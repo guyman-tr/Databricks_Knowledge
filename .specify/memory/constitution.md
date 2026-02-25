@@ -21,7 +21,7 @@ Every object and column must trace back to its upstream source(s). Lineage is no
 Knowledge is organized into domains (Trading, Payments, Risk, Revenue, etc.). Each domain is self-contained with its own knowledge package. Cross-domain relationships are explicit edges, not implicit assumptions. The agent uses domain boundaries for routing.
 
 ### VII. Don't Rebuild What Exists
-Bonnie's production-layer work (trading platform schemas, relationships, column context) is consumed as-is via MCP. We extend her methodology to new schemas and layers -- we don't re-derive what she's already mapped. Same principle applies to any existing metadata sources.
+Bonnie's production-layer work (trading platform schemas, relationships, column context) is consumed as-is via MCP. We extend his methodology to new schemas and layers -- we don't re-derive what he's already mapped. Same principle applies to any existing metadata sources.
 
 ## Data Stack Scope
 

@@ -41,7 +41,7 @@ As a data knowledge engineer, I need the wiki to reference relevant PRDs, BRDs, 
 
 As a data knowledge engineer, I need the wiki output in both markdown (human) and structured JSON/YAML (machine), so that the same knowledge serves both Bonnie's QA use case and our agent use case.
 
-**Why this priority**: The constitution mandates agent-first, but Bonnie's team also needs human-readable output.
+**Why this priority**: Both formats serve distinct needs -- Bonnie's automated QA workflows consume structured data, while human stakeholders need readable documentation.
 
 **Independent Test**: Generate both formats for one schema and verify the JSON contains all information present in the markdown.
 

@@ -27,7 +27,7 @@ As a data knowledge engineer, I need a single agreed-upon schema that defines wh
 
 As a data knowledge engineer, I need to programmatically consume the knowledge artifacts Bonnie has already produced for the eToro trading platform, so that I don't rebuild what already exists.
 
-**Why this priority**: Bonnie's work is the proven baseline. Integrating it validates our schema and gives us immediate coverage of the trading platform.
+**Why this priority**: Bonnie's work is the proven baseline -- already built for machine consumption (automated QA, agent workflows). Integrating it validates our schema and gives us immediate coverage of the trading platform.
 
 **Independent Test**: Query Bonnie's MCP for a known trading platform table and receive structured metadata that maps cleanly to our canonical schema.
 
@@ -65,7 +65,7 @@ As a data knowledge engineer, I need to validate the canonical schema against a 
 ### Functional Requirements
 
 - **FR-001**: System MUST define a canonical metadata schema covering: object name, schema, object type, columns (name, type, nullable, description), relationships (explicit and derived), lineage (upstream sources), description, domain, tags
-- **FR-002**: System MUST support consuming Bonnie's MCP output and mapping it to the canonical schema
+- **FR-002**: System MUST support consuming Bonnie's MCP output (already machine-readable) and mapping it to the canonical schema
 - **FR-003**: System MUST distinguish between explicit constraints (PK/FK) and derived/inferred relationships
 - **FR-004**: System MUST handle objects that span multiple layers (e.g., a production table that also exists in the lake and UC)
 - **FR-005**: System MUST version the canonical schema so future amendments are tracked
