@@ -1,0 +1,96 @@
+---
+description: Phase 8 - Procedure Reference Scan for DWH Semantic Documentation. Finds ALL procedures that interact with a table using Synapse metadata.
+globs:
+alwaysApply: false
+---
+
+# Phase 8: Procedure Reference Scan
+
+## Purpose
+
+Find ALL stored procedures that interact with the documented object. Uses Synapse metadata views and SQL text search.
+
+## Prerequisites
+
+- Phase 7 (View Dependency Scan) complete - need view list for indirect references
+
+## Discovery Methods
+
+### Method 1: Direct References via Metadata
+
+```sql
+SELECT
+    OBJECT_SCHEMA_NAME(d.referencing_id) AS proc_schema,
+    OBJECT_NAME(d.referencing_id) AS proc_name
+FROM sys.sql_expression_dependencies d
+JOIN sys.objects o ON d.referencing_id = o.object_id
+WHERE d.referenced_schema_name = '{Schema}'
+  AND d.referenced_entity_name = '{TableName}'
+  AND o.type = 'P'
+ORDER BY proc_name
+```
+
+### Method 2: Via Views (from Phase 7)
+
+For EACH view referencing this table, find procedures that use the view (already done in Phase 7 Step 3).
+
+### Method 3: Text Search in SP Definitions
+
+For edge cases where metadata dependencies are incomplete:
+
+```sql
+SELECT OBJECT_SCHEMA_NAME(object_id) AS sp_schema,
+       OBJECT_NAME(object_id) AS sp_name
+FROM sys.sql_modules
+WHERE definition LIKE '%{TableName}%'
+  AND OBJECTPROPERTY(object_id, 'IsProcedure') = 1
+```
+
+## Categorize Results
+
+For each procedure found, read its definition and determine its relationship:
+
+### DML Categories
+
+| Category | SQL Pattern | Meaning |
+|----------|------------|---------|
+| **WRITER** | `INSERT INTO`, `CREATE TABLE ... AS SELECT`, `SELECT INTO` | Creates/populates rows |
+| **MODIFIER** | `UPDATE ... SET` | Changes existing rows |
+| **READER** | `SELECT ... FROM` | Reads data |
+| **DELETER** | `DELETE FROM`, `TRUNCATE TABLE` | Removes rows |
+| **MIXED** | Multiple DML types | Complex ETL operation |
+
+### Importance Ranking
+
+| Rank | Criteria |
+|------|----------|
+| 1 (Critical) | WRITER/ETL procedures - they define how data enters the table |
+| 2 (Critical) | MODIFIER procedures with business logic |
+| 3 (Important) | Main READ procedures used by reports/dashboards |
+| 4 (Reference) | Ad-hoc reporting reads |
+| 5 (Reference) | Maintenance/cleanup procedures |
+
+## Output Format
+
+```
+PHASE 8 RESULTS - [Schema].[Table]
+====================================
+Discovery Method Breakdown:
+  Method 1 (Direct metadata): {N} procedures
+  Method 2 (Via Views): {N} procedures
+  Method 3 (Text search): {N} additional procedures
+  TOTAL UNIQUE: {N} procedures
+
+WRITERS/ETL:
+  1. {Schema}.{ProcName} - {What it does} (INSERT/CTAS)
+
+MODIFIERS:
+  2. {Schema}.{ProcName} - {What it does} (UPDATE)
+
+READERS:
+  3. {Schema}.{ProcName} - {What it does} (SELECT)
+```
+
+## Completion
+
+Mark `[x] Phase 8: Procedure Reference Scan` in the checklist.

@@ -1,0 +1,127 @@
+---
+description: Phase 1 - Structure Analysis for DWH Semantic Documentation. Extracts structure from Synapse metadata views via MCP.
+globs:
+alwaysApply: false
+---
+
+# Phase 1: Structure Analysis
+
+## Purpose
+
+Extract the complete structural definition of a Synapse DWH object by querying metadata views via MCP. This is the foundation for all subsequent phases.
+
+## CRITICAL: DDL Source is Synapse Metadata, NOT a Repo
+
+Unlike the production pipeline which reads SSDT repo files, Synapse has no SSDT project. **ALWAYS query Synapse metadata views via MCP.**
+
+## Queries
+
+### For Tables — Columns
+
+```sql
+SELECT
+    c.TABLE_SCHEMA, c.TABLE_NAME, c.COLUMN_NAME, c.ORDINAL_POSITION,
+    c.DATA_TYPE, c.CHARACTER_MAXIMUM_LENGTH, c.NUMERIC_PRECISION, c.NUMERIC_SCALE,
+    c.IS_NULLABLE, c.COLUMN_DEFAULT
+FROM INFORMATION_SCHEMA.COLUMNS c
+WHERE c.TABLE_SCHEMA = '{Schema}' AND c.TABLE_NAME = '{TableName}'
+ORDER BY c.ORDINAL_POSITION
+```
+
+### For Tables — Distribution Strategy
+
+```sql
+SELECT
+    t.name AS table_name,
+    d.distribution_policy_desc,
+    c.name AS distribution_column
+FROM sys.tables t
+JOIN sys.pdw_table_distribution_properties d ON t.object_id = d.object_id
+LEFT JOIN sys.columns c ON t.object_id = c.object_id AND d.distribution_ordinal = c.column_id
+WHERE t.name = '{TableName}' AND SCHEMA_NAME(t.schema_id) = '{Schema}'
+```
+
+### For Tables — Index Type
+
+```sql
+SELECT
+    i.name AS index_name,
+    i.type_desc AS index_type,
+    STRING_AGG(c.name, ', ') AS index_columns
+FROM sys.indexes i
+LEFT JOIN sys.index_columns ic ON i.object_id = ic.object_id AND i.index_id = ic.index_id
+LEFT JOIN sys.columns c ON ic.object_id = c.object_id AND ic.column_id = c.column_id
+WHERE i.object_id = OBJECT_ID('{Schema}.{TableName}')
+GROUP BY i.name, i.type_desc
+```
+
+### For Views — Definition
+
+```sql
+SELECT definition
+FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{Schema}.{ViewName}')
+```
+
+### For Stored Procedures — Definition
+
+```sql
+SELECT definition
+FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{Schema}.{ProcName}')
+```
+
+### For Functions — Definition
+
+```sql
+SELECT definition
+FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{Schema}.{FunctionName}')
+```
+
+## Extraction Checklist
+
+### For Tables
+
+- [ ] **Columns**: Name, data type, length/precision/scale, NULL/NOT NULL, default
+- [ ] **Distribution**: HASH (which column), ROUND_ROBIN, or REPLICATE
+- [ ] **Index Type**: CLUSTERED COLUMNSTORE INDEX, CLUSTERED INDEX, HEAP
+- [ ] **Primary Key**: Column(s) if declared (NOT ENFORCED in Synapse)
+- [ ] **Statistics**: Auto-created or manual statistics
+- [ ] **ID columns needing resolution**: List all `*ID` columns
+
+### For Views
+
+- [ ] **SQL definition**: Full SELECT statement
+- [ ] **Base tables**: All tables in FROM/JOIN
+- [ ] **JOIN conditions**: ON clauses
+- [ ] **WHERE filters**: Permanent filter conditions
+- [ ] **Aggregations**: GROUP BY, HAVING
+
+### For Stored Procedures
+
+- [ ] **Parameters**: Name, type, direction, default value
+- [ ] **Tables referenced**: All tables in FROM/JOIN/INSERT/UPDATE/DELETE/CTAS
+- [ ] **Temp tables / CTEs**: #table definitions, CTE definitions
+- [ ] **CTAS patterns**: CREATE TABLE AS SELECT (common in Synapse ETL)
+
+### For Functions
+
+- [ ] **Parameters**: Name, type
+- [ ] **Return type**: Scalar type or TABLE definition
+
+## Output Format
+
+```
+PHASE 1 RESULTS - [Schema].[Table]
+==================================
+Columns: {N}
+Distribution: {HASH(column) / ROUND_ROBIN / REPLICATE}
+Index: {CLUSTERED COLUMNSTORE INDEX / CLUSTERED INDEX / HEAP}
+PK: {column(s) or NONE}
+ID columns needing resolution: [list all *ID columns]
+```
+
+## Completion
+
+Mark `[x] Phase 1: Structure Analysis` in the checklist.

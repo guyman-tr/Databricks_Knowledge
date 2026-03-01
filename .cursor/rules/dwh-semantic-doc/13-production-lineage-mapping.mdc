@@ -1,0 +1,154 @@
+---
+description: Phase 13 - Production Lineage Mapping for DWH Semantic Documentation. Traces each Synapse table back to its production sources via the Generic Pipeline mapping view, ETL SPs, and lake imports.
+globs:
+alwaysApply: false
+---
+
+# Phase 13: Production Lineage Mapping
+
+## Purpose
+
+Trace each Synapse table back through its populating SP to the lake import to the production source table. This is the cross-layer bridge that connects the DWH knowledge to the upstream production knowledge.
+
+## Prerequisites
+
+- Phase 9 (Procedure Logic Extraction) complete - need source-to-target map
+- Phase 9B (ETL Orchestration) complete - need ETL chain
+- Upstream knowledge sources configured in `dwh-semantic-doc-config.json`
+- Generic Pipeline mapping view available (configured in `dwh-semantic-doc-config.json` under `lineage.generic_pipeline_mapping`)
+
+## Algorithm
+
+### Step 1: Query the Generic Pipeline Mapping View
+
+The primary lineage discovery source is the Unity Catalog mapping view (1,697 rows covering all production-to-lake mappings). Read the config to get the view name, then query it via the Databricks MCP.
+
+**Search by production table name** (best for matching ETL source references):
+```sql
+SELECT DatabaseName, SchemaName, TableName, ServerName,
+       CopyStrategy, FrequencyMinute, DatalakePath,
+       UnityCatalogTableName, BusinessGroup, inc_column_Name
+FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
+WHERE TableName = '{ProductionTableName}'
+  AND SchemaName = '{ProductionSchema}'
+```
+
+**Search by database name** (when you know the source database):
+```sql
+SELECT DatabaseName, SchemaName, TableName, CopyStrategy,
+       FrequencyMinute, UnityCatalogTableName
+FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
+WHERE DatabaseName = '{DatabaseName}'
+ORDER BY SchemaName, TableName
+```
+
+**Key columns in the mapping view**:
+
+| Column | Meaning |
+|--------|---------|
+| `DatabaseName` | Production source database (e.g., `etoro`, `USABroker`) |
+| `SchemaName` | Production schema (e.g., `Trade`, `Dictionary`) |
+| `TableName` | Production table name |
+| `ServerName` | Production server identifier |
+| `CopyStrategy` | `Override` (full load) or `Append` (incremental) |
+| `FrequencyMinute` | Refresh interval in minutes (1440 = daily, 60 = hourly) |
+| `inc_column_Name` | Incremental watermark column (empty for full loads) |
+| `DatalakePath` | Lake landing path (e.g., `Bronze/etoro/Trade/PositionTbl/`) |
+| `UnityCatalogTableName` | UC bronze table (e.g., `trading.bronze_etoro_trade_positiontbl`) |
+| `BusinessGroup` | UC catalog grouping (e.g., `trading`, `finance`, `general`) |
+
+### Step 2: Identify Additional Sources from ETL Code
+
+From Phase 9's source-to-target mapping, identify all source tables not already covered by the mapping view. For each source:
+- If it's a staging table (`stg_*`, `CopyFromLake_*`), trace further to find its production origin
+- If it references a production table name, map it
+- Cross-reference with the mapping view results from Step 1
+
+### Step 3: Match to Upstream Production Wiki
+
+Read the config to get the list of `upstream_knowledge_sources`. For each identified production source table, check if it has existing documentation:
+
+```
+Check: {upstream_repo_path}/{upstream_wiki_path}/{Schema}/Tables/{Schema}.{TableName}.md
+```
+
+If found, extract:
+- Business Meaning (Section 1) -- deepens the DWH doc's context
+- Key Business Logic (Section 2) -- inherited logic that survives ETL
+- Element descriptions (Section 4) -- column meanings from production
+
+### Step 4: Build Complete Lineage Chain
+
+```
+LINEAGE CHAIN: {DWH Schema}.{DWH Table}
+=========================================
+
+Production:
+  Table: {Production Schema}.{Production Table}
+  Server: {source server from mapping view}
+  Wiki: {upstream_repo_path}/{upstream_wiki_path}/{path}
+  Business Meaning: {from upstream wiki Section 1, first paragraph}
+
+Generic Pipeline:
+  Copy Strategy: {CopyStrategy: Override = full / Append = incremental}
+  Frequency: {FrequencyMinute} minutes ({e.g., 1440 = daily})
+  Incremental Column: {inc_column_Name or "N/A for full loads"}
+  Lake Path: {DatalakePath}
+  UC Bronze Table: {UnityCatalogTableName}
+  Business Group: {BusinessGroup}
+
+Lake / Staging:
+  Table: {Staging Schema}.{Staging Table}
+  Load: {raw import, minimal transform}
+
+ETL:
+  SP: {Schema}.{SP Name}
+  Pattern: {Full / Incremental / Merge}
+  Transforms: {key transformations applied}
+
+Target:
+  Table: {DWH Schema}.{DWH Table}
+  Distribution: {HASH(col) / ROUND_ROBIN / REPLICATE}
+```
+
+### Step 5: Column-Level Lineage
+
+Map each DWH column back to its production origin:
+
+```
+COLUMN LINEAGE:
+| DWH Column | Production Column | Production Table | Transform | Notes |
+|-----------|-------------------|------------------|-----------|-------|
+| PositionID | PositionID | Trade.PositionTbl | None (passthrough) | PK in both layers |
+| StatusName | StatusID | Trade.PositionTbl | CASE resolve via Dictionary.PositionStatus | Enum -> text |
+| OpenDate | OpenDateTime | Trade.PositionTbl | DATE truncation | Time component dropped |
+```
+
+### Step 6: Identify Lost/Added Columns
+
+- **Columns in production but NOT in DWH**: Why were they dropped? (irrelevant for analytics, PII, too granular)
+- **Columns in DWH but NOT in production**: Where do they come from? (derived calculations, ETL metadata, joined dimensions)
+
+## Output Format
+
+```
+PHASE 13 RESULTS - {Schema}.{Table}
+====================================
+Generic Pipeline Match: {YES / NO / PARTIAL}
+  {mapping view row details}
+
+Production Sources: {N} tables identified
+  {list with upstream wiki links}
+
+Column Lineage: {N}/{Total} columns traced to production
+  Passthrough: {N}
+  Transformed: {N}
+  DWH-only (derived): {N}
+
+Lineage Chain Diagram:
+  [see Step 4 format]
+```
+
+## Completion
+
+Mark `[x] Phase 13: Production Lineage Mapping` in the checklist.

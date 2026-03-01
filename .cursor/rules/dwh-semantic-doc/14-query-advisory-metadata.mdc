@@ -1,0 +1,123 @@
+---
+description: Phase 14 - Query Advisory Metadata for DWH Semantic Documentation. Captures distribution keys, recommended query patterns, performance notes, and data freshness -- the analyst-facing layer unique to this pipeline.
+globs:
+alwaysApply: false
+---
+
+# Phase 14: Query Advisory Metadata
+
+## Purpose
+
+Produce the analyst-facing advisory layer that the production pipeline doesn't generate. This phase synthesizes technical metadata into actionable query guidance that an AI assistant can use to help analysts write optimal queries.
+
+## Prerequisites
+
+- Phase 1 (Structure Analysis) complete - distribution, indexes
+- Phase 3 (Distribution Analysis) complete - distribution strategy
+- Phase 9 (Procedure Logic) complete - ETL patterns
+- Phase 9B (ETL Orchestration) complete - refresh schedule
+- All previous phases provide context
+
+## Analysis Areas
+
+### 1. Distribution Key Advisory
+
+From Phase 1 and 3:
+
+```
+DISTRIBUTION ADVISORY:
+  Type: {HASH(column) / ROUND_ROBIN / REPLICATE}
+  Key Column: {column or N/A}
+
+  PERFORMANCE RULES:
+  - {e.g., "Always include PositionID in WHERE or JOIN for data locality"}
+  - {e.g., "JOINing two HASH tables on different columns causes data movement -- avoid"}
+  - {e.g., "This REPLICATE table is broadcast to all nodes -- JOINs are always local"}
+```
+
+### 2. Recommended Query Patterns
+
+Synthesize from all phases:
+
+```
+RECOMMENDED PATTERNS:
+
+Pattern 1: {Common analyst question}
+  Approach: {SQL pattern}
+  Why: {Explains distribution/index alignment}
+  Example:
+    SELECT ... FROM {table} WHERE {distribution_col} = @value AND {filter}
+
+Pattern 2: {Another common question}
+  Approach: {SQL pattern with JOINs}
+  Why: {Explains why this JOIN order is efficient}
+
+ANTI-PATTERNS (avoid these):
+  - {e.g., "SELECT * without WHERE -- scans all {N}M rows across all distributions"}
+  - {e.g., "GROUP BY on non-distribution column without WHERE -- causes full redistribution"}
+```
+
+### 3. Data Freshness Advisory
+
+From Phase 9B:
+
+```
+DATA FRESHNESS:
+  Refresh Frequency: {Hourly / Daily / Unknown}
+  Typical Lag: {N hours behind production}
+  Last Known Refresh: {timestamp or "check ETL logs"}
+  Stale Data Risk: {LOW / MEDIUM / HIGH}
+
+  ADVISORY:
+  - {e.g., "For real-time position data, query production (if access exists)"}
+  - {e.g., "Data is refreshed nightly -- intraday positions won't appear until next morning"}
+```
+
+### 4. Common JOIN Map
+
+Synthesize from Phases 5, 7, 8:
+
+```
+COMMON JOINS:
+| Join To | ON Condition | Distribution Match? | Performance | Use Case |
+|---------|-------------|---------------------|-------------|----------|
+| dim_instrument | PositionID -> InstrumentID | {YES/NO} | {GOOD/FAIR/POOR} | Get instrument name |
+| dim_customer | CID -> CID | {YES/NO} | {GOOD/FAIR/POOR} | Get customer details |
+```
+
+### 5. Gotchas and Pitfalls
+
+Synthesize from all phases:
+
+```
+GOTCHAS:
+1. {e.g., "StatusID=2 is transient ('Being Closed'), not 'Closed'. Closed positions are in fact_position_history."}
+2. {e.g., "MirrorID=0 means manual trade. Don't filter MirrorID IS NOT NULL to find copy trades."}
+3. {e.g., "IsSettled does NOT mean 'settlement complete' -- it means 'real stock ownership'. See Section 2."}
+4. {e.g., "Amounts are in CENTS, not dollars. Divide by 100 for display."}
+```
+
+## Output Format
+
+```
+PHASE 14 RESULTS - {Schema}.{Table}
+====================================
+Distribution Advisory: {summary}
+Query Patterns: {N} recommended, {N} anti-patterns
+Data Freshness: {frequency}, {lag}
+Common JOINs: {N} mapped
+Gotchas: {N} documented
+```
+
+## Integration with Phase 11
+
+Phase 14 results feed directly into the template:
+- Distribution Advisory -> Section 3.1
+- Common Patterns -> Section 3.2
+- Common JOINs -> Section 3.3
+- Gotchas -> Section 3.4
+- Data Freshness -> Section 1, paragraph 3
+
+## Completion
+
+Mark `[x] Phase 14: Query Advisory Metadata` in the checklist.

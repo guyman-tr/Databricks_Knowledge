@@ -1,0 +1,121 @@
+---
+description: Phase 12 - Cross-Object Knowledge Enrichment for DWH Semantic Documentation. Syncs knowledge across documented objects and links to upstream production wikis.
+globs:
+alwaysApply: false
+---
+
+# Phase 12: Cross-Object Knowledge Enrichment
+
+## Goal
+
+Make every documented object **smarter** by leveraging knowledge from:
+1. Other DWH wiki docs in `knowledge/synapse/Wiki/`
+2. Upstream production wikis (paths configured in `dwh-semantic-doc-config.json` under `upstream_knowledge_sources`)
+
+## When This Phase Runs
+
+### Mechanism 1: "Read Before Write" (During Phase 11)
+
+Before generating any documentation, Phase 11 MUST first execute the Pre-Read step below.
+
+### Mechanism 2: "Batch Enrichment Pass" (After Batch Completes)
+
+After documenting multiple objects, run the full enrichment pass.
+
+## Mechanism 1: Pre-Read
+
+### Step 1: Identify Related Objects
+
+From phases 1-10, collect ALL objects discovered:
+- Tables referenced in JOINs (Phase 5)
+- Lookup tables (Phase 4)
+- Views referencing this object (Phase 7)
+- Procedures (Phases 8, 9)
+- Production source tables (Phase 9, 13)
+
+### Step 2: Scan for Existing Docs
+
+Check DWH wiki:
+```
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md
+```
+
+Check upstream production wikis (read paths from config):
+```
+{upstream_repo_path}/{upstream_wiki_path}/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md
+```
+
+### Step 3: Extract Knowledge from Existing Docs
+
+| What to Extract | How to Use It |
+|----------------|---------------|
+| Element descriptions | Reuse exact description for shared columns (consistency) |
+| Business Logic patterns | Reference: "See also: `{Schema}.{Object}` Section 2.X" |
+| Value maps from lookups | Copy exactly instead of re-querying |
+| Lineage info | Enrich lineage chain with production context from upstream docs |
+| Query patterns | Cross-reference common JOINs |
+
+### Step 4: Apply Absorbed Knowledge
+
+- **Element descriptions**: If a related doc describes a shared column, use the same description
+- **Production context**: If the upstream wiki has deep business meaning for a production source, incorporate it into the DWH doc's Section 1 and 5
+- **Relationships**: Populate "Referenced By" using knowledge from related docs
+
+## Mechanism 2: Batch Enrichment Pass
+
+### Step 1: Build Knowledge Graph
+
+Scan all `.md` files in `knowledge/synapse/Wiki/`:
+- Extract outgoing edges (Section 6.1)
+- Extract incoming edges (Section 6.2)
+- Extract shared concepts (Section 2)
+
+### Step 2: Detect Gaps
+
+| Gap Type | Fix |
+|----------|-----|
+| Missing "Referenced By" | Add cross-reference |
+| Inconsistent element description | Use richer description in both |
+| Missing production lineage link | Add link to upstream wiki |
+| Missing cross-reference | Add "See also" |
+
+### Step 3: Apply Fixes
+
+Only ADD or ALIGN -- never delete. Preserve original content.
+
+### Step 4: Update Semantic Index
+
+Regenerate `knowledge/synapse/Wiki/_semantic_index.md`:
+
+```markdown
+# Semantic Index - Synapse DWH
+
+*Generated: {date} | Objects: {N}*
+
+## Business Concepts
+
+| Concept | Primary Object(s) | Related Objects | Description |
+|---------|-------------------|-----------------|-------------|
+
+## Shared Elements
+
+| Element Name | Appears In | Description |
+|-------------|-----------|-------------|
+
+## Production Lineage Map
+
+| DWH Object | Production Source | Upstream Wiki Link |
+|-----------|-------------------|-------------------|
+```
+
+## Enrichment Rules
+
+1. Never remove information -- enrichment only ADDS or ALIGNS
+2. Richer description wins
+3. Preserve original timestamps; add `Enriched: {date}` to footer
+4. Idempotent -- running multiple times produces same result
+5. Log all changes
+
+## Completion
+
+Mark `[x] Phase 12: Cross-Object Enrichment` in the checklist.

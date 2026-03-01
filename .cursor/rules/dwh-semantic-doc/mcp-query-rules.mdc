@@ -1,0 +1,64 @@
+---
+description: MCP Query Safety Rules for DWH Semantic Documentation. Loaded alongside any phase that queries Synapse.
+globs:
+alwaysApply: false
+---
+
+# MCP Query Rules (Synapse)
+
+## Rule 1: No NOLOCK Needed
+
+Synapse uses **snapshot isolation** by default. Do NOT use `WITH (NOLOCK)` -- it is not needed and may cause syntax issues on some Synapse configurations.
+
+```sql
+-- CORRECT for Synapse
+SELECT * FROM [dbo].[dim_position]
+
+-- WRONG (unnecessary for Synapse)
+SELECT * FROM [dbo].[dim_position] WITH (NOLOCK)
+```
+
+## Rule 2: Table Size Strategy
+
+| Table Pattern | Expected Size | Query Strategy |
+|---------------|---------------|----------------|
+| `dim_*` | Medium-Large (100K - 10M) | `TOP 10` sample + `COUNT(*)` + `GROUP BY` |
+| `fact_*` | Large (millions+) | `TOP 10` sample + aggregates only |
+| `*_lookup`, `*_ref` | Small (< 10K) | `SELECT *` (ALL rows) |
+| `stg_*` | Variable | `SELECT COUNT(*)` first, then sample |
+| `*_config`, `*_settings` | Small (< 1K) | `SELECT *` (ALL rows) |
+| Unknown | Check first | `SELECT COUNT(*)` first |
+
+## Rule 3: Never Modify Data
+
+All queries MUST be read-only:
+- SELECT only
+- No INSERT, UPDATE, DELETE
+- No EXEC of procedures
+- No DDL (CREATE, ALTER, DROP)
+- No CTAS (CREATE TABLE AS SELECT)
+
+## Rule 4: Query Timeout
+
+If a query takes more than 60 seconds (Synapse can be slower than SQL Server for cold starts):
+1. Note "Query timed out" in phase results
+2. Try a more targeted query (add WHERE, reduce TOP)
+3. If still failing, skip and document from metadata only
+
+## Rule 5: Distribution-Aware Queries
+
+When querying large fact tables, include the distribution column in WHERE if possible:
+```sql
+-- Better (data locality if HASH distributed on PositionID)
+SELECT TOP 10 * FROM [dbo].[dim_position] WHERE PositionID > 0
+
+-- Avoid for very large tables (full scan)
+SELECT COUNT(DISTINCT CID) FROM [dbo].[fact_position]
+```
+
+## Rule 6: Metadata Queries Are Always Safe
+
+Querying `INFORMATION_SCHEMA`, `sys.*` views, and `sys.pdw_*` views is always safe regardless of table size:
+```sql
+SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'dim_position'
+```

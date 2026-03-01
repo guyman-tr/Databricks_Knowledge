@@ -1,0 +1,101 @@
+---
+description: Phase 4 - Lookup Resolution for DWH Semantic Documentation. Resolves ID columns to human-readable values using production Dictionary tables and the upstream FK lookup reference.
+globs:
+alwaysApply: false
+---
+
+# Phase 4: Lookup Resolution
+
+## Purpose
+
+Resolve ID columns to human-readable business values. Since Synapse has NO enforced foreign key constraints, this phase relies on:
+1. **Upstream semantic wiki** (production wiki) — already validated through strict code-is-king analysis; authoritative starting point for all ID resolution
+2. Column naming patterns from the FK lookup reference (`fk-lookup-reference.mdc`)
+3. Production Dictionary tables replicated to Synapse (verification/supplementation)
+4. DWH-local lookup/dim tables
+
+## Prerequisites
+
+- Phase 1 (Structure Analysis) complete - need column list with all `*ID` columns
+- Upstream knowledge config: read `dwh-semantic-doc-config.json` to locate the FK lookup reference and upstream wiki paths
+- MCP connection active
+
+## Resolution Strategy
+
+### Step 1: Start From Upstream Wiki (Authoritative Source)
+
+The upstream production wiki has already resolved ID columns through the full code-is-king pipeline (JOIN analysis, procedure logic extraction, application code tracing). Start here. Read the config to get the wiki path, then look for:
+```
+{upstream_repo_path}/{upstream_wiki_path}/Dictionary/Tables/Dictionary.{TableName}.md
+```
+
+Extract the Elements section for the complete value map. Also check the wiki file for the source table itself — the Elements section will have resolved descriptions for every ID column.
+
+### Step 2: Match Against Known Production Patterns
+
+Use the FK lookup reference (`fk-lookup-reference.mdc`) to match column names not yet resolved from the upstream wiki:
+
+| Column Pattern | Production Lookup Table | Key Column | Name Column |
+|----------------|------------------------|------------|-------------|
+| `CID` | Customer.Customer | CID | (join CustomerStatic) |
+| `InstrumentID` | Trade.Instrument + Trade.InstrumentMetaData | InstrumentID | InstrumentDisplayName |
+| `CountryID` | Dictionary.Country | CountryID | Name |
+| `CurrencyID` | Dictionary.Currency | CurrencyID | Name |
+| `CreditTypeID` | Dictionary.CreditType | CreditTypeID | Name |
+| `StatusID` | Context-dependent (see below) | varies | Name |
+| `SettlementTypeID` | Dictionary.SettlementTypes | SettlementTypeID | Name |
+
+### Step 3: Verify/Supplement From Synapse Lookup Tables
+
+Many production Dictionary tables are replicated to Synapse. Query them to verify upstream wiki mappings and catch any new values added since the wiki was generated:
+
+```sql
+SELECT * FROM [{Schema}].[{LookupTableName}] ORDER BY 1
+```
+
+If Synapse has values not in the upstream wiki, include them and flag for upstream investigation.
+
+### Step 4: Check DWH-Local Lookups
+
+Some DWH schemas have their own lookup/dimension tables:
+```sql
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME LIKE '%lookup%' OR TABLE_NAME LIKE '%dim_%' OR TABLE_NAME LIKE '%ref_%'
+ORDER BY TABLE_SCHEMA, TABLE_NAME
+```
+
+### Step 5: Build Value Maps
+
+For enum-like lookup tables (< 100 rows), build a complete map:
+
+```
+StatusID -> Dictionary.PositionStatus:
+  1 = Open
+  2 = Closed
+  3 = Pending
+```
+
+For high-cardinality references, note the purpose:
+
+```
+CID -> Customer dimension (millions of rows)
+  Purpose: References the customer who owns this record
+```
+
+## Output Format
+
+```
+PHASE 4 RESULTS - [Schema].[Table]
+====================================
+ID Columns Resolved:
+  StatusID -> PositionStatus: {1=Open, 2=Closed, ...} (source: Synapse lookup)
+  SettlementTypeID -> SettlementTypes: {0=CFD, 1=Real, ...} (source: upstream wiki)
+
+Unresolved ID Columns (-> Phase 5):
+  CustomTypeID, SpecialFlagID, ...
+```
+
+## Completion
+
+Mark `[x] Phase 4: Lookup Resolution` in the checklist.

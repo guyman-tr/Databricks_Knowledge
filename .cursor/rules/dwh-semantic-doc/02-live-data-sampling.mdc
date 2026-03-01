@@ -1,0 +1,86 @@
+---
+description: Phase 2 - Live Data Sampling via Synapse MCP for DWH Semantic Documentation. Queries actual data to understand content patterns.
+globs:
+alwaysApply: false
+---
+
+# Phase 2: Live Data Sampling
+
+## Purpose
+
+Query the Synapse DWH via MCP to see actual data values, understand table size, identify NULL patterns, and establish date ranges. This transforms abstract structure into concrete understanding.
+
+## Prerequisites
+
+- MCP connection must be active (Synapse SQL connection)
+- Also load: `.cursor/rules/dwh-semantic-doc/mcp-query-rules.mdc`
+
+## No NOLOCK Needed
+
+Synapse uses snapshot isolation by default. No `WITH (NOLOCK)` hints are required or supported.
+
+## Query Sequence
+
+### Step 1: Determine Table Size Category
+
+| Pattern | Category | Strategy |
+|---------|----------|----------|
+| `dim_*` | Medium-Large | TOP 10 + aggregates |
+| `fact_*` | Large (millions+) | TOP 10 + aggregates |
+| `*_lookup`, `*_ref`, `*_config` | Small (< 10K rows) | Read ALL rows |
+| `stg_*` | Staging (variable) | Try COUNT first |
+| Everything else | Unknown | Try COUNT first |
+
+### Step 2: Sample Data
+
+**For Small/Lookup Tables:**
+```sql
+SELECT * FROM [{Schema}].[{Table}] ORDER BY 1
+```
+
+**For Large Tables:**
+```sql
+SELECT TOP 10 * FROM [{Schema}].[{Table}]
+```
+
+### Step 3: Row Count
+
+```sql
+SELECT COUNT(*) AS TotalRows FROM [{Schema}].[{Table}]
+```
+
+### Step 4: Date Range (if datetime columns exist)
+
+```sql
+SELECT MIN([{DateCol}]) AS Earliest, MAX([{DateCol}]) AS Latest
+FROM [{Schema}].[{Table}]
+```
+
+### Step 5: NULL Pattern Analysis
+
+From the sample data, note:
+- Columns that are always NULL -> possibly deprecated or not yet populated by ETL
+- Columns that are never NULL despite allowing NULL -> reliably populated
+- Columns with mixed NULL/value -> conditional population (only certain record types)
+
+## What to Record
+
+| Data Point | Why It Matters |
+|------------|---------------|
+| Sample values | See real data patterns |
+| Row count | Understand table scale |
+| Date range | Know if active or historical, identify ETL freshness |
+| NULL patterns | Identify truly used vs legacy/placeholder columns |
+| Default value patterns | Columns with all-same values |
+
+## Error Handling
+
+| Error | Action |
+|-------|--------|
+| Query timeout | Note "Large table - sample timed out", try with smaller TOP |
+| Table not found | Note "Object not deployed", continue with metadata only |
+| Permission denied | Note "No read access", continue with metadata only |
+
+## Completion
+
+Mark `[x] Phase 2: Live Data Sampling` in the checklist.

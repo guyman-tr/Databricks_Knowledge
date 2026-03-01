@@ -1,9 +1,9 @@
 # Feature Specification: Build Column Lineage Descriptions
 
-**Feature Branch**: `007-build-column-lineage-descriptions`
+**Feature Branch**: `006-build-column-lineage-descriptions`
 **Created**: 2026-02-25
 **Status**: Draft
-**Input**: For each column in each object, produce a concise description containing first upstream source, last upstream source, and transformation chain -- all within Unity Catalog's 1024-character limit. Generate UC tags from lineage metadata.
+**Input**: For each column in each object, produce a concise lineage description containing first upstream source, last upstream source, and transformation chain — all within Unity Catalog's 1024-character limit. Generate UC tags from lineage metadata. This spec produces two output formats: (1) descriptions-only (base from spec 005), (2) full combined with lineage context. The final format choice is deferred to post-POC evaluation.
 
 ## User Scenarios & Testing
 
@@ -38,42 +38,36 @@ As a data knowledge engineer, I need the column description (including lineage) 
 
 ---
 
-### User Story 3 - Generate UC Tags From Lineage (Priority: P2)
-
-As a data knowledge engineer, I need tags derived from lineage metadata (source system, domain, transformation type, refresh frequency), so that UC objects are discoverable via tag search.
-
-**Why this priority**: Tags enable the agent to filter and route queries to the right domain.
-
-**Independent Test**: Generate tags for 10 columns and verify they include at least: source_system, domain, and refresh_frequency.
-
-**Acceptance Scenarios**:
-
-1. **Given** a column with lineage metadata, **When** I generate tags, **Then** tags include: source_system, domain, data_type_category, refresh_frequency
-2. **Given** generated tags, **When** I validate against UC tag format, **Then** all tags are valid UC key-value pairs
-
 ---
 
 ### Edge Cases
 
-- What happens when lineage can't be traced (e.g., hardcoded values, external imports)?
-- How do we handle columns with multiple upstream sources (e.g., COALESCE from 3 tables)?
+- What happens when lineage can't be traced (e.g., hardcoded values, external imports)? → Resolved: label as "derived: <expression>"
+- How do we handle columns with multiple upstream sources (e.g., COALESCE from 3 tables)? → Resolved: list all as multiple lineage parents
 - What about columns that are computed (no direct upstream, e.g., GETDATE())?
 
 ## Requirements
 
 ### Functional Requirements
 
-- **FR-001**: System MUST trace lineage for each column to its first and last upstream sources
+- **FR-001**: System MUST assemble lineage for each column from upstream wiki outputs (specs 001, 003) to identify first and last upstream sources
 - **FR-002**: System MUST summarize transformation steps in the lineage chain
 - **FR-003**: System MUST generate descriptions under 1024 characters including lineage information
-- **FR-004**: System MUST generate UC-compatible tags from lineage metadata
 - **FR-005**: System MUST handle columns with untraceable lineage by marking them explicitly
 
 ### Key Entities
 
 - **ColumnLineage**: The full chain from first upstream source through transformations to current column
 - **CompressedDescription**: A UC-ready description containing meaning + lineage within 1024 chars
-- **LineageTag**: A key-value tag derived from lineage metadata
+## Clarifications
+
+### Session 2026-03-01
+
+- Q: How do specs 005 and 006 combine their UC descriptions? → A: Both produce separate outputs. Two formats generated: (1) descriptions-only (from 005), (2) full combined with lineage (from 006). Evaluate which fits the 1024-char budget and is intelligible; decide post-POC which to use.
+- Q: Where does lineage data come from? → A: Consume from upstream wiki outputs (spec 001 production wiki + spec 003 Synapse wiki). No re-tracing of SP code.
+- Q: Should tag generation live in 006 or 007? → A: Move to 007. Tags align with the mandatory tag standard in Confluence ("Databricks AI Agent - Data layer Rules", page 13960052801). Infer what's possible from pipeline outputs. PII tag uses two tiers: direct (column IS PII) and indirect (column JOINs to PII), per Confluence PII mapping pages.
+- Q: How to handle columns with multiple upstream sources (COALESCE, CASE)? → A: List all upstream sources as multiple lineage parents.
+- Q: How to mark columns with no traceable upstream (GETDATE, hardcoded, identity)? → A: Label as "derived" with the expression (e.g., "derived: GETDATE()"). No fake lineage.
 
 ## Success Criteria
 
@@ -81,5 +75,4 @@ As a data knowledge engineer, I need tags derived from lineage metadata (source 
 
 - **SC-001**: Lineage is traced for at least 70% of columns across all mapped objects
 - **SC-002**: 100% of generated descriptions are under 1024 characters
-- **SC-003**: Tags are generated for at least 80% of columns with valid UC format
 - **SC-004**: Columns with untraceable lineage are explicitly marked (not left blank)

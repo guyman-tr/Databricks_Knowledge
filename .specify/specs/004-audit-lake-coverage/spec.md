@@ -3,7 +3,7 @@
 **Feature Branch**: `004-audit-lake-coverage`
 **Created**: 2026-02-25
 **Status**: Draft
-**Input**: Determine which production objects are exported to the Data Lake via the Generic Pipeline and which are not. Map Unity Catalog registration status for all lake objects.
+**Input**: Determine which production objects are exported to the Data Lake via the Generic Pipeline and which are not. Map Unity Catalog registration status for all lake objects. This audit serves three purposes: (1) **Gap analysis** — identify what's NOT flowing downstream, (2) **Target map** — identify all downstream endpoints where metadata needs to be pushed to (specs 005, 007), and (3) **Scope map for the Databricks/Lake knowledge layer** — the lake is not just a passthrough; it has its own notebooks, Spark pipelines, and Delta transformations that will need their own knowledge analysis in a future layer. The complete vision: all knowledge files ultimately live in Databricks agent folders, routing user queries to the right knowledge skills across all layers (production → DWH → lake/Databricks).
 
 ## User Scenarios & Testing
 
@@ -56,7 +56,15 @@ As a data knowledge engineer, I need to know which lake objects are registered i
 
 - What if the Generic Pipeline exports objects that no longer exist in production (orphaned exports)?
 - How do we handle objects that are exported but under a different name in the lake?
-- What about objects exported to the lake but not through the Generic Pipeline (custom exports)?
+- What about objects exported to the lake but not through the Generic Pipeline (custom exports)? → Note if discovered but don't actively hunt. Generic Pipeline mapping view is the primary source.
+
+## Clarifications
+
+### Session 2026-03-01
+
+- Q: What format does the coverage matrix output take? → A: Markdown report in `knowledge/` (cross-cutting audit artifact, not a single-object wiki file). Human-readable, git-diffable, and directly consumable by the AI agent.
+- Q: Are non-Generic Pipeline exports (custom ADF, manual) in scope? → A: Note but don't hunt. Generic Pipeline mapping view is the primary source. If custom exports are discovered, note them.
+- Q: What is the full purpose of the coverage matrix beyond gap analysis? → A: Three purposes: (1) gap analysis, (2) target map for metadata push (specs 005/007), (3) scope map for the future Databricks/Lake knowledge layer — the lake has its own notebooks, Spark pipelines, and Delta transformations that will need knowledge analysis. The complete vision is all knowledge files live in Databricks agent folders for query routing across all layers.
 
 ## Requirements
 
@@ -65,7 +73,7 @@ As a data knowledge engineer, I need to know which lake objects are registered i
 - **FR-001**: System MUST extract all Generic Pipeline export configurations (source, target, schedule)
 - **FR-002**: System MUST compare production inventory against lake inventory to identify gaps
 - **FR-003**: System MUST query Unity Catalog to determine registration status of lake objects
-- **FR-004**: System MUST produce a coverage matrix: production object -> lake status -> UC status -> refresh schedule
+- **FR-004**: System MUST produce a coverage matrix as a Markdown report in `knowledge/` (e.g., `knowledge/coverage-matrix.md`): production object -> lake status -> UC status -> refresh schedule
 - **FR-005**: System MUST categorize gaps (intentional exclusion, not configured, unknown)
 
 ### Key Entities

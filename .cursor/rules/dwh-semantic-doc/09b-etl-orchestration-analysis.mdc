@@ -1,0 +1,113 @@
+---
+description: Phase 9B - ETL Orchestration Analysis for DWH Semantic Documentation. Maps refresh schedules, SP execution order, and ETL dependencies. Replaces the production pipeline's Application Code Analysis since DWH SPs are ETL, not app-called.
+globs:
+alwaysApply: false
+---
+
+# Phase 9B: ETL Orchestration Analysis
+
+## Purpose
+
+DWH stored procedures are ETL processes, not application-called code. Instead of tracing C# call sites (as the production pipeline does), this phase maps:
+- **Refresh schedules**: How often is this table refreshed?
+- **ETL dependencies**: Which tables must be loaded before this one?
+- **Execution order**: What is the sequence of SP calls in the ETL pipeline?
+- **Data freshness**: What is the typical lag between production and DWH?
+
+## Prerequisites
+
+- Phase 8 (Procedure Reference Scan) complete - need WRITER procedure list
+- Phase 9 (Procedure Logic Extraction) complete - need source tables identified
+
+## Algorithm
+
+### Step 1: Identify ETL Dependencies
+
+From Phase 9's source-to-target mapping, build a dependency graph:
+
+```
+dim_position depends on:
+  <- stg_position (staging table, loaded from lake)
+  <- dim_instrument (dimension lookup, must be current)
+  <- dim_customer (dimension lookup, must be current)
+```
+
+### Step 2: Search for Orchestration Metadata
+
+Check if there are orchestration/scheduling tables in Synapse:
+
+```sql
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME LIKE '%schedule%'
+   OR TABLE_NAME LIKE '%job%'
+   OR TABLE_NAME LIKE '%etl%'
+   OR TABLE_NAME LIKE '%pipeline%'
+   OR TABLE_NAME LIKE '%log%'
+ORDER BY TABLE_SCHEMA, TABLE_NAME
+```
+
+If an ETL log table exists, query it for the target table's refresh history:
+
+```sql
+SELECT TOP 20 *
+FROM [{Schema}].[{ETLLogTable}]
+WHERE [{TableNameColumn}] LIKE '%{TableName}%'
+ORDER BY [{DateColumn}] DESC
+```
+
+### Step 3: Infer Refresh Pattern from Data
+
+If no orchestration metadata is available, infer from the data:
+
+```sql
+SELECT
+    MAX([{ModifiedDateColumn}]) AS LastModified,
+    DATEDIFF(HOUR, MAX([{ModifiedDateColumn}]), GETDATE()) AS HoursStale
+FROM [{Schema}].[{Table}]
+```
+
+### Step 4: Map SP Call Chain
+
+If the WRITER SP calls other SPs:
+
+```sql
+SELECT definition FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{Schema}.{WriterProcName}')
+```
+
+Search the definition for `EXEC` or `EXECUTE` calls to other procedures.
+
+### Step 5: Document ETL Context
+
+```
+ETL ORCHESTRATION:
+  Loader SP: {Schema}.{ProcName}
+  Frequency: {Hourly / Daily / On-demand / Unknown}
+  Load Pattern: {Full / Incremental / Merge}
+  Dependencies: {list of tables that must be loaded first}
+  Typical Lag: {N hours behind production}
+  Last Refresh: {timestamp from data}
+```
+
+## Output Format
+
+```
+PHASE 9B RESULTS - {Schema}.{Table}
+=============================================
+ETL Chain:
+  Production -> Lake (Generic Pipeline) -> Staging -> {Schema}.{Table}
+
+Refresh Pattern:
+  Frequency: {Hourly / Daily / Unknown}
+  Load SP: {Schema}.{ProcName}
+  Dependencies: {N} upstream tables
+  Typical Lag: {N} hours
+
+Dependency Graph:
+  {Table} <- {Source1} <- {Source2 (production)}
+```
+
+## Completion
+
+Mark `[x] Phase 9B: ETL Orchestration Analysis` in the checklist.

@@ -1,0 +1,109 @@
+---
+description: Phase 7 - View Dependency Scan for DWH Semantic Documentation. Maps all views referencing a table and traces the dependency chain using Synapse metadata.
+globs:
+alwaysApply: false
+---
+
+# Phase 7: View Dependency Scan
+
+## Purpose
+
+Many stored procedures access tables **through views**, not directly. This phase traces the complete dependency chain: Table -> Views -> Procedures, using Synapse metadata views instead of repo file searches.
+
+## Algorithm
+
+### Step 1: Find Views Referencing This Table
+
+```sql
+SELECT
+    OBJECT_SCHEMA_NAME(d.referencing_id) AS view_schema,
+    OBJECT_NAME(d.referencing_id) AS view_name
+FROM sys.sql_expression_dependencies d
+JOIN sys.objects o ON d.referencing_id = o.object_id
+WHERE d.referenced_schema_name = '{Schema}'
+  AND d.referenced_entity_name = '{TableName}'
+  AND o.type = 'V'
+ORDER BY view_name
+```
+
+### Step 2: Read and Classify Each View
+
+For each view found, read its definition:
+
+```sql
+SELECT definition FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{ViewSchema}.{ViewName}')
+```
+
+Classify:
+
+| View Type | Description |
+|-----------|-------------|
+| WRAPPER | Simple SELECT * or most columns |
+| FILTER | Adds WHERE condition |
+| JOIN | Combines multiple tables |
+| AGGREGATE | Uses GROUP BY |
+| UNION | Combines multiple sources |
+| COMPUTED | Adds calculated columns |
+
+### Step 3: Find Procedures That Use Each View
+
+```sql
+SELECT
+    OBJECT_SCHEMA_NAME(d.referencing_id) AS proc_schema,
+    OBJECT_NAME(d.referencing_id) AS proc_name
+FROM sys.sql_expression_dependencies d
+JOIN sys.objects o ON d.referencing_id = o.object_id
+WHERE d.referenced_schema_name = '{ViewSchema}'
+  AND d.referenced_entity_name = '{ViewName}'
+  AND o.type = 'P'
+```
+
+### Step 4: Check for Nested Views
+
+```sql
+SELECT
+    OBJECT_SCHEMA_NAME(d.referencing_id) AS nested_view_schema,
+    OBJECT_NAME(d.referencing_id) AS nested_view_name
+FROM sys.sql_expression_dependencies d
+JOIN sys.objects o ON d.referencing_id = o.object_id
+WHERE d.referenced_schema_name = '{ViewSchema}'
+  AND d.referenced_entity_name = '{ViewName}'
+  AND o.type = 'V'
+```
+
+### Step 5: Build Dependency Chain
+
+```
+[Table] dbo.dim_position
+  |-- [View] dbo.vw_open_positions (FILTER: StatusID=1)
+  |    |-- [Proc] bi_db.sp_refresh_position_summary
+  |    |-- [Proc] dealing.sp_get_active_positions
+  |-- [View] dbo.vw_position_with_instrument (JOIN)
+  |    |-- [Proc] bi_db.sp_position_report
+  |-- [Direct] dealing.sp_load_dim_position (WRITER)
+```
+
+## Output Format
+
+```
+PHASE 7 RESULTS - [Schema].[Table]
+====================================
+Views Referencing This Table:
+
+1. {Schema}.{ViewName} ({VIEW_TYPE})
+   Consumers: {N} procedures
+   Main abstraction: YES/NO
+
+Dependency Chain Diagram:
+  [see Step 5 format]
+
+Total Consumer Reach:
+  Direct procedures: {N}
+  Via views: {N}
+  TOTAL: {N} procedures
+```
+
+## Completion
+
+Mark `[x] Phase 7: View Dependency Scan` in the checklist.

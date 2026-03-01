@@ -1,0 +1,232 @@
+---
+description: Phase 11 - Generate Documentation for DWH Semantic Documentation. Query-brain template focused on analyst and business user consumption, NOT DBA code review.
+globs:
+alwaysApply: false
+---
+
+# Phase 11: Generate Documentation
+
+## Goal
+
+Any AI assistant or analyst reading this document MUST be able to:
+- **Understand** what the table represents in the business
+- **Query it** effectively with the right JOINs and filters
+- **Interpret** every column value in business terms (no raw IDs left unexplained)
+- **Trace** where the data comes from (production lineage)
+- **Avoid** performance pitfalls (distribution keys, large scans)
+
+This is NOT a code review document. It's a **query brain** -- the knowledge an expert analyst would have after years of working with this data.
+
+## Prerequisites
+
+ALL applicable phases must be complete before generating.
+
+## Pre-Read: Cross-Object Knowledge
+
+Before generating, execute the Pre-Read step from `12-cross-object-enrichment.mdc`:
+1. Collect all related objects discovered in earlier phases
+2. Check if any already have `.md` docs in `knowledge/synapse/Wiki/`
+3. Read existing docs and extract: element descriptions, value maps, relationships
+4. Use absorbed knowledge for consistency across docs
+
+## Output Path
+
+```
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md
+```
+
+Object type folders: `Tables/`, `Views/`, `Stored Procedures/`, `Functions/`
+
+## STRICT RULES
+
+1. **Use the query-brain template below** for ALL object types
+2. **Copy the template EXACTLY** -- do not change section names, numbering, or order
+3. **No environment-specific statistics** -- no row counts, percentages, date ranges
+4. **DO include lookup value mappings** -- these define the system
+5. **DO include query advisory** -- this is the core differentiator
+6. **Every `{PLACEHOLDER}` must be replaced** with real content
+7. **If a section does not apply**, write "N/A for {object type}." -- do NOT remove the section
+8. **Elements table must list EVERY element** -- no skipping, no grouping
+9. **CODE IS KING** -- when sources conflict, the hierarchy is: upstream wiki > Synapse live code > live data > metadata > Confluence/Jira. The upstream wiki has already gone through strict code-is-king analysis on production sources and is our authoritative starting point. Synapse code wins only for DWH-specific transformations and derived columns. If Phase 2 sampling found 5 enum values but Confluence documents only 3, include all 5 and note the undocumented ones. Confluence provides business meaning and intent; upstream wiki and Synapse code/data provide truth.
+
+---
+
+## QUERY-BRAIN TEMPLATE
+
+Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
+
+````markdown
+# {Schema}.{ObjectName}
+
+> {One-sentence business description: what this object represents or does in plain English}
+
+| Property | Value |
+|----------|-------|
+| **Schema** | {Schema} |
+| **Object Type** | {Table / View / Stored Procedure / Function} |
+| **Distribution** | {HASH(column) / ROUND_ROBIN / REPLICATE / N/A} |
+| **Index Type** | {CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP / N/A} |
+| **Production Source** | {Production table name or "Derived" or "Multiple sources"} |
+| **Refresh** | {Hourly / Daily / Real-time / Unknown} |
+
+---
+
+## 1. Business Meaning
+
+{Paragraph 1: WHAT this object represents in the business. Explain it as if talking to an analyst who knows SQL but not this specific dataset. What real-world concept does it model? What question does it answer?}
+
+{Paragraph 2: WHERE this data comes from. Trace the lineage: production source table -> lake export -> Synapse ETL -> this table. Reference the upstream production wiki if applicable: "Source: `Trade.PositionTbl` (see upstream wiki: Trade/Tables/Trade.PositionTbl.md)"}
+
+{Paragraph 3: HOW FRESH is this data and how is it loaded. ETL procedure name, load pattern (full/incremental/merge), refresh frequency, typical lag behind production.}
+
+---
+
+## 2. Business Logic
+
+{For EACH business concept discovered in Phases 6, 9, and 10, create a numbered subsection.}
+
+### 2.1 {Concept Name}
+
+**What**: {One sentence: what business concept this represents}
+
+**Columns Involved**: `{Column1}`, `{Column2}`, `{Column3}`
+
+**Rules**:
+- {Rule 1: plain English description}
+- {Rule 2: what specific values mean in combination}
+
+**Diagram**:
+```
+{ASCII diagram showing the relationship, hierarchy, state machine, or flow}
+```
+
+---
+
+## 3. Query Advisory
+
+{THIS IS THE KEY DIFFERENTIATOR from the production pipeline output. This section tells analysts HOW to use the table effectively.}
+
+### 3.1 Distribution Key
+
+{Distribution column and what it means for query performance. E.g., "This table is HASH-distributed on `PositionID`. Always include `PositionID` in JOINs or WHERE clauses for optimal performance. Queries that filter only on `CID` will scan all distributions."}
+
+### 3.2 Common Query Patterns
+
+{List the 3-5 most common ways analysts query this table, with recommended approaches.}
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| {e.g., "All open positions for a customer"} | {e.g., "Filter StatusID = 1 AND CID = @cid"} |
+| {e.g., "Position P&L for a date range"} | {e.g., "JOIN with fact_pnl on PositionID, filter on date"} |
+
+### 3.3 Common JOINs
+
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| {Schema.Table} | {ON condition} | {Why you'd join} |
+
+### 3.4 Gotchas
+
+{Things that trip up analysts:}
+- {e.g., "StatusID=2 means 'Being Closed' -- a brief transitional state. For 'closed', look in the history table."}
+- {e.g., "TreeID = PositionID means root position. TreeID != PositionID means copy-trade child."}
+- {e.g., "MirrorID = 0 means manually opened. MirrorID > 0 means copy-trade."}
+
+---
+
+## 4. Elements
+
+{EVERY column with a clear, meaningful description. No raw IDs left unexplained.}
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| {n} | {Name} | {SQL data type} | {YES / NO} | {MEANINGFUL business description. For ID columns: include the resolved value map: "Position state: 1=Open, 2=Closed (from Dictionary.PositionStatus)". For amounts: include units. For dates: explain when set. For flags: explain both values.} |
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources
+
+| Synapse Column | Production Source | Source Column | Transform |
+|---------------|-------------------|---------------|-----------|
+| {Col} | {Production Schema.Table} | {Source Col} | {None / Expression / CASE mapping} |
+
+{Link to upstream wiki: "Full production documentation: see upstream wiki {path} (source configured in dwh-semantic-doc-config.json)"}
+
+### 5.2 ETL Pipeline
+
+```
+{Production Table} -> Generic Pipeline (lake export) -> {Staging Table} -> {ETL SP} -> {This Table}
+```
+
+| Step | Object | Description |
+|------|--------|-------------|
+| Source | {Production.Table} | {Production table description} |
+| Lake | {Lake path if known} | {Export frequency} |
+| Staging | {Staging table} | {Raw import} |
+| ETL | {SP name} | {Transformations applied} |
+| Target | {This table} | {Final DWH table} |
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)
+
+| Element | Related Object | Description |
+|---------|---------------|-------------|
+| {Col} | {Schema.Object} | {Business meaning of the relationship} |
+
+### 6.2 Referenced By (other objects point to this)
+
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| {Schema.Object} | {Col} | {Business meaning} |
+
+---
+
+## 7. Sample Queries
+
+{Three practical queries that analysts would actually use. Each query should answer a real business question.}
+
+### 7.1 {Business question as title}
+```sql
+{Practical query answering this question}
+```
+
+### 7.2 {Business question as title}
+```sql
+{Another useful query}
+```
+
+### 7.3 {Business question with JOINs resolving IDs to names}
+```sql
+{A JOIN query that resolves IDs to human-readable names}
+```
+
+---
+
+## 8. Atlassian Knowledge Sources
+
+| Source | Type | Key Knowledge Extracted |
+|--------|------|------------------------|
+| [{Page title or ticket key}]({URL}) | {Confluence / Jira} | {One-sentence summary} |
+
+{If Phase 10 found nothing, write "No Atlassian sources found for this object."}
+
+---
+
+*Generated: {YYYY-MM-DD} | Object: {Schema}.{ObjectName} | Type: {Object Type} | Phases: {N}/{Total}*
+*Production Source: {Production table path or "N/A"}*
+````
+
+---
+
+## Post-Generation
+
+1. **Update `_semantic_index.md`**: Map business concepts from Sections 2 and 3 to this object
+
+## Completion
+
+Mark `[x] Phase 11: Documentation Generated` in the checklist.

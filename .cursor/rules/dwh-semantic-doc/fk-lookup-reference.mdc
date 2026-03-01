@@ -1,0 +1,81 @@
+---
+description: FK Lookup Reference for DWH Semantic Documentation. Common column-to-table mappings inherited from the production knowledge base, adapted for Synapse DWH context.
+globs:
+alwaysApply: false
+---
+
+# Foreign Key Lookup Reference (DWH)
+
+## How This Works in Synapse
+
+Synapse has NO enforced FK constraints. All relationships are implicit. This reference maps common column naming patterns to their production lookup tables, which may exist in Synapse (replicated) or only in the upstream production wiki.
+
+## Resolution Priority
+
+1. **Start from upstream wiki** (authoritative): Read the upstream wiki file for the Dictionary table (path from config: `{upstream_repo_path}/{upstream_wiki_path}/Dictionary/Tables/Dictionary.{TableName}.md`). The upstream wiki has already validated these mappings through the full code-is-king pipeline on production sources.
+2. **Check upstream FK reference**: The FK reference from the production pipeline has the complete 313-table dictionary list (path from config: `{upstream_repo_path}/{fk_lookup_reference}`)
+3. **Verify/supplement from Synapse**: The lookup table may be replicated to DWH. Query it to catch any new values added since the upstream wiki was generated.
+
+## Common Column -> Lookup Table Mappings
+
+### High-Priority Lookups (Used in most DWH tables)
+
+| Column Pattern | Production Lookup Table | Key Column | Name Column |
+|----------------|------------------------|------------|-------------|
+| `CID` | Customer.Customer | CID | (join CustomerStatic for name) |
+| `InstrumentID` | Trade.Instrument + Trade.InstrumentMetaData | InstrumentID | InstrumentDisplayName |
+| `CountryID` | Dictionary.Country | CountryID | Name |
+| `CurrencyID` | Dictionary.Currency | CurrencyID | Name |
+| `CreditTypeID` | Dictionary.CreditType | CreditTypeID | Name |
+| `StatusID` | Context-dependent (see below) | varies | Name |
+
+## Context-Based StatusID Resolution
+
+| DWH Table Contains | Lookup Table |
+|-------------------|-------------|
+| Position data | Dictionary.PositionStatus |
+| Mirror/copy data | Dictionary.MirrorStatus |
+| Customer data | Dictionary.PlayerStatus |
+| Deposit data | Dictionary.PaymentStatus |
+| Withdrawal data | Dictionary.CashoutStatus |
+| Order data | Dictionary.OrdersActionType |
+
+## DWH-Specific Patterns
+
+DWH tables may have columns that don't exist in production:
+
+| Column Pattern | Likely Source |
+|---------------|-------------|
+| `*_src` | Original production value before transformation |
+| `*_dwh` | DWH-computed/transformed value |
+| `etl_*`, `dwh_*` | ETL metadata (load date, batch ID, source system) |
+| `is_current` | SCD Type 2 flag (1=current record, 0=historical) |
+| `valid_from`, `valid_to` | SCD Type 2 date range |
+
+## Name Column Detection
+
+Try these column names in order:
+1. `Name`
+2. `[TableName]Name`
+3. `DisplayName`
+4. `Description`
+5. `Title`
+
+## Auto-Discovery in Synapse
+
+When no mapping exists, search Synapse metadata:
+
+```sql
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME LIKE '%{ColumnNameWithoutID}%'
+ORDER BY TABLE_SCHEMA, TABLE_NAME
+```
+
+Also check if a dimension table exists with the matching name:
+```sql
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_NAME LIKE 'dim_%{ColumnNameWithoutID}%'
+ORDER BY TABLE_SCHEMA, TABLE_NAME
+```

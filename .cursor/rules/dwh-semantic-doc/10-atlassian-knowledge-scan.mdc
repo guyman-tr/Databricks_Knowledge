@@ -1,0 +1,118 @@
+---
+description: Phase 10 - Atlassian Knowledge Scan for DWH Semantic Documentation. Searches Jira and Confluence for business context AFTER all code analysis is complete. Adapted from the production pipeline's Phase 10 with DWH-specific search patterns.
+globs:
+alwaysApply: false
+---
+
+# Phase 10: Atlassian Knowledge Scan
+
+## Goal
+
+Extract business meaning, logic, column descriptions, architecture context, and change history from Jira and Confluence to **enrich** the DWH object's documentation. Runs AFTER all code/data analysis (Phases 1-9B) so every claim can be validated.
+
+## CRITICAL: Atlassian is a "Hint Provider", NOT a "Truth Provider"
+
+The upstream semantic wiki and Synapse code/data are the sources of truth for technical details. Atlassian is authoritative ONLY for:
+- Business meaning (what something represents, why it exists)
+- Architecture context (how it fits in the data platform)
+- Change history reasons (why a column was added)
+- Business rules (constraints enforced outside the database)
+
+## Prerequisites
+
+- Phases 1-9B MUST be complete
+- Atlassian MCP must be connected
+
+## Step 1: Get Cloud ID
+
+```
+getAccessibleAtlassianResources({})
+-> Extract cloudId
+```
+
+## Step 2: Search for DWH-Specific Content
+
+### Query 1 - Full qualified name:
+```
+search({ query: "{Schema}.{ObjectName}" })
+```
+
+### Query 2 - DWH table name:
+```
+search({ query: "{ObjectName} synapse" })
+```
+
+### Query 3 - Production source name (for lineage context):
+If Phase 9 identified production source tables, search for those too:
+```
+search({ query: "{ProductionTableName} DWH" })
+```
+
+### Query 4 - Business entity:
+```
+search({ query: "{EntityName} data warehouse" })
+```
+
+## Step 3: Rank Results
+
+| Result Type | Priority |
+|------------|----------|
+| Confluence page titled with DWH object name | CRITICAL |
+| Data Platform architecture/flow doc | HIGH |
+| ETL design doc mentioning this table | HIGH |
+| BI/Analytics doc explaining column meanings | MEDIUM |
+| Jira ticket for DWH schema changes | MEDIUM |
+| Production-focused docs (covered by upstream wiki) | LOW (already have via upstream knowledge) |
+
+## Step 4: Fetch and Validate
+
+For CRITICAL/HIGH results, fetch full content:
+```
+getConfluencePage({ cloudId: "{cloudId}", pageId: "{pageId}", contentFormat: "markdown" })
+```
+
+### Validation Rules — CODE IS KING
+
+**Constitution Principle II applies here.** Atlassian content is a hint provider, not a truth provider. Confluence pages go stale the moment someone adds a new enum value or changes a CASE expression. The collision resolution hierarchy is absolute:
+
+1. Upstream semantic wikis — already validated through strict code-is-king analysis on production
+2. Live code (Synapse SP/view definitions from `sys.sql_modules`) — Synapse-layer ground truth
+3. Live data (sampling results from Phase 2) — empirical evidence
+4. Metadata views (Phase 1 structure) — structural truth
+5. **Confluence / Jira — intent and context, frequently stale** ← you are here
+
+**Recency tiebreaker:** When multiple Atlassian sources exist at the same confidence level, prefer the most recently updated one. A 2025 page outweighs a 2021 page. Always note the source date in the output.
+
+Every Atlassian fact is classified against earlier phase evidence:
+
+| Level | Criteria | Action |
+|-------|----------|--------|
+| **HIGH** | Confirmed by Synapse metadata or SP code from earlier phases | Include as validated fact |
+| **MEDIUM** | Plausible but not verifiable from code — adds business context | Include with `[Source: Confluence]` attribution |
+| **LOW** | Contradicts code evidence, or document is old and likely stale | Use for business meaning only; flag as "historical context, verify against live data" |
+| **DISCARD** | References objects/values that don't exist in current metadata | Drop entirely |
+
+**Example**: A Confluence page says `SettlementTypeID` has values {0=CFD, 1=Real, 2=TRS}. Phase 2 sampling found values {0, 1, 2, 3, 4}. The sampled values are authoritative. The Confluence page is cited as historical context, and the undocumented values 3 and 4 are flagged for investigation via code analysis.
+
+## Step 5: Organize Output
+
+```
+ATLASSIAN KNOWLEDGE SUMMARY - {Schema}.{ObjectName}
+==================================================
+Confluence pages: {N} (list titles + URLs)
+Jira issues: {N} (list keys + summaries)
+
+HIGH confidence facts: {N}
+MEDIUM confidence facts: {N}
+Discarded facts: {N}
+
+OBJECT MEANING (validated):
+{Combined business purpose}
+
+ELEMENT MEANINGS (validated):
+| Element | Source | Confidence | Business Meaning |
+```
+
+## Completion
+
+Mark `[x] Phase 10: Atlassian Knowledge Scan` in the checklist.

@@ -1,0 +1,107 @@
+---
+description: Phase 6 - Business Logic Discovery for DWH Semantic Documentation. Analyzes column groups, hierarchies, self-references, and data clusters to extract business meaning.
+globs:
+alwaysApply: false
+---
+
+# Phase 6: Business Logic Discovery
+
+## Purpose
+
+Individual columns don't tell the story -- **combinations do**. This phase discovers the business meaning behind groups of related columns by analyzing data patterns, self-references, and hierarchies.
+
+## Prerequisites
+
+- Phase 1 (Structure Analysis) complete - column structure
+- Phase 2 (Live Data) complete - sample data
+- Phase 3 (Distribution) complete - value patterns
+- MCP connection active
+
+## Sub-Phase 1: Identify Related Column Groups
+
+Scan all columns for groups that work together:
+
+| Pattern | Columns to Group | Business Concept |
+|---------|-----------------|------------------|
+| `*ID + Parent*ID + Tree*ID` | PositionID, ParentPositionID, TreeID | Hierarchy/Tree |
+| `*ID + Mirror*ID` | PositionID, MirrorID | Copy/Replication |
+| `Init* + End*` | InitRate, EndRate; InitAmount, EndAmount | Lifecycle (open->close) |
+| `*Amount + *Units + *Lot*` | Amount, Units, LotCount | Financial quantity set |
+| `*Rate + *RateID` | Rate, RateSourceID | Price with source |
+| `*Date + *By` | CreatedDate, CreatedBy | Audit pair |
+| `Is* + *Date` | IsClosed, CloseDate | State + timestamp |
+| `*_src + *_dwh` | Column_src, Column_dwh | ETL transformation pair |
+
+## Sub-Phase 2: Self-Reference Pattern Detection
+
+For each column that could reference the same table's PK:
+
+```sql
+SELECT COUNT(*) AS SelfRefCount
+FROM [{Schema}].[{Table}]
+WHERE [{Column}] = [{PKColumn}]
+```
+
+### Common Self-Reference Meanings
+
+| Pattern | Query | Meaning |
+|---------|-------|---------|
+| `TreeID = PositionID` | Count where equal | ROOT of a tree/hierarchy |
+| `ParentPositionID = 0` or `= 1` | Count where 0 or 1 | No parent (root/manual) |
+| `MirrorID = 0` | Count where 0 | Not a copy (manual action) |
+
+## Sub-Phase 3: Data Cluster Analysis
+
+Find groups of rows sharing same value to discover business groupings:
+
+```sql
+SELECT [{GroupColumn}],
+       COUNT(*) AS Total,
+       COUNT(DISTINCT [{RelatedCol1}]) AS Distinct1,
+       COUNT(DISTINCT [{RelatedCol2}]) AS Distinct2
+FROM [{Schema}].[{Table}]
+GROUP BY [{GroupColumn}]
+HAVING COUNT(*) > 1
+ORDER BY COUNT(*) DESC
+```
+
+## Sub-Phase 4: Business Scenario Synthesis
+
+Combine findings from sub-phases 1-3 into plain English:
+
+```
+BUSINESS CONCEPT: [Name]
+
+WHAT: [One sentence description]
+
+HOW IT WORKS:
+- [Column A] does [X]
+- [Column B] does [Y]
+- Together they represent [business concept]
+
+STATES:
+- [State 1]: When [Column] = [Value], it means [business meaning]
+- [State 2]: When [Column] = [Value], it means [business meaning]
+```
+
+## Sub-Phase 5: Generate Visual Diagram
+
+Create ASCII diagrams showing discovered relationships.
+
+## Output Format
+
+```
+PHASE 6 RESULTS - [Schema].[Table]
+====================================
+Business Concepts Discovered:
+
+1. [Concept Name]
+   Columns: [list]
+   Description: [plain English]
+   Evidence: [data query results]
+   Diagram: [ASCII art]
+```
+
+## Completion
+
+Mark `[x] Phase 6: Business Logic Discovery` in the checklist.

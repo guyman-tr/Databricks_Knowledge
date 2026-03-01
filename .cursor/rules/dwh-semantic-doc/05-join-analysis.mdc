@@ -1,0 +1,117 @@
+---
+description: Phase 5 - JOIN Analysis for DWH Semantic Documentation. PRIMARY method for discovering implicit relationships by analyzing JOINs in Synapse SPs, views, and functions.
+globs:
+alwaysApply: false
+---
+
+# Phase 5: JOIN Analysis (PRIMARY Relationship Discovery Method)
+
+## Purpose
+
+Discover implicit relationships between tables by analyzing JOIN conditions in stored procedures, views, and functions. This is the **most reliable method** because Synapse has NO enforced FK constraints -- all relationships are implicit in code.
+
+## Prerequisites
+
+- Phase 1 (Structure Analysis) complete - need column list
+- Phase 4 (Lookup Resolution) complete - need list of UNRESOLVED ID columns
+- MCP connection active
+
+## Input
+
+List of ID columns that were NOT resolved in Phase 4.
+
+## Algorithm
+
+### Step 1: Find All Objects Referencing This Table
+
+Query Synapse metadata for all objects that reference the target table:
+
+```sql
+SELECT
+    OBJECT_SCHEMA_NAME(d.referencing_id) AS referencing_schema,
+    OBJECT_NAME(d.referencing_id) AS referencing_name,
+    o.type_desc AS referencing_type
+FROM sys.sql_expression_dependencies d
+JOIN sys.objects o ON d.referencing_id = o.object_id
+WHERE d.referenced_schema_name = '{Schema}'
+  AND d.referenced_entity_name = '{TableName}'
+ORDER BY o.type_desc, referencing_name
+```
+
+### Step 2: Read SQL Definitions of Referencing Objects
+
+For each referencing object, read its SQL definition:
+
+```sql
+SELECT definition
+FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{RefSchema}.{RefName}')
+```
+
+### Step 3: Extract JOIN Conditions
+
+From the SQL text, identify:
+
+| Result Pattern | Extraction |
+|---------------|------------|
+| `a.Col = b.Col` in JOIN | Related table = table aliased as `b` |
+| `Col = 1 --REAL` | Value meaning: 1 = REAL |
+| `IIF(Col=5, special)` | Business logic for value 5 |
+| `CASE WHEN Col = value THEN 'label'` | Value mapping |
+
+### Step 4: Search for Lookup Patterns in SP Code
+
+For each unresolved ID column, search all SP definitions for patterns:
+
+```sql
+SELECT OBJECT_SCHEMA_NAME(object_id) AS sp_schema,
+       OBJECT_NAME(object_id) AS sp_name,
+       definition
+FROM sys.sql_modules
+WHERE definition LIKE '%{ColumnName}%'
+  AND OBJECT_SCHEMA_NAME(object_id) IN ('dbo','dealing','bi_db','exw','emoney')
+```
+
+From results, look for JOIN conditions that reveal the lookup table.
+
+### Step 5: All-Column Usage Analysis
+
+For EVERY column (especially BIT/flag/tinyint columns), search SP code for usage patterns:
+
+**Function Call Discovery**: Search for columns being passed to functions -- function names reveal meaning.
+
+**CASE/IIF Patterns**: Find `CASE WHEN Col = value THEN 'label'` -- reveals value mappings.
+
+**Code Comments**: Find inline comments near column usage -- developers annotate true meanings.
+
+### Step 6: Document Value Meanings from Code
+
+```
+SettlementTypeID discovered meanings:
+  From code comments:  1 = REAL
+  From IIF conditions:  5 = MARGIN_TRADE
+  From JOIN:           joins to a lookup table
+```
+
+## Output Format
+
+```
+PHASE 5 RESULTS - [Schema].[Table]
+====================================
+Relationships Discovered via JOIN Analysis:
+  SettlementTypeID:
+    Related: joins to lookup in SP {name}
+    Values: {0=CFD, 1=Real, ...}
+
+All-Column Usage Analysis:
+  IsSettled (BIT):
+    Code comments: "CFD positions (IsSettled=0), REAL positions (IsSettled=1)"
+    VERIFIED MEANING: 1 = Real stock position, 0 = CFD
+
+Still Unresolved:
+  [List any columns still without known relationship]
+```
+
+## Completion
+
+Mark `[x] Phase 5: JOIN Analysis` in the checklist.

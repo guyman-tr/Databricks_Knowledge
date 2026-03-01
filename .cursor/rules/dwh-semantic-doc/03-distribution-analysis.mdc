@@ -1,0 +1,95 @@
+---
+description: Phase 3 - Distribution Analysis via Synapse MCP for DWH Semantic Documentation. Analyzes value distributions to identify enums, flags, and patterns. Also captures Synapse table distribution strategy.
+globs:
+alwaysApply: false
+---
+
+# Phase 3: Distribution Analysis
+
+## Purpose
+
+Analyze value distributions for numeric columns to identify enum-like values, status codes, flags, and dominant patterns. Also capture the Synapse table distribution strategy which is critical for query advisory.
+
+## Prerequisites
+
+- Phase 1 (Structure Analysis) complete - need column list
+- Phase 2 (Live Data Sampling) complete - need row count for context
+- MCP connection active
+
+## Part A: Value Distribution Analysis
+
+### Target Columns
+
+Analyze EVERY column with these data types:
+- `INT`, `BIGINT`, `SMALLINT`, `TINYINT`
+- `BIT`
+- `DECIMAL`/`NUMERIC` with scale=0 (integer-like)
+
+### Query Template
+
+```sql
+SELECT [{Column}], COUNT(*) AS [Count]
+FROM [{Schema}].[{Table}]
+GROUP BY [{Column}]
+ORDER BY [Count] DESC
+```
+
+For columns with high cardinality (> 100 distinct values), use:
+```sql
+SELECT TOP 20 [{Column}], COUNT(*) AS [Count]
+FROM [{Schema}].[{Table}]
+GROUP BY [{Column}]
+ORDER BY [Count] DESC
+```
+
+### Distribution Classification Rules
+
+| Pattern | Classification | Meaning |
+|---------|---------------|---------|
+| 2 values only | Boolean/Flag | True/False, Yes/No, Active/Inactive |
+| 3-20 distinct values | Enum/Status/Type | Lookup table likely exists (in production) |
+| 1 value has 95%+ of rows | Default with exceptions | The dominant value is the "normal" state |
+| Even distribution | ID/Key | References to another table |
+| NULL dominant (90%+) | Optional/Conditional | Only populated in specific scenarios |
+| 0 and 1 only | Boolean stored as INT | Should be BIT but isn't |
+| Negative values present | Signed indicator | Negative may mean reversal/credit |
+
+### Cross-Reference with Column Names
+
+| Column Name Pattern | Expected Distribution |
+|--------------------|-----------------------|
+| `*StatusID` | Enum (3-15 values) |
+| `*TypeID` | Enum (5-30 values) |
+| `Is*`, `Has*`, `Can*` | Boolean (2 values) |
+| `*Count`, `*Quantity` | Numeric range |
+| `*Amount`, `*Rate` | Decimal range |
+| `*CID`, `*UserID` | High cardinality FK |
+
+## Part B: Synapse Distribution Strategy
+
+Already captured in Phase 1, but record it here for query advisory:
+
+| Distribution Type | Query Advisory |
+|-------------------|---------------|
+| HASH(column) | Always filter/join on the distribution column for best performance |
+| ROUND_ROBIN | No distribution advantage; any column works for filters |
+| REPLICATE | Small table replicated to all nodes; JOINs are fast regardless of column |
+
+## Output Format
+
+```
+PHASE 3 RESULTS - [Schema].[Table]
+====================================
+Column Distributions:
+  StatusID: 5 values [1=45%, 2=30%, 3=15%, 4=8%, 5=2%] -> ENUM (lookup needed)
+  IsBuy: 2 values [1=52%, 0=48%] -> BOOLEAN (Buy/Sell flag)
+  InstrumentID: 1,247 distinct -> FK (high cardinality)
+
+Synapse Distribution:
+  Type: HASH(PositionID)
+  Advisory: Filter/JOIN on PositionID for optimal query performance
+```
+
+## Completion
+
+Mark `[x] Phase 3: Distribution Analysis` in the checklist.

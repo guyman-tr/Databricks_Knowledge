@@ -1,0 +1,128 @@
+---
+description: Phase 9 - Procedure Logic Extraction for DWH Semantic Documentation. Reads the top 10 most important procedures deeply to extract column assignments, business logic, and ETL transformation knowledge.
+globs:
+alwaysApply: false
+---
+
+# Phase 9: Procedure Logic Extraction
+
+## Purpose
+
+Procedures define the **lifecycle** of every column -- what values go in when, what changes when, and why. In the DWH context, these are primarily ETL procedures that load and transform data from production sources. This phase reads the actual procedure code to extract that knowledge.
+
+## Prerequisites
+
+- Phase 8 (Procedure Reference Scan) complete - need the categorized procedure list
+
+## Input
+
+The top 10 most important procedures from Phase 8:
+1. **WRITERS/ETL** (all, up to cap) - they define how data enters and transforms
+2. **MODIFIERS** (all, up to cap) - they define incremental updates
+3. **Key READERS** (fill remaining) - they reveal what queries the system needs
+
+## Algorithm
+
+### Step 1: Read Procedure Code from Synapse
+
+```sql
+SELECT definition FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{Schema}.{ProcName}')
+```
+
+### Step 2: Extract Column Assignments (for WRITERS/ETL)
+
+For each INSERT/CTAS statement:
+```
+Record for each column:
+  Column: {ColumnName}
+  Value Source:
+    - Source table column -> "FROM {SourceSchema}.{SourceTable}.{SourceColumn}"
+    - Expression -> "Calculated: {expression}"
+    - CASE/IIF -> "Conditional: {condition} -> {value1}, ELSE -> {value2}"
+    - Literal -> "Hard-coded to {value}"
+    - NULL -> "Initially NULL"
+```
+
+### Step 3: Extract Transformation Logic
+
+DWH procedures often contain significant transformation logic:
+- **Aggregations**: SUM, AVG, COUNT, MAX, MIN
+- **CASE/IIF mappings**: Status code translations, value derivations
+- **Date logic**: Date truncation, period calculations, fiscal year mapping
+- **Joins enriching data**: Adding dimensions, lookups, calculated fields
+- **Deduplication**: ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...) patterns
+
+Record each transformation:
+```
+TRANSFORMATION: {Column}
+  Input: {source columns/tables}
+  Logic: {SQL expression or description}
+  Business Meaning: {what this computation represents}
+```
+
+### Step 4: Extract Source-to-Target Mapping
+
+Build a complete map of where each column comes from:
+```
+SOURCE -> TARGET MAPPING:
+  {TargetColumn} <- {SourceSchema}.{SourceTable}.{SourceColumn} [{transform if any}]
+  {TargetColumn} <- CASE WHEN ... (derived)
+  {TargetColumn} <- GETDATE() (ETL metadata)
+```
+
+### Step 5: Extract WHERE Filters and Incremental Logic
+
+DWH loads are often incremental. Identify:
+- **Watermark columns**: `WHERE ModifiedDate > @LastLoadDate`
+- **Full reload indicators**: `TRUNCATE TABLE` followed by full INSERT
+- **Merge patterns**: MERGE statements with INSERT/UPDATE/DELETE branches
+- **Type 1 vs Type 2 SCD**: How historical changes are handled
+
+### Step 6: Synthesize Per-Procedure Summary
+
+```
+{Schema}.{ProcedureName} (ETL WRITER)
+================================================================
+
+SUMMARY: {What this procedure does in business terms}
+
+SOURCE TABLES:
+  - {Schema}.{Table} (primary source)
+  - {Schema}.{Table} (lookup join)
+
+TARGET: {Schema}.{TargetTable}
+
+LOAD PATTERN: {Full reload / Incremental / Merge / CTAS swap}
+
+TRANSFORMATIONS:
+| Target Column | Source | Transform | Business Meaning |
+|--------------|--------|-----------|------------------|
+| StatusName | CASE StatusID WHEN 1 THEN 'Open'... | Enum resolve | Human-readable status |
+| PositionAge | DATEDIFF(day, OpenDate, GETDATE()) | Calculation | Days since position opened |
+```
+
+## Output Format
+
+```
+PHASE 9 RESULTS - {Schema}.{Table}
+====================================
+Procedures Analyzed: {N}/10
+
+ETL SUMMARY:
+  Primary loader: {Schema}.{ProcName}
+  Load pattern: {Full reload / Incremental / Merge}
+  Source tables: {list}
+  Transformations: {N} columns transformed
+
+SOURCE-TO-TARGET MAP:
+| Target Column | Source | Transform | Business Meaning |
+|--------------|--------|-----------|------------------|
+
+KEY BUSINESS RULES DISCOVERED:
+  1. {Rule from procedure logic}
+```
+
+## Completion
+
+Mark `[x] Phase 9: Procedure Logic Extraction` in the checklist.
