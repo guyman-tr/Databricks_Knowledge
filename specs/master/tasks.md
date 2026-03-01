@@ -17,11 +17,11 @@
 
 **Purpose**: Project structure, configs, pipeline scaffold
 
-- [ ] T001 Create `knowledge/` folder structure per plan.md: `synapse/Wiki/`, `coverage/`, `columns/mappings/`, `columns/descriptions/`, `columns/lineage/`, `domains/`
-- [ ] T002 Verify `.specify/Configs/dwh-semantic-doc-config.json` has correct paths to upstream wiki sources in DB_Schema repo
-- [ ] T003 [P] Verify Synapse MCP connection works — run a test query via `execute_sql_read_only` against `INFORMATION_SCHEMA.TABLES`
+- [x] T001 Create `knowledge/` folder structure per plan.md: `synapse/Wiki/`, `coverage/`, `columns/mappings/`, `columns/descriptions/`, `columns/lineage/`, `domains/`
+- [x] T002 Verify `.specify/Configs/dwh-semantic-doc-config.json` has correct paths to upstream wiki sources in DB_Schema repo
+- [x] T003 [P] Verify Synapse MCP connection works — run a test query via `execute_sql_read_only` against `INFORMATION_SCHEMA.TABLES`
 - [ ] T004 [P] Verify Databricks MCP connection works — run a test query against Unity Catalog
-- [ ] T005 [P] Verify Atlassian MCP connection works — search Confluence for a known page
+- [x] T005 [P] Verify Atlassian MCP connection works — search Confluence for a known page
 
 ---
 
