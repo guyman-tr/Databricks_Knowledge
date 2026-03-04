@@ -1,5 +1,5 @@
 ---
-description: Phase 9 - Procedure Logic Extraction for DWH Semantic Documentation. Reads the top 10 most important procedures deeply to extract column assignments, business logic, and ETL transformation knowledge.
+description: Phase 9 - Procedure Logic Extraction for DWH Semantic Documentation. Reads the top 10 most important procedures deeply to extract column assignments, business logic, and ETL transformation knowledge. Reads SP code from the Dataplatform repo.
 globs:
 alwaysApply: false
 ---
@@ -16,15 +16,34 @@ Procedures define the **lifecycle** of every column -- what values go in when, w
 
 ## Input
 
-The top 10 most important procedures from Phase 8:
+The top 10 most important procedures from Phase 8, split into two groups:
+
+**Group A — ETL writers/modifiers (up to 10):**
 1. **WRITERS/ETL** (all, up to cap) - they define how data enters and transforms
 2. **MODIFIERS** (all, up to cap) - they define incremental updates
-3. **Key READERS** (fill remaining) - they reveal what queries the system needs
+
+**Group B — Downstream readers (at least 10, in addition to Group A):**
+3. **READERS** - they reveal column semantics independently via CASE/IF patterns
+
+Reader SPs are NOT filler — they are a critical independent validation source. Downstream consumers often contain CASE/IF patterns that reveal business semantics the ETL writers do not (e.g., `CASE WHEN IsSettled = 1 THEN 'Real' ELSE 'CFD'`). Always read at least 10 reader SPs and extract every CASE/IF/IIF pattern that references columns on the target table.
 
 ## Algorithm
 
-### Step 1: Read Procedure Code from Synapse
+### Step 1: Read Procedure Code from Dataplatform Repo
 
+**Read the SP file directly** from the repo:
+
+```
+Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/Stored Procedures/{Schema}.{ProcName}.sql
+```
+
+If the exact file path is unknown, use Glob to locate it:
+```
+Glob: "**/Stored Procedures/{Schema}.{ProcName}.sql"
+Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+```
+
+**Fallback** (only if file not found in repo — e.g., recently created SP not yet committed):
 ```sql
 SELECT definition FROM sys.sql_modules
 WHERE object_id = OBJECT_ID('{Schema}.{ProcName}')
@@ -102,12 +121,25 @@ TRANSFORMATIONS:
 | PositionAge | DATEDIFF(day, OpenDate, GETDATE()) | Calculation | Days since position opened |
 ```
 
+### Step 7: Extract Reader SP Semantics (Group B)
+
+For each of the 10+ reader SPs, scan the procedure code for CASE, IF, and IIF patterns that reference columns on the target table. These patterns reveal how downstream consumers interpret column values — independent validation of what each value means.
+
+```
+READER SP PATTERN: {Schema}.{ProcedureName}
+  Column: {ColumnName}
+  Pattern: CASE WHEN {ColumnName} = {value} THEN '{label}' ...
+  Semantic: {What this reveals about the column's meaning}
+```
+
+Aggregate across all reader SPs to build a consensus map of column semantics. When reader SP patterns confirm upstream wiki descriptions, note the confirmation. When they reveal meanings not in the upstream wiki, flag for inclusion.
+
 ## Output Format
 
 ```
 PHASE 9 RESULTS - {Schema}.{Table}
 ====================================
-Procedures Analyzed: {N}/10
+Procedures Analyzed: {N} writers + {M} readers
 
 ETL SUMMARY:
   Primary loader: {Schema}.{ProcName}
@@ -121,6 +153,12 @@ SOURCE-TO-TARGET MAP:
 
 KEY BUSINESS RULES DISCOVERED:
   1. {Rule from procedure logic}
+
+READER SP SEMANTIC PATTERNS:
+  Readers Analyzed: {M}
+  Patterns Found:
+  | Column | Pattern | Reader SP | Semantic |
+  |--------|---------|-----------|----------|
 ```
 
 ## Completion

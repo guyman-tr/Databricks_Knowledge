@@ -123,16 +123,16 @@ Query `sys.sql_expression_dependencies` in Synapse instead of grepping repo file
 Query `sys.sql_modules` for all objects referencing the target. Categorize as WRITER/MODIFIER/READER/DELETER.
 
 ### Phase 09 - Procedure Logic Extraction (adapted)
-Read SP code from `sys.sql_modules` instead of SSDT files. Same extraction logic for column assignments, modifications, conditionals.
+Read SP code from `sys.sql_modules` instead of SSDT files. Same extraction logic for column assignments, modifications, conditionals. **Must include both ETL writer SPs AND at least 10 downstream reader SPs.** Scan reader SPs for CASE/IF patterns that reveal column semantics independently (e.g., `CASE WHEN IsSettled = 1 THEN 'Real' ELSE 'CFD'`). Reader SPs are a critical independent validation source — they are not filler.
 
 ### Phase 09b - ETL Orchestration Analysis (replaces App Code Analysis)
 DWH SPs are ETL, not app-called. Map refresh schedules, SP execution order, dependencies between load processes.
 
-### Phase 10 - Atlassian Knowledge Scan (same)
-Search Confluence/Jira for business context. Same validation against code evidence.
+### Phase 10 - Atlassian Knowledge Scan (MANDATORY — same approach)
+Search Confluence/Jira for business context. Same validation against code evidence. **This phase is mandatory for every pipeline run and must not be deferred or skipped.** The Atlassian tools (Rovo Search, Confluence page fetch, Jira search) are available. Search for the target table name, key business concepts (e.g., "settlement type", "copy trade"), and related terms.
 
 ### Phase 11 - Generate Documentation (new template)
-Query-brain template: Business Meaning, Query Advisory, Elements with resolved enums, Lineage, Performance Notes, Sample Queries.
+Query-brain template: Business Meaning, Query Advisory, Elements with resolved enums, Lineage, Performance Notes, Sample Queries. **Column descriptions from upstream wiki must be inherited verbatim — no paraphrasing, summarizing, or rewriting.** No environment-specific statistics (row counts, percentages, date ranges) in element descriptions. Confidence tier tagging required. A `.review-needed.md` sidecar must be produced alongside every wiki file.
 
 ### Phase 12 - Cross-Object Enrichment (extended)
 Same gap detection + fix approach. Extended to cross-layer: links Synapse objects to upstream production wiki files.
@@ -151,6 +151,15 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 - Q: For Synapse tables with no production source (DWH-derived), what is the authority source? → A: Document them with Synapse SP code as authority (tier 2 becomes effective tier 1). Lineage section notes "DWH-derived, no production source." All semantic meaning comes from the SP code that creates/maintains the object.
 - Q: Should the pipeline assign Domain tags, and which phase handles it? → A: Yes, Phase 13 (Production Lineage Mapping) infers Domain tags from the production lineage chain. Since it traces which production schemas feed each Synapse object, it can automatically tag with the Domain(s) of the source BU schemas (per spec 002's many-to-many model).
 
+### Session 2026-03-02 (Post-POC Debriefing — Dim_Position First Run)
+
+- Q: What happens if Phase 10 (Atlassian Knowledge Scan) is skipped? → A: It must not be skipped. Elevated to mandatory in constitution v1.3.0. The first run skipped Phase 10 entirely, losing business context from ~240 referencing SPs across BI, compliance, dealing, and finance.
+- Q: Should Phase 9 cover downstream reader SPs, not just ETL writers? → A: Yes. At least 10 downstream readers must be scanned for CASE/IF patterns on each column. These reveal business semantics independently (e.g., `CASE WHEN IsSettled = 1 THEN 'Real' ELSE 'CFD'`). The first run only read ETL writer SPs, missing this independent validation.
+- Q: How to handle columns not found in the upstream wiki source table? → A: Search the entire upstream wiki folder (views, related tables, history schemas) before concluding a column is undocumented. The first run only read `Trade.PositionTbl.md`, missing columns documented on `Trade.PositionTreeInfo`, `Trade.OpenPositionEndOfDay`, `Trade.PositionForExternalUse`, and `History.Position`.
+- Q: What if no source documents a column? → A: Flag as `[UNVERIFIED]` in the wiki, add to `.review-needed.md` sidecar, write only mechanically inferred facts (type, nullability, observed values). Never fabricate from column names. The first run incorrectly guessed meanings for DLTOpen/DLTClose, IsAirDrop, CommissionByUnits, FullCommission, and IsDiscounted.
+- Q: Should sampling results override upstream wiki enum values? → A: Never. Sampling adds newly discovered values; it never drops documented upstream values absent from a filtered sample. The first run dropped SettlementTypeID values 2 (TRS) and 3 (CMT) because they filtered to 2025 data only.
+- Q: Should element descriptions include runtime statistics? → A: No. Phase 11 rule #3: "No environment-specific statistics." The first run included "~85% Buy", "~69% leverage=1", "~79% settled", "2.64B rows" in descriptions. These belong in query advisory or working notes.
+
 ## Requirements
 
 ### Functional Requirements
@@ -163,6 +172,9 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 - **FR-006**: Pipeline MUST be executable via a Cursor command (`/dwh-semantic-doc`). Re-runs fully regenerate the wiki file (overwrite); git history preserves the diff. Regeneration is triggered by change (upstream wiki update, new SPs discovered, etc.), not scheduled.
 - **FR-007**: Upstream knowledge sources MUST be configured in `dwh-semantic-doc-config.json`, not hardcoded
 - **FR-008**: Pipeline MUST work against any Synapse schema listed in the config
+- **FR-009**: Pipeline MUST produce a `.review-needed.md` sidecar alongside each wiki file, listing all Tier 4 (column-name-inferred) items with specific questions for domain experts. Columns without any source documentation must be flagged `[UNVERIFIED]`, not given fabricated descriptions.
+- **FR-010**: Pipeline MUST NOT include environment-specific statistics (row counts, percentages, date ranges) in wiki column descriptions. These belong in working notes or query advisory metadata, not in the Elements table.
+- **FR-011**: Pipeline MUST search the entire upstream wiki folder (tables, views, related objects across all schemas) before labeling any column as DWH-specific or unresolved. The source table wiki alone is insufficient — columns may be documented on related tables, views, or history schemas.
 
 ### Key Entities
 

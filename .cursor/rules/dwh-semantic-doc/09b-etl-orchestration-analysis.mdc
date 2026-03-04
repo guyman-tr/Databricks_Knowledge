@@ -1,5 +1,5 @@
 ---
-description: Phase 9B - ETL Orchestration Analysis for DWH Semantic Documentation. Maps refresh schedules, SP execution order, and ETL dependencies. Replaces the production pipeline's Application Code Analysis since DWH SPs are ETL, not app-called.
+description: Phase 9B - ETL Orchestration Analysis for DWH Semantic Documentation. Maps refresh schedules, SP execution order, and ETL dependencies. Reads SP code from the Dataplatform repo. Replaces the production pipeline's Application Code Analysis since DWH SPs are ETL, not app-called.
 globs:
 alwaysApply: false
 ---
@@ -69,14 +69,19 @@ FROM [{Schema}].[{Table}]
 
 ### Step 4: Map SP Call Chain
 
-If the WRITER SP calls other SPs:
+If the WRITER SP calls other SPs, **read the SP file from the Dataplatform repo**:
 
+```
+Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/Stored Procedures/{Schema}.{WriterProcName}.sql
+```
+
+Search the definition for `EXEC` or `EXECUTE` calls to other procedures. For each called SP, read its file from the repo too to trace the full chain.
+
+**Fallback** (only if file not found in repo):
 ```sql
 SELECT definition FROM sys.sql_modules
 WHERE object_id = OBJECT_ID('{Schema}.{WriterProcName}')
 ```
-
-Search the definition for `EXEC` or `EXECUTE` calls to other procedures.
 
 ### Step 5: Document ETL Context
 

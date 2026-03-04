@@ -14,7 +14,18 @@ Discover implicit relationships between tables by analyzing JOIN conditions in s
 
 - Phase 1 (Structure Analysis) complete - need column list
 - Phase 4 (Lookup Resolution) complete - need list of UNRESOLVED ID columns
-- MCP connection active
+
+## Dataplatform Repo Convention
+
+All SQL object definitions live in the **Dataplatform repo** workspace root:
+
+```
+DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/{ObjectType}/{Schema}.{ObjectName}.sql
+```
+
+Object type folders: `Stored Procedures`, `Views`, `Functions`, `Tables`, `External Tables`.
+
+**Always read definitions from repo files.** Only fall back to `sys.sql_modules` if the file is not found in the repo (e.g., recently created object not yet committed).
 
 ## Input
 
@@ -24,27 +35,33 @@ List of ID columns that were NOT resolved in Phase 4.
 
 ### Step 1: Find All Objects Referencing This Table
 
-Query Synapse metadata for all objects that reference the target table:
+Use **Grep** across the Dataplatform repo to find all SQL files that mention the target table:
 
-```sql
-SELECT
-    OBJECT_SCHEMA_NAME(d.referencing_id) AS referencing_schema,
-    OBJECT_NAME(d.referencing_id) AS referencing_name,
-    o.type_desc AS referencing_type
-FROM sys.sql_expression_dependencies d
-JOIN sys.objects o ON d.referencing_id = o.object_id
-WHERE d.referenced_schema_name = '{Schema}'
-  AND d.referenced_entity_name = '{TableName}'
-ORDER BY o.type_desc, referencing_name
 ```
+Grep pattern: "{TableName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+Glob: "*.sql"
+Output mode: files_with_matches
+```
+
+This returns SPs, views, and functions that reference the table — equivalent to `sys.sql_expression_dependencies` but catches dynamic SQL and comments too.
+
+Classify each result by its folder path:
+- `/Stored Procedures/` → SP
+- `/Views/` → View
+- `/Functions/` → Function
 
 ### Step 2: Read SQL Definitions of Referencing Objects
 
-For each referencing object, read its SQL definition:
+For each referencing object found in Step 1, **read the file directly** from the repo:
 
+```
+Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/Stored Procedures/{Schema}.{ProcName}.sql
+```
+
+**Fallback** (only if file not found in repo):
 ```sql
-SELECT definition
-FROM sys.sql_modules
+SELECT definition FROM sys.sql_modules
 WHERE object_id = OBJECT_ID('{RefSchema}.{RefName}')
 ```
 
@@ -61,18 +78,26 @@ From the SQL text, identify:
 
 ### Step 4: Search for Lookup Patterns in SP Code
 
-For each unresolved ID column, search all SP definitions for patterns:
+For each unresolved ID column, use **Grep** to search SP files for usage patterns:
 
+```
+Grep pattern: "{ColumnName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+Glob: "**/Stored Procedures/*.sql"
+Output mode: content (with context lines)
+```
+
+From results, look for JOIN conditions that reveal the lookup table.
+
+**Fallback** (only if repo search yields nothing):
 ```sql
 SELECT OBJECT_SCHEMA_NAME(object_id) AS sp_schema,
        OBJECT_NAME(object_id) AS sp_name,
        definition
 FROM sys.sql_modules
 WHERE definition LIKE '%{ColumnName}%'
-  AND OBJECT_SCHEMA_NAME(object_id) IN ('dbo','dealing','bi_db','exw','emoney')
+  AND OBJECTPROPERTY(object_id, 'IsProcedure') = 1
 ```
-
-From results, look for JOIN conditions that reveal the lookup table.
 
 ### Step 5: All-Column Usage Analysis
 

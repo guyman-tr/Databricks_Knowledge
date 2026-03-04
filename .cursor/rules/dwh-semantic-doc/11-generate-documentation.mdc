@@ -29,13 +29,16 @@ Before generating, execute the Pre-Read step from `12-cross-object-enrichment.md
 3. Read existing docs and extract: element descriptions, value maps, relationships
 4. Use absorbed knowledge for consistency across docs
 
-## Output Path
+## Output Path — TWO FILES PER OBJECT
 
 ```
-knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md              ← wiki doc
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.review-needed.md ← review sidecar
 ```
 
 Object type folders: `Tables/`, `Views/`, `Stored Procedures/`, `Functions/`
+
+Both files are mandatory outputs. Write the wiki doc first, then immediately write the review sidecar before marking Phase 11 complete.
 
 ## STRICT RULES
 
@@ -48,6 +51,13 @@ Object type folders: `Tables/`, `Views/`, `Stored Procedures/`, `Functions/`
 7. **If a section does not apply**, write "N/A for {object type}." -- do NOT remove the section
 8. **Elements table must list EVERY element** -- no skipping, no grouping
 9. **CODE IS KING** -- when sources conflict, the hierarchy is: upstream wiki > Synapse live code > live data > metadata > Confluence/Jira. The upstream wiki has already gone through strict code-is-king analysis on production sources and is our authoritative starting point. Synapse code wins only for DWH-specific transformations and derived columns. If Phase 2 sampling found 5 enum values but Confluence documents only 3, include all 5 and note the undocumented ones. Confluence provides business meaning and intent; upstream wiki and Synapse code/data provide truth.
+10. **VERBATIM UPSTREAM INHERITANCE** -- when a column exists in an upstream wiki, copy its description verbatim into the Elements table. Do not paraphrase, summarize, or rewrite. Only APPEND DWH-specific notes (prefixed with "DWH note:") if the DWH transforms that column differently. The upstream wiki's descriptions have already been validated through the full code-is-king pipeline — rewriting them introduces errors and loses context.
+11. **CONFIDENCE TIERS** -- every element description must be traceable to a source tier: Tier 1 (upstream wiki verbatim), Tier 2 (Synapse SP code / downstream CASE patterns), Tier 3 (live data distribution), Tier 4 (column name inference — must be flagged `[UNVERIFIED]`). When generating the Elements table, Tier 4 descriptions must carry the `[UNVERIFIED]` prefix so human reviewers can prioritize corrections.
+12. **REVIEW SIDECAR** -- alongside every wiki file, produce a `.review-needed.md` companion file listing all Tier 4 items and specific questions for domain experts. Path: same directory as the wiki file, named `{Schema}.{ObjectName}.review-needed.md`. This is not optional.
+13. **FULL UPSTREAM SEARCH** -- before labeling any column as "DWH-specific" or writing a Tier 4 description, grep the entire upstream wiki folder (tables, views, related objects, all schemas) for the column name. Columns frequently originate from views, related tables, or history schemas — not just the source table. Only after an exhaustive search returns no results may a column be flagged as DWH-specific or given a Tier 4 description.
+14. **REVIEWER CORRECTIONS (RERUN)** -- before generating, check if a `.review-needed.md` already exists for this object. If it contains a `## Reviewer Corrections` section with entries, read every row and apply them as **Tier 5** overrides. Tier 5 is absolute — it overrides all other tiers including upstream wiki (Tier 1). After applying, carry corrections forward in the new `.review-needed.md` with a `[RESOLVED]` marker so they persist across future reruns.
+15. **DOMAIN GLOSSARY** -- before generating, read `knowledge/glossary.md`. All acronym expansions, term definitions, and value maps in the glossary are Tier 5 authority. The pipeline MUST NOT infer alternative meanings for any term that has a glossary entry. Apply glossary terms wherever the term appears in element descriptions, business logic sections, or query advisory.
+16. **TIER 5 IN ELEMENTS TABLE** -- when a description comes from reviewer corrections or the glossary, tag it `(Tier 5 — domain expert)` instead of the usual tier tag. Tier 5 entries are never flagged `[UNVERIFIED]` and never appear in the review sidecar's Tier 4 section.
 
 ---
 
@@ -223,10 +233,53 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 
 ---
 
+## Review Sidecar Template
+
+The `.review-needed.md` file MUST follow this structure:
+
+```markdown
+# {Schema}.{ObjectName} — Review Needed
+
+> Items requiring human domain expert review. Generated alongside the wiki documentation.
+
+## Reviewer Corrections
+
+> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
+> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
+> also be added to `knowledge/glossary.md`.
+
+| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
+|----------------|-----------------|------------|-------|----------|------|
+
+## Tier 4 (UNVERIFIED) Columns
+
+{All Tier 4 items from the Elements table}
+
+## Columns Needing Clarification
+
+{Items where the pipeline found conflicting or ambiguous evidence, regardless of tier}
+
+## Structural Questions
+
+{Questions about the object's design, schema, or ETL that cannot be answered from code alone}
+```
+
+On **rerun**: If a previous `.review-needed.md` exists, read `## Reviewer Corrections` first.
+Apply all entries as Tier 5 overrides. In the new sidecar, carry resolved corrections forward
+with `[RESOLVED]` prefix in the "Current (wrong)" column. Remove resolved items from
+Tier 4 / Clarification sections.
+
 ## Post-Generation
 
 1. **Update `_semantic_index.md`**: Map business concepts from Sections 2 and 3 to this object
 
-## Completion
+## Completion — BOTH FILES REQUIRED
 
-Mark `[x] Phase 11: Documentation Generated` in the checklist.
+Phase 11 is NOT complete until BOTH files exist:
+
+1. **Wiki file**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md`
+2. **Review sidecar**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.review-needed.md`
+
+The review sidecar is a mandatory byproduct of every run. It may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case. When in doubt, create the file.
+
+Mark `[x] Phase 11: Documentation Generated` in the checklist only after both files are written.

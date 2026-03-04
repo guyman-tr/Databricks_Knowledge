@@ -1,5 +1,5 @@
 ---
-description: Phase 4 - Lookup Resolution for DWH Semantic Documentation. Resolves ID columns to human-readable values using production Dictionary tables and the upstream FK lookup reference.
+description: Phase 4 - Lookup Resolution for DWH Semantic Documentation. Resolves ID columns to human-readable values using the Dataplatform repo Dim_* tables, production Dictionary tables, and the upstream FK lookup reference.
 globs:
 alwaysApply: false
 ---
@@ -22,14 +22,26 @@ Resolve ID columns to human-readable business values. Since Synapse has NO enfor
 
 ## Resolution Strategy
 
+### Step 0: Consult Domain Glossary (Tier 5 — Highest Authority)
+
+Before any other resolution, read `knowledge/glossary.md`. If the glossary contains a value map for the column being resolved (in the `## Value Maps` section), use it as-is — it is Tier 5 (domain-expert confirmed) and overrides all other sources. If the glossary contains acronym expansions relevant to the column's values, use those expansions verbatim.
+
 ### Step 1: Start From Upstream Wiki (Authoritative Source)
 
-The upstream production wiki has already resolved ID columns through the full code-is-king pipeline (JOIN analysis, procedure logic extraction, application code tracing). Start here. Read the config to get the wiki path, then look for:
-```
-{upstream_repo_path}/{upstream_wiki_path}/Dictionary/Tables/Dictionary.{TableName}.md
-```
+The upstream production wiki has already resolved ID columns through the full code-is-king pipeline (JOIN analysis, procedure logic extraction, application code tracing). Start here. Read the config to get the wiki path, then search **the entire upstream wiki folder** — not just the source table's wiki file.
 
-Extract the Elements section for the complete value map. Also check the wiki file for the source table itself — the Elements section will have resolved descriptions for every ID column.
+**Search order (all must be checked):**
+
+1. **Source table wiki**: `{upstream_repo_path}/{upstream_wiki_path}/{SourceSchema}/Tables/{SourceSchema}.{SourceTable}.md`
+2. **Source views**: The DWH staging sources are often views, not tables. Check view wikis:
+   - `{SourceSchema}/Views/{SourceSchema}.{ViewName}.md` (e.g., `Trade.OpenPositionEndOfDay`, `Trade.PositionForExternalUse`)
+3. **Related tables**: Columns may originate from related tables joined during ETL:
+   - `{SourceSchema}/Tables/{SourceSchema}.{RelatedTable}.md` (e.g., `Trade.PositionTreeInfo`, `Trade.Orders`)
+4. **Dictionary tables**: `Dictionary/Tables/Dictionary.{LookupTableName}.md`
+5. **History schema**: `History/Views/History.{ViewName}.md`
+6. **Grep fallback**: If the column is not found in the obvious locations, grep the entire upstream wiki folder for the column name. Columns can appear in unexpected places.
+
+Extract the Elements section for the complete value map from whichever wiki file documents the column. Only after an exhaustive search returns no results may a column be flagged as unresolved and passed to Phase 5.
 
 ### Step 2: Match Against Known Production Patterns
 
@@ -55,9 +67,31 @@ SELECT * FROM [{Schema}].[{LookupTableName}] ORDER BY 1
 
 If Synapse has values not in the upstream wiki, include them and flag for upstream investigation.
 
-### Step 4: Check DWH-Local Lookups
+### Step 4: Search Dataplatform Repo for DWH Dimension Tables (Primary)
 
-Some DWH schemas have their own lookup/dimension tables:
+The Dataplatform repo contains ALL Dim_* tables in the DWH. Search it BEFORE querying Synapse:
+
+```
+Glob: "**/Tables/DWH_dbo.Dim_*.sql"
+Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+```
+
+For each `*ID` column in the target table, check if a matching `Dim_{name}` table exists:
+- `FundingTypeID` → look for `Dim_FundingType`
+- `BonusTypeID` → look for `Dim_BonusType`
+- `PaymentStatusID` → look for `Dim_PaymentStatus`
+- `CampaignID` → look for `Dim_Campaign`
+- `CountryID*` → look for `Dim_Country`, `Dim_CountryIP`
+
+Also search staging tables for replicated Dictionary tables:
+```
+Glob: "**/Tables/DWH_staging.etoro_Dictionary_*.sql"
+Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+```
+
+Read the DDL of each matching Dim table to discover its columns (Name, Description, IsActive, etc.) and note the join key.
+
+**Fallback** (only if Dataplatform repo not available):
 ```sql
 SELECT TABLE_SCHEMA, TABLE_NAME
 FROM INFORMATION_SCHEMA.TABLES

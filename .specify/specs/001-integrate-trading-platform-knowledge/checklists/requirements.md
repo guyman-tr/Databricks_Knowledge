@@ -37,9 +37,12 @@
 - [x] No implementation details leak into specification
 - [x] Upstream wiki authority (tier 1) codified in US2 and FR-002
 - [x] Source attribution requirement (FR-006) has matching success criterion (SC-004)
+- [x] Verbatim inheritance rule codified in FR-002 (no paraphrasing of upstream descriptions)
+- [x] Full upstream wiki search scope codified in FR-007 (search all schemas, tables, views, functions)
 
 ## Notes
 
 - Spec updated 2026-03-01 to align with constitution v1.2.0 (upstream wiki elevated to tier 1 authority)
 - Clarification session resolved 4 critical ambiguities: identity model, update lifecycle, schema format, metadata loss tolerance
+- Spec updated 2026-03-02 to codify first-run debriefing findings: FR-002 strengthened to require verbatim inheritance, FR-007 added for full upstream wiki search scope, SC-005 strengthened to require verbatim (not paraphrased) inheritance
 - All items pass — spec is ready for `/speckit.plan`

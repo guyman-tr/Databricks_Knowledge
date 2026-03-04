@@ -1,5 +1,5 @@
 ---
-description: Phase 7 - View Dependency Scan for DWH Semantic Documentation. Maps all views referencing a table and traces the dependency chain using Synapse metadata.
+description: Phase 7 - View Dependency Scan for DWH Semantic Documentation. Maps all views referencing a table and traces the dependency chain using the Dataplatform repo.
 globs:
 alwaysApply: false
 ---
@@ -8,31 +8,52 @@ alwaysApply: false
 
 ## Purpose
 
-Many stored procedures access tables **through views**, not directly. This phase traces the complete dependency chain: Table -> Views -> Procedures, using Synapse metadata views instead of repo file searches.
+Many stored procedures access tables **through views**, not directly. This phase traces the complete dependency chain: Table -> Views -> Procedures, using the **Dataplatform repo** as the primary source.
+
+## Dataplatform Repo Convention
+
+All SQL object definitions live in the **Dataplatform repo** workspace root:
+
+```
+DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/{ObjectType}/{Schema}.{ObjectName}.sql
+```
+
+Object type folders: `Stored Procedures`, `Views`, `Functions`, `Tables`, `External Tables`.
+
+**Always read definitions from repo files.** Only fall back to Synapse queries if the file is not found in the repo.
 
 ## Algorithm
 
 ### Step 1: Find Views Referencing This Table
 
+Use **Grep** to search all view files for the target table name:
+
+```
+Grep pattern: "{TableName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+Glob: "**/Views/*.sql"
+Output mode: files_with_matches
+```
+
+This is more thorough than `sys.sql_expression_dependencies` — catches dynamic SQL and aliased references.
+
+**Fallback** (only if repo not available):
 ```sql
-SELECT
-    OBJECT_SCHEMA_NAME(d.referencing_id) AS view_schema,
-    OBJECT_NAME(d.referencing_id) AS view_name
+SELECT OBJECT_SCHEMA_NAME(d.referencing_id) AS view_schema,
+       OBJECT_NAME(d.referencing_id) AS view_name
 FROM sys.sql_expression_dependencies d
 JOIN sys.objects o ON d.referencing_id = o.object_id
 WHERE d.referenced_schema_name = '{Schema}'
   AND d.referenced_entity_name = '{TableName}'
   AND o.type = 'V'
-ORDER BY view_name
 ```
 
 ### Step 2: Read and Classify Each View
 
-For each view found, read its definition:
+**Read the view file directly** from the repo:
 
-```sql
-SELECT definition FROM sys.sql_modules
-WHERE object_id = OBJECT_ID('{ViewSchema}.{ViewName}')
+```
+Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{ViewSchema}/Views/{ViewSchema}.{ViewName}.sql
 ```
 
 Classify:
@@ -46,31 +67,35 @@ Classify:
 | UNION | Combines multiple sources |
 | COMPUTED | Adds calculated columns |
 
+**Fallback** (only if file not found):
+```sql
+SELECT definition FROM sys.sql_modules
+WHERE object_id = OBJECT_ID('{ViewSchema}.{ViewName}')
+```
+
 ### Step 3: Find Procedures That Use Each View
 
-```sql
-SELECT
-    OBJECT_SCHEMA_NAME(d.referencing_id) AS proc_schema,
-    OBJECT_NAME(d.referencing_id) AS proc_name
-FROM sys.sql_expression_dependencies d
-JOIN sys.objects o ON d.referencing_id = o.object_id
-WHERE d.referenced_schema_name = '{ViewSchema}'
-  AND d.referenced_entity_name = '{ViewName}'
-  AND o.type = 'P'
+Use **Grep** to search all SP files for the view name:
+
+```
+Grep pattern: "{ViewName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+Glob: "**/Stored Procedures/*.sql"
+Output mode: files_with_matches
 ```
 
 ### Step 4: Check for Nested Views
 
-```sql
-SELECT
-    OBJECT_SCHEMA_NAME(d.referencing_id) AS nested_view_schema,
-    OBJECT_NAME(d.referencing_id) AS nested_view_name
-FROM sys.sql_expression_dependencies d
-JOIN sys.objects o ON d.referencing_id = o.object_id
-WHERE d.referenced_schema_name = '{ViewSchema}'
-  AND d.referenced_entity_name = '{ViewName}'
-  AND o.type = 'V'
+Use **Grep** to search other view files for the view name (view-on-view chains):
+
 ```
+Grep pattern: "{ViewName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+Glob: "**/Views/*.sql"
+Output mode: files_with_matches
+```
+
+Exclude the view's own file from results.
 
 ### Step 5: Build Dependency Chain
 

@@ -6,6 +6,10 @@ alwaysApply: false
 
 # Phase 10: Atlassian Knowledge Scan
 
+## MANDATORY — DO NOT SKIP
+
+This phase is **required** for every pipeline run. It must not be deferred, skipped, or deprioritized regardless of POC scope or time constraints. The Atlassian tools (Rovo Search, Confluence page fetch, Jira search) are available and must be used. Constitution v1.3.0, Quality Gates: "Phase 10 (Atlassian Knowledge Scan) is mandatory for every pipeline run."
+
 ## Goal
 
 Extract business meaning, logic, column descriptions, architecture context, and change history from Jira and Confluence to **enrich** the DWH object's documentation. Runs AFTER all code/data analysis (Phases 1-9B) so every claim can be validated.

@@ -20,7 +20,7 @@
 - [x] T001 Create `knowledge/` folder structure per plan.md: `synapse/Wiki/`, `coverage/`, `columns/mappings/`, `columns/descriptions/`, `columns/lineage/`, `domains/`
 - [x] T002 Verify `.specify/Configs/dwh-semantic-doc-config.json` has correct paths to upstream wiki sources in DB_Schema repo
 - [x] T003 [P] Verify Synapse MCP connection works — run a test query via `execute_sql_read_only` against `INFORMATION_SCHEMA.TABLES`
-- [ ] T004 [P] Verify Databricks MCP connection works — run a test query against Unity Catalog
+- [x] T004 [P] Verify Databricks MCP connection works — run a test query against Unity Catalog
 - [x] T005 [P] Verify Atlassian MCP connection works — search Confluence for a known page
 
 ---
@@ -33,11 +33,11 @@
 
 **Independent Test**: Map 5 trading platform objects from the upstream wiki to the canonical schema without data loss.
 
-- [ ] T006 [S01] Review the existing Phase 11 template in `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc` and document the canonical schema fields (object name, schema, type, columns, relationships, lineage, description, domain, tags) in `knowledge/canonical-schema.md`
-- [ ] T007 [S01] Verify upstream wiki path in `dwh-semantic-doc-config.json` — read 3 wiki files from DB_Schema `etoro/Wiki/` and confirm they parse into canonical schema fields
-- [ ] T008 [S01] Map 5 trading platform objects (e.g., `Trade.PositionTbl`, `Trade.Mirror`, `Customer.Customer`, `Dictionary.StatusType`, `Trade.OrderTbl`) from upstream wiki → canonical schema. Document any gaps in `knowledge/canonical-schema.md`
-- [ ] T009 [S01] Validate schema across layers — take 3 Synapse objects from `DWH_dbo` schema, describe using canonical schema, confirm compatibility
-- [ ] T010 [S01] Add source attribution convention to `knowledge/canonical-schema.md` — document how each metadata element tracks its source and authority tier
+- [x] T006 [S01] Review the existing Phase 11 template in `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc` and document the canonical schema fields (object name, schema, type, columns, relationships, lineage, description, domain, tags) in `knowledge/canonical-schema.md`
+- [x] T007 [S01] Verify upstream wiki path in `dwh-semantic-doc-config.json` — read 3 wiki files from DB_Schema `etoro/Wiki/` and confirm they parse into canonical schema fields
+- [x] T008 [S01] Map 5 trading platform objects (e.g., `Trade.PositionTbl`, `Trade.Mirror`, `Customer.Customer`, `Dictionary.StatusType`, `Trade.OrderTbl`) from upstream wiki → canonical schema. Document any gaps in `knowledge/canonical-schema.md`
+- [x] T009 [S01] Validate schema across layers — take 3 Synapse objects from `DWH_dbo` schema, describe using canonical schema, confirm compatibility
+- [x] T010 [S01] Add source attribution convention to `knowledge/canonical-schema.md` — document how each metadata element tracks its source and authority tier
 
 **Checkpoint**: Canonical schema documented. Upstream wiki consumption verified. All downstream specs can reference this schema.
 
@@ -51,35 +51,37 @@
 
 ### Structure & Sampling (Phases 1-3)
 
-- [ ] T011 [S03] Run Phase 01 (Structure Analysis) on `Dim_Position` — query `INFORMATION_SCHEMA.COLUMNS`, `sys.tables`, distribution properties via Synapse MCP. Save raw output to working notes.
-- [ ] T012 [S03] Run Phase 02 (Live Data Sampling) on `Dim_Position` — sample top rows, NULLs, distinct counts via Synapse MCP
-- [ ] T013 [S03] Run Phase 03 (Distribution Analysis) on `Dim_Position` — enum/flag detection via GROUP BY, capture distribution type (HASH/ROUND_ROBIN/REPLICATE)
+- [x] T011 [S03] Run Phase 01 (Structure Analysis) on `Dim_Position` — 133 columns, HASH(PositionID), CLUSTERED INDEX(PositionID, CloseDateID), 2.64B rows
+- [x] T012 [S03] Run Phase 02 (Live Data Sampling) on `Dim_Position` — sampled top rows, distinct counts (6.1M CIDs, 12.5K instruments), NULL rates, open/closed split
+- [x] T013 [S03] Run Phase 03 (Distribution Analysis) on `Dim_Position` — IsBuy 85/15, Leverage 69% =1, SettlementTypeID, ClosePositionReasonID, date range 2007-2026
 
 ### Relationship Discovery (Phases 4-6)
 
-- [ ] T014 [S03] Run Phase 04 (Lookup Resolution) on `Dim_Position` — resolve `*ID` columns using upstream FK lookup reference + production Dictionary tables
-- [ ] T015 [S03] Run Phase 05 (JOIN Analysis) on `Dim_Position` — query `sys.sql_modules` for SPs/views referencing Dim_Position, extract JOIN patterns
-- [ ] T016 [S03] Run Phase 06 (Business Logic Discovery) on `Dim_Position` — analyze column groups, hierarchies, data clusters
+- [x] T014 [S03] Run Phase 04 (Lookup Resolution) on `Dim_Position` — resolved ClosePositionReasonID (27 values), OpenPositionActionType (20 values), RedeemStatus (13 values), SettlementTypeID
+- [x] T015 [S03] Run Phase 05 (JOIN Analysis) on `Dim_Position` — found ~240 SPs + 2 views referencing this table
+- [x] T016 [S03] Run Phase 06 (Business Logic Discovery) on `Dim_Position` — 8 business concepts: Position Lifecycle, Settlement Type, Copy Trading Tree, Partial Close & Re-Open, Hedge Execution, Close Reason, NFT Redemption, Regulation Context
 
 ### Dependency & Code Analysis (Phases 7-9b)
 
-- [ ] T017 [S03] Run Phase 07 (View Dependency Scan) on `Dim_Position` — query `sys.sql_expression_dependencies` for views referencing this table
-- [ ] T018 [S03] Run Phase 08 (Procedure Reference Scan) on `Dim_Position` — find all SPs that read/write this table via `sys.sql_modules`
-- [ ] T019 [S03] Run Phase 09 (Procedure Logic Extraction) — read top SPs from Phase 08, extract column assignments and business logic
-- [ ] T020 [S03] Run Phase 09b (ETL Orchestration Analysis) — map refresh schedule and SP execution order for Dim_Position's load chain
+- [x] T017 [S03] Run Phase 07 (View Dependency Scan) on `Dim_Position` — 2 views: BI_DB_V_StockMargin_Balances, BI_DB_V_StockMargin_EventLog
+- [x] T018 [S03] Run Phase 08 (Procedure Reference Scan) on `Dim_Position` — key ETL: SP_Dim_Position_DL_To_Synapse (writer), plus SP_ReOpen, SP_IsPartialCloseParent, SP_HedgeType_Real/History
+- [x] T019 [S03] Run Phase 09 (Procedure Logic Extraction) — extracted ETL pattern (DELETE+INSERT), staging sources, regulation resolution, post-load SPs
+- [x] T020 [S03] Run Phase 09b (ETL Orchestration Analysis) — daily @dt parameter, staging tables: etoro_Trade_OpenPositionEndOfDay + etoro_History_ClosePositionEndOfDay
 
 ### Context & Documentation (Phases 10-14)
 
-- [ ] T021 [S03] Run Phase 10 (Atlassian Knowledge Scan) — search Confluence/Jira for Dim_Position, positions, trading context
-- [ ] T022 [S03] Run Phase 11 (Generate Documentation) — produce `knowledge/synapse/Wiki/DWH_dbo/Dim_Position.md` using the query-brain template
-- [ ] T023 [S03] Run Phase 12 (Cross-Object Enrichment) — link to upstream wiki for `Trade.PositionTbl`, enrich descriptions
-- [ ] T024 [S03] Run Phase 13 (Production Lineage Mapping) — trace Dim_Position → lake export → Trade.PositionTbl. Infer Domain tag from source schema.
-- [ ] T025 [S03] Run Phase 14 (Query Advisory Metadata) — add distribution key notes, recommended JOINs, sample queries
+- [x] T021 [S03] Run Phase 10 (Atlassian Knowledge Scan) — **MANDATORY, not deferrable.** Skipped in first run. Must search Confluence/Jira for "Dim_Position", "position", "settlement type", "copy trade", etc.
+- [x] T019b [S03] Re-run Phase 09 (Procedure Logic Extraction) — include top 10 downstream reader SPs for CASE/IF patterns on each column, not just ETL writers. First run only read writer SPs.
+- [x] T022 [S03] Re-run Phase 11 (Generate Documentation) — corrected second run addressing 13 specific errors from `knowledge/first-run-results.md`. Upstream wiki descriptions must be inherited verbatim. No runtime statistics. Confidence tier tagging required.
+- [x] T022b [S03] Generate `DWH_dbo.Dim_Position.review-needed.md` sidecar listing all Tier 4 / unresolved items with specific questions for domain experts
+- [x] T023 [S03] Re-run Phase 12 (Cross-Object Enrichment) — first run only read `Trade.PositionTbl.md`. Must search full upstream wiki (views: `Trade.OpenPositionEndOfDay`, `Trade.PositionForExternalUse`; tables: `Trade.PositionTreeInfo`; history: `History.Position`).
+- [x] T024 [S03] Run Phase 13 (Production Lineage Mapping) — traced Dim_Position → lake → staging → ETL SP → target. Domain: Trading. *(Lineage was correct in first run.)*
+- [x] T025 [S03] Re-run Phase 14 (Query Advisory Metadata) — first run included runtime statistics ("~85% Buy", "2.64B rows") violating Phase 11 rule #3. Must strip all environment-specific statistics from element descriptions; move to query advisory working notes only.
 
 ### Validation
 
-- [ ] T026 [S03] Validate wiki file: every `*ID` column has resolved values, lineage traces to production, 3+ query examples present
-- [ ] T027 [S03] Test with AI: ask 3 questions about Dim_Position and verify answers use wiki content correctly
+- [x] T026 [S03] Validate wiki file: every `*ID` column has resolved values, lineage traces to production, 3+ query examples present, no `[UNVERIFIED]` items left unexplained, no runtime statistics in element descriptions, upstream wiki descriptions inherited verbatim
+- [x] T027 [S03] Test with AI: ask 3 questions about Dim_Position and verify answers use wiki content correctly. Specific test: "What does IsSettled mean?" should return legacy real-ownership indicator (1=owns asset, 0=CFD/synthetic), NOT "whether settlement is complete"
 
 **Checkpoint**: One complete Synapse table documented end-to-end. Pipeline proven on POC object. Ready to scale.
 

@@ -16,6 +16,12 @@ Analyze value distributions for numeric columns to identify enum-like values, st
 - Phase 2 (Live Data Sampling) complete - need row count for context
 - MCP connection active
 
+## CRITICAL RULE: Sampling Adds, Never Subtracts
+
+When the upstream wiki documents enum values for a column (e.g., SettlementTypeID: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE), those values are the **baseline**. Synapse sampling may discover additional values not yet in the upstream wiki — include them and flag for upstream investigation. **Never drop documented upstream values because they were absent from a filtered or time-bounded sample.** A value documented in the upstream wiki is assumed valid until explicitly deprecated in code.
+
+When querying distributions, do NOT filter by date ranges that might exclude rare or historical values. If performance requires filtering, run a second unfiltered query on enum-like columns (< 100 distinct values) to capture the full value set.
+
 ## Part A: Value Distribution Analysis
 
 ### Target Columns
