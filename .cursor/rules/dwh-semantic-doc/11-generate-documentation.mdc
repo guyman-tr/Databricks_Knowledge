@@ -29,16 +29,17 @@ Before generating, execute the Pre-Read step from `12-cross-object-enrichment.md
 3. Read existing docs and extract: element descriptions, value maps, relationships
 4. Use absorbed knowledge for consistency across docs
 
-## Output Path — TWO FILES PER OBJECT
+## Output Path — THREE FILES PER OBJECT
 
 ```
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md              ← wiki doc
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.review-needed.md ← review sidecar
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.alter.sql        ← Databricks ALTER script (PRIMARY OUTPUT)
 ```
 
 Object type folders: `Tables/`, `Views/`, `Stored Procedures/`, `Functions/`
 
-Both files are mandatory outputs. Write the wiki doc first, then immediately write the review sidecar before marking Phase 11 complete.
+All three files are mandatory outputs. The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABLE ... SET TBLPROPERTIES` and `ALTER COLUMN ... COMMENT` statements that push metadata into Unity Catalog. The wiki and sidecar are intermediate artifacts that feed it. Write the wiki doc first, then the review sidecar, then generate the ALTER script from the wiki's Elements table.
 
 ## STRICT RULES
 
@@ -273,13 +274,50 @@ Tier 4 / Clarification sections.
 
 1. **Update `_semantic_index.md`**: Map business concepts from Sections 2 and 3 to this object
 
-## Completion — BOTH FILES REQUIRED
+## Databricks ALTER Script Generation
 
-Phase 11 is NOT complete until BOTH files exist:
+The `.alter.sql` file is the PRIMARY output of the entire pipeline. Generate it from the wiki's Elements table (Section 4) after the wiki and sidecar are written.
+
+### ALTER Script Template
+
+```sql
+-- =============================================================================
+-- Databricks ALTER Script: {Schema}.{ObjectName}
+-- Generated: {YYYY-MM-DD} | {N}-phase pipeline
+-- Target: Unity Catalog table comment + column comments (1024 char limit)
+-- =============================================================================
+
+ALTER TABLE {uc_catalog}.{uc_table} SET TBLPROPERTIES (
+    'comment' = '{table_comment_max_1024_chars}'
+);
+
+ALTER TABLE {uc_catalog}.{uc_table} ALTER COLUMN {ColumnName} COMMENT '{column_comment_max_1024_chars}';
+-- ... one ALTER per column ...
+```
+
+### ALTER Script Rules
+
+1. **UC naming**: Convert Synapse names to Unity Catalog convention — `DWH_dbo.Fact_CustomerAction` → `dwh.fact_customeraction` (lowercase, schema.table)
+2. **Table comment**: Compress the one-line description + key business context from Section 1 into ≤1024 chars. Include: what it is, source, refresh, distribution, and the most critical gotchas
+3. **Column comments**: Compress each element description from Section 4 into ≤1024 chars. Prioritize:
+   - Business meaning (what the column represents)
+   - FK references (what table to JOIN for resolution)
+   - Key values/enums (most important mappings)
+   - Gotchas (common misunderstandings)
+4. **Drop tier tags**: Remove `(Tier N — source)` suffixes — these are pipeline metadata, not analyst-facing
+5. **Drop [UNVERIFIED] tags**: Remove `[UNVERIFIED]` prefixes — the ALTER script represents the best-available knowledge. Unverified items are tracked in the review sidecar
+6. **Preserve `Same meaning as Dim_Position.*`** references — these help the AI assistant cross-reference
+7. **Single quotes in values**: Escape any single quotes in descriptions with `''` (SQL standard)
+8. **One ALTER per column**: Each column gets its own `ALTER TABLE ... ALTER COLUMN ... COMMENT` statement on a single line
+
+## Completion — ALL THREE FILES REQUIRED
+
+Phase 11 is NOT complete until ALL THREE files exist:
 
 1. **Wiki file**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md`
 2. **Review sidecar**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.review-needed.md`
+3. **ALTER script**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.alter.sql`
 
-The review sidecar is a mandatory byproduct of every run. It may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case. When in doubt, create the file.
+The ALTER script is the ultimate deliverable — the metadata that powers the Databricks AI assistant. The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case. When in doubt, create both support files.
 
-Mark `[x] Phase 11: Documentation Generated` in the checklist only after both files are written.
+Mark `[x] Phase 11: Documentation Generated` in the checklist only after all three files are written.

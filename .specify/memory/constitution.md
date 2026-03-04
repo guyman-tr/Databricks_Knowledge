@@ -1,8 +1,23 @@
 <!--
-Sync Impact Report — v1.3.0 → v1.4.0 (MINOR)
+Sync Impact Report — v1.4.0 → v1.5.0 (MINOR)
 
-Version change: 1.3.0 → 1.4.0
-Bump rationale: Add reviewer feedback loop (Tier 5, corrections, glossary).
+Version change: 1.4.0 → 1.5.0
+Bump rationale: Databricks ALTER script (.alter.sql) is THE primary output.
+  The entire pipeline exists to produce machine-consumable metadata for
+  Unity Catalog. The ALTER script is now a mandatory, constitution-level
+  output alongside the wiki and review sidecar.
+
+Modified principles:
+  - I. Agent-First Knowledge: Added: the Databricks ALTER script is the
+    ULTIMATE deliverable. Wiki and sidecar are intermediate artifacts.
+  - Quality Gates: Added: every run must produce .alter.sql with table +
+    column COMMENTs within UC's 1024-char limit.
+
+Pipeline rules requiring updates:
+  - 11-generate-documentation.mdc → THREE files per object (wiki + sidecar + .alter.sql)
+
+Previous report (v1.3.0 → v1.4.0):
+  Add reviewer feedback loop (Tier 5, corrections, glossary).
   Enables domain experts to correct pipeline output and have corrections
   persist across reruns. Adds global glossary for cross-table domain terms.
 
@@ -43,6 +58,8 @@ Previous report (v1.2.0 → v1.3.0):
 
 ### I. Agent-First Knowledge (NON-NEGOTIABLE)
 Every knowledge artifact produced by this project must be machine-readable and consumable by the Databricks AI assistant. Human readability is a bonus, not the goal. If a piece of knowledge can't be programmatically parsed, routed, and served by an agent, it doesn't ship.
+
+**The Databricks ALTER script is the ULTIMATE deliverable.** The wiki documentation and review sidecar are intermediate artifacts that feed the final output: a `.alter.sql` file containing `ALTER TABLE ... SET TBLPROPERTIES ('comment' = ...)` and `ALTER TABLE ... ALTER COLUMN ... COMMENT '...'` statements ready to execute against Unity Catalog. Every column description must fit within UC's 1024-character limit. This script IS the metadata that powers the Databricks AI assistant — everything else in the pipeline exists to produce it.
 
 ### II. Code Is King (NON-NEGOTIABLE)
 When information from different sources conflicts, the hierarchy is absolute. The production pipeline's constitution (DB_Schema, Section XII) establishes the principle: JOIN analysis beats explicit FKs beats naming heuristics -- because "the application code reveals the TRUE relationships." This DWH pipeline inherits that principle and extends it: the upstream semantic wiki IS the output of that strict production analysis, so it starts as the authoritative baseline for everything we document here.
@@ -122,6 +139,7 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 
 - No spec proceeds to implementation without validation against the canonical metadata schema
 - Column descriptions must fit Unity Catalog's 1024-character limit
+- **Every pipeline run must produce THREE output files**: wiki (`.md`), review sidecar (`.review-needed.md`), and Databricks ALTER script (`.alter.sql`). The ALTER script is the primary deliverable — a pipeline run without it is incomplete
 - Every domain package must include at least 3 test questions with expected agent responses
 - Gap analysis (what's NOT in the lake) is as important as mapping what IS
 - No environment-specific statistics in wiki descriptions (row counts, percentages, date ranges) — these belong in working notes or query advisory, not in element descriptions
@@ -131,4 +149,4 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 
 This constitution governs all phases of the Data Knowledge Platform. Amendments require documentation and agreement between project contributors. The canonical metadata schema (Phase 1 output) becomes binding once ratified.
 
-**Version**: 1.4.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-03
+**Version**: 1.5.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-03

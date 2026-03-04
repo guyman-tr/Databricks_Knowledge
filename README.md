@@ -84,12 +84,15 @@ knowledge/
             └── Tables/
                 ├── DWH_dbo.Dim_Position.md                # Wiki documentation
                 ├── DWH_dbo.Dim_Position.review-needed.md  # Review sidecar
+                ├── DWH_dbo.Dim_Position.alter.sql         # ★ Databricks ALTER script
                 ├── DWH_dbo.Fact_CustomerAction.md
-                └── DWH_dbo.Fact_CustomerAction.review-needed.md
+                ├── DWH_dbo.Fact_CustomerAction.review-needed.md
+                └── DWH_dbo.Fact_CustomerAction.alter.sql  # ★ Databricks ALTER script
 ```
 
-Each documented table produces **two files**:
-- **Wiki (`.md`)** — Full semantic documentation: tagline, column descriptions with confidence tiers, relationships, common JOINs, business logic, gotchas, and query patterns.
+Each documented table produces **three files**:
+- **Databricks ALTER script (`.alter.sql`)** — **THE primary output.** Contains `ALTER TABLE ... SET TBLPROPERTIES` and `ALTER COLUMN ... COMMENT` statements ready to execute against Unity Catalog. Every description fits within UC's 1024-character limit. This is the metadata that powers the Databricks AI assistant.
+- **Wiki (`.md`)** — Full semantic documentation: tagline, column descriptions with confidence tiers, relationships, common JOINs, business logic, gotchas, and query patterns. Intermediate artifact that feeds the ALTER script.
 - **Review sidecar (`.review-needed.md`)** — Tracks unverified items, reviewer corrections, and open questions. Persists across reruns so domain expert feedback is never lost.
 
 ## Confidence Tiers
