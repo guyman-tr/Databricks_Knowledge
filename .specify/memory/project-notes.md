@@ -4,9 +4,9 @@
 
 The POC is tightly scoped to `DWH_dbo.Dim_Position`. Three deliverables:
 
-1. **Semantic wiki file** — full `knowledge/synapse/Wiki/DWH_dbo/Tables/DWH_dbo.Dim_Position.md` following the canonical schema (table description, all column descriptions, business logic, lineage, relationships, query advisory)
+1. **Semantic wiki file** — full `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.md` following the canonical schema (table description, all column descriptions, business logic, lineage, relationships, query advisory)
 2. **Databricks ALTER script** — a runnable `.alter.sql` script that pushes the table description and all column descriptions to Unity Catalog via `ALTER TABLE ... SET TBLPROPERTIES` / `ALTER TABLE ... ALTER COLUMN ... COMMENT`
-3. **Review sidecar** — `DWH_dbo.Dim_Position.review-needed.md` listing all Tier 4 / unresolved items for domain expert review (added in constitution v1.3.0)
+3. **Review sidecar** — `Dim_Position.review-needed.md` listing all Tier 4 / unresolved items for domain expert review (added in constitution v1.3.0)
 
 **NOT in POC scope**: Databricks agent knowledge markdowns, domain packages, routing metadata. Those are Phase 9 (Spec 007) concerns. The POC proves the pipeline produces correct semantic output and can push it to UC — nothing more.
 

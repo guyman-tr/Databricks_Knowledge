@@ -243,7 +243,7 @@ An AI-driven pipeline that produces analyst-ready documentation for Synapse DWH 
 ### Phase 12: Cross-Object Enrichment
 **What it does**: Reads existing wiki documentation for related objects and inherits knowledge for shared columns.
 
-**Automated**: Yes — reads `DWH_dbo.Dim_Position.md` and applies descriptions to shared columns.
+**Automated**: Yes — reads `Dim_Position.md` and applies descriptions to shared columns.
 
 **FCA Output**:
 > 33 columns cross-referenced with Dim_Position wiki. Descriptions inherited for: Commission ("eToro markup/spread"), FullCommission ("market spread + eToro markup"), IsAirDrop ("position created by eToro on behalf of customer"), DLTOpen/DLTClose ("German crypto broker"), SettlementTypeID (0-5 value map), RedeemStatus (crypto wallet redemption).
@@ -338,8 +338,8 @@ AI:   PlatformID corrected. Updated wiki (element, business logic,
 
 | Artifact | Purpose | Example |
 |----------|---------|---------|
-| `{Schema}.{Table}.md` | Analyst-facing wiki documentation | `DWH_dbo.Fact_CustomerAction.md` (398 lines, 8 sections) |
-| `{Schema}.{Table}.review-needed.md` | Review tracker + correction log | `DWH_dbo.Fact_CustomerAction.review-needed.md` (82 lines, 21 items) |
+| `{Table}.md` | Analyst-facing wiki documentation | `Fact_CustomerAction.md` (398 lines, 8 sections) |
+| `{Table}.review-needed.md` | Review tracker + correction log | `Fact_CustomerAction.review-needed.md` (82 lines, 21 items) |
 | `knowledge/glossary.md` | Cross-object domain terminology | 10 terms, 6 value maps (shared across all documented objects) |
 | Phase rule files (`.mdc`) | Pipeline configuration | 14 phase rules in `.cursor/rules/dwh-semantic-doc/` |
 

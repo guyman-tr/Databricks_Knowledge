@@ -6,6 +6,7 @@
 |----------|-------|
 | **Schema** | DWH_dbo |
 | **Object Type** | Table (Fact) |
+| **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
 | **Distribution** | HASH(RealCID) |
 | **Index Type** | CLUSTERED COLUMNSTORE + 4 nonclustered |
 | **Row Count** | ~11 billion |
@@ -103,7 +104,7 @@ The data originates from production systems, flows through the Azure Data Lake a
 - These columns are ONLY populated for position events (ActionTypeID IN 1-6, 28, 39, 40)
 - For non-position events, these columns are 0 or NULL
 - The ETL joins from staging tables directly — NOT from Dim_Position itself
-- Column meanings are identical to Dim_Position (see `DWH_dbo.Dim_Position.md` for detailed descriptions)
+- Column meanings are identical to Dim_Position (see `Dim_Position.md` for detailed descriptions)
 
 ### 2.4 PlatformID — Product/Platform Resolution
 
@@ -394,4 +395,4 @@ All staging → SP_Fact_CustomerAction → Ext_FCA_Fact_CustomerAction
 ---
 
 *Generated: 2026-03-03 | Object: DWH_dbo.Fact_CustomerAction | Type: Table (Fact) | Phases: 14/14*
-*Sources: Synapse metadata + SP analysis + upstream Wiki (History.Credit, Dictionary.CreditType, Dictionary.MoveMoneyReason, Dictionary.SubCreditTypeID) + cross-reference DWH_dbo.Dim_Position.md + Atlassian (5 Confluence, 7 Jira)*
+*Sources: Synapse metadata + SP analysis + upstream Wiki (History.Credit, Dictionary.CreditType, Dictionary.MoveMoneyReason, Dictionary.SubCreditTypeID) + cross-reference Dim_Position.md + Atlassian (5 Confluence, 7 Jira)*

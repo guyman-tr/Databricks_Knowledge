@@ -1,0 +1,280 @@
+---
+description: Phase 15 - UC Lineage Injection for DWH Semantic Documentation. Bridges the Synapse black-box gap by injecting external lineage into Unity Catalog using the External Lineage API. Makes Synapse ETL transformations visible in UC's native lineage graph.
+globs:
+alwaysApply: false
+---
+
+# Phase 15: UC Lineage Injection
+
+## Purpose
+
+Unity Catalog auto-captures lineage for Spark operations inside Databricks, but Synapse DWH transformations are a **black box** — UC sees data arrive in gold tables but has no visibility into the Synapse SPs, staging tables, and ETL logic that transform bronze-layer Generic Pipeline objects into downstream gold objects.
+
+This phase bridges that gap by using the **Databricks External Lineage API** (Public Preview) to inject Synapse transformation knowledge directly into UC's native lineage graph. The result: end-to-end lineage from production source through lake through Synapse ETL to UC gold tables and downstream views — all visible in Catalog Explorer's lineage tab.
+
+## Prerequisites
+
+- Phase 9 (Procedure Logic Extraction) complete — source-to-target column mappings
+- Phase 9B (ETL Orchestration) complete — SP execution order, dependencies
+- Phase 13 (Production Lineage Mapping) complete — full lineage chain
+- Phase 11 (Generate Documentation) complete — validated UC target name
+- Databricks Python SDK installed (`databricks-sdk`)
+- `CREATE EXTERNAL METADATA` privilege on the metastore
+- `MODIFY` privilege on target UC tables (for upstream lineage)
+- `SELECT` privilege on source UC tables (for downstream lineage)
+
+## Conceptual Model
+
+For a documented table like `DWH_dbo.Fact_CustomerAction`, the lineage chain in UC will look like:
+
+```
+[UC Bronze Table]                    [External: Synapse SP]              [UC Gold Table]                  [UC Downstream View]
+trading.bronze_etoro_               Synapse:DWH_dbo.                    main.dwh.gold_sql_dp_prod_we_    main.bi_output_stg.
+  trade_positiontbl       ──►       SP_Fact_CustomerAction    ──►        dwh_dbo_fact_customeraction  ──►  v_semantic_fact_customeraction
+                                    (with column mappings)
+trading.bronze_etoro_      ──►
+  history_credit
+trading.bronze_etoro_      ──►
+  customer_customerstatic
+```
+
+Each arrow is an **external lineage relationship** with optional column-level mappings.
+
+## Algorithm
+
+### Step 1: Gather Lineage Data from Prior Phases
+
+Read the Phase 13 lineage chain for this object:
+- Production source tables → lake paths → UC bronze tables
+- Synapse staging tables → ETL SPs → target DWH table
+- Column-level lineage (Phase 9 source-to-target mappings)
+
+Read the Phase 11 ALTER script header for the validated UC target name.
+
+### Step 2: Map UC Bronze Tables
+
+For each production source identified in Phase 13:
+1. Query the Generic Pipeline mapping view to find the UC bronze table:
+   ```sql
+   SELECT UnityCatalogTableName, BusinessGroup
+   FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
+   WHERE TableName = '{ProductionTableName}'
+     AND SchemaName = '{ProductionSchema}'
+   ```
+2. Construct the full UC bronze table name: `main.{BusinessGroup}.{UnityCatalogTableName}`
+3. Verify it exists: `DESCRIBE TABLE {uc_bronze_table}`
+
+If the bronze table doesn't exist or isn't accessible, note it and continue — the lineage will have a gap at that link but the rest still adds value.
+
+### Step 3: Create External Metadata Objects
+
+Using the Databricks Python SDK (`databricks.sdk`), create external metadata objects for each Synapse entity in the lineage chain.
+
+**Synapse Table (the DWH object itself):**
+```python
+from databricks.sdk import WorkspaceClient
+from databricks.sdk.service.catalog import (
+    CreateExternalMetadataRequest,
+    ExternalMetadataEntityType,
+    ExternalMetadataSystemType,
+)
+
+w = WorkspaceClient()
+
+synapse_table = w.external_metadata.create_external_metadata(
+    CreateExternalMetadataRequest(
+        name="synapse__dwh_dbo__fact_customeraction",
+        entity_type=ExternalMetadataEntityType.TABLE,
+        system_type=ExternalMetadataSystemType.CUSTOM,
+        description="Synapse DWH table: DWH_dbo.Fact_CustomerAction. Central customer activity fact table.",
+        url="",  # link to wiki doc if hosted somewhere
+        columns=["HistoryID", "GCID", "RealCID", ...],  # all column names
+        properties={
+            "synapse_schema": "DWH_dbo",
+            "synapse_object": "Fact_CustomerAction",
+            "synapse_server": "sql_dp_prod_we",
+            "object_type": "USER_TABLE",
+            "refresh": "daily",
+            "distribution": "HASH(RealCID)",
+            "documented_by": "dwh-semantic-doc pipeline",
+        }
+    )
+)
+```
+
+**Synapse Stored Procedures (each ETL SP):**
+```python
+for sp_name in etl_sps:
+    w.external_metadata.create_external_metadata(
+        CreateExternalMetadataRequest(
+            name=f"synapse__dwh_dbo__{sp_name.lower()}",
+            entity_type=ExternalMetadataEntityType.CUSTOM,  # no native SP type
+            system_type=ExternalMetadataSystemType.CUSTOM,
+            description=f"Synapse stored procedure: DWH_dbo.{sp_name}. ETL transformation.",
+            properties={
+                "synapse_schema": "DWH_dbo",
+                "synapse_object": sp_name,
+                "object_type": "SQL_STORED_PROCEDURE",
+                "etl_pattern": "incremental/merge/full",
+            }
+        )
+    )
+```
+
+**Naming convention for external metadata objects:**
+- `synapse__{schema}__{object_name}` (double underscore as separator, lowercase)
+- Example: `synapse__dwh_dbo__fact_customeraction`, `synapse__dwh_dbo__sp_fact_customeraction`
+
+### Step 4: Create Lineage Relationships
+
+Create directional lineage relationships connecting the chain:
+
+**Bronze → Synapse SP (upstream relationship):**
+```python
+from databricks.sdk.service.catalog import (
+    CreateRequestExternalLineage,
+    ExternalLineageObject,
+    ExternalLineageObjectType,
+    LineageDirection,
+)
+
+# Bronze UC table is upstream to the Synapse SP
+w.external_lineage.create_external_lineage_relationship(
+    CreateRequestExternalLineage(
+        source=ExternalLineageObject(
+            object_type=ExternalLineageObjectType.TABLE,
+            table={"name": "main.trading.bronze_etoro_trade_positiontbl"},
+        ),
+        target=ExternalLineageObject(
+            object_type=ExternalLineageObjectType.EXTERNAL_METADATA,
+            external_metadata={"name": "synapse__dwh_dbo__sp_fact_customeraction"},
+        ),
+        column_mappings=[
+            {"source_column": "PositionID", "target_column": "PositionID"},
+            {"source_column": "CID", "target_column": "RealCID"},
+            # ... from Phase 9 column lineage
+        ],
+        properties={
+            "relationship_type": "etl_source",
+            "description": "Bronze lake table read by Synapse SP via CopyFromLake staging",
+        }
+    )
+)
+```
+
+**Synapse SP → Gold UC table (downstream relationship):**
+```python
+# Synapse SP writes to the gold UC table
+w.external_lineage.create_external_lineage_relationship(
+    CreateRequestExternalLineage(
+        source=ExternalLineageObject(
+            object_type=ExternalLineageObjectType.EXTERNAL_METADATA,
+            external_metadata={"name": "synapse__dwh_dbo__sp_fact_customeraction"},
+        ),
+        target=ExternalLineageObject(
+            object_type=ExternalLineageObjectType.TABLE,
+            table={"name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"},
+        ),
+        column_mappings=[
+            {"source_column": "HistoryID", "target_column": "HistoryID"},
+            {"source_column": "RealCID", "target_column": "RealCID"},
+            # ... all passthrough and transformed columns
+        ],
+        properties={
+            "relationship_type": "etl_target",
+            "description": "Synapse SP writes transformed data to gold table via Generic Pipeline delta export",
+        }
+    )
+)
+```
+
+### Step 5: Column-Level Mappings
+
+For each column in the documented table, create column-level lineage entries based on Phase 9's source-to-target mapping:
+
+| Mapping Type | Column Mapping |
+|-------------|----------------|
+| Passthrough | `source_col = target_col` (same name) |
+| Renamed | `source_col → target_col` (different names, same data) |
+| Derived | Multiple source columns → one target column (include transform description in properties) |
+| DWH-only | No source → target column (ETL-computed, flag in properties) |
+
+### Step 6: Idempotency
+
+Before creating objects, check if they already exist:
+```python
+existing = list(w.external_metadata.list_external_metadata(
+    # filter by name prefix
+))
+```
+
+If an external metadata object already exists:
+- **Update** it if the description or properties changed
+- **Skip** creation if unchanged
+
+If a lineage relationship already exists:
+- **Update** column mappings if the lineage data changed
+- **Skip** if unchanged
+
+### Step 7: Generate Lineage Script
+
+Produce a Python script alongside the ALTER script:
+```
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.py
+```
+
+This script:
+1. Is executable standalone: `python DWH_dbo.Fact_CustomerAction.lineage.py`
+2. Uses the Databricks SDK with OAuth
+3. Creates/updates all external metadata objects and lineage relationships
+4. Is idempotent — safe to re-run
+5. Logs what was created/updated/skipped
+
+## Output Format
+
+```
+PHASE 15 RESULTS - {Schema}.{Table}
+====================================
+External Metadata Objects:
+  Created: {N} (list names)
+  Updated: {N} (list names)
+  Skipped: {N} (already current)
+
+Lineage Relationships:
+  Created: {N} upstream, {N} downstream
+  Column Mappings: {N} columns mapped across {N} relationships
+
+Lineage Chain (as it appears in UC):
+  [UC Bronze: {table}] → [Ext: Synapse SP] → [UC Gold: {table}] → [UC View: {view}]
+
+Script: knowledge/synapse/Wiki/{Schema}/Tables/{Schema}.{ObjectName}.lineage.py
+```
+
+## Permission Requirements
+
+| Action | Required Privilege |
+|--------|-------------------|
+| Create external metadata object | `CREATE EXTERNAL METADATA` on metastore |
+| Upstream lineage to UC table | `MODIFY` on target table |
+| Downstream lineage from UC table | `SELECT` on source table |
+| Column-level mappings | Same as table-level above |
+
+If any permission is missing, log the specific error and continue with available relationships. Partial lineage is better than no lineage.
+
+## Limits
+
+Per the Databricks docs:
+- 10,000 external metadata objects per metastore
+- 100,000 external lineage relationships per metastore
+
+At ~5 external objects per documented table and ~10 relationships, we can document ~2,000 tables before hitting limits. Well within scope.
+
+## Important Notes
+
+- External lineage is NOT recorded in `system.access.table_lineage` / `system.access.column_lineage`. It is visible only in Catalog Explorer's lineage graph UI. When the user gains access to system lineage tables, those will show auto-captured Spark lineage; this phase covers the Synapse gap that Spark lineage cannot capture.
+- The `system_type` for Synapse is `CUSTOM` since Azure Synapse is not in the predefined list. Use `properties` to store Synapse-specific metadata.
+- Column names in external metadata objects are case-sensitive. Match the casing from the UC DESCRIBE TABLE output.
+
+## Completion
+
+Mark `[x] Phase 15: UC Lineage Injection` in the checklist after the lineage script is generated and (if permissions allow) executed successfully.

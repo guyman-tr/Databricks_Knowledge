@@ -22,10 +22,10 @@ You are a **review assistant**. Your job is to make reviewing wiki documentation
 ### Step 1: Locate Review Files
 
 ```
-Sidecar pattern: knowledge/synapse/Wiki/{Schema}/Tables/{Schema}.{ObjectName}.review-needed.md
+Sidecar pattern: knowledge/synapse/Wiki/{Schema}/Tables/{ObjectName}.review-needed.md
 Glossary:        knowledge/glossary.md
-Wiki:            knowledge/synapse/Wiki/{Schema}/Tables/{Schema}.{ObjectName}.md
-ALTER script:    knowledge/synapse/Wiki/{Schema}/Tables/{Schema}.{ObjectName}.alter.sql
+Wiki:            knowledge/synapse/Wiki/{Schema}/Tables/{ObjectName}.md
+ALTER script:    knowledge/synapse/Wiki/{Schema}/Tables/{ObjectName}.alter.sql
 ```
 
 Read all `.review-needed.md` files to build the review queue. Use Glob: `knowledge/**//*.review-needed.md`
@@ -56,6 +56,11 @@ When the user provides a correction, apply it to **all three targets simultaneou
 
 2. **ALTER script (.alter.sql)** — find the matching `ALTER TABLE ... ALTER COLUMN ... COMMENT`
    line and update the comment text to reflect the correction (respect 1024-char UC limit).
+   Read the `-- UC Target:` and `-- Resolved via:` lines in the ALTER script header to confirm
+   the UC target is validated. If the header says `INFERRED (unvalidated)`, warn the user:
+   "The UC target for this table hasn't been validated against Unity Catalog yet. The ALTER
+   script may be targeting a non-existent object." If Databricks is available, offer to run
+   the UC Object Resolution algorithm from Phase 11 to fix the target before continuing.
 
 3. **Sidecar (.review-needed.md)** — add a row to `## Reviewer Corrections`:
 

@@ -60,4 +60,4 @@ These columns received descriptions based only on column name inference. A domai
 
 ---
 
-*Generated: 2026-03-02 | Updated: 2026-03-03 | Companion to DWH_dbo.Dim_Position.md*
+*Generated: 2026-03-02 | Updated: 2026-03-03 | Companion to Dim_Position.md*

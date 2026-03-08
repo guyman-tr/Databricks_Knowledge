@@ -46,7 +46,35 @@ search({ query: "test" })
 
 > **BLOCKED: Atlassian MCP is not working.** Please re-authorize and restart Cursor. No documentation will be generated without Jira+Confluence knowledge.
 
-### Check 3: Upstream Knowledge Sources
+### Check 3: Databricks / Unity Catalog Connection
+
+Verify connectivity to Unity Catalog — required for ALTER script UC target validation:
+
+**Option A — Databricks MCP** (preferred):
+```sql
+SELECT 1 AS ConnectionTest
+```
+via `user-databricks_sql-execute_sql_read_only`
+
+**Option B — Python connector** (fallback if MCP errored):
+```python
+from databricks import sql
+conn = sql.connect(
+    server_hostname="adb-5142916747090026.6.azuredatabricks.net",
+    http_path="/sql/1.0/warehouses/208214768b0e0308",
+    auth_type="databricks-oauth"
+)
+cursor = conn.cursor()
+cursor.execute("SELECT 1")
+print(cursor.fetchone())
+```
+
+- If either returns `1` -> PASS — set `uc_available = true`
+- If both fail -> **WARN** (not blocking, but ALTER script will use unvalidated UC target):
+
+> **WARNING: Databricks/UC not available.** ALTER scripts will be generated with `-- UNVALIDATED UC TARGET` header. UC names are inferred, not verified — run the validation step separately once connectivity is restored.
+
+### Check 4: Upstream Knowledge Sources
 
 Read the config file (`/.specify/Configs/dwh-semantic-doc-config.json`) and for each entry in `upstream_knowledge_sources`, verify the wiki is accessible:
 ```
@@ -57,7 +85,7 @@ Read: {repo_path}/{wiki_path}/{index_file}
 
 > **WARNING: Upstream knowledge source '{name}' not found at {repo_path}.** Production lineage tracing will be limited. Clone or pull the repository for full functionality.
 
-**Gate: Checks 1 and 2 must PASS. Check 3 is advisory.**
+**Gate: Checks 1 and 2 must PASS. Checks 3 and 4 are advisory.**
 
 ---
 
@@ -93,13 +121,13 @@ For each object to document:
    ```
 
 2. **Set output path**:
-   - Tables: `knowledge/synapse/Wiki/{Schema}/Tables/{Schema}.{ObjectName}.md`
-   - Views: `knowledge/synapse/Wiki/{Schema}/Views/{Schema}.{ObjectName}.md`
-   - Stored Procedures: `knowledge/synapse/Wiki/{Schema}/Stored Procedures/{Schema}.{ObjectName}.md`
-   - Functions: `knowledge/synapse/Wiki/{Schema}/Functions/{Schema}.{ObjectName}.md`
+   - Tables: `knowledge/synapse/Wiki/{Schema}/Tables/{ObjectName}.md`
+   - Views: `knowledge/synapse/Wiki/{Schema}/Views/{ObjectName}.md`
+   - Stored Procedures: `knowledge/synapse/Wiki/{Schema}/Stored Procedures/{ObjectName}.md`
+   - Functions: `knowledge/synapse/Wiki/{Schema}/Functions/{ObjectName}.md`
 
 3. **Select pipeline** based on object type:
-   - **Tables**: All phases (1-14)
+   - **Tables**: All phases (1-15)
    - **Views**: Phases 1, 2, 5, 7, 8, 10, 11, 14
    - **Stored Procedures**: Phases 1, 5, 8, 9, 10, 11
    - **Functions**: Phases 1, 2, 5, 7, 8, 10, 11
@@ -128,8 +156,9 @@ Object Type: [Table/View/Procedure/Function]
 - [ ] Phase 12: Cross-Object Enrichment
 - [ ] Phase 13: Production Lineage Mapping
 - [ ] Phase 14: Query Advisory Metadata
+- [ ] Phase 15: UC Lineage Injection
 
-Status: 0/14
+Status: 0/15
 ```
 
 ---
@@ -177,7 +206,7 @@ Execute ALL applicable phases sequentially. Each phase MUST load its rule file f
 **Load**: `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc`
 **Also Load**: `.cursor/rules/dwh-semantic-doc/12-cross-object-enrichment.mdc` (Mechanism 1: Pre-Read)
 
-Write MD file to: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{ObjectName}.md`
+Write MD file to: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md`
 
 ### Phase 12: Cross-Object Enrichment
 **Load**: `.cursor/rules/dwh-semantic-doc/12-cross-object-enrichment.mdc`
@@ -187,6 +216,10 @@ Write MD file to: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{Schema}.{Object
 
 ### Phase 14: Query Advisory Metadata
 **Load**: `.cursor/rules/dwh-semantic-doc/14-query-advisory-metadata.mdc`
+
+### Phase 15: UC Lineage Injection
+**Load**: `.cursor/rules/dwh-semantic-doc/15-uc-lineage-injection.mdc`
+**Requires**: Databricks Python SDK (`databricks-sdk`), `CREATE EXTERNAL METADATA` privilege on metastore
 
 ---
 
@@ -211,6 +244,7 @@ Completed: [timestamp]
 - [x] Phase 12: Cross-Object Enrichment
 - [x] Phase 13: Production Lineage Mapping
 - [x] Phase 14: Query Advisory Metadata
+- [x] Phase 15: UC Lineage Injection
 
 Status: COMPLETE
 ```

@@ -1,8 +1,25 @@
 <!--
-Sync Impact Report — v1.4.0 → v1.5.0 (MINOR)
+Sync Impact Report — v1.5.0 → v1.6.0 (MINOR)
 
-Version change: 1.4.0 → 1.5.0
-Bump rationale: Databricks ALTER script (.alter.sql) is THE primary output.
+Version change: 1.5.0 → 1.6.0
+Bump rationale: ALTER scripts must target validated UC objects. The prior
+  naming convention (DWH_dbo.Fact_CustomerAction → dwh.fact_customeraction)
+  was pure inference and produced ALTER scripts targeting non-existent UC
+  tables. Now: query Unity Catalog directly to resolve the actual
+  catalog.schema.table before generating any ALTER statement.
+
+Modified principles:
+  - Quality Gates: Added: ALTER scripts must target a validated UC object.
+    UC fully-qualified name resolved by querying UC, not inferred.
+    If Databricks unavailable, ALTER script gets UNVALIDATED header.
+
+Pipeline rules requiring updates:
+  - dwh-semantic-doc.md → Add Databricks pre-flight check (advisory)
+  - 11-generate-documentation.mdc → Replace UC naming inference with
+    UC Object Resolution algorithm (query UC directly)
+
+Previous report (v1.4.0 → v1.5.0):
+  Databricks ALTER script (.alter.sql) is THE primary output.
   The entire pipeline exists to produce machine-consumable metadata for
   Unity Catalog. The ALTER script is now a mandatory, constitution-level
   output alongside the wiki and review sidecar.
@@ -140,6 +157,7 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 - No spec proceeds to implementation without validation against the canonical metadata schema
 - Column descriptions must fit Unity Catalog's 1024-character limit
 - **Every pipeline run must produce THREE output files**: wiki (`.md`), review sidecar (`.review-needed.md`), and Databricks ALTER script (`.alter.sql`). The ALTER script is the primary deliverable — a pipeline run without it is incomplete
+- **ALTER scripts must target a validated Unity Catalog object.** The UC fully-qualified name (`catalog.schema.table`) must be resolved by querying Unity Catalog directly — never inferred from Synapse naming conventions alone. If the Databricks connection is unavailable, the ALTER script must be generated with an `-- UNVALIDATED UC TARGET` header and the inferred name treated as a placeholder until validated
 - Every domain package must include at least 3 test questions with expected agent responses
 - Gap analysis (what's NOT in the lake) is as important as mapping what IS
 - No environment-specific statistics in wiki descriptions (row counts, percentages, date ranges) — these belong in working notes or query advisory, not in element descriptions
@@ -149,4 +167,4 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 
 This constitution governs all phases of the Data Knowledge Platform. Amendments require documentation and agreement between project contributors. The canonical metadata schema (Phase 1 output) becomes binding once ratified.
 
-**Version**: 1.5.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-03
+**Version**: 1.6.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-08

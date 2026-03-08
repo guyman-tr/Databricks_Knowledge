@@ -6,6 +6,7 @@
 |----------|-------|
 | **Schema** | DWH_dbo |
 | **Object Type** | Table |
+| **UC Target** | `main.dwh.dim_position` |
 | **Distribution** | HASH(PositionID) |
 | **Index Type** | CLUSTERED INDEX (PositionID) |
 | **Production Source** | `Trade.PositionTbl` + `Trade.PositionTreeInfo` (via `Trade.Position` → `Trade.PositionForExternalUse` → `Trade.OpenPositionEndOfDay` / `History.ClosePositionEndOfDay`) |

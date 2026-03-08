@@ -82,12 +82,12 @@ knowledge/
     └── Wiki/
         └── DWH_dbo/
             └── Tables/
-                ├── DWH_dbo.Dim_Position.md                # Wiki documentation
-                ├── DWH_dbo.Dim_Position.review-needed.md  # Review sidecar
-                ├── DWH_dbo.Dim_Position.alter.sql         # ★ Databricks ALTER script
-                ├── DWH_dbo.Fact_CustomerAction.md
-                ├── DWH_dbo.Fact_CustomerAction.review-needed.md
-                └── DWH_dbo.Fact_CustomerAction.alter.sql  # ★ Databricks ALTER script
+                ├── Dim_Position.md                # Wiki documentation
+                ├── Dim_Position.review-needed.md  # Review sidecar
+                ├── Dim_Position.alter.sql         # ★ Databricks ALTER script
+                ├── Fact_CustomerAction.md
+                ├── Fact_CustomerAction.review-needed.md
+                └── Fact_CustomerAction.alter.sql  # ★ Databricks ALTER script
 ```
 
 Each documented table produces **three files**:

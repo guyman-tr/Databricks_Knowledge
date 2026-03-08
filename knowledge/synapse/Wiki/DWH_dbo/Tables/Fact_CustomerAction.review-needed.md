@@ -78,4 +78,4 @@ These columns received descriptions based only on column name inference. A domai
 
 ---
 
-*Generated: 2026-03-03 | Companion to DWH_dbo.Fact_CustomerAction.md*
+*Generated: 2026-03-03 | Companion to Fact_CustomerAction.md*
