@@ -29,17 +29,22 @@ Before generating, execute the Pre-Read step from `12-cross-object-enrichment.md
 3. Read existing docs and extract: element descriptions, value maps, relationships
 4. Use absorbed knowledge for consistency across docs
 
-## Output Path — THREE FILES PER OBJECT
+## Output Path — FOUR FILES PER TABLE OBJECT
 
 ```
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md              ← wiki doc
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md ← review sidecar
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.alter.sql        ← Databricks ALTER script (PRIMARY OUTPUT)
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.views.alter.sql  ← downstream view column comments
 ```
 
 Object type folders: `Tables/`, `Views/`, `Stored Procedures/`, `Functions/`
 
-All three files are mandatory outputs. The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABLE ... SET TBLPROPERTIES` and `ALTER COLUMN ... COMMENT` statements that push metadata into Unity Catalog. The wiki and sidecar are intermediate artifacts that feed it. Write the wiki doc first, then the review sidecar, then generate the ALTER script from the wiki's Elements table.
+The first three files are mandatory outputs. The fourth (`.views.alter.sql`) is mandatory for tables that have downstream UC views — which is almost all of them.
+
+Each object gets its OWN `.views.alter.sql` — never combine multiple source tables into one file. When the same column appears in views downstream of multiple tables, each table's file emits the same `COMMENT ON COLUMN` for that view column independently. This is by design: duplicate-safe and allows each table to be documented/deployed independently.
+
+The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABLE ... SET TBLPROPERTIES` and `ALTER COLUMN ... COMMENT` statements that push metadata into Unity Catalog. The wiki and sidecar are intermediate artifacts that feed it. Write the wiki doc first, then the review sidecar, then generate the ALTER script from the wiki's Elements table, then the views ALTER script.
 
 ## STRICT RULES
 
@@ -377,9 +382,9 @@ Tag values:
 - `source_schema` / `source_server`: From Synapse metadata and config
 - `refresh`: From Phase 9B ETL orchestration analysis
 
-### View Propagation (Downstream Column Comments)
+### View Propagation (Downstream Column Comments) — SEPARATE FILE
 
-After generating the base table ALTER script, discover and propagate column descriptions to downstream UC views. Views are the primary interface for analysts and BI tools — undocumented view columns defeat the purpose of the pipeline.
+View propagation is written to its own file: `{ObjectName}.views.alter.sql`. It is NOT embedded in the main `.alter.sql`.
 
 **Discovery**: Search for views that reference the base table:
 ```sql
@@ -389,34 +394,55 @@ WHERE table_type = 'VIEW'
   AND LOWER(table_name) LIKE '%{object_name_pattern}%'
 ```
 
+Then verify each candidate view actually reads from the base table by checking `SHOW CREATE TABLE` or `system.information_schema.view_table_usage` (when available). Include transitive dependencies (view-of-view) only when the column name and semantics are preserved.
+
 **Syntax**: Views do NOT support `ALTER TABLE ... ALTER COLUMN ... COMMENT`. Use `COMMENT ON COLUMN` instead:
 ```sql
 COMMENT ON COLUMN {catalog}.{schema}.{view_name}.{column_name} IS '{description}';
 ```
 
-**Column matching**: For each view column, match by name to the base table's Elements table. Only propagate descriptions for columns that exist in both the view and the base table. View-specific columns (e.g., computed aliases, joined columns from other tables) should be noted in the review sidecar for future documentation.
+**Column matching**: For each view, query its column list (`DESCRIBE {view}`) and match by name (case-insensitive) to the base table's Elements table. Only propagate descriptions for columns that exist in both. View-specific columns (computed aliases, joined columns from other tables) should be noted in the review sidecar for future documentation.
 
-**Permissions**: `COMMENT ON COLUMN` requires MODIFY permission on the view. If permission is denied for a specific view, note it in the ALTER script as a comment and move on — do not fail the entire propagation.
+**Permissions**: `COMMENT ON COLUMN` requires MODIFY permission on the view. If permission is denied for a specific view, note it in the ALTER script as a comment and move on.
 
-**Script structure**: Group view propagation at the end of the `.alter.sql` file, separated by a clear header:
+**File structure**:
 ```sql
 -- =============================================================================
--- View Propagation: push column descriptions to downstream UC views
--- Syntax: COMMENT ON COLUMN (works for views; ALTER TABLE does not)
+-- Databricks View Column Comment Propagation: {ObjectName}
+-- Generated: {date} | dwh-semantic-doc pipeline
+--
+-- Source: {uc_catalog}.{uc_schema}.{uc_table}
+-- Synapse: {Schema}.{ObjectName}
+--
+-- Target views ({N}):
+--   {catalog}.{schema}.{view_name}  ({matched}/{total} cols)
+--   ...
+--
+-- Total: {N} COMMENT ON COLUMN statements
 -- =============================================================================
 
--- ---- {catalog}.{schema}.{view_name} ({N} columns) ----
+-- ---- {catalog}.{schema}.{view_name} ({matched}/{total} columns matched) ----
 COMMENT ON COLUMN {catalog}.{schema}.{view_name}.{col} IS '{description}';
 ```
 
-## Completion — ALL THREE FILES REQUIRED
+**One file per source table**: Each table produces its own `.views.alter.sql`. If `PositionID` appears in views downstream of both `Dim_Position` and `Fact_CustomerAction`, both files emit their own `COMMENT ON COLUMN` for it. This is idempotent and allows independent deployment.
 
-Phase 11 is NOT complete until ALL THREE files exist:
+**Cross-reference in main ALTER script**: The main `.alter.sql` should include a comment:
+```sql
+-- View propagation: see {ObjectName}.views.alter.sql
+```
+
+## Completion — ALL FOUR FILES REQUIRED (for Tables)
+
+Phase 11 is NOT complete until ALL files exist:
 
 1. **Wiki file**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md`
 2. **Review sidecar**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md`
 3. **ALTER script**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.alter.sql`
+4. **View propagation**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.views.alter.sql`
 
-The ALTER script is the ultimate deliverable — the metadata that powers the Databricks AI assistant. It must include: table comment, table tags, column comments, UC-only column comments, and view propagation. The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case. When in doubt, create both support files.
+The ALTER script is the ultimate deliverable — the metadata that powers the Databricks AI assistant. It must include: table comment, table tags, column comments, and UC-only column comments. View propagation lives in its own file. The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case.
 
-Mark `[x] Phase 11: Documentation Generated` in the checklist only after all three files are written.
+For Views and other object types, only files 1-3 are required (no `.views.alter.sql` — views don't have downstream views of their own in this pipeline).
+
+Mark `[x] Phase 11: Documentation Generated` in the checklist only after all required files are written.

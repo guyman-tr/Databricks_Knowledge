@@ -129,7 +129,9 @@ COLUMN LINEAGE:
 - **Columns in production but NOT in DWH**: Why were they dropped? (irrelevant for analytics, PII, too granular)
 - **Columns in DWH but NOT in production**: Where do they come from? (derived calculations, ETL metadata, joined dimensions)
 
-## Output Format
+## Output — TWO ARTIFACTS
+
+### 1. Phase 13 Results (in-session)
 
 ```
 PHASE 13 RESULTS - {Schema}.{Table}
@@ -149,6 +151,73 @@ Lineage Chain Diagram:
   [see Step 4 format]
 ```
 
+### 2. Column Lineage File — `{ObjectName}.lineage.md`
+
+```
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md
+```
+
+One file per documented table. Contains the column-level lineage mapping in a structured markdown table. This is a SEPARATE deliverable from the `.md` wiki doc and `.alter.sql` — it captures the production-to-DWH column mapping that enables upstream comment propagation in the future.
+
+**File structure**:
+
+```markdown
+# Column Lineage: {Schema}.{ObjectName}
+
+| Property | Value |
+|----------|-------|
+| **DWH Table** | `{Schema}.{ObjectName}` |
+| **UC Target** | `{uc_catalog}.{uc_schema}.{uc_table}` |
+| **Primary Source** | `{ProductionSchema}.{ProductionTable}` (`{DatabaseName}`) |
+| **ETL SP** | `{SP_Name}` |
+| **Secondary Sources** | `{comma-separated list}` |
+| **Generated** | {date} |
+
+## Lineage Chain
+
+{ASCII diagram showing Production → Pipeline → ETL → DWH}
+
+## Column Lineage
+
+### Legend
+
+| Transform | Meaning |
+|-----------|---------|
+| **passthrough** | Column copied as-is. Same name, same value. |
+| **rename** | Same value, different column name in DWH. |
+| **cast/convert** | Type conversion only (e.g., cents→dollars, datetime→int). |
+| **ETL-computed** | Derived/calculated by ETL SP. Not in any single source. |
+| **join-enriched** | Joined from a secondary source table during ETL. |
+| **SP-adjusted** | Starts as passthrough but modified by a post-load SP. |
+
+### Columns
+
+| DWH Column | Source Table | Source Column | Transform | Notes |
+|-----------|-------------|---------------|-----------|-------|
+| {col} | {source} | {source_col} | {transform} | {notes} |
+| {computed_col} | — | — | ETL-computed | {formula or SP name} |
+
+## Summary
+
+| Category | Count |
+|----------|-------|
+| **Passthrough** | {N} |
+| **Rename** | {N} |
+| ... | ... |
+| **Total** | {N} |
+```
+
+**Rules**:
+- One row per DWH column, every column accounted for
+- Use `—` for Source Table and Source Column when the column is ETL-computed or DWH-only
+- Transform categories are mutually exclusive; pick the dominant one
+- Notes should reference specific SPs (e.g., "Set by SP_Dim_Position_ReOpen") or formulas
+- For `join-enriched`, note the join key (e.g., "Joined via PositionID")
+- For `rename`, note the original column name
+- This file is the authoritative source for upstream comment propagation decisions
+
+**Reference example**: See `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.lineage.md`
+
 ## Completion
 
-Mark `[x] Phase 13: Production Lineage Mapping` in the checklist.
+Mark `[x] Phase 13: Production Lineage Mapping` in the checklist only after both the in-session results and the `.lineage.md` file are produced.
