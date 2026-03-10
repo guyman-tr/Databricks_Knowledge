@@ -61,7 +61,7 @@ The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABL
 11. **CONFIDENCE TIERS** -- every element description must be traceable to a source tier: Tier 1 (upstream wiki verbatim), Tier 2 (Synapse SP code / downstream CASE patterns), Tier 3 (live data distribution), Tier 4 (column name inference — must be flagged `[UNVERIFIED]`). When generating the Elements table, Tier 4 descriptions must carry the `[UNVERIFIED]` prefix so human reviewers can prioritize corrections.
 12. **REVIEW SIDECAR** -- alongside every wiki file, produce a `.review-needed.md` companion file listing all Tier 4 items and specific questions for domain experts. Path: same directory as the wiki file, named `{ObjectName}.review-needed.md`. This is not optional.
 13. **FULL UPSTREAM SEARCH** -- before labeling any column as "DWH-specific" or writing a Tier 4 description, grep the entire upstream wiki folder (tables, views, related objects, all schemas) for the column name. Columns frequently originate from views, related tables, or history schemas — not just the source table. Only after an exhaustive search returns no results may a column be flagged as DWH-specific or given a Tier 4 description.
-14. **REVIEWER CORRECTIONS (RERUN)** -- before generating, check if a `.review-needed.md` already exists for this object. If it contains a `## Reviewer Corrections` section with entries, read every row and apply them as **Tier 5** overrides. Tier 5 is absolute — it overrides all other tiers including upstream wiki (Tier 1). After applying, carry corrections forward in the new `.review-needed.md` with a `[RESOLVED]` marker so they persist across future reruns.
+14. **REVIEWER CORRECTIONS (RERUN)** -- before generating, check if a `.review-needed.md` already exists for this object. If it contains a `## Reviewer Corrections` section with entries, read every row and apply them as **Tier 5** overrides. Tier 5 is absolute — it overrides all other tiers including upstream wiki (Tier 1). After applying, carry corrections forward in the new `.review-needed.md` with a `[RESOLVED]` marker so they persist across future reruns. **STALENESS CHECK**: For each Tier 5 override, compare the current Tier 1–3 description against the description that was current when the Tier 5 was written (recorded in the "Current (wrong)" column of the corrections table). If the Tier 1–3 description has materially changed (new computation, renamed column, different transformation logic, changed FK target — not just wording/formatting), the Tier 5 may be stale. In this case: (a) still apply the Tier 5 for now, but (b) add the column to a new `## Tier 5 Re-Review Needed` section in the sidecar, showing the original context, the Tier 5 correction, and the new Tier 1–3 description, so a domain expert can confirm or update. Tag the column `(Tier 5 — domain expert, RE-REVIEW)` in the wiki until confirmed.
 15. **DOMAIN GLOSSARY** -- before generating, read `knowledge/glossary.md`. All acronym expansions, term definitions, and value maps in the glossary are Tier 5 authority. The pipeline MUST NOT infer alternative meanings for any term that has a glossary entry. Apply glossary terms wherever the term appears in element descriptions, business logic sections, or query advisory.
 16. **TIER 5 IN ELEMENTS TABLE** -- when a description comes from reviewer corrections or the glossary, tag it `(Tier 5 — domain expert)` instead of the usual tier tag. Tier 5 entries are never flagged `[UNVERIFIED]` and never appear in the review sidecar's Tier 4 section.
 
@@ -80,11 +80,16 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 |----------|-------|
 | **Schema** | {Schema} |
 | **Object Type** | {Table / View / Stored Procedure / Function} |
-| **UC Target** | `{uc_catalog}.{uc_schema}.{uc_table}` |
-| **Distribution** | {HASH(column) / ROUND_ROBIN / REPLICATE / N/A} |
-| **Index Type** | {CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP / N/A} |
 | **Production Source** | {Production table name or "Derived" or "Multiple sources"} |
 | **Refresh** | {Hourly / Daily / Real-time / Unknown} |
+| | |
+| **Synapse Distribution** | {HASH(column) / ROUND_ROBIN / REPLICATE / N/A} |
+| **Synapse Index** | {CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP / N/A} |
+| | |
+| **UC Target** | `{uc_catalog}.{uc_schema}.{uc_table}` |
+| **UC Format** | {Delta / Parquet / CSV / N/A} |
+| **UC Partitioned By** | {`col1`, `col2`, `col3` / None} |
+| **UC Table Type** | {MANAGED / EXTERNAL / N/A} |
 
 ---
 
@@ -123,9 +128,13 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 
 {THIS IS THE KEY DIFFERENTIATOR from the production pipeline output. This section tells analysts HOW to use the table effectively.}
 
-### 3.1 Distribution Key
+### 3.1 Synapse Distribution & Index
 
-{Distribution column and what it means for query performance. E.g., "This table is HASH-distributed on `PositionID`. Always include `PositionID` in JOINs or WHERE clauses for optimal performance. Queries that filter only on `CID` will scan all distributions."}
+{**Explicitly label as Synapse.** Distribution column, index type, and what they mean for Synapse query performance. E.g., "**In Synapse**, this table is HASH-distributed on `PositionID` with a CLUSTERED INDEX. Always include `PositionID` in JOINs or WHERE clauses for optimal Synapse query performance."}
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+{**Explicitly label as UC/Databricks.** Format, table type, partition columns, and what they mean for Databricks query performance. E.g., "**In Databricks**, this table is stored as Delta (MANAGED), partitioned by `etr_y`, `etr_ym`, `etr_ymd`. Always filter on these partition columns for partition pruning. Consider Z-ORDER for additional clustering."}
 
 ### 3.2 Common Query Patterns
 
@@ -269,12 +278,26 @@ The `.review-needed.md` file MUST follow this structure:
 ## Structural Questions
 
 {Questions about the object's design, schema, or ETL that cannot be answered from code alone}
+
+## Tier 5 Re-Review Needed
+
+> Tier 5 (domain expert) overrides whose underlying Tier 1–3 source has materially changed
+> since the correction was made. The Tier 5 is still applied, but a domain expert should
+> confirm it remains valid given the new upstream definition.
+
+| Column | Tier 5 Correction | Was Based On (old Tier 1–3) | New Tier 1–3 | Change Summary |
+|--------|-------------------|----------------------------|--------------|----------------|
 ```
 
 On **rerun**: If a previous `.review-needed.md` exists, read `## Reviewer Corrections` first.
 Apply all entries as Tier 5 overrides. In the new sidecar, carry resolved corrections forward
 with `[RESOLVED]` prefix in the "Current (wrong)" column. Remove resolved items from
-Tier 4 / Clarification sections.
+Tier 4 / Clarification sections. **Staleness check**: For each Tier 5, compare the "Current
+(wrong)" column (the old Tier 1–3 text the correction was based on) against the freshly
+generated Tier 1–3 description. If the Tier 1–3 has materially changed (not just formatting),
+populate the `## Tier 5 Re-Review Needed` section and tag the column `(Tier 5 — domain expert, RE-REVIEW)`.
+Once a reviewer confirms the Tier 5 still holds, they update the "Current (wrong)" column to
+match the new Tier 1–3, clearing the staleness flag on the next run.
 
 ## Post-Generation
 
@@ -323,6 +346,26 @@ The `.alter.sql` file is the PRIMARY output of the entire pipeline. Generate it 
 -- Resolved via: {information_schema / SHOW TABLES / mapping view / INFERRED (unvalidated)}
 ```
 
+### UC Table Metadata Discovery (after UC Object Resolution)
+
+Once the UC target is resolved, query Databricks for physical table metadata to populate the UC-specific properties in the wiki and table tags. Run these queries via the Databricks MCP:
+
+1. **Table format and type**:
+   ```sql
+   DESCRIBE DETAIL {uc_catalog}.{uc_schema}.{uc_table}
+   ```
+   Extracts: `format` (delta, parquet, csv), `type` (MANAGED, EXTERNAL), `location`, `numFiles`, `sizeInBytes`.
+
+2. **Partitioning**:
+   ```sql
+   DESCRIBE TABLE EXTENDED {uc_catalog}.{uc_schema}.{uc_table}
+   ```
+   Look for `# Partition Information` in the output. Extract partition column names.
+
+3. **If Databricks is unavailable**: Set all UC properties to `N/A` in the wiki and omit the UC-specific tags.
+
+Populate the wiki properties table and ALTER script tags with the discovered values.
+
 ### ALTER Script Template
 
 ```sql
@@ -345,14 +388,14 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} COMMEN
 ### ALTER Script Rules
 
 1. **UC naming**: Use the fully-qualified name (`catalog.schema.table`) resolved by the UC Object Resolution algorithm above. **Never infer from Synapse naming conventions.** Every ALTER statement must use the validated 3-level name
-2. **Table comment**: Compress the one-line description + key business context from Section 1 into ≤1024 chars. Include: what it is, source, refresh, distribution, and the most critical gotchas
+2. **Table comment**: Compress the one-line description + key business context from Section 1 into ≤1024 chars. Include: what it is, source, refresh, and the most critical gotchas. **Label Synapse-specific metadata with `Synapse:` prefix** (e.g., `Synapse: HASH(PositionID), CLUSTERED INDEX`) and **UC-specific metadata with `UC:` prefix** (e.g., `UC: Delta, partitioned by etr_y/etr_ym/etr_ymd`). Never leave distribution/index/partitioning unlabeled — readers in UC must not assume Synapse metadata applies to their environment
 3. **Column comments**: Compress each element description from Section 4 into ≤1024 chars. Prioritize:
    - Business meaning (what the column represents)
    - FK references (what table to JOIN for resolution)
    - Key values/enums (most important mappings)
    - Gotchas (common misunderstandings)
-4. **Drop tier tags**: Remove `(Tier N — source)` suffixes — these are pipeline metadata, not analyst-facing
-5. **Drop [UNVERIFIED] tags**: Remove `[UNVERIFIED]` prefixes — the ALTER script represents the best-available knowledge. Unverified items are tracked in the review sidecar
+4. **KEEP tier tags**: Preserve `(Tier N — source)` suffixes in column comments. These provide traceability — anyone reading a UC column comment can see whether the description came from the upstream wiki (Tier 1), SP code (Tier 2), live data (Tier 3), inference (Tier 4), or domain expert (Tier 5). Format: append at the end of the description, e.g., `'...description text. (Tier 1 — upstream wiki)'`. If the description is near the 1024-char limit, the tier tag takes priority over truncating description content
+5. **KEEP [UNVERIFIED] tags**: Preserve `[UNVERIFIED]` prefixes on Tier 4 descriptions in the ALTER script. This signals to analysts and the AI assistant that the description is inferred, not confirmed. Unverified items are ALSO tracked in the review sidecar, but the tag in the ALTER output ensures visibility even after deployment to UC
 6. **Preserve `Same meaning as Dim_Position.*`** references — these help the AI assistant cross-reference
 7. **Single quotes in values**: Escape any single quotes in descriptions with `''` (SQL standard)
 8. **One ALTER per column**: Each column gets its own `ALTER TABLE ... ALTER COLUMN ... COMMENT` statement on a single line
@@ -370,9 +413,12 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TAGS (
     'source_schema' = '{SynapseSchema}',
     'source_server' = '{server from mapping view or config}',
     'refresh' = '{daily / hourly / real-time / unknown}',
-    'distribution' = '{HASH(col) / ROUND_ROBIN / REPLICATE}',
+    'synapse_distribution' = '{HASH(col) / ROUND_ROBIN / REPLICATE}',
+    'synapse_index' = '{CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP}',
+    'uc_format' = '{delta / parquet}',
+    'uc_partitioned_by' = '{col1, col2, col3 / none}',
     'pipeline' = 'dwh-semantic-doc',
-    'pipeline_version' = '14-phase'
+    'pipeline_version' = '15-phase'
 );
 ```
 

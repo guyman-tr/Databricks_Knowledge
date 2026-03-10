@@ -9,7 +9,7 @@
 
 -- ---- Table Comment ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction SET TBLPROPERTIES (
-    'comment' = 'Central customer activity fact table — one row per event. Covers position opens/closes, logins, deposits, cashouts, fees, bonuses, registrations, copy-trade ops, and more. ActionTypeID drives which columns are populated (sparse by design). Source: History.Credit, Trade.OpenPositionEndOfDay, History.ClosePositionEndOfDay, STS logins, Billing.Login, Customer.CustomerStatic. Refreshed daily via SWITCH partition. HASH(RealCID). ~11B rows. Always filter by ActionTypeID + DateID. IsReal always 1 (real accounts only). ~33 position columns shared with Dim_Position.'
+    'comment' = 'Central customer activity fact table — one row per event. Covers position opens/closes, logins, deposits, cashouts, fees, bonuses, registrations, copy-trade ops, and more. ActionTypeID drives which columns are populated (sparse by design). Source: History.Credit, Trade.OpenPositionEndOfDay, History.ClosePositionEndOfDay, STS logins, Billing.Login, Customer.CustomerStatic. Refreshed daily via SWITCH partition. Synapse: HASH(RealCID), CLUSTERED COLUMNSTORE + 4 NC indexes. UC: Delta. ~11B rows. Always filter by ActionTypeID + DateID. IsReal always 1 (real accounts only). ~33 position columns shared with Dim_Position.'
 );
 
 -- ---- Table Tags ----
@@ -19,9 +19,12 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction SET TAGS (
     'source_schema' = 'DWH_dbo',
     'source_server' = 'sql_dp_prod_we',
     'refresh' = 'daily',
-    'distribution' = 'HASH(RealCID)',
+    'synapse_distribution' = 'HASH(RealCID)',
+    'synapse_index' = 'CLUSTERED COLUMNSTORE + 4 nonclustered',
+    'uc_format' = 'delta',
+    'uc_partitioned_by' = 'TBD — resolve via DESCRIBE DETAIL',
     'pipeline' = 'dwh-semantic-doc',
-    'pipeline_version' = '14-phase'
+    'pipeline_version' = '15-phase'
 );
 
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN HistoryID COMMENT 'Intended as unique key but contains duplicates — NOT reliable. Never use for JOINs, deduplication, or row identification.';

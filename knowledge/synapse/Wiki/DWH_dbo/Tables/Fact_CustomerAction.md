@@ -6,12 +6,17 @@
 |----------|-------|
 | **Schema** | DWH_dbo |
 | **Object Type** | Table (Fact) |
-| **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
-| **Distribution** | HASH(RealCID) |
-| **Index Type** | CLUSTERED COLUMNSTORE + 4 nonclustered |
 | **Row Count** | ~11 billion |
 | **Production Sources** | `History.Credit` (via `History.ActiveCredit`), `Trade.OpenPositionEndOfDay`, `History.ClosePositionEndOfDay`, `STS_Audit_UserOperationsData` (logins), `Billing.Login` (cashier logins), `Customer.CustomerStatic` (registrations) |
 | **Refresh** | Daily (midnight ETL via SWITCH partition) |
+| | |
+| **Synapse Distribution** | HASH(RealCID) |
+| **Synapse Index** | CLUSTERED COLUMNSTORE + 4 nonclustered |
+| | |
+| **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
+| **UC Format** | Delta |
+| **UC Partitioned By** | *(resolve via DESCRIBE DETAIL — TBD)* |
+| **UC Table Type** | *(resolve via DESCRIBE DETAIL — TBD)* |
 
 ---
 
@@ -139,9 +144,13 @@ WHERE fca.ActionTypeID = 14
 
 ## 3. Query Advisory
 
-### 3.1 Distribution Key
+### 3.1 Synapse Distribution & Index
 
-This table is HASH-distributed on `RealCID`. Always include `RealCID` in WHERE or JOIN for optimal single-distribution queries. Nonclustered indexes exist on `ActionTypeID+DateID`, `ActionTypeID`, `CompensationReasonID`, and `RealCID+DateID`.
+**In Synapse**, this table is HASH-distributed on `RealCID` with a CLUSTERED COLUMNSTORE INDEX + 4 nonclustered indexes (`ActionTypeID+DateID`, `ActionTypeID`, `CompensationReasonID`, `RealCID+DateID`). Always include `RealCID` in WHERE or JOIN for optimal single-distribution queries. The columnstore index enables efficient analytical scans across the ~11B rows.
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+**In Databricks**, this table is stored as **Delta**. Partitioning columns TBD — resolve via `DESCRIBE DETAIL main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` once Databricks MCP is available. Given the table's ~11B row size, partition pruning will be critical for any practical query.
 
 ### 3.2 Common Query Patterns
 

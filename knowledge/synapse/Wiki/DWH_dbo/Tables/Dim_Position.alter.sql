@@ -9,7 +9,7 @@
 
 -- ---- Table Comment ----
 ALTER TABLE main.dwh.dim_position SET TBLPROPERTIES (
-    'comment' = 'Central trading-position dimension storing every open and historically-closed position as an end-of-day snapshot. Each row is one trade held by a customer on a financial instrument. Source: Trade.PositionTbl + Trade.PositionTreeInfo. Refreshed daily at midnight. HASH(PositionID). Key patterns: CloseDateID=0 means open; filter ISNULL(IsPartialCloseChild,0)=0 to exclude partial-close children; InitialAmountCents/100 for USD amount.'
+    'comment' = 'Central trading-position dimension storing every open and historically-closed position as an end-of-day snapshot. Each row is one trade held by a customer on a financial instrument. Source: Trade.PositionTbl + Trade.PositionTreeInfo. Refreshed daily at midnight. Synapse: HASH(PositionID), CLUSTERED INDEX. UC: Delta, partitioned by etr_y/etr_ym/etr_ymd. Key patterns: CloseDateID=0 means open; filter ISNULL(IsPartialCloseChild,0)=0 to exclude partial-close children; InitialAmountCents/100 for USD amount.'
 );
 
 -- ---- Table Tags ----
@@ -19,9 +19,12 @@ ALTER TABLE main.dwh.dim_position SET TAGS (
     'source_schema' = 'DWH_dbo',
     'source_server' = 'sql_dp_prod_we',
     'refresh' = 'daily',
-    'distribution' = 'HASH(PositionID)',
+    'synapse_distribution' = 'HASH(PositionID)',
+    'synapse_index' = 'CLUSTERED INDEX (PositionID)',
+    'uc_format' = 'delta',
+    'uc_partitioned_by' = 'etr_y, etr_ym, etr_ymd',
     'pipeline' = 'dwh-semantic-doc',
-    'pipeline_version' = '14-phase'
+    'pipeline_version' = '15-phase'
 );
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN PositionID COMMENT 'Unique position identifier. System-generated. Also serves as the root TreeID for independent (non-copy-trade) positions. HASH distribution key for this table.';

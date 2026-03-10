@@ -6,11 +6,16 @@
 |----------|-------|
 | **Schema** | DWH_dbo |
 | **Object Type** | Table |
-| **UC Target** | `main.dwh.dim_position` |
-| **Distribution** | HASH(PositionID) |
-| **Index Type** | CLUSTERED INDEX (PositionID) |
 | **Production Source** | `Trade.PositionTbl` + `Trade.PositionTreeInfo` (via `Trade.Position` → `Trade.PositionForExternalUse` → `Trade.OpenPositionEndOfDay` / `History.ClosePositionEndOfDay`) |
 | **Refresh** | Daily (midnight ETL — end-of-day snapshot) |
+| | |
+| **Synapse Distribution** | HASH(PositionID) |
+| **Synapse Index** | CLUSTERED INDEX (PositionID) |
+| | |
+| **UC Target** | `main.dwh.dim_position` |
+| **UC Format** | Delta |
+| **UC Partitioned By** | `etr_y`, `etr_ym`, `etr_ymd` |
+| **UC Table Type** | MANAGED |
 
 ---
 
@@ -147,9 +152,13 @@ Leader Position (TreeID = PositionID, MirrorID = 0)
 
 ## 3. Query Advisory
 
-### 3.1 Distribution Key
+### 3.1 Synapse Distribution & Index
 
-This table is HASH-distributed on `PositionID`. Always include `PositionID` in JOINs or WHERE clauses for optimal single-distribution queries. Queries filtering only on `CID`, `InstrumentID`, or date columns will scan all 60 distributions. There are nonclustered indexes on `CID`, `CloseDateID`, `InstrumentID`, `OpenDateID+CloseDateID`, and `CloseOccurred+OpenOccurred` to accelerate common filter patterns.
+**In Synapse**, this table is HASH-distributed on `PositionID` with a CLUSTERED INDEX on `PositionID`. Always include `PositionID` in JOINs or WHERE clauses for optimal single-distribution queries. Queries filtering only on `CID`, `InstrumentID`, or date columns will scan all 60 distributions. Nonclustered indexes exist on `CID`, `CloseDateID`, `InstrumentID`, `OpenDateID+CloseDateID`, and `CloseOccurred+OpenOccurred` to accelerate common Synapse filter patterns.
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+**In Databricks**, this table is stored as **Delta** (MANAGED), partitioned by `etr_y`, `etr_ym`, `etr_ymd` (year, year-month, year-month-day). Always include partition columns in WHERE clauses for partition pruning — e.g., `WHERE etr_y = 2025 AND etr_ym = 202503` will skip scanning irrelevant partitions. The partition columns `etr_y`, `etr_ym`, `etr_ymd` are Databricks-layer additions not present in the Synapse source.
 
 ### 3.2 Common Query Patterns
 

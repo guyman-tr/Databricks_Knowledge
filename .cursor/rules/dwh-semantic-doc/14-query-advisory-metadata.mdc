@@ -20,19 +20,30 @@ Produce the analyst-facing advisory layer that the production pipeline doesn't g
 
 ## Analysis Areas
 
-### 1. Distribution Key Advisory
+### 1. Distribution & Partitioning Advisory
 
-From Phase 1 and 3:
+From Phase 1 and 3 (Synapse), and UC metadata discovery:
 
 ```
-DISTRIBUTION ADVISORY:
-  Type: {HASH(column) / ROUND_ROBIN / REPLICATE}
-  Key Column: {column or N/A}
+SYNAPSE DISTRIBUTION ADVISORY:
+  Distribution: {HASH(column) / ROUND_ROBIN / REPLICATE}
+  Distribution Key: {column or N/A}
+  Index: {CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP}
 
-  PERFORMANCE RULES:
+  SYNAPSE PERFORMANCE RULES:
   - {e.g., "Always include PositionID in WHERE or JOIN for data locality"}
   - {e.g., "JOINing two HASH tables on different columns causes data movement -- avoid"}
   - {e.g., "This REPLICATE table is broadcast to all nodes -- JOINs are always local"}
+
+UC (DATABRICKS) ADVISORY:
+  Format: {Delta / Parquet}
+  Table Type: {MANAGED / EXTERNAL}
+  Partitioned By: {col1, col2, col3 / None}
+
+  UC PERFORMANCE RULES:
+  - {e.g., "Always filter on partition columns (etr_y, etr_ym, etr_ymd) for partition pruning"}
+  - {e.g., "Delta format supports Z-ORDER -- check if additional clustering is applied"}
+  - {e.g., "No partition columns -- full table scan on every query; filter by date columns early"}
 ```
 
 ### 2. Recommended Query Patterns
