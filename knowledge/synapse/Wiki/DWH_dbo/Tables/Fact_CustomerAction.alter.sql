@@ -18,11 +18,13 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction SET TAGS (
     'object_type' = 'fact',
     'source_schema' = 'DWH_dbo',
     'source_server' = 'sql_dp_prod_we',
-    'refresh' = 'daily',
+    'refresh_frequency' = 'daily',
+    'sla' = 'D+1 10:00',
+    'source_system' = 'Synapse',
     'synapse_distribution' = 'HASH(RealCID)',
     'synapse_index' = 'CLUSTERED COLUMNSTORE + 4 nonclustered',
     'uc_format' = 'delta',
-    'uc_partitioned_by' = 'TBD — resolve via DESCRIBE DETAIL',
+    'uc_partitioned_by' = 'etr_y, etr_ym, etr_ymd',
     'pipeline' = 'dwh-semantic-doc',
     'pipeline_version' = '15-phase'
 );
@@ -173,5 +175,14 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUM
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN etr_y COMMENT 'Partition column: year (string). Added by Databricks gold-layer ETL for partition pruning. Derived from event date.';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN etr_ym COMMENT 'Partition column: year-month (string). Added by Databricks gold-layer ETL for partition pruning. Derived from event date.';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN etr_ymd COMMENT 'Partition column: year-month-day (string). Added by Databricks gold-layer ETL for partition pruning. Derived from event date. Finest grain for partition filter.';
+
+-- ---- Column PII Tags ----
+-- Most columns are trading/financial metrics or pseudonymous system IDs → pii = 'none'.
+-- IPNumber is a numeric representation of user IP address → pii = 'direct'.
+-- CID/GCID/RealCID/DemoCID are pseudonymous identifiers → pii = 'none'.
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN IPNumber SET TAGS ('pii' = 'direct');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN GCID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN RealCID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN DemoCID SET TAGS ('pii' = 'none');
 
 -- View propagation: see Fact_CustomerAction.views.alter.sql

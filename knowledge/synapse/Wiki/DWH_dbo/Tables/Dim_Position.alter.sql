@@ -18,7 +18,9 @@ ALTER TABLE main.dwh.dim_position SET TAGS (
     'object_type' = 'dimension',
     'source_schema' = 'DWH_dbo',
     'source_server' = 'sql_dp_prod_we',
-    'refresh' = 'daily',
+    'refresh_frequency' = 'daily',
+    'sla' = 'D+1 10:00',
+    'source_system' = 'Synapse',
     'synapse_distribution' = 'HASH(PositionID)',
     'synapse_index' = 'CLUSTERED INDEX (PositionID)',
     'uc_format' = 'delta',
@@ -292,3 +294,12 @@ ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_PriceType COMMENT 'Closing 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN CurrentCalculationRate COMMENT 'Current calculation rate for open position PnL (end-of-day snapshot).';
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN CurrentConversionRate COMMENT 'Current conversion rate for open position PnL (end-of-day snapshot).';
+
+-- ---- Column PII Tags ----
+-- All columns in Dim_Position are trading/financial metrics or pseudonymous system IDs.
+-- No direct PII (no names, emails, addresses, phone numbers, SSNs, etc.).
+-- CID/GCID are pseudonymous identifiers, not directly identifying → pii = 'none'.
+-- Bulk-setting all columns to 'none'. If a future column contains direct PII, add an
+-- explicit override here.
+ALTER TABLE main.dwh.dim_position ALTER COLUMN CID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.dim_position ALTER COLUMN PositionID SET TAGS ('pii' = 'none');

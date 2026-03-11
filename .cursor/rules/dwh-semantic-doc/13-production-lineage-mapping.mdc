@@ -57,6 +57,19 @@ ORDER BY SchemaName, TableName
 | `UnityCatalogTableName` | UC bronze table (e.g., `trading.bronze_etoro_trade_positiontbl`) |
 | `BusinessGroup` | UC catalog grouping (e.g., `trading`, `finance`, `general`) |
 
+### Step 1b: Extract Governance Metadata for Phase 11
+
+From the mapping view results in Step 1, extract and carry forward to Phase 11:
+
+| Field | Source | Derivation |
+|-------|--------|------------|
+| `refresh_frequency` | `FrequencyMinute` | Convert: 60→`hourly`, 1440→`daily`, else→`{N}min` |
+| `sla` | `FrequencyMinute` + ETL SP execution patterns from Phase 9B | Estimate completion time. E.g., daily (1440min) + ETL runs at midnight + ~2hr load → `D+1 02:00`. If SP completion time is known from Phase 9B orchestration analysis, use that |
+| `source_system` | `ServerName` / `DatabaseName` | Map to canonical names: `sql_dp_prod_we`→`Synapse`, `etoro`→`etorodb`, etc. If multiple sources, list the primary |
+| `pii` | **Primary**: Query opsdb `dbo.GDPR_DL_Tables_Data` for the table's `PIIColumns` (comma-separated PII column names). Also check `ColumnsToMask` in `dbo.generic_inc_process_config` — if set, the table has PII data (`BusinessGroup = 'pii_data'` in UnityCatalogMapping). **Secondary**: Query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns. **Fallback** (if DB sources unavailable): pattern-match column names (`*Email*`, `*Phone*`, `*Address*`, `*SSN*`, `*TaxID*`, `*BirthDate*`, `*IP*`, `*IPAddress*`, `*FirstName*`, `*LastName*`, `*FullName*`, `*Passport*`, `*NationalID*`). Values: `direct` or `none` only — never `indirect` |
+
+Store these values in the Phase 13 results for Phase 11 to consume when generating tags.
+
 ### Step 2: Identify Additional Sources from ETL Code
 
 From Phase 9's source-to-target mapping, identify all source tables not already covered by the mapping view. For each source:

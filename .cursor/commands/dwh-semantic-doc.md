@@ -85,7 +85,19 @@ Read: {repo_path}/{wiki_path}/{index_file}
 
 > **WARNING: Upstream knowledge source '{name}' not found at {repo_path}.** Production lineage tracing will be limited. Clone or pull the repository for full functionality.
 
-**Gate: Checks 1 and 2 must PASS. Checks 3 and 4 are advisory.**
+### Check 5: Org Standards (Confluence — fetch ONCE per batch)
+
+Fetch the org-level data layer rules from Confluence **once per batch run** (not per table). Cache the result for all subsequent phases.
+
+```
+getConfluencePage({ cloudId: "etoro-jira.atlassian.net", pageId: "13960052801", contentFormat: "markdown" })
+```
+- If this returns the page body -> PASS — cache as `org_standards` for use in Phase 11 (tag generation, naming validation)
+- If this fails -> **WARN** (not blocking): Use hardcoded tag defaults from the speckit. Note in output that org standards were not refreshed.
+
+The page defines mandatory tags (`owner`, `domain`, `layer`, `refresh_frequency`, `sla`, `source_system`, `pii`, `certified`), naming conventions (domain-first for `etoro_kpi`), and description requirements. Phase 11 uses this to ensure ALTER script tags comply with org standards.
+
+**Gate: Checks 1 and 2 must PASS. Checks 3, 4, and 5 are advisory.**
 
 ---
 

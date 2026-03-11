@@ -412,7 +412,9 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TAGS (
     'object_type' = '{dimension / fact / lookup / bridge / staging}',
     'source_schema' = '{SynapseSchema}',
     'source_server' = '{server from mapping view or config}',
-    'refresh' = '{daily / hourly / real-time / unknown}',
+    'refresh_frequency' = '{hourly / daily / weekly / unknown}',
+    'sla' = '{D+1 02:00 / T+2h / unknown}',
+    'source_system' = '{Synapse / etorodb / cosmos / mixed}',
     'synapse_distribution' = '{HASH(col) / ROUND_ROBIN / REPLICATE}',
     'synapse_index' = '{CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP}',
     'uc_format' = '{delta / parquet}',
@@ -426,7 +428,28 @@ Tag values:
 - `domain`: Infer from table name and business meaning (trading, finance, billing, compliance, risk, marketing, etc.)
 - `object_type`: `dim_` prefix → dimension, `fact_` prefix → fact, lookup tables → lookup
 - `source_schema` / `source_server`: From Synapse metadata and config
-- `refresh`: From Phase 9B ETL orchestration analysis
+- `refresh_frequency`: From Phase 13 Step 1b — derived from Generic Pipeline `FrequencyMinute` (1440→daily, 60→hourly, etc.)
+- `sla`: From Phase 13 Step 1b — estimated data readiness time (e.g., `D+1 02:00` for a daily table whose ETL completes ~2AM). Combine `FrequencyMinute` with Phase 9B SP execution timing. If unknown, use `unknown`
+- `source_system`: From Phase 13 Step 1b — canonical source system name derived from Generic Pipeline `ServerName`/`DatabaseName` (e.g., `Synapse`, `etorodb`, `cosmos`). If multiple production sources feed the table, use the primary source or `mixed`
+
+### Column-Level PII Tags
+
+For **every column**, generate a PII tag. Use `none` or `direct` only (no `indirect`).
+
+```sql
+ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} SET TAGS ('pii' = '{none / direct}');
+```
+
+**PII detection** (from Phase 13 Step 1b — stop at first authoritative match):
+1. **GDPR_DL_Tables_Data** (primary) — query opsdb `dbo.GDPR_DL_Tables_Data` for the table. If a row exists, `PIIColumns` contains a comma-separated list of PII column names → tag those as `direct`, all others as `none`
+2. **ColumnsToMask** (primary) — check `dbo.generic_inc_process_config` for the table's `ColumnsToMask`. If populated, those columns are PII → `direct`
+3. **DataSolutionsMappingTableGDPR** (secondary) — query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns
+4. **UC column tags** — if UC already has PII tags on the column, use those
+5. **Column name patterns** (fallback) — flag as `direct` if column name matches: `*Email*`, `*Phone*`, `*Mobile*`, `*Address*`, `*SSN*`, `*TaxID*`, `*BirthDate*`, `*DateOfBirth*`, `*IP*`, `*IPAddress*`, `*FirstName*`, `*LastName*`, `*FullName*`, `*Passport*`, `*NationalID*`, `*BankAccount*`, `*IBAN*`, `*CreditCard*`
+6. **FK to customer identity** — columns that are direct FKs to customer tables (`CID`, `GCID`, `RealCID`, `DemoCID`, `UserID`) are **not PII** themselves (they are pseudonymous IDs, not directly identifying). Mark as `none`
+7. **Default** — if no match, use `none`
+
+Generate PII tags in a `-- ---- Column PII Tags ----` section after column comments, grouped together for readability.
 
 ### View Propagation (Downstream Column Comments) — SEPARATE FILE
 

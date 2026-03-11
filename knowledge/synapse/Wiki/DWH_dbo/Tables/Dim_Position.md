@@ -15,7 +15,7 @@
 | **UC Target** | `main.dwh.dim_position` |
 | **UC Format** | Delta |
 | **UC Partitioned By** | `etr_y`, `etr_ym`, `etr_ymd` |
-| **UC Table Type** | MANAGED |
+| **UC Table Type** | EXTERNAL |
 
 ---
 

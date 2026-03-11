@@ -15,8 +15,8 @@
 | | |
 | **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
 | **UC Format** | Delta |
-| **UC Partitioned By** | *(resolve via DESCRIBE DETAIL — TBD)* |
-| **UC Table Type** | *(resolve via DESCRIBE DETAIL — TBD)* |
+| **UC Partitioned By** | `etr_y`, `etr_ym`, `etr_ymd` |
+| **UC Table Type** | EXTERNAL |
 
 ---
 
@@ -150,7 +150,7 @@ WHERE fca.ActionTypeID = 14
 
 ### 3.1b UC (Databricks) Storage & Partitioning
 
-**In Databricks**, this table is stored as **Delta**. Partitioning columns TBD — resolve via `DESCRIBE DETAIL main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` once Databricks MCP is available. Given the table's ~11B row size, partition pruning will be critical for any practical query.
+**In Databricks**, this table is stored as **Delta** (EXTERNAL, ~430 GB, ~7K files), partitioned by `etr_y`, `etr_ym`, `etr_ymd` (year, year-month, year-month-day). Always include partition columns in WHERE clauses for partition pruning — e.g., `WHERE etr_y = '2025' AND etr_ym = '202503'` will skip scanning irrelevant partitions. Given the table's ~11B rows, partition pruning is critical for any practical query. The partition columns are Databricks-layer additions not present in the Synapse source. Deletion vectors are enabled (`delta.enableDeletionVectors = true`).
 
 ### 3.2 Common Query Patterns
 
