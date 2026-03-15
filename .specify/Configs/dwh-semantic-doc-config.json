@@ -29,5 +29,19 @@
         }
       ]
     }
+  },
+  "propagation": {
+    "blacklist": [
+      {"column_name": "etr_ymd", "canonical_description": "ETL partition column: year-month-day (YYYYMMDD format)", "category": "etl_partition"},
+      {"column_name": "etr_ym", "canonical_description": "ETL partition column: year-month (YYYYMM format)", "category": "etl_partition"},
+      {"column_name": "etr_y", "canonical_description": "ETL partition column: year (YYYY format)", "category": "etl_partition"},
+      {"column_name": "UpdateDate", "canonical_description": "ETL metadata: timestamp when this row was last updated by the ETL pipeline", "category": "etl_metadata"},
+      {"column_name": "CreatedDate", "canonical_description": "ETL metadata: timestamp when this row was first created by the ETL pipeline", "category": "etl_metadata"},
+      {"column_name": "Created", "canonical_description": "ETL metadata: timestamp when this row was first created", "category": "etl_metadata"},
+      {"column_name": "FileName", "canonical_description": "ETL metadata: source file name from lake ingestion", "category": "etl_metadata"},
+      {"column_name": "_fivetran_synced", "canonical_description": "Fivetran metadata: timestamp when this row was last synced by Fivetran", "category": "etl_metadata"},
+      {"column_name": "_row", "canonical_description": "ETL infrastructure: internal row identifier used by the ingestion pipeline", "category": "infrastructure"},
+      {"column_name": "__MEETS_DROP_EXPECTATIONS", "canonical_description": "Data quality infrastructure: flag indicating whether this row passed DROP expectations checks", "category": "infrastructure"}
+    ]
   }
 }

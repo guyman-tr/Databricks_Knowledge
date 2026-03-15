@@ -29,22 +29,23 @@ Before generating, execute the Pre-Read step from `12-cross-object-enrichment.md
 3. Read existing docs and extract: element descriptions, value maps, relationships
 4. Use absorbed knowledge for consistency across docs
 
-## Output Path — FOUR FILES PER TABLE OBJECT
+## Output Path — FIVE FILES PER TABLE OBJECT
 
 ```
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md              ← wiki doc
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md ← review sidecar
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.alter.sql        ← Databricks ALTER script (PRIMARY OUTPUT)
-knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.views.alter.sql  ← downstream view column comments
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.downstream.alter.sql  ← downstream column comments (tables + views)
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.deploy-report.md ← deployment report (execution summary)
 ```
 
 Object type folders: `Tables/`, `Views/`, `Stored Procedures/`, `Functions/`
 
-The first three files are mandatory outputs. The fourth (`.views.alter.sql`) is mandatory for tables that have downstream UC views — which is almost all of them.
+The first three files are mandatory outputs. The fourth (`.downstream.alter.sql`) is mandatory for tables that have downstream UC objects sharing columns — which is almost all of them. The fifth (`.deploy-report.md`) is mandatory and is always the LAST file written — it summarizes the outcome of the entire pipeline run for this object.
 
-Each object gets its OWN `.views.alter.sql` — never combine multiple source tables into one file. When the same column appears in views downstream of multiple tables, each table's file emits the same `COMMENT ON COLUMN` for that view column independently. This is by design: duplicate-safe and allows each table to be documented/deployed independently.
+Each object gets its OWN `.downstream.alter.sql` — never combine multiple source tables into one file. When the same column appears in objects downstream of multiple tables, each table's file emits the same comment for that column independently. This is by design: duplicate-safe and allows each table to be documented/deployed independently.
 
-The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABLE ... SET TBLPROPERTIES` and `ALTER COLUMN ... COMMENT` statements that push metadata into Unity Catalog. The wiki and sidecar are intermediate artifacts that feed it. Write the wiki doc first, then the review sidecar, then generate the ALTER script from the wiki's Elements table, then the views ALTER script.
+The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABLE ... SET TBLPROPERTIES` and `ALTER COLUMN ... COMMENT` statements that push metadata into Unity Catalog. The wiki and sidecar are intermediate artifacts that feed it. Write the wiki doc first, then the review sidecar, then generate the ALTER script from the wiki's Elements table, then the downstream ALTER script, and finally the deployment report.
 
 ## STRICT RULES
 
@@ -58,12 +59,14 @@ The **ALTER script is the ultimate deliverable** — it contains the `ALTER TABL
 8. **Elements table must list EVERY element** -- no skipping, no grouping
 9. **CODE IS KING** -- when sources conflict, the hierarchy is: upstream wiki > Synapse live code > live data > metadata > Confluence/Jira. The upstream wiki has already gone through strict code-is-king analysis on production sources and is our authoritative starting point. Synapse code wins only for DWH-specific transformations and derived columns. If Phase 2 sampling found 5 enum values but Confluence documents only 3, include all 5 and note the undocumented ones. Confluence provides business meaning and intent; upstream wiki and Synapse code/data provide truth.
 10. **VERBATIM UPSTREAM INHERITANCE** -- when a column exists in an upstream wiki, copy its description verbatim into the Elements table. Do not paraphrase, summarize, or rewrite. Only APPEND DWH-specific notes (prefixed with "DWH note:") if the DWH transforms that column differently. The upstream wiki's descriptions have already been validated through the full code-is-king pipeline — rewriting them introduces errors and loses context.
-11. **CONFIDENCE TIERS** -- every element description must be traceable to a source tier: Tier 1 (upstream wiki verbatim), Tier 2 (Synapse SP code / downstream CASE patterns), Tier 3 (live data distribution), Tier 4 (column name inference — must be flagged `[UNVERIFIED]`). When generating the Elements table, Tier 4 descriptions must carry the `[UNVERIFIED]` prefix so human reviewers can prioritize corrections.
+11. **CONFIDENCE TIERS** -- every element description must be traceable to a source tier: Tier 1 (upstream wiki verbatim — 4 stars), Tier 2 (Synapse SP code / downstream CASE patterns — 3 stars), Tier 3 (live data distribution — 2 stars), Tier 4 (column name inference — 1 star, must be flagged `[UNVERIFIED]`), Tier 5 (domain expert confirmed — 5 stars, highest confidence). When generating the Elements table, Tier 4 descriptions must carry the `[UNVERIFIED]` prefix so human reviewers can prioritize corrections. A Confidence Tier Legend table MUST be included in Section 4 before the Elements table, documenting what each tier means, its star rating, and how the description was derived.
 12. **REVIEW SIDECAR** -- alongside every wiki file, produce a `.review-needed.md` companion file listing all Tier 4 items and specific questions for domain experts. Path: same directory as the wiki file, named `{ObjectName}.review-needed.md`. This is not optional.
 13. **FULL UPSTREAM SEARCH** -- before labeling any column as "DWH-specific" or writing a Tier 4 description, grep the entire upstream wiki folder (tables, views, related objects, all schemas) for the column name. Columns frequently originate from views, related tables, or history schemas — not just the source table. Only after an exhaustive search returns no results may a column be flagged as DWH-specific or given a Tier 4 description.
 14. **REVIEWER CORRECTIONS (RERUN)** -- before generating, check if a `.review-needed.md` already exists for this object. If it contains a `## Reviewer Corrections` section with entries, read every row and apply them as **Tier 5** overrides. Tier 5 is absolute — it overrides all other tiers including upstream wiki (Tier 1). After applying, carry corrections forward in the new `.review-needed.md` with a `[RESOLVED]` marker so they persist across future reruns. **STALENESS CHECK**: For each Tier 5 override, compare the current Tier 1–3 description against the description that was current when the Tier 5 was written (recorded in the "Current (wrong)" column of the corrections table). If the Tier 1–3 description has materially changed (new computation, renamed column, different transformation logic, changed FK target — not just wording/formatting), the Tier 5 may be stale. In this case: (a) still apply the Tier 5 for now, but (b) add the column to a new `## Tier 5 Re-Review Needed` section in the sidecar, showing the original context, the Tier 5 correction, and the new Tier 1–3 description, so a domain expert can confirm or update. Tag the column `(Tier 5 — domain expert, RE-REVIEW)` in the wiki until confirmed.
 15. **DOMAIN GLOSSARY** -- before generating, read `knowledge/glossary.md`. All acronym expansions, term definitions, and value maps in the glossary are Tier 5 authority. The pipeline MUST NOT infer alternative meanings for any term that has a glossary entry. Apply glossary terms wherever the term appears in element descriptions, business logic sections, or query advisory.
-16. **TIER 5 IN ELEMENTS TABLE** -- when a description comes from reviewer corrections or the glossary, tag it `(Tier 5 — domain expert)` instead of the usual tier tag. Tier 5 entries are never flagged `[UNVERIFIED]` and never appear in the review sidecar's Tier 4 section.
+16. **TIER 5 IN ELEMENTS TABLE** -- when a description comes from reviewer corrections or the glossary, tag it `(Tier 5 — domain expert, {original source})` — preserving the original production source from the lineage file (e.g., `Trade.PositionTbl`, `ETL-computed`, `Trade.OpenPositionEndOfDay → join-enriched`). The Tier 5 label indicates the *description quality* was expert-confirmed; the source indicates *where the data comes from*. Both are required for traceability. Tier 5 entries are never flagged `[UNVERIFIED]` and never appear in the review sidecar's Tier 4 section.
+17. **ALL 8 section headers MUST exist as separate `## N.` lines** -- collapsing sections (e.g., `## 2–8.`) is FORBIDDEN and produces an invalid doc. See "Batch Processing & Subagent Quality Enforcement" section below for full enforcement rules.
+18. **Batch size limits and minimum line counts are mandatory** -- Tables: max 3/subagent, Views: max 5. Minimum lines: Tables 100+, Views 80+. See Rules B1 and B3 below.
 
 ---
 
@@ -128,6 +131,8 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 
 {THIS IS THE KEY DIFFERENTIATOR from the production pipeline output. This section tells analysts HOW to use the table effectively.}
 
+{**VIEW-SPECIFIC**: For views, include a **Data Preview** subsection (3.0) before the distribution/index subsections. Query the view directly via MCP (`SELECT TOP 5 ... FROM [{Schema}].[{ViewName}]`) and show 3-5 representative rows with a Meaning column explaining what each row represents in terms of the view's business purpose. Pick rows that show the variety of data within the view's filter (e.g., different settlement types, instruments, copy-trade vs independent). This preview helps analysts understand what the view actually produces before diving into query patterns.}
+
 ### 3.1 Synapse Distribution & Index
 
 {**Explicitly label as Synapse.** Distribution column, index type, and what they mean for Synapse query performance. E.g., "**In Synapse**, this table is HASH-distributed on `PositionID` with a CLUSTERED INDEX. Always include `PositionID` in JOINs or WHERE clauses for optimal Synapse query performance."}
@@ -163,6 +168,14 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 ## 4. Elements
 
 {EVERY column with a clear, meaningful description. No raw IDs left unexplained.}
+{For Tables: list every column. For Views: list every output column. For Procedures: list every parameter. For Functions: list parameters + return columns.}
+{Order must match the DDL definition order.}
+
+{**VIEW-SPECIFIC RULES -- Views must be as meaning-rich as tables:**}
+{1. List EVERY output column individually -- parse the SELECT list from the Phase 1 DDL analysis and enumerate each one. If a view has 60 columns, the table has 60 rows.}
+{2. **Inherit descriptions from base table docs**: For each view column, use the column-to-source mapping from Phase 1 to identify its base table (e.g., `dp.CurrencyID` -> `DWH_dbo.Dim_Position.CurrencyID`). Read the existing `.md` doc for that base table and COPY the rich description from there. Adapt slightly for view context if needed, but keep the full business meaning. The tier tag inherits too -- if the base table doc says `(Tier 1 — upstream wiki)`, the view column inherits that tier.}
+{3. For computed/derived columns in the view (CASE, ISNULL, arithmetic expressions), document BOTH the formula AND the business purpose: "Computed in view: `ISNULL(InitialUnits, AmountInUnitsDecimal)`. Returns the original unit count at open, falling back to current units for positions opened before InitialUnits was added."}
+{4. For columns sourced from a JOIN table (not the primary base table), note the source: "From DWH_dbo.Dim_Instrument via InstrumentID JOIN. Financial instrument traded in this position."}
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
@@ -243,20 +256,21 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 
 ---
 
-*Generated: {YYYY-MM-DD} | Object: {Schema}.{ObjectName} | Type: {Object Type} | Phases: {N}/{Total}*
-*Production Source: {Production table path or "N/A"}*
+*Generated: {YYYY-MM-DD} | Quality: {N.N}/10 ({star_grade}) | Phases: {N}/{Total}*
+*Tiers: {N} T1, {N} T2, {N} T3, {N} T4 [UNVERIFIED], {N} T5 | Elements: {N}/10, Logic: {N}/10, Relationships: {N}/10, Sources: {N}/10*
+*Object: {Schema}.{ObjectName} | Type: {Object Type} | Production Source: {Production table path or "N/A"}*
 ````
 
 ---
 
 ## Review Sidecar Template
 
-The `.review-needed.md` file MUST follow this structure:
+The `.review-needed.md` file MUST follow this structure. This is an **offline review artifact** — the pipeline does NOT stop here. Domain experts review it at their own pace, and corrections trigger a selective review-rerun (Phase 11 + ALTER re-deploy only).
 
 ```markdown
 # {Schema}.{ObjectName} — Review Needed
 
-> Items requiring human domain expert review. Generated alongside the wiki documentation.
+> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
 
 ## Reviewer Corrections
 
@@ -289,7 +303,7 @@ The `.review-needed.md` file MUST follow this structure:
 |--------|-------------------|----------------------------|--------------|----------------|
 ```
 
-On **rerun**: If a previous `.review-needed.md` exists, read `## Reviewer Corrections` first.
+On **rerun** (full or review-rerun): If a previous `.review-needed.md` exists, read `## Reviewer Corrections` first.
 Apply all entries as Tier 5 overrides. In the new sidecar, carry resolved corrections forward
 with `[RESOLVED]` prefix in the "Current (wrong)" column. Remove resolved items from
 Tier 4 / Clarification sections. **Staleness check**: For each Tier 5, compare the "Current
@@ -298,6 +312,10 @@ generated Tier 1–3 description. If the Tier 1–3 has materially changed (not 
 populate the `## Tier 5 Re-Review Needed` section and tag the column `(Tier 5 — domain expert, RE-REVIEW)`.
 Once a reviewer confirms the Tier 5 still holds, they update the "Current (wrong)" column to
 match the new Tier 1–3, clearing the staleness flag on the next run.
+
+**Review-rerun mode**: When triggered by the review-rerun scope (not a full pipeline run), Phase 11
+uses the previously gathered phase data (Phases 1–10 are NOT re-run). Only the documentation
+generation and ALTER deployment are refreshed. This makes review-rerun fast (~2-3 min per table).
 
 ## Post-Generation
 
@@ -420,7 +438,8 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TAGS (
     'uc_format' = '{delta / parquet}',
     'uc_partitioned_by' = '{col1, col2, col3 / none}',
     'pipeline' = 'dwh-semantic-doc',
-    'pipeline_version' = '15-phase'
+    'pipeline_version' = '15-phase',
+    'semantic_grade' = '{1-5}'
 );
 ```
 
@@ -431,6 +450,7 @@ Tag values:
 - `refresh_frequency`: From Phase 13 Step 1b — derived from Generic Pipeline `FrequencyMinute` (1440→daily, 60→hourly, etc.)
 - `sla`: From Phase 13 Step 1b — estimated data readiness time (e.g., `D+1 02:00` for a daily table whose ETL completes ~2AM). Combine `FrequencyMinute` with Phase 9B SP execution timing. If unknown, use `unknown`
 - `source_system`: From Phase 13 Step 1b — canonical source system name derived from Generic Pipeline `ServerName`/`DatabaseName` (e.g., `Synapse`, `etorodb`, `cosmos`). If multiple production sources feed the table, use the primary source or `mixed`
+- `semantic_grade`: 1-5 star grade derived from the Quality Score calculation (see "Star Grade" section). Compact signal for catalog consumers — full detail lives in the wiki footer only
 
 ### Column-Level PII Tags
 
@@ -451,67 +471,534 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} SET TA
 
 Generate PII tags in a `-- ---- Column PII Tags ----` section after column comments, grouped together for readability.
 
-### View Propagation (Downstream Column Comments) — SEPARATE FILE
+### Downstream Column Comment Propagation — DEEP LINEAGE (SEPARATE FILE)
 
-View propagation is written to its own file: `{ObjectName}.views.alter.sql`. It is NOT embedded in the main `.alter.sql`.
+Downstream propagation uses the **deep lineage library** (`knowledge/synapse/Wiki/_deep_propagate_lib.py`) to trace ALL downstream UC objects through `system.access.column_lineage` BFS traversal PLUS name-pattern discovery. This replaces the previous inline discovery approach. Written to: `{ObjectName}.downstream.alter.sql`.
 
-**Discovery**: Search for views that reference the base table:
-```sql
-SELECT table_catalog, table_schema, table_name
-FROM system.information_schema.tables
-WHERE table_type = 'VIEW'
-  AND LOWER(table_name) LIKE '%{object_name_pattern}%'
+**Recommended processing order**: Use `knowledge/synapse/Wiki/_dependency_order.json` to process tables bottom-up (depth 0 first = production sources, depth 5 last). This ensures upstream descriptions are already in place when downstream tables are documented.
+
+#### Step D1: Generate the Deep Propagation Script
+
+```python
+import sys, os
+sys.path.insert(0, "knowledge/synapse/Wiki")
+import _deep_propagate_lib as lib
+
+lib.generate_script(
+    source_uc_name="{uc_catalog}.{uc_schema}.{uc_table}",
+    source_synapse_name="{SynapseSchema}.{ObjectName}",
+    object_dir="{wiki_output_dir}",
+    object_name="{ObjectName}",
+)
 ```
 
-Then verify each candidate view actually reads from the base table by checking `SHOW CREATE TABLE` or `system.information_schema.view_table_usage` (when available). Include transitive dependencies (view-of-view) only when the column name and semantics are preserved.
+This generates `{ObjectName}_deep_propagate.py` in the wiki output directory.
 
-**Syntax**: Views do NOT support `ALTER TABLE ... ALTER COLUMN ... COMMENT`. Use `COMMENT ON COLUMN` instead:
-```sql
-COMMENT ON COLUMN {catalog}.{schema}.{view_name}.{column_name} IS '{description}';
+#### Step D2: Run Discovery
+
+Execute via Shell tool:
+```bash
+python "{wiki_output_dir}/{ObjectName}_deep_propagate.py" discover
 ```
 
-**Column matching**: For each view, query its column list (`DESCRIBE {view}`) and match by name (case-insensitive) to the base table's Elements table. Only propagate descriptions for columns that exist in both. View-specific columns (computed aliases, joined columns from other tables) should be noted in the review sidecar for future documentation.
+This produces:
+- `{ObjectName}.lineage-tree.json` — full BFS tree with column matches + renames
+- `{ObjectName}.propagation-scope.md` — human-readable blast radius report
 
-**Permissions**: `COMMENT ON COLUMN` requires MODIFY permission on the view. If permission is denied for a specific view, note it in the ALTER script as a comment and move on.
+The discovery uses two complementary methods (FR-012):
+1. **Lineage traversal**: Recursive BFS over `system.access.column_lineage`, following source→target mappings transitively with cycle detection
+2. **Name-pattern supplement**: Searches `system.information_schema.tables` for objects whose name contains the source table name, then DESCRIBE-matches columns
 
-**File structure**:
-```sql
--- =============================================================================
--- Databricks View Column Comment Propagation: {ObjectName}
--- Generated: {date} | dwh-semantic-doc pipeline
---
--- Source: {uc_catalog}.{uc_schema}.{uc_table}
--- Synapse: {Schema}.{ObjectName}
---
--- Target views ({N}):
---   {catalog}.{schema}.{view_name}  ({matched}/{total} cols)
---   ...
---
--- Total: {N} COMMENT ON COLUMN statements
--- =============================================================================
+Blacklisted ETL columns (from `dwh-semantic-doc-config.json → propagation.blacklist`) are automatically excluded.
 
--- ---- {catalog}.{schema}.{view_name} ({matched}/{total} columns matched) ----
-COMMENT ON COLUMN {catalog}.{schema}.{view_name}.{col} IS '{description}';
+#### Step D3: Review Scope Report
+
+Read `{ObjectName}.propagation-scope.md` and present a summary to the operator:
+- Total downstream objects discovered
+- Column matches (identical + renamed)
+- Execution plan (batch count, statements)
+
+#### Step D4: Run Execution
+
+```bash
+python "{wiki_output_dir}/{ObjectName}_deep_propagate.py" execute
 ```
 
-**One file per source table**: Each table produces its own `.views.alter.sql`. If `PositionID` appears in views downstream of both `Dim_Position` and `Fact_CustomerAction`, both files emit their own `COMMENT ON COLUMN` for it. This is idempotent and allows independent deployment.
+This:
+1. Reads `.lineage-tree.json`
+2. Processes objects in batches (default 30, configurable via `--batch-size`)
+3. For each object: DESCRIBE to verify columns, then ALTER/COMMENT ON
+4. Updates `.propagation-progress.json` after each batch (resume support)
+5. Generates `.downstream.alter.sql` with all ALTER statements
+
+#### Step D5: Collect Results for Deploy Report
+
+Read the terminal output for execution stats (succeeded/failed counts). Include in the deploy report Section 4.
+
+**Important notes**:
+- The deep propagation script runs as a standalone Python process with ONE Databricks session — no MCP browser tabs
+- Blacklisted columns (etr_ymd, UpdateDate, etc.) are handled separately by `_broadcast_propagate.py`
+- Column renames detected via lineage (e.g., `FirstDepositDate → FTDDate`) are propagated with context annotation
+- If `system.access.column_lineage` fails (permissions), falls back to name-pattern-only discovery
+
+**File format**: Same as before — one ALTER per column, grouped by target object. The file is larger because deep lineage finds more objects.
 
 **Cross-reference in main ALTER script**: The main `.alter.sql` should include a comment:
 ```sql
--- View propagation: see {ObjectName}.views.alter.sql
+-- Downstream propagation: see {ObjectName}.downstream.alter.sql
 ```
 
-## Completion — ALL FOUR FILES REQUIRED (for Tables)
+## Quality Score Calculation
+
+Calculate a quality score (0-10 scale) from four dimensions. Include in the wiki doc footer. The score measures **documentation completeness**, not data quality — it tells you how thorough the pipeline's analysis was for this object.
+
+### Dimensions
+
+| Dimension | Weight | How to Score |
+|-----------|--------|-------------|
+| **Elements** | 40% | `(1 - (Tier4_count / total_elements)) × 10`. Perfect = 0 Tier 4 [UNVERIFIED] elements. Each Tier 4 reduces the score. |
+| **Business Logic** | 25% | Based on Section 2 richness: 0 concepts = 2/10, 1 concept = 5/10, 2 concepts = 7/10, 3+ concepts with diagrams = 10/10. |
+| **Relationships** | 20% | Based on Section 6 completeness: No relationships = 2/10, only "References To" = 5/10, both directions populated = 8/10, both directions + business descriptions = 10/10. |
+| **Sources** | 15% | Based on evidence breadth: Only DDL = 2/10, +live data = 4/10, +Synapse SP logic = 6/10, +Atlassian = 7/10, +upstream wiki = 9/10, +upstream wiki AND Atlassian = 10/10. |
+
+### Formula
+
+```
+Overall = (Elements × 0.40) + (Logic × 0.25) + (Relationships × 0.20) + (Sources × 0.15)
+```
+
+Round to one decimal place.
+
+### Star Grade (1-5 Scale)
+
+Map the 0-10 score to a compact 1-5 star grade for the ALTER script tag. This is the **only** quality signal that goes into UC — the full breakdown stays in the wiki.
+
+| Score | Stars | Visual | Tag Value |
+|-------|-------|--------|-----------|
+| 9.0-10.0 | 5 | ★★★★★ | `5` |
+| 7.0-8.9 | 4 | ★★★★☆ | `4` |
+| 5.0-6.9 | 3 | ★★★☆☆ | `3` |
+| 3.0-4.9 | 2 | ★★☆☆☆ | `2` |
+| 0.0-2.9 | 1 | ★☆☆☆☆ | `1` |
+
+The star visual goes into the wiki footer (e.g., `Quality: 8.2/10 (★★★★☆)`). The numeric grade goes into the ALTER script tag.
+
+### Quality Thresholds
+
+| Grade | Rating | Action |
+|-------|--------|--------|
+| ★★★★★ (5) | Excellent | No action needed |
+| ★★★★☆ (4) | Good | Acceptable for most objects |
+| ★★★☆☆ (3) | Fair | Review Tier 4 elements, consider re-running with more grep against upstream wikis |
+| ★★☆☆☆ (2) | Poor | Investigate why phases produced thin results; may need manual enrichment |
+| ★☆☆☆☆ (1) | Insufficient | Pipeline likely failed or was run with missing prerequisites |
+
+---
+
+## CRITICAL: Batch Processing & Subagent Quality Enforcement
+
+When documentation is generated in bulk (multiple objects per subagent), these rules are **NON-NEGOTIABLE**. Every violation produces a broken doc that must be regenerated from scratch. Our pipeline produces up to 4 files per table, making quality degradation under batch pressure an even bigger risk.
+
+### Rule B1: Maximum Batch Sizes Per Subagent
+
+| Object Type | Max Per Subagent | Rationale |
+|-------------|-----------------|-----------|
+| **Tables** | 3 | Full pipeline with MCP queries, Grep, upstream wiki search, AND 4 output files (wiki + sidecar + ALTER + downstream ALTER) |
+| **Views** | 5 | Must inherit from base table docs, trace JOINs, 3 output files |
+| **Stored Procedures** | 8 | Must extract logic, parameters, dependencies, callers |
+| **Functions** | 8 | Must trace dependency chain, document parameters and returns |
+
+**NEVER exceed these limits.** A subagent processing 10 tables WILL produce skeleton wikis, skip ALTER script generation, and omit downstream propagation entirely.
+
+### Rule B2: Every Doc MUST Have All 8 Section Headers
+
+After writing each wiki doc, the subagent MUST verify that **ALL** of these markdown headers exist as separate lines in the file:
+
+```
+## 1. Business Meaning
+## 2. Business Logic
+## 3. Query Advisory
+## 4. Elements
+## 5. Lineage
+## 6. Relationships
+## 7. Sample Queries
+## 8. Atlassian Knowledge Sources
+```
+
+**FORBIDDEN patterns** -- these indicate a subagent cut corners:
+- `## 2–8.` or `## 2-8.` (collapsed all sections into one)
+- `## 2. Business Logic, Query Advisory, Elements` (merged section titles)
+- Missing `## 4. Elements` entirely
+- Missing `## 3. Query Advisory` entirely (this is our key differentiator)
+- Missing `## 5. Lineage` entirely
+
+If ANY required header is missing, the doc is **INVALID** and must be rewritten before the subagent reports success.
+
+### Rule B3: Minimum Line Counts (Wiki File)
+
+| Object Type | Minimum Lines | Rationale |
+|-------------|--------------|-----------|
+| **Tables** | 100 | 8 sections + Elements table with all columns + Query Advisory + Lineage |
+| **Views** | 80 | 8 sections + all output columns + Query Advisory |
+| **Stored Procedures** | 60 | 8 sections + parameters + core logic |
+| **Functions** | 60 | 8 sections + parameters + return columns |
+
+A wiki file below the minimum is **automatically suspect**. The subagent must check line count before reporting completion and re-expand any section that was too brief.
+
+### Rule B4: Elements Table Must List Every Element Individually
+
+The `## 4. Elements` section MUST contain a markdown table with one row per element:
+- **Tables**: One row per column (a 40-column table = 40 rows in Elements)
+- **Views**: One row per output column
+- **Functions**: One row per parameter + one row per return column
+- **Procedures**: One row per parameter
+
+**FORBIDDEN**: Grouping multiple elements into one row, listing elements in prose instead of a table, or writing "See DDL for full column list."
+
+This reinforces Strict Rule 8 but is restated here because batch execution is where violations occur most.
+
+### Rule B5: Subagent Prompts Must Reference the Spec
+
+The orchestrator (parent agent) MUST include this instruction in every subagent prompt:
+
+> "Read and follow the template in `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc` EXACTLY. Every doc must have all 8 section headers, an Elements table with one row per element, tier tags on every description, and all output files (wiki + sidecar + ALTER script + downstream ALTER for tables). Do NOT abbreviate, collapse, or skip sections."
+
+**FORBIDDEN orchestrator prompt patterns**:
+- "write concise MD (50-100 lines)" -- this actively instructs the subagent to violate the template
+- "write a brief doc" -- same problem
+- "sections 1-8 + footer" -- too vague; subagent will shortcut
+- "just generate the ALTER script" -- the ALTER script derives from the wiki; skipping the wiki produces garbage comments
+
+### Rule B6: Post-Write Validation Gate
+
+After writing each object's output files, the subagent MUST run this validation **before moving to the next object**:
+
+1. **Section check**: Confirm all 8 `## N.` headers exist in the wiki file
+2. **Elements check**: Confirm `## 4. Elements` contains a markdown table with `|` delimiters
+3. **Line count check**: Confirm the wiki file meets the minimum for its object type (Rule B3)
+4. **Tier tag check**: Confirm every element description includes a `(Tier N` tag or `[UNVERIFIED]` prefix
+5. **Quality score check**: Confirm the footer contains a `Quality:` score and star grade, and the ALTER script contains a `semantic_grade` tag
+6. **Output file check**: Confirm all required output files exist:
+   - Tables: wiki `.md` + sidecar `.review-needed.md` + `.alter.sql` + `.downstream.alter.sql` + `.deploy-report.md`
+   - Views/other: wiki `.md` + sidecar `.review-needed.md` + `.alter.sql` + `.deploy-report.md`
+
+If any check fails, the subagent MUST fix the doc immediately -- not move on and report partial success.
+
+### Rule B7: Orchestrator Must Verify Subagent Output
+
+After a subagent completes, the orchestrator MUST spot-check at least 1 random doc from the batch:
+1. Read the wiki file
+2. Verify it has all 8 section headers
+3. Verify the Elements table has individual rows with tier tags
+4. Verify the ALTER script file exists and contains `ALTER TABLE` statements
+5. If the spot-check fails, assume ALL docs from that subagent are suspect and re-dispatch
+
+---
+
+## Shared Modules (Committed, Not Generated)
+
+These files live in `knowledge/synapse/Wiki/` and are **committed to the repo** — unlike `_deploy.py` which is generated and deleted per run:
+
+| File | Purpose |
+|------|---------|
+| `_deep_propagate_lib.py` | Shared library for deep lineage discovery and batched execution. Imported by per-table `{Object}_deep_propagate.py` scripts. |
+| `_build_dependency_order.py` | Builds bottom-up Synapse table processing order from SSDT dependencies + SP write target parsing. Re-run when DataPlatform repo is updated. |
+| `_dependency_order.json` | Generated output: 2,134 Synapse objects with dependency depth. Used by the pipeline to determine processing order. |
+| `_broadcast_propagate.py` | Standalone script for propagating blacklisted ETL column descriptions across all UC instances. |
+
+## Completion — ALL FIVE FILES REQUIRED (for Tables)
 
 Phase 11 is NOT complete until ALL files exist:
 
 1. **Wiki file**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md`
 2. **Review sidecar**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md`
 3. **ALTER script**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.alter.sql`
-4. **View propagation**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.views.alter.sql`
+4. **Downstream propagation**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.downstream.alter.sql`
+5. **Deployment report**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.deploy-report.md`
 
-The ALTER script is the ultimate deliverable — the metadata that powers the Databricks AI assistant. It must include: table comment, table tags, column comments, and UC-only column comments. View propagation lives in its own file. The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case.
+The ALTER script is the ultimate deliverable — the metadata that powers the Databricks AI assistant. It must include: table comment, table tags, column comments, and UC-only column comments. Downstream propagation lives in its own file covering ALL downstream UC objects — tables AND views (not just views). The deployment report is the last file written and summarizes the execution outcome. The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case.
 
-For Views and other object types, only files 1-3 are required (no `.views.alter.sql` — views don't have downstream views of their own in this pipeline).
+For Views and other non-table object types, only files 1-3 plus the deployment report are required (no `.downstream.alter.sql` — they are themselves downstream objects documented via their source table's propagation file).
 
-Mark `[x] Phase 11: Documentation Generated` in the checklist only after all required files are written.
+Mark `[x] Phase 11: Documentation Generated` in the checklist only after all required files are written AND ALTER execution completes AND the deployment report is generated (see below).
+
+---
+
+## ALTER Execution (Automatic Deployment to Unity Catalog)
+
+After all output files are written, **automatically execute** the ALTER scripts against Databricks Unity Catalog via the Databricks MCP. This is the final substep of Phase 11 — documentation is not fully deployed until metadata is live in UC.
+
+### Pre-Check
+
+Execution requires `uc_available = true` (set during Step 0, Check 3). If Databricks MCP is unavailable:
+
+> **SKIPPED: ALTER execution skipped — Databricks MCP unavailable.** Scripts generated at `{path}`. Execute manually when connectivity is restored.
+
+Log this warning and mark Phase 11 complete anyway — the files are the fallback.
+
+### Execution Flow — SINGLE-SESSION PYTHON SCRIPT
+
+**CRITICAL: DO NOT execute ALTER statements individually via MCP tool calls.** Each MCP call triggers an OAuth handshake that opens a browser tab. For a table with 139 columns, that's 280+ browser tabs for the main script alone, plus 500+ for downstream — completely unusable.
+
+Instead, generate a **temporary Python execution script** that uses a single authenticated `databricks-sql-connector` session to run all statements sequentially over one connection.
+
+#### Step E1: Generate Execution Script
+
+Generate a Python script at `{wiki_output_dir}/{ObjectName}_deploy.py` that:
+
+1. Reads the Databricks connection config from the Databricks connection skill (workspace host, HTTP path, token/OAuth)
+2. Opens ONE `databricks.sql.connect()` session
+3. Reads the `.alter.sql` file, extracts each executable statement (lines NOT starting with `--`)
+4. Executes each statement sequentially via `cursor.execute(stmt)`
+5. Logs success/failure per statement, continues on error
+6. Then reads the `.downstream.alter.sql` file and does the same
+7. Prints a structured execution summary
+8. Writes the execution log to the end of the `.alter.sql` file
+
+```python
+"""
+Deployment script for {Schema}.{ObjectName}
+Generated by dwh-semantic-doc pipeline — run once, then delete.
+"""
+import re, sys, os
+from datetime import datetime
+
+# --- Connection (reads from env or uses skill defaults) ---
+DATABRICKS_HOST = os.environ.get("DATABRICKS_HOST", "{host}")
+DATABRICKS_HTTP_PATH = os.environ.get("DATABRICKS_HTTP_PATH", "{http_path}")
+DATABRICKS_TOKEN = os.environ.get("DATABRICKS_TOKEN", "{token_or_empty}")
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MAIN_SQL = os.path.join(SCRIPT_DIR, "{ObjectName}.alter.sql")
+DOWNSTREAM_SQL = os.path.join(SCRIPT_DIR, "{ObjectName}.downstream.alter.sql")
+
+def extract_statements(filepath):
+    """Extract executable SQL statements from a .sql file (skip comment-only lines)."""
+    stmts = []
+    with open(filepath, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("--"):
+                continue
+            if line.endswith(";"):
+                line = line[:-1]
+            stmts.append(line)
+    return stmts
+
+def run_file(cursor, filepath, label):
+    """Execute all statements in a file, return (succeeded, failed, errors)."""
+    if not os.path.exists(filepath):
+        print(f"  SKIPPED: {filepath} not found")
+        return 0, 0, []
+    stmts = extract_statements(filepath)
+    succeeded, failed, errors = 0, 0, []
+    for i, stmt in enumerate(stmts, 1):
+        try:
+            cursor.execute(stmt)
+            succeeded += 1
+        except Exception as e:
+            failed += 1
+            col = "unknown"
+            m = re.search(r"COLUMN\s+(\w+)", stmt, re.IGNORECASE)
+            if m:
+                col = m.group(1)
+            errors.append((col, str(e)[:200]))
+            print(f"  FAILED [{i}/{len(stmts)}] {col}: {e}")
+        if i % 50 == 0:
+            print(f"  {label}: {i}/{len(stmts)} processed ({succeeded} ok, {failed} err)")
+    print(f"  {label}: {succeeded}/{len(stmts)} succeeded, {failed} failed")
+    return succeeded, failed, errors
+
+def main():
+    from databricks import sql as dbsql
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+    print(f"== ALTER DEPLOYMENT: {ts} ==")
+
+    conn = dbsql.connect(
+        server_hostname=DATABRICKS_HOST,
+        http_path=DATABRICKS_HTTP_PATH,
+        access_token=DATABRICKS_TOKEN if DATABRICKS_TOKEN else None,
+    )
+    cursor = conn.cursor()
+
+    print(f"\n[Main ALTER] {MAIN_SQL}")
+    m_ok, m_fail, m_errs = run_file(cursor, MAIN_SQL, "Main")
+
+    print(f"\n[Downstream ALTER] {DOWNSTREAM_SQL}")
+    d_ok, d_fail, d_errs = run_file(cursor, DOWNSTREAM_SQL, "Downstream")
+
+    cursor.close()
+    conn.close()
+
+    total_ok = m_ok + d_ok
+    total_fail = m_fail + d_fail
+    all_errs = m_errs + d_errs
+
+    report = [
+        f"-- == LAST EXECUTION ==",
+        f"-- Timestamp: {ts}",
+        f"-- Main: {m_ok}/{m_ok + m_fail} succeeded | Downstream: {d_ok}/{d_ok + d_fail} succeeded",
+        f"-- Failures: {total_fail}",
+    ]
+    for col, err in all_errs:
+        report.append(f"--   {col}: {err}")
+    report.append("-- ====================")
+
+    with open(MAIN_SQL, "r", encoding="utf-8") as f:
+        content = f.read()
+    content = re.sub(r"-- == LAST EXECUTION ==.*?-- ====================",
+                     "", content, flags=re.DOTALL).rstrip()
+    content += "\n\n" + "\n".join(report) + "\n"
+    with open(MAIN_SQL, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    print(f"\n== RESULT: {total_ok}/{total_ok + total_fail} succeeded, {total_fail} failed ==")
+    if all_errs:
+        print("Failures:")
+        for col, err in all_errs:
+            print(f"  {col}: {err}")
+    sys.exit(1 if total_fail > 0 else 0)
+
+if __name__ == "__main__":
+    main()
+```
+
+#### Step E2: Execute the Script
+
+Run the generated Python script via the Shell tool:
+
+```bash
+python "{wiki_output_dir}/{ObjectName}_deploy.py"
+```
+
+Wait for completion (set appropriate `block_until_ms` based on statement count — ~1 min per 100 statements). Monitor the terminal output for the execution summary.
+
+**Connection resolution**: The script uses the Databricks connection skill's configuration. Read the skill at `C:\Users\guyman\.cursor\skills\databricks-connection\SKILL.md` to populate the host, HTTP path, and token values. If OAuth (no token), the script opens ONE browser tab for authentication — not hundreds.
+
+#### Step E3: Verify & Clean Up
+
+1. Read the terminal output for the execution summary
+2. Verify the `-- == LAST EXECUTION ==` block was appended to the `.alter.sql` file
+3. Delete the temporary `{ObjectName}_deploy.py` script (it's single-use)
+4. Populate the `.deploy-report.md` with the execution results
+
+### Idempotency
+
+All ALTER statements are idempotent — re-executing them sets the same comment/tag value again. There is no harm in re-running. The pipeline does NOT skip previously-executed statements; it re-applies everything to ensure the latest descriptions are deployed.
+
+### Execution Errors That Require Attention
+
+Add to the `.review-needed.md` sidecar under a new `## ALTER Execution Issues` section:
+
+| Object | Column | Error | Action Needed |
+|--------|--------|-------|---------------|
+| {catalog.schema.object} | {column} | {error} | {e.g., "Column may have been renamed — verify in UC"} |
+
+Only populate this section if there are actual failures. Omit it entirely if everything succeeded.
+
+---
+
+## Deployment Report (Step E5)
+
+After ALTER execution completes (Steps E1–E4), generate a `.deploy-report.md` file summarizing the full pipeline run for this object. This is the **last file written** and serves as a human-readable audit trail. It answers: "What happened, what got deployed, and what needs attention?"
+
+### Deploy Report Template
+
+```markdown
+# Deployment Report: {Schema}.{ObjectName}
+
+> Generated: {YYYY-MM-DD HH:MM} | Pipeline: dwh-semantic-doc ({N}-phase)
+
+## 1. Object Summary
+
+| Property | Value |
+|----------|-------|
+| **Synapse Object** | `{Schema}.{ObjectName}` |
+| **Object Type** | {Table / View / Stored Procedure / Function} |
+| **UC Primary Target** | `{uc_catalog}.{uc_schema}.{uc_table}` |
+| **Columns Documented** | {N} |
+| **Quality Score** | {N.N}/10 ({star_grade}) |
+| **Tier Breakdown** | {N} T1, {N} T2, {N} T3, {N} T4 [UNVERIFIED], {N} T5 |
+| **Review Items** | {N} Tier 4 columns + {N} clarification questions + {N} structural questions |
+
+## 2. Output Files
+
+| File | Status | Description |
+|------|--------|-------------|
+| `{ObjectName}.md` | {WRITTEN / SKIPPED} | Wiki documentation ({N} lines) |
+| `{ObjectName}.review-needed.md` | {WRITTEN / SKIPPED} | Review sidecar ({N} items) |
+| `{ObjectName}.alter.sql` | {WRITTEN / SKIPPED} | Main ALTER script ({N} statements) |
+| `{ObjectName}.downstream.alter.sql` | {WRITTEN / SKIPPED / N/A} | Downstream propagation ({N} statements) |
+| `{ObjectName}.deploy-report.md` | WRITTEN | This file |
+
+## 3. Main ALTER Execution
+
+| Component | Succeeded | Total | Status |
+|-----------|-----------|-------|--------|
+| Table comment | {1/0} | 1 | {OK / FAILED: reason} |
+| Table tags | {1/0} | 1 | {OK / FAILED: reason} |
+| Column comments | {N} | {M} | {OK / PARTIAL / FAILED} |
+| PII tags | {N} | {M} | {OK / PARTIAL / FAILED} |
+| **Total** | **{N}** | **{M}** | |
+
+## 4. Downstream Objects (Deep Lineage)
+
+{N} downstream objects discovered, {M} updated successfully.
+
+| Metric | Value |
+|--------|-------|
+| **Discovery method** | {lineage / name_pattern / both} |
+| **Total objects discovered** | {N} (lineage: {L}, name-pattern: {P}) |
+| **Identical column matches** | {N} |
+| **Renamed column matches** | {N} |
+| **Blacklisted columns excluded** | {N} |
+| **Batches** | {N} (size: {batch_size}) |
+| **Resume events** | {N} |
+
+| # | Object | Type | Hop | Via | Identical | Renamed | Statements | Status |
+|---|--------|------|-----|-----|-----------|---------|------------|--------|
+| 1 | `{catalog}.{schema}.{object_name}` | {TABLE / VIEW} | {hop} | {lineage / name_pattern} | {N} | {N} | {N}/{M} | {OK / PARTIAL / FAILED / SKIPPED} |
+| ... | ... | ... | ... | ... | ... | ... | ... | ... |
+
+**Skipped objects**:
+- {catalog}.{schema}.{object_name} — {reason, e.g., "METRIC_VIEW, no column comment support"}
+
+## 5. Failures
+
+{If zero failures: "No failures. All {N} statements executed successfully."}
+
+{If failures exist:}
+| Object | Column | Error | Action |
+|--------|--------|-------|--------|
+| {catalog.schema.object} | {column} | {error_message} | {recommended action} |
+
+## 6. Phases Completed
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| 1. Structure Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 2. Live Data Sampling | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 3. Distribution Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 4. Lookup Resolution | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 5. JOIN Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 6. Business Logic Discovery | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 7. View Dependency Scan | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 8. Procedure Reference Scan | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 9. Procedure Logic Extraction | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 9B. ETL Orchestration Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 10. Atlassian Knowledge Scan | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 11. Generate Documentation | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 12. Cross-Object Enrichment | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 13. Production Lineage Mapping | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 14. Query Advisory Metadata | {DONE / SKIPPED / PARTIAL} | {brief note} |
+```
+
+### Deploy Report Rules
+
+1. **Always the last file written** — generated only after ALTER execution (Steps E1–E4) finishes
+2. **Mandatory for ALL object types** — tables, views, procedures, functions
+3. **List every downstream object** in Section 4 with its full `catalog.schema.object` name and type — this gives visibility into the propagation footprint
+4. **Counts only for items updated** — list downstream objects individually but do NOT list every column statement; show the counts (e.g., "130/135 cols")
+5. **Capture all failures** — even if they were already logged in the ALTER script footer, duplicate them here for a single-file overview
+6. **Phase status table** — reflect the actual phases run (or skipped) for this object. Use "SKIPPED" when a phase was not applicable (e.g., no views found in Phase 7), "PARTIAL" when a phase ran but had incomplete results
+7. **On rerun** — overwrite the previous `.deploy-report.md` entirely (not append). Each run produces a fresh report
