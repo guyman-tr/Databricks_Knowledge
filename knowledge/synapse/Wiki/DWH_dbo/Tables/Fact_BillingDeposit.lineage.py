@@ -1,13 +1,14 @@
 """
-Dim_Position — UC External Lineage Injection
-=============================================
-Generated: 2026-03-08 | Updated: 2026-03-13
-Injects Synapse DWH lineage into Unity Catalog for DWH_dbo.Dim_Position.
+Fact_BillingDeposit — UC External Lineage Injection
+====================================================
+Generated: 2026-03-15
+Injects Synapse DWH lineage into Unity Catalog for DWH_dbo.Fact_BillingDeposit.
 
 Resolves ALL bronze table names dynamically from the Generic Pipeline
-mapping view — never infers from naming conventions.  Verifies every UC
-object exists before creating lineage.  On any error: logs, skips the
-failed item, and continues.  Produces a summary report at the end.
+mapping view — falls back to FALLBACK_BRONZE when mapping returns invalid
+values (e.g. "internal-sources").  Verifies every UC object exists before
+creating lineage.  On any error: logs, skips the failed item, and continues.
+Produces a summary report at the end.
 
 Prerequisites:
   pip install databricks-sdk
@@ -15,13 +16,13 @@ Prerequisites:
 
 Privileges required:
   CREATE EXTERNAL METADATA  on metastore
-  MODIFY                    on main.dwh.dim_position
+  MODIFY                    on main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit
   SELECT                    on bronze source tables
   SELECT                    on main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
 
 Usage:
-  python Dim_Position.lineage.py              # dry run (default)
-  python Dim_Position.lineage.py --execute    # actually write to UC
+  python Fact_BillingDeposit.lineage.py              # dry run (default)
+  python Fact_BillingDeposit.lineage.py --execute   # actually write to UC
 """
 
 from __future__ import annotations
@@ -50,7 +51,7 @@ logging.basicConfig(
     format="%(asctime)s  %(levelname)-8s  %(message)s",
     stream=sys.stderr,
 )
-log = logging.getLogger("lineage-dim-position")
+log = logging.getLogger("lineage-fact-billingdeposit")
 
 # ── Configuration ─────────────────────────────────────────────────────
 
@@ -59,254 +60,118 @@ WAREHOUSE_ID = "208214768b0e0308"
 PROFILE = "guyman"
 WAIT_TIMEOUT = "50s"
 
-UC_GOLD_TABLE = "main.dwh.dim_position"
+UC_GOLD_TABLE = "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
 SYNAPSE_SCHEMA = "DWH_dbo"
-SYNAPSE_TABLE = "Dim_Position"
+SYNAPSE_TABLE = "Fact_BillingDeposit"
 
 MAPPING_VIEW = "main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables"
 
-# Production sources that feed Dim_Position through the main ETL SP.
+# Production sources that feed Fact_BillingDeposit through the main ETL SP.
 # Schema.Table as they appear in the production (etoro) database.
 # The script resolves each to a UC bronze table via the mapping view.
 PRODUCTION_SOURCES = [
-    {"database": "etoro", "schema": "Trade",      "table": "PositionTbl"},
-    {"database": "etoro", "schema": "Trade",      "table": "PositionTreeInfo"},
-    {"database": "etoro", "schema": "Trade",      "table": "OpenPositionEndOfDay"},
-    {"database": "etoro", "schema": "Trade",      "table": "PositionAirdropLog"},
-    {"database": "etoro", "schema": "BackOffice", "table": "Customer"},
-    {"database": "etoro", "schema": "Trade",      "table": "HBCExecutionLog"},
-    {"database": "etoro", "schema": "History",    "table": "Cost"},
-    # PriceLog is a partitioned/sharded log — may not have a single
-    # mapping entry.  The script will try to resolve it; if it can't,
-    # it skips with a warning.
-    {"database": "etoro", "schema": "Trade",      "table": "PriceLog"},
+    {"database": "etoro", "schema": "Billing", "table": "Deposit"},
+    {"database": "etoro", "schema": "Billing", "table": "Funding_DataFactory"},
 ]
+
+# Fallback when mapping view returns invalid UnityCatalogTableName (e.g. "internal-sources")
+FALLBACK_BRONZE = {
+    "Billing.Deposit": "main.billing.bronze_etoro_billing_deposit",
+    "Billing.Funding_DataFactory": "main.billing.bronze_etoro_billing_funding_datafactory",
+}
 
 # ETL stored procedures
 SYNAPSE_SPS = [
     {
-        "name": "synapse__dwh_dbo__sp_dim_position_populate",
+        "name": "synapse__dwh_dbo__sp_fact_billingdeposit_dl_to_synapse",
         "entity_type": "Stored Procedure",
         "description": (
-            "Main ETL procedure for DWH_dbo.Dim_Position. "
-            "Loads from Trade.PositionTbl via CopyFromLake staging, "
-            "joins PositionTreeInfo, PriceLog snapshots, HBCExecutionLog, "
-            "BackOffice.Customer, and History.Cost. Incremental by PositionID."
+            "Main ETL procedure for DWH_dbo.Fact_BillingDeposit. "
+            "Loads from Billing.Deposit and Billing.Funding via DWH_staging, "
+            "extracts ~70 columns from XML blobs (PaymentData, FundingData) "
+            "using ExtractXMLValue function. Computes AmountUSD, ExpirationDateID, "
+            "ModificationDateID. Writes to Ext_FBD_Fact_BillingDeposit staging buffer."
         ),
         "properties": {
             "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_Populate",
+            "synapse_object": "SP_Fact_BillingDeposit_DL_To_Synapse",
             "object_type": "SQL_STORED_PROCEDURE",
             "etl_pattern": "incremental",
         },
     },
     {
-        "name": "synapse__dwh_dbo__sp_dim_position_reopen",
+        "name": "synapse__dwh_dbo__sp_fact_billingdeposit",
         "entity_type": "Stored Procedure",
         "description": (
-            "Post-load SP: adjusts CommissionOnClose and "
-            "FullCommissionOnClose for reopened positions."
+            "Post-processing SP for DWH_dbo.Fact_BillingDeposit. "
+            "Enriches MOPCountry (from Dim_Country), BankName and CardCategory "
+            "(from Dim_CountryBin), PlatformID (from Fact_CustomerAction), "
+            "and IsRecurring (from Billing.RecurringDeposit)."
         ),
         "properties": {
             "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_ReOpen",
+            "synapse_object": "SP_Fact_BillingDeposit",
             "object_type": "SQL_STORED_PROCEDURE",
-            "etl_pattern": "post-load adjustment",
-        },
-    },
-    {
-        "name": "synapse__dwh_dbo__sp_dim_position_partialclosechild",
-        "entity_type": "Stored Procedure",
-        "description": (
-            "Post-load SP: handles partial-close child positions. "
-            "Pro-rates Amount, AmountInUnitsDecimal, LotCountDecimal."
-        ),
-        "properties": {
-            "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_PartialCloseChild",
-            "object_type": "SQL_STORED_PROCEDURE",
-            "etl_pattern": "post-load adjustment",
-        },
-    },
-    {
-        "name": "synapse__dwh_dbo__sp_dim_position_ispartialcloseparent",
-        "entity_type": "Stored Procedure",
-        "description": "Post-load SP: flags positions with partial-close children.",
-        "properties": {
-            "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_IsPartialCloseParent",
-            "object_type": "SQL_STORED_PROCEDURE",
-            "etl_pattern": "post-load adjustment",
-        },
-    },
-    {
-        "name": "synapse__dwh_dbo__sp_dim_position_iscopyfundposition",
-        "entity_type": "Stored Procedure",
-        "description": "Post-load SP: determines if position belongs to a CopyFund.",
-        "properties": {
-            "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_IsCopyFundPosition",
-            "object_type": "SQL_STORED_PROCEDURE",
-            "etl_pattern": "post-load adjustment",
-        },
-    },
-    {
-        "name": "synapse__dwh_dbo__sp_dim_position_hedgetype_history",
-        "entity_type": "Stored Procedure",
-        "description": (
-            "Post-load SP: sets InitHedgeType and EndHedgeType from "
-            "Trade.HBCExecutionLog for historical (closed) positions."
-        ),
-        "properties": {
-            "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_HedgeType_History",
-            "object_type": "SQL_STORED_PROCEDURE",
-            "etl_pattern": "post-load adjustment",
-        },
-    },
-    {
-        "name": "synapse__dwh_dbo__sp_dim_position_hedgetype_real",
-        "entity_type": "Stored Procedure",
-        "description": (
-            "Post-load SP: sets InitHedgeType and EndHedgeType from "
-            "Trade.HBCExecutionLog for real-time (open) positions."
-        ),
-        "properties": {
-            "synapse_schema": "DWH_dbo",
-            "synapse_object": "SP_Dim_Position_HedgeType_Real",
-            "object_type": "SQL_STORED_PROCEDURE",
-            "etl_pattern": "post-load adjustment",
+            "etl_pattern": "post-load enrichment",
         },
     },
 ]
 
-MAIN_SP = "synapse__dwh_dbo__sp_dim_position_populate"
+MAIN_SP = "synapse__dwh_dbo__sp_fact_billingdeposit_dl_to_synapse"
 
 # Column-level lineage: production source column → DWH column.
 # Keyed by "Schema.Table".
 COLUMN_MAPPINGS_BY_SOURCE = {
-    "Trade.PositionTbl": [
-        ("PositionID", "PositionID"),
+    "Billing.Deposit": [
         ("CID", "CID"),
         ("CurrencyID", "CurrencyID"),
-        ("ProviderID", "ProviderID"),
-        ("InstrumentID", "InstrumentID"),
-        ("HedgeID", "HedgeID"),
-        ("HedgeServerID", "HedgeServerID"),
-        ("Leverage", "Leverage"),
-        ("Amount", "Amount"),
-        ("AmountInUnitsDecimal", "AmountInUnitsDecimal"),
-        ("LotCountDecimal", "LotCountDecimal"),
-        ("UnitMargin", "UnitMargin"),
-        ("InitForexRate", "InitForexRate"),
-        ("NetProfit", "NetProfit"),
-        ("SpreadedPipBid", "SpreadedPipBid"),
-        ("SpreadedPipAsk", "SpreadedPipAsk"),
-        ("IsBuy", "IsBuy"),
-        ("EndOfWeekFee", "EndOfWeekFee"),
         ("Commission", "Commission"),
-        ("CommissionOnClose", "CommissionOnClose"),
-        ("Occurred", "OpenOccurred"),
-        ("CloseOccurred", "CloseOccurred"),
-        ("ParentPositionID", "ParentPositionID"),
-        ("OrigParentPositionID", "OrigParentPositionID"),
-        ("MirrorID", "MirrorID"),
-        ("IsOpenOpen", "IsOpenOpen"),
-        ("PlatformTypeID", "PlatformTypeID"),
-        ("PositionSegment", "PositionSegment"),
-        ("OpenInd", "OpenInd"),
-        ("SpreadedCommission", "SpreadedCommission"),
-        ("EndForexRate", "EndForexRate"),
-        ("LastOpConversionRate", "LastOpConversionRate"),
-        ("ClosePositionReasonID", "ClosePositionReasonID"),
-        ("TreeID", "TreeID"),
-        ("FullCommission", "FullCommission"),
-        ("FullCommissionOnClose", "FullCommissionOnClose"),
-        ("IsComputeForHedge", "IsComputeForHedge"),
-        ("InitialAmountCents", "InitialAmountCents"),
-        ("RedeemStatus", "RedeemStatus"),
-        ("RedeemID", "RedeemID"),
-        ("InitialUnits", "InitialUnits"),
-        ("IsSettled", "IsSettled"),
-        ("LastOpPriceRateID", "LastOpPriceRateID"),
-        ("InitForexPriceRateID", "InitForexPriceRateID"),
-        ("EndForexPriceRateID", "EndForexPriceRateID"),
-        ("InitExecutionID", "InitExecutionID"),
-        ("EndExecutionID", "EndExecutionID"),
-        ("InitConversionRate", "InitConversionRate"),
-        ("InitConversionRateID", "InitConversionRateID"),
-        ("CloseMarketPriceRateID", "CloseMarketPriceRateID"),
-        ("OrderID", "OrderID"),
-        ("ExitOrderID", "ExitOrderID"),
-        ("IsSettledOnOpen", "IsSettledOnOpen"),
-        ("LastOpPriceRate", "LastOpPriceRate"),
-        ("SettlementTypeID", "SettlementTypeID"),
-        ("OpenMarketPriceRateID", "OpenMarketPriceRateID"),
-        ("RequestOccurred", "RequestOpenOccurred"),
-        ("RequestCloseOccurred", "RequestCloseOccurred"),
-        ("OrderType", "OrderType"),
-        ("PnLVersion", "PnLVersion"),
-        ("CloseMarkupOnOpen", "CloseMarkupOnOpen"),
-        ("OpenMarkup", "OpenMarkup"),
-        ("CloseMarkup", "CloseMarkup"),
-        ("DLTOpen", "DLTOpen"),
-        ("DLTClose", "DLTClose"),
-        ("CommissionVersion", "CommissionVersion"),
-        ("ExitOrderType", "ExitOrderType"),
-        ("OpenActionType", "OpenPositionReasonID"),
-        ("OpenTotalTaxes", "OpenTotalTaxes"),
-        ("CloseTotalTaxes", "CloseTotalTaxes"),
-        ("EstimateCloseFeeOnOpen", "EstimateCloseFeeOnOpen"),
+        ("Approved", "Approved"),
+        ("ModificationDate", "ModificationDate"),
+        ("FundingID", "FundingID"),
+        ("ExchangeRate", "ExchangeRate"),
+        ("DepositID", "DepositID"),
+        ("ProcessorValueDate", "ProcessorValueDate"),
+        ("DepotID", "DepotID"),
+        ("PaymentStatusID", "PaymentStatusID"),
+        ("ManagerID", "ManagerID"),
+        ("RiskManagementStatusID", "RiskManagementStatusID"),
+        ("Amount", "Amount"),
+        ("PaymentDate", "PaymentDate"),
+        ("IPAddress", "IPAddress"),
+        ("ClearingHouseEffectiveDate", "ClearingHouseEffectiveDate"),
+        ("IsFTD", "IsFTD"),
+        ("RefundVerificationCode", "RefundVerificationCode"),
+        ("MatchStatusID", "MatchStatusID"),
+        ("BonusStatusID", "BonusStatusID"),
+        ("BonusAmount", "BonusAmount"),
+        ("BonusErrorCode", "BonusErrorCode"),
+        ("ExTransactionID", "ExTransactionID"),
+        ("FundingTypeID", "FundingTypeID"),
+        ("IsRefundExcluded", "IsRefundExcluded"),
+        ("DocumentRequired", "DocumentRequired"),
+        ("BaseExchangeRate", "BaseExchangeRate"),
+        ("ExchangeFee", "ExchangeFee"),
+        ("ProtocolMIDSettingsID", "ProtocolMIDSettingsID"),
+        ("FunnelID", "FunnelID"),
+        ("SessionID", "SessionID"),
+        ("PaymentGeneration", "PaymentGeneration"),
+        ("ProcessRegulationID", "ProcessRegulationID"),
+        ("MerchantAccountID", "MerchantAccountID"),
+        ("IsSetBalanceCompleted", "IsSetBalanceCompleted"),
+        ("RoutingReasonID", "RoutingReasonID"),
+        ("FlowID", "FlowID"),
+        ("IsAftSupportedAsBool", "IsAftSupportedAsBool"),
+        ("IsAftEligibleAsBool", "IsAftEligibleAsBool"),
+        ("IsAftProcessedAsBool", "IsAftProcessedAsBool"),
     ],
-    "Trade.PositionTreeInfo": [
-        ("CloseOnEndOfWeek", "CloseOnEndOfWeek"),
-        ("LimitRate", "LimitRate"),
-        ("StopRate", "StopRate"),
-        ("IsDiscounted", "IsDiscounted"),
-        ("StopRate", "StopRateOnOpen"),
-        ("LimitRate", "LimitRateOnOpen"),
-    ],
-    "Trade.OpenPositionEndOfDay": [
-        ("PnLInDollars", "PnLInDollars"),
-        ("EstimateCloseFeeForCFD", "EstimateCloseFeeForCFD"),
-        ("Close_PnLInDollars", "Close_PnLInDollars"),
-        ("Close_CalculationRate", "Close_CalculationRate"),
-        ("Close_ConversionRate", "Close_ConversionRate"),
-        ("Close_PriceType", "Close_PriceType"),
-        ("CurrentCalculationRate", "CurrentCalculationRate"),
-        ("CurrentConversionRate", "CurrentConversionRate"),
-    ],
-    "BackOffice.Customer": [
-        ("RegulationID", "RegulationIDOnOpen"),
-    ],
-    "Trade.HBCExecutionLog": [],
-    "Trade.PositionAirdropLog": [],
-    "History.Cost": [],
-    "Trade.PriceLog": [],
+    "Billing.Funding_DataFactory": [],
 }
 
-# Post-load SPs and the specific columns they modify
+# Post-load SP columns (the columns modified by SP_Fact_BillingDeposit)
 POST_LOAD_SP_COLUMNS = {
-    "synapse__dwh_dbo__sp_dim_position_reopen": [
-        "CommissionOnClose", "FullCommissionOnClose", "IsReOpen",
-        "ReopenForPositionID", "CommissionOnCloseOrig",
-        "FullCommissionOnCloseOrig", "IsPartialCloseChildFromReOpen",
-    ],
-    "synapse__dwh_dbo__sp_dim_position_partialclosechild": [
-        "Amount", "AmountInUnitsDecimal", "LotCountDecimal",
-        "OriginalPositionID", "IsPartialCloseChild",
-    ],
-    "synapse__dwh_dbo__sp_dim_position_ispartialcloseparent": [
-        "IsPartialCloseParent",
-    ],
-    "synapse__dwh_dbo__sp_dim_position_iscopyfundposition": [
-        "IsCopyFundPosition",
-    ],
-    "synapse__dwh_dbo__sp_dim_position_hedgetype_history": [
-        "InitHedgeType", "EndHedgeType",
-    ],
-    "synapse__dwh_dbo__sp_dim_position_hedgetype_real": [
-        "InitHedgeType", "EndHedgeType",
+    "synapse__dwh_dbo__sp_fact_billingdeposit": [
+        "MOPCountry", "BankName", "CardCategory", "PlatformID", "IsRecurring",
     ],
 }
 
@@ -323,7 +188,7 @@ class Report:
 
     def print_summary(self):
         log.info("=" * 60)
-        log.info("LINEAGE INJECTION REPORT — Dim_Position")
+        log.info("LINEAGE INJECTION REPORT — Fact_BillingDeposit")
         log.info("=" * 60)
         log.info("Resolved:  %d", len(self.resolved))
         for r in self.resolved:
@@ -375,6 +240,39 @@ def run_sql(w: WorkspaceClient, query: str) -> Optional[list[dict]]:
     return None
 
 
+def _is_invalid_uc_table_name(name: str) -> bool:
+    """Check if UnityCatalogTableName from mapping view is invalid (e.g. internal-sources)."""
+    if not name or not str(name).strip():
+        return True
+    n = str(name).strip().lower()
+    if n in ("internal-sources", "internal", ""):
+        return True
+    if n.startswith("internal-") or n.startswith("internal_"):
+        return True
+    if "." in n or " " in n:
+        return True
+    return False
+
+
+def _try_fallback_bronze(
+    w: WorkspaceClient,
+    schema: str,
+    table: str,
+    label: str,
+    report: Report,
+) -> Optional[str]:
+    """Try FALLBACK_BRONZE when mapping view fails or returns invalid values."""
+    key = f"{schema}.{table}"
+    fallback_uc = FALLBACK_BRONZE.get(key)
+    if not fallback_uc:
+        return None
+    verify = run_sql(w, f"DESCRIBE TABLE {fallback_uc}")
+    if verify is None:
+        return None
+    report.resolved.append(f"{label} → {fallback_uc} (fallback)")
+    return fallback_uc
+
+
 # ── Resolution functions ──────────────────────────────────────────────
 
 def resolve_bronze_table(
@@ -385,7 +283,8 @@ def resolve_bronze_table(
     report: Report,
 ) -> Optional[str]:
     """Query the Generic Pipeline mapping view to find the UC bronze table.
-    Returns the fully qualified UC table name or None."""
+    Falls back to FALLBACK_BRONZE when mapping returns invalid values
+    (e.g. 'internal-sources'). Returns the fully qualified UC table name or None."""
 
     label = f"{schema}.{table} ({database})"
     query = (
@@ -398,10 +297,16 @@ def resolve_bronze_table(
     rows = run_sql(w, query)
 
     if rows is None:
+        uc_fqn = _try_fallback_bronze(w, schema, table, label, report)
+        if uc_fqn:
+            return uc_fqn
         report.skipped.append(f"{label} — mapping view query failed")
         return None
 
     if len(rows) == 0:
+        uc_fqn = _try_fallback_bronze(w, schema, table, label, report)
+        if uc_fqn:
+            return uc_fqn
         report.skipped.append(f"{label} — no mapping found in Generic Pipeline")
         return None
 
@@ -417,7 +322,19 @@ def resolve_bronze_table(
     business_group = row.get("BusinessGroup")
 
     if not uc_table_name or not business_group:
+        uc_fqn = _try_fallback_bronze(w, schema, table, label, report)
+        if uc_fqn:
+            return uc_fqn
         report.skipped.append(f"{label} — mapping row missing UnityCatalogTableName or BusinessGroup")
+        return None
+
+    if _is_invalid_uc_table_name(uc_table_name):
+        uc_fqn = _try_fallback_bronze(w, schema, table, label, report)
+        if uc_fqn:
+            return uc_fqn
+        report.skipped.append(
+            f"{label} — mapping returned invalid UnityCatalogTableName: {uc_table_name}"
+        )
         return None
 
     uc_fqn = f"main.{business_group}.{uc_table_name}"
@@ -425,7 +342,12 @@ def resolve_bronze_table(
     # Verify the table actually exists in UC
     verify = run_sql(w, f"DESCRIBE TABLE {uc_fqn}")
     if verify is None:
-        report.skipped.append(f"{label} — resolved to {uc_fqn} but DESCRIBE failed (table may not exist or no access)")
+        uc_fqn = _try_fallback_bronze(w, schema, table, label, report)
+        if uc_fqn:
+            return uc_fqn
+        report.skipped.append(
+            f"{label} — resolved to {uc_fqn} but DESCRIBE failed (table may not exist or no access)"
+        )
         return None
 
     report.resolved.append(f"{label} → {uc_fqn}")
@@ -549,7 +471,7 @@ def create_or_skip_lineage(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Inject Dim_Position lineage into Unity Catalog"
+        description="Inject Fact_BillingDeposit lineage into Unity Catalog"
     )
     parser.add_argument(
         "--execute", action="store_true",
@@ -585,7 +507,7 @@ def main():
         sys.exit(1)
     log.info("Gold table has %d columns", len(gold_columns))
 
-    # A3: Resolve bronze tables from the Generic Pipeline mapping view
+    # A3: Resolve bronze tables from the Generic Pipeline mapping view (with fallback)
     bronze_resolved: dict[str, str] = {}  # "Schema.Table" → UC FQN
     for src in PRODUCTION_SOURCES:
         key = f"{src['schema']}.{src['table']}"
@@ -607,11 +529,12 @@ def main():
 
     # B1: Synapse table
     synapse_table_meta = {
-        "name": "synapse__dwh_dbo__dim_position",
+        "name": "synapse__dwh_dbo__fact_billingdeposit",
         "entity_type": "Table",
         "description": (
-            "Synapse DWH table: DWH_dbo.Dim_Position. "
-            "Central position dimension with full lifecycle attributes."
+            "Synapse DWH table: DWH_dbo.Fact_BillingDeposit. "
+            "Central deposit fact table recording every monetary deposit attempt. "
+            "136 columns including ~70 XML-extracted payment provider fields."
         ),
         "columns": gold_columns,
         "properties": {
@@ -620,7 +543,7 @@ def main():
             "synapse_server": "sql_dp_prod_we",
             "object_type": "USER_TABLE",
             "refresh": "daily",
-            "distribution": "HASH(PositionID)",
+            "distribution": "HASH(DepositID)",
             "documented_by": "dwh-semantic-doc pipeline",
         },
     }
@@ -681,7 +604,8 @@ def main():
         props={
             "relationship_type": "etl_target",
             "description": (
-                "SP_Dim_Position_Populate writes to main.dwh.dim_position "
+                "SP_Fact_BillingDeposit_DL_To_Synapse writes to "
+                "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit "
                 "via Generic Pipeline delta export"
             ),
         },

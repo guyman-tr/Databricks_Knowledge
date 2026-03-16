@@ -7,7 +7,8 @@
 | **Primary Source** | `Trade.PositionTbl` (etoro) |
 | **ETL SP** | `SP_Dim_Position_Populate` |
 | **Secondary Sources** | `Trade.PositionTreeInfo`, `Trade.OpenPositionEndOfDay`, `Trade.PositionAirdropLog`, `BackOffice.Customer`, `PriceLog`, `Trade.HBCExecutionLog`, `History.Cost` |
-| **Generated** | 2026-03-08 |
+| **Generic Pipeline** | NOT in mapping view — uses custom DWH-to-UC pipeline |
+| **Generated** | 2026-03-08 | Updated: 2026-03-13 |
 
 ## Lineage Chain
 

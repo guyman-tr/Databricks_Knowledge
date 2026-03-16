@@ -44,8 +44,8 @@ These columns received descriptions based only on column name inference. A domai
 | Column | Tier | Question |
 |--------|------|----------|
 | OpenPositionReasonID | 5 | [RESOLVED] Expert confirmed: column IS OpenActionType. 2000-series values are ETL data quality issue. Upstream dictionary (0-18) is correct. |
-| Close_PriceType | 2 | Observed values: NULL (92%), 2, 0, 1, 3. What do these price types represent? No upstream wiki documentation found. |
-| ExitOrderType | 2 | Observed values: NULL (89%), 20 (11%), 19 (rare). What do values 19 and 20 represent? They don't match standard `Dictionary.OrderType` values found in other contexts. |
+| Close_PriceType | 2 | 2026 distribution: 2=63.5%, NULL=18%, 1=11.8%, 0=6.6%, 3=0.05%. Expert says: official close, unofficial close, dealer injection, or last internal price. Exact value-to-source mapping still TBD. |
+| ExitOrderType | 2 | 2026 distribution: 20=56%, NULL=44%, 19=rare. What do values 19 and 20 represent? They don't match standard `Dictionary.OrderType` values. |
 | CommissionVersion | 5 | [RESOLVED] Expert confirmed: commission calculation version with multiple models. Detailed value mapping TBD. |
 | VolumeOnClose | 5 | [RESOLVED] Expert confirmed: same as Volume but at close time. rounded(Units * Price * ConversionRate). Pro-rated for partial close. |
 
@@ -60,4 +60,4 @@ These columns received descriptions based only on column name inference. A domai
 
 ---
 
-*Generated: 2026-03-02 | Updated: 2026-03-03 | Companion to Dim_Position.md*
+*Generated: 2026-03-02 | Updated: 2026-03-13 | Companion to Dim_Position.md*

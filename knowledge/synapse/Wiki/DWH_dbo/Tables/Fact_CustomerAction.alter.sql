@@ -185,4 +185,4 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUM
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN RealCID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction ALTER COLUMN DemoCID SET TAGS ('pii' = 'none');
 
--- View propagation: see Fact_CustomerAction.views.alter.sql
+-- Downstream propagation: see Fact_CustomerAction.downstream.alter.sql

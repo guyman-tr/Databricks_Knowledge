@@ -1,6 +1,6 @@
 -- =============================================================================
 -- Databricks ALTER Script: DWH_dbo.Dim_Position
--- Generated: 2026-03-02 | Updated: 2026-03-08 | 14-phase pipeline
+-- Generated: 2026-03-02 | Updated: 2026-03-13 | 15-phase pipeline
 -- Target: Unity Catalog table comment + column comments (1024 char limit)
 -- UC Target: main.dwh.dim_position
 -- Resolved via: information_schema (validated 2026-03-08)
@@ -87,7 +87,7 @@ ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenDateID COMMENT 'Open date as 
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseDateID COMMENT 'Close date as YYYYMMDD int. 0=still open. Part of clustered index. Key filter for open vs closed.';
 
-ALTER TABLE main.dwh.dim_position ALTER COLUMN RegulationIDOnOpen COMMENT 'Regulation at open. DWH-joined from BackOfficeCustomer. 0=None,1=CySEC,2=FCA,4=ASIC,5=BVI,9=FSA Seychelles,10=ASIC&GAML,11=FSRA. Refs Dim_Regulation.';
+ALTER TABLE main.dwh.dim_position ALTER COLUMN RegulationIDOnOpen COMMENT 'Regulation at open. DWH-joined from BackOfficeCustomer. 0=None,1=CySEC,2=FCA,3=eToroUS,4=ASIC,5=BVI,6=FinCEN,7=FINRAONLY,8=MAS,9=FSA Seychelles,10=ASIC&GAML,11=FSRA,12=NYDFS+FINRA. Refs Dim_Regulation.';
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN PlatformTypeID COMMENT '[UNVERIFIED] Platform type. Not populated — always NULL in this table.';
 
@@ -109,7 +109,7 @@ ALTER TABLE main.dwh.dim_position ALTER COLUMN LimitRate COMMENT 'Take-profit ra
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN StopRate COMMENT 'Stop-loss rate from Trade.PositionTreeInfo. Price at which position auto-closes if market moves against.';
 
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ClosePositionReasonID COMMENT 'Close reason. Refs Dim_ClosePositionReason: 0=Customer,1=StopLoss,5=TakeProfit,7=Rollover,8=BackOffice,9=HierarchicalClose,13=CopySL,17=ManualUnregister,19=Redeem,23=Alignment,24=Delist,26=Expiry.';
+ALTER TABLE main.dwh.dim_position ALTER COLUMN ClosePositionReasonID COMMENT 'Close reason. Refs Dim_ClosePositionReason: 0=Customer,1=StopLoss,5=TakeProfit,7=Rollover,8=BackOffice,9=Hierarchical,13=CopySL,14=ReturnToMarket,15=JoinDemoChallenge,17=ManualUnregister,19=Redeem,20=CloseAll,21=ManualLiquidation,23=Alignment,24=Delist,25=BSL,26=Expiry,27=OpAdjustment,28=Orphaned,29=TransferredOut.';
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN TreeID COMMENT 'Copy-trade tree root. Independent: TreeID=PositionID. Copy-trade: TreeID=leader PositionID. All positions sharing a TreeID share SL/TP settings.';
 
@@ -265,9 +265,9 @@ ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarkupByUnits COMMENT 'eToro 
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN CommissionVersion COMMENT 'Commission calculation version. Different values represent different versions/models of how commission is computed.';
 
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ExitOrderType COMMENT 'Exit order type for stop/limit-triggered closes. Values: NULL(89%),20(11%),19(rare). NULL for direct closes.';
+ALTER TABLE main.dwh.dim_position ALTER COLUMN ExitOrderType COMMENT 'Exit order type for stop/limit-triggered closes. Values: 20=56%,NULL=44%,19=rare. NULL for customer/manual closes.';
 
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenPositionReasonID COMMENT 'Open mechanism/reason. Refs Dictionary.OpenPositionActionType. Common: 2020-2023(year codes),1(regular),0(default),-1(undefined),3(hierarchical).';
+ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenPositionReasonID COMMENT 'Open mechanism/reason. Refs Dictionary.OpenPositionActionType. Values 0-18 per dictionary. 2000-series values (2020-2023) are ETL data quality artefacts, not year codes.';
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenTotalTaxes COMMENT 'Total taxes at open (e.g., UK stamp duty). Default 0.';
 
@@ -289,7 +289,7 @@ ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_CalculationRate COMMENT 'In
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_ConversionRate COMMENT 'Currency conversion rate for Close_PnLInDollars. Converts instrument currency to USD using closing price snapshot.';
 
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_PriceType COMMENT 'Closing price source for Close_PnLInDollars: official close, unofficial close, dealer injection, or last internal price. Value mapping TBD.';
+ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_PriceType COMMENT 'Closing price source for Close_PnLInDollars. 2=63.5%,1=11.8%,0=6.6%,3=0.05%,NULL=18%. Sources: official close, unofficial close, dealer injection, last internal price. Value-to-source mapping TBD.';
 
 ALTER TABLE main.dwh.dim_position ALTER COLUMN CurrentCalculationRate COMMENT 'Current calculation rate for open position PnL (end-of-day snapshot).';
 

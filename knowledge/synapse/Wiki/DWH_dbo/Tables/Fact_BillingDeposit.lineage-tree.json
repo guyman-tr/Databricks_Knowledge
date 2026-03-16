@@ -1,0 +1,2572 @@
+{
+  "source": {
+    "catalog": "main",
+    "schema": "dwh",
+    "table": "gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+    "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit"
+  },
+  "discovered_at": "2026-03-16T12:40:07.885762+00:00",
+  "discovery_methods": [
+    "synapse_dependency",
+    "name_pattern"
+  ],
+  "total_downstream_objects": 22,
+  "total_column_matches": 289,
+  "total_renames": 0,
+  "nodes": [
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeRate",
+          "target_column": "ExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Conversion rate from deposit currency to USD. Used to compute AmountUSD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BaseExchangeRate",
+          "target_column": "BaseExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Base conversion rate before exchange fee markup. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeFee",
+          "target_column": "ExchangeFee",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Exchange fee in basis points. Common: 0=no fee, 150=1.5%, 50=0.5%. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardCategory",
+          "target_column": "CardCategory",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card tier (CLASSIC, STANDARD, PLATINUM, etc.). ETL-enriched from Dim_CountryBin. Note: STANDART typo exists. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MOPCountry",
+          "target_column": "MOPCountry",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country of payment method. ETL-enriched from CountryIDAsString via Dim_Country. ~14.5% populated. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Unique deposit transaction ID. Distribution key + clustered index. Effectively the PK. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "ManagerID",
+          "target_column": "ManagerID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Manager/account manager ID. 98.9% populated. (Tier 2 — live data)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "finance",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_audit_auxillary_datapoints",
+      "full_name": "main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_audit_auxillary_datapoints",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "dwh",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata",
+      "full_name": "main.dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First Time Deposit flag: 1=first deposit for this CID, 0=subsequent. 8% are FTD. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeRate",
+          "target_column": "ExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Conversion rate from deposit currency to USD. Used to compute AmountUSD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BaseExchangeRate",
+          "target_column": "BaseExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Base conversion rate before exchange fee markup. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeFee",
+          "target_column": "ExchangeFee",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Exchange fee in basis points. Common: 0=no fee, 150=1.5%, 50=0.5%. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardCategory",
+          "target_column": "CardCategory",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card tier (CLASSIC, STANDARD, PLATINUM, etc.). ETL-enriched from Dim_CountryBin. Note: STANDART typo exists. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MOPCountry",
+          "target_column": "MOPCountry",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country of payment method. ETL-enriched from CountryIDAsString via Dim_Country. ~14.5% populated. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Unique deposit transaction ID. Distribution key + clustered index. Effectively the PK. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_money_in_new_management_dashboard",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_money_in_new_management_dashboard",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Unique deposit transaction ID. Distribution key + clustered index. Effectively the PK. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentDate",
+          "target_column": "PaymentDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "When the payment was initiated by the customer. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ModificationDate",
+          "target_column": "ModificationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Timestamp of last modification. Primary date column for filtering. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusID",
+          "target_column": "PaymentStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment lifecycle: 1=New, 2=Approved, 3=Decline, 4=Technical, 5=InProcess, 6=Canceled, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE. FK to Dim_PaymentStatus. Key filter: =2 for approved. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First Time Deposit flag: 1=first deposit for this CID, 0=subsequent. 8% are FTD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ProcessorValueDate",
+          "target_column": "ProcessorValueDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processor settlement date. ~29% populated. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "ModificationDateID",
+          "target_column": "ModificationDateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date key YYYYMMDD from ModificationDate. FK to Dim_Date. ETL-computed. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Unique deposit transaction ID. Distribution key + clustered index. Effectively the PK. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingType",
+          "target_column": "FundingType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding type name from FundingData XML. String version of FundingTypeID. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ModificationDate",
+          "target_column": "ModificationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Timestamp of last modification. Primary date column for filtering. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First Time Deposit flag: 1=first deposit for this CID, 0=subsequent. 8% are FTD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ModificationDateID",
+          "target_column": "ModificationDateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date key YYYYMMDD from ModificationDate. FK to Dim_Date. ETL-computed. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingID",
+          "target_column": "FundingID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding instrument ID. FK to staging etoro_Billing_Funding. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountBalanceAsDecimal",
+          "target_column": "AccountBalanceAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account balance from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountHolderAsString",
+          "target_column": "AccountHolderAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account holder name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountIDAsDecimal",
+          "target_column": "AccountIDAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account ID from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ACHBankAccountIDAsInteger",
+          "target_column": "ACHBankAccountIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "ACH bank account ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Address1AsString",
+          "target_column": "Address1AsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Address line 1 from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Address2AsString",
+          "target_column": "Address2AsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Address line 2 from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AdviseAsString",
+          "target_column": "AdviseAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Payment advisory message from PaymentData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "AvailableBalanceAsDecimal",
+          "target_column": "AvailableBalanceAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Available balance from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankCodeAsString",
+          "target_column": "BankCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank code (string) from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankIDAsInteger",
+          "target_column": "BankIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank ID from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BillNumberAsString",
+          "target_column": "BillNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bill/invoice number from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BuildingNumberAsString",
+          "target_column": "BuildingNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Building number (address) from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardHolderPhoneNumberBodyAsString",
+          "target_column": "CardHolderPhoneNumberBodyAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card holder phone number (body) from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardHolderPhoneNumberPrefixAsString",
+          "target_column": "CardHolderPhoneNumberPrefixAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card holder phone prefix from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardNumberAsString",
+          "target_column": "CardNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card number (masked/partial) from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CityAsString",
+          "target_column": "CityAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "City from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDAsString",
+          "target_column": "CountryIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country identifier (string) from PaymentData XML. Used to derive MOPCountry via Dim_Country. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryNameAsString",
+          "target_column": "CountryNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CreatedAtAsString",
+          "target_column": "CreatedAtAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Creation timestamp from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CurrentBalanceAsDecimal",
+          "target_column": "CurrentBalanceAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Current balance from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CustomerIDAsString",
+          "target_column": "CustomerIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "EmailAsString",
+          "target_column": "EmailAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer email from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "EndPointIDAsString",
+          "target_column": "EndPointIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment endpoint ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ErrorCodeAsString",
+          "target_column": "ErrorCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Error code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ErrorTypeAsString",
+          "target_column": "ErrorTypeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Error type from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstNameAsString",
+          "target_column": "FirstNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer first name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IBANCodeAsString",
+          "target_column": "IBANCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IBAN from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "InitialTransactionIDAsString",
+          "target_column": "InitialTransactionIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Initial/original transaction ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IPAsString",
+          "target_column": "IPAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IP address (string) from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "LanguageIDAsInteger",
+          "target_column": "LanguageIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Language ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastNameAsString",
+          "target_column": "LastNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer last name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MD5AsString",
+          "target_column": "MD5AsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] MD5 hash from PaymentData XML. Purpose unclear. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerAsString",
+          "target_column": "PayerAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerBusiness",
+          "target_column": "PayerBusiness",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer business name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerIDAsString",
+          "target_column": "PayerIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer ID from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerPurseAsString",
+          "target_column": "PayerPurseAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer e-wallet purse from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerStatus",
+          "target_column": "PayerStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer status from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentAmountAsDecimal",
+          "target_column": "PaymentAmountAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment amount from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentDateAsDateTime",
+          "target_column": "PaymentDateAsDateTime",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment date from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentGuaranteeAsString",
+          "target_column": "PaymentGuaranteeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Payment guarantee indicator from PaymentData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentModeAsInteger",
+          "target_column": "PaymentModeAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Payment mode ID from PaymentData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentProviderTransactionStatusAsString",
+          "target_column": "PaymentProviderTransactionStatusAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Transaction status from payment provider, from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusAsInteger",
+          "target_column": "PaymentStatusAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment status (integer) from PaymentData XML. Provider's own status code. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentTypeAsString",
+          "target_column": "PaymentTypeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment type from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlaidItemIDAsString",
+          "target_column": "PlaidItemIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Plaid item ID from PaymentData XML. Used for ACH/Plaid integrations. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlaidNamesAsString",
+          "target_column": "PlaidNamesAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Plaid account holder names from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformIDAsInteger",
+          "target_column": "PlatformIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Platform ID (string) from PaymentData XML. Different from PlatformID column. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PromotionCodeAsString",
+          "target_column": "PromotionCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Promotion/coupon code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PSPCodeAsString",
+          "target_column": "PSPCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment Service Provider code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RapidFirstNameAsString",
+          "target_column": "RapidFirstNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "RapidTransfer first name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RapidLastNameAsString",
+          "target_column": "RapidLastNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "RapidTransfer last name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ResponseMessageAsString",
+          "target_column": "ResponseMessageAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Provider response message from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ResponseTimeAsString",
+          "target_column": "ResponseTimeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Provider response time from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SecretKeyAsString",
+          "target_column": "SecretKeyAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Secret key from PaymentData XML. Potential security concern. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "ThreeDsAsJson",
+          "target_column": "ThreeDsAsJson",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "3D Secure response data as JSON from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ThreeDsResponseType",
+          "target_column": "ThreeDsResponseType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "3D Secure response type from PaymentData XML. Values include '1'. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "TokenAsString",
+          "target_column": "TokenAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment token from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "TransactionIDAsString",
+          "target_column": "TransactionIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Transaction ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ZipCodeAsString",
+          "target_column": "ZipCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Zip/postal code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountTypeAsString",
+          "target_column": "AccountTypeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account type from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankAccountAsString",
+          "target_column": "BankAccountAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank account number from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankAddressAsString",
+          "target_column": "BankAddressAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank address from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankCodeAsDecimal",
+          "target_column": "BankCodeAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank code (numeric) from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankDetailsAccountIDAsString",
+          "target_column": "BankDetailsAccountIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank details account ID from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankIDAsString",
+          "target_column": "BankIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank ID (string) from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankNameAsString",
+          "target_column": "BankNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank name from FundingData XML. Raw provider value (vs BankName which is enriched from Dim_CountryBin). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BICCodeAsString",
+          "target_column": "BICCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "BIC/SWIFT code from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BinCodeAsString",
+          "target_column": "BinCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card BIN code (first 6-8 digits) from FundingData XML. Used to JOIN Dim_CountryBin for BankName + CardCategory. (Tier 5 — domain expert)",
+          "tier": ""
+        },
+        {
+          "source_column": "BinCountryIDAsInteger",
+          "target_column": "BinCountryIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID from BIN lookup, from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardTypeIDAsInteger",
+          "target_column": "CardTypeIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card network: 1=Visa, 2=MasterCard, 3=Diners. From FundingData XML. FK to Dim_CardType. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "CIDAsString",
+          "target_column": "CIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Customer ID as string from FundingData XML. May differ from CID column. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "ClientBankNameAsString",
+          "target_column": "ClientBankNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Client bank name from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDAsInteger",
+          "target_column": "CountryIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID from payment provider response, from FundingData XML. FK to Dim_Country. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CustomerAddressAsString",
+          "target_column": "CustomerAddressAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer address from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CustomerNameAsString",
+          "target_column": "CustomerNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer name from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MaskedAccountIDAsString",
+          "target_column": "MaskedAccountIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Masked payment account ID from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PurseAsString",
+          "target_column": "PurseAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "E-wallet purse identifier from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RoutingNumberAsString",
+          "target_column": "RoutingNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank routing number from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SecuredCardDataAsString",
+          "target_column": "SecuredCardDataAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Encrypted/hashed card data from FundingData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "SecureIDAsDecimal",
+          "target_column": "SecureIDAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Secure ID from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SortCodeAsString",
+          "target_column": "SortCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank sort code from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SwiftCodeAsString",
+          "target_column": "SwiftCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "SWIFT/BIC code from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BaseExchangeRate",
+          "target_column": "BaseExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Base conversion rate before exchange fee markup. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepotID",
+          "target_column": "DepotID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processor/depot: 87=CyberSource, 92=Checkout.com, 12=PayPal, 88=eToroMoney. FK to Dim_BillingDepot. (Tier 2 — Dim lookup)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_deposit_reversals_pips",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_deposit_reversals_pips",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeRate",
+          "target_column": "ExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Conversion rate from deposit currency to USD. Used to compute AmountUSD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BaseExchangeRate",
+          "target_column": "BaseExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Base conversion rate before exchange fee markup. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeFee",
+          "target_column": "ExchangeFee",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Exchange fee in basis points. Common: 0=no fee, 150=1.5%, 50=0.5%. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardCategory",
+          "target_column": "CardCategory",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card tier (CLASSIC, STANDARD, PLATINUM, etc.). ETL-enriched from Dim_CountryBin. Note: STANDART typo exists. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MOPCountry",
+          "target_column": "MOPCountry",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country of payment method. ETL-enriched from CountryIDAsString via Dim_Country. ~14.5% populated. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRecurring",
+          "target_column": "IsRecurring",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Recurring deposit: 1=yes(0.9%), 0=no(55.6%), NULL=pre-feature. From etoro_Billing_RecurringDeposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method: 1=CreditCard, 2=WireTransfer, 3=PayPal, 8=Skrill, 28=OnlineBanking, 29=ACH, 33=eToroMoney, 34=iDEAL, 35=Trustly. FK to Dim_FundingType. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "CurrencyID",
+          "target_column": "CurrencyID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit currency: 1=USD, 2=EUR, 3=GBP, 5=AUD, 6=CHF + 28 others. FK to Dim_Currency. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRecurring",
+          "target_column": "IsRecurring",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Recurring deposit: 1=yes(0.9%), 0=no(55.6%), NULL=pre-feature. From etoro_Billing_RecurringDeposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_withdraw_rollback_pips",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_withdraw_rollback_pips",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeRate",
+          "target_column": "ExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Conversion rate from deposit currency to USD. Used to compute AmountUSD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BaseExchangeRate",
+          "target_column": "BaseExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Base conversion rate before exchange fee markup. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeFee",
+          "target_column": "ExchangeFee",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Exchange fee in basis points. Common: 0=no fee, 150=1.5%, 50=0.5%. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardCategory",
+          "target_column": "CardCategory",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card tier (CLASSIC, STANDARD, PLATINUM, etc.). ETL-enriched from Dim_CountryBin. Note: STANDART typo exists. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MOPCountry",
+          "target_column": "MOPCountry",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country of payment method. ETL-enriched from CountryIDAsString via Dim_Country. ~14.5% populated. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositusersfirsttouchpoints",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositusersfirsttouchpoints",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "pii_data",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates",
+      "full_name": "main.pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_sar_report_fca",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_sar_report_fca",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_output",
+      "table": "vg_fact_billingdeposit_for_genie",
+      "full_name": "main.bi_output.vg_fact_billingdeposit_for_genie",
+      "object_type": "VIEW",
+      "hop_distance": 1,
+      "discovered_via": "name_pattern",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID (FK to Dim_Customer.RealCID). The customer who initiated the deposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CurrencyID",
+          "target_column": "CurrencyID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit currency: 1=USD, 2=EUR, 3=GBP, 5=AUD, 6=CHF + 28 others. FK to Dim_Currency. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "Commission",
+          "target_column": "Commission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Commission charged on the deposit, in deposit currency. Typically 0. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Approved",
+          "target_column": "Approved",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[DEPRECATED] Legacy approval flag. 99.99% NULL. Use PaymentStatusID instead. (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "ModificationDate",
+          "target_column": "ModificationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Timestamp of last modification. Primary date column for filtering. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ModificationDateID",
+          "target_column": "ModificationDateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date key YYYYMMDD from ModificationDate. FK to Dim_Date. ETL-computed. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingID",
+          "target_column": "FundingID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding instrument ID. FK to staging etoro_Billing_Funding. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeRate",
+          "target_column": "ExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Conversion rate from deposit currency to USD. Used to compute AmountUSD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Unique deposit transaction ID. Distribution key + clustered index. Effectively the PK. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ProcessorValueDate",
+          "target_column": "ProcessorValueDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processor settlement date. ~29% populated. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepotID",
+          "target_column": "DepotID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processor/depot: 87=CyberSource, 92=Checkout.com, 12=PayPal, 88=eToroMoney. FK to Dim_BillingDepot. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "SecuredCardDataAsString",
+          "target_column": "SecuredCardDataAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Encrypted/hashed card data from FundingData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "BinCodeAsString",
+          "target_column": "BinCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card BIN code (first 6-8 digits) from FundingData XML. Used to JOIN Dim_CountryBin for BankName + CardCategory. (Tier 5 — domain expert)",
+          "tier": ""
+        },
+        {
+          "source_column": "BinCountryIDAsInteger",
+          "target_column": "BinCountryIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID from BIN lookup, from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardTypeIDAsInteger",
+          "target_column": "CardTypeIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card network: 1=Visa, 2=MasterCard, 3=Diners. From FundingData XML. FK to Dim_CardType. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusID",
+          "target_column": "PaymentStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment lifecycle: 1=New, 2=Approved, 3=Decline, 4=Technical, 5=InProcess, 6=Canceled, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE. FK to Dim_PaymentStatus. Key filter: =2 for approved. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "ManagerID",
+          "target_column": "ManagerID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Manager/account manager ID. 98.9% populated. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "RiskManagementStatusID",
+          "target_column": "RiskManagementStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Risk check result: 1=Success, 2-69=various decline reasons. FK to Dim_RiskManagementStatus. 95.2% NULL. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit amount in deposit currency. Capped at +/-99,999,999 in ETL (fix 2025-04-17). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentDate",
+          "target_column": "PaymentDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "When the payment was initiated by the customer. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IPAddress",
+          "target_column": "IPAddress",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's IP address stored as numeric. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ClearingHouseEffectiveDate",
+          "target_column": "ClearingHouseEffectiveDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Clearing house settlement date. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First Time Deposit flag: 1=first deposit for this CID, 0=subsequent. 8% are FTD. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RefundVerificationCode",
+          "target_column": "RefundVerificationCode",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Verification code for refund processing. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "MatchStatusID",
+          "target_column": "MatchStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Electronic verification: 0=None(97.4%), 2=Verified, 3=NotVerified. FK to Dim_EvMatchStatus. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "BonusStatusID",
+          "target_column": "BonusStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bonus status: NULL=61.4%, 0=none(38.3%), 1=active, 2=expired. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "BonusAmount",
+          "target_column": "BonusAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bonus amount credited. 99.98% NULL. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "BonusErrorCode",
+          "target_column": "BonusErrorCode",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Error code from bonus processing. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExTransactionID",
+          "target_column": "ExTransactionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "External transaction ID from payment provider. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method: 1=CreditCard, 2=WireTransfer, 3=PayPal, 8=Skrill, 28=OnlineBanking, 29=ACH, 33=eToroMoney, 34=iDEAL, 35=Trustly. FK to Dim_FundingType. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRefundExcluded",
+          "target_column": "IsRefundExcluded",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "1=excluded from refund eligibility (1.3%), 0=eligible. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DocumentRequired",
+          "target_column": "DocumentRequired",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "1=document required for deposit (56.7%), 0=not required. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExpirationDateID",
+          "target_column": "ExpirationDateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card expiration YYYYMM. 190001=missing/invalid. ETL-computed from ExpirationDateAsString. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDAsInteger",
+          "target_column": "CountryIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID from payment provider response, from FundingData XML. FK to Dim_Country. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "StateIDAsInteger",
+          "target_column": "StateIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "State/province ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankIDAsInteger",
+          "target_column": "BankIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank ID from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountNameAsString",
+          "target_column": "AccountNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account holder name from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountTypeAsString",
+          "target_column": "AccountTypeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account type from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankAccountAsString",
+          "target_column": "BankAccountAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank account number from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankAddressAsString",
+          "target_column": "BankAddressAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank address from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankCodeAsDecimal",
+          "target_column": "BankCodeAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank code (numeric) from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankDetailsAccountIDAsString",
+          "target_column": "BankDetailsAccountIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank details account ID from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankIDAsString",
+          "target_column": "BankIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank ID (string) from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankNameAsString",
+          "target_column": "BankNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank name from FundingData XML. Raw provider value (vs BankName which is enriched from Dim_CountryBin). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BICCodeAsString",
+          "target_column": "BICCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "BIC/SWIFT code from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CIDAsString",
+          "target_column": "CIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Customer ID as string from FundingData XML. May differ from CID column. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "v",
+          "target_column": "v",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "ClientBankNameAsString (TRUNCATED ALIAS BUG). Client bank name from FundingData XML. ETL code: ExtractXMLValue('ClientBankNameAsString', FundingData) aliased as 'v'. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CustomerAddressAsString",
+          "target_column": "CustomerAddressAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer address from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CustomerNameAsString",
+          "target_column": "CustomerNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer name from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingType",
+          "target_column": "FundingType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding type name from FundingData XML. String version of FundingTypeID. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MaskedAccountIDAsString",
+          "target_column": "MaskedAccountIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Masked payment account ID from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PurseAsString",
+          "target_column": "PurseAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "E-wallet purse identifier from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RoutingNumberAsString",
+          "target_column": "RoutingNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank routing number from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SecureIDAsDecimal",
+          "target_column": "SecureIDAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Secure ID from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SortCodeAsString",
+          "target_column": "SortCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank sort code from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountBalanceAsDecimal",
+          "target_column": "AccountBalanceAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account balance from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountHolderAsString",
+          "target_column": "AccountHolderAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account holder name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AccountIDAsDecimal",
+          "target_column": "AccountIDAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account ID from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ACHBankAccountIDAsInteger",
+          "target_column": "ACHBankAccountIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "ACH bank account ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Address1AsString",
+          "target_column": "Address1AsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Address line 1 from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "Address2AsString",
+          "target_column": "Address2AsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Address line 2 from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "AdviseAsString",
+          "target_column": "AdviseAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Payment advisory message from PaymentData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "AvailableBalanceAsDecimal",
+          "target_column": "AvailableBalanceAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Available balance from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankCodeAsString",
+          "target_column": "BankCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bank code (string) from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BillNumberAsString",
+          "target_column": "BillNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bill/invoice number from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BuildingNumberAsString",
+          "target_column": "BuildingNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Building number (address) from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardHolderPhoneNumberBodyAsString",
+          "target_column": "CardHolderPhoneNumberBodyAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card holder phone number (body) from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardHolderPhoneNumberPrefixAsString",
+          "target_column": "CardHolderPhoneNumberPrefixAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card holder phone prefix from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardNumberAsString",
+          "target_column": "CardNumberAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card number (masked/partial) from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CityAsString",
+          "target_column": "CityAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "City from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDAsString",
+          "target_column": "CountryIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country identifier (string) from PaymentData XML. Used to derive MOPCountry via Dim_Country. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryNameAsString",
+          "target_column": "CountryNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CreatedAtAsString",
+          "target_column": "CreatedAtAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Creation timestamp from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CurrentBalanceAsDecimal",
+          "target_column": "CurrentBalanceAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Current balance from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CustomerIDAsString",
+          "target_column": "CustomerIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "EmailAsString",
+          "target_column": "EmailAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer email from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "EndPointIDAsString",
+          "target_column": "EndPointIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment endpoint ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ErrorCodeAsString",
+          "target_column": "ErrorCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Error code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ErrorTypeAsString",
+          "target_column": "ErrorTypeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Error type from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstNameAsString",
+          "target_column": "FirstNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer first name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IBANCodeAsString",
+          "target_column": "IBANCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IBAN from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "InitialTransactionIDAsString",
+          "target_column": "InitialTransactionIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Initial/original transaction ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IPAsString",
+          "target_column": "IPAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IP address (string) from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "LanguageIDAsInteger",
+          "target_column": "LanguageIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Language ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastNameAsString",
+          "target_column": "LastNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer last name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MD5AsString",
+          "target_column": "MD5AsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] MD5 hash from PaymentData XML. Purpose unclear. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerAsString",
+          "target_column": "PayerAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerBusiness",
+          "target_column": "PayerBusiness",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer business name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerIDAsString",
+          "target_column": "PayerIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer ID from PaymentData/FundingData XML (COALESCE). (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerPurseAsString",
+          "target_column": "PayerPurseAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer e-wallet purse from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PayerStatus",
+          "target_column": "PayerStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payer status from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentAmountAsDecimal",
+          "target_column": "PaymentAmountAsDecimal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment amount from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentDateAsDateTime",
+          "target_column": "PaymentDateAsDateTime",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment date from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentGuaranteeAsString",
+          "target_column": "PaymentGuaranteeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Payment guarantee indicator from PaymentData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentModeAsInteger",
+          "target_column": "PaymentModeAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Payment mode ID from PaymentData XML. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentProviderTransactionStatusAsString",
+          "target_column": "PaymentProviderTransactionStatusAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Transaction status from payment provider, from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusAsInteger",
+          "target_column": "PaymentStatusAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment status (integer) from PaymentData XML. Provider's own status code. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentTypeAsString",
+          "target_column": "PaymentTypeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment type from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlaidItemIDAsString",
+          "target_column": "PlaidItemIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Plaid item ID from PaymentData XML. Used for ACH/Plaid integrations. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlaidNamesAsString",
+          "target_column": "PlaidNamesAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Plaid account holder names from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformIDAsInteger",
+          "target_column": "PlatformIDAsInteger",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Platform ID (string) from PaymentData XML. Different from PlatformID column. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PromotionCodeAsString",
+          "target_column": "PromotionCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Promotion/coupon code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PSPCodeAsString",
+          "target_column": "PSPCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment Service Provider code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RapidFirstNameAsString",
+          "target_column": "RapidFirstNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "RapidTransfer first name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "RapidLastNameAsString",
+          "target_column": "RapidLastNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "RapidTransfer last name from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ResponseMessageAsString",
+          "target_column": "ResponseMessageAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Provider response message from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ResponseTimeAsString",
+          "target_column": "ResponseTimeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Provider response time from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SecretKeyAsString",
+          "target_column": "SecretKeyAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Secret key from PaymentData XML. Potential security concern. (Tier 4 — column name)",
+          "tier": ""
+        },
+        {
+          "source_column": "ThreeDsAsJson",
+          "target_column": "ThreeDsAsJson",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "3D Secure response data as JSON from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ThreeDsResponseType",
+          "target_column": "ThreeDsResponseType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "3D Secure response type from PaymentData XML. Values include '1'. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "TokenAsString",
+          "target_column": "TokenAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment token from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "TransactionIDAsString",
+          "target_column": "TransactionIDAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Transaction ID from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ZipCodeAsString",
+          "target_column": "ZipCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Zip/postal code from PaymentData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BaseExchangeRate",
+          "target_column": "BaseExchangeRate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Base conversion rate before exchange fee markup. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ExchangeFee",
+          "target_column": "ExchangeFee",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Exchange fee in basis points. Common: 0=no fee, 150=1.5%, 50=0.5%. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "ProtocolMIDSettingsID",
+          "target_column": "ProtocolMIDSettingsID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Merchant ID/protocol settings config. FK to Dim_BillingProtocolMIDSettingsID. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "FunnelID",
+          "target_column": "FunnelID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit funnel: 36=Default(93.8%), 9=Cashier, 43=GCC. FK to Dim_Funnel. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "AmountUSD",
+          "target_column": "AmountUSD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "USD equivalent. ETL-computed: Amount * ExchangeRate. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SessionID",
+          "target_column": "SessionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Session ID for the deposit attempt. Always populated. Used to resolve PlatformID. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformID",
+          "target_column": "PlatformID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Internal platform ID from Fact_CustomerAction (ActionTypeID=14). Values: 111, 105, 117 etc. Does NOT map to Dim_Platform. 40.6% NULL. (Tier 4 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "MOPCountry",
+          "target_column": "MOPCountry",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country of payment method. ETL-enriched from CountryIDAsString via Dim_Country. ~14.5% populated. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "SwiftCodeAsString",
+          "target_column": "SwiftCodeAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "SWIFT/BIC code from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "ClientBankNameAsString",
+          "target_column": "ClientBankNameAsString",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Client bank name from FundingData XML. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "BankName",
+          "target_column": "BankName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Issuing bank name. ETL-enriched from Dim_CountryBin by BinCodeAsString. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "CardCategory",
+          "target_column": "CardCategory",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Card tier (CLASSIC, STANDARD, PLATINUM, etc.). ETL-enriched from Dim_CountryBin. Note: STANDART typo exists. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentGeneration",
+          "target_column": "PaymentGeneration",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment system generation: NULL=pre-feature, 0=legacy, 1=new. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "ProcessRegulationID",
+          "target_column": "ProcessRegulationID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Regulatory entity: 1=CySEC, 2=FCA, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML. FK to Dim_Regulation. 63.7% NULL. (Tier 2 — Dim lookup)",
+          "tier": ""
+        },
+        {
+          "source_column": "MerchantAccountID",
+          "target_column": "MerchantAccountID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Merchant account for processing. 49.4% NULL. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSetBalanceCompleted",
+          "target_column": "IsSetBalanceCompleted",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Balance update status: 1=completed, 0=not completed, NULL=pre-feature. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "RoutingReasonID",
+          "target_column": "RoutingReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment routing reason: 1=default, 3/5/6/7=various rules. 67.9% NULL. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRecurring",
+          "target_column": "IsRecurring",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Recurring deposit: 1=yes(0.9%), 0=no(55.6%), NULL=pre-feature. From etoro_Billing_RecurringDeposit. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FlowID",
+          "target_column": "FlowID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit flow: 1=standard, 2/3=alternative. 95.7% NULL. (Tier 2 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAftSupportedAsBool",
+          "target_column": "IsAftSupportedAsBool",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "AFT supported flag. Added 2025-03-02. ~14% populated. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAftEligibleAsBool",
+          "target_column": "IsAftEligibleAsBool",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "AFT eligible flag. Added 2025-03-02. ~14% populated. (Tier 3 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAftProcessedAsBool",
+          "target_column": "IsAftProcessedAsBool",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "AFT processed flag. Added 2025-03-02. ~14% populated. (Tier 3 — SP code)",
+          "tier": ""
+        }
+      ]
+    }
+  ]
+}

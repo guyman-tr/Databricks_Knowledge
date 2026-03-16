@@ -1,0 +1,3628 @@
+{
+  "source": {
+    "catalog": "main",
+    "schema": "dwh",
+    "table": "gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+    "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+  },
+  "discovered_at": "2026-03-16T12:43:54.610588+00:00",
+  "discovery_methods": [
+    "synapse_dependency",
+    "name_pattern"
+  ],
+  "total_downstream_objects": 62,
+  "total_column_matches": 366,
+  "total_renames": 0,
+  "nodes": [
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "finance",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_audit_auxillary_datapoints",
+      "full_name": "main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_audit_auxillary_datapoints",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "MirrorID",
+          "target_column": "MirrorID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Copy-trade relationship ID. 0=manual action, >0=copy-trade. Same meaning as Dim_Position.MirrorID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_emoney_dbo_emoney_reports_acquisitionfunnel",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_acquisitionfunnel",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnClose",
+          "target_column": "CommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position close. 0 for opens and non-position events. For reopened positions: adjusted = new - original. Same meaning as Dim_Position.CommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnClose",
+          "target_column": "FullCommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as Dim_Position.FullCommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "SettlementTypeID",
+          "target_column": "SettlementTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Settlement mechanism: 0=CFD, 1=Real asset, 2=TRS, 3=CMT (crypto settled), 4=REAL_FUTURES, 5=MARGIN_TRADE. NULL for non-position events. Same meaning as Dim_Position.SettlementTypeID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First-Time Deposit flag: 1=this is the customer's first deposit. NULL for non-deposit events.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ops_fraud_alert_analysis",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ops_fraud_alert_analysis",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_exw_dbo_exw_compensationclosingcountries",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_compensationclosingcountries",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_deposit_reversals_pips",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_deposit_reversals_pips",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_amlperiodicreview",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_amlperiodicreview",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_emoney_dbo_emoney_panel_retention_monthly",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_retention_monthly",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "dwh",
+      "table": "gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Commission",
+          "target_column": "Commission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position open in USD. 0 for non-position events. Same meaning as Dim_Position.Commission.",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusID",
+          "target_column": "PaymentStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing status for deposit/cashout events. NULL for non-payment events. References Dim_PaymentStatus.PaymentStatusID — JOIN for Name.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First-Time Deposit flag: 1=this is the customer's first deposit. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method for deposits/withdrawals. 0 for non-deposit events. References Dim_FundingType.FundingTypeID — JOIN for Name, IsNewStyle, IsSingleFunding, IsCashoutActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "SessionID",
+          "target_column": "SessionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "STS session identifier for logins and position opens. For manual opens: from login session. For copy opens: from mirror session. NULL for other events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformID",
+          "target_column": "PlatformID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Product/platform identifier — badly named, actually references Dim_Product.ProductID (not a standalone platform enum). JOIN to Dim_Product for Product, Platform, SubPlatform. Only populated for ActionTypeID=14 (logins) and 41 (registrations).",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawPaymentID",
+          "target_column": "WithdrawPaymentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CreditID",
+          "target_column": "CreditID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reference to source History.Credit.CreditID. Enables join back to credit history for audit.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailydividendsbyposition",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailydividendsbyposition",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "DividendID",
+          "target_column": "DividendID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Dividend event identifier for dividend-related fees. NULL for non-dividend events.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "emoney",
+      "table": "gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history",
+      "full_name": "main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_aggregate_level_new",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_aggregate_level_new",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawPaymentID",
+          "target_column": "WithdrawPaymentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CreditID",
+          "target_column": "CreditID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reference to source History.Credit.CreditID. Enables join back to credit history for audit.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_money_in_new_management_dashboard",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_money_in_new_management_dashboard",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusID",
+          "target_column": "PaymentStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing status for deposit/cashout events. NULL for non-payment events. References Dim_PaymentStatus.PaymentStatusID — JOIN for Name.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First-Time Deposit flag: 1=this is the customer's first deposit. NULL for non-deposit events.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport_instrument_agg",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport_instrument_agg",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnClose",
+          "target_column": "CommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position close. 0 for opens and non-position events. For reopened positions: adjusted = new - original. Same meaning as Dim_Position.CommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnClose",
+          "target_column": "FullCommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as Dim_Position.FullCommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "SettlementTypeID",
+          "target_column": "SettlementTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Settlement mechanism: 0=CFD, 1=Real asset, 2=TRS, 3=CMT (crypto settled), 4=REAL_FUTURES, 5=MARGIN_TRADE. NULL for non-position events. Same meaning as Dim_Position.SettlementTypeID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "MirrorID",
+          "target_column": "MirrorID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Copy-trade relationship ID. 0=manual action, >0=copy-trade. Same meaning as Dim_Position.MirrorID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "CompensationReasonID",
+          "target_column": "CompensationReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Compensation reason for compensation events (ActionTypeID=36) and position opens (airdrop identification). References BackOffice.CompensationReason. 0 for non-compensation events.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFeeDividend",
+          "target_column": "IsFeeDividend",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Fee sub-type for ActionTypeID=35: 1=overnight/weekend fee, 2=dividend, 3=SDRT, 4=ticket fees (OpenTotalFees/CloseTotalFees). NULL for non-fee events. See DSM-1463.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "Description",
+          "target_column": "Description",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Human-readable description. Mainly for ActionTypeID=35 (fees): \"Over night fee\", \"Payment caused by dividend\", \"Weekend fee\", \"OpenTotalFees\", \"CloseTotalFees\", \"SDRT Charge\". Also for deposits, stop-loss edits.",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "SettlementTypeID",
+          "target_column": "SettlementTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Settlement mechanism: 0=CFD, 1=Real asset, 2=TRS, 3=CMT (crypto settled), 4=REAL_FUTURES, 5=MARGIN_TRADE. NULL for non-position events. Same meaning as Dim_Position.SettlementTypeID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method for deposits/withdrawals. 0 for non-deposit events. References Dim_FundingType.FundingTypeID — JOIN for Name, IsNewStyle, IsSingleFunding, IsCashoutActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRedeem",
+          "target_column": "IsRedeem",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Redeem flag: 0=not a redeem, 1=is a redeem. NULL for non-position events. Same meaning as Dim_Position.IsRedeem.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "commission",
+          "target_column": "commission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position open in USD. 0 for non-position events. Same meaning as Dim_Position.Commission.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_tax_compliance_tin",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_tax_compliance_tin",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_rolloverfee_dividends",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_rolloverfee_dividends",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "DividendID",
+          "target_column": "DividendID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Dividend event identifier for dividend-related fees. NULL for non-dividend events.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "CompensationReasonID",
+          "target_column": "CompensationReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Compensation reason for compensation events (ActionTypeID=36) and position opens (airdrop identification). References BackOffice.CompensationReason. 0 for non-compensation events.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_investorsdetail",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_investorsdetail",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_exw_dbo_exw_usersettingswalletallowance",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_usersettingswalletallowance",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "pii_data",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates",
+      "full_name": "main.pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "dealing",
+      "table": "gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "full_name": "main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommission",
+          "target_column": "FullCommission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position open = market spread + eToro markup. NULL for non-position events. Same meaning as Dim_Position.FullCommission.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_sar_report_fca",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_sar_report_fca",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_outliers_new",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_outliers_new",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cb_cyclegap_categorization",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cb_cyclegap_categorization",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDByIP",
+          "target_column": "CountryIDByIP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country determined by IP geolocation. Populated for logins and registrations. References Dim_Country.CountryID — JOIN for country name.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommission",
+          "target_column": "FullCommission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position open = market spread + eToro markup. NULL for non-position events. Same meaning as Dim_Position.FullCommission.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnClose",
+          "target_column": "FullCommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as Dim_Position.FullCommissionOnClose.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "emoney",
+      "table": "gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment",
+      "full_name": "main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "finance",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_client_balance_breakdown_instrument_level",
+      "full_name": "main.finance.gold_sql_dp_prod_we_bi_db_dbo_client_balance_breakdown_instrument_level",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "SettlementTypeID",
+          "target_column": "SettlementTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Settlement mechanism: 0=CFD, 1=Real asset, 2=TRS, 3=CMT (crypto settled), 4=REAL_FUTURES, 5=MARGIN_TRADE. NULL for non-position events. Same meaning as Dim_Position.SettlementTypeID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_withdraw_rollback_pips",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_withdraw_rollback_pips",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "dwh",
+      "table": "gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction",
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DemoCID",
+          "target_column": "DemoCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Demo-account Customer ID. Always 0 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "IPNumber",
+          "target_column": "IPNumber",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IP address as numeric value. Populated for logins and registrations.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReal",
+          "target_column": "IsReal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account type flag. Always 1 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformTypeID",
+          "target_column": "PlatformTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Legacy platform type. 0=default (most rows), 99=STS source. Values 1-9 for specific platforms.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "CampaignID",
+          "target_column": "CampaignID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing campaign identifier. 0 if not campaign-related. References Dim_Campaign.CampaignID — JOIN for Code, Description, StartDate, EndDate, MaxBonusAmount, IsActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "BonusTypeID",
+          "target_column": "BonusTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bonus type for bonus events (ActionTypeID=9). 0 for non-bonus. References Dim_BonusType.BonusTypeID — JOIN for Name, IsWithdrawable, IsActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method for deposits/withdrawals. 0 for non-deposit events. References Dim_FundingType.FundingTypeID — JOIN for Name, IsNewStyle, IsSingleFunding, IsCashoutActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "LoginID",
+          "target_column": "LoginID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Login session identifier from Billing.Login. 0 for non-login events.",
+          "tier": ""
+        },
+        {
+          "source_column": "MirrorID",
+          "target_column": "MirrorID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Copy-trade relationship ID. 0=manual action, >0=copy-trade. Same meaning as Dim_Position.MirrorID.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawID",
+          "target_column": "WithdrawID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PostID",
+          "target_column": "PostID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Social post/comment GUID for social engagement events (ActionTypeID 21-26). NULL for non-social events. Dead data — no longer updated.",
+          "tier": ""
+        },
+        {
+          "source_column": "CaseID",
+          "target_column": "CaseID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "CRM case identifier for ActionTypeID=31 (Open CRM Case). 0 otherwise.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "TimeID",
+          "target_column": "TimeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Hour of action (0-23). Derived from DATEPART(HOUR, Occurred).",
+          "tier": ""
+        },
+        {
+          "source_column": "CompensationReasonID",
+          "target_column": "CompensationReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Compensation reason for compensation events (ActionTypeID=36) and position opens (airdrop identification). References BackOffice.CompensationReason. 0 for non-compensation events.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawPaymentID",
+          "target_column": "WithdrawPaymentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "HistoryID",
+          "target_column": "HistoryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Intended as unique key but contains duplicates — NOT reliable. Never use for JOINs, deduplication, or row identification.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_output_stg",
+      "table": "v_semantic_fact_customeraction",
+      "full_name": "main.bi_output_stg.v_semantic_fact_customeraction",
+      "object_type": "VIEW",
+      "hop_distance": 1,
+      "discovered_via": "name_pattern",
+      "columns": [
+        {
+          "source_column": "HistoryID",
+          "target_column": "HistoryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Intended as unique key but contains duplicates — NOT reliable. Never use for JOINs, deduplication, or row identification.",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DemoCID",
+          "target_column": "DemoCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Demo-account Customer ID. Always 0 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "IPNumber",
+          "target_column": "IPNumber",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IP address as numeric value. Populated for logins and registrations.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReal",
+          "target_column": "IsReal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account type flag. Always 1 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformTypeID",
+          "target_column": "PlatformTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Legacy platform type. 0=default (most rows), 99=STS source. Values 1-9 for specific platforms.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "NetProfit",
+          "target_column": "NetProfit",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Realized P&L for position closes in USD. 0 for opens and non-position events. Same meaning as Dim_Position.NetProfit.",
+          "tier": ""
+        },
+        {
+          "source_column": "Commission",
+          "target_column": "Commission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position open in USD. 0 for non-position events. Same meaning as Dim_Position.Commission.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "CampaignID",
+          "target_column": "CampaignID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing campaign identifier. 0 if not campaign-related. References Dim_Campaign.CampaignID — JOIN for Code, Description, StartDate, EndDate, MaxBonusAmount, IsActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "BonusTypeID",
+          "target_column": "BonusTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bonus type for bonus events (ActionTypeID=9). 0 for non-bonus. References Dim_BonusType.BonusTypeID — JOIN for Name, IsWithdrawable, IsActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method for deposits/withdrawals. 0 for non-deposit events. References Dim_FundingType.FundingTypeID — JOIN for Name, IsNewStyle, IsSingleFunding, IsCashoutActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "LoginID",
+          "target_column": "LoginID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Login session identifier from Billing.Login. 0 for non-login events.",
+          "tier": ""
+        },
+        {
+          "source_column": "MirrorID",
+          "target_column": "MirrorID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Copy-trade relationship ID. 0=manual action, >0=copy-trade. Same meaning as Dim_Position.MirrorID.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawID",
+          "target_column": "WithdrawID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "DurationInSeconds",
+          "target_column": "DurationInSeconds",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Login session duration in seconds. NULL for non-login events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PostID",
+          "target_column": "PostID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Social post/comment GUID for social engagement events (ActionTypeID 21-26). NULL for non-social events. Dead data — no longer updated.",
+          "tier": ""
+        },
+        {
+          "source_column": "CaseID",
+          "target_column": "CaseID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "CRM case identifier for ActionTypeID=31 (Open CRM Case). 0 otherwise.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "TimeID",
+          "target_column": "TimeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Hour of action (0-23). Derived from DATEPART(HOUR, Occurred).",
+          "tier": ""
+        },
+        {
+          "source_column": "StatusID",
+          "target_column": "StatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Row status. Nearly always 1 (active). NULL for ~2M rows.",
+          "tier": ""
+        },
+        {
+          "source_column": "PreviousOccurred",
+          "target_column": "PreviousOccurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deprecated/unused column. NULL for most rows — not reliably populated. Do not use.",
+          "tier": ""
+        },
+        {
+          "source_column": "CompensationReasonID",
+          "target_column": "CompensationReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Compensation reason for compensation events (ActionTypeID=36) and position opens (airdrop identification). References BackOffice.CompensationReason. 0 for non-compensation events.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawPaymentID",
+          "target_column": "WithdrawPaymentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnClose",
+          "target_column": "CommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position close. 0 for opens and non-position events. For reopened positions: adjusted = new - original. Same meaning as Dim_Position.CommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsPlug",
+          "target_column": "IsPlug",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deprecated/unused column. Always NULL.",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PostRootID",
+          "target_column": "PostRootID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Root post ID for social engagement events. NULL for non-social events. Dead data — no longer updated.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommission",
+          "target_column": "FullCommission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position open = market spread + eToro markup. NULL for non-position events. Same meaning as Dim_Position.FullCommission.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnClose",
+          "target_column": "FullCommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as Dim_Position.FullCommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "RedeemID",
+          "target_column": "RedeemID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Crypto redemption transaction reference. NULL when not a redeem. Same meaning as Dim_Position.RedeemID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RedeemStatus",
+          "target_column": "RedeemStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Crypto redemption status: 0=N/A, 1=Pending, 6=Closed by redeem, 20=Terminated, 21=FailedToCancel. Same meaning as Dim_Position.RedeemStatus.",
+          "tier": ""
+        },
+        {
+          "source_column": "SessionID",
+          "target_column": "SessionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "STS session identifier for logins and position opens. For manual opens: from login session. For copy opens: from mirror session. NULL for other events.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRedeem",
+          "target_column": "IsRedeem",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Redeem flag: 0=not a redeem, 1=is a redeem. NULL for non-position events. Same meaning as Dim_Position.IsRedeem.",
+          "tier": ""
+        },
+        {
+          "source_column": "RegulationIDOnOpen",
+          "target_column": "RegulationIDOnOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Regulatory jurisdiction at position open. 0=None, 1=CySEC, 2=FCA, 4=ASIC, 5=BVI, 9=FSA Seychelles. NULL for non-position events. Same meaning as Dim_Position.RegulationIDOnOpen. Refs Dim_Regulation.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformID",
+          "target_column": "PlatformID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Product/platform identifier — badly named, actually references Dim_Product.ProductID (not a standalone platform enum). JOIN to Dim_Product for Product, Platform, SubPlatform. Only populated for ActionTypeID=14 (logins) and 41 (registrations).",
+          "tier": ""
+        },
+        {
+          "source_column": "ReopenForPositionID",
+          "target_column": "ReopenForPositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "For reopened positions: the PositionID of the original closed position. Same meaning as Dim_Position.ReopenForPositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReOpen",
+          "target_column": "IsReOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reopen flag: 1=position created by reopening a previously closed position. Same meaning as Dim_Position.IsReOpen.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnCloseOrig",
+          "target_column": "CommissionOnCloseOrig",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original CommissionOnClose before reopen adjustment. Same meaning as Dim_Position.CommissionOnCloseOrig.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnCloseOrig",
+          "target_column": "FullCommissionOnCloseOrig",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original FullCommissionOnClose before reopen adjustment. Same meaning as Dim_Position.FullCommissionOnCloseOrig.",
+          "tier": ""
+        },
+        {
+          "source_column": "OriginalPositionID",
+          "target_column": "OriginalPositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "For partial-close children: parent PositionID. When OriginalPositionID != PositionID, this is a partial-close child. Same meaning as Dim_Position.OriginalPositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsPartialCloseParent",
+          "target_column": "IsPartialCloseParent",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Flag: 1=has had partial-close children. Set by SP_Fact_CustomerAction_IsParitalCloseParent. Same meaning as Dim_Position.IsPartialCloseParent.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsPartialCloseChild",
+          "target_column": "IsPartialCloseChild",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Flag: 1=created by partial close. Filter out (ISNULL(IsPartialCloseChild,0)=0) when counting positions. Same meaning as Dim_Position.IsPartialCloseChild.",
+          "tier": ""
+        },
+        {
+          "source_column": "InitialUnits",
+          "target_column": "InitialUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original unit count at position open. Never updated on partial close. Same meaning as Dim_Position.InitialUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusID",
+          "target_column": "PaymentStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing status for deposit/cashout events. NULL for non-payment events. References Dim_PaymentStatus.PaymentStatusID — JOIN for Name.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsDiscounted",
+          "target_column": "IsDiscounted",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Discounted pricing flag: 0=standard, 1=discounted (VIP/partner). Same meaning as Dim_Position.IsDiscounted.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionByUnits",
+          "target_column": "CommissionByUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Commission prorated by units: (AmountInUnitsDecimal/InitialUnits)*Commission. Same meaning as Dim_Position.CommissionByUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionByUnits",
+          "target_column": "FullCommissionByUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread prorated by units: (AmountInUnitsDecimal/InitialUnits)*FullCommission. Same meaning as Dim_Position.FullCommissionByUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First-Time Deposit flag: 1=this is the customer's first deposit. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDByIP",
+          "target_column": "CountryIDByIP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country determined by IP geolocation. Populated for logins and registrations. References Dim_Country.CountryID — JOIN for country name.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAnonymousIP",
+          "target_column": "IsAnonymousIP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Anonymous IP flag: 1=connection via anonymous proxy/VPN. NULL for most rows.",
+          "tier": ""
+        },
+        {
+          "source_column": "ProxyType",
+          "target_column": "ProxyType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Proxy classification: DCH=datacenter, VPN=VPN, PUB=public proxy, SES=session proxy, TOR=Tor exit node, WEB=web proxy. NULL for non-proxy connections.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFeeDividend",
+          "target_column": "IsFeeDividend",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Fee sub-type for ActionTypeID=35: 1=overnight/weekend fee, 2=dividend, 3=SDRT, 4=ticket fees (OpenTotalFees/CloseTotalFees). NULL for non-fee events. See DSM-1463.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "DividendID",
+          "target_column": "DividendID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Dividend event identifier for dividend-related fees. NULL for non-dividend events.",
+          "tier": ""
+        },
+        {
+          "source_column": "MoveMoneyReasonID",
+          "target_column": "MoveMoneyReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reason for money movement: 1=Adjustment, 5=InternalTransfer Trade, 6=InternalTransfer, 8=Recurring Deposit, 9=Recurring Investment. Refs Dictionary.MoveMoneyReason.",
+          "tier": ""
+        },
+        {
+          "source_column": "SettlementTypeID",
+          "target_column": "SettlementTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Settlement mechanism: 0=CFD, 1=Real asset, 2=TRS, 3=CMT (crypto settled), 4=REAL_FUTURES, 5=MARGIN_TRADE. NULL for non-position events. Same meaning as Dim_Position.SettlementTypeID.",
+          "tier": ""
+        },
+        {
+          "source_column": "DLTOpen",
+          "target_column": "DLTOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DLT (German crypto broker) flag at open: 1=opened on DLT platform, 0/NULL=not DLT. Same meaning as Dim_Position.DLTOpen.",
+          "tier": ""
+        },
+        {
+          "source_column": "DLTClose",
+          "target_column": "DLTClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DLT (German crypto broker) flag at close: 1=closed on DLT platform. Same meaning as Dim_Position.DLTClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "OpenMarkupByUnits",
+          "target_column": "OpenMarkupByUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Open markup prorated by units: OpenMarkup * AmountInUnitsDecimal / InitialUnits. Same meaning as Dim_Position.OpenMarkupByUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "Description",
+          "target_column": "Description",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Human-readable description. Mainly for ActionTypeID=35 (fees): \"Over night fee\", \"Payment caused by dividend\", \"Weekend fee\", \"OpenTotalFees\", \"CloseTotalFees\", \"SDRT Charge\". Also for deposits, stop-loss edits.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsBuy",
+          "target_column": "IsBuy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Trade direction: True=Buy/Long, False=Sell/Short. NULL for non-position events. Same meaning as Dim_Position.IsBuy.",
+          "tier": ""
+        },
+        {
+          "source_column": "CreditID",
+          "target_column": "CreditID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reference to source History.Credit.CreditID. Enables join back to credit history for audit.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "data_rooms",
+      "table": "vw_fact_customeraction",
+      "full_name": "main.data_rooms.vw_fact_customeraction",
+      "object_type": "VIEW",
+      "hop_distance": 1,
+      "discovered_via": "name_pattern",
+      "columns": [
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "HistoryID",
+          "target_column": "HistoryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Intended as unique key but contains duplicates — NOT reliable. Never use for JOINs, deduplication, or row identification.",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReal",
+          "target_column": "IsReal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account type flag. Always 1 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformTypeID",
+          "target_column": "PlatformTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Legacy platform type. 0=default (most rows), 99=STS source. Values 1-9 for specific platforms.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "NetProfit",
+          "target_column": "NetProfit",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Realized P&L for position closes in USD. 0 for opens and non-position events. Same meaning as Dim_Position.NetProfit.",
+          "tier": ""
+        },
+        {
+          "source_column": "Commission",
+          "target_column": "Commission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position open in USD. 0 for non-position events. Same meaning as Dim_Position.Commission.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "MirrorID",
+          "target_column": "MirrorID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Copy-trade relationship ID. 0=manual action, >0=copy-trade. Same meaning as Dim_Position.MirrorID.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawID",
+          "target_column": "WithdrawID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "DurationInSeconds",
+          "target_column": "DurationInSeconds",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Login session duration in seconds. NULL for non-login events.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "TimeID",
+          "target_column": "TimeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Hour of action (0-23). Derived from DATEPART(HOUR, Occurred).",
+          "tier": ""
+        },
+        {
+          "source_column": "CompensationReasonID",
+          "target_column": "CompensationReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Compensation reason for compensation events (ActionTypeID=36) and position opens (airdrop identification). References BackOffice.CompensationReason. 0 for non-compensation events.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawPaymentID",
+          "target_column": "WithdrawPaymentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnClose",
+          "target_column": "CommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position close. 0 for opens and non-position events. For reopened positions: adjusted = new - original. Same meaning as Dim_Position.CommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommission",
+          "target_column": "FullCommission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position open = market spread + eToro markup. NULL for non-position events. Same meaning as Dim_Position.FullCommission.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnClose",
+          "target_column": "FullCommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as Dim_Position.FullCommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "RedeemID",
+          "target_column": "RedeemID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Crypto redemption transaction reference. NULL when not a redeem. Same meaning as Dim_Position.RedeemID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RedeemStatus",
+          "target_column": "RedeemStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Crypto redemption status: 0=N/A, 1=Pending, 6=Closed by redeem, 20=Terminated, 21=FailedToCancel. Same meaning as Dim_Position.RedeemStatus.",
+          "tier": ""
+        },
+        {
+          "source_column": "SessionID",
+          "target_column": "SessionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "STS session identifier for logins and position opens. For manual opens: from login session. For copy opens: from mirror session. NULL for other events.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRedeem",
+          "target_column": "IsRedeem",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Redeem flag: 0=not a redeem, 1=is a redeem. NULL for non-position events. Same meaning as Dim_Position.IsRedeem.",
+          "tier": ""
+        },
+        {
+          "source_column": "RegulationIDOnOpen",
+          "target_column": "RegulationIDOnOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Regulatory jurisdiction at position open. 0=None, 1=CySEC, 2=FCA, 4=ASIC, 5=BVI, 9=FSA Seychelles. NULL for non-position events. Same meaning as Dim_Position.RegulationIDOnOpen. Refs Dim_Regulation.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformID",
+          "target_column": "PlatformID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Product/platform identifier — badly named, actually references Dim_Product.ProductID (not a standalone platform enum). JOIN to Dim_Product for Product, Platform, SubPlatform. Only populated for ActionTypeID=14 (logins) and 41 (registrations).",
+          "tier": ""
+        },
+        {
+          "source_column": "ReopenForPositionID",
+          "target_column": "ReopenForPositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "For reopened positions: the PositionID of the original closed position. Same meaning as Dim_Position.ReopenForPositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReOpen",
+          "target_column": "IsReOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reopen flag: 1=position created by reopening a previously closed position. Same meaning as Dim_Position.IsReOpen.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First-Time Deposit flag: 1=this is the customer's first deposit. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFeeDividend",
+          "target_column": "IsFeeDividend",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Fee sub-type for ActionTypeID=35: 1=overnight/weekend fee, 2=dividend, 3=SDRT, 4=ticket fees (OpenTotalFees/CloseTotalFees). NULL for non-fee events. See DSM-1463.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "MoveMoneyReasonID",
+          "target_column": "MoveMoneyReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reason for money movement: 1=Adjustment, 5=InternalTransfer Trade, 6=InternalTransfer, 8=Recurring Deposit, 9=Recurring Investment. Refs Dictionary.MoveMoneyReason.",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "compliance_stg",
+      "table": "rnd_output_gold_sql_dp_prod_we_dwh_dbo_fact_customeraction_delta_partitionioned",
+      "full_name": "main.compliance_stg.rnd_output_gold_sql_dp_prod_we_dwh_dbo_fact_customeraction_delta_partitionioned",
+      "object_type": "TABLE",
+      "hop_distance": 1,
+      "discovered_via": "name_pattern",
+      "columns": [
+        {
+          "source_column": "HistoryID",
+          "target_column": "HistoryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Intended as unique key but contains duplicates — NOT reliable. Never use for JOINs, deduplication, or row identification.",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RealCID",
+          "target_column": "RealCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.",
+          "tier": ""
+        },
+        {
+          "source_column": "DemoCID",
+          "target_column": "DemoCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Demo-account Customer ID. Always 0 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "Occurred",
+          "target_column": "Occurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.",
+          "tier": ""
+        },
+        {
+          "source_column": "IPNumber",
+          "target_column": "IPNumber",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "IP address as numeric value. Populated for logins and registrations.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReal",
+          "target_column": "IsReal",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account type flag. Always 1 in this table (real accounts only).",
+          "tier": ""
+        },
+        {
+          "source_column": "ActionTypeID",
+          "target_column": "ActionTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event type classifier. References Dim_ActionType.ActionTypeID — JOIN for Name, Category, CategoryID. Key filter: determines which other columns are populated. 1-3,39=position opens, 4-6,28,40=closes, 7=deposit, 8=cashout, 9=bonus, 14=login, 35=fees, 41=registration.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformTypeID",
+          "target_column": "PlatformTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Legacy platform type. 0=default (most rows), 99=STS source. Values 1-9 for specific platforms.",
+          "tier": ""
+        },
+        {
+          "source_column": "InstrumentID",
+          "target_column": "InstrumentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Financial instrument. References Dim_Instrument. 0 for non-position events. Same meaning as Dim_Position.InstrumentID.",
+          "tier": ""
+        },
+        {
+          "source_column": "Amount",
+          "target_column": "Amount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Event amount in USD. For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative).",
+          "tier": ""
+        },
+        {
+          "source_column": "Leverage",
+          "target_column": "Leverage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Leverage multiplier for position events. 0=non-position event. 1=no leverage (real ownership). Same meaning as Dim_Position.Leverage.",
+          "tier": ""
+        },
+        {
+          "source_column": "NetProfit",
+          "target_column": "NetProfit",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Realized P&L for position closes in USD. 0 for opens and non-position events. Same meaning as Dim_Position.NetProfit.",
+          "tier": ""
+        },
+        {
+          "source_column": "Commission",
+          "target_column": "Commission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position open in USD. 0 for non-position events. Same meaning as Dim_Position.Commission.",
+          "tier": ""
+        },
+        {
+          "source_column": "PositionID",
+          "target_column": "PositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Position identifier for position events. 0 for non-position events. Same meaning as Dim_Position.PositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "CampaignID",
+          "target_column": "CampaignID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing campaign identifier. 0 if not campaign-related. References Dim_Campaign.CampaignID — JOIN for Code, Description, StartDate, EndDate, MaxBonusAmount, IsActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "BonusTypeID",
+          "target_column": "BonusTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Bonus type for bonus events (ActionTypeID=9). 0 for non-bonus. References Dim_BonusType.BonusTypeID — JOIN for Name, IsWithdrawable, IsActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "FundingTypeID",
+          "target_column": "FundingTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment method for deposits/withdrawals. 0 for non-deposit events. References Dim_FundingType.FundingTypeID — JOIN for Name, IsNewStyle, IsSingleFunding, IsCashoutActive.",
+          "tier": ""
+        },
+        {
+          "source_column": "LoginID",
+          "target_column": "LoginID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Login session identifier from Billing.Login. 0 for non-login events.",
+          "tier": ""
+        },
+        {
+          "source_column": "MirrorID",
+          "target_column": "MirrorID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Copy-trade relationship ID. 0=manual action, >0=copy-trade. Same meaning as Dim_Position.MirrorID.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawID",
+          "target_column": "WithdrawID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "DurationInSeconds",
+          "target_column": "DurationInSeconds",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Login session duration in seconds. NULL for non-login events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PostID",
+          "target_column": "PostID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Social post/comment GUID for social engagement events (ActionTypeID 21-26). NULL for non-social events. Dead data — no longer updated.",
+          "tier": ""
+        },
+        {
+          "source_column": "CaseID",
+          "target_column": "CaseID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "CRM case identifier for ActionTypeID=31 (Open CRM Case). 0 otherwise.",
+          "tier": ""
+        },
+        {
+          "source_column": "DateID",
+          "target_column": "DateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.",
+          "tier": ""
+        },
+        {
+          "source_column": "TimeID",
+          "target_column": "TimeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Hour of action (0-23). Derived from DATEPART(HOUR, Occurred).",
+          "tier": ""
+        },
+        {
+          "source_column": "StatusID",
+          "target_column": "StatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Row status. Nearly always 1 (active). NULL for ~2M rows.",
+          "tier": ""
+        },
+        {
+          "source_column": "PreviousOccurred",
+          "target_column": "PreviousOccurred",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deprecated/unused column. NULL for most rows — not reliably populated. Do not use.",
+          "tier": ""
+        },
+        {
+          "source_column": "CompensationReasonID",
+          "target_column": "CompensationReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Compensation reason for compensation events (ActionTypeID=36) and position opens (airdrop identification). References BackOffice.CompensationReason. 0 for non-compensation events.",
+          "tier": ""
+        },
+        {
+          "source_column": "WithdrawPaymentID",
+          "target_column": "WithdrawPaymentID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnClose",
+          "target_column": "CommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "eToro markup (spread) at position close. 0 for opens and non-position events. For reopened positions: adjusted = new - original. Same meaning as Dim_Position.CommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsPlug",
+          "target_column": "IsPlug",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deprecated/unused column. Always NULL.",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositID",
+          "target_column": "DepositID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Deposit transaction identifier. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "PostRootID",
+          "target_column": "PostRootID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Root post ID for social engagement events. NULL for non-social events. Dead data — no longer updated.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommission",
+          "target_column": "FullCommission",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position open = market spread + eToro markup. NULL for non-position events. Same meaning as Dim_Position.FullCommission.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnClose",
+          "target_column": "FullCommissionOnClose",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as Dim_Position.FullCommissionOnClose.",
+          "tier": ""
+        },
+        {
+          "source_column": "RedeemID",
+          "target_column": "RedeemID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Crypto redemption transaction reference. NULL when not a redeem. Same meaning as Dim_Position.RedeemID.",
+          "tier": ""
+        },
+        {
+          "source_column": "RedeemStatus",
+          "target_column": "RedeemStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Crypto redemption status: 0=N/A, 1=Pending, 6=Closed by redeem, 20=Terminated, 21=FailedToCancel. Same meaning as Dim_Position.RedeemStatus.",
+          "tier": ""
+        },
+        {
+          "source_column": "SessionID",
+          "target_column": "SessionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "STS session identifier for logins and position opens. For manual opens: from login session. For copy opens: from mirror session. NULL for other events.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsRedeem",
+          "target_column": "IsRedeem",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Redeem flag: 0=not a redeem, 1=is a redeem. NULL for non-position events. Same meaning as Dim_Position.IsRedeem.",
+          "tier": ""
+        },
+        {
+          "source_column": "RegulationIDOnOpen",
+          "target_column": "RegulationIDOnOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Regulatory jurisdiction at position open. 0=None, 1=CySEC, 2=FCA, 4=ASIC, 5=BVI, 9=FSA Seychelles. NULL for non-position events. Same meaning as Dim_Position.RegulationIDOnOpen. Refs Dim_Regulation.",
+          "tier": ""
+        },
+        {
+          "source_column": "PlatformID",
+          "target_column": "PlatformID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Product/platform identifier — badly named, actually references Dim_Product.ProductID (not a standalone platform enum). JOIN to Dim_Product for Product, Platform, SubPlatform. Only populated for ActionTypeID=14 (logins) and 41 (registrations).",
+          "tier": ""
+        },
+        {
+          "source_column": "ReopenForPositionID",
+          "target_column": "ReopenForPositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "For reopened positions: the PositionID of the original closed position. Same meaning as Dim_Position.ReopenForPositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsReOpen",
+          "target_column": "IsReOpen",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reopen flag: 1=position created by reopening a previously closed position. Same meaning as Dim_Position.IsReOpen.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionOnCloseOrig",
+          "target_column": "CommissionOnCloseOrig",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original CommissionOnClose before reopen adjustment. Same meaning as Dim_Position.CommissionOnCloseOrig.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionOnCloseOrig",
+          "target_column": "FullCommissionOnCloseOrig",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original FullCommissionOnClose before reopen adjustment. Same meaning as Dim_Position.FullCommissionOnCloseOrig.",
+          "tier": ""
+        },
+        {
+          "source_column": "OriginalPositionID",
+          "target_column": "OriginalPositionID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "For partial-close children: parent PositionID. When OriginalPositionID != PositionID, this is a partial-close child. Same meaning as Dim_Position.OriginalPositionID.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsPartialCloseParent",
+          "target_column": "IsPartialCloseParent",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Flag: 1=has had partial-close children. Set by SP_Fact_CustomerAction_IsParitalCloseParent. Same meaning as Dim_Position.IsPartialCloseParent.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsPartialCloseChild",
+          "target_column": "IsPartialCloseChild",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Flag: 1=created by partial close. Filter out (ISNULL(IsPartialCloseChild,0)=0) when counting positions. Same meaning as Dim_Position.IsPartialCloseChild.",
+          "tier": ""
+        },
+        {
+          "source_column": "InitialUnits",
+          "target_column": "InitialUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original unit count at position open. Never updated on partial close. Same meaning as Dim_Position.InitialUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "PaymentStatusID",
+          "target_column": "PaymentStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processing status for deposit/cashout events. NULL for non-payment events. References Dim_PaymentStatus.PaymentStatusID — JOIN for Name.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsDiscounted",
+          "target_column": "IsDiscounted",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Discounted pricing flag: 0=standard, 1=discounted (VIP/partner). Same meaning as Dim_Position.IsDiscounted.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSettled",
+          "target_column": "IsSettled",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Real ownership flag: 1=settled (owns asset), 0=CFD. NULL for non-position events. ETL fallback: IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) => 1. Same meaning as Dim_Position.IsSettled.",
+          "tier": ""
+        },
+        {
+          "source_column": "CommissionByUnits",
+          "target_column": "CommissionByUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Commission prorated by units: (AmountInUnitsDecimal/InitialUnits)*Commission. Same meaning as Dim_Position.CommissionByUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "FullCommissionByUnits",
+          "target_column": "FullCommissionByUnits",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Full spread prorated by units: (AmountInUnitsDecimal/InitialUnits)*FullCommission. Same meaning as Dim_Position.FullCommissionByUnits.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFTD",
+          "target_column": "IsFTD",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First-Time Deposit flag: 1=this is the customer's first deposit. NULL for non-deposit events.",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryIDByIP",
+          "target_column": "CountryIDByIP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country determined by IP geolocation. Populated for logins and registrations. References Dim_Country.CountryID — JOIN for country name.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAnonymousIP",
+          "target_column": "IsAnonymousIP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Anonymous IP flag: 1=connection via anonymous proxy/VPN. NULL for most rows.",
+          "tier": ""
+        },
+        {
+          "source_column": "ProxyType",
+          "target_column": "ProxyType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Proxy classification: DCH=datacenter, VPN=VPN, PUB=public proxy, SES=session proxy, TOR=Tor exit node, WEB=web proxy. NULL for non-proxy connections.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFeeDividend",
+          "target_column": "IsFeeDividend",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Fee sub-type for ActionTypeID=35: 1=overnight/weekend fee, 2=dividend, 3=SDRT, 4=ticket fees (OpenTotalFees/CloseTotalFees). NULL for non-fee events. See DSM-1463.",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDrop",
+          "target_column": "IsAirDrop",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Airdrop flag: 1=position created by eToro on behalf of customer (staking, promotions, compensations). Same meaning as Dim_Position.IsAirDrop.",
+          "tier": ""
+        },
+        {
+          "source_column": "DividendID",
+          "target_column": "DividendID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Dividend event identifier for dividend-related fees. NULL for non-dividend events.",
+          "tier": ""
+        },
+        {
+          "source_column": "MoveMoneyReasonID",
+          "target_column": "MoveMoneyReasonID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Reason for money movement: 1=Adjustment, 5=InternalTransfer Trade, 6=InternalTransfer, 8=Recurring Deposit, 9=Recurring Investment. Refs Dictionary.MoveMoneyReason.",
+          "tier": ""
+        },
+        {
+          "source_column": "SettlementTypeID",
+          "target_column": "SettlementTypeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Settlement mechanism: 0=CFD, 1=Real asset, 2=TRS, 3=CMT (crypto settled), 4=REAL_FUTURES, 5=MARGIN_TRADE. NULL for non-position events. Same meaning as Dim_Position.SettlementTypeID.",
+          "tier": ""
+        }
+      ]
+    }
+  ]
+}

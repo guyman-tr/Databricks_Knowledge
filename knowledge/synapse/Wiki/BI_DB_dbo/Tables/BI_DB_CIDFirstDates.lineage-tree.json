@@ -1,0 +1,2091 @@
+{
+  "source": {
+    "catalog": "main",
+    "schema": "pii_data",
+    "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates",
+    "full_name": "main.pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates"
+  },
+  "discovered_at": "2026-03-16T12:48:56.747649+00:00",
+  "discovery_methods": [
+    "synapse_dependency",
+    "name_pattern"
+  ],
+  "total_downstream_objects": 19,
+  "total_column_matches": 233,
+  "total_renames": 0,
+  "nodes": [
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Manager",
+          "target_column": "Manager",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account manager's full name (FirstName + LastName). Resolved from Dim_Manager via AccountManagerID. 'System' = no assigned manager. (Tier 2 — SP code, Dim_Manager)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "Club",
+          "target_column": "Club",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro Club tier level. Resolved from Dim_PlayerLevel.Name via PlayerLevelID. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Updated daily. (Tier 2 — SP code, Dim_PlayerLevel)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "dwh",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata",
+      "full_name": "main.dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastPosOpenDate",
+          "target_column": "LastPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent position open date (manual or copy). From Fact_CustomerAction where ActionTypeID IN (1,2) (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastLoggedIn",
+          "target_column": "LastLoggedIn",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent real-money login timestamp. From Fact_CustomerAction where ActionTypeID=14 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "NewMarketingRegion",
+          "target_column": "NewMarketingRegion",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryID",
+          "target_column": "CountryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID — FK to Dim_Country.CountryID. Use Dim_Country for country name, region, regulation mapping, and risk group. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "UserName",
+          "target_column": "UserName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro username (display name on the platform). PII. From Dim_Customer.UserName. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Language",
+          "target_column": "Language",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's platform language preference. Resolved from Dim_Language.Name via LanguageID. (Tier 2 — SP code, Dim_Language)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "State",
+          "target_column": "State",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's state/province. Resolved from Dim_State_and_Province.Name via RegionByIP_ID. Populated for US, Italy, and select countries. (Tier 2 — SP code, Dim_State_and_Province)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryID",
+          "target_column": "CountryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID — FK to Dim_Country.CountryID. Use Dim_Country for country name, region, regulation mapping, and risk group. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAmount",
+          "target_column": "FirstDepositAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the first successful deposit in USD. Default 0. From Dim_Customer.FirstDepositAmount. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_knowledge_assessment",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_knowledge_assessment",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAmount",
+          "target_column": "FirstDepositAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the first successful deposit in USD. Default 0. From Dim_Customer.FirstDepositAmount. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "NewMarketingRegion",
+          "target_column": "NewMarketingRegion",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_panel",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_panel",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FunnelName",
+          "target_column": "FunnelName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Registration funnel name. Resolved from Dim_Funnel.Name via FunnelID. Values: Retoro, reToroiOS, reToroAndroid, Web Trader, etc. Indicates which app/platform was used for registration. (Tier 2 — SP code, Dim_Funnel)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryID",
+          "target_column": "CountryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID — FK to Dim_Country.CountryID. Use Dim_Country for country name, region, regulation mapping, and risk group. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "RegulationID",
+          "target_column": "RegulationID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Regulatory entity ID. FK to Dim_Regulation.ID. Values: 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI (~80%), 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML, 11=FSRA, 12=FINRAONLY, 13=MAS, 14=NYDFS+FINRA. (Tier 2 — SP code, Dim_Regulation)",
+          "tier": ""
+        },
+        {
+          "source_column": "Club",
+          "target_column": "Club",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro Club tier level. Resolved from Dim_PlayerLevel.Name via PlayerLevelID. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Updated daily. (Tier 2 — SP code, Dim_PlayerLevel)",
+          "tier": ""
+        },
+        {
+          "source_column": "Gender",
+          "target_column": "Gender",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer gender. M=Male, F=Female, U=Unknown, NULL=not provided. From Dim_Customer.Gender. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAmount",
+          "target_column": "FirstDepositAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the first successful deposit in USD. Default 0. From Dim_Customer.FirstDepositAmount. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositusersfirsttouchpoints",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositusersfirsttouchpoints",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubAffiliateID",
+          "target_column": "SubAffiliateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-affiliate tracking ID. From Dim_Customer.SubSerialID. Can contain URLs, campaign tags, or partner codes. Free-text. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "State",
+          "target_column": "State",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's state/province. Resolved from Dim_State_and_Province.Name via RegionByIP_ID. Populated for US, Italy, and select countries. (Tier 2 — SP code, Dim_State_and_Province)",
+          "tier": ""
+        },
+        {
+          "source_column": "EvMatchStatus",
+          "target_column": "EvMatchStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Electronic verification match status. FK to Dim_EvMatchStatus.EvMatchStatusID. Values: 0=None, 1=PartiallyVerified, 2=Verified, 3=NotVerified. From Dim_Customer.EvMatchStatus. (Tier 2 — SP code, Dim_EvMatchStatus)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "RealizedEquity",
+          "target_column": "RealizedEquity",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Current realized equity (USD). From V_Liabilities. Updated only when @date = yesterday. Represents deposits + realized P&L - withdrawals. (Tier 2 — SP code, V_Liabilities)",
+          "tier": ""
+        },
+        {
+          "source_column": "Credit",
+          "target_column": "Credit",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Current credit balance (USD). From V_Liabilities. Updated only when @date = yesterday. Represents available trading credit including bonuses. (Tier 2 — SP code, V_Liabilities)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastPosOpenDate",
+          "target_column": "LastPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent position open date (manual or copy). From Fact_CustomerAction where ActionTypeID IN (1,2) (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastLoggedIn",
+          "target_column": "LastLoggedIn",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent real-money login timestamp. From Fact_CustomerAction where ActionTypeID=14 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "NewMarketingRegion",
+          "target_column": "NewMarketingRegion",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstNewFundedDate",
+          "target_column": "FirstNewFundedDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First date the customer became \"funded.\" From Function_Population_First_Time_Funded. Set once, never overwritten. (Tier 2 — SP code, Function_Population_First_Time_Funded)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CountryID",
+          "target_column": "CountryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID — FK to Dim_Country.CountryID. Use Dim_Country for country name, region, regulation mapping, and risk group. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "NewMarketingRegion",
+          "target_column": "NewMarketingRegion",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ops_fraud_alert_analysis",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ops_fraud_alert_analysis",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "Email",
+          "target_column": "Email",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's email address. PII — use masked UC table for non-privileged access. From Dim_Customer.Email. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "BirthDate",
+          "target_column": "BirthDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's date of birth. PII. 1900-01-02 = unknown/not provided. From Dim_Customer.BirthDate. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "IP",
+          "target_column": "IP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's IP address (as numeric). PII. From Dim_Customer.IP. Mostly NULL in recent records. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel3Date",
+          "target_column": "VerificationLevel3Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 3 (fully verified). From Fact_SnapshotCustomer (MIN date where VerificationLevelID=3). (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel2Date",
+          "target_column": "VerificationLevel2Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 2. From Fact_SnapshotCustomer (MIN date where VerificationLevelID=2). Backfilled from Level 3 if NULL. (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel1Date",
+          "target_column": "VerificationLevel1Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 1. From Fact_SnapshotCustomer (MIN date where VerificationLevelID=1). May be backfilled from higher levels. (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "EVMatchStatusDate",
+          "target_column": "EVMatchStatusDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer reached EvMatchStatus=2 (Verified) for electronic verification. From Fact_SnapshotCustomer. (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Club",
+          "target_column": "Club",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro Club tier level. Resolved from Dim_PlayerLevel.Name via PlayerLevelID. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Updated daily. (Tier 2 — SP code, Dim_PlayerLevel)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "general",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_pltv",
+      "full_name": "main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_pltv",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CountryID",
+          "target_column": "CountryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID — FK to Dim_Country.CountryID. Use Dim_Country for country name, region, regulation mapping, and risk group. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cross_selling_monthly",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cross_selling_monthly",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_amlperiodicreview",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_amlperiodicreview",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "Club",
+          "target_column": "Club",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro Club tier level. Resolved from Dim_PlayerLevel.Name via PlayerLevelID. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Updated daily. (Tier 2 — SP code, Dim_PlayerLevel)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "NewMarketingRegion",
+          "target_column": "NewMarketingRegion",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification",
+      "object_type": "TABLE",
+      "hop_distance": 2,
+      "discovered_via": "synapse_dependency",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Club",
+          "target_column": "Club",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro Club tier level. Resolved from Dim_PlayerLevel.Name via PlayerLevelID. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Updated daily. (Tier 2 — SP code, Dim_PlayerLevel)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel3Date",
+          "target_column": "VerificationLevel3Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 3 (fully verified). From Fact_SnapshotCustomer (MIN date where VerificationLevelID=3). (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "pii_data",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_metric_view",
+      "full_name": "main.pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_metric_view",
+      "object_type": "VIEW",
+      "hop_distance": 1,
+      "discovered_via": "name_pattern",
+      "columns": [
+        {
+          "source_column": "UserName",
+          "target_column": "UserName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro username (display name on the platform). PII. From Dim_Customer.UserName. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        }
+      ]
+    },
+    {
+      "catalog": "main",
+      "schema": "bi_db",
+      "table": "gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "full_name": "main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "object_type": "TABLE",
+      "hop_distance": 1,
+      "discovered_via": "name_pattern",
+      "columns": [
+        {
+          "source_column": "CID",
+          "target_column": "CID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer ID — primary identifier for a customer in the eToro platform. Maps to Dim_Customer.RealCID. Distribution key; always filter/join on CID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "GCID",
+          "target_column": "GCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Global Customer ID — globally unique customer identifier across all eToro entities. From Dim_Customer.GCID. Used for cross-system joins (e.g., ComplianceStateDB uses GCID). (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "OriginalCID",
+          "target_column": "OriginalCID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Original CID before account merge or migration. From Dim_Customer.OriginalCID. Useful for tracking merged accounts. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "UserName",
+          "target_column": "UserName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro username (display name on the platform). PII. From Dim_Customer.UserName. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Club",
+          "target_column": "Club",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's eToro Club tier level. Resolved from Dim_PlayerLevel.Name via PlayerLevelID. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Updated daily. (Tier 2 — SP code, Dim_PlayerLevel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SerialID",
+          "target_column": "SerialID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Affiliate serial ID. From Dim_Customer.AffiliateID. Identifies the affiliate partner who referred this customer. 0 = no affiliate. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Channel",
+          "target_column": "Channel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Marketing acquisition channel. Resolved from Dim_Channel via Dim_Affiliate.SubChannelID. Values: Direct, Affiliate, SEM, SEO, Mobile Acquisition, Media Performance, Friend Referral, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubChannel",
+          "target_column": "SubChannel",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-channel within the acquisition channel. Resolved from Dim_Channel. Values: Direct Mobile, Affiliate, Direct, SEO, Mobile CPA, Google UAC, Google Brand, FB, YT, ASA, etc. Default 'Direct' when NULL. (Tier 2 — SP code, Dim_Channel)",
+          "tier": ""
+        },
+        {
+          "source_column": "LabelName",
+          "target_column": "LabelName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Platform brand/label the customer registered under. Resolved from Dim_Label.Name via LabelID. Values: eToro (~97%), eToroRussia, ICMarkets, eToroChina, Royal-CM, eToroUSA, etc. (Tier 2 — SP code, Dim_Label)",
+          "tier": ""
+        },
+        {
+          "source_column": "Country",
+          "target_column": "Country",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's country of registration. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Language",
+          "target_column": "Language",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's platform language preference. Resolved from Dim_Language.Name via LanguageID. (Tier 2 — SP code, Dim_Language)",
+          "tier": ""
+        },
+        {
+          "source_column": "Region",
+          "target_column": "Region",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Geographic region for business reporting. Resolved from Dim_Country.Region. Values: UK, French, German, Italian, Other Asia, USA, Spanish, Eastern Europe, etc. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "PotentialDesk",
+          "target_column": "PotentialDesk",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sales desk assignment. Resolved from Dim_Country.Desk. Indicates which sales/support desk handles this customer's region. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "Email",
+          "target_column": "Email",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's email address. PII — use masked UC table for non-privileged access. From Dim_Customer.Email. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "Credit",
+          "target_column": "Credit",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Current credit balance (USD). From V_Liabilities. Updated only when @date = yesterday. Represents available trading credit including bonuses. (Tier 2 — SP code, V_Liabilities)",
+          "tier": ""
+        },
+        {
+          "source_column": "RealizedEquity",
+          "target_column": "RealizedEquity",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Current realized equity (USD). From V_Liabilities. Updated only when @date = yesterday. Represents deposits + realized P&L - withdrawals. (Tier 2 — SP code, V_Liabilities)",
+          "tier": ""
+        },
+        {
+          "source_column": "SocialConnect",
+          "target_column": "SocialConnect",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Whether customer connected a social account. 1 = connected, NULL = not. Source table not updated since Sep 2018. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "Verified",
+          "target_column": "Verified",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer verification level ID. Resolved via Dim_VerificationLevel. Values: 0=Unverified, 1=Level 1, 2=Level 2, 3=Fully Verified. NOT a boolean — do not treat as 0/1. (Tier 2 — SP code, Dim_VerificationLevel)",
+          "tier": ""
+        },
+        {
+          "source_column": "KYC",
+          "target_column": "KYC",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — KYC status. Nullified 2022-02-22. All values are NULL. Do not use. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "DocsOK",
+          "target_column": "DocsOK",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer's documents have been approved. 1 = approved, NULL = not yet approved. Mostly NULL (~99.9%). (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "Blocked",
+          "target_column": "Blocked",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer account is blocked/restricted. 0 = active, 1 = blocked. Computed from PlayerStatusID IN (2,4,6,7,8,9). Blocked != closed — check Dim_Customer.PendingClosureStatusID for closure. (Tier 2 — SP code, Dim_PlayerStatus)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsSales",
+          "target_column": "IsSales",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer is flagged as a sales account. 0 = not sales, 1 = sales. Mostly NULL (~94%). (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "HasPic",
+          "target_column": "HasPic",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer has a profile picture. 1 = has picture, 0 = no picture. Mostly NULL (~98.6%). (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "Bankruptcy",
+          "target_column": "Bankruptcy",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Bankruptcy flag. Nullified 2022-02-22. All values are NULL. Do not use. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "FunnelName",
+          "target_column": "FunnelName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Registration funnel name. Resolved from Dim_Funnel.Name via FunnelID. Values: Retoro, reToroiOS, reToroAndroid, Web Trader, etc. Indicates which app/platform was used for registration. (Tier 2 — SP code, Dim_Funnel)",
+          "tier": ""
+        },
+        {
+          "source_column": "DownloadID",
+          "target_column": "DownloadID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Download tracking ID from customer acquisition. From Dim_Customer.DownloadID. Typically 0. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "registered",
+          "target_column": "registered",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer registration date — the earlier of RegisteredDemo and RegisteredReal from Dim_Customer. First-ever interaction with the platform. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstTimeUser",
+          "target_column": "FirstTimeUser",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First time the user engaged with the platform as a new user. Rarely populated — not updated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstLoggedIn",
+          "target_column": "FirstLoggedIn",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First real-money login timestamp. From Fact_CustomerAction where ActionTypeID=14. Set once, never overwritten (MIN logic). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDemoLoggedIn",
+          "target_column": "FirstDemoLoggedIn",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First demo account login timestamp. Not updated by current SP code. May contain historical values only. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDemoPosOpenDate",
+          "target_column": "FirstDemoPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First demo position open date. Not updated by current SP code. May contain historical values only. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDemoMirrorRegistrationDate",
+          "target_column": "FirstDemoMirrorRegistrationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First demo copy-trade registration date. Not updated by current SP code. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDemoMirrorRegistrationDate",
+          "target_column": "LastDemoMirrorRegistrationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Last demo copy-trade registration date. Not updated by current SP code. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDemoMirrorPosOpenDate",
+          "target_column": "FirstDemoMirrorPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First demo copy-trade position open date. Not updated by current SP code. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstCashierLogin",
+          "target_column": "FirstCashierLogin",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First cashier page login. From Fact_CustomerAction where ActionTypeID=29 (MIN). First time customer visited the deposit/cashier page. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAttempt",
+          "target_column": "FirstDepositAttempt",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First deposit attempt timestamp (regardless of success). From Fact_FirstCustomerAction where ActionTypeID=27. (Tier 2 — SP code, Fact_FirstCustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAttemptAmount",
+          "target_column": "FirstDepositAttemptAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the first deposit attempt in USD. Computed as Amount * ExchangeRate. (Tier 2 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAttemptProcessor",
+          "target_column": "FirstDepositAttemptProcessor",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processor for the first deposit attempt. Currently set to 'NA' (not available from current data source). (Tier 2 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAttemptFundingType",
+          "target_column": "FirstDepositAttemptFundingType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding type for the first deposit attempt. Currently set to 'NA' (not available from current data source). (Tier 2 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositDate",
+          "target_column": "FirstDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful deposit date. From Dim_Customer.FirstDepositDate via Fact_BillingDeposit. 1900-01-01 = no deposit (sentinel). Filter with YEAR(FirstDepositDate) != 1900. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositProcessor",
+          "target_column": "FirstDepositProcessor",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Payment processor for the first deposit. Resolved from Dim_BillingDepot.Name via DepotID. (Tier 2 — SP code, Dim_BillingDepot)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositFundingType",
+          "target_column": "FirstDepositFundingType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding type for the first deposit. Resolved from Dim_FundingType.Name via FundingTypeID. Values: CreditCard, Wire, PayPal, eToroMoney, IXOPAY-Nuvei, etc. (Tier 2 — SP code, Dim_FundingType)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAmount",
+          "target_column": "FirstDepositAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the first successful deposit in USD. Default 0. From Dim_Customer.FirstDepositAmount. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstEngagementDate",
+          "target_column": "FirstEngagementDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — First social engagement date. ETL section commented out. May contain historical values. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstPosOpenDate",
+          "target_column": "FirstPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First position open date (manual or copy-trade). From Fact_CustomerAction where ActionTypeID IN (1,2). Uses MIN logic. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstMirrorRegistrationDate",
+          "target_column": "FirstMirrorRegistrationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First copy-trade (mirror) registration date. From Fact_CustomerAction where ActionTypeID=17. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastMirrorRegistrationDate",
+          "target_column": "LastMirrorRegistrationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent copy-trade registration date. From Fact_CustomerAction where ActionTypeID=17 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstMirrorPosOpenDate",
+          "target_column": "FirstMirrorPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First copy-trade position open date. From Fact_CustomerAction where ActionTypeID=2. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstLeadDate",
+          "target_column": "FirstLeadDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — First lead date. Nullified 2022-02-22. 1900-01-01 = sentinel for older records. Do not use. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDepositAmountExtended",
+          "target_column": "FirstDepositAmountExtended",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Extended first deposit amount — may include bonuses or promotions. Not updated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "ReferralID",
+          "target_column": "ReferralID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "CID of the customer who referred this customer. 0 = no referral. From Dim_Customer.ReferralID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDemoLoggedIn",
+          "target_column": "LastDemoLoggedIn",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Last demo login date. Not updated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDemoMirrorPosOpenDate",
+          "target_column": "LastDemoMirrorPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Last demo copy-trade position date. Not updated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDemoPosOpenDate",
+          "target_column": "LastDemoPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Last demo position open date. Not updated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastEngagementDate",
+          "target_column": "LastEngagementDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Last social engagement date. ETL section commented out. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastLoggedIn",
+          "target_column": "LastLoggedIn",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent real-money login timestamp. From Fact_CustomerAction where ActionTypeID=14 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastMirrorPosOpenDate",
+          "target_column": "LastMirrorPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent copy-trade position open date. From Fact_CustomerAction where ActionTypeID=2 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastPosOpenDate",
+          "target_column": "LastPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent position open date (manual or copy). From Fact_CustomerAction where ActionTypeID IN (1,2) (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "CertifiedGuru",
+          "target_column": "CertifiedGuru",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether the customer is a certified Popular Investor (guru). 1 = certified, NULL = not certified. Very rare (~515 out of 45M). (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstTimeBeingCopied",
+          "target_column": "FirstTimeBeingCopied",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First time another customer copied this customer's trades. From Dim_Mirror.OpenOccurred (MIN for this CID as ParentCID). (Tier 2 — SP code, Dim_Mirror)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastTimeBeingCopied",
+          "target_column": "LastTimeBeingCopied",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent time another customer copied this customer's trades. From Dim_Mirror.OpenOccurred (MAX for this CID as ParentCID). (Tier 2 — SP code, Dim_Mirror)",
+          "tier": ""
+        },
+        {
+          "source_column": "Gender",
+          "target_column": "Gender",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer gender. M=Male, F=Female, U=Unknown, NULL=not provided. From Dim_Customer.Gender. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "CountryID",
+          "target_column": "CountryID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Country ID — FK to Dim_Country.CountryID. Use Dim_Country for country name, region, regulation mapping, and risk group. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstMenualPosOpenDate",
+          "target_column": "FirstMenualPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First manually opened position date (NOT copy-trade). From Fact_CustomerAction where ActionTypeID=1. Note: \"Menual\" is a typo for \"Manual.\" (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "BirthDate",
+          "target_column": "BirthDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's date of birth. PII. 1900-01-02 = unknown/not provided. From Dim_Customer.BirthDate. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "CommunicationLanguage",
+          "target_column": "CommunicationLanguage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's preferred communication language (emails, notifications). Resolved from Dim_Language.Name via CommunicationLanguageID. May differ from platform Language. (Tier 2 — SP code, Dim_Language)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastMenualPosOpenDate",
+          "target_column": "LastMenualPosOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent manually opened position date. From Fact_CustomerAction where ActionTypeID=1 (MAX). Note: \"Menual\" is a typo for \"Manual.\" (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstTimeSocialConnect",
+          "target_column": "FirstTimeSocialConnect",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — First social account connection date. Source not updated since 2018. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastCashierLogin",
+          "target_column": "LastCashierLogin",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent cashier page login. From Fact_CustomerAction where ActionTypeID=29 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstCashoutDate",
+          "target_column": "FirstCashoutDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First withdrawal/cashout date. From Fact_CustomerAction where ActionTypeID=8 (MIN). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "FunnelFromName",
+          "target_column": "FunnelFromName",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Name of the originating marketing funnel. Resolved from Dim_Funnel.Name via FunnelFromID. Shows specific landing page/campaign funnel (eToro Homepage, Stocks Offering, reToroiOS, etc.). (Tier 2 — SP code, Dim_Funnel)",
+          "tier": ""
+        },
+        {
+          "source_column": "BannerID",
+          "target_column": "BannerID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Affiliate banner ID. From Dim_Customer.BannerID. 0 = no banner/direct. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "SubAffiliateID",
+          "target_column": "SubAffiliateID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Sub-affiliate tracking ID. From Dim_Customer.SubSerialID. Can contain URLs, campaign tags, or partner codes. Free-text. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstCampaignID",
+          "target_column": "FirstCampaignID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "ID of the first marketing campaign the customer received. From History.Credit.CampaignID (via External_etoro_History_Credit). (Tier 2 — SP code, History.Credit)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstCampaignDate",
+          "target_column": "FirstCampaignDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of the first marketing campaign received. (Tier 2 — SP code, History.Credit)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstCampaignAmount",
+          "target_column": "FirstCampaignAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the first campaign payment/credit received (USD). (Tier 2 — SP code, History.Credit)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstStocksOpenDate",
+          "target_column": "FirstStocksOpenDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First date the customer opened a real stocks position. From Fact_CustomerAction where ActionTypeID=34. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "SevenDayRetained",
+          "target_column": "SevenDayRetained",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Whether customer was retained at day 7 after first deposit. 1 = retained, 0 = not retained, NULL = not yet evaluated. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstToSevenDayRetained",
+          "target_column": "FirstToSevenDayRetained",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Whether customer was retained between first deposit and day 7. 1 = retained, 0 = not retained, NULL = not yet evaluated. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstDateRetained",
+          "target_column": "FirstDateRetained",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Whether customer was retained on first-date basis. 1 = retained, 0 = not retained, NULL = not yet evaluated. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastContactAttemptDate_ByPhone",
+          "target_column": "LastContactAttemptDate_ByPhone",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent phone contact attempt date. From BI_DB_UsageTracking_SF — Salesforce usage tracking. (Tier 2 — SP code, BI_DB_UsageTracking_SF)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastContactDate",
+          "target_column": "LastContactDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent successful contact date (any channel). From BI_DB_UsageTracking_SF where ActionName IN ('Completed_Contact_Email__c', 'Phone_Call_Succeed__c'). (Tier 2 — SP code, BI_DB_UsageTracking_SF)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastContactAttemptDate",
+          "target_column": "LastContactAttemptDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent contact attempt date (any channel). From BI_DB_UsageTracking_SF. (Tier 2 — SP code, BI_DB_UsageTracking_SF)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastContactDate_ByPhone",
+          "target_column": "LastContactDate_ByPhone",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent successful phone contact date. From BI_DB_UsageTracking_SF where ActionName = 'Phone_Call_Succeed__c'. (Tier 2 — SP code, BI_DB_UsageTracking_SF)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstContactAttemptDate",
+          "target_column": "FirstContactAttemptDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First contact attempt date (any channel). From BI_DB_UsageTracking_SF (MIN). (Tier 2 — SP code, BI_DB_UsageTracking_SF)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstContactAttemptDate_ByPhone",
+          "target_column": "FirstContactAttemptDate_ByPhone",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First phone contact attempt date. Not explicitly set in current SP code. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstContactDate",
+          "target_column": "FirstContactDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First successful contact date (any channel). From BI_DB_UsageTracking_SF (MIN). (Tier 2 — SP code, BI_DB_UsageTracking_SF)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstContactDate_ByPhone",
+          "target_column": "FirstContactDate_ByPhone",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] First successful phone contact date. Not explicitly set in current SP code. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "PremiumAccount",
+          "target_column": "PremiumAccount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Whether customer has a premium account type. Entirely NULL in current data — not populated. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "Evangelist",
+          "target_column": "Evangelist",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer is an eToro evangelist/ambassador. 1 = evangelist, NULL = not. Very rare (~208). (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstToThirtyDayRetained",
+          "target_column": "FirstToThirtyDayRetained",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Whether customer was retained between first deposit and day 30. 1 = retained, 0 = not retained, NULL = not yet evaluated. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstWallEngagement",
+          "target_column": "FirstWallEngagement",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — First social wall engagement date. ETL section commented out. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "FeedUnBlocked",
+          "target_column": "FeedUnBlocked",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Whether the customer's social feed is unblocked. Entirely NULL — not populated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "PrivacyPolicyID",
+          "target_column": "PrivacyPolicyID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Privacy policy version accepted by the customer. Values: 1 (~47%), 2 (~53%). From Dim_Customer.PrivacyPolicyID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "IP",
+          "target_column": "IP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's IP address (as numeric). PII. From Dim_Customer.IP. Mostly NULL in recent records. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FeedUnlocked",
+          "target_column": "FeedUnlocked",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether the customer has unlocked their social feed. 0 = locked, 1 = unlocked, NULL = not evaluated. (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "Follow5UsersDate",
+          "target_column": "Follow5UsersDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Date when the customer followed 5 users (social onboarding milestone). Not populated in current data. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "NumberOfUsersFollowed",
+          "target_column": "NumberOfUsersFollowed",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Number of users this customer is following on the social feed. Not populated in current data. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "PopularInvestor",
+          "target_column": "PopularInvestor",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer is part of the Popular Investor program. 1 = yes, NULL = no. Very rare (~360). (Tier 3 — live data)",
+          "tier": ""
+        },
+        {
+          "source_column": "Manager",
+          "target_column": "Manager",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Account manager's full name (FirstName + LastName). Resolved from Dim_Manager via AccountManagerID. 'System' = no assigned manager. (Tier 2 — SP code, Dim_Manager)",
+          "tier": ""
+        },
+        {
+          "source_column": "SuitabilityTestCompletedAt",
+          "target_column": "SuitabilityTestCompletedAt",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Suitability test completion date. Nullified 2022-02-22. 1900-01-01 = sentinel in older records. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "PassedSuitabilityTest",
+          "target_column": "PassedSuitabilityTest",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Whether customer passed the suitability test. Nullified 2022-02-22. All NULL. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "Model_FTDsOTDs",
+          "target_column": "Model_FTDsOTDs",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] ML model score predicting FTD (First Time Deposit) / OTD conversion probability. Not populated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "Model_Leads",
+          "target_column": "Model_Leads",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] ML model score for lead quality/conversion. Not populated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDepositDate",
+          "target_column": "LastDepositDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent deposit date. From Fact_BillingDeposit via #fundingLast (ModificationDate). Updated daily for new deposits. (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDepositAmount",
+          "target_column": "LastDepositAmount",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Amount of the most recent deposit in USD. From Fact_BillingDeposit (Amount * ExchangeRate). (Tier 2 — SP code, Fact_BillingDeposit)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastDepositFundingType",
+          "target_column": "LastDepositFundingType",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Funding type of the most recent deposit. Resolved from Dim_FundingType.Name. Values: CreditCard, Wire, PayPal, eToroMoney, etc. (Tier 2 — SP code, Dim_FundingType)",
+          "tier": ""
+        },
+        {
+          "source_column": "Model_ReDepositor",
+          "target_column": "Model_ReDepositor",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] ML model score predicting re-deposit probability. Not populated by current SP. (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "RegulationID",
+          "target_column": "RegulationID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Regulatory entity ID. FK to Dim_Regulation.ID. Values: 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI (~80%), 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML, 11=FSRA, 12=FINRAONLY, 13=MAS, 14=NYDFS+FINRA. (Tier 2 — SP code, Dim_Regulation)",
+          "tier": ""
+        },
+        {
+          "source_column": "RiskGroup",
+          "target_column": "RiskGroup",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Customer risk classification. A/B/C. ETL disabled 2023-05-09. Historical values only. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "DepositGroup",
+          "target_column": "DepositGroup",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Customer deposit tier. Low/Mid/High. ETL disabled 2023-05-09. Historical values only. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel1Date",
+          "target_column": "VerificationLevel1Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 1. From Fact_SnapshotCustomer (MIN date where VerificationLevelID=1). May be backfilled from higher levels. (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel2Date",
+          "target_column": "VerificationLevel2Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 2. From Fact_SnapshotCustomer (MIN date where VerificationLevelID=2). Backfilled from Level 3 if NULL. (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "VerificationLevel3Date",
+          "target_column": "VerificationLevel3Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer first reached Verification Level 3 (fully verified). From Fact_SnapshotCustomer (MIN date where VerificationLevelID=3). (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "EmailVerifiedDate",
+          "target_column": "EmailVerifiedDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer's email was verified. From Fact_SnapshotCustomer (MIN date where IsEmailVerified=1). (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstInstallDate",
+          "target_column": "FirstInstallDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First mobile app install date. From BI_DB_AppFlyer_Reports (EventName='install') via AppsFlyer tracking. (Tier 2 — SP code, BI_DB_AppFlyer_Reports)",
+          "tier": ""
+        },
+        {
+          "source_column": "EvMatchStatusDate",
+          "target_column": "EvMatchStatusDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer reached EvMatchStatus=2 (Verified) for electronic verification. From Fact_SnapshotCustomer. (Tier 2 — SP code, Fact_SnapshotCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "State",
+          "target_column": "State",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Customer's state/province. Resolved from Dim_State_and_Province.Name via RegionByIP_ID. Populated for US, Italy, and select countries. (Tier 2 — SP code, Dim_State_and_Province)",
+          "tier": ""
+        },
+        {
+          "source_column": "PhoneVerifiedDate",
+          "target_column": "PhoneVerifiedDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date customer's phone was verified. From History.BackOfficeCustomer where PhoneVerifiedID IN (1=AutomaticallyVerified, 2=ManuallyVerified). (Tier 2 — SP code, History.BackOfficeCustomer)",
+          "tier": ""
+        },
+        {
+          "source_column": "KycModeID",
+          "target_column": "KycModeID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "KYC verification mode. Values: 1 (~48%), 2 (~9%), 3 (~0.3%), 4 (~6%), NULL (~37%). From ComplianceStateDB.Compliance.CustomerKycMode. Joined on GCID. (Tier 2 — SP code, ComplianceStateDB)",
+          "tier": ""
+        },
+        {
+          "source_column": "PEPCreatedTime",
+          "target_column": "PEPCreatedTime",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — PEP (Politically Exposed Person) check creation time. Nullified 2022-02-22. 1900-01-01 = sentinel. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "PEPStatusUpdatedDate",
+          "target_column": "PEPStatusUpdatedDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — PEP status last update date. Nullified 2022-02-22. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "isPassedPEP",
+          "target_column": "isPassedPEP",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — Whether customer passed PEP screening. Nullified 2022-02-22. All NULL. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "PEPStatusID",
+          "target_column": "PEPStatusID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "DEPRECATED — PEP screening status ID. Nullified 2022-02-22. All NULL. (Tier 2 — SP code, deprecated)",
+          "tier": ""
+        },
+        {
+          "source_column": "EvMatchStatus",
+          "target_column": "EvMatchStatus",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Electronic verification match status. FK to Dim_EvMatchStatus.EvMatchStatusID. Values: 0=None, 1=PartiallyVerified, 2=Verified, 3=NotVerified. From Dim_Customer.EvMatchStatus. (Tier 2 — SP code, Dim_EvMatchStatus)",
+          "tier": ""
+        },
+        {
+          "source_column": "FTDIsLessThanAWeek",
+          "target_column": "FTDIsLessThanAWeek",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether first deposit occurred within 7 days of registration AND deposit > 0. 1 = fast depositor, 0 = slower or no deposit. Computed: DATEDIFF(DAY, registered, FirstDepositDate) < 8 AND FirstDepositAmount > 0. (Tier 2 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "DesignatedRegulationID",
+          "target_column": "DesignatedRegulationID",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Designated regulation entity ID. FK to Dim_Regulation.ID. Same value map as RegulationID. May differ when designated regulation differs from operating regulation. From Dim_Customer.DesignatedRegulationID. (Tier 2 — SP code, Dim_Customer)",
+          "tier": ""
+        },
+        {
+          "source_column": "ProfessionalApplicationDate",
+          "target_column": "ProfessionalApplicationDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date the customer applied for professional (non-retail) classification. From ComplianceStateDB.Compliance.CustomerProfessionalQuestionnaireResult. (Tier 2 — SP code, ComplianceStateDB)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastCampaignSentDate",
+          "target_column": "LastCampaignSentDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Date of the most recent marketing campaign sent to this customer. (Tier 2 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "NewMarketingRegion",
+          "target_column": "NewMarketingRegion",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 — SP code, Dim_Country)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsFundedNew",
+          "target_column": "IsFundedNew",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer is currently \"funded\" — meeting active depositor criteria. 1 = funded, 0 = not funded. Determined by Function_Population_Funded. (Tier 2 — SP code, Function_Population_Funded)",
+          "tier": ""
+        },
+        {
+          "source_column": "FirstNewFundedDate",
+          "target_column": "FirstNewFundedDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "First date the customer became \"funded.\" From Function_Population_First_Time_Funded. Set once, never overwritten. (Tier 2 — SP code, Function_Population_First_Time_Funded)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastNewFundedDate",
+          "target_column": "LastNewFundedDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent date the customer was in \"funded\" status. From DDR daily status and Function_Population_Funded. Updated daily. (Tier 2 — SP code)",
+          "tier": ""
+        },
+        {
+          "source_column": "IsAirDropBefore",
+          "target_column": "IsAirDropBefore",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Whether customer received a crypto airdrop in the last 30 days AND has deposited. 1 = received airdrop. From Fact_CustomerAction (ActionTypeID=1, IsAirDrop=1, InstrumentTypeID=5). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "SignedW8Date",
+          "target_column": "SignedW8Date",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "[UNVERIFIED] Date the customer signed the W-8BEN tax form (for non-US customers trading US securities). Not populated by current SP (section disabled). (Tier 4 — column name inference)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastCashoutDate",
+          "target_column": "LastCashoutDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent withdrawal/cashout date. From Fact_CustomerAction where ActionTypeID=8 (MAX). (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastPublishedPostDate",
+          "target_column": "LastPublishedPostDate",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent date the customer published a post on the social feed. From Fact_CustomerAction where ActionTypeID=21. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        },
+        {
+          "source_column": "LastActionDateForLifeStage",
+          "target_column": "LastActionDateForLifeStage",
+          "match_type": "identical",
+          "rename_chain": [],
+          "description": "Most recent \"life stage\" action date (manual pos open, mirror pos open, mirror registration, or cashout). From Fact_CustomerAction where ActionTypeID IN (1,15,17). Used for lifecycle stage classification. (Tier 2 — SP code, Fact_CustomerAction)",
+          "tier": ""
+        }
+      ]
+    }
+  ]
+}
