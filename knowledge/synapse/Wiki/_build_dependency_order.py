@@ -190,8 +190,7 @@ def topo_sort(edges, all_nodes):
     for target, sources in edges.items():
         for src in sources:
             reverse_edges[src].add(target)
-            in_degree[target] += 0  # ensure target exists
-        in_degree[target] = max(in_degree[target], len(sources))
+            in_degree[target] += 1
 
     # BFS from roots (nodes with no incoming edges in the depends-on graph)
     depth = {}

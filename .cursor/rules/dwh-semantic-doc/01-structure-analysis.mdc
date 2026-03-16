@@ -92,11 +92,20 @@ WHERE object_id = OBJECT_ID('{Schema}.{FunctionName}')
 
 ### For Views
 
-- [ ] **SQL definition**: Full SELECT statement
+- [ ] **SQL definition**: Full SELECT statement (from `sys.sql_modules`)
+- [ ] **EVERY output column**: Parse the SELECT list and enumerate EVERY column individually. For a view with 60 columns, list all 60 -- never summarize or group them.
+- [ ] **Column-to-source mapping**: For each output column, record which base table and column it comes from:
+  - Direct column: `dp.CurrencyID` -> source: `DWH_dbo.Dim_Position.CurrencyID`
+  - Aliased column: `dp.SettlementTypeID AS SettlementType` -> source: `DWH_dbo.Dim_Position.SettlementTypeID`, alias: `SettlementType`
+  - Computed/derived: `ISNULL(dp.InitialUnits, dp.AmountInUnitsDecimal) AS InitialUnits` -> source: computed from `DWH_dbo.Dim_Position.InitialUnits` and `DWH_dbo.Dim_Position.AmountInUnitsDecimal`
+  - CASE expression: `CASE WHEN ... END AS StatusLabel` -> source: computed, formula: `{expression}`
 - [ ] **Base tables**: All tables in FROM/JOIN
-- [ ] **JOIN conditions**: ON clauses
-- [ ] **WHERE filters**: Permanent filter conditions
+- [ ] **JOIN conditions**: ON clauses (exact expressions -- these reveal distribution alignment patterns in Synapse)
+- [ ] **WHERE filters**: Permanent filter conditions (these define the view's business scope)
 - [ ] **Aggregations**: GROUP BY, HAVING
+- [ ] **UNION**: Multiple SELECT blocks
+
+**CRITICAL**: The column-to-source mapping is essential for Phase 11 documentation and downstream ALTER propagation. It enables inheriting rich column descriptions from already-documented base tables. If a view's base table has already been documented in `knowledge/synapse/Wiki/`, those descriptions should be reused in the view's documentation and propagated via `.downstream.alter.sql`.
 
 ### For Stored Procedures
 
@@ -109,6 +118,7 @@ WHERE object_id = OBJECT_ID('{Schema}.{FunctionName}')
 
 - [ ] **Parameters**: Name, type
 - [ ] **Return type**: Scalar type or TABLE definition
+- [ ] **Referenced Objects**: All tables, views, and functions in FROM/JOIN/CROSS APPLY/OUTER APPLY (these are the function's dependencies)
 
 ## Output Format
 

@@ -62,3 +62,20 @@ Querying `INFORMATION_SCHEMA`, `sys.*` views, and `sys.pdw_*` views is always sa
 ```sql
 SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'dim_position'
 ```
+
+## Rule 7: Bulk MCP Call Limit (Databricks AND Synapse)
+
+**HARD CAP: Do not exceed ~10 write MCP calls per pipeline step.** Each MCP tool call (`execute_sql` / `execute_sql_read_only`) is a separate HTTP request. For the Databricks MCP, each call may trigger an OAuth browser tab. Running hundreds of MCP calls:
+- Opens hundreds of Chrome authentication tabs
+- Causes Cursor OOM crashes (observed: "window terminated unexpectedly, reason: 'oom'")
+- Makes the IDE completely unusable
+
+**Read-only MCP calls** (DESCRIBE, SHOW, SELECT) are lightweight and tolerable in moderate volume (up to ~30-50 per phase). But **write calls** (ALTER, CREATE, INSERT) must be capped at ~10.
+
+**When you need bulk writes**, generate a Python script that uses a single authenticated connection (see the Databricks connection skill for the pattern). This applies to:
+- Column comments (ALTER COLUMN COMMENT) — tables with 20+ columns
+- PII tags (ALTER COLUMN SET TAGS) — same threshold
+- Downstream propagation — any number of downstream objects
+- Batch table migrations — multiple tables in one run
+
+This rule takes priority over any other spec instruction that says "execute each statement individually via MCP."

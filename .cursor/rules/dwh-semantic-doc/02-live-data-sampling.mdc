@@ -21,6 +21,13 @@ Synapse uses snapshot isolation by default. No `WITH (NOLOCK)` hints are require
 
 ## Query Sequence
 
+### Step 0: Determine Object Type
+
+Check whether the target is a **table** or a **view**.
+
+- **Tables** -> follow Steps 1-5 below.
+- **Views** -> follow **View Sampling** section at the end of this phase.
+
 ### Step 1: Determine Table Size Category
 
 | Pattern | Category | Strategy |
@@ -73,12 +80,46 @@ From the sample data, note:
 | NULL patterns | Identify truly used vs legacy/placeholder columns |
 | Default value patterns | Columns with all-same values |
 
+## View Sampling
+
+Views are queryable objects and MUST be sampled just like tables. Seeing the view's actual output is essential to understanding what it does and what data it produces.
+
+### Step V1: Sample the View Output
+
+```sql
+SELECT TOP 5 * FROM [{Schema}].[{ViewName}]
+```
+
+If the view is too wide (many columns), also run a targeted query showing key columns:
+
+```sql
+SELECT TOP 5 [{PK_or_identifier}], [{key_business_columns}], [{computed_columns}]
+FROM [{Schema}].[{ViewName}]
+```
+
+### Step V2: Understand Data Variety
+
+If the view filters or transforms data (e.g., `WHERE StatusID = 1`), the sample should show the variety of data WITHIN that filter. For example, for an "open positions" view, pick rows with different settlement types, instruments, etc.
+
+### Step V3: NULL Pattern Analysis
+
+Same as Step 5 for tables -- note which view output columns are always NULL, never NULL, or mixed. This reveals which base-table columns are relevant for the view's filtered subset.
+
+### What to Record (Views)
+
+| Data Point | Why It Matters |
+|------------|---------------|
+| Sample output rows | See what the view actually produces -- this IS the view's purpose |
+| Column values | Understand the data range within the view's filter |
+| NULL patterns | Identify columns not relevant for the view's subset |
+| Computed column outputs | Verify formula results with real data |
+
 ## Error Handling
 
 | Error | Action |
 |-------|--------|
-| Query timeout | Note "Large table - sample timed out", try with smaller TOP |
-| Table not found | Note "Object not deployed", continue with metadata only |
+| Query timeout | Note "Large table/view - sample timed out", try with smaller TOP |
+| Table/View not found | Note "Object not deployed", continue with metadata only |
 | Permission denied | Note "No read access", continue with metadata only |
 
 ## Completion

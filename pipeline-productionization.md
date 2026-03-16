@@ -10,9 +10,9 @@
    ┌─────┐  Automated step (no human, no new privilege)
    ╔═════╗  Pipeline boundary (start / end)
    ┌ ─ ─ ┐  Needs repo / system access (existing creds OK)
-   ▓▓▓▓▓▓▓  ⛔ HUMAN REQUIRED — pipeline blocks here
    ░░░░░░░  🔑 NEW PRIVILEGE REQUIRED — won't work without setup
    ┌─ ! ─┐  ⚠️  FRAGILE — known reliability concern
+   (No blocking human gates — review is offline)
 
 
 ╔══════════════════════════════════════════════════════════════╗
@@ -146,7 +146,7 @@
                                │
               ┌────────────────┴────────────────┐
               │    PHASE GROUP D: GENERATION      │
-              │    (automated + review gate)       │
+              │    (automated, end-to-end)         │
               └────────────────┬────────────────┘
                                │
                                ▼
@@ -169,26 +169,10 @@
                │    {Table}.md                  │
                │    {Table}.review-needed.md    │
                │    {Table}.alter.sql           │
-               │    {Table}.views.alter.sql     │
+               │    {Table}.downstream.alter.sql     │
                └───────────────┬───────────────┘
                                │
-                               ▼
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓                                                              ▓
-▓  ⛔  HUMAN REVIEW GATE — PIPELINE BLOCKS HERE               ▓
-▓                                                              ▓
-▓  Domain expert reviews .review-needed.md                     ▓
-▓  Corrects Tier 4 [UNVERIFIED] items                          ▓
-▓  Corrections persist as Tier 5 overrides                     ▓
-▓                                                              ▓
-▓  → Pipeline can re-run after corrections                     ▓
-▓  → Tier 5 corrections survive all future runs                ▓
-▓  → Review burden DECREASES over time (glossary grows)        ▓
-▓                                                              ▓
-▓  FIRST TABLE: ~30% columns need review                       ▓
-▓  50th TABLE:  ~5% columns need review                        ▓
-▓                                                              ▓
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+                               │  (no review gate — pipeline continues)
                                │
               ┌────────────────┴────────────────┐
               │    PHASE GROUP E: LINEAGE         │
@@ -226,33 +210,20 @@
                                ▼
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ░  Deploy: View Propagation                    🔑 NEW PRIV    ░
-░  ● Execute .views.alter.sql                                  ░
+░  ● Execute .downstream.alter.sql                                  ░
 ░  ● COMMENT ON COLUMN for downstream views                    ░
 ░  🔑 REQUIRES: MODIFY on every downstream UC view            ░
 ░  ⚠️  May be denied on some views (skip + report)             ░
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░┬░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
                                │
                                ▼
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-░  Phase 15: UC Lineage Injection              🔑 NEW PRIV    ░
-░  ● Execute .lineage.py                                       ░
-░  ● External metadata objects + lineage arrows                ░
-░  🔑 REQUIRES:                                               ░
-░      CREATE EXTERNAL METADATA on metastore                   ░
-░      MODIFY on gold tables                                   ░
-░      SELECT on bronze tables                                 ░
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░┬░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                               │
-                               ▼
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓                                                              ▓
-▓  ⛔  DEPLOY APPROVAL GATE                                   ▓
-▓                                                              ▓
-▓  PR review of all generated files                            ▓
-▓  Reviewer sees: ALTER diff, lineage dry-run output           ▓
-▓  Approve → merge → deploy to UC                             ▓
-▓                                                              ▓
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+               ┌───────────────────────────────┐
+               │  Phase 15: UC Lineage (OFFLINE)│
+               │  ● .lineage.py GENERATED only  │
+               │  ● NOT executed automatically   │
+               │  ● Deploy separately when ready │
+               │  🔑 CREATE EXTERNAL METADATA   │
+               └───────────────┬───────────────┘
                                │
                                ▼
 ╔══════════════════════════════════════════════════════════════╗
@@ -260,18 +231,47 @@
 ║                                                              ║
 ║  Outputs per table (6 files):                                ║
 ║    {Table}.md               — wiki doc                       ║
-║    {Table}.review-needed.md — review sidecar                 ║
+║    {Table}.review-needed.md — review sidecar (offline)       ║
 ║    {Table}.alter.sql        — table/column ALTERs            ║
-║    {Table}.views.alter.sql  — downstream view comments       ║
+║    {Table}.downstream.alter.sql  — downstream column comments║
 ║    {Table}.lineage.md       — upstream column lineage        ║
-║    {Table}.lineage.py       — lineage injection script       ║
+║    {Table}.lineage.py       — lineage injection (not run)    ║
 ║                                                              ║
-║  UC metadata updated:                                        ║
+║  UC metadata DEPLOYED (automatic):                           ║
 ║    ✓ Table + column comments                                 ║
 ║    ✓ Table tags                                              ║
-║    ✓ Downstream view column comments                         ║
-║    ✓ External lineage (Synapse → UC)                         ║
+║    ✓ Downstream column comments (tables + views)             ║
+║    ○ External lineage — PENDING (run .lineage.py offline)    ║
+║                                                              ║
+║  Review: OFFLINE — domain experts review at own pace         ║
+║    → corrections trigger review-rerun (Phase 11 + re-deploy) ║
 ╚══════════════════════════════════════════════════════════════╝
+
+
+                    OFFLINE REVIEW-RERUN FLOW
+                    ═════════════════════════
+
+               ┌───────────────────────────────┐
+               │  Domain expert reviews         │
+               │  .review-needed.md files       │
+               │  (at any time, any pace)       │
+               │                                │
+               │  Methods:                      │
+               │  ● wiki-review skill (chat)    │
+               │  ● Edit .review-needed.md      │
+               │  → Adds rows to Corrections    │
+               └───────────────┬───────────────┘
+                               │
+                               ▼
+               ┌───────────────────────────────┐
+               │  User triggers review-rerun    │
+               │  (table or batch scope)        │
+               │                                │
+               │  Skips Phases 1–10             │
+               │  Re-runs Phase 11 with Tier 5  │
+               │  Re-deploys ALTERs to UC       │
+               │  ~2-3 min per table            │
+               └───────────────────────────────┘
 
 
 PRIVILEGE SUMMARY — what needs to be granted before go-live:
@@ -299,9 +299,11 @@ PRIVILEGE SUMMARY — what needs to be granted before go-live:
 | Atlassian search | ✅ Working | MCP (Jira + Confluence) |
 | SP source code read | ✅ Working | Local file read from Dataplatform repo |
 | UC ALTER execution | ✅ Working | MCP execute_sql |
-| View comment propagation | ✅ Working | Generated SQL, manual execution |
+| Downstream comment propagation | ✅ Working | Generated SQL, manual execution |
 | Lineage injection | 🧪 Testing | Python script, pending DE test |
-| Human review cycle | ✅ Working | .review-needed.md + glossary corrections |
+| Human review cycle | ✅ Working | .review-needed.md + glossary corrections (offline) |
+| End-to-end automation | ✅ Working | Phases 1–14 + ALTER deploy, no review gate |
+| Review-rerun mode | ✅ Working | Phase 11 re-gen + ALTER re-deploy after corrections |
 | Full pipeline orchestration | ❌ Manual | Human triggers phases via Cursor chat |
 
 ---
@@ -419,16 +421,30 @@ OPTION C: Hybrid
 
 ---
 
-## 4. Human-in-the-Loop Bottlenecks
+## 4. Human-in-the-Loop — Offline Review Model
 
-| Bottleneck | Where | Frequency | Mitigation |
-|-----------|-------|-----------|------------|
-| **Domain review** | After Phase 11 | Every table | Batch reviews (10 tables → 1 review session). Reviewers get `.review-needed.md` with specific questions, not open-ended review |
-| **Tier 4 corrections** | .review-needed.md | ~30% of columns on first run | Corrections persist as Tier 5 — second run is near-zero review. Glossary grows over time, reducing Tier 4 count |
-| **UC permission grants** | Before first deploy | One-time setup | Service principal with pre-granted permissions |
-| **ALTER script approval** | Before deploy | Every table (first run) | PR-based approval. Reviewer sees diff of UC metadata changes |
-| **Lineage script approval** | Before Phase 15 | Every table (first run) | Dry-run output attached to PR for review |
-| **New schema onboarding** | When adding a new Synapse schema | Rare | Config update + FK reference update + upstream wiki mapping |
+The pipeline runs **end-to-end without stopping**. Human review is decoupled from the automation flow.
+
+### What Changed
+
+| Before (POC) | After (Production) |
+|-------------|-------------------|
+| Pipeline BLOCKS after Phase 11 for review | Pipeline runs Phases 1–14 + ALTER deploy continuously |
+| Review is synchronous (pipeline waits) | Review is asynchronous (offline, any pace) |
+| Corrections require full re-run | Corrections trigger lightweight review-rerun (Phase 11 only) |
+| Phase 15 executed inline | Phase 15 generates `.lineage.py` but does NOT execute (offline deploy) |
+| Deploy approval gate | ALTERs deploy automatically; idempotent and safe to re-run |
+
+### Remaining Human Touchpoints
+
+| Touchpoint | When | Frequency | Impact on Pipeline |
+|-----------|------|-----------|-------------------|
+| **Domain review** | Anytime after pipeline completes | Per-table, at reviewer's pace | None — pipeline is already done. Review-rerun picks up corrections |
+| **Tier 4 corrections** | Offline via wiki-review skill or sidecar edit | ~30% of columns on first table, ~5% by 50th | Triggers review-rerun (Phase 11 + ALTER re-deploy, ~2-3 min/table) |
+| **UC permission grants** | Before first pipeline run | One-time setup | Blocking only on first run |
+| **Lineage injection** | Separate deployment step | Per-table, when ready | Run `.lineage.py` manually or via separate automation |
+| **New schema onboarding** | When adding a new Synapse schema | Rare | Config update + FK reference update |
+| **Glossary updates** | When a correction is domain-wide | Grows over time | Triggers batch review-rerun for all affected tables |
 
 ---
 
@@ -443,7 +459,7 @@ OPTION C: Hybrid
 | **Atlassian API rate limit** | Phase 10 partial | Retry with backoff. Phase 10 results are additive — partial is OK |
 | **SP source code not found** | Phase 9 incomplete | Skip missing SPs, document gap in review sidecar |
 | **UC table doesn't exist** | ALTER script invalid | Phase 11 writes `-- UNVALIDATED UC TARGET` header. Human resolves |
-| **VIEW MODIFY permission denied** | .views.alter.sql partial | Skip denied views with comment. Report in summary |
+| **MODIFY permission denied on downstream object** | .downstream.alter.sql partial | Skip denied objects with comment. Report in summary |
 | **CREATE EXTERNAL METADATA denied** | Phase 15 blocked | Skip lineage injection. All other outputs still valid |
 | **Mid-pipeline crash** | Partial outputs | Each phase writes results to files. Re-run resumes from last complete phase |
 
@@ -483,7 +499,7 @@ On restart:
 | Phase 1–10 queries | ✅ Yes | Read-only, can re-run freely |
 | Phase 11 file generation | ✅ Yes | Overwrites previous files |
 | .alter.sql execution | ✅ Yes | ALTER COLUMN COMMENT is a SET, not append |
-| .views.alter.sql execution | ✅ Yes | COMMENT ON COLUMN is a SET |
+| .downstream.alter.sql execution | ✅ Yes | COMMENT ON COLUMN / ALTER COLUMN COMMENT are both SETs |
 | .lineage.py execution | ✅ Yes | Checks existence before create, handles ALREADY_EXISTS |
 | ALTER TABLE SET TAGS | ✅ Yes | SET replaces, doesn't append |
 
@@ -510,27 +526,37 @@ On restart:
 | B: Relationships (5-8) | ~3 min | Repo grep |
 | C: Deep Analysis (9-10) | ~10 min | SP reads + Atlassian |
 | D: Generation (11-14) | ~5 min | LLM generation |
-| Review gate | hours–days | Human |
-| F: Deployment (ALTER + lineage) | ~2 min | UC API calls |
-| **Total (automated)** | **~25 min/table** | |
-| **Total (with review)** | **1–3 days/table** | |
+| E: ALTER Deployment | ~2 min | UC API calls |
+| **Total (end-to-end)** | **~25 min/table** | No human gate |
+| Review-rerun (after corrections) | ~2-3 min/table | Phase 11 + ALTER only |
+| Lineage injection (offline) | ~1 min/table | Separate step |
 
 ### 6.3 Batch Strategy
 
 ```
-Phase 1: Document the "big 20" tables          (~20 tables, ~4 weeks)
-  Dim_Position ✅, Fact_CustomerAction ✅
+Phase 1: Document the "big 20" tables          (~20 tables, ~8 hours automated)
+  Dim_Position ✅, Fact_CustomerAction ✅, Fact_BillingDeposit ✅
   Dim_Customer, Dim_Instrument, Dim_Mirror,
   Fact_Deposit, Fact_Withdrawal, Dim_Currency,
   Dim_Country, Dim_Regulation, ...
 
-Phase 2: Document remaining DWH_dbo tables     (~80 tables, ~8 weeks)
+  → Review happens offline in parallel with Phase 2
+  → Review-rerun picks up corrections as they come in
 
-Phase 3: Document Dealing + BI_DB schemas      (~110 tables, ~10 weeks)
+Phase 2: Document remaining DWH_dbo tables     (~80 tables, ~33 hours automated)
 
-Phase 4: Document remaining schemas            (~remaining, ~4 weeks)
+Phase 3: Document Dealing + BI_DB schemas      (~110 tables, ~46 hours automated)
+
+Phase 4: Document remaining schemas            (~remaining, ~16 hours automated)
 
 Phase 5: Maintenance mode                      (re-run on schema changes)
+
+Timeline with continuous processing (no review gate):
+  Phase 1: ~2 days (batch, no waiting)
+  Phase 2: ~1 week
+  Phase 3: ~1.5 weeks
+  Phase 4: ~0.5 week
+  Total: ~4 weeks for full coverage (vs. ~26 weeks with review gates)
 ```
 
 ---
@@ -540,12 +566,12 @@ Phase 5: Maintenance mode                      (re-run on schema changes)
 | Quirk | Description | Mitigation |
 |-------|-------------|------------|
 | **UC naming inconsistency** | Some gold tables have `gold_sql_dp_prod_we_dwh_dbo_` prefix, others don't | Phase 11 resolves dynamically via UC query — never infer |
-| **View COMMENT syntax** | Views don't support `ALTER TABLE ... ALTER COLUMN COMMENT`. Must use `COMMENT ON COLUMN` | Separate .views.alter.sql with correct syntax |
+| **Object type syntax** | Views need `COMMENT ON COLUMN`; tables need `ALTER TABLE ... ALTER COLUMN COMMENT` | .downstream.alter.sql uses correct syntax per object type |
 | **1024 char limit** | UC column comments max 1024 characters | Phase 11 enforces; truncates with `[truncated]` marker |
 | **PriceLog sharding** | PriceLog is partitioned/sharded — no single mapping entry | lineage.py handles gracefully (skip with warning) |
 | **Column name typos** | Production columns have typos (e.g., `OpenMarketCoversionRate`) | Document typo in description, don't "fix" the name |
 | **Dead columns** | Some columns always NULL or deprecated | Flag in description ("Deprecated/unused column. Always NULL.") |
-| **Shared columns across tables** | Same column (e.g., PositionID) appears in many tables | Each table's .views.alter.sql emits independently — idempotent |
+| **Shared columns across tables** | Same column (e.g., PositionID) appears in many tables | Each table's .downstream.alter.sql emits independently — idempotent |
 | **Synapse connection drops** | Long-running sessions drop | MCP server has keepalive thread + reconnect |
 | **Databricks token expiry** | OAuth tokens expire after 1hr | SDK auto-refreshes; SP tokens don't expire |
 | **Atlassian rate limits** | Heavy search can hit limits | Backoff + partial results OK |
@@ -595,9 +621,9 @@ Auth: All via Service Principals
 2. **LLM provider**: Azure OpenAI (GPT-4) vs. Anthropic API vs. keep Cursor?
 3. **Repo home**: Standalone repo vs. subfolder in Dataplatform?
 4. **Branch strategy**: One branch per table vs. batch branches?
-5. **Review workflow**: PR-based vs. dedicated review UI vs. Slack bot?
-6. **Deploy authority**: Auto-deploy after approval vs. manual deploy step?
+5. ~~**Review workflow**: PR-based vs. dedicated review UI vs. Slack bot?~~ → **DECIDED**: Offline review via `.review-needed.md` + wiki-review skill. Review-rerun mode for corrections.
+6. ~~**Deploy authority**: Auto-deploy after approval vs. manual deploy step?~~ → **DECIDED**: Auto-deploy (ALTERs are idempotent). Lineage injection remains manual/offline.
 7. **Scheduling**: On-demand vs. nightly batch vs. triggered by schema changes?
 8. **Priority**: Which 20 tables first? By query frequency? By analyst requests?
-9. **Lineage injection**: Run per-table or batch all at end?
+9. ~~**Lineage injection**: Run per-table or batch all at end?~~ → **DECIDED**: Generate `.lineage.py` per table, execute separately (offline).
 10. **Maintenance trigger**: How to detect schema changes and re-run?

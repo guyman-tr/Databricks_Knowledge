@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2026-03-01
 
 ## Active Technologies
+- Python 3.11 + `databricks-sql-connector`, `databricks-sdk` (already installed) (001-deep-lineage-propagation)
+- JSON files on disk (lineage tree, progress log), SQL files (ALTER scripts), Markdown (scope report) (001-deep-lineage-propagation)
 
 - PowerShell 5.1 (pipeline orchestration), Cursor rules `.mdc` (phase logic), Markdown (output) + Synapse MCP (live SQL queries), Databricks MCP (UC metadata), Atlassian MCP (Jira/Confluence context), git (version control + diff history) (master)
 
@@ -22,6 +24,7 @@ tests/
 PowerShell 5.1 (pipeline orchestration), Cursor rules `.mdc` (phase logic), Markdown (output): Follow standard conventions
 
 ## Recent Changes
+- 001-deep-lineage-propagation: Added Python 3.11 + `databricks-sql-connector`, `databricks-sdk` (already installed)
 
 - master: Added PowerShell 5.1 (pipeline orchestration), Cursor rules `.mdc` (phase logic), Markdown (output) + Synapse MCP (live SQL queries), Databricks MCP (UC metadata), Atlassian MCP (Jira/Confluence context), git (version control + diff history)
 

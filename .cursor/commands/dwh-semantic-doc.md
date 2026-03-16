@@ -112,6 +112,7 @@ If `$ARGUMENTS` does not contain all required information, ask the user:
 > 1. **Single Object** - Document one specific object (e.g., `DWH_dbo.Dim_Position`)
 > 2. **Schema** - Document all objects in a schema (e.g., `DWH_dbo`)
 > 3. **Enrich Existing Docs** - Run cross-object knowledge sync on existing docs
+> 4. **Review-Rerun** - Regenerate docs for tables with pending reviewer corrections
 
 ### Question 2: Object/Schema Name
 
@@ -119,6 +120,7 @@ Based on scope:
 - **Single Object**: Ask for `[Schema].[ObjectName]`
 - **Schema**: Ask for schema name
 - **Enrich**: Skip to Phase 12
+- **Review-Rerun**: Scan `knowledge/synapse/Wiki/` for `.review-needed.md` files with pending corrections. If `$ARGUMENTS` includes a specific table name, rerun only that table. Otherwise, rerun all tables with pending corrections.
 
 ---
 
@@ -139,7 +141,7 @@ For each object to document:
    - Functions: `knowledge/synapse/Wiki/{Schema}/Functions/{ObjectName}.md`
 
 3. **Select pipeline** based on object type:
-   - **Tables**: All phases (1-15)
+   - **Tables**: Phases 1-14 + ALTER deploy (Phase 15 generates .lineage.py but does not execute)
    - **Views**: Phases 1, 2, 5, 7, 8, 10, 11, 14
    - **Stored Procedures**: Phases 1, 5, 8, 9, 10, 11
    - **Functions**: Phases 1, 2, 5, 7, 8, 10, 11
@@ -152,6 +154,7 @@ For each object to document:
 ## Documentation Checklist - [Schema].[ObjectName]
 Started: [timestamp]
 Object Type: [Table/View/Procedure/Function]
+Mode: [full | review-rerun]
 
 - [ ] Phase 1: Structure Analysis
 - [ ] Phase 2: Live Data Sampling
@@ -164,20 +167,22 @@ Object Type: [Table/View/Procedure/Function]
 - [ ] Phase 9: Procedure Logic Extraction
 - [ ] Phase 9B: ETL Orchestration Analysis
 - [ ] Phase 10: Atlassian Knowledge Scan
-- [ ] Phase 11: Documentation Generated
+- [ ] Phase 11: Documentation Generated + ALTER Executed
 - [ ] Phase 12: Cross-Object Enrichment
 - [ ] Phase 13: Production Lineage Mapping
 - [ ] Phase 14: Query Advisory Metadata
-- [ ] Phase 15: UC Lineage Injection
+- [ ] Phase 15: UC Lineage Injection (SKIPPED — offline, see .lineage.py)
 
-Status: 0/15
+Status: 0/14 (Phase 15 excluded)
 ```
 
 ---
 
 ## Phase Execution
 
-Execute ALL applicable phases sequentially. Each phase MUST load its rule file from `.cursor/rules/dwh-semantic-doc/`.
+Execute ALL applicable phases sequentially **end-to-end without stopping**. Each phase MUST load its rule file from `.cursor/rules/dwh-semantic-doc/`.
+
+**No review gate**: The pipeline does NOT stop for human review. The `.review-needed.md` sidecar is generated as an offline review artifact. Domain experts review it at their own pace. After corrections are made, a **review-rerun** regenerates only the affected items (see "Review-Rerun Mode" section below).
 
 ### Phase 1: Structure Analysis
 **Load**: `.cursor/rules/dwh-semantic-doc/01-structure-analysis.mdc`
@@ -214,11 +219,18 @@ Execute ALL applicable phases sequentially. Each phase MUST load its rule file f
 ### Phase 10: Atlassian Knowledge Scan
 **Load**: `.cursor/rules/dwh-semantic-doc/10-atlassian-knowledge-scan.mdc`
 
-### Phase 11: Generate Documentation
+### Phase 11: Generate Documentation + ALTER Execution
 **Load**: `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc`
 **Also Load**: `.cursor/rules/dwh-semantic-doc/12-cross-object-enrichment.mdc` (Mechanism 1: Pre-Read)
 
 Write MD file to: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md`
+
+**After all 4 output files are written**, execute ALTER scripts automatically against UC:
+- Requires `uc_available = true` (from Step 0, Check 3)
+- Execute `.alter.sql` then `.downstream.alter.sql` via `user-databricks_sql-execute_sql`
+- Statement-by-statement, best-effort (log failures, continue)
+- Output execution report; persist log in `.alter.sql` footer
+- If `uc_available = false`: skip execution, leave scripts as files for manual deployment
 
 ### Phase 12: Cross-Object Enrichment
 **Load**: `.cursor/rules/dwh-semantic-doc/12-cross-object-enrichment.mdc`
@@ -229,9 +241,10 @@ Write MD file to: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md`
 ### Phase 14: Query Advisory Metadata
 **Load**: `.cursor/rules/dwh-semantic-doc/14-query-advisory-metadata.mdc`
 
-### Phase 15: UC Lineage Injection
-**Load**: `.cursor/rules/dwh-semantic-doc/15-uc-lineage-injection.mdc`
-**Requires**: Databricks Python SDK (`databricks-sdk`), `CREATE EXTERNAL METADATA` privilege on metastore
+### Phase 15: UC Lineage Injection — SKIPPED (offline)
+**File generated**: `.lineage.py` is written by the pipeline but **NOT executed automatically**.
+Lineage injection requires `CREATE EXTERNAL METADATA` privilege and is managed as a separate deployment step.
+The `.lineage.py` script is committed to the repo alongside other artifacts for future execution.
 
 ---
 
@@ -252,14 +265,58 @@ Completed: [timestamp]
 - [x] Phase 9: Procedure Logic Extraction
 - [x] Phase 9B: ETL Orchestration Analysis
 - [x] Phase 10: Atlassian Knowledge Scan
-- [x] Phase 11: Documentation Generated
+- [x] Phase 11: Documentation Generated + ALTER Executed
 - [x] Phase 12: Cross-Object Enrichment
 - [x] Phase 13: Production Lineage Mapping
 - [x] Phase 14: Query Advisory Metadata
-- [x] Phase 15: UC Lineage Injection
+- [ ] Phase 15: UC Lineage Injection (SKIPPED — offline)
 
-Status: COMPLETE
+Status: COMPLETE (14/14 automated phases)
+UC metadata: DEPLOYED (table + column comments, tags, PII tags, downstream propagation)
+Lineage injection: PENDING (run .lineage.py separately when ready)
+Review sidecar: GENERATED (offline review at any time — see Review-Rerun Mode)
 ```
+
+---
+
+## Review-Rerun Mode
+
+When the user provides `$ARGUMENTS` containing "review-rerun" or "rerun after review", the pipeline runs in **selective regeneration mode**. This is the offline review workflow:
+
+### How It Works
+
+1. **Pipeline runs end-to-end** → generates `.review-needed.md` alongside all other artifacts → deploys ALTERs to UC
+2. **Domain expert reviews offline** → uses the wiki-review skill or edits `.review-needed.md` directly → adds rows to `## Reviewer Corrections`
+3. **User triggers review-rerun** → pipeline reads corrections, regenerates only affected outputs, re-deploys
+
+### Review-Rerun Steps
+
+1. **Scan for corrections**: Read all `.review-needed.md` files matching the scope (single table or schema). Identify files where `## Reviewer Corrections` has non-empty rows without `[RESOLVED]` prefix.
+
+2. **For each table with pending corrections**:
+   - **Skip Phases 1–10** — data gathering is NOT re-run (nothing changed in Synapse)
+   - **Load Phase 12 pre-read** — re-read related docs for cross-object consistency
+   - **Re-run Phase 11 ONLY** — generate documentation with Tier 5 overrides applied:
+     - Read the corrections from `## Reviewer Corrections`
+     - Apply each as a Tier 5 override (highest confidence)
+     - Regenerate: wiki `.md`, sidecar `.review-needed.md`, `.alter.sql`, `.downstream.alter.sql`
+     - Staleness check: compare old vs new Tier 1–3 descriptions
+   - **Re-execute ALTER scripts** — deploy updated comments/tags to UC
+   - **Skip Phase 13–14** — lineage and advisory don't change from review corrections
+
+3. **Update glossary**: If any correction has `Scope = glossary`, ensure `knowledge/glossary.md` is updated (the wiki-review skill does this automatically, but verify on rerun).
+
+4. **Report**: Summarize what changed — how many columns updated, which tables re-deployed.
+
+### What Triggers a Full Re-Run vs. Review-Rerun
+
+| Trigger | Mode | Phases Run |
+|---------|------|------------|
+| New table documentation | Full | 1–14 + ALTER deploy |
+| Schema change (columns added/removed) | Full | 1–14 + ALTER deploy |
+| Reviewer corrections in `.review-needed.md` | Review-rerun | 11 + ALTER deploy |
+| Glossary update affecting multiple tables | Review-rerun (batch) | 11 + ALTER deploy for each affected table |
+| Upstream wiki updated | Full | 1–14 + ALTER deploy |
 
 ---
 

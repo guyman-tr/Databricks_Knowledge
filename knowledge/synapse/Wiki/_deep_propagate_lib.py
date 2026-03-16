@@ -279,6 +279,8 @@ def query_column_lineage(source_table_full_name: str, blacklist: set, cursor) ->
           AND target_column_name IS NOT NULL
           AND source_column_name IS NOT NULL
           AND target_table_full_name != source_table_full_name
+          AND event_time > current_timestamp() - INTERVAL 7 DAYS
+        LIMIT 5000
     """)
 
     try:
@@ -348,6 +350,87 @@ def query_name_pattern(source_table_synapse_name: str, source_columns: dict,
         print(f"  WARNING: name-pattern search failed: {e}")
 
     return results
+
+# ---------------------------------------------------------------------------
+# T019: parse_alter_sql_metadata — extract UC target and Synapse source
+# ---------------------------------------------------------------------------
+
+_UC_TARGET_RE = re.compile(r'^--\s*UC\s+Target:\s*(.+)$', re.MULTILINE)
+_SYNAPSE_SOURCE_RE = re.compile(r'^--\s*Synapse\s+Source:\s*(.+)$', re.MULTILINE)
+_ALTER_SCRIPT_RE = re.compile(r'^--\s*Databricks\s+ALTER\s+Script:\s*(.+)$', re.MULTILINE)
+
+def parse_alter_sql_metadata(alter_sql_path: str) -> dict:
+    """
+    Parse the header of an .alter.sql file to extract UC target and Synapse source.
+    Returns {"uc_target": "main.dwh.dim_position", "synapse_source": "DWH_dbo.Dim_Position"}.
+    Falls back to '-- Databricks ALTER Script: <synapse_name>' if Synapse Source is missing.
+    """
+    result = {"uc_target": "", "synapse_source": ""}
+    if not os.path.isfile(alter_sql_path):
+        return result
+
+    with open(alter_sql_path, "r", encoding="utf-8") as f:
+        header = f.read(2048)
+
+    m = _UC_TARGET_RE.search(header)
+    if m:
+        result["uc_target"] = m.group(1).strip()
+
+    m = _SYNAPSE_SOURCE_RE.search(header)
+    if m:
+        result["synapse_source"] = m.group(1).strip()
+    else:
+        m = _ALTER_SCRIPT_RE.search(header)
+        if m:
+            result["synapse_source"] = m.group(1).strip()
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# T020: bulk_resolve_uc_names — batch lookup for multiple Synapse tables
+# ---------------------------------------------------------------------------
+
+def bulk_resolve_uc_names(synapse_names: list, cursor) -> dict:
+    """
+    Resolve a list of Synapse table names to their UC three-level names.
+    Queries the Generic Pipeline mapping view once, then resolves via
+    information_schema. Returns {synapse_name_lower: uc_full_name}.
+    """
+    uc_mapping = _map_synapse_to_uc(synapse_names, cursor)
+
+    if not uc_mapping:
+        return {}
+
+    resolved = {}
+    uc_table_names = list(set(uc_mapping.values()))
+
+    for batch_start in range(0, len(uc_table_names), 20):
+        batch = uc_table_names[batch_start:batch_start + 20]
+        or_clauses = " OR ".join(f"LOWER(table_name) = '{t}'" for t in batch)
+
+        try:
+            cursor.execute(f"""\
+                SELECT table_catalog, table_schema, table_name
+                FROM system.information_schema.tables
+                WHERE ({or_clauses})
+                  AND table_schema != 'information_schema'
+            """)
+            uc_lookup = {}
+            for row in cursor.fetchall():
+                if str(row[0]).startswith("__databricks_internal"):
+                    continue
+                uc_lookup[str(row[2]).lower()] = f"{row[0]}.{row[1]}.{row[2]}"
+
+            for syn_name, uc_table in uc_mapping.items():
+                if uc_table in uc_lookup and syn_name not in resolved:
+                    resolved[syn_name] = uc_lookup[uc_table]
+
+        except Exception as e:
+            print(f"  WARNING: UC resolution failed for batch: {e}")
+
+    return resolved
+
 
 # ---------------------------------------------------------------------------
 # Synapse dependency discovery — bridges the "Synapse black hole"
@@ -519,9 +602,20 @@ def query_synapse_dependencies(source_synapse_name: str, cursor,
 
 def discover_tree(source_uc_name: str, source_synapse_name: str,
                   source_descriptions: dict, blacklist: set,
-                  output_path: str) -> LineageTree:
+                  output_path: str,
+                  include_uc_lineage: bool = False) -> LineageTree:
     """
-    BFS traversal of UC column lineage + name-pattern + Synapse dependency union.
+    Discover downstream UC objects for a Synapse-sourced table.
+
+    Discovery order (by reliability for DWH tables):
+      1. Synapse dependency graph (_dependency_order.json) — PRIMARY for DWH
+      2. Name-pattern search (information_schema.tables) — supplement
+      3. UC column lineage (system.access.column_lineage) — opt-in only
+
+    UC column lineage is off by default because DWH tables arrive via
+    Generic Pipeline bulk copy, which does not generate UC lineage entries.
+    The lineage query is also extremely slow for heavily-referenced tables.
+
     Writes .lineage-tree.json to disk.
     """
     conn = get_connection()
@@ -529,7 +623,7 @@ def discover_tree(source_uc_name: str, source_synapse_name: str,
 
     parts = source_uc_name.split(".")
     if len(parts) == 2:
-        parts = ["main"] + parts  # default catalog
+        parts = ["main"] + parts
     tree = LineageTree(
         source={"catalog": parts[0], "schema": parts[1], "table": parts[2],
                 "full_name": ".".join(parts)},
@@ -539,107 +633,14 @@ def discover_tree(source_uc_name: str, source_synapse_name: str,
 
     full_source = ".".join(parts)
     visited = {full_source.lower()}
-    node_map = {}  # full_name_lower -> DownstreamNode dict
-    queue = [(full_source, 0)]
-    lineage_found = False
+    node_map = {}
 
-    print(f"\n  BFS Discovery from {source_uc_name}...")
+    print(f"\n  Discovery from {source_uc_name}...")
     print(f"  Source descriptions: {len(source_descriptions)} columns")
+    print(f"  UC lineage: {'ENABLED' if include_uc_lineage else 'DISABLED (DWH default)'}")
 
-    while queue:
-        current_table, current_hop = queue.pop(0)
-
-        downstream = query_column_lineage(current_table, blacklist, cursor)
-        if downstream:
-            lineage_found = True
-
-        # Group by target table
-        by_target = defaultdict(list)
-        for d in downstream:
-            by_target[d["target_table"]].append(d)
-
-        for target_name, mappings in by_target.items():
-            target_lower = target_name.lower()
-
-            if target_lower.startswith("__databricks_internal"):
-                continue
-
-            if target_lower not in node_map:
-                t_parts = target_name.split(".")
-                if len(t_parts) != 3:
-                    continue
-                node_map[target_lower] = {
-                    "catalog": t_parts[0], "schema": t_parts[1], "table": t_parts[2],
-                    "full_name": target_name,
-                    "object_type": mappings[0].get("target_type", "TABLE"),
-                    "hop_distance": current_hop + 1,
-                    "discovered_via": "lineage",
-                    "columns": [],
-                }
-
-            node = node_map[target_lower]
-
-            for m in mappings:
-                src_col_lower = m["source_column"].lower()
-                tgt_col_lower = m["target_column"].lower()
-
-                if src_col_lower in source_descriptions:
-                    if src_col_lower == tgt_col_lower:
-                        node["columns"].append(asdict(ColumnMatch(
-                            source_column=m["source_column"],
-                            target_column=m["target_column"],
-                            match_type="identical",
-                            description=source_descriptions[src_col_lower],
-                        )))
-                    elif is_plausible_rename(m["source_column"], m["target_column"]):
-                        chain = [m["source_column"], m["target_column"]]
-                        rename_desc = format_rename_description(
-                            source_descriptions[src_col_lower],
-                            m["source_column"],
-                            source_uc_name,
-                            chain,
-                        )
-                        node["columns"].append(asdict(ColumnMatch(
-                            source_column=m["source_column"],
-                            target_column=m["target_column"],
-                            match_type="renamed",
-                            rename_chain=chain,
-                            description=rename_desc,
-                        )))
-
-            if target_lower not in visited:
-                visited.add(target_lower)
-                queue.append((target_name, current_hop + 1))
-
-    if lineage_found:
-        tree.discovery_methods.append("lineage")
-    else:
-        print("  WARNING: No lineage data found — falling back to name-pattern only (T028)")
-
-    # Name-pattern supplement (FR-012)
-    print(f"  Running name-pattern supplement...")
-    np_results = query_name_pattern(source_synapse_name, source_descriptions,
-                                     blacklist, cursor)
-    np_added = 0
-    for np in np_results:
-        np_lower = np["full_name"].lower()
-        if np_lower not in visited and np_lower not in node_map:
-            node_map[np_lower] = {
-                "catalog": np.get("catalog", ""),
-                "schema": np.get("schema", ""),
-                "table": np.get("table", ""),
-                "full_name": np["full_name"],
-                "object_type": np.get("object_type", "TABLE"),
-                "hop_distance": 1,
-                "discovered_via": np.get("discovered_via", "name_pattern"),
-                "columns": [],
-            }
-            np_added += 1
-
-    if np_added > 0:
-        tree.discovery_methods.append("name_pattern")
-
-    # Synapse dependency discovery — bridges the "Synapse black hole"
+    # --- Method 1: Synapse dependency graph (PRIMARY for DWH) ---
+    print(f"\n  [1/3] Synapse dependency graph...")
     sd_results = query_synapse_dependencies(source_synapse_name, cursor, max_hops=2)
     sd_added = 0
     for sd in sd_results:
@@ -659,17 +660,115 @@ def discover_tree(source_uc_name: str, source_synapse_name: str,
 
     if sd_added > 0:
         tree.discovery_methods.append("synapse_dependency")
-    print(f"  Synapse dependency: {sd_added} new objects added")
+    print(f"    {sd_added} objects from Synapse dependency graph")
 
-    # T010: match_columns for nodes without lineage column data
-    print(f"  Matching columns for {len(node_map)} downstream objects...")
+    # --- Method 2: Name-pattern search (supplement) ---
+    print(f"  [2/3] Name-pattern search...")
+    np_results = query_name_pattern(source_synapse_name, source_descriptions,
+                                     blacklist, cursor)
+    np_added = 0
+    for np_item in np_results:
+        np_lower = np_item["full_name"].lower()
+        if np_lower not in visited and np_lower not in node_map:
+            node_map[np_lower] = {
+                "catalog": np_item.get("catalog", ""),
+                "schema": np_item.get("schema", ""),
+                "table": np_item.get("table", ""),
+                "full_name": np_item["full_name"],
+                "object_type": np_item.get("object_type", "TABLE"),
+                "hop_distance": 1,
+                "discovered_via": np_item.get("discovered_via", "name_pattern"),
+                "columns": [],
+            }
+            np_added += 1
+
+    if np_added > 0:
+        tree.discovery_methods.append("name_pattern")
+    print(f"    {np_added} objects from name-pattern search")
+
+    # --- Method 3: UC column lineage (opt-in) ---
+    if include_uc_lineage:
+        print(f"  [3/3] UC column lineage (BFS)...")
+        queue = [(full_source, 0)]
+        lineage_found = False
+
+        while queue:
+            current_table, current_hop = queue.pop(0)
+            downstream = query_column_lineage(current_table, blacklist, cursor)
+            if downstream:
+                lineage_found = True
+
+            by_target = defaultdict(list)
+            for d in downstream:
+                by_target[d["target_table"]].append(d)
+
+            for target_name, mappings in by_target.items():
+                target_lower = target_name.lower()
+                if target_lower.startswith("__databricks_internal"):
+                    continue
+
+                if target_lower not in node_map:
+                    t_parts = target_name.split(".")
+                    if len(t_parts) != 3:
+                        continue
+                    node_map[target_lower] = {
+                        "catalog": t_parts[0], "schema": t_parts[1], "table": t_parts[2],
+                        "full_name": target_name,
+                        "object_type": mappings[0].get("target_type", "TABLE"),
+                        "hop_distance": current_hop + 1,
+                        "discovered_via": "lineage",
+                        "columns": [],
+                    }
+
+                node = node_map[target_lower]
+                for m in mappings:
+                    src_col_lower = m["source_column"].lower()
+                    tgt_col_lower = m["target_column"].lower()
+
+                    if src_col_lower in source_descriptions:
+                        if src_col_lower == tgt_col_lower:
+                            node["columns"].append(asdict(ColumnMatch(
+                                source_column=m["source_column"],
+                                target_column=m["target_column"],
+                                match_type="identical",
+                                description=source_descriptions[src_col_lower],
+                            )))
+                        elif is_plausible_rename(m["source_column"], m["target_column"]):
+                            chain = [m["source_column"], m["target_column"]]
+                            rename_desc = format_rename_description(
+                                source_descriptions[src_col_lower],
+                                m["source_column"],
+                                source_uc_name,
+                                chain,
+                            )
+                            node["columns"].append(asdict(ColumnMatch(
+                                source_column=m["source_column"],
+                                target_column=m["target_column"],
+                                match_type="renamed",
+                                rename_chain=chain,
+                                description=rename_desc,
+                            )))
+
+                if target_lower not in visited:
+                    visited.add(target_lower)
+                    queue.append((target_name, current_hop + 1))
+
+        if lineage_found:
+            tree.discovery_methods.append("lineage")
+        lineage_new = sum(1 for n in node_map.values() if n["discovered_via"] == "lineage")
+        print(f"    {lineage_new} objects from UC lineage")
+    else:
+        print(f"  [3/3] UC column lineage: SKIPPED")
+
+    # --- Column matching for all discovered nodes ---
+    print(f"\n  Matching columns for {len(node_map)} downstream objects...")
     for key, node in node_map.items():
         if not node["columns"]:
             matched = match_columns(node["full_name"], source_descriptions, blacklist, cursor)
             node["columns"] = [asdict(cm) for cm in matched]
 
-    # Build final tree
-    tree.nodes = list(node_map.values())
+    # Build final tree — filter first, then calculate stats
+    tree.nodes = [n for n in node_map.values() if len(n["columns"]) > 0]
     tree.total_downstream_objects = len(tree.nodes)
     tree.total_column_matches = sum(
         len([c for c in n["columns"] if c["match_type"] == "identical"])
@@ -679,10 +778,6 @@ def discover_tree(source_uc_name: str, source_synapse_name: str,
         len([c for c in n["columns"] if c["match_type"] == "renamed"])
         for n in tree.nodes
     )
-
-    # Remove nodes with zero column matches
-    tree.nodes = [n for n in tree.nodes if len(n["columns"]) > 0]
-    tree.total_downstream_objects = len(tree.nodes)
 
     tree.save(output_path)
     cursor.close()
@@ -794,7 +889,7 @@ def execute_batches(tree_path: str, progress_path: str,
 
             for col_data in node.get("columns", []):
                 target_col = col_data["target_column"]
-                desc = col_data["description"].replace("'", "\\'")
+                desc = col_data["description"].replace("'", "''")
 
                 if "VIEW" in obj_type.upper():
                     stmt = f"COMMENT ON COLUMN {full_name}.`{target_col}` IS '{desc}'"
@@ -889,7 +984,7 @@ def generate_downstream_alter_sql(tree_path: str, output_path: str,
         lines.append(f"-- {full_name} ({obj_type}, {len(columns)} columns)")
         for col_data in columns:
             target_col = col_data["target_column"]
-            desc = col_data["description"].replace("'", "\\'")
+            desc = col_data["description"].replace("'", "''")
             if "VIEW" in obj_type.upper():
                 lines.append(f"COMMENT ON COLUMN {full_name}.`{target_col}` IS '{desc}';")
             else:
@@ -1061,6 +1156,8 @@ def generate_script(source_uc_name: str, source_synapse_name: str,
             parser.add_argument("--batch-size", type=int, default=lib.DEFAULT_BATCH_SIZE)
             parser.add_argument("--schema-filter", type=str, default=None,
                                 help="Comma-separated schema list to limit execution (e.g., main.bi_output,main.etoro_kpi)")
+            parser.add_argument("--include-uc-lineage", action="store_true",
+                                help="Also query system.access.column_lineage (slow, usually not needed for DWH)")
             args = parser.parse_args()
 
             blacklist = lib.load_blacklist()
@@ -1073,7 +1170,8 @@ def generate_script(source_uc_name: str, source_synapse_name: str,
 
             if args.command in ("discover", "both"):
                 print(f"\\n=== DISCOVER: {{SOURCE_SYNAPSE}} ===")
-                lib.discover_tree(SOURCE_UC, SOURCE_SYNAPSE, source_descs, blacklist, TREE_PATH)
+                lib.discover_tree(SOURCE_UC, SOURCE_SYNAPSE, source_descs, blacklist, TREE_PATH,
+                                  include_uc_lineage=args.include_uc_lineage)
                 lib.generate_scope_report(TREE_PATH, SCOPE_PATH, source_descs, blacklist, args.batch_size)
 
             if args.command in ("execute", "both"):
