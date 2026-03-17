@@ -6,6 +6,12 @@ alwaysApply: false
 
 # Phase 13: Production Lineage Mapping
 
+> **MCP Fallback**: Step 1 queries the Generic Pipeline mapping view via Databricks MCP.
+> If the MCP call fails or is unavailable, **fall back to the static JSON backup** at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`.
+> Read the JSON, filter `mappings[]` entries by `database_name`/`schema_name`/`table_name` to find the production source.
+> The static file is refreshed periodically and contains all 1700+ mapping rows with corrected column names.
+> Steps 1/1b/3 MUST run for ALL commands (`build-wiki-dwh` AND `write-objects-dwh`) — they are essential for Tier 1 column inheritance.
+
 ## Purpose
 
 Trace each Synapse table back through its populating SP to the lake import to the production source table. This is the cross-layer bridge that connects the DWH knowledge to the upstream production knowledge.
@@ -19,53 +25,51 @@ Trace each Synapse table back through its populating SP to the lake import to th
 
 ## Algorithm
 
-### Step 1: Query the Generic Pipeline Mapping View
+### Step 1: Query the Generic Pipeline Mapping (ALL commands)
 
-The primary lineage discovery source is the Unity Catalog mapping view (1,697 rows covering all production-to-lake mappings). Read the config to get the view name, then query it via the Databricks MCP.
+The primary lineage discovery source is the Generic Pipeline mapping (1,711 rows covering all production-to-lake mappings).
 
-**Search by production table name** (best for matching ETL source references):
-```sql
-SELECT DatabaseName, SchemaName, TableName, ServerName,
-       CopyStrategy, FrequencyMinute, DatalakePath,
-       UnityCatalogTableName, BusinessGroup, inc_column_Name
-FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
-WHERE TableName = '{ProductionTableName}'
-  AND SchemaName = '{ProductionSchema}'
+**Strategy: MCP first, static fallback**
+
+1. **Try Databricks MCP** — query the view configured in `dwh-semantic-doc-config.json` under `lineage.generic_pipeline_mapping.catalog_view`
+2. **If MCP fails** (timeout, auth error, unavailable) — **immediately fall back** to the static JSON at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`. Read the file, filter `mappings[]` entries by matching `database_name`, `schema_name`, and `table_name` fields.
+
+> **CRITICAL — Column Misalignment**: The view `main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables` has broken column metadata — header names are shifted by 1 from position 11 onward. **DO NOT use SELECT-by-column-name** (results will be wrong). If querying live via MCP, use `SELECT *` and parse by position, OR prefer the static fallback.
+
+**Static fallback lookup** (preferred for reliability):
+```
+Read: knowledge/synapse/Wiki/_generic_pipeline_mapping.json
+Filter: mappings[].database_name == '{DatabaseName}'
+         AND mappings[].schema_name == '{Schema}'
+         AND mappings[].table_name == '{TableName}'
 ```
 
-**Search by database name** (when you know the source database):
-```sql
-SELECT DatabaseName, SchemaName, TableName, CopyStrategy,
-       FrequencyMinute, UnityCatalogTableName
-FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
-WHERE DatabaseName = '{DatabaseName}'
-ORDER BY SchemaName, TableName
-```
+The static JSON uses corrected field names:
 
-**Key columns in the mapping view**:
+**Key fields in the static mapping**:
 
-| Column | Meaning |
-|--------|---------|
-| `DatabaseName` | Production source database (e.g., `etoro`, `USABroker`) |
-| `SchemaName` | Production schema (e.g., `Trade`, `Dictionary`) |
-| `TableName` | Production table name |
-| `ServerName` | Production server identifier |
-| `CopyStrategy` | `Override` (full load) or `Append` (incremental) |
-| `FrequencyMinute` | Refresh interval in minutes (1440 = daily, 60 = hourly) |
-| `inc_column_Name` | Incremental watermark column (empty for full loads) |
-| `DatalakePath` | Lake landing path (e.g., `Bronze/etoro/Trade/PositionTbl/`) |
-| `UnityCatalogTableName` | UC bronze table (e.g., `trading.bronze_etoro_trade_positiontbl`) |
-| `BusinessGroup` | UC catalog grouping (e.g., `trading`, `finance`, `general`) |
+| Field (static JSON) | Meaning |
+|---------------------|---------|
+| `database_name` | Production source database (e.g., `etoro`, `USABroker`) |
+| `schema_name` | Production schema (e.g., `Trade`, `Dictionary`) |
+| `table_name` | Production table name |
+| `server_name` | Production server identifier (e.g., `etoroDB-REAL`) |
+| `copy_strategy` | `Override` (full load) or `Append` (incremental) |
+| `frequency_minutes` | Refresh interval in minutes (1440 = daily, 60 = hourly) |
+| `inc_column_name` | Incremental watermark column (empty for full loads) |
+| `datalake_path` | Lake landing path (e.g., `Bronze/etoro/Trade/PositionTbl/`) |
+| `uc_table` | UC bronze table (e.g., `general.bronze_etoro_dictionary_actiontype`) |
+| `business_group` | UC catalog grouping (e.g., `trading`, `finance`, `general`) |
 
-### Step 1b: Extract Governance Metadata for Phase 11
+### Step 1b: Extract Governance Metadata
 
 From the mapping view results in Step 1, extract and carry forward to Phase 11:
 
 | Field | Source | Derivation |
 |-------|--------|------------|
-| `refresh_frequency` | `FrequencyMinute` | Convert: 60→`hourly`, 1440→`daily`, else→`{N}min` |
-| `sla` | `FrequencyMinute` + ETL SP execution patterns from Phase 9B | Estimate completion time. E.g., daily (1440min) + ETL runs at midnight + ~2hr load → `D+1 02:00`. If SP completion time is known from Phase 9B orchestration analysis, use that |
-| `source_system` | `ServerName` / `DatabaseName` | Map to canonical names: `sql_dp_prod_we`→`Synapse`, `etoro`→`etorodb`, etc. If multiple sources, list the primary |
+| `refresh_frequency` | `frequency_minutes` | Convert: 60→`hourly`, 1440→`daily`, else→`{N}min` |
+| `sla` | `frequency_minutes` + ETL SP execution patterns from Phase 9B | Estimate completion time. E.g., daily (1440min) + ETL runs at midnight + ~2hr load → `D+1 02:00`. If SP completion time is known from Phase 9B orchestration analysis, use that |
+| `source_system` | `server_name` / `database_name` | Map to canonical names: `sql_dp_prod_we`→`Synapse`, `etoro`→`etorodb`, etc. If multiple sources, list the primary |
 | `pii` | **Primary**: Query opsdb `dbo.GDPR_DL_Tables_Data` for the table's `PIIColumns` (comma-separated PII column names). Also check `ColumnsToMask` in `dbo.generic_inc_process_config` — if set, the table has PII data (`BusinessGroup = 'pii_data'` in UnityCatalogMapping). **Secondary**: Query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns. **Fallback** (if DB sources unavailable): pattern-match column names (`*Email*`, `*Phone*`, `*Address*`, `*SSN*`, `*TaxID*`, `*BirthDate*`, `*IP*`, `*IPAddress*`, `*FirstName*`, `*LastName*`, `*FullName*`, `*Passport*`, `*NationalID*`). Values: `direct` or `none` only — never `indirect` |
 
 Store these values in the Phase 13 results for Phase 11 to consume when generating tags.
@@ -77,18 +81,25 @@ From Phase 9's source-to-target mapping, identify all source tables not already 
 - If it references a production table name, map it
 - Cross-reference with the mapping view results from Step 1
 
-### Step 3: Match to Upstream Production Wiki
+### Step 3: Match to Upstream Production Wiki — TIER 1 SOURCE
 
-Read the config to get the list of `upstream_knowledge_sources`. For each identified production source table, check if it has existing documentation:
+Read the config to get the list of `upstream_knowledge_sources`. For each production source identified in Step 1, **read the upstream wiki file**:
 
 ```
-Check: {upstream_repo_path}/{upstream_wiki_path}/{Schema}/Tables/{Schema}.{TableName}.md
+Path: {upstream_repo_path}/{upstream_wiki_path}/{Schema}/Tables/{Schema}.{TableName}.md
+Example: C:\Users\guyman\Documents\github\DB_Schema\etoro\Wiki\Trade\Tables\Trade.PositionTbl.md
 ```
 
-If found, extract:
-- Business Meaning (Section 1) -- deepens the DWH doc's context
-- Key Business Logic (Section 2) -- inherited logic that survives ETL
-- Element descriptions (Section 4) -- column meanings from production
+> **THIS IS THE ENTIRE POINT OF PHASE 13.** Without this step, zero Tier 1 columns appear in the output.
+
+If the upstream wiki file exists, **READ IT** and extract:
+- **`## 4. Elements` table** — every column description becomes a **Tier 1** source for the DWH doc. Parse the Elements table, match DWH columns by name, and carry descriptions forward VERBATIM into Phase 11.
+- **`## 1. Business Meaning`** — inherit as context for the DWH doc's Section 1
+- **`## 2. Business Logic`** — inherit logic that survives the ETL transformation
+
+Store the extracted upstream column descriptions in the Phase 13 results so Phase 11 can tag them as `(Tier 1 — upstream wiki, {Schema}.{Table})`.
+
+If NOT found, note `"No upstream wiki found for {DatabaseName}.{Schema}.{Table}"` in the lineage output and fall through to Tier 2-4 inference in Phase 11.
 
 ### Step 4: Build Complete Lineage Chain
 

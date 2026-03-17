@@ -1,4 +1,47 @@
 <!--
+Sync Impact Report — v1.7.0 → v1.8.0 (MINOR)
+
+Version change: 1.7.0 → 1.8.0
+Bump rationale: Updated Quality Gates to accommodate two-command pipeline
+  decomposition (build-wiki-dwh + write-objects-dwh). The prior gate required
+  every pipeline *run* to produce THREE files including ALTER script. Now:
+  every documented *object* must have FOUR files (wiki + sidecar + lineage +
+  ALTER) produced across the full pipeline — not necessarily in one run.
+  Added .lineage.md as a required output file.
+
+Modified principles:
+  - Quality Gates: Changed from per-run atomicity to per-object completeness.
+    Added .lineage.md as fourth required file. Clarified that decomposed
+    commands each produce a subset — object is complete when all four exist.
+
+Pipeline rules requiring updates:
+  - None — plan.md and tasks.md already implement this model.
+
+Previous report (v1.6.0 → v1.7.0):
+
+Sync Impact Report — v1.6.0 → v1.7.0 (MINOR)
+
+Version change: 1.6.0 → 1.7.0
+Bump rationale: Codified "Repo First, MCP Second" as a NON-NEGOTIABLE
+  constitution principle (IX). The locally cloned SSDT repos (Dataplatform,
+  DB_Schema) contain all DDLs, SP code, view definitions, and table structures.
+  MCP is ONLY for live data queries (Phases 2-3). Querying the database for
+  structural/code metadata that exists in repo files is now a rule violation.
+
+Modified principles:
+  - Added: IX. Repo First, MCP Second (NON-NEGOTIABLE). NEVER seek from the
+    database what you can get from the repo. MCP is ONLY for live data queries.
+
+Pipeline rules requiring updates:
+  - 01-structure-analysis.mdc → Remove "CRITICAL: DDL Source is Synapse
+    Metadata, NOT a Repo" header. Replace with repo-first approach.
+  - All phase rules that query sys.* or INFORMATION_SCHEMA for structural
+    metadata → redirect to Dataplatform repo file reads.
+  - semantic-layer-core/repo-first-access.mdc → NEW shared rule (already
+    created) with full enforcement table and repository paths.
+
+Previous report (v1.5.0 → v1.6.0):
+
 Sync Impact Report — v1.5.0 → v1.6.0 (MINOR)
 
 Version change: 1.5.0 → 1.6.0
@@ -14,7 +57,7 @@ Modified principles:
     If Databricks unavailable, ALTER script gets UNVALIDATED header.
 
 Pipeline rules requiring updates:
-  - dwh-semantic-doc.md → Add Databricks pre-flight check (advisory)
+  - build-semantic-layer-dwh.md (formerly dwh-semantic-doc.md) → Add Databricks pre-flight check (advisory)
   - 11-generate-documentation.mdc → Replace UC naming inference with
     UC Object Resolution algorithm (query UC directly)
 
@@ -142,6 +185,13 @@ Knowledge is organized into domains (Trading, Payments, Risk, Revenue, etc.). Ea
 ### VIII. Don't Rebuild What Exists
 Existing upstream knowledge sources — such as semantic wikis generated for production schemas — are consumed as-is. We extend the methodology to new schemas and layers; we don't re-derive what has already been mapped. Upstream sources are declared in `dwh-semantic-doc-config.json` and referenced by path during lineage tracing and lookup resolution.
 
+### IX. Repo First, MCP Second (NON-NEGOTIABLE)
+**NEVER seek from the database what you can get from the repo.** The locally cloned SSDT / SQL project repositories (Dataplatform, DB_Schema) contain DDLs, stored procedure code, view definitions, function definitions, and table structures as version-controlled `.sql` files. These are the source of truth for all structural and code-based information.
+
+**MCP is ONLY for live data queries**: `SELECT TOP N`, `COUNT(*)`, `GROUP BY`, `MIN/MAX`, `DISTINCT` — operations that require actual row data not present in DDL files. That's Phases 2-3 (Live Data Sampling and Distribution Analysis). Nothing else.
+
+Querying a database via MCP for metadata that exists as a file on disk (e.g., `INFORMATION_SCHEMA.COLUMNS`, `sys.sql_modules`, `sys.tables`, `sys.indexes`) is a rule violation — it is slower, fragile, wasteful of context window, and redundant with the repo. See `.cursor/rules/semantic-layer-core/repo-first-access.mdc` for the full enforcement table and repository paths.
+
 ## Data Stack Scope
 
 This project covers the full eToro data path:
@@ -156,7 +206,7 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 
 - No spec proceeds to implementation without validation against the canonical metadata schema
 - Column descriptions must fit Unity Catalog's 1024-character limit
-- **Every pipeline run must produce THREE output files**: wiki (`.md`), review sidecar (`.review-needed.md`), and Databricks ALTER script (`.alter.sql`). The ALTER script is the primary deliverable — a pipeline run without it is incomplete
+- **Every documented object must ultimately have FOUR output files** across the full pipeline: wiki (`.md`), review sidecar (`.review-needed.md`), lineage map (`.lineage.md`), and Databricks ALTER script (`.alter.sql`). The ALTER script is the primary deliverable. In a decomposed pipeline (wiki build + write-objects), these files are produced by different commands — `build-wiki-dwh` produces the first three, `write-objects-dwh` produces the ALTER script. An object is not fully complete until all four exist
 - **ALTER scripts must target a validated Unity Catalog object.** The UC fully-qualified name (`catalog.schema.table`) must be resolved by querying Unity Catalog directly — never inferred from Synapse naming conventions alone. If the Databricks connection is unavailable, the ALTER script must be generated with an `-- UNVALIDATED UC TARGET` header and the inferred name treated as a placeholder until validated
 - Every domain package must include at least 3 test questions with expected agent responses
 - Gap analysis (what's NOT in the lake) is as important as mapping what IS
@@ -167,4 +217,4 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 
 This constitution governs all phases of the Data Knowledge Platform. Amendments require documentation and agreement between project contributors. The canonical metadata schema (Phase 1 output) becomes binding once ratified.
 
-**Version**: 1.6.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-08
+**Version**: 1.8.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-16

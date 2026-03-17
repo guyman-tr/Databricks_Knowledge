@@ -169,7 +169,7 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 - **FR-003**: Pipeline MUST trace lineage from Synapse objects to production sources using upstream wiki references
 - **FR-004**: Output MUST include query advisory information (recommended JOINs, filters, performance notes)
 - **FR-005**: Output MUST follow the query-brain template, not the QA/code-review template
-- **FR-006**: Pipeline MUST be executable via a Cursor command (`/dwh-semantic-doc`). Re-runs fully regenerate the wiki file (overwrite); git history preserves the diff. Regeneration is triggered by change (upstream wiki update, new SPs discovered, etc.), not scheduled.
+- **FR-006**: Pipeline MUST be executable via a Cursor command (`/build-semantic-layer-dwh`). Re-runs fully regenerate the wiki file (overwrite); git history preserves the diff. Regeneration is triggered by change (upstream wiki update, new SPs discovered, etc.), not scheduled.
 - **FR-007**: Upstream knowledge sources MUST be configured in `dwh-semantic-doc-config.json`, not hardcoded
 - **FR-008**: Pipeline MUST work against any Synapse schema listed in the config
 - **FR-009**: Pipeline MUST produce a `.review-needed.md` sidecar alongside each wiki file, listing all Tier 4 (column-name-inferred) items with specific questions for domain experts. Columns without any source documentation must be flagged `[UNVERIFIED]`, not given fabricated descriptions.

@@ -1,0 +1,249 @@
+---
+description: "Batch Orchestration — batch planning, dependency-aware segmentation, resume protocol, and execution flow for schema-level mass documentation. Shared across all build-wiki-{target} commands. Deployment batching is governed by deploy-index-management.mdc."
+globs:
+alwaysApply: false
+---
+
+# Batch Orchestration Protocol
+
+This rule file defines how schema-level mass documentation is planned, executed, and resumed across agent sessions. It coordinates between `index-management.mdc` (tracking) and `context-handoff.mdc` (cross-batch knowledge).
+
+**Execution model**: Plan + Execute run as a single uninterrupted flow within one session. The agent plans the batch, documents every object inline (no subagents), updates tracking in bulk at the end, and prints a summary. No user input required between start and finish.
+
+---
+
+## Configuration Constants
+
+```
+DEFAULT_BATCH_SIZE       = 25      # Objects per wiki batch (FR-007). Inline serial execution.
+STALENESS_THRESHOLD_DAYS = 30      # Skip objects documented within this many days (FR-008).
+```
+
+For V1, these are edited in this rule file directly. Command-argument overrides are deferred to a future iteration.
+
+---
+
+## Object Discovery (Research R1)
+
+### Primary Source: Dependency Graph
+
+Load `knowledge/synapse/Wiki/_dependency_order.json`. Each entry has:
+
+```json
+{
+  "table": "DWH_dbo.Dim_Position",
+  "depth": 2,
+  "depends_on": ["DWH_dbo.External_etoro_Trade_PositionTbl", "DWH_dbo.Dim_Instrument"]
+}
+```
+
+Filter entries where the `table` field starts with `{Schema}.` (e.g., `DWH_dbo.`).
+
+### Supplementary Source: SSDT Repository (Constitution IX)
+
+**Repo-first (Constitution IX)**: Scan the Dataplatform SSDT repo for objects not captured by the dependency parser. Do NOT query Synapse metadata views.
+
+Glob for `.sql` files in the SSDT repo paths:
+- Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\*.sql`
+- External Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\External Tables\*.sql`
+- Views: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Views\*.sql`
+
+Objects found in the SSDT repo but missing from `_dependency_order.json` are added at depth 0 with empty `depends_on`.
+
+### Merge
+
+Combine both sources into a unified object list. Each object has: name, type, depth, depends_on. The dependency graph is the authority for depth and dependencies; SSDT repo fills gaps.
+
+---
+
+## Batch Segmentation Algorithm (Research R3)
+
+### Steps
+
+1. **Filter**: Take the unified object list for the target schema.
+
+2. **Exclude**: Remove objects that are `Done` or `Skipped` in `_index.md` (if it exists).
+
+3. **Group by depth**: Group remaining objects by their depth value (0, 1, 2, …). Objects with depth -1 (cyclic dependencies) form their own group, processed last.
+
+4. **Sort within depth**: Within each depth group, sort alphabetically by object name.
+
+5. **Segment into batches**: Walk through depth groups in order (0, 1, 2, …, -1):
+   - Fill the current batch up to `DEFAULT_BATCH_SIZE`.
+   - **Prefer not to split a depth level mid-batch**: If adding the next depth group would exceed the batch size, and the current batch is not empty, close the current batch and start a new one with the next depth group.
+   - **Exception**: If a single depth group has more objects than `DEFAULT_BATCH_SIZE`, split it into multiple batches at the same depth.
+
+6. **Assign batch numbers**: Number batches sequentially starting from the next batch number after the last completed batch (from `_index.md`).
+
+7. **Assign within-batch order**: Within each batch, maintain the depth-then-alphabetical order. Assign position numbers (#1, #2, #3, …).
+
+8. **Resolve intra-batch dependencies**: For each object in a batch, check if any of its `depends_on` entries point to another object in the same batch. If so, ensure the dependency comes before the dependent object (lower position number). Re-order within the batch if needed.
+
+### Batch Sizing Guidelines (Research R2)
+
+| Object type | Wiki Build (build-wiki-dwh) | Deployment (write-objects-dwh) |
+|-------------|---------------------------|-------------------------------|
+| Tables (dim ≤15 cols) | 25 | 25 |
+| Tables (medium 15-40 cols) | 20 | 25 |
+| Tables (large 40+ cols) | 15 | 25 |
+| Views | 25 | 25 |
+| Mixed (tables + views) | 20 | 25 |
+
+Wiki build uses inline serial execution within the parent agent. No subagent dispatch. Deployment uses a separate batch size — governed by `deploy-index-management.mdc`, not this rule.
+
+> **Important:** Only Tables and Views are documentation targets. Stored Procedures and Functions are **not** tracked in `_index.md` and are **not** queued for batch processing. They serve as analysis inputs during Phases 8, 9, and 9B — their code is read to understand ETL logic, transformation rules, and lineage for the tables/views they populate.
+
+---
+
+## Schema Scope Execution
+
+**When**: Operator provides a schema name with no second argument (Build mode).
+
+### Steps
+
+1. **Discover objects**: Run Object Discovery (above) for the target schema.
+
+2. **Check for existing `_index.md`**:
+   - If it does not exist: call `index-management.mdc` Protocol 1 (CREATE) to generate it.
+   - If it exists: read it to identify already-done/failed/skipped objects. Re-scan for new objects (from dependency graph + SSDT) and add any new ones as `Pending`.
+
+3. **Detect stale objects**: For each object with an existing wiki file, check its last-modified date. If within `STALENESS_THRESHOLD_DAYS`, mark as `Skipped — stale <30d` in `_index.md`.
+
+4. **Build batch plan**: Run the Batch Segmentation Algorithm on all `Pending` objects. Update `_index.md` with batch assignments (`Queued (Batch N, #M)` status) and the Next Batch section.
+
+5. **Execute the batch inline**: For each object in Batch N, in order:
+   a. **Run the inline pipeline**: DDL resolution → analysis phases → Phase 11 documentation generation. Follow the inline pipeline defined in `build-wiki-dwh.md` Section 3 Step 3.
+   b. **Track result in memory**: Record status (Done/Failed/Skipped) and quality score. Do NOT update `_index.md` per-object.
+   c. **On failure**: Log the error, mark as Failed in the running list, continue to the next object. Failed objects do not block subsequent objects.
+
+6. **Bulk-update `_index.md`**: After all objects in the batch are processed, call `index-management.mdc` Protocol 2 (BATCH UPDATE) to record all results at once. Move the batch to Completed Batches.
+
+7. **Write context handoff**: Call `context-handoff.mdc` Protocol 1 (WRITE) or Protocol 3 (MERGE) to serialize `_batch_context.json` with glossary, relationships, and cross-references from the completed batch.
+
+8. **Print end-of-batch banner**:
+
+### End-of-Batch Banner
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║  BATCH {N} COMPLETE — {Schema}                                  ║
+║                                                                 ║
+║  Objects:  {processed} processed, {failed} failed               ║
+║  Quality:  avg {avg} (range {min} – {max})                     ║
+║  Progress: {total_done}/{total_objects} ({pct}%)               ║
+║  Next:     Batch {N+1} ({next_count} objects remaining)        ║
+║                                                                 ║
+║  Run /{command_name} {Schema} again for the next batch.        ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+### Schema-Complete Banner
+
+```
+╔══════════════════════════════════════════════════════════════════╗
+║  SCHEMA COMPLETE — {Schema}                                     ║
+║                                                                 ║
+║  Batches:  {total_batches}                                      ║
+║  Objects:  {documented} documented, {failed} failed             ║
+║  Quality:  avg {avg}                                            ║
+║                                                                 ║
+║  Recommended next step:                                         ║
+║  /{command_name} enrich {Schema}                               ║
+║  (runs Phase 12 cross-object enrichment across all docs)       ║
+╚══════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+## Resume Execution
+
+**When**: Operator runs the command and `_index.md` already has `Queued` objects from an interrupted previous run.
+
+### Steps
+
+1. **Load tracking state**: Read `_index.md`.
+   - If `_index.md` does not exist: **STOP** with error: "No tracking file found for {Schema}. Run the command with Schema scope first to create `_index.md`."
+   - Extract: last completed batch number, list of `Queued` objects for the current batch.
+
+2. **Load cross-batch context**: Read `_batch_context.json`.
+   - If file does not exist: warn and proceed without cross-batch knowledge.
+
+3. **Re-scan for new objects**: Re-read `_dependency_order.json` and run the supplementary SSDT repo scan. If new objects are found that are not in `_index.md`, add them as `Pending`. New objects do NOT join the current batch — they will be included in the next batch plan.
+
+4. **Identify resume point**: Find the first `Queued` object in `_index.md`. If a batch was interrupted mid-way (some objects `Done`, others still `Queued`), continue from the first `Queued` object in that batch.
+
+5. **Execute remaining objects**: Same as Schema Scope Execution step 5 — inline serial pipeline for each remaining Queued object.
+
+6. **Finalize**: Same as Schema Scope steps 6-8 — bulk-update `_index.md`, write context handoff, print banner.
+
+---
+
+## Status Scope Execution
+
+**When**: Operator selects Status scope. This is strictly read-only.
+
+### Steps
+
+1. **Read `_index.md`**: If it does not exist, print: "No tracking file found for {Schema}. Run the command with Schema scope first." and exit.
+
+2. **Call `index-management.mdc` Protocol 3 (STATUS DISPLAY)**: Parse and display the compact progress summary.
+
+3. **Exit**: No files are modified. No batch processing occurs.
+
+---
+
+## Error Recovery
+
+### Mid-Object Crash
+
+The session dies while an object is being documented (between Phase 1 and Phase 11).
+
+- **State**: `_index.md` still has all objects as `Queued` (batch-level update hasn't happened yet). Output files for the in-progress object may be partially written.
+- **Recovery**: On next run, the batch is identified as having `Queued` objects. All `Queued` objects are re-processed. Partial output files are overwritten.
+
+### Mid-Batch Crash
+
+The session dies after completing some objects but before the batch-level `_index.md` update.
+
+- **State**: `_index.md` has all objects still as `Queued` (batch-level update hasn't happened yet). Completed objects have their wiki files on disk but are not tracked as Done.
+- **Recovery**: On next run, all `Queued` objects are re-processed. Wiki files from already-completed objects are overwritten (idempotent). The batch context handoff has NOT been updated.
+- **Optimization**: Before re-processing, the agent MAY check if a wiki file already exists on disk and was modified today. If so, it can skip that object and mark it as Done in the results. This is optional — overwriting is safe.
+
+### Missing `_batch_context.json`
+
+- **Behavior**: Proceed without cross-batch knowledge. The agent warns. Cross-references from prior batches are not available — "Referenced By" sections for new objects will not include prior-batch consumers.
+- **Mitigation**: After the run completes, the operator can run Enrich scope to fill in missing cross-references.
+
+### Missing `_index.md` on Resume
+
+- **Behavior**: Treat as a fresh schema run. Create `_index.md` via Protocol 1 and proceed with Batch 1.
+
+### Missing `_dependency_order.json`
+
+- **Behavior**: **STOP**. Print clear error: "No dependency graph found at `knowledge/synapse/Wiki/_dependency_order.json`. Run `_build_dependency_order.py` first."
+
+### Object Documentation Failure
+
+- **Behavior**: Record as `Failed (Batch N) — {error reason}` in the in-memory results list. Continue with the next object in the batch. Failed objects do not block subsequent objects.
+- **Retry**: To retry a failed object, change its status to `Pending` in `_index.md`, then run the command again.
+
+---
+
+## Cross-Batch Enrichment Strategy (Research R9)
+
+### During Batch Execution (Lightweight)
+
+Phase 11's Pre-Read mechanism (from `12-cross-object-enrichment.mdc`) is extended to use `_batch_context.json`:
+
+- When generating documentation for an object, Phase 11 Pre-Read loads `_batch_context.json` and checks:
+  - Does any prior-batch object reference this object? → Include in "Referenced By" section.
+  - Does this object reference any prior-batch object? → Include in "Relationships" section with a link.
+  - Are any glossary terms relevant to this object's columns? → Use in column descriptions.
+
+### After All Batches (Full Enrichment)
+
+The operator runs Enrich scope (`/build-wiki-dwh enrich {Schema}`) after all batches complete. This triggers a full Phase 12 pass across ALL documented objects:
+
+- Update "Referenced By" sections for all objects based on the complete relationship graph.
+- Fill in cross-references that were missed during batch execution (e.g., object A documented in batch 1, consumer B documented in batch 5 — A's "Referenced By" now includes B).
+- Reconcile glossary usage across all wiki files.

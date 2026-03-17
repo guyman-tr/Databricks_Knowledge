@@ -1,0 +1,653 @@
+---
+description: "Phase 11W - Write Objects for DWH Semantic Documentation. ALTER generation + UC deployment from existing wiki files. Run via write-objects-dwh command."
+globs:
+alwaysApply: false
+---
+
+# Phase 11W: Write Objects
+
+## 1. Purpose
+
+Generate ALTER scripts and deploy metadata to Unity Catalog from existing wiki documentation files.
+
+This rule is used by the `write-objects-dwh` command. It reads wiki `.md` files produced by `build-wiki-dwh` and generates ALTER scripts for UC deployment.
+
+Phase 11W does NOT re-run analysis phases (1-10). Wiki parsing is its sole input.
+
+## 2. Prerequisites
+
+- Wiki `.md` file must exist for the object
+- Databricks MCP connection mandatory
+- Synapse MCP optional (for PII GDPR queries — graceful degradation to column-name patterns)
+- Atlassian not needed
+
+## 3. Wiki File Parsing Protocol (T021)
+
+Define how to extract data from an existing wiki `.md` file:
+
+- **Header table**: Read the property table at the top for Schema, Object Type, Production Source, Refresh, Synapse Distribution, Synapse Index. UC properties may show "Pending — resolved during write-objects" — these will be filled during this phase.
+- **Section 1 (Business Meaning)**: Extract for the table comment. Compress to ≤1024 chars.
+- **Section 4 (Elements)**: Parse the markdown table. Each row has: #, Element, Type, Nullable, Description. The Description field contains business meaning with Tier tags — preserve these verbatim for column comments.
+- **Section 5 (Lineage)**: Read for lineage context to include in tags and comments.
+- **Quality footer**: Read the footer line for quality score and star grade.
+
+**Note**: The wiki file is the SOLE input for ALTER script content. Do not query databases for column descriptions.
+
+---
+
+## 4. UC Object Resolution (MANDATORY before ALTER generation)
+
+**Never infer UC names from Synapse naming conventions.** The Synapse name `DWH_dbo.Fact_CustomerAction` does NOT reliably map to `dwh.fact_customeraction` — that table may not exist. Always resolve the actual UC fully-qualified name (`catalog.schema.table`) by querying Unity Catalog directly.
+
+**Resolution algorithm** (stop at first match):
+
+1. **Search UC `information_schema`** — broadest search, finds the table regardless of catalog/schema:
+   ```sql
+   SELECT table_catalog, table_schema, table_name
+   FROM system.information_schema.tables
+   WHERE LOWER(table_name) LIKE '%{object_name_lower_no_prefix}%'
+   ORDER BY table_catalog, table_schema
+   ```
+   Where `{object_name_lower_no_prefix}` strips common prefixes: `Fact_` → `customeraction`, `Dim_` → `position`. Also try the full lowered name (e.g., `fact_customeraction`).
+
+2. **Search specific UC schemas** — check the known DWH-layer schemas:
+   ```sql
+   SHOW TABLES IN main.dwh LIKE '*{partial_name}*'
+   ```
+   Repeat for `main.bi_output`, `main.bi_output_stg`, and any other schemas listed in the Databricks connection skill.
+
+3. **Search the Generic Pipeline mapping view** — find the UC bronze table and trace forward:
+   ```sql
+   SELECT UnityCatalogTableName, BusinessGroup, TableName
+   FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
+   WHERE LOWER(TableName) LIKE '%{object_name_pattern}%'
+   ```
+   The mapping view shows bronze-layer names; the gold/DWH target may differ but the `BusinessGroup` hints at the correct catalog.
+
+4. **If all searches fail** — the object has no UC target yet. Generate the ALTER script with an `-- UNVALIDATED UC TARGET` header and the inferred name as a placeholder. Add a note to the review sidecar under `## Structural Questions`.
+
+**If Databricks is unavailable** (pre-flight Check 3 failed): Skip Steps 1-3, go directly to Step 4. The ALTER script is still generated but clearly marked as unvalidated.
+
+**Record the resolution**: Add a comment in the ALTER script header showing how the UC target was resolved:
+```sql
+-- UC Target: {catalog}.{schema}.{table}
+-- Resolved via: {information_schema / SHOW TABLES / mapping view / INFERRED (unvalidated)}
+```
+
+---
+
+## 5. UC Table Metadata Discovery
+
+Once the UC target is resolved, query Databricks for physical table metadata to populate the UC-specific properties in the wiki and table tags. Run these queries via the Databricks MCP:
+
+1. **Table format and type**:
+   ```sql
+   DESCRIBE DETAIL {uc_catalog}.{uc_schema}.{uc_table}
+   ```
+   Extracts: `format` (delta, parquet, csv), `type` (MANAGED, EXTERNAL), `location`, `numFiles`, `sizeInBytes`.
+
+2. **Partitioning**:
+   ```sql
+   DESCRIBE TABLE EXTENDED {uc_catalog}.{uc_schema}.{uc_table}
+   ```
+   Look for `# Partition Information` in the output. Extract partition column names.
+
+3. **If Databricks is unavailable**: Set all UC properties to `N/A` in the wiki and omit the UC-specific tags.
+
+Populate the wiki properties table and ALTER script tags with the discovered values.
+
+---
+
+## 6. Generic Pipeline Mapping (T024)
+
+From Phase 13 — Step 1 and Step 1b. These queries use **Databricks MCP** (not Synapse MCP).
+
+### Step 1: Query the Generic Pipeline Mapping View
+
+The primary lineage discovery source is the Unity Catalog mapping view (1,697 rows covering all production-to-lake mappings). Read the config to get the view name, then query it via the Databricks MCP.
+
+**Search by production table name** (best for matching ETL source references):
+```sql
+SELECT DatabaseName, SchemaName, TableName, ServerName,
+       CopyStrategy, FrequencyMinute, DatalakePath,
+       UnityCatalogTableName, BusinessGroup, inc_column_Name
+FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
+WHERE TableName = '{ProductionTableName}'
+  AND SchemaName = '{ProductionSchema}'
+```
+
+**Search by database name** (when you know the source database):
+```sql
+SELECT DatabaseName, SchemaName, TableName, CopyStrategy,
+       FrequencyMinute, UnityCatalogTableName
+FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
+WHERE DatabaseName = '{DatabaseName}'
+ORDER BY SchemaName, TableName
+```
+
+**Key columns in the mapping view**:
+
+| Column | Meaning |
+|--------|---------|
+| `DatabaseName` | Production source database (e.g., `etoro`, `USABroker`) |
+| `SchemaName` | Production schema (e.g., `Trade`, `Dictionary`) |
+| `TableName` | Production table name |
+| `ServerName` | Production server identifier |
+| `CopyStrategy` | `Override` (full load) or `Append` (incremental) |
+| `FrequencyMinute` | Refresh interval in minutes (1440 = daily, 60 = hourly) |
+| `inc_column_Name` | Incremental watermark column (empty for full loads) |
+| `DatalakePath` | Lake landing path (e.g., `Bronze/etoro/Trade/PositionTbl/`) |
+| `UnityCatalogTableName` | UC bronze table (e.g., `trading.bronze_etoro_trade_positiontbl`) |
+| `BusinessGroup` | UC catalog grouping (e.g., `trading`, `finance`, `general`) |
+
+### Step 1b: Extract Governance Metadata for Phase 11
+
+From the mapping view results in Step 1, extract and carry forward to Phase 11:
+
+| Field | Source | Derivation |
+|-------|--------|------------|
+| `refresh_frequency` | `FrequencyMinute` | Convert: 60→`hourly`, 1440→`daily`, else→`{N}min` |
+| `sla` | `FrequencyMinute` + ETL SP execution patterns from Phase 9B | Estimate completion time. E.g., daily (1440min) + ETL runs at midnight + ~2hr load → `D+1 02:00`. If SP completion time is known from Phase 9B orchestration analysis, use that |
+| `source_system` | `ServerName` / `DatabaseName` | Map to canonical names: `sql_dp_prod_we`→`Synapse`, `etoro`→`etorodb`, etc. If multiple sources, list the primary |
+| `pii` | **Primary**: Query opsdb `dbo.GDPR_DL_Tables_Data` for the table's `PIIColumns` (comma-separated PII column names). Also check `ColumnsToMask` in `dbo.generic_inc_process_config` — if set, the table has PII data (`BusinessGroup = 'pii_data'` in UnityCatalogMapping). **Secondary**: Query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns. **Fallback** (if DB sources unavailable): pattern-match column names (`*Email*`, `*Phone*`, `*Address*`, `*SSN*`, `*TaxID*`, `*BirthDate*`, `*IP*`, `*IPAddress*`, `*FirstName*`, `*LastName*`, `*FullName*`, `*Passport*`, `*NationalID*`). Values: `direct` or `none` only — never `indirect` |
+
+Store these values for use when generating table tags.
+
+---
+
+## 7. ALTER Script Template
+
+```sql
+-- =============================================================================
+-- Databricks ALTER Script: {SynapseSchema}.{ObjectName}
+-- Generated: {YYYY-MM-DD} | {N}-phase pipeline
+-- Target: Unity Catalog table comment + column comments (1024 char limit)
+-- UC Target: {uc_catalog}.{uc_schema}.{uc_table}
+-- Resolved via: {resolution_method}
+-- =============================================================================
+
+ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TBLPROPERTIES (
+    'comment' = '{table_comment_max_1024_chars}'
+);
+
+ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} COMMENT '{column_comment_max_1024_chars}';
+-- ... one ALTER per column ...
+```
+
+---
+
+## 8. ALTER Script Rules
+
+1. **UC naming**: Use the fully-qualified name (`catalog.schema.table`) resolved by the UC Object Resolution algorithm above. **Never infer from Synapse naming conventions.** Every ALTER statement must use the validated 3-level name
+2. **Table comment**: Compress the one-line description + key business context from Section 1 into ≤1024 chars. Include: what it is, source, refresh, and the most critical gotchas. **Label Synapse-specific metadata with `Synapse:` prefix** (e.g., `Synapse: HASH(PositionID), CLUSTERED INDEX`) and **UC-specific metadata with `UC:` prefix** (e.g., `UC: Delta, partitioned by etr_y/etr_ym/etr_ymd`). Never leave distribution/index/partitioning unlabeled — readers in UC must not assume Synapse metadata applies to their environment
+3. **Column comments**: Compress each element description from Section 4 into ≤1024 chars. Prioritize:
+   - Business meaning (what the column represents)
+   - FK references (what table to JOIN for resolution)
+   - Key values/enums (most important mappings)
+   - Gotchas (common misunderstandings)
+4. **KEEP tier tags**: Preserve `(Tier N — source)` suffixes in column comments. These provide traceability — anyone reading a UC column comment can see whether the description came from the upstream wiki (Tier 1), SP code (Tier 2), live data (Tier 3), inference (Tier 4), or domain expert (Tier 5). Format: append at the end of the description, e.g., `'...description text. (Tier 1 — upstream wiki)'`. If the description is near the 1024-char limit, the tier tag takes priority over truncating description content
+5. **KEEP [UNVERIFIED] tags**: Preserve `[UNVERIFIED]` prefixes on Tier 4 descriptions in the ALTER script. This signals to analysts and the AI assistant that the description is inferred, not confirmed. Unverified items are ALSO tracked in the review sidecar, but the tag in the ALTER output ensures visibility even after deployment to UC
+6. **Preserve `Same meaning as Dim_Position.*`** references — these help the AI assistant cross-reference
+7. **Single quotes in values**: Escape any single quotes in descriptions with `''` (SQL standard)
+8. **One ALTER per column**: Each column gets its own `ALTER TABLE ... ALTER COLUMN ... COMMENT` statement on a single line
+9. **Column name validation**: When UC is available, verify each column exists in the target table before generating its ALTER COLUMN statement. Use `DESCRIBE TABLE {uc_catalog}.{uc_schema}.{uc_table}` to get the actual column list. Skip columns that don't exist in UC (they may have been dropped or renamed) and note them in the review sidecar
+10. **UC-only columns**: If `DESCRIBE TABLE` reveals columns that exist in UC but not in Synapse (e.g., partition columns like `etr_y`, `etr_ym`, `etr_ymd`), generate `ALTER COLUMN ... COMMENT` statements for them with a description noting they are Databricks-layer additions (e.g., partition pruning columns)
+
+---
+
+## 9. Table Tags
+
+Generate `ALTER TABLE ... SET TAGS` alongside the table comment. Tags provide structured metadata for catalog browsing, governance, and the AI assistant.
+
+```sql
+ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TAGS (
+    'domain' = '{domain}',
+    'object_type' = '{dimension / fact / lookup / bridge / staging}',
+    'source_schema' = '{SynapseSchema}',
+    'source_server' = '{server from mapping view or config}',
+    'refresh_frequency' = '{hourly / daily / weekly / unknown}',
+    'sla' = '{D+1 02:00 / T+2h / unknown}',
+    'source_system' = '{Synapse / etorodb / cosmos / mixed}',
+    'synapse_distribution' = '{HASH(col) / ROUND_ROBIN / REPLICATE}',
+    'synapse_index' = '{CLUSTERED COLUMNSTORE / CLUSTERED INDEX / HEAP}',
+    'uc_format' = '{delta / parquet}',
+    'uc_partitioned_by' = '{col1, col2, col3 / none}',
+    'pipeline' = 'dwh-semantic-doc',
+    'pipeline_version' = '15-phase',
+    'semantic_grade' = '{1-5}'
+);
+```
+
+Tag values:
+- `domain`: Infer from table name and business meaning (trading, finance, billing, compliance, risk, marketing, etc.)
+- `object_type`: `dim_` prefix → dimension, `fact_` prefix → fact, lookup tables → lookup
+- `source_schema` / `source_server`: From Synapse metadata and config
+- `refresh_frequency`: From Phase 13 Step 1b — derived from Generic Pipeline `FrequencyMinute` (1440→daily, 60→hourly, etc.)
+- `sla`: From Phase 13 Step 1b — estimated data readiness time (e.g., `D+1 02:00` for a daily table whose ETL completes ~2AM). Combine `FrequencyMinute` with Phase 9B SP execution timing. If unknown, use `unknown`
+- `source_system`: From Phase 13 Step 1b — canonical source system name derived from Generic Pipeline `ServerName`/`DatabaseName` (e.g., `Synapse`, `etorodb`, `cosmos`). If multiple production sources feed the table, use the primary source or `mixed`
+- `semantic_grade`: 1-5 star grade derived from the Quality Score calculation (see "Star Grade" section). Compact signal for catalog consumers — full detail lives in the wiki footer only
+
+---
+
+## 10. Column-Level PII Tags
+
+For **every column**, generate a PII tag. Use `none` or `direct` only (no `indirect`).
+
+```sql
+ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} SET TAGS ('pii' = '{none / direct}');
+```
+
+**PII detection** (from Phase 13 Step 1b — stop at first authoritative match):
+1. **GDPR_DL_Tables_Data** (primary) — query opsdb `dbo.GDPR_DL_Tables_Data` for the table. If a row exists, `PIIColumns` contains a comma-separated list of PII column names → tag those as `direct`, all others as `none`
+2. **ColumnsToMask** (primary) — check `dbo.generic_inc_process_config` for the table's `ColumnsToMask`. If populated, those columns are PII → `direct`
+3. **DataSolutionsMappingTableGDPR** (secondary) — query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns
+4. **UC column tags** — if UC already has PII tags on the column, use those
+5. **Column name patterns** (fallback) — flag as `direct` if column name matches: `*Email*`, `*Phone*`, `*Mobile*`, `*Address*`, `*SSN*`, `*TaxID*`, `*BirthDate*`, `*DateOfBirth*`, `*IP*`, `*IPAddress*`, `*FirstName*`, `*LastName*`, `*FullName*`, `*Passport*`, `*NationalID*`, `*BankAccount*`, `*IBAN*`, `*CreditCard*`
+6. **FK to customer identity** — columns that are direct FKs to customer tables (`CID`, `GCID`, `RealCID`, `DemoCID`, `UserID`) are **not PII** themselves (they are pseudonymous IDs, not directly identifying). Mark as `none`
+7. **Default** — if no match, use `none`
+
+Generate PII tags in a `-- ---- Column PII Tags ----` section after column comments, grouped together for readability.
+
+---
+
+## 11. Downstream Column Comment Propagation — DEEP LINEAGE (SEPARATE FILE)
+
+Downstream propagation uses the **deep lineage library** (`knowledge/synapse/Wiki/_deep_propagate_lib.py`) to trace ALL downstream UC objects through `system.access.column_lineage` BFS traversal PLUS name-pattern discovery. This replaces the previous inline discovery approach. Written to: `{ObjectName}.downstream.alter.sql`.
+
+**Recommended processing order**: Use `knowledge/synapse/Wiki/_dependency_order.json` to process tables bottom-up (depth 0 first = production sources, depth 5 last). This ensures upstream descriptions are already in place when downstream tables are documented.
+
+### Step D1: Generate the Deep Propagation Script
+
+```python
+import sys, os
+sys.path.insert(0, "knowledge/synapse/Wiki")
+import _deep_propagate_lib as lib
+
+lib.generate_script(
+    source_uc_name="{uc_catalog}.{uc_schema}.{uc_table}",
+    source_synapse_name="{SynapseSchema}.{ObjectName}",
+    object_dir="{wiki_output_dir}",
+    object_name="{ObjectName}",
+)
+```
+
+This generates `{ObjectName}_deep_propagate.py` in the wiki output directory.
+
+### Step D2: Run Discovery
+
+Execute via Shell tool:
+```bash
+python "{wiki_output_dir}/{ObjectName}_deep_propagate.py" discover
+```
+
+This produces:
+- `{ObjectName}.lineage-tree.json` — full BFS tree with column matches + renames
+- `{ObjectName}.propagation-scope.md` — human-readable blast radius report
+
+The discovery uses two complementary methods (FR-012):
+1. **Lineage traversal**: Recursive BFS over `system.access.column_lineage`, following source→target mappings transitively with cycle detection
+2. **Name-pattern supplement**: Searches `system.information_schema.tables` for objects whose name contains the source table name, then DESCRIBE-matches columns
+
+Blacklisted ETL columns (from `dwh-semantic-doc-config.json → propagation.blacklist`) are automatically excluded.
+
+### Step D3: Review Scope Report
+
+Read `{ObjectName}.propagation-scope.md` and present a summary to the operator:
+- Total downstream objects discovered
+- Column matches (identical + renamed)
+- Execution plan (batch count, statements)
+
+### Step D4: Run Execution
+
+```bash
+python "{wiki_output_dir}/{ObjectName}_deep_propagate.py" execute
+```
+
+This:
+1. Reads `.lineage-tree.json`
+2. Processes objects in batches (default 30, configurable via `--batch-size`)
+3. For each object: DESCRIBE to verify columns, then ALTER/COMMENT ON
+4. Updates `.propagation-progress.json` after each batch (resume support)
+5. Generates `.downstream.alter.sql` with all ALTER statements
+
+### Step D5: Collect Results for Deploy Report
+
+Read the terminal output for execution stats (succeeded/failed counts). Include in the deploy report Section 4.
+
+**Important notes**:
+- The deep propagation script runs as a standalone Python process with ONE Databricks session — no MCP browser tabs
+- Blacklisted columns (etr_ymd, UpdateDate, etc.) are handled separately by `_broadcast_propagate.py`
+- Column renames detected via lineage (e.g., `FirstDepositDate → FTDDate`) are propagated with context annotation
+- If `system.access.column_lineage` fails (permissions), falls back to name-pattern-only discovery
+
+**File format**: Same as before — one ALTER per column, grouped by target object. The file is larger because deep lineage finds more objects.
+
+**Cross-reference in main ALTER script**: The main `.alter.sql` should include a comment:
+```sql
+-- Downstream propagation: see {ObjectName}.downstream.alter.sql
+```
+
+---
+
+## 12. ALTER Execution (Automatic Deployment to Unity Catalog)
+
+After all output files are written, **automatically execute** the ALTER scripts against Databricks Unity Catalog via the Databricks MCP. This is the final substep of Phase 11 — documentation is not fully deployed until metadata is live in UC.
+
+### Pre-Check
+
+Execution requires `uc_available = true` (set during Step 0, Check 3). If Databricks MCP is unavailable:
+
+> **SKIPPED: ALTER execution skipped — Databricks MCP unavailable.** Scripts generated at `{path}`. Execute manually when connectivity is restored.
+
+Log this warning and mark Phase 11 complete anyway — the files are the fallback.
+
+### Execution Flow — SINGLE-SESSION PYTHON SCRIPT
+
+**CRITICAL: DO NOT execute ALTER statements individually via MCP tool calls.** Each MCP call triggers an OAuth handshake that opens a browser tab. For a table with 139 columns, that's 280+ browser tabs for the main script alone, plus 500+ for downstream — completely unusable.
+
+Instead, generate a **temporary Python execution script** that uses a single authenticated `databricks-sql-connector` session to run all statements sequentially over one connection.
+
+#### Step E1: Generate Execution Script
+
+Generate a Python script at `{wiki_output_dir}/{ObjectName}_deploy.py` that:
+
+1. Reads the Databricks connection config from the Databricks connection skill (workspace host, HTTP path, token/OAuth)
+2. Opens ONE `databricks.sql.connect()` session
+3. Reads the `.alter.sql` file, extracts each executable statement (lines NOT starting with `--`)
+4. Executes each statement sequentially via `cursor.execute(stmt)`
+5. Logs success/failure per statement, continues on error
+6. Then reads the `.downstream.alter.sql` file and does the same
+7. Prints a structured execution summary
+8. Writes the execution log to the end of the `.alter.sql` file
+
+```python
+"""
+Deployment script for {Schema}.{ObjectName}
+Generated by dwh-semantic-doc pipeline — run once, then delete.
+"""
+import re, sys, os
+from datetime import datetime
+
+# --- Connection (reads from env or uses skill defaults) ---
+DATABRICKS_HOST = os.environ.get("DATABRICKS_HOST", "{host}")
+DATABRICKS_HTTP_PATH = os.environ.get("DATABRICKS_HTTP_PATH", "{http_path}")
+DATABRICKS_TOKEN = os.environ.get("DATABRICKS_TOKEN", "{token_or_empty}")
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MAIN_SQL = os.path.join(SCRIPT_DIR, "{ObjectName}.alter.sql")
+DOWNSTREAM_SQL = os.path.join(SCRIPT_DIR, "{ObjectName}.downstream.alter.sql")
+
+def extract_statements(filepath):
+    """Extract executable SQL statements from a .sql file (skip comment-only lines)."""
+    stmts = []
+    with open(filepath, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("--"):
+                continue
+            if line.endswith(";"):
+                line = line[:-1]
+            stmts.append(line)
+    return stmts
+
+def run_file(cursor, filepath, label):
+    """Execute all statements in a file, return (succeeded, failed, errors)."""
+    if not os.path.exists(filepath):
+        print(f"  SKIPPED: {filepath} not found")
+        return 0, 0, []
+    stmts = extract_statements(filepath)
+    succeeded, failed, errors = 0, 0, []
+    for i, stmt in enumerate(stmts, 1):
+        try:
+            cursor.execute(stmt)
+            succeeded += 1
+        except Exception as e:
+            failed += 1
+            col = "unknown"
+            m = re.search(r"COLUMN\s+(\w+)", stmt, re.IGNORECASE)
+            if m:
+                col = m.group(1)
+            errors.append((col, str(e)[:200]))
+            print(f"  FAILED [{i}/{len(stmts)}] {col}: {e}")
+        if i % 50 == 0:
+            print(f"  {label}: {i}/{len(stmts)} processed ({succeeded} ok, {failed} err)")
+    print(f"  {label}: {succeeded}/{len(stmts)} succeeded, {failed} failed")
+    return succeeded, failed, errors
+
+def main():
+    from databricks import sql as dbsql
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+    print(f"== ALTER DEPLOYMENT: {ts} ==")
+
+    conn = dbsql.connect(
+        server_hostname=DATABRICKS_HOST,
+        http_path=DATABRICKS_HTTP_PATH,
+        access_token=DATABRICKS_TOKEN if DATABRICKS_TOKEN else None,
+    )
+    cursor = conn.cursor()
+
+    print(f"\n[Main ALTER] {MAIN_SQL}")
+    m_ok, m_fail, m_errs = run_file(cursor, MAIN_SQL, "Main")
+
+    print(f"\n[Downstream ALTER] {DOWNSTREAM_SQL}")
+    d_ok, d_fail, d_errs = run_file(cursor, DOWNSTREAM_SQL, "Downstream")
+
+    cursor.close()
+    conn.close()
+
+    total_ok = m_ok + d_ok
+    total_fail = m_fail + d_fail
+    all_errs = m_errs + d_errs
+
+    report = [
+        f"-- == LAST EXECUTION ==",
+        f"-- Timestamp: {ts}",
+        f"-- Main: {m_ok}/{m_ok + m_fail} succeeded | Downstream: {d_ok}/{d_ok + d_fail} succeeded",
+        f"-- Failures: {total_fail}",
+    ]
+    for col, err in all_errs:
+        report.append(f"--   {col}: {err}")
+    report.append("-- ====================")
+
+    with open(MAIN_SQL, "r", encoding="utf-8") as f:
+        content = f.read()
+    content = re.sub(r"-- == LAST EXECUTION ==.*?-- ====================",
+                     "", content, flags=re.DOTALL).rstrip()
+    content += "\n\n" + "\n".join(report) + "\n"
+    with open(MAIN_SQL, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    print(f"\n== RESULT: {total_ok}/{total_ok + total_fail} succeeded, {total_fail} failed ==")
+    if all_errs:
+        print("Failures:")
+        for col, err in all_errs:
+            print(f"  {col}: {err}")
+    sys.exit(1 if total_fail > 0 else 0)
+
+if __name__ == "__main__":
+    main()
+```
+
+#### Step E2: Execute the Script
+
+Run the generated Python script via the Shell tool:
+
+```bash
+python "{wiki_output_dir}/{ObjectName}_deploy.py"
+```
+
+Wait for completion (set appropriate `block_until_ms` based on statement count — ~1 min per 100 statements). Monitor the terminal output for the execution summary.
+
+**Connection resolution**: The script uses the Databricks connection skill's configuration. Read the skill at `C:\Users\guyman\.cursor\skills\databricks-connection\SKILL.md` to populate the host, HTTP path, and token values. If OAuth (no token), the script opens ONE browser tab for authentication — not hundreds.
+
+#### Step E3: Verify & Clean Up
+
+1. Read the terminal output for the execution summary
+2. Verify the `-- == LAST EXECUTION ==` block was appended to the `.alter.sql` file
+3. Delete the temporary `{ObjectName}_deploy.py` script (it's single-use)
+4. Populate the `.deploy-report.md` with the execution results
+
+### Idempotency
+
+All ALTER statements are idempotent — re-executing them sets the same comment/tag value again. There is no harm in re-running. The pipeline does NOT skip previously-executed statements; it re-applies everything to ensure the latest descriptions are deployed.
+
+### Execution Errors That Require Attention
+
+Add to the `.review-needed.md` sidecar under a new `## ALTER Execution Issues` section:
+
+| Object | Column | Error | Action Needed |
+|--------|--------|-------|---------------|
+| {catalog.schema.object} | {column} | {error} | {e.g., "Column may have been renamed — verify in UC"} |
+
+Only populate this section if there are actual failures. Omit it entirely if everything succeeded.
+
+---
+
+## 13. Deployment Report (Step E5)
+
+After ALTER execution completes (Steps E1–E4), generate a `.deploy-report.md` file summarizing the full pipeline run for this object. This is the **last file written** and serves as a human-readable audit trail. It answers: "What happened, what got deployed, and what needs attention?"
+
+### Deploy Report Template
+
+```markdown
+# Deployment Report: {Schema}.{ObjectName}
+
+> Generated: {YYYY-MM-DD HH:MM} | Pipeline: dwh-semantic-doc ({N}-phase)
+
+## 1. Object Summary
+
+| Property | Value |
+|----------|-------|
+| **Synapse Object** | `{Schema}.{ObjectName}` |
+| **Object Type** | {Table / View} |
+| **UC Primary Target** | `{uc_catalog}.{uc_schema}.{uc_table}` |
+| **Columns Documented** | {N} |
+| **Quality Score** | {N.N}/10 ({star_grade}) |
+| **Tier Breakdown** | {N} T1, {N} T2, {N} T3, {N} T4 [UNVERIFIED], {N} T5 |
+| **Review Items** | {N} Tier 4 columns + {N} clarification questions + {N} structural questions |
+
+## 2. Output Files
+
+| File | Status | Description |
+|------|--------|-------------|
+| `{ObjectName}.md` | {WRITTEN / SKIPPED} | Wiki documentation ({N} lines) |
+| `{ObjectName}.review-needed.md` | {WRITTEN / SKIPPED} | Review sidecar ({N} items) |
+| `{ObjectName}.alter.sql` | {WRITTEN / SKIPPED} | Main ALTER script ({N} statements) |
+| `{ObjectName}.downstream.alter.sql` | {WRITTEN / SKIPPED / N/A} | Downstream propagation ({N} statements) |
+| `{ObjectName}.deploy-report.md` | WRITTEN | This file |
+
+## 3. Main ALTER Execution
+
+| Component | Succeeded | Total | Status |
+|-----------|-----------|-------|--------|
+| Table comment | {1/0} | 1 | {OK / FAILED: reason} |
+| Table tags | {1/0} | 1 | {OK / FAILED: reason} |
+| Column comments | {N} | {M} | {OK / PARTIAL / FAILED} |
+| PII tags | {N} | {M} | {OK / PARTIAL / FAILED} |
+| **Total** | **{N}** | **{M}** | |
+
+## 4. Downstream Objects (Deep Lineage)
+
+{N} downstream objects discovered, {M} updated successfully.
+
+| Metric | Value |
+|--------|-------|
+| **Discovery method** | {lineage / name_pattern / both} |
+| **Total objects discovered** | {N} (lineage: {L}, name-pattern: {P}) |
+| **Identical column matches** | {N} |
+| **Renamed column matches** | {N} |
+| **Blacklisted columns excluded** | {N} |
+| **Batches** | {N} (size: {batch_size}) |
+| **Resume events** | {N} |
+
+| # | Object | Type | Hop | Via | Identical | Renamed | Statements | Status |
+|---|--------|------|-----|-----|-----------|---------|------------|--------|
+| 1 | `{catalog}.{schema}.{object_name}` | {TABLE / VIEW} | {hop} | {lineage / name_pattern} | {N} | {N} | {N}/{M} | {OK / PARTIAL / FAILED / SKIPPED} |
+| ... | ... | ... | ... | ... | ... | ... | ... | ... |
+
+**Skipped objects**:
+- {catalog}.{schema}.{object_name} — {reason, e.g., "METRIC_VIEW, no column comment support"}
+
+## 5. Failures
+
+{If zero failures: "No failures. All {N} statements executed successfully."}
+
+{If failures exist:}
+| Object | Column | Error | Action |
+|--------|--------|-------|--------|
+| {catalog.schema.object} | {column} | {error_message} | {recommended action} |
+
+## 6. Phases Completed
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| 1. Structure Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 2. Live Data Sampling | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 3. Distribution Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 4. Lookup Resolution | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 5. JOIN Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 6. Business Logic Discovery | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 7. View Dependency Scan | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 8. Procedure Reference Scan | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 9. Procedure Logic Extraction | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 9B. ETL Orchestration Analysis | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 10. Atlassian Knowledge Scan | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 11. Generate Documentation | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 12. Cross-Object Enrichment | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 13. Production Lineage Mapping | {DONE / SKIPPED / PARTIAL} | {brief note} |
+| 14. Query Advisory Metadata | {DONE / SKIPPED / PARTIAL} | {brief note} |
+```
+
+### Deploy Report Rules
+
+1. **Always the last file written** — generated only after ALTER execution (Steps E1–E4) finishes
+2. **Mandatory for ALL object types** — tables, views, procedures, functions
+3. **List every downstream object** in Section 4 with its full `catalog.schema.object` name and type — this gives visibility into the propagation footprint
+4. **Counts only for items updated** — list downstream objects individually but do NOT list every column statement; show the counts (e.g., "130/135 cols")
+5. **Capture all failures** — even if they were already logged in the ALTER script footer, duplicate them here for a single-file overview
+6. **Phase status table** — reflect the actual phases run (or skipped) for this object. Use "SKIPPED" when a phase was not applicable (e.g., no views found in Phase 7), "PARTIAL" when a phase ran but had incomplete results
+7. **On rerun** — overwrite the previous `.deploy-report.md` entirely (not append). Each run produces a fresh report
+
+---
+
+## 14. Wiki Backfill (T031)
+
+After UC Object Resolution determines the actual UC target, optionally update the wiki `.md` file's header table to replace placeholder UC properties with resolved values.
+
+Update these rows:
+- **UC Target**
+- **UC Format**
+- **UC Partitioned By**
+- **UC Table Type**
+
+This step is optional. The wiki file remains valid without it — the UC properties are informational and don't affect ALTER script generation.
+
+When running in batch mode, backfill happens after all objects in the batch are deployed.
+
+---
+
+## 15. Output Files & Completion Criteria (T032)
+
+### Output Files Per Object
+
+**For Tables**:
+1. `{ObjectName}.alter.sql` — Main ALTER script (table comment + tags + column comments + PII tags)
+2. `{ObjectName}.downstream.alter.sql` — Downstream column comment propagation
+3. `{ObjectName}.deploy-report.md` — Deployment execution summary
+4. `{ObjectName}_deep_propagate.py` — Deep propagation discovery script (generated, then deleted after execution)
+5. (Optional) Updated `{ObjectName}.md` — Wiki backfill with resolved UC properties
+
+**For Views**:
+1. `{ObjectName}.alter.sql` — Main ALTER script
+2. `{ObjectName}.deploy-report.md` — Deployment execution summary
+3. (Optional) Updated `{ObjectName}.md` — Wiki backfill with resolved UC properties
+
+(No downstream ALTER — views are themselves downstream objects)
+
+### Completion Criteria
+
+Phase 11W is complete when:
+- ALTER script exists and has been executed (or marked UNVALIDATED if Databricks unavailable)
+- Downstream propagation has run (for tables)
+- Deploy report is written (always the last file)
+- `_deploy-index.md` is updated with deployment status

@@ -8,7 +8,23 @@
         "generic_pipeline_mapping": {
           "catalog_view": "main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables",
           "mcp_tool": "databricks_sql",
-          "description": "Unity Catalog view that maps production source tables to their lake/DWH targets via the Generic Pipeline. Use this to trace lineage from any Synapse table back to its production source."
+          "static_fallback": "knowledge/synapse/Wiki/_generic_pipeline_mapping.json",
+          "static_fallback_note": "View has column-name misalignment from position 11 onward. Static file uses corrected position-based extraction. Refresh with _parse_mapping.py when needed.",
+          "description": "Unity Catalog view that maps production source tables to their lake/DWH targets via the Generic Pipeline. Use this to trace lineage from any Synapse table back to its production source. Falls back to static JSON when Databricks MCP is unavailable."
+        }
+      },
+      "ssdt_repo": {
+        "description": "Dataplatform SSDT project — the version-controlled source of truth for ALL Synapse SQL Pool DDLs, SP code, view definitions, and function definitions. Constitution IX: ALWAYS read from here, NEVER query Synapse MCP for structural metadata.",
+        "repo_path": "C:\\Users\\guyman\\Documents\\github\\Dataplatform",
+        "sql_pool_path": "SynapseSQLPool1/sql_dp_prod_we",
+        "object_paths": {
+          "tables": "{schema}/Tables/{schema}.{object}.sql",
+          "views": "{schema}/Views/{schema}.{object}.sql",
+          "stored_procedures": "{schema}/Stored Procedures/{schema}.{object}.sql",
+          "functions": "{schema}/Functions/{schema}.{object}.sql"
+        },
+        "counts": {
+          "DWH_dbo": {"tables": 343, "stored_procedures": 126, "views": 22}
         }
       },
       "upstream_knowledge_sources": [

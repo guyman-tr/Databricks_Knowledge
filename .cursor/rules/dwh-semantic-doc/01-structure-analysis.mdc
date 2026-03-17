@@ -1,5 +1,5 @@
 ---
-description: Phase 1 - Structure Analysis for DWH Semantic Documentation. Extracts structure from Synapse metadata views via MCP.
+description: Phase 1 - Structure Analysis for DWH Semantic Documentation. Extracts structure from the Dataplatform SSDT repo (repo-first, per Constitution IX).
 globs:
 alwaysApply: false
 ---
@@ -8,76 +8,67 @@ alwaysApply: false
 
 ## Purpose
 
-Extract the complete structural definition of a Synapse DWH object by querying metadata views via MCP. This is the foundation for all subsequent phases.
+Extract the complete structural definition of a Synapse DWH object by reading DDL files from the locally cloned Dataplatform SSDT repo. This is the foundation for all subsequent phases.
 
-## CRITICAL: DDL Source is Synapse Metadata, NOT a Repo
+## CRITICAL: DDL Source is the Dataplatform SSDT Repo
 
-Unlike the production pipeline which reads SSDT repo files, Synapse has no SSDT project. **ALWAYS query Synapse metadata views via MCP.**
+**Constitution IX (Repo First, MCP Second)**: The Dataplatform repo IS the SSDT project for Synapse SQL Pool. It contains 343 table DDLs, 126 SP definitions, and 22 view definitions for DWH_dbo — every object's full CREATE statement including columns, types, distribution, and indexes.
 
-## Queries
+**ALWAYS read the `.sql` file from the repo. NEVER query Synapse metadata views via MCP for structural information.**
 
-### For Tables — Columns
+See `.cursor/rules/semantic-layer-core/repo-first-access.mdc` for the full enforcement table.
 
-```sql
-SELECT
-    c.TABLE_SCHEMA, c.TABLE_NAME, c.COLUMN_NAME, c.ORDINAL_POSITION,
-    c.DATA_TYPE, c.CHARACTER_MAXIMUM_LENGTH, c.NUMERIC_PRECISION, c.NUMERIC_SCALE,
-    c.IS_NULLABLE, c.COLUMN_DEFAULT
-FROM INFORMATION_SCHEMA.COLUMNS c
-WHERE c.TABLE_SCHEMA = '{Schema}' AND c.TABLE_NAME = '{TableName}'
-ORDER BY c.ORDINAL_POSITION
+## How to Read Structure from Repo
+
+### Repository Path
+
+```
+Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\{ObjectType}\{Schema}.{ObjectName}.sql
 ```
 
-### For Tables — Distribution Strategy
+Examples:
+- Table: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\DWH_dbo\Tables\DWH_dbo.Dim_ActionType.sql`
+- View: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\DWH_dbo\Views\DWH_dbo.{ViewName}.sql`
+- SP: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\DWH_dbo\Stored Procedures\DWH_dbo.{SPName}.sql`
+- Function: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\DWH_dbo\Functions\DWH_dbo.{FunctionName}.sql`
 
+### For Tables — Parse the CREATE TABLE Statement
+
+The `.sql` file contains the full DDL. Parse it to extract:
+
+- **Columns**: Name, data type, length/precision/scale, NULL/NOT NULL from the column list
+- **Distribution**: `DISTRIBUTION = HASH({column})`, `ROUND_ROBIN`, or `REPLICATE` from the `WITH` clause
+- **Index**: `CLUSTERED COLUMNSTORE INDEX`, `CLUSTERED INDEX ({columns})`, or `HEAP` from the `WITH` clause
+
+Example DDL (actual file content):
 ```sql
-SELECT
-    t.name AS table_name,
-    d.distribution_policy_desc,
-    c.name AS distribution_column
-FROM sys.tables t
-JOIN sys.pdw_table_distribution_properties d ON t.object_id = d.object_id
-LEFT JOIN sys.columns c ON t.object_id = c.object_id AND d.distribution_ordinal = c.column_id
-WHERE t.name = '{TableName}' AND SCHEMA_NAME(t.schema_id) = '{Schema}'
+CREATE TABLE [DWH_dbo].[Dim_ActionType]
+(
+    [ActionTypeID] [smallint] NULL,
+    [Name] [varchar](100) NULL,
+    [UpdateDate] [datetime] NULL,
+    [InsertDate] [datetime] NULL,
+    [Category] [varchar](50) NULL,
+    [CategoryID] [int] NULL
+)
+WITH
+(
+    DISTRIBUTION = REPLICATE,
+    CLUSTERED INDEX ([ActionTypeID] ASC)
+)
 ```
 
-### For Tables — Index Type
+### For Views — Read the CREATE VIEW Statement
 
-```sql
-SELECT
-    i.name AS index_name,
-    i.type_desc AS index_type,
-    STRING_AGG(c.name, ', ') AS index_columns
-FROM sys.indexes i
-LEFT JOIN sys.index_columns ic ON i.object_id = ic.object_id AND i.index_id = ic.index_id
-LEFT JOIN sys.columns c ON ic.object_id = c.object_id AND ic.column_id = c.column_id
-WHERE i.object_id = OBJECT_ID('{Schema}.{TableName}')
-GROUP BY i.name, i.type_desc
-```
+The `.sql` file contains the full view definition including SELECT statement, JOINs, WHERE clauses.
 
-### For Views — Definition
+### For Stored Procedures — Read the CREATE PROCEDURE Statement
 
-```sql
-SELECT definition
-FROM sys.sql_modules
-WHERE object_id = OBJECT_ID('{Schema}.{ViewName}')
-```
+The `.sql` file contains the full SP body — parameters, table references, ETL logic.
 
-### For Stored Procedures — Definition
+### For Functions — Read the CREATE FUNCTION Statement
 
-```sql
-SELECT definition
-FROM sys.sql_modules
-WHERE object_id = OBJECT_ID('{Schema}.{ProcName}')
-```
-
-### For Functions — Definition
-
-```sql
-SELECT definition
-FROM sys.sql_modules
-WHERE object_id = OBJECT_ID('{Schema}.{FunctionName}')
-```
+The `.sql` file contains parameters, return type, and function body.
 
 ## Extraction Checklist
 

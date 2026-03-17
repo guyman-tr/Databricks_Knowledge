@@ -1,0 +1,123 @@
+---
+description: "Repo-First Data Access — NEVER query a database for information that exists in a locally cloned repository. MCP is ONLY for live data. Shared across all build-semantic-layer-{target} and build-wiki-{target} commands."
+globs:
+alwaysApply: false
+---
+
+# Repo-First Data Access (NON-NEGOTIABLE)
+
+## Principle
+
+**NEVER seek from the database what you can get from the repo.**
+
+The locally cloned SSDT / SQL project repositories contain DDLs, stored procedure code, view definitions, function definitions, and table structures. These files are the **version-controlled source of truth** for all structural and code-based information. Querying a database via MCP for metadata that exists as a file on disk is:
+
+1. **Slower** — MCP round trips add latency per object; file reads are instant
+2. **Fragile** — MCP connections can timeout, throttle, or be unavailable
+3. **Wasteful** — burns context window on query boilerplate and result formatting
+4. **Redundant** — the repo IS the deployed codebase; the database reflects it
+
+## The Rule
+
+| Task | Source | NEVER Use |
+|------|--------|-----------|
+| Discover objects in a schema | **Glob/ls** on SSDT repo folders | ~~MCP query to sys.tables/sys.objects/INFORMATION_SCHEMA~~ |
+| Read table DDL (columns, types, nullability, defaults) | **Read** the `.sql` file from the SSDT repo | ~~MCP query to INFORMATION_SCHEMA.COLUMNS~~ |
+| Read distribution strategy and index type | **Read** the `.sql` file (WITH clause) | ~~MCP query to sys.pdw_table_distribution_properties~~ |
+| Read view/function/SP definition | **Read** the `.sql` file from the SSDT repo | ~~MCP query to sys.sql_modules / sp_helptext~~ |
+| Find dependencies between objects | **Parse** the `.sql` file text (FROM/JOIN/EXEC/REFERENCES) | ~~MCP query to sys.sql_expression_dependencies~~ |
+| Find objects matching a naming pattern | **Glob** on SSDT folders | ~~MCP query to sys.tables WHERE name LIKE~~ |
+| Read procedure/function code for logic extraction | **Read** the `.sql` file from the SSDT repo | ~~MCP query to sys.sql_modules~~ |
+| Read Dictionary/Dim lookup table structure | **Read** from upstream DB_Schema SSDT repo | ~~MCP query to INFORMATION_SCHEMA~~ |
+
+## When MCP IS Required
+
+MCP is ONLY for **live data queries** that cannot exist in a repo file:
+
+| Task | Why MCP | Phases |
+|------|---------|--------|
+| `SELECT TOP N` from a table | Actual row data doesn't live in DDL files | Phase 2 (Sampling) |
+| `SELECT col, COUNT(*) GROUP BY` | Value distributions require live data | Phase 3 (Distribution) |
+| `SELECT DISTINCT` for enum detection | Runtime enum values aren't in DDL | Phase 3 (Distribution) |
+| `MIN/MAX/AVG` for range analysis | Statistical aggregates need live data | Phase 3 (Distribution) |
+
+**That's it.** Nothing else requires MCP for Synapse. Atlassian MCP (Phase 10) and Databricks MCP (write-objects) are separate concerns — this rule governs database-to-repo access.
+
+## Repository Paths
+
+### DWH Semantic Documentation (Synapse)
+
+The Dataplatform repo is the SSDT project for Synapse SQL Pool:
+
+```
+c:\Users\guyman\Documents\github\Dataplatform\SynapseSQLPool1\sql_dp_prod_we\
+├── DWH_dbo\
+│   ├── Tables\          → DWH_dbo.{TableName}.sql     (343 files)
+│   ├── Views\           → DWH_dbo.{ViewName}.sql      (22 files)
+│   ├── Stored Procedures\ → DWH_dbo.{SPName}.sql      (126 files)
+│   └── Functions\       → DWH_dbo.{FunctionName}.sql
+```
+
+**File naming convention**: `{Schema}.{ObjectName}.sql`
+Example: `DWH_dbo.Dim_ActionType.sql` → `CREATE TABLE [DWH_dbo].[Dim_ActionType] (...) WITH (DISTRIBUTION = REPLICATE, ...)`
+
+### Production Pipeline (DB_Schema)
+
+The upstream DB_Schema SSDT project:
+
+```
+c:\Users\guyman\Documents\github\DB_Schema\
+├── {DatabaseName}\
+│   ├── {DatabaseName}\
+│   │   ├── {Schema}\
+│   │   │   ├── Tables\          → {Schema}.{Table}.sql
+│   │   │   ├── Views\           → {Schema}.{View}.sql
+│   │   │   ├── Stored Procedures\ → {Schema}.{SP}.sql
+│   │   │   └── Functions\       → {Schema}.{Function}.sql
+```
+
+### Upstream Wiki
+
+Already-documented upstream objects:
+
+```
+c:\Users\guyman\Documents\github\DB_Schema\etoro\Wiki\
+├── {Schema}\
+│   ├── Tables\{Table}.md
+│   ├── Views\{View}.md
+│   └── Stored Procedures\{SP}.md
+```
+
+## Phase-by-Phase Source Assignment
+
+| Phase | Data Needed | Source | MCP? |
+|-------|-------------|--------|------|
+| 1 — Structure Analysis | Columns, types, distribution, indexes | **Dataplatform repo** `.sql` file | NO |
+| 2 — Live Data Sampling | Actual row data (TOP N) | **Synapse MCP** | YES |
+| 3 — Distribution Analysis | Value counts, enums, ranges | **Synapse MCP** | YES |
+| 4 — Lookup Resolution | Dim_* / Dictionary table structures | **Dataplatform + DB_Schema repos** | NO |
+| 5 — JOIN Analysis | SP/view SQL for JOIN patterns | **Dataplatform repo** `.sql` files | NO |
+| 6 — Business Logic Discovery | Column groups, hierarchies | Derived from Phases 1-5 output | NO |
+| 7 — View Dependency Scan | View definitions, base tables | **Dataplatform repo** `.sql` files | NO |
+| 8 — Procedure Reference Scan | SP code referencing table | **Dataplatform repo** Grep/Read | NO |
+| 9 — Procedure Logic Extraction | SP code deep read | **Dataplatform repo** `.sql` files | NO |
+| 9B — ETL Orchestration | SP execution order | **Dataplatform repo** `.sql` files | NO |
+| 10 — Atlassian Knowledge Scan | Jira/Confluence | **Atlassian MCP** | YES (different MCP) |
+| 11 — Generate Documentation | Synthesis of all phases | Local computation | NO |
+| 12 — Cross-Object Enrichment | Existing wiki files | **Local wiki files** | NO |
+| 13 — Production Lineage | SP code lineage | **Dataplatform repo** | NO |
+| 14 — Query Advisory | Distribution keys, patterns | Derived from Phases 1, 3 | NO |
+
+**Result**: Only Phases 2-3 need Synapse MCP. Everything else reads from repo files.
+
+## Enforcement
+
+If an agent or rule file contains a query to `INFORMATION_SCHEMA`, `sys.columns`, `sys.tables`, `sys.indexes`, `sys.sql_modules`, `sys.pdw_table_distribution_properties`, or `sp_helptext` for structural/code information that exists in the SSDT repo — **that is a rule violation**. The correct action is to read the corresponding `.sql` file from the repo.
+
+## Rationale
+
+This principle exists because:
+- The Dataplatform SSDT repo has **343 table DDLs, 126 SP definitions, and 22 view definitions** for DWH_dbo — every object's full CREATE statement including columns, types, distribution, and indexes
+- Reading a local file takes <100ms; a Synapse MCP query takes 3-10 seconds with connection overhead
+- For a batch of 25 objects, repo-first eliminates **~100 MCP round trips** (4 queries/object × 25 objects) → saves ~10-15 minutes per batch
+- DB_Schema (Bonnie's pipeline) has enforced this principle since Day 1 and processes 125 objects/day as a result

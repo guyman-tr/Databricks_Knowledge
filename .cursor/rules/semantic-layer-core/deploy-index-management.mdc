@@ -1,0 +1,227 @@
+---
+description: "Deploy Index Management — _deploy-index.md generation, update, and status display protocol for schema-level deployment tracking. Used by write-objects-dwh command."
+globs:
+alwaysApply: false
+---
+
+# Deploy Index Management Protocol
+
+The `_deploy-index.md` file tracks which wiki-documented objects have been deployed to Unity Catalog. It is separate from `_index.md` (which tracks wiki build progress). Operators never edit it manually.
+
+**File location**: `knowledge/synapse/Wiki/{Schema}/_deploy-index.md`
+
+---
+
+## _deploy-index.md vs _index.md
+
+| File | Purpose |
+|------|---------|
+| `_index.md` | Tracks wiki documentation build progress (Pending, Done, Failed, Queued) |
+| `_deploy-index.md` | Tracks UC deployment status (Pending, Deployed, Failed, Stale) |
+
+Every object in `_deploy-index.md` must have status `Done` in `_index.md`.
+
+---
+
+## _deploy-index.md Schema
+
+### YAML Frontmatter
+
+```yaml
+---
+schema: DWH_dbo
+database: Synapse DWH
+total_deployable: 23
+deployed: 18
+failed: 1
+last_deploy_batch: 4
+last_updated: "2026-03-16"
+---
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `schema` | string | yes | Schema name (e.g., `DWH_dbo`) |
+| `database` | string | yes | Database identifier (e.g., `Synapse DWH`) |
+| `total_deployable` | int | yes | Total objects in the file (must equal object count) |
+| `deployed` | int | yes | Count of objects with status `Deployed` |
+| `failed` | int | yes | Count of objects with status `Failed` |
+| `last_deploy_batch` | int | yes | Most recently completed deploy batch number |
+| `last_updated` | string | yes | ISO date of last update |
+
+### Markdown Body
+
+1. **Metrics Table** — summary stats
+2. **Completed Deploy Batches** — one section per completed batch (newest first)
+3. **Object Type Sections** — Tables, Views (alphabetical within each) with status column
+
+---
+
+## Status Values (Exhaustive)
+
+| Status | Meaning |
+|--------|---------|
+| `Deployed (Batch N)` | Successfully deployed in deploy batch N |
+| `Pending` | Wiki done, not yet deployed |
+| `Failed (Batch N) — {reason}` | Deployment failed |
+| `Stale — wiki updated` | Wiki was modified after last deploy |
+
+---
+
+## Protocol 1: CREATE (First Run)
+
+**When**: No `_deploy-index.md` exists for the target schema.
+
+**Steps**:
+
+1. **Read `_index.md`**: Parse Object Type sections for objects with status `Done` or `Done (Batch N)`.
+
+2. **Create `_deploy-index.md`**: Write the file with:
+   - YAML frontmatter: `total_deployable` = count of Done objects, `deployed` = 0, `failed` = 0, `last_deploy_batch` = 0
+   - Metrics Table
+   - Empty Completed Deploy Batches area
+   - Object Type sections (Tables, Views) with every Done object listed as `Pending`
+
+3. **Sort objects** within each type section alphabetically by object name.
+
+4. **Validation**: Every object in `_deploy-index.md` must have status `Done` in `_index.md`.
+
+---
+
+## Protocol 2: UPDATE (After Each Object)
+
+**When**: An object completes deployment or fails during deployment.
+
+**Steps**:
+
+### On Success:
+
+1. **Update Object Type section**: Find the object's row. Change status from `Pending` to `Deployed (Batch N)`. Add markdown link to wiki file: `[{Schema}.{ObjectName}]({TypeFolder}/{ObjectName}.md)`.
+
+2. **Update frontmatter counters**: Increment `deployed` by 1. Update `last_deploy_batch` if this is a new batch. Update `last_updated` to today's date.
+
+3. **Update Completed Deploy Batch section** (if this is the last object in the batch): Add a new Completed Deploy Batch block at the top of the completed batches area.
+
+### On Failure:
+
+1. **Update Object Type section**: Change status to `Failed (Batch N) — {error reason}`.
+
+2. **Update frontmatter counters**: Increment `failed` by 1. Update `last_updated`.
+
+3. **Continue**: The batch continues with the next object. Failed objects do not block subsequent objects.
+
+### Format for Completed Deploy Batch Section:
+
+```markdown
+## Deploy Batch 4 (COMPLETED) - 5 objects
+
+Planned: 2026-03-16 | Completed: 2026-03-16
+
+| # | Object | Type | Status |
+|---|--------|------|--------|
+| 1 | [DWH_dbo.Dim_Position](Tables/Dim_Position.md) | Table | Deployed |
+| 2 | [DWH_dbo.Dim_Instrument](Tables/Dim_Instrument.md) | Table | Deployed |
+| 3 | DWH_dbo.Dim_Sector | Table | Failed — UC target not found |
+| 4 | [DWH_dbo.Dim_Country](Tables/Dim_Country.md) | Table | Deployed |
+| 5 | [DWH_dbo.Dim_Currency](Tables/Dim_Currency.md) | Table | Deployed |
+```
+
+### Format for Object Type Sections:
+
+```markdown
+## Tables (45)
+
+| Object | Status |
+|--------|--------|
+| [DWH_dbo.Dim_Country](Tables/Dim_Country.md) | Deployed (Batch 4) |
+| [DWH_dbo.Dim_Position](Tables/Dim_Position.md) | Deployed (Batch 4) |
+| DWH_dbo.Fact_Revenue | Pending |
+| DWH_dbo.Dim_Sector | Failed (Batch 4) — UC target not found |
+| DWH_dbo.Dim_ActionType | Stale — wiki updated |
+```
+
+---
+
+## Protocol 3: STATUS DISPLAY (Read-Only)
+
+**When**: Operator runs the command with `status` scope.
+
+**Steps**:
+
+1. **Read `_deploy-index.md`**: Parse YAML frontmatter for aggregate metrics. Parse Object Type sections for per-type counts.
+
+2. **Compute per-type breakdown**: For each type (Tables, Views): count Deployed, Pending, Failed, Stale.
+
+3. **Identify next deployment batch**: Objects with status `Pending` or `Stale`, ordered by `_dependency_order.json`.
+
+4. **Display compact summary**:
+
+```
+Schema: DWH_dbo (Deployment)
+═══════════════════════════════════
+Progress:  18/23 deployed (78%)
+Failed:    1
+Stale:     2 (wiki updated after last deploy)
+
+By type:
+  Tables:     12/15 deployed
+  Views:       6/8 deployed
+
+Next deploy batch: 5 objects (4 Pending, 1 Stale)
+  1. DWH_dbo.Fact_Revenue (Table)
+  2. DWH_dbo.Dim_ActionType (Table) — Stale
+  3. DWH_dbo.vw_RevenueDaily (View)
+  ...
+
+Recent failures: DWH_dbo.Dim_Sector — UC target not found
+═══════════════════════════════════
+```
+
+5. **Exit without modifying any files.** Status scope is strictly read-only.
+
+---
+
+## Protocol 4: STALE DETECTION
+
+**Purpose**: Identify objects whose wiki was updated after their last deployment. These should be re-deployed (the `re-deploy` scope in write-objects-dwh).
+
+**Detection logic**:
+
+1. For each object with status `Deployed (Batch N)` in `_deploy-index.md`, get the wiki `.md` file path: `knowledge/synapse/Wiki/{Schema}/{TypeFolder}/{ObjectName}.md`.
+
+2. Read the wiki file's last-modified date (from git or filesystem).
+
+3. Compare against the object's last deploy timestamp. If the deploy batch completion time is stored, use that; otherwise use `last_updated` from frontmatter as a proxy for the schema's last deploy.
+
+4. If the wiki `.md` file is **newer** than the last deploy → mark as `Stale — wiki updated`.
+
+5. Stale objects are included in the `re-deploy` scope. They are re-processed through the per-object pipeline and their status is updated to `Deployed (Batch N)` after successful re-deployment.
+
+---
+
+## Validation Rules
+
+These rules MUST hold for every `_deploy-index.md` file. The agent should verify them after CREATE and periodically after UPDATE.
+
+1. **Index alignment**: Every object in `_deploy-index.md` must have status `Done` in `_index.md`.
+2. **Total count consistency**: `total_deployable` MUST equal the count of objects in the Object Type sections.
+3. **Deployed count consistency**: `deployed` in frontmatter MUST equal the count of `Deployed` status rows.
+4. **Failed count consistency**: `failed` in frontmatter MUST equal the count of `Failed` status rows.
+
+---
+
+## Metrics Table Format
+
+```markdown
+## Schema Deployment Progress
+
+| Metric | Value |
+|--------|-------|
+| **Schema** | {Schema} |
+| **Total Deployable** | {total_deployable} |
+| **Deployed** | {deployed} ({pct}%) |
+| **Failed** | {failed} |
+| **Stale** | {stale} |
+| **Last Deploy Batch** | {last_deploy_batch} |
+| **Last Updated** | {last_updated} |
+```

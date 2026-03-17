@@ -5,6 +5,10 @@ Auto-generated from all feature plans. Last updated: 2026-03-01
 ## Active Technologies
 - Python 3.11 + `databricks-sql-connector`, `databricks-sdk` (already installed) (001-deep-lineage-propagation)
 - JSON files on disk (lineage tree, progress log), SQL files (ALTER scripts), Markdown (scope report) (001-deep-lineage-propagation)
+- Cursor command markdown + Cursor rule files (.mdc) + Synapse MCP (`synapse_sql`), Atlassian MCP, Databricks MCP (optional) (002-mass-process-orchestration)
+- File-based — `_index.md` (markdown), `_batch_context.json` (JSON), wiki `.md` files (002-mass-process-orchestration)
+- Cursor rules (`.mdc`), Markdown commands (`.md`), Python helper scripts + Synapse MCP, Atlassian MCP, Databricks MCP, upstream wiki repos, Dataplatform repo (002-mass-process-orchestration)
+- Local filesystem (wiki files, tracking files, ALTER scripts); Unity Catalog (deployed metadata) (002-mass-process-orchestration)
 
 - PowerShell 5.1 (pipeline orchestration), Cursor rules `.mdc` (phase logic), Markdown (output) + Synapse MCP (live SQL queries), Databricks MCP (UC metadata), Atlassian MCP (Jira/Confluence context), git (version control + diff history) (master)
 
@@ -24,9 +28,18 @@ tests/
 PowerShell 5.1 (pipeline orchestration), Cursor rules `.mdc` (phase logic), Markdown (output): Follow standard conventions
 
 ## Recent Changes
-- 001-deep-lineage-propagation: Added Python 3.11 + `databricks-sql-connector`, `databricks-sdk` (already installed)
+- 002-mass-process-orchestration: Added Cursor rules (`.mdc`), Markdown commands (`.md`), Python helper scripts + Synapse MCP, Atlassian MCP, Databricks MCP, upstream wiki repos, Dataplatform repo
+- 002-mass-process-orchestration: Added Cursor rules (`.mdc`), Markdown commands (`.md`), Python helper scripts + Synapse MCP, Atlassian MCP, Databricks MCP, upstream wiki repos, Dataplatform repo
+- 002-mass-process-orchestration: Added Cursor command markdown + Cursor rule files (.mdc) + Synapse MCP (`synapse_sql`), Atlassian MCP, Databricks MCP (optional)
 
-- master: Added PowerShell 5.1 (pipeline orchestration), Cursor rules `.mdc` (phase logic), Markdown (output) + Synapse MCP (live SQL queries), Databricks MCP (UC metadata), Atlassian MCP (Jira/Confluence context), git (version control + diff history)
 
 <!-- MANUAL ADDITIONS START -->
+## Constitution IX: Repo First, MCP Second (NON-NEGOTIABLE)
+
+**NEVER seek from the database what you can get from the repo.**
+
+- Dataplatform SSDT repo (`Dataplatform\SynapseSQLPool1\sql_dp_prod_we\`) has ALL DDLs for Synapse objects (343 tables, 126 SPs, 22 views for DWH_dbo)
+- DB_Schema SSDT repo has ALL production DDLs and upstream wikis
+- Synapse MCP is ONLY for live data queries (Phases 2-3: `SELECT TOP N`, `COUNT(*)`, `GROUP BY`)
+- See `.cursor/rules/semantic-layer-core/repo-first-access.mdc` for full enforcement table
 <!-- MANUAL ADDITIONS END -->

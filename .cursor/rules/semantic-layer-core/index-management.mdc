@@ -1,0 +1,275 @@
+---
+description: "Index Management — _index.md generation, update, and status display protocol for schema-level wiki documentation tracking. Shared across all build-wiki-{target} commands."
+globs:
+alwaysApply: false
+---
+
+# Index Management Protocol
+
+The `_index.md` file is the per-schema tracking registry for batch documentation. It is auto-generated on the first schema-scope run and auto-maintained after every object completes. Operators never edit it manually.
+
+**File location**: `knowledge/synapse/Wiki/{Schema}/_index.md`
+
+**V1 limitation**: Designed for single-operator use. Concurrent writes from multiple sessions may overwrite each other. Timestamp-based conflict detection is deferred to V2.
+
+---
+
+## _index.md Schema
+
+### YAML Frontmatter
+
+Every `_index.md` starts with machine-parseable YAML frontmatter:
+
+```yaml
+---
+schema: DWH_dbo
+database: Synapse DWH
+total_objects: 87
+documented: 23
+failed: 1
+last_batch: 5
+last_updated: "2026-03-16"
+quality_avg: 8.1
+---
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `schema` | string | yes | Schema name (e.g., `DWH_dbo`) |
+| `database` | string | yes | Database identifier (e.g., `Synapse DWH`) |
+| `total_objects` | int | yes | Total objects discovered in schema |
+| `documented` | int | yes | Count of objects with status `Done` |
+| `failed` | int | yes | Count of objects with status `Failed` |
+| `last_batch` | int | yes | Most recently completed batch number |
+| `last_updated` | string | yes | ISO date of last update |
+| `quality_avg` | float | yes | Average quality score across documented objects |
+
+### Markdown Body
+
+After the frontmatter, the body contains four sections in order:
+
+1. **Metrics Table** — summary stats
+2. **Next Batch** — the planned upcoming batch with dependency notation
+3. **Completed Batches** — one section per completed batch (newest first)
+4. **Object Type Sections** — Tables, Views (alphabetical within each)
+
+---
+
+## Status Values (Exhaustive)
+
+| Status | Meaning |
+|--------|---------|
+| `Done (Batch N)` | Successfully documented in batch N |
+| `Queued (Batch N, #M)` | Assigned to batch N, position M |
+| `Pending` | Not yet assigned to any batch |
+| `Failed (Batch N) — {reason}` | Failed during batch N with error reason |
+| `Skipped — stale <30d` | Already documented within staleness threshold |
+
+Quality values: Numeric `0.0`–`10.0` for documented objects, `-` for undocumented.
+
+---
+
+## Dependency Notation Grammar
+
+Used in the Next Batch section to show intra-batch and cross-batch dependencies:
+
+| Notation | Meaning |
+|----------|---------|
+| `(leaf)` | No DWH-layer dependencies |
+| `-> ObjectName [done]` | Depends on an already-documented object |
+| `-> #N (ObjectName)` | Depends on batch item N (must come before this item) |
+| `-> ObjectName [external]` | Depends on an object in another schema |
+| `-> ObjectName [pending]` | Depends on an unscheduled object (batch planner should prevent this) |
+
+---
+
+## Protocol 1: CREATE (First Run)
+
+**When**: No `_index.md` exists for the target schema.
+
+**Steps**:
+
+1. **Load dependency graph**: Read `knowledge/synapse/Wiki/_dependency_order.json`. Filter entries where the `table` field starts with `{Schema}.` (e.g., `DWH_dbo.`). Extract object name, depth, and depends_on for each.
+
+2. **Supplementary SSDT repo scan (Constitution IX)**: Scan the Dataplatform SSDT repo for objects not in the dependency graph. Glob for `.sql` files:
+   - Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\*.sql`
+   - Views: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Views\*.sql`
+   
+   Objects found in the SSDT repo but missing from `_dependency_order.json` are added at depth 0 with empty `depends_on`.
+
+3. **Classify objects** into type groups:
+   - `U` / `USER_TABLE` → Tables
+   - `V` / `VIEW` → Views
+   
+   > Stored Procedures and Functions are **not** documentation targets — they are excluded from discovery and tracking. They are analyzed as inputs during table/view Phases 8, 9, and 9B.
+
+4. **Check for existing documentation**: For each object, check if a wiki file already exists at the expected path (`knowledge/synapse/Wiki/{Schema}/{TypeFolder}/{ObjectName}.md`). If it exists and was modified within the staleness threshold (see Staleness Detection below), mark as `Skipped — stale <30d`. If it exists but is older, mark as `Pending` (will be regenerated).
+
+5. **Generate `_index.md`**: Write the file with:
+   - YAML frontmatter (all counters initialized — documented=0, failed=0, last_batch=0)
+   - Metrics Table
+   - Next Batch section (Batch 1 plan — first N objects by depth order)
+   - Empty Completed Batches area
+   - Object Type sections with every object listed as `Pending` (or `Skipped`) with quality `-`
+
+6. **Sort objects** within each type section alphabetically by object name.
+
+---
+
+## Protocol 2: BATCH UPDATE (After Entire Batch)
+
+**When**: All objects in a batch have been processed (Done, Failed, or Skipped). This runs once at the end of the batch, NOT after each individual object.
+
+**Why batch-level**: Updating `_index.md` per-object wastes tool calls and creates unnecessary I/O. During execution, results are tracked in memory. One bulk write at the end is faster and crash-safe (on crash, all objects are still `Queued` and get re-processed on resume).
+
+**Input**: A results list collected during execution: `[{object, status, quality_score, reason}]`
+
+**Steps**:
+
+1. **Update Object Type sections**: For each result in the list:
+   - **Done**: Change `Queued (Batch N, #M)` → `Done (Batch N)`. Set quality score. Add markdown link: `[{Schema}.{ObjectName}]({TypeFolder}/{ObjectName}.md)`.
+   - **Failed**: Change to `Failed (Batch N) — {reason}`. Quality remains `-`.
+   - **Skipped**: Change to `Skipped (no DDL in SSDT)` or `Skipped — {reason}`. Quality remains `-`.
+
+2. **Update frontmatter counters**: Set `documented` = total count of `Done` rows. Set `failed` = total count of `Failed` rows. Recalculate `quality_avg` across all `Done` objects. Set `last_batch` = N. Set `last_updated` to today.
+
+3. **Move batch to Completed Batches**: Add a new Completed Batch block at the top of `## Completed Batches`. Include all objects with their quality scores and final status.
+
+4. **Update Next Batch section**: Replace with placeholder: "Batch N+1 will be planned on next run." If all objects are documented, replace with "All batches complete."
+
+### Format for Completed Batch Section:
+
+```markdown
+## Batch 5 (COMPLETED) - 5 objects (4 done, 1 failed)
+
+Planned: 2026-03-16 | Completed: 2026-03-16
+
+| # | Object | Type | Quality | Status |
+|---|--------|------|---------|--------|
+| 1 | [DWH_dbo.Dim_Position](Tables/Dim_Position.md) | Table | 8.5 | Done |
+| 2 | [DWH_dbo.Dim_Instrument](Tables/Dim_Instrument.md) | Table | 8.8 | Done |
+| 3 | DWH_dbo.Dim_Sector | Table | - | Failed — MCP timeout |
+| 4 | [DWH_dbo.Dim_Country](Tables/Dim_Country.md) | Table | 9.0 | Done |
+| 5 | [DWH_dbo.Dim_Currency](Tables/Dim_Currency.md) | Table | 8.2 | Done |
+```
+
+### Format for Next Batch Section:
+
+```markdown
+## Next Batch (Batch 6) - 5 objects
+
+Planned: 2026-03-16
+
+| # | Object | Type | Depth | Dependencies |
+|---|--------|------|-------|--------------|
+| 1 | DWH_dbo.Fact_Revenue | Table | 2 | -> Dim_Customer [done], Dim_Instrument [done] |
+| 2 | DWH_dbo.Dim_Campaign | Table | 2 | -> Dim_Country [done] |
+| 3 | DWH_dbo.vw_RevenueDaily | View | 3 | -> #1 (Fact_Revenue) |
+| 4 | DWH_dbo.V_Dim_Customer | View | 2 | -> Dim_Customer [done] |
+| 5 | DWH_dbo.Fact_Commission | Table | 2 | -> Dim_Customer [done] |
+
+All within-batch dependencies are satisfied.
+```
+
+### Format for Object Type Sections:
+
+```markdown
+## Tables (45)
+
+| Object | Quality | Status |
+|--------|---------|--------|
+| [DWH_dbo.Dim_Country](Tables/Dim_Country.md) | 9.0 | Done (Batch 5) |
+| [DWH_dbo.Dim_Position](Tables/Dim_Position.md) | 8.5 | Done (Batch 5) |
+| DWH_dbo.Fact_Revenue | - | Queued (Batch 6, #1) |
+| DWH_dbo.Fact_Trading | - | Pending |
+| DWH_dbo.Dim_Sector | - | Failed (Batch 5) — MCP timeout |
+```
+
+---
+
+## Protocol 3: STATUS DISPLAY (Read-Only)
+
+**When**: Operator runs the command with Status scope.
+
+**Steps**:
+
+1. **Read `_index.md`**: Parse YAML frontmatter for aggregate metrics. Parse Object Type sections for per-type counts.
+
+2. **Compute per-type breakdown**:
+   - For each type (Tables, Views): count Done, Pending, Failed, Skipped.
+
+3. **Identify next batch**: Parse the Next Batch section for planned objects.
+
+4. **Display compact summary**:
+
+```
+Schema: DWH_dbo
+═══════════════════════════════════
+Progress:  23/87 objects (26%)
+Batches:   5 complete, 13 remaining
+Quality:   avg 8.1 | min 7.0 | max 9.2
+
+By type:
+  Tables:     12/45 done
+  Views:       8/22 done
+
+Next batch (Batch 6): 5 objects at depth 2
+  1. DWH_dbo.Fact_Revenue (Table)
+  2. DWH_dbo.Dim_Campaign (Table)
+  3. DWH_dbo.vw_RevenueDaily (View)
+  4. DWH_dbo.Fact_Commission (Table)
+
+Recent failures: none
+═══════════════════════════════════
+```
+
+5. **Exit without modifying any files.** Status scope is strictly read-only.
+
+---
+
+## Staleness Detection
+
+**Purpose**: Skip re-documenting objects that were recently processed (FR-008).
+
+**Threshold**: 30 days (V1 constant — see `batch-orchestration.mdc` for the configuration constant `STALENESS_THRESHOLD_DAYS`).
+
+**Detection logic**:
+
+1. Check if the wiki file exists at the expected path.
+2. If it exists, read the file's last-modified date (from git or filesystem).
+3. If the file was modified within the staleness threshold, mark the object as `Skipped — stale <30d` in `_index.md`.
+4. Skipped objects are excluded from batch planning — they do not consume batch slots.
+5. If the operator wants to force re-documentation of a skipped object, they can change its status to `Pending` in `_index.md` and resume.
+
+---
+
+## Validation Rules
+
+These rules MUST hold for every `_index.md` file. The agent should verify them after CREATE and periodically after UPDATE.
+
+1. **Complete inventory**: Every object in `_dependency_order.json` for this schema MUST appear in the Object Type sections.
+2. **Documented count consistency**: `documented` in frontmatter MUST equal the count of `Done` status rows across all Object Type sections.
+3. **Failed count consistency**: `failed` in frontmatter MUST equal the count of `Failed` status rows.
+4. **Total count consistency**: `total_objects` MUST equal the sum of all object counts across all Object Type section headers (e.g., Tables (45) + Views (22) + ... = total).
+5. **Queued-Next Batch alignment**: Objects in the Next Batch section MUST have status `Queued` in their Object Type section.
+6. **Intra-batch dependency ordering**: Within a batch, all dependencies using `-> #N` notation MUST reference a lower-numbered item (N < current item number).
+7. **Quality range**: Quality scores MUST be numeric `0.0`–`10.0` or `-` for non-documented objects.
+
+---
+
+## Metrics Table Format
+
+```markdown
+## Schema Documentation Progress
+
+| Metric | Value |
+|--------|-------|
+| **Schema** | {Schema} |
+| **Total Objects** | {total} |
+| **Tables** | {table_count} |
+| **Views** | {view_count} |
+| **Documented** | {documented} ({pct}%) |
+| **Failed** | {failed} |
+| **Skipped** | {skipped} |
+| **Last Updated** | {date} |
+```

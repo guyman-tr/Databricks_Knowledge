@@ -1,0 +1,226 @@
+---
+description: "Context Handoff — _batch_context.json serialization, loading, merging, and distillation protocol for inter-batch knowledge persistence. Shared across all build-semantic-layer-{target} commands."
+globs:
+alwaysApply: false
+---
+
+# Context Handoff Protocol
+
+The `_batch_context.json` file persists cross-object knowledge between agent sessions. When a batch ends and the operator starts a new chat, this file is the mechanism for the new session to know what was discovered in prior batches — glossary terms, relationships, cross-references, and quality scores.
+
+**File location**: `knowledge/synapse/Wiki/{Schema}/_batch_context.json`
+**Size budget**: ≤ 20 KB after distillation (~5K tokens, ~2.5% of a 200K context window)
+
+---
+
+## _batch_context.json Schema
+
+```json
+{
+  "schema": "DWH_dbo",
+  "version": 1,
+  "last_batch": 5,
+  "last_updated": "2026-03-16T14:30:00Z",
+  "batch_history": [
+    {
+      "batch": 1,
+      "objects_processed": 5,
+      "objects_failed": 0,
+      "quality_avg": 8.3,
+      "completed_at": "2026-03-16T10:15:00Z"
+    }
+  ],
+  "glossary": {
+    "CID": "Customer ID — unique identifier for a customer account in the eToro platform",
+    "RealCID": "The original Customer ID before any account migration or merge",
+    "InstrumentID": "Unique identifier for a tradeable financial instrument"
+  },
+  "objects": {
+    "DWH_dbo.Dim_Position": {
+      "quality": 8.5,
+      "batch": 1,
+      "primary_key": ["PositionID"],
+      "business_domain": "Trading",
+      "key_columns": ["PositionID", "InstrumentID", "CID", "OpenRate", "CloseRate"],
+      "outbound_relationships": [
+        "InstrumentID -> DWH_dbo.Dim_Instrument.InstrumentID",
+        "CID -> DWH_dbo.Dim_Customer.CID"
+      ],
+      "inbound_references": [],
+      "one_line_summary": "Individual trading positions with open/close details, P&L, and instrument references"
+    }
+  },
+  "cross_references": {
+    "DWH_dbo.Dim_Instrument.InstrumentID": {
+      "referenced_by": ["DWH_dbo.Dim_Position", "DWH_dbo.Fact_BillingDeposit"]
+    }
+  }
+}
+```
+
+### Field Definitions
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `schema` | string | Schema being documented |
+| `version` | int | Schema version for format evolution (always `1` in V1) |
+| `last_batch` | int | Last completed batch number |
+| `last_updated` | string | ISO 8601 datetime |
+| `batch_history` | array | One entry per completed batch with summary metrics |
+| `glossary` | object | Term → definition map. Accumulated across batches. Values ≤ 200 chars. |
+| `objects` | object | Per-object summaries keyed by fully-qualified name |
+| `objects.{name}.quality` | float | Quality score from wiki footer |
+| `objects.{name}.batch` | int | Batch number where documented |
+| `objects.{name}.primary_key` | string[] | Primary key column(s). Empty array if none. |
+| `objects.{name}.business_domain` | string | Business domain (Trading, Payments, Risk, Revenue, etc.) |
+| `objects.{name}.key_columns` | string[] | Most important columns (max 10) |
+| `objects.{name}.outbound_relationships` | string[] | FK-style references TO other objects |
+| `objects.{name}.inbound_references` | string[] | Objects that reference THIS object |
+| `objects.{name}.one_line_summary` | string | One-line business description. ≤ 150 chars. |
+| `cross_references` | object | Column-level cross-reference index |
+
+**Design note**: Glossary entries are cross-referencing aids for the agent, not replacements for element descriptions in wiki files. Confidence tiers are tracked in the wiki files themselves — the context file does not elevate or change tiers during handoff.
+
+---
+
+## Protocol 1: WRITE (End of Batch)
+
+**When**: All objects in the current batch have been processed (Done or Failed).
+
+**Steps**:
+
+1. **Collect batch results**: For each object processed in this batch, extract from the generated wiki file:
+   - Quality score (from the wiki footer)
+   - Primary key columns (from Elements section)
+   - Business domain (from the Business Meaning section or Phase 13 lineage)
+   - Key columns (top 10 most important — PK, FK, and business-critical columns)
+   - Outbound relationships (from the Relationships section)
+   - One-line summary (from the Business Meaning opening sentence)
+
+2. **Collect glossary terms**: Gather new terms discovered during this batch from:
+   - Phase 4 (Lookup Resolution): Enum mappings, acronym expansions, ID-to-name resolutions
+   - Phase 11 (Documentation Generation): Domain terms from business meaning sections
+   - Existing `knowledge/glossary.md` entries referenced during this batch
+
+3. **Collect cross-references**: For each relationship discovered:
+   - If the target object already exists in `objects`, add this object to the target's `inbound_references`
+   - Add to `cross_references` keyed by `{Schema}.{Table}.{Column}`
+
+4. **Build batch_history entry**:
+   ```json
+   {
+     "batch": N,
+     "objects_processed": count_done + count_failed,
+     "objects_failed": count_failed,
+     "quality_avg": average_quality_of_done_objects,
+     "completed_at": "ISO-8601-timestamp"
+   }
+   ```
+
+5. **Write or merge** (see Protocol 3 for merge logic):
+   - If `_batch_context.json` does not exist: create with all collected data
+   - If it exists: merge (append glossary, add objects, update cross-references)
+
+---
+
+## Protocol 2: READ (On Resume)
+
+**When**: Operator starts a new chat and runs the command with Resume scope.
+
+**Steps**:
+
+1. **Load file**: Read `knowledge/synapse/Wiki/{Schema}/_batch_context.json`.
+   - If file does not exist: warn the operator ("Context handoff file not found — proceeding without cross-batch knowledge. Cross-references and glossary from prior batches will not be available.") and continue without it.
+   - If file exists but exceeds 20 KB: run Distill protocol (Protocol 4) before loading.
+
+2. **Apply glossary**: Make all glossary entries available for:
+   - Phase 4 (Lookup Resolution): Use glossary definitions before querying Dictionary tables. Glossary entries are Tier 5 authority if sourced from `knowledge/glossary.md`, otherwise inherit their original tier.
+   - Phase 11 (Documentation Generation): Use glossary terms in column descriptions where applicable.
+
+3. **Apply relationships**: Make object summaries and cross-references available for:
+   - Phase 11 Pre-Read: When generating "Relationships" and "Referenced By" sections, include objects from prior batches that reference or are referenced by the current object.
+   - Phase 12 (Cross-Object Enrichment): Use `outbound_relationships` and `inbound_references` to populate cross-links.
+
+4. **Apply quality context**: Use quality scores from prior batches to prioritize cross-referencing — higher-quality docs are more reliable references.
+
+---
+
+## Protocol 3: MERGE (Across Batches)
+
+**When**: Writing `_batch_context.json` after batch N+1 when a file from batch N already exists.
+
+**Steps**:
+
+1. **Read existing file**: Load the current `_batch_context.json`.
+
+2. **Merge glossary**: Append new terms. If a term already exists in the glossary, keep the existing definition (do not overwrite — earlier batches may have more context). New terms only.
+
+3. **Merge objects**: Add new object entries. If an object somehow appears in both (e.g., re-documented after failure), replace with the newer entry.
+
+4. **Update inbound_references**: For each new object's `outbound_relationships`, find the referenced objects in the existing `objects` map and append the new object to their `inbound_references` array (if not already present).
+
+5. **Merge cross_references**: For each column-level cross-reference, merge the `referenced_by` arrays (union, no duplicates).
+
+6. **Append batch_history**: Add the new batch entry to the `batch_history` array.
+
+7. **Update metadata**: Set `last_batch`, `last_updated`, and `schema` (should already match).
+
+8. **Write**: Overwrite the file with the merged result.
+
+---
+
+## Protocol 4: DISTILL (Size Management)
+
+**When**: Before loading `_batch_context.json` into a new session, if the file exceeds 20 KB.
+
+**Steps**:
+
+1. **Identify upcoming batch**: Read `_index.md` to find the next batch's objects. Build the dependency graph for those objects — all objects that the upcoming batch depends on (direct and transitive).
+
+2. **Keep unconditionally**:
+   - All `glossary` entries (compact — typically < 2 KB even with 50+ terms)
+   - All `batch_history` entries (compact summary records)
+   - All `quality` scores in `objects` (minimal space)
+   - `schema`, `version`, `last_batch`, `last_updated` metadata
+
+3. **Keep selectively** (objects in the dependency graph):
+   - Full object entries (all fields) for objects that appear in the upcoming batch's dependency graph
+   - Full object entries for objects that have `inbound_references` pointing to upcoming batch objects
+
+4. **Prune** (objects not connected to upcoming work):
+   - Reduce to minimal record: keep only `quality`, `batch`, `business_domain`, and `one_line_summary`
+   - Remove `key_columns`, `outbound_relationships`, `inbound_references`, `primary_key`
+
+5. **Prune cross_references**: Remove entries where neither the source column's table nor any `referenced_by` table is in the upcoming batch's dependency graph.
+
+6. **Verify size**: If still > 20 KB after pruning, further reduce `one_line_summary` fields on pruned objects to empty strings. This should bring the file well under budget.
+
+7. **Write**: Overwrite with the distilled version. The pre-distillation version is preserved in git history.
+
+---
+
+## Accumulation Sources
+
+The context file accumulates knowledge from these pipeline phases:
+
+| Source | What it provides | Destination field |
+|--------|-----------------|-------------------|
+| Phase 4 (Lookup Resolution) | Enum mappings, acronym expansions | `glossary` |
+| Phase 5 (JOIN Analysis) | FK-style relationships | `objects.*.outbound_relationships` |
+| Phase 11 (Generate Documentation) | Quality score, business meaning, key columns | `objects.*` (all fields) |
+| Phase 12 (Cross-Object Enrichment) | Inbound references | `objects.*.inbound_references`, `cross_references` |
+| Phase 13 (Production Lineage) | Business domain | `objects.*.business_domain` |
+| `knowledge/glossary.md` | Domain-wide terms | `glossary` |
+
+---
+
+## Validation Rules
+
+These rules MUST hold for every `_batch_context.json` file:
+
+1. **Batch consistency**: `last_batch` MUST equal the highest batch number in `batch_history`.
+2. **Object-index alignment**: Every object key in `objects` MUST have status `Done` in `_index.md`.
+3. **Glossary length**: Each glossary value MUST NOT exceed 200 characters.
+4. **Summary length**: Each `one_line_summary` MUST NOT exceed 150 characters.
+5. **Size budget**: Total file size MUST NOT exceed 20 KB after distillation.
+6. **Version**: `version` MUST be `1` (reserved for future format evolution).
