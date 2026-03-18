@@ -1,0 +1,52 @@
+---
+description: "GATE — Forces spec loading before ANY DWH wiki file generation. Prevents agents from generating docs from memory."
+globs:
+alwaysApply: true
+---
+
+# ⛔ DWH Wiki Generation Gate
+
+**This rule is always loaded. It applies when the agent is executing `build-wiki-dwh` or generating files under `knowledge/synapse/Wiki/`.**
+
+## Trigger Detection
+
+If ANY of these are true, this gate is ACTIVE:
+- The user's message contains `build-wiki-dwh`
+- The conversation summary mentions `build-wiki-dwh`, `DWH_dbo`, or wiki documentation for Synapse objects
+- You are about to write a `.md` file under `knowledge/synapse/Wiki/`
+
+## MANDATORY: Load Before You Generate
+
+**Before writing ANY wiki `.md`, `.review-needed.md`, or `.lineage.md` file, you MUST:**
+
+1. **Read the execution card**: `.cursor/rules/dwh-semantic-doc/00-execution-card.mdc`
+2. **Read the Phase 11 spec**: `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc`
+3. **Read the lineage/upstream spec**: `.cursor/rules/dwh-semantic-doc/13-production-lineage-mapping.mdc`
+
+**If you have not read all 3 files in THIS conversation, STOP and read them NOW.**
+
+## MANDATORY: Phase Gate Checklist Before Each Object
+
+Before generating documentation for EACH object, emit this checklist:
+
+```
+PHASE GATE CHECK — {ObjectName}:
+  [x/  ] P1 DDL   [x/  ] P2 Sample   [x/  ] P3 Dist   [x/  ] P4 Lookup
+  [x/  ] P5 JOIN  [x/  ] P6 BizLogic [x/  ] P7 Views  [x/  ] P8 SP-scan
+  [x/  ] P9 SP-logic [x/  ] P9B ETL  [x/  ] P10 Jira  [x/  ] P10.5 Upstream
+  → Ready for P11
+```
+
+If ANY HARD-gated phase is unchecked (`[ ]`), DO NOT generate. Go run that phase.
+
+## Critical Reminders (from Phase 11 spec)
+
+- **Template**: 8 numbered sections (`## 1.` through `## 8.`). No other structure.
+- **Tier suffix**: Every element description MUST end with `(Tier N — source.table)` IN the description text. A separate Confidence column does NOT satisfy this.
+- **Tier 1 = upstream wiki verbatim** from DB_Schema. ETL-computed columns (ModificationDateID, UpdateDate) are NEVER Tier 1.
+- **Phase 10.5 is HARD**: Read upstream wiki from `DB_Schema\etoro\Wiki\` BEFORE generating. This is the #1 quality driver.
+- **Elements table format**: `| # | Element | Type | Nullable | Description |` — 5 columns, tier suffix inside Description.
+
+## Violation = Delete and Redo
+
+If a generated doc is missing the tier suffix, uses the wrong template, or skipped Phase 10.5: delete it and regenerate. Do not patch — the structure is too different to fix incrementally.

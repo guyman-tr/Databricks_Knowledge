@@ -3,13 +3,13 @@ schema: DWH_dbo
 database: Synapse DWH
 total_objects: 379
 blacklisted: 246
-pending: 116
-documented: 0
+pending: 108
+documented: 9
 failed: 0
 skipped: 3
-last_batch: 0
+last_batch: 1
 last_updated: "2026-03-18"
-quality_avg: 0
+quality_avg: 7.1
 revisions: 0
 ---
 
@@ -21,9 +21,10 @@ revisions: 0
 | **Total Objects** | 379 |
 | **Active (to document)** | 116 (95 tables, 21 views) |
 | **Blacklisted** | 246 |
-| **Documented** | 0 (0%) |
+| **Documented** | 9 (7.8%) |
 | **Skipped** | 3 |
 | **Last Updated** | 2026-03-18 |
+| **Quality Avg** | 7.1 (range 6.2-9.2) |
 
 ---
 
@@ -34,7 +35,7 @@ revisions: 0
 | DWH_dbo.CustomerStatic | - | Pending |
 | DWH_dbo.Dim_AccountStatus | - | Pending |
 | DWH_dbo.Dim_AccountType | - | Pending |
-| DWH_dbo.Dim_ActionType | - | Pending |
+| DWH_dbo.Dim_ActionType | 7.7 ★★★★☆ | Done — [wiki](Tables/Dim_ActionType.md) |
 | DWH_dbo.Dim_Affiliate | - | Pending |
 | DWH_dbo.Dim_AffiliateCostType | - | Pending |
 | DWH_dbo.Dim_BillingDepot | - | Pending |
@@ -42,7 +43,7 @@ revisions: 0
 | DWH_dbo.Dim_BonusType | - | Pending |
 | DWH_dbo.Dim_CalculationType | - | Pending |
 | DWH_dbo.Dim_Campaign | - | Pending |
-| DWH_dbo.Dim_CardType | - | Pending |
+| DWH_dbo.Dim_CardType | 7.9 ★★★★☆ | Done — [wiki](Tables/Dim_CardType.md) |
 | DWH_dbo.Dim_CashoutFeeGroup | - | Pending |
 | DWH_dbo.Dim_CashoutMode | - | Pending |
 | DWH_dbo.Dim_CashoutReason | - | Pending |
@@ -52,7 +53,7 @@ revisions: 0
 | DWH_dbo.Dim_ClosePositionReason | - | Pending |
 | DWH_dbo.Dim_CompensationReason | - | Pending |
 | DWH_dbo.Dim_ContactType | - | Pending |
-| DWH_dbo.Dim_ContractType | - | Pending |
+| DWH_dbo.Dim_ContractType | 6.4 ★★★☆☆ | Done — [wiki](Tables/Dim_ContractType.md) |
 | DWH_dbo.Dim_CostConfigurationId | - | Pending |
 | DWH_dbo.Dim_CostSubtype | - | Pending |
 | DWH_dbo.Dim_CostType | - | Pending |
@@ -87,7 +88,7 @@ revisions: 0
 | DWH_dbo.Dim_MifidCategorization | - | Pending |
 | DWH_dbo.Dim_Mirror | - | Pending |
 | DWH_dbo.Dim_MirrorType | - | Pending |
-| DWH_dbo.Dim_MoveMoneyReason | - | Pending |
+| DWH_dbo.Dim_MoveMoneyReason | 7.3 ★★★★☆ | Done — [wiki](Tables/Dim_MoveMoneyReason.md) |
 | DWH_dbo.Dim_PaymentStatus | - | Pending |
 | DWH_dbo.Dim_PendingClosureStatus | - | Pending |
 | DWH_dbo.Dim_PhoneVerified | - | Pending |
@@ -120,25 +121,25 @@ revisions: 0
 | DWH_dbo.Fact_BillingDeposit | - | Pending |
 | DWH_dbo.Fact_BillingRedeem | - | Pending |
 | DWH_dbo.Fact_BillingWithdraw | - | Pending |
-| DWH_dbo.Fact_Cashout_Rollback | - | Pending |
+| DWH_dbo.Fact_Cashout_Rollback | 9.2 ★★★★★ | Done — [wiki](Tables/Fact_Cashout_Rollback.md) |
 | DWH_dbo.Fact_Cashout_State | - | Pending |
 | DWH_dbo.Fact_CurrencyPriceWithSplit | - | Pending |
 | DWH_dbo.Fact_CustomerAction | - | Pending |
 | DWH_dbo.Fact_CustomerUnrealized_PnL | - | Pending |
 | DWH_dbo.Fact_CustomerUnrealized_PnL_UserAPI | - | Pending |
-| DWH_dbo.Fact_Deposit_Fees | - | Pending |
+| DWH_dbo.Fact_Deposit_Fees | 6.2 ★★★☆☆ | Done — [wiki](Tables/Fact_Deposit_Fees.md) |
 | DWH_dbo.Fact_Deposit_State | - | Pending |
 | DWH_dbo.Fact_FirstCustomerAction | - | Pending |
 | DWH_dbo.Fact_Guru_Copiers | - | Pending |
 | DWH_dbo.Fact_History_Cost | - | Pending |
 | DWH_dbo.Fact_Position_Futures_Snapshot | - | Pending |
 | DWH_dbo.Fact_RegulationTransfer | - | Pending |
-| DWH_dbo.Fact_Reverse_Deposits | - | Pending |
+| DWH_dbo.Fact_Reverse_Deposits | 6.5 ★★★☆☆ | Done — [wiki](Tables/Fact_Reverse_Deposits.md) |
 | DWH_dbo.Fact_Settlement_Prices | - | Pending |
 | DWH_dbo.Fact_SnapshotCustomer | - | Pending |
 | DWH_dbo.Fact_SnapshotEquity | - | Pending |
-| DWH_dbo.Fact_Withdraw_Fees | - | Pending |
-| DWH_dbo.History_CurrencyPrice | - | Pending |
+| DWH_dbo.Fact_Withdraw_Fees | 6.5 ★★★☆☆ | Done — [wiki](Tables/Fact_Withdraw_Fees.md) |
+| DWH_dbo.History_CurrencyPrice | 7.2 ★★★★☆ | Done — [wiki](Tables/History_CurrencyPrice.md) |
 | DWH_dbo.STS_User_Operations_Data_History | - | Pending |
 
 ## Views (21)

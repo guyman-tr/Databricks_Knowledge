@@ -1,9 +1,9 @@
 {
   "schema": "DWH_dbo",
-  "last_batch": 0,
+  "last_batch": 1,
   "last_updated": "2026-03-18",
-  "documented_count": 0,
-  "pending_count": 116,
+  "documented_count": 9,
+  "pending_count": 108,
   "reset_reason": "QA reset after batch-size reduction (25→10) and Rule 19 tier-suffix enforcement",
   "etl_patterns": {
     "SP_Dictionaries_DL_To_Synapse": {
@@ -107,9 +107,46 @@
     "Billing.*": "Billing source tables have upstream wikis in DB_Schema/etoro/Wiki/Billing/",
     "UserApiDB.*": "UserApiDB Dictionary tables (EvMatchStatus, ExtendedUserField) loaded via SP_Dictionaries_DL_To_Synapse"
   },
+  "batch_1_knowledge": {
+    "dead_fact_tables_pipeline_stopped_2024": [
+      "Fact_Deposit_Fees (staging: etoro_BackOffice_BillingDepositsPCIVersion, source SP: BackOffice.BillingDepositsPCIVersion, stopped 2024-07-01, 14.4M rows)",
+      "Fact_Reverse_Deposits (staging: etoro_BackOffice_GetRiskExposureReportPCIVersion, source SP: BackOffice.GetRiskExposureReportPCIVersion, stopped 2024-06-29, 9,904 rows)",
+      "Fact_Withdraw_Fees (staging: etoro_BackOffice_GetProcessedWithdrawPCIVersion, source SP: BackOffice.GetProcessedWithdrawPCIVersion, stopped 2024-07-01, 6.6M rows)"
+    ],
+    "etl_notes": {
+      "Fact_Deposit_Fees": "SP WHERE clause commented out - full reload mode. Staging table gone. ModificationDateID = YYYYMMDD from StatusModificationTime.",
+      "Fact_Reverse_Deposits": "SP has active DELETE+INSERT incremental (WHERE not commented out). Staging gone. ModificationDateID from DepositStatusModificationTime.",
+      "Fact_Withdraw_Fees": "SP has active DELETE+INSERT incremental. Staging gone. ModificationDateID from StatusModificationTime."
+    },
+    "dim_source_notes": {
+      "Dim_ActionType": "DWH-specific financial action types (45 rows). NOT sourced from etoro.Dictionary.ActionType (which has session events). Migrated from Legacy DWH SQL Server. No active ETL SP.",
+      "Dim_CardType": "Frozen 2019 snapshot (18 of 32 production types). CarTypeName has DDL typo (Car vs Card). IsActive discrepancies vs production.",
+      "Dim_ContractType": "DWH-internal affiliate commission model lookup (9 rows). No production etoro.Dictionary equivalent. SP_Dim_Affiliate derives ContractType via CASE on ContractName text.",
+      "Dim_MoveMoneyReason": "4 of 9 production IDs in DWH. ID=5 (InternalTransfer Trade) used in SP_Fact_CustomerAction for ActionTypeID 44/45 but MISSING from DWH dim."
+    },
+    "upstream_wiki_additions": {
+      "Dictionary.MoveMoneyReason": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.MoveMoneyReason.md - quality 9.2/10. Production has IDs 1-3,5-9. DWH has 1-4 (Airdrop label for ID=4 diverges).",
+      "Dictionary.CardType": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CardType.md - quality 9.2/10. Tier 1 source for Dim_CardType columns.",
+      "Trade.CurrencyPrice": "Found at DB_Schema/etoro/Wiki/Trade/Tables/Trade.CurrencyPrice.md - quality 9.2/10. Live price cache; used as Tier 1 for History_CurrencyPrice column semantics."
+    },
+    "external_table_notes": {
+      "History_CurrencyPrice": "External Table on Bronze/PriceLog/History/CurrencyPrice/*/*/*.parquet. Massive tick archive - ALWAYS filter by etr_ymd. Downstream SPs use DWH_staging.PriceLog_History_CurrencyPrice_Active (1-day) and Active_5_days staging variants instead of the full external table."
+    },
+    "quality_scores": {
+      "Dim_ActionType": 7.7,
+      "Dim_CardType": 7.9,
+      "Dim_ContractType": 6.4,
+      "Dim_MoveMoneyReason": 7.3,
+      "Fact_Cashout_Rollback": 9.2,
+      "Fact_Deposit_Fees": 6.2,
+      "Fact_Reverse_Deposits": 6.5,
+      "Fact_Withdraw_Fees": 6.5,
+      "History_CurrencyPrice": 7.2
+    }
+  },
   "next_batch_plan": {
-    "batch_number": 1,
+    "batch_number": 2,
     "resume": false,
-    "object_count_remaining": 116
+    "object_count_remaining": 108
   }
 }
