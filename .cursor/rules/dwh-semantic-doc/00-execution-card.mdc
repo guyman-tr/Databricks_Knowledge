@@ -1,0 +1,69 @@
+---
+description: "Per-Object Execution Card — compact flight checklist for DWH wiki pipeline. KEEP LOADED at all times during batch processing. Full phase rules are loaded on-demand; this card is the cognitive anchor."
+globs:
+alwaysApply: false
+---
+
+# Per-Object Execution Card
+
+**Load this ONCE at batch start. Never unload it. Load full phase rules on-demand per step.**
+
+## Pipeline (standard path)
+
+```
+ #  Phase              Do what                                        Rule file            Gate
+ 1  Structure          Read SSDT DDL → columns, types, indexes        01-structure         HARD
+ 2  Sample + ETL       SELECT TOP 10 + row count + ETL source chain   02-live-data         HARD ← IMMEDIATE gate
+ 3  Distribution       Value counts, NULLs, enums                     03-distribution      SOFT
+ 4  Lookup             Resolve *ID → Dim/Dict (repo first, then MCP)  04-lookup            SOFT
+ 5  JOINs              Grep SPs/views for JOIN patterns               05-join-analysis     SOFT
+ 6  Business Logic     Column groups, hierarchies, flags              06-business-logic    SOFT
+ 7  View Deps          Which views reference this table?              07-view-dependency   SOFT
+ 8  SP Scan            Find writer/reader SPs (consume P2 results!)   08-procedure-scan    HARD
+ 9  SP Logic           Read top SPs deeply → source-to-target map     09-procedure-logic   SOFT
+ 9B ETL Orchestration  Refresh schedule, dependencies                 09b-etl-orch         SOFT
+10  Atlassian          Search Jira/Confluence for business context     10-atlassian         SOFT
+10.5 Upstream Wiki     Generic Pipeline → production source → read    13-prod-lineage §1-3 HARD*
+11  Generate Doc       Write .md + .review-needed.md                  11-generate-doc      HARD
+13  Column Lineage     Write .lineage.md (post-doc)                   13-prod-lineage §2-6 SOFT
+12  Cross-Enrich       Pre-Read is embedded in P11; batch pass later  12-cross-enrich      —
+```
+
+*HARD when Phase 2 found a known source (staging/ext/migration). SOFT only if source genuinely unknown.
+
+## Simple Dictionary Fast-Path
+
+**Criteria**: ≤10 columns, no computed columns, single-source from SP_Dictionaries.
+
+```
+ 1 → 2 → 8 → 4 → 10.5 → 11 → 13
+```
+
+Skip: P3 (trivial dist), P5 (no JOINs), P6 (no logic), P7 (no views), P9B (no orchestration), P10 (low value).
+P9 runs only if SP_Dictionaries has non-trivial transforms (column renames, CASE, hardcoded values).
+
+## Phase Gate Checklist (emit before Phase 11)
+
+```
+PHASE GATE CHECK — {ObjectName}:
+  [x] P1 DDL   [x] P2 Sample   [x] P3 Dist   [x] P4 Lookup
+  [x] P5 JOIN  [x] P6 BizLogic [x] P7 Views  [x] P8 SP-scan
+  [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10.5 Upstream
+  → Ready for P11
+```
+
+For simple-dictionary fast-path, unchecked boxes are marked `[-]` (skipped by fast-path):
+```
+PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
+  [x] P1 DDL   [x] P2 Sample   [-] P3 Dist   [x] P4 Lookup
+  [-] P5 JOIN  [-] P6 BizLogic [-] P7 Views  [x] P8 SP-scan
+  [-] P9 SP-logic [-] P9B ETL  [-] P10 Jira  [x] P10.5 Upstream
+  → Ready for P11
+```
+
+**Phase 11 MUST refuse to generate if any `[ ]` (unchecked, non-skipped) box remains.**
+
+## Hard Enforcement Reminders
+
+- **⛔ ONE BATCH PER SESSION**: After end-of-batch banner → STOP. Do NOT start the next batch. New session required.
+- **⛔ TIER SUFFIX ON EVERY DESCRIPTION (Rule 19)**: Every column description MUST end with `(Tier N — source.table)`. This suffix is written verbatim to Unity Catalog by Phase 11W. No exceptions.

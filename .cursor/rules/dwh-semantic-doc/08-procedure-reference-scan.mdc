@@ -12,7 +12,8 @@ Find ALL stored procedures that interact with the documented object. Uses the **
 
 ## Prerequisites
 
-- Phase 7 (View Dependency Scan) complete - need view list for indirect references
+- Phase 2 (Live Data Sampling) complete — ETL source discovery results are consumed here (see section below), NOT re-discovered
+- Phase 7 (View Dependency Scan) complete — need view list for indirect references
 
 ## Dataplatform Repo Convention
 
@@ -25,6 +26,33 @@ DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/{ObjectType}/{Schema}.{Obje
 Object type folders: `Stored Procedures`, `Views`, `Functions`, `Tables`, `External Tables`.
 
 **Always search repo files first.** Only fall back to Synapse queries if the repo is unavailable.
+
+## ⚠️ ETL Source: Consume Phase 2 Results — Do NOT Re-Discover
+
+Phase 2 Step 6 is the canonical ETL source discovery. Phase 8 MUST consume its results, not re-run the discovery chain independently.
+
+### How to Use Phase 2 ETL Results
+
+From Phase 2's output, read:
+- **ETL source**: confirmed source table (staging, migration, or unknown)
+- **Timestamp pattern**: GETDATE-based (active ETL) vs historical (frozen migration)
+- **SP_Dictionaries match**: YES/NO (already grepped in Phase 2 Tier A2)
+- **Staging/external table**: name and location if found
+
+Use these results to:
+1. **If SP_Dictionaries match was found**: The writer SP is `SP_Dictionaries_DL_To_Synapse`. Extract column renames, hardcoded values from that SP (Phase 9 will read it deeply).
+2. **If staging table was found**: Grep for SPs that reference that staging table — those are the writer SPs.
+3. **If migration source was identified**: There is no active writer SP. Document as "Frozen migration — no ETL SP."
+4. **If source is unknown**: Run the broad SP grep (Method 1 below) to find any INSERT/CTAS referencing this table.
+
+### Absence Documentation
+
+When no ETL SP is found (Phase 2 source = unknown AND Method 1 finds no writers), document explicitly:
+
+```
+ETL SP: None found (Phase 2: no staging/migration match; Phase 8: no INSERT/CTAS in any SP)
+Interpretation: [Frozen table — no active ETL] OR [Loaded via mechanism outside SSDT]
+```
 
 ## Discovery Methods
 

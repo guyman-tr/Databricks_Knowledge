@@ -16,7 +16,9 @@ Resolve ID columns to human-readable business values. Since Synapse has NO enfor
 
 ## Prerequisites
 
-- Phase 1 (Structure Analysis) complete - need column list with all `*ID` columns
+- Phase 1 (Structure Analysis) complete — need column list with all `*ID` columns
+- Phase 2 (Live Data Sampling) complete — need sample data to verify lookup values against actual content
+- Phase 3 (Distribution Analysis) complete — need value distributions to identify enum-like columns
 - Upstream knowledge config: read `dwh-semantic-doc-config.json` to locate the FK lookup reference and upstream wiki paths
 - MCP connection active
 
@@ -57,47 +59,65 @@ Use the FK lookup reference (`fk-lookup-reference.mdc`) to match column names no
 | `StatusID` | Context-dependent (see below) | varies | Name |
 | `SettlementTypeID` | Dictionary.SettlementTypes | SettlementTypeID | Name |
 
-### Step 3: Verify/Supplement From Synapse Lookup Tables
+### Step 3: Search Dataplatform Repo for DWH Dimension Tables (Constitution IX — Repo First)
 
-Many production Dictionary tables are replicated to Synapse. Query them to verify upstream wiki mappings and catch any new values added since the wiki was generated:
+The Dataplatform repo contains ALL Dim_* tables. Search it BEFORE querying Synapse MCP — Constitution IX requires repo-first for structural data.
 
-```sql
-SELECT * FROM [{Schema}].[{LookupTableName}] ORDER BY 1
-```
-
-If Synapse has values not in the upstream wiki, include them and flag for upstream investigation.
-
-### Step 4: Search Dataplatform Repo for DWH Dimension Tables (Primary)
-
-The Dataplatform repo contains ALL Dim_* tables in the DWH. Search it BEFORE querying Synapse:
-
+**Search DWH_dbo Dim tables:**
 ```
 Glob: "**/Tables/DWH_dbo.Dim_*.sql"
 Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
 ```
 
-For each `*ID` column in the target table, check if a matching `Dim_{name}` table exists:
-- `FundingTypeID` → look for `Dim_FundingType`
-- `BonusTypeID` → look for `Dim_BonusType`
-- `PaymentStatusID` → look for `Dim_PaymentStatus`
-- `CampaignID` → look for `Dim_Campaign`
-- `CountryID*` → look for `Dim_Country`, `Dim_CountryIP`
+**Search supplementary knowledge schemas (Constitution II — blacklisted objects are lineage inputs):**
 
-Also search staging tables for replicated Dictionary tables:
+Essential dimensions like `Dim_AccountType` live in `DWH_Migration`, not `DWH_dbo`. These schemas are NOT documentation targets but contain lookup/dimension data used by DWH_dbo tables:
+
+```
+Glob: "**/Tables/DWH_Migration.Dim_*.sql"
+Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+```
+
+```
+Glob: "**/Tables/BI_DB_Migration.Dim_*.sql"
+Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+```
+
 ```
 Glob: "**/Tables/DWH_staging.etoro_Dictionary_*.sql"
 Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
 ```
 
-Read the DDL of each matching Dim table to discover its columns (Name, Description, IsActive, etc.) and note the join key.
-
-**Fallback** (only if Dataplatform repo not available):
-```sql
-SELECT TABLE_SCHEMA, TABLE_NAME
-FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_NAME LIKE '%lookup%' OR TABLE_NAME LIKE '%dim_%' OR TABLE_NAME LIKE '%ref_%'
-ORDER BY TABLE_SCHEMA, TABLE_NAME
 ```
+Glob: "**/Tables/CopyFromLake.*.sql"
+Target: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+```
+
+For each `*ID` column in the target table, check if a matching `Dim_{name}` table exists in ANY of these schemas:
+- `FundingTypeID` → look for `Dim_FundingType` in DWH_dbo, DWH_Migration, BI_DB_Migration
+- `AccountTypeID` → look for `Dim_AccountType` (lives in DWH_Migration — unique to Synapse, no production equivalent)
+- `BonusTypeID` → look for `Dim_BonusType`
+- `PaymentStatusID` → look for `Dim_PaymentStatus`
+- `CampaignID` → look for `Dim_Campaign`
+- `CountryID*` → look for `Dim_Country`, `Dim_CountryIP`
+
+Read the DDL of each matching Dim table to discover its columns (Name, Description, IsActive, etc.) and note the join key. For DWH_Migration tables, the DDL is the primary source — these are frozen dimensions from the legacy DWH SQL Server with no active ETL.
+
+### Step 4: Verify/Supplement From Synapse Lookup Tables (MCP — Constitution IX: after repo)
+
+After exhausting repo-based lookup, query Synapse to verify upstream wiki mappings and catch values added since the wiki was generated:
+
+```sql
+SELECT * FROM [{Schema}].[{LookupTableName}] ORDER BY 1
+```
+
+**For DWH_Migration dimension tables**: Check Phase 2 B1b results first. If Phase 2 B1b already sampled a DWH_Migration table (e.g., `DWH_Migration.Dim_AccountType`), **consume those results — do not re-query**. If Phase 2 B1b did not fire for this table (B1b is conditional on B1 finding nothing), query the DWH_Migration table now:
+
+```sql
+SELECT * FROM [DWH_Migration].[{DimTableName}] ORDER BY 1
+```
+
+If Synapse has values not in the upstream wiki, include them and flag for upstream investigation.
 
 ### Step 5: Build Value Maps
 

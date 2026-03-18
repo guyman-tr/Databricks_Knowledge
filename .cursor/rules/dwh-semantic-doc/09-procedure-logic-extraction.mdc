@@ -90,6 +90,14 @@ SOURCE -> TARGET MAPPING:
   {TargetColumn} <- GETDATE() (ETL metadata)
 ```
 
+**When a source is a staging, external, or CopyFromLake table**: Read its DDL from the SSDT repo (Constitution II — blacklisted objects are lineage inputs). The DDL reveals column renames between the production source and the DWH target — e.g., `DWH_staging.etoro_Dictionary_ActionType.Name` → `DWH_dbo.Dim_ActionType.Name`. This column rename knowledge feeds Phase 13's column lineage map.
+
+```
+Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{StagingSchema}/Tables/{StagingSchema}.{StagingTable}.sql
+```
+
+For external tables, also parse the `LOCATION` path to identify the production source (circular import detection — see Phase 2 B2 and Phase 13 Step 1c).
+
 ### Step 5: Extract WHERE Filters and Incremental Logic
 
 DWH loads are often incremental. Identify:

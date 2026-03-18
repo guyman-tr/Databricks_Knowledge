@@ -83,7 +83,7 @@ The `.sql` file contains parameters, return type, and function body.
 
 ### For Views
 
-- [ ] **SQL definition**: Full SELECT statement (from `sys.sql_modules`)
+- [ ] **SQL definition**: Full SELECT statement (from SSDT repo `.sql` file — Constitution IX)
 - [ ] **EVERY output column**: Parse the SELECT list and enumerate EVERY column individually. For a view with 60 columns, list all 60 -- never summarize or group them.
 - [ ] **Column-to-source mapping**: For each output column, record which base table and column it comes from:
   - Direct column: `dp.CurrencyID` -> source: `DWH_dbo.Dim_Position.CurrencyID`

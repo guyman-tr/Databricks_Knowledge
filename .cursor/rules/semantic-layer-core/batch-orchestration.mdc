@@ -10,12 +10,16 @@ This rule file defines how schema-level mass documentation is planned, executed,
 
 **Execution model**: Plan + Execute run as a single uninterrupted flow within one session. The agent plans the batch, documents every object inline (no subagents), updates tracking in bulk at the end, and prints a summary. No user input required between start and finish.
 
+> **⛔ ONE BATCH PER SESSION — HARD ENFORCEMENT**
+>
+> Each agent session processes **exactly one batch**. After completing a batch (bulk-update `_index.md`, write context handoff, print end-of-batch banner), the agent **MUST STOP**. Do NOT plan, queue, or begin the next batch. The operator starts a new session for each subsequent batch. In production, batch iteration is automated via a clause loop — the agent is never responsible for multi-batch sequencing. This constraint exists because context window limitations degrade documentation quality when multiple batches share a session. **Violating this rule is a hard failure.**
+
 ---
 
 ## Configuration Constants
 
 ```
-DEFAULT_BATCH_SIZE       = 25      # Objects per wiki batch (FR-007). Inline serial execution.
+DEFAULT_BATCH_SIZE       = 10      # Objects per wiki batch. Lowered from 25 to prevent context degradation on later objects.
 STALENESS_THRESHOLD_DAYS = 30      # Skip objects documented within this many days (FR-008).
 ```
 
@@ -83,15 +87,59 @@ Combine both sources into a unified object list. Each object has: name, type, de
 
 | Object type | Wiki Build (build-wiki-dwh) | Deployment (write-objects-dwh) |
 |-------------|---------------------------|-------------------------------|
-| Tables (dim ≤15 cols) | 25 | 25 |
-| Tables (medium 15-40 cols) | 20 | 25 |
-| Tables (large 40+ cols) | 15 | 25 |
-| Views | 25 | 25 |
-| Mixed (tables + views) | 20 | 25 |
+| Tables (dim ≤15 cols) | 10 | 25 |
+| Tables (medium 15-40 cols) | 8 | 25 |
+| Tables (large 40+ cols) | 5 | 25 |
+| Views | 10 | 25 |
+| Mixed (tables + views) | 8 | 25 |
 
 Wiki build uses inline serial execution within the parent agent. No subagent dispatch. Deployment uses a separate batch size — governed by `deploy-index-management.mdc`, not this rule.
 
 > **Important:** Only Tables and Views are documentation targets. Stored Procedures and Functions are **not** tracked in `_index.md` and are **not** queued for batch processing. They serve as analysis inputs during Phases 8, 9, and 9B — their code is read to understand ETL logic, transformation rules, and lineage for the tables/views they populate.
+
+---
+
+## Simple Dictionary Fast-Path
+
+Many DWH tables are trivial single-source dictionary/dimension lookups (Dim_CreditType, Dim_DocumentStatus, Dim_EvMatchStatus). Running 15 phases on these wastes context and creates fatigue that causes the agent to silently shortcut on the few phases that DO matter.
+
+### Eligibility Criteria (ALL must be true)
+
+1. **≤ 10 columns** (from Phase 1 DDL)
+2. **No computed columns** (no CASE, no formula columns in the DDL)
+3. **Single-source passthrough from SP_Dictionaries** (Phase 2 Tier A2 found a match in `SP_Dictionaries_DL_To_Synapse`)
+
+### Condensed Pipeline
+
+```
+Phase 1 → Phase 2 → Phase 8 → Phase 4 → Phase 10.5 → Phase 11 → Phase 13
+```
+
+**Skipped phases** (they produce nothing for simple dictionaries):
+- Phase 3 (Distribution) — trivial for <10 cols, enum values already visible from Phase 2 sample
+- Phase 5 (JOINs) — dictionary tables are JOIN targets, not JOIN sources; consumers found via Phase 8
+- Phase 6 (Business Logic) — no column groups, hierarchies, or flags to discover
+- Phase 7 (View Dependencies) — rarely referenced by views; if they are, Phase 8 catches the SPs
+- Phase 9 (SP Logic) — only if SP_Dictionaries has non-trivial transforms (column renames, CASE expressions, hardcoded values). Run if Phase 8 flagged transforms; skip if it's a clean passthrough.
+- Phase 9B (ETL Orchestration) — no dependencies beyond SP_Dictionaries
+- Phase 10 (Atlassian) — low value for dictionary tables; Confluence rarely documents individual enum tables
+
+### Non-Negotiable Even on Fast-Path
+
+- **Phase 2** — HARD gate, always runs
+- **Phase 8** — must confirm SP_Dictionaries is the writer and check for column renames
+- **Phase 4** — resolve ID columns against upstream wiki and DWH Dim tables
+- **Phase 10.5** — upstream wiki bridge is the #1 quality driver. **HARD when source known.**
+- **Phase 11** — the output. Phase gate checklist uses `[-]` markers for skipped phases.
+
+### Detection
+
+The agent determines eligibility AFTER Phase 2 completes (column count from Phase 1, SP_Dictionaries match from Phase 2 Tier A2). If eligible, announce:
+
+```
+SIMPLE-DICT FAST-PATH: {ObjectName} (N columns, SP_Dictionaries match)
+Skipping: P3, P5, P6, P7, P9B, P10
+```
 
 ---
 
@@ -112,15 +160,62 @@ Wiki build uses inline serial execution within the parent agent. No subagent dis
 4. **Build batch plan**: Run the Batch Segmentation Algorithm on all `Pending` objects. Update `_index.md` with batch assignments (`Queued (Batch N, #M)` status) and the Next Batch section.
 
 5. **Execute the batch inline**: For each object in Batch N, in order:
-   a. **Run the inline pipeline**: DDL resolution → analysis phases → Phase 11 documentation generation. Follow the inline pipeline defined in `build-wiki-dwh.md` Section 3 Step 3.
-   b. **Track result in memory**: Record status (Done/Failed/Skipped) and quality score. Do NOT update `_index.md` per-object.
-   c. **On failure**: Log the error, mark as Failed in the running list, continue to the next object. Failed objects do not block subsequent objects.
+
+   a. **MCP pre-flight** (once per batch, not per object): Before the first object in the batch, verify MCP connectivity by running a trivial query (e.g., `SELECT 1`). If MCP is unavailable, **STOP the entire batch** — Phases 2, 3, 6, and 9B require MCP and every object will fail without it. Do not attempt to document objects without MCP.
+
+   b. **Run the inline pipeline in this EXACT execution order**:
+   
+   ```
+   Phase 1  (Structure Analysis — repo DDL)
+   Phase 2  (Live Data Sampling + ETL Source Discovery — Synapse MCP)
+     └─ IMMEDIATE HARD GATE: check Phase 2 gate marker RIGHT HERE.
+        If PHASE 2 GATE = FAILED or MISSING → object fails, skip to next.
+        Do NOT proceed to Phase 3 — all subsequent phases depend on Phase 2 data.
+   Phase 3  (Distribution Analysis — Synapse MCP)
+   Phase 4  (Lookup Resolution — repo + upstream wiki + MCP verification)
+   Phase 5  (JOIN Analysis — repo grep)
+   Phase 6  (Business Logic Discovery — MCP)
+   Phase 7  (View Dependency Scan — repo grep)
+   Phase 8  (Procedure Reference Scan — repo grep, consumes Phase 2 ETL results)
+   Phase 9  (Procedure Logic Extraction — repo read)
+   Phase 9B (ETL Orchestration Analysis — repo + MCP)
+   Phase 10  (Atlassian Knowledge Scan — Atlassian MCP)
+   Phase 10.5 (Upstream Wiki Bridge — Generic Pipeline → production source → read upstream wiki)
+   Phase 11  (Generate Documentation — writes wiki + sidecar)
+   Phase 13  (Column Lineage — writes .lineage.md, post-doc steps only)
+   Phase 12 Mechanism 1 is embedded in Phase 11's Pre-Read step.
+   ```
+   
+   > **Phase 10.5** is the pre-Phase 11 portion of the production lineage mapping (Steps 1/1b/1c/3 from `13-production-lineage-mapping.mdc`). It identifies the production source and reads the upstream wiki to feed Tier 1 column descriptions into Phase 11. **Phase 13** is the post-Phase 11 portion (Steps 2/4/5/6) that produces the `.lineage.md` file.
+   
+   > **The Phase 2 gate check is IMMEDIATE — right after Phase 2, before Phase 3.** This prevents wasting Phases 3-10 on an object that will be rejected at Phase 11. The previous design checked the gate only at Phase 11, allowing 8 phases to run uselessly.
+   
+   > **Per-object phase gate checklist** — After completing all pre-Phase 11 steps, emit the phase gate checklist from `00-execution-card.mdc` before calling Phase 11. Phase 11 MUST refuse to generate if any required box is unchecked. This creates an external cognitive checkpoint that cannot be silently skipped — especially critical for objects 10+ in a batch where context pressure is highest.
+   
+   c. **Track result in memory**: Record status (Done/Failed/Skipped) and quality score. Do NOT update `_index.md` per-object.
+   
+   d. **On failure — severity determines action**:
+   
+   | Phase | Failure Severity | Action |
+   |-------|-----------------|--------|
+   | Phase 1 | HARD | Object fails — cannot proceed without structure |
+   | Phase 2 | HARD | Object fails — `PHASE 2 GATE: FAILED` prevents Phase 11 |
+   | Phase 3 | SOFT | Warn, proceed — quality score penalty (Elements -2) |
+   | Phases 4-7 | SOFT | Warn, proceed — quality score penalty |
+   | Phase 8 | HARD | Object fails — cannot document ETL without SP scan |
+   | Phases 9, 9B | SOFT | Warn, proceed — less rich documentation |
+   | Phase 10 | SOFT | Warn, proceed — quality score penalty (Sources -3) |
+   | Phase 10.5 (Upstream Wiki) | **HARD when source known** | If Phase 2 ETL discovery found a staging/external/migration source → HARD FAIL (we KNOW the upstream wiki exists). If source is genuinely unknown → SOFT (warn, proceed with zero Tier 1). |
+   | Phase 11 | HARD | Object fails — no output produced |
+   | Phase 13 (Column Lineage) | SOFT | Warn — wiki exists but no .lineage.md file |
+   
+   Failed objects do not block subsequent objects.
 
 6. **Bulk-update `_index.md`**: After all objects in the batch are processed, call `index-management.mdc` Protocol 2 (BATCH UPDATE) to record all results at once. Move the batch to Completed Batches.
 
 7. **Write context handoff**: Call `context-handoff.mdc` Protocol 1 (WRITE) or Protocol 3 (MERGE) to serialize `_batch_context.json` with glossary, relationships, and cross-references from the completed batch.
 
-8. **Print end-of-batch banner**:
+8. **Print end-of-batch banner and STOP (⛔ HARD)**:
 
 ### End-of-Batch Banner
 
@@ -133,9 +228,11 @@ Wiki build uses inline serial execution within the parent agent. No subagent dis
 ║  Progress: {total_done}/{total_objects} ({pct}%)               ║
 ║  Next:     Batch {N+1} ({next_count} objects remaining)        ║
 ║                                                                 ║
-║  Run /{command_name} {Schema} again for the next batch.        ║
+║  ⛔ SESSION ENDS HERE — start a new session for the next batch. ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
+
+> **⛔ HARD STOP**: After printing this banner, the agent's work is done. Do NOT continue to the next batch. Return control to the operator. The next batch runs in a fresh session with a clean context window.
 
 ### Schema-Complete Banner
 

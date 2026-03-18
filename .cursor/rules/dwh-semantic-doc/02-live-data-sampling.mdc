@@ -4,11 +4,17 @@ globs:
 alwaysApply: false
 ---
 
-# Phase 2: Live Data Sampling
+# Phase 2: Live Data Sampling + ETL Source Discovery
+
+## ⛔ MANDATORY — CANNOT BE SKIPPED
+
+**This phase is NOT optional.** Documentation written without live data sampling will contain fabricated values and wrong source attributions. Every object must be sampled before Phase 11 runs. This was the root cause of the Batch 1 failures for Dim_ActionType and Dim_ClosePositionReason.
 
 ## Purpose
 
-Query the Synapse DWH via MCP to see actual data values, understand table size, identify NULL patterns, and establish date ranges. This transforms abstract structure into concrete understanding.
+Query the Synapse DWH via MCP to see actual data values, understand table size, identify NULL patterns, establish date ranges, **and discover the ETL origin via staging/external tables**. This transforms abstract structure into concrete understanding.
+
+Staging and external tables are **never wiki-documented**, but they are **lineage clues** — they reveal what production source feeds the DWH table, which column renames occurred, and whether a table is a regular ETL load or a frozen migration.
 
 ## Prerequisites
 
@@ -114,14 +120,242 @@ Same as Step 5 for tables -- note which view output columns are always NULL, nev
 | NULL patterns | Identify columns not relevant for the view's subset |
 | Computed column outputs | Verify formula results with real data |
 
+## Step 6: ETL Source Discovery — Tiered Fallback Chain
+
+**Do NOT run all sub-steps by default.** Work through the tiers in order. Stop as soon as the source is confirmed — going deeper wastes context and adds noise.
+
+---
+
+### Tier A — Always Run (cheap, high-signal)
+
+These two checks take one query and one grep each. Run them for every object without exception.
+
+#### A1: Timestamp Analysis
+
+```sql
+SELECT MIN(UpdateDate) AS Earliest, MAX(UpdateDate) AS Latest,
+       COUNT(DISTINCT CAST(UpdateDate AS date)) AS UniqueDates
+FROM [{Schema}].[{TableName}]
+```
+
+| Pattern | Signal | Next Step |
+|---------|--------|-----------|
+| All rows = same date ≈ today | GETDATE() ETL — regular refresh | → Tier B staging check |
+| Dates span years (e.g. 2013–2024) | Real production timestamps — **one-time migration** | → Tier C migration lookup |
+| Mixed: mostly same, a few old | Regular ETL with historical seeds | → Tier B staging check |
+
+**This single query prevents mistaking a frozen migration table for an active ETL table.**
+
+#### A2: SP_Dictionaries_DL_To_Synapse Check (Dim_ tables only)
+
+Grep for the table name in the canonical ETL SP before doing anything else:
+
+```
+Grep: "{TableNameWithoutPrefix}"
+File: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/DWH_dbo/Stored Procedures/DWH_dbo.SP_Dictionaries_DL_To_Synapse.sql
+```
+
+- **Found** → source confirmed (staging table, column renames, hardcoded values all visible). **Stop here.** Tier 2 confidence.
+- **Not found** → signal: not a standard dictionary ETL. Proceed to Tier B.
+
+---
+
+### Tier B — Run When Tier A Is Inconclusive
+
+Only run these if Tier A did not confirm the source.
+
+#### B1: Check for Staging Table (Repo First — Constitution IX)
+
+Search the SSDT repo for matching staging tables:
+
+```
+Glob: "*{TableNameWithoutPrefix}*"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/DWH_staging/Tables
+```
+
+If found: read the `.sql` file to see column names and types. Source = `DWH_staging.{Name}` → lake pipeline active. Read the corresponding SP for column mapping. **Stop here.** Tier 2 confidence.
+
+#### B1b: Check DWH_Migration Tables (Constitution — staging schema encoding)
+
+**Always run when B1 (staging check) did NOT confirm the source** — regardless of timestamp pattern. A table can originate from DWH_Migration AND have GETDATE() timestamps (e.g., if someone added a refresh ETL on top of a migrated table). The DWH_Migration DDL and live data are valuable inputs even for actively refreshed tables. Gating this on "migration timestamps only" misses tables like Dim_AccountType that were migrated but later got GETDATE()-based refresh.
+
+```
+Glob: "*{TableNameWithoutPrefix}*"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/DWH_Migration/Tables
+```
+
+Also check BI_DB_Migration:
+```
+Glob: "*{TableNameWithoutPrefix}*"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/BI_DB_Migration/Tables
+```
+
+If found:
+
+1. **Read the `.sql` DDL file** — extract column names, types, and structure. This is a persistent migration staging table (not a one-time NoDbObjectsScripts run), migrated from the legacy on-premises DWH SQL Server. The DDL is the primary knowledge source for frozen dimensions like `Dim_AccountType` that have no production equivalent.
+
+2. **Sample the live Synapse table** — migration tables still exist in Synapse and contain valuable value maps:
+   ```sql
+   SELECT * FROM [DWH_Migration].[{TableName}] ORDER BY 1
+   ```
+   For small dimension tables (< 1000 rows), read ALL rows. This builds the complete value map used in Phase 4 (Lookup Resolution). Many DWH_dbo tables JOIN to DWH_Migration dimensions — the value map is essential even though DWH_Migration is not a documentation target.
+
+3. **Record**: Source = DWH_Migration (legacy DWH SQL Server). Tier 2 confidence. Document as frozen migration with known column structure and value maps.
+
+**Stop here** — source confirmed. Do not proceed to Tier C.
+
+#### B2: Check for External Table (Repo First — Constitution IX)
+
+Search the SSDT repo for matching external tables across ALL documentation target schemas. External tables are blacklisted for documentation but are essential lineage inputs (Constitution II — "blacklisted objects are lineage inputs").
+
+**Read the schema list from `dwh-semantic-doc-config.json` → `external_table_paths.paths`** — do NOT hardcode schemas here. The config is the authoritative list. As of this writing, the paths are:
+
+For each path in `external_table_paths.paths`:
+```
+Glob: "*{TableNameWithoutPrefix}*"
+Path: {external_table_paths.base_path}/{path}
+```
+
+Also check the CopyFromLake schema (listed in `supplementary_knowledge_schemas`):
+```
+Glob: "*{TableNameWithoutPrefix}*"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/CopyFromLake/Tables
+```
+
+If found: read the `.sql` DDL file. Parse the `LOCATION` path to identify the production source:
+
+**LOCATION path parsing rule:**
+```
+LOCATION = '{path}' inside DATA_SOURCE = '{datasource}'
+Path format: Bronze/{database}/{schema}/{table}/
+→ Production source: {database}.{schema}.{table}
+Example: Bronze/etoro/Trade/PositionTbl/ → etoro.Trade.PositionTbl
+```
+
+> **Circular import detection (CRITICAL)**: Many DWH tables are loaded from external tables or CopyFromLake tables that read from the data lake. These are **NOT sources** — they are pipes. The real source is the production table that the Generic Pipeline exported to the lake. Common examples: `Billing.Deposit` → lake → `Ext_FBD_Fact_BillingDeposit` → SP → `Fact_BillingDeposit`. Or `History.Credit` → lake → `etoro_History_Credit` → SP → `Fact_SnapshotEquity`. The external/CopyFromLake table is equivalent to the old linked server — infrastructure, not a data source. Use the Generic Pipeline mapping view (Phase 13 Step 1) or its static fallback to confirm the production source. If the LOCATION path follows `Bronze/{database}/{schema}/{table}/`, parse it to identify the real production source directly.
+
+**Stop here.** Tier 2 confidence.
+
+---
+
+### Tier C — Fallback: Run Only When Tiers A + B Come Up Empty
+
+These are expensive or speculative. Only invoke when both Tier B checks returned nothing AND Tier A showed migration-pattern timestamps.
+
+#### C1: Search NoDbObjectsScripts for Migration DDLs
+
+```
+Glob: "*{TableName}*"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/NoDbObjectsScripts
+```
+
+**How to read the result — the staging schema name encodes the source system:**
+
+| Staging Schema in DDL | Source System | Example |
+|-----------------------|--------------|---------|
+| `DWH_Migration.{TableName}` | Legacy on-premises **DWH SQL Server** | `Dim_ActionType` — migrated from old DWH |
+| `BI_DB_Migration.{TableName}` | Legacy on-premises **BI_DB** production SQL Server | BI_DB-specific tables |
+| `BI_DB_dbo.{TableName}` | Direct BI_DB reference (not migration) | May still be active |
+
+A `JUNK_*` variant alongside the real DDL confirms this was a migration attempt (first-pass staging table, then discarded).
+
+#### C2: Search ADF Pipeline JSONs
+
+```
+Grep: "{TableNameWithoutPrefix}"
+Path: DataPlatform/ADF
+Glob: "**/*.json"
+Output: files_with_matches
+```
+
+Open any matching pipeline JSON. Distinguish between:
+- Table used as a **source/sink name** → this IS the ETL path
+- Table name appearing as a **column value** inside a copy activity → irrelevant match
+
+#### C3: Broad SP Grep Across All DWH_dbo Procedures
+
+```
+Grep: "INSERT INTO.*{TableName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/DWH_dbo/Stored Procedures
+Glob: "*.sql"
+Output: files_with_matches
+```
+
+Only needed if C1 and C2 are also empty.
+
+---
+
+### Decision Summary
+
+| Tier A Result | Tier B Result | Action |
+|---------------|--------------|--------|
+| GETDATE pattern + found in SP_Dictionaries | — | Done. Document as regular ETL, Tier 2. |
+| GETDATE pattern + NOT in SP_Dictionaries | B1: Staging found | Done. Document lake→staging ETL, Tier 2. |
+| GETDATE pattern + NOT in SP_Dictionaries | B1: No staging → B1b: DWH_Migration found | Done. Document as migration-origin table (may have refresh on top). Read DDL + sample. Tier 2. |
+| GETDATE pattern + NOT in SP_Dictionaries | B1: No staging → B1b: No migration → B2: External found | Done. Parse LOCATION, trace to production source. Tier 2. |
+| GETDATE pattern + NOT in SP_Dictionaries | B1+B1b+B2 all empty | Run Tier C: ADF + broad SP grep. |
+| Migration timestamps + NOT in SP_Dictionaries | B1b: DWH_Migration found | Done. Frozen migration. Read DDL + sample. Tier 2. |
+| Migration timestamps + NOT in SP_Dictionaries | B1b: No migration | Run C1 (NoDbObjectsScripts). Use schema name to identify source system. |
+| Inconclusive / no date columns | — | Run Tier B (B1 → B1b → B2), then Tier C if needed. |
+
+### What Source Evidence Tells You
+
+| Finding | What It Means | Documentation |
+|---------|--------------|---------------|
+| In `SP_Dictionaries_DL_To_Synapse` | Active lake→staging→DWH ETL | Source: production system via lake. Tier 2. |
+| `DWH_staging.*` table exists | Lake pipeline active; source readable from staging name | Tier 2 confidence. |
+| External table in repo | Direct lake read; `LOCATION` path = source | Tier 2 confidence. |
+| `DWH_Migration.{Name}` DDL in NoDbObjectsScripts | One-time migration from legacy DWH SQL Server | Frozen table. Tier 2. |
+| `BI_DB_Migration.{Name}` DDL | One-time migration from BI_DB production | Frozen table. Tier 2. |
+| ADF pipeline reference (as sink/source) | ADF-managed ETL, no SSDT SP | Document ADF pipeline as ETL path. Tier 3. |
+| Nothing found anywhere | Truly unknown | Flag UNKNOWN. Lower confidence tier. |
+
 ## Error Handling
 
-| Error | Action |
-|-------|--------|
-| Query timeout | Note "Large table/view - sample timed out", try with smaller TOP |
-| Table/View not found | Note "Object not deployed", continue with metadata only |
-| Permission denied | Note "No read access", continue with metadata only |
+| Error | Scope | Action |
+|-------|-------|--------|
+| MCP unavailable / connection failed | All of Phase 2 | **HARD FAIL** — mark object as `Failed — MCP unavailable`. The batch orchestrator's MCP pre-flight should have caught this before Phase 2, but if MCP drops mid-batch, this row applies. Record `PHASE 2 GATE: FAILED — MCP unavailable`. |
+| Query timeout | Target table sample (Step 2) | Retry with `TOP 5`. If still fails, **HARD FAIL** — mark object as `Failed — Phase 2 sample timeout`. |
+| Table/View not found | Target table sample (Step 2) | **HARD FAIL** — mark object as `Failed — object not deployed in Synapse`. |
+| Permission denied | Target table sample (Step 2) | **HARD FAIL** — mark object as `Failed — no read access to target table`. |
+| Query timeout | Supplementary queries (Steps 3-5, Step 6 Tier A/B) | Note the timeout, proceed with remaining steps. Phase 2 is still considered complete if the core sample (Step 2) succeeded. |
+| Table not found | DWH_Migration sample (Step 6 B1b) | The DDL exists in the repo but the table may not be deployed in Synapse. Note the absence, proceed using repo DDL only. Not a hard fail. |
+| Any error | Step 6 Tier C (fallback) | Note the error, proceed. Tier C is best-effort. |
 
-## Completion
+> **Phase 2 HARD FAIL means the object cannot be documented.** Do not proceed to Phase 3 or beyond. The batch orchestrator must mark this object as Failed and move to the next object. The Dim_ActionType and Dim_ClosePositionReason failures were caused by "continuing with metadata only" after Phase 2 failures — producing fabricated descriptions.
 
-Mark `[x] Phase 2: Live Data Sampling` in the checklist.
+## Completion Gate — Machine-Readable Marker
+
+Phase 2 is complete ONLY when all of the following are true:
+
+1. **Core sample obtained**: At least one `SELECT` against the target table returned rows (Step 2)
+2. **Row count obtained**: Step 3 returned a number
+3. **ETL source discovery attempted**: Step 6 Tier A was executed (even if source not found)
+
+Record the following **completion marker** in the phase output — Phase 11 MUST check for this marker before generating:
+
+```
+PHASE 2 GATE: PASSED
+  Sample rows: {N}
+  Row count: {N}
+  Timestamp pattern: {GETDATE-based | historical | mixed | no-date-columns}
+  ETL source: {confirmed: {source} | inconclusive | unknown}
+```
+
+If the core sample failed, record:
+
+```
+PHASE 2 GATE: FAILED — {reason}
+```
+
+**Phase 11 MUST refuse to generate documentation if `PHASE 2 GATE: FAILED` or if no Phase 2 gate marker exists.**
+
+## Phase Output Record
+
+In addition to the gate marker, record:
+- Sample values and patterns observed
+- NULL patterns (always-NULL, never-NULL, mixed)
+- Staging table found: YES ({name}) | NO
+- External table found: YES ({name}, location: {path}) | NO
+- Migration scripts found: YES ({filename}) | NO
+- Preliminary source hypothesis: {source}

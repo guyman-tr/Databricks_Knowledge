@@ -23,31 +23,37 @@ DWH stored procedures are ETL processes, not application-called code. Instead of
 
 ### Step 1: Identify ETL Dependencies
 
-From Phase 9's source-to-target mapping, build a dependency graph:
+From Phase 9's source-to-target mapping, build a dependency graph. Include supplementary schema objects (DWH_Migration, DWH_staging, CopyFromLake, external tables) — they are not documentation targets but ARE dependency nodes:
 
 ```
 dim_position depends on:
   <- stg_position (staging table, loaded from lake)
   <- dim_instrument (dimension lookup, must be current)
   <- dim_customer (dimension lookup, must be current)
+  <- DWH_Migration.Dim_AccountType (frozen migration dimension — no ETL, static)
 ```
+
+For DWH_Migration dependencies, document them as "frozen — no ETL dependency, static data migrated from legacy DWH." They do not affect refresh scheduling but must appear in the dependency graph for lineage completeness.
 
 ### Step 2: Search for Orchestration Metadata
 
-Check if there are orchestration/scheduling tables in Synapse:
+**Repo First (Constitution IX):** Check the SSDT repo for known orchestration/log tables before querying live data:
 
-```sql
-SELECT TABLE_SCHEMA, TABLE_NAME
-FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_NAME LIKE '%schedule%'
-   OR TABLE_NAME LIKE '%job%'
-   OR TABLE_NAME LIKE '%etl%'
-   OR TABLE_NAME LIKE '%pipeline%'
-   OR TABLE_NAME LIKE '%log%'
-ORDER BY TABLE_SCHEMA, TABLE_NAME
+```
+Grep: "{TableName}"
+Path: DataPlatform/SynapseSQLPool1/sql_dp_prod_we
+Glob: "**/Tables/*Log*.sql"
+Output mode: files_with_matches
 ```
 
-If an ETL log table exists, query it for the target table's refresh history:
+Also check known DWH orchestration tables (these exist in DWH_dbo):
+- `DataSolutionsTablesDate` — tracks last-load timestamps per table
+- `DataSolutionsProcessesStatus` — tracks ETL process execution
+- `DataLakeTableStatus` — tracks lake-to-Synapse load status
+
+**Live data query (valid MCP use — querying row-level content, not structural metadata):**
+
+If an ETL log/status table is identified (from the repo or known tables above), query it for the target table's refresh history:
 
 ```sql
 SELECT TOP 20 *

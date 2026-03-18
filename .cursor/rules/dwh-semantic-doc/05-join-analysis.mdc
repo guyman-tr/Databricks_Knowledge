@@ -12,8 +12,10 @@ Discover implicit relationships between tables by analyzing JOIN conditions in s
 
 ## Prerequisites
 
-- Phase 1 (Structure Analysis) complete - need column list
-- Phase 4 (Lookup Resolution) complete - need list of UNRESOLVED ID columns
+- Phase 1 (Structure Analysis) complete — need column list
+- Phase 2 (Live Data Sampling) complete — need sample data for value verification and ETL source discovery results
+- Phase 3 (Distribution Analysis) complete — need value patterns
+- Phase 4 (Lookup Resolution) complete — need list of UNRESOLVED ID columns
 
 ## Dataplatform Repo Convention
 
@@ -75,6 +77,8 @@ From the SQL text, identify:
 | `Col = 1 --REAL` | Value meaning: 1 = REAL |
 | `IIF(Col=5, special)` | Business logic for value 5 |
 | `CASE WHEN Col = value THEN 'label'` | Value mapping |
+
+**Supplementary schema awareness**: JOINs may reference tables in supplementary knowledge schemas (DWH_Migration, DWH_staging, CopyFromLake). These are NOT documentation targets but they ARE valid JOIN targets that reveal lineage and column relationships. When a JOIN references a DWH_Migration table (e.g., `DWH_Migration.Dim_AccountType`), read its DDL from the repo — it contains column definitions for frozen dimensions unique to Synapse.
 
 ### Step 4: Search for Lookup Patterns in SP Code
 

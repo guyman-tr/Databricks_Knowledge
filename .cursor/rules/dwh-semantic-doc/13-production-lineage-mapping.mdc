@@ -1,27 +1,43 @@
 ---
-description: Phase 13 - Production Lineage Mapping for DWH Semantic Documentation. Traces each Synapse table back to its production sources via the Generic Pipeline mapping view, ETL SPs, and lake imports.
+description: "Phase 10.5 (Upstream Wiki Bridge) + Phase 13 (Column Lineage) for DWH Semantic Documentation. Phase 10.5 (Steps 1/1b/1c/3) runs BEFORE Phase 11 — traces to production source and reads upstream wiki. Phase 13 (Steps 2/4/5/6) runs AFTER Phase 11 — produces .lineage.md file."
 globs:
 alwaysApply: false
 ---
 
-# Phase 13: Production Lineage Mapping
+# Production Lineage Mapping — Phase 10.5 + Phase 13
+
+This rule contains TWO execution units with distinct identities:
+
+- **Phase 10.5 (Upstream Wiki Bridge)** — Steps 1/1b/1c/3 — runs BEFORE Phase 11
+- **Phase 13 (Column Lineage)** — Steps 2/4/5/6 — runs AFTER Phase 11
 
 > **MCP Fallback**: Step 1 queries the Generic Pipeline mapping view via Databricks MCP.
 > If the MCP call fails or is unavailable, **fall back to the static JSON backup** at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`.
 > Read the JSON, filter `mappings[]` entries by `database_name`/`schema_name`/`table_name` to find the production source.
 > The static file is refreshed periodically and contains all 1700+ mapping rows with corrected column names.
-> Steps 1/1b/3 MUST run for ALL commands (`build-wiki-dwh` AND `write-objects-dwh`) — they are essential for Tier 1 column inheritance.
 
-## Purpose
+## Phase 10.5: Upstream Wiki Bridge (pre-Phase 11)
 
-Trace each Synapse table back through its populating SP to the lake import to the production source table. This is the cross-layer bridge that connects the DWH knowledge to the upstream production knowledge.
+**Purpose**: Identify the production source table and read its upstream wiki to provide Tier 1 column descriptions for Phase 11's element table. This is the "#1 quality driver" — without it, every column defaults to Tier 3-4 inference.
 
-## Prerequisites
+**Failure severity**: **HARD when source known** (Phase 2 found staging/ext/migration) — if we know `etoro_Dictionary_DocumentStatus` exists, skipping the upstream wiki is negligent. SOFT only when source is genuinely unknown.
 
-- Phase 9 (Procedure Logic Extraction) complete - need source-to-target map
-- Phase 9B (ETL Orchestration) complete - need ETL chain
+Steps 1/1b/1c/3 below run for ALL commands (`build-wiki-dwh` AND `write-objects-dwh`).
+
+### Prerequisites
+
+- Phase 2 (Live Data Sampling) complete — need ETL source discovery results
 - Upstream knowledge sources configured in `dwh-semantic-doc-config.json`
-- Generic Pipeline mapping view available (configured in `dwh-semantic-doc-config.json` under `lineage.generic_pipeline_mapping`)
+- Generic Pipeline mapping view or static fallback available
+
+## Phase 13: Column Lineage (post-Phase 11)
+
+Steps 2/4/5/6 produce the `.lineage.md` file using Phase 9's source-to-target mapping.
+
+### Prerequisites
+
+- Phase 9 (Procedure Logic Extraction) complete — need source-to-target map
+- Phase 9B (ETL Orchestration) complete — need ETL chain
 
 ## Algorithm
 
@@ -74,11 +90,73 @@ From the mapping view results in Step 1, extract and carry forward to Phase 11:
 
 Store these values in the Phase 13 results for Phase 11 to consume when generating tags.
 
+### Step 1c: Circular Import Detection — Trace Through External Tables
+
+Many DWH tables are fed via external tables or CopyFromLake tables that read from the data lake. These are **NOT sources** — they are pipes because Synapse cannot pull directly from production like the old linked servers could. The real source is the production table that the Generic Pipeline exported to the lake.
+
+**Pattern**: `Production Table → Generic Pipeline → Lake → External Table / CopyFromLake → SP → DWH table`
+
+**Detection algorithm — TWO triggers (Phase 2 result OR independent scan):**
+
+**Trigger A: From Phase 2 Step 6 results** (primary path)
+
+1. From Phase 2 Step 6 results, check if the ETL source is an external table (`Ext_*` prefix), a lake-import table (`etoro_*` prefix), or a CopyFromLake table.
+
+**Trigger B: Independent scan** (catches cases Phase 2 missed)
+
+If Phase 2 did not identify an external/CopyFromLake source, but the writer SP (from Phase 8/9) references an external table or CopyFromLake table, trace through it here. Scan the writer SP definition (already read in Phase 9) for table references:
+
+```
+Grep: "FROM.*\[?(Ext_|etoro_|CopyFromLake)"
+Target: The writer SP definition (already read in Phase 9)
+Context: -C 2  (show 2 lines before/after for JOIN/FROM verification)
+```
+
+**Verification**: Only treat as a circular import if the match appears in a FROM, JOIN, or CROSS APPLY clause — not in a comment, string literal, or column alias. Read the surrounding context lines to confirm. False positives from column names like `etoro_SourceID` or comments like `-- removed CopyFromLake` must be filtered out.
+
+**Tracing the external table (applies to both triggers):**
+
+2. Read the external table DDL from the SSDT repo. **Read the schema list from `dwh-semantic-doc-config.json` → `external_table_paths.paths`** — do NOT hardcode schemas. For each path in the config:
+   ```
+   Read: {external_table_paths.base_path}/{path}/{Schema}.{ExternalTableName}.sql
+   ```
+   
+   Also check CopyFromLake (listed in `supplementary_knowledge_schemas`):
+   ```
+   Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/CopyFromLake/Tables/CopyFromLake.{TableName}.sql
+   ```
+
+3. Parse the `LOCATION` path from the DDL:
+   ```
+   LOCATION path parsing rule:
+   Path format: '{folder}/{database}/{schema}/{table}/' inside DATA_SOURCE
+   Example: 'Bronze/etoro/Trade/PositionTbl/' → production source = etoro.Trade.PositionTbl
+   Example: 'Bronze/etoro/Dictionary/ActionType/' → production source = etoro.Dictionary.ActionType
+   Example: 'Bronze/etoro/Billing/vDeposit/' → production source = etoro.Billing.vDeposit
+   ```
+   
+   If the LOCATION path does not follow the `Bronze/{database}/{schema}/{table}/` format, fall back to the Generic Pipeline mapping (Step 1 results) to find the production source by matching the external table name or lake path.
+
+4. Cross-reference the parsed production source with the Generic Pipeline mapping (Step 1 results) to confirm the match and get metadata (frequency, copy strategy, etc.).
+5. Record the REAL production source — not the external table — as the lineage origin.
+
+> **Why this matters**: Without this step, the pipeline documents `DWH_dbo.etoro_History_Credit` as the source for `Fact_SnapshotEquity` when the real source is `etoro.History.Credit` on the production SQL Server. Schemas like BI_DB_dbo and Dealing_dbo do extensive datalake importing — tables like `Billing.Deposit` or `History.Credit` are loaded from prod to the lake via Generic Pipeline, then pulled to Synapse via external tables because Synapse cannot connect directly to production like old linked servers could. The external table is equivalent to a linked server — it's infrastructure, not a data source. The lineage MUST trace through to the real production table.
+
+**Common circular-import patterns across all schemas:**
+
+| External Table Pattern | Production Source Pattern | Example |
+|----------------------|-------------------------|---------|
+| `Ext_{Prefix}_{ProdTable}` | `{database}.{schema}.{ProdTable}` | `Ext_FBD_Fact_BillingDeposit` → `etoro.Billing.Deposit` |
+| `etoro_{Schema}_{Table}` | `etoro.{Schema}.{Table}` | `etoro_History_Credit` → `etoro.History.Credit` |
+| `Ext_Dim_{Entity}_{SubEntity}` | Various production tables | `Ext_Dim_Customer_Customer` → `etoro.Customer.Customer` |
+| `CopyFromLake.{Table}` | Varies — check Generic Pipeline mapping | CopyFromLake tables are used by some schemas instead of external tables |
+
 ### Step 2: Identify Additional Sources from ETL Code
 
 From Phase 9's source-to-target mapping, identify all source tables not already covered by the mapping view. For each source:
-- If it's a staging table (`stg_*`, `CopyFromLake_*`), trace further to find its production origin
-- If it references a production table name, map it
+- If it's a staging table (`DWH_staging.*`, `CopyFromLake.*`), trace further using the staging table name to find its production origin (staging table names encode the source: `etoro_Dictionary_ActionType` → `etoro.Dictionary.ActionType`)
+- If it's an external table, apply Step 1c circular import detection
+- If it references a production table name directly, map it
 - Cross-reference with the mapping view results from Step 1
 
 ### Step 3: Match to Upstream Production Wiki — TIER 1 SOURCE

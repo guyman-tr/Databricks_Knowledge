@@ -24,7 +24,7 @@ After documenting multiple objects, run the full enrichment pass.
 
 ## Mechanism 1: Pre-Read
 
-### Step 1: Identify Related Objects
+### Step 1: Identify Related Objects (Including Blacklisted Inputs)
 
 From phases 1-10, collect ALL objects discovered:
 - Tables referenced in JOINs (Phase 5)
@@ -32,6 +32,7 @@ From phases 1-10, collect ALL objects discovered:
 - Views referencing this object (Phase 7)
 - Procedures (Phases 8, 9)
 - Production source tables (Phase 9, 13)
+- **Blacklisted objects that serve as inputs** (Constitution II): External tables (`Ext_*`) in ALL target schemas, staging tables (`DWH_staging.*`), utility tables (`Dim_Date`), etl_source tables (`etoro_*`), CopyFromLake tables, and **DWH_Migration / BI_DB_Migration dimension tables** (frozen dimensions unique to Synapse, e.g., `DWH_Migration.Dim_AccountType`). These do NOT get wiki files but their DDLs in the SSDT repo contain column definitions, LOCATION paths, value maps, and reference data that enrich the documented object's knowledge. Read their DDLs from the repo. For DWH_Migration dimensions, also use the value maps sampled in Phase 2 B1b.
 
 ### Step 2: Scan for Existing Docs
 

@@ -77,13 +77,16 @@ getConfluencePage({ cloudId: "{cloudId}", pageId: "{pageId}", contentFormat: "ma
 
 ### Validation Rules — CODE IS KING
 
-**Constitution Principle II applies here.** Atlassian content is a hint provider, not a truth provider. Confluence pages go stale the moment someone adds a new enum value or changes a CASE expression. The collision resolution hierarchy is absolute:
+**Constitution Principle II applies here.** Atlassian content is a hint provider, not a truth provider. Confluence pages go stale the moment someone adds a new enum value or changes a CASE expression. The collision resolution hierarchy from Constitution Section II is absolute:
 
-1. Upstream semantic wikis — already validated through strict code-is-king analysis on production
-2. Live code (Synapse SP/view definitions from `sys.sql_modules`) — Synapse-layer ground truth
-3. Live data (sampling results from Phase 2) — empirical evidence
-4. Metadata views (Phase 1 structure) — structural truth
-5. **Confluence / Jira — intent and context, frequently stale** ← you are here
+1. **Tier 5**: Domain expert / reviewer corrections / glossary — absolute override (not available to this phase, but corrections from prior runs take precedence)
+2. **Tier 1**: Upstream semantic wikis — already validated through strict code-is-king analysis on production
+3. **Tier 2**: Live code (Synapse SP/view definitions from the **Dataplatform SSDT repo** — Constitution IX) — Synapse-layer ground truth
+4. **Tier 2b**: DWH_Migration / BI_DB_Migration DDLs — frozen dimensions migrated from legacy systems
+5. **Tier 3**: Live data (sampling results from Phase 2) — empirical evidence
+6. **Tier 3b**: Structural metadata (DDL from SSDT repo — Constitution IX) — structural truth
+7. **Tier 4-Atlassian**: **Confluence / Jira — intent and context, frequently stale** ← you are here
+8. **Tier 4-Inferred**: Column name guessing — lowest, MUST flag `[UNVERIFIED]`
 
 **Recency tiebreaker:** When multiple Atlassian sources exist at the same confidence level, prefer the most recently updated one. A 2025 page outweighs a 2021 page. Always note the source date in the output.
 

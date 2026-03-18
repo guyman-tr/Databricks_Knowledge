@@ -1,0 +1,114 @@
+{
+  "schema": "DWH_dbo",
+  "last_batch": 0,
+  "last_updated": "2026-03-18",
+  "documented_count": 0,
+  "pending_count": 116,
+  "etl_patterns": {
+    "SP_Dictionaries_DL_To_Synapse": {
+      "description": "Main dictionary loader SP. Truncate-and-reload pattern from DWH_staging tables.",
+      "common_transforms": {
+        "UpdateDate": "GETDATE() — not from source",
+        "InsertDate": "GETDATE() — not from source (on tables that have it)",
+        "StatusID": "Hardcoded to 1 (on tables that have it)",
+        "DWH*ID_columns": "Often set to same value as source PK (e.g. DWHCompensationID = CompensationReasonID)",
+        "ID_0_placeholder": "Many tables get an INSERT of ID=0 with N/A name for fact table JOINs"
+      },
+      "staging_naming": "DWH_staging.[database_schema_tablename] e.g. etoro_Dictionary_CashoutMode",
+      "source_databases": ["etoro", "fiktivo", "HistoryCosts", "ScreeningService", "UserApiDB"],
+      "known_bug_FeeOperationTypes": "INSERT without preceding TRUNCATE causes duplicate rows to accumulate on each ETL run. Only 3 distinct FeeOperationTypeIDs but 299+ rows."
+    },
+    "SP_Dictionaries_Country_DL_To_Synapse": {
+      "description": "Dedicated multi-step ETL for Dim_Country + Dim_CountryIPAnonymous. INSERT from 2 staging sources, then 3 UPDATE passes from external tables.",
+      "sources": ["etoro.Dictionary.Country", "etoro.Dictionary.MarketingRegion", "Ext_Dim_Country", "Ext_Dim_Country_Region_Desk", "ComplianceStateDB.Compliance.RegulationCountry", "DWH_staging.IP2Location"],
+      "derived_columns": {
+        "IsHighRiskCountry": "CASE WHEN RiskGroupID IN (0,4) THEN 0 ELSE 1 END",
+        "DWHCountryID": "= CountryID (redundant copy)"
+      }
+    },
+    "SP_Dim_Channel": {
+      "description": "Separate SP for Dim_Channel. Reads from Ext_Dim_SubChannel_UnifyCode, applies Organic/Paid classification.",
+      "source": "AffWizz affiliate system (fiktivo_dbo.tblaff_*)"
+    },
+    "SP_Dim_Affiliate": {
+      "description": "Separate SP for Dim_Affiliate. Derives ContractType via CASE expression on ContractName text.",
+      "source": "AffWizz affiliate system (fiktivo_dbo.tblaff_*)"
+    },
+    "SP_Dim_HistorySplitRatio_DL_To_Synapse": {
+      "description": "Dedicated SP for Dim_HistorySplitRatio. Loads stock split/corporate action ratios with date ranges.",
+      "source": "Trade.HistorySplitRatio"
+    }
+  },
+  "dead_tables": [
+    {
+      "table": "Dim_Campaign",
+      "reason": "ETL INSERT is commented out in SP_Dictionaries_DL_To_Synapse. Only placeholder row (ID=0).",
+      "rows": 1
+    },
+    {
+      "table": "Dim_AffiliateCostType",
+      "reason": "Loaded from DWH_Migration, no active ETL. Frozen data from Synapse migration.",
+      "rows": 11
+    },
+    {
+      "table": "Dim_ContactType",
+      "reason": "No ETL loader SP found anywhere. Table exists but has 0 rows.",
+      "rows": 0
+    },
+    {
+      "table": "Dim_ContractType",
+      "reason": "No ETL. Manually loaded frozen dictionary (9 rows). All InsertDate/UpdateDate NULL. DWH-internal lookup.",
+      "rows": 9
+    },
+    {
+      "table": "Dim_CustomerChangeType",
+      "reason": "No active ETL. All rows dated 2018-10-02. Frozen since then.",
+      "rows": 16
+    },
+    {
+      "table": "Dim_Desk",
+      "reason": "No active ETL. InsertDate/UpdateDate all NULL. Manually loaded mapping table.",
+      "rows": "unknown"
+    },
+    {
+      "table": "Dim_CountryIPAnonymousProxyType",
+      "reason": "No active ETL. UpdateDate all NULL. 6 rows from IP2Location reference docs.",
+      "rows": 6
+    },
+    {
+      "table": "Dim_MoveMoneyReason",
+      "reason": "No active ETL in SP_Dictionaries_DL_To_Synapse (section commented out). Frozen at 4 rows from Synapse migration. Production has 8+ values.",
+      "rows": 4
+    },
+    {
+      "table": "Dim_FTDPlatform",
+      "reason": "No ETL found. Static 4 rows (Undefined/Web/IOS/Android). Likely manual or one-time migration load.",
+      "rows": 4
+    },
+    {
+      "table": "Dim_PEPStatus",
+      "reason": "Table dropped from DWH. ETL section commented out in SP_Dictionaries_DL_To_Synapse. No DDL in SSDT.",
+      "rows": 0
+    }
+  ],
+  "schema_drift_patterns": [
+    "Production DisplayName columns are frequently dropped (BonusType, CompensationReason)",
+    "Production flag columns (IsActive, IsTaxable, IsCashflowForGain, IsShownInHistory) often dropped",
+    "Name columns sometimes renamed to include table prefix (Name → CashoutFeeGroupName, Name → ClientWithdrawReasonName)",
+    "Production Identity columns become nullable int in Synapse (no IDENTITY support)",
+    "HistoryCosts staging column CostConfigurationId (the name field) is renamed to CostConfiguration in DWH to avoid collision with the ID column",
+    "Dim_Currency includes 15.7K rows (fiat + commodities + instruments) despite the name suggesting only currencies",
+    "Dim_Language uses char(50) for Name (fixed-width with trailing spaces) — unusual for a dimension column"
+  ],
+  "upstream_wiki_coverage": {
+    "Dictionary.*": "Most Dictionary tables have upstream wikis in DB_Schema/etoro/Wiki/Dictionary/",
+    "BackOffice.*": "BackOffice source tables have upstream wikis in DB_Schema/etoro/Wiki/BackOffice/",
+    "Billing.*": "Billing source tables have upstream wikis in DB_Schema/etoro/Wiki/Billing/",
+    "UserApiDB.*": "UserApiDB Dictionary tables (EvMatchStatus, ExtendedUserField) loaded via SP_Dictionaries_DL_To_Synapse"
+  },
+  "next_batch_plan": {
+    "batch_number": 1,
+    "resume": false,
+    "object_count_remaining": 116
+  }
+}

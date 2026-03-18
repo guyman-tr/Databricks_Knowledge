@@ -4,6 +4,52 @@
       "description": "eToro Synapse Data Warehouse — DWH layer with ETL transformations from production sources",
       "mcp_tool": "synapse_sql",
       "schemas": ["DWH_dbo", "Dealing_dbo", "BI_DB_dbo", "EXW_dbo", "eMoney_dbo"],
+      "supplementary_knowledge_schemas": {
+        "description": "Schemas that are NOT documentation targets but contain essential knowledge for lineage, ETL source discovery, and column descriptions. Their DDLs in the SSDT repo should be read during Phases 2, 4, 5, 8, 9, and 13. Constitution II: blacklisted objects are lineage inputs.",
+        "schemas": [
+          {
+            "name": "DWH_Migration",
+            "purpose": "Legacy on-prem DWH SQL Server migration staging. Tables here were migrated to DWH_dbo in Sept 2024. Contains frozen dimension definitions (e.g., Dim_AccountType, Dim_Position) unique to Synapse. No wiki needed, but DDLs should be read for column structure AND live tables should be sampled for value maps in Phase 2 B1b.",
+            "ssdt_path": "DWH_Migration/Tables",
+            "nodbobjects_pattern": "DWH_Migration.*",
+            "tier": "Tier 2b — migration DDL",
+            "input_use": "Lookup/dimension resolution (Phase 4), JOIN target recognition (Phase 5), lineage source attribution (Phase 13). Query live Synapse table for value maps."
+          },
+          {
+            "name": "BI_DB_Migration",
+            "purpose": "Legacy on-prem BI_DB production migration staging. Tables migrated from the BI_DB production SQL Server.",
+            "ssdt_path": "BI_DB_Migration/Tables",
+            "nodbobjects_pattern": "BI_DB_Migration.*",
+            "tier": "Tier 2b — migration DDL",
+            "input_use": "Same as DWH_Migration."
+          },
+          {
+            "name": "DWH_staging",
+            "purpose": "Active lake-to-Synapse pipeline staging tables. 135 tables staging data from the data lake before ETL SPs load them into DWH_dbo/BI_DB_dbo. Column names reveal production source table naming.",
+            "ssdt_path": "DWH_staging/Tables",
+            "tier": "Tier 2 — staging DDL",
+            "input_use": "Column rename discovery (Phase 9), ETL source identification (Phase 2 B1)."
+          },
+          {
+            "name": "CopyFromLake",
+            "purpose": "Alternative lake import tables. Used by some schemas for direct lake-to-table loads instead of external tables.",
+            "ssdt_path": "CopyFromLake/Tables",
+            "tier": "Tier 2 — staging DDL",
+            "input_use": "Circular import detection — equivalent to external tables. Trace through to production source (Phase 2 B2, Phase 13 Step 1c)."
+          }
+        ]
+      },
+      "external_table_paths": {
+        "description": "External table SSDT repo paths for ALL documentation target schemas. AUTHORITATIVE LIST — Phase 2 B2 and Phase 13 Step 1c MUST read this config for the schema list instead of hardcoding schemas. When a new schema is added to the 'schemas' array above, add its External Tables path here too. External tables are NOT documentation targets but are essential lineage inputs.",
+        "base_path": "DataPlatform/SynapseSQLPool1/sql_dp_prod_we",
+        "paths": [
+          "DWH_dbo/External Tables",
+          "BI_DB_dbo/External Tables",
+          "Dealing_dbo/External Tables",
+          "EXW_dbo/External Tables",
+          "eMoney_dbo/External Tables"
+        ]
+      },
       "lineage": {
         "generic_pipeline_mapping": {
           "catalog_view": "main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables",
@@ -51,7 +97,8 @@
       {"column_name": "etr_ymd", "canonical_description": "ETL partition column: year-month-day (YYYYMMDD format)", "category": "etl_partition"},
       {"column_name": "etr_ym", "canonical_description": "ETL partition column: year-month (YYYYMM format)", "category": "etl_partition"},
       {"column_name": "etr_y", "canonical_description": "ETL partition column: year (YYYY format)", "category": "etl_partition"},
-      {"column_name": "UpdateDate", "canonical_description": "ETL metadata: timestamp when this row was last updated by the ETL pipeline", "category": "etl_metadata"},
+      {"column_name": "UpdateDate", "canonical_description": "ETL metadata: timestamp when this row was last updated by the ETL pipeline. EXCEPTION: for frozen migration tables (DWH_Migration schema origin), this is the original production timestamp preserved from the legacy system — NOT set by GETDATE(). Run timestamp analysis (Phase 2 Tier A1) to determine which applies before using this description.", "category": "etl_metadata"},
+      {"column_name": "InsertDate", "canonical_description": "ETL metadata: timestamp when this row was first inserted by the ETL pipeline. EXCEPTION: for frozen migration tables (DWH_Migration schema origin), this is the original creation timestamp preserved from the legacy system — NOT set by GETDATE(). Run timestamp analysis (Phase 2 Tier A1) to determine which applies before using this description.", "category": "etl_metadata"},
       {"column_name": "CreatedDate", "canonical_description": "ETL metadata: timestamp when this row was first created by the ETL pipeline", "category": "etl_metadata"},
       {"column_name": "Created", "canonical_description": "ETL metadata: timestamp when this row was first created", "category": "etl_metadata"},
       {"column_name": "FileName", "canonical_description": "ETL metadata: source file name from lake ingestion", "category": "etl_metadata"},

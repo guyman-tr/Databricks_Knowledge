@@ -27,7 +27,7 @@ Define how to extract data from an existing wiki `.md` file:
 
 - **Header table**: Read the property table at the top for Schema, Object Type, Production Source, Refresh, Synapse Distribution, Synapse Index. UC properties may show "Pending — resolved during write-objects" — these will be filled during this phase.
 - **Section 1 (Business Meaning)**: Extract for the table comment. Compress to ≤1024 chars.
-- **Section 4 (Elements)**: Parse the markdown table. Each row has: #, Element, Type, Nullable, Description. The Description field contains business meaning with Tier tags — preserve these verbatim for column comments.
+- **Section 4 (Elements)**: Parse the markdown table. Each row has: #, Element, Type, Nullable, Description. The Description field contains business meaning with a **mandatory tier suffix** at the end: `(Tier N — source.table)`. This suffix is the provenance trail — preserve it verbatim in the UC column comment. If any description is missing the tier suffix, STOP and report the wiki file as non-compliant (it must be regenerated with Rule 19 enforcement).
 - **Section 5 (Lineage)**: Read for lineage context to include in tags and comments.
 - **Quality footer**: Read the footer line for quality score and star grade.
 
