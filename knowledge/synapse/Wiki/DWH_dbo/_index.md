@@ -3,13 +3,13 @@ schema: DWH_dbo
 database: Synapse DWH
 total_objects: 379
 blacklisted: 246
-pending: 91
-documented: 25
+pending: 116
+documented: 0
 failed: 0
 skipped: 3
-last_batch: 1
+last_batch: 0
 last_updated: "2026-03-18"
-quality_avg: 7.6
+quality_avg: 0
 revisions: 0
 ---
 
@@ -21,42 +21,9 @@ revisions: 0
 | **Total Objects** | 379 |
 | **Active (to document)** | 116 (95 tables, 21 views) |
 | **Blacklisted** | 246 |
-| **Documented** | 25 (21.6%) |
+| **Documented** | 0 (0%) |
 | **Skipped** | 3 |
 | **Last Updated** | 2026-03-18 |
-
-## Completed Batches
-
-### Batch 1 — 25 depth-0 Dim_* tables
-Completed: 2026-03-18 | Avg Quality: 7.6/10 | Dead/Frozen: 4
-
-| # | Object | Quality | Notes |
-|---|--------|---------|-------|
-| 1 | Dim_AccountStatus | 8.2 | Dictionary, SP_Dictionaries |
-| 2 | Dim_AccountType | 8.2 | Dictionary, SP_Dictionaries |
-| 3 | Dim_ActionType | 7.9 | Frozen, Legacy DWH migration |
-| 4 | Dim_AffiliateCostType | 7.2 | Frozen, Legacy DWH migration |
-| 5 | Dim_BillingDepot | 8.5 | Billing.Depot, SP_Dictionaries |
-| 6 | Dim_BillingProtocolMIDSettingsID | 8.7 | Billing.ProtocolMIDSettings |
-| 7 | Dim_BonusType | 8.3 | BackOffice.BonusType |
-| 8 | Dim_CalculationType | 7.5 | HistoryCosts domain |
-| 9 | Dim_Campaign | 6.5 | DEAD — ETL commented out |
-| 10 | Dim_CardType | 7.4 | Frozen, Legacy DWH migration |
-| 11 | Dim_CashoutFeeGroup | 7.5 | Dictionary, SP_Dictionaries |
-| 12 | Dim_CashoutMode | 7.8 | Dictionary, SP_Dictionaries |
-| 13 | Dim_CashoutReason | 7.5 | Dictionary, SP_Dictionaries |
-| 14 | Dim_CashoutStatus | 7.8 | Dictionary, SP_Dictionaries |
-| 15 | Dim_ClientWithdrawReason | 7.5 | Dictionary, SP_Dictionaries |
-| 16 | Dim_ClosePositionReason | 7.8 | Dictionary, ClosePositionActionType |
-| 17 | Dim_CompensationReason | 7.6 | BackOffice.CompensationReason |
-| 18 | Dim_ContactType | 5.5 | DEAD — 0 rows, no ETL |
-| 19 | Dim_ContractType | 6.8 | Frozen, manually loaded |
-| 20 | Dim_CostConfigurationId | 7.5 | HistoryCosts domain |
-| 21 | Dim_CostSubtype | 7.5 | HistoryCosts domain |
-| 22 | Dim_CostType | 7.5 | HistoryCosts domain |
-| 23 | Dim_CountryBin | 7.5 | Dictionary, 16.4M rows |
-| 24 | Dim_CountryIP | 7.5 | Dictionary, 6.9M rows |
-| 25 | Dim_CountryIPAnonymous | 7.3 | SP_Dictionaries_Country, 4.8M rows |
 
 ---
 
@@ -65,34 +32,34 @@ Completed: 2026-03-18 | Avg Quality: 7.6/10 | Dead/Frozen: 4
 | Object | Quality | Status |
 |--------|---------|--------|
 | DWH_dbo.CustomerStatic | - | Pending |
-| DWH_dbo.Dim_AccountStatus | 8.2 | Done (Batch 1) |
-| DWH_dbo.Dim_AccountType | 8.2 | Done (Batch 1) |
-| DWH_dbo.Dim_ActionType | 7.9 | Done (Batch 1) |
+| DWH_dbo.Dim_AccountStatus | - | Pending |
+| DWH_dbo.Dim_AccountType | - | Pending |
+| DWH_dbo.Dim_ActionType | - | Pending |
 | DWH_dbo.Dim_Affiliate | - | Pending |
-| DWH_dbo.Dim_AffiliateCostType | 7.2 | Done (Batch 1) |
-| DWH_dbo.Dim_BillingDepot | 8.5 | Done (Batch 1) |
-| DWH_dbo.Dim_BillingProtocolMIDSettingsID | 8.7 | Done (Batch 1) |
-| DWH_dbo.Dim_BonusType | 8.3 | Done (Batch 1) |
-| DWH_dbo.Dim_CalculationType | - | Queued (Batch 1, #8) |
-| DWH_dbo.Dim_Campaign | 6.5 | Done (Batch 1, dead) |
-| DWH_dbo.Dim_CardType | - | Queued (Batch 1, #10) |
-| DWH_dbo.Dim_CashoutFeeGroup | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_CashoutMode | - | Queued (Batch 1, #12) |
-| DWH_dbo.Dim_CashoutReason | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_CashoutStatus | 7.8 | Done (Batch 1) |
+| DWH_dbo.Dim_AffiliateCostType | - | Pending |
+| DWH_dbo.Dim_BillingDepot | - | Pending |
+| DWH_dbo.Dim_BillingProtocolMIDSettingsID | - | Pending |
+| DWH_dbo.Dim_BonusType | - | Pending |
+| DWH_dbo.Dim_CalculationType | - | Pending |
+| DWH_dbo.Dim_Campaign | - | Pending |
+| DWH_dbo.Dim_CardType | - | Pending |
+| DWH_dbo.Dim_CashoutFeeGroup | - | Pending |
+| DWH_dbo.Dim_CashoutMode | - | Pending |
+| DWH_dbo.Dim_CashoutReason | - | Pending |
+| DWH_dbo.Dim_CashoutStatus | - | Pending |
 | DWH_dbo.Dim_Channel | - | Pending |
-| DWH_dbo.Dim_ClientWithdrawReason | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_ClosePositionReason | 7.8 | Done (Batch 1) |
-| DWH_dbo.Dim_CompensationReason | 7.6 | Done (Batch 1) |
-| DWH_dbo.Dim_ContactType | 5.5 | Done (Batch 1, dead) |
-| DWH_dbo.Dim_ContractType | 6.8 | Done (Batch 1, frozen) |
-| DWH_dbo.Dim_CostConfigurationId | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_CostSubtype | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_CostType | 7.5 | Done (Batch 1) |
+| DWH_dbo.Dim_ClientWithdrawReason | - | Pending |
+| DWH_dbo.Dim_ClosePositionReason | - | Pending |
+| DWH_dbo.Dim_CompensationReason | - | Pending |
+| DWH_dbo.Dim_ContactType | - | Pending |
+| DWH_dbo.Dim_ContractType | - | Pending |
+| DWH_dbo.Dim_CostConfigurationId | - | Pending |
+| DWH_dbo.Dim_CostSubtype | - | Pending |
+| DWH_dbo.Dim_CostType | - | Pending |
 | DWH_dbo.Dim_Country | - | Pending |
-| DWH_dbo.Dim_CountryBin | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_CountryIP | 7.5 | Done (Batch 1) |
-| DWH_dbo.Dim_CountryIPAnonymous | 7.3 | Done (Batch 1) |
+| DWH_dbo.Dim_CountryBin | - | Pending |
+| DWH_dbo.Dim_CountryIP | - | Pending |
+| DWH_dbo.Dim_CountryIPAnonymous | - | Pending |
 | DWH_dbo.Dim_CountryIPAnonymousProxyType | - | Pending |
 | DWH_dbo.Dim_CreditType | - | Pending |
 | DWH_dbo.Dim_Currency | - | Pending |
