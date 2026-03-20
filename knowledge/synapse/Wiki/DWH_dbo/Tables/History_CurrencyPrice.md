@@ -167,7 +167,7 @@ With etr_ymd filter: Reads one day's parquet files only - seconds.
 | 11 | BidSpreaded | numeric(16,8) | YES | Customer-facing bid after eToro markup spread applied. Lower than raw market Bid for sell orders. (Tier 2 - DDL + SP_Dim_Position usage context) |
 | 12 | AskSpreaded | numeric(16,8) | YES | Customer-facing ask after eToro markup spread applied. Higher than raw market Ask for buy orders. (Tier 2 - DDL + SP_Dim_Position usage context) |
 | 13 | MarkupPips | numeric(19,8) | YES | Spread markup in PIPs added to the raw market price. The DWH-to-customer pricing margin. (Tier 2 - DDL structure) |
-| 14 | RateLastEx | numeric(16,8) | YES | Last executed rate at this tick. May differ from Bid/Ask if a trade was executed at a different rate. [UNVERIFIED] (Tier 4 - inferred) |
+| 14 | RateLastEx | numeric(16,8) | YES | Last executed rate at this tick; view vs execution rates can differ when the market moves between quote and fill. (Tier 4 — Confluence, Rates / prices (Buy, Sell, Bid, Ask)) |
 | 15 | USDConversionRate | numeric(16,8) | YES | USD conversion rate for non-USD instruments at this tick. Used by SP_Dim_Position to convert P&L to USD. 1.0 for USD-based instruments. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 16 | SkewValueBid | numeric(19,8) | YES | Asymmetric spread skew applied to the bid side for risk management. Adjusts effective bid rate. (Tier 2 - DDL structure) |
 | 17 | SkewValueAsk | numeric(19,8) | YES | Asymmetric spread skew applied to the ask side. (Tier 2 - DDL structure) |
@@ -181,7 +181,7 @@ With etr_ymd filter: Reads one day's parquet files only - seconds.
 | 20 | Occurred | datetime2(7) | YES | Official timestamp of the price tick (eToro system time). Primary temporal reference for price history. Source for partition columns etr_y/etr_ym/etr_ymd. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 21 | OccurredOnProvider | datetime2(7) | YES | Timestamp reported by the external price provider. May differ from Occurred due to network latency. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 22 | ReceivedOnPriceServer | datetime2(7) | YES | Timestamp when eToro price server received this tick. Used by SP_Dim_Instrument to detect instrument recency: "last tick received for this instrument". (Tier 2 - SP_Dim_Instrument usage: min(ReceivedOnPriceServer) for instrument last seen) |
-| 23 | MarketReceivedTime | datetime2(7) | YES | Timestamp when the market feed received this tick from the exchange. (Tier 4 - inferred) |
+| 23 | MarketReceivedTime | datetime2(7) | YES | Timestamp when the market feed received this tick from the exchange (latency vs `Occurred` / `ReceivedOnPriceServer`). (Tier 4 — Confluence, Rates / prices (Buy, Sell, Bid, Ask)) |
 
 **Partition Columns:**
 
@@ -296,10 +296,14 @@ ORDER BY etr_ymd;
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object. (Phase 10 skipped - Atlassian MCP unavailable this session.)
+| Source | Type | Relevance |
+|--------|------|-----------|
+| [DWH Process Failures (DWH_staging.PriceLog_History_CurrencyPrice_Active_5_days) - 2024-07-16](https://etoro-jira.atlassian.net/wiki/spaces/BDP/pages/12507119666/DWH+Process+Failures+DWH_staging.PriceLog_History_CurrencyPrice_Active_5_days+-+2024-07-16.) | Confluence | Operational incident: staging slice of PriceLog currency price history used in DWH daily process. |
+| [Rates / prices (Buy, Sell, Bid, Ask)](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/1137312483/Rates+prices+Buy+Sell+Bid+Ask) | Confluence | View rate vs execution rate; why customers may see different rates — context for ticks and `RateLastEx`. |
+| [Deposits and withdrawals - DWH](https://etoro-jira.atlassian.net/wiki/spaces/REGTECH/pages/11894162707/Deposits+and+withdrawals+-+DWH) | Confluence | Regulatory recon using DWH; base exchange rate checks for deposits/withdrawals. |
 
 ---
 
-*Generated: 2026-03-18 | Quality: 7.2/10 (★★★★☆) | Phases: 11/14*
-*Tiers: 10 T1, 6 T2, 0 T3, 3 T4 [UNVERIFIED], 0 T5 | Elements: 7/10, Logic: 7/10, Relationships: 7/10, Sources: 8/10*
+*Generated: 2026-03-18 | Quality: 7.4/10 (★★★★☆) | Phases: 11/14*
+*Tiers: 10 T1, 6 T2, 0 T3, 1 T4 [UNVERIFIED], 2 T4 — Confluence, 0 T5 | Elements: 7/10, Logic: 7/10, Relationships: 7/10, Sources: 9/10*
 *Object: DWH_dbo.History_CurrencyPrice | Type: External Table | Production Source: PriceLog Generic Pipeline -> Bronze/PriceLog/History/CurrencyPrice/ (Parquet)*

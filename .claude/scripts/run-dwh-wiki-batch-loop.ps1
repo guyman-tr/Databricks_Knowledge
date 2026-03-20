@@ -1,10 +1,22 @@
 param(
-    [string]$SchemaName = ""
+    [string]$SchemaName = "",
+    [string]$DocLevel = ""
 )
+
+$ErrorActionPreference = 'Continue'
 
 if (-not $SchemaName) {
     $SchemaName = Read-Host "Schema Name (default: DWH_dbo)"
     if (-not $SchemaName) { $SchemaName = "DWH_dbo" }
+}
+
+# Pick the right command based on schema
+if ($SchemaName -eq "BI_DB_dbo") {
+    $batchCommand = "/build-wiki-bidb-batch"
+    $commandArgs = "$SchemaName $DocLevel".Trim()
+} else {
+    $batchCommand = "/build-wiki-dwh-batch"
+    $commandArgs = $SchemaName
 }
 
 $claudePath = "$env:APPDATA\npm\claude.cmd"
@@ -18,9 +30,13 @@ if (-not (Test-Path $claudePath)) {
 
 Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
-Write-Host "  DWH Wiki Batch Loop" -ForegroundColor Cyan
-Write-Host "  Schema: $SchemaName" -ForegroundColor Cyan
-Write-Host "  Repo:   $repoRoot" -ForegroundColor Cyan
+Write-Host "  Wiki Batch Loop" -ForegroundColor Cyan
+Write-Host "  Schema:  $SchemaName" -ForegroundColor Cyan
+Write-Host "  Command: $batchCommand" -ForegroundColor Cyan
+if ($DocLevel) {
+    Write-Host "  Filter:  $DocLevel" -ForegroundColor Cyan
+}
+Write-Host "  Repo:    $repoRoot" -ForegroundColor Cyan
 Write-Host "  Started: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host ""
@@ -41,26 +57,34 @@ while ($true) {
     $outputTokens = 0
     $costUsd = 0
 
-    & $claudePath --dangerously-skip-permissions --verbose --output-format stream-json --print "run /build-wiki-dwh-batch $SchemaName" | ForEach-Object {
-        try {
-            $obj = $_ | ConvertFrom-Json
-            if ($obj.type -eq "assistant" -and $obj.message.content) {
-                foreach ($block in $obj.message.content) {
-                    if ($block.type -eq "text" -and $block.text) {
-                        Write-Host $block.text -NoNewline
-                    } elseif ($block.type -eq "tool_use") {
-                        Write-Host "[Tool: $($block.name)]" -ForegroundColor Cyan
+    try {
+        & $claudePath --dangerously-skip-permissions --verbose --output-format stream-json --print "run $batchCommand $commandArgs" 2>$null | ForEach-Object {
+            try {
+                $obj = $_ | ConvertFrom-Json -ErrorAction SilentlyContinue
+                if ($null -eq $obj) { return }
+                if ($obj.type -eq "assistant" -and $obj.message.content) {
+                    foreach ($block in $obj.message.content) {
+                        if ($block.type -eq "text" -and $block.text) {
+                            Write-Host $block.text -NoNewline
+                        } elseif ($block.type -eq "tool_use") {
+                            Write-Host "[Tool: $($block.name)]" -ForegroundColor Cyan
+                        }
                     }
                 }
-            }
-            if ($obj.type -eq "result") {
-                if ($obj.usage) {
-                    $inputTokens  = $obj.usage.input_tokens
-                    $outputTokens = $obj.usage.output_tokens
+                if ($obj.type -eq "result") {
+                    if ($obj.usage) {
+                        $inputTokens  = $obj.usage.input_tokens
+                        $outputTokens = $obj.usage.output_tokens
+                    }
+                    if ($obj.cost_usd) { $costUsd = $obj.cost_usd }
                 }
-                if ($obj.cost_usd) { $costUsd = $obj.cost_usd }
+            } catch {
+                # JSON parse error - skip line
             }
-        } catch {}
+        }
+    } catch {
+        Write-Host ""
+        Write-Host "  Claude Code process error: $_" -ForegroundColor Red
     }
 
     $totalCostUsd += $costUsd
@@ -76,8 +100,8 @@ while ($true) {
 
     $schemaComplete = $false
     if (Test-Path $indexPath) {
-        $content = Get-Content $indexPath -Raw
-        if ($content -notmatch "Pending") {
+        $content = Get-Content $indexPath -Raw -ErrorAction SilentlyContinue
+        if ($content -and ($content -notmatch "Pending")) {
             $schemaComplete = $true
         }
     }

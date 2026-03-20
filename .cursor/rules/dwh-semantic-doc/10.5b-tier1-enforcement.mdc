@@ -1,0 +1,180 @@
+---
+description: "Phase 10.5b — Tier 1 Upstream Inheritance Enforcement. Hard rules for maximising Tier 1 coverage from DB_Schema wikis. Loaded alongside Phase 10.5 and Phase 11."
+globs:
+alwaysApply: false
+---
+
+# Tier 1 Upstream Inheritance — ENFORCEMENT PROTOCOL
+
+> **WHY THIS EXISTS**: Agents repeatedly see upstream wikis, acknowledge them, then stamp
+> everything Tier 2 anyway. Phase 11 Rule 10 says "copy verbatim" — agents ignore it.
+> This rule makes compliance **checkable** and **non-optional**.
+
+## 1. EXHAUSTIVE UPSTREAM SEARCH — NOT JUST THE PRIMARY TABLE
+
+The DWH ETL doesn't always pull from the primary source table directly. Data flows
+through views, staging views, and history tables that ADD columns not present in the
+base table. You MUST search ALL of these.
+
+### Search Order (mandatory, in this sequence):
+
+```
+For each DWH column without a Tier 1 match:
+
+1. Primary source table wiki
+   Path: DB_Schema/etoro/Wiki/{Schema}/Tables/{Schema}.{Table}.md
+
+2. Staging views (the view the Generic Pipeline actually exports)
+   Path: DB_Schema/etoro/Wiki/{Schema}/Views/{Schema}.{ViewName}.md
+   Common: Trade.OpenPositionEndOfDay, Trade.Position, History.ClosePositionEndOfDay
+   These add computed columns (PnL, fees, conversion rates) on top of the base table.
+
+3. Related views and functions referenced by the ETL SP
+   Grep the writer SP for FROM/JOIN references, then check if those objects have wikis.
+
+4. History schema equivalents
+   Path: DB_Schema/etoro/Wiki/History/Tables/History.{Table}.md
+   Closed positions often come from History tables with different column sets.
+
+5. Dictionary/lookup tables
+   Some columns are join-enriched from Dictionary tables that DO have wikis.
+```
+
+### The Search Must Be GREEDY
+
+For ANY DWH column that doesn't match the primary table by name:
+- Grep `DB_Schema/etoro/Wiki/` recursively for the column name
+- Check Tables, Views, Functions, and Stored Procedures wiki folders
+- A match in ANY documented object is a potential Tier 1 source
+
+**FAILURE MODE TO AVOID**: Searching only Trade.PositionTbl and missing that
+`PnLInDollars` is documented in `Trade.OpenPositionEndOfDay` (the staging view).
+Or missing that `CommissionOnClose` exists in PositionTbl but gets adjusted by
+the DWH SP — still Tier 1, but needs a DWH note.
+
+## 2. TIER ASSIGNMENT RULES — THE DECISION TREE
+
+```
+For each DWH column:
+
+Q1: Does the column name (or a known rename) appear in ANY upstream
+    DB_Schema wiki element table?
+    
+    YES → Q2
+    NO  → Tier 2 (SP code) or Tier 4 (inferred). NOT Tier 1.
+
+Q2: Does the DWH SP transform this column's VALUE beyond passthrough?
+    (renames don't count — only computation, CASE logic, JOINs, or adjustments)
+    
+    NO  → Tier 1 verbatim. Copy the upstream description exactly.
+          Tag: (Tier 1 — {Schema}.{Table or View})
+    
+    YES → Q3
+
+Q3: Is the upstream description still the BEST starting point for understanding
+    this column, even though the DWH modifies it?
+    
+    YES → Tier 1 + DWH note. Copy upstream description, THEN append:
+          "DWH note: {transformation description}."
+          Tag: (Tier 1 — {Schema}.{Table or View})
+          
+    NO  → Tier 2. The DWH computation is so different that the upstream
+          description would be misleading. Write a DWH-specific description.
+          Tag: (Tier 2 — {SP_Name})
+```
+
+### EXAMPLES — Correct Tier Assignment
+
+**Passthrough (Tier 1 verbatim)**:
+- `PositionID` in Dim_Position ← Trade.PositionTbl: same column, same value
+- Description: "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl)"
+
+**Renamed passthrough (Tier 1 verbatim)**:
+- `ClosePositionReasonID` in Dim_Position ← `ActionType` in Trade.PositionTbl
+- Description: "Close reason. 0=Customer, 1=Stop Loss, 5=Take Profit, 9=Hierarchical Close. (Tier 1 — Trade.PositionTbl)"
+
+**View-computed (Tier 1 from view wiki)**:
+- `PnLInDollars` in Dim_Position ← Trade.OpenPositionEndOfDay (staging view)
+- Description: "Max-rate PnL in dollars. From Trade.FnCalculatePnLWrapper using the max-date market rate. Represents unrealized profit/loss at the highest available price timestamp. (Tier 1 — Trade.OpenPositionEndOfDay)"
+
+**Passthrough with DWH adjustment (Tier 1 + DWH note)**:
+- `CommissionOnClose` in Dim_Position ← Trade.PositionTbl but SP adjusts on reopens
+- Description: "Commission charged on close. DWH note: adjusted by SP_Dim_Position when position is reopened; CommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl)"
+
+**ETL-computed, no upstream equivalent (Tier 2)**:
+- `OpenDateID` in Dim_Position — computed as CONVERT(int, YYYYMMDD) from OpenOccurred
+- `IsCopyFundPosition` — computed via JOIN chain to fund accounts
+- `IsReOpen` — computed: CASE WHEN ReopenForPositionID IS NOT NULL THEN 1
+- Description: "ETL-computed date int derived from OpenOccurred. (Tier 2 — SP_Dim_Position_DL_To_Synapse)"
+
+**Join-enriched, no wiki for source (Tier 2)**:
+- InitForex_Ask in Dim_Position — from PriceLog_History_CurrencyPrice_Active (no wiki)
+- Description: "Raw ask price at open from price book. (Tier 2 — SP_Dim_Position_DL_To_Synapse)"
+
+## 3. POST-WRITE SEMANTIC VALIDATION
+
+After writing a wiki file, perform this check BEFORE marking the object as done:
+
+### Check: Tier 1 Coverage Ratio
+
+```
+1. Count how many columns in the Elements table have (Tier 1 — ...)
+2. Count total columns
+3. Look up how many columns the PRIMARY upstream wiki documents
+
+IF upstream_wiki_column_count > 20 AND tier1_count == 0:
+   → HARD FAIL. You found a rich upstream wiki and inherited NOTHING.
+   → Delete the wiki file and regenerate.
+
+IF upstream_wiki_column_count > 0 AND tier1_count < (upstream_matchable_columns * 0.5):
+   → WARNING. You likely missed Tier 1 matches.
+   → Re-run the exhaustive search (Section 1) before proceeding.
+```
+
+### Check: Transformation Awareness
+
+```
+For each column tagged Tier 1:
+   Grep the writer SP for that column name.
+   IF the SP contains UPDATE/SET/CASE logic that modifies this column:
+      → The description MUST contain "DWH note:" explaining the transformation.
+      → If it doesn't, add the note before proceeding.
+```
+
+## 4. KNOWN MULTI-SOURCE PATTERNS
+
+These DWH tables have MULTIPLE upstream sources. Search ALL of them:
+
+| DWH Table | Primary Source | Also Search |
+|-----------|---------------|-------------|
+| Dim_Position | Trade.PositionTbl | Trade.OpenPositionEndOfDay, History.ClosePositionEndOfDay, Trade.Position, Trade.PositionTreeInfo |
+| Dim_Customer | Customer.CustomerStatic | BackOffice.Customer, Customer.Customer |
+| Fact_BillingWithdraw | Billing.Withdraw | Billing.WithdrawToFunding, Billing.Funding |
+| Fact_BillingDeposit | Billing.Deposit | Billing.Funding |
+| Dim_Mirror | Trade.Mirror | — |
+| Dim_Instrument | Trade.Instrument | — |
+| Fact_Guru_Copiers | — (check Trade.Mirror, BackOffice.Customer) | Trade.CopyRelationCloseActions |
+
+This table is NOT exhaustive. For any DWH table not listed, always run the exhaustive
+search from Section 1.
+
+## 5. RENAME MAPPING — COMMON DWH COLUMN RENAMES
+
+When the DWH renames a column, you won't find it by exact name match. Check these
+known patterns:
+
+| DWH Column | Production Column | Source Table |
+|-----------|-------------------|-------------|
+| RealCID | CID | Customer.CustomerStatic |
+| OpenOccurred | Occurred | Trade.PositionTbl |
+| ClosePositionReasonID | ActionType | Trade.PositionTbl |
+| OpenPositionReasonID | OpenActionType | Trade.PositionTbl |
+| Amount_Withdraw | Amount | Billing.Withdraw |
+| Amount_WithdrawToFunding | Amount | Billing.WithdrawToFunding |
+| FundingTypeID_Withdraw | FundingTypeID | Billing.Withdraw |
+| FundingTypeID_Funding | FundingTypeID | Billing.Funding |
+| CashoutStatusID_Withdraw | CashoutStatusID | Billing.Withdraw |
+| CashoutStatusID_Funding | CashoutStatusID | Billing.WithdrawToFunding |
+| WithdrawPaymentID | ID | Billing.WithdrawToFunding |
+
+Add new renames to this list as they're discovered during pipeline runs.

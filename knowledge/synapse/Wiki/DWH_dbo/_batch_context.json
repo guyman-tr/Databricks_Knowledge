@@ -1,16 +1,16 @@
 {
   "schema": "DWH_dbo",
-  "last_batch": 1,
-  "last_updated": "2026-03-18",
-  "documented_count": 9,
-  "pending_count": 108,
-  "reset_reason": "QA reset after batch-size reduction (25→10) and Rule 19 tier-suffix enforcement",
+  "last_batch": 14,
+  "last_updated": "2026-03-19",
+  "documented_count": 130,
+  "pending_count": 0,
+  "reset_reason": "QA reset after batch-size reduction (25->10) and Rule 19 tier-suffix enforcement",
   "etl_patterns": {
     "SP_Dictionaries_DL_To_Synapse": {
       "description": "Main dictionary loader SP. Truncate-and-reload pattern from DWH_staging tables.",
       "common_transforms": {
-        "UpdateDate": "GETDATE() — not from source",
-        "InsertDate": "GETDATE() — not from source (on tables that have it)",
+        "UpdateDate": "GETDATE() -- not from source",
+        "InsertDate": "GETDATE() -- not from source (on tables that have it)",
         "StatusID": "Hardcoded to 1 (on tables that have it)",
         "DWH*ID_columns": "Often set to same value as source PK (e.g. DWHCompensationID = CompensationReasonID)",
         "ID_0_placeholder": "Many tables get an INSERT of ID=0 with N/A name for fact table JOINs"
@@ -37,7 +37,70 @@
     },
     "SP_Dim_HistorySplitRatio_DL_To_Synapse": {
       "description": "Dedicated SP for Dim_HistorySplitRatio. Loads stock split/corporate action ratios with date ranges.",
-      "source": "Trade.HistorySplitRatio"
+      "source": "PriceLog.History.SplitRatio (NOT Trade.HistorySplitRatio - confirmed via _generic_pipeline_mapping.json)",
+      "note": "source_correction: earlier context had wrong database. Source is PriceLog server (AZR-W-PRICEDB-2-Price), not Trade."
+    },
+    "SP_Dim_Mirror_DL_To_Synapse": {
+      "description": "Incremental MERGE for Dim_Mirror. Never truncates. Two sources: Trade.Mirror (open) + History.Mirror (closed). Complex DELETE+MERGE+UPDATE pattern.",
+      "etl_pattern": "1. Delete/reset yesterday open rows. 2. Load Ext_Dim_Mirror_Real from etoro_Trade_Mirror. 3. Load Ext_Dim_Mirror_History from etoro_History_Mirror (MirrorOperationID=2). 4. UPDATE+INSERT from History. 5. Derive IsCopyFundMirror from BackOffice AccountTypeID=9. 6. MERGE Real->Dim_Mirror. 7. UPDATE SessionID from History MirrorOperationID=1.",
+      "sentinels": "CloseDateID=0 + CloseOccurred='1900-01-01' = open mirror (not closed)"
+    },
+    "SP_Dim_Instrument": {
+      "description": "Full TRUNCATE+INSERT+5 post-load UPDATEs for Dim_Instrument. 7 staging source JOINs. Ends with EXEC SP_Dim_Instrument_Snapshot @dt.",
+      "sources": ["etoro_Trade_GetInstrument (primary)", "etoro_Dictionary_Currency (buy/sell names)", "etoro_Trade_InstrumentMetaData", "etoro_Trade_ProviderToInstrument", "etoro_Trade_InstrumentCusip", "etoro_Trade_FuturesMetaData", "etoro_Trade_FuturesInstrumentsInitialMarginByProviderMapping", "etoro_Trade_Instrument"],
+      "post_load_updates": ["ReceivedOnPriceServer from Ext_Dim_Instrument_ReceivedOnPriceServerStatic", "AssetClass/IndustryGroup from Ext_Dim_Instrument_Classification_Static", "ADV/MKTcap/SharesOutStanding from Rankings StockInfo (MetadataIDs 8557/8735/9315/8444)", "PlatformSector/PlatformIndustry from Rankings StockInfo (MetadataIDs 8436/8280)"]
+    },
+    "SP_Dim_Position_DL_To_Synapse": {
+      "description": "Complex incremental ETL for Dim_Position. 134 columns. Daily DELETE+INSERT with extensive corrections.",
+      "etl_steps": [
+        "1. DELETE positions with CloseDateID >= yesterday (re-process window)",
+        "2. Load open positions from etoro_Trade_OpenPositionEndOfDay (CloseDateID=0)",
+        "3. Load closed positions from etoro_History_ClosePositionEndOfDay",
+        "4. Apply corrections from PositionChangeLog (ChangeTypeID=12: cumulative amount adjustment)",
+        "5. Apply AirDrop corrections (credit transactions tagged as AirDrop)",
+        "6. Apply CurrencyPrice adjustments for non-USD FX positions",
+        "7. UPDATE existing open positions that just closed",
+        "8. INSERT new closed position records",
+        "9. Call SP_Dim_Position_HedgeType_Real and SP_Dim_Position_HedgeType_History"
+      ],
+      "sentinels": {
+        "CloseDateID=0": "Actively open position (normal state, not yet closed)",
+        "CloseDateID=19000101": "Transient ETL reprocessing state during DELETE window, NOT a real close date",
+        "OpenDateID=0": "ID=0 placeholder row only"
+      },
+      "source_renames": {
+        "ActionType -> ClosePositionReasonID": "Source column ActionType renamed to ClosePositionReasonID in DWH",
+        "OpenActionType -> OpenPositionReasonID": "Source column OpenActionType renamed to OpenPositionReasonID in DWH"
+      },
+      "known_bugs": [
+        "Line ~520: OpenPositionReasonIDfOpenTotalFees - copy-paste typo in SP column name (extra 'f' before 'Open')",
+        "Mixed timezone: some columns use GETDATE() (server local), others GETUTCDATE() -- inconsistency"
+      ],
+      "distribution": "HASH(PositionID) + monthly partition (2007-01-01 to 2026-02-28, CLUSTERED INDEX on CloseDateID ASC, PositionID ASC)",
+      "data_range": "2007-08-27 (first open) to 2026-03-10 (most recent close)"
+    },
+    "SP_Dim_PositionChangeLog_DL_To_Synapse": {
+      "description": "Incremental ETL for Dim_PositionChangeLog. DELETE OccurredDateID >= yesterday, then INSERT.",
+      "source": "etoro_History_PositionChangeLog",
+      "etl_pattern": "DELETE WHERE OccurredDateID >= yesterday, INSERT all matching rows for Occurred >= yesterday",
+      "historical_gap": "Before 2025-01-05, ETL only loaded ChangeTypeIDs 1,5,11,12,13. ChangeTypeIDs 0 and 2 were excluded. Full load started 2025-01-05.",
+      "no_deduplication": "ETL does NOT deduplicate -- multiple rows per position per day are expected (complete history)"
+    },
+    "SP_Dim_PositionHedgeServerChangeLog_DL_To_Synapse": {
+      "description": "Daily incremental ETL for Dim_PositionHedgeServerChangeLog_Snapshot. SCD Type 2 pattern.",
+      "etl_steps": [
+        "1. DELETE rows with FromDate >= yesterday (re-process yesterday)",
+        "2. SET ToDate=20991231 on most recent row per PositionID (repair open-ended records)",
+        "3. Load Ext_Dim_Position_PositionHedgeServerChangeLog from staging",
+        "4. CALL SP_Dim_Position_PositionHedgeServerChangeLog (inner SP)"
+      ],
+      "inner_sp_SP_Dim_Position_PositionHedgeServerChangeLog": {
+        "steps": [
+          "Deduplicates Ext table: keeps most recent per PositionID (ROW_NUMBER by OccurredDate DESC)",
+          "For existing positions: UPDATE old active row ToDate=yesterday, INSERT new active row",
+          "For new positions: INSERT pre-change row (FromDate=OpenDateID, ToDate=OccurredDateID-1) + active row (FromDate=OccurredDateID, ToDate=20991231)"
+        ]
+      }
     }
   },
   "dead_tables": [
@@ -95,17 +158,27 @@
   "schema_drift_patterns": [
     "Production DisplayName columns are frequently dropped (BonusType, CompensationReason)",
     "Production flag columns (IsActive, IsTaxable, IsCashflowForGain, IsShownInHistory) often dropped",
-    "Name columns sometimes renamed to include table prefix (Name → CashoutFeeGroupName, Name → ClientWithdrawReasonName)",
+    "Name columns sometimes renamed to include table prefix (Name -> CashoutFeeGroupName, Name -> ClientWithdrawReasonName)",
     "Production Identity columns become nullable int in Synapse (no IDENTITY support)",
     "HistoryCosts staging column CostConfigurationId (the name field) is renamed to CostConfiguration in DWH to avoid collision with the ID column",
     "Dim_Currency includes 15.7K rows (fiat + commodities + instruments) despite the name suggesting only currencies",
-    "Dim_Language uses char(50) for Name (fixed-width with trailing spaces) — unusual for a dimension column"
+    "Dim_Language uses char(50) for Name (fixed-width with trailing spaces) -- unusual for a dimension column",
+    "Dim_Currency is NOT a currency table -- it is the universal instrument registry (stocks 83%, ETFs 7%, crypto 4%, commodities 3%, indices 1%, forex 1%). Legacy name from eToro's forex-only origins.",
+    "Dim_CreditType.CreditTypeName uses char(50) -- all 33 values have trailing spaces, RTRIM() required",
+    "Dim_Country.IsSettlementRestricted DROPPED from DWH -- compliance-critical field (21 restricted countries incl. US)",
+    "Dim_Country.DWHCountryID always equals CountryID (redundant copy, x.CountryID AS DWHCountryID in SP)",
+    "Dim_PlayerStatusSubReasons: ALL 3 columns are NULL in DDL including the PK (PlayerStatusSubReasonID NULL) -- structural anomaly",
+    "Dim_PlayerStatusSubReasons: Name column renamed to PlayerStatusSubReasonName (inconsistent with Dim_PlayerStatusReasons which keeps Name as-is)",
+    "Dim_Position DDL PARTITION clause references [DateID] column which does NOT exist in the table -- DDL anomaly",
+    "Dim_Position ClosePositionReasonID <- ActionType (source rename), OpenPositionReasonID <- OpenActionType (source rename)"
   ],
   "upstream_wiki_coverage": {
     "Dictionary.*": "Most Dictionary tables have upstream wikis in DB_Schema/etoro/Wiki/Dictionary/",
     "BackOffice.*": "BackOffice source tables have upstream wikis in DB_Schema/etoro/Wiki/BackOffice/",
     "Billing.*": "Billing source tables have upstream wikis in DB_Schema/etoro/Wiki/Billing/",
-    "UserApiDB.*": "UserApiDB Dictionary tables (EvMatchStatus, ExtendedUserField) loaded via SP_Dictionaries_DL_To_Synapse"
+    "UserApiDB.*": "UserApiDB Dictionary tables (EvMatchStatus, ExtendedUserField) loaded via SP_Dictionaries_DL_To_Synapse",
+    "Dictionary.PlayerStatusReasons": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerStatusReasons.md - quality 9.2/10. 44 rows (IDs 0-43). No=0 is a real production row, not a sentinel.",
+    "Dictionary.PlayerStatusSubReasons": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerStatusSubReasons.md - quality 9.2/10. 83 rows (IDs 0-82). Abbreviation glossary: CHBK=Chargeback, POI=Proof of Identity, POA=Proof of Address, FTD=First Time Deposit."
   },
   "batch_1_knowledge": {
     "dead_fact_tables_pipeline_stopped_2024": [
@@ -144,9 +217,724 @@
       "History_CurrencyPrice": 7.2
     }
   },
-  "next_batch_plan": {
-    "batch_number": 2,
-    "resume": false,
-    "object_count_remaining": 108
+  "batch_2_knowledge": {
+    "dead_tables_confirmed": [
+      "CustomerStatic: 0 rows, no ETL SP writes to DWH_dbo.CustomerStatic. DWH_staging.etoro_Customer_CustomerStatic feeds Ext_Dim_CustomerStatic (external table), not the DWH target. 10-col stub with ActionTypeID/PlatformTypeID/Amount columns not in production Customer.CustomerStatic.",
+      "Dim_Campaign: 1 row only (ID=0 placeholder via @ddate). TRUNCATE runs but INSERT is commented out at lines 1093-1118 of SP_Dictionaries_DL_To_Synapse. ID=0 placeholder inserted at line 1683 using @ddate (CAST(GETDATE() AS DATE) = midnight, not GETDATE()). Upstream BackOffice.Campaign frozen since May 2017 (11,080 rows, no new campaigns)."
+    ],
+    "new_source_databases": [
+      "HistoryCosts: DB_Schema/HistoryCosts/ has SQL DDLs but NO wiki files. Dim_CalculationType, Dim_CostConfigurationId, Dim_CostSubtype loaded from HistoryCosts.Dictionary.* - use DDL+live data only (Tier 3 confidence). HistoryCosts section in SP_Dictionaries starts at line 1342."
+    ],
+    "column_rename_patterns": [
+      "CashoutFeeGroup.Name -> CashoutFeeGroupName (DWH renames to avoid ambiguity)",
+      "BillingProtocolMIDSettings.ID -> ProtocolMIDSettingsID (renamed to clarify it's a PK)",
+      "CalculationType.Id -> CalculationTypeId (lowercased d in DWH)",
+      "AccountType.AccountTypeName -> Name (DWH shortens to Name for Dim_AccountType)",
+      "BonusType production has 9 cols, DWH loads only 4 (drops ParentID, DisplayName, IsDepositRelated, HideFromAffwiz, Configuration)"
+    ],
+    "distribution_anomalies": [
+      "Dim_CalculationType: ROUND_ROBIN despite 8 rows. Should be REPLICATE. Likely ETL default applied without size consideration.",
+      "Dim_BillingProtocolMIDSettingsID: REPLICATE with ~1,851 rows (acceptable but monitor as table grows)"
+    ],
+    "@ddate_convention": "DECLARE @ddate date = CAST(GETDATE() AS DATE) used for ID=0 placeholder InsertDate/UpdateDate in Dim_Campaign (and other tables). Produces midnight timestamp, unlike GETDATE() used for live-data rows.",
+    "etl_freshness_alert": "As of 2026-03-18, UpdateDate for SP_Dictionaries_DL_To_Synapse-loaded tables shows 2026-03-11 (7 days stale). Affects: Dim_BillingDepot, Dim_BillingProtocolMIDSettingsID, Dim_BonusType, Dim_CalculationType, Dim_CashoutFeeGroup, Dim_CashoutMode, and others. Investigate SP execution logs.",
+    "sensitive_data_flags": [
+      "Dim_BillingProtocolMIDSettingsID.Value: contains MID strings, API keys, merchant credentials. Exclude from unmasked exports.",
+      "Dim_Campaign.ParticipatedUsers + Description: Dynamic Data Masking (default()) applied in DWH DDL. Non-privileged users see 0 / NULL."
+    ],
+    "upstream_wiki_additions": {
+      "BackOffice.BonusType": "Found at DB_Schema/etoro/Wiki/BackOffice/Tables/BackOffice.BonusType.md - quality 9.0/10. Note: DWH loads only 4 of 9 columns (no ParentID hierarchy, no DisplayName, no IsDepositRelated).",
+      "BackOffice.Campaign": "Found at DB_Schema/etoro/Wiki/BackOffice/Tables/BackOffice.Campaign.md. Table frozen since May 2017. 11,080 rows in production, 0 in DWH.",
+      "Billing.Depot": "Found at DB_Schema/etoro/Wiki/Billing/Tables/Billing.Depot.md - quality 9.2/10. DWH excludes PayoutGeneration and Features columns.",
+      "Billing.ProtocolMIDSettings": "Found at DB_Schema/etoro/Wiki/Billing/Tables/Billing.ProtocolMIDSettings.md - quality 9.1/10. DWH renames ID->ProtocolMIDSettingsID.",
+      "Dictionary.AccountType": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AccountType.md - quality 8.4/10. DWH has 19 rows (ID=0-18); production wiki covers IDs 1-17.",
+      "Dictionary.CashoutFeeGroup": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutFeeGroup.md - quality 9.4/10.",
+      "Dictionary.CashoutMode": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutMode.md - quality 9.2/10."
+    },
+    "quality_scores": {
+      "CustomerStatic": 6.9,
+      "Dim_AccountStatus": 7.6,
+      "Dim_AccountType": 8.0,
+      "Dim_BillingDepot": 8.5,
+      "Dim_BillingProtocolMIDSettingsID": 8.5,
+      "Dim_BonusType": 7.8,
+      "Dim_CalculationType": 6.5,
+      "Dim_Campaign": 7.0,
+      "Dim_CashoutFeeGroup": 8.5,
+      "Dim_CashoutMode": 8.5
+    }
+  },
+  "batch_3_knowledge": {
+    "recovered_from_prior_session": [
+      "Dim_AffiliateCostType (6.3): Loaded from DWH_Migration (11 rows). No active ETL - frozen since Synapse migration. Source unknown, partner/affiliate cost taxonomy. No upstream wiki.",
+      "Dim_ContactType (4.5): 0 rows. No ETL loader found anywhere. Table stub with no data.",
+      "Dim_CountryIPAnonymousProxyType (7.8): 6 rows from IP2Location reference data (no ETL). Static mapping of IP proxy types (0=Unknown, 1=Anonymous, 2=HTTP, 3=SOCKS, 4=Elite, 5=Corporate).",
+      "Dim_CustomerChangeType (7.6): 16 rows. No active ETL. All rows dated 2018-10-02 - frozen since then. Source unknown.",
+      "Dim_Desk (7.8): Manually loaded mapping table. No active ETL. Desk = regional sales/support group (desk name + region + manager)."
+    ],
+    "dwh_schema_drift_confirmed": [
+      "Dim_CashoutStatus: CRITICAL - Only 5 rows (IDs 0-4) vs 17 production states. IDs 5-17 MISSING from DWH. Also drops IsFinalStatus and IsFinishedWithoutMoneyTransfer flags. DWHCashoutStatusID = CashoutStatusID (redundant rename).",
+      "Dim_ClientWithdrawReason: Drops IsActive and DisplayOrder. Name -> ClientWithdrawReasonName. 7 rows (IDs 1-7), no ID=0.",
+      "Dim_ClosePositionReason: Both PK columns renamed: ID->ClosePositionReasonID, ClosePositionActionName->Name. Source staging name is etoro_Dictionary_ClosePositionActionType (different from DWH table name). 27 rows (0-26).",
+      "Dim_CompensationReason: Drops DisplayName, IsShownInHistory, IsCashflowForGain, IsTaxable, IsActive. Adds DWHCompensationID (= CompensationReasonID, redundant). Source is BackOffice (not Dictionary) - etoro_BackOffice_CompensationReason. 133 rows (IDs 0-134, IDs 5+130 absent)."
+    ],
+    "upstream_wiki_additions": {
+      "Dictionary.CashoutReason": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutReason.md - quality 9.2/10. 19 cashout/withdrawal payment method labels. No ID=0 in DWH.",
+      "Dictionary.CashoutStatus": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutStatus.md - quality 8.6/10. CRITICAL: production has 17 states, DWH has only 5 (IDs 1-4, plus ETL-inserted ID=0).",
+      "Dictionary.ClientWithdrawReason": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ClientWithdrawReason.md - quality 9.2/10. 7-reason withdrawal form lookup. Drops IsActive/DisplayOrder.",
+      "Dictionary.ClosePositionActionType": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ClosePositionActionType.md - quality 8.6/10. 27 closure trigger codes (0-26).",
+      "BackOffice.CompensationReason": "Found at DB_Schema/etoro/Wiki/BackOffice/Tables/BackOffice.CompensationReason.md - quality 9.1/10. Hierarchical lookup. DWH drops 5 production columns."
+    },
+    "dim_compensation_reason_hierarchy": {
+      "root_categories": {
+        "0": "N/A (ETL placeholder)",
+        "1": "Custom",
+        "4": "Marketing",
+        "9": "Accounting / Ops (largest - 40+ children)",
+        "10": "R&D",
+        "16": "ACT (Account Transfer)",
+        "23": "Obsolete",
+        "35": "MT4",
+        "45": "Dividend (large - 30+ corporate action types)",
+        "48": "Inactivity Fee For Non Depositor"
+      },
+      "note": "Exactly 2-level hierarchy. All leaves point directly to a root (no deep nesting)."
+    },
+    "quality_scores": {
+      "Dim_AffiliateCostType": 6.3,
+      "Dim_CashoutReason": 9.0,
+      "Dim_CashoutStatus": 8.7,
+      "Dim_ClientWithdrawReason": 8.6,
+      "Dim_ClosePositionReason": 9.0,
+      "Dim_CompensationReason": 8.8,
+      "Dim_ContactType": 4.5,
+      "Dim_CountryIPAnonymousProxyType": 7.8,
+      "Dim_CustomerChangeType": 7.6,
+      "Dim_Desk": 7.8
+    }
+  },
+  "batch_4_knowledge": {
+    "upstream_wiki_additions": {
+      "Dictionary.Country": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Country.md - quality 9.4/10. 251 rows (250 active + 1 placeholder). DWH drops 8 cols (IsSettlementRestricted CRITICAL, DefaultCurrencyID, LanguageID, IsActive, PhonePrefix, IsoCode, RegionID, EconomicTypeID). DWH recomputes IsHighRiskCountry from RiskGroupID (CASE WHEN IN (0,4) THEN 0 ELSE 1 END).",
+      "Dictionary.CountryBin6": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CountryBin6.md. BIN lookup with 3DS/prepaid/AFT/CFT flags. DWH drops ChallengeIndicator3DS, SupportsAFT, IsCFT, DomesticMoneyTransfer, CrossBorderMoneyTransfer from staging.",
+      "Dictionary.CountryBin8": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CountryBin8.md. 8-digit BINs, same structure as CountryBin6.",
+      "Dictionary.CountryIP": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CountryIP.md. IP range geolocation (6.8M rows). IPv4 as bigint integers. Simple passthrough ETL.",
+      "Dictionary.CreditType": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CreditType.md. 33 credit transaction types covering deposits/cashouts/positions/fees/copy-trading events.",
+      "Dictionary.Currency": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Currency.md - quality 9+/10. CRITICAL: despite name, this is the UNIVERSAL INSTRUMENT REGISTRY. DWH 15.7K rows (vs 10.7K in wiki - wiki was written earlier; platform added ~5K more instruments). CurrencyTypeID: 1=Forex(174), 2=Commodity(533), 4=Indices(203), 5=Stocks(13044), 6=ETF(1094), 10=Crypto(686). Mask bitmask only for original 8 major forex currencies.",
+      "Dictionary.DocumentStatus": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DocumentStatus.md. 7 KYC document review states: 0=None, 1=New Upload, 2=Reviewed, 3=Accepted, 4=Rejected, 5=POIApproved, 6=POAApproved."
+    },
+    "complex_tables_documented": [
+      "Dim_Country: 19 cols, 5 sources (etoro.Dictionary.Country + MarketingRegion + Ext_Dim_Country + Ext_Dim_Country_Region_Desk + ComplianceStateDB). IsHighRiskCountry RECOMPUTED from RiskGroupID. DWHCountryID always = CountryID (redundant). IsSettlementRestricted dropped (compliance gap). SP_Dictionaries_Country_DL_To_Synapse dedicated SP.",
+      "Dim_CountryBin: 12 cols, 16.3M rows, combines 6-digit + 8-digit BINs from IP2Location staging. REPLICATE unusual for 16M rows. 7 staging cols dropped.",
+      "Dim_CountryIP: 5 cols, 6.8M rows, pure passthrough from etoro_Dictionary_CountryIP. REPLICATE at 6.8M borderline.",
+      "Dim_CountryIPAnonymous: 7 cols, 4.8M rows from IP2Location Anonymous IP DB. Snake_case renames. ISNULL(country_code,'NA') Namibia guard. CountryID resolved via UPDATE JOIN on Dim_Country.Abbreviation.",
+      "Dim_Currency: 10 cols, 15.7K rows, UNIVERSAL INSTRUMENT REGISTRY. Naming is misleading (legacy forex name). 83% stocks by row count."
+    ],
+    "schema_drift_confirmed": [
+      "Dim_Country drops IsSettlementRestricted - compliance-critical flag for CFD-only users (21 countries incl. US).",
+      "Dim_CountryBin drops ChallengeIndicator3DS, SupportsAFT, IsCFT from production BIN table."
+    ],
+    "ip2location_notes": {
+      "source": "IP2Location is an external commercial GeoIP provider",
+      "tables": ["Dim_CountryIPAnonymous (from DWH_staging.IP2Location - anonymous proxy database)", "Dim_CountryIPAnonymousProxyType (static reference - no active ETL)"],
+      "loaded_by": "SP_Dictionaries_Country_DL_To_Synapse (same SP as Dim_Country)",
+      "namibia_null_guard": "ISNULL(country_code,'NA') - ISO alpha-2 'NA' = Namibia, protected from NULL confusion"
+    },
+    "quality_scores": {
+      "Dim_CostConfigurationId": 6.8,
+      "Dim_CostSubtype": 6.8,
+      "Dim_CostType": 6.8,
+      "Dim_Country": 8.8,
+      "Dim_CountryBin": 7.7,
+      "Dim_CountryIP": 8.0,
+      "Dim_CountryIPAnonymous": 7.8,
+      "Dim_CreditType": 7.2,
+      "Dim_Currency": 8.5,
+      "Dim_DocumentStatus": 6.8
+    }
+  },
+  "batch_5_knowledge": {
+    "partial_batch_note": "Batch 5 stopped after 4 objects due to Synapse MCP token auth failure (2026-03-19). Remaining ~70 objects deferred to Batch 6.",
+    "static_migration_tables": [
+      "Dim_FTDPlatform: 4-row static lookup from MoneyBusDB.Dictionary.AccountTypes. No active ETL. One-time manual load. FTDPlatformID 1-4 (TradingPlatform/Options/eMoney/MoneyFarm). No ID=0 placeholder - requires LEFT JOIN on Dim_Customer.",
+      "Dim_PlatformType: 13-row legacy migration from on-prem DWH SQL Server. No ETL. Modern SP_Fact_CustomerAction hardcodes PlatformTypeID=0 for all rows. IDs 0 and 99 are both 'No Platform' (migration artifact). 5 flag columns (CanManualTrade/CanOpenMirror/CanCopyTrade/CanDeposit/CanCashout)."
+    ],
+    "data_quality_artifacts": [
+      "Dim_Position_Account_Statement_AmountInUnitsDecimal: 34,258 rows. NOT a real dimension - ad-hoc investigation artifact. 99.5% mismatch rate. No writer SP in SSDT. HASH(PositionID).",
+      "Dim_Position_Account_Statement_NetProfit: 251,813 rows. NOT a real dimension - ad-hoc investigation artifact. 100% mismatch - ALL NetProfit_dwh=0 (DWH calc was missing at capture time). No writer SP in SSDT. HASH(PositionID). Sibling of AmountInUnitsDecimal table."
+    ],
+    "upstream_wiki_additions": {
+      "MoneyBusDB.Dictionary.AccountTypes": "No upstream wiki found. MoneyBusDB is eToro eMoney/subsidiary platform transaction ledger. Generic Pipeline exports to Bronze/MoneyBusDB/Dictionary/AccountTypes/. BI_DB_dbo.External_MoneyBusDB_Dictionary_AccountTypes reads it."
+    },
+    "quality_scores": {
+      "Dim_FTDPlatform": 7.9,
+      "Dim_PlatformType": 7.8,
+      "Dim_Position_Account_Statement_AmountInUnitsDecimal": 6.5,
+      "Dim_Position_Account_Statement_NetProfit": 6.5
+    }
+  },
+  "batch_6_knowledge": {
+    "userapi_source_confirmed": [
+      "UserApiDB tables (Dim_EvMatchStatus, Dim_ExtendedUserField) loaded from DWH_staging.UserApiDB_* via SP_Dictionaries_DL_To_Synapse. No upstream wikis exist for UserApiDB.Dictionary schema in DB_Schema. Use DDL + live data only (Tier 3).",
+      "HistoryCosts tables (Dim_ExecutionOperationType, Dim_FeeOperationTypes) also have no upstream wikis. HistoryCosts section in SP_Dictionaries starts at line 1342."
+    ],
+    "critical_bugs": [
+      "Dim_FeeOperationTypes: INSERT-only (no TRUNCATE) accumulates ~3 duplicate rows per day. 897 rows total as of 2026-03-11 (only 3 distinct IDs: 1=Open, 2=Close, 3=All). ALWAYS use SELECT DISTINCT before joining. Fix: add TRUNCATE at SP_Dictionaries ~line 1404."
+    ],
+    "fund_dimension_notes": {
+      "Dim_Fund": "877 rows from etoro.Trade.Fund (non-dictionary source). Drops CreateDate, LastUpdateDate, HasCrypto from staging. FundAccountID=FundOwnerID in all observed rows (same account).",
+      "Dim_FundType": "3-row FK target for Dim_Fund.FundType: 1=TopTraders(38 funds), 2=Partners(44 funds), 3=Market(795 funds). Description renamed to FundTypeName.",
+      "fund_type_distribution": "90.6% of funds are FundType=3 (Market/thematic)"
+    },
+    "payment_method_notes": {
+      "Dim_FundingType": "44 payment methods (IDs 0-44, ID 41 absent). FundingTypeID=0 is synthetic N/A sentinel (hardcoded VALUES INSERT). FundingTypeID=27 (eToroCryptoWallet) hardcoded in SP_Fact_CustomerAction for IsRedeem calculation. Three behavioral flags: IsNewStyle, IsSingleFunding, IsCashoutActive.",
+      "funding_type_consumers": ["Fact_BillingDeposit", "Fact_BillingWithdraw (FundingTypeID_Withdraw + FundingTypeID_Funding)", "Fact_CustomerAction"]
+    },
+    "acquisition_funnel_notes": {
+      "Dim_Funnel": "129 rows (FunnelID -9 to 130). FunnelID=-9=AutomationTest (negative!), FunnelID=0=Unknown (null sentinel). PlatformID: 0=Unspecified, 1=Web, 2=iOS, 3=Android. SP_Dim_Customer uses ISNULL(FunnelID,0).",
+      "funnel_consumers": ["Dim_Customer", "Fact_BillingDeposit", "Fact_CustomerAction"]
+    },
+    "popular_investor_notes": {
+      "Dim_GuruStatus": "9 rows: 0=No(not enrolled), 1=Certified, 2=Cadet, 3=Rising Star, 4=Champion, 5=Elite, 6=Elite Pro, 7=Removed, 8=Rejected. Active PI = IDs 1-6. SP_Dim_Customer uses ISNULL(GuruStatusID,0). Consumers: Dim_Customer, Fact_SnapshotCustomer, Fact_CustomerAction.",
+      "terminology": "Internally called 'Guru'; customer-facing brand is 'Popular Investor' (PI)"
+    },
+    "distribution_anomalies_continued": [
+      "Dim_ExecutionOperationType: ROUND_ROBIN despite ~25 rows. Same anomaly as Dim_CalculationType. HistoryCosts section default.",
+      "Dim_FeeOperationTypes: ROUND_ROBIN despite 3 distinct rows (897 due to bug).",
+      "Dim_ExtendedUserField: HEAP index (not CLUSTERED). Unusual for Dim_ tables.",
+      "Dim_Funnel: HEAP index. Same pattern as Dim_ExtendedUserField."
+    ],
+    "orphaned_dimensions": [
+      "Dim_ExchangeInfo: 51 rows. ExchangeID explicitly commented out in SP_Fact_CustomerUnrealized_PnL. No active FK consumers.",
+      "Dim_Fund: 877 rows. No active FK consumers in DWH SSDT repo."
+    ],
+    "null_sentinel_pattern_confirmed": "Multiple tables follow ISNULL(ColID, 0) + synthetic ID=0 row pattern: Dim_FundingType (ID=0=N/A), Dim_Funnel (ID=0=Unknown), Dim_GuruStatus (ID=0=No). Fact tables coerce NULLs to 0 before joining.",
+    "upstream_wiki_additions": {
+      "HistoryCosts.*": "No wiki files exist in DB_Schema/HistoryCosts/ for any HistoryCosts.Dictionary tables. Use DDL + live MCP data for tier evidence.",
+      "UserApiDB.*": "No wiki files exist in DB_Schema/UserApiDB/ for UserApiDB.Dictionary tables. Use DDL + live MCP data for tier evidence.",
+      "etoro.Trade.Fund": "No upstream wiki. etoro.Trade.Fund is the fund/Smart Portfolio entity table (non-dictionary). Staging has 3 extra cols (CreateDate, LastUpdateDate, HasCrypto) dropped by DWH ETL."
+    },
+    "quality_scores": {
+      "Dim_EvMatchStatus": 7.8,
+      "Dim_ExchangeInfo": 7.2,
+      "Dim_ExecutionOperationType": 7.5,
+      "Dim_ExtendedUserField": 7.5,
+      "Dim_FeeOperationTypes": 7.0,
+      "Dim_Fund": 7.5,
+      "Dim_FundType": 8.0,
+      "Dim_FundingType": 8.5,
+      "Dim_Funnel": 7.5,
+      "Dim_GuruStatus": 8.5
+    }
+  },
+  "batch_7_knowledge": {
+    "pricelog_source_correction": "Dim_HistorySplitRatio source is PriceLog.History.SplitRatio (AZR-W-PRICEDB-2-Price), NOT Trade.HistorySplitRatio. Orphaned: consumer SPs (SP_Fact_CurrencyPriceWithSplit, SP_Fact_CustomerUnrealized_PnL) use external staging tables (Ext_FCPWS_History_SplitRatio, Ext_FCUPNL_History_SplitRatio), not the Dim_ table directly.",
+    "dim_instrument_notes": {
+      "cols": 47,
+      "rows": 15707,
+      "etl": "SP_Dim_Instrument: TRUNCATE+INSERT+5 post-load UPDATEs. Ends with EXEC SP_Dim_Instrument_Snapshot @dt.",
+      "upstream_wiki": "DB_Schema/etoro/Wiki/Trade/Tables/Trade.Instrument.md (quality 9.1/10)",
+      "tier1_cols": ["InstrumentID", "BuyCurrencyID", "SellCurrencyID", "TradeRange", "DollarRatio", "PipDifferenceThreshold", "IsMajor (renaming: IsMajorID=int, IsMajor=text)", "OperationMode"],
+      "distribution": {"Stocks": "82%", "ETF": "8%", "Crypto": "4%", "Commodities": "3%", "Indices": "2%", "Currencies": "1%"},
+      "computed_cols": ["InstrumentType = CASE on InstrumentTypeID", "IsFuture = CASE WHEN in InstrumentGroups GroupID=25", "IsMajor = CASE 1->'Yes' 0->'No'", "DWHInstrumentID = InstrumentID (redundant)"],
+      "gotchas": ["StatusID hardcoded 1", "DWHInstrumentID always = InstrumentID", "UpdateDate/InsertDate both GETDATE() (not production dates)"]
+    },
+    "dim_instrument_snapshot_notes": {
+      "cols": 9,
+      "rows": 5311079,
+      "date_range": "20241222 to 20260310 (444 daily snapshots)",
+      "etl_pattern": "DELETE @Yesterdayint + INSERT from Dim_Instrument. DateID = yesterday (T-1 day). SettlementTime converted to DATETIME by combining @dt + TIME.",
+      "futures_count": "243 IsFuture=1 instruments per snapshot day",
+      "note": "UC uc_table not assigned in _generic_pipeline_mapping.json"
+    },
+    "dim_manager_notes": {
+      "rows": 5152,
+      "active": 1367,
+      "etl_pattern": "MERGE-like: UPDATE existing rows (name/active/TL/Calendly) + INSERT new rows. Never truncated. SFManagerID set from Salesforce mapping post-load.",
+      "dead_columns": "UserGroup and ParentUserGroup hardcoded 'Not Available' for ALL rows - never populated",
+      "calendly_sentinel": "CalendlyID='etoro-club' for inactive managers (default/fallback, not real Calendly ID)"
+    },
+    "dim_mifid_notes": {
+      "rows": 6,
+      "values": {"0": "None", "1": "Retail", "2": "Professional", "3": "Elective professional", "4": "Retail Pending", "5": "Pending"},
+      "regulatory_significance": "MiFID II classification determines leverage caps, margin requirements, and investor protection rules for EU customers"
+    },
+    "dim_mirrortype_notes": {
+      "rows": 4,
+      "values": {"1": "Regular (85.2% of Dim_Mirror)", "2": "CopyMe/Popular Investor (0.7%)", "3": "Social Index (0.001%, only 122 total rows)", "4": "Fund (14.1%)"}
+    },
+    "dim_mirror_notes": {
+      "cols": 26,
+      "rows": 11145368,
+      "date_range": "2011-06-13 to 2026-03-10 (14+ years)",
+      "etl_pattern": "Incremental MERGE from Trade.Mirror (open) + History.Mirror (closed). Never fully truncated.",
+      "open_sentinel": "CloseDateID=0 + CloseOccurred='1900-01-01' = currently open mirror",
+      "typo": "RealziedPnL (not RealizedPnL) - typo in both DDL and SP, use exact spelling in queries",
+      "active_counts": {"Regular_open": 468911, "CopyMe_open": 9, "Fund_open": 201001, "total_open": 669921},
+      "iscopyFundMirror": "1 if ParentCID is BackOffice AccountTypeID=9 (Fund account)",
+      "sessionID": "NULL for historical mirrors; set from History.Mirror MirrorOperationID=1 (open event)"
+    },
+    "dim_paymentstatus_notes": {
+      "rows": 40,
+      "sentinel": "PaymentStatusID=-1 (Name='N/A', DWHPaymentStatusID=0) is manually inserted (midnight UpdateDate vs 02:12 SP rows). Not from SP_Dictionaries.",
+      "success_ids": [2, 7],
+      "pending_ids": [1, 4, 5, 13, 36],
+      "chargeback_refund_ids": [11, 12, 26, 37, 38, 39],
+      "method_block_ids": [14, 15, 16, 17, 22, 23, 24, 28]
+    },
+    "quality_scores": {
+      "Dim_HistorySplitRatio": 8.2,
+      "Dim_Instrument": 9.4,
+      "Dim_Instrument_Snapshot": 8.6,
+      "Dim_Label": 8.1,
+      "Dim_Language": 8.3,
+      "Dim_Manager": 8.4,
+      "Dim_MifidCategorization": 8.5,
+      "Dim_MirrorType": 8.3,
+      "Dim_Mirror": 9.0,
+      "Dim_PaymentStatus": 8.6
+    }
+  },
+  "batch_8_knowledge": {
+    "player_status_hierarchy": {
+      "Dim_PlayerStatus": "Loaded from etoro.BackOffice.CustomerStatuses via SP_Dictionaries_DL_To_Synapse. Status lifecycle: 1=Registered -> 2=PendingActivation -> 3=Active -> 4=Blocked -> 5=Suspended -> 6=Duplicate -> 7=Fraud -> 8=Closed -> 9=Test -> 10=PendingClosure -> 11=CompliedClosure -> 12=AutomaticallyClosed.",
+      "Dim_PlayerStatusReasons": "44 rows (IDs 0-43). Loaded from etoro.BackOffice.CustomerStatusReasons. ID=0='No' is a real production row (not just ETL sentinel). Reason categories: Regulation/Compliance, AML/KYC, Fraud/Risk, Operational, Technical.",
+      "Dim_PlayerStatusSubReasons": {
+        "rows": 83,
+        "id_range": "0-82",
+        "source": "etoro.BackOffice.CustomerStatusSubReasons",
+        "rename": "Name -> PlayerStatusSubReasonName (only sub-reasons table gets this rename; reasons table keeps Name as-is)",
+        "nullable_pk_anomaly": "ALL 3 columns are NULL in DDL including PlayerStatusSubReasonID -- unique structural anomaly",
+        "abbreviation_glossary": {
+          "CHBK": "Chargeback",
+          "POI": "Proof of Identity",
+          "POA": "Proof of Address",
+          "FTD": "First Time Deposit",
+          "KYC": "Know Your Customer",
+          "AML": "Anti-Money Laundering",
+          "PEP": "Politically Exposed Person",
+          "CFT": "Countering the Financing of Terrorism"
+        }
+      }
+    },
+    "dim_position_critical_notes": {
+      "cols": 134,
+      "distribution": "HASH(PositionID) with monthly partition (2007-01 to 2026-02). CLUSTERED INDEX on CloseDateID ASC, PositionID ASC.",
+      "open_position_sentinel": "CloseDateID=0 means actively open (normal state, not yet closed). NOT 1900-01-01.",
+      "reprocessing_sentinel": "CloseDateID=19000101 is transient during ETL reprocessing DELETE window. Should not appear in final data.",
+      "position_count": "~200M+ total rows (Dim_Position is the largest table in DWH_dbo by far)",
+      "source_renames": {
+        "ActionType": "-> ClosePositionReasonID in DWH",
+        "OpenActionType": "-> OpenPositionReasonID in DWH"
+      },
+      "etl_bug": "SP line ~520: 'OpenPositionReasonIDfOpenTotalFees' -- copy-paste typo, extra 'f' in column name",
+      "ddl_anomaly": "PARTITION clause references [DateID] column which does NOT exist in the 134-column DDL -- DDL inconsistency",
+      "etl_staleness": "Positions stale to 2026-03-10 as of session date 2026-03-19",
+      "consumers": ["SP_Dim_PositionHedgeServerChangeLog_Snapshot (OpenDateID lookup)", "Fact_CustomerAction", "Fact_SnapshotEquity", "Fact_CustomerUnrealized_PnL"]
+    },
+    "dim_positionchangelog_notes": {
+      "cols": 17,
+      "distribution": "HASH(PositionID), CLUSTERED INDEX on OccurredDateID",
+      "source": "etoro.History.PositionChangeLog",
+      "changetype_mapping": {
+        "0": "Initial position open event",
+        "1": "Rate change (e.g. stop loss/take profit adjustment)",
+        "2": "Unknown (further investigation needed)",
+        "5": "Unknown (further investigation needed)",
+        "11": "Partial close",
+        "12": "Amount adjustment (cumulative -- SP_Dim_Position_DL_To_Synapse applies ChangeTypeID=12 corrections to InvestedAmount)",
+        "13": "Unknown (further investigation needed)"
+      },
+      "historical_gap": "Before 2025-01-05 ETL only loaded ChangeTypeIDs 1,5,11,12,13. ChangeTypeIDs 0 and 2 were excluded. Full load started 2025-01-05.",
+      "no_dedup": "Multiple rows per position per day expected and intentional (complete change history)",
+      "etl_pattern": "DELETE WHERE OccurredDateID >= yesterday, INSERT all WHERE Occurred >= yesterday. Risk: events with OccurredDate in past but processed late could be lost."
+    },
+    "dim_positionhedgeserverchangelog_snapshot_notes": {
+      "cols": 5,
+      "distribution": "HASH(PositionID), CLUSTERED INDEX on PositionID ASC (no date partition)",
+      "source": "etoro.Trade.PositionsHedgeServerChangeLog",
+      "scd2_pattern": {
+        "active_row": "ToDate=20991231 (year 2099 sentinel)",
+        "historical_row": "ToDate=OccurredDateID-1 (last day assignment was valid, inclusive)",
+        "fromdate_initial": "= OpenDateID from Dim_Position (joined at ETL time)",
+        "fromdate_change": "= OccurredDateID (date change took effect)"
+      },
+      "predecessor_table": "Dim_PositionHedgeServerChangeLog (without _Snapshot suffix) was DROPPED from Synapse. Do NOT reference the old name.",
+      "hedgeserverid_84": "Most frequent HedgeServerID in live data as of 2026-02-27. No Dim_HedgeServer table exists in DWH.",
+      "extra_staleness": "UpdateDate=2026-02-27 -- 20+ days stale vs other DWH tables (stale to 2026-03-11). SP may run on independent schedule.",
+      "consumers": ["SP_Dim_Position_HedgeType_Real (derives InitHedgeType for open positions)", "SP_Dim_Position_HedgeType_History (derives EndHedgeType for closed positions)"],
+      "blacklist_correction": "Was misclassified as 'backup' in _blacklist.json due to _Snapshot suffix. This IS the canonical current table."
+    },
+    "skipped_objects": {
+      "Dim_PositionHedgeServerChangeLog": "DOES NOT EXIST in Synapse. MCP query returned error 208 (invalid object name). The canonical replacement is Dim_PositionHedgeServerChangeLog_Snapshot."
+    },
+    "quality_scores": {
+      "Dim_PendingClosureStatus": 8.0,
+      "Dim_PhoneVerified": 8.0,
+      "Dim_Platform": 8.0,
+      "Dim_PlayerLevel": 8.0,
+      "Dim_PlayerStatus": 8.0,
+      "Dim_PlayerStatusReasons": 8.5,
+      "Dim_PlayerStatusSubReasons": 8.5,
+      "Dim_Position": 8.0,
+      "Dim_PositionChangeLog": 7.5,
+      "Dim_PositionHedgeServerChangeLog_Snapshot": 7.5
+    }
+  },
+  "batch_9_knowledge": {
+    "frozen_legacy_tables_confirmed": [
+      "Dim_Product: 27-row frozen migration from Synapse migration era. No active ETL SP. 3-level hierarchy (Platform > SubPlatform > Product). ProductID=99='No Product' sentinel. No upstream wiki.",
+      "Dim_SocialNetwork: 4-row frozen one-time migration (2013-2014 timestamps). No active ETL SP found anywhere in DWH_dbo SSDT. Not in SP_Dictionaries_DL_To_Synapse. Values: 0=N/A, 1=Facebook, 2=Twitter, 3=LinkedIn. No upstream wiki."
+    ],
+    "dwhxxx_alias_pattern_confirmed": "Multiple Dim_ tables have a DWHxxxID column that is simply `[PK_ID] as [DWHxxxID]` - always equal to the PK. Confirmed: DWHRegulationID, DWHRiskManagementStatusID, DWHRiskStatusID, DWHSocialNetworkID. Pattern: StatusID=hardcoded 1 always accompanies DWHxxxID on these tables.",
+    "dim_range_notes": {
+      "cols": 4,
+      "rows_approx": "1.3M",
+      "source": "DWH-internal only - written by SP_Fact_SnapshotEquity and SP_Fact_SnapshotCustomer. No production DB equivalent.",
+      "date_range_id_encoding": "12-digit BigInt = CAST(YYYYMMDD(FromDate) + MMDD(ToDate) AS BIGINT). Formula from SP: convert(bigint, convert(Varchar, @date, 112) + right(convert(Varchar, @largedate, 112), 4)). ToDate always same year as FromDate.",
+      "etl_pattern": "INSERT-only (no TRUNCATE). New DateRangeIDs added daily when Action='UPDATE'. Consumed by V_M2M_Date_DateRange, V_Fact_SnapshotEquity, V_Fact_SnapshotEquity_FromDateID, V_Fact_SnapshotCustomer, V_Fact_SnapshotCustomer_FromDateID."
+    },
+    "dim_regulation_notes": {
+      "rows": 15,
+      "id_range": "0-14",
+      "source": "etoro.Dictionary.Regulation via DWH_staging.etoro_Dictionary_Regulation",
+      "cluster_regulation_id": "CASE WHEN ID IN (0,1,5) THEN 1 ELSE ID END - groups None(0)+CySEC(1)+BVI(5) into cluster 1",
+      "dropped_production_cols": ["IsUSA", "JurisdictionName", "BankID", "RegulationLongName", "RegulationShortName", "DefaultRegulationID"],
+      "us_regulations_hardcode": "IsUSA dropped from DWH - hardcode IDs 6,7,8,12,14 for US in analytics",
+      "view_consumer": "DWH_dbo.V_Dim_Customer uses INNER JOIN Dim_Regulation ON ID = RegulationID"
+    },
+    "risk_dimensions_overview": {
+      "Dim_RiskClassification": "6 rows. Customer OVERALL risk level. Low(0) to Unacceptable(200) RiskScore. Name renamed from production. No DWH views join it.",
+      "Dim_RiskManagementStatus": "70 rows (0-69). Per-DEPOSIT check outcome. ID=0=N/A(midnight sentinel), ID=1=Success, 2-69=specific block reasons. 4 ETL-computed cols (DWHRiskManagementStatusID, StatusID, UpdateDate, InsertDate). No DWH views join it.",
+      "Dim_RiskStatus": "90 rows (0-90 with gaps), 74 active, 16 inactive. Customer risk FLAG reason (granular). IsActive=False=deprecated. RiskCategoryID dropped from DWH. No DWH views join it.",
+      "note": "Three distinct risk dimensions with different scopes: RiskClassification=overall level, RiskManagementStatus=deposit check, RiskStatus=customer flag reason."
+    },
+    "dim_redeemstatus_notes": {
+      "rows": 13,
+      "id_range": "0,1-8,20-21,25,100",
+      "upstream_wiki_outdated": "Dictionary.RedeemStatus upstream wiki (2026-03-13) documents only 5 rows with different names (ID=2 was 'InProcess' now 'Rejected'). DWH reflects current production with 13 states.",
+      "state_machine": "New(100,cancel)->PositionPending(1,cancel)->Approved(3,cancel)->ReadyToRedeem(4,cancel)->PositionClosing(5,cancel)->PositionClosed(6,NO CANCEL)-> TransactionInProcess(7,NO)->TransactionDone(8,NO)",
+      "sentinel": "ID=0(N/A): InsertDate=midnight(@ddate), all others=02:13 getdate()",
+      "consumer": "DWH_dbo.Fact_BillingRedeem"
+    },
+    "screening_service_confirmed": {
+      "note": "Dim_ScreeningStatus (8 rows) sources from ScreeningServiceDB (AML compliance microservice), NOT etoro.Dictionary.*. Staging table named ScreeningService_Dictionary_ScreeningStatus (not etoro_Dictionary_*). No upstream wiki exists. Values: 0=Unknown, 1=NoMatch, 2=PendingInvestigation, 3=PEP, 4=RiskMatch, 5=Technical, 6=MultipleMatch, 7=SanctionsMatch. ETL renames ID->ScreeningStatusID. UC Bronze: bi_db.bronze_screeningservice_dictionary_screeningstatus.",
+      "simplest_etl": "Only 3 columns - no DWHxxxID alias or StatusID. Simplest ETL transformation in the entire SP_Dictionaries SP."
+    },
+    "new_dead_tables": [
+      {
+        "table": "Dim_Product",
+        "reason": "Frozen legacy migration. 27 rows with 3-level product hierarchy. No active ETL SP. UpdateDate/InsertDate from Synapse migration era.",
+        "rows": 27
+      },
+      {
+        "table": "Dim_SocialNetwork",
+        "reason": "Frozen one-time migration. 4 rows (N/A/Facebook/Twitter/LinkedIn). Timestamps 2013-2014. Not in SP_Dictionaries or any DWH SP.",
+        "rows": 4
+      }
+    ],
+    "schema_drift_additions": [
+      "Dim_Regulation drops IsUSA (critical for US/non-US split analytics) + JurisdictionName, BankID, RegulationLongName, RegulationShortName, DefaultRegulationID - 6 of 8 production cols dropped",
+      "Dim_RiskStatus drops RiskCategoryID (FK to Dictionary.RiskCategories) - loses grouping by velocity/country/fraud/etc",
+      "Dim_RiskManagementStatus: ID=0 (N/A) has midnight timestamp despite SP using getdate() for all rows - origin unclear (staging table artifact?)"
+    ],
+    "upstream_wiki_additions": {
+      "Dictionary.Regulation": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Regulation.md - quality 9.2/10. DWH drops 6 of 8 production cols. DWH adds DWHRegulationID + StatusID + ClusterRegulationID.",
+      "Dictionary.RiskClassification": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskClassification.md - quality 9.2/10. 6 rows. IDs not ordered by severity - use RiskScore for ordering.",
+      "Dictionary.RiskManagementStatus": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskManagementStatus.md. 69 production rows (1-69). DWH adds ID=0. 68 block/decline reason codes.",
+      "Dictionary.RiskStatus": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskStatus.md. 90 rows, 74 active. Has RiskCategoryID (dropped by DWH). Detailed risk flag taxonomy.",
+      "Dictionary.RedeemReason": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RedeemReason.md. 18 production rows (gaps 17,19). DWH has 19 rows (gap 17 only, ID=19=FailedByDelta added). Name->RedeemReasonName.",
+      "Dictionary.RedeemStatus": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RedeemStatus.md - OUTDATED (5 rows documented vs 13 in DWH). Production schema evolved significantly.",
+      "ScreeningService.Dictionary.ScreeningStatus": "NO upstream wiki. AML microservice DB. 8 rows. Staging: ScreeningService_Dictionary_ScreeningStatus."
+    },
+    "quality_scores": {
+      "Dim_Product": 6.8,
+      "Dim_Range": 8.3,
+      "Dim_RedeemReason": 8.5,
+      "Dim_RedeemStatus": 8.2,
+      "Dim_Regulation": 8.0,
+      "Dim_RiskClassification": 8.5,
+      "Dim_RiskManagementStatus": 8.0,
+      "Dim_RiskStatus": 8.0,
+      "Dim_ScreeningStatus": 7.5,
+      "Dim_SocialNetwork": 6.5
+    }
+  },
+  "batch_10_knowledge": {
+    "recovery_items": [
+      "Dim_Instrument_Correlation_UnionedPartitions (8.4): VIEW — UNION ALL of 20 partition tables (Dim_Instrument_Correlation_Half_Records_1..20). 3.8B rows. 10 cols: DateID, InstrumentID_a/b, SampleSize, StdDev_a/b, Covariance, PearsonCorrelation, InsertDate, UpdateDate. ~66-day rolling window.",
+      "Fact_CustomerAction (8.5): 11B-row central customer activity fact. HASH(RealCID). CLUSTERED COLUMNSTORE. Generated 2026-03-03. UC Target: main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction."
+    ],
+    "new_etl_patterns": {
+      "SP_Fact_BillingDeposit_DL_To_Synapse": {
+        "description": "2-pass ETL for Fact_BillingDeposit. 138 columns. Multi-source with ~91 XML ExtractXMLValue calls.",
+        "sources": ["etoro.Billing.Deposit (primary - 35 passthrough cols)", "etoro.Billing.Funding (JOIN on FundingID - 6 cols)", "etoro.Billing.RecurringDeposit (OUTER APPLY - IsRecurring)"],
+        "xml_extraction": "~91 columns extracted via ExtractXMLValue(d.PaymentData, 'attr') / ExtractXMLValue(d.FundingData, 'attr'). All nvarchar(max) unless noted.",
+        "pass1": "DELETE Ext_FBD (rolling window by ModificationDateID) -> INSERT Ext_FBD -> DELETE Fact_BillingDeposit -> INSERT from Ext_FBD",
+        "pass2": "EXEC SP_Fact_BillingDeposit @Yesterday: UPDATE PlatformID from Fact_CustomerAction WHERE ActionTypeID=14 JOIN on SessionID",
+        "amount_capping": "CASE expression cap on Amount column added 2025-04-17 to prevent extreme outliers",
+        "unnamed_column": "Column 'v' is an XML-extracted field with no descriptive attribute name - artifact of XML schema"
+      },
+      "SP_Fact_BillingRedeem_DL_To_Synapse": {
+        "description": "7-day rolling window DELETE+INSERT for Fact_BillingRedeem. 12 columns, 1.4M rows.",
+        "source": "Billing.Redeem (no upstream wiki)",
+        "etl_pattern": "DELETE WHERE ModificationDateID >= 7-days-ago, INSERT from staging for same window",
+        "refresh": "Hourly (60 min)",
+        "note": "Billing.Redeem is distinct from Billing.Cashout: Redeem = copy-position cashout, Cashout = general withdrawal"
+      },
+      "SP_Fact_Cashout_State": {
+        "description": "Daily DELETE today + INSERT for Fact_Cashout_State. Custom pipeline NOT in _generic_pipeline_mapping.json.",
+        "source": "Billing.BI_Cashout_State_Report (custom BI report table in etoroDB-REAL)",
+        "etl_pattern": "DELETE today's rows + INSERT from staging",
+        "distribution": "ROUND_ROBIN (unusual for a 9.95M-row fact table — verify if HASH(WithdrawID) would be better)",
+        "schema_drift": "CreditID bigint column added 2025-08-13 by guym - confirm business meaning"
+      }
+    },
+    "upstream_wiki_additions": {
+      "Billing.Deposit": "Found at DB_Schema/etoro/Wiki/Billing/Tables/Billing.Deposit.md - quality 9.2/10 (inferred). Provides Tier 1 descriptions for 35 Fact_BillingDeposit columns. Covers full deposit lifecycle, FTD rules, amount/exchange logic, routing, XML PaymentData, DR processing.",
+      "Dictionary.ThreeDsResponseTypes": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ThreeDsResponseTypes.md - quality 9.2/10. 15 rows (0-14). Two phases: Enrollment (3-6) and Authentication (7-12). DWH renames Name->ThreeDsResponseTypesName.",
+      "Dictionary.VerificationLevel": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.VerificationLevel.md - quality 9.4/10. 4 rows (0-3). Level 0=Unverified, 1=Basic, 2=Intermediate, 3=Full KYC. Referenced by 60+ procedures.",
+      "Dictionary.WorldCheck": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.WorldCheck.md - quality 9.4/10. 5 rows (0-4). Refinitiv AML/sanctions screening: 0=Unscreened, 1=Pending, 2=No Match, 3=PEP, 4=Risk. DWH type-widens TINYINT->INT.",
+      "Dictionary.RegionByIP": "Found at DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RegionByIP.md. 4,206 rows in source. DWH Dim_State_and_Province has only 181 rows (INNER JOIN with RegionName on ShortName+CountryID loses most entries).",
+      "Billing.Redeem": "NOT FOUND in DB_Schema wiki. All Fact_BillingRedeem descriptions are Tier 2 (SP code only).",
+      "Dictionary.VerificationStatus": "NOT FOUND in DB_Schema wiki. UserApiDB source is undocumented. All Dim_VerificationStatus descriptions are Tier 2/3 only."
+    },
+    "schema_drift_additions": [
+      "Dim_VerificationLevel: DWHVerificationLevelID = ID (exact copy, redundant alias). StatusID hardcoded to 1. Adds sentinel row ID=-1 (not in production source).",
+      "Dim_WorldCheck: WorldCheckID is INT in DWH vs TINYINT in production (type widening).",
+      "Dim_ThreeDsResponseTypes: Name column renamed to ThreeDsResponseTypesName in DWH.",
+      "Dim_State_and_Province: 181 of 4,206 source rows survive DWH INNER JOIN filter (rei.Name = ren.ShortName AND rei.CountryID = ren.CountryID). Most US sub-states excluded.",
+      "Fact_BillingDeposit: BankName (varchar(100)) and CardCategory (varchar(50)) are non-nvarchar(max) exceptions among the ~91 XML-extracted columns.",
+      "Fact_BillingDeposit: AmountUSD is DWH-computed (Amount × ExchangeRate) — NOT from production source."
+    ],
+    "quality_scores": {
+      "Dim_Instrument_Correlation_UnionedPartitions": 8.4,
+      "v_Dim_Mirror": 7.5,
+      "Dim_State_and_Province": 8.0,
+      "Dim_ThreeDsResponseTypes": 8.5,
+      "Dim_VerificationLevel": 8.5,
+      "Dim_VerificationStatus": 7.0,
+      "Dim_WorldCheck": 8.5,
+      "Fact_BillingDeposit": 8.5,
+      "Fact_BillingRedeem": 7.5,
+      "Fact_Cashout_State": 7.5,
+      "Fact_CustomerAction": 8.5
+    }
+  },
+  "batch_11_knowledge": {
+    "recovery_items": [
+      "Fact_CurrencyPriceWithSplit (7.7): Daily currency price snapshot with corporate-action split ratios applied. HASH(InstrumentID). Partition SWITCH ETL.",
+      "Fact_Deposit_State (7.5): Daily deposit lifecycle state tracking. HASH(DepositID). Partition SWITCH ETL from etoro_Billing_vDeposit.",
+      "Fact_Settlement_Prices (7.8): End-of-day settlement/closing prices per instrument. HASH(InstrumentID). Used for unrealized PnL calculations.",
+      "Fact_SnapshotCustomer (8.0): Daily customer state snapshot. SCD Type 2 via DateRangeID (Dim_Range bridge). HASH(CID). Central customer dimension for point-in-time analytics."
+    ],
+    "new_etl_patterns": {
+      "SP_Fact_CustomerAction_DL_To_Synapse": {
+        "description": "Orchestration SP that loads STS_User_Operations_Data_History via partition SWITCH.",
+        "sts_insert_logic": "INSERT from DWH_staging.STS_Audit_UserOperationsData. Computes DateID and UpdateDate. Partition SWITCH via SP_STS_User_Operations_Data_History_SWITCH.",
+        "distribution": "HASH(Gcid), CLUSTERED INDEX on DateID"
+      },
+      "SP_Fact_Guru_Copiers_DL_To_Synapse": {
+        "description": "Orchestration SP: DELETE today's data, TRUNCATE Ext_FGC_Guru_Copiers, INSERT from DWH_staging.etoro_History_GuruCopiers, then EXEC SP_Fact_Guru_Copiers.",
+        "inner_sp_logic": "SP_Fact_Guru_Copiers aggregates per copier CID per day: sums CopyFundAUM components from Ext_FGC_Guru_Copiers, joins Fact_SnapshotCustomer (AccountTypeID=9 filter) and V_M2M_Date_DateRange.",
+        "distribution": "HASH(CID), CLUSTERED COLUMNSTORE INDEX, PK (DateID, CID) NOT ENFORCED"
+      }
+    },
+    "view_patterns": {
+      "V_Dim_Date": "Enriched date dimension. Selects all Dim_Date columns (excluding PartitionID) + ~20 dynamic CASE expressions for temporal flags (IsCurrentDay/Week/Month/Quarter/Year/MTD/QTD/YTD) relative to DATEADD(DD,-1,GETDATE()). Adds CalculatedWeekNumber.",
+      "V_Dim_Date_For_DWHRep": "Simplified Dim_Date pass-through for replication. Includes PartitionID, UpdateDate, IsFirstDayOfMonth. No dynamic computed columns. Used by 'Import Tables From Synapse To DWH' pipeline.",
+      "V_M2M_Date_DateRange": "Many-to-many bridge expanding DateRangeID ranges into individual DateKey rows. JOIN Dim_Range with Dim_Date WHERE FromDateID <= DateKey AND ToDateID >= DateKey. Outputs DateRangeID, DateKey, FullDate.",
+      "V_Customers": "Flattened daily customer state view. Selects 26 columns from Fact_SnapshotCustomer + V_M2M_Date_DateRange. ISNULL(column,0) on all numeric/flag columns except IsDepositor. Filters DateKey < TODAY to exclude current/future day."
+    },
+    "sts_authentication_notes": {
+      "STS_User_Operations_Data_History": "Historical log of STS authentication/login events. 20 columns. HASH(Gcid). CLUSTERED INDEX on DateID. Sourced from STS_Audit_UserOperationsData staging. Partition SWITCH ETL. Gold data lake path cancelled but Synapse ETL active.",
+      "consumers": ["Vw_STS_User_Operations_Data_History (trivial wrapper)", "Fact_CustomerAction (SP_Fact_CustomerAction uses STS data for login actions)"]
+    },
+    "auc_money_components": {
+      "description": "Fact_Guru_Copiers tracks Assets Under Copy (AUC) per copier per day",
+      "CopyFundAUM": "Computed: CopyFundTotalWithdraws + CopyFundEquity + CopyFundTotalOnHoldWithdraw + CopyFundTotalInProcessCashout - CopyFundAdjustment",
+      "note": "All money amounts are aggregate sums across all copiers per CID per day. See Confluence 'AUM Life Cycle' for component definitions."
+    },
+    "fact_snapshot_customer_daterange": {
+      "description": "Fact_SnapshotCustomer uses DateRangeID (FK to Dim_Range) for SCD Type 2 versioning, NOT DateID. V_M2M_Date_DateRange bridge expands ranges to daily rows for querying.",
+      "consumer_views": ["V_Customers", "V_Fact_SnapshotCustomer", "V_Fact_SnapshotCustomer_FromDateID"]
+    },
+    "synapse_mcp_issues": "MCP connection became unavailable mid-batch. STS_User_Operations_Data_History had partial P2/P3 (sampling/distribution) coverage. Arithmetic overflow on COUNT(*) required COUNT_BIG() workaround.",
+    "quality_scores": {
+      "Fact_CurrencyPriceWithSplit": 7.7,
+      "Fact_Deposit_State": 7.5,
+      "Fact_Settlement_Prices": 7.8,
+      "Fact_SnapshotCustomer": 8.0,
+      "STS_User_Operations_Data_History": 7.5,
+      "V_Dim_Date": 7.8,
+      "V_Dim_Date_For_DWHRep": 7.2,
+      "V_M2M_Date_DateRange": 8.0,
+      "Fact_Guru_Copiers": 8.5,
+      "V_Customers": 8.2
+    }
+  },
+  "batch_12_knowledge": {
+    "completed_objects": [
+      "Dim_Channel (7.5): 6-col channel/sub-channel classification from AffWizz. ROUND_ROBIN. Two-stage ETL via SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse -> Ext_Dim_SubChannel_UnifyCode -> SP_Dim_Channel. Organic/Paid classification logic.",
+      "Vw_STS_User_Operations_Data_History (7.8): Trivial pass-through view. CAST(ClientDeviceId AS nvarchar(max)) only transformation. Delegates all semantics to base table.",
+      "Dim_Instrument_Correlation (8.0): Full symmetric Pearson correlation matrix VIEW. Reconstructs from 20 Half_Records partition tables + Archive via Dim_Instrument_Correlation_UnionedPartitions. 3-month rolling window from hourly price changes.",
+      "Dim_Affiliate (7.5): 56-col denormalized affiliate dimension. REPLICATE. Email/City masked. Combines AffWizz profile, channel/sub-channel, trading account linkage, registration/FTD/FTDe metrics across multiple time windows. Complex ContractType derivation via CASE on ContractName text.",
+      "Fact_FirstCustomerAction (7.5): First customer action per ActionType. HASH(RealCID). Double MERGE pattern in SP (FirstEver=1 for absolute first, FirstEver=0 for other distinct events). Derived from Fact_CustomerAction.",
+      "Fact_RegulationTransfer (7.8): Customer regulatory entity transfers with financial snapshot. HASH(CID). SCD2 change detection on DWH_staging.etoro_History_BackOfficeCustomer. V_Liabilities snapshot at T-1 day before transfer.",
+      "Fact_History_Cost (7.0): Granular cost/fee records. HASH(CostID). CLUSTERED COLUMNSTORE. Staging from HistoryCosts_History_Costs. Simple DELETE today + INSERT all pattern.",
+      "Fact_Position_Futures_Snapshot (8.0): Daily settlement-time futures position snapshot. HASH(PositionID). CLUSTERED COLUMNSTORE. Complex 8-temp-table orchestration in SP: settlement prices, open/closed positions, changelog corrections, partial close handling, mark-to-market PnL.",
+      "Fact_CustomerUnrealized_PnL_UserAPI (7.2): API-optimized 34-col subset of Fact_CustomerUnrealized_PnL. HASH(CID). CLUSTERED COLUMNSTORE. Pure column subset, no transformation. Populated within same SP as parent table."
+    ],
+    "deferred_to_batch_13": {
+      "reason": "Context window limits — remaining objects are high-complexity (109+ columns, multi-source ETL, or complex view logic)",
+      "objects": ["Dim_Customer (109 cols)", "Fact_BillingWithdraw (86 cols)", "Fact_CustomerUnrealized_PnL (59 cols)", "Fact_SnapshotEquity (34 cols)", "V_Dim_Customer (view)", "VU_FactBilling_ForBigQuery (view)"]
+    },
+    "new_etl_patterns": {
+      "SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse": {
+        "description": "Two-stage AffWizz channel ETL. Loads Ext_Dim_SubChannel_UnifyCode from fiktivo_dbo staging, then SP_Dim_Channel reads it.",
+        "source": "fiktivo_dbo.tblaff_Affiliates (AffWizz affiliate system)"
+      },
+      "SP_Fact_FirstCustomerAction": {
+        "description": "Double MERGE from Fact_CustomerAction. First MERGE inserts absolute first events (FirstEver=1), second MERGE inserts remaining unique action+date combos (FirstEver=0).",
+        "source": "DWH_dbo.Fact_CustomerAction"
+      },
+      "SP_Fact_RegulationTransfer_DL_To_Synapse": {
+        "description": "SCD2 change detection on etoro_History_BackOfficeCustomer. Detects RegulationID changes, joins V_Liabilities for financial snapshot at T-1.",
+        "sources": ["DWH_staging.etoro_History_BackOfficeCustomer", "DWH_dbo.V_Liabilities"]
+      },
+      "SP_Fact_Position_Futures_Snapshot": {
+        "description": "Complex 8-temp-table orchestration for daily futures settlement snapshot. Sources: Dim_Position, Dim_Instrument_Snapshot, Fact_Settlement_Prices, Dim_PositionChangeLog.",
+        "temp_tables": ["#Fact_Settlement_Prices_LastPrices", "#openAtSettlement", "#ClosedInSettlement", "#changelog", "#originMetrics", "#firstPartial", "#prepOpens", "#prepClosed"]
+      }
+    },
+    "instrument_correlation_architecture": {
+      "description": "Multi-layered architecture for Pearson correlations between instrument pairs",
+      "layers": {
+        "source": "Ext_FCUPNL_GetSpreadedPriceCandle60MinSplitted (hourly price changes)",
+        "compute": ["SP_Dim_Instrument_Correlation_Build_GroupsInstruments", "SP_Dim_Instrument_Correlation_FilterByInstrumentID", "SP_Dim_Instrument_Correlation_ByGroupRange"],
+        "storage": "20x Dim_Instrument_Correlation_Half_Records_N tables (half-matrix optimization)",
+        "archive": "Dim_Instrument_Correlation_Archive (rows older than rolling window)",
+        "union_view": "Dim_Instrument_Correlation_UnionedPartitions (UNION ALL of 20 partition tables)",
+        "top_view": "Dim_Instrument_Correlation (reconstructs full symmetric matrix A-B + B-A + self-correlation + archive)"
+      },
+      "rolling_window": "~66 days (3-month nominal, actual varies by computation schedule)"
+    },
+    "synapse_mcp_status": "Unavailable throughout batch. P2/P3 skipped on all objects. Databricks MCP available for lineage.",
+    "quality_scores": {
+      "Dim_Channel": 7.5,
+      "Vw_STS_User_Operations_Data_History": 7.8,
+      "Dim_Instrument_Correlation": 8.0,
+      "Dim_Affiliate": 7.5,
+      "Fact_FirstCustomerAction": 7.5,
+      "Fact_RegulationTransfer": 7.8,
+      "Fact_History_Cost": 7.0,
+      "Fact_Position_Futures_Snapshot": 8.0,
+      "Fact_CustomerUnrealized_PnL_UserAPI": 7.2
+    }
+  },
+  "batch_13_knowledge": {
+    "completed_objects": [
+      "Fact_SnapshotEquity (8.5): SCD2 daily equity snapshot. HASH(CID). 34 cols. 10-source ETL via SP_Fact_SnapshotEquity_DL_To_Synapse. MERGE-based change detection on financial metrics. Year-end close logic. Sources: etoro_History_ActiveCredit, etoro_Trade_OpenPositionEndOfDay, etoro_History_InProcessCashouts, etc.",
+      "V_Fact_SnapshotEquity_FromDateID (8.0): Thin view adding FromDateID/ToDateID from Dim_Range to Fact_SnapshotEquity. No row expansion.",
+      "V_Fact_SnapshotEquity_ForDWHRep (7.5): Column subset of Fact_SnapshotEquity for replication. Adds computed PartitionCol = CID % 10. Excludes futures/stock margin columns.",
+      "V_Fact_SnapshotCustomer_FromDateID (8.0): Thin view adding FromDateID/ToDateID from Dim_Range to Fact_SnapshotCustomer. Same pattern as equity equivalent.",
+      "V_Fact_SnapshotCustomer (8.0): Expands SCD2 date ranges to daily rows via Dim_Range + Dim_Date. One row per CID per day. Applies ISNULL defaults.",
+      "V_Dim_Instrument_Correlation_Test_Full (7.5): Test view reconstructing full symmetric correlation matrix from undivided Dim_Instrument_Correlation_Half_Records table. UNION ALL with swapped instrument pairs.",
+      "V_Dim_Instrument_Correlation (7.5): Filtered correlation view from Dim_Instrument_Correlation_Active. 3-part UNION ALL with date split at 20250202 (half-matrix expansion for recent data, passthrough for older pre-computed full matrix).",
+      "V_FCA_NumOfLogins_mean_1q (8.0): FCA regulatory view. Rolling 3-month daily average login count per RealCID. FROM Fact_CustomerAction WHERE ActionTypeID=14. Uses GETDATE() — non-deterministic.",
+      "V_Fact_CustomerUnrealized_PnL_For_DWH_Rep (7.5): Passthrough replication view. 48 columns from Fact_CustomerUnrealized_PnL with no filter/transform.",
+      "V_Fact_RegulationTransfer (8.5): Directional UNION ALL. TransferDirection +1 (inbound, ToRegulationID) and -1 (outbound, FromRegulationID). Unified RegulationID. 30 columns including full equity snapshot at transfer time.",
+      "V_Fact_SnapshotEquity (8.5): Complex daily expansion view. 4-table join: Fact_SnapshotEquity + V_M2M_Date_DateRange + LEFT JOIN Fact_CustomerUnrealized_PnL + LEFT JOIN Fact_Guru_Copiers. Adds DateKey, ~72 columns including unrealized PnL. WHERE DateKey < today.",
+      "V_Liabilities (8.0): Primary liability computation. 4-source join. ~72 cols. 8 computed columns: ActualNWA, Liabilities, WA_Liabilities, Liabilities_InUsedMargin, LiabilitiesStockReal, LiabilitiesCryptoReal, LiabilitiesCrypto_TRS, LiabilitiesFuturesReal. Complex CASE nesting for NWA/liability formulas.",
+      "V_Dim_Customer (8.0): Denormalized 91-column customer view. 7 INNER JOINs resolving: Country, Affiliate, Language, VerificationLevel, PlayerStatus, PlayerLevel, Regulation. Date/boolean columns cast to VARCHAR for export. Excludes ReferralID, UserName_Lower, 2FA.",
+      "VU_FactBilling_ForBigQuery (7.5): Sanitized export view for Google BigQuery. ~125 columns from Fact_BillingDeposit. ~70 string columns wrapped in RemoveSpecialChars(CONVERT(NVARCHAR(MAX),...)). No joins/filters."
+    ],
+    "new_etl_patterns": {
+      "SP_Fact_SnapshotEquity_DL_To_Synapse": {
+        "description": "10-source orchestration SP. Loads Ext staging tables, deletes obsolete records, updates DateRangeID, calls helper SPs (InProcessCashouts, TotalPositionAmount), then SP_Fact_SnapshotEquity for MERGE.",
+        "sources": ["etoro_History_ActiveCredit", "etoro_Trade_OpenPositionEndOfDay", "etoro_History_InProcessCashouts", "etoro_History_WithdrawAction", "etoro_History_WithdrawToFundingAction", "etoro_Trade_Position", "Ext_FSE_TotalCashChangeAll", "etoro_History_Position", "Ext_FSE_PositionChangeLog_Amount", "etoro_Dictionary_Currency"]
+      },
+      "SP_Fact_SnapshotEquity": {
+        "description": "Core MERGE SP. Detects changes in financial metrics, closes old DateRange (updates ToDateID), opens new DateRange, inserts new rows. Year-end close logic via SP_Fact_SnapshotEquity_CloseYear.",
+        "pattern": "Stage data in #temp → MERGE into Fact_SnapshotEquity → Dim_Range updates"
+      }
+    },
+    "liability_formulas": {
+      "NetEquity": "TotalPositionsAmount + TotalCash + TotalStockOrders + PositionPnL",
+      "ActualNWA": "MIN(NetEquity, BonusCredit) when positive; 0 when NetEquity < 0; else NetEquity",
+      "Liabilities": "InProcessCashouts + MAX(NetEquity - BonusCredit, MIN(NetEquity, 0))",
+      "WA_Liabilities": "MIN(Liabilities_excl_cashouts, Credit)",
+      "Liabilities_InUsedMargin": "MAX(Liabilities_excl_cashouts - Credit, 0)"
+    },
+    "synapse_mcp_status": "Unavailable throughout batch. P2/P3 skipped on all objects.",
+    "quality_scores": {
+      "Fact_SnapshotEquity": 8.5,
+      "V_Fact_SnapshotEquity_FromDateID": 8.0,
+      "V_Fact_SnapshotEquity_ForDWHRep": 7.5,
+      "V_Fact_SnapshotCustomer_FromDateID": 8.0,
+      "V_Fact_SnapshotCustomer": 8.0,
+      "V_Dim_Instrument_Correlation_Test_Full": 7.5,
+      "V_Dim_Instrument_Correlation": 7.5,
+      "V_FCA_NumOfLogins_mean_1q": 8.0,
+      "V_Fact_CustomerUnrealized_PnL_For_DWH_Rep": 7.5,
+      "V_Fact_RegulationTransfer": 8.5,
+      "V_Fact_SnapshotEquity_view": 8.5,
+      "V_Liabilities": 8.0,
+      "V_Dim_Customer": 8.0,
+      "VU_FactBilling_ForBigQuery": 7.5
+    }
+  },
+  "batch_14_knowledge": {
+    "completed_objects": [
+      "Fact_CustomerUnrealized_PnL (8.0): 59-col portfolio unrealized PnL. HASH(CID). CLUSTERED COLUMNSTORE. V0/V1 calculation versions. NOP, Notional, Markowitz StdDev metrics. SP_Fact_CustomerUnrealized_PnL orchestration with 14+ staging/external sources.",
+      "Fact_BillingWithdraw (8.5): 83-col denormalized withdrawal fact. HASH(WithdrawID). 3-way JOIN (Withdraw + WithdrawToFunding + Funding). ~40 XML-extracted columns via ExtractXMLValue(). BIN-code post-load enrichment from Dim_CountryBin.",
+      "Dim_Customer (9.0): 107-col master customer dimension. HASH(RealCID). 14+ staging sources. CDC-style change detection (50+ column comparison). Multi-phase post-load enrichment (avatar, FTD, screening, SF, document, 2FA, phone, Tangany, DLT, StocksLending). 14 PII-masked columns."
+    ],
+    "new_etl_patterns": {
+      "SP_Fact_CustomerUnrealized_PnL": {
+        "description": "Complex multi-source aggregation computing portfolio-level unrealized PnL per customer per day.",
+        "sources": ["Ext_FCUPNL_Trade_OpenPositionEndOfDay", "Ext_FCUPNL_GetSpreadedPriceClose", "Ext_FCUPNL_Trade_GetInstrument", "Ext_FCUPNL_History_SplitRatio", "Ext_FCUPNL_Dim_Instrument", "Ext_FCUPNL_Regulation_Leverage"],
+        "v0_v1_versions": "V0 = legacy calculation, V1 = current production. Both computed and stored side-by-side.",
+        "markowitz": "Portfolio-level standard deviation using Pearson correlations from Dim_Instrument_Correlation"
+      },
+      "SP_Fact_BillingWithdraw_DL_To_Synapse": {
+        "description": "DELETE+INSERT ETL with 3-way LEFT JOIN of Withdraw/WithdrawToFunding/Funding tables. ~40 XML-extracted columns via ExtractXMLValue(COALESCE(wtf.WithdrawData,bf.FundingData)).",
+        "sources": ["DWH_staging.etoro_Billing_Withdraw", "DWH_staging.etoro_Billing_WithdrawToFunding", "DWH_staging.etoro_Billing_Funding"],
+        "post_load": "SP_Fact_BillingWithdraw: UPDATE BankName+CardCategory from Dim_CountryBin via BinCodeAsString"
+      },
+      "SP_Dim_Customer_DL_To_Synapse": {
+        "description": "Complex 14+ source orchestration. SP_Dim_Customer inner SP: CDC-style change detection via 50+ column ISNULL comparisons. DELETE+INSERT for changed/new CIDs. Multi-phase post-load UPDATEs.",
+        "sources": ["Ext_Dim_Customer_Customer (primary)", "Ext_Dim_Customer_BOCustomer", "Ext_Dim_Customer_Affiliate", "Ext_Dim_Customer_2FA", "Ext_Dim_Customer_PhoneCustomer", "Ext_Dim_Customer_Avatars", "Ext_etoro_Billing_vDeposit (FTD)", "Ext_CustomerFinanceDB_Customer_FirstTimeDeposits", "Ext_Dim_Customer_ScreeningStatusID", "Ext_Dim_Customer_SF_ID", "Ext_Dim_Customer_Document", "Ext_Dim_CustomerStatic", "Ext_Dim_Customer_CustomerIdentification", "Ext_Dim_Customer_StocksLending"],
+        "change_detection": "50+ column comparison using ISNULL(old,default) <> ISNULL(new,default) with COLLATE Latin1_General_CI_AS for string columns"
+      }
+    },
+    "upstream_wiki_additions": {
+      "Billing.Withdraw": "Found at DB_Schema/etoro/Wiki/Billing/Tables/Billing.Withdraw.md. Core withdrawal request table. Tier 1 for ~20 passthrough columns.",
+      "Billing.WithdrawToFunding": "Found at DB_Schema/etoro/Wiki/Billing/Tables/Billing.WithdrawToFunding.md. Payment execution ledger. CashoutTypeID: 1=Cashout, 2=Refund. WithdrawData XML column.",
+      "Customer.CustomerStatic": "Found at DB_Schema/etoro/Wiki/Customer/Tables/Customer.CustomerStatic.md - quality 9.7/10. Extensive customer identity wiki with PII masking, history versioning, IsHedged logic, duplicate detection."
+    },
+    "dual_uc_targets": {
+      "Dim_Customer": {
+        "masked": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked (dwh business group)",
+        "unmasked": "main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer (pii_data business group)",
+        "copy_strategy": "Override",
+        "frequency": "Daily"
+      }
+    },
+    "synapse_mcp_status": "Unavailable throughout batch. P2/P3 skipped on all objects.",
+    "quality_scores": {
+      "Fact_CustomerUnrealized_PnL": 8.0,
+      "Fact_BillingWithdraw": 8.5,
+      "Dim_Customer": 9.0
+    }
+  },
+  "schema_complete": true,
+  "completion_summary": {
+    "total_batches": 14,
+    "total_documented": 130,
+    "total_skipped": 4,
+    "total_blacklisted": 245,
+    "quality_range": "4.5 - 9.4",
+    "quality_avg": 7.9
   }
 }

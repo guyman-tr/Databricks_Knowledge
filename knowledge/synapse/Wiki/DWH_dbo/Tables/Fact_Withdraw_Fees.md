@@ -161,12 +161,12 @@ Trustly, MoneyBookers, Przelewy24, EtoroOptions, Neteller, Payoneer, UnionPay: <
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 6 | WithdrawStatus | nvarchar(max) | YES | Final withdrawal processing status. Values (live): Processed(99.9%), Partially Processed, Partialy Reversed (typo - missing 'l' in production), Rejected, Reversed, InProcess. (Tier 3 - live data sampling) |
-| 7 | PaymentOrderStatus | nvarchar(max) | YES | Payment order status - distinct from WithdrawStatus. Captures payment gateway order state. (Tier 4 - inferred) |
+| 7 | PaymentOrderStatus | nvarchar(max) | YES | Payment order status — distinct from overall withdrawal status; CS docs describe withdrawal/cashout status by method (MOP) and stage in Cashout History. (Tier 4 — Confluence, Withdrawal in BO and Statuses) |
 | 8 | StatusModificationTime | datetime2(7) | YES | Timestamp of last status change. Source for ModificationDateID. ETL WHERE filter key. (Tier 2 - SP passthrough + WHERE clause) |
 | 9 | ModificationDateID | int | YES | ETL date key from StatusModificationTime: YYYYMMDD integer. Efficient date-range filter. (Tier 2 - SP computed: convert(int,...StatusModificationTime...112)) |
 | 10 | ProcessTime | datetime2(7) | YES | Withdrawal processing completion time. Range: 2021-12-01 to 2024-06-30. (Tier 2 - SP passthrough) |
 | 11 | RequestTime | datetime2(7) | YES | Customer cashout request submission time. (Tier 2 - SP passthrough) |
-| 12 | ProcessorValueDate | datetime2(7) | YES | Payment processor value date for settlement. May differ from ProcessTime. (Tier 4 - inferred) |
+| 12 | ProcessorValueDate | datetime2(7) | YES | Payment processor value date for settlement (when the provider books the transaction); may differ from `ProcessTime`. (Tier 4 — Confluence, Withdrawal in BO and Statuses) |
 | 13 | UpdateDate | datetime | YES | ETL load timestamp (getdate()). Range: 2024-01-08 to 2024-07-01. (Tier 2 - SP computed: getdate()) |
 
 **Amount & Fee Columns:**
@@ -184,13 +184,13 @@ Trustly, MoneyBookers, Przelewy24, EtoroOptions, Neteller, Payoneer, UnionPay: <
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 20 | PreparationType | nvarchar(max) | YES | How the withdrawal was prepared in the BackOffice workflow (manual, automated, bulk, etc.). [UNVERIFIED] (Tier 4 - inferred) |
-| 21 | ExecutionType | nvarchar(max) | YES | How the withdrawal was executed (direct, batch, deferred, etc.). [UNVERIFIED] (Tier 4 - inferred) |
-| 22 | Executedby | nvarchar(max) | YES | System agent or staff member who executed the withdrawal. [UNVERIFIED] (Tier 4 - inferred) |
-| 23 | CashoutType | nvarchar(max) | YES | Cashout classification type (standard, partial, etc.). [UNVERIFIED] (Tier 4 - inferred) |
-| 24 | BackOfficeWithdrawReason | nvarchar(max) | YES | BackOffice-assigned reason for the withdrawal (e.g., customer request, regulatory requirement). [UNVERIFIED] (Tier 4 - inferred) |
-| 25 | VerificationCode | nvarchar(max) | YES | Processor verification code returned on withdrawal. [UNVERIFIED] (Tier 4 - inferred) |
-| 26 | VendorCode | nvarchar(max) | YES | Payment vendor specific code. [UNVERIFIED] (Tier 4 - inferred) |
+| 20 | PreparationType | nvarchar(max) | YES | How the withdrawal was prepared in the cashout pipeline (e.g. manual vs automated preparation in CO workflows). (Tier 4 — Confluence, Cashout (CO) Approval Checks) |
+| 21 | ExecutionType | nvarchar(max) | YES | How execution was performed after preparation (internal routing to provider/billing). (Tier 4 — Confluence, Cashout (CO) Processing) |
+| 22 | Executedby | nvarchar(max) | YES | Actor or system step associated with execution (aligns with BO cashout/withdrawal processing terminology). (Tier 4 — Confluence, Cashout (CO) Processing) |
+| 23 | CashoutType | nvarchar(max) | YES | Classification of the cashout path (e.g. standard withdrawal vs internal transfer flows in related product docs). (Tier 4 — Confluence, Withdrawal issues) |
+| 24 | BackOfficeWithdrawReason | nvarchar(max) | YES | BackOffice reason for the withdrawal request (customer-initiated, compliance, manual payout, etc.). (Tier 4 — Confluence, Withdrawal issues) |
+| 25 | VerificationCode | nvarchar(max) | YES | Processor or gateway verification code on the withdrawal. (Tier 4 — Confluence, Lost Cashout (CO) - Credit/Debit Card (CC)) |
+| 26 | VendorCode | nvarchar(max) | YES | Payment vendor-specific code from the provider. (Tier 4 — Confluence, Withdrawal in BO and Statuses) |
 
 **Payment Channel Columns:**
 
@@ -207,8 +207,8 @@ Trustly, MoneyBookers, Przelewy24, EtoroOptions, Neteller, Payoneer, UnionPay: <
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 33 | CustomerStatus | nvarchar(max) | YES | Customer account status at withdrawal time. (Tier 4 - inferred) |
-| 34 | CustomerLevel | nvarchar(max) | YES | Customer tier at withdrawal time. (Tier 4 - inferred) |
+| 33 | CustomerStatus | nvarchar(max) | YES | Customer account status at withdrawal time (e.g. limited/blocked accounts affect manual cashout handling). (Tier 4 — Confluence, Cashout (CO) Approval Checks) |
+| 34 | CustomerLevel | nvarchar(max) | YES | Customer tier/club level at withdrawal time; fee exemptions (e.g. Platinum+ withdrawal fee) are documented in fee-group logic. (Tier 4 — Confluence, Fee Group Logic) |
 | 35 | Regulation | nvarchar(max) | YES | Regulatory jurisdiction for this customer. (Tier 2 - SP passthrough) |
 | 36 | WhiteLabel | nvarchar(max) | YES | White-label brand name. (Tier 2 - SP passthrough) |
 
@@ -297,10 +297,17 @@ ORDER BY w.ProcessTime DESC;
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object. (Phase 10 skipped - Atlassian MCP unavailable this session.)
+| Source | Type | Relevance |
+|--------|------|-----------|
+| [Withdrawal fees and conversion fees](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/11699453953/Withdrawal+fees+and+conversion+fees) | Confluence | USD withdrawal fee; pip-based conversion fee example. |
+| [Conversion fee Revenue Calculation (PIP in USD)](https://etoro-jira.atlassian.net/wiki/spaces/FC/pages/12000526439/Conversion+fee+Revenue+Calculation+PIP+in+USD) | Confluence | PIP-in-USD revenue formula for deposits/withdrawals/chargebacks/refunds. |
+| [Withdrawal in BO and Statuses](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/11668652311/Withdrawal+in+BO+and+Statuses) | Confluence | Cashout History, withdraw status by MOP, net amount and exchange context. |
+| [Cashout (CO) Processing](https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/902987840/Cashout+CO+Processing) | Confluence | BO navigation for cashout requests / withdrawals. |
+| [Cashout (CO) Approval Checks](https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/12451579392/Cashout+CO+Approval+Checks) | Confluence | Manual CO checks (HCO, AML, blocked status). |
+| [Fee Group Logic](https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/12002525197/Fee+Group+Logic) | Confluence | Club tiers and withdrawal/conversion fee exemptions. |
 
 ---
 
-*Generated: 2026-03-18 | Quality: 6.5/10 (★★★☆☆) | Phases: 11/14*
-*Tiers: 0 T1, 15 T2, 2 T3, 7 T4 [UNVERIFIED], 0 T5 | Elements: 7/10, Logic: 7/10, Relationships: 5/10, Sources: 6/10*
+*Generated: 2026-03-18 | Quality: 7.0/10 (★★★☆☆) | Phases: 11/14*
+*Tiers: 0 T1, 15 T2, 2 T3, 0 T4 [UNVERIFIED], 11 T4 — Confluence, 0 T5 | Elements: 7/10, Logic: 7/10, Relationships: 5/10, Sources: 8/10*
 *Object: DWH_dbo.Fact_Withdraw_Fees | Type: Table | Production Source: BackOffice.GetProcessedWithdrawPCIVersion (SP) - pipeline stopped 2024-07-01*

@@ -22,8 +22,10 @@ If ANY of these are true, this gate is ACTIVE:
 1. **Read the execution card**: `.cursor/rules/dwh-semantic-doc/00-execution-card.mdc`
 2. **Read the Phase 11 spec**: `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc`
 3. **Read the lineage/upstream spec**: `.cursor/rules/dwh-semantic-doc/13-production-lineage-mapping.mdc`
+4. **Read the lineage contract**: `.cursor/rules/dwh-semantic-doc/GATE-lineage-contract.mdc`
+5. **Read the tier enforcement**: `.cursor/rules/dwh-semantic-doc/10.5b-tier1-enforcement.mdc`
 
-**If you have not read all 3 files in THIS conversation, STOP and read them NOW.**
+**If you have not read all 5 files in THIS conversation, STOP and read them NOW.**
 
 ## MANDATORY: Phase Gate Checklist Before Each Object
 
@@ -39,13 +41,79 @@ PHASE GATE CHECK — {ObjectName}:
 
 If ANY HARD-gated phase is unchecked (`[ ]`), DO NOT generate. Go run that phase.
 
-## Critical Reminders (from Phase 11 spec)
+## Critical Reminders
 
 - **Template**: 8 numbered sections (`## 1.` through `## 8.`). No other structure.
-- **Tier suffix**: Every element description MUST end with `(Tier N — source.table)` IN the description text. A separate Confidence column does NOT satisfy this.
-- **Tier 1 = upstream wiki verbatim** from DB_Schema. ETL-computed columns (ModificationDateID, UpdateDate) are NEVER Tier 1.
-- **Phase 10.5 is HARD**: Read upstream wiki from `DB_Schema\etoro\Wiki\` BEFORE generating. This is the #1 quality driver.
+- **Tier suffix**: Every element description MUST end with `(Tier N — source.table)` IN the description text.
+- **Lineage BEFORE docs**: Write `.lineage.md` first. Read it back. Then write `.md` using lineage data for tier assignment.
+- **Tier assignment is MECHANICAL**: lineage transform + upstream wiki availability → tier number. Not a judgment call. See `GATE-lineage-contract.mdc`.
+- **Phase 9 is HARD**: Read the SP code. It tells you WHERE each column comes from. Don't guess — read the INSERT/SELECT in the SP.
+- **Transformation awareness**: If the SP modifies a column that HAS an upstream wiki (e.g., CommissionOnClose adjusted on reopens), it's still Tier 1 with a "DWH note:" — NOT Tier 2.
+- **Multi-source search**: Don't stop at the primary table. The SP may pull from staging views (Trade.OpenPositionEndOfDay), history tables, multiple source tables. Check ALL of them for upstream wikis.
 - **Elements table format**: `| # | Element | Type | Nullable | Description |` — 5 columns, tier suffix inside Description.
+
+## MANDATORY: Lineage Before Docs
+
+**The `.lineage.md` file MUST be written BEFORE the wiki `.md` file.**
+
+Phase 9 traces every column to its source table via the SP code. Phase 10.5 finds upstream
+wikis. Phase 13 writes the `.lineage.md` file from this data. Only THEN does Phase 11
+generate the wiki doc — reading the lineage file to determine tier assignments.
+
+```
+Execution: ... → P9 → P9B → P10 → P10.5 → P13 (lineage) → P11 (wiki doc) → P12
+```
+
+See `GATE-lineage-contract.mdc` for full details.
+
+## MANDATORY: Post-Write Validation (TWO scripts)
+
+After writing EACH wiki `.md` file, you MUST run BOTH validation scripts:
+
+### Check A: Structural Validation
+
+**PowerShell (Cursor):**
+```powershell
+& .cursor/scripts/validate-wiki.ps1 -Path "knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md"
+```
+
+**Bash (Claude CLI):**
+```bash
+bash .cursor/scripts/validate-wiki.sh "knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md"
+```
+
+Checks 5 structural things: headers, tier suffixes, line count, companion files, footer.
+
+### Check B: Semantic Tier 1 Coverage
+
+**PowerShell (Cursor):**
+```powershell
+& .cursor/scripts/validate-tier1-coverage.ps1 -Path "knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md"
+```
+
+**Bash (Claude CLI):**
+```bash
+bash .cursor/scripts/validate-tier1-coverage.sh "knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md"
+```
+
+Cross-references the wiki's tier assignments against upstream DB_Schema wikis.
+Catches the critical failure: upstream wiki exists with matching columns but zero got Tier 1.
+
+- **Exit 0 (PASS)**: Tier 1 coverage is adequate
+- **Exit 1 (FAIL)**: ZERO Tier 1 despite matchable upstream columns → delete and redo
+- **Exit 2 (WARNING)**: Below 40% Tier 1 coverage → review the MISS list
+
+### Failure Protocol
+
+**If EITHER script exits non-zero (FAIL):**
+1. Read the output to see which checks failed
+2. Delete the wiki `.md` file
+3. Regenerate from scratch following the exact template
+4. Re-run BOTH validations
+
+**Do NOT proceed to the next object until BOTH validations pass.**
+**Do NOT report the object as "Done" in `_index.md` until BOTH pass.**
+**Do NOT skip either step. They are not optional.**
 
 ## Violation = Delete and Redo
 

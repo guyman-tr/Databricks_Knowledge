@@ -66,16 +66,24 @@ Deposit submitted
 
 ### 2.2 Fee Calculation in PIPs
 
-**What**: The deposit fee is expressed in PIPs and converted to USD.
+**What**: eToro charges a conversion fee on non-USD deposits, expressed in PIPs (price interest points). The fee is embedded in the exchange rate spread.
 
-**Columns Involved**: `FeeinPIPs`, `PIPsinUSD`, `BaseExchangeRate`, `ExchangeRate`, `DepositAmount`, `Currency`
+**Columns Involved**: `FeeinPIPs`, `PIPsinUSD`, `BaseExchangeRate`, `ExchangeRate`, `DepositAmount`, `Currency`, `DepositCollarAmount`
 
-**Rules**:
-- `FeeinPIPs` (int): Fee rate in price interest points (basis point units)
-- `PIPsinUSD` (decimal): USD monetary value of the fee at deposit time
-- `BaseExchangeRate` and `ExchangeRate`: Exchange rates at deposit time for currency conversion
-- `DepositCollarAmount`: Collar-adjusted deposit amount used in fee calculation
-- Currency is stored as text (e.g., USD, EUR, GBP, CLP); most deposits are in customer's local currency
+**Formula** (from Confluence — Finance team):
+```
+PIP_in_USD = OriginalAmount * (BaseExchangeRate - ExchangeRate)
+```
+- `BaseExchangeRate`: Market exchange rate BEFORE fee deduction
+- `ExchangeRate`: Rate AFTER fee (BaseRate minus PIP spread) — this is the rate applied to the customer's deposit
+- `FeeinPIPs`: The conversion fee rate. Varies by currency, payment method, and eToro Club tier:
+  - EUR/GBP/AUD/CHF: 150 PIPs (Debit/Credit Card, Bank Transfer, Wallets), Free (eToroMoney deposit)
+  - SEK/DKK/NOK: 1500 PIPs
+  - PLN/HUF: 650 PIPs
+  - Club discounts: Bronze/Silver/Gold = 0%, Platinum/Platinum+ = 50% off, Diamond = 100% off (fee-free)
+- `PIPsinUSD`: Monetary USD value of the fee at deposit time
+
+**Chargeback PIP behavior**: For EUR/GBP/AUD/AED/QAR/BHD/PEN/OMR, the chargeback PIP equals the deposit PIP (depends only on amount and fee, not exchange rate). For other currencies, the PIP varies with exchange rate fluctuation between deposit and chargeback dates.
 
 ### 2.3 Payment Channel Breakdown
 
@@ -189,7 +197,7 @@ FSRA, ASIC, FinCEN, BVI, eToroUS: <0.5%
 | 9 | ModificationDateID | int | YES | ETL-computed date key: convert(int, convert(varchar, dateadd(day,datediff(day,0,StatusModificationTime),0), 112)). Format: YYYYMMDD. Efficient date-range filter key. (Tier 2 - SP_Fact_Deposit_Fees_DL_To_Synapse computed column) |
 | 10 | DepositTime | datetime2(7) | YES | Original deposit submission timestamp. Range in DWH: 2020-03-05 to 2024-06-30. (Tier 2 - SP passthrough) |
 | 11 | FirstApprovedTime | datetime2(7) | YES | Timestamp of first approval status. For re-approved deposits, this captures the initial approval. (Tier 2 - SP passthrough) |
-| 12 | DepositValueDate | datetime2(7) | YES | Value date for accounting purposes (when funds are formally recognized). May differ from DepositTime for wire transfers. (Tier 4 - inferred) |
+| 12 | DepositValueDate | datetime2(7) | YES | Value date for accounting purposes — when funds are formally recognized. May differ from DepositTime for wire transfers where settlement takes 1-3 business days. (Tier 4 — Confluence, Deposit issues) |
 | 13 | UpdateDate | datetime | YES | ETL load timestamp: getdate() at time SP ran. Range: 2023-11-28 to 2024-07-01. (Tier 2 - SP_Fact_Deposit_Fees_DL_To_Synapse computed: getdate()) |
 
 **Amount & Fee Columns:**
@@ -198,9 +206,9 @@ FSRA, ASIC, FinCEN, BVI, eToroUS: <0.5%
 |---|---------|------|----------|-------------|
 | 14 | DepositAmount | decimal(38,18) | YES | Deposit amount in the customer's currency (see Currency column). Primary deposit value. (Tier 2 - SP passthrough) |
 | 15 | Currency | nvarchar(max) | YES | Customer's deposit currency code (USD, EUR, GBP, CLP, etc.). (Tier 2 - SP passthrough) |
-| 16 | DepositCollarAmount | decimal(38,18) | YES | Collar-adjusted deposit amount used in fee calculation. Applied when exchange rate fluctuation limits (collars) are in effect. (Tier 4 - inferred) |
-| 17 | BaseExchangeRate | decimal(38,18) | YES | Base currency exchange rate at deposit time. Used to convert between customer currency and USD. (Tier 2 - SP passthrough) |
-| 18 | ExchangeRate | decimal(38,18) | YES | Applied exchange rate at deposit time (may differ from base due to spread or collar). (Tier 2 - SP passthrough) |
+| 16 | DepositCollarAmount | decimal(38,18) | YES | Collar-adjusted deposit amount used in fee calculation. When exchange rate fluctuation limits (collars) apply, this caps the fee base to protect against rate volatility. (Tier 4 — Confluence, Conversion fee Revenue Calculation) |
+| 17 | BaseExchangeRate | decimal(38,18) | YES | Market exchange rate BEFORE fee deduction. The PIP fee is embedded as a spread: BaseExchangeRate minus FeeinPIPs/10000 = ExchangeRate. Used in the formula: PIP_in_USD = DepositAmount * (BaseExchangeRate - ExchangeRate). (Tier 4 — Confluence, Deposit conversion fee) |
+| 18 | ExchangeRate | decimal(38,18) | YES | Exchange rate AFTER fee deduction (BaseExchangeRate minus PIP spread). This is the actual rate applied to the customer's deposit — the fee is embedded in this rate difference. (Tier 4 — Confluence, Deposit conversion fee) |
 | 19 | FeeinPIPs | int | YES | Deposit fee expressed in PIPs (price interest points). A pip is 1/10000 of the base currency unit. Zero for fee-free deposits. (Tier 2 - SP_Fact_Deposit_Fees_DL_To_Synapse + BackOffice.BillingDepositsPCIVersion changelog: OPSE-236) |
 | 20 | PIPsinUSD | decimal(38,18) | YES | USD monetary value of FeeinPIPs at deposit exchange rate. NULL for some zero-fee rows. (Tier 2 - SP passthrough + BackOffice changelog: OPSE-236) |
 | 21 | TotalRollbackDollarAmount | decimal(38,18) | YES | Total USD amount rolled back for chargeback/refund scenarios. (Tier 2 - SP passthrough) |
@@ -234,15 +242,15 @@ FSRA, ASIC, FinCEN, BVI, eToroUS: <0.5%
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 37 | CountryByRegIP | nvarchar(max) | YES | Customer's country determined by registration IP address. Used for regulatory routing decisions. (Tier 4 - inferred) |
+| 37 | CountryByRegIP | nvarchar(max) | YES | Customer's country determined by registration IP address. Used for regulatory routing and conversion fee schedule selection (fees vary by country/currency). (Tier 4 — Confluence, Conversion fee Revenue Calculation) |
 | 38 | CustomerStatus | nvarchar(max) | YES | Customer account status at time of deposit. [UNVERIFIED] (Tier 4 - inferred) |
 | 39 | CustomerLevel | nvarchar(max) | YES | Customer tier/level at time of deposit (e.g., Silver, Gold, Platinum). [UNVERIFIED] (Tier 4 - inferred) |
 | 40 | AccountManager | nvarchar(max) | YES | Assigned account manager name at time of deposit. [UNVERIFIED] (Tier 4 - inferred) |
 | 41 | Regulation | nvarchar(max) | YES | Regulatory jurisdiction for this customer's account. Values (live): CySEC(53.5%), FCA(30.8%), ASIC&GAML(7.7%), FinCEN+FINRA(3.8%), FSA Seychelles(3.7%), FSRA, ASIC, FinCEN, BVI, eToroUS. (Tier 3 - live data distribution) |
 | 42 | WhiteLabel | nvarchar(max) | YES | White-label brand for this customer. Predominantly "eToro". (Tier 3 - live data sampling) |
 | 43 | Brand | nvarchar(max) | YES | Payment card network brand (Visa, Master Card, Maestro, American Express, etc.). Corresponds to Dim_CardType.CarTypeName. (Tier 3 - live data sampling) |
-| 44 | CardCategory | nvarchar(max) | YES | Card category classification (Debit, Credit, Prepaid, etc.). (Tier 4 - inferred) |
-| 45 | FTD | nvarchar(max) | YES | First Time Deposit flag. Text-based ("Yes"/"No" or "1"/"0"). Identifies if this is the customer's first ever deposit. (Tier 4 - inferred) |
+| 44 | CardCategory | nvarchar(max) | YES | Card category classification (Debit, Credit, Prepaid). Conversion fee schedule differs between Debit/Credit Cards and other payment methods per eToro fee table. (Tier 4 — Confluence, Conversion fee Revenue Calculation) |
+| 45 | FTD | nvarchar(max) | YES | First Time Deposit flag. Identifies whether this is the customer's first ever deposit. FTD is a key business event — triggers affiliate commission payouts and customer lifecycle classification. (Tier 4 — Confluence, Deposit conversion fee) |
 | 46 | Funnel | nvarchar(max) | YES | Customer acquisition funnel label. From Dictionary.Funnel. [UNVERIFIED] (Tier 4 - inferred) |
 | 47 | DepositType | nvarchar(max) | YES | Deposit type classification. NULL for most rows in live data. [UNVERIFIED] (Tier 4 - inferred) |
 
@@ -358,10 +366,16 @@ ORDER BY Chargebacks DESC;
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object. (Phase 10 skipped - Atlassian MCP unavailable this session.)
+| Source | Type | Key Knowledge Extracted |
+|--------|------|------------------------|
+| [Conversion fee Revenue Calculation (PIP in USD)](https://etoro-jira.atlassian.net/wiki/spaces/FC/pages/12000526439) | Confluence | PIP formula: PIP_in_USD = Amount * (BaseRate - ExRate). Fee schedule by currency/payment method. Club tier discounts (Diamond=100%, Platinum=50%). Chargeback PIP behavior differs by currency group. |
+| [Deposit conversion fee](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/11705909430) | Confluence | How conversion fees are calculated and displayed to customers. BaseExchangeRate vs ExchangeRate explained. BO Transactions view for fee verification. |
+| [Withdrawal fees and conversion fees](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/11699453953) | Confluence | Fee structure: 50 PIPs vs 150 PIPs by currency. Global fee change Sep 2023. |
+| [03.07.2024 - Wrong PIPs incident](https://etoro-jira.atlassian.net/wiki/spaces/NOC/pages/12502532097) | Confluence | Production incident where wrong PIPs were charged for CC and eToro Money deposits. Explains PIPs validation process. |
+| [DepositAlert: Overview](https://etoro-jira.atlassian.net/wiki/spaces/MG/pages/14081032227) | Confluence | Alert system monitoring deposit PIP mismatches, wrong fee deductions, and exchange rate overrides. |
 
 ---
 
-*Generated: 2026-03-18 | Quality: 6.2/10 (★★★☆☆) | Phases: 11/14*
-*Tiers: 0 T1, 12 T2, 8 T3, 15 T4 [UNVERIFIED], 0 T5 | Elements: 7/10, Logic: 6/10, Relationships: 5/10, Sources: 6/10*
-*Object: DWH_dbo.Fact_Deposit_Fees | Type: Table | Production Source: BackOffice.BillingDepositsPCIVersion (SP) - pipeline stopped 2024-07-01*
+*Generated: 2026-03-19 | Quality: 7.4/10 (★★★★☆) | Phases: 13/14*
+*Tiers: 0 T1, 12 T2, 8 T3, 6 T4-Atlassian, 5 T4 [UNVERIFIED], 0 T5 | Elements: 8.9/10, Logic: 7/10, Relationships: 5/10, Sources: 7/10*
+*Object: DWH_dbo.Fact_Deposit_Fees | Type: Table | Production Source: BackOffice.BillingDepositsPCIVersion (SP) — pipeline stopped 2024-07-01*

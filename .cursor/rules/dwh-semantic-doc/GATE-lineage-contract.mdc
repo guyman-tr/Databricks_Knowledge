@@ -1,0 +1,96 @@
+---
+description: "GATE — Lineage-First Contract. Column lineage file MUST exist BEFORE Phase 11 generates docs. Restructures execution order so tier assignment is data-driven, not guesswork."
+globs:
+alwaysApply: true
+---
+
+# ⛔ Lineage-First Contract
+
+> The lineage file already traces every column to its source. Phase 11 was ignoring it
+> because it ran BEFORE the lineage was produced. This rule fixes the execution order.
+
+## Problem This Solves
+
+Phase 9 reads the SP code and discovers `PnLInDollars` comes from
+`etoro_Trade_OpenPositionEndOfDay` (→ `Trade.OpenPositionEndOfDay`). Phase 13 writes
+this into the `.lineage.md` file. But Phase 11 generates the wiki doc BEFORE
+Phase 13 runs — so it guesses the tier instead of reading the lineage.
+
+Result: correct lineage exists in the `.lineage.md` file, but the wiki doc says Tier 2
+for columns that should be Tier 1.
+
+## New Execution Order
+
+```
+OLD: ... → 9 → 9B → 10 → 10.5 → 11 (docs) → 13 (lineage) → 12
+NEW: ... → 9 → 9B → 10 → 10.5 → 13 (lineage) → 11 (docs) → 12
+```
+
+**Phase 13 (Column Lineage) moves BEFORE Phase 11 (Generate Documentation).**
+
+Phase 13's prerequisites (Phase 9 source-to-target map, Phase 10.5 upstream wiki) are
+all complete before it runs. The only change is that it now runs before Phase 11 instead
+of after.
+
+## The Contract
+
+### Phase 9 → Phase 13: Source-to-Target Map
+
+Phase 9 Step 4 produces a source-to-target mapping for every column:
+```
+{TargetColumn} <- {SourceSchema}.{SourceTable}.{SourceColumn} [{transform}]
+```
+
+Phase 13 consumes this to build the `.lineage.md` column lineage table.
+
+### Phase 13 → Phase 11: The Lineage File Is Input
+
+Phase 11 MUST read the `.lineage.md` file BEFORE generating the wiki doc.
+From the lineage file's column mapping:
+
+```
+| DWH Column | Source Table | Source Column | Transform | Notes |
+```
+
+Phase 11 derives tier assignments MECHANICALLY:
+
+| Transform in lineage | Upstream wiki exists? | → Tier |
+|----------------------|----------------------|--------|
+| passthrough | YES | Tier 1 — verbatim description |
+| rename | YES | Tier 1 — verbatim from source column |
+| cast/convert | YES | Tier 1 — verbatim + "DWH note: {cast}" |
+| SP-adjusted | YES | Tier 1 — verbatim + "DWH note: {adjustment}" |
+| passthrough | NO | Tier 2 — from SP code |
+| ETL-computed | any | Tier 2 — from SP code |
+| join-enriched | YES for join source | Tier 1 — from join source wiki |
+| join-enriched | NO | Tier 2 — from SP code |
+
+### Phase 11 Gate: Lineage File Must Exist
+
+**Before Phase 11 writes the wiki file:**
+
+```
+CHECK: Does {ObjectName}.lineage.md exist?
+  YES → Read it. Use the column lineage table for tier assignment.
+  NO  → STOP. Run Phase 13 first.
+```
+
+If the lineage file has fewer columns than the DDL, Phase 9 didn't complete properly.
+Go back and re-run Phase 9.
+
+## What This Means For The Agent
+
+1. **Don't guess where columns come from.** Read the SP code (Phase 9). Follow the
+   column assignments. The SP tells you exactly which staging table each column
+   comes from. The staging table name tells you the production source.
+
+2. **Don't stop at the primary table.** The SP might pull from `etoro_Trade_PositionTbl`
+   (→ Trade.PositionTbl) AND `etoro_Trade_OpenPositionEndOfDay`
+   (→ Trade.OpenPositionEndOfDay). Each staging table is a separate source with its own
+   upstream wiki.
+
+3. **Produce the lineage file BEFORE the wiki doc.** Write `.lineage.md` first.
+   Then read it back. Then write the wiki doc using the lineage data.
+
+4. **Tier assignment is deterministic.** Given the lineage source + upstream wiki
+   availability, the tier is a lookup — not a judgment call.

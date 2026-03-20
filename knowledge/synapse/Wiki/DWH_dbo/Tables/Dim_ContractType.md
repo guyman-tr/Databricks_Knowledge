@@ -209,10 +209,15 @@ ORDER BY AffiliateCount DESC;
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object. (Phase 10 skipped - Atlassian MCP unavailable this session.)
+| Source | Type | Relevance |
+|--------|------|-----------|
+| [Affiliates - System Document](https://etoro-jira.atlassian.net/wiki/spaces/XP/pages/11497250033/Affiliates+-+System+Document) | Confluence | CPA vs FTD, eligibility, commission types in affiliate flows |
+| [Affiliate commission services (RevShare)](https://etoro-jira.atlassian.net/wiki/spaces/CI/pages/11257972276/Affiliate+commission+services+RevShare) | Confluence | RevShare / affiliate-commission service context |
+| [Affiliate - Data migration](https://etoro-jira.atlassian.net/wiki/spaces/XP/pages/11643322541/Affiliate+-Data+migration) | Confluence | CPA, RevShare, and commission migration scope |
+| [Affiliate Program - eToro Partners](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/1137312260/Affiliate+Program+-+eToro+Partners) | Confluence | Partner commission plans and CPA negotiation context |
 
 ---
 
-*Generated: 2026-03-18 | Quality: 6.4/10 (★★★☆☆) | Phases: 11/14*
-*Tiers: 0 T1, 2 T2, 2 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 7/10, Logic: 5/10, Relationships: 5/10, Sources: 6/10*
+*Generated: 2026-03-18 | Quality: 6.8/10 (★★★☆☆) | Phases: 13/14*
+*Tiers: 0 T1, 2 T2, 2 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 7/10, Logic: 5/10, Relationships: 5/10, Sources: 9/10*
 *Object: DWH_dbo.Dim_ContractType | Type: Table | Production Source: Legacy DWH SQL Server (DWH-internal, no etoro.Dictionary equivalent)*

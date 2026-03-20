@@ -55,32 +55,58 @@ PHASE GATE CHECK — {ObjectName}:
 The numeric phase labels are identifiers, NOT execution order. The correct execution order is:
 
 ```
-1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 9B → 10 → 10.5 → 11 → 13 → 12
+1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 9B → 10 → 10.5 → 13 → 11 → 12
 ```
 
-- **Phase 10.5 (Upstream Wiki Bridge)**: Generic Pipeline lookup → governance metadata → upstream wiki read. These FEED Phase 11 with Tier 1 column descriptions. Defined in `13-production-lineage-mapping.mdc` Steps 1/1b/1c/3.
-- **Phase 13 (Column Lineage)**: ETL code sources → lineage chain → column lineage → lost/added columns. Produces the `.lineage.md` file. Defined in `13-production-lineage-mapping.mdc` Steps 2/4/5/6.
+- **Phase 10.5 (Upstream Wiki Bridge)**: Generic Pipeline lookup → governance metadata → upstream wiki read. Defined in `13-production-lineage-mapping.mdc` Steps 1/1b/1c/3.
+- **Phase 13 (Column Lineage)**: ETL code sources → lineage chain → column lineage → lost/added columns. Produces the `.lineage.md` file. **NOW RUNS BEFORE Phase 11** so the wiki doc can use the lineage data for tier assignment. Defined in `13-production-lineage-mapping.mdc` Steps 2/4/5/6.
 
 Phase 12 Mechanism 1 ("Pre-Read") is embedded in Phase 11's pre-read step below. Phase 12 Mechanism 2 ("Batch Enrichment Pass") runs after all objects in a batch are documented.
 
-ALL applicable phases must be complete before generating.
+ALL applicable phases must be complete before generating. **Phase 13 lineage file MUST exist before Phase 11 starts.**
 
-## Pre-Read: Upstream Wiki (Tier 1 Source) — MANDATORY
+## Pre-Read: Lineage File (Column Sources) — MANDATORY
 
-Phase 10.5 identifies the production source table via the Generic Pipeline mapping. Before generating, **read the upstream production wiki** for that source table:
+**The `.lineage.md` file is produced by Phase 13 BEFORE Phase 11 runs.** This file contains the column-level source mapping from Phase 9's SP code analysis. Phase 11 READS it to determine tier assignments.
 
-1. From Phase 10.5 results, get: `database_name`, `schema_name`, `table_name` (the production source)
-2. Build the upstream wiki path: `C:\Users\guyman\Documents\github\DB_Schema\etoro\Wiki\{schema_name}\Tables\{schema_name}.{table_name}.md`
+1. **Read the lineage file**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md`
+2. Parse the `## Column Lineage` table: `| DWH Column | Source Table | Source Column | Transform |`
+3. For each column, the source table tells you WHERE it comes from
+4. Use the source table to find the upstream wiki (see next section)
+5. **Tier assignment is MECHANICAL** based on the lineage + upstream wiki:
+
+| Lineage Transform | Upstream Wiki? | → Tier Assignment |
+|-------------------|----------------|-------------------|
+| passthrough/rename | Wiki exists | Tier 1 — copy description verbatim from upstream wiki |
+| cast/convert | Wiki exists | Tier 1 — verbatim + "DWH note: {cast}" |
+| SP-adjusted | Wiki exists | Tier 1 — verbatim + "DWH note: {adjustment}" |
+| passthrough/rename | No wiki | Tier 2 — from SP code |
+| ETL-computed | Any | Tier 2 — from SP code |
+| join-enriched | Join source has wiki | Tier 1 — from join source wiki |
+| join-enriched | No wiki | Tier 2 — from SP code |
+
+**If the lineage file does not exist, STOP. Run Phase 13 first.**
+
+> See `GATE-lineage-contract.mdc` for the full contract between Phase 13 and Phase 11.
+
+## Pre-Read: Upstream Wiki (Tier 1 Descriptions) — MANDATORY
+
+The lineage file tells you the source tables. Now read the upstream wikis for those sources:
+
+1. From the lineage file's column mapping, collect ALL unique source tables
+2. For EACH source table, build the upstream wiki path:
+   - `DB_Schema\etoro\Wiki\{schema_name}\Tables\{schema_name}.{table_name}.md`
    - Also check: `DB_Schema\etoro\Wiki\{schema_name}\Views\{schema_name}.{table_name}.md`
-3. **Read the upstream wiki file**. Extract the `## 4. Elements` table.
-4. For EVERY DWH column that matches an upstream wiki column by name:
+3. **Read each upstream wiki file**. Extract the `## 4. Elements` table.
+4. For EVERY DWH column that maps to an upstream wiki column (per the lineage file):
    - Copy the upstream description **VERBATIM** as Tier 1
-   - Tag it `(Tier 1 — upstream wiki, {schema_name}.{table_name})`
+   - Tag it `(Tier 1 — {schema_name}.{table_name})`
    - Do NOT paraphrase, summarize, or rewrite
-   - Only APPEND DWH-specific notes prefixed with "DWH note:" if the DWH transforms that column
-5. If no upstream wiki exists for the mapped source, note it and fall through to Tier 2-4
+   - Only APPEND DWH-specific notes prefixed with "DWH note:" if the lineage shows a transform
+5. If no upstream wiki exists for a source table, fall through to Tier 2
 
-> **This is the #1 quality driver.** Without this step, every column defaults to Tier 3-4 inference and the documentation is unreliable. Phase 10.5 MUST have run before this step.
+> **This is the #1 quality driver.** Without it, every column defaults to Tier 2-4.
+> Also read: `10.5b-tier1-enforcement.mdc` for the exhaustive search protocol and examples.
 
 ## Pre-Read: Cross-Object Knowledge
 

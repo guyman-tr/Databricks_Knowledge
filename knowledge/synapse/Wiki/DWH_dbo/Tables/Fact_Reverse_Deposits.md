@@ -167,8 +167,8 @@ Other, Funds not received, Incorrect Currency, CO Logic, etc.
 | 13 | RollbackAmount | decimal(38,18) | YES | Rollback amount in original deposit currency. (Tier 2 - SP passthrough) |
 | 14 | RollbackUSDAmount | decimal(38,18) | YES | Rollback amount converted to USD at rollback-time exchange rate. (Tier 2 - SP passthrough) |
 | 15 | RollbackReason | nvarchar(max) | YES | Business reason for rollback. 30 distinct values; Fraud=86%. Full list: Fraud, Successful Dispute, Wrong Deposit ID/Amount, Technical/Service/Complaint, Fake Docs, Rollback Adjustment, Attack, Processor Reimbursement, and 22 others. (Tier 3 - live data distribution) |
-| 16 | RollbackCanceled | nvarchar(max) | YES | Non-NULL if rollback was subsequently cancelled (deposit reinstated). (Tier 4 - inferred) |
-| 17 | ReferenceNumber | nvarchar(max) | YES | External reference number for chargeback/refund tracking with processor or card scheme. (Tier 4 - inferred) |
+| 16 | RollbackCanceled | nvarchar(max) | YES | Non-NULL if rollback was subsequently cancelled (deposit reinstated). Ops procedures register Chargeback Reversal / Refund Reversal on top of an existing charged-back line in Back Office. (Tier 4 — Confluence, WorldPay Disputes) |
+| 17 | ReferenceNumber | nvarchar(max) | YES | External reference for chargeback/refund reconciliation — e.g. reference from processor chargeback reports (PP CHB column A) when registering rollback in BO. (Tier 4 — Confluence, PayPal Chargebacks) |
 
 **Amount Columns:**
 
@@ -178,7 +178,7 @@ Other, Funds not received, Incorrect Currency, CO Logic, etc.
 | 19 | DepositUSDAmount | decimal(38,18) | YES | Original deposit amount in USD at deposit-time rate. Enables USD-normalized analysis. (Tier 2 - SP passthrough) |
 | 20 | Currency | nvarchar(max) | YES | Customer's deposit currency. (Tier 2 - SP passthrough) |
 | 21 | ExchangeRate | decimal(38,18) | YES | Exchange rate applied at rollback time. (Tier 2 - SP passthrough) |
-| 22 | ConversionFee | decimal(38,18) | YES | Fee for currency conversion applied during rollback. (Tier 4 - inferred) |
+| 22 | ConversionFee | decimal(38,18) | YES | Fee for currency conversion on deposit/withdrawal flows; internal docs describe conversion fees in PIPs or percentages depending on method and region. (Tier 4 — Confluence, Conversion Fee) |
 | 23 | PIPsInUSD | decimal(38,18) | YES | USD value of PIPs fee associated with this deposit. (Tier 2 - SP passthrough) |
 
 **Customer Risk Snapshot (at rollback time):**
@@ -311,10 +311,15 @@ ORDER BY DepositStatusModificationTime DESC;
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object. (Phase 10 skipped - Atlassian MCP unavailable this session.)
+| Source | Type | Relevance |
+|--------|------|-----------|
+| [Checkout Disputes & Chargebacks](https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/13939277907/Checkout+Disputes+Chargebacks) | Confluence | Back Office “Rollback Deposit” workflow; Chargeback vs Chargeback Reversal registration. |
+| [PayPal Chargebacks](https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/898171516/PayPal+Chargebacks) | Confluence | Deposit line rollback, chargeback amount, rollback date, **reference number** from processor report. |
+| [WorldPay Disputes](https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/900563376/WorldPay+Disputes) | Confluence | Representment upload; BO rollback as “Chargeback Reversal” or “Refund Reversal” on charged-back transaction. |
+| [Conversion Fee](https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/1137344864/Conversion+Fee) | Confluence | Context for conversion fee semantics (PIPs vs % by method/region). |
 
 ---
 
-*Generated: 2026-03-18 | Quality: 6.5/10 (★★★☆☆) | Phases: 11/14*
-*Tiers: 0 T1, 18 T2, 3 T3, 7 T4 [UNVERIFIED], 0 T5 | Elements: 7/10, Logic: 7/10, Relationships: 5/10, Sources: 6/10*
+*Generated: 2026-03-18 | Quality: 7.0/10 (★★★☆☆) | Phases: 11/14*
+*Tiers: 0 T1, 18 T2, 3 T3, 11 T4 (3 Confluence, 5 UNVERIFIED, 3 inferred), 0 T5 | Elements: 7/10, Logic: 7/10, Relationships: 5/10, Sources: 8/10*
 *Object: DWH_dbo.Fact_Reverse_Deposits | Type: Table | Production Source: BackOffice.GetRiskExposureReportPCIVersion (SP) - pipeline stopped 2024-06-29*

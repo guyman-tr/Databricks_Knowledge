@@ -20,12 +20,12 @@ alwaysApply: false
  6  Business Logic     Column groups, hierarchies, flags              06-business-logic    SOFT
  7  View Deps          Which views reference this table?              07-view-dependency   SOFT
  8  SP Scan            Find writer/reader SPs (consume P2 results!)   08-procedure-scan    HARD
- 9  SP Logic           Read top SPs deeply → source-to-target map     09-procedure-logic   SOFT
+ 9  SP Logic           Read top SPs deeply → source-to-target map     09-procedure-logic   HARD ← feeds lineage
  9B ETL Orchestration  Refresh schedule, dependencies                 09b-etl-orch         SOFT
 10  Atlassian          Search Jira/Confluence for business context     10-atlassian         SOFT
 10.5 Upstream Wiki     Generic Pipeline → production source → read    13-prod-lineage §1-3 HARD*
-11  Generate Doc       Write .md + .review-needed.md                  11-generate-doc      HARD
-13  Column Lineage     Write .lineage.md (post-doc)                   13-prod-lineage §2-6 SOFT
+13  Column Lineage     Write .lineage.md (BEFORE doc!)                13-prod-lineage §2-6 HARD ← new position
+11  Generate Doc       Read .lineage.md → write .md + .review-needed  11-generate-doc      HARD
 12  Cross-Enrich       Pre-Read is embedded in P11; batch pass later  12-cross-enrich      —
 ```
 
@@ -67,3 +67,6 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
 
 - **⛔ ONE BATCH PER SESSION**: After end-of-batch banner → STOP. Do NOT start the next batch. New session required.
 - **⛔ TIER SUFFIX ON EVERY DESCRIPTION (Rule 19)**: Every column description MUST end with `(Tier N — source.table)`. This suffix is written verbatim to Unity Catalog by Phase 11W. No exceptions.
+- **⛔ LINEAGE BEFORE DOCS**: Write `.lineage.md` BEFORE `.md`. Phase 11 READS the lineage file to assign tiers. See `GATE-lineage-contract.mdc`.
+- **⛔ TWO VALIDATIONS**: After each wiki doc, run BOTH `validate-wiki.ps1` (structural) AND `validate-tier1-coverage.ps1` (semantic). Both must pass before proceeding.
+- **⛔ PHASE 9 IS HARD**: Read the SP code. Trace column assignments to source tables. The SP tells you WHERE each column comes from — you don't need to guess. If Phase 9 is skipped, Phase 13 lineage will be wrong, Phase 11 tiers will be wrong, and the semantic validation will fail.
