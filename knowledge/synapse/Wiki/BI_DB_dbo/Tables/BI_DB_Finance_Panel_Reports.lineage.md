@@ -1,0 +1,70 @@
+# Column Lineage -- BI_DB_dbo.BI_DB_Finance_Panel_Reports
+
+**Writer SP**: `BI_DB_dbo.SP_Finance_Panel_Reports` @Date  
+**OpsDB**: Priority 99 -- FinanceReportSPS, Daily  
+**ETL pattern**: `#Prices` -- `#IsSettled_OnOpen` -- `#Open_Positions_Phase` / `#Close_Positions_Phase` / `#IsSettled_Changes*` / `#Change_Positions_Phase` -- `DELETE` by `DateID` -- `INSERT` (three `UNION ALL` branches, each filtered `Is_Stamp_Duty = 1 OR Is_MP = 1`)
+
+---
+
+## Source tables
+
+| Source | Alias / stage | Role |
+|--------|----------------|------|
+| DWH_dbo.Fact_CurrencyPriceWithSplit | `#Prices` | Ask for instruments 1, 2, 666 on `@DateID` for GBP/EUR conversion |
+| DWH_dbo.Dim_Instrument | `di` | Instrument metadata, ISIN, sell currency, type 5/6 filter, GB/GI filter |
+| DWH_dbo.Fact_CustomerAction | `fca` | `IsSettled_OnOpen` for open-day actions (types 1–3); join on change path |
+| DWH_dbo.Dim_Position | `dp` | Open/close dates, amounts, units, leverage, mirror, hedge server, regulation-on-open |
+| DWH_dbo.Fact_SnapshotCustomer | `fsc` | Valid CB flag, regulation-on-close, date range |
+| DWH_dbo.Dim_Range | `ddr` | Customer snapshot active on `@DateID` |
+| DWH_dbo.Dim_Regulation | `dr` | Regulation names |
+| DWH_dbo.Dim_PositionChangeLog | `cl` | Same-day `ChangeTypeID = 13` settlement flips (leverage 1) |
+| BI_DB_dbo.BI_DB_Finance_Panel_Reports | `pr` (subquery) | Dedupes stamp duty on change rows vs prior `Open_Position` |
+
+---
+
+## Column-level lineage
+
+| BI_DB_Finance_Panel_Reports column | Primary source | Source column / object | Transform |
+|------------------------------------|----------------|-------------------------|-----------|
+| Position_Phase | literals | Open_Position / Close_Position | `'Open_Position'` or `'Close_Position'` per branch |
+| DateID | Dim_Position / ChangeLog | OpenDateID, CloseDateID, ChangedDateID | Phase-specific date id |
+| EOW | Dim_Position / ChangeLog | OpenOccurred, CloseOccurred, ChangedOccurred | Week-ending from `DATEPART`/`DATEADD` |
+| EOM | same occurred | OpenOccurred, CloseOccurred, ChangedOccurred | `EOMONTH` to date |
+| HedgeServerID | Dim_Position | HedgeServerID | Passthrough |
+| ISINCountryCode | Dim_Instrument | ISINCode | Parse 2/3 char prefix; `'-'` if invalid length |
+| InstrumentTypeID | Dim_Instrument | InstrumentTypeID | Filtered to 5,6 |
+| InstrumentTypeName | Dim_Instrument | InstrumentType | Passthrough |
+| InstrumentID | Dim_Instrument | InstrumentID | Passthrough |
+| InstrumentName | Dim_Instrument | Name | Passthrough |
+| CID | Dim_Position / ChangeLog | CID | Passthrough |
+| PositionID | Dim_Position / ChangeLog | PositionID | Passthrough |
+| IsSettled_OnOpen | Fact_CustomerAction | IsSettled | Join on open `DateID`; `-1` if N/A |
+| IsSettled_OnClose | Dim_Position | IsSettled | Close rows; `-1` if N/A |
+| Leverage | Dim_Position | Leverage | Passthrough; change path may use FCA leverage |
+| SellCurrencyID | Dim_Instrument | SellCurrencyID | Passthrough |
+| SellCurrency | Dim_Instrument | SellCurrency | Passthrough |
+| Amount_OnOpen_USD | Dim_Position / ChangeLog | InitialAmountCents, NewAmount | `InitialAmountCents/100` or change `NewAmount` |
+| Amount_OnOpen_GBP | #Prices + SellCurrencyID | Ask (instr 2) | USD / ask when `SellCurrencyID` in (666,3) |
+| Amount_OnOpen_EUR | #Prices + SellCurrencyID | Ask (instr 1) | USD / ask when `SellCurrencyID` = 2 |
+| Notional_Value | Dim_Position | AmountInUnitsDecimal, InitForexRate, EndForexRate | Open: units/init rate; close: units×end rate; change: USD×leverage |
+| Amount_OnClose_USD | Dim_Position | Amount | Close rows only |
+| Amount_OnClose_GBP | Dim_Position + #Prices | Amount, Ask (2) | Same routing as open GBP |
+| Amount_OnClose_EUR | Dim_Position + #Prices | Amount, Ask (1) | Same routing as open EUR |
+| RegulationID_OnOpen | Dim_Position / FSC | RegulationIDOnOpen, RegulationID | Open/change vs close |
+| RegulationName_OnOpen | Dim_Regulation | Name | Join to open regulation |
+| RegulationID_OnClose | Fact_SnapshotCustomer | RegulationID | Close rows |
+| RegulationName_OnClose | Dim_Regulation | Name | Join to close regulation |
+| Is_Copy | Dim_Position | MirrorID | `1` if `MirrorID <> 0` |
+| Position_Quantity | literal | 1 | Constant |
+| Is_Stamp_Duty | multiple | IsSettled, InstrumentTypeID, Prior rows | Settlement + type 5/6; change path adds guards vs `BI_DB_Finance_Panel_Reports` |
+| Is_MP | Dim_Position | MirrorID | `1` when mirror null/0 |
+| UpdateDate | n/a | GETDATE() | Set at INSERT |
+| DateOccurred | Dim_Position / ChangeLog | OpenOccurred, CloseOccurred, ChangedOccurred | Cast to date |
+| ISINCode | Dim_Instrument | ISINCode | Passthrough |
+| Units_OnOpen | Dim_Position / Change path | InitialUnits, AmountInUnits | Open/change vs 0 on close |
+| Units_OnClose | Dim_Position | AmountInUnitsDecimal | Close vs 0 on open/change |
+| Total_Stamp_Duty | Dim_Position | HedgeServerID, InitialAmountCents, Amount | `0.005` × base × (3 or 2) for servers 126/125 |
+
+---
+
+*Generated by DWH Semantic Documentation Pipeline -- Batch 5*

@@ -73,7 +73,7 @@ ALL applicable phases must be complete before generating. **Phase 13 lineage fil
 2. Parse the `## Column Lineage` table: `| DWH Column | Source Table | Source Column | Transform |`
 3. For each column, the source table tells you WHERE it comes from
 4. Use the source table to find the upstream wiki (see next section)
-5. **Tier assignment is MECHANICAL** based on the lineage + upstream wiki:
+5. **Tier assignment is MECHANICAL** based on the lineage + upstream wiki (see `GATE-lineage-contract.mdc` for tier transitivity rules):
 
 | Lineage Transform | Upstream Wiki? | → Tier Assignment |
 |-------------------|----------------|-------------------|
@@ -99,14 +99,90 @@ The lineage file tells you the source tables. Now read the upstream wikis for th
    - Also check: `DB_Schema\etoro\Wiki\{schema_name}\Views\{schema_name}.{table_name}.md`
 3. **Read each upstream wiki file**. Extract the `## 4. Elements` table.
 4. For EVERY DWH column that maps to an upstream wiki column (per the lineage file):
-   - Copy the upstream description **VERBATIM** as Tier 1
-   - Tag it `(Tier 1 — {schema_name}.{table_name})`
+   - Copy the upstream description **VERBATIM**
+   - **INHERIT the origin tier tag** from the upstream description. Parse the `(Tier N — {origin})` suffix from the upstream column. That origin traces through ALL relay layers unchanged. Example: if Dim_Position says `Commission ... (Tier 1 — Trade.PositionTbl)`, BI_DB's passthrough says `(Tier 1 — Trade.PositionTbl)` — NOT `(Tier 1 — DWH_dbo.Dim_Position)`. The relay is invisible.
+   - If the upstream column has no parseable tier tag, use the upstream table as origin: `(Tier 1 — {upstream_schema}.{upstream_table})`
+   - If the upstream column is itself Tier 2 (ETL-computed), the passthrough inherits Tier 2 — tiers don't upgrade by passing through a relay
    - Do NOT paraphrase, summarize, or rewrite
-   - Only APPEND DWH-specific notes prefixed with "DWH note:" if the lineage shows a transform
+   - Only APPEND schema-specific transform notes (e.g., "BI_DB transform: {what changed}") if the lineage shows a transform. Keep the origin tier tag.
 5. If no upstream wiki exists for a source table, fall through to Tier 2
 
 > **This is the #1 quality driver.** Without it, every column defaults to Tier 2-4.
 > Also read: `10.5b-tier1-enforcement.mdc` for the exhaustive search protocol and examples.
+
+## Pre-Read: Computation Formulas (Tier 2 Columns) — MANDATORY
+
+**This step runs BEFORE writing Section 4.** It builds a formula lookup table so that description writing is mechanical — not a per-column grep-and-hope exercise.
+
+### Why This Exists
+
+A 174-column table with 167 Tier 2 columns means 167 descriptions need computation formulas (Rule 20). Writing descriptions first and catching vague phrases in post-write validation (B6 check 7) means going back to the SP 100+ times to fix. That's unacceptable. Extract ALL formulas in one concentrated pass, then write mechanically.
+
+### Algorithm
+
+1. **Read the lineage file** (already done in the previous pre-read). Collect ALL columns where Transform = `ETL-computed` or the column requires a formula (aggregations, CASE flags, filtered SUMs). These are the Tier 2 columns that need formulas.
+
+2. **One-pass SP scan**: Open the writer SP file from the SSDT repo (identified in Phase 8/9). For EACH Tier 2 column from the lineage file:
+   - Grep the SP file for the column name
+   - Read the surrounding context (the INSERT/SELECT block, the CASE expression, or the aggregation)
+   - Extract: the exact `ActionTypeID`, `CompensationReasonID`, `MoneyMovementReasonID`, `FeeTypeID`, `InstrumentTypeID`, `IsSettled`, `SettlementTypeID`, or other filter values
+   - For CASE/IIF flags: extract the exact condition
+   - For day-over-day deltas: extract the source column names for today and yesterday
+   - For function calls: read the function from SSDT (one-time per function, not per column)
+
+3. **Build the formula lookup** — an in-memory table (or scratch notes):
+
+   ```
+   FORMULA LOOKUP — {ObjectName}:
+   | Column | Formula |
+   |--------|---------|
+   | CompensationPI | SUM(Amount) WHERE ActionTypeID=36 AND CompensationReasonID IN (23,42,51) |
+   | Deposits | SUM(Amount) WHERE ActionTypeID=7, MMRID NOT IN (18,19,37,38,47,48) |
+   | IsDLTUser | CASE WHEN DltStatusID=4 THEN 1 ELSE 0 |
+   | ClosingBalance | Direct: V_Liabilities.ClosingBalance |
+   | UnrealizedPnLChangeCryptoReal | today.UnrealizedPnLCryptoReal - yesterday.UnrealizedPnLCryptoReal |
+   ```
+
+4. **Validate the lookup**: Every Tier 2 column from the lineage file MUST have a formula entry. If any are missing, grep the SP again for those specific columns before proceeding. Do NOT proceed to Section 4 writing with gaps.
+
+### ⛔ Alias-Level Source Attribution (Multi-Table JOINs)
+
+When the SP's INSERT/SELECT draws from a multi-table JOIN, the source of each column is determined by its **table alias in the SELECT list** — not by the JOIN clause.
+
+**Failure mode this prevents (JOIN clause bleeding)**: The LLM reads:
+```sql
+SELECT dc.FirstDepositDate, D.FundingTypeID
+FROM Dim_Customer dc
+LEFT JOIN Fact_BillingDeposit D ON dc.FTDTransactionID = CAST(D.DepositID AS NVARCHAR(4000)) AND D.IsFTD=1
+```
+...and writes "`FirstDepositDate` — from Dim_Customer.FirstDepositDate via Fact_BillingDeposit WHERE IsFTD=1." This is **wrong**. The JOIN to `Fact_BillingDeposit` serves `D.FundingTypeID`, not `dc.FirstDepositDate`. The LLM conflated the proximity of the JOIN condition with the column's source.
+
+**Rule**: For each column in the formula lookup:
+1. Read the SELECT expression alias prefix (e.g., `dc.FirstDepositDate` → alias `dc`)
+2. Resolve the alias to the FROM/JOIN table (`dc` = `Dim_Customer`)
+3. That table is the source — **ignore all JOIN conditions on other aliases**
+4. A column is "join-enriched" or "via" another table ONLY when the SELECT alias resolves to that JOINed table
+5. Never describe a column as coming "via" a JOINed table unless the SELECT expression references that JOINed alias for that specific column
+
+**In the formula lookup**:
+```
+CORRECT:  FirstDepositDate  | Direct: Dim_Customer.FirstDepositDate
+CORRECT:  FundingType       | From Dim_FundingType.Name via Fact_BillingDeposit.FundingTypeID (join-enriched)
+WRONG:    FirstDepositDate  | From Dim_Customer.FirstDepositDate via Fact_BillingDeposit WHERE IsFTD=1
+```
+
+### Efficiency Note
+
+For large SPs (5,000+ lines), the SP often has a single INSERT...SELECT block with all column assignments. Read that block ONCE and extract all formulas in one pass — don't grep column-by-column. For SPs that use temp tables and multi-step aggregation (like SP_Client_Balance_New with its #CIDAgg pattern), identify the final INSERT...SELECT and the key aggregation CTEs/temp tables, then read those sections.
+
+### Output
+
+The formula lookup is consumed by Section 4 writing. Each Tier 2 description is assembled mechanically:
+```
+{business meaning}. {formula from lookup}. {additional context if any}. (Tier 2 — {source SP})
+```
+
+The formula lookup is NOT written to a file — it's an intermediate artifact used within Phase 11's execution. The formulas live in the element descriptions in the wiki file.
 
 ## Pre-Read: Cross-Object Knowledge
 
@@ -172,7 +248,65 @@ Only Tier 4-Inferred descriptions carry the `[UNVERIFIED]` prefix. Tier 4-Atlass
     - `Financial instrument display name. DWH note: truncated to varchar(50). (Tier 1 — Trade.Instrument)`
     - `Country name from IP2Location GeoIP database. (Tier 5 — domain expert, Dictionary.Country)`
     
-    The suffix MUST include: (a) the tier number, (b) the tier label (upstream wiki / SP code / inferred / domain expert), and (c) the **source object** — the production table, SP, or upstream wiki that the description was derived from. A separate Confidence column in the Elements table is permitted but does NOT substitute for the suffix in the description text. **Validation**: Phase 11's post-write gate (Rule B6, check 4) MUST verify every description ends with `(Tier`.
+    The suffix MUST include: (a) the tier number, (b) the tier label (upstream wiki / SP code / inferred / domain expert), and (c) the **ORIGIN source object** — the production table, SP, or upstream wiki that the description was ORIGINALLY derived from. **Tier tags are transitive**: if DWH_dbo.Dim_Position says `(Tier 1 — Trade.PositionTbl)` and BI_DB passes the column through, BI_DB says `(Tier 1 — Trade.PositionTbl)` — the relay is invisible. Only transformations earn an annotation; the origin never changes. See `GATE-lineage-contract.mdc` for the full transitivity rule. A separate Confidence column in the Elements table is permitted but does NOT substitute for the suffix in the description text. **Validation**: Phase 11's post-write gate (Rule B6, check 4) MUST verify every description ends with `(Tier`.
+20. **⛔ COMPUTATION FORMULA ON TIER 2 COLUMNS — HARD ENFORCED** -- For every Tier 2 column derived from SP code, the description MUST include a **concise computation formula** showing HOW the sausage is made. This is the core value of a semantic layer — analysts need to know not just WHAT a metric means but HOW it is computed. The formula should be compact but complete enough that an analyst could reconstruct the query logic.
+
+    **What to include by column type:**
+
+    | Column Source Pattern | Formula Format |
+    |-----------------------|----------------|
+    | `SUM/COUNT/AVG(Amount)` with filters | `SUM(Amount) from Fact_CustomerAction WHERE ActionTypeID=N AND {filter}` |
+    | CASE/IIF-derived flags | `CASE WHEN {condition} THEN 1 ELSE 0` or the actual branching logic |
+    | Compensation subsets (ActionTypeID=36) | `ActionTypeID=36, CompensationReasonID IN (N,M,...)` — list the ACTUAL IDs |
+    | Snapshot columns from FSE/V_Liabilities | `From {SourceView}.{ColumnName}` (already done for some — keep doing it) |
+    | Hardcoded values / specific CID lists | Show the actual values: `CID IN (2244852, 2283663, ...)` |
+    | Join-enriched lookups | `From {DimTable}.{Column} via {JoinColumn}` |
+    | Day-over-day deltas | `today.{X} - yesterday.{X}` (name the source column) |
+    | Function-computed | `Function_{Name}({params})` with a 1-line summary of the function's core logic |
+    | Filtered aggregations by InstrumentType/Settlement | `WHERE IsSettled=1 AND InstrumentTypeID IN (5,6)` — list actual filter values |
+
+    **Examples (GOOD vs BAD):**
+
+    BAD: `"Compensation amounts classified as Performance Incentive (PI). Subset of compensation with PI-specific reason IDs."`
+    GOOD: `"PI compensation. SUM(Amount) from Fact_CustomerAction WHERE ActionTypeID=36 AND CompensationReasonID IN (23,42,51). Performance Incentive payouts to popular investors."`
+
+    BAD: `"Total deposits made by the customer on this date."`
+    GOOD: `"Total deposits. SUM(Amount) from Fact_CustomerAction WHERE ActionTypeID=7, MoneyMovementReasonID NOT IN (internal transfer reasons). Excludes InternalTransferDeposits."`
+
+    BAD: `"Net commission for real stock positions."`
+    GOOD: `"Net commission for real stocks. SUM(Commission) from Fact_CustomerAction WHERE ActionTypeID IN (22,23) AND IsSettled=1 AND InstrumentTypeID IN (5,6). Client's commission share after eToro markup."`
+
+    BAD: `"Day-over-day change in unrealized PnL for real crypto positions."`
+    GOOD: `"Delta in unrealized PnL for real crypto. today.UnrealizedPnLCryptoReal - yesterday.UnrealizedPnLCryptoReal from Fact_CustomerUnrealized_PnL."`
+
+    **Conciseness rule**: The formula should be SHORT — not a full SQL query. Use `SUM(Amount) WHERE ActionTypeID=36 AND ReasonID IN (...)` not a 10-line SELECT statement. The goal is an analyst reading this can immediately understand the filter criteria without reading the 9,500-line SP.
+
+    **Phase 9 is the source**: The computation formulas come from Phase 9's column assignment extraction (Step 2/3/4). Phase 9 MUST capture the specific filter IDs, CASE branches, and aggregation expressions for each column. Phase 11 then embeds them in the description. If Phase 9 didn't capture the formula, go back and read the SP code for that column.
+
+    **When formulas are unavailable**: If a column is a simple passthrough from a source view/table (e.g., `ClosingBalance FROM V_Liabilities.Liabilities`), the source reference is sufficient — no formula needed. Formulas are mandatory only for COMPUTED, AGGREGATED, or FILTERED columns.
+
+    **⛔ FORBIDDEN VAGUE PHRASES — HARD BLACKLIST** (validated in Rule B6 check 7):
+
+    If ANY Tier 2 element description contains one of these phrases, the description is **INVALID** and must be rewritten with actual values from the SP code:
+
+    | Forbidden Phrase | Why It Fails | Fix |
+    |------------------|-------------|-----|
+    | "specific reason IDs" | Doesn't tell the analyst WHICH IDs | List the actual `CompensationReasonID IN (N,M,...)` |
+    | "PI-specific reason IDs" | Same — which IDs? | `CompensationReasonID IN (23,42,51)` |
+    | "affiliate-specific reason IDs" | Same | `CompensationReasonID IN (...)` |
+    | "deposit-like in nature" | Vague business prose | List the actual filter: `MoneyMovementReasonID IN (...)` |
+    | "with specific compensation reason IDs" | Vague | List them |
+    | "specific fee type" / "fee types related to" | Which fee type? | `FeeTypeID IN (N,M)` or `ActionTypeID=35 AND FeeTypeID=N` |
+    | "PI-specific" / "cashout-related" / "dividend fee type" | Adjective instead of filter | Replace with the actual WHERE clause values |
+    | "certain conditions" / "specific conditions" | Meaningless | State the actual CASE WHEN condition |
+    | "various" / "multiple" / "several" (when describing filter values) | Hides the actual values | List every value |
+    | "excluded reasons are ... no longer applicable" | Why are they excluded? List them or drop the clause | Keep the exclusion list: `NOT IN (6,23,28,...)` — analysts need it |
+    | "subset of" (without listing what subset) | Analyst can't reproduce the query | Follow with the actual WHERE filter |
+    | "from specific money movement reasons" | Which reasons? | `MoneyMovementReasonID IN (...)` |
+
+    **The test is simple**: Could an analyst reconstruct the SQL WHERE clause from the description alone? If not, the description is vague and must be rewritten.
+
+    **When the SP is too large to find specific IDs**: If Phase 9 didn't capture the filter values for a column, Phase 11 MUST go back and read the relevant SP section. Use Grep to find the column name in the SP file, read the surrounding 50 lines, and extract the actual filter. Do NOT write a vague placeholder and move on.
 
 ---
 
@@ -285,7 +419,7 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| {n} | {Name} | {SQL data type} | {YES / NO} | {MEANINGFUL business description. For ID columns: include the resolved value map: "Position state: 1=Open, 2=Closed (from Dictionary.PositionStatus)". For amounts: include units. For dates: explain when set. For flags: explain both values.} `(Tier N — source.table)` ← **MANDATORY suffix, see Rule 19** |
+| {n} | {Name} | {SQL data type} | {YES / NO} | {MEANINGFUL business description WITH computation formula (Rule 20). For ID columns: include the resolved value map: "Position state: 1=Open, 2=Closed (from Dictionary.PositionStatus)". For computed amounts: include the formula: "PI compensation. SUM(Amount) from Fact_CustomerAction WHERE ActionTypeID=36 AND CompensationReasonID IN (23,42,51)." For snapshot columns: "From V_Liabilities.ActualNWA." For dates: explain when set. For flags: explain condition: "1 if DltStatusID=4 in FSC, 0 otherwise." For day-over-day deltas: "today.X - yesterday.X from SourceTable."} `(Tier N — source.table)` ← **MANDATORY suffix, see Rule 19; MANDATORY formula, see Rule 20** |
 
 ---
 
@@ -558,6 +692,7 @@ After writing each object's output files, the subagent MUST run this validation 
 5. **Quality score check**: Confirm the footer contains a `Quality:` score and star grade
 6. **Output file check**: Confirm all required output files exist:
    - All object types: wiki `.md` + sidecar `.review-needed.md` + `.lineage.md`
+7. **Formula vagueness check (Rule 20) — SAFETY NET**: Grep the wiki file for EVERY phrase in the Rule 20 Forbidden Vague Phrases blacklist. Use case-insensitive search for: `specific reason IDs`, `specific fee type`, `fee types related to`, `specific conditions`, `certain conditions`, `deposit-like`, `cashout-related`, `PI-specific`, `affiliate-specific`, `dividend fee type`, `specific money movement`, `subset of compensation` (without following filter). If ANY match is found in a Tier 2 element description, the description is INVALID — go back to the SP code, extract the actual filter values, and rewrite. This check has the same enforcement weight as check 4 (tier suffix) — a single vague phrase blocks completion. **NOTE**: If the "Pre-Read: Computation Formulas" step was executed properly, this check should find ZERO matches. If it fires on more than 5 columns, the pre-read was skipped or incomplete — go back and redo the formula pre-pass for all failing columns in one batch, not one at a time.
 
 If any check fails, the subagent MUST fix the doc immediately -- not move on and report partial success.
 

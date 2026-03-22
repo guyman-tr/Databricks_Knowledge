@@ -29,9 +29,42 @@ For V1, these are edited in this rule file directly. Command-argument overrides 
 
 ## Object Discovery (Research R1)
 
-### Primary Source: Dependency Graph
+Object discovery uses **two complementary data sources** depending on the target schema. The goal is to build a unified object list with priority, dependencies, and object type for each entry.
 
-Load `knowledge/synapse/Wiki/_dependency_order.json`. Each entry has:
+### Source A: OpsDB Configuration (BI_DB_dbo and schemas with Service Broker orchestration)
+
+When `.specify/Configs/opsdb-objects-status.json` contains entries for the target schema, use it as the **primary source** for priority and dependency ordering.
+
+**Priority file** — `opsdb-objects-status.json`: Each entry maps a procedure to its target table, with an ETL execution priority (0 = base layer, 99 = runs last / most dependent):
+
+```json
+{
+  "ProcedureName": "BI_DB_dbo.SP_CIDFirstDates",
+  "TableName": "BI_DB_dbo.BI_DB_CIDFirstDates",
+  "Priority": 90,
+  "FrequencySP": "Daily",
+  "ProcessType": 1,
+  "ProcessName": "SB_Daily"
+}
+```
+
+**Dependency file** — `opsdb-procedure-dependencies.json`: "Dependencie row" entries show which tables feed into each object. A `Main row` establishes the object itself; `Dependencie row` entries list upstream dependencies via `TableName_source`:
+
+```json
+{
+  "RowType": "Dependencie row",
+  "ProcedureName": "BI_DB_dbo.SP_AccountClosure",
+  "TableName": "BI_DB_dbo.BI_DB_AccountClosure",
+  "ProcedureName_source": "BI_DB_dbo.SP_CID_DailyPanel_FullData",
+  "TableName_source": "BI_DB_dbo.BI_DB_CID_DailyPanel_FullData",
+  "Priority": 0,
+  "schema_name": "BI_DB_dbo"
+}
+```
+
+### Source B: Dependency Graph (DWH_dbo and schemas without OpsDB orchestration)
+
+When OpsDB data is unavailable for the target schema, fall back to `knowledge/synapse/Wiki/_dependency_order.json`. Each entry has:
 
 ```json
 {
@@ -41,26 +74,43 @@ Load `knowledge/synapse/Wiki/_dependency_order.json`. Each entry has:
 }
 ```
 
-Filter entries where the `table` field starts with `{Schema}.` (e.g., `DWH_dbo.`).
+Filter entries where the `table` field starts with `{Schema}.` (e.g., `DWH_dbo.`). For depth-based schemas, use `depth` as a proxy for priority: highest depth = most dependent = process first (same top-down principle).
 
 ### Supplementary Source: SSDT Repository (Constitution IX)
 
-**Repo-first (Constitution IX)**: Scan the Dataplatform SSDT repo for objects not captured by the dependency parser. Do NOT query Synapse metadata views.
+**Repo-first (Constitution IX)**: Scan the Dataplatform SSDT repo for objects not captured by OpsDB or the dependency parser. Do NOT query Synapse metadata views.
 
 Glob for `.sql` files in the SSDT repo paths:
 - Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\*.sql`
 - External Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\External Tables\*.sql`
 - Views: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Views\*.sql`
 
-Objects found in the SSDT repo but missing from `_dependency_order.json` are added at depth 0 with empty `depends_on`.
+Objects found in SSDT but missing from OpsDB / dependency graph are added at Priority 0 with empty dependencies.
 
 ### Merge
 
-Combine both sources into a unified object list. Each object has: name, type, depth, depends_on. The dependency graph is the authority for depth and dependencies; SSDT repo fills gaps.
+Combine all sources into a unified object list. Each object has: **name, type, priority, depends_on** (list of intra-schema dependency table names). OpsDB is the authority for priority and dependencies when available; SSDT repo fills gaps for undiscovered objects.
+
+### Dependency Classification — Core vs Non-Core Schemas
+
+Dependencies are classified by schema to determine blocking behavior:
+
+| Classification | Schemas | Batch Planning Impact |
+|---|---|---|
+| **CORE — must be documented first** | `BI_DB_dbo`, `DWH_dbo`, `DB_Schema` (production OLTP) | Intra-schema deps → must appear in an earlier batch. Cross-schema deps → verified at Phase 10.5 runtime (their wiki should exist from a prior schema build). |
+| **NON-CORE — proceed with Tier 4** | `EXW_dbo`, `Dealing_dbo`, `eMoney_dbo`, Databricks jobs, external APIs, any other schema | No blocking. Use best available knowledge (Tier 4). Do NOT delay documentation waiting for non-core upstream wikis. |
+
+> **Key rule**: A dependency from a non-core schema is never a reason to postpone documenting an object. The object proceeds with whatever upstream knowledge exists (Tier 4 = "best available, limited confidence").
 
 ---
 
 ## Batch Segmentation Algorithm (Research R3)
+
+> **⛔ CORE PRINCIPLE: Priority-First, Top-Down, Dependency-Pull-Forward**
+>
+> Start from the **highest-priority objects** (Priority 99 — the business-critical report/aggregation tables) and work **downward** toward Priority 0 (base layer). Before an object can be documented, ALL of its **core-schema** intra-schema dependencies must be documented first. Non-core dependencies are accepted as Tier 4 and never block.
+>
+> This ensures the most valuable objects are documented as early as possible, and base-layer objects that nothing depends on are documented last (or deferred entirely).
 
 ### Steps
 
@@ -68,20 +118,60 @@ Combine both sources into a unified object list. Each object has: name, type, de
 
 2. **Exclude**: Remove objects that are `Done` or `Skipped` in `_index.md` (if it exists).
 
-3. **Group by depth**: Group remaining objects by their depth value (0, 1, 2, …). Objects with depth -1 (cyclic dependencies) form their own group, processed last.
+3. **Build intra-schema dependency graph**: From OpsDB dependency rows (or `_dependency_order.json` for non-OpsDB schemas), build an adjacency map: `object → [list of intra-schema objects it depends on]`. Discard non-core-schema dependencies (Dealing_dbo, EXW_dbo, etc.) — they do not affect ordering.
 
-4. **Sort within depth**: Within each depth group, sort alphabetically by object name.
+4. **Collect priority tiers**: Group remaining objects by OpsDB Priority (or depth for non-OpsDB schemas). Sort tiers in **descending** order: `[99, 90, 80, 70, 60, 21, 20, 15, 1, 0]`.
 
-5. **Segment into batches**: Walk through depth groups in order (0, 1, 2, …, -1):
-   - Fill the current batch up to `DEFAULT_BATCH_SIZE`.
-   - **Prefer not to split a depth level mid-batch**: If adding the next depth group would exceed the batch size, and the current batch is not empty, close the current batch and start a new one with the next depth group.
-   - **Exception**: If a single depth group has more objects than `DEFAULT_BATCH_SIZE`, split it into multiple batches at the same depth.
+5. **Build the documentation queue (priority-first with dependency pull-forward)**:
 
-6. **Assign batch numbers**: Number batches sequentially starting from the next batch number after the last completed batch (from `_index.md`).
+   ```
+   queue = []          # ordered list — final documentation order
+   queued_set = {}     # set — objects already in the queue
 
-7. **Assign within-batch order**: Within each batch, maintain the depth-then-alphabetical order. Assign position numbers (#1, #2, #3, …).
+   FOR each priority tier P in descending order (99, 90, …, 0):
+     FOR each object O in tier P (alphabetically within tier):
+       IF O is already in queued_set → SKIP
+       CALL resolve(O)
 
-8. **Resolve intra-batch dependencies**: For each object in a batch, check if any of its `depends_on` entries point to another object in the same batch. If so, ensure the dependency comes before the dependent object (lower position number). Re-order within the batch if needed.
+   FUNCTION resolve(O):
+     IF O is in queued_set → RETURN
+     FOR each dependency D of O (intra-schema, core-schema only):
+       IF D is NOT in queued_set AND D is NOT Done/Skipped:
+         CALL resolve(D)          # recursively pull in dependencies first
+     ADD O to queue
+     ADD O to queued_set
+   ```
+
+   **Result**: A topologically-sorted queue where Priority 99 objects appear as early as possible, but always AFTER their intra-schema prerequisites. Priority 0 objects that nothing depends on appear at the tail.
+
+   **Cycle handling**: If a cycle is detected (object encountered while already being resolved), break the cycle by adding the object without waiting for the cyclic dependency. Log a warning: `CYCLE DETECTED: {A} ↔ {B} — breaking cycle, documenting {A} first`.
+
+6. **Segment the queue into batches**: Walk through the queue sequentially:
+   - Fill each batch up to `DEFAULT_BATCH_SIZE`.
+   - **Dependency integrity**: Never place an object in a batch unless ALL of its intra-schema dependencies are either (a) already `Done`/`Skipped` in `_index.md`, or (b) assigned to an earlier batch in this plan. If a batch boundary would split an object from its last unresolved dependency, pull the object into the next batch.
+   - **Large dependency chains**: If a single dependency chain exceeds `DEFAULT_BATCH_SIZE`, split across multiple batches — the chain's leaf dependencies go first, the chain's root (the high-priority object) goes in a later batch.
+
+7. **Assign batch numbers**: Number batches sequentially starting from the next batch number after the last completed batch (from `_index.md`).
+
+8. **Assign within-batch order**: Within each batch, maintain topological order (dependencies before dependents). Assign position numbers (#1, #2, #3, …).
+
+9. **Announce the plan**: Before executing, print the batch plan showing which priority-tier objects are targeted and which dependencies were pulled forward:
+
+   ```
+   BATCH PLAN — {Schema}
+   ═══════════════════════════════════════════
+   Target: Priority 99 objects (29 total, N undocumented)
+   Pull-forward: M dependency objects from lower priority tiers
+
+   Batch 1 (10 objects):
+     #1  BI_DB_SomeBaseTable         [Priority 0, pulled forward for BI_DB_FinanceReport]
+     #2  BI_DB_AnotherBase           [Priority 0, pulled forward for BI_DB_FinanceReport]
+     ...
+     #10 BI_DB_FinanceReport         [Priority 99 — TARGET]
+
+   Batch 2 (8 objects):
+     ...
+   ```
 
 ### Batch Sizing Guidelines (Research R2)
 
@@ -153,7 +243,7 @@ Skipping: P3, P5, P6, P7, P9B, P10
 
 2. **Check for existing `_index.md`**:
    - If it does not exist: call `index-management.mdc` Protocol 1 (CREATE) to generate it.
-   - If it exists: read it to identify already-done/failed/skipped objects. Re-scan for new objects (from dependency graph + SSDT) and add any new ones as `Pending`.
+   - If it exists: read it to identify already-done/failed/skipped objects. Re-scan for new objects (from OpsDB / dependency graph + SSDT) and add any new ones as `Pending`.
 
 3. **Detect stale objects**: For each object with an existing wiki file, check its last-modified date. If within `STALENESS_THRESHOLD_DAYS`, mark as `Skipped — stale <30d` in `_index.md`.
 

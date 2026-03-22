@@ -56,14 +56,56 @@ Phase 11 derives tier assignments MECHANICALLY:
 
 | Transform in lineage | Upstream wiki exists? | → Tier |
 |----------------------|----------------------|--------|
-| passthrough | YES | Tier 1 — verbatim description |
-| rename | YES | Tier 1 — verbatim from source column |
-| cast/convert | YES | Tier 1 — verbatim + "DWH note: {cast}" |
-| SP-adjusted | YES | Tier 1 — verbatim + "DWH note: {adjustment}" |
+| passthrough | YES | **Inherit origin tier** — verbatim description + origin tag |
+| rename | YES | **Inherit origin tier** — verbatim from source column + origin tag |
+| cast/convert | YES | **Inherit origin tier** — verbatim + transform note |
+| SP-adjusted | YES | **Inherit origin tier** — verbatim + transform note |
+| function-computed | YES (for inputs) | Tier 2 — function logic defines the column |
 | passthrough | NO | Tier 2 — from SP code |
 | ETL-computed | any | Tier 2 — from SP code |
-| join-enriched | YES for join source | Tier 1 — from join source wiki |
+| join-enriched | YES for join source | **Inherit origin tier** from join source wiki |
 | join-enriched | NO | Tier 2 — from SP code |
+
+### Tier Transitivity Rule
+
+**Tier tags trace to the ORIGIN, not the relay.** When an upstream wiki column already
+carries a tier tag (e.g., `(Tier 1 — Trade.PositionTbl)`), that tag is **inherited
+through every downstream layer** that passes the column without transformation.
+
+The intermediate table (e.g., DWH_dbo.Dim_Position) is a relay — not the source of truth.
+If Commission is `(Tier 1 — Trade.PositionTbl)` in Dim_Position, and BI_DB passes it
+through unchanged, BI_DB's doc says `(Tier 1 — Trade.PositionTbl)` — NOT
+`(Tier 1 — DWH_dbo.Dim_Position)`.
+
+**How to extract the origin tier:** Read the upstream wiki column description. Parse the
+parenthetical tier tag at the end: `(Tier N — {origin})`. That `{origin}` is the true
+source. If the upstream column has NO tier tag (shouldn't happen but handle gracefully),
+treat the upstream table itself as the origin.
+
+If the upstream column is itself Tier 2 (e.g., ETL-computed in Dim_Position), the downstream
+passthrough inherits Tier 2 with the same origin SP. Tier doesn't magically improve by
+passing through another table.
+
+### Transform Note Pattern
+
+**No transformation → keep the origin tier tag as-is. No annotation needed.**
+```
+{upstream description} (Tier N — {origin})
+```
+
+**With transformation → keep origin description + append the delta:**
+```
+{upstream description}. {Schema} transform: {what changed}. (Tier N — {origin}, {transform-type})
+```
+
+Examples:
+- DWH_dbo column → BI_DB **passthrough**: `"Opening commission in dollars. (Tier 1 — Trade.PositionTbl)"`
+- DWH_dbo column → BI_DB **renamed**: `"When position was opened. Renamed from OpenOccurred. (Tier 1 — Trade.PositionTbl)"`
+- DWH_dbo column → BI_DB **SP-adjusted**: `"Position size in USD at open. BI_DB transform: rewound to PreviousAmount if partial close occurred after @dt. (Tier 1 — Trade.PositionTbl, SP-adjusted)"`
+- DWH_dbo column → BI_DB **function-computed**: `"Daily trading volume in USD, computed by Function_Trading_Volume from close price × units. (Tier 2 — SP_DDR_Fact_Trading_Volumes)"`
+- DWH_dbo Tier 2 column → BI_DB passthrough: `"ETL-computed date int (YYYYMMDD). (Tier 2 — SP_Dim_Position_DL_To_Synapse)"` — tier does NOT upgrade
+
+The origin is the foundation. Intermediate relays are invisible unless they transform.
 
 ### Phase 11 Gate: Lineage File Must Exist
 
@@ -94,3 +136,8 @@ Go back and re-run Phase 9.
 
 4. **Tier assignment is deterministic.** Given the lineage source + upstream wiki
    availability, the tier is a lookup — not a judgment call.
+
+5. **Tier tags are transitive.** When reading an upstream wiki column description,
+   extract the existing `(Tier N — {origin})` tag. That origin passes through ALL
+   downstream relay layers unchanged. Only actual transformations earn a new annotation
+   — the origin never changes.

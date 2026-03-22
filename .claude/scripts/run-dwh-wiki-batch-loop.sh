@@ -44,6 +44,18 @@ while true; do
     output_tokens=0
     cost_usd=0
 
+    BATCH_MAX_SECONDS=900  # 15 min hard ceiling per batch
+
+    # Use timeout if available (coreutils), fall back to direct call
+    TIMEOUT_CMD=""
+    if command -v timeout &>/dev/null; then
+        TIMEOUT_CMD="timeout --signal=KILL $BATCH_MAX_SECONDS"
+    elif command -v gtimeout &>/dev/null; then
+        TIMEOUT_CMD="gtimeout --signal=KILL $BATCH_MAX_SECONDS"
+    else
+        echo -e "\e[33m  WARNING: 'timeout' not found — no per-batch timeout protection.\e[0m"
+    fi
+
     while IFS= read -r line; do
         result=$(echo "$line" | python3 -c "
 import sys, json
@@ -66,7 +78,7 @@ except: pass
         elif [ -n "$result" ]; then
             echo "$result"
         fi
-    done < <(claude --dangerously-skip-permissions --verbose --output-format stream-json --print "run $BATCH_COMMAND $COMMAND_ARGS")
+    done < <($TIMEOUT_CMD claude --dangerously-skip-permissions --verbose --output-format stream-json --print "run $BATCH_COMMAND $COMMAND_ARGS")
 
     total_input_tokens=$((total_input_tokens + input_tokens))
     total_output_tokens=$((total_output_tokens + output_tokens))

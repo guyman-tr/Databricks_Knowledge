@@ -89,13 +89,7 @@ Used in the Next Batch section to show intra-batch and cross-batch dependencies:
 
 **Steps**:
 
-1. **Load dependency graph**: Read `knowledge/synapse/Wiki/_dependency_order.json`. Filter entries where the `table` field starts with `{Schema}.` (e.g., `DWH_dbo.`). Extract object name, depth, and depends_on for each.
-
-2. **Supplementary SSDT repo scan (Constitution IX)**: Scan the Dataplatform SSDT repo for objects not in the dependency graph. Glob for `.sql` files:
-   - Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\*.sql`
-   - Views: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Views\*.sql`
-   
-   Objects found in the SSDT repo but missing from `_dependency_order.json` are added at depth 0 with empty `depends_on`.
+1. **Run Object Discovery** from `batch-orchestration.mdc` (Research R1). This loads objects from OpsDB (when available for the target schema) or `_dependency_order.json` (fallback), plus SSDT repo scanning. Each discovered object has: name, type, priority, depends_on.
 
 3. **Classify objects** into type groups:
    - `U` / `USER_TABLE` → Tables
@@ -108,7 +102,7 @@ Used in the Next Batch section to show intra-batch and cross-batch dependencies:
 5. **Generate `_index.md`**: Write the file with:
    - YAML frontmatter (all counters initialized — documented=0, failed=0, last_batch=0)
    - Metrics Table
-   - Next Batch section (Batch 1 plan — first N objects by depth order)
+   - Next Batch section (Batch 1 plan — objects ordered per batch-orchestration.mdc priority-first algorithm)
    - Empty Completed Batches area
    - Object Type sections with every object listed as `Pending` (or `Skipped`) with quality `-`
 
@@ -160,13 +154,13 @@ Planned: 2026-03-16 | Completed: 2026-03-16
 
 Planned: 2026-03-16
 
-| # | Object | Type | Depth | Dependencies |
-|---|--------|------|-------|--------------|
-| 1 | DWH_dbo.Fact_Revenue | Table | 2 | -> Dim_Customer [done], Dim_Instrument [done] |
-| 2 | DWH_dbo.Dim_Campaign | Table | 2 | -> Dim_Country [done] |
-| 3 | DWH_dbo.vw_RevenueDaily | View | 3 | -> #1 (Fact_Revenue) |
-| 4 | DWH_dbo.V_Dim_Customer | View | 2 | -> Dim_Customer [done] |
-| 5 | DWH_dbo.Fact_Commission | Table | 2 | -> Dim_Customer [done] |
+| # | Object | Type | Priority | Dependencies |
+|---|--------|------|----------|--------------|
+| 1 | BI_DB_dbo.BI_DB_SomeBaseTable | Table | 0 | (leaf) — pulled forward for #5 |
+| 2 | BI_DB_dbo.BI_DB_AnotherDep | Table | 20 | -> SomeBaseTable [done] — pulled forward for #5 |
+| 3 | BI_DB_dbo.BI_DB_MidTier | Table | 20 | -> #1 (SomeBaseTable) |
+| 4 | BI_DB_dbo.BI_DB_ReportDep | Table | 60 | -> #2 (AnotherDep) — pulled forward for #5 |
+| 5 | BI_DB_dbo.BI_DB_FinanceReport | Table | 99 | -> #4 (ReportDep) — TARGET |
 
 All within-batch dependencies are satisfied.
 ```
@@ -213,11 +207,11 @@ By type:
   Tables:     12/45 done
   Views:       8/22 done
 
-Next batch (Batch 6): 5 objects at depth 2
-  1. DWH_dbo.Fact_Revenue (Table)
-  2. DWH_dbo.Dim_Campaign (Table)
-  3. DWH_dbo.vw_RevenueDaily (View)
-  4. DWH_dbo.Fact_Commission (Table)
+Next batch (Batch 6): 5 objects — targeting Priority 99
+  1. BI_DB_dbo.BI_DB_SomeBaseTable (Table, P0 — pulled forward)
+  2. BI_DB_dbo.BI_DB_AnotherDep (Table, P20 — pulled forward)
+  3. BI_DB_dbo.BI_DB_MidTier (Table, P20)
+  4. BI_DB_dbo.BI_DB_FinanceReport (Table, P99 — TARGET)
 
 Recent failures: none
 ═══════════════════════════════════
@@ -247,7 +241,7 @@ Recent failures: none
 
 These rules MUST hold for every `_index.md` file. The agent should verify them after CREATE and periodically after UPDATE.
 
-1. **Complete inventory**: Every object in `_dependency_order.json` for this schema MUST appear in the Object Type sections.
+1. **Complete inventory**: Every discovered object (from OpsDB / dependency graph + SSDT) for this schema MUST appear in the Object Type sections.
 2. **Documented count consistency**: `documented` in frontmatter MUST equal the count of `Done` status rows across all Object Type sections.
 3. **Failed count consistency**: `failed` in frontmatter MUST equal the count of `Failed` status rows.
 4. **Total count consistency**: `total_objects` MUST equal the sum of all object counts across all Object Type section headers (e.g., Tables (45) + Views (22) + ... = total).

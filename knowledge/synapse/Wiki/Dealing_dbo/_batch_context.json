@@ -1,0 +1,493 @@
+{
+  "schema": "Dealing_dbo",
+  "database": "Synapse DWH",
+  "last_batch": 20,
+  "last_updated": "2026-03-21",
+  "total_objects": 238,
+  "documented": 240,
+  "quality_avg": 7.8,
+  "next_batch_objects": [],
+  "next_batch_notes": "SCHEMA COMPLETE. All 240 objects documented (232 tables + 6 views + 2 external tables counted separately). 19 tables intentionally skipped.",
+  "batch_history": [
+    {
+      "batch": 20,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.V_Dealing_CEPDailyAudit_CP_Last180Days",
+        "Dealing_dbo.V_Dealing_CEPDailyAudit_Conditions_Last180Days",
+        "Dealing_dbo.V_Dealing_CEPDailyAudit_Rules_Last180Days",
+        "Dealing_dbo.V_Dealing_DealingDashboard_Clients",
+        "Dealing_dbo.V_Dealing_Duco_EODRecon",
+        "Dealing_dbo.V_RequestViewForBestExecution"
+      ],
+      "notes": "Final views batch — schema complete. 3 CEP audit 180-day filter views, 1 DealingDashboard client filter view (consumed by SP_Regime_Flags), 1 Duco EOD recon DISTINCT+alias view, 1 MiFID Best Execution UNION view (HedgeServer + EMS paths).",
+      "quality_scores": [7.0, 7.0, 7.0, 7.5, 7.5, 7.5],
+      "avg_quality": 7.25
+    },
+    {
+      "batch": 19,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_FactSet_Management_Export",
+        "Dealing_dbo.Dealing_etoro_history_interestrate",
+        "Dealing_dbo.External_Fivetran_dealing_overnight_fees",
+        "Dealing_dbo.External_Gold_Dealing_Marex_Trader_OrderID"
+      ],
+      "notes": "Final tables batch. 3 external tables (Gold/Bronze layers) + 1 Fivetran table. FactSet Management Export = staging for PI data export acknowledgment. etoro_history_interestrate = SCD2 overnight fee rate configs from Bronze. External_Fivetran_dealing_overnight_fees = Bloomberg futures prices for Islamic spot price adjustment. External_Gold_Dealing_Marex_Trader_OrderID = Trader-to-OrderID mapping for Marex futures reconciliation.",
+      "quality_scores": [7.5, 7.5, 8.0, 8.2],
+      "avg_quality": 7.8
+    },
+    {
+      "batch": 18,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Market_Manipulation_OutstandingsharesHigherthan005",
+        "Dealing_dbo.Dealing_Supposed_LPFees",
+        "Dealing_dbo.Dealing_FactSet_NewPIs_History",
+        "Dealing_dbo.Dealing_Regime_Flags",
+        "Dealing_dbo.Dealing_WeeklyCMT_Fees",
+        "Dealing_dbo.Dealing_Unrealized_Open_CryptoRebate",
+        "Dealing_dbo.Dealing_PriceLocks",
+        "Dealing_dbo.StocksOverrideRateLog",
+        "Dealing_dbo.Dealing_MCS_Model_Report",
+        "Dealing_dbo.Dealing_RiskMatrix_V2"
+      ],
+      "quality_range": [3.5, 8.0],
+      "notes": "Batch 18 spans market surveillance + legacy LP fees + FactSet history + regime analytics + legacy/active crypto programs + price operations + MCS model + NOP stress test. (1) MARKET_MANIPULATION_0005 (7.5/10): dual-threshold surveillance; instrument-level (eToro LP flow >0.5% outstanding shares) + CID-level (>0.25%); VolumeExternalised_CID = proportional CID attribution; NULL sentinels on breach-free days; sibling Email table cleared daily; migrated from Databricks Dec 2024. (2) SUPPOSED_LPFEES (3.5/10): ORPHANED — stale ~30mo, no writer SP in SSDT or OpsDB; REPLICATE distribution; 3 LPs (JP/SAXO/IB); 'Supposed' = benchmark/theoretical fee; superseded by specific LP recon tables. (3) FACTSET_NEWPIS_HISTORY (6.5/10): STALE since 2024-06-04; TRUNCATE+INSERT single-day snapshot; gold lake parquet source (FactSet_PositionPnL_stg); HistorySendFlag=1 gate; LastNightRiskScore 10-bucket StdDev ladder (breakpoints: <0.0011=1 to ≥0.0475=10); feed discontinued. (4) REGIME_FLAGS (6.0/10): STALE 2025-01-19; NOT in OpsDB; no @Date param; rebuilds full history from 2019 each run; 4 MeasureNames (Zero/Volume/NOP/NOP_Change); rolling windows (5-day Weekly, 10-day Fortnightly); NumOfDistribution=504/252/126; hardcoded normal CDF lookup table. (5) WEEKLYCMT_FEES (4.5/10): STALE 2023-04-09; Sunday-only SP; legacy leveraged crypto positions opened before 2021-01-08 that are still open; StopRate≤1pip filter; ActionTypeID=35+IsFeeDividend=1 for rollover fee lookup; program discontinued. (6) UNREALIZED_OPEN_CRYPTOREBATE (8.0/10): monthly; Diamond-only (PlayerLevelID=7); FCA excluded + 9 European countries; real crypto (IsSettled=1), Leverage=1, IsBuy=1, MirrorID=0, OpenDateID≥20220308; OpenedVolume=InitForex basis, ClosedVolume=EOD bid; brackets ($100K-$1M at 0.15%, $1M-$5M at 0.25%, >$5M at 0.50%); $5 minimum; UPdatedate DDL typo. (7) PRICELOCKS (7.5/10): active 6.9M rows; 5 EventNames (SpreadLock/VolatilityLock/TimeOut/CrossSpreads/CircuitBreaker); time windows (TotalInFirst10Min, TotalInFirst15Min — note DDL typo TotalInFist15Min, TotalInLast5Min); migrated from Databricks SR-244984. (8) STOCKSOVERRIDERATEDLOG (8.0/10): active 6.5M rows; daily DELETE+INSERT; UNION of Active (EndTime=NULL) + Historical overrides; Total_Buy=InterestRateBuy+MarkupBuy; Arthur Greenberg 2023-08-08. (9) MCS_MODEL_REPORT (8.0/10): active 1.1B rows; HASH(PositionID)/CI(Date); InstrTypeID IN (5,6); two sets: opened-today + closed-today; Volume_Open/Close = USD volume at open/close price; Click_Open/Close = event count; Gil Cholev 2014. (10) RISKMATRIX_V2 (4.0/10): STALE single snapshot 2024-06-02; HEAP; no writer SP; 64 cols (13 dimension + 50 NOP scenarios: +1% to +900%, -1% to -100%); ad-hoc risk stress test for hedge book."
+    },
+    {
+      "batch": 16,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Rollover_Assurance",
+        "Dealing_dbo.Dealing_Staking_Position_US",
+        "Dealing_dbo.Dealing_Staking_Results_US",
+        "Dealing_dbo.Dealing_Staking_Summary_US",
+        "Dealing_dbo.Dealing_Staking_OptedOut_PerCID_US",
+        "Dealing_dbo.Dealing_Staking_OptedOut_US",
+        "Dealing_dbo.Dealing_Staking_Parameters_US",
+        "Dealing_dbo.Dealing_Islamic_Daily_Administrative_Fee",
+        "Dealing_dbo.Dealing_Islamic_Daily_Spot_Price_Adjustment"
+      ],
+      "quality_range": [8.0, 8.5],
+      "notes": "Rollover Assurance + US Staking full suite + Islamic fees batch. (1) DEALING_ROLLOVER_ASSURANCE (46.4M rows, HASH(CID,InstrumentID), CCI): SP_Rev_Assurance runs monthly. Writes 3 tables: Rollover_Assurance (position-level discrepancy audit), Commission_Assurance (instrument-level ratio), Commission_Assurance_By_Position (position-level). Source: etoro_History_Credit (CreditTypeID=14 = rollover fee). Cutoff=21:00 UTC (not 22:00 like Islamic/staking). Triple-day: Fri (Stocks/ETF/Crypto), Wed (FX/Commodities/Indices). 4 mutually exclusive breakdown cols: [Calculated RO] (main fee), [Islamic] (islamic account fee), [Closed after cutoff] (closed before 21:00 but after prior cutoff), [Fee updated] (CutoffDate adjustment), [Other] (all others). Only stores ABS(diff)>1. Column names with square brackets (spaces in name). (2) US STAKING FULL SUITE — SP_Staking_US (writes Position_US + Results_US + Summary_US + Club_US): US-only, RegulationID=8 (FinCEN+FINRA), GCID-based, External_USABroker_Apex_UserProgramEnrolment (UserProgramID=2 non-ETH, UserProgramID=3 ETH), IntroDays gate (ETH=60d much stricter; ADA=9d, SOL/SUI=7d), $1 minimum reward threshold, 6 ClubCategory buckets (Bronze/Silver/Gold/Platinum/Diamond/other). Summary_US adds MonthlyPool + IntroDays columns vs non-US Summary. Position_US: IsPI=NULL, IsOptedIn_ETH=NULL in live data (SP inserts NULL for these). Results_US: 3 instruments (ADA/SOL/ETH); SUI not yet in Results_US (Distribution_StartDate=2026-04-01 future). SP_Staking_DailyPool_US (writes OptedOut_PerCID_US + OptedOut_US + DailyPool_US): excluded states CA/MD/NJ/WI/WA/NY/NV/HI (2 more than SP_Staking_US which only excludes NV+HI in some branches). VerificationLevelID=3 required. 4 instruments in OptedOut (including SUI). Country column in OptedOut_PerCID_US = US state name (legacy naming quirk, NOT country). PARAMETERS_US: manually maintained 4-row config; LiquidityBuffer: ADA/SUI=0.9, SOL=0.8, ETH=1.0; WelcomeEmail_StartDate for ADA/ETH/SOL=2026-08-19 (future). (3) ISLAMIC FEE TABLES: SP_Islamic_Administrative_Fee (Fee_Type_ID=1): scope = WeekendFeePrecentage=0, IsValidCustomer=1; instruments: Stocks/ETF (Lev>1, Long), Crypto CFDs (excl German Lev-1 Long), manually grouped instruments. 22:00 UTC cutoff. Grace period from Dealing_Islamic_Admin_Fee_Per_Group. Days_Open counting rules: Count_Fri (futures+ExchangeID≥3), Count_Wed (FX/Metals ExchangeID 1/2), Count_Thu (InstrID=62 only), Count_All (ExchangeID=8), Count_i (default). Days_To_Charge: 0/1/2/3 on triple-day. Final_Fee formula differs by type: FX /100000, Commodities /contract, Indices ×units, Stocks/ETF/Crypto (units×price)/10000; always ×(-1). 25 suspended instruments blacklist. SP_Islamic_Spot_Price_Adjustment (Fee_Type_ID=2): only 7 futures instruments (17=XTI, 22=XNG, 339=LEAD, 340=ZINC, 341=EuroOIL, 343=Nickel, 344=Aluminum). Skips weekends. Fivetran source: Dealing_staging.External_Fivetran_dealing_overnight_fees (front/next contract close prices). Final_Fee = direction × ((Next-Front)/Days_Between_Expiration) × Units × Days_To_Charge (can be positive). ExchangeID=0 hardcoded (not joined). Alert to Dealing_Islamic_Daily_Spot_Price_Adjustment_Email when Fivetran missing on non-weekend non-Friday. Two Islamic tables are COMPLEMENTARY: a position in XTI/USD for Islamic client appears in BOTH Admin_Fee (Type=1) and Spot_Adjustment (Type=2) on same day."
+    },
+    {
+      "batch": 15,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_CommoditiesIntraHour_Clients",
+        "Dealing_dbo.Dealing_CommoditiesIntraHour_Etoro",
+        "Dealing_dbo.Dealing_CopierAnalysis",
+        "Dealing_dbo.Dealing_CryptoVolume",
+        "Dealing_dbo.Dealing_CryptoVolume_ByDirection",
+        "Dealing_dbo.Dealing_ESMANetLoss",
+        "Dealing_dbo.Dealing_Employees_Report",
+        "Dealing_dbo.Dealing_EquityFees",
+        "Dealing_dbo.Dealing_FactSet_Daily",
+        "Dealing_dbo.Dealing_FactSet_Management"
+      ],
+      "quality_range": [3.0, 8.5],
+      "notes": "Intraday Commodity + Copier Analytics + Crypto Volume + ESMA + Employees + Equity Fees + FactSet batch. (1) IntraHour Commodity (2 tables): SP_IntraHourCommodityReport writes both Clients+Etoro in same run; 5 instruments (17=Silver, 18=Oil/WTI, 19=Gold, 22=Platinum, 96=NaturalGas); HS=225 since SR-310993 Apr 2025; IDs 150/151 use Gold prices; forward-fill via LAG for weekend/gap price smoothing; Etoro side breaks out LP by LiquidityAccountID; (2) Dealing_CopierAnalysis (633M rows, HASH(ParentCID)): dual-side demographics for copier+PI; 54 cols; FirstName/Email always NULL for privacy; TraderType from avg holding days; Classification CASE on instrument type mix (Long/Short Equity / Long Equity / Currencies / Commodities / Crypto / ETF / Multi-Strategy); column names with special chars: PI/CP, Positive/NegativePnL; (3) Dealing_CryptoVolume STALE since 2024-04-02 — no writer SP found in SSDT, CLUSTERED COLUMNSTORE (unusual for Dealing_dbo); (4) Dealing_CryptoVolume_ByDirection (active, 775K rows): daily crypto by direction; IsBuy inverted for close trades (buy position close → IsBuy=0); InstrumentTypeID=10 filter; (5) Dealing_ESMANetLoss (118.6K rows): ESMA loss reporting, filter NetProfit<0 AND ABS(NetProfit)/Amount>=0.95 AND ClosePositionReasonID=1 AND EndForexPriceRateID=0 AND IsComputeForHedge=1; NoRestrictionNetProfit=hypothetical PnL without stop protection; DeltaLoss=NoRestrictionNetProfit-NetProfit (protection benefit); NoProtectionRate from PriceLog_History_CurrencyPrice; (6) Dealing_Employees_Report (231.4M rows, HASH(CID)): AccountTypeID IN (7,13), IsValidCustomer=0; includes BOTH open + closed positions; DailyPnL 3-way logic: open→BI_DB_PositionPnL.DailyPnL; same-day close→NetProfit; prior-day close→NetProfit-previos_Position_PnL; DDL typos: CopyTarde (should be CopyTrade), previos_Position_PnL (should be previous); (7) Dealing_EquityFees (3.8M rows): JP Morgan EOD ComponentUnderlyings + availability + Goldman Sachs SRPB vs BI_DB_PositionPnL client NOP (HedgeServerID IN 2,101=CBH); Fianancing typo in 4 cols preserved from LP report; ISIN/SEDOL→InstrumentID resolved via Dim_Instrument; (8) Dealing_FactSet_Daily+Management STALE since 2024-06-04: Daily uses TRUNCATE (single snapshot, not date-partitioned history); Management is UPSERT control table; HistorySendFlag managed externally; DeleteRule: DailyFirstSentDate IS NULL AND IsActive=1; SP_FactSet_Daily uses Management.IsActive=1 AND DailyLastSentDate<@Date as population filter."
+    },
+    {
+      "batch": 12,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_FailReasons_PIs",
+        "Dealing_dbo.Dealing_Fails_PI",
+        "Dealing_dbo.Dealing_Fails_PI_ErrorCodes",
+        "Dealing_dbo.Dealing_PlayerLevel_Data",
+        "Dealing_dbo.Dealing_PlayerLevel_Data_PIs",
+        "Dealing_dbo.Dealing_PlayerLevel_Fails",
+        "Dealing_dbo.Dealing_PlayerLevel_Fails_PIs",
+        "Dealing_dbo.Dealing_Staking_Position",
+        "Dealing_dbo.Dealing_Staking_Results",
+        "Dealing_dbo.Dealing_Staking_Summary"
+      ],
+      "quality_range": [7.5, 9.0],
+      "notes": "CommissionsAndFails PI extensions + PlayerLevel aggregates + Staking core pipeline tables. Key findings: (1) Dealing_Fails_PI naming is misleading — contains ALL position fails with IsPI=1/0 column, not PI-only; written by SP_Fails_PI from Dealing_staging.PositionFailReal_History_PositionFail_DWH (different path from CopyFromLake used by CommissionsAndFails family); 3.97B rows — requires COUNT_BIG(*) (INT overflow); (2) Dealing_Fails_PI_ErrorCodes = 234-row static lookup, no automated ETL SP — must be manually maintained; NULL Generic_FailReason = new platform error code not in lookup; (3) PlayerLevel aggregates: Dealing_PlayerLevel_Data (full population), Dealing_PlayerLevel_Data_PIs (PI-only, typically only Diamond+Platinum Plus appear); commission formula is same as CommissionsAndFails — open/close attribution avoids double-counting; TotalCommission formula: OpenSameDay→FullCommissionOnClose; ClosedToday→OnClose-ByUnits; OpenedToday→ByUnits; else 0; (4) Dealing_PlayerLevel_Fails / _PIs: tier×reason cross-dimension; PIs show only 'Other' fail reason at top tiers — hedge-level execution failures not matched by 28-bucket CASE WHEN classification; for PI fail root cause use Dealing_Fails_PI.HedgeFailReason; (5) Staking pipeline (SP_Staking, event-driven on Fivetran update): Position (159.5M rows, 1 row per position per staking month, all eligibility flags) → Results (20.4M rows, 1 row per CID×instrument×month, Client_Airdrop + Etoro_Amount + airdrop execution fields) → Summary (158 rows, 1 row per instrument×month, finance/management view with EtoroYield + AnnualizedYield); (6) StakingMonthID malformed bug: 7-digit IDs 2025030 (Mar 2025), 2024100 (Oct 2024), 2025100 (Oct 2025) from LEFT(7) vs LEFT(6) historical SP bug — these sort above all valid 6-digit IDs; always use StakingYear+StakingMonth for temporal ordering; add LEN(CAST(StakingMonthID AS VARCHAR)) = 6 filter when needed; (7) ETH staking default OFF (opt-in required via IsOptedIn_ETH); all other coins (ADA/SOL/TRX/ATOM/DOT/NEAR/POL/SUI) default ON (opt-out via IsWaiver); (8) PIs (GuruStatusID IN (5,6)) are excluded from staking — appear in Dealing_Staking_Position with IsPI=1 but not rewarded; (9) RevShare brackets: Bronze=0.45, Silver=0.55, Gold=0.65, Platinum=0.75, Platinum Plus=0.85, Diamond=0.90; (10) Cash-equivalent countries (IsCashEquivalentCountry=1): Hungary (CountryID=94) and 6 others receive USD credit instead of crypto airdrop; OriginalCompensationType='Cash'; (11) Staking_Summary columns PercentUnutilized + UnutilizedPercent are duplicates — legacy + current; prefer UnutilizedPercent; (12) USD_ConversionRate = BidSpreaded from Fact_CurrencyPriceWithSplit at staking_end_date (single point-in-time rate for all USD columns in Summary); (13) PlayerLevelID non-sequential: 1=Bronze, 5=Silver, 3=Gold, 2=Platinum, 6=Platinum Plus, 7=Diamond — never sort by PlayerLevelID for tier hierarchy. Key cross-references from Batch 10: SP_Staking also writes Dealing_Staking_Club (club category for reduced commission) + DailyPool + OptedOut tables. Staking pipeline completeness: all core SP_Staking tables now documented."
+    },
+    {
+      "batch": 11,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Execution_Slippage",
+        "Dealing_dbo.Dealing_Execution_Slippage_AssetType",
+        "Dealing_dbo.Dealing_Execution_Slippage_AssetType_RequestTime",
+        "Dealing_dbo.Dealing_Execution_Slippage_RequestTime",
+        "Dealing_dbo.Dealing_Daily_Slippage_Positions_TriggerVSReceived",
+        "Dealing_dbo.Dealing_Daily_Slippage_Totals",
+        "Dealing_dbo.Dealing_Daily_Slippage_Totals_TriggerVSReceived",
+        "Dealing_dbo.Dealing_CIDs_CommissionsAndFails",
+        "Dealing_dbo.Dealing_CIDs_CommissionsAndFails_PIs",
+        "Dealing_dbo.Dealing_FailReasons"
+      ],
+      "quality_range": [8.0, 9.0],
+      "notes": "Execution Quality & Commission Monitoring batch. Two writer SPs: SP_Execution_Slippage (4 Execution_Slippage tables) and SP_Slippage_Report (Totals/Positions + TVR variants). PIPELINE ALERTS: (1) Execution_Slippage / Execution_Slippage_AssetType STALE since Oct 2024 — root cause is CopyFromLake.PricesFromProvider_MarketCurrencyPrice (Kusto LP feed) broken since SR-257525 (Jun 2024 price table migration); (2) All 6 Slippage_Report tables + RequestTime variants have gap since Jan 2025 — SP scheduling issue (not a data feed failure); (3) SP_Execution_Slippage: SendTime path requires #KustoPrices CROSS APPLY on PricesFromProvider; RequestTime path uses only PriceLog_History CROSS APPLY on Occurred≤ExecutionTime — this is why _RequestTime tables outlasted the SendTime tables; (4) TVR method (Trigger-vs-Received): uses RequestOccurred_CustomerChosenRate = eToro price at ReceivedOnPriceServer≤RequestCloseOccurred + spread adjustment, providing more accurate slippage benchmark for SL/TP events than static CustomerChosenRate; fallback to CustomerChosenRate when NULL; (5) SP_Slippage_Report slippage sign: SlippageInDollar=(IsBuy=1?+1:-1)×(CustomerChosenRate−EndForexRate)×AmountInUnitsDecimal×ConversionRate — positive means eToro gains; (6) SP_CommissionsAndFails_PerCID: writes 9 tables total — CommissionsAndFails, CommissionsAndFails_PIs (GuruStatusID IN (5,6)), FailReasons, FailReasons_Top20, FailReasons_Top20_PIs, PlayerLevel_Data, PlayerLevel_Data_PIs, PlayerLevel_Fails, PlayerLevel_Fails_PIs; only first 3 are in this batch; (7) TOP 20 selection: sorted by TotalCommission desc; commission attribution formula accounts for open-same-day vs carry positions; (8) FailReasons standardizes raw fail messages via ~28 LIKE patterns; 'Min Position Amount' = top fail reason (100K-300K/day); HedgeServerID NULL = platform-level rejection; (9) Kusto = LP market data platform providing real-time market prices from liquidity providers; CBH = Clearing Broker Hedging (STP to Apex/BNY); HBC = Hedge By Company (eToro direct). Key glossary: IsBuy inversion for closes in SP_Slippage_Report; OverThreshold threshold = 0.5% for all asset classes; WithinFirst5Minutes_MarketHours added Sep 2024 (SR-273115); IsSettled added Oct 2024 (SR-276862) — both added to Totals only, not TVR Totals."
+    },
+    {
+      "batch": 10,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Staking_Club",
+        "Dealing_dbo.Dealing_Staking_Club_US",
+        "Dealing_dbo.Dealing_Staking_Compensation",
+        "Dealing_dbo.Dealing_Staking_Compensation_US",
+        "Dealing_dbo.Dealing_Staking_DailyPool",
+        "Dealing_dbo.Dealing_Staking_DailyPool_US",
+        "Dealing_dbo.Dealing_Staking_Emails_New",
+        "Dealing_dbo.Dealing_Staking_Emails_US",
+        "Dealing_dbo.Dealing_Staking_OptedOut",
+        "Dealing_dbo.Dealing_Staking_OptedOut_PerCID"
+      ],
+      "quality_range": [8.0, 8.5],
+      "notes": "Staking core pipeline batch. Three writer SPs: SP_Staking (non-US, event-driven, writes Staking_Club+Staking_Summary+Staking_Results+Staking_Position), SP_Staking_US (daily 11:00 AM, writes parallel _US tables), SP_Staking_DailyPool (daily, writes DailyPool+OptedOut+OptedOut_PerCID), SP_Staking_Emails (writes Compensation+Emails_New). Non-US/US are parallel table pairs for all staking objects. Key findings: (1) StakingMonthID BUG — SP_Staking_Emails older version uses LEFT(...,7) instead of LEFT(...,6), producing malformed values 2024100 and 2025030 in Compensation and Emails_New; (2) Dealing_Staking_Club: ≤40 USD worth of eligible crypto → 'Club' tier with 10% reduced commission, written by SP_Staking via #1USD_Holdings_Threshold; (3) Dealing_Staking_OptedOut_PerCID is 590M rows (largest table in Dealing_dbo, ~13M rows/day growth, no retention policy documented); (4) SUI (100340) appears in DailyPool_US (4 instruments) but absent from Compensation_US and Emails_US (only 3: ADA/SOL/ETH) — possible OpsDB gap or pipeline issue; (5) SP_Staking writes to Dealing_Staking_Club but this relationship is NOT tracked in OpsDB (monitoring gap); (6) Liquidity buffer formula: Units_AvailableForStaking = LEAST(EligibleUnits × LiquidityBuffer, OptedInUnits × 0.95 [ETH: 0.90]); (7) DailyPool aggregation hierarchy: OptedOut_PerCID (CID×instrument×day) → OptedOut (regulation×instrument×day) → DailyPool (instrument×day) → monthly average → reward calculation."
+    },
+    {
+      "batch": 9,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_IGReconEODHolding",
+        "Dealing_dbo.Dealing_IGReconTrades",
+        "Dealing_dbo.Dealing_JPMReconEODHolding",
+        "Dealing_dbo.Dealing_JPMReconTrades",
+        "Dealing_dbo.Dealing_VisionRecon_EODHoldings",
+        "Dealing_dbo.Dealing_VisionRecon_Trades",
+        "Dealing_dbo.Dealing_Marex_Recon_EODHoldings",
+        "Dealing_dbo.Dealing_Marex_Recon_Trades",
+        "Dealing_dbo.Dealing_Marex_Recon_EODHoldings_Futures",
+        "Dealing_dbo.Dealing_Marex_Recon_Trades_Futures"
+      ],
+      "quality_range": [7.0, 7.8],
+      "notes": "LP Reconciliation completion batch: IG (SP_IGRecon), JPM (SP_JPMRecon), Vision (SP_Vision_Recon), Marex (SP_Marex_Recon). All DELETE-INSERT by Date. Key structural differences: IG uses parquet COPY INTO + hardcoded #MarketNameToID map + Oil×100 multiplier; JPM has 3-region UNION (NA/EMEA/ASIA) + HS 9 special ISIN+DisplayName join (no InstrumentID), date lag when JPM report delayed; Vision uses CUSIP join key + etoro_Hedge_InstrumentBoundaries tolerance bands + Reality-Supposed/Reality-Client naming + IsBuy bit flag; Marex standard uses Google Sheets Fivetran mapping (External_Bronze_Fivetran_google_sheets_marex_mapping_table) + temporally versioned etoro_Hedge_Netting + DateToDateID() UDF + CopyFromLake.etoro_Hedge_ExecutionLog for trades; Marex Futures (May 2025) at CID granularity with lot-based recon, all-caps-space column names from Marex LP file, ADJ FX columns (Jul 2025), 3-way recon on trades but 2-way (Marex vs Clients only) on EOD holdings. Notable: Trades_Futures has eToroRate_AfterADJ absent from EODHoldings_Futures."
+    },
+    {
+      "batch": 6,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_BNY_Citadel_ReconTrades",
+        "Dealing_dbo.Dealing_BNY_Detailed",
+        "Dealing_dbo.Dealing_BNY_VIRTU_ReconEODHolding",
+        "Dealing_dbo.Dealing_BNY_VIRTU_ReconTrades",
+        "Dealing_dbo.Dealing_GSReconEODHolding",
+        "Dealing_dbo.Dealing_GSReconTrades",
+        "Dealing_dbo.Dealing_IBRecon_EODHoldings",
+        "Dealing_dbo.Dealing_IBRecon_EODHoldings_CFD",
+        "Dealing_dbo.Dealing_IBRecon_Trades",
+        "Dealing_dbo.Dealing_IBRecon_Trades_CFD"
+      ],
+      "quality_range": [5.5, 7.8],
+      "notes": "All 10 are LP reconciliation tables at dependency depth 2. Three writer SPs: SP_BNY_VIRTU_Recon (4 tables: BNY_Citadel_ReconTrades, BNY_Detailed, BNY_VIRTU_ReconEODHolding, BNY_VIRTU_ReconTrades), SP_GSRecon (2 tables: GSReconEODHolding, GSReconTrades — CFDs only via GS HS), SP_IB_Recon (4 tables: IBRecon_EODHoldings, IBRecon_EODHoldings_CFD, IBRecon_Trades, IBRecon_Trades_CFD). All use FULL OUTER JOIN pattern and DELETE-INSERT by Date. GBX÷100 normalisation in SP_BNY_VIRTU_Recon and SP_IB_Recon. Pipeline health issues: IBRecon_Trades stale since 2025-08-22 (7+ months); IBRecon_Trades_CFD effectively abandoned (1 row, 2025-03-28). IB HS 300 (CFD) added Apr 2025 replacing HS 126. GS is exclusively CFD LP (activity='Stocks - CFDs'). BNY tables include Citadel 3-way comparison."
+    },
+    {
+      "batch": 5,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Staking_WelcomeEmail_Temp",
+        "Dealing_dbo.Dealing_DailyZeroPnL_Stocks",
+        "Dealing_dbo.Dealing_Duco_EODRecon",
+        "Dealing_dbo.Dealing_Duco_ActivityRecon",
+        "Dealing_dbo.Dealing_Daily_Latency_Compensation",
+        "Dealing_dbo.Dealing_Daily_Slippage_Positions",
+        "Dealing_dbo.Dealing_ApexRecon_TradeActivity",
+        "Dealing_dbo.Dealing_Best_Execution_Compensation_CBH",
+        "Dealing_dbo.Dealing_Best_Execution_Compensation_HBC",
+        "Dealing_dbo.Dealing_CloseOnly_Recon"
+      ],
+      "quality_range": [5.5, 8.5],
+      "notes": "Critical LP recon foundations (Duco EOD/Activity) + decommissioned best-execution pipeline (Latency/Slippage/CBH/HBC — max_date 2025-01-11). SP_DataForDuco feeds 11+ downstream LP recon tables. SP_Best_Execution not in OpsDB — pipeline appears deprecated."
+    },
+    {
+      "batch": 1,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.DSC_HedgeOnIndices",
+        "Dealing_dbo.DSC_HedgeOnIndices_H",
+        "Dealing_dbo.Dealing_ClientsCapitalAdequacy",
+        "Dealing_dbo.Dealing_LP_StocksNOP",
+        "Dealing_dbo.Dealing_NOP_LPandClients",
+        "Dealing_dbo.Dealing_CFDs_Stocks_Credit_Risk",
+        "Dealing_dbo.Dealing_CopyPortfolio_Allocation",
+        "Dealing_dbo.Dealing_DailyAvgSpread",
+        "Dealing_dbo.Dealing_DealingDashboard_Clients",
+        "Dealing_dbo.Dealing_Employee_Zero_StocksETFs"
+      ],
+      "quality_range": [7.0, 8.0],
+      "all_tier2": true
+    },
+    {
+      "batch": 2,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_NumberofPositionsOpened_Agg",
+        "Dealing_dbo.Dealing_GS_Credit_Risk",
+        "Dealing_dbo.Dealing_JP_Credit_Risk",
+        "Dealing_dbo.Dealing_Max_NOP",
+        "Dealing_dbo.Dealing_MIMO_Zero",
+        "Dealing_dbo.Dealing_NOPDistribution",
+        "Dealing_dbo.Dealing_OfferedInstruments",
+        "Dealing_dbo.Dealing_RolloverCommissionSplit",
+        "Dealing_dbo.Dealing_IndiciesIntraHour_Clients",
+        "Dealing_dbo.Dealing_IndiciesIntraHour_Etoro"
+      ],
+      "quality_range": [7.0, 8.0],
+      "all_tier2": true
+    },
+    {
+      "batch": 3,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Clicks_OpenClose_Breakdown",
+        "Dealing_dbo.Dealing_Failures",
+        "Dealing_dbo.Dealing_Failures_Rate",
+        "Dealing_dbo.Dealing_overnight_fees",
+        "Dealing_dbo.Dealing_CEP_ExecutionMonitoring",
+        "Dealing_dbo.Dealing_PDT",
+        "Dealing_dbo.Dealing_MarketMakerAllTrade",
+        "Dealing_dbo.Dealing_MarketMakerAllTradeEtoroX",
+        "Dealing_dbo.Dealing_MarketMakerBoundaries_CFD",
+        "Dealing_dbo.Dealing_MarketMakerBoundaries_Real",
+        "Dealing_dbo.Dealing_Islamic_Admin_Fee_Per_Group",
+        "Dealing_dbo.Dealing_Islamic_Instruments_Groups",
+        "Dealing_dbo.Dealing_Islamic_Units_Per_Contract",
+        "Dealing_dbo.Dealing_Staking_Emails",
+        "Dealing_dbo.Dealing_Staking_Parameters"
+      ],
+      "quality_range": [5.0, 7.8],
+      "notes": "Mix of ETL tables, Fivetran-loaded, reference/config tables, and one HOLD/deprecated table"
+    },
+    {
+      "batch": 4,
+      "date": "2026-03-21",
+      "objects": [
+        "Dealing_dbo.Dealing_Boundary_Cost",
+        "Dealing_dbo.Dealing_HedgeCost",
+        "Dealing_dbo.Dealing_ManipulationReport_RealStocks",
+        "Dealing_dbo.Dealing_ManipulationReport_RealStocks_CID",
+        "Dealing_dbo.Dealing_Market_Manipulation_Report",
+        "Dealing_dbo.Dealing_Market_Manipulation_Report_FCA",
+        "Dealing_dbo.Dealing_AbuseAPI",
+        "Dealing_dbo.Dealing_AbusersCIDs",
+        "Dealing_dbo.Dealing_ApexRecon_Hedging",
+        "Dealing_dbo.Dealing_ApexRecon_Holdings"
+      ],
+      "quality_range": [7.2, 8.2],
+      "notes": "Compliance/surveillance domain (depth=3) + abuse detection + Apex reconciliation (depth=2). Multiple PII tables. Atlassian MCP unavailable throughout. Market_Manipulation_Report_FCA potentially stale (max date 2025-07-12)."
+    }
+  ],
+  "cross_batch_knowledge": {
+    "common_sources": {
+      "BI_DB_dbo.BI_DB_PositionPnL": "Primary client position fact table — used by 7 of 10 Batch 1 objects and Batch 2 objects (GS/JP Credit Risk, NOPDistribution). Contains DateID, CID, InstrumentID, IsBuy, NOP, DailyPnL, PositionPnL, AmountInUnitsDecimal, IsSettled, HedgeServerID, Amount, Volume, VolumeOnClose, Commission fields.",
+      "DWH_dbo.Dim_Position": "Position lifecycle dimension — used by SP_DealingDashboard_Clients, SP_Employee_Zero_StocksETFs, SP_IntraHourIndexReport, SP_RolloverCommissionSplit. Contains open/close dates, NetProfit, FullCommission variants, leverage, MirrorID, IsSettled, forex rates.",
+      "DWH_dbo.Dim_Instrument": "Instrument dimension — used by all objects. Key fields: InstrumentID, InstrumentType, InstrumentTypeID, Name, InstrumentDisplayName, Symbol, SellCurrency, BuyCurrencyID, SellCurrencyID, Exchange, IsFuture.",
+      "DWH_dbo.Fact_SnapshotCustomer": "Customer snapshot dimension — used for regulation, country, MiFID, and validity filtering. Key fields: RealCID, RegulationID, CountryID, IsValidCustomer, IsDepositor, VerificationLevelID, PlayerStatusID, MifidCategorizationID, DateRangeID, GuruStatusID, AccountTypeID.",
+      "DWH_dbo.Dim_Regulation": "Regulation lookup. Key: DWHRegulationID/ID → Name. 15+ distinct values.",
+      "DWH_dbo.Fact_CurrencyPriceWithSplit": "Currency prices for NOP USD conversion. Key: InstrumentID, OccurredDateID → Ask, Bid, AskSpreaded, BidSpreaded.",
+      "Dealing_staging.etoro_History_Netting_History": "Temporal LP netting data (SysStartTime/SysEndTime SCD2). Used for LP NOP calculation in credit risk, Max NOP, and IntraHour tables.",
+      "Dealing_staging.etoro_Hedge_Netting": "Current LP netting state. Unioned with history for point-in-time LP position reconstruction.",
+      "BI_DB_dbo.BI_DB_DepositWithdrawFee": "Deposit/withdrawal transaction detail. Used by SP_MIMO_Zero for FX revenue calculation.",
+      "DWH_dbo.Dim_Mirror": "Copy trading relationship. MirrorID → ParentCID, ParentUserName. Used by SP_NOPDistribution.",
+      "DWH_dbo.Dim_Currency": "Currency dimension (CurrencyTypeID=1 for fiat). Used by SP_MIMO_Zero.",
+      "CopyFromLake.PriceLog_History_CurrencyPrice": "Minute-resolution raw prices. Used by SP_IntraHourIndexReport for intraday price reconstruction.",
+      "CopyFromLake.etoro_Hedge_ExecutionLog": "LP hedge execution data. Used by SP_IntraHourIndexReport for LP volume calculation.",
+      "Dealing_staging.External_Fivetran_dealing_active_hs_mappings": "Dynamic hedge server → LP mapping. Used by SP_JP_Credit_Risk to identify JPM servers.",
+      "CopyFromLake.etoro_History_OrdersFail": "Order failure records with ErrorCode and FailReason. Used by SP_Failures for daily failure aggregation.",
+      "CopyFromLake.MarketMaker_dbo_HedgeTrades": "LP hedge trade records from MarketMaker system. Used by SP_MarketMakerAllTrade.",
+      "Dealing_staging.External_MarketMaker_dbo_Configurations": "JSON configuration data for market maker exposure band limits. Parsed by SP_MarketMakerBoundaries.",
+      "Dealing_staging.External_ExternalOperations_Trade_PdtOperations": "PDT (Pattern Day Trader) round trip data from Apex clearing. Used by SP_PDT.",
+      "DWH_dbo.Fact_CustomerAction": "Customer action log — ActionTypeID=35 with IsFeeDividend=4 = ticket fees. Used by SP_Clicks_OpenClose_Breakdown.",
+      "DWH_dbo.Dim_PlayerLevel": "Player tier lookup (Name: Bronze, Silver, Gold, Platinum). Used by SP_Clicks_OpenClose_Breakdown for Club column."
+    },
+    "common_patterns": {
+      "nop_sign_convention": "NOP sign: (2*IsBuy-1) — positive for long (IsBuy=1), negative for short (IsBuy=0)",
+      "fx_conversion_to_usd": "Multi-step FX to CurrencyID=1 (USD): 1) SellCurrencyID=1 → 1.0, 2) BuyCurrencyID=1 → 1/price, 3) cross via intermediate pair",
+      "real_vs_cfd": "Two approaches: IsSettled=1 for Real (client positions) OR HedgeServerID list (3,9,102,112,125,126,81) for Real (LP positions)",
+      "zero_calculation": "eToro revenue (Zero): Realized = NetProfit + CommissionOnClose - PrevDayPnL. Unrealized = DailyPnL + commission adjustment.",
+      "valid_customer_filter": "Standard filter: IsValidCustomer=1. Extended filter adds: IsDepositor=1, VerificationLevelID IN (2,3), PlayerStatusID NOT IN (2,4,14).",
+      "netting_dedup": "LP netting dedup: UNION history+current → ROW_NUMBER PARTITION BY (server, instrument) ORDER BY UpdateTime DESC → rank=1",
+      "credit_risk_scenario": "Stress test: CASE WHEN Buffer>threshold THEN 0 ELSE OP*(threshold-Buffer) END. Buffer=1/EffLev. 10 scenarios: ±15%, ±20%, ±25%, ±30%, ±50%.",
+      "effective_leverage": "EffLev per position = ABS(NOP)/NULLIF(Amount+PositionPnL, 0). Weighted average across positions.",
+      "mimo_zero": "FX implicit revenue: LocalAmount * (EODRate - WeightedAvgTransactionRate). Rolling sum via self-join to yesterday.",
+      "rollover_fee_split": "Overnight fee decomposition: PureLPCost = (NonLeveragedOverNightFee - eToroCommission) * Units. eToroCommission = Price * 0.05/365.",
+      "intraday_forward_fill": "Price drag: if no price for a minute, OUTER APPLY to latest non-NULL price. LAG() for FirstBid/FirstAsk."
+    },
+    "common_sources_batch5": {
+      "CopyFromLake.eToroLogs_Real_Hedge_EMSOrders": "EMS Async execution log — source for latency/slippage pipeline (SP_Latency_Report, SP_Slippage_Report, SP_Best_Execution). Contains ExecutionTime, RequestTime, LiquidityAccountID, ExecutionID. Switched from HBCExecutionLog in SR-223342 (Dec 2023).",
+      "CopyFromLake.etoro_Hedge_ExecutionLog": "LP trade fills — source for SP_DataForDuco ActivityRecon path. Contains trade units, rate, HedgeServerID per instrument per date.",
+      "Dealing_staging.LP_APEX_EXT872_3EU_217314": "Apex broker trade file (Fivetran) — source for SP_Apex_Recon trade activity comparison. Contains AccountNumber, Units, Rate, Amount per instrument.",
+      "BI_DB_dbo.BI_DB_IndexesMapping_Static": "Static stock index membership mapping (S&P500, NASDAQ, etc.) — used by SP_DailyZeroPnL_Stocks for StockIndex column.",
+      "DWH_dbo.Dim_HistorySplitRatio": "Corporate action split ratio adjustments — used by SP_Slippage_Report and SP_Best_Execution to adjust AmountInUnitsDecimal and price rates for stock splits.",
+      "DWH_dbo.Dim_ExchangeInfo": "Exchange metadata — used by SP_Best_Execution for exchange/EU routing logic.",
+      "Dealing_staging.External_CalendarDB_Market_MergedDailySchedules": "Market calendar with open/close times per exchange per date — used by SP_Latency_Report and SP_Best_Execution for WithinFirst5/7Minutes_MarketHours flags."
+    },
+    "shared_sps": {
+      "SP_Capital_Adequacy_IFR_KPMG": "Writes to BOTH Dealing_ClientsCapitalAdequacy AND Dealing_LP_StocksNOP",
+      "SP_DealingDashboard_Clients": "Writes to Dealing_DealingDashboard_Clients AND Dealing_NumberofPositionsOpened_Agg",
+      "SP_IntraHourIndexReport": "Writes to BOTH Dealing_IndiciesIntraHour_Clients AND Dealing_IndiciesIntraHour_Etoro",
+      "SP_Failures": "Writes to BOTH Dealing_Failures AND Dealing_Failures_Rate",
+      "SP_MarketMakerBoundaries": "Writes to BOTH Dealing_MarketMakerBoundaries_CFD AND Dealing_MarketMakerBoundaries_Real",
+      "SP_Islamic_Administrative_Fee": "Reads from 3 reference tables: Dealing_Islamic_Admin_Fee_Per_Group, Dealing_Islamic_Instruments_Groups, Dealing_Islamic_Units_Per_Contract. Writes to Dealing_Islamic_Daily_Administrative_Fee.",
+      "SP_ManipulationReport_RealStocks": "Writes to BOTH Dealing_ManipulationReport_RealStocks (instrument-level, KPI structure) AND Dealing_ManipulationReport_RealStocks_CID (customer-level, separate flagging logic). Author: Amir Gurewitz 2019, 700+ lines.",
+      "SP_Apex_Recon": "Writes to THREE tables: Dealing_ApexRecon_TradeActivity, Dealing_ApexRecon_Holdings, Dealing_ApexRecon_Hedging (in that order, each downstream uses previous). Author: Sarah Benchitrit 2021. Reads from Dealing_Duco_ActivityRecon + EODRecon (eToro side) and LP_APEX_EXT872_3EU_217314 (Apex side). DST-aware. Additional intraday run via SP_Run_Recon at 12:00 UTC.",
+      "SP_DataForDuco": "Writes to BOTH Dealing_Duco_EODRecon AND Dealing_Duco_ActivityRecon. Author: Jenia 2021, updates through 2025-08-07. Skips weekends. EOD path: FULL OUTER JOIN netting vs BI_DB_PositionPnL. Activity path: FULL OUTER JOIN etoro_Hedge_ExecutionLog vs BI_DB_PositionPnL. Foundation for 11+ LP recon tables.",
+      "SP_Best_Execution": "Writes to BOTH Dealing_Best_Execution_Compensation_HBC (first) AND Dealing_Best_Execution_Compensation_CBH. Author: Adar Cahlon 2021. Reads from Dealing_Daily_Slippage_Positions (OverThreshold=1) and Dealing_Daily_Latency_Compensation. Fetches LP price from PriceLog_History_CurrencyPrice at FinalOccurred. APPEARS DECOMMISSIONED (max_date 2025-01-11).",
+      "SP_Latency_Report": "Writes to FOUR tables: Dealing_Daily_Latency, Dealing_Daily_Latency_ClientOrder_WithDelay, Dealing_Daily_Latency_Compensation, Dealing_Daily_Latency_AllPositions. Author: Eden Liberman 2018, Adar Cahlon extensive updates 2021-2024. Uses eToroLogs_Real_Hedge_EMSOrders for EMS timestamps. APPEARS DECOMMISSIONED (max_date 2025-01-11).",
+      "SP_Slippage_Report": "Writes to Dealing_Daily_Slippage_Positions (and Dealing_Daily_Slippage_Totals, _TriggerVSReceived). Author: Eden Liberman 2018, Adar Cahlon updates through 2024-08. P20 priority. APPEARS DECOMMISSIONED (max_date 2025-01-11).",
+      "SP_DailyZeroPnL_Stocks": "Writes to Dealing_DailyZeroPnL_Stocks. Author: Amir Gurewitz 2020, Synapse migration Gal 2024. Stocks/ETFs (InstrumentTypeID 5/6) only. Downstream: Dealing_Apex_PnL, Dealing_CFDs_Stocks_Credit_Risk, Dealing_HedgeCost, Dealing_Manual_Exec_Trade.",
+      "SP_CloseOnly_Recon": "Writes to Dealing_CloseOnly_Recon. Author: Gili Goldbaum 2023. Reads Dealing_Duco_EODRecon for both @Date and @Previous_Date. Skips Sundays. Weekend-aware Previous_Date (Mon→Fri)."
+    },
+    "hedge_server_notes": {
+      "2": "JP Morgan (CFD Stocks/ETF) — legacy",
+      "101": "Goldman Sachs (CFD Stocks/ETF) — hardcoded in SP_GS_Credit_Risk",
+      "81": "Real Stocks LP (only server with volume tracking in SP_Capital_Adequacy_IFR_KPMG)",
+      "real_servers": [3, 9, 102, 112, 125, 126, 81],
+      "excluded_from_nop": [101, 221, 223, 224, 225, 226, 5000],
+      "jpm_dynamic": "JP Morgan servers resolved dynamically from External_Fivetran_dealing_active_hs_mappings WHERE liquidity_provider LIKE '%JPM%'"
+    },
+    "instrument_type_ids": {
+      "1": "Currencies (FX)",
+      "5": "Stocks",
+      "6": "ETF"
+    },
+    "specific_instrument_ids": {
+      "17": "NSDQ100 (used in RolloverCommissionSplit)",
+      "22": "SPX500 (used in RolloverCommissionSplit)",
+      "27": "SPX500 (used in IntraHourIndexReport — index variant)",
+      "28": "DJ30 (used in IntraHourIndexReport)",
+      "32": "NSDQ100 (used in IntraHourIndexReport — index variant)"
+    },
+    "decommissioned_pipelines": {
+      "best_execution_pipeline": {
+        "tables": ["Dealing_Daily_Latency_Compensation", "Dealing_Daily_Slippage_Positions", "Dealing_Best_Execution_Compensation_CBH", "Dealing_Best_Execution_Compensation_HBC"],
+        "max_date": "2025-01-11",
+        "sps": ["SP_Latency_Report", "SP_Slippage_Report", "SP_Best_Execution"],
+        "opsdb_status": "SP_Best_Execution has P20 entries in OpsDB but all four tables have no recent data. SP_Latency_Report is P0. SP_Slippage_Report is P20. Confirm decommission status with Dealing team.",
+        "note": "Four tables with ~500M+ total rows of historical data still in Synapse. The HOLD variants (CBH_HOLD, HBC_HOLD) suggest planned deprecation. The last change to SP_Best_Execution was 2024-09-03."
+      }
+    },
+    "possibly_inactive_tables": {
+      "Dealing_Max_NOP": "Last data 2024-06-02 — SP_Max_NOP may be decommissioned",
+      "Dealing_MarketMakerAllTradeEtoroX": "HOLD/Deprecated since SR-239249 (2024-03-04). DDL renamed to HOLD_. SP section commented out.",
+      "Dealing_Failures_Rate": "Recent NULL values (Nov 2025+). CopyFromLake.etoro_Hedge_ExecutionLog may have stopped loading.",
+      "Dealing_Daily_Latency_Compensation": "Max date 2025-01-11 — part of decommissioned best-execution pipeline.",
+      "Dealing_Daily_Slippage_Positions": "Max date 2025-01-11 — part of decommissioned best-execution pipeline.",
+      "Dealing_Best_Execution_Compensation_CBH": "Max date 2025-01-11 — HOLD variant exists. Pipeline decommissioned.",
+      "Dealing_Best_Execution_Compensation_HBC": "Max date 2025-01-11 — HOLD variant exists. Pipeline decommissioned."
+    },
+    "islamic_fee_logic": {
+      "fee_formula": "Varies by InstrumentTypeID: Currencies=units/100000*fee*days, Commodities=units/contract_size*fee*days, Indices=units*fee*days, Stocks/ETF/Crypto=(units*USD_price/10000)*fee*days",
+      "grace_period": "7 days for all groups — no fee charged before day 8",
+      "day_count_rules": "Wed=3 for standard exchanges (ExchangeID 1,2), Fri=3 for commodities/non-standard (ExchangeID >=3), Thu=3 for InstrumentID=62, All days for ExchangeID=8 (crypto). Sat/Sun excluded except crypto.",
+      "excluded_instruments": "25 suspended instruments excluded from fee calculation"
+    },
+    "staking_program": {
+      "supported_cryptos": ["ETH", "ADA", "TRX", "SOL", "DOT", "NEAR", "ATOM", "AVAX", "SUI", "POL"],
+      "eur_pairs": ["ETHEUR", "SOLEUR", "ADAEUR"],
+      "instrument_id_range": "100xxx series (100001=ETH, 100017=ADA, 100026=TRX, etc.)",
+      "intro_days": {"ETH": 60, "ADA": 9, "default": 7},
+      "sp_family": {
+        "SP_Staking": "Non-US monthly reward calc. Event-driven (after month close). Writes: Dealing_Staking_Club, Dealing_Staking_Summary, Dealing_Staking_Results, Dealing_Staking_Position.",
+        "SP_Staking_US": "US monthly reward calc. Daily 11:00 AM. Writes: Dealing_Staking_Club_US, Dealing_Staking_Summary_US, Dealing_Staking_Results_US, Dealing_Staking_Position_US.",
+        "SP_Staking_DailyPool": "Daily non-US pool monitoring. Writes: Dealing_Staking_DailyPool, Dealing_Staking_OptedOut, Dealing_Staking_OptedOut_PerCID (co-written in one run).",
+        "SP_Staking_Emails": "Post-month email/compensation batch. Writes: Dealing_Staking_Compensation (cash payouts), Dealing_Staking_Emails_New (email triggers). Source: Dealing_Staking_Results WHERE ActualCompensationType='Cash'."
+      },
+      "table_pairs": {
+        "non_us": ["Dealing_Staking_Club", "Dealing_Staking_Summary", "Dealing_Staking_Results", "Dealing_Staking_Position", "Dealing_Staking_DailyPool", "Dealing_Staking_OptedOut", "Dealing_Staking_OptedOut_PerCID", "Dealing_Staking_Compensation", "Dealing_Staking_Emails_New", "Dealing_Staking_Parameters"],
+        "us": ["Dealing_Staking_Club_US", "Dealing_Staking_Summary_US", "Dealing_Staking_Results_US", "Dealing_Staking_Position_US", "Dealing_Staking_DailyPool_US", "Dealing_Staking_Emails_US", "Dealing_Staking_Compensation_US", "Dealing_Staking_Parameters_US"]
+      },
+      "known_bugs": {
+        "staking_month_id": "SP_Staking_Emails uses LEFT(CONVERT(VARCHAR,@StakingMonthID),7) instead of LEFT(...,6), producing 7-digit month IDs. Affected months: 2024100 (should be 202410), 2025030 (should be 202503). Both Dealing_Staking_Compensation and Dealing_Staking_Emails_New are affected."
+      },
+      "club_eligibility": "≤40 USD equivalent of eligible crypto holdings per client. Computed from #1USD_Holdings_Threshold in SP_Staking. Club clients get 10% commission reduction.",
+      "liquidity_buffer": "Units_AvailableForStaking = LEAST(EligibleUnits × LiquidityBuffer, OptedInUnits × 0.95). ETH: OptedInUnits × 0.90. LiquidityBuffer from Dealing_Staking_Parameters.",
+      "us_instruments_gap": "DailyPool_US has 4 instruments (ADA/SOL/ETH/SUI) but Compensation_US and Emails_US only reference 3 (ADA/SOL/ETH). SUI added to US program but payout pipeline may not yet be extended.",
+      "opsdb_gaps": "SP_Staking → Dealing_Staking_Club relationship NOT in OpsDB. Only Summary, Position, Results tracked. Dealing_Staking_DailyPool also not in OpsDB."
+    },
+    "market_maker": {
+      "boundary_types": {
+        "CFD": "etoro_cfd",
+        "Real_IM": "eToro_Real_IM", 
+        "Real_HBC": "etoro_MM_HBC_Real"
+      },
+      "config_name": "PushedOrderWithLPAndAggregationExecution_ExposureBandLimitsPerInstrumentPerPartyName",
+      "etorox_deprecated": "eToroX exchange section removed SR-239249. Table renamed to HOLD."
+    },
+    "pdt_tracking": {
+      "source": "Apex clearing broker",
+      "threshold": "3+ round trips, non-OK status",
+      "apex_id_format": "Alphanumeric 8-char (e.g., 3EW35324)"
+    }
+  },
+  "batch_13": {
+    "batch": 13,
+    "date": "2026-03-21",
+    "objects": [
+      "Dealing_dbo.Dealing_Daily_Latency",
+      "Dealing_dbo.Dealing_Daily_Latency_StatusUpdateTime",
+      "Dealing_dbo.Dealing_Daily_Latency_AllPositions",
+      "Dealing_dbo.Dealing_Daily_Latency_AllPositions_StatusUpdateTime",
+      "Dealing_dbo.Dealing_Daily_Latency_ClientOrder_WithDelay",
+      "Dealing_dbo.Dealing_Daily_Latency_ClientOrder_WithDelay_StatusUpdateTime",
+      "Dealing_dbo.Dealing_Daily_Latency_Compensation_StatusUpdateTime",
+      "Dealing_dbo.Dealing_OccurredAtProvider_Latency_Instrument",
+      "Dealing_dbo.Dealing_OccurredAtProvider_Latency_LiquidityAccountID",
+      "Dealing_dbo.Dealing_OccurredAtProvider_Latency_PCSID",
+      "Dealing_dbo.Dealing_Latency_SuspiciousCIDs",
+      "Dealing_dbo.Dealing_DailySpread_ModeFrequency",
+      "Dealing_dbo.Dealing_DailySpreadsAggregated",
+      "Dealing_dbo.Dealing_DailySpreadsAggregatedFX",
+      "Dealing_dbo.Dealing_DailyVariableSpread",
+      "Dealing_dbo.Dealing_Extented_Hours_NewCID",
+      "Dealing_dbo.Dealing_Extented_Hours_Volume"
+    ],
+    "quality_range": [7.0, 8.5],
+    "notes": "Latency + Spreads + Extended Hours. Key findings: (1) All Latency tables (SP_Latency_Report + SP_Latency_Report_StatusUpdateTime) stopped Jan 11 2025 — CopyFromLake.eToroLogs_Real_Hedge_EMSOrders feed disruption. _StatusUpdateTime family covers only Jul-Oct 2024 (3-month experimental window). (2) OccurredAtProvider tables (3) measure price feed delivery latency from LPs (OccurredOnProvider→ReceivedOnPriceServer, filter ≥3s) — also stopped Jan 2025 (PriceLog feed). Three granularity levels: Instrument→LiquidityAccountID→PCSID. (3) Dealing_Latency_SuspiciousCIDs is active (to 2026-03-10) — NULL sentinel rows on empty days. (4) DailySpread_ModeFrequency and DailyVariableSpread are active; DailySpreadsAggregated STALE since Feb 2025; DailySpreadsAggregatedFX STALE since Apr 2024 (FX branch removed from SP). (5) Extended hours tables: 'Extented' typo preserved in all object names; stopped Aug 2025 despite OpsDB Priority 0; OverNight_Session category added to Volume table Mar 2025 — not backfilled."
+  },
+  "batch_14": {
+    "batch": 14,
+    "date": "2026-03-21",
+    "objects": [
+      "Dealing_dbo.Dealing_ClientDataFinal",
+      "Dealing_dbo.Dealing_ClientDataRecurring",
+      "Dealing_dbo.Dealing_ClientDataTop50",
+      "Dealing_dbo.Dealing_ClientsDataChange_3Months",
+      "Dealing_dbo.Dealing_ClientsDataChange_6Months",
+      "Dealing_dbo.Dealing_Commission_Assurance",
+      "Dealing_dbo.Dealing_Commission_Assurance_By_Position",
+      "Dealing_dbo.Dealing_ClientCountry",
+      "Dealing_dbo.Dealing_ClientCountry_Reg",
+      "Dealing_dbo.Dealing_CME_Reporting",
+      "Dealing_dbo.Dealing_CapitalGuarantee",
+      "Dealing_dbo.Dealing_ManualPositionClose",
+      "Dealing_dbo.Dealing_Manual_Exec",
+      "Dealing_dbo.Dealing_Manual_Exec_Trade",
+      "Dealing_dbo.Dealing_Manual_Exec_Trade_Summary",
+      "Dealing_dbo.Dealing_SuspiciousActivityTrading_24H",
+      "Dealing_dbo.Dealing_PreviouslyIdentifiedAbusers",
+      "Dealing_dbo.Dealing_SelfCopyingPI",
+      "Dealing_dbo.Dealing_Monitoring_ADV",
+      "Dealing_dbo.Dealing_Monitoring_ADV_MoreThanPercent",
+      "Dealing_dbo.Dealing_NOP_Report",
+      "Dealing_dbo.Dealing_MAXLeverageByNOP",
+      "Dealing_dbo.Dealing_MaxNOPLimitSettings",
+      "Dealing_dbo.Dealing_MaxPositionUnits"
+    ],
+    "quality_range": [7.5, 9.0],
+    "notes": "Five functional families. (1) Client Analytics: WeeklyClientData SP (5 tables, InstrumentTypeID scope varies — Change tables use 2,4 only), SP_ClientCountry (2 tables, Exchange→country CASE hardcoded, IsSameRegion DWH RegulationID→region mapping), SP_Rev_Assurance (2 tables, monthly MTD, 90M+ rows position-level), SP_M_CME_Reporting (1 table, 24 hardcoded instrument IDs), SP_CapitalGuarantee (1 table, promo expired 2025-01-01 but SP still running). (2) Manual Execution: SP_ManualPositionClose (crisis-flow, US_Client via CountryIDs 4/86/153/166/214/219, tree via MirrorID>0), SP_Manual_Exec (STALE since 2024-11-02, 3 exec types, InstrumentID 19×0.01/22×0.001 multipliers), SP_Manual_Exec_Trade (active, RequestTypeID IN 0,3, signed units, also writes Summary with NOP_Start/End from netting, Zero from BI_DB_DailyZero_TreeSize_NEW+Dealing_DailyZeroPnL_Stocks). (3) Surveillance/Abuse: SuspiciousActivityTrading_24H (3-min burst detection, HAVING COUNT(*)≥5 AND SUM>3K, copy trades TreePnL>10K, IsImportantPI >10 copiers, NULL sentinels), PreviouslyIdentifiedAbusers (SENSITIVE — ~120 hardcoded FirstName+LastName pairs, HASH(CID) distribution, NULL sentinels), SelfCopyingPI (DECOMMISSIONED April 2024, HOLD_20240416 SP prefix, last data 2023-09-03, Dim_Mirror CopyerIP matching). (4) ADV Monitoring: SP_Monitoring_ADV writes both ADV (29M rows, Real Stocks+ETFs InstrumentTypeID 5,6) and MoreThanPercent (per-CID threshold alerts) in same execution; CopyFromLake ExecutionLog loading added Dec 2024 SR-289246; special-char column names need quoting. (5) NOP/Risk Config: NOP_Report (ProcessType 3 SQL&TIME, skips Saturday, Sunday→Friday date, 10 LPs, 21K-token SP), MAXLeverageByNOP (JSON_VALUE from BI_DB_dbo.External_SettingsDB_Settings_SystemRestrictions.SelectedValue, GETDATE() only, 5 NOP tiers per row), MaxNOPLimitSettings (EXW_Settings schema — DIFFERENT system from External_SettingsDB; TagType=Customer+TagValue=CID for individual overrides; RestrictionWeight=priority), MaxPositionUnits (DWH_staging.etoro_Trade_ProviderToInstrument, Tradable=1+VisibleInternallyOnly=0 filters, [MaxPositionUnitsXaip.LastPrice]=units×BidSpreaded price).",
+    "glossary": {
+      "ADV": "Average Daily Volume — market-wide daily trading volume for an instrument (from external market data source)",
+      "NOP": "Net Open Position — eToro's total open exposure for an instrument",
+      "EXW_Settings": "Execution settings schema — separate from BI_DB_dbo.External_SettingsDB; governs position limits and NOP caps",
+      "External_SettingsDB": "BI_DB_dbo settings system — governs leverage tiers; distinct from EXW_Settings",
+      "MKTcap": "Market capitalization in native currency (Monitoring_ADV)",
+      "SharesOutStanding": "Total shares outstanding for an instrument (Monitoring_ADV)",
+      "PercentfromADV": "Client daily volume / ADV × 100 — individual client's share of market ADV (MoreThanPercent table)",
+      "RestrictionWeight": "Priority of a NOP restriction rule — higher = higher precedence (MaxNOPLimitSettings)",
+      "Xaip": "Unknown acronym in MaxPositionUnitsXaip.LastPrice column — likely external API/provider system",
+      "HBC_PI": "High-Balance Copy - Popular Investor execution type in Manual_Exec",
+      "ProcessType3": "OpsDB ProcessType=3 (SQL&TIME) — SP has a time-based scheduling component",
+      "NULL_sentinel": "A NULL-filled row written on days with no activity (via LEFT JOIN to Dim_Date) — prevents pipeline false-positives from missing dates"
+    }
+  }
+}

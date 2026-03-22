@@ -61,6 +61,41 @@ Record for each column:
     - CASE/IIF -> "Conditional: {condition} -> {value1}, ELSE -> {value2}"
     - Literal -> "Hard-coded to {value}"
     - NULL -> "Initially NULL"
+  Computation Formula (MANDATORY for Phase 11 Rule 20):
+    - For SUM/COUNT/AVG: record the exact WHERE filters (ActionTypeID, ReasonID, InstrumentTypeID, IsSettled, SettlementTypeID, etc.)
+    - For CASE/IIF flags: record the exact condition expression
+    - For compensation subsets: record the EXACT CompensationReasonID list (IN or NOT IN)
+    - For filtered aggregations: record ALL filter predicates with actual values
+    - For day-over-day deltas: record the source column and table for both today/yesterday
+    - For function calls: record the function name and parameters
+    This formula data is what Phase 11 embeds in column descriptions to show HOW each metric is computed.
+```
+
+### ⛔ Step 2b: Alias-Level Source Attribution (Multi-Table JOINs)
+
+When a SELECT draws from a multi-table JOIN (including temp table population, INSERT...SELECT, and CTAS), **each column's source is determined by its table alias in the SELECT list — NOT by the JOIN clause**.
+
+**The failure mode this prevents**: The LLM reads a query like:
+```sql
+SELECT dc.FirstDepositDate, D.FundingTypeID, dbd.Name AS Processor
+FROM Dim_Customer dc
+LEFT JOIN Fact_BillingDeposit D ON dc.FTDTransactionID = CAST(D.DepositID AS NVARCHAR(4000))
+LEFT JOIN Dim_BillingDepot dbd ON D.DepotID = dbd.DepotID
+```
+...and describes `FirstDepositDate` as coming "from Dim_Customer via Fact_BillingDeposit WHERE IsFTD=1" — conflating the JOIN condition (which serves `D.FundingTypeID` and `dbd.Name`) with the source of `dc.FirstDepositDate` (which is purely `Dim_Customer`).
+
+**Rule**: For EVERY column in the SELECT list:
+1. Identify the **alias prefix** (e.g., `dc.FirstDepositDate` → alias `dc`)
+2. Resolve the alias to its table in the FROM/JOIN clause (e.g., `dc` → `Dim_Customer`)
+3. That resolved table is the column's **source** — full stop
+4. JOIN conditions on OTHER aliases are **irrelevant** to this column's source attribution
+5. A column is "join-enriched" ONLY if its alias resolves to a JOINed table (e.g., `dbd.Name` → alias `dbd` → `Dim_BillingDepot` via JOIN)
+
+**In the source-to-target map output**: Record the alias-resolved source, not the query's "most complex" table:
+```
+CORRECT:  FirstDepositDate  ← Dim_Customer.FirstDepositDate  [direct]
+CORRECT:  Processor         ← Dim_BillingDepot.Name          [join-enriched via Fact_BillingDeposit.DepotID]
+WRONG:    FirstDepositDate  ← Dim_Customer.FirstDepositDate via Fact_BillingDeposit  [conflated]
 ```
 
 ### Step 3: Extract Transformation Logic
@@ -79,6 +114,32 @@ TRANSFORMATION: {Column}
   Logic: {SQL expression or description}
   Business Meaning: {what this computation represents}
 ```
+
+### Step 3b: Read Called Functions (BI_DB and downstream schemas)
+
+**Check `dwh-semantic-doc-config.json` → `ssdt_repo.function_foundations`** to see if this schema requires function analysis.
+
+When the writer SP calls a user-defined function (e.g., `dbo.Function_Trading_Volume(...)`, `dbo.Function_Revenue_TicketFee(...)`), **read the function definition from the SSDT repo**:
+
+```
+Read: DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/Functions/{Schema}.{FunctionName}.sql
+```
+
+For each called function:
+1. Extract the calculation logic (SELECT expression, CASE branches, aggregation formulas)
+2. Map function parameters to the calling SP's column bindings
+3. Record the function's output as the business logic definition for the target column
+
+```
+FUNCTION: {Schema}.{FunctionName}
+  Called By: {WriterSP}
+  Parameters: {param1} = {bound_column}, {param2} = {bound_column}
+  Returns: {data_type}
+  Logic: {concise formula or rule description}
+  Maps To Column: {TargetColumn in the documented table}
+```
+
+Functions in BI_DB contain the core business logic — revenue calculations, trading volume formulas, population segmentation rules, PnL computations. Without reading them, column descriptions for computed columns are meaningless placeholders.
 
 ### Step 4: Extract Source-to-Target Mapping
 
@@ -156,8 +217,13 @@ ETL SUMMARY:
   Transformations: {N} columns transformed
 
 SOURCE-TO-TARGET MAP:
-| Target Column | Source | Transform | Business Meaning |
-|--------------|--------|-----------|------------------|
+| Target Column | Source | Transform | Computation Formula | Business Meaning |
+|--------------|--------|-----------|---------------------|------------------|
+{The Computation Formula column is CRITICAL for Phase 11 Rule 20. For each computed column, include the concise formula:}
+{e.g.: CompensationPI | Fact_CustomerAction | SUM+filter | SUM(Amount) WHERE ActionTypeID=36 AND CompensationReasonID IN (23,42,51) | PI payouts }
+{e.g.: Deposits | Fact_CustomerAction | SUM+filter | SUM(Amount) WHERE ActionTypeID=7, MMRID NOT IN (internal xfer) | Customer deposits }
+{e.g.: IsDLTUser | Fact_SnapshotCustomer | flag | CASE WHEN DltStatusID=4 THEN 1 ELSE 0 | Has active DLT wallet }
+{For passthrough columns from views/snapshots, formula = "Direct: SourceView.ColumnName"}
 
 KEY BUSINESS RULES DISCOVERED:
   1. {Rule from procedure logic}

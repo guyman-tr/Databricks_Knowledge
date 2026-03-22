@@ -57,34 +57,86 @@ while ($true) {
     $outputTokens = 0
     $costUsd = 0
 
+    $batchMaxSeconds = 900   # 15 min hard ceiling per batch
+    $postResultGrace = 30    # kill 30s after "result" event (conversation done but process lingers)
+
+    $tempOut = Join-Path $env:TEMP "claude_wiki_batch_$iteration.jsonl"
+    $tempErr = Join-Path $env:TEMP "claude_wiki_batch_err_$iteration.tmp"
+    Remove-Item $tempOut -Force -ErrorAction SilentlyContinue
+    Remove-Item $tempErr -Force -ErrorAction SilentlyContinue
+
     try {
-        & $claudePath --dangerously-skip-permissions --verbose --output-format stream-json --print "run $batchCommand $commandArgs" 2>$null | ForEach-Object {
-            try {
-                $obj = $_ | ConvertFrom-Json -ErrorAction SilentlyContinue
-                if ($null -eq $obj) { return }
-                if ($obj.type -eq "assistant" -and $obj.message.content) {
-                    foreach ($block in $obj.message.content) {
-                        if ($block.type -eq "text" -and $block.text) {
-                            Write-Host $block.text -NoNewline
-                        } elseif ($block.type -eq "tool_use") {
-                            Write-Host "[Tool: $($block.name)]" -ForegroundColor Cyan
-                        }
-                    }
-                }
-                if ($obj.type -eq "result") {
-                    if ($obj.usage) {
-                        $inputTokens  = $obj.usage.input_tokens
-                        $outputTokens = $obj.usage.output_tokens
-                    }
-                    if ($obj.cost_usd) { $costUsd = $obj.cost_usd }
-                }
-            } catch {
-                # JSON parse error - skip line
+        $proc = Start-Process -FilePath $claudePath `
+            -ArgumentList "--dangerously-skip-permissions --verbose --output-format stream-json --print `"run $batchCommand $commandArgs`"" `
+            -PassThru -NoNewWindow `
+            -RedirectStandardOutput $tempOut `
+            -RedirectStandardError $tempErr
+
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+        $lastSize = 0
+        $gotResult = $false
+        $resultElapsed = 0
+
+        while (-not $proc.HasExited) {
+            Start-Sleep -Milliseconds 500
+
+            if ($gotResult -and ($sw.Elapsed.TotalSeconds - $resultElapsed) -gt $postResultGrace) {
+                Write-Host "`n  Post-result cleanup: process did not exit within $($postResultGrace)s -- killing." -ForegroundColor DarkYellow
+                Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+                break
             }
+            if ($sw.Elapsed.TotalSeconds -gt $batchMaxSeconds) {
+                Write-Host "`n  TIMEOUT ($($batchMaxSeconds)s): Killing hung Claude process..." -ForegroundColor Red
+                Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+                break
+            }
+
+            if (-not (Test-Path $tempOut)) { continue }
+            $fi = Get-Item $tempOut -ErrorAction SilentlyContinue
+            if ($null -eq $fi -or $fi.Length -le $lastSize) { continue }
+
+            try {
+                $stream = [System.IO.File]::Open($tempOut, 'Open', 'Read', 'ReadWrite')
+                $stream.Seek($lastSize, 'Begin') | Out-Null
+                $reader = New-Object System.IO.StreamReader($stream)
+                while ($null -ne ($line = $reader.ReadLine())) {
+                    try {
+                        $obj = $line | ConvertFrom-Json -ErrorAction SilentlyContinue
+                        if ($null -eq $obj) { continue }
+                        if ($obj.type -eq "assistant" -and $obj.message.content) {
+                            foreach ($block in $obj.message.content) {
+                                if ($block.type -eq "text" -and $block.text) {
+                                    Write-Host $block.text -NoNewline
+                                } elseif ($block.type -eq "tool_use") {
+                                    Write-Host "[Tool: $($block.name)]" -ForegroundColor Cyan
+                                }
+                            }
+                        }
+                        if ($obj.type -eq "result") {
+                            $gotResult = $true
+                            $resultElapsed = $sw.Elapsed.TotalSeconds
+                            if ($obj.usage) {
+                                $inputTokens  = $obj.usage.input_tokens
+                                $outputTokens = $obj.usage.output_tokens
+                            }
+                            if ($obj.cost_usd) { $costUsd = $obj.cost_usd }
+                        }
+                    } catch { }
+                }
+                $lastSize = $stream.Position
+                $reader.Close()
+                $stream.Close()
+            } catch { }
         }
     } catch {
         Write-Host ""
         Write-Host "  Claude Code process error: $_" -ForegroundColor Red
+    } finally {
+        if ($proc -and -not $proc.HasExited) {
+            Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+        }
+        Remove-Item $tempOut -Force -ErrorAction SilentlyContinue
+        Remove-Item $tempErr -Force -ErrorAction SilentlyContinue
     }
 
     $totalCostUsd += $costUsd

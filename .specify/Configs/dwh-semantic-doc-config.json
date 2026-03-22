@@ -50,6 +50,26 @@
           "eMoney_dbo/External Tables"
         ]
       },
+      "opsdb_orchestration": {
+        "description": "Static snapshots of OpsDB ETL orchestration metadata. Use these INSTEAD of querying OpsDB MCP. Covers BI_DB_dbo, DWH_dbo, Dealing_dbo schemas. Refresh manually via OpsDB MCP only if objects are missing.",
+        "objects_status": ".specify/Configs/opsdb-objects-status.json",
+        "objects_status_note": "710 active objects: ProcedureName, TableName, Priority (0=first, 99=last), FrequencySP, ProcessType (1=SQL, 4=FinanceReportSPS), ProcessName",
+        "procedure_dependencies": ".specify/Configs/opsdb-procedure-dependencies.json",
+        "procedure_dependencies_note": "1149 rows: Main rows (SP→Table) + Dependency rows (SP reads from other SP outputs). RowType='Main row' or 'Dependencie row'",
+        "process_type_dic": ".specify/Configs/opsdb-process-type-dic.json",
+        "process_type_dic_note": "ProcessType ID → description lookup (1=SQL, 2=GENERIC-DWH, 3=SQL&TIME, 4=FinanceReportSPS)",
+        "priority_semantics": {
+          "0": "Base layer — no intra-schema dependencies, reads from DWH/production directly",
+          "15": "Second wave — depends on Priority 0 outputs (e.g., CMR Phase2)",
+          "20": "Third wave — depends on Priority 0 and 15 outputs",
+          "21": "Slight dependency on Priority 20",
+          "60": "DDR fact tables — heavy cross-object aggregation",
+          "70": "Usage tracking (Salesforce)",
+          "80": "Interest calculations",
+          "90": "Final aggregation (CIDFirstDates, DDR rollup)",
+          "99": "FinanceReportSPS — run LAST, depend on everything else"
+        }
+      },
       "lineage": {
         "generic_pipeline_mapping": {
           "catalog_view": "main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables",
@@ -58,6 +78,20 @@
           "static_fallback_note": "View has column-name misalignment from position 11 onward. Static file uses corrected position-based extraction. Refresh with _parse_mapping.py when needed.",
           "description": "Unity Catalog view that maps production source tables to their lake/DWH targets via the Generic Pipeline. Use this to trace lineage from any Synapse table back to its production source. Falls back to static JSON when Databricks MCP is unavailable."
         }
+      },
+      "object_blacklist": {
+        "description": "Objects matching these patterns are SKIPPED during documentation — frozen/archived tables not worth documenting. Applied across ALL target schemas.",
+        "name_patterns": [
+          {
+            "pattern": "*_HOLD",
+            "reason": "HOLD suffix = decommissioned/archived table. Pipeline stopped, data frozen. Not worth documenting or deploying to UC.",
+            "action": "skip",
+            "affected_objects": {
+              "Dealing_dbo": ["Daily_Slippage_Positions_HOLD", "Dealing_Best_Execution_Compensation_CBH_HOLD", "Dealing_Best_Execution_Compensation_HBC_HOLD"],
+              "BI_DB_dbo": ["BI_DB_Daily_Slippage_Totals_HOLD", "BI_DB_Daily_Latency_HOLD", "BI_DB_Daily_Latency_Compensation_HOLD", "BI_DB_Daily_Latency_ClientOrder_WithDelay_HOLD"]
+            }
+          }
+        ]
       },
       "ssdt_repo": {
         "description": "Dataplatform SSDT project — the version-controlled source of truth for ALL Synapse SQL Pool DDLs, SP code, view definitions, and function definitions. Constitution IX: ALWAYS read from here, NEVER query Synapse MCP for structural metadata.",
@@ -71,6 +105,12 @@
         },
         "counts": {
           "DWH_dbo": {"tables": 343, "stored_procedures": 126, "views": 22}
+        },
+        "function_foundations": {
+          "description": "For BI_DB_dbo and downstream schemas, functions contain foundational business logic (revenue calculations, population segmentation, trading volumes, DDR aggregations, PnL, AUM, MIMO). Phase 9 MUST read called functions from the SSDT repo and trace their logic into column descriptions. Functions are NOT documentation targets but are critical inputs — their computations define column semantics in the tables that use them.",
+          "applies_to_schemas": ["BI_DB_dbo", "Dealing_dbo"],
+          "ssdt_path": "{schema}/Functions/{schema}.{function_name}.sql",
+          "phase_9_instruction": "When tracing column assignments in a writer SP, if the SP calls a function (e.g., dbo.Function_Trading_Volume), READ the function definition from the SSDT repo. Extract the calculation logic and embed it concisely in the column description. The function IS the business logic — without reading it, the column description is meaningless."
         }
       },
       "upstream_knowledge_sources": [
@@ -82,6 +122,16 @@
           "wiki_schemas": ["Trade", "Customer", "Dictionary"],
           "fk_lookup_reference": ".cursor/rules/sql-semantic-doc/fk-lookup-reference.mdc",
           "index_file": "_semantic_index.md"
+        },
+        {
+          "name": "dwh_dbo_wiki",
+          "description": "Semantic wiki for the DWH_dbo schema in Synapse — BI_DB tables read heavily from DWH_dbo dimensions and facts. Column descriptions from DWH_dbo docs are Tier 1 sources for BI_DB documentation.",
+          "repo_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge",
+          "wiki_path": "knowledge/synapse/Wiki/DWH_dbo",
+          "wiki_schemas": ["Tables", "Views"],
+          "applies_to_schemas": ["BI_DB_dbo", "Dealing_dbo", "EXW_dbo", "eMoney_dbo"],
+          "index_file": "_index.md",
+          "tier_label": "Tier 1 — DWH_dbo wiki"
         }
       ],
       "confluence_sources": [

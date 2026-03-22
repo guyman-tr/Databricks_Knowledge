@@ -35,9 +35,20 @@ dim_position depends on:
 
 For DWH_Migration dependencies, document them as "frozen — no ETL dependency, static data migrated from legacy DWH." They do not affect refresh scheduling but must appear in the dependency graph for lineage completeness.
 
-### Step 2: Search for Orchestration Metadata
+### Step 2: Read OpsDB Orchestration Metadata (Static Files)
 
-**Repo First (Constitution IX):** Check the SSDT repo for known orchestration/log tables before querying live data:
+**Static first — do NOT query OpsDB MCP.** Read the pre-extracted orchestration data from the config files referenced in `dwh-semantic-doc-config.json` → `opsdb_orchestration`:
+
+1. **Read `.specify/Configs/opsdb-objects-status.json`** — find entries where `TableName` matches `{Schema}.{Table}`. Extract:
+   - `ProcedureName` — the SP that populates this table
+   - `Priority` — execution order (0=first, 99=last)
+   - `FrequencySP` — refresh schedule (Daily, Hourly, Weekly, Monthly, Quarterly)
+   - `ProcessType` — 1=SQL, 4=FinanceReportSPS
+   - `ProcessName` — process group (SB_Daily, SB_Hourly)
+
+2. **Read `.specify/Configs/opsdb-procedure-dependencies.json`** — find entries where `ProcedureName` matches the SP from step 1. Rows with `RowType="Dependencie row"` show which other BI_DB/DWH SPs this SP depends on (reads their output tables).
+
+3. **Cross-reference with SSDT repo** for orchestration/log tables:
 
 ```
 Grep: "{TableName}"
@@ -51,16 +62,7 @@ Also check known DWH orchestration tables (these exist in DWH_dbo):
 - `DataSolutionsProcessesStatus` — tracks ETL process execution
 - `DataLakeTableStatus` — tracks lake-to-Synapse load status
 
-**Live data query (valid MCP use — querying row-level content, not structural metadata):**
-
-If an ETL log/status table is identified (from the repo or known tables above), query it for the target table's refresh history:
-
-```sql
-SELECT TOP 20 *
-FROM [{Schema}].[{ETLLogTable}]
-WHERE [{TableNameColumn}] LIKE '%{TableName}%'
-ORDER BY [{DateColumn}] DESC
-```
+**Live OpsDB MCP query — ONLY if the table is not found in the static files** (e.g., newly added object). In that case, query `dbo.ObjectsStatus` and `dbo.V_ProcedureDependencies` via `opsdb_sql` MCP tool.
 
 ### Step 3: Infer Refresh Pattern from Data
 
@@ -94,9 +96,12 @@ WHERE object_id = OBJECT_ID('{Schema}.{WriterProcName}')
 ```
 ETL ORCHESTRATION:
   Loader SP: {Schema}.{ProcName}
-  Frequency: {Hourly / Daily / On-demand / Unknown}
+  OpsDB Priority: {N} ({priority_semantics from config})
+  Frequency: {FrequencySP from OpsDB} / {Hourly / Daily / On-demand / Unknown}
+  Process: {ProcessName} ({ProcessType → ProcessTypeDic description})
   Load Pattern: {Full / Incremental / Merge}
-  Dependencies: {list of tables that must be loaded first}
+  Dependencies (from OpsDB): {list of dependent SPs/tables from procedure_dependencies}
+  Dependencies (from SP code): {list of tables that must be loaded first}
   Typical Lag: {N hours behind production}
   Last Refresh: {timestamp from data}
 ```
@@ -106,6 +111,13 @@ ETL ORCHESTRATION:
 ```
 PHASE 9B RESULTS - {Schema}.{Table}
 =============================================
+OpsDB Orchestration:
+  SP: {ProcedureName}
+  Priority: {N} — {semantic meaning}
+  Schedule: {FrequencySP} / {ProcessName}
+  Process Type: {ProcessType} ({ProcessTypeDic desc})
+  Dependencies: {N} upstream SPs (from OpsDB dependency graph)
+
 ETL Chain:
   Production -> Lake (Generic Pipeline) -> Staging -> {Schema}.{Table}
 

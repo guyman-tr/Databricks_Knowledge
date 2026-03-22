@@ -159,13 +159,27 @@ From Phase 9's source-to-target mapping, identify all source tables not already 
 - If it references a production table name directly, map it
 - Cross-reference with the mapping view results from Step 1
 
-### Step 3: Match to Upstream Production Wiki — TIER 1 SOURCE
+### Step 3: Match to Upstream Wiki — TIER 1 SOURCE
 
-Read the config to get the list of `upstream_knowledge_sources`. For each production source identified in Step 1, **read the upstream wiki file**:
+Read the config to get the list of `upstream_knowledge_sources`. Check ALL sources — both the production wiki and the DWH_dbo wiki (for downstream schemas like BI_DB_dbo).
 
+**Source selection logic:**
+1. If the source table is a DWH_dbo table (e.g., BI_DB reads from `DWH_dbo.Dim_Customer`) → use the `dwh_dbo_wiki` upstream source (check `applies_to_schemas` field)
+2. If the source traces to a production table (e.g., `etoro.Trade.PositionTbl`) → use the `production_trading_platform` upstream source
+3. Both can apply — a BI_DB table might read from DWH_dbo (which itself traces to production)
+
+**Path conventions differ per upstream source:**
+
+Production wiki (DB_Schema):
 ```
-Path: {upstream_repo_path}/{upstream_wiki_path}/{Schema}/Tables/{Schema}.{TableName}.md
+Path: {repo_path}/{wiki_path}/{Schema}/Tables/{Schema}.{TableName}.md
 Example: C:\Users\guyman\Documents\github\DB_Schema\etoro\Wiki\Trade\Tables\Trade.PositionTbl.md
+```
+
+DWH_dbo wiki (this repo):
+```
+Path: {repo_path}/{wiki_path}/Tables/{TableName}.md
+Example: C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md
 ```
 
 > **THIS IS THE ENTIRE POINT OF PHASE 13.** Without this step, zero Tier 1 columns appear in the output.
@@ -175,7 +189,30 @@ If the upstream wiki file exists, **READ IT** and extract:
 - **`## 1. Business Meaning`** — inherit as context for the DWH doc's Section 1
 - **`## 2. Business Logic`** — inherit logic that survives the ETL transformation
 
-Store the extracted upstream column descriptions in the Phase 13 results so Phase 11 can tag them as `(Tier 1 — upstream wiki, {Schema}.{Table})`.
+**TIER TRANSITIVITY — Extract the origin tier tag from each upstream column description:**
+
+When reading an upstream wiki column, parse the parenthetical tier tag at the end of the description:
+```
+Pattern: (Tier N — {origin})
+Example: "Customer ID. References Customer.Customer. (Tier 1 — Trade.PositionTbl)"
+  → origin_tier = "Tier 1"
+  → origin_source = "Trade.PositionTbl"
+```
+
+**Store BOTH the description AND the origin tier tag** in the Phase 13 results. Phase 11 will use the ORIGIN tag, not the intermediate table name. This ensures tier tags trace to the true source across unlimited relay layers:
+
+```
+Production (Trade.PositionTbl) → DWH_dbo.Dim_Position → BI_DB_dbo.BI_DB_PositionPnL
+  Commission: (Tier 1 — Trade.PositionTbl) in ALL three layers (no transformation)
+```
+
+If the upstream column has no parseable tier tag, treat the upstream table itself as the origin:
+```
+origin_tier = upstream column's own tier (default "Tier 1" if from upstream wiki)
+origin_source = "{UpstreamSchema}.{UpstreamTable}"
+```
+
+**Multi-hop resolution:** When the intermediate wiki (e.g., DWH_dbo) references an origin (e.g., `Trade.PositionTbl`), that origin passes through unchanged. Only actual transformations (SP-adjusted, function-computed, ETL-computed) warrant a new annotation — the origin itself NEVER changes.
 
 If NOT found, note `"No upstream wiki found for {DatabaseName}.{Schema}.{Table}"` in the lineage output and fall through to Tier 2-4 inference in Phase 11.
 
@@ -214,6 +251,8 @@ Target:
 ```
 
 ### Step 5: Column-Level Lineage
+
+**⛔ Alias-Level Source Attribution**: When mapping columns from multi-table JOINs in ETL SPs, each column's source is determined by its **table alias in the SELECT list** — not by the overall FROM/JOIN clause. See Phase 9 Step 2b for the full rule. The "Production Table" column below must reflect the alias-resolved source table, not a JOINed table whose condition happened to appear nearby in the SQL. Example: `dc.FirstDepositDate` from `Dim_Customer dc` → source is `Dim_Customer`, even if the same query JOINs to `Fact_BillingDeposit` for other columns.
 
 Map each DWH column back to its production origin:
 
@@ -294,10 +333,14 @@ One file per documented table. Contains the column-level lineage mapping in a st
 
 ### Columns
 
-| DWH Column | Source Table | Source Column | Transform | Notes |
-|-----------|-------------|---------------|-----------|-------|
-| {col} | {source} | {source_col} | {transform} | {notes} |
-| {computed_col} | — | — | ETL-computed | {formula or SP name} |
+| DWH Column | Source Table | Source Column | Transform | Computation Formula | Notes |
+|-----------|-------------|---------------|-----------|---------------------|-------|
+| {col} | {source} | {source_col} | passthrough | Direct: {source}.{col} | {notes} |
+| {computed_col} | Fact_CustomerAction | Amount | ETL-computed | `SUM(Amount) WHERE ActionTypeID=36 AND CompensationReasonID IN (23,42,51)` | {formula from Phase 9} |
+| {flag_col} | Fact_SnapshotCustomer | DltStatusID | ETL-computed | `CASE WHEN DltStatusID=4 THEN 1 ELSE 0` | {flag derivation} |
+| {delta_col} | Fact_CustomerUnrealized_PnL | {col} | ETL-computed | `today.X - yesterday.X` | {day-over-day delta} |
+
+**Computation Formula column (MANDATORY for Phase 11 Rule 20):** For ETL-computed, join-enriched, and SP-adjusted columns, include the concise SQL formula showing the exact filter predicates (ActionTypeID, CompensationReasonID, InstrumentTypeID, IsSettled, SettlementTypeID, etc.), aggregation type, and CASE/IIF conditions. Phase 11 embeds this formula directly into the wiki column description. For passthrough/rename columns, use `Direct: {source}.{col}`.
 
 ## Summary
 
