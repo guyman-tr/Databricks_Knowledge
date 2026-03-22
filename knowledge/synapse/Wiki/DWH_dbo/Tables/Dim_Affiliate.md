@@ -13,7 +13,9 @@
 | **Synapse Distribution** | REPLICATE |
 | **Synapse Index** | CLUSTERED INDEX (AffiliateID ASC) |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate_masked` |
+| **UC Target (PII)** | `pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate` |
+| **UC Masked Columns** | Email,City |
 | **UC Format** | _Pending — resolved during write-objects_ |
 | **UC Partitioned By** | _Pending — resolved during write-objects_ |
 | **UC Table Type** | _Pending — resolved during write-objects_ |

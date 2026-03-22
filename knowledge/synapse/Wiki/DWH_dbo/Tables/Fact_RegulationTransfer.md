@@ -14,7 +14,7 @@
 | **Synapse Index** | CLUSTERED INDEX (DateID ASC, CID ASC) |
 | **Synapse NCI** | IX_Fact_RegulationTransfer (DateID, CID) |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | `compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer` |
 | **UC Format** | _Pending — resolved during write-objects_ |
 | **UC Partitioned By** | _Pending — resolved during write-objects_ |
 | **UC Table Type** | _Pending — resolved during write-objects_ |

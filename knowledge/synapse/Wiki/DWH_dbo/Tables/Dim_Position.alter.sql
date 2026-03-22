@@ -1,305 +1,296 @@
 -- =============================================================================
 -- Databricks ALTER Script: DWH_dbo.Dim_Position
--- Generated: 2026-03-02 | Updated: 2026-03-08 | 14-phase pipeline
+-- Generated: 2026-03-22 | 15-phase pipeline
 -- Target: Unity Catalog table comment + column comments (1024 char limit)
--- UC Target: main.dwh.dim_position
--- Resolved via: information_schema (validated 2026-03-08)
--- Synapse Source: DWH_dbo.Dim_Position
+-- UC Target: main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position
+-- Resolved via: information_schema bulk query
+-- Classification: Standard
 -- =============================================================================
 
--- ---- Table Comment ----
-ALTER TABLE main.dwh.dim_position SET TBLPROPERTIES (
-    'comment' = 'Central trading-position dimension storing every open and historically-closed position as an end-of-day snapshot. Each row is one trade held by a customer on a financial instrument. Source: Trade.PositionTbl + Trade.PositionTreeInfo. Refreshed daily at midnight. Synapse: HASH(PositionID), CLUSTERED INDEX. UC: Delta, partitioned by etr_y/etr_ym/etr_ymd. Key patterns: CloseDateID=0 means open; filter ISNULL(IsPartialCloseChild,0)=0 to exclude partial-close children; InitialAmountCents/100 for USD amount.'
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position SET TBLPROPERTIES (
+    'comment' = 'Dim_Position is the central trading record table in DWH, containing every position (trade) ever opened on the eToro platform. Each row represents a single trading position lifecycle: opened by a customer (CID) on an instrument (InstrumentID), held for some duration, and either still open (CloseDateID=0) or closed with a final NetProfit. The data spans positions from 2007-08-27 to the most recent load date (2026-03-10 as of last ETL run 2026-03-11). **Position types represented**: - **Retail positions**: Opened by customers directly in the eToro web/mobile app - **Mirror/CopyTrading positions**: Opened when a customer copies another trader (MirrorID links to Dim_Mirror); ParentPositionID links to the "master" position - **Copy Fund positions**: IsCopyFundPosition=1 when the position''s root (TreeID) belongs to a fund account (AccountTypeID=9) - **AirDrop positions**: IsAirDrop=1 for positions created via airdrop events (crypto) - **ReOpen positions**: IsReOpen=1 for positions reopened after a ReOpen event; R...'
 );
 
--- ---- Table Tags ----
-ALTER TABLE main.dwh.dim_position SET TAGS (
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position SET TAGS (
     'domain' = 'trading',
     'object_type' = 'dimension',
     'source_schema' = 'DWH_dbo',
-    'source_server' = 'sql_dp_prod_we',
     'refresh_frequency' = 'daily',
-    'sla' = 'D+1 10:00',
     'source_system' = 'Synapse',
-    'synapse_distribution' = 'HASH(PositionID)',
-    'synapse_index' = 'CLUSTERED INDEX (PositionID)',
-    'uc_format' = 'delta',
-    'uc_partitioned_by' = 'etr_y, etr_ym, etr_ymd',
+    'synapse_distribution' = 'HASH (PositionID)',
+    'synapse_index' = 'CLUSTERED INDEX (CloseDateID ASC, PositionID ASC)',
     'pipeline' = 'dwh-semantic-doc',
     'pipeline_version' = '15-phase'
 );
 
-ALTER TABLE main.dwh.dim_position ALTER COLUMN PositionID COMMENT 'Unique position identifier. System-generated. Also serves as the root TreeID for independent (non-copy-trade) positions. HASH distribution key for this table.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CID COMMENT 'Customer ID — the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CurrencyID COMMENT 'Account currency for amounts/commissions. References Dim_Currency. In practice always 1 (USD) in this table.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ProviderID COMMENT 'Legacy field, always 1. Originally identified the trading provider.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InstrumentID COMMENT 'Financial instrument being traded (stock, forex, crypto, ETF, commodity, index). References Dim_Instrument. Drives settlement rules, fees, hedge routing, PnL conversion.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN HedgeID COMMENT 'Reference to a specific hedge record in Trade.Hedge. Links position to the corresponding hedge order. NULL if no direct hedge record.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN HedgeServerID COMMENT 'Hedge server routing/executing hedges for this position. References Trade.HedgeServer.HedgeServerID.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Leverage COMMENT 'Leverage multiplier (e.g., 1=no leverage/real ownership, 5=5x). Leverage=1 + IsSettled=1 → REAL settlement. Gross notional = Amount × Leverage.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Amount COMMENT 'Customer invested amount in USD. Updated proportionally on partial close. Gross notional = Amount × Leverage.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN AmountInUnitsDecimal COMMENT 'Position size in units of the underlying instrument (shares, crypto units, forex lots). Updated on partial close. Used in PnL and hedge exposure.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN LotCountDecimal COMMENT 'Position size in standard lots. Updated on partial close. Used in overnight fee and hedge calculations.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN UnitMargin COMMENT 'Margin requirement per unit at open, in account currency. Used for margin calcs, risk checks, regulatory reporting.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForexRate COMMENT 'Instrument exchange rate at open. Core PnL input: (CloseRate - InitForexRate) × Units × ConversionRate.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN NetProfit COMMENT 'Closed PnL in USD. Zero while open. Set at close: ROUND(@NetProfit / 100, 2).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN SpreadedPipBid COMMENT 'Bid-side spread rate at open (instrument bid after spread mark-up). Used in PnL and hedge calculations.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN SpreadedPipAsk COMMENT 'Ask-side spread rate at open (instrument ask after spread mark-up). Used in PnL and hedge calculations.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsBuy COMMENT 'Trade direction: 1=Buy/Long (profits if price rises), 0=Sell/Short (profits if price falls).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseOnEndOfWeek COMMENT 'Weekend close flag from Trade.PositionTreeInfo. Deprecated feature, typically 0.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndOfWeekFee COMMENT 'Cumulative end-of-week holding fee in USD. Updated weekly. Reduced on partial close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Commission COMMENT 'eToro markup (additional spread on top of market spread) at open in USD. Synonym: markup. Manifests as AskSpreaded/BidSpreaded minus Ask/Bid.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CommissionOnClose COMMENT 'eToro markup (additional spread) at close. May be adjusted by SP_Dim_Position_ReOpen for reopened positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenOccurred COMMENT 'UTC timestamp when position was opened. Maps to Occurred in production Trade.PositionTbl.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseOccurred COMMENT 'UTC timestamp when close was written. 1900-01-01 for open positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ParentPositionID COMMENT 'Copy-trade: direct parent PositionID. Sentinel 1 = independent/no parent.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OrigParentPositionID COMMENT 'Original parent PositionID at copy time. Preserved even after tree restructuring. Sentinel 1 = independent.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN MirrorID COMMENT 'Copy-trade relationship: 0=manually opened, >0=auto-opened via CopyTrader (references Trade.Mirror.MirrorID).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsOpenOpen COMMENT 'OPEN_OPEN mechanism: 1=created by reinvesting unrealised profit (OpenActionType=3).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenDateID COMMENT 'Open date as YYYYMMDD int. DWH-computed from OpenOccurred. Indexed.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseDateID COMMENT 'Close date as YYYYMMDD int. 0=still open. Part of clustered index. Key filter for open vs closed.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN RegulationIDOnOpen COMMENT 'Regulation at open. DWH-joined from BackOfficeCustomer. 0=None,1=CySEC,2=FCA,4=ASIC,5=BVI,9=FSA Seychelles,10=ASIC&GAML,11=FSRA. Refs Dim_Regulation.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN PlatformTypeID COMMENT '[UNVERIFIED] Platform type. Not populated — always NULL in this table.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN PositionSegment COMMENT '[UNVERIFIED] Position segment. Not populated — always NULL in this table.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Volume COMMENT 'Open volume = rounded(Units * Price * ConversionRate). Pro-rated for partial close — parents and children each show volume pro-rated to their own AmountInUnitsDecimal.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN UpdateDate COMMENT 'UTC timestamp of last DWH ETL update for this row.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenInd COMMENT '[UNVERIFIED] Open indicator flag. Mostly NULL; values 0 and 1 observed rarely.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN SpreadedCommission COMMENT 'Spread commission in pips (integer). Used in hedge calculation and spread-group reporting.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForexRate COMMENT 'Instrument exchange rate at close. NULL for open positions. Used in NetProfit calculation.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN LastOpConversionRate COMMENT 'Conversion rate from most recent overnight operation for non-USD instruments.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN LimitRate COMMENT 'Take-profit rate from Trade.PositionTreeInfo. Price at which position auto-closes if market moves favorably.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN StopRate COMMENT 'Stop-loss rate from Trade.PositionTreeInfo. Price at which position auto-closes if market moves against.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ClosePositionReasonID COMMENT 'Close reason. Refs Dim_ClosePositionReason: 0=Customer,1=StopLoss,5=TakeProfit,7=Rollover,8=BackOffice,9=HierarchicalClose,13=CopySL,17=ManualUnregister,19=Redeem,23=Alignment,24=Delist,26=Expiry.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN TreeID COMMENT 'Copy-trade tree root. Independent: TreeID=PositionID. Copy-trade: TreeID=leader PositionID. All positions sharing a TreeID share SL/TP settings.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN FullCommission COMMENT 'Full spread at open = market spread (variable spread, Ask-Bid) + eToro markup (Commission). Total spread cost to customer.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN FullCommissionOnClose COMMENT 'Full spread at close = market spread + eToro markup. May be adjusted for reopened positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsComputeForHedge COMMENT 'Hedge participation: 1=included in hedge exposure (default), 0=excluded (PlayerLevelID=4 customers).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitialAmountCents COMMENT 'Original amount in cents at open. NEVER updated. Divide by 100 for USD: InitialAmountCents/100. Denominator for partial-close proportional calcs.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN RedeemStatus COMMENT 'Crypto redemption status — tracks position to crypto-in-wallet loop: 0=N/A,1=Pending,6=PositionClosed(redeem),20=Terminated,21=FailedToCancel. Refs Dim_RedeemStatus.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN RedeemID COMMENT 'Crypto redemption transaction record reference. NULL when RedeemStatus=0.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ReopenForPositionID COMMENT 'For reopened positions: references the original closed PositionID this position replaces.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsReOpen COMMENT 'Reopen flag: 1=created by reopening a previously closed position (e.g., after corporate action). Default 0.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CommissionOnCloseOrig COMMENT 'Original CommissionOnClose before reopen adjustment by SP_Dim_Position_ReOpen.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN FullCommissionOnCloseOrig COMMENT 'Original FullCommissionOnClose before reopen adjustment.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OriginalPositionID COMMENT 'For partial-close children: parent PositionID. When OriginalPositionID ≠ PositionID → partial-close child.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsPartialCloseParent COMMENT 'Flag: 1=has had partial-close children created. Set by SP_Dim_Position_IsPartialCloseParent.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsPartialCloseChild COMMENT 'Flag: 1=created by partial close. ALWAYS filter ISNULL(IsPartialCloseChild,0)=0 when counting positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitialUnits COMMENT 'Original unit count at open, preserved before partial-close adjustments. AmountInUnitsDecimal changes; InitialUnits does not.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsPartialCloseChildFromReOpen COMMENT 'Flag: 1=partial close child of a reopened position. Set by SP_Dim_Position_ReOpen.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsDiscounted COMMENT 'Discounted pricing from Trade.PositionTreeInfo: 0=standard Bid/Ask, 1=BidDiscounted/AskDiscounted (VIP/partner).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsSettled COMMENT 'Legacy real-ownership flag: 1=Real (owns shares), 0=CFD. Predates SettlementTypeID. Fallback: ISNULL(SettlementTypeID, CAST(IsSettled AS tinyint)).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN VolumeOnClose COMMENT 'Close volume = rounded(Units * Price * ConversionRate) at close. Same formula as Volume but at close-time values. Pro-rated for partial close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CommissionByUnits COMMENT 'eToro markup prorated by units: (AmountInUnitsDecimal/InitialUnits)*Commission. Adjusts for partial closes.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN FullCommissionByUnits COMMENT 'Full spread prorated by units: (AmountInUnitsDecimal/InitialUnits)*FullCommission. Adjusts for partial closes.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsCopyFundPosition COMMENT 'Flag: 1=belongs to CopyFund (tree root CID has AccountTypeID=9 OR MirrorTypeID=4 in Dim_Mirror). NULL=not copy fund.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN LastOpPriceRateID COMMENT 'Price-rate record from most recent overnight operation.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsAirDrop COMMENT 'Airdrop flag: 1=eToro opened position on behalf of customer (staking, promotions, compensations — not just crypto). Set from Trade.PositionAirdropLog. NULL=not airdrop.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForexPriceRateID COMMENT 'Price-rate snapshot record at open. Enables exact rate lookup for audit/recalculation.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForexPriceRateID COMMENT 'Price-rate snapshot at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForex_Ask COMMENT 'Ask price from forex price snapshot at open. Joined from PriceLog via InitForexPriceRateID.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForex_Bid COMMENT 'Bid price from forex price snapshot at open. Joined from PriceLog via InitForexPriceRateID.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForex_AskSpreaded COMMENT 'Ask with spread at open from forex price snapshot.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForex_BidSpreaded COMMENT 'Bid with spread at open from forex price snapshot.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitForex_USDConversionRate COMMENT 'USD conversion rate at open from forex price snapshot. Used for PnL conversion to USD.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForex_Ask COMMENT 'Ask price from forex price snapshot at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForex_Bid COMMENT 'Bid price from forex price snapshot at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForex_AskSpreaded COMMENT 'Ask with spread at close from forex price snapshot.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForex_BidSpreaded COMMENT 'Bid with spread at close from forex price snapshot.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndForex_USDConversionRate COMMENT 'USD conversion rate at close from forex price snapshot.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitExecutionID COMMENT 'Execution record ID from exchange/LP at open. Used for reconciliation and to determine InitHedgeType (HBC vs CBH).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndExecutionID COMMENT 'Execution record ID from exchange/LP at close. Used to determine EndHedgeType.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitConversionRate COMMENT 'Conversion rate from instrument currency to account currency at open. Used in PnL currency conversion.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitConversionRateID COMMENT 'Conversion-rate snapshot record at open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarketPriceRateID COMMENT 'Market price-rate record at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN InitHedgeType COMMENT 'Hedge model at open: CBH=Client-Based Hedging (~95%), HBC=Hedge Before Client (~5%). Determined from HBCExecutionLog.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EndHedgeType COMMENT 'Hedge model at close: CBH or HBC. NULL for open positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OrderID COMMENT 'Initial order that triggered this open (for order-driven opens). NULL for direct opens.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ExitOrderID COMMENT 'Exit order ID for stop/limit-triggered closes. NULL for market/direct closes.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN IsSettledOnOpen COMMENT 'Settlement status at open time. May differ from IsSettled if converted after open. Use ISNULL(IsSettledOnOpen,IsSettled) for at-open segmentation.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN StopRateOnOpen COMMENT 'Stop-loss rate at open time. May differ from current StopRate if modified after open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN LimitRateOnOpen COMMENT 'Take-profit rate at open time. May differ from current LimitRate if modified after open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN LastOpPriceRate COMMENT 'Instrument price from most recent overnight operation. Starting rate for next overnight PnL calculation.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN SettlementTypeID COMMENT 'Authoritative settlement: 0=CFD,1=REAL,2=TRS,3=CMT(Crypto settled),4=REAL_FUTURES,5=MARGIN_TRADE. NULL=legacy, use ISNULL(SettlementTypeID,CAST(IsSettled AS tinyint)).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarketPriceRateID COMMENT 'Market price-rate record at open execution time.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarket_Ask COMMENT 'Market ask price at open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarket_Bid COMMENT 'Market bid price at open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarket_AskSpreaded COMMENT 'Market ask with spread at open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarket_BidSpreaded COMMENT 'Market bid with spread at open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarketCoversionRateBidSpreaded COMMENT 'Conversion rate (bid-spreaded) at open market snapshot. Note: column name typo "Coversion".';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarketCoversionRateAskSpreaded COMMENT 'Conversion rate (ask-spreaded) at open market snapshot. Note: column name typo "Coversion".';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarket_AskSpreaded COMMENT 'Market ask with spread at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarket_BidSpreaded COMMENT 'Market bid with spread at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarket_Ask COMMENT 'Market ask price at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarket_Bid COMMENT 'Market bid price at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarketCoversionRateBidSpreaded COMMENT 'Conversion rate (bid-spreaded) at close market snapshot. Note: column name typo "Coversion".';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarketCoversionRateAskSpreaded COMMENT 'Conversion rate (ask-spreaded) at close market snapshot. Note: column name typo "Coversion".';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN RequestOpenOccurred COMMENT 'UTC timestamp when open was requested. May differ from OpenOccurred if execution was delayed.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN RequestCloseOccurred COMMENT 'UTC timestamp when close was requested. Used for close latency measurement.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OrderType COMMENT 'Order type at open. Refs Dictionary.OrderType. Common: NULL(66%),17(28%),0(4%),18/13(rare).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN PnLVersion COMMENT 'PnL formula version: 0=CFD_FORMULA, 1=REAL_FORMULA. NULL=legacy. Determines Trade.FnCalculatePnL code path.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN PnLInDollars COMMENT 'Current unrealized PnL in dollars for open positions (end-of-day snapshot). From Trade.OpenPositionEndOfDay.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarketSpread COMMENT 'Market spread (variable spread) at open = Ask - Bid. The market-side spread before eToro markup is added.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarketSpread COMMENT 'Market spread (variable spread) at close = Ask - Bid.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarkupOnOpen COMMENT 'eToro close-side markup pre-computed at open time. Locks in the close markup rate at entry.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarkup COMMENT 'eToro markup (additional spread) at open in USD. Same concept as Commission in spread terms.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseMarkup COMMENT 'eToro markup (additional spread) at close.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN DLTOpen COMMENT 'DLT broker flag at open: 1=opened on DLT platform (German crypto broker for trade execution), 0/NULL=not DLT.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN DLTClose COMMENT 'DLT broker flag at close: 1=closed on DLT platform (German crypto broker), 0/NULL=not DLT.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenMarkupByUnits COMMENT 'eToro open markup prorated by units: OpenMarkup * AmountInUnitsDecimal / InitialUnits. Adjusts for partial closes.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CommissionVersion COMMENT 'Commission calculation version. Different values represent different versions/models of how commission is computed.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN ExitOrderType COMMENT 'Exit order type for stop/limit-triggered closes. Values: NULL(89%),20(11%),19(rare). NULL for direct closes.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenPositionReasonID COMMENT 'Open mechanism/reason. Refs Dictionary.OpenPositionActionType. Common: 2020-2023(year codes),1(regular),0(default),-1(undefined),3(hierarchical).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenTotalTaxes COMMENT 'Total taxes at open (e.g., UK stamp duty). Default 0.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseTotalTaxes COMMENT 'Total taxes at close. NULL for open positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN OpenTotalFees COMMENT 'Total ticket fees at open — fixed $ or % of volume. More fees may be added later; full breakdown in History.Cost.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CloseTotalFees COMMENT 'Total ticket fees at close — fixed $ or % of volume. More fees may accrue; full breakdown in History.Cost. NULL for open positions.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EstimateCloseFeeForCFD COMMENT 'Estimated close fee for CFD positions. From Trade.OpenPositionEndOfDay.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EstimateCloseFeeOnOpenByUnits COMMENT 'Estimated close fee at open, per unit.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN EstimateCloseFeeOnOpen COMMENT 'Estimated close fee recorded at open.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_PnLInDollars COMMENT 'Same as PnLInDollars but based on closing price instead of last (current) price.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_CalculationRate COMMENT 'Instrument rate used to compute Close_PnLInDollars (closing-price-based PnL, vs last-price-based PnLInDollars).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_ConversionRate COMMENT 'Currency conversion rate for Close_PnLInDollars. Converts instrument currency to USD using closing price snapshot.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN Close_PriceType COMMENT 'Closing price source for Close_PnLInDollars: official close, unofficial close, dealer injection, or last internal price. Value mapping TBD.';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CurrentCalculationRate COMMENT 'Current calculation rate for open position PnL (end-of-day snapshot).';
-
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CurrentConversionRate COMMENT 'Current conversion rate for open position PnL (end-of-day snapshot).';
+-- ---- Column Comments ----
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PositionID COMMENT 'Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CID COMMENT 'Customer ID. References Customer.Customer. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InstrumentID COMMENT 'FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CurrencyID COMMENT 'FK to Dictionary.Currency. Denomination currency for Amount, NetProfit. Must be > 0. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ProviderID COMMENT 'References Trade.Provider. Execution provider (default 1 = TRADONOMI in PositionOpen). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenOccurred COMMENT 'When position was persisted (mapped from Occurred in production). Default getutcdate(). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseOccurred COMMENT 'When close was persisted. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenDateID COMMENT 'ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseDateID COMMENT 'ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. **Partition column.** Always include in WHERE clause. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RequestOpenOccurred COMMENT 'When the open request arrived at Trading API. Distinct from OpenOccurred (DB insert time). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RequestCloseOccurred COMMENT 'When close request arrived at API. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Amount COMMENT 'Position size in currency. Must be >= 0. Stored in dollars (PositionOpen divides by 100 from cents). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN AmountInUnitsDecimal COMMENT 'Position size in units/shares. Fractional lots. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitialAmountCents COMMENT 'Initial amount in cents. Used for ratio calculations. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitialUnits COMMENT 'Original unit count at open. Used for partial close ratio. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN NetProfit COMMENT 'Realized PnL. 0 when open; set on close. In position currency. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PnLInDollars COMMENT 'Max-rate PnL in dollars. From Trade.FnCalculatePnLWrapper using the max-date market rate. Represents unrealized profit/loss at the highest available price timestamp. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Commission COMMENT 'Open commission in dollars. PositionOpen stores @Commission/100 (cents to dollars). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionOnClose COMMENT 'Commission charged on close. DWH note: adjusted by SP_Dim_Position when position is reopened; CommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommission COMMENT 'Full commission including spread. PositionOpen stores @FullCommission/100. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionOnClose COMMENT 'Full commission on close. DWH note: adjusted by SP_Dim_Position when position is reopened; FullCommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionByUnits COMMENT 'Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionByUnits COMMENT 'Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission. (Tier 1 — Trade.Position)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndOfWeekFee COMMENT 'Overnight/weekend carry fee. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LotCountDecimal COMMENT 'Lot count from provider. Used for hedge aggregation and unit-based sizing. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN UnitMargin COMMENT 'Margin per unit. From Trade.ProviderToInstrument. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Volume COMMENT 'ETL-computed approximation of USD value: ROUND(AmountInUnitsDecimal * InitForexRate * USD conversion, 0). (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN VolumeOnClose COMMENT 'ETL-computed USD volume at close: ROUND(AmountInUnitsDecimal * EndForexRate * USD conversion, 0). 0 for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsBuy COMMENT '1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Leverage COMMENT 'Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseOnEndOfWeek COMMENT 'Weekend-close flag. 1 = position auto-closes at end of trading week. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LimitRate COMMENT 'Take-profit rate set at open (or most recent update). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN StopRate COMMENT 'Stop-loss rate set at open (or most recent update). Can be updated via PositionChangeLog. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForexRate COMMENT 'Opening price rate at position open. Used for PnL calculation. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForexRate COMMENT 'Closing rate at position close. NULL for open positions. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LastOpConversionRate COMMENT 'Conversion rate for last operation. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitConversionRate COMMENT 'Currency conversion rate at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SpreadedPipBid COMMENT 'Bid rate with spread at open. From Trade.CurrencyPrice/spread config. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SpreadedPipAsk COMMENT 'Ask rate with spread at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForexPriceRateID COMMENT 'FK to price log table -- the specific price rate record at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForexPriceRateID COMMENT 'Price rate ID at close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LastOpPriceRateID COMMENT 'Last operation price rate ID. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LastOpPriceRate COMMENT 'Last operation price. Updated on partial close, dividend, etc. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketPriceRateID COMMENT 'Market price rate ID at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketPriceRateID COMMENT 'Market price rate ID at close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitConversionRateID COMMENT 'Conversion rate record ID at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitExecutionID COMMENT 'Execution record ID at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndExecutionID COMMENT 'Execution record ID at close. NULL for open positions. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_Ask COMMENT 'Raw ask price at open from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_Bid COMMENT 'Raw bid price at open from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_AskSpreaded COMMENT 'Ask price including spread at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_BidSpreaded COMMENT 'Bid price including spread at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_USDConversionRate COMMENT 'USD conversion rate at open from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_Ask COMMENT 'Raw ask at close. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_Bid COMMENT 'Raw bid at close. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_AskSpreaded COMMENT 'Spreaded ask at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_BidSpreaded COMMENT 'Spreaded bid at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_USDConversionRate COMMENT 'USD conversion rate at close from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_Ask COMMENT 'Market ask at time of open-side market event. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_Bid COMMENT 'Market bid at time of open-side market event. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_AskSpreaded COMMENT 'Spreaded market ask at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_BidSpreaded COMMENT 'Spreaded market bid at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketCoversionRateBidSpreaded COMMENT 'USD conversion rate (bid-spreaded) at market open. Note: "Coversion" typo in original DDL. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketCoversionRateAskSpreaded COMMENT 'USD conversion rate (ask-spreaded) at market open. Note: "Coversion" typo in original DDL. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_Ask COMMENT 'Market ask at close event. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_Bid COMMENT 'Market bid at close event. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_AskSpreaded COMMENT 'Spreaded market ask at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_BidSpreaded COMMENT 'Spreaded market bid at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketCoversionRateBidSpreaded COMMENT 'USD conversion rate (bid-spreaded) at market close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketCoversionRateAskSpreaded COMMENT 'USD conversion rate (ask-spreaded) at market close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketSpread COMMENT 'Spread at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketSpread COMMENT 'Spread at close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarkupOnOpen COMMENT 'Close markup projected at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarkup COMMENT 'Markup at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarkup COMMENT 'Markup at close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarkupByUnits COMMENT 'Prorated open markup for partial close. Formula: OpenMarkup * AmountInUnitsDecimal / InitialUnits. (Tier 1 — Trade.Position)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SpreadedCommission COMMENT 'Spread-related commission component. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN MirrorID COMMENT 'FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN HedgeID COMMENT 'FK to Trade.Hedge. Broker executed hedge. NULL until hedge is opened. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN HedgeServerID COMMENT 'FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ParentPositionID COMMENT 'Copy-trade parent. 0/1 = root. Positive = child of referenced position. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OrigParentPositionID COMMENT 'Original parent before any detachment. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN TreeID COMMENT 'Links to Trade.PositionTreeInfo. Root: TreeID=PositionID. Children: root PositionID. Demo: negative. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsCopyFundPosition COMMENT '1=position belongs to a copy fund tree (TreeID''s CID has AccountTypeID=9). ETL-computed via JOIN chain. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsOpenOpen COMMENT 'Open-on-open copy behavior. From Mirror. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ReopenForPositionID COMMENT 'When position was reopened: references the erroneously closed PositionID. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsReOpen COMMENT '1=this position was reopened from ReopenForPositionID. ETL-computed: CASE WHEN ReopenForPositionID IS NOT NULL THEN 1. Default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OriginalPositionID COMMENT 'Original position ID for positions split by partial close. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseParent COMMENT '1=this position was partially closed (is the parent in a partial close event). (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseChild COMMENT '1=this position is the child (remainder) of a partial close event. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseChildFromReOpen COMMENT '1=partial close child that was created via a ReOpen flow. (Tier 4 - [UNVERIFIED])';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionOnCloseOrig COMMENT 'Original CommissionOnClose before reopen adjustments. ETL: CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettled COMMENT 'LEGACY: 1 = real stock, 0 = CFD. NOT settlement complete. Predates SettlementTypeID. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettledOnOpen COMMENT '1=position was settled at the time of open (pre-settlement flag). (Tier 4 - [UNVERIFIED])';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RedeemStatus COMMENT 'Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RedeemID COMMENT 'Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionOnCloseOrig COMMENT 'Original FullCommissionOnClose before reopen. ETL default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ClosePositionReasonID COMMENT 'Close reason mapped from ActionType. 0=Customer, 1=Stop Loss, 5=Take Profit, 9=Hierarchical Close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenPositionReasonID COMMENT 'Open reason mapped from OpenActionType. 0=Customer, 1=Hierarchical Open, 2=Reopen, 3=Open Open, 13=ACATS_IN. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OrderID COMMENT 'FK to Trade.Orders. Originating order. NULL for corporate action/dividend positions. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ExitOrderID COMMENT 'Order that closed the position (exit order). (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OrderType COMMENT 'Dictionary.OrderType at open. 1=OpenTrade, 13=EntryOrder, 16=EntryOrderByUnits, etc. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ExitOrderType COMMENT 'Order type of the exit order. Dictionary.OrderType. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PositionSegment COMMENT 'Internal segment classification. (Tier 4 - [UNVERIFIED])';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RegulationIDOnOpen COMMENT 'Regulatory jurisdiction ID at time of position open. ETL-computed via JOIN to etoro_History_BackOfficeCustomer (customer''s regulation history). ISNULL(..., 0) when no regulation match found. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PlatformTypeID COMMENT 'FK to Dim_PlatformType. Platform used to open: 1=Web, 2=iOS, 3=Android, 0=Undefined/NULL. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsAirDrop COMMENT '1=position was created via an airdrop event (crypto). ETL-computed: JOIN to etoro_Trade_PositionAirdropLog. NULL=not an airdrop. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsDiscounted COMMENT '1=position received a discounted rate. DWH note: CAST from bit to int. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitHedgeType COMMENT 'Hedge type at position open: ''HBC'' or ''CBH''. Populated by SP_Dim_Position_HedgeType_Real. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndHedgeType COMMENT 'Hedge type at position close. Populated by SP_Dim_Position_HedgeType_History. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN DLTOpen COMMENT 'DLT flag at open. Added 2024-06-02 (Ofir A). (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN DLTClose COMMENT 'DLT flag at close. Added 2024-06-02. NULL for open positions and older positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionVersion COMMENT 'Version of commission calculation algorithm used. Added 2024-08-22. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PnLVersion COMMENT 'PnL calculation version. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SettlementTypeID COMMENT 'Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsComputeForHedge COMMENT '1 = include in hedge exposure calculation, 0 = exclude. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenTotalTaxes COMMENT 'Taxes at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseTotalTaxes COMMENT 'Taxes at close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenTotalFees COMMENT 'Fees at open. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseTotalFees COMMENT 'Fees at close. (Tier 1 — Trade.PositionTbl)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EstimateCloseFeeForCFD COMMENT 'Estimated close fee for CFD positions at end-of-day rates. From Trade.FnGetCloseFee using max-rate closing rate and conversion rate. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EstimateCloseFeeOnOpenByUnits COMMENT 'Estimated close fee per unit, calculated from open parameters. From Trade.FnGetCloseFeeOnOpen. Alternative fee calculation method based on unit count. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EstimateCloseFeeOnOpen COMMENT 'Estimated close fee calculated based on position open parameters. From Trade.FnGetCloseFeeOnOpen using OpenTotalFees, InitialLotCount, IsBuy, OpenMarketSpread, units. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_PnLInDollars COMMENT 'Official closing-rate PnL in dollars. From Trade.FnCalculatePnLWrapper using the Close_* prices. The regulated end-of-day position value. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_CalculationRate COMMENT 'Official closing rate used for close PnL. Selected from Close_Bid/Ask/Spreaded based on direction and settlement. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_ConversionRate COMMENT 'Conversion rate at official close. Same calculation as CurrentConversionRate but at the closing price point. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_PriceType COMMENT 'Price type indicator for the closing price. From History.CurrencyPriceMaxDateClosingPriceWithSplitView.PriceType. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CurrentCalculationRate COMMENT 'The max-date closing rate used for PnL calculation. From Trade.FnCalculatePnLWrapper. The bid or ask price selected based on IsBuy and IsRealPosition. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CurrentConversionRate COMMENT 'Currency conversion rate at end-of-day for the max-rate PnL. Computed from end-of-day prices using the conversion instrument pair, direction, and settlement type. (Tier 1 — Trade.OpenPositionEndOfDay)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN StopRateOnOpen COMMENT 'Stop-loss rate as set at the time of open (immutable snapshot). (Tier 4 - [UNVERIFIED])';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LimitRateOnOpen COMMENT 'Take-profit rate as set at the time of open (immutable snapshot). (Tier 4 - [UNVERIFIED])';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsAirDrop COMMENT '(Duplicate reference -- see Group R #107) (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. GETDATE() for new inserts; GETUTCDATE() for updates of existing rows. Not a reliable "data freshness" indicator. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsCopyFundPosition COMMENT '(Duplicate reference -- see Group M #84) (Tier 2 — SP_Dim_Position_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
--- All columns in Dim_Position are trading/financial metrics or pseudonymous system IDs.
--- No direct PII (no names, emails, addresses, phone numbers, SSNs, etc.).
--- CID/GCID are pseudonymous identifiers, not directly identifying → pii = 'none'.
--- Bulk-setting all columns to 'none'. If a future column contains direct PII, add an
--- explicit override here.
-ALTER TABLE main.dwh.dim_position ALTER COLUMN CID SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.dim_position ALTER COLUMN PositionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PositionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CurrencyID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ProviderID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenOccurred SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseOccurred SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenDateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseDateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RequestOpenOccurred SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RequestCloseOccurred SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Amount SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN AmountInUnitsDecimal SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitialAmountCents SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitialUnits SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN NetProfit SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PnLInDollars SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Commission SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionOnClose SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommission SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionOnClose SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionByUnits SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionByUnits SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndOfWeekFee SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LotCountDecimal SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN UnitMargin SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Volume SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN VolumeOnClose SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsBuy SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Leverage SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseOnEndOfWeek SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LimitRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN StopRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForexRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForexRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LastOpConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SpreadedPipBid SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SpreadedPipAsk SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForexPriceRateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForexPriceRateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LastOpPriceRateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LastOpPriceRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketPriceRateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketPriceRateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitConversionRateID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitExecutionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndExecutionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_Ask SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_Bid SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_AskSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_BidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitForex_USDConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_Ask SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_Bid SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_AskSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_BidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndForex_USDConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_Ask SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_Bid SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_AskSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarket_BidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketCoversionRateBidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketCoversionRateAskSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_Ask SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_Bid SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_AskSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarket_BidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketCoversionRateBidSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketCoversionRateAskSpreaded SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarketSpread SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarketSpread SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarkupOnOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarkup SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseMarkup SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenMarkupByUnits SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SpreadedCommission SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN MirrorID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN HedgeID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN HedgeServerID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ParentPositionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OrigParentPositionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN TreeID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsCopyFundPosition SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsOpenOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ReopenForPositionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsReOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OriginalPositionID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseParent SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseChild SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseChildFromReOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionOnCloseOrig SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettled SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettledOnOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RedeemStatus SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RedeemID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionOnCloseOrig SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ClosePositionReasonID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenPositionReasonID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OrderID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ExitOrderID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OrderType SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN ExitOrderType SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PositionSegment SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RegulationIDOnOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PlatformTypeID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsAirDrop SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsDiscounted SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN InitHedgeType SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EndHedgeType SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN DLTOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN DLTClose SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionVersion SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN PnLVersion SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN SettlementTypeID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsComputeForHedge SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenTotalTaxes SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseTotalTaxes SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN OpenTotalFees SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CloseTotalFees SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EstimateCloseFeeForCFD SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EstimateCloseFeeOnOpenByUnits SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN EstimateCloseFeeOnOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_PnLInDollars SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_CalculationRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_ConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN Close_PriceType SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CurrentCalculationRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CurrentConversionRate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN StopRateOnOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN LimitRateOnOpen SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsAirDrop SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsCopyFundPosition SET TAGS ('pii' = 'none');

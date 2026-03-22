@@ -14,7 +14,7 @@
 | **Synapse Distribution** | ROUND_ROBIN |
 | **Synapse Index** | CLUSTERED COLUMNSTORE + NCI on DateID + NCI on (Date, InstrumentID) |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients` |
 
 ---
 

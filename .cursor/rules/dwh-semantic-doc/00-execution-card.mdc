@@ -42,6 +42,19 @@ alwaysApply: false
 Skip: P3 (trivial dist), P5 (no JOINs), P6 (no logic), P7 (no views), P9B (no orchestration), P10 (low value).
 P9 runs only if SP_Dictionaries has non-trivial transforms (column renames, CASE, hardcoded values).
 
+## Function Path
+
+Functions follow the standard pipeline with these adaptations:
+- **P1**: Read CREATE FUNCTION from SSDT → parameters, return type (scalar or TABLE), referenced objects
+- **P2**: Skip live sampling (functions need parameters to execute)
+- **P3**: Skip distribution analysis (no storage layer)
+- **P5**: Analyze JOINs/CROSS APPLY within the function body
+- **P7**: Reverse — find which views/SPs CALL this function (CROSS APPLY / scalar reference)
+- **P8-P9**: Find SPs that call the function → understand execution context
+- **P10.5**: Functions are Synapse-only; no UC target expected (UC Target: `_Not_Migrated`)
+- **P11**: Document using the standard template (Section 4 = parameters + return columns)
+- **ALTER**: Only if function happens to exist in UC (rare). Most will be knowledge-only.
+
 ## Phase Gate Checklist (emit before Phase 11)
 
 ```

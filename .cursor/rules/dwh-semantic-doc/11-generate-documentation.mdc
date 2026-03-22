@@ -200,9 +200,9 @@ knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md ← r
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md       ← production lineage map (from Phase 13 Column Lineage)
 ```
 
-Object type folders: `Tables/`, `Views/`
+Object type folders: `Tables/`, `Views/`, `Functions/`
 
-> Stored Procedures and Functions are not documentation targets. They are analyzed as inputs during table/view documentation (Phases 8, 9, 9B) but do not produce their own wiki files.
+> Stored Procedures are not documentation targets. They are analyzed as inputs during table/view documentation (Phases 8, 9, 9B) but do not produce their own wiki files. Functions **are** documentation targets and produce wiki files in the `Functions/` folder.
 
 All three files are mandatory outputs. The `.lineage.md` file captures the production-to-DWH column mapping from Phase 13 Column Lineage (SP code lineage analysis).
 

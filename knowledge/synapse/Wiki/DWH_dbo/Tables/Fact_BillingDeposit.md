@@ -12,7 +12,7 @@
 | **Synapse Distribution** | HASH (DepositID) |
 | **Synapse Index** | CLUSTERED (DepositID ASC) + NC (PaymentStatusID ASC, ExpirationDateID ASC) |
 | | |
-| **UC Target** | _Pending -- resolved during write-objects_ |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit` |
 | **UC Format** | _Pending -- resolved during write-objects_ |
 | **UC Partitioned By** | _Pending -- resolved during write-objects_ |
 | **UC Table Type** | _Pending -- resolved during write-objects_ |

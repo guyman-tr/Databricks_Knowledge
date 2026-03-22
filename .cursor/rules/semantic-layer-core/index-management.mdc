@@ -51,7 +51,7 @@ After the frontmatter, the body contains four sections in order:
 1. **Metrics Table** — summary stats
 2. **Next Batch** — the planned upcoming batch with dependency notation
 3. **Completed Batches** — one section per completed batch (newest first)
-4. **Object Type Sections** — Tables, Views (alphabetical within each)
+4. **Object Type Sections** — Tables, Views, Functions (alphabetical within each)
 
 ---
 
@@ -94,8 +94,9 @@ Used in the Next Batch section to show intra-batch and cross-batch dependencies:
 3. **Classify objects** into type groups:
    - `U` / `USER_TABLE` → Tables
    - `V` / `VIEW` → Views
+   - `FN` / `IF` / `TF` / `FUNCTION` → Functions
    
-   > Stored Procedures and Functions are **not** documentation targets — they are excluded from discovery and tracking. They are analyzed as inputs during table/view Phases 8, 9, and 9B.
+   > Stored Procedures are **not** documentation targets — they are analyzed as inputs during Phases 8, 9, and 9B. Functions **are** documentation targets and are tracked in `_index.md`.
 
 4. **Check for existing documentation**: For each object, check if a wiki file already exists at the expected path (`knowledge/synapse/Wiki/{Schema}/{TypeFolder}/{ObjectName}.md`). If it exists and was modified within the staleness threshold (see Staleness Detection below), mark as `Skipped — stale <30d`. If it exists but is older, mark as `Pending` (will be regenerated).
 
@@ -190,7 +191,7 @@ All within-batch dependencies are satisfied.
 1. **Read `_index.md`**: Parse YAML frontmatter for aggregate metrics. Parse Object Type sections for per-type counts.
 
 2. **Compute per-type breakdown**:
-   - For each type (Tables, Views): count Done, Pending, Failed, Skipped.
+   - For each type (Tables, Views, Functions): count Done, Pending, Failed, Skipped.
 
 3. **Identify next batch**: Parse the Next Batch section for planned objects.
 
@@ -206,6 +207,7 @@ Quality:   avg 8.1 | min 7.0 | max 9.2
 By type:
   Tables:     12/45 done
   Views:       8/22 done
+  Functions:   3/20 done
 
 Next batch (Batch 6): 5 objects — targeting Priority 99
   1. BI_DB_dbo.BI_DB_SomeBaseTable (Table, P0 — pulled forward)
@@ -244,7 +246,7 @@ These rules MUST hold for every `_index.md` file. The agent should verify them a
 1. **Complete inventory**: Every discovered object (from OpsDB / dependency graph + SSDT) for this schema MUST appear in the Object Type sections.
 2. **Documented count consistency**: `documented` in frontmatter MUST equal the count of `Done` status rows across all Object Type sections.
 3. **Failed count consistency**: `failed` in frontmatter MUST equal the count of `Failed` status rows.
-4. **Total count consistency**: `total_objects` MUST equal the sum of all object counts across all Object Type section headers (e.g., Tables (45) + Views (22) + ... = total).
+4. **Total count consistency**: `total_objects` MUST equal the sum of all object counts across all Object Type section headers (e.g., Tables (45) + Views (22) + Functions (11) + ... = total).
 5. **Queued-Next Batch alignment**: Objects in the Next Batch section MUST have status `Queued` in their Object Type section.
 6. **Intra-batch dependency ordering**: Within a batch, all dependencies using `-> #N` notation MUST reference a lower-numbered item (N < current item number).
 7. **Quality range**: Quality scores MUST be numeric `0.0`–`10.0` or `-` for non-documented objects.
@@ -262,6 +264,7 @@ These rules MUST hold for every `_index.md` file. The agent should verify them a
 | **Total Objects** | {total} |
 | **Tables** | {table_count} |
 | **Views** | {view_count} |
+| **Functions** | {function_count} |
 | **Documented** | {documented} ({pct}%) |
 | **Failed** | {failed} |
 | **Skipped** | {skipped} |

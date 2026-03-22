@@ -14,7 +14,7 @@
 | **Synapse Index** | CLUSTERED INDEX (RealCID ASC) |
 | **Synapse NCI** | IX_Fact_FirstCustomerAction_ActionTypeID (DateID, ActionTypeID, FirstEver) |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction` |
 | **UC Format** | _Pending — resolved during write-objects_ |
 | **UC Partitioned By** | _Pending — resolved during write-objects_ |
 | **UC Table Type** | _Pending — resolved during write-objects_ |

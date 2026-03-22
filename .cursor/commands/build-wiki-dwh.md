@@ -276,10 +276,11 @@ When argument is `review-rerun`:
 |------|---------|
 | `knowledge/synapse/Wiki/{Schema}/Tables/` | Table wiki output |
 | `knowledge/synapse/Wiki/{Schema}/Views/` | View wiki output |
+| `knowledge/synapse/Wiki/{Schema}/Functions/` | Function wiki output |
 | `knowledge/synapse/Wiki/{Schema}/_index.md` | Batch tracking |
 | `knowledge/synapse/Wiki/{Schema}/_batch_context.json` | Cross-batch context |
 | `knowledge/synapse/Wiki/_dependency_order.json` | Dependency graph |
-| `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\` | SSDT repo (Tables, External Tables, Views, SPs) |
+| `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\` | SSDT repo (Tables, External Tables, Views, Functions, SPs) |
 
 ---
 

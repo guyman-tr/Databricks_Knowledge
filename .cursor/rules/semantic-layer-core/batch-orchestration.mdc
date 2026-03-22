@@ -84,6 +84,7 @@ Glob for `.sql` files in the SSDT repo paths:
 - Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\*.sql`
 - External Tables: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\External Tables\*.sql`
 - Views: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Views\*.sql`
+- Functions: `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Functions\*.sql`
 
 Objects found in SSDT but missing from OpsDB / dependency graph are added at Priority 0 with empty dependencies.
 
@@ -181,11 +182,14 @@ Dependencies are classified by schema to determine blocking behavior:
 | Tables (medium 15-40 cols) | 8 | 25 |
 | Tables (large 40+ cols) | 5 | 25 |
 | Views | 10 | 25 |
-| Mixed (tables + views) | 8 | 25 |
+| Functions (TVF/scalar) | 10 | 25 |
+| Mixed (tables + views + functions) | 8 | 25 |
 
 Wiki build uses inline serial execution within the parent agent. No subagent dispatch. Deployment uses a separate batch size — governed by `deploy-index-management.mdc`, not this rule.
 
-> **Important:** Only Tables and Views are documentation targets. Stored Procedures and Functions are **not** tracked in `_index.md` and are **not** queued for batch processing. They serve as analysis inputs during Phases 8, 9, and 9B — their code is read to understand ETL logic, transformation rules, and lineage for the tables/views they populate.
+> **Important:** Tables, Views, and Functions are documentation targets — all are tracked in `_index.md` and queued for batch processing. Stored Procedures are **not** documentation targets; they serve as analysis inputs during Phases 8, 9, and 9B — their code is read to understand ETL logic, transformation rules, and lineage for the tables/views they populate.
+>
+> **Functions note:** Most functions do not exist in the data lake (UC). They still receive wiki documentation for knowledge purposes. ALTER scripts are generated only for functions that have a UC counterpart (rare). Functions follow the same phase pipeline as views — Phase 1 reads their CREATE FUNCTION from SSDT, subsequent phases analyze their dependencies, and Phase 11 generates documentation.
 
 ---
 

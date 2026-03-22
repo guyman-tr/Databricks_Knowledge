@@ -12,7 +12,7 @@
 | **Synapse Distribution** | ROUND_ROBIN |
 | **Synapse Index** | CLUSTERED COLUMNSTORE INDEX + NCI on Date |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | `dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown` |
 | **UC Format** | _Pending — resolved during write-objects_ |
 | **UC Partitioned By** | _Pending — resolved during write-objects_ |
 | **UC Table Type** | _Pending — resolved during write-objects_ |

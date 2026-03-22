@@ -39,39 +39,94 @@ Define how to extract data from an existing wiki `.md` file:
 
 **Never infer UC names from Synapse naming conventions.** The Synapse name `DWH_dbo.Fact_CustomerAction` does NOT reliably map to `dwh.fact_customeraction` — that table may not exist. Always resolve the actual UC fully-qualified name (`catalog.schema.table`) by querying Unity Catalog directly.
 
-**Resolution algorithm** (stop at first match):
+### 4a. Bulk Resolution (batch mode — `generate-alter-dwh`)
 
-1. **Search UC `information_schema`** — broadest search, finds the table regardless of catalog/schema:
+When processing a full schema in batch mode, run ONE query to fetch all candidate UC tables and cache the results. Per-object matching then uses the cache — no individual queries needed.
+
+```sql
+SELECT table_catalog, table_schema, table_name
+FROM system.information_schema.tables
+WHERE table_catalog = 'main'
+  AND table_name LIKE 'gold_sql_dp_prod_we_%'
+ORDER BY table_schema, table_name
+```
+
+For schemas other than `DWH_dbo`, adjust the prefix pattern to match the source server and schema naming (e.g., `gold_sql_dp_prod_we_bi_db_dbo_%` for BI_DB_dbo, `gold_sql_dp_prod_we_dealing_dbo_%` for Dealing_dbo).
+
+### 4b. Per-Object Matching
+
+Derive the expected UC table name from the Synapse object:
+- Schema `DWH_dbo`, table `Dim_Affiliate` → expected pattern: `gold_sql_dp_prod_we_dwh_dbo_dim_affiliate`
+- All lowercased, dots and spaces replaced with underscores
+
+Search the cache for all rows where `table_name` starts with that pattern. Classify the result:
+
+| Result Pattern | Classification | Primary UC Target | Secondary UC Target |
+|---|---|---|---|
+| 1 row in `dwh` schema, no `_masked` suffix | **Standard** | `main.dwh.{name}` | — |
+| Row in `dwh` with `_masked` suffix + row in `pii_data` without suffix | **PII Masked** | `main.dwh.{name}_masked` | `main.pii_data.{name}` |
+| Row in `pii_data` only, none in `dwh` | **PII Only** | `main.pii_data.{name}` | — |
+| Rows in other schemas (e.g., `bi_output`) | **Non-standard** | Use the matched `catalog.schema.table` | — |
+| 0 rows | **Not in UC** | — (mark as "No UC table exists") | — |
+
+### 4c. PII Masking Detection
+
+The Generic Pipeline exports tables with PII columns as TWO copies:
+- **Unmasked** → `main.pii_data.gold_..._dim_affiliate` (restricted access)
+- **Masked** → `main.dwh.gold_..._dim_affiliate_masked` (general access, PII columns redacted)
+
+This is driven by the `ColumnsToMask` field in `generic_inc_process_config`. The pipeline config holds ONE row; the pipeline automatically generates both copies.
+
+When a PII Masked classification is detected:
+1. Use the `dwh` masked version as the **primary** target (most analysts access this)
+2. Record the `pii_data` unmasked version as the **secondary** target
+3. Generate ALTER statements for BOTH targets in the same `.alter.sql` file (column meanings are identical regardless of masking)
+4. In the wiki, record both:
+   ```
+   | **UC Target** | `dwh.gold_..._masked` |
+   | **UC Target (PII)** | `pii_data.gold_...` |
+   | **UC Masked Columns** | Email, City |
+   ```
+
+### 4d. Single-Object Resolution (fallback)
+
+When bulk cache is unavailable (single-object mode or cache miss), query individually:
+
+1. **Search UC `information_schema`**:
    ```sql
    SELECT table_catalog, table_schema, table_name
    FROM system.information_schema.tables
-   WHERE LOWER(table_name) LIKE '%{object_name_lower_no_prefix}%'
-   ORDER BY table_catalog, table_schema
+   WHERE table_catalog = 'main'
+     AND LOWER(table_name) LIKE '%{expected_uc_name}%'
+   ORDER BY table_schema, table_name
    ```
-   Where `{object_name_lower_no_prefix}` strips common prefixes: `Fact_` → `customeraction`, `Dim_` → `position`. Also try the full lowered name (e.g., `fact_customeraction`).
 
-2. **Search specific UC schemas** — check the known DWH-layer schemas:
+2. **Search the Generic Pipeline config** for `ColumnsToMask` (to confirm PII pattern):
    ```sql
-   SHOW TABLES IN main.dwh LIKE '*{partial_name}*'
+   SELECT TableName, ColumnsToMask, UnityCatalogTableName
+   FROM main.pii_data_stg.bronze_qa_generic_dbo_v_generic_inc_process_config_delta_override
+   WHERE TableName = '{SynapseTableName}'
    ```
-   Repeat for `main.bi_output`, `main.bi_output_stg`, and any other schemas listed in the Databricks connection skill.
 
-3. **Search the Generic Pipeline mapping view** — find the UC bronze table and trace forward:
-   ```sql
-   SELECT UnityCatalogTableName, BusinessGroup, TableName
-   FROM main.general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables
-   WHERE LOWER(TableName) LIKE '%{object_name_pattern}%'
-   ```
-   The mapping view shows bronze-layer names; the gold/DWH target may differ but the `BusinessGroup` hints at the correct catalog.
+3. **If all searches fail** — the object has no UC target yet. Mark as "No UC table exists".
 
-4. **If all searches fail** — the object has no UC target yet. Generate the ALTER script with an `-- UNVALIDATED UC TARGET` header and the inferred name as a placeholder. Add a note to the review sidecar under `## Structural Questions`.
+### 4e. Databricks Unavailable
 
-**If Databricks is unavailable** (pre-flight Check 3 failed): Skip Steps 1-3, go directly to Step 4. The ALTER script is still generated but clearly marked as unvalidated.
+**If Databricks MCP is unavailable** (pre-flight Check 3 failed): Skip resolution entirely. Objects with `_Pending` UC targets are skipped. Objects with already-resolved UC targets proceed normally.
 
-**Record the resolution**: Add a comment in the ALTER script header showing how the UC target was resolved:
+### 4f. Record the Resolution
+
+Add a comment in the ALTER script header:
 ```sql
 -- UC Target: {catalog}.{schema}.{table}
--- Resolved via: {information_schema / SHOW TABLES / mapping view / INFERRED (unvalidated)}
+-- Resolved via: {Wiki property table / information_schema bulk query / information_schema single query / INFERRED (unvalidated)}
+-- Classification: {Standard / PII Masked / PII Only / Non-standard}
+```
+
+For PII Masked tables, also include:
+```sql
+-- Secondary UC Target: {catalog}.{schema}.{table}  (PII unmasked)
+-- Masked Columns: {col1, col2, ...}
 ```
 
 ---
@@ -164,6 +219,7 @@ Store these values for use when generating table tags.
 -- Target: Unity Catalog table comment + column comments (1024 char limit)
 -- UC Target: {uc_catalog}.{uc_schema}.{uc_table}
 -- Resolved via: {resolution_method}
+-- Classification: {Standard / PII Masked / PII Only / Non-standard}
 -- =============================================================================
 
 ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TBLPROPERTIES (
@@ -172,6 +228,21 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TBLPROPERTIES (
 
 ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} COMMENT '{column_comment_max_1024_chars}';
 -- ... one ALTER per column ...
+```
+
+**PII Masked dual-target format** — when classification is `PII Masked`, append a second section:
+```sql
+-- === Secondary UC Target (PII unmasked) ===
+-- UC Target: {pii_catalog}.{pii_schema}.{pii_table}
+-- Masked Columns: {col1, col2, ...}
+-- Column comments are identical — meaning is the same regardless of masking.
+
+ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} SET TBLPROPERTIES (
+    'comment' = '{table_comment_max_1024_chars}'
+);
+
+ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} ALTER COLUMN {ColumnName} COMMENT '{column_comment_max_1024_chars}';
+-- ... one ALTER per column (same comments as primary target) ...
 ```
 
 ---
@@ -612,17 +683,19 @@ After ALTER execution completes (Steps E1–E4), generate a `.deploy-report.md` 
 
 ## 14. Wiki Backfill (T031)
 
-After UC Object Resolution determines the actual UC target, optionally update the wiki `.md` file's header table to replace placeholder UC properties with resolved values.
+After UC Object Resolution determines the actual UC target, update the wiki `.md` file's header table to replace placeholder UC properties with resolved values.
 
 Update these rows:
-- **UC Target**
-- **UC Format**
-- **UC Partitioned By**
-- **UC Table Type**
+- **UC Target** — the primary 3-level name (without `main.` catalog prefix, e.g., `dwh.gold_...`)
+- **UC Format** — from `DESCRIBE DETAIL` (delta, parquet, etc.)
+- **UC Partitioned By** — from `DESCRIBE TABLE EXTENDED` partition info
+- **UC Table Type** — MANAGED or EXTERNAL
 
-This step is optional. The wiki file remains valid without it — the UC properties are informational and don't affect ALTER script generation.
+**For PII Masked tables**, also add/update:
+- **UC Target (PII)** — the `pii_data` schema unmasked variant (e.g., `pii_data.gold_...`)
+- **UC Masked Columns** — comma-separated list of masked column names (e.g., `Email, City`)
 
-When running in batch mode, backfill happens after all objects in the batch are deployed.
+When running via `generate-alter-dwh`, backfill happens inline as each object's UC target is resolved — the wiki is updated before ALTER generation proceeds. This ensures subsequent runs find the resolved target and skip re-resolution.
 
 ---
 
