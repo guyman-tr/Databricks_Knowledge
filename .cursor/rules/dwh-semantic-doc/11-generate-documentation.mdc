@@ -21,7 +21,7 @@ This is NOT a code review document. It's a **query brain** -- the knowledge an e
 
 **ALL of the following phases are hard prerequisites. If any are missing, run them NOW before proceeding.**
 
-### ⛔ GATE: Phase 2 + Phase 8 + Phase 13 (Steps 1/1b/3) Are Non-Negotiable
+### ⛔ GATE: Phase 2 + Phase 8 + Phase 10A (Steps 1/1b/3) Are Non-Negotiable
 
 Before Phase 11 generates a single line of documentation, confirm:
 
@@ -32,9 +32,9 @@ Before Phase 11 generates a single line of documentation, confirm:
 | Phase 2: Timestamp analysis done | ✅ MANDATORY | Without this, a frozen migration table is mistaken for a regular ETL table. |
 | Phase 8: SP_Dictionaries_DL_To_Synapse scanned (Dim_ tables) | ✅ MANDATORY | Without this, column renames, hardcoded values (StatusID=1), and DWH surrogates (DWH{X}ID={X}ID) are all marked UNVERIFIED. |
 | Phase 8: ETL SP found OR absence documented | ✅ MANDATORY | If no SP found, document explicitly. Do not assume passthrough. |
-| Phase 10.5 (Upstream Wiki Bridge): Production source resolved + upstream wiki read | ✅ MANDATORY | Without this, zero Tier 1 columns. Step 1 queries the Generic Pipeline mapping view to find the production source. Step 1b extracts governance metadata. Step 3 reads the upstream wiki. **HARD FAIL when Phase 2 found a known source.** |
+| Phase 10A (Upstream Wiki Bridge): Production source resolved + upstream wiki read | ✅ MANDATORY | Without this, zero Tier 1 columns. Step 1 queries the Generic Pipeline mapping view to find the production source. Step 1b extracts governance metadata. Step 3 reads the upstream wiki. **HARD FAIL when Phase 2 found a known source.** |
 
-**If you are about to write an element description with [UNVERIFIED] and you have NOT yet run Phase 2, Phase 8, and Phase 10.5 — STOP. Run those phases first.**
+**If you are about to write an element description with [UNVERIFIED] and you have NOT yet run Phase 2, Phase 8, and Phase 10A — STOP. Run those phases first.**
 
 ### ⛔ Phase Gate Checklist — MANDATORY Before Generating
 
@@ -44,7 +44,7 @@ Before Phase 11 writes a single line, emit the phase gate checklist from `00-exe
 PHASE GATE CHECK — {ObjectName}:
   [x] P1 DDL   [x] P2 Sample   [x] P3 Dist   [x] P4 Lookup
   [x] P5 JOIN  [x] P6 BizLogic [x] P7 Views  [x] P8 SP-scan
-  [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10.5 Upstream
+  [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 ```
 
@@ -55,19 +55,19 @@ PHASE GATE CHECK — {ObjectName}:
 The numeric phase labels are identifiers, NOT execution order. The correct execution order is:
 
 ```
-1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 9B → 10 → 10.5 → 13 → 11 → 12
+1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 9B → 10 → 10A → 10B → 11 → 12
 ```
 
-- **Phase 10.5 (Upstream Wiki Bridge)**: Generic Pipeline lookup → governance metadata → upstream wiki read. Defined in `13-production-lineage-mapping.mdc` Steps 1/1b/1c/3.
-- **Phase 13 (Column Lineage)**: ETL code sources → lineage chain → column lineage → lost/added columns. Produces the `.lineage.md` file. **NOW RUNS BEFORE Phase 11** so the wiki doc can use the lineage data for tier assignment. Defined in `13-production-lineage-mapping.mdc` Steps 2/4/5/6.
+- **Phase 10A (Upstream Wiki Bridge)**: Generic Pipeline lookup → governance metadata → upstream wiki read. Defined in `13-production-lineage-mapping.mdc` Steps 1/1b/1c/3.
+- **Phase 10B (Column Lineage)**: ETL code sources → lineage chain → column lineage → lost/added columns. Produces the `.lineage.md` file. **NOW RUNS BEFORE Phase 11** so the wiki doc can use the lineage data for tier assignment. Defined in `13-production-lineage-mapping.mdc` Steps 2/4/5/6.
 
 Phase 12 Mechanism 1 ("Pre-Read") is embedded in Phase 11's pre-read step below. Phase 12 Mechanism 2 ("Batch Enrichment Pass") runs after all objects in a batch are documented.
 
-ALL applicable phases must be complete before generating. **Phase 13 lineage file MUST exist before Phase 11 starts.**
+ALL applicable phases must be complete before generating. **Phase 10B lineage file MUST exist before Phase 11 starts.**
 
 ## Pre-Read: Lineage File (Column Sources) — MANDATORY
 
-**The `.lineage.md` file is produced by Phase 13 BEFORE Phase 11 runs.** This file contains the column-level source mapping from Phase 9's SP code analysis. Phase 11 READS it to determine tier assignments.
+**The `.lineage.md` file is produced by Phase 10B BEFORE Phase 11 runs.** This file contains the column-level source mapping from Phase 9's SP code analysis. Phase 11 READS it to determine tier assignments.
 
 1. **Read the lineage file**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md`
 2. Parse the `## Column Lineage` table: `| DWH Column | Source Table | Source Column | Transform |`
@@ -85,9 +85,9 @@ ALL applicable phases must be complete before generating. **Phase 13 lineage fil
 | join-enriched | Join source has wiki | Tier 1 — from join source wiki |
 | join-enriched | No wiki | Tier 2 — from SP code |
 
-**If the lineage file does not exist, STOP. Run Phase 13 first.**
+**If the lineage file does not exist, STOP. Run Phase 10B first.**
 
-> See `GATE-lineage-contract.mdc` for the full contract between Phase 13 and Phase 11.
+> See `GATE-lineage-contract.mdc` for the full contract between Phase 10B and Phase 11.
 
 ## Pre-Read: Upstream Wiki (Tier 1 Descriptions) — MANDATORY
 
@@ -194,21 +194,37 @@ Before generating, execute the Pre-Read step from `12-cross-object-enrichment.md
 
 ## Output Path — THREE FILES PER OBJECT
 
+> **⛔ CRITICAL: The `.md` file IS the wiki. The `.review-needed.md` is a lightweight sidecar. These are DIFFERENT files with DIFFERENT purposes. Writing wiki content into `.review-needed.md` and skipping `.md` is a HARD FAILURE that has happened before — see batch 8 postmortem.**
+
 ```
-knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md              ← wiki doc
-knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md ← review sidecar
-knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md       ← production lineage map (from Phase 13 Column Lineage)
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md              ← THE WIKI DOC (full 8-section template, Elements table, 100+ lines)
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md ← REVIEW SIDECAR (Tier 4 items, reviewer corrections, questions — NOT the wiki)
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md       ← PRODUCTION LINEAGE MAP (from Phase 10B Column Lineage)
 ```
+
+### File Identity Rules (DO NOT CONFUSE THESE)
+
+| File | Contains | Does NOT contain |
+|------|----------|------------------|
+| **`.md`** | Full 8-section wiki template (Business Meaning, Business Logic, Query Advisory, Elements, Lineage, Relationships, Sample Queries, Atlassian). This is the PRIMARY artifact. | N/A — this is the complete document |
+| **`.review-needed.md`** | Reviewer Corrections table, Tier 4 UNVERIFIED list, Clarification questions, Structural questions | The Elements table. Section headers like `## 1. Business Meaning`. Full column descriptions. If you see these, you're writing to the WRONG file. |
+| **`.lineage.md`** | Column-level source mapping from Phase 10B | Wiki prose, element descriptions |
 
 Object type folders: `Tables/`, `Views/`, `Functions/`
 
 > Stored Procedures are not documentation targets. They are analyzed as inputs during table/view documentation (Phases 8, 9, 9B) but do not produce their own wiki files. Functions **are** documentation targets and produce wiki files in the `Functions/` folder.
 
-All three files are mandatory outputs. The `.lineage.md` file captures the production-to-DWH column mapping from Phase 13 Column Lineage (SP code lineage analysis).
+All three files are mandatory outputs. The `.lineage.md` file captures the production-to-DWH column mapping from Phase 10B Column Lineage (SP code lineage analysis).
 
 > **ALTER scripts, downstream propagation, and deployment reports** are produced separately by Phase 11W (`11w-write-objects.mdc`) via the `write-objects-dwh` command. They are NOT generated during wiki build.
 
-Write the wiki doc first, then the review sidecar, then the lineage file.
+### Write Order (MANDATORY)
+
+1. **FIRST**: Write `{ObjectName}.md` — the wiki doc. Use the Write tool with the `.md` path. Verify the file contains all 8 `## N.` section headers.
+2. **SECOND**: Write `{ObjectName}.review-needed.md` — the review sidecar. This is a SHORT file listing Tier 4 items and questions. It does NOT duplicate the wiki.
+3. **THIRD**: Write `{ObjectName}.lineage.md` — the lineage map (or confirm it was already written by Phase 10B).
+
+**Self-check after each object**: Read back the `.md` file path and confirm it is non-empty and contains `## 4. Elements`. If the `.md` file is empty or missing, Phase 11 has FAILED for this object.
 
 ## STRICT RULES
 
@@ -239,8 +255,8 @@ Only Tier 4-Inferred descriptions carry the `[UNVERIFIED]` prefix. Tier 4-Atlass
 14. **REVIEWER CORRECTIONS (RERUN)** -- before generating, check if a `.review-needed.md` already exists for this object. If it contains a `## Reviewer Corrections` section with entries, read every row and apply them as **Tier 5** overrides. Tier 5 is absolute — it overrides all other tiers including upstream wiki (Tier 1). After applying, carry corrections forward in the new `.review-needed.md` with a `[RESOLVED]` marker so they persist across future reruns. **STALENESS CHECK**: For each Tier 5 override, compare the current Tier 1–3 description against the description that was current when the Tier 5 was written (recorded in the "Current (wrong)" column of the corrections table). If the Tier 1–3 description has materially changed (new computation, renamed column, different transformation logic, changed FK target — not just wording/formatting), the Tier 5 may be stale. In this case: (a) still apply the Tier 5 for now, but (b) add the column to a new `## Tier 5 Re-Review Needed` section in the sidecar, showing the original context, the Tier 5 correction, and the new Tier 1–3 description, so a domain expert can confirm or update. Tag the column `(Tier 5 — domain expert, RE-REVIEW)` in the wiki until confirmed.
 15. **DOMAIN GLOSSARY** -- before generating, read `knowledge/glossary.md`. All acronym expansions, term definitions, and value maps in the glossary are Tier 5 authority. The pipeline MUST NOT infer alternative meanings for any term that has a glossary entry. Apply glossary terms wherever the term appears in element descriptions, business logic sections, or query advisory.
 16. **TIER 5 IN ELEMENTS TABLE** -- when a description comes from reviewer corrections or the glossary, tag it `(Tier 5 — domain expert, {original source})` — preserving the original production source from the lineage file (e.g., `Trade.PositionTbl`, `ETL-computed`, `Trade.OpenPositionEndOfDay → join-enriched`). The Tier 5 label indicates the *description quality* was expert-confirmed; the source indicates *where the data comes from*. Both are required for traceability. Tier 5 entries are never flagged `[UNVERIFIED]` and never appear in the review sidecar's Tier 4 section.
-17. **ALL 8 section headers MUST exist as separate `## N.` lines** -- collapsing sections (e.g., `## 2–8.`) is FORBIDDEN and produces an invalid doc. See "Batch Processing & Subagent Quality Enforcement" section below for full enforcement rules.
-18. **Batch size limits and minimum line counts are mandatory** -- Tables: max 3/subagent, Views: max 5. Minimum lines: Tables 100+, Views 80+. See Rules B1 and B3 below.
+17. **ALL 8 section headers MUST exist as separate `## N.` lines** -- collapsing sections (e.g., `## 2–8.`) is FORBIDDEN and produces an invalid doc. See "Inline Execution & Quality Enforcement" section below for full enforcement rules.
+18. **Minimum line counts are mandatory** -- Tables: 100+ lines, Views: 80+ lines. See Rule B3 below. All documentation is generated inline by the parent agent — subagents are FORBIDDEN (see Rule B1).
 19. **⛔ TIER SUFFIX ON EVERY COLUMN DESCRIPTION — HARD ENFORCED** -- Every element description in Section 4 MUST end with a tier suffix in the format `(Tier N — source.table)`. This is non-negotiable because Phase 11W (`write-objects-dwh`) extracts the Description field verbatim and writes it as the Unity Catalog column comment. The tier and source table are the provenance trail that travels with the column into UC — without them, consumers cannot assess description reliability. Examples:
     - `Primary key. Payment gateway endpoint identifier. (Tier 1 — Billing.Depot)`
     - `ETL load timestamp — set to GETDATE() on each reload. (Tier 2 — SP_Dictionaries_DL_To_Synapse)`
@@ -560,7 +576,7 @@ generation and ALTER deployment are refreshed. This makes review-rerun fast (~2-
 ## Post-Generation
 
 1. **Update `_semantic_index.md`**: Map business concepts from Sections 2 and 3 to this object
-2. **Generate `.lineage.md`**: Run Phase 13 Column Lineage (SP code lineage analysis) to produce the column lineage map. This file captures production-to-DWH column mappings from ETL SPs. See `13-production-lineage-mapping.mdc` for the file format and column lineage template
+2. **Generate `.lineage.md`**: Run Phase 10B Column Lineage (SP code lineage analysis) to produce the column lineage map. This file captures production-to-DWH column mappings from ETL SPs. See `13-production-lineage-mapping.mdc` for the file format and column lineage template
 
 > **NOTE**: UC Object Resolution, ALTER Script Generation, Table Tags, PII Tags, Downstream Propagation, ALTER Execution, and Deployment Reports have been moved to **Phase 11W** (`11w-write-objects.mdc`). They are executed via the `write-objects-dwh` command, not during wiki build.
 
@@ -611,22 +627,21 @@ The star visual goes into the wiki footer (e.g., `Quality: 8.2/10 (★★★★�
 
 ---
 
-## CRITICAL: Batch Processing & Subagent Quality Enforcement
+## CRITICAL: Inline Execution & Quality Enforcement
 
-When documentation is generated in bulk (multiple objects per subagent), these rules are **NON-NEGOTIABLE**. Every violation produces a broken doc that must be regenerated from scratch. Our pipeline produces 3 files per object, making quality degradation under batch pressure a significant risk.
+> **⛔ SUBAGENTS ARE FORBIDDEN — NO EXCEPTIONS.**
+>
+> Wiki documentation MUST be generated **inline by the parent agent**, one object at a time, serially. The Task tool / subagent dispatch MUST NOT be used for wiki generation, lineage files, review sidecars, or any Phase 11 output. This is reinforced by `batch-orchestration.mdc`: *"Wiki build uses inline serial execution within the parent agent. No subagent dispatch."*
+>
+> **Why**: Subagents lose context. They skip phases (10A, 10B), don't read function code, don't generate lineage files, don't generate review sidecars, and produce shallow column descriptions that just restate function names. Every historical subagent-generated batch has required full regeneration.
 
-### Rule B1: Maximum Batch Sizes Per Subagent
+### Rule B1: Inline Serial Execution
 
-| Object Type | Max Per Subagent | Rationale |
-|-------------|-----------------|-----------|
-| **Tables** | 3 | Full pipeline with MCP queries, Grep, upstream wiki search, and 3 output files (wiki + sidecar + lineage) |
-| **Views** | 5 | Must inherit from base table docs, trace JOINs, 3 output files |
-
-**NEVER exceed these limits.** A subagent processing 10 tables WILL produce skeleton wikis with missing sections and inadequate lineage maps.
+Each object is documented **inline** by the parent agent following the full phase pipeline (Phases 1→10A→10B→11). The agent processes one object at a time, writes all 3 output files, validates, then moves to the next object. No parallelism, no delegation.
 
 ### Rule B2: Every Doc MUST Have All 8 Section Headers
 
-After writing each wiki doc, the subagent MUST verify that **ALL** of these markdown headers exist as separate lines in the file:
+After writing each wiki doc, verify that **ALL** of these markdown headers exist as separate lines in the file:
 
 ```
 ## 1. Business Meaning
@@ -639,14 +654,14 @@ After writing each wiki doc, the subagent MUST verify that **ALL** of these mark
 ## 8. Atlassian Knowledge Sources
 ```
 
-**FORBIDDEN patterns** -- these indicate a subagent cut corners:
+**FORBIDDEN patterns**:
 - `## 2–8.` or `## 2-8.` (collapsed all sections into one)
 - `## 2. Business Logic, Query Advisory, Elements` (merged section titles)
 - Missing `## 4. Elements` entirely
 - Missing `## 3. Query Advisory` entirely (this is our key differentiator)
 - Missing `## 5. Lineage` entirely
 
-If ANY required header is missing, the doc is **INVALID** and must be rewritten before the subagent reports success.
+If ANY required header is missing, the doc is **INVALID** and must be rewritten before moving to the next object.
 
 ### Rule B3: Minimum Line Counts (Wiki File)
 
@@ -655,7 +670,7 @@ If ANY required header is missing, the doc is **INVALID** and must be rewritten 
 | **Tables** | 100 | 8 sections + Elements table with all columns + Query Advisory + Lineage |
 | **Views** | 80 | 8 sections + all output columns + Query Advisory |
 
-A wiki file below the minimum is **automatically suspect**. The subagent must check line count before reporting completion and re-expand any section that was too brief.
+A wiki file below the minimum is **automatically suspect**. Check the line count before reporting completion and re-expand any section that was too brief.
 
 ### Rule B4: Elements Table Must List Every Element Individually
 
@@ -667,43 +682,33 @@ The `## 4. Elements` section MUST contain a markdown table with one row per elem
 
 **FORBIDDEN**: Grouping multiple elements into one row, listing elements in prose instead of a table, or writing "See DDL for full column list."
 
-This reinforces Strict Rule 8 but is restated here because batch execution is where violations occur most.
+### Rule B5: Function Code MUST Be Read
 
-### Rule B5: Subagent Prompts Must Reference the Spec
+When a column's value comes from a function (e.g., `Function_Population_Funded`, `Function_Population_Active_Traders`), the agent MUST read the function's SQL file from the DataPlatform repo before writing the column description. The description must explain the **business logic inside the function** — not just restate the function name.
 
-The orchestrator (parent agent) MUST include this instruction in every subagent prompt:
+**FORBIDDEN descriptions**:
+- "0/1: funded customer (`Function_Population_Funded`). (Tier 2 — function)" — restates the name
+- "Portfolio-only metric amount from segmentation logic. (Tier 2 — Function_Population_Portfolio_Only)" — says nothing
 
-> "Read and follow the template in `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc` EXACTLY. Every doc must have all 8 section headers, an Elements table with one row per element, tier tags on every description, and all 3 output files (wiki + sidecar + lineage). Do NOT abbreviate, collapse, or skip sections."
-
-**FORBIDDEN orchestrator prompt patterns**:
-- "write concise MD (50-100 lines)" -- this actively instructs the subagent to violate the template
-- "write a brief doc" -- same problem
-- "sections 1-8 + footer" -- too vague; subagent will shortcut
-- "just generate the lineage file" -- the lineage file requires the full wiki context to be meaningful
+**REQUIRED**: Describe what the function actually computes, its key filters, exclusions, and the segmentation hierarchy. Example:
+- "0/1: customer has positive equity (TP + eMoney + Options) AND was first-time-funded (deposited + verified + had trade/IOB/options activity). Excludes bad $1 FTDs from Aug 2025. `Function_Population_Funded` → joins `Function_Population_First_Time_Funded` with aggregated equity from `BI_DB_Client_Balance_CID_Level_New` + `eMoneyClientBalance` + `Function_AUM_OptionsPlatform`. (Tier 2 — ETL-computed, Function_Population_Funded)"
 
 ### Rule B6: Post-Write Validation Gate
 
-After writing each object's output files, the subagent MUST run this validation **before moving to the next object**:
+After writing each object's output files, run this validation **before moving to the next object**:
 
 1. **Section check**: Confirm all 8 `## N.` headers exist in the wiki file
 2. **Elements check**: Confirm `## 4. Elements` contains a markdown table with `|` delimiters
 3. **Line count check**: Confirm the wiki file meets the minimum for its object type (Rule B3)
 4. **Tier suffix check (Rule 19)**: Confirm every element description ENDS WITH a `(Tier N — source.table)` suffix. A separate Confidence column is allowed but does NOT satisfy this check — the suffix must be in the Description text itself because Phase 11W writes this text verbatim to Unity Catalog
 5. **Quality score check**: Confirm the footer contains a `Quality:` score and star grade
-6. **Output file check**: Confirm all required output files exist:
-   - All object types: wiki `.md` + sidecar `.review-needed.md` + `.lineage.md`
+6. **Output file check — MOST CRITICAL**: Confirm all required output files exist AND have the correct content:
+   - **`.md` file**: Must exist, must be non-empty, must contain `## 4. Elements` and at least 5 of the 8 section headers. **If this file is empty or missing, the entire object has FAILED — do not mark it Done.**
+   - **`.review-needed.md` file**: Must exist. Must NOT contain `## 4. Elements` (that belongs in `.md`). If it does, you wrote to the wrong file.
+   - **`.lineage.md` file**: Must exist and contain the column lineage table.
 7. **Formula vagueness check (Rule 20) — SAFETY NET**: Grep the wiki file for EVERY phrase in the Rule 20 Forbidden Vague Phrases blacklist. Use case-insensitive search for: `specific reason IDs`, `specific fee type`, `fee types related to`, `specific conditions`, `certain conditions`, `deposit-like`, `cashout-related`, `PI-specific`, `affiliate-specific`, `dividend fee type`, `specific money movement`, `subset of compensation` (without following filter). If ANY match is found in a Tier 2 element description, the description is INVALID — go back to the SP code, extract the actual filter values, and rewrite. This check has the same enforcement weight as check 4 (tier suffix) — a single vague phrase blocks completion. **NOTE**: If the "Pre-Read: Computation Formulas" step was executed properly, this check should find ZERO matches. If it fires on more than 5 columns, the pre-read was skipped or incomplete — go back and redo the formula pre-pass for all failing columns in one batch, not one at a time.
 
-If any check fails, the subagent MUST fix the doc immediately -- not move on and report partial success.
-
-### Rule B7: Orchestrator Must Verify Subagent Output
-
-After a subagent completes, the orchestrator MUST spot-check at least 1 random doc from the batch:
-1. Read the wiki file
-2. Verify it has all 8 section headers
-3. Verify the Elements table has individual rows with tier tags
-4. Verify the `.lineage.md` file exists with column lineage mapping
-5. If the spot-check fails, assume ALL docs from that subagent are suspect and re-dispatch
+If any check fails, fix the doc immediately — do not move on and report partial success.
 
 ---
 
@@ -726,7 +731,7 @@ Phase 11 is NOT complete until ALL three files exist:
 2. **Review sidecar**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md`
 3. **Lineage map**: `knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md`
 
-The wiki file is the primary knowledge artifact — it contains the structured documentation that feeds ALTER scripts during the deployment phase (Phase 11W via `write-objects-dwh`). The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case. The lineage map is produced from Phase 13 Column Lineage.
+The wiki file is the primary knowledge artifact — it contains the structured documentation that feeds ALTER scripts during the deployment phase (Phase 11W via `write-objects-dwh`). The review sidecar may only be omitted if there are genuinely ZERO Tier 4 columns, ZERO clarification questions, and ZERO structural questions — which is almost never the case. The lineage map is produced from Phase 10B Column Lineage.
 
 > **ALTER scripts, downstream propagation, deployment reports, and UC execution** are NOT part of Phase 11. They are handled by Phase 11W (`11w-write-objects.mdc`) via the `write-objects-dwh` command.
 

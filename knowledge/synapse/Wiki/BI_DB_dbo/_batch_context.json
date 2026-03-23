@@ -1,0 +1,109 @@
+{
+  "schema": "BI_DB_dbo",
+  "last_batch": 8,
+  "last_updated": "2026-03-22",
+  "batch_8_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 8,
+    "total_columns_documented": 170,
+    "objects": [
+      {
+        "name": "BI_DB_Futures_Finance_Prep_Data",
+        "type": "Table",
+        "columns": 27,
+        "priority": 90,
+        "writer_sp": "SP_Futures_Finance_Prep_Data",
+        "quality": 8.5,
+        "notes": "Daily futures position change ledger for finance. Reconstructs opening balance + intraday movements between settlement windows from Dim_PositionChangeLog + Fact_Position_Futures_Snapshot. ActionType: Open/CloseOrig/PartialCloseOrig/EditSL/ChildClose/Hold. Author: Guy Manova."
+      },
+      {
+        "name": "BI_DB_InterestDaily",
+        "type": "Table",
+        "columns": 20,
+        "priority": 80,
+        "writer_sp": "SP_InterestDaily",
+        "quality": 8.5,
+        "notes": "Daily interest accrual per CID. Passthrough from External_Interest_Trade_InterestDaily_Daily_Data (data lake). Source: Interest microservice. All columns Tier 2 (external table source). Author: Artyom Bogomolsky."
+      },
+      {
+        "name": "BI_DB_UsageTracking_SF",
+        "type": "Table",
+        "columns": 12,
+        "priority": 70,
+        "writer_sp": "SP_UsageTracking_SF",
+        "quality": 8.5,
+        "notes": "Salesforce CRM usage tracking — account history events. COPY INTO from ADLS Gold/CRM/UsageTracking parquet. Full TRUNCATE+INSERT. ID column always NULL. CreatedByManagerID = ManagerID (duplicate). Author: Katy F."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_PnL",
+        "type": "Table",
+        "columns": 15,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_PnL",
+        "quality": 8.5,
+        "notes": "Aggregated daily PnL per CID × instrument type × flags. SUM(UnrealizedPnLChange), SUM(NetProfit), COUNT(PositionID). Source: Function_PnL_Single_Day. ~111 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_MIMO_AllPlatforms",
+        "type": "Table",
+        "columns": 21,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_Fact_MIMO_AllPlatforms",
+        "quality": 8.5,
+        "notes": "Unified MIMO across Trading Platform + eMoney + Options + MoneyFarm. Complex multi-path ETL with platform-specific full reloads. IsGlobalFTD from Function_MIMO_First_Deposit_All_Platforms. ~422 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_MIMO_eMoney_Platform",
+        "type": "Table",
+        "columns": 21,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_MIMO_eMoney_Platform",
+        "quality": 8.5,
+        "notes": "eMoney (IBAN) deposits/withdrawals. Source: eMoney_Fact_Transaction_Status. Deposits from TxTypeID=5, withdrawals negated. ROW_NUMBER dedup. Post-insert FTD recovery UPDATE. ~229 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_Revenue_Generating_Actions",
+        "type": "Table",
+        "columns": 27,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_Revenue_Generating_Actions",
+        "quality": 8.5,
+        "notes": "Comprehensive revenue fact — 18+ Function_Revenue_* (commissions, fees, overnights, dividends, staking, options etc.). RevenueMetricID/CategoryID from Dim_Revenue_Metrics. Options: full reload. Staking: retroactive month. ~1709 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_Trading_Volumes_And_Amounts",
+        "type": "Table",
+        "columns": 27,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_Trading_Volumes_And_Amounts",
+        "quality": 8.5,
+        "notes": "Daily trading volumes and invested amounts. Source: Function_Trading_Volume_PositionLevel. SUM aggregation. Optional QA dump to BI_DB_VolumeQA. Author: Guy Manova (2025-04-20, newest DDR fact). ~200 lines."
+      }
+    ]
+  },
+  "batch_7_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 5,
+    "domain": "DDR (Daily Data Report) — CID_Level + Aggregated tiers",
+    "priority": 90,
+    "total_columns_documented": 495
+  },
+  "ddr_domain_knowledge": {
+    "architecture": "CID_Level → Daily_Aggregated → TimeRange_Aggregated (3-tier aggregation pyramid)",
+    "fact_tables": "PnL, MIMO (AllPlatforms/eMoney/Trading/Options), Revenue, Trading Volumes — all feed DDR_CID_Level or are standalone DDR components",
+    "auxiliary_pattern": "Separate CID_Level_Aux + Daily_Aggregated_Aux tables for fees added post-initial design",
+    "revenue_functions": "18+ Function_Revenue_* functions are the foundational building blocks. Each calculates a specific revenue metric.",
+    "mimo_platforms": "Trading Platform, eMoney (IBAN), Options (Gatsby), MoneyFarm — each has a dedicated fact table feeding into AllPlatforms union",
+    "unique_user_caveat": "Time-range aggregations attribute users to last day's dimension values",
+    "datasource_pattern": "TimeRange table uses DataSource column to partition standard vs auxiliary data"
+  },
+  "next_batch_plan": {
+    "batch_number": 9,
+    "target_objects": [
+      "BI_DB_DDR_Customer_Periodic_Status (P60, 128 cols) — monster",
+      "BI_DB_DDR_Customer_Daily_Status (P60, 64 cols)",
+      "BI_DB_DDR_Fact_AUM (P60, 43 cols)"
+    ],
+    "notes": "Last 3 remaining P60+ objects. Customer_Periodic_Status is a monster (128 cols). These complete all P60+ BI_DB_dbo documentation."
+  }
+}

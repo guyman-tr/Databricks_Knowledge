@@ -5,7 +5,7 @@
       "mcp_tool": "synapse_sql",
       "schemas": ["DWH_dbo", "Dealing_dbo", "BI_DB_dbo", "EXW_dbo", "eMoney_dbo"],
       "supplementary_knowledge_schemas": {
-        "description": "Schemas that are NOT documentation targets but contain essential knowledge for lineage, ETL source discovery, and column descriptions. Their DDLs in the SSDT repo should be read during Phases 2, 4, 5, 8, 9, and 13. Constitution II: blacklisted objects are lineage inputs.",
+        "description": "Schemas that are NOT documentation targets but contain essential knowledge for lineage, ETL source discovery, and column descriptions. Their DDLs in the SSDT repo should be read during Phases 2, 4, 5, 8, 9, and 10A/10B. Constitution II: blacklisted objects are lineage inputs.",
         "schemas": [
           {
             "name": "DWH_Migration",
@@ -13,7 +13,7 @@
             "ssdt_path": "DWH_Migration/Tables",
             "nodbobjects_pattern": "DWH_Migration.*",
             "tier": "Tier 2b — migration DDL",
-            "input_use": "Lookup/dimension resolution (Phase 4), JOIN target recognition (Phase 5), lineage source attribution (Phase 13). Query live Synapse table for value maps."
+            "input_use": "Lookup/dimension resolution (Phase 4), JOIN target recognition (Phase 5), lineage source attribution (Phase 10A/10B). Query live Synapse table for value maps."
           },
           {
             "name": "BI_DB_Migration",
@@ -35,12 +35,12 @@
             "purpose": "Alternative lake import tables. Used by some schemas for direct lake-to-table loads instead of external tables.",
             "ssdt_path": "CopyFromLake/Tables",
             "tier": "Tier 2 — staging DDL",
-            "input_use": "Circular import detection — equivalent to external tables. Trace through to production source (Phase 2 B2, Phase 13 Step 1c)."
+            "input_use": "Circular import detection — equivalent to external tables. Trace through to production source (Phase 2 B2, Phase 10A Step 1c)."
           }
         ]
       },
       "external_table_paths": {
-        "description": "External table SSDT repo paths for ALL documentation target schemas. AUTHORITATIVE LIST — Phase 2 B2 and Phase 13 Step 1c MUST read this config for the schema list instead of hardcoding schemas. When a new schema is added to the 'schemas' array above, add its External Tables path here too. External tables are NOT documentation targets but are essential lineage inputs.",
+        "description": "External table SSDT repo paths for ALL documentation target schemas. AUTHORITATIVE LIST — Phase 2 B2 and Phase 10A Step 1c MUST read this config for the schema list instead of hardcoding schemas. When a new schema is added to the 'schemas' array above, add its External Tables path here too. External tables are NOT documentation targets but are essential lineage inputs.",
         "base_path": "DataPlatform/SynapseSQLPool1/sql_dp_prod_we",
         "paths": [
           "DWH_dbo/External Tables",
@@ -90,6 +90,38 @@
               "Dealing_dbo": ["Daily_Slippage_Positions_HOLD", "Dealing_Best_Execution_Compensation_CBH_HOLD", "Dealing_Best_Execution_Compensation_HBC_HOLD"],
               "BI_DB_dbo": ["BI_DB_Daily_Slippage_Totals_HOLD", "BI_DB_Daily_Latency_HOLD", "BI_DB_Daily_Latency_Compensation_HOLD", "BI_DB_Daily_Latency_ClientOrder_WithDelay_HOLD"]
             }
+          }
+        ],
+        "explicit_blacklist": [
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_DDR_CID_Level",
+            "reason": "DDR aggregation pyramid — too wide (172 cols), deferred"
+          },
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_DDR_CID_Level_Auxiliary_Metrics",
+            "reason": "DDR auxiliary metrics sidecar for CID_Level, deferred"
+          },
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_DDR_Daily_Aggregated",
+            "reason": "DDR aggregation pyramid — too wide (137 cols), deferred"
+          },
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_DDR_Daily_Aggregated_Auxiliary_Metrics",
+            "reason": "DDR auxiliary metrics sidecar for Daily_Aggregated, deferred"
+          },
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_DDR_Process_Monitor",
+            "reason": "DDR internal process monitoring, not an analytics table"
+          },
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_DDR_TimeRange_Aggregated_Country_Level",
+            "reason": "DDR aggregation pyramid — too wide (141 cols), deferred"
           }
         ]
       },

@@ -12,9 +12,9 @@ alwaysApply: true
 ## Problem This Solves
 
 Phase 9 reads the SP code and discovers `PnLInDollars` comes from
-`etoro_Trade_OpenPositionEndOfDay` (→ `Trade.OpenPositionEndOfDay`). Phase 13 writes
+`etoro_Trade_OpenPositionEndOfDay` (→ `Trade.OpenPositionEndOfDay`). Phase 10B writes
 this into the `.lineage.md` file. But Phase 11 generates the wiki doc BEFORE
-Phase 13 runs — so it guesses the tier instead of reading the lineage.
+Phase 10B runs — so it guesses the tier instead of reading the lineage.
 
 Result: correct lineage exists in the `.lineage.md` file, but the wiki doc says Tier 2
 for columns that should be Tier 1.
@@ -22,28 +22,28 @@ for columns that should be Tier 1.
 ## New Execution Order
 
 ```
-OLD: ... → 9 → 9B → 10 → 10.5 → 11 (docs) → 13 (lineage) → 12
-NEW: ... → 9 → 9B → 10 → 10.5 → 13 (lineage) → 11 (docs) → 12
+OLD: ... → 9 → 9B → 10 → 10A (upstream wiki) → 11 (docs) → 10B (lineage) → 12
+NEW: ... → 9 → 9B → 10 → 10A (upstream wiki) → 10B (lineage) → 11 (docs) → 12
 ```
 
-**Phase 13 (Column Lineage) moves BEFORE Phase 11 (Generate Documentation).**
+**Phase 10B (Column Lineage) moves BEFORE Phase 11 (Generate Documentation).**
 
-Phase 13's prerequisites (Phase 9 source-to-target map, Phase 10.5 upstream wiki) are
+Phase 10B's prerequisites (Phase 9 source-to-target map, Phase 10A upstream wiki) are
 all complete before it runs. The only change is that it now runs before Phase 11 instead
 of after.
 
 ## The Contract
 
-### Phase 9 → Phase 13: Source-to-Target Map
+### Phase 9 → Phase 10B: Source-to-Target Map
 
 Phase 9 Step 4 produces a source-to-target mapping for every column:
 ```
 {TargetColumn} <- {SourceSchema}.{SourceTable}.{SourceColumn} [{transform}]
 ```
 
-Phase 13 consumes this to build the `.lineage.md` column lineage table.
+Phase 10B consumes this to build the `.lineage.md` column lineage table.
 
-### Phase 13 → Phase 11: The Lineage File Is Input
+### Phase 10B → Phase 11: The Lineage File Is Input
 
 Phase 11 MUST read the `.lineage.md` file BEFORE generating the wiki doc.
 From the lineage file's column mapping:
@@ -114,7 +114,7 @@ The origin is the foundation. Intermediate relays are invisible unless they tran
 ```
 CHECK: Does {ObjectName}.lineage.md exist?
   YES → Read it. Use the column lineage table for tier assignment.
-  NO  → STOP. Run Phase 13 first.
+  NO  → STOP. Run Phase 10B first.
 ```
 
 If the lineage file has fewer columns than the DDL, Phase 9 didn't complete properly.

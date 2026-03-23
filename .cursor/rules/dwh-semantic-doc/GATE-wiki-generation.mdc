@@ -35,7 +35,7 @@ Before generating documentation for EACH object, emit this checklist:
 PHASE GATE CHECK — {ObjectName}:
   [x/  ] P1 DDL   [x/  ] P2 Sample   [x/  ] P3 Dist   [x/  ] P4 Lookup
   [x/  ] P5 JOIN  [x/  ] P6 BizLogic [x/  ] P7 Views  [x/  ] P8 SP-scan
-  [x/  ] P9 SP-logic [x/  ] P9B ETL  [x/  ] P10 Jira  [x/  ] P10.5 Upstream
+  [x/  ] P9 SP-logic [x/  ] P9B ETL  [x/  ] P10 Jira  [x/  ] P10A Upstream  [x/  ] P10B Lineage
   → Ready for P11
 ```
 
@@ -56,19 +56,34 @@ If ANY HARD-gated phase is unchecked (`[ ]`), DO NOT generate. Go run that phase
 
 **The `.lineage.md` file MUST be written BEFORE the wiki `.md` file.**
 
-Phase 9 traces every column to its source table via the SP code. Phase 10.5 finds upstream
-wikis. Phase 13 writes the `.lineage.md` file from this data. Only THEN does Phase 11
+Phase 9 traces every column to its source table via the SP code. Phase 10A finds upstream
+wikis. Phase 10B writes the `.lineage.md` file from this data. Only THEN does Phase 11
 generate the wiki doc — reading the lineage file to determine tier assignments.
 
 ```
-Execution: ... → P9 → P9B → P10 → P10.5 → P13 (lineage) → P11 (wiki doc) → P12
+Execution: ... → P9 → P9B → P10 → P10A → P10B (lineage) → P11 (wiki doc) → P12
 ```
 
 See `GATE-lineage-contract.mdc` for full details.
 
+## MANDATORY: Post-Write File Identity Check (BEFORE validation scripts)
+
+After writing files for EACH object, verify file identity BEFORE running validation:
+
+```
+POST-WRITE FILE IDENTITY CHECK — {ObjectName}:
+  .md file:              exists? [y/n]  contains "## 4. Elements"? [y/n]  line count > 50? [y/n]
+  .review-needed.md file: exists? [y/n]  contains "## 4. Elements"? [MUST BE NO]
+  .lineage.md file:      exists? [y/n]
+```
+
+**If `.md` is empty or missing `## 4. Elements` → HARD FAILURE. Delete `.review-needed.md` (it probably has the wiki content), rewrite `.md` first, then write a proper sidecar.**
+
+**If `.review-needed.md` contains `## 4. Elements` → you wrote to the WRONG file. Move that content to `.md`, then write a proper lightweight sidecar.**
+
 ## MANDATORY: Post-Write Validation (TWO scripts)
 
-After writing EACH wiki `.md` file, you MUST run BOTH validation scripts:
+After the file identity check passes, run BOTH validation scripts on EACH wiki `.md` file:
 
 ### Check A: Structural Validation
 
@@ -117,4 +132,4 @@ Catches the critical failure: upstream wiki exists with matching columns but zer
 
 ## Violation = Delete and Redo
 
-If a generated doc is missing the tier suffix, uses the wrong template, or skipped Phase 10.5: delete it and regenerate. Do not patch — the structure is too different to fix incrementally.
+If a generated doc is missing the tier suffix, uses the wrong template, or skipped Phase 10A: delete it and regenerate. Do not patch — the structure is too different to fix incrementally.
