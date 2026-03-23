@@ -92,7 +92,7 @@ The `_batch_context.json` file persists cross-object knowledge between agent ses
 1. **Collect batch results**: For each object processed in this batch, extract from the generated wiki file:
    - Quality score (from the wiki footer)
    - Primary key columns (from Elements section)
-   - Business domain (from the Business Meaning section or Phase 13 lineage)
+   - Business domain (from the Business Meaning section or Phase 10B lineage)
    - Key columns (top 10 most important — PK, FK, and business-critical columns)
    - Outbound relationships (from the Relationships section)
    - One-line summary (from the Business Meaning opening sentence)
@@ -209,7 +209,7 @@ The context file accumulates knowledge from these pipeline phases:
 | Phase 5 (JOIN Analysis) | FK-style relationships | `objects.*.outbound_relationships` |
 | Phase 11 (Generate Documentation) | Quality score, business meaning, key columns | `objects.*` (all fields) |
 | Phase 12 (Cross-Object Enrichment) | Inbound references | `objects.*.inbound_references`, `cross_references` |
-| Phase 13 (Production Lineage) | Business domain | `objects.*.business_domain` |
+| Phase 10A/10B (Production Lineage) | Business domain | `objects.*.business_domain` |
 | `knowledge/glossary.md` | Domain-wide terms | `glossary` |
 
 ---

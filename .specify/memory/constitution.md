@@ -1,4 +1,30 @@
 <!--
+Sync Impact Report — v1.11.0 → v1.12.0 (MINOR)
+
+Version change: 1.11.0 → 1.12.0
+Bump rationale: Full spec-reality sync following speckit.analyze review of feature 002
+  (mass-process-orchestration). Implementation evolved during development: parallel subagents
+  abandoned (serial inline), Plan/Execute two-session replaced with single continuous flow,
+  write-objects-dwh split into 3 commands (generate-alter-dwh + deploy-alter-dwh +
+  propagate-downstream-dwh), GATE quality enforcement created, Phase 10.5/13 renumbered to
+  10A/10B for sequential execution order.
+
+Modified principles:
+  - Quality Gates: Updated pipeline decomposition from 2-command (build-wiki-dwh +
+    write-objects-dwh) to 3-command model (build-wiki-dwh + generate-alter-dwh +
+    deploy-alter-dwh). Downstream propagation deferred to future propagate-downstream-dwh.
+  - Quality Gates: Added lineage-first execution order — Phase 10B (Column Lineage) MUST
+    run before Phase 11 (Generate Documentation). Phase numbering updated: 10.5→10A, 13→10B.
+  - Quality Gates: Added mandatory post-write validation — every wiki file must pass
+    structural validation (validate-wiki) and semantic Tier 1 coverage validation
+    (validate-tier1-coverage) before the object is marked Done.
+
+Pipeline rules updated:
+  - Phase numbering: 10.5 renamed to 10A (Upstream Wiki Bridge), 13 renamed to 10B
+    (Column Lineage). New execution order: 1→2→3→...→10→10A→10B→11→12→14→15.
+
+Previous report (v1.10.0 → v1.11.0 (MINOR)):
+
 Sync Impact Report — v1.10.0 → v1.11.0 (MINOR)
 
 Version change: 1.10.0 → 1.11.0
@@ -278,7 +304,7 @@ The source authority hierarchy and confidence tiers are ONE system. Each source 
 | `DWH_staging.X` | Active lake/Databricks pipeline (regular ETL) | `etoro_Dictionary_ActionType` — refreshed via Generic Pipeline |
 | `CopyFromLake.X` | Alternative lake import path | Some schemas use this instead of DWH_staging |
 
-These schemas are supplementary knowledge sources configured in `dwh-semantic-doc-config.json` under `supplementary_knowledge_schemas`. Their tables are NOT documentation targets but their DDLs MUST be consulted during ETL source discovery (Phase 2), procedure scanning (Phase 8), and lineage mapping (Phase 13).
+These schemas are supplementary knowledge sources configured in `dwh-semantic-doc-config.json` under `supplementary_knowledge_schemas`. Their tables are NOT documentation targets but their DDLs MUST be consulted during ETL source discovery (Phase 2), procedure scanning (Phase 8), and lineage mapping (Phase 10A/10B).
 
 **Blacklisted objects are lineage inputs, not just exclusions:** External tables (`Ext_*`), staging tables, etl_source tables, and utility tables are blacklisted from wiki documentation but their DDLs in the SSDT repo contain essential lineage and reference information. The pipeline MUST read their DDLs when tracing lineage for DWH tables they feed. "Blacklisted for output" does NOT mean "invisible for input."
 
@@ -360,18 +386,20 @@ Knowledge flows downstream: Production -> Lake -> Synapse -> Unity Catalog. Meta
 
 - No spec proceeds to implementation without validation against the canonical metadata schema
 - Column descriptions must fit Unity Catalog's 1024-character limit
-- **Every documented object must ultimately have FOUR output files** across the full pipeline: wiki (`.md`), review sidecar (`.review-needed.md`), lineage map (`.lineage.md`), and Databricks ALTER script (`.alter.sql`). The ALTER script is the primary deliverable. In a decomposed pipeline (wiki build + write-objects), these files are produced by different commands — `build-wiki-dwh` produces the first three, `write-objects-dwh` produces the ALTER script. An object is not fully complete until all four exist
+- **Every documented object must ultimately have FOUR output files** across the full pipeline: wiki (`.md`), review sidecar (`.review-needed.md`), lineage map (`.lineage.md`), and Databricks ALTER script (`.alter.sql`). The ALTER script is the primary deliverable. In a decomposed pipeline (wiki build + ALTER generation + deployment), these files are produced by different commands — `build-wiki-dwh` produces the first three, `generate-alter-dwh` produces the ALTER script, and `deploy-alter-dwh` executes it against Unity Catalog. An object is not fully complete until all four exist
 - **ALTER scripts must target a validated Unity Catalog object.** The UC fully-qualified name (`catalog.schema.table`) must be resolved by querying Unity Catalog directly — never inferred from Synapse naming conventions alone. If the Databricks connection is unavailable, the ALTER script must be generated with an `-- UNVALIDATED UC TARGET` header and the inferred name treated as a placeholder until validated
 - **Phase 2 (Live Data Sampling) is a mandatory hard gate IMMEDIATELY after Phase 2, before Phase 3.** Documentation cannot proceed without live data sampling. Phase 2 produces a machine-readable `PHASE 2 GATE: PASSED/FAILED` marker. The gate is checked immediately after Phase 2 — if FAILED or missing, the object fails and skips to the next object. Phases 3-10 do NOT execute. Phase 11 also checks the gate as a safety net. MCP connectivity is verified once per batch before the first object. Target table errors (timeout, not found, permission denied) are HARD FAIL — the object cannot be documented. See `02-live-data-sampling.mdc` for the completion gate specification and `batch-orchestration.mdc` for the MCP pre-flight check.
+- **Phase 10B (Column Lineage) is a mandatory gate before Phase 11 (Generate Documentation).** The lineage file (`.lineage.md`) must exist before the wiki doc is generated. Phase 10B produces the column-level source mapping that Phase 11 reads for mechanical tier assignment. Without it, all columns default to Tier 3-4 inference instead of Tier 1 inheritance. See `GATE-lineage-contract.mdc` for the full contract.
 - **ETL source discovery uses a tiered fallback chain — do NOT run all lookup methods by default.** Tier A (timestamp analysis + SP_Dictionaries grep) covers ~80% of cases at minimal cost. Tier B (staging/external table checks via repo Globs — Constitution IX) runs only when Tier A is inconclusive. Tier C (NoDbObjectsScripts, ADF JSONs, broad SP grep) runs only when both Tiers A and B come up empty. Running Tier C by default wastes context and produces noise.
 - **Migration staging schema names encode the source system.** Now codified in Section II with the full schema-to-source mapping table. See Section II for the authoritative reference. Supplementary knowledge schemas (DWH_Migration, BI_DB_Migration, DWH_staging, CopyFromLake) are configured in `dwh-semantic-doc-config.json` under `supplementary_knowledge_schemas`.
 - Every domain package must include at least 3 test questions with expected agent responses
 - Gap analysis (what's NOT in the lake) is as important as mapping what IS
 - No environment-specific statistics in wiki descriptions (row counts, percentages, date ranges) — these belong in working notes or query advisory, not in element descriptions
 - Phase 10 (Atlassian Knowledge Scan) is mandatory for every pipeline run — it must not be deferred or skipped
+- **Post-write validation is mandatory for every wiki file.** After generating each wiki `.md` file, two validation scripts must pass: (1) structural validation (`validate-wiki.ps1/.sh`) checking headers, tier suffixes, line count, companion files, and footer; (2) semantic Tier 1 coverage validation (`validate-tier1-coverage.ps1/.sh`) cross-referencing against upstream DB_Schema wikis. Both must exit 0 (PASS) before the object is marked Done. Failure requires deletion and regeneration.
 
 ## Governance
 
 This constitution governs all phases of the Data Knowledge Platform. Amendments require documentation and agreement between project contributors. The canonical metadata schema (Phase 1 output) becomes binding once ratified.
 
-**Version**: 1.11.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-18
+**Version**: 1.12.0 | **Ratified**: 2026-02-25 | **Last Amended**: 2026-03-22

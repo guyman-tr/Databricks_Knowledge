@@ -51,7 +51,7 @@ Before any processing, verify prerequisites:
 | Upstream wiki repos | Local filesystem | Advisory | For Tier 1 column descriptions. Configured in `dwh-semantic-doc-config.json` |
 | Synapse MCP | MCP connection | Advisory | **ONLY** for Phases 2-3 (live data sampling/distribution). Graceful degradation: skip phases if unavailable |
 | Atlassian MCP | MCP connection | **Mandatory** | Phase 10 knowledge scan. **STOP** if unavailable |
-| Databricks MCP | MCP connection OR static fallback | Advisory | Phase 13 uses the Generic Pipeline mapping to trace lineage. If MCP unavailable, falls back to static JSON at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`. Graceful degradation either way |
+| Databricks MCP | MCP connection OR static fallback | Advisory | Phase 10A uses the Generic Pipeline mapping to trace lineage. If MCP unavailable, falls back to static JSON at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`. Graceful degradation either way |
 
 ### Check 1: Dataplatform SSDT Repo
 
@@ -135,11 +135,12 @@ Run each applicable phase directly. Skip phases that have no relevant input — 
 | **Phase 7** (View Deps) | Trace view dependency chains. | Skip if object is a table with no view references |
 | **Phase 9** (SP Logic) | Deep-read top SPs for column assignments and transformation logic. | Skip if Phase 8 found no SPs |
 | **Phase 9B** (ETL Orchestration) | Map refresh schedules and SP execution order. | Skip if no orchestration SPs found |
-| **Phase 13** (Production Lineage) | Query Generic Pipeline mapping (MCP or static fallback) to find production source table. Then **read upstream wiki from DB_Schema** and extract Tier 1 column descriptions for inheritance. This is what enables Tier 1 columns in the output. | Never — always run. If MCP fails, use static JSON fallback. If no mapping found, note in lineage file and proceed. |
+| **Phase 10A** (Production source & upstream wiki) | Query Generic Pipeline mapping (MCP or static fallback) to find production source table. Then **read upstream wiki from DB_Schema** and extract Tier 1 column descriptions for inheritance. This is what enables Tier 1 columns in the output. | Never — always run. If MCP fails, use static JSON fallback. If no mapping found, note in lineage file and proceed. |
+| **Phase 10B** (Column lineage) | Resolve column-level lineage (production ↔ DWH) for the `.lineage.md` content produced in Phase 11. | Never — always run. If mapping is incomplete, document gaps in the lineage file and proceed. |
 
-**Minimum required phases for every object**: Phase 1, Phase 13, Phase 10, Phase 11.
+**Minimum required phases for every object**: Phase 1, Phase 10A, Phase 10B, Phase 10, Phase 11.
 
-> **CRITICAL — Phase 13 before Phase 11**: Phase 13 MUST run before Phase 11 so that upstream wiki column descriptions are available as Tier 1 sources during documentation generation. Without Phase 13, every column defaults to Tier 3-4 and zero Tier 1 columns appear in the output.
+> **CRITICAL — Phase 10A/10B before Phase 11**: Phase 10A and Phase 10B MUST run before Phase 11 so that upstream wiki column descriptions and lineage context are available as Tier 1 sources during documentation generation. Without Phase 10A, every column defaults to Tier 3-4 and zero Tier 1 columns appear in the output.
 
 #### c. Generate Documentation (Phase 11)
 
@@ -150,7 +151,7 @@ Follow `11-generate-documentation.mdc` EXACTLY. Write **3 files**:
 
 All 8 section headers required. Individual element descriptions with confidence tiers. Quality score in footer.
 
-**Tier 1 column inheritance** (from Phase 13 results): For each column that Phase 13 mapped to a production source table with an upstream wiki, **read the upstream wiki file** and copy the column description verbatim as Tier 1. The upstream wiki path format: `DB_Schema/etoro/Wiki/{Schema}/Tables/{Schema}.{TableName}.md`. If the column exists in the upstream wiki's Elements table, its description is Tier 1 — do NOT paraphrase or rewrite it. Only append DWH-specific notes prefixed with "DWH note:". This is the single most important step for documentation quality.
+**Tier 1 column inheritance** (from Phase 10A results): For each column that Phase 10A mapped to a production source table with an upstream wiki, **read the upstream wiki file** and copy the column description verbatim as Tier 1. The upstream wiki path format: `DB_Schema/etoro/Wiki/{Schema}/Tables/{Schema}.{TableName}.md`. If the column exists in the upstream wiki's Elements table, its description is Tier 1 — do NOT paraphrase or rewrite it. Only append DWH-specific notes prefixed with "DWH note:". This is the single most important step for documentation quality.
 
 #### d. Track Result (In Memory)
 
@@ -253,7 +254,7 @@ When argument is `review-rerun`:
 .cursor/rules/dwh-semantic-doc/10-atlassian-knowledge-scan.mdc
 .cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc   (wiki-only slim variant)
 .cursor/rules/dwh-semantic-doc/12-cross-object-enrichment.mdc
-.cursor/rules/dwh-semantic-doc/13-production-lineage-mapping.mdc  (ALL steps — mapping + upstream wiki + lineage)
+.cursor/rules/dwh-semantic-doc/13-production-lineage-mapping.mdc  (Phases 10A and 10B — production mapping, upstream wiki, and column lineage)
 .cursor/rules/dwh-semantic-doc/14-query-advisory-metadata.mdc
 ```
 
@@ -289,7 +290,7 @@ When argument is `review-rerun`:
 | Issue | Solution |
 |-------|----------|
 | Synapse MCP timeout | Skip Phases 2–3, proceed with repo-only; note in doc |
-| Databricks MCP unavailable | Phase 13 falls back to static JSON at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`; no action needed |
+| Databricks MCP unavailable | Phase 10A falls back to static JSON at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`; no action needed |
 | Atlassian MCP error | **STOP** — Phase 10 required |
 | Dataplatform repo missing | **STOP** — clone repo |
 | DDL file not found | Mark object as `Skipped (no DDL in SSDT)`, continue to next object |

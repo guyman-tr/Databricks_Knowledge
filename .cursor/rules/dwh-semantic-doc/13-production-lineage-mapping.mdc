@@ -1,22 +1,22 @@
 ---
-description: "Phase 10.5 (Upstream Wiki Bridge) + Phase 13 (Column Lineage) for DWH Semantic Documentation. Phase 10.5 (Steps 1/1b/1c/3) runs BEFORE Phase 11 — traces to production source and reads upstream wiki. Phase 13 (Steps 2/4/5/6) runs AFTER Phase 11 — produces .lineage.md file."
+description: "Phase 10A (Upstream Wiki Bridge) + Phase 10B (Column Lineage) for DWH Semantic Documentation. Phase 10A (Steps 1/1b/1c/3) runs BEFORE Phase 11 — traces to production source and reads upstream wiki. Phase 10B (Steps 2/4/5/6) runs BEFORE Phase 11 — produces .lineage.md file."
 globs:
 alwaysApply: false
 ---
 
-# Production Lineage Mapping — Phase 10.5 + Phase 13
+# Production Lineage Mapping — Phases 10A + 10B
 
 This rule contains TWO execution units with distinct identities:
 
-- **Phase 10.5 (Upstream Wiki Bridge)** — Steps 1/1b/1c/3 — runs BEFORE Phase 11
-- **Phase 13 (Column Lineage)** — Steps 2/4/5/6 — runs AFTER Phase 11
+- **Phase 10A (Upstream Wiki Bridge)** — Steps 1/1b/1c/3 — runs BEFORE Phase 11
+- **Phase 10B (Column Lineage)** — Steps 2/4/5/6 — runs BEFORE Phase 11
 
 > **MCP Fallback**: Step 1 queries the Generic Pipeline mapping view via Databricks MCP.
 > If the MCP call fails or is unavailable, **fall back to the static JSON backup** at `knowledge/synapse/Wiki/_generic_pipeline_mapping.json`.
 > Read the JSON, filter `mappings[]` entries by `database_name`/`schema_name`/`table_name` to find the production source.
 > The static file is refreshed periodically and contains all 1700+ mapping rows with corrected column names.
 
-## Phase 10.5: Upstream Wiki Bridge (pre-Phase 11)
+## Phase 10A: Upstream Wiki Bridge (pre-Phase 11)
 
 **Purpose**: Identify the production source table and read its upstream wiki to provide Tier 1 column descriptions for Phase 11's element table. This is the "#1 quality driver" — without it, every column defaults to Tier 3-4 inference.
 
@@ -30,7 +30,7 @@ Steps 1/1b/1c/3 below run for ALL commands (`build-wiki-dwh` AND `write-objects-
 - Upstream knowledge sources configured in `dwh-semantic-doc-config.json`
 - Generic Pipeline mapping view or static fallback available
 
-## Phase 13: Column Lineage (post-Phase 11)
+## Phase 10B: Column Lineage (pre-Phase 11)
 
 Steps 2/4/5/6 produce the `.lineage.md` file using Phase 9's source-to-target mapping.
 
@@ -38,6 +38,7 @@ Steps 2/4/5/6 produce the `.lineage.md` file using Phase 9's source-to-target ma
 
 - Phase 9 (Procedure Logic Extraction) complete — need source-to-target map
 - Phase 9B (ETL Orchestration) complete — need ETL chain
+- Phase 10A (Upstream Wiki Bridge) complete — upstream wiki content and tier tags available for lineage notes
 
 ## Algorithm
 
@@ -88,7 +89,7 @@ From the mapping view results in Step 1, extract and carry forward to Phase 11:
 | `source_system` | `server_name` / `database_name` | Map to canonical names: `sql_dp_prod_we`→`Synapse`, `etoro`→`etorodb`, etc. If multiple sources, list the primary |
 | `pii` | **Primary**: Query opsdb `dbo.GDPR_DL_Tables_Data` for the table's `PIIColumns` (comma-separated PII column names). Also check `ColumnsToMask` in `dbo.generic_inc_process_config` — if set, the table has PII data (`BusinessGroup = 'pii_data'` in UnityCatalogMapping). **Secondary**: Query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns. **Fallback** (if DB sources unavailable): pattern-match column names (`*Email*`, `*Phone*`, `*Address*`, `*SSN*`, `*TaxID*`, `*BirthDate*`, `*IP*`, `*IPAddress*`, `*FirstName*`, `*LastName*`, `*FullName*`, `*Passport*`, `*NationalID*`). Values: `direct` or `none` only — never `indirect` |
 
-Store these values in the Phase 13 results for Phase 11 to consume when generating tags.
+Store these values in the Phase 10A results for Phase 11 to consume when generating tags.
 
 ### Step 1c: Circular Import Detection — Trace Through External Tables
 
@@ -182,7 +183,7 @@ Path: {repo_path}/{wiki_path}/Tables/{TableName}.md
 Example: C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md
 ```
 
-> **THIS IS THE ENTIRE POINT OF PHASE 13.** Without this step, zero Tier 1 columns appear in the output.
+> **THIS IS THE ENTIRE POINT OF PHASE 10A.** Without this step, zero Tier 1 columns appear in the output.
 
 If the upstream wiki file exists, **READ IT** and extract:
 - **`## 4. Elements` table** — every column description becomes a **Tier 1** source for the DWH doc. Parse the Elements table, match DWH columns by name, and carry descriptions forward VERBATIM into Phase 11.
@@ -199,7 +200,7 @@ Example: "Customer ID. References Customer.Customer. (Tier 1 — Trade.PositionT
   → origin_source = "Trade.PositionTbl"
 ```
 
-**Store BOTH the description AND the origin tier tag** in the Phase 13 results. Phase 11 will use the ORIGIN tag, not the intermediate table name. This ensures tier tags trace to the true source across unlimited relay layers:
+**Store BOTH the description AND the origin tier tag** in the Phase 10A results. Phase 11 will use the ORIGIN tag, not the intermediate table name. This ensures tier tags trace to the true source across unlimited relay layers:
 
 ```
 Production (Trade.PositionTbl) → DWH_dbo.Dim_Position → BI_DB_dbo.BI_DB_PositionPnL
@@ -272,10 +273,10 @@ COLUMN LINEAGE:
 
 ## Output — TWO ARTIFACTS
 
-### 1. Phase 13 Results (in-session)
+### 1. Phase 10B Results (in-session)
 
 ```
-PHASE 13 RESULTS - {Schema}.{Table}
+PHASE 10B RESULTS - {Schema}.{Table}
 ====================================
 Generic Pipeline Match: {YES / NO / PARTIAL}
   {mapping view row details}
@@ -365,4 +366,4 @@ One file per documented table. Contains the column-level lineage mapping in a st
 
 ## Completion
 
-Mark `[x] Phase 13: Production Lineage Mapping` in the checklist only after both the in-session results and the `.lineage.md` file are produced.
+Mark `[x] Phase 10B: Production Lineage Mapping` in the checklist only after both the in-session results and the `.lineage.md` file are produced.

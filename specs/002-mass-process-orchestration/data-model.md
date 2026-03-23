@@ -1,4 +1,4 @@
-# Data Model: Pipeline Decomposition — Wiki Build + Write Objects
+# Data Model: Pipeline Decomposition — Wiki Build + ALTER Generation + Deployment
 
 **Branch**: `002-mass-process-orchestration` | **Date**: 2026-03-16
 
@@ -6,50 +6,86 @@
 
 ## Entity Relationship Diagram
 
+`_index.md` tracks wiki build progress. `_deploy-index.md` tracks ALTER generation plus deployment progress (not a single combined “write-objects” step).
+
+```mermaid
+flowchart LR
+  build_wiki["build-wiki-dwh"]
+  wiki_files["wiki files\n(.md, .review-needed.md, .lineage.md)"]
+  gen_alter["generate-alter-dwh"]
+  alter_sql["ALTER scripts\n(.alter.sql)"]
+  deploy_alter["deploy-alter-dwh"]
+  deploy_report["deployment reports\n(.deploy-report.md)"]
+  propagate["propagate-downstream-dwh\n(future)"]
+  downstream["downstream updates\n(future)"]
+
+  build_wiki --> wiki_files
+  wiki_files --> gen_alter
+  gen_alter --> alter_sql
+  alter_sql --> deploy_alter
+  deploy_alter --> deploy_report
+  propagate -.-> downstream
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         SCHEMA (DWH_dbo)                            │
-│                                                                     │
-│  ┌──────────────┐    ┌──────────────────┐    ┌──────────────────┐  │
-│  │  _index.md   │    │ _deploy-index.md │    │ _batch_context   │  │
-│  │  (wiki build │    │ (write-objects   │    │    .json         │  │
-│  │   tracking)  │    │   tracking)      │    │ (cross-batch     │  │
-│  └──────┬───────┘    └────────┬─────────┘    │  knowledge)      │  │
-│         │                     │              └──────────────────┘  │
-│         │ "Done" objects      │ reads from                         │
-│         │ eligible for        │ _index.md                          │
-│         ▼ deployment          ▼                                    │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │                    OBJECT (per table/view)                    │  │
-│  │                                                              │  │
-│  │   build-wiki-dwh produces:          write-objects-dwh reads: │  │
-│  │   ┌─────────────┐                   ┌─────────────┐         │  │
-│  │   │ {Object}.md │ ─────────────────▶│ {Object}.md │         │  │
-│  │   └─────────────┘                   └──────┬──────┘         │  │
-│  │   ┌──────────────────────┐                 │                │  │
-│  │   │ {Object}             │                 │ produces:      │  │
-│  │   │   .review-needed.md  │                 ▼                │  │
-│  │   └──────────────────────┘         ┌──────────────────┐     │  │
-│  │   ┌──────────────────────┐         │ {Object}         │     │  │
-│  │   │ {Object}             │         │   .alter.sql     │     │  │
-│  │   │   .lineage.md        │         └──────────────────┘     │  │
-│  │   └──────────────────────┘         ┌──────────────────┐     │  │
-│  │                                    │ {Object}         │     │  │
-│  │                                    │   .downstream    │     │  │
-│  │                                    │   .alter.sql     │     │  │
-│  │                                    └──────────────────┘     │  │
-│  │                                    ┌──────────────────┐     │  │
-│  │                                    │ {Object}         │     │  │
-│  │                                    │   .deploy-report │     │  │
-│  │                                    │   .md            │     │  │
-│  │                                    └──────────────────┘     │  │
-│  │                                    ┌──────────────────┐     │  │
-│  │                                    │ {Object}         │     │  │
-│  │                                    │   .lineage.py    │     │  │
-│  │                                    └──────────────────┘     │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
+
+Text equivalent:
+
 ```
+build-wiki-dwh  -->  wiki files (.md, .review-needed.md, .lineage.md)
+generate-alter-dwh  -->  ALTER scripts (.alter.sql)
+deploy-alter-dwh  -->  deployment reports (.deploy-report.md)
+propagate-downstream-dwh  -->  downstream updates (future)
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         SCHEMA (DWH_dbo)                                    │
+│                                                                             │
+│  ┌──────────────┐    ┌──────────────────────┐    ┌──────────────────┐      │
+│  │  _index.md   │    │ _deploy-index.md     │    │ _batch_context   │      │
+│  │  (wiki build │    │ (ALTER generation +    │    │    .json         │      │
+│  │   tracking)  │    │  deployment tracking) │    │ (cross-batch     │      │
+│  └──────┬───────┘    └──────────┬───────────┘    │  knowledge)      │      │
+│         │                       │ reads from      └──────────────────┘      │
+│         │ "Done" objects        │ _index.md (eligibility)                  │
+│         │                       │                                          │
+│         ▼                       ▼                                          │
+│  ┌────────────────────────────────────────────────────────────────────┐     │
+│  │                    OBJECT (per table/view/function)                 │     │
+│  │                                                                     │     │
+│  │  build-wiki-dwh ──► {Object}.md, .review-needed.md, .lineage.md    │     │
+│  │                                                                     │     │
+│  │  generate-alter-dwh ──► reads wiki ──► {Object}.alter.sql          │     │
+│  │                         updates _deploy-index.md (Generated)      │     │
+│  │                                                                     │     │
+│  │  deploy-alter-dwh ──► runs .alter.sql ──► {Object}.deploy-report.md │     │
+│  │                       updates _deploy-index.md (Deployed)           │     │
+│  │                                                                     │     │
+│  │  propagate-downstream-dwh (future) ──► downstream UC updates       │     │
+│  └────────────────────────────────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Entities
+
+### Entities
+
+SSDT object types: Table, View, Stored Procedure, and other entities already in the pipeline are unchanged; **Function** is defined below.
+
+#### Function
+
+Represents a SQL Server user-defined function in the SSDT repository.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| Schema | string | The schema name (e.g., `BI_DB_dbo`) |
+| FunctionName | string | The function name (e.g., `Function_Revenue_TicketFee`) |
+| ObjectType | enum | Always `Functions` |
+| UCTarget | string | Unity Catalog target. Defaults to `_Not_Migrated` since most DWH functions don't have UC counterparts |
+| PhasePath | string | Tailored phase path: no Phase 2/3 (no live sampling), reversed Phase 7 (find callers instead of dependencies) |
+| WikiFile | string | Path to `knowledge/synapse/Wiki/{Schema}/Functions/{FunctionName}.md` |
+| LineageFile | string | Path to `.lineage.md` companion |
 
 ---
 
@@ -89,49 +125,54 @@
 | Scope | Description |
 |-------|-------------|
 | Schema | Full batch processing for all objects in a schema |
-| Resume | Continue from last completed batch |
 | Status | Read-only progress display |
 | Single | Document one object |
 
+**Resume:** Auto-detected — if `_index.md` has `Queued` objects from an interrupted batch, the system resumes from the first Queued object. No explicit resume scope is needed.
+
 ---
 
-## Entity: Write Objects Command (`write-objects-dwh`)
+## Entity: `generate-alter-dwh` Command
 
-### Inputs
+Generates ALTER scripts from existing wiki files. File generation only — does not execute against Databricks.
 
-| Input | Source | Required |
-|-------|--------|----------|
-| Schema name or object name | User argument | Yes |
-| Wiki `.md` files | `build-wiki-dwh` output | Yes |
-| Databricks MCP connection | MCP server | Yes |
-| `_index.md` | Wiki build tracking | Yes (schema scope) |
-| Synapse MCP connection | MCP server | Optional (PII queries) |
-| `.lineage.md` files | Wiki build output | Optional |
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| Scope | enum | `schema`, `single`, `status`, `regenerate` |
+| Schema | string | Target schema name |
+| InputSource | string | Wiki `.md` files from `build-wiki-dwh` |
+| OutputFile | string | `.alter.sql` per object |
+| Tracking | string | Updates `_deploy-index.md` with `Generated` status |
+| BatchSize | integer | Default 25 |
+| UCResolution | string | Optional Databricks MCP query to resolve `_Pending` UC targets |
 
-### Outputs (per object)
+---
 
-| Output | Format | Content |
-|--------|--------|---------|
-| `{Object}.alter.sql` | SQL | Table comment + column comments + tags + PII |
-| `{Object}.downstream.alter.sql` | SQL | Downstream UC object comments |
-| `{Object}.deploy-report.md` | Markdown | Execution summary |
-| `{Object}.lineage.py` | Python | UC lineage injection (offline) |
+## Entity: `deploy-alter-dwh` Command
 
-### Outputs (per schema)
+Executes ALTER scripts against Unity Catalog. Requires Databricks MCP.
 
-| Output | Format | Content |
-|--------|--------|---------|
-| `_deploy-index.md` | YAML + Markdown | Deployment progress tracking |
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| Scope | enum | `schema`, `single`, `resume`, `status`, `dry-run` |
+| Schema | string | Target schema name |
+| InputSource | string | `.alter.sql` files from `generate-alter-dwh` |
+| OutputFile | string | `.deploy-report.md` per object |
+| Tracking | string | Updates `_deploy-index.md` with `Deployed` status |
+| ExecutionStrategy | string | Single `databricks.sql.connect()` session per batch, sequential statements |
 
-### Scope Options
+---
 
-| Scope | Description |
-|-------|-------------|
-| Schema | Deploy all documented objects in a schema |
-| Resume | Continue deployment from last batch |
-| Status | Read-only deployment progress display |
-| Single | Deploy one object |
-| Re-deploy | Re-deploy after review-rerun corrections |
+## Entity: `propagate-downstream-dwh` Command (Future)
+
+Propagates column descriptions to downstream tables that inherit from documented objects.
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| Scope | enum | `discover`, `execute`, `status` |
+| Schema | string | Target schema name |
+| Strategy | string | Bottom-up execution order; documented objects never overwritten |
+| Status | string | Not yet implemented — placeholder |
 
 ---
 
@@ -186,6 +227,7 @@ last_updated: "2026-03-20"
 
 | Status | Meaning |
 |--------|---------|
+| `Generated (Batch N)` | `.alter.sql` written in batch N; not yet executed in UC |
 | `Deployed (Batch N)` | ALTER executed successfully in batch N |
 | `Queued (Batch N, #M)` | Assigned for deployment |
 | `Pending` | Has wiki doc but not yet scheduled |
@@ -235,12 +277,12 @@ last_updated: "2026-03-20"
 | Review sidecar generation | ✅ | ✅ Same |
 | UC Object Resolution | ✅ (3-4 UC queries) | ❌ Removed |
 | UC Table Metadata Discovery | ✅ (2 UC queries) | ❌ Removed |
-| ALTER script generation | ✅ | ❌ Moved to write-objects |
-| Table tags | ✅ | ❌ Moved to write-objects |
-| PII tags | ✅ | ❌ Moved to write-objects |
-| Downstream propagation | ✅ | ❌ Moved to write-objects |
-| Deploy script + execution | ✅ | ❌ Moved to write-objects |
-| Deploy report | ✅ | ❌ Moved to write-objects |
+| ALTER script generation | ✅ | ❌ Moved to `generate-alter-dwh` |
+| Table tags | ✅ | ❌ Moved to `generate-alter-dwh` |
+| PII tags | ✅ | ❌ Moved to `generate-alter-dwh` |
+| Downstream propagation | ✅ | ❌ Future: `propagate-downstream-dwh` |
+| Deploy script + execution | ✅ | ❌ Moved to `deploy-alter-dwh` |
+| Deploy report | ✅ | ❌ Moved to `deploy-alter-dwh` |
 | Quality score calculation | ✅ | ✅ Same |
 | Cross-object pre-read | ✅ | ✅ Same |
 
@@ -249,7 +291,7 @@ last_updated: "2026-03-20"
 The wiki properties table uses placeholder values for UC-specific fields:
 
 ```markdown
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | _Pending — resolved during generate-alter-dwh_ |
 | **UC Format** | _Pending_ |
 | **UC Partitioned By** | _Pending_ |
 | **UC Table Type** | _Pending_ |
@@ -259,22 +301,22 @@ Phase 11 Rules B1-B7 (batch quality enforcement) are preserved — they apply to
 
 ---
 
-## Entity: Phase 11W — Write Objects Logic
+## Entity: Phase 11W — Generate ALTER + Deploy Logic (`11w-write-objects.mdc`)
 
 ### New Rule File: `11w-write-objects.mdc`
 
-Encapsulates all UC-facing operations previously embedded in Phase 11:
+Encapsulates UC-facing operations previously embedded in Phase 11, split across **`generate-alter-dwh`** (steps 1–7, file output) and **`deploy-alter-dwh`** (execution + deploy report). Downstream propagation moves to **`propagate-downstream-dwh`** when implemented.
 
 1. **Wiki Parsing**: Read existing `.md` file, extract Elements table, Business Meaning, Lineage
 2. **UC Object Resolution**: Same algorithm as current Phase 11 (search information_schema, SHOW TABLES, mapping view)
 3. **UC Table Metadata**: DESCRIBE DETAIL + DESCRIBE TABLE EXTENDED for format/partitioning
 4. **Generic Pipeline Mapping**: Query for refresh_frequency, sla, source_system
 5. **PII Detection**: GDPR tables + column patterns
-6. **ALTER Generation**: Same template as current Phase 11
-7. **Tag Generation**: Same tag set
-8. **Downstream Propagation**: Same deep lineage library
-9. **Execution**: Same single-session Python script
-10. **Deploy Report**: Same template
+6. **ALTER Generation**: Same template as current Phase 11 (`generate-alter-dwh`)
+7. **Tag Generation**: Same tag set (`generate-alter-dwh`)
+8. **Downstream Propagation**: Same deep lineage library (future: `propagate-downstream-dwh`)
+9. **Execution**: Single `databricks.sql.connect()` session per batch, sequential statements (`deploy-alter-dwh`)
+10. **Deploy Report**: Same template (`deploy-alter-dwh`)
 
 ### Wiki Backfill (Optional)
 
@@ -285,28 +327,38 @@ After UC resolution, optionally update the wiki `.md` file's properties table wi
 ## Relationships Between Entities
 
 ```
-build-wiki-dwh                         write-objects-dwh
-┌────────────────┐                      ┌────────────────┐
-│                │                      │                │
-│  _index.md     │─── "Done" objects ──▶│ _deploy-       │
-│                │    eligible for      │  index.md      │
-│                │    deployment        │                │
-│                │                      │                │
-│  {Object}.md   │─── wiki content ───▶│ ALTER script   │
-│  .lineage.md   │    feeds ALTER       │ generation     │
-│  .review-      │    generation        │                │
-│   needed.md    │                      │ .alter.sql     │
-│                │                      │ .downstream    │
-│  _batch_       │    (not used by      │  .alter.sql    │
-│   context.json │     write-objects)   │ .deploy-report │
-│                │                      │ .lineage.py    │
-└────────────────┘                      └────────────────┘
+build-wiki-dwh
+┌────────────────┐
+│  _index.md     │  wiki build progress
+│  {Object}.md   │  .review-needed.md  .lineage.md
+│  _batch_       │  (only build-wiki-dwh reads/writes _batch_context.json)
+│   context.json │
+└───────┬────────┘
+        │ wiki files
+        ▼
+generate-alter-dwh
+┌────────────────┐
+│ _deploy-       │  "Done" in _index.md → eligible for Generated
+│  index.md      │  updates: Generated, Queued, etc.
+│  .alter.sql    │
+└───────┬────────┘
+        │ .alter.sql
+        ▼
+deploy-alter-dwh
+┌────────────────┐
+│ _deploy-       │  updates: Deployed, Failed, etc.
+│  index.md      │
+│ .deploy-report │
+│    .md         │
+└────────────────┘
+
+propagate-downstream-dwh (future) ──► downstream UC updates
 ```
 
 ### Dependency Rules
 
-1. An object must have status `Done` in `_index.md` before `write-objects-dwh` can deploy it
+1. An object must have status `Done` in `_index.md` before `generate-alter-dwh` can emit `.alter.sql` for it (and before `deploy-alter-dwh` can execute)
 2. The wiki `.md` file must exist and pass validation (all 8 sections, Elements table) before ALTER generation
-3. `_deploy-index.md` is created by `write-objects-dwh` on first run — it doesn't exist until deployment starts
-4. `_batch_context.json` is only used within `build-wiki-dwh` — `write-objects-dwh` never reads it
-5. Downstream propagation in `write-objects-dwh` requires prior upstream objects to be deployed first (bottom-up processing order from `_dependency_order.json`)
+3. `_deploy-index.md` is created on first `generate-alter-dwh` or `deploy-alter-dwh` run — it may exist with `Generated` rows before any UC execution
+4. `_batch_context.json` is only used within `build-wiki-dwh` — `generate-alter-dwh` and `deploy-alter-dwh` do not read it
+5. Future downstream propagation (`propagate-downstream-dwh`) will require prior upstream objects to be deployed first (bottom-up order from `_dependency_order.json`); documented objects are never overwritten

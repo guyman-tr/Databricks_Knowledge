@@ -16,7 +16,7 @@ This phase bridges that gap by using the **Databricks External Lineage API** (Pu
 
 - Phase 9 (Procedure Logic Extraction) complete — source-to-target column mappings
 - Phase 9B (ETL Orchestration) complete — SP execution order, dependencies
-- Phase 13 (Production Lineage Mapping) complete — full lineage chain
+- Phase 10A/10B (Production Lineage Mapping) complete — full lineage chain
 - Phase 11 (Generate Documentation) complete — validated UC target name
 - Databricks Python SDK installed (`databricks-sdk`)
 - `CREATE EXTERNAL METADATA` privilege on the metastore
@@ -44,7 +44,7 @@ Each arrow is an **external lineage relationship** with optional column-level ma
 
 ### Step 1: Gather Lineage Data from Prior Phases
 
-Read the Phase 13 lineage chain for this object:
+Read the Phase 10B lineage chain for this object:
 - Production source tables → lake paths → UC bronze tables
 - Synapse staging tables → ETL SPs → target DWH table
 - Column-level lineage (Phase 9 source-to-target mappings)
@@ -53,7 +53,7 @@ Read the Phase 11 ALTER script header for the validated UC target name.
 
 ### Step 2: Resolve UC Bronze Tables (MUST be dynamic)
 
-For each production source identified in Phase 13, resolve the UC bronze table name **by querying the mapping view** — never by inferring from naming conventions.
+For each production source identified in Phase 10A/10B, resolve the UC bronze table name **by querying the mapping view** — never by inferring from naming conventions.
 
 1. Query the Generic Pipeline mapping view:
    ```sql

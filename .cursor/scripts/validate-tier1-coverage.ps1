@@ -212,7 +212,7 @@ if ($matchCount -gt 10 -and $matchedAndTier1 -eq 0) {
     Write-Host ""
     Write-Host "  [FAIL] ZERO Tier 1 columns despite $matchCount matchable upstream columns!"
     Write-Host "  The upstream wiki was found and has matching columns, but NONE got Tier 1."
-    Write-Host "  This means Phase 10.5 (Upstream Wiki Bridge) was skipped or ignored."
+    Write-Host "  This means Phase 10A (Upstream Wiki Bridge) was skipped or ignored."
     $exitCode = 1
     $result = 'FAIL'
 } elseif ($matchCount -gt 0 -and $matchedAndTier1 -lt [Math]::Floor($matchCount * 0.4)) {

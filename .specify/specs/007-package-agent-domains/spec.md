@@ -70,7 +70,7 @@ As a data knowledge engineer, I need each domain package to include routing meta
 - **FR-004**: System MUST tag objects belonging to multiple domains with cross-domain references
 - **FR-005**: System MUST produce domain packages in a format consumable by a future agent spec (file-based, self-contained)
 - **FR-006**: System MUST include test questions with expected answers for each domain
-- **FR-007**: System MUST generate UC tags per the mandatory standard (Confluence: "Databricks AI Agent - Data layer Rules", page 13960052801). Inferrable tags: `owner` (from BU/schema), `domain` (from Phase 13 lineage), `layer` (from naming convention), `refresh_frequency` (from ETL orchestration), `source_system` (from lineage chain), `data_classification` (heuristic). Non-inferrable tags (`sla`, `certified`) left blank for manual assignment.
+- **FR-007**: System MUST generate UC tags per the mandatory standard (Confluence: "Databricks AI Agent - Data layer Rules", page 13960052801). Inferrable tags: `owner` (from BU/schema), `domain` (from Phase 10A/10B lineage), `layer` (from naming convention), `refresh_frequency` (from ETL orchestration), `source_system` (from lineage chain), `data_classification` (heuristic). Non-inferrable tags (`sla`, `certified`) left blank for manual assignment.
 - **FR-008**: System MUST infer `pii` tag at column level using two tiers: `direct` = column IS PII (name, email, phone, address, DOB, IP, etc. per Confluence PII mapping pages 12044435462 and 11908645178), `indirect` = column can JOIN to a table with direct PII (e.g., GCID, CID, CustomerID). `none` otherwise. The pipeline can infer this from column names, upstream wiki column descriptions, and the known PII column lists in Confluence.
 
 ### Key Entities

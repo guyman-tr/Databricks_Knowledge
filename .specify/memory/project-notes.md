@@ -87,14 +87,14 @@ Ran `/speckit.analyze` focused on 6 areas identified from Batch 1 failures. Foun
 | # | Severity | Issue | Fix |
 |---|----------|-------|-----|
 | F1/F2 | CRITICAL | Phase 2 could be skipped — no hard gate, error handling said "continue with metadata only" | Added `PHASE 2 GATE: PASSED/FAILED` marker. Phase 11 refuses to generate without it. Target table errors are now HARD FAIL. |
-| F3 | CRITICAL | Phase 13 numbered after Phase 11 but must run before it (Steps 1/1b/3 feed Tier 1 descriptions) | Documented split execution model. Batch orchestrator now shows explicit order: `...10 → 13(1,1b,3) → 11 → 13(2-6)`. |
+| F3 | CRITICAL | Phase 13 numbered after Phase 11 but must run before it (Steps 1/1b/3 feed Tier 1 descriptions) | Documented split execution model. Renumbered in v1.12.0: Phase 13 → Phase 10A (Upstream Wiki Bridge, Steps 1/1b/1c/3) + Phase 10B (Column Lineage, Steps 2/4/5/6). Execution order: `...10 → 10A → 10B → 11 → 12`. |
 | F4 | HIGH | Phase 2 Step 6 and Phase 8 duplicated the same ETL source discovery chain | Phase 8 now consumes Phase 2 results instead of re-running. |
-| F5 | HIGH | Phases 4/5/6 had inconsistent prerequisites (Phase 4 didn't require Phase 2) | Normalized: 1→2→3→4→5→6→7→8→9→9B→10→13(partial)→11→13(rest)→12. |
+| F5 | HIGH | Phases 4/5/6 had inconsistent prerequisites (Phase 4 didn't require Phase 2) | Normalized: 1→2→3→4→5→6→7→8→9→9B→10→10A→10B→11→12→14→15 (renumbered in v1.12.0). |
 | F6 | CRITICAL | Source hierarchy (6 levels) and confidence tiers (5 tiers) were independent contradicting systems | Unified into ONE table in Constitution Section II with explicit rank-to-tier mapping. |
 | F7/F15/F19 | HIGH | 4 rules referenced `sys.sql_modules` or `INFORMATION_SCHEMA` for structural metadata (Constitution IX violation) | Fixed in Phase 1, Phase 2, Phase 9B, Phase 10. |
 | F8/F9/F20 | CRITICAL | Blacklisted objects (staging/external/etl_source) excluded from input — but they contain essential lineage | Added "blacklisted for output ≠ invisible for input" principle. Phase 2 Tier B uses repo Globs instead of INFORMATION_SCHEMA. |
 | F10/F11 | CRITICAL | DWH_Migration not in config, not consulted, Dim_AccountType had no source path | Added to config as supplementary_knowledge_schema. Migration schema encoding promoted from Quality Gates to Section II. |
-| F12/F13 | CRITICAL | No circular import detection — external tables documented as sources instead of tracing through to production | Added Step 1c to Phase 13 with LOCATION path parsing rule and circular-import pattern table. |
+| F12/F13 | CRITICAL | No circular import detection — external tables documented as sources instead of tracing through to production | Added Step 1c to Phase 10A (formerly Phase 13) with LOCATION path parsing rule and circular-import pattern table. |
 | F14 | MEDIUM | Phase 9B queried INFORMATION_SCHEMA for orchestration tables | Replaced with repo grep + known table list. |
 | F16 | MEDIUM | All phase failures treated equally | Added HARD/SOFT severity per phase in batch orchestrator. |
 | F17 | MEDIUM | Dim_Date blacklisted as "utility" but essential for date JOINs | Added blacklist-category input-value table distinguishing which categories have input value. |

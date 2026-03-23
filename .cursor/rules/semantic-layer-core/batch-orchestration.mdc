@@ -98,7 +98,7 @@ Dependencies are classified by schema to determine blocking behavior:
 
 | Classification | Schemas | Batch Planning Impact |
 |---|---|---|
-| **CORE — must be documented first** | `BI_DB_dbo`, `DWH_dbo`, `DB_Schema` (production OLTP) | Intra-schema deps → must appear in an earlier batch. Cross-schema deps → verified at Phase 10.5 runtime (their wiki should exist from a prior schema build). |
+| **CORE — must be documented first** | `BI_DB_dbo`, `DWH_dbo`, `DB_Schema` (production OLTP) | Intra-schema deps → must appear in an earlier batch. Cross-schema deps → verified at Phase 10A runtime (their wiki should exist from a prior schema build). |
 | **NON-CORE — proceed with Tier 4** | `EXW_dbo`, `Dealing_dbo`, `eMoney_dbo`, Databricks jobs, external APIs, any other schema | No blocking. Use best available knowledge (Tier 4). Do NOT delay documentation waiting for non-core upstream wikis. |
 
 > **Key rule**: A dependency from a non-core schema is never a reason to postpone documenting an object. The object proceeds with whatever upstream knowledge exists (Tier 4 = "best available, limited confidence").
@@ -206,7 +206,7 @@ Many DWH tables are trivial single-source dictionary/dimension lookups (Dim_Cred
 ### Condensed Pipeline
 
 ```
-Phase 1 → Phase 2 → Phase 8 → Phase 4 → Phase 10.5 → Phase 11 → Phase 13
+Phase 1 → Phase 2 → Phase 8 → Phase 4 → Phase 10A → Phase 10B → Phase 11
 ```
 
 **Skipped phases** (they produce nothing for simple dictionaries):
@@ -223,7 +223,7 @@ Phase 1 → Phase 2 → Phase 8 → Phase 4 → Phase 10.5 → Phase 11 → Phas
 - **Phase 2** — HARD gate, always runs
 - **Phase 8** — must confirm SP_Dictionaries is the writer and check for column renames
 - **Phase 4** — resolve ID columns against upstream wiki and DWH Dim tables
-- **Phase 10.5** — upstream wiki bridge is the #1 quality driver. **HARD when source known.**
+- **Phase 10A** — upstream wiki bridge is the #1 quality driver. **HARD when source known.**
 - **Phase 11** — the output. Phase gate checklist uses `[-]` markers for skipped phases.
 
 ### Detection
@@ -274,13 +274,13 @@ Skipping: P3, P5, P6, P7, P9B, P10
    Phase 9  (Procedure Logic Extraction — repo read)
    Phase 9B (ETL Orchestration Analysis — repo + MCP)
    Phase 10  (Atlassian Knowledge Scan — Atlassian MCP)
-   Phase 10.5 (Upstream Wiki Bridge — Generic Pipeline → production source → read upstream wiki)
+   Phase 10A (Upstream Wiki Bridge — Generic Pipeline → production source → read upstream wiki)
+   Phase 10B (Column Lineage — writes .lineage.md, runs before Phase 11)
    Phase 11  (Generate Documentation — writes wiki + sidecar)
-   Phase 13  (Column Lineage — writes .lineage.md, post-doc steps only)
    Phase 12 Mechanism 1 is embedded in Phase 11's Pre-Read step.
    ```
    
-   > **Phase 10.5** is the pre-Phase 11 portion of the production lineage mapping (Steps 1/1b/1c/3 from `13-production-lineage-mapping.mdc`). It identifies the production source and reads the upstream wiki to feed Tier 1 column descriptions into Phase 11. **Phase 13** is the post-Phase 11 portion (Steps 2/4/5/6) that produces the `.lineage.md` file.
+   > **Phase 10A** is the pre-Phase 11 portion of the production lineage mapping (Steps 1/1b/1c/3 from `13-production-lineage-mapping.mdc`). It identifies the production source and reads the upstream wiki to feed Tier 1 column descriptions into Phase 11. **Phase 10B** runs before Phase 11 (Steps 2/4/5/6 from `13-production-lineage-mapping.mdc`) and produces the `.lineage.md` file so Phase 11 can use lineage data for tier assignment.
    
    > **The Phase 2 gate check is IMMEDIATE — right after Phase 2, before Phase 3.** This prevents wasting Phases 3-10 on an object that will be rejected at Phase 11. The previous design checked the gate only at Phase 11, allowing 8 phases to run uselessly.
    
@@ -299,9 +299,9 @@ Skipping: P3, P5, P6, P7, P9B, P10
    | Phase 8 | HARD | Object fails — cannot document ETL without SP scan |
    | Phases 9, 9B | SOFT | Warn, proceed — less rich documentation |
    | Phase 10 | SOFT | Warn, proceed — quality score penalty (Sources -3) |
-   | Phase 10.5 (Upstream Wiki) | **HARD when source known** | If Phase 2 ETL discovery found a staging/external/migration source → HARD FAIL (we KNOW the upstream wiki exists). If source is genuinely unknown → SOFT (warn, proceed with zero Tier 1). |
+   | Phase 10A (Upstream Wiki) | **HARD when source known** | If Phase 2 ETL discovery found a staging/external/migration source → HARD FAIL (we KNOW the upstream wiki exists). If source is genuinely unknown → SOFT (warn, proceed with zero Tier 1). |
+   | Phase 10B (Column Lineage) | SOFT | Warn — wiki exists but no .lineage.md file |
    | Phase 11 | HARD | Object fails — no output produced |
-   | Phase 13 (Column Lineage) | SOFT | Warn — wiki exists but no .lineage.md file |
    
    Failed objects do not block subsequent objects.
 

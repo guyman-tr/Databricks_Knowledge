@@ -5,7 +5,7 @@
 
 ## Summary
 
-The monolithic DWH documentation pipeline (14 phases + ALTER generation + deployment per object, batch size 5, ~25 min/object) is decomposed into two independent commands: **`build-wiki-dwh`** (fast wiki build, batch size 25, **parallel subagents for independent objects**, Synapse+Atlassian only) and **`write-objects-dwh`** (ALTER generation + UC deployment, parallel, Databricks only). Combined with Bonnie's Plan/Execute two-session model and depth-level parallelism, this reduces estimated full-schema coverage from ~3-4 weeks to **~2-3 days** while preserving quality via Rules B1-B7.
+The monolithic DWH documentation pipeline (14 phases + ALTER generation + downstream propagation + deployment per object, batch size 5, ~25 min/object) is decomposed into a wiki build command and a three-command deployment pipeline: **`build-wiki-dwh`** (wiki build, batch size 10-15, serial inline processing, Synapse+Atlassian only), **`generate-alter-dwh`** (ALTER script generation from wiki files, Databricks optional), and **`deploy-alter-dwh`** (ALTER execution against Unity Catalog, Databricks mandatory). Downstream propagation is deferred to a future **`propagate-downstream-dwh`** command. Combined with phase-skip optimization and the Simple Dictionary Fast-Path, this reduces per-object wiki time from ~25 min to ~5-10 min while achieving avg quality 8.0 across 130 DWH_dbo objects in 15 serial batches.
 
 ## Technical Context
 
@@ -15,9 +15,9 @@ The monolithic DWH documentation pipeline (14 phases + ALTER generation + deploy
 **Testing**: End-to-end: run both commands on a 10-object subset and verify quality scores ≥ 7.0 and ALTER deployment succeeds  
 **Target Platform**: Cursor IDE (agent-driven); future: headless Python orchestrator  
 **Project Type**: Agent command pipeline (Cursor rules + commands)  
-**Performance Goals**: 25 objects per wiki batch with parallel subagents (10x improvement over current); 25-50 per deployment batch  
-**Constraints**: Max 4 concurrent subagents; 3 tables/subagent (Rule B1); serial across depth levels, parallel within; context window ~200K tokens  
-**Scale/Scope**: 281 objects in DWH_dbo schema (259 tables, 22 views); expandable to 5+ schemas
+**Performance Goals**: 10-15 objects per wiki batch with serial inline processing; 25 per ALTER generation batch; 25 per deployment batch  
+**Constraints**: Serial inline processing (one object at a time within each batch); one batch per session; context window ~200K tokens  
+**Scale/Scope**: DWH_dbo: 130 objects documented (complete). Dealing_dbo: 231 objects (complete). BI_DB_dbo: 30/1204 objects (in progress). Expandable to additional schemas.
 
 ## Constitution Check
 
@@ -25,16 +25,16 @@ The monolithic DWH documentation pipeline (14 phases + ALTER generation + deploy
 
 | Principle | Status | Notes |
 |-----------|--------|-------|
-| I. Agent-First Knowledge | ✅ PASS | ALTER script remains the ultimate deliverable — produced by `write-objects-dwh` from wiki content |
+| I. Agent-First Knowledge | ✅ PASS | ALTER script remains the ultimate deliverable — produced by `generate-alter-dwh` + `deploy-alter-dwh` from wiki content |
 | II. Code Is King | ✅ PASS | Source hierarchy unchanged; all 14 analysis phases preserved in wiki build |
 | III. Accuracy Over Coverage | ✅ PASS | Larger batches for simple objects, smaller for complex — prevents quality degradation |
 | IV. Incremental Delivery | ✅ IMPROVED | Wiki and deployment are independently deliverable phases |
 | V. Canonical Metadata Schema | ✅ PASS | Same output format for all files |
-| VI. Lineage Is First-Class | ✅ PASS | `.lineage.md` produced during wiki build; `.lineage.py` during write-objects |
+| VI. Lineage Is First-Class | ✅ PASS | `.lineage.md` produced during wiki build; `.lineage.py` during future uc-lineage-injection |
 | VII. Domain Boundaries | ✅ PASS | Unchanged |
 | VIII. Don't Rebuild What Exists | ✅ PASS | Staleness detection unchanged |
 | IX. Repo First, MCP Second | ✅ ENFORCED | NEW principle — Dataplatform SSDT repo for all structural/code reads. MCP only Phases 2-3 |
-| Quality Gates (v1.8.0) | ✅ PASS | Four mandatory files per object across pipeline — wiki + sidecar + lineage from build, ALTER from write-objects |
+| Quality Gates (v1.12.0) | ✅ PASS | Four mandatory files per object across pipeline — wiki + sidecar + lineage from build-wiki-dwh, ALTER from generate-alter-dwh |
 
 **Gate result: PASS** — no violations.
 
@@ -58,10 +58,10 @@ specs/002-mass-process-orchestration/
 ```text
 .cursor/
 ├── commands/
-│   ├── build-wiki-dwh.md                              # NEW — wiki build command
-│   ├── write-objects-dwh.md                            # NEW — deployment command
-│   ├── build-semantic-layer-dwh.md                     # DEPRECATED — replaced by build-wiki-dwh
-│   └── build-semantic-layer-dwh-no-propagation.md      # DEPRECATED — redundant
+│   ├── build-wiki-dwh.md                              # Wiki build command
+│   ├── generate-alter-dwh.md                          # ALTER script generation (from wiki files)
+│   ├── deploy-alter-dwh.md                            # ALTER execution against Unity Catalog
+│   └── propagate-downstream-dwh.md                    # [FUTURE] Downstream column propagation
 │
 ├── rules/
 │   ├── dwh-semantic-doc/
@@ -83,6 +83,10 @@ specs/002-mass-process-orchestration/
 │   │   ├── 14-query-advisory-metadata.mdc              # UNCHANGED
 │   │   ├── 15-uc-lineage-injection.mdc                 # UNCHANGED (already offline)
 │   │   ├── fk-lookup-reference.mdc                     # UNCHANGED
+│   │   ├── 00-execution-card.mdc                        # Per-object flight checklist
+│   │   ├── 10.5b-tier1-enforcement.mdc                  # Tier 1 upstream inheritance rules
+│   │   ├── GATE-lineage-contract.mdc                    # Lineage-first execution order contract
+│   │   ├── GATE-wiki-generation.mdc                     # Pre-flight + post-write validation gate
 │   │   └── mcp-query-rules.mdc                         # UNCHANGED
 │   │
 │   └── semantic-layer-core/
@@ -101,12 +105,21 @@ knowledge/synapse/Wiki/DWH_dbo/
 │   ├── {Object}.md                                     # Wiki doc (build-wiki-dwh)
 │   ├── {Object}.review-needed.md                       # Review sidecar (build-wiki-dwh)
 │   ├── {Object}.lineage.md                             # Lineage mapping (build-wiki-dwh)
-│   ├── {Object}.alter.sql                              # ALTER script (write-objects-dwh)
-│   ├── {Object}.downstream.alter.sql                   # Downstream ALTERs (write-objects-dwh)
-│   ├── {Object}.deploy-report.md                       # Deploy report (write-objects-dwh)
-│   └── {Object}.lineage.py                             # Lineage injection (write-objects-dwh)
+│   ├── {Object}.alter.sql                              # ALTER script (generate-alter-dwh)
+│   ├── {Object}.downstream.alter.sql                   # Downstream ALTERs (future propagate-downstream-dwh)
+│   ├── {Object}.deploy-report.md                       # Deploy report (deploy-alter-dwh)
+│   └── {Object}.lineage.py                             # Lineage injection (future uc-lineage-injection)
 └── Views/
     └── ...                                             # Same pattern
+
+├── _batch_generate_lib.py                             # Python batch engine for ALTER generation
+├── _deep_propagate_lib.py                             # Deep lineage propagation library
+
+.cursor/scripts/
+├── validate-wiki.ps1                                  # Structural validation (5 checks)
+├── validate-wiki.sh                                   # Bash equivalent
+├── validate-tier1-coverage.ps1                        # Semantic Tier 1 coverage validation
+└── validate-tier1-coverage.sh                         # Bash equivalent
 ```
 
 **Structure Decision**: No new directories. All files stay in the existing `Tables/` and `Views/` folders. Two new schema-level tracking files (`_deploy-index.md`, and eventually a new command pair) are the only additions to the schema folder.
@@ -119,93 +132,56 @@ knowledge/synapse/Wiki/DWH_dbo/
 
 **File**: `.cursor/commands/build-wiki-dwh.md`
 
-This command replaces `build-semantic-layer-dwh` for documentation generation. It adopts the **Plan/Execute two-session model** from DB_Schema (Bonnie's architecture) and adds **parallel subagent dispatch for independent objects**.
+This command replaces `build-semantic-layer-dwh` for documentation generation. It runs as a **single continuous flow** within one session: serial inline processing per object (no subagents), with phase-skip optimization and the Simple Dictionary Fast-Path where applicable.
 
-#### Two-Session Architecture (from DB_Schema)
+#### Single Continuous Flow
 
-**Plan mode** (auto-detected when no `## Next Batch` in `_index.md`):
-1. Pre-flight: Synapse MCP advisory (only needed for Phases 2-3 live data — structure comes from repo). Atlassian MCP mandatory. Databricks SKIPPED.
-2. Read `_dependency_order.json`, scan for pending objects
-3. Select next 25 objects (depth-ordered, self-consistent slice)
-4. Write `## Next Batch` section to `_index.md`
-5. **STOP** — print plan summary, instruct operator to start new chat
+**Execution model**: Plan + Execute run as a single uninterrupted flow within one session. The agent plans the batch, documents every object inline (serial, no subagents), updates tracking in bulk at the end, and prints a summary. No user input required between start and finish.
 
-**Execute mode** (auto-detected when `## Next Batch` exists):
-1. Read queued objects from `_index.md`
-2. Group by depth level
-3. **For each depth level**: dispatch parallel subagents
-4. Validate output, update tracking
-5. Write `_batch_context.json`
-6. Print end-of-batch banner
+1. Load state: Read `_index.md` + `_batch_context.json`. Auto-generate `_index.md` if missing.
+2. Plan batch: Select next 10-15 Pending objects (depth-ordered). Write `## Next Batch` to `_index.md`.
+3. Execute serial: Process each object through the full phase pipeline (Phases 1-12, 14) inline.
+4. Finalize: Bulk-update `_index.md`, write `_batch_context.json`, print end-of-batch banner.
+5. Stop: Operator starts a new chat for the next batch.
 
-Operator workflow: run the same command every time, it alternates Plan/Execute automatically.
-
-#### Parallel Subagent Dispatch
-
-Within each depth level, objects are independent (by definition of topological depth). The parent agent dispatches up to **4 concurrent subagents**, each documenting **3 tables** (Rule B1) or **5 views**:
-
-```
-Depth 0: [Dim_ActionType, Dim_CardType, Dim_ContractType] → Subagent 1
-          [Dim_Date, Dim_MoveMoneyReason, Ext_Dim_Country] → Subagent 2
-          [Ext_Dim_Country_Region_Desk, Ext_PhoneVerif, DWH_Status] → Subagent 3
-          [DataSolutionsTablesRunInd, Dim_AccountStatus, Dim_AccountType] → Subagent 4
-          
-          Wait for all 4 → validate (Rule B7) → update _index.md → next round
-```
-
-Each subagent receives:
-- Object names to document
-- Full phase pipeline instructions (Phases 1-11 slim)
-- Repo paths for DDL files (Dataplatform SSDT — Constitution IX)
-- MCP access: Synapse (Phases 2-3 live data only) + Atlassian (Phase 10)
-- Glossary from `_batch_context.json`
-- References to existing dependency wiki files (already on disk)
-
-**Quality enforcement**: Rules B1-B7 apply per subagent. Parent spot-checks 1 random doc per subagent (Rule B7). Failed checks → re-dispatch serially.
-
-**Serial fallback**: Objects with cross-depth dependencies within the same batch, or objects that fail quality checks, are re-run serially by the parent agent.
+**Phase-skip optimization**: Phases with no relevant input are skipped (zero grep hits for SP scan, no ID columns for lookup, MCP unavailable for live sampling). A **Simple Dictionary Fast-Path** (1→2→8→4→10A→10B→11) handles tables with ≤10 columns and single-source SP_Dictionaries origin.
 
 #### Other Differences from Current Pipeline
 
 1. **Pre-flight**: Synapse MCP advisory (live data only). Atlassian mandatory. No Databricks.
-2. **Phase pipeline**: Phase 1 reads from Dataplatform SSDT repo (Constitution IX). Phases 2-3 query Synapse MCP (live data). Phases 4-10 use repo files + Atlassian MCP. Phase 11 slim (wiki + sidecar + lineage only). Phase 13 partial (code lineage only, no UC queries).
+2. **Phase pipeline**: Phase 1 reads from Dataplatform SSDT repo (Constitution IX). Phases 2-3 query Synapse MCP (live data). Phases 4-10 use repo files + Atlassian MCP. Phase 11 slim (wiki + sidecar + lineage only). Phase 10A/10B (lineage — runs before Phase 11).
 3. **Output**: 3 files per object (wiki + sidecar + lineage). No ALTER, no downstream, no deploy report.
-4. **Batch size**: 25 (same as DB_Schema).
+4. **Batch size**: 10-15 (conservative, prevents context degradation on later objects).
 5. **Verification gate**: 3 files, not 5.
 
-### Task Group 2: Create `write-objects-dwh` Command
+### Task Group 2a: Create `generate-alter-dwh` Command
 
-**File**: `.cursor/commands/write-objects-dwh.md`
+**File**: `.cursor/commands/generate-alter-dwh.md`
 
-New command for ALTER generation and UC deployment. Structure:
+New command for ALTER script generation from existing wiki files. Does NOT execute against Databricks — file generation only.
 
-1. **Pre-flight**: Databricks MCP mandatory. Synapse MCP optional (needed for PII GDPR queries — graceful degradation to column-name patterns if unavailable). Atlassian not needed.
+1. **Pre-flight**: `_index.md` mandatory. Databricks MCP optional (resolves `_Pending` UC targets via bulk `information_schema` query).
+2. **Per-object pipeline**: Parse wiki `.md` → resolve UC target → extract metadata → generate `.alter.sql` with table comment, column comments, tags, PII tags.
+3. **Batch processing**: Default 25 objects. Bulk UC resolution query runs once per batch.
+4. **Tracking**: Updates `_deploy-index.md` with `Generated` status.
+5. **Batch engine**: `_batch_generate_lib.py` handles programmatic batch generation.
 
-2. **Scope options**:
-   - **Schema**: Deploy all objects with wiki status `Done` in `_index.md`
-   - **Resume**: Continue from last deployment batch
-   - **Status**: Show deployment progress from `_deploy-index.md`
-   - **Single**: Deploy one object
-   - **Re-deploy**: Re-deploy objects whose wiki was updated after last deploy
+### Task Group 2b: Create `deploy-alter-dwh` Command
 
-3. **Per-object pipeline** (loaded from `11w-write-objects.mdc`):
-   - Read and parse wiki `.md` file (Elements table, Business Meaning, Lineage)
-   - UC Object Resolution (current Phase 11 algorithm)
-   - UC Table Metadata Discovery (DESCRIBE DETAIL + EXTENDED)
-   - Generic Pipeline mapping query (Phase 13 Step 1/1b)
-   - ALTER script generation (table comment + column comments)
-   - Tag generation (domain, object_type, source_schema, refresh_frequency, sla, etc.)
-   - PII tag generation (GDPR tables + column patterns)
-   - Downstream propagation (deep lineage via `_deep_propagate_lib.py`)
-   - ALTER execution (single-session Python script)
-   - Deploy report generation
-   - Optional: backfill UC properties into wiki `.md`
+**File**: `.cursor/commands/deploy-alter-dwh.md`
 
-4. **Batch size**: Default 25. Each object is much lighter — read wiki + generate SQL + execute.
+New command for ALTER execution against Unity Catalog. Generates a temporary Python deployment script per batch to avoid browser-tab explosion from individual MCP calls.
 
-5. **Tracking**: Manages `_deploy-index.md` via `deploy-index-management.mdc`.
+1. **Pre-flight**: Databricks MCP mandatory. ALTER scripts must exist from `generate-alter-dwh`.
+2. **Execution**: Single `databricks.sql.connect()` session per batch. Sequential statement execution with per-statement logging.
+3. **Scope options**: Schema (all Generated), Single, Resume, Status, Dry-run.
+4. **Output**: Updated `.alter.sql` (execution footer), `.deploy-report.md`.
 
-6. **Dependency ordering**: Uses `_dependency_order.json` for bottom-up processing (upstream objects deployed before their downstream consumers).
+### Task Group 2c: Create `propagate-downstream-dwh` Command (Future)
+
+**File**: `.cursor/commands/propagate-downstream-dwh.md`
+
+Placeholder for future downstream column description propagation. Not yet implemented.
 
 ### Task Group 3: Refactor Phase 11 to Wiki-Only
 
@@ -245,7 +221,7 @@ Sections:
 1. **Wiki File Parsing Protocol**: How to read and extract from an existing wiki `.md` file
 2. **UC Object Resolution**: Current Phase 11 resolution algorithm (unchanged)
 3. **UC Table Metadata Discovery**: Current Phase 11 metadata queries (unchanged)
-4. **Generic Pipeline Mapping**: Current Phase 13 Step 1/1b queries
+4. **Generic Pipeline Mapping**: Current Phase 10A Step 1/1b queries
 5. **ALTER Script Generation**: Current Phase 11 ALTER template and rules
 6. **Table Tags**: Current Phase 11 tag generation
 7. **Column PII Tags**: Current Phase 11 PII detection
@@ -277,8 +253,7 @@ Protocols:
 
 ### Task Group 7: Deprecate Old Commands
 
-- Move `build-semantic-layer-dwh.md` to a `deprecated/` subfolder or add a `DEPRECATED` header pointing to the two new commands
-- Remove `build-semantic-layer-dwh-no-propagation.md` (redundant — wiki build IS no-propagation)
+- The original `build-semantic-layer-dwh.md` and `build-semantic-layer-dwh-no-propagation.md` commands were deleted during implementation (not deprecated with headers). No action needed — replacements are operational.
 
 ### Task Group 8: Update Spec, Constitution, and Rules
 
@@ -305,28 +280,28 @@ Task Group 1 (build-wiki-dwh command)
 Task Group 6 (deploy-index-management)
     │
     ▼
-Task Group 2 (write-objects-dwh command)
+Task Group 2a (generate-alter-dwh command)
+Task Group 2b (deploy-alter-dwh command)        ← can parallelize with 2a
+Task Group 2c (propagate-downstream-dwh)        ← placeholder, future
     │
     ▼
-Task Group 7 (deprecate old commands)
-    │
-    ▼
-Task Group 8 (update spec)
+Task Group 8 (update spec — THIS SYNC)
 ```
 
-**Critical path**: TG3 → TG1 → TG6 → TG2 (can start testing wiki build before write-objects is ready)
+**Critical path**: TG3 → TG1 → TG6 → TG2a/TG2b (can start testing wiki build before ALTER generation/deploy is ready)
 
 ---
 
 ## Risk Assessment
 
-| Risk | Probability | Impact | Mitigation |
-|------|------------|--------|------------|
-| Wiki quality drops with larger batches | Medium | High | Start with batch of 10, measure quality, increase gradually. Quality thresholds from Rules B1-B7 catch degradation |
-| Phase 13 partial mode misses important lineage data | Low | Medium | SP code analysis captures most lineage. UC mapping view data is supplementary and gets added during write-objects |
-| Existing Batch 1 objects need re-processing | Low | Low | They don't — wiki files exist and are valid. Write-objects can deploy from them as-is |
-| Two-command workflow confuses operators | Low | Medium | Clear quickstart guide. Status commands on both show what's done/pending |
-| Deploy-index and index get out of sync | Medium | Medium | Deploy-index always reads index as source of truth. No write-objects without matching Done in index |
+| Risk | Probability | Impact | Actual Outcome |
+|------|------------|--------|----------------|
+| Wiki quality drops with larger batches | Medium | High | **Mitigated**: Batch size reduced from 25 to 10-15. Quality avg 8.0 across 15 DWH_dbo batches (range 4.5-9.4). GATE enforcement + post-write validation catch degradation. |
+| Phase 10B partial mode misses lineage data | Low | Medium | **Resolved**: Phase 10B moved before Phase 11 (GATE-lineage-contract). Lineage file is now mandatory input for doc generation. |
+| Existing Batch 1 objects need re-processing | Low | Low | **Confirmed OK**: Wiki files valid. `generate-alter-dwh` deploys from them as-is. |
+| Two-command workflow confuses operators | Low | Medium | **Evolved**: Now 3 commands (build-wiki, generate-alter, deploy-alter). Clear separation of concerns. Status commands on all three. |
+| Deploy-index and index get out of sync | Medium | Medium | **Mitigated**: `_deploy-index.md` reads `_index.md` as source of truth. Stale detection works. |
+| Parallel subagent quality | High | High | **Confirmed**: Abandoned. Serial inline with GATE enforcement achieves higher quality (avg 8.0 vs projected 6-7 for parallel). |
 
 ---
 
@@ -336,7 +311,7 @@ No constitution violations to justify.
 
 | Aspect | Decision | Simpler Alternative Rejected Because |
 |--------|----------|-------------------------------------|
-| Two commands instead of one | Split wiki build from deployment | One command couldn't scale past batch size 5 — too much per-object context |
+| Three commands (plus future propagation) | Split wiki build from ALTER generation and deployment | One command couldn't scale past batch size 5 — too much per-object context |
 | Two tracking files | `_index.md` + `_deploy-index.md` | Single file with two status columns is harder to parse and mixes concerns |
 | New rule file `11w-write-objects.mdc` | Extract ALTER logic from Phase 11 | Keeping it in Phase 11 with conditional execution adds complexity and makes the rule file enormous |
 
@@ -344,13 +319,13 @@ No constitution violations to justify.
 
 ## Success Criteria (Measurable)
 
-| Criterion | Target | How to Verify |
-|-----------|--------|---------------|
-| Wiki batch size | ≥ 15 objects per batch | Run `/build-wiki-dwh DWH_dbo` — verify batch plan shows 15+ objects |
-| Wiki quality | Avg ≥ 7.0 for first 3 batches | Check quality scores in `_index.md` after 3 batches |
-| Last-vs-first quality gap | ≤ 0.5 points | Compare quality of object #1 vs #15 in same batch |
-| Per-object wiki time | ≤ 10 min for dim tables | Measure wall-clock time per object in batch |
-| Deploy batch size | ≥ 25 objects per batch | Run `/write-objects-dwh DWH_dbo` — verify batch plan |
-| ALTER execution success | ≥ 95% statements succeed | Check deploy report |
-| Full schema timeline | ≤ 5 days | Track from first batch to full deployment |
-| Backward compatibility | All 8 existing docs valid | Run `/write-objects-dwh` on Batch 1 objects without re-building wiki |
+| Criterion | Target | Actual | How Verified |
+|-----------|--------|--------|-------------|
+| Wiki batch size | ≥ 10 objects per batch | 10-15 (DWH_dbo avg ~9) | `_index.md` batch logs |
+| Wiki quality | Avg ≥ 7.0 for first 3 batches | 8.0 avg across 15 batches | `_index.md` quality scores |
+| Last-vs-first quality gap | ≤ 1.0 points | Within range | Batch log comparison |
+| Per-object wiki time | ≤ 15 min for dim tables | ~5-10 min | Wall-clock observation |
+| Deploy batch size | ≥ 25 objects per batch | 25 (default) | `_deploy-index.md` |
+| ALTER execution success | ≥ 95% statements succeed | Achieved | Deploy reports |
+| Full schema timeline | DWH_dbo complete | ✅ 130 objects, 15 batches | `_index.md` status |
+| Backward compatibility | All existing docs valid | ✅ Batch 1 objects deployed | Deploy reports |

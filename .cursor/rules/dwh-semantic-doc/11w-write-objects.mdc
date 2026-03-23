@@ -155,7 +155,7 @@ Populate the wiki properties table and ALTER script tags with the discovered val
 
 ## 6. Generic Pipeline Mapping (T024)
 
-From Phase 13 — Step 1 and Step 1b. These queries use **Databricks MCP** (not Synapse MCP).
+From Phase 10A — Step 1 and Step 1b. These queries use **Databricks MCP** (not Synapse MCP).
 
 ### Step 1: Query the Generic Pipeline Mapping View
 
@@ -293,9 +293,9 @@ Tag values:
 - `domain`: Infer from table name and business meaning (trading, finance, billing, compliance, risk, marketing, etc.)
 - `object_type`: `dim_` prefix → dimension, `fact_` prefix → fact, lookup tables → lookup
 - `source_schema` / `source_server`: From Synapse metadata and config
-- `refresh_frequency`: From Phase 13 Step 1b — derived from Generic Pipeline `FrequencyMinute` (1440→daily, 60→hourly, etc.)
-- `sla`: From Phase 13 Step 1b — estimated data readiness time (e.g., `D+1 02:00` for a daily table whose ETL completes ~2AM). Combine `FrequencyMinute` with Phase 9B SP execution timing. If unknown, use `unknown`
-- `source_system`: From Phase 13 Step 1b — canonical source system name derived from Generic Pipeline `ServerName`/`DatabaseName` (e.g., `Synapse`, `etorodb`, `cosmos`). If multiple production sources feed the table, use the primary source or `mixed`
+- `refresh_frequency`: From Phase 10A Step 1b — derived from Generic Pipeline `FrequencyMinute` (1440→daily, 60→hourly, etc.)
+- `sla`: From Phase 10A Step 1b — estimated data readiness time (e.g., `D+1 02:00` for a daily table whose ETL completes ~2AM). Combine `FrequencyMinute` with Phase 9B SP execution timing. If unknown, use `unknown`
+- `source_system`: From Phase 10A Step 1b — canonical source system name derived from Generic Pipeline `ServerName`/`DatabaseName` (e.g., `Synapse`, `etorodb`, `cosmos`). If multiple production sources feed the table, use the primary source or `mixed`
 - `semantic_grade`: 1-5 star grade derived from the Quality Score calculation (see "Star Grade" section). Compact signal for catalog consumers — full detail lives in the wiki footer only
 
 ---
@@ -308,7 +308,7 @@ For **every column**, generate a PII tag. Use `none` or `direct` only (no `indir
 ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} SET TAGS ('pii' = '{none / direct}');
 ```
 
-**PII detection** (from Phase 13 Step 1b — stop at first authoritative match):
+**PII detection** (from Phase 10A Step 1b — stop at first authoritative match):
 1. **GDPR_DL_Tables_Data** (primary) — query opsdb `dbo.GDPR_DL_Tables_Data` for the table. If a row exists, `PIIColumns` contains a comma-separated list of PII column names → tag those as `direct`, all others as `none`
 2. **ColumnsToMask** (primary) — check `dbo.generic_inc_process_config` for the table's `ColumnsToMask`. If populated, those columns are PII → `direct`
 3. **DataSolutionsMappingTableGDPR** (secondary) — query `BI_DB_dbo.DataSolutionsMappingTableGDPR` for CID/RealCID/ParentCID GDPR-flagged columns

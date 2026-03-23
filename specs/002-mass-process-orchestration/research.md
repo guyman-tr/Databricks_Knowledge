@@ -66,7 +66,7 @@
 | Phase 10: Atlassian Knowledge Scan | ✅ | ⬜ | Business annotations for wiki |
 | Phase 11: Generate Documentation | ✅ SLIM | ⬜ | Wiki `.md` + sidecar + lineage only |
 | Phase 12: Cross-Object Pre-Read | ✅ | ⬜ | Consistency across wiki docs |
-| Phase 13: Production Lineage Mapping | ✅ PARTIAL | ✅ PARTIAL | See R2b below |
+| Phase 10A/10B: Production Lineage Mapping | ✅ PARTIAL | ✅ PARTIAL | See R2b below |
 | Phase 14: Query Advisory | ✅ | ⬜ | Advisory content for wiki |
 | UC Object Resolution | ⬜ | ✅ | Requires Databricks |
 | UC Table Metadata Discovery | ⬜ | ✅ | Requires Databricks |
@@ -77,7 +77,7 @@
 | ALTER execution | ⬜ | ✅ | Executes against UC |
 | Deploy report | ⬜ | ✅ | Summarizes deployment |
 
-### R2b: Phase 13 Split
+### R2b: Phase 10A/10B Split (formerly Phase 13)
 
 **Wiki build**: SP code lineage (Steps 2-6) — produces `.lineage.md` from repo analysis.
 **Write-objects**: Generic Pipeline mapping query (Steps 1, 1b) — UC query for refresh_frequency, SLA, source_system, PII. Feeds tag generation.
@@ -153,6 +153,25 @@ Each subagent gets:
 - Objects where Phase 12 pre-read reveals heavy cross-references → serial
 - If any subagent fails quality checks → re-run that cluster serially in parent agent
 
+#### Post-Implementation Outcome
+
+Parallel subagent dispatch was **abandoned** during implementation. The serial inline model was adopted instead.
+
+**Why it was abandoned:**
+
+1. **Quality degradation**: Each subagent starts with zero context about peer objects. Despite objects being at the same dependency depth (theoretically independent), shared domain context — glossary terms, naming patterns, common source tables — significantly improved quality when processed serially. The DB_Schema quality data (serial 9-10 vs parallel 6-7) predicted this correctly.
+
+2. **GATE enforcement complexity**: Subagents could not reliably follow the lineage-first contract (Phase 10B before Phase 11) or load the mandatory spec files before generation. The GATE-lineage-contract and GATE-wiki-generation rule files only work with serial inline processing where the parent agent controls execution order.
+
+3. **Cursor subagent limitations**: Subagents could not receive the full phase pipeline context (14 rule files + 3 GATE files + execution card) within their context window while also processing multiple objects. Context window budget: ~200K tokens. Phase rules alone consume ~50K.
+
+**Measured outcome (serial inline):**
+- DWH_dbo: 130 objects, 15 batches, avg quality 8.0 (range 4.5-9.4), 0 failed
+- Dealing_dbo: 231 objects, 20 batches, avg quality 7.8
+- BI_DB_dbo: 30 objects, 6 batches, avg quality 9.1
+
+Serial inline processing with phase-skip optimization achieves sufficient throughput without quality trade-offs.
+
 ---
 
 ## R4: Revised Batch Size and Timing
@@ -191,6 +210,22 @@ Each subagent gets:
 
 **Adopt Bonnie's Plan/Execute two-session model**: Plan session reads dependency graph and queues 25 objects in `_index.md`. Execute session documents them. Auto-detect mode from `_index.md` state. This eliminates planning overhead from execution context.
 
+#### Actual Results
+
+| Metric | DWH_dbo | Dealing_dbo | BI_DB_dbo |
+|--------|---------|-------------|-----------|
+| Total objects | 130 | 231 | 30 (of 1204 active) |
+| Total batches | 15 | 20 | 6 |
+| Avg batch size | ~9 | ~12 | ~5 |
+| Quality range | 4.5-9.4 | TBD | TBD |
+| Quality average | 8.0 | 7.8 | 9.1 |
+| Failed objects | 0 | TBD | TBD |
+
+**Key findings:**
+- Batch size 10-15 is the sweet spot. Larger batches (15+) showed no measurable quality drop for well-structured tables, but complex tables (multiple SPs, cross-schema dependencies) benefit from smaller batches.
+- The Simple Dictionary Fast-Path (Phases 1→2→8→4→10A→10B→11) significantly accelerates simple lookup tables, allowing larger effective batch sizes.
+- BI_DB_dbo's higher quality (9.1) reflects its OpsDB-based discovery which provides better dependency ordering and ETL priority information than the dependency-graph fallback used for DWH_dbo.
+
 ---
 
 ## R5: How Write-Objects Reads From Wiki Files
@@ -226,7 +261,7 @@ Two separate tracking files per schema, same directory:
 | File | Command | Tracks |
 |------|---------|--------|
 | `_index.md` | `build-wiki-dwh` | Wiki documentation status |
-| `_deploy-index.md` | `write-objects-dwh` | Deployment status |
+| `_deploy-index.md` | `generate-alter-dwh` / `deploy-alter-dwh` | Deployment status |
 
 ### Integration
 
@@ -235,7 +270,7 @@ Two separate tracking files per schema, same directory:
 ### Context Handoff
 
 - `_batch_context.json` used by wiki build only (cross-depth glossary, relationships)
-- Write-objects reads wiki files directly — no context handoff needed
+- `generate-alter-dwh` / `deploy-alter-dwh` read wiki files directly — no context handoff needed
 
 ---
 
@@ -246,7 +281,8 @@ Two separate tracking files per schema, same directory:
 | Command | Name |
 |---------|------|
 | Wiki Build | `build-wiki-dwh` |
-| Write Objects | `write-objects-dwh` |
+| ALTER Generation | `generate-alter-dwh` |
+| ALTER Deployment | `deploy-alter-dwh` |
 
 ### Deprecation
 
@@ -290,6 +326,20 @@ This means the operator just runs the same command every time:
 ... repeat until schema complete
 ```
 
+#### Post-Implementation Outcome
+
+The Plan/Execute two-session model was **replaced with a single continuous flow** during implementation.
+
+**Why it was replaced:**
+
+The Plan/Execute model required operators to run the command twice per batch — once to plan (write `## Next Batch` to `_index.md` with Queued objects), then start a new chat to execute. In practice:
+
+1. **No quality benefit**: Planning and execution share the same context (phase rules, GATE files, batch context). Splitting them adds a manual step with no improvement.
+2. **Resume already handles interruption**: If a batch is interrupted mid-execution, the system auto-detects `Queued` objects in `_index.md` and resumes from the first Queued object. This makes explicit planning-then-execution redundant.
+3. **Operator friction**: The DWH documentation campaign involves 15-20 batches per schema. Adding a manual restart between plan and execute doubles the operator interactions per schema from ~15 to ~30.
+
+**Single continuous flow** (current model): Load state → Plan batch → Execute serial → Finalize → Banner → Stop. Operator starts a new chat for the next batch. One interaction per batch instead of two.
+
 ---
 
 ## R9: Revised Timeline Projection (Post-Pivot with Parallelism)
@@ -323,6 +373,20 @@ At 6-8 productive hours/day: **~1 day** for full deployment.
 | Current (serial, full pipeline, batch 5) | ~3-4 weeks | baseline |
 | Plan v1 (serial, wiki-only, batch 15) | ~8-9 days | 3x |
 | **Plan v2 (parallel subagents, wiki-only, batch 25)** | **~2-3 days** | **10x** |
+
+#### Actual Results
+
+| Schema | Objects | Batches | Calendar time | Status |
+|--------|---------|---------|---------------|--------|
+| DWH_dbo | 130 | 15 | ~3 weeks | ✅ Complete |
+| Dealing_dbo | 231 | 20 | ~4 weeks | ✅ Complete |
+| BI_DB_dbo | 30/1204 | 6 | Ongoing | 🟡 In progress |
+
+**Timeline analysis:**
+- Wiki build throughput: ~1-2 batches per operator day (depends on object complexity and operator availability)
+- ALTER generation + deployment: Separate workflow, can run independently after wiki batches complete
+- Total pipeline: Wiki build is the bottleneck; ALTER generation/deployment is fast (~5 min per batch of 25)
+- Projected BI_DB_dbo completion at current pace: ~60 additional batches needed (~30 operator-days)
 
 ---
 

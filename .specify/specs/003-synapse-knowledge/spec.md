@@ -54,7 +54,7 @@ As a data knowledge engineer, I need to run the full pipeline against a single S
 **Acceptance Scenarios**:
 
 1. **Given** the pipeline runs on `Dim_Position`, **When** Phase 1 completes, **Then** all columns, types, distribution key, and index type are captured from Synapse metadata
-2. **Given** the pipeline runs on `Dim_Position`, **When** Phase 13 (Lineage) completes, **Then** the wiki file traces back to `Trade.PositionTbl` in the upstream production wiki with a direct path reference
+2. **Given** the pipeline runs on `Dim_Position`, **When** Phase 10A/10B (Lineage) completes, **Then** the wiki file traces back to `Trade.PositionTbl` in the upstream production wiki with a direct path reference
 3. **Given** the generated wiki file, **When** an AI reads it, **Then** it can answer "How should I query open positions?" with the correct JOIN pattern and StatusID filter
 
 ---
@@ -137,8 +137,8 @@ Query-brain template: Business Meaning, Query Advisory, Elements with resolved e
 ### Phase 12 - Cross-Object Enrichment (extended)
 Same gap detection + fix approach. Extended to cross-layer: links Synapse objects to upstream production wiki files.
 
-### Phase 13 (NEW) - Production Lineage Mapping
-Trace each Synapse table back through its populating SP to the lake import to the production source table. Link to the upstream wiki file for each production source. Additionally, infer Domain tags from the production lineage chain — tag the Synapse object with the Domain(s) of its source BU schemas (per spec 002's many-to-many model). For DWH-derived objects with no production source, Domain is inferred from the Synapse schema or consuming views/reports.
+### Phase 10A (Upstream Wiki Bridge) + Phase 10B (Column Lineage) — formerly Phase 13
+Trace each Synapse table back through its populating SP to the lake import to the production source table. Link to the upstream wiki file for each production source. Phase 10A (Steps 1/1b/1c/3) runs BEFORE Phase 11 — traces to production source and reads upstream wiki. Phase 10B (Steps 2/4/5/6) runs AFTER Phase 11 — produces `.lineage.md` file. Additionally, infer Domain tags from the production lineage chain — tag the Synapse object with the Domain(s) of its source BU schemas (per spec 002's many-to-many model). For DWH-derived objects with no production source, Domain is inferred from the Synapse schema or consuming views/reports.
 
 ### Phase 14 (NEW) - Query Advisory Metadata
 Distribution keys, recommended JOIN patterns, common WHERE clauses, performance notes, data freshness / refresh schedule.
@@ -149,7 +149,7 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 
 - Q: When the pipeline re-runs on an object that already has a wiki file, what happens? → A: Full regeneration when triggered by change (not scheduled or wasteful). The wiki file is overwritten entirely with fresh output; the previous version is preserved in git history for diffing. Cross-object enrichment (Phase 12) is additive and idempotent — consistent with the DB_Schema pipeline model.
 - Q: For Synapse tables with no production source (DWH-derived), what is the authority source? → A: Document them with Synapse SP code as authority (tier 2 becomes effective tier 1). Lineage section notes "DWH-derived, no production source." All semantic meaning comes from the SP code that creates/maintains the object.
-- Q: Should the pipeline assign Domain tags, and which phase handles it? → A: Yes, Phase 13 (Production Lineage Mapping) infers Domain tags from the production lineage chain. Since it traces which production schemas feed each Synapse object, it can automatically tag with the Domain(s) of the source BU schemas (per spec 002's many-to-many model).
+- Q: Should the pipeline assign Domain tags, and which phase handles it? → A: Yes, Phase 10A/10B (Production Lineage Mapping, formerly Phase 13) infers Domain tags from the production lineage chain. Since it traces which production schemas feed each Synapse object, it can automatically tag with the Domain(s) of the source BU schemas (per spec 002's many-to-many model).
 
 ### Session 2026-03-02 (Post-POC Debriefing — Dim_Position First Run)
 

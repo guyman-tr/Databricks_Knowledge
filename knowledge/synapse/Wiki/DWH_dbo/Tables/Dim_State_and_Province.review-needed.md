@@ -18,7 +18,7 @@ No Tier 4 (UNVERIFIED) columns. All 5 columns have Tier 1 or Tier 2 descriptions
 ## Structural Questions
 
 1. **181 rows vs 4,206 source rows**: The INNER JOIN filters ~98% of RegionByIP entries. Confirm whether this is intentional (only named regions are useful in DWH) or if regions without RegionName entries should also be present.
-2. **Upstream wiki gap**: Dictionary.RegionName has an upstream wiki (read during Phase 10.5) but ShortName/Name column descriptions are Tier 2 only (derived from SP code). Consider upgrading to Tier 1 by reading the RegionName wiki details.
+2. **Upstream wiki gap**: Dictionary.RegionName has an upstream wiki (read during Phase 10A) but ShortName/Name column descriptions are Tier 2 only (derived from SP code). Consider upgrading to Tier 1 by reading the RegionName wiki details.
 
 ## Tier 5 Re-Review Needed
 

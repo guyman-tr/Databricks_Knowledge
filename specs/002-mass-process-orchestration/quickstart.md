@@ -1,69 +1,81 @@
 # Quickstart: Wiki Build + Write Objects (Post-Pivot)
 
-**Branch**: `002-mass-process-orchestration` | **Date**: 2026-03-16
+**Branch**: `002-mass-process-orchestration` | **Date**: 2026-03-22
 
 ---
 
-## The Two Commands
+## The Commands
 
-The monolithic `build-semantic-layer-dwh` (14 phases + ALTER + deploy per object, batch size 5) is replaced by two focused commands:
+The monolithic `build-semantic-layer-dwh` (14 phases + ALTER + deploy per object, batch size 5) is replaced by focused commands:
 
-| Command | What It Does | Needs | Batch Size | Per-Object Time |
-|---------|-------------|-------|------------|----------------|
-| `/build-wiki-dwh` | Phases 1-12+14 → wiki `.md` + sidecar + lineage | Synapse + Atlassian | 15-25 | ~5-10 min |
-| `/write-objects-dwh` | Read wiki → ALTER + tags + PII + downstream + deploy | Databricks | 25-50 | ~3-5 min |
+| Command | What It Does | Needs | Batch Size | Notes |
+|---------|-------------|-------|------------|-------|
+| `/build-wiki-dwh` | Phases 1→12 → wiki `.md` + sidecar + lineage | Synapse + Atlassian | 10-15 | Serial per object in batch |
+| `/generate-alter-dwh` | Read wikis → `.alter.sql` (no UC execution) | Optional Databricks for `_Pending` targets | 25 | Updates `_deploy-index.md` |
+| `/deploy-alter-dwh` | Execute ALTERs against Unity Catalog | Databricks | 25 | `.deploy-report.md` per object |
+
+Downstream propagation (if used) remains `/propagate-downstream-dwh` per object or batch.
 
 ---
 
-## Workflow: Document a Full Schema (DWH_dbo)
+## Workflow
 
-### Step 1: Build All Wikis (~5-6 days)
+### Step 1: Build Wikis (`build-wiki-dwh`)
 
-```
-/build-wiki-dwh DWH_dbo
-```
-
-This discovers all 281 objects, plans batches of 15-25, and starts documenting.
-
-After each batch completes (~2h), start a new chat and run the same command — it auto-detects Plan vs Execute mode:
-```
-/build-wiki-dwh DWH_dbo
-```
-
-Check progress anytime:
-```
-/build-wiki-dwh DWH_dbo status
-```
-
-**Output**: 281 wiki `.md` files + `.review-needed.md` sidecars + `.lineage.md` files. All in `knowledge/synapse/Wiki/DWH_dbo/Tables/` and `Views/`.
-
-### Step 2: Review Offline (parallel with Step 1)
-
-Domain experts review `.review-needed.md` files at their own pace. Corrections go into `## Reviewer Corrections`. No rush — this doesn't block wiki build.
-
-### Step 3: Deploy to Unity Catalog (~2-3 days)
+Generate semantic documentation for all objects in a schema.
 
 ```
-/write-objects-dwh DWH_dbo
+/build-wiki-dwh {schema_name}
 ```
 
-This reads all wiki files with status `Done`, generates ALTER scripts, and executes them against UC.
+**What happens:**
+1. Loads `_index.md` (or auto-generates if first run). Reads `_batch_context.json` for cross-batch knowledge.
+2. Plans the next batch: 10-15 Pending objects, depth-ordered.
+3. Processes each object serially through the phase pipeline (Phases 1→2→3→...→10→10A→10B→11→12).
+4. Bulk-updates `_index.md`, writes `_batch_context.json`, prints summary.
+5. Stops. Start a new chat for the next batch.
 
-After each batch:
+**Output per object:** `.md` (wiki), `.review-needed.md` (sidecar), `.lineage.md` (column lineage)
+
+**Repeat** until all objects are `Done` in `_index.md`.
+
+### Step 2: Generate ALTERs (`generate-alter-dwh`)
+
+Generate ALTER scripts from wiki files. Does NOT execute against Databricks.
+
 ```
-/write-objects-dwh DWH_dbo resume
+/generate-alter-dwh {schema_name}
 ```
 
-**Output**: `.alter.sql` + `.downstream.alter.sql` + `.deploy-report.md` + `.lineage.py` per object.
+**What happens:**
+1. Reads `_index.md` — processes all objects with wiki status `Done`.
+2. Optionally queries Databricks to resolve `_Pending` UC targets (bulk `information_schema` query).
+3. Generates `.alter.sql` per object (table comment, column comments, tags, PII).
+4. Updates `_deploy-index.md` with `Generated` status.
 
-### Step 4: Re-Deploy After Reviews
+### Step 3: Deploy ALTERs (`deploy-alter-dwh`)
 
-After domain experts correct items:
+Execute ALTER scripts against Unity Catalog. Requires Databricks connection.
+
 ```
-/write-objects-dwh DWH_dbo re-deploy
+/deploy-alter-dwh {schema_name}
 ```
 
-Picks up objects whose wiki was updated after last deployment (status `Stale` in `_deploy-index.md`).
+**What happens:**
+1. Reads `_deploy-index.md` — deploys all `Generated` objects.
+2. Opens a single `databricks.sql.connect()` session per batch.
+3. Executes ALTER statements sequentially with per-statement logging.
+4. Generates `.deploy-report.md` per object.
+5. Updates `_deploy-index.md` with `Deployed` status.
+
+### Step 4: Review & Re-deploy
+
+After deployment, review results and handle any issues:
+
+1. Check `_deploy-index.md` status — any `Failed` objects?
+2. For failed objects: check `.deploy-report.md` for error details, fix the wiki, regenerate ALTER, redeploy.
+3. For objects with review sidecar items: use `/wiki-review` to walk through Tier 4 and unverified items.
+4. When upstream DB_Schema wikis are updated: re-run `build-wiki-dwh` for affected objects (staleness threshold handles this), then `generate-alter-dwh` + `deploy-alter-dwh`.
 
 ---
 
@@ -71,12 +83,13 @@ Picks up objects whose wiki was updated after last deployment (status `Stale` in
 
 For one-off documentation:
 ```
-/build-wiki-dwh DWH_dbo.Dim_Customer
+/build-wiki-dwh {schema_name}.{object_name}
 ```
 
-Then deploy it:
+Then generate and deploy:
 ```
-/write-objects-dwh DWH_dbo.Dim_Customer
+/generate-alter-dwh {schema_name}.{object_name}
+/deploy-alter-dwh {schema_name}.{object_name}
 ```
 
 ---
@@ -94,10 +107,10 @@ knowledge/synapse/Wiki/DWH_dbo/
 │   ├── Dim_ActionType.md                  ← wiki doc (build-wiki-dwh)
 │   ├── Dim_ActionType.review-needed.md    ← review sidecar (build-wiki-dwh)
 │   ├── Dim_ActionType.lineage.md          ← lineage mapping (build-wiki-dwh)
-│   ├── Dim_ActionType.alter.sql           ← ALTER script (write-objects-dwh)
-│   ├── Dim_ActionType.downstream.alter.sql← downstream (write-objects-dwh)
-│   ├── Dim_ActionType.deploy-report.md    ← deploy report (write-objects-dwh)
-│   ├── Dim_ActionType.lineage.py          ← lineage inject (write-objects-dwh)
+│   ├── Dim_ActionType.alter.sql           ← ALTER script (generate-alter-dwh)
+│   ├── Dim_ActionType.downstream.alter.sql← downstream (propagate-downstream-dwh, if used)
+│   ├── Dim_ActionType.deploy-report.md    ← deploy report (deploy-alter-dwh)
+│   ├── Dim_ActionType.lineage.py          ← lineage inject (optional / downstream tooling)
 │   ├── Dim_Customer.md
 │   ├── Dim_Customer.review-needed.md
 │   └── ...
@@ -108,29 +121,43 @@ knowledge/synapse/Wiki/DWH_dbo/
 
 ---
 
-## Comparison: Before vs After
+## Throughput
 
-| Metric | Before (Monolithic) | After (Split) |
-|--------|-------------------|---------------|
-| Batch size | 5 | 15-25 (wiki), 25 (deploy) |
-| Per-object time | ~25 min | ~5-10 min (wiki) + ~3-5 min (deploy) |
-| Parallel subagents | None | 4 concurrent (3 tables each) |
-| Batches for 281 objects | ~56 | ~26 rounds (wiki) + ~6-12 (deploy) |
-| Total time estimate | ~3-4 weeks | **~2-3 days** (with parallel subagents) |
-| Resume points | Every 5 objects | Every 15-25 objects |
-| Manual chat restarts | ~56 | ~12 plan/execute pairs (wiki) + ~6 (deploy) |
-| Databricks connection | Required throughout | Only during write-objects |
-| Can review before deploy | No (deploy is inline) | Yes (wiki build → review → deploy) |
+| Metric | Value |
+|--------|-------|
+| Wiki batch size | 10-15 objects |
+| Wiki per-object time | ~5-10 min (complex), ~2-3 min (dictionary fast-path) |
+| Wiki batches per operator-day | 1-2 |
+| ALTER generation batch size | 25 objects |
+| ALTER generation time | ~2-3 min per batch |
+| Deploy batch size | 25 objects |
+| Deploy time | ~5 min per batch |
+
+### Actual Progress
+
+| Schema | Objects | Wiki Batches | Avg Quality | Status |
+|--------|---------|-------------|-------------|--------|
+| DWH_dbo | 130 | 15 | 8.0 | ✅ Complete |
+| Dealing_dbo | 231 | 20 | 7.8 | ✅ Complete |
+| BI_DB_dbo | 30/1204 | 6 | 9.1 | 🟡 In progress |
 
 ---
 
-## Migration: Existing Documented Objects
+## Function Documentation
 
-The 8 objects documented in Batch 1 (`DataLakeTableStatus_ID`, `DataSolutionsProcessesStatus`, `Dim_ActionType`, `Dim_CardType`, `Dim_ContractType`, plus 3 pre-existing) already have wiki `.md` files and some have `.alter.sql` files.
+Functions follow a tailored phase path:
+- **No Phase 2/3**: Functions don't hold data — no live sampling or distribution analysis
+- **Reversed Phase 7**: Instead of finding views this function depends on, find callers (views/SPs that use this function)
+- **UC Target**: Defaults to `_Not_Migrated` since most DWH functions don't have UC counterparts
+- **Output**: Same three files (`.md`, `.review-needed.md`, `.lineage.md`) in `knowledge/synapse/Wiki/{Schema}/Functions/`
 
-- **No migration needed**: `_index.md` already tracks them as `Done`. The `write-objects-dwh` command can deploy them directly.
-- The existing `_index.md` format is compatible — only `DEFAULT_BATCH_SIZE` changes.
-- `_deploy-index.md` will be created on first `write-objects-dwh` run.
+---
+
+## Migration Status
+
+DWH_dbo wiki documentation is complete (130 objects across 15 batches). Dealing_dbo is complete (231 objects, 20 batches). BI_DB_dbo is in progress (30 of 1204 active objects documented across 6 batches).
+
+ALTER generation and deployment are operational for DWH_dbo and Dealing_dbo. BI_DB_dbo ALTER deployment will follow wiki completion.
 
 ---
 
@@ -141,7 +168,8 @@ The 8 objects documented in Batch 1 (`DataLakeTableStatus_ID`, `DataSolutionsPro
 | File | Purpose |
 |------|---------|
 | `.cursor/commands/build-wiki-dwh.md` | Wiki build command |
-| `.cursor/commands/write-objects-dwh.md` | Deployment command |
+| `.cursor/commands/generate-alter-dwh.md` | ALTER generation (no execution) |
+| `.cursor/commands/deploy-alter-dwh.md` | UC deployment command |
 | `.cursor/rules/dwh-semantic-doc/11w-write-objects.mdc` | ALTER generation + deployment logic |
 | `.cursor/rules/semantic-layer-core/deploy-index-management.mdc` | `_deploy-index.md` tracking protocol |
 

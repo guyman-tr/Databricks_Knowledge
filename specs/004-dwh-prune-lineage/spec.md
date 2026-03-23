@@ -17,7 +17,7 @@ Two critical issues with the current DWH wiki build pipeline:
 
 - **Pruning**: No blacklist mechanism exists. Every object in the SSDT repo or dependency graph is treated as a documentation target.
 
-- **Lineage**: Phase 13 Step 1 (Generic Pipeline mapping view query) is explicitly skipped during wiki build with the comment "requires Databricks which is not available." But the Databricks MCP IS configured and available (`dwh-semantic-doc-config.json` → `lineage.generic_pipeline_mapping.mcp_tool: "databricks_sql"`). Phase 13 Step 3 (upstream wiki lookup) is also skipped, so production wiki column descriptions are never inherited.
+- **Lineage**: Phase 10A Step 1 (Generic Pipeline mapping view query) is explicitly skipped during wiki build with the comment "requires Databricks which is not available." But the Databricks MCP IS configured and available (`dwh-semantic-doc-config.json` → `lineage.generic_pipeline_mapping.mcp_tool: "databricks_sql"`). Phase 10A Step 3 (upstream wiki lookup) is also skipped, so production wiki column descriptions are never inherited.
 
 ## User Scenarios & Testing
 
@@ -47,9 +47,9 @@ As a data knowledge engineer, I need every DWH table's production source identif
 
 **Acceptance Scenarios**:
 
-1. **Given** the Databricks MCP is available, **When** Phase 13 runs for a DWH table, **Then** the mapping view is queried to find the exact production source (DatabaseName, SchemaName, TableName)
+1. **Given** the Databricks MCP is available, **When** Phase 10A runs for a DWH table, **Then** the mapping view is queried to find the exact production source (DatabaseName, SchemaName, TableName)
 2. **Given** the mapping view returns a match, **When** the lineage chain is built, **Then** it includes CopyStrategy, FrequencyMinute, DatalakePath, UnityCatalogTableName, and ServerName from the mapping view
-3. **Given** the mapping view has no match for a table, **When** Phase 13 runs, **Then** it falls back to SP-code-based lineage (current behavior) and flags the table as "No Generic Pipeline match"
+3. **Given** the mapping view has no match for a table, **When** Phase 10A runs, **Then** it falls back to SP-code-based lineage (current behavior) and flags the table as "No Generic Pipeline match"
 
 ---
 
@@ -63,7 +63,7 @@ As a data knowledge engineer, I need DWH column descriptions to inherit from the
 
 **Acceptance Scenarios**:
 
-1. **Given** the mapping view identifies `etoro.Dictionary.ActionType` as the source, **When** Phase 13 Step 3 runs, **Then** it looks up `DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ActionType.md` and reads the column descriptions
+1. **Given** the mapping view identifies `etoro.Dictionary.ActionType` as the source, **When** Phase 10A Step 3 runs, **Then** it looks up `DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ActionType.md` and reads the column descriptions
 2. **Given** an upstream wiki exists and a DWH column is a passthrough (same name, same type), **When** Phase 11 generates the Elements table, **Then** the column description is inherited verbatim and tagged as `(Tier 1 — upstream wiki)`
 3. **Given** a DWH column exists in the upstream wiki but has been renamed or transformed, **When** Phase 11 generates documentation, **Then** the description is adapted (not verbatim) and tagged as `(Tier 2 — adapted from upstream)`
 4. **Given** no upstream wiki exists for the production source, **When** Phase 11 generates documentation, **Then** columns fall back to Tier 2/Tier 4 as before
@@ -99,7 +99,7 @@ As a data knowledge engineer, I need to regenerate the 38 already-documented obj
 
 - **FR-001**: System MUST support a permanent blacklist file (`_blacklist.json`) per schema that excludes tables from batch planning and documentation
 - **FR-002**: Blacklist file MUST support categorized entries with reason codes (backup, test, junk, switch, partition, replication, validation, poc)
-- **FR-003**: Pipeline MUST query the Generic Pipeline mapping view via Databricks MCP during Phase 13 Step 1 for every table being documented
+- **FR-003**: Pipeline MUST query the Generic Pipeline mapping view via Databricks MCP during Phase 10A Step 1 for every table being documented
 - **FR-004**: Pipeline MUST look up the upstream production wiki in `DB_Schema/etoro/Wiki/` using the production source identified by the mapping view
 - **FR-005**: Pipeline MUST inherit column descriptions from upstream wiki as Tier 1 when the column is a passthrough (same name)
 - **FR-006**: Pipeline MUST tag inherited descriptions with `(Tier 1 — upstream wiki)` in the Elements table
