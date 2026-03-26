@@ -11,22 +11,22 @@ alwaysApply: false
 ## Pipeline (standard path)
 
 ```
- #   Phase              Do what                                        Rule file            Gate
- 1   Structure          Read SSDT DDL → columns, types, indexes        01-structure         HARD
- 2   Sample + ETL       SELECT TOP 10 + row count + ETL source chain   02-live-data         HARD ← IMMEDIATE gate
- 3   Distribution       Value counts, NULLs, enums                     03-distribution      SOFT
- 4   Lookup             Resolve *ID → Dim/Dict (repo first, then MCP)  04-lookup            SOFT
- 5   JOINs              Grep SPs/views for JOIN patterns               05-join-analysis     SOFT
- 6   Business Logic     Column groups, hierarchies, flags              06-business-logic    SOFT
- 7   View Deps          Which views reference this table?              07-view-dependency   SOFT
- 8   SP Scan            Find writer/reader SPs (consume P2 results!)   08-procedure-scan    HARD
- 9   SP Logic           Read top SPs deeply → source-to-target map     09-procedure-logic   HARD ← feeds lineage
- 9B  ETL Orchestration  Refresh schedule, dependencies                 09b-etl-orch         SOFT
-10   Atlassian          Search Jira/Confluence for business context     10-atlassian         SOFT
-10A  Upstream Wiki      Generic Pipeline → production source → read    13-prod-lineage §1-3 HARD*
-10B  Column Lineage     Write .lineage.md (BEFORE doc!)                13-prod-lineage §2-6 HARD
-11   Generate Doc       Read .lineage.md → write .md (WIKI!) then .review-needed (sidecar)  11-generate-doc      HARD
-12   Cross-Enrich       Pre-Read is embedded in P11; batch pass later  12-cross-enrich      —
+ #   Phase              Do what                                        Rule file            Gate    Checkpoint
+ 1   Structure          Read SSDT DDL → columns, types, indexes        01-structure         HARD    PHASE 1 CHECKPOINT: PASS
+ 2   Sample + ETL       SELECT TOP 10 + row count + ETL source chain   02-live-data         HARD    PHASE 2 CHECKPOINT: PASS ← IMMEDIATE
+ 3   Distribution       Value counts, NULLs, enums                     03-distribution      SOFT    PHASE 3 CHECKPOINT: PASS
+ 4   Lookup             Resolve *ID → Dim/Dict (repo first, then MCP)  04-lookup            SOFT    PHASE 4 CHECKPOINT: PASS
+ 5   JOINs              Grep SPs/views for JOIN patterns               05-join-analysis     SOFT    PHASE 5 CHECKPOINT: PASS
+ 6   Business Logic     Column groups, hierarchies, flags              06-business-logic    SOFT    PHASE 6 CHECKPOINT: PASS
+ 7   View Deps          Which views reference this table?              07-view-dependency   SOFT    PHASE 7 CHECKPOINT: PASS
+ 8   SP Scan            Find writer/reader SPs (consume P2 results!)   08-procedure-scan    HARD    PHASE 8 CHECKPOINT: PASS
+ 9   SP Logic           Read top SPs deeply → source-to-target map     09-procedure-logic   HARD    PHASE 9 CHECKPOINT: PASS ← feeds lineage
+ 9B  ETL Orchestration  Refresh schedule, dependencies                 09b-etl-orch         SOFT    PHASE 9B CHECKPOINT: PASS
+10   Atlassian          Search Jira/Confluence for business context     10-atlassian         SOFT    PHASE 10 CHECKPOINT: PASS
+10A  Upstream Wiki      Generic Pipeline → production source → read    13-prod-lineage §1-3 HARD*   PHASE 10A CHECKPOINT: PASS
+10B  Column Lineage     Write .lineage.md (BEFORE doc!)                13-prod-lineage §2-6 HARD    PHASE 10B CHECKPOINT: PASS
+11   Generate Doc       Read .lineage.md → write .md (WIKI!) then .review-needed (sidecar)  11-generate-doc      HARD    (shape check)
+12   Cross-Enrich       Pre-Read is embedded in P11; batch pass later  12-cross-enrich      —       —
 ```
 
 *HARD when Phase 2 found a known source (staging/ext/migration). SOFT only if source genuinely unknown.
@@ -88,3 +88,5 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
   **The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.**
 - **⛔ TWO VALIDATIONS**: After each wiki doc, run BOTH `validate-wiki.ps1` (structural) AND `validate-tier1-coverage.ps1` (semantic). Both must pass before proceeding.
 - **⛔ PHASE 9 IS HARD**: Read the SP code. Trace column assignments to source tables. The SP tells you WHERE each column comes from — you don't need to guess. If Phase 9 is skipped, Phase 10B lineage will be wrong, Phase 11 tiers will be wrong, and the semantic validation will fail.
+- **⛔ CHECKPOINT MARKERS ARE NOT OPTIONAL**: Every phase MUST emit its `PHASE {N} CHECKPOINT: PASS/FAIL` marker at completion. Every HARD phase must show PASS before the next phase begins. The GATE verifies the full checkpoint chain before Phase 11 runs. A missing checkpoint is treated the same as a failed checkpoint.
+- **⛔ GOLDEN REFERENCE**: Read `GOLDEN-REFERENCE.mdc` once per batch. Your output must match the golden skeleton shape. Dictionary columns with <=15 values get inline key=value pairs.

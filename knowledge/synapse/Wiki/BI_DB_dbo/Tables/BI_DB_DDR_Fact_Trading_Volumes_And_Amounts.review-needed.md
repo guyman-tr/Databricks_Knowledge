@@ -1,26 +1,32 @@
-# Review Sidecar: BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
+# BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts — Review Needed
 
-## Verification Status
+> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
 
-| Item | Status | Notes |
-|------|--------|-------|
-| Writer SP | Verified | `SP_DDR_Fact_Trading_Volumes_And_Amounts` — `#data` from `Function_Trading_Volume_PositionLevel`, GROUP BY + SUM |
-| Primary lineage | Verified | Single TVF source for all measures and dimensions |
-| Distribution / CCI | Verified | HASH(RealCID), clustered columnstore from DDL |
-| QA path | Verified | Optional `BI_DB_VolumeQA` when object exists |
-| Downstream consumers | Not found | No references in DataPlatform SSDT repo beyond writer |
+## Reviewer Corrections
 
-## Unverified Items
+> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
+> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
+> also be added to `knowledge/glossary.md`.
 
-| Topic | Tier | Issue |
-|-------|------|-------|
-| `IsOpenedFromIBAN` varchar domain | T4 | Values and semantics (free text vs coded) — align with `Function_Trading_Volume_PositionLevel` |
-| Volume unit / scaling | T4 | “Position value” definition lives inside the function — not fully documented here |
-| TotalVolume vs VolumeOpen + VolumeClose | T4 | After SUM aggregation, validate reconciliation rules with function |
-| NetInvestedAmount sign | T4 | Confirm open minus close interpretation at position level |
-| Downstream reports | T4 | Consumers likely outside cloned repo — grep other repos or UC |
+| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
+|----------------|-----------------|------------|-------|----------|------|
 
-## Quality Notes
+## Tier 4 (UNVERIFIED) Columns
 
-- **Simpler ETL** than revenue fact — remaining risk is **inside** `Function_Trading_Volume_PositionLevel` (not expanded in this sidecar).
-- SP author flagged **timing/QA** issues — use `BI_DB_VolumeQA` when deployed for investigation.
+No Tier 4 columns — all 27 columns are Tier 2 with verified SP code provenance.
+
+## Columns Needing Clarification
+
+| Column | Question |
+|--------|----------|
+| IsOpenedFromIBAN | DDL defines as `varchar(100)` but function returns int-like values (0/1). Is this a DDL bug or intentional for future expansion? |
+| IsLeverage | Named `IsLeverage` instead of `IsLeveraged` (used in other DDR tables). Confirm this is intentional or should be aligned |
+| InvestedAmountOpen/Closed | Uses `money` type — confirm whether precision is sufficient for large positions |
+
+## Structural Questions
+
+| Topic | Question |
+|-------|----------|
+| QA dump | The SP writes position-level detail to `BI_DB_VolumeQA` — confirm whether this is actively monitored or just a debugging artifact |
+| Data loss investigation | SP change history (2026-01-15) mentions "bizarre data loss when running at different times" — confirm whether the root cause was found and resolved |
+| Function replacement | 2026-01-15 replaced source function with position-level granularity — confirm whether historical data before this date was backfilled with the new function |

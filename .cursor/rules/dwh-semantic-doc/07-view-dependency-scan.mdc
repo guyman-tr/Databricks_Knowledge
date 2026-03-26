@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 7: View Dependency Scan
 
+## CONTRACT — Phase 7
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Target table name; Dataplatform SSDT repo |
+| **Outputs required** | List of views referencing this table (classified by type); procedures consuming each view; dependency chain diagram |
+| **MUST NOT** | Query `sys.sql_expression_dependencies` before searching repo files; miss nested view chains |
+| **Failure mode** | **SOFT** — view dependencies enrich Phase 8/11 but are not blocking |
+
+---
+
 ## Purpose
 
 Many stored procedures access tables **through views**, not directly. This phase traces the complete dependency chain: Table -> Views -> Procedures, using the **Dataplatform repo** as the primary source.
@@ -129,6 +140,18 @@ Total Consumer Reach:
   TOTAL: {N} procedures
 ```
 
-## Completion
+## CHECKPOINT — Phase 7
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Grep across all view files for table name done | [ ] |
+| 2 | Each view classified (WRAPPER/FILTER/JOIN/AGGREGATE/UNION/COMPUTED) | [ ] |
+| 3 | Procedures consuming each view identified | [ ] |
+| 4 | Nested view chains checked | [ ] |
+| 5 | Dependency chain diagram built | [ ] |
+
+```
+PHASE 7 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 7: View Dependency Scan` in the checklist.

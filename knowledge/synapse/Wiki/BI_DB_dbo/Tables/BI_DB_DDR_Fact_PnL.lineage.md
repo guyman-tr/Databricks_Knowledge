@@ -1,63 +1,65 @@
 # Column Lineage: BI_DB_dbo.BI_DB_DDR_Fact_PnL
 
-## Column Mapping
-
-| DWH Column | Immediate Source | Upstream / Transform | Notes |
-|------------|------------------|----------------------|-------|
-| DateID | `BI_DB_dbo.Function_PnL_Single_Day(@dateID)` | `frfc.DateID` | Matches `@dateID` (YYYYMMDD int) |
-| Date | ETL parameter | `@date` | Literal calendar date passed to SP |
-| RealCID | `Function_PnL_Single_Day` | `frfc.CID` | Real customer ID (not virtual) |
-| InstrumentTypeID | `DWH_dbo.Dim_Instrument` | `di.InstrumentTypeID` via `JOIN ON frfc.InstrumentID = di.InstrumentID` | Grain dimension |
-| IsCopy | `Function_PnL_Single_Day` | `CASE WHEN frfc.MirrorID > 0 THEN 1 ELSE 0 END` | Copy-trade vs manual |
-| IsSettled | `Function_PnL_Single_Day` | `frfc.IsSettled` | Passthrough from position-level logic |
-| UnrealizedPnLChange | `Function_PnL_Single_Day` | `SUM(frfc.UnrealizedPnLChange)` | Day’s unrealized PnL movement |
-| NetProfit | `Function_PnL_Single_Day` | `SUM(frfc.NetProfit)` | Realized PnL component |
-| CountPositions | `Function_PnL_Single_Day` | `COUNT(frfc.PositionID)` | Positions in grain |
-| UpdateDate | — | `GETDATE()` | Load timestamp |
-| IsFuture | `Function_PnL_Single_Day` | `ISNULL(frfc.IsFuture, 0)` | Futures vs non-futures |
-| IsLeveraged | `Function_PnL_Single_Day` | `CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END` | Leverage flag |
-| IsBuy | `Function_PnL_Single_Day` | `frfc.IsBuy` | Long vs short |
-| IsCopyFund | `Function_PnL_Single_Day` | `ISNULL(frfc.IsCopyFund, 0)` | Copy-fund position |
-| IsSQF | `Function_PnL_Single_Day` | `ISNULL(frfc.IsSQF, 0)` | Spot Quoted Futures — from `Function_Instrument_Snapshot_Enriched` join inside TVF |
-
-## Upstream of `Function_PnL_Single_Day` (conceptual)
-
-The table-valued function composes same-day PnL from:
-
-| Source object | Role |
-|---------------|------|
-| `BI_DB_dbo.BI_DB_PositionPnL` | Start-of-day / end-of-day position PnL snapshots (two `DateID` slices joined) |
-| `DWH_dbo.Dim_Position` | Closed positions with `CloseDateID = @dateID` for realized `NetProfit` |
-| `DWH_dbo.Dim_Instrument` | `IsFuture` and instrument metadata |
-| `BI_DB_dbo.BI_DB_CopyFund_Positions` | Marks copy-fund positions (`IsCopyFund`) |
-| `BI_DB_dbo.Function_Instrument_Snapshot_Enriched(@dateID)` | `IsSQF = 1` instruments for SQF tagging |
-
-## ETL Pipeline
-
-```
-BI_DB_dbo.Function_PnL_Single_Day(@dateID)
-  ← BI_DB_PositionPnL, Dim_Position, Dim_Instrument, BI_DB_CopyFund_Positions, Function_Instrument_Snapshot_Enriched
-       │
-       └─ JOIN DWH_dbo.Dim_Instrument di ON frfc.InstrumentID = di.InstrumentID
-            │
-            └─ GROUP BY (grain dimensions)
-                 │
-                 └─ SP_DDR_Fact_PnL(@date)
-                      ├─ DELETE FROM BI_DB_DDR_Fact_PnL WHERE DateID = @dateID
-                      └─ INSERT ... SELECT (aggregated measures)
-```
-
-## Source Tables (writer SP)
-
-| Source | Role | Columns Used |
-|--------|------|----------------|
-| `BI_DB_dbo.Function_PnL_Single_Day(@dateID)` | Primary rowset | CID, InstrumentID, MirrorID, IsSettled, UnrealizedPnLChange, NetProfit, PositionID, IsFuture, Leverage, IsBuy, IsCopyFund, IsSQF, DateID |
-| `DWH_dbo.Dim_Instrument` | Instrument grain | InstrumentTypeID (join key: InstrumentID) |
-
-## Consumers
-
-| Consumer | Usage |
+| Property | Value |
 |----------|-------|
-| `BI_DB_dbo.BI_DB_V_DDR_PnL` | Rolls up `UnrealizedPnLChange + NetProfit` by RealCID/Date; splits by instrument type, copy vs manual, settled vs CFD, period starts |
-| `BI_DB_dbo.BI_DB_V_DDR_Daily_Panel` | Joins `BI_DB_V_DDR_PnL` for customer daily panel metrics |
-| `BI_DB_dbo.Function_DDR_Aggregation_*` (Yesterday, ThisWeek, ThisMonth, ThisQuarter, ThisYear, YoY, MoM) | Period comparisons via `BI_DB_V_DDR_PnL` |
+| **DWH Table** | `BI_DB_dbo.BI_DB_DDR_Fact_PnL` |
+| **UC Target** | _Pending — resolved during write-objects_ |
+| **Primary Source** | `BI_DB_dbo.Function_PnL_Single_Day` (TVF) |
+| **ETL SP** | `SP_DDR_Fact_PnL` |
+| **Secondary Sources** | `DWH_dbo.Dim_Instrument` |
+| **Generated** | 2026-03-26 |
+
+## Lineage Chain
+
+```
+BI_DB_dbo.BI_DB_PositionPnL + DWH_dbo.Dim_Position + DWH_dbo.Dim_Instrument
+  + BI_DB_dbo.BI_DB_CopyFund_Positions + BI_DB_dbo.Function_Instrument_Snapshot_Enriched
+  |-- Function_PnL_Single_Day(@dateID) ---|
+  v
+[position-level PnL rows]
+  |-- SP_DDR_Fact_PnL: JOIN Dim_Instrument, GROUP BY, SUM/COUNT ---|
+  v
+BI_DB_dbo.BI_DB_DDR_Fact_PnL (aggregated CID × InstrumentType × flags)
+```
+
+## Column Lineage
+
+### Legend
+
+| Transform | Meaning |
+|-----------|---------|
+| **passthrough** | Column copied as-is from function output |
+| **rename** | Same value, different column name |
+| **ETL-computed** | Derived/calculated by SP logic |
+| **join-enriched** | Joined from secondary source during ETL |
+
+### Columns
+
+| DWH Column | Source Table | Source Column | Transform | Computation Formula | Notes |
+|-----------|-------------|---------------|-----------|---------------------|-------|
+| DateID | Function_PnL_Single_Day | DateID | passthrough | Direct: frfc.DateID | GROUP BY key |
+| Date | — | — | ETL-computed | `@date` parameter (DATE cast of DateID) | SP parameter |
+| RealCID | Function_PnL_Single_Day | CID | rename | Direct: frfc.CID | GROUP BY key; renamed CID→RealCID |
+| InstrumentTypeID | Dim_Instrument | InstrumentTypeID | join-enriched | `di.InstrumentTypeID` via `frfc.InstrumentID = di.InstrumentID` | GROUP BY key |
+| IsCopy | Function_PnL_Single_Day | MirrorID | ETL-computed | `CASE WHEN frfc.MirrorID > 0 THEN 1 ELSE 0 END` | GROUP BY key |
+| IsSettled | Function_PnL_Single_Day | IsSettled | passthrough | Direct: frfc.IsSettled | GROUP BY key |
+| UnrealizedPnLChange | Function_PnL_Single_Day | UnrealizedPnLChange | ETL-computed | `SUM(frfc.UnrealizedPnLChange)` | Aggregated per group |
+| NetProfit | Function_PnL_Single_Day | NetProfit | ETL-computed | `SUM(frfc.NetProfit)` | Aggregated per group |
+| CountPositions | Function_PnL_Single_Day | PositionID | ETL-computed | `COUNT(frfc.PositionID)` | Count of positions per group |
+| UpdateDate | — | — | ETL-computed | `GETDATE()` | ETL timestamp |
+| IsFuture | Function_PnL_Single_Day | IsFuture | passthrough | `ISNULL(frfc.IsFuture, 0)` | NULL→0 coercion; GROUP BY key |
+| IsLeveraged | Function_PnL_Single_Day | Leverage | ETL-computed | `CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END` | GROUP BY key |
+| IsBuy | Function_PnL_Single_Day | IsBuy | passthrough | Direct: frfc.IsBuy | GROUP BY key |
+| IsCopyFund | Function_PnL_Single_Day | IsCopyFund | passthrough | `ISNULL(frfc.IsCopyFund, 0)` | NULL→0 coercion; GROUP BY key |
+| IsSQF | Function_PnL_Single_Day | IsSQF | passthrough | `ISNULL(frfc.IsSQF, 0)` | NULL→0 coercion; GROUP BY key |
+
+## Summary
+
+| Category | Count |
+|----------|-------|
+| **Passthrough** | 5 |
+| **Rename** | 1 |
+| **ETL-computed** | 7 |
+| **Join-enriched** | 1 |
+| **SP-adjusted** | 0 |
+| **Total** | 15 |

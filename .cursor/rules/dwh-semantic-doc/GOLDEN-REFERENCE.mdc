@@ -1,0 +1,212 @@
+---
+description: "Golden Reference — the shape and quality standard for DWH wiki output. Read BEFORE Phase 11 generates any wiki file. Based on Dim_Mirror.md (quality 9.0)."
+globs:
+alwaysApply: false
+---
+
+# Golden Reference — What a Perfect Wiki Looks Like
+
+> **Read this file ONCE before Phase 11 generates documentation.** It defines the shape,
+> structure, and quality bar. Your output must match this skeleton. If it doesn't, fix it
+> before writing to disk.
+
+## A. Annotated Skeleton
+
+The golden example is `DWH_dbo.Dim_Mirror` (313 lines, quality 9.0/10, 19 Tier 1 + 7 Tier 2).
+Below is the condensed structural skeleton with annotations. Your output MUST match this shape.
+
+```markdown
+# {Schema}.{ObjectName}                          ← FULL qualified name
+
+> {1-2 sentence summary with row count, date range, what it tracks, production source, refresh status}
+                                                  ← The summary is NOT filler — it has specifics
+
+| Property | Value |                              ← Property table: 10+ rows minimum
+|----------|-------|
+| **Schema** | {Schema} |
+| **Object Type** | Table |
+| **Production Source** | {source with SP name} |  ← Specific, not vague
+| **Refresh** | {frequency + pattern} |
+| **Synapse Distribution** | {HASH(col) / ROUND_ROBIN / REPLICATE} |
+| **Synapse Index** | {index details} |
+| **UC Target** | `{fully.qualified.uc.name}` |
+| **UC Format** | delta |
+| **UC Partitioned By** | {partition or None} |
+| **UC Table Type** | {Gold export details} |
+
+---
+
+## 1. Business Meaning                           ← WHAT this table is, WHY it exists
+                                                  ← Must include: row count, date range, distribution of key types
+                                                  ← Must name the ETL SP and describe the load pattern
+                                                  ← Must explain sentinel values (e.g., 1900-01-01 = open)
+
+---
+
+## 2. Business Logic                             ← Numbered subsections (2.1, 2.2, ...)
+
+### 2.1 {Pattern Name}                           ← Each subsection follows What/Columns/Rules structure
+
+**What**: {one sentence}
+**Columns Involved**: {list}
+**Rules**:
+- {bullet per rule with specific values}
+
+---
+
+## 3. Query Advisory                             ← How to query this table efficiently
+
+### 3.1 Synapse Distribution & Index             ← Distribution key + index implications
+### 3.2 Common Query Patterns                    ← Table: Analyst Question | Recommended Approach
+### 3.3 Common JOINs                             ← Table: Join To | Join Condition | Purpose
+### 3.4 Gotchas                                  ← Bullet list of traps (sentinels, typos, NULL quirks)
+
+---
+
+## 4. Elements                                   ← THE CORE — every column documented
+
+### Confidence Tier Legend                        ← Tier legend table (always present)
+
+| # | Element | Type | Nullable | Description |  ← 5-column table, EVERY column, NO exceptions
+                                                  ← Description MUST end with (Tier N — source)
+                                                  ← Dictionary values inline if <=15 distinct (see Section C)
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources                       ← Table: Synapse Column | Production Source | Source Column | Transform
+### 5.2 ETL Pipeline                             ← ASCII diagram showing the full chain:
+                                                  ← Production → Lake → Staging → SP → Target → UC Gold
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)    ← Table: Element | Related Object | Description
+### 6.2 Referenced By (other objects point to this)
+
+---
+
+## 7. Sample Queries                             ← 2-3 real SQL queries analysts would run
+                                                  ← Each with a descriptive ### heading
+
+---
+
+## 8. Atlassian Knowledge Sources                ← Confluence/Jira links OR "No sources found"
+
+---
+
+*Generated: {date} | Quality: {N}/10 | Phases: {N}/14*
+*Tiers: {N} T1, {N} T2, {N} T3, {N} T4, {N} T5 | Elements: {N}/{N}, Logic: {N}/10, ...*
+*Object: {Schema}.{ObjectName} | Type: {type} | Production Source: {source}*
+```
+
+## B. Quality Assertions — Machine-Checkable
+
+After writing, verify EVERY assertion before saving:
+
+| # | Assertion | How to Check | Hard/Soft |
+|---|-----------|-------------|-----------|
+| 1 | All 8 `## N.` sections present (1 through 8) | Count `## 1.` through `## 8.` headers | HARD |
+| 2 | Every Element description ends with `(Tier N — source)` | Grep for `\(Tier [1-5] —` in Section 4 | HARD |
+| 3 | Element table has 5 columns: `# \| Element \| Type \| Nullable \| Description` | Check header row | HARD |
+| 4 | Element count matches DDL column count | Compare `| {N} |` max row number vs Phase 1 column count | HARD |
+| 5 | Section 2 has numbered subsections with What/Columns/Rules | Check for `### 2.N` and bold `**What**:` | SOFT |
+| 6 | Section 3 has a Gotchas subsection | Check for `### 3.4 Gotchas` or similar | SOFT |
+| 7 | Section 5.2 has ETL pipeline ASCII diagram | Check for code block with `→` or `\|--` | HARD |
+| 8 | Footer has tier breakdown counts | Check for `*Tiers:` line | HARD |
+| 9 | Property table has Production Source, Refresh, Distribution, UC Target | Check for these rows | HARD |
+| 10 | Summary line has row count and date range (not vague) | Check `>` line for numbers/dates | SOFT |
+| 11 | Dictionary columns with <=15 values have inline values | See Section C rule | SOFT |
+| 12 | `.review-needed.md` does NOT contain `## 4. Elements` | If it does, content is in the WRONG file | HARD |
+| 13 | `.lineage.md` exists and was written BEFORE `.md` | Check file existence | HARD |
+
+**If ANY HARD assertion fails: delete the file and regenerate. Do not patch.**
+
+## C. Dictionary Inline Values Rule
+
+When a column references a dictionary/lookup table:
+
+| Dictionary Size | Rule | Example |
+|----------------|------|---------|
+| **<=15 distinct values** | Inline key=value pairs in the description | `1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType)` |
+| **>15 distinct values** | Name the join target only, describe what it represents | `FK to Dim_Country. Resolves to country name.` |
+
+**Threshold rationale**: 15 values fit in ~200 characters. Beyond that, inline enumeration hurts readability and adds noise.
+
+**Naming convention awareness**: When the production Dictionary name differs from the DWH Dim name, document BOTH:
+- Production: `Dictionary.MirrorType` (for lineage traceability)
+- DWH: `Dim_MirrorType` (for query use)
+
+Example from Dim_Mirror:
+```
+| 10 | MirrorTypeID | int | YES | 1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType). Determines mirror behavior. (Tier 1 — Trade.Mirror) |
+```
+
+## D. Anti-Patterns — What Drift Looks Like
+
+These are concrete examples of BAD output observed in actual production runs. If your output matches any of these, STOP and fix.
+
+### D1. Missing Tier Suffix
+
+```
+WRONG: | 2 | CID | int | NO | Customer ID |
+RIGHT: | 2 | CID | int | NO | Copier customer ID. The user who allocates money to follow the leader. (Tier 1 — Trade.Mirror) |
+```
+
+The tier suffix `(Tier N — source)` is not optional. It is written verbatim to Unity Catalog by Phase 11W. Every single element description must end with it.
+
+### D2. Vague Business Meaning (Section 1)
+
+```
+WRONG: > This table stores mirror data for the DWH.
+RIGHT: > 11.1M-row copy-trading relationship dimension table tracking every CopyTrader,
+       > CopyMe (Popular Investor), Smart Portfolio, and Fund mirror relationship from
+       > 2011 to present -- capturing the copier (CID), the copied person (ParentCID),
+       > investment amount, open/close dates, risk settings, and financial performance.
+```
+
+Section 1 must have: row count, date range, specific business entities, ETL pattern.
+
+### D3. Wrong File — Wiki Content in Sidecar
+
+```
+WRONG: Writing the Elements table into {ObjectName}.review-needed.md
+RIGHT: The .md file gets the full 8-section wiki. The .review-needed.md gets ONLY
+       Tier 4 items, questions for reviewers, and correction notes. It is a lightweight
+       checklist, NOT a duplicate wiki.
+```
+
+If you find yourself writing `## 4. Elements` into `.review-needed.md`, you are writing to the WRONG file. Stop and redirect to `.md`.
+
+### D4. Elements Table Missing Columns
+
+```
+WRONG: | # | Element | Description |              ← Only 3 columns, missing Type and Nullable
+RIGHT: | # | Element | Type | Nullable | Description |  ← All 5 columns required
+```
+
+### D5. ETL Pipeline Without Detail
+
+```
+WRONG: ## 5. Lineage
+       Data comes from production via ETL.
+
+RIGHT: ## 5. Lineage
+       ### 5.2 ETL Pipeline
+       ```
+       etoro.Trade.Mirror (active, etoroDB-REAL)
+         |-- Generic Pipeline (Bronze export) ---|
+         v
+       DWH_staging.etoro_Trade_Mirror
+         |-- SP_Dim_Mirror_DL_To_Synapse @dt ---|
+         v
+       DWH_dbo.Dim_Mirror (11.1M rows)
+         |-- Generic Pipeline (Override, delta) ---|
+         v
+       dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror
+       ```
+```
+
+The ETL pipeline must be a concrete ASCII diagram with table names, SP names, and row counts.

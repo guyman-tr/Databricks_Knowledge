@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 4: Lookup Resolution
 
+## CONTRACT — Phase 4
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 1 column list (`*ID` columns); Phase 2 sample data; Phase 3 distributions; glossary (`knowledge/glossary.md`); FK lookup reference (`fk-lookup-reference.mdc`) |
+| **Outputs required** | Resolved value maps for each `*ID` column; list of unresolved IDs passed to Phase 5 |
+| **MUST NOT** | Skip glossary check (Tier 5); query MCP before searching repo (Constitution IX) |
+| **Failure mode** | **SOFT** — unresolved IDs pass to Phase 5 for JOIN-based discovery |
+
+---
+
 ## Purpose
 
 Resolve ID columns to human-readable business values. Since Synapse has NO enforced foreign key constraints, this phase relies on:
@@ -150,6 +161,19 @@ Unresolved ID Columns (-> Phase 5):
   CustomTypeID, SpecialFlagID, ...
 ```
 
-## Completion
+## CHECKPOINT — Phase 4
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Glossary consulted (Step 0) | [ ] |
+| 2 | Upstream wiki searched for ID columns (Step 1) | [ ] |
+| 3 | FK lookup reference patterns checked (Step 2) | [ ] |
+| 4 | SSDT repo searched for Dim_* tables (Step 3) | [ ] |
+| 5 | Value maps built for resolved columns | [ ] |
+| 6 | Unresolved ID list prepared for Phase 5 | [ ] |
+
+```
+PHASE 4 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 4: Lookup Resolution` in the checklist.

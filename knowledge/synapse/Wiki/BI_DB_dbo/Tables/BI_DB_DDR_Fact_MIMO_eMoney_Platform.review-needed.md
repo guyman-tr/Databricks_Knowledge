@@ -1,29 +1,33 @@
-# Review Sidecar: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+# BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform — Review Needed
 
-## Verification Status
+> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
 
-| Item | Status | Notes |
-|------|--------|-------|
-| Writer / refresh pattern | Verified from SP | `DELETE` by `DateID` + `INSERT`; post-`UPDATE` for FTD recovery |
-| Row grain | Verified from SP | Dedupe by `TransactionID` after UNION deposits + withdraws |
-| Deposit vs withdraw TxType sets | Verified from SP | Deposits 7,5,14; withdraws 8,6; settled only |
-| Amount signs | Verified from SP | Withdrawals negated; FTD amount update on deposits from `#FTDIBAN` |
-| Currency resolution | Verified from SP | Two paths: ISO static mapping vs `Dim_Currency.Abbreviation` |
-| Consumers | Verified from repo grep | `SP_DDR_Fact_Fact_MIMO_AllPlatforms`, `SP_DDR_Process_Monitor` |
-| Synapse physical DDL | Verified from user DDL | `HASH(RealCID)`, clustered columnstore |
+## Reviewer Corrections
 
-## Unverified Items
+> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
+> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
+> also be added to `knowledge/glossary.md`.
 
-| Topic | Tier | Issue |
-|-------|------|-------|
-| TxTypeID semantics (7,5,14,8,6) | T4 | Business names for each eMoney TxType id not enumerated in SP — need eMoney data dictionary or product confirmation |
-| FundingTypeID = 33 | T4 | Meaning of code `33` in DDR / reporting dims not confirmed beyond “internal transfer” branch |
-| IsTradeFromIBAN business label | T4 | Rule is in SP; product naming (“trade from IBAN”) should be validated with payments / eMoney owners |
-| TxType 8 withdraw inclusion | T4 | Author comment: may include trade-open flows — downstream users should confirm inclusion in MIMO KPIs |
-| ReferenceNumber sentinel `-1` | T2 | Behavior is in SP; confirm consumer compatibility (string vs numeric expectation) |
+| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
+|----------------|-----------------|------------|-------|----------|------|
 
-## Quality Notes
+## Tier 4 (UNVERIFIED) Columns
 
-- **No live Synapse sampling** in this documentation pass — distributions of `TxTypeID` / `FundingTypeID` not validated from data.
-- **Atlassian**: No Confluence/Jira links captured; Phase 10 can add eMoney IBAN / DDR sources.
-- **Column count**: DDL lists 21 columns (header comment “20 columns” may be outdated).
+No Tier 4 columns — all 21 columns are Tier 2 with verified SP code provenance.
+
+## Columns Needing Clarification
+
+| Column | Question |
+|--------|----------|
+| IsRedeem | Hardcoded to 0 — is there a plan to populate this from eMoney redemption data? |
+| IsIBANQuickTransfer | Hardcoded to 0 — confirm whether MoveMoneyReasonID=6 filtering should be wired here or only in AllPlatforms |
+| IsRecurring | Hardcoded to 0 — confirm whether eMoney has a recurring deposit feature or this is TP-only |
+| TxTypeID = 8 | SP header says TxTypeID=8 (trade open) "may be removed upon further discussions" — confirm current status |
+
+## Structural Questions
+
+| Topic | Question |
+|-------|----------|
+| Currency mapping | Changed from Dim_Currency to eMoney_Currency_Instrument_Mapping_Static for deposits (2025-12-23) — confirm this mapping is authoritative and covers all currencies |
+| Deduplication | Added 2025-12-31 for symmetry with TP — confirm whether eMoney actually produces duplicate TransactionIDs or this is purely defensive |
+| ReferenceNumber 'P' prefix | Confirm the business meaning of the 'P' prefix pattern in ReferenceNumber for IsTradeFromIBAN detection |

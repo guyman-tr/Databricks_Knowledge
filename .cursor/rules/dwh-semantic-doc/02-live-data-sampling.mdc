@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 2: Live Data Sampling + ETL Source Discovery
 
+## CONTRACT — Phase 2
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 1 column list; active Synapse MCP connection |
+| **Outputs required** | Sample rows, row count, date range, NULL patterns, ETL source hypothesis, `PHASE 2 GATE: PASSED/FAILED` marker |
+| **MUST NOT** | Skip sampling and proceed to Phase 3+; fabricate sample values; continue after HARD FAIL |
+| **Failure mode** | **HARD** — if core sample fails, object cannot be documented. Emit `PHASE 2 GATE: FAILED`. |
+
+---
+
 ## ⛔ MANDATORY — CANNOT BE SKIPPED
 
 **This phase is NOT optional.** Documentation written without live data sampling will contain fabricated values and wrong source attributions. Every object must be sampled before Phase 11 runs. This was the root cause of the Batch 1 failures for Dim_ActionType and Dim_ClosePositionReason.
@@ -359,3 +370,18 @@ In addition to the gate marker, record:
 - External table found: YES ({name}, location: {path}) | NO
 - Migration scripts found: YES ({filename}) | NO
 - Preliminary source hypothesis: {source}
+
+## CHECKPOINT — Phase 2
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Core sample rows obtained (SELECT TOP N returned data) | [ ] |
+| 2 | Row count obtained | [ ] |
+| 3 | Date range / timestamp analysis done (Tier A1) | [ ] |
+| 4 | NULL pattern analysis recorded | [ ] |
+| 5 | ETL source discovery attempted (Tier A minimum) | [ ] |
+| 6 | `PHASE 2 GATE: PASSED/FAILED` marker emitted | [ ] |
+
+```
+PHASE 2 CHECKPOINT: {PASS/FAIL}
+```

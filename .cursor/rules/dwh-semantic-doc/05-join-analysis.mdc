@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 5: JOIN Analysis (PRIMARY Relationship Discovery Method)
 
+## CONTRACT — Phase 5
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 4 unresolved ID list; Dataplatform SSDT repo; Phase 2 ETL source discovery results |
+| **Outputs required** | JOIN-discovered relationships; value meanings from code; all-column usage analysis; still-unresolved list |
+| **MUST NOT** | Query `sys.sql_modules` before searching repo files; ignore supplementary schema JOINs (DWH_Migration, DWH_staging) |
+| **Failure mode** | **SOFT** — relationships not found here remain unresolved (lower confidence in Phase 11) |
+
+---
+
 ## Purpose
 
 Discover implicit relationships between tables by analyzing JOIN conditions in stored procedures, views, and functions. This is the **most reliable method** because Synapse has NO enforced FK constraints -- all relationships are implicit in code.
@@ -141,6 +152,18 @@ Still Unresolved:
   [List any columns still without known relationship]
 ```
 
-## Completion
+## CHECKPOINT — Phase 5
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Grep across all SP/view/function files for table references done | [ ] |
+| 2 | JOIN conditions extracted from referencing objects | [ ] |
+| 3 | All-column usage analysis (CASE/IIF/function patterns) done | [ ] |
+| 4 | Value meanings documented from code | [ ] |
+| 5 | Unresolved columns listed | [ ] |
+
+```
+PHASE 5 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 5: JOIN Analysis` in the checklist.

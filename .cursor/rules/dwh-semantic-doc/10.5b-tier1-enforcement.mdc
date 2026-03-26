@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Tier 1 Upstream Inheritance — ENFORCEMENT PROTOCOL
 
+## CONTRACT — Phase 10.5b
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 10A upstream wiki content; Phase 9 source-to-target map; Phase 10B lineage file |
+| **Outputs required** | Tier 1 assignments for every column with an upstream wiki match; DWH notes for transformed columns; post-write Tier 1 coverage ratio |
+| **MUST NOT** | Stamp Tier 2 on columns that have upstream wiki matches; search only the primary table (must search views, history, dictionary); drop rename mappings |
+| **Failure mode** | **HARD** — ZERO Tier 1 despite rich upstream wiki = delete and redo |
+
+---
+
 > **WHY THIS EXISTS**: Agents repeatedly see upstream wikis, acknowledge them, then stamp
 > everything Tier 2 anyway. Phase 11 Rule 10 says "copy verbatim" — agents ignore it.
 > This rule makes compliance **checkable** and **non-optional**.
@@ -178,3 +189,18 @@ known patterns:
 | WithdrawPaymentID | ID | Billing.WithdrawToFunding |
 
 Add new renames to this list as they're discovered during pipeline runs.
+
+## CHECKPOINT — Phase 10.5b
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Exhaustive upstream search done (primary + views + history + dictionary) | [ ] |
+| 2 | Tier decision tree applied to every column (Q1→Q2→Q3) | [ ] |
+| 3 | DWH notes added for transformed Tier 1 columns | [ ] |
+| 4 | Rename mappings checked | [ ] |
+| 5 | Post-write Tier 1 coverage ratio computed | [ ] |
+| 6 | HARD FAIL triggered if upstream_wiki_columns > 20 AND tier1_count == 0 | [ ] |
+
+```
+PHASE 10.5b CHECKPOINT: {PASS/FAIL}
+```

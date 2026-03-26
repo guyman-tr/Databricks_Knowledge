@@ -1,13 +1,13 @@
 # BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
 
-> Unified daily Money-In/Money-Out transaction fact across all platforms (Trading Platform, eMoney, Options, MoneyFarm) — records every deposit and withdrawal with platform-specific and global first-time-deposit flags, feeding the DDR customer status aggregation.
+> 91.5M-row transaction-level MIMO (Money In / Money Out) fact table unifying deposits and withdrawals across all four platforms — TradingPlatform, eMoney, Options (Apex), and MoneyFarm — with first-time deposit flags at both platform and global levels. Sourced from three sub-platform MIMO tables plus `Function_MIMO_First_Deposit_All_Platforms` for cross-platform FTD reconciliation, assembled by `SP_DDR_Fact_Fact_MIMO_AllPlatforms` with daily DELETE/INSERT by DateID for TP+eMoney and full DELETE/re-INSERT for Options and MoneyFarm.
 
 | Property | Value |
 |----------|-------|
 | **Schema** | BI_DB_dbo |
-| **Object Type** | Table (Fact — daily transactions) |
-| **Production Source** | DWH-computed: UNION of TP MIMO + eMoney MIMO + Options + MoneyFarm |
-| **Refresh** | Daily — DELETE for @dateID + INSERT (SP_DDR_Fact_Fact_MIMO_AllPlatforms @date) |
+| **Object Type** | Table |
+| **Production Source** | Multiple — `BI_DB_DDR_Fact_MIMO_Trading_Platform`, `BI_DB_DDR_Fact_MIMO_eMoney_Platform`, `BI_DB_DDR_Fact_MIMO_Options_Platform`, `Function_MIMO_First_Deposit_All_Platforms` |
+| **Refresh** | Daily — DELETE/INSERT by DateID (TP+eMoney); full DELETE/re-INSERT (Options, MoneyFarm) |
 | | |
 | **Synapse Distribution** | HASH(RealCID) |
 | **Synapse Index** | CLUSTERED COLUMNSTORE INDEX |
@@ -21,64 +21,65 @@
 
 ## 1. Business Meaning
 
-`BI_DB_DDR_Fact_MIMO_AllPlatforms` is the consolidated Money-In/Money-Out fact table that unifies deposit and withdrawal transactions from all eToro platforms into a single daily view per customer. "MIMO" = Money In, Money Out.
+This table is the **unified MIMO (Money In / Money Out) fact table** within the DDR (Daily Data Report) framework. Each row represents a single financial transaction — deposit or withdrawal — for a customer on a specific date, tagged with the originating platform and enriched with first-time deposit indicators at both the platform level (`IsPlatformFTD`) and global cross-platform level (`IsGlobalFTD`).
 
-The table combines four platform sources:
-- **Trading Platform (TP)**: Main eToro trading platform deposits/withdrawals
-- **eMoney**: eToro's electronic money platform (IBAN-based transactions)
-- **Options**: Options platform MIMO (best effort — data may not be reliably ready daily)
-- **MoneyFarm**: MoneyFarm FTD-only data
+The table answers: "What deposits and withdrawals occurred for each customer on each day, across which platform, and which of those represent first-time deposits?"
 
-Each transaction includes two FTD (First Time Deposit) indicators:
-- **IsPlatformFTD**: Whether this is the first deposit on this specific platform
-- **IsGlobalFTD**: Whether this is the customer's first deposit across ALL platforms (resolved via `Function_MIMO_First_Deposit_All_Platforms`)
+Data flows through a three-tier architecture:
+1. **Sub-platform tables** — `BI_DB_DDR_Fact_MIMO_Trading_Platform` (TP), `BI_DB_DDR_Fact_MIMO_eMoney_Platform` (eMoney/IBAN), and `BI_DB_DDR_Fact_MIMO_Options_Platform` (Apex options) each capture platform-specific MIMO transactions with platform-level FTD flags.
+2. **Global FTD function** — `Function_MIMO_First_Deposit_All_Platforms(0)` determines which deposit is the customer's very first across all platforms.
+3. **Unification SP** — `SP_DDR_Fact_Fact_MIMO_AllPlatforms` merges all platforms via UNION ALL, joins with global FTDs, adds MoneyFarm FTD-only records from `Dim_Customer`, and runs post-insert UPDATE corrections for FTD recovery and Crypto-to-Fiat tagging.
 
-Created: 2024-07-02 by Guy Manova. Heavily evolved through 2025 with additions for C2F, recurring, IBAN quick transfers, Options, MoneyFarm, and crypto-to-fiat indicators.
+The SP runs daily via Service Broker (`SB_Daily`). It was authored 2024-07-02 and has undergone significant evolution: C2F support (2025-03-17), recurring deposits (2025-05-06), IBAN quick transfer (2025-06-16), Options platform (2025-10-06), MoneyFarm (2025-11-18), C2USD broad tagging (2025-12-04), and null handling for lake merge keys (2025-12-07).
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Platform Union
+### 2.1 Multi-Platform Unification
 
-**What**: Combines MIMO transactions from 4 platforms into a single table.
+**What**: Combines MIMO transactions from four distinct platforms into a single queryable table
+
+**Columns Involved**: `MIMOPlatform`, all transaction columns
 
 **Rules**:
-- TP and eMoney are the primary sources (reliable daily)
-- Options is "best effort, no dependencies" — data may be delayed
-- MoneyFarm is FTD-only data
-- Each row gets a `MIMOPlatform` tag identifying its source
+- TradingPlatform and eMoney are UNION ALL'd with consistent column ordering, then DELETE/INSERT'd by DateID (idempotent daily refresh)
+- Options platform is fully deleted and re-inserted every run (data arrives unreliably; small dataset ~98K rows)
+- MoneyFarm is FTD-only — only first deposits appear, no general MIMO (full delete/re-insert)
+- Column mappings differ by platform: `IsIBANTrade` in eMoney ↔ `IsIBANTrade` in TP become `IsTradeFromIBAN`; `IsFTD` becomes `IsPlatformFTD`
 
-### 2.2 Global FTD Resolution
+### 2.2 Global FTD Reconciliation
 
-**What**: Determines if a deposit is the customer's first across all platforms.
+**What**: Identifies whether a deposit is the customer's very first across ALL platforms, not just the originating one
 
 **Columns Involved**: `IsGlobalFTD`, `IsPlatformFTD`
 
 **Rules**:
-- `IsGlobalFTD` is resolved via `Function_MIMO_First_Deposit_All_Platforms(0)`
-- `IsPlatformFTD` indicates first deposit on the specific platform
-- Post-load UPDATE recovers FTDs from `Dim_Customer` for cases where FTD data arrived after initial run
+- `IsGlobalFTD = 1` when a LEFT JOIN to `Function_MIMO_First_Deposit_All_Platforms` matches on `RealCID + IsFTD=1 + FTDPlatformID`
+- A deposit can be `IsPlatformFTD = 1` (first on eMoney) but `IsGlobalFTD = 0` (customer already deposited on TP before)
+- Post-insert UPDATE recovery: matches Dim_Customer.FTDTransactionID to eMoney_Fact_Transaction_Status and direct TransactionID for TP to set both flags to 1 for DateID >= 20250901
 
-### 2.3 Crypto-to-Fiat
+### 2.3 Crypto-to-Fiat Classification
 
-**What**: Identifies crypto-to-USD conversions on the trading platform.
+**What**: Dual-source tagging for deposits that convert crypto to fiat currency
 
 **Columns Involved**: `IsCryptoToFiat`
 
 **Rules**:
-- `FundingTypeID = 27` on TP indicates crypto-to-USD conversion
-- Applied to the whole population daily to avoid chasing history
+- Sub-platform tables provide their own `IsCryptoToFiat` flag (from eMoney `TxTypeID=14`)
+- Post-insert UPDATE additionally sets `IsCryptoToFiat = 1` for TradingPlatform deposits where `FundingTypeID = 27` and `DateID >= 20250701`
+- Both paths are additive — a deposit tagged by either source or the UPDATE gets `IsCryptoToFiat = 1`
 
-### 2.4 IBAN Quick Transfer
+### 2.4 MoneyFarm Special Handling
 
-**What**: Identifies eMoney internal transfers.
+**What**: MoneyFarm only contributes FTD records, not general MIMO activity
 
-**Columns Involved**: `IsIBANQuickTransfer`
+**Columns Involved**: `MIMOPlatform = 'MoneyFarm'`
 
 **Rules**:
-- `MoneyMoveReason = 6` in eMoney — new feature called "Internal Transfer" in eMoney
-- Named `IsIBANQuickTransfer` because "internal transfer" means something different on TP
+- Only deposits with `FTDPlatform = 'MoneyFarm'` from `Function_MIMO_First_Deposit_All_Platforms` are included
+- Hardcoded values: `AmountOrigCurrency = -1`, `FundingTypeID = -1`, `CurrencyID = 3`, `Currency = 'GBP'`
+- All boolean flags (`IsRedeem`, `IsTradeFromIBAN`, `IsCryptoToFiat`, `IsRecurring`, `IsIBANQuickTransfer`) are hardcoded to 0
 
 ---
 
@@ -86,30 +87,43 @@ Created: 2024-07-02 by Guy Manova. Heavily evolved through 2025 with additions f
 
 ### 3.1 Synapse Distribution & Index
 
-**HASH(RealCID)**: Co-located with other DDR customer-level tables for efficient JOINs.
-
-**CLUSTERED COLUMNSTORE INDEX**: Good for analytical scans over date ranges.
+**In Synapse**, this table is HASH-distributed on `RealCID` with a CLUSTERED COLUMNSTORE INDEX. Always include `RealCID` in WHERE or JOIN conditions for optimal distribution-aligned queries. With 91.5M rows, always filter by `DateID` and/or `MIMOPlatform` to limit scan scope.
 
 ### 3.1b UC (Databricks) Storage & Partitioning
 
 _Pending — resolved during write-objects._
 
-### 3.2 Common JOINs
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Total deposits/withdrawals for a customer | `WHERE RealCID = @cid AND DateID BETWEEN @s AND @e` — SUM `AmountUSD` by `MIMOAction` |
+| FTD count by platform and date | `WHERE IsPlatformFTD = 1 GROUP BY DateID, MIMOPlatform` — COUNT(*) |
+| Global FTDs per day | `WHERE IsGlobalFTD = 1 AND MIMOAction = 'Deposit' GROUP BY DateID` |
+| Platform comparison of deposit volumes | `WHERE MIMOAction = 'Deposit' GROUP BY DateID, MIMOPlatform` — SUM `AmountUSD` |
+| Crypto-to-fiat deposit trends | `WHERE IsCryptoToFiat = 1 GROUP BY DateID` — SUM `AmountUSD` |
+| Recurring deposit analysis | `WHERE IsRecurring = 1 GROUP BY DateID` — COUNT and SUM |
+
+### 3.3 Common JOINs
 
 | Join To | Join Condition | Purpose |
 |---------|---------------|---------|
-| DWH_dbo.Dim_Customer | ON RealCID | Customer details |
-| DWH_dbo.Dim_Currency | ON CurrencyID | Currency name |
-| DWH_dbo.Dim_Date | ON DateID | Calendar attributes |
-| BI_DB_DDR_Customer_Daily_Status | ON RealCID, DateID | Daily panel enrichment |
+| `DWH_dbo.Dim_Customer` | `ON m.RealCID = dc.RealCID` | Customer demographics, registration, country |
+| `DWH_dbo.Dim_FundingType` | `ON m.FundingTypeID = dft.FundingTypeID` | Payment method name (Wire, CC, e-Wallet, etc.) |
+| `DWH_dbo.Dim_Currency` | `ON m.CurrencyID = dc.CurrencyID` | Full currency details |
+| `BI_DB_dbo.BI_DB_DDR_CID_Level` | `ON m.RealCID = cl.RealCID AND m.DateID = cl.DateID` | Full DDR daily picture per customer |
 
-### 3.3 Gotchas
+### 3.4 Gotchas
 
-- **Options data is unreliable**: Options platform MIMO is "best effort" — may not be present for every day.
-- **Multiple rows per CID per day**: A customer can have multiple deposits/withdrawals on the same day across platforms.
-- **Null merge keys replaced**: As of 2025-12-07, NULLs in merge key columns are replaced with sentinel values for lake compatibility.
-- **IsGlobalFTD vs IsPlatformFTD**: These can differ — a customer's first eMoney deposit may not be their global FTD.
-- **SP name has double "Fact"**: The writer SP is `SP_DDR_Fact_Fact_MIMO_AllPlatforms` (intentional naming).
+- **91.5M rows** — always filter by `DateID`. Unfiltered scans are expensive.
+- **IsPlatformFTD ≠ IsGlobalFTD** — a customer can have multiple platform FTDs but only one global FTD. Use `IsGlobalFTD` for unique first-deposit counting.
+- **Options TransactionID = 0** — Options platform transactions have TransactionID set to 0 (varchar/int incompatibility with lake schemas); do not join on TransactionID for Options rows.
+- **MoneyFarm is FTD-only** — only first deposits appear. No withdrawals or subsequent deposits.
+- **AmountOrigCurrency = -1 for MoneyFarm** — sentinel value indicating original currency amount not available.
+- **IsTradeFromIBAN column** — renamed from `IsIBANTrade` in sub-platform tables; always 0 for Options/MoneyFarm.
+- **IsCryptoToFiat dual source** — set by both sub-platform flag AND post-insert UPDATE for FundingTypeID=27. Historical data before 2025-07 may have gaps in TP tagging.
+- **FTD recovery runs for DateID >= 20250901** — older records may have under-counted FTDs that were corrected later via Dim_Customer.
+- **NULL coercion** — all boolean flags are ISNULL'd to 0; NULLs never appear in flag columns.
 
 ---
 
@@ -117,108 +131,164 @@ _Pending — resolved during write-objects._
 
 ### Confidence Tier Legend
 
-| Stars | Tier | Tag |
-|-------|------|-----|
-| ★★★ | Tier 2 — Synapse SP code | (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| ★ | Tier 4 — Inferred | (Tier 4 — [UNVERIFIED]) |
+| Stars | Tiers | Tag |
+|-------|-------|-----|
+| 3 stars | Tier 2 (Synapse SP code) | `(Tier 2 — ...)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | int | NULL | Transaction date as YYYYMMDD integer. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 2 | Date | date | NULL | Transaction date. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 3 | RealCID | int | NULL | Real customer ID. Distribution key. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 4 | MIMOAction | varchar(100) | NULL | Transaction type: Deposit or Withdraw. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 5 | OrigIdentifier | varchar(100) | NULL | Original transaction identifier from the source platform. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 6 | TransactionID | int | NULL | Transaction ID from the source system. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 7 | AmountUSD | decimal(16,6) | NULL | Transaction amount in USD. Positive for deposits, negative for withdrawals. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 8 | AmountOrigCurrency | decimal(16,6) | NULL | Transaction amount in the original currency. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 9 | FundingTypeID | int | NULL | Funding/payment method type. 27 = crypto-to-fiat on TP, 33 = eMoney deposit. (Tier 4 — [UNVERIFIED]) |
-| 10 | CurrencyID | int | NULL | Currency dimension key. FK to Dim_Currency. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 11 | Currency | varchar(20) | NULL | Currency abbreviation (USD, EUR, GBP, etc.). (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 12 | IsPlatformFTD | int | NULL | 1 = first time deposit on this specific platform. 0 = not FTD on this platform. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 13 | IsInternalTransfer | int | NULL | 1 = internal transfer between platforms/accounts. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 14 | IsRedeem | int | NULL | 1 = redeem transaction (CopyFund/SmartPortfolio redemption). (Tier 4 — [UNVERIFIED]) |
-| 15 | IsTradeFromIBAN | int | NULL | 1 = trade opened from IBAN balance. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 16 | MIMOPlatform | varchar(20) | NULL | Source platform identifier: TP, eMoney, Options, MoneyFarm. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 17 | IsGlobalFTD | int | NULL | 1 = first time deposit across ALL platforms. Resolved via Function_MIMO_First_Deposit_All_Platforms. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 18 | UpdateDate | datetime | NULL | ETL load timestamp — GETDATE(). (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 19 | IsCryptoToFiat | int | NULL | 1 = crypto-to-fiat conversion (FundingTypeID 27 on TP, TxType 14 on eMoney). Added 2025-03-17. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 20 | IsRecurring | int | NULL | 1 = recurring transaction. Added 2025-05-06. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
-| 21 | IsIBANQuickTransfer | int | NULL | 1 = eMoney internal transfer (MoneyMoveReason = 6). Added 2025-06-16. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 1 | DateID | int | YES | Date key in YYYYMMDD integer format. Partition/filter key for daily DELETE/INSERT (TP+eMoney). Direct passthrough from sub-platform tables. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 2 | Date | date | YES | Calendar date corresponding to DateID. `@date` SP input parameter. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 3 | RealCID | int | YES | Customer identifier. Distribution key. Passthrough from sub-platform tables. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 4 | MIMOAction | varchar(100) | YES | Transaction direction. `'Deposit'` for money in, `'Withdraw'` for money out. Passthrough from sub-platform tables. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 5 | OrigIdentifier | varchar(100) | YES | Type label for the source transaction ID. Values: `'TransactionID'` (eMoney deposit), `'WithdrawPaymentID'` (withdrawal), `'DepositID'` (TP deposit/MoneyFarm). Passthrough from sub-platform tables. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 6 | TransactionID | int | YES | Source transaction identifier. `CAST(f.TransactionID AS VARCHAR(50))` for TP/eMoney; hardcoded `0` for Options and MoneyFarm (varchar incompatibility with lake schemas). (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 7 | AmountUSD | decimal(16,6) | YES | Transaction amount in USD equivalent. Passthrough from sub-platform tables. Negative values may appear for withdrawals depending on platform source. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 8 | AmountOrigCurrency | decimal(16,6) | YES | Transaction amount in original currency. Passthrough from sub-platform tables. `-1` sentinel for MoneyFarm (original amount unavailable). Negative for withdrawals on TP. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 9 | FundingTypeID | int | YES | Payment method identifier. Passthrough from sub-platform tables. `-1` sentinel for MoneyFarm. JOIN to `DWH_dbo.Dim_FundingType` for name. `FundingTypeID = 27` triggers C2USD UPDATE for TP. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 10 | CurrencyID | int | YES | Currency identifier. Passthrough from sub-platform tables. `3` (GBP) hardcoded for MoneyFarm. JOIN to `DWH_dbo.Dim_Currency`. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 11 | Currency | varchar(20) | YES | Currency ISO code. Passthrough from sub-platform tables. `'GBP'` hardcoded for MoneyFarm. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 12 | IsPlatformFTD | int | YES | Platform-level first-time deposit flag. `ISNULL(f.IsPlatformFTD, 0)`. Renamed from `IsFTD` in sub-platform tables. 1 = first deposit on this specific platform. Updated by FTD recovery logic for DateID >= 20250901. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 13 | IsInternalTransfer | int | YES | Internal fund transfer flag. `ISNULL(f.IsInternalTransfer, 0)`. 1 = transfer between platforms (TP↔eMoney), not an external deposit/withdrawal. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 14 | IsRedeem | int | YES | eMoney redemption flag. `ISNULL(f.IsRedeem, 0)`. 1 = eMoney balance redeemed to bank account. Always 0 for Options/MoneyFarm. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 15 | IsTradeFromIBAN | int | YES | eMoney-initiated trade flag. `ISNULL(f.IsIBANTrade, 0)`. Renamed from `IsIBANTrade` in sub-platform tables. 1 = deposit originated from eMoney IBAN. Always 0 for Options/MoneyFarm. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 16 | MIMOPlatform | varchar(20) | YES | Platform discriminator. Literal: `'TradingPlatform'`, `'eMoney'`, `'Options'`, `'MoneyFarm'`. Set by SP during UNION/INSERT logic. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 17 | IsGlobalFTD | int | YES | Cross-platform first-time deposit flag. `CASE WHEN f.RealCID IS NOT NULL THEN 1 ELSE 0 END` from LEFT JOIN to `Function_MIMO_First_Deposit_All_Platforms`; `ISNULL(...,0)`. Updated by FTD recovery UPDATEs from `Dim_Customer` for DateID >= 20250901. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 18 | UpdateDate | datetime | YES | ETL load timestamp. `GETDATE()` at SP execution time. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 19 | IsCryptoToFiat | int | YES | Crypto-to-fiat deposit flag. `ISNULL(f.IsCryptoToFiat, 0)` from sub-platform tables; additionally `UPDATE SET IsCryptoToFiat=1 WHERE FundingTypeID=27 AND MIMOPlatform='TradingPlatform' AND DateID >= 20250701`. Dual-source indicator. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 20 | IsRecurring | int | YES | Recurring deposit flag. `ISNULL(f.IsRecurring, 0)`. 1 = deposit made via recurring/auto-deposit feature. Always 0 for Options/MoneyFarm. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
+| 21 | IsIBANQuickTransfer | int | YES | eMoney internal transfer flag (MoveMoneyReasonID = 6). `ISNULL(f.IsIBANQuickTransfer, 0)`. 1 = eMoney "Internal Transfer" feature (distinct from TP internal transfers). Always 0 for Options/MoneyFarm. (Tier 2 — SP_DDR_Fact_Fact_MIMO_AllPlatforms) |
 
 ---
 
 ## 5. Lineage
 
-### 5.1 Pipeline
+### 5.1 Production Sources
+
+| Synapse Column | Production Source | Source Column | Transform |
+|---------------|-------------------|---------------|-----------|
+| DateID | Sub-platform tables | DateID | passthrough |
+| RealCID | Sub-platform tables | RealCID | passthrough |
+| MIMOAction | Sub-platform tables | MIMOAction | passthrough |
+| TransactionID | Sub-platform tables | TransactionID | CAST to VARCHAR(50); 0 for Options/MoneyFarm |
+| IsPlatformFTD | Sub-platform tables | IsFTD | rename + ISNULL + FTD recovery UPDATE |
+| IsTradeFromIBAN | Sub-platform tables | IsIBANTrade | rename + ISNULL |
+| MIMOPlatform | — | — | Literal per UNION branch |
+| IsGlobalFTD | Function_MIMO_First_Deposit_All_Platforms | RealCID match | LEFT JOIN + CASE + FTD recovery UPDATE |
+| IsCryptoToFiat | Sub-platform tables + FundingTypeID | IsCryptoToFiat | passthrough + UPDATE for FundingTypeID=27 |
+
+### 5.2 ETL Pipeline
 
 ```
-TP MIMO + eMoney MIMO + Options + MoneyFarm
-    │
-    └─ SP_DDR_Fact_Fact_MIMO_AllPlatforms(@date)
-        ├─ #ibans (FTD customers from Dim_Customer)
-        ├─ #globalFTDs (Function_MIMO_First_Deposit_All_Platforms)
-        ├─ UNION of all platform MIMO
-        ├─ JOIN to #globalFTDs for IsGlobalFTD
-        ├─ DELETE/INSERT
-        └─ UPDATE: FTD recovery from Dim_Customer
+BI_DB_DDR_Fact_MIMO_Trading_Platform  ──┐
+BI_DB_DDR_Fact_MIMO_eMoney_Platform   ──┤── UNION ALL → #globalMIMO
+                                        │
+BI_DB_DDR_Fact_MIMO_Options_Platform  ──┤── Separate DELETE/INSERT (full reload)
+                                        │
+Function_MIMO_First_Deposit_All_Platforms ── #globalFTDs (global FTD reference)
+DWH_dbo.Dim_Customer                    ── MoneyFarm FTDs + FTD recovery
+eMoney_dbo.eMoney_Fact_Transaction_Status── FTD recovery (eMoney)
+  |
+  |-- SP_DDR_Fact_Fact_MIMO_AllPlatforms(@date):
+  |     LEFT JOIN globalFTDs → IsGlobalFTD
+  |     DELETE/INSERT by DateID
+  |     + DELETE ALL Options → re-INSERT
+  |     + DELETE ALL MoneyFarm → INSERT FTD-only
+  |     + UPDATE FTD recovery
+  |     + UPDATE C2USD
+  v
+BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms (91.5M rows, transaction-level grain)
 ```
+
+| Step | Object | Description |
+|------|--------|-------------|
+| Source 1 | BI_DB_DDR_Fact_MIMO_Trading_Platform | TP deposits & withdrawals (68.2M rows) |
+| Source 2 | BI_DB_DDR_Fact_MIMO_eMoney_Platform | eMoney deposits & withdrawals (23.2M rows) |
+| Source 3 | BI_DB_DDR_Fact_MIMO_Options_Platform | Options deposits & withdrawals (98K rows) |
+| Source 4 | Function_MIMO_First_Deposit_All_Platforms | Cross-platform FTD reference |
+| Source 5 | Dim_Customer | MoneyFarm FTDs + FTD recovery joins |
+| ETL | SP_DDR_Fact_Fact_MIMO_AllPlatforms | UNION ALL + global FTD JOIN + platform-specific inserts + recovery UPDATEs |
+| Target | BI_DB_DDR_Fact_MIMO_AllPlatforms | Unified MIMO fact table |
 
 ---
 
 ## 6. Relationships
 
-### 6.1 References To
+### 6.1 References To (this object points to)
 
-| Target Object | Join Column | Description |
-|--------------|-------------|-------------|
-| DWH_dbo.Dim_Customer | RealCID | Customer details, FTD recovery |
-| DWH_dbo.Dim_Currency | CurrencyID | Currency name |
+| Element | Related Object | Description |
+|---------|---------------|-------------|
+| RealCID | DWH_dbo.Dim_Customer | Customer dimension |
+| FundingTypeID | DWH_dbo.Dim_FundingType | Payment method name |
+| CurrencyID | DWH_dbo.Dim_Currency | Currency details |
 
-### 6.2 Referenced By
+### 6.2 Referenced By (other objects point to this)
 
-| Source Object | Usage |
-|--------------|-------|
-| SP_DDR_Customer_Daily_Status | Daily customer status aggregation |
-| SP_MarketingCloudDaily | Marketing cloud daily feed |
-| SP_RevenueForum | Revenue forum reporting |
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| BI_DB_dbo.Function_MIMO_First_Deposit_All_Platforms | BI_DB_DDR_Fact_MIMO_AllPlatforms | Self-reference: function reads this table for existing MIMO data |
+| BI_DB_dbo.BI_DB_V_DDR_MIMO_AllPlatforms | — | View for DDR reporting |
+| BI_DB_dbo.Function_DDR_Aggregation_* | — | Aggregation functions for time-range rollups |
+| BI_DB_dbo.BI_DB_DDR_CID_Level | — | CID-level daily DDR aggregation |
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Daily MIMO by platform
+### 7.1 Daily deposit volume by platform
 
 ```sql
-SELECT  MIMOPlatform, MIMOAction,
-        COUNT(*) AS TxCount,
-        SUM(AmountUSD) AS TotalUSD
-FROM    [BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_AllPlatforms]
-WHERE   DateID = 20260320
-GROUP BY MIMOPlatform, MIMOAction
-ORDER BY MIMOPlatform, MIMOAction;
+SELECT DateID,
+       MIMOPlatform,
+       COUNT(*) AS DepositCount,
+       SUM(AmountUSD) AS TotalUSD
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+WHERE MIMOAction = 'Deposit'
+  AND DateID BETWEEN 20260301 AND 20260309
+GROUP BY DateID, MIMOPlatform
+ORDER BY DateID, MIMOPlatform;
 ```
 
-### 7.2 Global FTDs by platform
+### 7.2 Global FTD count by platform and date
 
 ```sql
-SELECT  MIMOPlatform,
-        COUNT(*) AS FTDCount,
-        SUM(AmountUSD) AS FTDAmountUSD
-FROM    [BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_AllPlatforms]
-WHERE   DateID = 20260320
-  AND   IsGlobalFTD = 1
-GROUP BY MIMOPlatform;
+SELECT DateID,
+       MIMOPlatform,
+       COUNT(*) AS GlobalFTDs,
+       SUM(AmountUSD) AS FTD_Amount_USD
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+WHERE IsGlobalFTD = 1
+  AND MIMOAction = 'Deposit'
+  AND DateID BETWEEN 20260301 AND 20260309
+GROUP BY DateID, MIMOPlatform
+ORDER BY DateID, MIMOPlatform;
+```
+
+### 7.3 Customer MIMO timeline with payment method
+
+```sql
+SELECT m.DateID,
+       m.MIMOAction,
+       m.MIMOPlatform,
+       m.AmountUSD,
+       m.Currency,
+       dft.FundingTypeName,
+       m.IsPlatformFTD,
+       m.IsGlobalFTD
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms m
+LEFT JOIN DWH_dbo.Dim_FundingType dft ON m.FundingTypeID = dft.FundingTypeID
+WHERE m.RealCID = 12345678
+ORDER BY m.DateID;
 ```
 
 ---
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found specific to this table.
+No Atlassian sources found for this object.
 
 ---
 
-*Generated: 2026-03-22 | Quality: 8.0/10 (★★★★☆) | Phases: 12/14 (P2,P3 skipped — Synapse MCP unavailable)*
-*Tiers: 0 T1, 18 T2, 0 T3, 3 T4 [UNVERIFIED] (FundingTypeID values, IsRedeem, MIMOAction domain), 0 T5 | Elements: 9/10, Logic: 9/10, Relationships: 8/10, Sources: 8/10*
-*Object: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms | Type: Table | Source: DWH-computed (TP + eMoney + Options + MoneyFarm union)*
+*Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
+*Tiers: 0 T1, 21 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
+*Object: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms | Type: Table | Production Source: Sub-platform MIMO tables + Function_MIMO_First_Deposit_All_Platforms*

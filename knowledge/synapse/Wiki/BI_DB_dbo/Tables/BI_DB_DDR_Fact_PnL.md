@@ -1,13 +1,13 @@
 # BI_DB_dbo.BI_DB_DDR_Fact_PnL
 
-> DDR (Daily Data Report) fact table — daily per-customer aggregation of unrealized PnL change, realized net profit, and position counts, sliced by instrument type, copy-trade flags, settlement, futures, leverage, side, copy-fund, and SQF (Spot Quoted Futures).
+> 8.8B-row granular daily P&L fact table tracking unrealized PnL changes and realized net profit per customer × instrument type × position flags since 2015. Sourced from `Function_PnL_Single_Day` (which reads `BI_DB_PositionPnL`, `Dim_Position`, `Dim_Instrument`), aggregated by `SP_DDR_Fact_PnL` with daily DELETE/INSERT by DateID.
 
 | Property | Value |
 |----------|-------|
 | **Schema** | BI_DB_dbo |
-| **Object Type** | Table (Fact — DDR daily aggregate) |
-| **Production Source** | `BI_DB_dbo.Function_PnL_Single_Day(@dateID)` + `DWH_dbo.Dim_Instrument` via `SP_DDR_Fact_PnL` |
-| **Refresh** | Per business date — `DELETE WHERE DateID = @dateID` + `INSERT` for that day |
+| **Object Type** | Table |
+| **Production Source** | Multiple — `BI_DB_PositionPnL`, `Dim_Position`, `Dim_Instrument` via `Function_PnL_Single_Day` TVF |
+| **Refresh** | Daily (DELETE/INSERT by DateID) |
 | | |
 | **Synapse Distribution** | HASH(RealCID) |
 | **Synapse Index** | CLUSTERED COLUMNSTORE INDEX |
@@ -21,74 +21,87 @@
 
 ## 1. Business Meaning
 
-`BI_DB_DDR_Fact_PnL` is a **DDR pyramid** fact: one row represents a single **grain** of trading PnL for a **real customer** (`RealCID`) on a **calendar day**, after aggregation from position-level PnL produced by `Function_PnL_Single_Day`. The grain includes **instrument type** (`InstrumentTypeID` from `Dim_Instrument`), whether the activity is **copy trading** (`IsCopy` from `MirrorID`), **settled vs open/CFD** posture (`IsSettled`), **futures** vs other (`IsFuture`), **leveraged** vs not (`IsLeveraged` from `Leverage > 1`), **buy vs sell** (`IsBuy`), **copy-fund** positions (`IsCopyFund`), and **Spot Quoted Futures** (`IsSQF`).
+This table is the daily P&L (Profit & Loss) fact table within the DDR (Daily Data Report) framework. Each row represents the aggregated unrealized PnL change and realized net profit for a single customer (`RealCID`) on a specific date, broken down by instrument type, copy-trade status, settlement status, buy/sell direction, leverage, futures, copy-fund, and SQF flags. It answers: "How much did each customer's positions gain or lose today, by asset class and trade characteristics?"
 
-Measures stored are **unrealized PnL change** for the day, **net profit** (realized component from the TVF), and **how many positions** contributed to that cell (`CountPositions`). Together with downstream view `BI_DB_V_DDR_PnL`, this table feeds **customer daily/periodic status**, **DDR aggregation functions** (week/month/quarter/year, MoM, YoY), and **BI dashboards** that compare manual vs copy PnL and splits by asset class.
+Data originates from `Function_PnL_Single_Day`, a TVF that reads position-level PnL from `BI_DB_PositionPnL` (daily position P&L snapshot), enriched with position attributes from `Dim_Position` and instrument metadata from `Dim_Instrument`. The SP aggregates position-level rows into customer × dimension-group granularity using SUM for monetary measures and COUNT for position counts.
 
-Author: Guy Manova (SP header). SP created 2024-07-02; dimensions `IsFuture`, `IsLeveraged`, `IsBuy` added 2025-03-09; `IsSQF` 2025-06-23; null handling for merge keys 2025-12-07.
+`SP_DDR_Fact_PnL` runs daily via Service Broker (`SB_Daily`). It performs a DELETE by DateID followed by INSERT, making it idempotent and re-runnable. The ETL was authored in 2024-07-02 with subsequent additions: IsFuture/IsLeveraged/IsBuy (2025-03-09), IsSQF (2025-06-23), and null handling for lake merge keys (2025-12-07).
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Load pattern
+### 2.1 PnL Aggregation Grain
 
-**What**: Replace one calendar day’s rows in the fact.
+**What**: Positions are aggregated to CID × InstrumentType × flag combination level
 
-**Columns involved**: `DateID`, `[Date]`, all measures.
-
-**Rules** (from `SP_DDR_Fact_PnL`):
-
-- `@dateID = CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)`.
-- `DELETE FROM BI_DB_DDR_Fact_PnL WHERE DateID = @dateID`.
-- `INSERT ... SELECT` from aggregated TVF output; `[Date] = @date` (constant for the batch); `UpdateDate = GETDATE()`.
-
-### 2.2 Aggregation grain
-
-**What**: Multiple positions roll up to one row per distinct combination of dimension keys.
+**Columns Involved**: `RealCID`, `InstrumentTypeID`, `IsCopy`, `IsSettled`, `IsFuture`, `IsLeveraged`, `IsBuy`, `IsCopyFund`, `IsSQF`
 
 **Rules**:
+- The GROUP BY includes all 9 dimension columns — every unique combination gets its own row
+- `UnrealizedPnLChange` and `NetProfit` are SUMmed across positions within each group
+- `CountPositions` is the COUNT of distinct position rows in that group
+- Total P&L for a CID on a date = SUM across all rows for that CID/DateID
 
-- Source: `FROM BI_DB_dbo.Function_PnL_Single_Day(@dateID) frfc JOIN DWH_dbo.Dim_Instrument di ON frfc.InstrumentID = di.InstrumentID`.
-- `GROUP BY`: `DateID`, `CID`, `InstrumentTypeID`, copy flag (`MirrorID > 0`), `IsSettled`, `IsFuture` (null→0), `IsLeveraged` (`Leverage > 1`), `IsBuy`, `IsCopyFund` (null→0), `IsSQF` (null→0).
-- `RealCID` in the table = **`frfc.CID`** (real customer id).
-- **UnrealizedPnLChange** = `SUM(UnrealizedPnLChange)`; **NetProfit** = `SUM(NetProfit)`; **CountPositions** = `COUNT(PositionID)`.
+### 2.2 Copy-Trade Detection
 
-### 2.3 Upstream PnL semantics (TVF)
+**What**: Distinguishes positions opened by copy-trading from manual positions
 
-**What**: `Function_PnL_Single_Day` builds position-level realized + unrealized PnL for the day from `BI_DB_PositionPnL` (open position marks) and `Dim_Position` (positions closed on `@dateID`), then tags **IsSQF** by joining `Function_Instrument_Snapshot_Enriched(@dateID)` where `IsSQF = 1`.
+**Columns Involved**: `IsCopy`, `IsCopyFund`
 
-**Note**: Detailed position-level formulas (e.g. unrealized change from start/end marks) live in `Function_PnL_Single_Day`; this fact only stores **aggregates** at the DDR grain.
+**Rules**:
+- `IsCopy = 1` when `MirrorID > 0` in the source function (position was opened via CopyTrader)
+- `IsCopyFund = 1` when the position belongs to a Smart Portfolio / Fund vehicle (from `BI_DB_CopyFund_Positions` lookup in the function)
+- Both flags are independent — a position can be copy but not fund, or fund but not copy
+
+### 2.3 Leverage Classification
+
+**What**: Flags whether positions in the group used leverage
+
+**Columns Involved**: `IsLeveraged`
+
+**Rules**:
+- `IsLeveraged = 1` when `Leverage > 1` in the source position data
+- Settled real stocks (`IsSettled=1, InstrumentTypeID=5`) typically have `IsLeveraged=0`
 
 ---
 
 ## 3. Query Advisory
 
-### 3.1 Synapse distribution and columnstore
+### 3.1 Synapse Distribution & Index
 
-**HASH(RealCID)**: Co-locates rows for the same customer — good for **filtering or joining on `RealCID`**. Combine with **`DateID`** predicates to limit scans.
+**In Synapse**, this table is HASH-distributed on `RealCID` with a CLUSTERED COLUMNSTORE INDEX. Always include `RealCID` in WHERE or JOIN conditions for optimal distribution-aligned queries. With 8.8B rows, always filter by `DateID` to limit scan scope.
 
-**CLUSTERED COLUMNSTORE**: Favors **analytical aggregates** over narrow OLTP point lookups. Prefer **date-scoped** queries and avoid `SELECT *` on wide exploratory scans without filters.
-
-### 3.1b UC (Databricks) storage and partitioning
+### 3.1b UC (Databricks) Storage & Partitioning
 
 _Pending — resolved during write-objects._
 
-### 3.2 Common JOINs
+### 3.2 Common Query Patterns
 
-| Join to | Join condition | Purpose |
-|---------|----------------|---------|
-| `DWH_dbo.Dim_Instrument` | `InstrumentTypeID` | Instrument type name / hierarchy |
-| `DWH_dbo.Dim_Customer` | `RealCID` = customer key | Customer attributes |
-| `DWH_dbo.Dim_Date` | `DateID` | Calendar attributes |
-| `BI_DB_dbo.BI_DB_V_DDR_PnL` | `RealCID`, `DateID` | Pre-rolled daily PnL totals and asset-class splits |
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Total PnL for a customer on a date | `WHERE RealCID = @cid AND DateID = @dt` — SUM `UnrealizedPnLChange + NetProfit` across all rows |
+| Daily PnL by asset class | `GROUP BY DateID, InstrumentTypeID` — SUM the measures |
+| Copy vs non-copy P&L comparison | `GROUP BY DateID, IsCopy` — compare aggregated PnL |
+| Count of active positions by instrument | `SUM(CountPositions) GROUP BY DateID, InstrumentTypeID` |
+| Leveraged vs unleveraged performance | `GROUP BY DateID, IsLeveraged` — SUM PnL measures |
 
-### 3.3 Gotchas
+### 3.3 Common JOINs
 
-- **Grain is not “one row per customer per day”** — there are **multiple rows per customer per day** (one per dimension combination). Use `SUM` with correct filters or use `BI_DB_V_DDR_PnL` for customer-day totals.
-- **Total daily PnL** for reporting is often computed as **`UnrealizedPnLChange + NetProfit`** (see `BI_DB_V_DDR_PnL`).
-- **`IsCopy`**: derived from **`MirrorID > 0`**, not a raw column on this table.
-- **Refresh ordering**: This table is part of the DDR batch; consumers assume **a full day’s load** for a given `DateID`.
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| `DWH_dbo.Dim_InstrumentType` | `ON p.InstrumentTypeID = dit.InstrumentTypeID` | Resolve instrument type names (Stocks, Crypto, ETFs, etc.) |
+| `DWH_dbo.Dim_Customer` | `ON p.RealCID = dc.RealCID` | Customer demographics, registration, country |
+| `BI_DB_dbo.BI_DB_DDR_CID_Level` | `ON p.RealCID = cl.RealCID AND p.DateID = cl.DateID` | Full DDR daily picture per customer |
+
+### 3.4 Gotchas
+
+- **8.8B rows** — always filter by `DateID`. Unfiltered scans are prohibitively expensive.
+- **UnrealizedPnLChange is a DELTA, not absolute** — it represents the day-over-day change in unrealized P&L, not the total unrealized P&L.
+- **NetProfit is realized** — only positions that closed on this date contribute non-zero NetProfit.
+- **IsCopy and IsCopyFund are independent** — a CopyFund position has `IsCopyFund=1` but may also have `IsCopy=1` if opened through copy-trading a fund manager.
+- **Null coercion** — `IsFuture`, `IsCopyFund`, `IsSQF` are ISNULL'd to 0 — NULLs never appear in these columns.
+- **IsSettled** — distinguishes CFD (`IsSettled=0`) from real/settled positions (`IsSettled=1`).
 
 ---
 
@@ -96,126 +109,139 @@ _Pending — resolved during write-objects._
 
 ### Confidence Tier Legend
 
-| Stars | Tier | Tag |
-|-------|------|-----|
-| ★★★ | Tier 2 — Synapse SP code | (Tier 2 — SP_DDR_Fact_PnL) |
+| Stars | Tiers | Tag |
+|-------|-------|-----|
+| 3 stars | Tier 2 (Synapse SP code / function) | `(Tier 2 — ...)` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | int | NULL | Business date as YYYYMMDD integer. Delete/replace key for the daily load. (Tier 2 — SP_DDR_Fact_PnL) |
-| 2 | Date | date | NULL | Calendar date for the batch — equals parameter `@date` in `SP_DDR_Fact_PnL`. (Tier 2 — SP_DDR_Fact_PnL) |
-| 3 | RealCID | int | NULL | Real customer ID (`frfc.CID`). HASH distribution key. (Tier 2 — SP_DDR_Fact_PnL) |
-| 4 | InstrumentTypeID | int | NULL | Instrument type from `DWH_dbo.Dim_Instrument` for `frfc.InstrumentID`. (Tier 2 — SP_DDR_Fact_PnL) |
-| 5 | IsCopy | int | NULL | `1` if copy trade (`MirrorID > 0`), else `0`. (Tier 2 — SP_DDR_Fact_PnL) |
-| 6 | IsSettled | int | NULL | Settlement / product posture flag from position-level PnL (passed through from `Function_PnL_Single_Day`). (Tier 2 — SP_DDR_Fact_PnL) |
-| 7 | UnrealizedPnLChange | decimal(16,6) | NULL | Sum of unrealized PnL change for the day for this grain. (Tier 2 — SP_DDR_Fact_PnL) |
-| 8 | NetProfit | decimal(16,6) | NULL | Sum of realized net profit for the grain (from TVF). (Tier 2 — SP_DDR_Fact_PnL) |
-| 9 | CountPositions | int | NULL | Count of distinct `PositionID` values in the grain. (Tier 2 — SP_DDR_Fact_PnL) |
-| 10 | UpdateDate | datetime | NULL | ETL load timestamp — `GETDATE()` at insert. (Tier 2 — SP_DDR_Fact_PnL) |
-| 11 | IsFuture | int | NULL | `ISNULL(IsFuture, 0)` from TVF — futures instrument flag. (Tier 2 — SP_DDR_Fact_PnL) |
-| 12 | IsLeveraged | int | NULL | `1` if `Leverage > 1`, else `0`. (Tier 2 — SP_DDR_Fact_PnL) |
-| 13 | IsBuy | int | NULL | Long (`1`) vs short (`0`) side from position data. (Tier 2 — SP_DDR_Fact_PnL) |
-| 14 | IsCopyFund | int | NULL | `ISNULL(IsCopyFund, 0)` — position is in a copy fund (from TVF / copy-fund join logic). (Tier 2 — SP_DDR_Fact_PnL) |
-| 15 | IsSQF | int | NULL | `ISNULL(IsSQF, 0)` — Spot Quoted Futures instrument (from `Function_Instrument_Snapshot_Enriched` inside TVF). (Tier 2 — SP_DDR_Fact_PnL) |
+| 1 | DateID | int | YES | Date key in YYYYMMDD integer format. Partition/filter key for daily DELETE/INSERT. Direct from `Function_PnL_Single_Day.DateID`. (Tier 2 — SP_DDR_Fact_PnL) |
+| 2 | Date | date | YES | Calendar date corresponding to DateID. `@date` SP input parameter. (Tier 2 — SP_DDR_Fact_PnL) |
+| 3 | RealCID | int | YES | Customer identifier. Renamed from `CID` in `Function_PnL_Single_Day`. Distribution key. (Tier 2 — SP_DDR_Fact_PnL) |
+| 4 | InstrumentTypeID | int | YES | Instrument asset class. Join-enriched from `Dim_Instrument.InstrumentTypeID` via `frfc.InstrumentID = di.InstrumentID`. Common values: 4=Indices, 5=Stocks, 6=Commodities, 10=Crypto, 12=ETFs, 73=Currencies. (Tier 2 — SP_DDR_Fact_PnL) |
+| 5 | IsCopy | int | YES | Copy-trade flag. `CASE WHEN frfc.MirrorID > 0 THEN 1 ELSE 0 END`. 1=position opened via CopyTrader, 0=manual/independent. (Tier 2 — SP_DDR_Fact_PnL) |
+| 6 | IsSettled | int | YES | Settlement type flag from source position. 1=real/settled position (physical ownership), 0=CFD (contract for difference). Direct passthrough from `Function_PnL_Single_Day.IsSettled`. (Tier 2 — SP_DDR_Fact_PnL) |
+| 7 | UnrealizedPnLChange | decimal(16,6) | YES | Day-over-day change in unrealized P&L in USD. `SUM(frfc.UnrealizedPnLChange)` aggregated across all positions in the group. Represents the daily mark-to-market movement for open positions. (Tier 2 — SP_DDR_Fact_PnL) |
+| 8 | NetProfit | decimal(16,6) | YES | Realized net profit in USD from positions closed on this date. `SUM(frfc.NetProfit)` aggregated across closed positions in the group. Zero for groups with no closes. (Tier 2 — SP_DDR_Fact_PnL) |
+| 9 | CountPositions | int | YES | Number of positions contributing to this row's PnL. `COUNT(frfc.PositionID)` within the group. (Tier 2 — SP_DDR_Fact_PnL) |
+| 10 | UpdateDate | datetime | YES | ETL load timestamp. `GETDATE()` at SP execution time. (Tier 2 — SP_DDR_Fact_PnL) |
+| 11 | IsFuture | int | YES | Futures contract flag. `ISNULL(frfc.IsFuture, 0)`. 1=futures position, 0=non-futures. NULL coerced to 0. (Tier 2 — SP_DDR_Fact_PnL) |
+| 12 | IsLeveraged | int | YES | Leverage flag. `CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END`. 1=leveraged position (leverage multiplier > 1×), 0=unleveraged. (Tier 2 — SP_DDR_Fact_PnL) |
+| 13 | IsBuy | int | YES | Trade direction. 1=long (buy), 0=short (sell). Direct from `Function_PnL_Single_Day.IsBuy`. (Tier 2 — SP_DDR_Fact_PnL) |
+| 14 | IsCopyFund | int | YES | Smart Portfolio / Fund position flag. `ISNULL(frfc.IsCopyFund, 0)`. 1=position belongs to a Smart Portfolio or Fund vehicle, 0=regular. Derived from `BI_DB_CopyFund_Positions` lookup in the function. (Tier 2 — SP_DDR_Fact_PnL) |
+| 15 | IsSQF | int | YES | Sustainable & Quality-Focused instrument flag. `ISNULL(frfc.IsSQF, 0)`. 1=instrument is SQF-classified via `Function_Instrument_Snapshot_Enriched`, 0=non-SQF. (Tier 2 — SP_DDR_Fact_PnL) |
 
 ---
 
 ## 5. Lineage
 
-### 5.1 Pipeline
+### 5.1 Production Sources
+
+| Synapse Column | Production Source | Source Column | Transform |
+|---------------|-------------------|---------------|-----------|
+| DateID | Function_PnL_Single_Day | DateID | passthrough |
+| RealCID | Function_PnL_Single_Day | CID | rename |
+| InstrumentTypeID | Dim_Instrument | InstrumentTypeID | join-enriched |
+| IsCopy | Function_PnL_Single_Day | MirrorID | CASE WHEN > 0 |
+| IsSettled | Function_PnL_Single_Day | IsSettled | passthrough |
+| UnrealizedPnLChange | Function_PnL_Single_Day | UnrealizedPnLChange | SUM |
+| NetProfit | Function_PnL_Single_Day | NetProfit | SUM |
+| CountPositions | Function_PnL_Single_Day | PositionID | COUNT |
+| IsLeveraged | Function_PnL_Single_Day | Leverage | CASE WHEN > 1 |
+
+### 5.2 ETL Pipeline
 
 ```
-BI_DB_dbo.Function_PnL_Single_Day(@dateID)
-  ← BI_DB_PositionPnL, Dim_Position, Dim_Instrument, BI_DB_CopyFund_Positions,
-     Function_Instrument_Snapshot_Enriched(@dateID)
-       │
-       └─ JOIN DWH_dbo.Dim_Instrument (InstrumentTypeID)
-            │
-            └─ SP_DDR_Fact_PnL(@date)
-                 ├─ DELETE WHERE DateID = @dateID
-                 └─ INSERT aggregated rows
+BI_DB_dbo.BI_DB_PositionPnL + DWH_dbo.Dim_Position + DWH_dbo.Dim_Instrument
+  + BI_DB_CopyFund_Positions + Function_Instrument_Snapshot_Enriched(IsSQF)
+  |-- Function_PnL_Single_Day(@dateID) ---|
+  v
+[position-level PnL: 19 columns per position per day]
+  |-- SP_DDR_Fact_PnL(@date): JOIN Dim_Instrument, GROUP BY 9 dims, SUM/COUNT ---|
+  v
+BI_DB_dbo.BI_DB_DDR_Fact_PnL (8.8B rows, CID × InstrumentType × flags grain)
 ```
 
-### 5.2 Key source objects
-
-| Source | Columns used |
-|--------|----------------|
-| `BI_DB_dbo.Function_PnL_Single_Day(@dateID)` | Position-level PnL, CID, InstrumentID, MirrorID, IsSettled, IsFuture, Leverage, IsBuy, IsCopyFund, IsSQF, DateID |
-| `DWH_dbo.Dim_Instrument` | `InstrumentTypeID` |
+| Step | Object | Description |
+|------|--------|-------------|
+| Source | BI_DB_PositionPnL, Dim_Position, Dim_Instrument | Position-level daily PnL snapshots |
+| TVF | Function_PnL_Single_Day | Joins sources, outputs 19-column position-level PnL |
+| ETL | SP_DDR_Fact_PnL | DELETE/INSERT by DateID; aggregates with GROUP BY + SUM/COUNT |
+| Target | BI_DB_DDR_Fact_PnL | Aggregated DDR PnL fact table |
 
 ---
 
 ## 6. Relationships
 
-### 6.1 References to (this object points to)
+### 6.1 References To (this object points to)
 
-| Target object | Join column | Description |
-|---------------|-------------|-------------|
-| `DWH_dbo.Dim_Instrument` | `InstrumentTypeID` | Instrument type dimension |
-| `DWH_dbo.Dim_Customer` | `RealCID` | Customer dimension |
-| `DWH_dbo.Dim_Date` | `DateID` | Date dimension |
+| Element | Related Object | Description |
+|---------|---------------|-------------|
+| InstrumentTypeID | DWH_dbo.Dim_InstrumentType | Resolves to instrument class name |
+| RealCID | DWH_dbo.Dim_Customer | Customer dimension |
 
-### 6.2 Referenced by (other objects point to this)
+### 6.2 Referenced By (other objects point to this)
 
-| Source object | Description |
-|---------------|-------------|
-| `BI_DB_dbo.BI_DB_V_DDR_PnL` | View — aggregates to customer-day PnL buckets |
-| `BI_DB_dbo.BI_DB_V_DDR_Daily_Panel` | Customer daily panel (via `BI_DB_V_DDR_PnL`) |
-| `BI_DB_dbo.Function_DDR_Aggregation_Yesterday` | Period-compare TVFs consuming `BI_DB_V_DDR_PnL` |
-| `BI_DB_dbo.Function_DDR_Aggregation_ThisWeek` | (same) |
-| `BI_DB_dbo.Function_DDR_Aggregation_ThisMonth` | (same) |
-| `BI_DB_dbo.Function_DDR_Aggregation_ThisQuarter` | (same) |
-| `BI_DB_dbo.Function_DDR_Aggregation_ThisYear` | (same) |
-| `BI_DB_dbo.Function_DDR_Aggregation_YoY` | (same) |
-| `BI_DB_dbo.Function_DDR_Aggregation_MoM` | (same) |
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| BI_DB_dbo.BI_DB_V_DDR_PnL | — | View that reads this table for DDR reporting |
+| BI_DB_dbo.BI_DB_V_DDR_Daily_Panel | — | Daily panel view aggregating DDR facts |
+| BI_DB_dbo.Function_DDR_Aggregation_* | — | Aggregation functions for time-range rollups |
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Customer total PnL for one day (matches view logic)
+### 7.1 Total daily PnL for a customer
 
 ```sql
-SELECT  RealCID,
-        SUM(UnrealizedPnLChange + NetProfit) AS DailyTotalPnL
-FROM    BI_DB_dbo.BI_DB_DDR_Fact_PnL
-WHERE   DateID = 20260320
-  AND   RealCID = 12345678
-GROUP BY RealCID;
+SELECT DateID,
+       SUM(UnrealizedPnLChange) AS TotalUnrealizedDelta,
+       SUM(NetProfit) AS TotalRealized,
+       SUM(UnrealizedPnLChange + NetProfit) AS TotalPnL,
+       SUM(CountPositions) AS PositionCount
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL
+WHERE RealCID = 12345678
+  AND DateID BETWEEN 20260301 AND 20260310
+GROUP BY DateID
+ORDER BY DateID;
 ```
 
-### 7.2 Manual vs copy split for one day
+### 7.2 PnL by asset class for a date range
 
 ```sql
-SELECT  IsCopy,
-        SUM(UnrealizedPnLChange + NetProfit) AS PnL
-FROM    BI_DB_dbo.BI_DB_DDR_Fact_PnL
-WHERE   DateID = 20260320
-GROUP BY IsCopy;
+SELECT dit.Name AS InstrumentType,
+       SUM(p.UnrealizedPnLChange) AS UnrealizedDelta,
+       SUM(p.NetProfit) AS RealizedProfit,
+       SUM(p.CountPositions) AS Positions
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL p
+JOIN DWH_dbo.Dim_InstrumentType dit ON p.InstrumentTypeID = dit.InstrumentTypeID
+WHERE p.DateID = 20260309
+GROUP BY dit.Name
+ORDER BY SUM(p.NetProfit) DESC;
 ```
 
-### 7.3 Drill to SQF and futures slice
+### 7.3 Copy vs manual PnL comparison
 
 ```sql
-SELECT  RealCID,
-        SUM(UnrealizedPnLChange + NetProfit) AS PnL
-FROM    BI_DB_dbo.BI_DB_DDR_Fact_PnL
-WHERE   DateID = 20260320
-  AND   IsSQF = 1
-  AND   IsFuture = 1
-GROUP BY RealCID;
+SELECT DateID,
+       CASE WHEN IsCopy = 1 THEN 'CopyTrade' ELSE 'Manual' END AS TradeType,
+       SUM(UnrealizedPnLChange + NetProfit) AS TotalPnL,
+       SUM(CountPositions) AS Positions
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL
+WHERE DateID = 20260309
+GROUP BY DateID, IsCopy
+ORDER BY IsCopy;
 ```
 
 ---
 
 ## 8. Atlassian Knowledge Sources
 
-| Source | Type | Relevance |
-|--------|------|-----------|
-| _None auto-linked in this pass_ | — | Add Confluence links for DDR pyramid / customer daily panel when available |
+No Atlassian sources found for this object.
 
 ---
 
-*Generated: 2026-03-23 | Quality: 7.5/10 (★★★★☆) | Phases: wiki pass from DataPlatform repo (SP + TVF)*  
-*Tiers: 0 T1, 15 T2, 0 T3, 0 T4, 0 T5 | Elements: 9/10, Logic: 8/10, Relationships: 8/10, Sources: 6/10 (no Confluence hits in pass)*  
-*Object: BI_DB_dbo.BI_DB_DDR_Fact_PnL | Type: Table | Writer: SP_DDR_Fact_PnL*
+*Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
+*Tiers: 0 T1, 15 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 8/10, Relationships: 7/10, Sources: 7/10*
+*Object: BI_DB_dbo.BI_DB_DDR_Fact_PnL | Type: Table | Production Source: Function_PnL_Single_Day + Dim_Instrument*

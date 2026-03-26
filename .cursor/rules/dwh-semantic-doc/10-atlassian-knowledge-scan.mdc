@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 10: Atlassian Knowledge Scan
 
+## CONTRACT — Phase 10
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phases 1-9B complete; Atlassian MCP connected; object name and production source name |
+| **Outputs required** | Confluence/Jira search results ranked; HIGH/MEDIUM/LOW/DISCARD classification; validated business meanings |
+| **MUST NOT** | Use Atlassian as truth source for technical details (code is king); skip validation against earlier phase evidence |
+| **Failure mode** | **SOFT** — Atlassian enriches business context but is Tier 4; absence does not block Phase 11 |
+
+---
+
 ## MANDATORY — DO NOT SKIP
 
 This phase is **required** for every pipeline run. It must not be deferred, skipped, or deprioritized regardless of POC scope or time constraints. The Atlassian tools (Rovo Search, Confluence page fetch, Jira search) are available and must be used. Constitution v1.3.0, Quality Gates: "Phase 10 (Atlassian Knowledge Scan) is mandatory for every pipeline run."
@@ -120,6 +131,17 @@ ELEMENT MEANINGS (validated):
 | Element | Source | Confidence | Business Meaning |
 ```
 
-## Completion
+## CHECKPOINT — Phase 10
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | At least 2 Rovo search queries executed | [ ] |
+| 2 | Results ranked by priority (CRITICAL/HIGH/MEDIUM/LOW) | [ ] |
+| 3 | HIGH/CRITICAL pages fetched and validated against code evidence | [ ] |
+| 4 | Confidence classification applied to each fact | [ ] |
+
+```
+PHASE 10 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 10: Atlassian Knowledge Scan` in the checklist.

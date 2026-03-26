@@ -1,26 +1,33 @@
-# Review Sidecar: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+# BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms — Review Needed
 
-## Verification Status
+> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
 
-| Item | Status | Notes |
-|------|--------|-------|
-| Writer SP | Verified | `SP_DDR_Fact_Fact_MIMO_AllPlatforms` — double `Fact` in name |
-| Core lineage | Verified | Union of `BI_DB_DDR_Fact_MIMO_Trading_Platform` + `BI_DB_DDR_Fact_MIMO_eMoney_Platform`; Options and MoneyFarm append paths |
-| Global FTD | Verified | `Function_MIMO_First_Deposit_All_Platforms(0)` + post-UPDATEs with `Dim_Customer` / `eMoney_Fact_Transaction_Status` |
-| DDL vs SP | Review | Table DDL defines `TransactionID` as `int`; SP text casts via `VARCHAR(50)` in INSERT — confirm deployed Synapse object matches SSDT (implicit conversion or drift) |
-| Consumer list | Verified via repo grep | `SP_DDR_Customer_Daily_Status`, `SP_MarketingCloudDaily`, `SP_RevenueForum`, `BI_DB_V_DDR_MIMO`, functions |
+## Reviewer Corrections
 
-## Unverified Items
+> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
+> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
+> also be added to `knowledge/glossary.md`.
 
-| Topic | Tier | Issue |
-|-------|------|--------|
-| Full `MIMOAction` domain | T4 | Enumerate all distinct values across platforms — not extracted here |
-| `FundingTypeID` / `CurrencyID` dictionaries | T4 | Confirm Dim / dictionary joins for decode lists |
-| Options data readiness | T4 | Procedure states Options feed is “best effort” and not always ready at DDR send — quantify lag if needed for SLAs |
-| Function_MIMO_First_Deposit_All_Platforms ↔ this table | T4 | Circular dependency — document execution order in OpsDB / orchestration if required |
+| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
+|----------------|-----------------|------------|-------|----------|------|
 
-## Quality Notes
+## Tier 4 (UNVERIFIED) Columns
 
-- No live Synapse data sampling in this pass — distributions of flags and action types should be validated with MCP or sampled queries when available.
-- Section 8 (Atlassian) left empty of real links — Phase 10 should attach DDR / payments Confluence context.
-- SQF columns intentionally omitted — MIMO-only scope per product context.
+No Tier 4 columns — all 21 columns are Tier 2 with verified SP code provenance.
+
+## Columns Needing Clarification
+
+| Column | Question |
+|--------|----------|
+| TransactionID | DDL defines as `int` but SP casts to `VARCHAR(50)` — confirm whether Synapse implicitly truncates or if this is a latent data truncation risk |
+| AmountOrigCurrency | Negative values observed for TP withdrawals — confirm sign convention across platforms (eMoney appears signed differently) |
+| IsTradeFromIBAN | Column renamed from IsIBANTrade — confirm whether "Trade from IBAN" means deposit FROM eMoney TO trading platform, or eMoney-originated trade |
+
+## Structural Questions
+
+| Topic | Question |
+|-------|----------|
+| Options reliability | SP comment says Options data "not reliably ready daily" — quantify the lag or failure rate |
+| MoneyFarm scope | Only FTDs appear — confirm whether general MIMO for MoneyFarm will be added in future or is intentionally excluded |
+| FTD recovery cutoff | Recovery UPDATEs only apply for DateID >= 20250901 — confirm whether historical data pre-Sept 2025 has known FTD gaps |
+| C2USD UPDATE scope | UPDATE for FundingTypeID=27 only applies to DateID >= 20250701 — confirm whether earlier C2USD deposits are intentionally untagged |

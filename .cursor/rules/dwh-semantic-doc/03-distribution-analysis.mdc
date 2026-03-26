@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 3: Distribution Analysis
 
+## CONTRACT — Phase 3
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 1 column list; Phase 2 row count and sample data; active Synapse MCP connection |
+| **Outputs required** | Value distribution for every integer/bit column, distribution classification (enum/flag/FK/boolean), Synapse distribution strategy note |
+| **MUST NOT** | Drop documented upstream enum values because they were absent from a filtered sample; skip columns |
+| **Failure mode** | **SOFT** — Phase 11 can proceed with Phase 2 sample data alone, but quality degrades |
+
+---
+
 ## Purpose
 
 Analyze value distributions for numeric columns to identify enum-like values, status codes, flags, and dominant patterns. Also capture the Synapse table distribution strategy which is critical for query advisory.
@@ -96,6 +107,17 @@ Synapse Distribution:
   Advisory: Filter/JOIN on PositionID for optimal query performance
 ```
 
-## Completion
+## CHECKPOINT — Phase 3
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Every integer/bit column distribution queried | [ ] |
+| 2 | Each column classified (enum/flag/boolean/FK/range) | [ ] |
+| 3 | Synapse distribution strategy recorded | [ ] |
+| 4 | Upstream enum values preserved (not dropped) | [ ] |
+
+```
+PHASE 3 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 3: Distribution Analysis` in the checklist.

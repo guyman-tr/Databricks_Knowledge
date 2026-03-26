@@ -286,6 +286,8 @@ Skipping: P3, P5, P6, P7, P9B, P10
    
    > **Per-object phase gate checklist** — After completing all pre-Phase 11 steps, emit the phase gate checklist from `00-execution-card.mdc` before calling Phase 11. Phase 11 MUST refuse to generate if any required box is unchecked. This creates an external cognitive checkpoint that cannot be silently skipped — especially critical for objects 10+ in a batch where context pressure is highest.
    
+   > **Checkpoint chain verification** — In addition to the phase gate checklist, verify that all HARD phases emitted their `PHASE {N} CHECKPOINT: PASS` markers (see `GATE-wiki-generation.mdc`). A missing or FAIL checkpoint on any HARD phase (P1, P2, P8, P9, P10A, P10B) blocks Phase 11. This is the last line of defense against phase skipping — checkpoints are filled out AT the end of each phase rule file, and verified HERE before generation.
+   
    c. **Track result in memory**: Record status (Done/Failed/Skipped) and quality score. Do NOT update `_index.md` per-object.
    
    d. **On failure — severity determines action**:
@@ -306,6 +308,13 @@ Skipping: P3, P5, P6, P7, P9B, P10
    Failed objects do not block subsequent objects.
 
 6. **Bulk-update `_index.md`**: After all objects in the batch are processed, call `index-management.mdc` Protocol 2 (BATCH UPDATE) to record all results at once. Move the batch to Completed Batches.
+
+   **Checkpoint chain validation before marking Done**: An object may ONLY be marked `Done` in `_index.md` if:
+   - All HARD phase checkpoints (P1, P2, P8, P9, P10A, P10B) show PASS
+   - Both validation scripts passed (validate-wiki + validate-tier1-coverage)
+   - The golden reference shape check passed
+   
+   If any of these conditions are not met, the object status is `Failed` — not `Done`. This prevents objects with skipped phases from polluting the completion count.
 
 7. **Write context handoff**: Call `context-handoff.mdc` Protocol 1 (WRITE) or Protocol 3 (MERGE) to serialize `_batch_context.json` with glossary, relationships, and cross-references from the completed batch.
 

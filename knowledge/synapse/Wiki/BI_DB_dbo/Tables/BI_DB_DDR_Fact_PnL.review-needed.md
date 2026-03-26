@@ -1,26 +1,31 @@
-# Review Sidecar: BI_DB_dbo.BI_DB_DDR_Fact_PnL
+# BI_DB_dbo.BI_DB_DDR_Fact_PnL — Review Needed
 
-## Verification Status
+> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
 
-| Item | Status | Notes |
-|------|--------|-------|
-| Writer SP | Verified | `SP_DDR_Fact_PnL` — DELETE/INSERT by `DateID`, aggregates from `Function_PnL_Single_Day` + `Dim_Instrument` |
-| Grain / GROUP BY | Verified | Matches SP `GROUP BY` list and measure expressions |
-| Tier 2 column semantics | Verified | All 15 columns traced to `SP_DDR_Fact_PnL` (measures and dimensions as coded) |
-| Upstream TVF | Verified | `Function_PnL_Single_Day` reads `BI_DB_PositionPnL`, `Dim_Position`, `Dim_Instrument`, `BI_DB_CopyFund_Positions`, `Function_Instrument_Snapshot_Enriched` for `IsSQF` |
-| Consumers | Verified via repo grep | `BI_DB_V_DDR_PnL` (direct); `BI_DB_V_DDR_Daily_Panel`; `Function_DDR_Aggregation_*` via view |
-| Confluence / Jira | Not searched this pass | Section 8 in main wiki left placeholder — run Phase 10 scan if links required |
+## Reviewer Corrections
 
-## Unverified Items
+> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
+> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
+> also be added to `knowledge/glossary.md`.
 
-| Topic | Notes |
-|-------|-------|
-| `InstrumentTypeID` business labels | IDs are correct from `Dim_Instrument`; human-readable names need dim lookup or glossary |
-| `IsSettled` business definition | Passed through from TVF / position data — confirm product meaning in `Dim_Position` / policy docs |
-| DDR orchestration schedule | Which parent job calls `SP_DDR_Fact_PnL` — confirm via OpsDB or orchestration wiki |
-| Lake / merge note | SP header mentions null handling for merge keys (2025-12-07) — validate for UC export if applicable |
+| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
+|----------------|-----------------|------------|-------|----------|------|
 
-## Quality Notes
+## Tier 4 (UNVERIFIED) Columns
 
-- No live Synapse sampling in this pass — distributions described from DDL only.
-- Total PnL for reporting is commonly `UnrealizedPnLChange + NetProfit` per `BI_DB_V_DDR_PnL`; analysts should not sum measures across duplicate grain misunderstandings.
+No Tier 4 columns — all 15 columns are Tier 2 with verified SP code provenance.
+
+## Columns Needing Clarification
+
+| Column | Question |
+|--------|----------|
+| InstrumentTypeID | Confirm full set of InstrumentTypeID values used in DDR reporting (4,5,6,10,12,73 are common but the enum may be larger) |
+| IsSettled | Confirm whether IsSettled=1 means "real stock ownership" or "settled CFD" in all contexts — product naming may differ |
+
+## Structural Questions
+
+| Topic | Question |
+|-------|----------|
+| Orchestration | Which parent SB job calls SP_DDR_Fact_PnL and at what time? Confirm via OpsDB SB_Daily configuration |
+| Lake merge keys | SP header (2025-12-07) mentions null handling for merge keys — validate downstream lake consumers handle ISNULL'd values correctly |
+| UnrealizedPnLChange scope | Does this include mark-to-market from all open positions or only positions with activity on this date? |

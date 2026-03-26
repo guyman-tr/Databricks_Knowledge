@@ -4,24 +4,28 @@ Reusable Synapse connection utility.
 Usage by agents:
     from synapse_connect import connect, run_query, run_queries, print_table
 
-    conn = connect()           # handles auth with clear user prompts
+    conn = connect()
     cols, rows = run_query(conn, "SELECT TOP 5 * FROM DWH_dbo.Dim_Country")
     print_table(cols, rows)
     conn.close()
 
-    # Or run multiple queries in one session:
     results = run_queries(["SELECT ...", "SELECT ..."])
 
-Auth strategy (in order):
-    1. Try ActiveDirectoryInteractive with cached WAM token (silent, no popup)
-    2. If that hangs >30s, it means WAM cache is cold — fall back to device code
-    3. Device code warms the MSAL cache, then retry ActiveDirectoryInteractive
+SQL authentication (no Azure AD / MFA):
+    Set environment variables (PowerShell):
+        $env:SYNAPSE_SQL_USER = "your_sql_login"
+        $env:SYNAPSE_SQL_PASSWORD = "..."
+    Optional overrides:
+        SYNAPSE_SERVER   (default: see SERVER below)
+        SYNAPSE_DATABASE (default: see DATABASE below)
+    When SYNAPSE_SQL_USER and SYNAPSE_SQL_PASSWORD are both set, connect() uses
+    SQL Server authentication only — no interactive or device-code flows.
 
-Why not use DeviceCodeCredential token directly?
-    The device-code client ID isn't whitelisted on the Synapse server.
-    But authenticating via device code warms the Windows WAM/MSAL cache,
-    which ActiveDirectoryInteractive then picks up silently.
+Azure AD (only if SQL env vars are not set):
+    1. ActiveDirectoryInteractive (cached WAM token)
+    2. If that hangs, device code to warm cache, then retry
 """
+import os
 import sys
 import signal
 import pyodbc
@@ -31,6 +35,48 @@ DATABASE = "sql_dp_stg_we_BI_no_retention"
 UID = "guyman@etoro.com"
 CONNECT_TIMEOUT = 30
 QUERY_TIMEOUT = 300
+
+# Env-based SQL auth (see module docstring)
+_ENV_SQL_USER = "SYNAPSE_SQL_USER"
+_ENV_SQL_PASSWORD = "SYNAPSE_SQL_PASSWORD"
+_ENV_SERVER = "SYNAPSE_SERVER"
+_ENV_DATABASE = "SYNAPSE_DATABASE"
+
+
+def _sql_auth_from_env():
+    """Return (user, password) if both SQL auth env vars are set, else (None, None)."""
+    user = os.environ.get(_ENV_SQL_USER, "").strip()
+    pwd = os.environ.get(_ENV_SQL_PASSWORD, "")
+    if user and pwd:
+        return user, pwd
+    return None, None
+
+
+def _effective_server_database():
+    return (
+        os.environ.get(_ENV_SERVER, SERVER).strip() or SERVER,
+        os.environ.get(_ENV_DATABASE, DATABASE).strip() or DATABASE,
+    )
+
+
+def _escape_odbc_brace_value(s: str) -> str:
+    """Brace-wrap ODBC values; double any closing braces inside the value."""
+    return s.replace("}", "}}")
+
+
+def _conn_str_sql(user: str, password: str):
+    """SQL Server authentication — no Azure AD."""
+    srv, db = _effective_server_database()
+    pwd_esc = _escape_odbc_brace_value(password)
+    return (
+        "Driver={ODBC Driver 18 for SQL Server};"
+        f"Server={srv};"
+        f"Database={db};"
+        f"UID={user};"
+        f"PWD={{{pwd_esc}}};"
+        "Encrypt=yes;TrustServerCertificate=no;"
+        f"Connection Timeout={CONNECT_TIMEOUT};"
+    )
 
 
 def _ensure_line_buffering():
@@ -110,15 +156,26 @@ def _warm_cache_via_device_code():
 
 def connect(verbose=True):
     """
-    Connect to Synapse with automatic auth fallback.
+    Connect to Synapse.
 
-    Returns a pyodbc.Connection.
-
-    Flow:
-        1. Try ActiveDirectoryInteractive (uses cached WAM token)
-        2. If popup hangs, warm cache via device code, then retry
+    If SYNAPSE_SQL_USER and SYNAPSE_SQL_PASSWORD are set, uses SQL authentication
+    (no browser/MFA). Otherwise uses ActiveDirectoryInteractive + device-code fallback.
     """
     _ensure_line_buffering()
+
+    sql_user, sql_pwd = _sql_auth_from_env()
+    if sql_user is not None:
+        srv, db = _effective_server_database()
+        if verbose:
+            print(
+                f"Connecting to Synapse ({srv} / {db}) using SQL login {_ENV_SQL_USER}...",
+                flush=True,
+            )
+        conn = pyodbc.connect(_conn_str_sql(sql_user, sql_pwd), timeout=CONNECT_TIMEOUT)
+        conn.timeout = QUERY_TIMEOUT
+        if verbose:
+            print("Connected (SQL authentication).\n", flush=True)
+        return conn
 
     if verbose:
         print(f"Connecting to Synapse ({SERVER})...", flush=True)

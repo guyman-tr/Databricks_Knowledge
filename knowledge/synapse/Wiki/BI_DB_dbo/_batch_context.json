@@ -1,39 +1,13 @@
 {
   "schema": "BI_DB_dbo",
-  "last_batch": 8,
-  "last_updated": "2026-03-22",
-  "batch_8_summary": {
+  "last_batch": 9,
+  "last_updated": "2026-03-26",
+  "batch_9_summary": {
     "status": "COMPLETE",
-    "objects_documented": 8,
-    "total_columns_documented": 170,
+    "objects_documented": 5,
+    "total_columns_documented": 117,
+    "domain": "DDR redo with improved harness — Batch 7 items 4-8 redone for quality uplift",
     "objects": [
-      {
-        "name": "BI_DB_Futures_Finance_Prep_Data",
-        "type": "Table",
-        "columns": 27,
-        "priority": 90,
-        "writer_sp": "SP_Futures_Finance_Prep_Data",
-        "quality": 8.5,
-        "notes": "Daily futures position change ledger for finance. Reconstructs opening balance + intraday movements between settlement windows from Dim_PositionChangeLog + Fact_Position_Futures_Snapshot. ActionType: Open/CloseOrig/PartialCloseOrig/EditSL/ChildClose/Hold. Author: Guy Manova."
-      },
-      {
-        "name": "BI_DB_InterestDaily",
-        "type": "Table",
-        "columns": 20,
-        "priority": 80,
-        "writer_sp": "SP_InterestDaily",
-        "quality": 8.5,
-        "notes": "Daily interest accrual per CID. Passthrough from External_Interest_Trade_InterestDaily_Daily_Data (data lake). Source: Interest microservice. All columns Tier 2 (external table source). Author: Artyom Bogomolsky."
-      },
-      {
-        "name": "BI_DB_UsageTracking_SF",
-        "type": "Table",
-        "columns": 12,
-        "priority": 70,
-        "writer_sp": "SP_UsageTracking_SF",
-        "quality": 8.5,
-        "notes": "Salesforce CRM usage tracking — account history events. COPY INTO from ADLS Gold/CRM/UsageTracking parquet. Full TRUNCATE+INSERT. ID column always NULL. CreatedByManagerID = ManagerID (duplicate). Author: Katy F."
-      },
       {
         "name": "BI_DB_DDR_Fact_PnL",
         "type": "Table",
@@ -41,7 +15,7 @@
         "priority": 60,
         "writer_sp": "SP_DDR_Fact_PnL",
         "quality": 8.5,
-        "notes": "Aggregated daily PnL per CID × instrument type × flags. SUM(UnrealizedPnLChange), SUM(NetProfit), COUNT(PositionID). Source: Function_PnL_Single_Day. ~111 lines."
+        "notes": "Daily P&L fact. SUM(UnrealizedPnLChange), SUM(NetProfit), COUNT(PositionID) from Function_PnL_Single_Day. 9-dimensional GROUP BY (CID x InstrumentType x 7 flags). 8.8B rows. ~111 lines. Redo: added lineage.md, computation formulas, mechanical tier2 assignments."
       },
       {
         "name": "BI_DB_DDR_Fact_MIMO_AllPlatforms",
@@ -50,7 +24,7 @@
         "priority": 60,
         "writer_sp": "SP_DDR_Fact_Fact_MIMO_AllPlatforms",
         "quality": 8.5,
-        "notes": "Unified MIMO across Trading Platform + eMoney + Options + MoneyFarm. Complex multi-path ETL with platform-specific full reloads. IsGlobalFTD from Function_MIMO_First_Deposit_All_Platforms. ~422 lines."
+        "notes": "Unified MIMO across 4 platforms (TP, eMoney, Options, MoneyFarm). UNION ALL sub-platform tables + global FTD JOIN + FTD recovery UPDATEs + C2USD UPDATE. 91.5M rows. ~422 lines. Redo: improved dual-FTD logic documentation, IBAN rename clarity."
       },
       {
         "name": "BI_DB_DDR_Fact_MIMO_eMoney_Platform",
@@ -59,7 +33,7 @@
         "priority": 60,
         "writer_sp": "SP_DDR_Fact_MIMO_eMoney_Platform",
         "quality": 8.5,
-        "notes": "eMoney (IBAN) deposits/withdrawals. Source: eMoney_Fact_Transaction_Status. Deposits from TxTypeID=5, withdrawals negated. ROW_NUMBER dedup. Post-insert FTD recovery UPDATE. ~229 lines."
+        "notes": "eMoney (IBAN) deposits/withdrawals from eMoney_Fact_Transaction_Status. TxTypeID classification (7=deposit, 5=internal, 14=C2F, 8=trade, 6=internal out). Dedup by TransactionID. FTD recovery UPDATE. 23.2M rows. ~228 lines."
       },
       {
         "name": "BI_DB_DDR_Fact_Revenue_Generating_Actions",
@@ -68,7 +42,7 @@
         "priority": 60,
         "writer_sp": "SP_DDR_Fact_Revenue_Generating_Actions",
         "quality": 8.5,
-        "notes": "Comprehensive revenue fact — 18+ Function_Revenue_* (commissions, fees, overnights, dividends, staking, options etc.). RevenueMetricID/CategoryID from Dim_Revenue_Metrics. Options: full reload. Staking: retroactive month. ~1709 lines."
+        "notes": "Master revenue fact table — 18 distinct metrics from 16+ Function_Revenue_* TVFs. Three insertion strategies: daily, Options full reload, Staking monthly lag. -1 sentinel convention (not 0). Position enrichment: IBAN, Recurring, CopyFund, C2P. 3.1B rows. ~1709 lines."
       },
       {
         "name": "BI_DB_DDR_Fact_Trading_Volumes_And_Amounts",
@@ -77,33 +51,99 @@
         "priority": 60,
         "writer_sp": "SP_DDR_Fact_Trading_Volumes_And_Amounts",
         "quality": 8.5,
-        "notes": "Daily trading volumes and invested amounts. Source: Function_Trading_Volume_PositionLevel. SUM aggregation. Optional QA dump to BI_DB_VolumeQA. Author: Guy Manova (2025-04-20, newest DDR fact). ~200 lines."
+        "notes": "Trading volume/invested amounts from Function_Trading_Volume_PositionLevel. GROUP BY 14 dimensions, SUM 9 measures. QA dump to BI_DB_VolumeQA. IsOpenedFromIBAN DDL as varchar(100) anomaly noted. 793M rows. ~200 lines."
+      }
+    ]
+  },
+  "batch_8_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 6,
+    "total_columns_documented": 276,
+    "objects": [
+      {
+        "name": "BI_DB_DDR_Fact_AUM",
+        "type": "Table",
+        "columns": 40,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_AUM",
+        "quality": 8.5,
+        "notes": "Multi-platform AUM aggregation: TP equity, IBAN balance, Options equity, MoneyFarm equity. FULL OUTER JOIN across 4 sources. Global + TP-specific totals. Sources: BI_DB_Client_Balance_CID_Level_New, V_Liabilities, Function_AUM_OptionsPlatform, MoneyFarm_Fact_AccountsDaily. ~195 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_MIMO_Options_Platform",
+        "type": "Table",
+        "columns": 15,
+        "priority": 0,
+        "writer_sp": "SP_DDR_Fact_MIMO_Options_Platform",
+        "quality": 8.0,
+        "notes": "Options (Apex) platform deposits/withdrawals. Simple TRUNCATE+INSERT from Function_MIMO_Options_Platform. Hardcoded USD-only, FundingTypeID=0, CurrencyID=1. OrigIdentifier always 'ApexTxID'. ~30 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_MIMO_Trading_Platform",
+        "type": "Table",
+        "columns": 19,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_MIMO_Trading_Platform",
+        "quality": 8.5,
+        "notes": "TP deposits/withdrawals with multi-currency support. Complex multi-source: Fact_CustomerAction, Fact_BillingDeposit, Fact_BillingWithdraw, Dim_Currency. UNION deposits+withdrawals with dedup. Post-insert FTD recovery UPDATE from Dim_Customer. Flags: IBAN, Recurring, C2F, Redeem. ~350 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Fact_Non_Revenue_Generating_Actions",
+        "type": "Table",
+        "columns": 8,
+        "priority": 60,
+        "writer_sp": "SP_DDR_Fact_Non_Revenue_Generating_Actions",
+        "quality": 8.5,
+        "notes": "Engagement/operational actions (logins, registrations, verifications, copy). Aggregated from Fact_CustomerAction + Dim_ActionType + Dim_CompensationReason. Complex action-type classification via CASE mapping. IsCopyFund detection via Dim_Mirror workaround. Depositor login split. ~200 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Customer_Daily_Status",
+        "type": "Table",
+        "columns": 64,
+        "priority": 99,
+        "writer_sp": "SP_DDR_Customer_Daily_Status",
+        "quality": 8.5,
+        "notes": "Central customer segmentation snapshot — one row per CID per day. 5-layer population build (TP, IBAN-only, Options-only, Options MIMO, MoneyFarm). Platform-specific FTD flags, daily MIMO flags with coercion, account segmentation (active/balance-only/portfolio-only/inactive). 13.3B rows. ~1250 lines."
+      },
+      {
+        "name": "BI_DB_DDR_Customer_Periodic_Status",
+        "type": "Table",
+        "columns": 130,
+        "priority": 100,
+        "writer_sp": "SP_DDR_Customer_Periodic_Status",
+        "quality": 8.0,
+        "notes": "Pre-aggregation of Customer_Daily_Status for dashboard performance. Rolling periods: ThisWeek/ThisMonth/ThisQuarter/ThisYear. Semantics: MAX for snapshot attrs (latest-day), MAX for activity flags (ever-happened), SUM for event counts, special IsFunded logic (last-day). 12.7B rows. ~460 lines."
       }
     ]
   },
   "batch_7_summary": {
     "status": "COMPLETE",
-    "objects_documented": 5,
-    "domain": "DDR (Daily Data Report) — CID_Level + Aggregated tiers",
-    "priority": 90,
-    "total_columns_documented": 495
+    "objects_documented": 8,
+    "total_columns_documented": 170,
+    "domain": "Mixed priority 60-90: Futures, Interest, UsageTracking + 5 DDR fact tables",
+    "objects": ["BI_DB_Futures_Finance_Prep_Data", "BI_DB_InterestDaily", "BI_DB_UsageTracking_SF", "BI_DB_DDR_Fact_PnL", "BI_DB_DDR_Fact_MIMO_AllPlatforms", "BI_DB_DDR_Fact_MIMO_eMoney_Platform", "BI_DB_DDR_Fact_Revenue_Generating_Actions", "BI_DB_DDR_Fact_Trading_Volumes_And_Amounts"]
   },
   "ddr_domain_knowledge": {
     "architecture": "CID_Level → Daily_Aggregated → TimeRange_Aggregated (3-tier aggregation pyramid)",
-    "fact_tables": "PnL, MIMO (AllPlatforms/eMoney/Trading/Options), Revenue, Trading Volumes — all feed DDR_CID_Level or are standalone DDR components",
+    "fact_tables": "PnL, MIMO (AllPlatforms/eMoney/Trading/Options), Revenue, Trading Volumes, AUM, Non-Revenue Actions — all feed DDR_CID_Level or are standalone DDR components",
+    "customer_tables": "Customer_Daily_Status (daily snapshot, 64 cols, 13.3B rows) → Customer_Periodic_Status (pre-agg, 130 cols, 12.7B rows) — population & segmentation backbone",
     "auxiliary_pattern": "Separate CID_Level_Aux + Daily_Aggregated_Aux tables for fees added post-initial design",
     "revenue_functions": "18+ Function_Revenue_* functions are the foundational building blocks. Each calculates a specific revenue metric.",
-    "mimo_platforms": "Trading Platform, eMoney (IBAN), Options (Gatsby), MoneyFarm — each has a dedicated fact table feeding into AllPlatforms union",
+    "mimo_platforms": "Trading Platform, eMoney (IBAN), Options (Gatsby/Apex), MoneyFarm — each has a dedicated fact table feeding into AllPlatforms union",
+    "population_sources": "5 mutually exclusive: TP (Fact_CustomerAction), IBAN-only (eMoney_Fact_Account_Status), Options-only (Gatsby_Fact_Account_Status), Options MIMO (DDR_Fact_MIMO_Options_Platform), MoneyFarm (MoneyFarm_Fact_AccountsDaily)",
     "unique_user_caveat": "Time-range aggregations attribute users to last day's dimension values",
-    "datasource_pattern": "TimeRange table uses DataSource column to partition standard vs auxiliary data"
+    "datasource_pattern": "TimeRange table uses DataSource column to partition standard vs auxiliary data",
+    "aum_sources": "4 pillars: TP equity (Client_Balance_CID_Level_New), IBAN balance (V_Liabilities), Options equity (Function_AUM_OptionsPlatform), MoneyFarm equity (MoneyFarm_Fact_AccountsDaily)"
   },
   "next_batch_plan": {
-    "batch_number": 9,
+    "batch_number": 10,
     "target_objects": [
-      "BI_DB_DDR_Customer_Periodic_Status (P60, 128 cols) — monster",
-      "BI_DB_DDR_Customer_Daily_Status (P60, 64 cols)",
-      "BI_DB_DDR_Fact_AUM (P60, 43 cols)"
+      "BI_DB_DDR_CID_Level (P60) — key bridge table from fact tables to aggregated layers",
+      "BI_DB_DDR_CID_Level_Aux (P60) — auxiliary fees extension",
+      "BI_DB_DDR_Daily_Aggregated (P60) — aggregated DDR metrics",
+      "BI_DB_DDR_Daily_Aggregated_Aux (P60) — auxiliary fees aggregation",
+      "BI_DB_DDR_TimeRange_Aggregated (P60) — period-level aggregation"
     ],
-    "notes": "Last 3 remaining P60+ objects. Customer_Periodic_Status is a monster (128 cols). These complete all P60+ BI_DB_dbo documentation."
+    "notes": "DDR aggregation pyramid tables — the core DDR reporting chain. These complete the DDR domain documentation."
   }
 }

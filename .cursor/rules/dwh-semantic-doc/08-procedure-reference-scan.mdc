@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 8: Procedure Reference Scan
 
+## CONTRACT — Phase 8
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 2 ETL source discovery results (consume, not re-discover); Phase 7 view list; Dataplatform SSDT repo |
+| **Outputs required** | Complete list of SPs interacting with this table; each SP categorized (WRITER/MODIFIER/READER/DELETER); importance ranking |
+| **MUST NOT** | Re-run ETL source discovery (consume Phase 2 results); query `sys.sql_expression_dependencies` before repo grep |
+| **Failure mode** | **HARD** — without SP list, Phase 9 cannot extract logic |
+
+---
+
 ## Purpose
 
 Find ALL stored procedures that interact with the documented object. Uses the **Dataplatform repo** as the primary source.
@@ -142,6 +153,20 @@ READERS:
   3. {Schema}.{ProcName} - {What it does} (SELECT)
 ```
 
-## Completion
+## CHECKPOINT — Phase 8
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Phase 2 ETL results consumed (not re-discovered) | [ ] |
+| 2 | Method 1: Grep across all SP files done | [ ] |
+| 3 | Method 2: Via-views references collected from Phase 7 | [ ] |
+| 4 | Method 3: Function references checked | [ ] |
+| 5 | Every SP categorized (WRITER/MODIFIER/READER/DELETER) | [ ] |
+| 6 | Importance ranking assigned | [ ] |
+| 7 | ETL SP absence explicitly documented if none found | [ ] |
+
+```
+PHASE 8 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 8: Procedure Reference Scan` in the checklist.

@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 6: Business Logic Discovery
 
+## CONTRACT — Phase 6
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phases 1-5 results (column structure, sample data, distributions, resolved lookups, JOIN relationships) |
+| **Outputs required** | Related column groups identified; self-reference patterns detected; business concept synthesis with evidence |
+| **MUST NOT** | Fabricate business concepts without data evidence; skip self-reference queries |
+| **Failure mode** | **SOFT** — business logic enriches Phase 11 Section 2 but is not a hard prerequisite |
+
+---
+
 ## Purpose
 
 Individual columns don't tell the story -- **combinations do**. This phase discovers the business meaning behind groups of related columns by analyzing data patterns, self-references, and hierarchies.
@@ -104,6 +115,17 @@ Business Concepts Discovered:
    Diagram: [ASCII art]
 ```
 
-## Completion
+## CHECKPOINT — Phase 6
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Related column groups identified (naming patterns, lifecycle pairs) | [ ] |
+| 2 | Self-reference patterns queried and documented | [ ] |
+| 3 | Data clusters analyzed | [ ] |
+| 4 | Business concepts synthesized with evidence | [ ] |
+
+```
+PHASE 6 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 6: Business Logic Discovery` in the checklist.

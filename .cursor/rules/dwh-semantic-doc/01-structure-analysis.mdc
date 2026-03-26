@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 1: Structure Analysis
 
+## CONTRACT — Phase 1
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | SSDT repo DDL file (`DataPlatform/SynapseSQLPool1/sql_dp_prod_we/{Schema}/{ObjectType}/{Schema}.{ObjectName}.sql`) |
+| **Outputs required** | Column list with types/nullability, distribution strategy, index type, PK, list of `*ID` columns needing resolution |
+| **MUST NOT** | Query Synapse metadata views via MCP for structural information (Constitution IX — repo first) |
+| **Failure mode** | **HARD** — without structure, no subsequent phase can run |
+
+---
+
 ## Purpose
 
 Extract the complete structural definition of a Synapse DWH object by reading DDL files from the locally cloned Dataplatform SSDT repo. This is the foundation for all subsequent phases.
@@ -123,6 +134,18 @@ PK: {column(s) or NONE}
 ID columns needing resolution: [list all *ID columns]
 ```
 
-## Completion
+## CHECKPOINT — Phase 1
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | DDL file read from SSDT repo (not MCP) | [ ] |
+| 2 | All columns extracted with name, type, nullability | [ ] |
+| 3 | Distribution strategy recorded (HASH/ROUND_ROBIN/REPLICATE) | [ ] |
+| 4 | Index type recorded (CLUSTERED COLUMNSTORE/CLUSTERED INDEX/HEAP) | [ ] |
+| 5 | All `*ID` columns listed for resolution | [ ] |
+
+```
+PHASE 1 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 1: Structure Analysis` in the checklist.

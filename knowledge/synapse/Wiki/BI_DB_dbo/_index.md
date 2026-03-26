@@ -2,11 +2,11 @@
 schema: BI_DB_dbo
 database: Synapse DWH
 total_objects: 1204
-documented: 38
+documented: 44
 failed: 0
-last_batch: 7
-last_updated: "2026-03-22"
-quality_avg: 8.9
+last_batch: 9
+last_updated: "2026-03-26"
+quality_avg: 8.8
 ---
 
 ## Schema Documentation Progress
@@ -15,12 +15,37 @@ quality_avg: 8.9
 |--------|-------|
 | **Schema** | BI_DB_dbo |
 | **Total Objects** | ~1204 (1160 tables, 44 views -- full inventory not yet enumerated) |
-| **Documented** | 38 |
+| **Documented** | 44 |
 | **Failed** | 0 |
-| **Last Updated** | 2026-03-22 |
-| **Quality Avg** | 8.9 |
+| **Last Updated** | 2026-03-26 |
+| **Quality Avg** | 8.8 |
 
 ---
+
+## Batch 9 (COMPLETE) -- DDR redo with improved harness: 5 objects (PnL, MIMO AllPlatforms/eMoney, Revenue, Trading Volumes)
+
+Planned: 2026-03-26 | Completed: 2026-03-26 | Note: Redo of Batch 7 items 4-8 with improved documentation pipeline
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 1 | [BI_DB_dbo.BI_DB_DDR_Fact_PnL](Tables/BI_DB_DDR_Fact_PnL.md) | Table | 60 | 8.5 | Done |
+| 2 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms](Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md) | Table | 60 | 8.5 | Done |
+| 3 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform](Tables/BI_DB_DDR_Fact_MIMO_eMoney_Platform.md) | Table | 60 | 8.5 | Done |
+| 4 | [BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md) | Table | 60 | 8.5 | Done |
+| 5 | [BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts](Tables/BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.md) | Table | 60 | 8.5 | Done |
+
+## Batch 8 (COMPLETE) -- DDR remaining tables: 6 objects (AUM, MIMO Options/TP, Non-Revenue, Customer Daily/Periodic)
+
+Planned: 2026-03-26 | Completed: 2026-03-26
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 1 | [BI_DB_dbo.BI_DB_DDR_Fact_AUM](Tables/BI_DB_DDR_Fact_AUM.md) | Table | 60 | 8.5 | Done |
+| 2 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform](Tables/BI_DB_DDR_Fact_MIMO_Options_Platform.md) | Table | 0 | 8.0 | Done |
+| 3 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform](Tables/BI_DB_DDR_Fact_MIMO_Trading_Platform.md) | Table | 60 | 8.5 | Done |
+| 4 | [BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Non_Revenue_Generating_Actions.md) | Table | 60 | 8.5 | Done |
+| 5 | [BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status](Tables/BI_DB_DDR_Customer_Daily_Status.md) | Table | 99 | 8.5 | Done |
+| 6 | [BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status](Tables/BI_DB_DDR_Customer_Periodic_Status.md) | Table | 100 | 8.0 | Done |
 
 ## Batch 7 (COMPLETE) -- Priority 60-90 targets: 8 objects (P90/P80/P70/P60 mix)
 
@@ -31,11 +56,11 @@ Planned: 2026-03-22 | Completed: 2026-03-22
 | 1 | [BI_DB_dbo.BI_DB_Futures_Finance_Prep_Data](Tables/BI_DB_Futures_Finance_Prep_Data.md) | Table | 90 | 8.5 | Done |
 | 2 | [BI_DB_dbo.BI_DB_InterestDaily](Tables/BI_DB_InterestDaily.md) | Table | 80 | 8.0 | Done |
 | 3 | [BI_DB_dbo.BI_DB_UsageTracking_SF](Tables/BI_DB_UsageTracking_SF.md) | Table | 70 | 7.5 | Done |
-| 4 | [BI_DB_dbo.BI_DB_DDR_Fact_PnL](Tables/BI_DB_DDR_Fact_PnL.md) | Table | 60 | 8.0 | Done |
-| 5 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms](Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md) | Table | 60 | 8.0 | Done |
-| 6 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform](Tables/BI_DB_DDR_Fact_MIMO_eMoney_Platform.md) | Table | 60 | 8.0 | Done |
-| 7 | [BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md) | Table | 60 | 8.0 | Done |
-| 8 | [BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts](Tables/BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.md) | Table | 60 | 8.0 | Done |
+| 4 | BI_DB_dbo.BI_DB_DDR_Fact_PnL | Table | 60 | ~~8.0~~ | Superseded by Batch 9 |
+| 5 | BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms | Table | 60 | ~~8.0~~ | Superseded by Batch 9 |
+| 6 | BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform | Table | 60 | ~~8.0~~ | Superseded by Batch 9 |
+| 7 | BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions | Table | 60 | ~~8.0~~ | Superseded by Batch 9 |
+| 8 | BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts | Table | 60 | ~~8.0~~ | Superseded by Batch 9 |
 
 ## Batch 6 (COMPLETE) -- Priority 99 targets: 1 object (173-column monster, dedicated batch)
 
@@ -111,7 +136,7 @@ Planned: 2026-03-20 | Completed: 2026-03-20
 
 ---
 
-## Tables (documented: 38)
+## Tables (documented: 44)
 
 | Object | Quality | Status |
 |--------|---------|--------|
@@ -123,8 +148,14 @@ Planned: 2026-03-20 | Completed: 2026-03-20
 | [BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New](Tables/BI_DB_Client_Balance_Aggregate_Level_New.md) | 9.0 | Done (Batch 6 #1) |
 | [BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New](Tables/BI_DB_Client_Balance_CID_Level_New.md) | 9.5 | Done (Batch 1) |
 | [BI_DB_dbo.BI_DB_Client_New_CompensationBreakdown](Tables/BI_DB_Client_New_CompensationBreakdown.md) | 9.0 | Done (Batch 3 #5) |
+| [BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status](Tables/BI_DB_DDR_Customer_Daily_Status.md) | 8.5 | Done (Batch 8 #5) |
+| [BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status](Tables/BI_DB_DDR_Customer_Periodic_Status.md) | 8.0 | Done (Batch 8 #6) |
+| [BI_DB_dbo.BI_DB_DDR_Fact_AUM](Tables/BI_DB_DDR_Fact_AUM.md) | 8.5 | Done (Batch 8 #1) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms](Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md) | 8.0 | Done (Batch 7 #5) |
+| [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform](Tables/BI_DB_DDR_Fact_MIMO_Options_Platform.md) | 8.0 | Done (Batch 8 #2) |
+| [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform](Tables/BI_DB_DDR_Fact_MIMO_Trading_Platform.md) | 8.5 | Done (Batch 8 #3) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform](Tables/BI_DB_DDR_Fact_MIMO_eMoney_Platform.md) | 8.0 | Done (Batch 7 #6) |
+| [BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Non_Revenue_Generating_Actions.md) | 8.5 | Done (Batch 8 #4) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_PnL](Tables/BI_DB_DDR_Fact_PnL.md) | 8.0 | Done (Batch 7 #4) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md) | 8.0 | Done (Batch 7 #7) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts](Tables/BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.md) | 8.0 | Done (Batch 7 #8) |

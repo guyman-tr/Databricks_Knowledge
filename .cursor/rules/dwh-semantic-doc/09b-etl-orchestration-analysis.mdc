@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 9B: ETL Orchestration Analysis
 
+## CONTRACT — Phase 9B
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 8 WRITER SP list; Phase 9 source tables; OpsDB static files (`.specify/Configs/opsdb-*.json`) |
+| **Outputs required** | Refresh frequency, OpsDB priority, process group, dependency graph, ETL chain diagram |
+| **MUST NOT** | Query OpsDB MCP before checking static JSON files; skip dependency graph for DWH_Migration sources (document as frozen) |
+| **Failure mode** | **SOFT** — orchestration metadata enriches Section 5 but is not blocking |
+
+---
+
 ## Purpose
 
 DWH stored procedures are ETL processes, not application-called code. Instead of tracing C# call sites (as the production pipeline does), this phase maps:
@@ -131,6 +142,17 @@ Dependency Graph:
   {Table} <- {Source1} <- {Source2 (production)}
 ```
 
-## Completion
+## CHECKPOINT — Phase 9B
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | OpsDB static files checked first (before MCP) | [ ] |
+| 2 | Refresh frequency identified | [ ] |
+| 3 | ETL dependency graph built | [ ] |
+| 4 | SP call chain traced | [ ] |
+
+```
+PHASE 9B CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 9B: ETL Orchestration Analysis` in the checklist.

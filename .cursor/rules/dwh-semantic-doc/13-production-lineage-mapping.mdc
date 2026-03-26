@@ -6,6 +6,26 @@ alwaysApply: false
 
 # Production Lineage Mapping — Phases 10A + 10B
 
+## CONTRACT — Phase 10A (Upstream Wiki Bridge)
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 2 ETL source discovery; Generic Pipeline mapping (MCP or static JSON fallback); upstream wiki repos |
+| **Outputs required** | Production source identified; governance metadata extracted; upstream wiki read and column descriptions carried forward |
+| **MUST NOT** | Skip Generic Pipeline lookup; skip upstream wiki read when source is known; treat external tables as sources (trace through to production) |
+| **Failure mode** | **HARD when source known** (Phase 2 found staging/ext/migration) — SOFT only if source genuinely unknown |
+
+## CONTRACT — Phase 10B (Column Lineage)
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 9 source-to-target map; Phase 10A upstream wiki content and tier tags |
+| **Outputs required** | `.lineage.md` file with every column mapped; lineage chain diagram; transform classification per column |
+| **MUST NOT** | Skip any column; write `.lineage.md` AFTER `.md` (lineage MUST come first); ignore alias-level source attribution |
+| **Failure mode** | **HARD** — Phase 11 reads `.lineage.md` for tier assignment; without it, tiers are guesswork |
+
+---
+
 This rule contains TWO execution units with distinct identities:
 
 - **Phase 10A (Upstream Wiki Bridge)** — Steps 1/1b/1c/3 — runs BEFORE Phase 11
@@ -364,6 +384,34 @@ One file per documented table. Contains the column-level lineage mapping in a st
 
 **Reference example**: See `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.lineage.md`
 
-## Completion
+## CHECKPOINT — Phase 10A
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Generic Pipeline mapping queried (MCP or static fallback) | [ ] |
+| 2 | Production source identified | [ ] |
+| 3 | Governance metadata extracted (frequency, SLA, PII) | [ ] |
+| 4 | Circular import detection applied (external tables traced through) | [ ] |
+| 5 | Upstream wiki file read and column descriptions extracted | [ ] |
+| 6 | Tier transitivity: origin tier tags parsed and stored | [ ] |
+
+```
+PHASE 10A CHECKPOINT: {PASS/FAIL}
+```
+
+## CHECKPOINT — Phase 10B
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | Every DWH column mapped to source (one row per column) | [ ] |
+| 2 | Transform type classified for each column | [ ] |
+| 3 | Computation formulas recorded for ETL-computed columns | [ ] |
+| 4 | Lineage chain diagram built | [ ] |
+| 5 | `.lineage.md` file written to disk | [ ] |
+| 6 | Lost/added columns identified | [ ] |
+
+```
+PHASE 10B CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 10B: Production Lineage Mapping` in the checklist only after both the in-session results and the `.lineage.md` file are produced.

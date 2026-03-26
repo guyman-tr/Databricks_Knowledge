@@ -1,25 +1,34 @@
-# Review Sidecar: BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+# BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions — Review Needed
 
-## Verification Status
+> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
 
-| Item | Status | Notes |
-|------|--------|-------|
-| Writer SP | Verified | `SP_DDR_Fact_Revenue_Generating_Actions` — DELETE/INSERT + options + staking passes |
-| Primary lineage | Verified | Many `Function_Revenue_*` TVFs, `Dim_Revenue_Metrics`, `Dim_ActionType`, `Dim_Instrument`, parquet, `V_C2P_Positions`, `BI_DB_CopyFund_Positions` |
-| Distribution / CCI | Verified | HASH(RealCID), clustered columnstore from DDL |
-| Consumers (repo) | Verified | `BI_DB_V_DDR_Revenue_Breakdown`, `Function_Revenue_Total`, `SP_RevenueForum` |
+## Reviewer Corrections
 
-## Unverified Items
+> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
+> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
+> also be added to `knowledge/glossary.md`.
 
-| Topic | Tier | Issue |
-|-------|------|-------|
-| Currency / FX | T4 | Assumed USD for DDR — confirm per-function |
-| Every `Metric` string | T4 | Dictionary in `Dim_Revenue_Metrics` should be reconciled to full union list |
-| Options second pass | T4 | All-time function window — confirm consumer expectations for `DateID` vs recognition |
-| Staking month rewrite | T4 | Confirm business sign-off on lag and MTD delete scope |
-| ActionTypeID null metrics | T4 | Document which metrics legitimately have NULL `ActionTypeID` |
+| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
+|----------------|-----------------|------------|-------|----------|------|
 
-## Quality Notes
+## Tier 4 (UNVERIFIED) Columns
 
-- **High complexity** — wiki summarizes SP; deep column provenance per `Metric` requires tracing individual `Function_Revenue_*` TVFs.
-- **SDRT IncludedInTotalRevenue** — SP applies explicit UPDATE; trust `Dim_Revenue_Metrics` plus post-fixes when auditing.
+No Tier 4 columns — all 27 columns are Tier 2 with verified SP code provenance.
+
+## Columns Needing Clarification
+
+| Column | Question |
+|--------|----------|
+| IncludedInTotalRevenue | Confirm the complete list of metrics that should be IncludedInTotalRevenue=0 (currently: Commission, Dividends, SDRT) — has this changed? |
+| IsMarginTrade | New flag added 2025-10-23 — confirm business definition: is this margin-call-related or simply leveraged-with-margin? |
+| IsC2P | Copy-to-Portfolio flag added 2025-12-13 — confirm scope: does this cover all C2P positions or only specific ones from V_C2P_Positions? |
+| CountAsActiveTrade | Only counted for ActionTypeID IN (1,39) — confirm whether ManualClose or other action types should also count |
+
+## Structural Questions
+
+| Topic | Question |
+|-------|----------|
+| SDRT recurrence | SP change history shows SDRT IncludedInTotalRevenue=1 kept reappearing and being fixed. Is there a root cause (code merge conflict?) that should be addressed? |
+| Staking lag | StakingLagOneMonth is shifted forward by one month — confirm whether downstream consumers (DDR reports) are aware of this lag |
+| Options reliability | All Options data is deleted and re-inserted every run — confirm impact on downstream caches or reports that may snapshot mid-day |
+| Dividend IsBuy override | IsBuy is overridden to 1 for positive dividends and 0 for negative — confirm whether this represents "long positions receive, short positions pay" |

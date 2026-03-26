@@ -24,8 +24,9 @@ If ANY of these are true, this gate is ACTIVE:
 3. **Read the lineage/upstream spec**: `.cursor/rules/dwh-semantic-doc/13-production-lineage-mapping.mdc`
 4. **Read the lineage contract**: `.cursor/rules/dwh-semantic-doc/GATE-lineage-contract.mdc`
 5. **Read the tier enforcement**: `.cursor/rules/dwh-semantic-doc/10.5b-tier1-enforcement.mdc`
+6. **Read the golden reference**: `.cursor/rules/dwh-semantic-doc/GOLDEN-REFERENCE.mdc`
 
-**If you have not read all 5 files in THIS conversation, STOP and read them NOW.**
+**If you have not read all 6 files in THIS conversation, STOP and read them NOW.**
 
 ## MANDATORY: Phase Gate Checklist Before Each Object
 
@@ -40,6 +41,40 @@ PHASE GATE CHECK — {ObjectName}:
 ```
 
 If ANY HARD-gated phase is unchecked (`[ ]`), DO NOT generate. Go run that phase.
+
+## MANDATORY: Checkpoint Chain Verification Before Phase 11
+
+Before Phase 11 runs, verify that ALL HARD-gated phases emitted their checkpoint markers:
+
+```
+CHECKPOINT CHAIN — {ObjectName}:
+  PHASE 1 CHECKPOINT:    {PASS/FAIL/MISSING}
+  PHASE 2 CHECKPOINT:    {PASS/FAIL/MISSING}
+  PHASE 8 CHECKPOINT:    {PASS/FAIL/MISSING}
+  PHASE 9 CHECKPOINT:    {PASS/FAIL/MISSING}
+  PHASE 10A CHECKPOINT:  {PASS/FAIL/MISSING}
+  PHASE 10B CHECKPOINT:  {PASS/FAIL/MISSING}
+```
+
+**If ANY HARD phase shows FAIL or MISSING: DO NOT proceed to Phase 11.** Go back and complete the failed/missing phase. SOFT phases (P3, P4, P5, P6, P7, P9B, P10) are allowed to be MISSING — they degrade quality but do not block.
+
+## MANDATORY: Shape Comparison Before Writing
+
+Before writing the `.md` file, compare your output against the golden reference skeleton (`GOLDEN-REFERENCE.mdc` Section A):
+
+```
+SHAPE CHECK — {ObjectName}:
+  [y/n] All 8 sections (## 1. through ## 8.) present
+  [y/n] Every Element description ends with (Tier N — source)
+  [y/n] Elements table has 5 columns (# | Element | Type | Nullable | Description)
+  [y/n] Element count matches DDL column count
+  [y/n] Section 5.2 has ETL pipeline ASCII diagram
+  [y/n] Footer has tier breakdown counts
+  [y/n] Property table has Production Source, Refresh, Distribution, UC Target
+  [y/n] Dictionary columns with <=15 values have inline values
+```
+
+**If ANY [n] on a HARD assertion (see GOLDEN-REFERENCE.mdc Section B): fix BEFORE writing.**
 
 ## Critical Reminders
 

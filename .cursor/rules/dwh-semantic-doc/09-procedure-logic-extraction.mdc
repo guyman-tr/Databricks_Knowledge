@@ -6,6 +6,17 @@ alwaysApply: false
 
 # Phase 9: Procedure Logic Extraction
 
+## CONTRACT — Phase 9
+
+| Constraint | Detail |
+|-----------|--------|
+| **Inputs required** | Phase 8 categorized SP list; Dataplatform SSDT repo for SP/function code |
+| **Outputs required** | Column assignments for every INSERT/CTAS; source-to-target map with computation formulas; transformation logic; reader SP semantic patterns |
+| **MUST NOT** | Guess column sources — read the SP code; skip alias-level attribution (Step 2b); skip reader SP analysis (Group B) |
+| **Failure mode** | **HARD** — source-to-target map feeds Phase 10B lineage; without it, tier assignment is guesswork |
+
+---
+
 ## Purpose
 
 Procedures define the **lifecycle** of every column -- what values go in when, what changes when, and why. In the DWH context, these are primarily ETL procedures that load and transform data from production sources. This phase reads the actual procedure code to extract that knowledge.
@@ -235,6 +246,20 @@ READER SP SEMANTIC PATTERNS:
   |--------|---------|-----------|----------|
 ```
 
-## Completion
+## CHECKPOINT — Phase 9
+
+| # | Deliverable | Verified |
+|---|------------|----------|
+| 1 | All WRITER/MODIFIER SPs read from SSDT repo | [ ] |
+| 2 | Column assignments extracted for every INSERT/CTAS | [ ] |
+| 3 | Alias-level source attribution applied (Step 2b) | [ ] |
+| 4 | Computation formulas recorded for ETL-computed columns | [ ] |
+| 5 | Called functions read and logic extracted (Step 3b) | [ ] |
+| 6 | Source-to-target map built (Step 4) | [ ] |
+| 7 | At least 10 reader SPs analyzed for CASE/IIF patterns (Step 7) | [ ] |
+
+```
+PHASE 9 CHECKPOINT: {PASS/FAIL}
+```
 
 Mark `[x] Phase 9: Procedure Logic Extraction` in the checklist.
