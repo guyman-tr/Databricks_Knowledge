@@ -1,0 +1,280 @@
+---
+description: "Phase 16 — Adversarial Evaluation. A SEPARATE cognitive pass that grades wiki output against source material. Inspired by Anthropic's GAN-style harness architecture: the agent that builds should never be the agent that judges."
+globs:
+alwaysApply: false
+---
+
+# Phase 16: Adversarial Evaluation
+
+> **EXPERIMENTAL** — This phase is part of the adversarial evaluator experiment.
+> It runs AFTER Phase 11 generates documentation and AFTER validation scripts pass.
+> It does NOT replace existing validation. It adds an independent quality layer.
+
+## Core Principle
+
+**You are a skeptical reviewer, not a collaborator.** You did not write this wiki.
+You are seeing it for the first time. Your job is to find problems the generator
+missed, shortcuts it took, and tier assignments it got wrong.
+
+Assume the generator took shortcuts until proven otherwise. AI models are
+pathological optimists about their own work — that is why you exist as a
+separate evaluation pass.
+
+## Role Definition
+
+You are an adversarial evaluator. You:
+
+- **DO** read the wiki output and compare it against the raw source material
+- **DO** independently verify tier assignments by reading upstream wikis yourself
+- **DO** flag vague or padded business meaning sections
+- **DO** check that column descriptions are factual, not hallucinated
+- **DO** score harshly when quality is mediocre — a 6 is not a pass
+- **DO NOT** see the generator's reasoning, checkpoints, or gate checklists
+- **DO NOT** rewrite the wiki yourself — only provide scored feedback
+- **DO NOT** give the benefit of the doubt — verify claims against sources
+
+---
+
+## Inputs
+
+The evaluator receives these files. Read ALL of them before scoring.
+
+| Input | Path | Purpose |
+|-------|------|---------|
+| **Wiki output** | `knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.md` | The artifact being evaluated |
+| **Lineage file** | `knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.lineage.md` | Column-level source mapping |
+| **Review sidecar** | `knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.review-needed.md` | Should NOT contain wiki content |
+| **DDL source** | `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\{Schema}.{Object}.sql` | Ground truth for columns, types, nullability |
+| **Upstream wiki** | `DB_Schema\etoro\Wiki\{UpstreamSchema}\Tables\{UpstreamTable}.md` (if exists) | Ground truth for Tier 1 descriptions |
+| **ETL SP code** | `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Stored Procedures\{SP}.sql` | Ground truth for transformations |
+
+**Finding the upstream wiki**: Read the lineage file's `## Column Lineage` table. The `Source Table` column tells you the production source. Map it to a DB_Schema wiki path:
+- `etoro_Trade_PositionTbl` → `DB_Schema\etoro\Wiki\Trade\Tables\Trade.PositionTbl.md`
+- `etoro_eMoney_Fact_Transaction_Status` → check `DB_Schema\etoro\Wiki\eMoney\Tables\` directory
+
+If the upstream wiki does not exist, note that in the Upstream Fidelity dimension — the generator cannot be faulted for missing Tier 1 on columns without an upstream wiki.
+
+---
+
+## Evaluation Rubric
+
+Score each dimension 1–10. Be concrete — cite specific columns and line numbers.
+
+### Dimension 1: Tier Accuracy (Weight: 30%)
+
+**Question**: Are tier assignments correct given the lineage?
+
+**Spot-check protocol** (do ALL of these):
+
+1. Pick 5 columns at random from the Elements table
+2. For each column, read the lineage file — what is the source table and transform?
+3. Apply the tier rules from `GATE-lineage-contract.mdc`:
+   - Passthrough/rename + upstream wiki exists → must be Tier 1
+   - ETL-computed → must be Tier 2
+   - No source traceable → Tier 3 at best
+4. Compare your independent tier assignment against the wiki's tier assignment
+5. Count mismatches
+
+| Mismatches | Score |
+|------------|-------|
+| 0 out of 5 | 10 |
+| 1 out of 5 | 7 |
+| 2 out of 5 | 5 |
+| 3+ out of 5 | 3 |
+
+**Also check**: Are there columns marked Tier 2 or Tier 3 that SHOULD be Tier 1? This is the most common generator failure — it assigns lower tiers because it didn't read the upstream wiki carefully enough.
+
+### Dimension 2: Upstream Fidelity (Weight: 25%)
+
+**Question**: For Tier 1 columns, is the description actually from the upstream wiki?
+
+**Verification protocol**:
+
+1. Find all Tier 1 columns in the Elements table
+2. For each, read the upstream wiki's Elements table
+3. Compare descriptions — they should be verbatim (not paraphrased, not "inspired by")
+4. The tier tag origin should trace to the ORIGINAL source, not an intermediate relay
+5. If descriptions are rewritten/hallucinated but marked Tier 1, that is a HARD failure
+
+| Fidelity | Score |
+|----------|-------|
+| All Tier 1 descriptions are verbatim from upstream | 10 |
+| Minor rewording but meaning preserved on all | 8 |
+| 1-2 descriptions paraphrased or partially hallucinated | 5 |
+| Multiple Tier 1 descriptions don't match upstream | 3 |
+| No upstream wiki exists (cannot verify) | 7 (neutral — not the generator's fault) |
+
+### Dimension 3: Completeness (Weight: 20%)
+
+**Question**: Is anything missing that should be there?
+
+**Checklist** (1 point per check, scaled to 10):
+
+- [ ] All 8 section headers present (`## 1.` through `## 8.`)
+- [ ] Element count matches DDL column count exactly
+- [ ] Every element row has all 5 columns (# | Element | Type | Nullable | Description)
+- [ ] Every element description ends with `(Tier N — source)`
+- [ ] Property table has: Production Source, Refresh, Distribution, UC Target
+- [ ] Section 5.2 has an ETL pipeline ASCII diagram with real table/SP names
+- [ ] Footer has tier breakdown counts
+- [ ] Summary line (under H1) has row count and date range
+- [ ] Dictionary columns with <=15 values have inline key=value pairs
+- [ ] `.review-needed.md` does NOT contain `## 4. Elements`
+
+| Checks passing | Score |
+|----------------|-------|
+| 10/10 | 10 |
+| 9/10 | 8 |
+| 8/10 | 6 |
+| 7 or fewer | 4 |
+
+### Dimension 4: Business Meaning (Weight: 15%)
+
+**Question**: Could an analyst who has never seen this table read Section 1 and understand when to use it?
+
+**Evaluation criteria**:
+
+- Does Section 1 name the specific business domain (trading, payments, copy-trading)?
+- Does it explain what each ROW represents (not just "this table stores data")?
+- Does it include concrete numbers (row count, date range)?
+- Does it name the ETL SP and describe the load pattern (full/incremental/delete-insert)?
+- Does it explain sentinel values or special conventions?
+- Does Section 2 have numbered subsections with concrete rules and column references?
+
+| Quality | Score |
+|---------|-------|
+| Section 1 is specific, concrete, actionable — analyst could query immediately | 9-10 |
+| Good but missing one of: row count, date range, ETL pattern | 7-8 |
+| Generic — could apply to any table with minor edits | 4-6 |
+| Vague filler ("This table stores data for the DWH") | 1-3 |
+
+### Dimension 5: Shape Fidelity (Weight: 10%)
+
+**Question**: Does the structure match the golden reference?
+
+**Checks**:
+- Property table format matches (10+ rows, specific values not placeholders)
+- Section numbering is `## 1.` through `## 8.` (not `## A.` or `##` without numbers)
+- Tier legend table present in Section 4
+- Sample queries in Section 7 are real SQL (not pseudocode)
+- Footer format matches: `*Generated: ... | Quality: N/10 | Phases: ...*`
+- Quality score in footer is justified (not always 8.5)
+
+| Fidelity | Score |
+|----------|-------|
+| Perfect match to golden skeleton | 10 |
+| Minor deviations (formatting, missing one subsection) | 7-8 |
+| Structural issues (wrong section numbering, missing sections) | 4-6 |
+| Unrecognizable structure | 1-3 |
+
+---
+
+## Scoring
+
+### Weighted Score Calculation
+
+```
+weighted_score = (tier_accuracy * 0.30)
+              + (upstream_fidelity * 0.25)
+              + (completeness * 0.20)
+              + (business_meaning * 0.15)
+              + (shape_fidelity * 0.10)
+```
+
+### Pass/Fail Threshold
+
+| Weighted Score | Verdict |
+|----------------|---------|
+| >= 7.5 | **PASS** — object is Done |
+| 6.0 – 7.4 | **FAIL** — regenerate Phase 11 with feedback (max 1 retry) |
+| < 6.0 | **FAIL** — regenerate Phase 11 with feedback (max 1 retry) |
+
+### Max Regeneration Attempts: 1
+
+If the first regeneration still fails evaluation, mark the object as Done with the
+second-attempt score. Do NOT loop indefinitely. The experiment needs to measure
+cost/quality tradeoff, not burn tokens.
+
+---
+
+## Output Format
+
+The evaluator MUST produce this structured output:
+
+```
+ADVERSARIAL EVALUATION — {Schema}.{ObjectName}
+══════════════════════════════════════════════
+
+DIMENSION SCORES:
+  Tier Accuracy     (30%):  {score}/10  {one-line justification}
+  Upstream Fidelity (25%):  {score}/10  {one-line justification}
+  Completeness      (20%):  {score}/10  {one-line justification}
+  Business Meaning  (15%):  {score}/10  {one-line justification}
+  Shape Fidelity    (10%):  {score}/10  {one-line justification}
+
+WEIGHTED SCORE: {N.N}/10
+
+VERDICT: {PASS / FAIL}
+
+SPECIFIC ISSUES (if FAIL):
+  1. {Column X}: Assigned Tier 2 but upstream wiki Trade.PositionTbl has matching column with description "..." — should be Tier 1
+  2. {Column Y}: Description says "..." but upstream wiki says "..." — not verbatim
+  3. Section 1: Missing row count and date range — too vague
+  ...
+
+REGENERATION FEEDBACK (if FAIL):
+  Re-run Phase 11 with these corrections:
+  - Read Trade.PositionTbl upstream wiki column {X} and copy description verbatim as Tier 1
+  - Add row count from Phase 2 to Section 1 summary
+  - ...
+```
+
+---
+
+## Integration With Pipeline
+
+### When This Phase Runs
+
+```
+Phase 11 (Generate Wiki)
+  ↓
+validate-wiki.ps1 (structural checks)
+  ↓
+validate-tier1-coverage.ps1 (semantic checks)
+  ↓
+Phase 16 (Adversarial Evaluation)  ← THIS PHASE
+  ↓
+If PASS → object Done
+If FAIL → re-run Phase 11 with feedback → re-validate → re-evaluate (max 1 retry)
+```
+
+### What the Generator Sees on Regeneration
+
+If Phase 16 returns FAIL, the generator receives ONLY:
+- The evaluator's `SPECIFIC ISSUES` list
+- The evaluator's `REGENERATION FEEDBACK`
+- The original source material (DDL, SP, upstream wiki)
+
+The generator does NOT see the evaluator's scores or rubric weights. It sees
+concrete, actionable feedback: "Column X should be Tier 1 with this description
+from this upstream wiki."
+
+### Tracking
+
+The evaluator score is tracked alongside the pipeline's self-reported quality score:
+- `evaluator_score`: the weighted score from this phase
+- `evaluator_attempt`: 1 (first pass) or 2 (after regeneration)
+- `evaluator_verdict`: PASS or FAIL
+
+These are recorded in the in-memory batch results and included in the
+end-of-batch banner for experiment comparison.
+
+---
+
+## What This Phase Is NOT
+
+- NOT a replacement for `validate-wiki.ps1` or `validate-tier1-coverage.ps1` (those still run first)
+- NOT a replacement for the Phase Gate Checklist (that still gates Phase 11)
+- NOT a parallel agent (it runs AFTER the serial pipeline completes for each object)
+- NOT a rewriter (it provides feedback; the generator rewrites)
+- NOT permanent (it is an experiment — results will determine if it stays)

@@ -278,6 +278,8 @@ Skipping: P3, P5, P6, P7, P9B, P10
    Phase 10B (Column Lineage — writes .lineage.md, runs before Phase 11)
    Phase 11  (Generate Documentation — writes wiki + sidecar)
    Phase 12 Mechanism 1 is embedded in Phase 11's Pre-Read step.
+   ── validate-wiki.ps1 + validate-tier1-coverage.ps1 ──
+   Phase 16  (Adversarial Evaluation — EXPERIMENT — independent quality check)
    ```
    
    > **Phase 10A** is the pre-Phase 11 portion of the production lineage mapping (Steps 1/1b/1c/3 from `13-production-lineage-mapping.mdc`). It identifies the production source and reads the upstream wiki to feed Tier 1 column descriptions into Phase 11. **Phase 10B** runs before Phase 11 (Steps 2/4/5/6 from `13-production-lineage-mapping.mdc`) and produces the `.lineage.md` file so Phase 11 can use lineage data for tier assignment.
@@ -288,9 +290,11 @@ Skipping: P3, P5, P6, P7, P9B, P10
    
    > **Checkpoint chain verification** — In addition to the phase gate checklist, verify that all HARD phases emitted their `PHASE {N} CHECKPOINT: PASS` markers (see `GATE-wiki-generation.mdc`). A missing or FAIL checkpoint on any HARD phase (P1, P2, P8, P9, P10A, P10B) blocks Phase 11. This is the last line of defense against phase skipping — checkpoints are filled out AT the end of each phase rule file, and verified HERE before generation.
    
-   c. **Track result in memory**: Record status (Done/Failed/Skipped) and quality score. Do NOT update `_index.md` per-object.
+   c. **Adversarial Evaluation (Phase 16 — EXPERIMENT)**: After both validation scripts pass, run the adversarial evaluator per `16-adversarial-evaluation.mdc`. The evaluator independently scores the wiki output against the source material (DDL, SP code, upstream wiki) using a 5-dimension rubric. If the weighted score is < 7.5, re-run Phase 11 with the evaluator's specific feedback (max 1 retry). Record `evaluator_score`, `evaluator_attempt`, and `evaluator_verdict` alongside the quality score.
    
-   d. **On failure — severity determines action**:
+   d. **Track result in memory**: Record status (Done/Failed/Skipped), quality score, and evaluator metrics. Do NOT update `_index.md` per-object.
+   
+   e. **On failure — severity determines action**:
    
    | Phase | Failure Severity | Action |
    |-------|-----------------|--------|
@@ -304,6 +308,7 @@ Skipping: P3, P5, P6, P7, P9B, P10
    | Phase 10A (Upstream Wiki) | **HARD when source known** | If Phase 2 ETL discovery found a staging/external/migration source → HARD FAIL (we KNOW the upstream wiki exists). If source is genuinely unknown → SOFT (warn, proceed with zero Tier 1). |
    | Phase 10B (Column Lineage) | SOFT | Warn — wiki exists but no .lineage.md file |
    | Phase 11 | HARD | Object fails — no output produced |
+   | Phase 16 (Evaluator) | SOFT | Evaluator FAIL does not block — object is Done with lower evaluator score. Max 1 regeneration attempt. |
    
    Failed objects do not block subsequent objects.
 
@@ -328,6 +333,7 @@ Skipping: P3, P5, P6, P7, P9B, P10
 ║                                                                 ║
 ║  Objects:  {processed} processed, {failed} failed               ║
 ║  Quality:  avg {avg} (range {min} – {max})                     ║
+║  Evaluator: avg {eval_avg} | {regen_count} regenerated          ║
 ║  Progress: {total_done}/{total_objects} ({pct}%)               ║
 ║  Next:     Batch {N+1} ({next_count} objects remaining)        ║
 ║                                                                 ║

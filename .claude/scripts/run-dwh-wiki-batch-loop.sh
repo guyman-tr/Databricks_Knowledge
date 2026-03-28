@@ -8,21 +8,28 @@ if [ -z "$SCHEMA_NAME" ]; then
     SCHEMA_NAME="${SCHEMA_NAME:-DWH_dbo}"
 fi
 
-# Pick the right command based on schema
+# Pick the right prompt file based on schema (bypasses locked .claude/commands/)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 if [ "$SCHEMA_NAME" = "BI_DB_dbo" ]; then
-    BATCH_COMMAND="/build-wiki-bidb-batch"
-    COMMAND_ARGS="$SCHEMA_NAME $DOC_LEVEL"
+    PROMPT_FILE="$REPO_ROOT/.claude/prompts/build-wiki-bidb-batch.md"
 else
-    BATCH_COMMAND="/build-wiki-dwh-batch"
-    COMMAND_ARGS="$SCHEMA_NAME"
+    PROMPT_FILE="$REPO_ROOT/.claude/prompts/build-wiki-dwh-batch.md"
 fi
-COMMAND_ARGS=$(echo "$COMMAND_ARGS" | xargs)
+
+if [ ! -f "$PROMPT_FILE" ]; then
+    echo -e "\e[31mERROR: Prompt file not found: $PROMPT_FILE\e[0m"
+    exit 1
+fi
+
+PROMPT_CONTENT=$(cat "$PROMPT_FILE")
 
 echo ""
 echo -e "\e[36m============================================================\e[0m"
 echo -e "\e[36m  Wiki Batch Loop\e[0m"
 echo -e "\e[36m  Schema:  $SCHEMA_NAME\e[0m"
-echo -e "\e[36m  Command: $BATCH_COMMAND\e[0m"
+echo -e "\e[36m  Prompt:  $PROMPT_FILE\e[0m"
 [ -n "$DOC_LEVEL" ] && echo -e "\e[36m  Filter:  $DOC_LEVEL\e[0m"
 echo -e "\e[36m  Started: $(date '+%Y-%m-%d %H:%M:%S')\e[0m"
 echo -e "\e[36m============================================================\e[0m"
@@ -78,7 +85,7 @@ except: pass
         elif [ -n "$result" ]; then
             echo "$result"
         fi
-    done < <($TIMEOUT_CMD claude --dangerously-skip-permissions --verbose --output-format stream-json --print "run $BATCH_COMMAND $COMMAND_ARGS")
+    done < <($TIMEOUT_CMD claude --dangerously-skip-permissions --verbose --output-format stream-json --print "$PROMPT_CONTENT")
 
     total_input_tokens=$((total_input_tokens + input_tokens))
     total_output_tokens=$((total_output_tokens + output_tokens))

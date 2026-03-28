@@ -10,21 +10,23 @@ if (-not $SchemaName) {
     if (-not $SchemaName) { $SchemaName = "DWH_dbo" }
 }
 
-# Pick the right command based on schema
-if ($SchemaName -eq "BI_DB_dbo") {
-    $batchCommand = "/build-wiki-bidb-batch"
-    $commandArgs = "$SchemaName $DocLevel".Trim()
-} else {
-    $batchCommand = "/build-wiki-dwh-batch"
-    $commandArgs = $SchemaName
-}
-
 $claudePath = "$env:APPDATA\npm\claude.cmd"
 $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $indexPath = Join-Path $repoRoot "knowledge\synapse\Wiki\$SchemaName\_index.md"
 
+# Resolve prompt file (bypasses locked .claude/commands/)
+if ($SchemaName -eq "BI_DB_dbo") {
+    $promptFile = Join-Path $repoRoot ".claude\prompts\build-wiki-bidb-batch.md"
+} else {
+    $promptFile = Join-Path $repoRoot ".claude\prompts\build-wiki-dwh-batch.md"
+}
+
 if (-not (Test-Path $claudePath)) {
     Write-Host "ERROR: claude not found at $claudePath" -ForegroundColor Red
+    exit 1
+}
+if (-not (Test-Path $promptFile)) {
+    Write-Host "ERROR: prompt file not found at $promptFile" -ForegroundColor Red
     exit 1
 }
 
@@ -32,7 +34,7 @@ Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host "  Wiki Batch Loop" -ForegroundColor Cyan
 Write-Host "  Schema:  $SchemaName" -ForegroundColor Cyan
-Write-Host "  Command: $batchCommand" -ForegroundColor Cyan
+Write-Host "  Prompt:  $promptFile" -ForegroundColor Cyan
 if ($DocLevel) {
     Write-Host "  Filter:  $DocLevel" -ForegroundColor Cyan
 }
@@ -66,8 +68,9 @@ while ($true) {
     Remove-Item $tempErr -Force -ErrorAction SilentlyContinue
 
     try {
+        $promptContent = (Get-Content $promptFile -Raw) -replace '"', '\"'
         $proc = Start-Process -FilePath $claudePath `
-            -ArgumentList "--dangerously-skip-permissions --verbose --output-format stream-json --print `"run $batchCommand $commandArgs`"" `
+            -ArgumentList "--dangerously-skip-permissions --verbose --output-format stream-json --print `"$promptContent`"" `
             -PassThru -NoNewWindow `
             -RedirectStandardOutput $tempOut `
             -RedirectStandardError $tempErr

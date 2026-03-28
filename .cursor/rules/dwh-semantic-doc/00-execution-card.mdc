@@ -26,6 +26,8 @@ alwaysApply: false
 10A  Upstream Wiki      Generic Pipeline → production source → read    13-prod-lineage §1-3 HARD*   PHASE 10A CHECKPOINT: PASS
 10B  Column Lineage     Write .lineage.md (BEFORE doc!)                13-prod-lineage §2-6 HARD    PHASE 10B CHECKPOINT: PASS
 11   Generate Doc       Read .lineage.md → write .md (WIKI!) then .review-needed (sidecar)  11-generate-doc      HARD    (shape check)
+     ── validate-wiki.ps1 + validate-tier1-coverage.ps1 ──
+16   Eval (EXPERIMENT)  Adversarial review: score against source material, regen if <7.5   16-adversarial-eval  SOFT    (evaluator score)
 12   Cross-Enrich       Pre-Read is embedded in P11; batch pass later  12-cross-enrich      —       —
 ```
 
