@@ -2,10 +2,10 @@
 schema: BI_DB_dbo
 database: Synapse DWH
 total_objects: 1204
-documented: 44
+documented: 50
 failed: 0
-last_batch: 9
-last_updated: "2026-03-26"
+last_batch: 10
+last_updated: "2026-03-28"
 quality_avg: 8.8
 ---
 
@@ -15,12 +15,25 @@ quality_avg: 8.8
 |--------|-------|
 | **Schema** | BI_DB_dbo |
 | **Total Objects** | ~1204 (1160 tables, 44 views -- full inventory not yet enumerated) |
-| **Documented** | 44 |
+| **Documented** | 50 |
 | **Failed** | 0 |
-| **Last Updated** | 2026-03-26 |
+| **Last Updated** | 2026-03-28 |
 | **Quality Avg** | 8.8 |
 
 ---
+
+## Batch 10 (COMPLETE) -- A/B test objects: 6 objects (ASIC CreditLine, AML Docs, Appropriateness, Crypto Airdrop, Chargeback, Clustering)
+
+Planned: 2026-03-28 | Completed: 2026-03-28 | Note: Generated on branch 005-bidb-batch-rules for A/B comparison against experiment/adversarial-evaluator baseline
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 1 | [BI_DB_dbo.BI_DB_ASIC_CreditLine_At_transfer](Tables/BI_DB_ASIC_CreditLine_At_transfer.md) | Table | 20 | 8.5 | Done (Batch 10) |
+| 2 | [BI_DB_dbo.BI_DB_AML_Documents_Dashboard](Tables/BI_DB_AML_Documents_Dashboard.md) | Table | 20 | 9.0 | Done (Batch 10) |
+| 3 | [BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market](Tables/BI_DB_Scored_Appropriateness_Negative_Market.md) | Table | 20 | 8.5 | Done (Batch 10) |
+| 4 | [BI_DB_dbo.BI_DB_Crypto_Airdrop](Tables/BI_DB_Crypto_Airdrop.md) | Table | 20 | 8.5 | Done (Batch 10) |
+| 5 | [BI_DB_dbo.BI_DB_ChargebackReport](Tables/BI_DB_ChargebackReport.md) | Table | 20 | 8.5 | Done (Batch 10) |
+| 6 | [BI_DB_dbo.BI_DB_ClusteringDailyPrepData](Tables/BI_DB_ClusteringDailyPrepData.md) | Table | 20 | 9.0 | Done (Batch 10) |
 
 ## Batch 9 (COMPLETE) -- DDR redo with improved harness: 5 objects (PnL, MIMO AllPlatforms/eMoney, Revenue, Trading Volumes)
 
@@ -136,18 +149,22 @@ Planned: 2026-03-20 | Completed: 2026-03-20
 
 ---
 
-## Tables (documented: 44)
+## Tables (documented: 50)
 
 | Object | Quality | Status |
 |--------|---------|--------|
+| [BI_DB_dbo.BI_DB_AML_Documents_Dashboard](Tables/BI_DB_AML_Documents_Dashboard.md) | 9.0 | Done (Batch 10 #2) |
 | [BI_DB_dbo.BI_DB_ASIC_ClientBalanceFinance](Tables/BI_DB_ASIC_ClientBalanceFinance.md) | 9.0 | Done (Batch 3 #1) |
+| [BI_DB_dbo.BI_DB_ASIC_CreditLine_At_transfer](Tables/BI_DB_ASIC_CreditLine_At_transfer.md) | 8.5 | Done (Batch 10 #1) |
 | [BI_DB_dbo.BI_DB_CB_CycleGap_Categorization](Tables/BI_DB_CB_CycleGap_Categorization.md) | 9.0 | Done (Batch 3 #2) |
 | [BI_DB_dbo.BI_DB_CID_Daily_NWA](Tables/BI_DB_CID_Daily_NWA.md) | 9.5 | Done (Batch 3 #3) |
 | [BI_DB_dbo.BI_DB_CIDFirstDates](Tables/BI_DB_CIDFirstDates.md) | 9.5 | Done (Batch 2) |
 | [BI_DB_dbo.BI_DB_CIDLevel_Settlement_Report](Tables/BI_DB_CIDLevel_Settlement_Report.md) | 9.0 | Done (Batch 3 #4) |
 | [BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New](Tables/BI_DB_Client_Balance_Aggregate_Level_New.md) | 9.0 | Done (Batch 6 #1) |
+| [BI_DB_dbo.BI_DB_ChargebackReport](Tables/BI_DB_ChargebackReport.md) | 8.5 | Done (Batch 10 #5) |
 | [BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New](Tables/BI_DB_Client_Balance_CID_Level_New.md) | 9.5 | Done (Batch 1) |
 | [BI_DB_dbo.BI_DB_Client_New_CompensationBreakdown](Tables/BI_DB_Client_New_CompensationBreakdown.md) | 9.0 | Done (Batch 3 #5) |
+| [BI_DB_dbo.BI_DB_ClusteringDailyPrepData](Tables/BI_DB_ClusteringDailyPrepData.md) | 9.0 | Done (Batch 10 #6) |
 | [BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status](Tables/BI_DB_DDR_Customer_Daily_Status.md) | 8.5 | Done (Batch 8 #5) |
 | [BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status](Tables/BI_DB_DDR_Customer_Periodic_Status.md) | 8.0 | Done (Batch 8 #6) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_AUM](Tables/BI_DB_DDR_Fact_AUM.md) | 8.5 | Done (Batch 8 #1) |
@@ -163,6 +180,7 @@ Planned: 2026-03-20 | Completed: 2026-03-20
 | [BI_DB_dbo.BI_DB_Crypto_Net_Units_End_Of_Month](Tables/BI_DB_Crypto_Net_Units_End_Of_Month.md) | 9.0 | Done (Batch 4 #2) |
 | [BI_DB_dbo.BI_DB_Crypto_NOP](Tables/BI_DB_Crypto_NOP.md) | 9.0 | Done (Batch 5 #1) |
 | [BI_DB_dbo.BI_DB_Crypto_NOP_CID](Tables/BI_DB_Crypto_NOP_CID.md) | 9.0 | Done (Batch 5 #2) |
+| [BI_DB_dbo.BI_DB_Crypto_Airdrop](Tables/BI_DB_Crypto_Airdrop.md) | 8.5 | Done (Batch 10 #4) |
 | [BI_DB_dbo.BI_DB_Crypto_Zero](Tables/BI_DB_Crypto_Zero.md) | 9.0 | Done (Batch 4 #3) |
 | [BI_DB_dbo.BI_DB_CycleGap](Tables/BI_DB_CycleGap.md) | 9.0 | Done (Batch 5 #3) |
 | [BI_DB_dbo.BI_DB_Daily_CB_Gaps_All](Tables/BI_DB_Daily_CB_Gaps_All.md) | 9.0 | Done (Batch 4 #4) |
@@ -182,6 +200,7 @@ Planned: 2026-03-20 | Completed: 2026-03-20
 | [BI_DB_dbo.BI_DB_Real_Crypto_Loan](Tables/BI_DB_Real_Crypto_Loan.md) | 9.0 | Done (Batch 4 #7) |
 | [BI_DB_dbo.BI_DB_RealCrypto_Lev2](Tables/BI_DB_RealCrypto_Lev2.md) | 9.0 | Done (Batch 5 #13) |
 | [BI_DB_dbo.BI_DB_RollOverFee_Dividends](Tables/BI_DB_RollOverFee_Dividends.md) | 9.0 | Done (Batch 5 #14) |
+| [BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market](Tables/BI_DB_Scored_Appropriateness_Negative_Market.md) | 8.5 | Done (Batch 10 #3) |
 | [BI_DB_dbo.BI_DB_UsageTracking_SF](Tables/BI_DB_UsageTracking_SF.md) | 7.5 | Done (Batch 7 #3) |
 | [BI_DB_dbo.BI_DB_VarCommission](Tables/BI_DB_VarCommission.md) | 9.0 | Done (Batch 4 #8) |
 
