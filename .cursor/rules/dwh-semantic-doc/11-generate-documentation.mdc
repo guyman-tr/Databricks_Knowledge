@@ -229,12 +229,12 @@ All four files are mandatory outputs. The `.lineage.md` file captures the produc
 1. **FIRST**: Confirm `{ObjectName}.lineage.md` exists (written by Phase 10B). If missing, Phase 11 cannot proceed.
 2. **SECOND**: Write `{ObjectName}.md` — the wiki doc. Use the Write tool with the `.md` path. Verify the file contains all 8 `## N.` section headers.
 3. **THIRD**: Write `{ObjectName}.review-needed.md` — the review sidecar. This is a SHORT file listing Tier 4 items and questions. It does NOT duplicate the wiki.
-4. **FOURTH**: Write `{ObjectName}.alter.sql` — the ALTER script. Generate from the wiki Elements table. Every column row in the wiki MUST produce one ALTER COLUMN COMMENT statement per UC target table. Read `11w-write-objects.mdc` for the ALTER template (header, TBLPROPERTIES, TAGS, column comments). For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables.
+4. **FOURTH**: Write `{ObjectName}.alter.sql` — the ALTER script. Generate from the wiki Elements table. Every column row in the wiki MUST produce one ALTER COLUMN COMMENT statement per UC target table. Read `11w-write-objects.mdc` for the ALTER template (header, TBLPROPERTIES, TAGS, column comments). For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables. **Exception**: If the object has no UC target (UC Target = `_Not_Migrated` or no generic pipeline mapping), skip the `.alter.sql` file entirely and note "No UC target" in the output check.
 
 **Self-check after each object**:
 - Read back the `.md` file path and confirm it is non-empty and contains `## 4. Elements`. If the `.md` file is empty or missing, Phase 11 has FAILED for this object.
 - Count element rows in the wiki (lines matching `| N |` in section 4). Count ALTER COLUMN statements in the `.alter.sql` file (per UC target). They MUST match. Emit: `ALTER COLUMN CHECK: wiki={N} alter={M} — PASS/FAIL`. If FAIL, fix the ALTER file before proceeding to the next object.
-- Confirm all 4 files exist on disk: `.lineage.md`, `.md`, `.review-needed.md`, `.alter.sql`. A missing file is a HARD FAIL.
+- Confirm all required files exist on disk: `.lineage.md`, `.md`, `.review-needed.md`, and `.alter.sql` (unless no UC target). A missing required file is a HARD FAIL.
 
 ## STRICT RULES
 

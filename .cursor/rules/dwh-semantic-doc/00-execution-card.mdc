@@ -67,8 +67,8 @@ PHASE GATE CHECK — {ObjectName}:
   [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 OUTPUT CHECK — {ObjectName}:
-  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists
-  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (or [-] No UC target)
+  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS (or [-] No UC target)
 ```
 
 For simple-dictionary fast-path, unchecked boxes are marked `[-]` (skipped by fast-path):
@@ -79,8 +79,8 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
   [-] P9 SP-logic [-] P9B ETL  [-] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
-  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists
-  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (or [-] No UC target)
+  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS (or [-] No UC target)
 ```
 
 **Phase 11 MUST refuse to generate if any `[ ]` (unchecked, non-skipped) box remains.**
@@ -94,8 +94,8 @@ OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
   1. `{ObjectName}.lineage.md` ← **LINEAGE** (column-level source mapping from Phase 10B). Written FIRST because the wiki reads it.
   2. `{ObjectName}.md` ← **THE WIKI** (full 8-section template, 100+ lines). This is the primary artifact.
   3. `{ObjectName}.review-needed.md` ← **SIDECAR** (Tier 4 items, questions, reviewer corrections). This is NOT the wiki. It is a lightweight review checklist.
-  4. `{ObjectName}.alter.sql` ← **ALTER SCRIPT** (UC table comment + column comments + tags). Every column in the wiki Elements table MUST have a corresponding ALTER COLUMN statement. For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables.
-  **Do NOT proceed to the next object until all 4 files exist on disk.** A missing file is a HARD FAIL for the object. The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.
+  4. `{ObjectName}.alter.sql` ← **ALTER SCRIPT** (UC table comment + column comments + tags). Every column in the wiki Elements table MUST have a corresponding ALTER COLUMN statement. For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables. **Exception**: If the object has no UC target (UC Target = `_Not_Migrated` or no generic pipeline mapping exists), the `.alter.sql` file is NOT required — skip it and note "No UC target" in the output check.
+  **Do NOT proceed to the next object until all required files exist on disk.** A missing file (other than `.alter.sql` when no UC target) is a HARD FAIL for the object. The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.
 - **⛔ ALTER COLUMN COUNT MUST MATCH WIKI COLUMN COUNT**: The number of ALTER COLUMN statements per UC target in `.alter.sql` MUST equal the number of element rows in the wiki `.md` file. If the wiki documents 47 columns, the ALTER file must have exactly 47 ALTER COLUMN statements per UC target table. A mismatch is a HARD FAIL — fix before proceeding. Count both sides and emit: `ALTER COLUMN CHECK: wiki={N} alter={M} — {PASS/FAIL}`.
 - **⛔ TWO VALIDATIONS**: After each wiki doc, run BOTH `validate-wiki.ps1` (structural) AND `validate-tier1-coverage.ps1` (semantic). Both must pass before proceeding.
 - **⛔ PHASE 9 IS HARD**: Read the SP code. Trace column assignments to source tables. The SP tells you WHERE each column comes from — you don't need to guess. If Phase 9 is skipped, Phase 10B lineage will be wrong, Phase 11 tiers will be wrong, and the semantic validation will fail.
