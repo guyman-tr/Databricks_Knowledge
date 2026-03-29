@@ -226,8 +226,8 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} SET TBLPROPERTIES (
     'comment' = '{table_comment_max_1024_chars}'
 );
 
-ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} COMMENT '{column_comment_max_1024_chars}';
--- ... one ALTER per column ...
+ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN `{ColumnName}` COMMENT '{column_comment_max_1024_chars}';
+-- ... one ALTER per column (ALWAYS backtick-quote column names) ...
 ```
 
 **PII Masked dual-target format** — when classification is `PII Masked`, append a second section:
@@ -241,8 +241,8 @@ ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} SET TBLPROPERTIES (
     'comment' = '{table_comment_max_1024_chars}'
 );
 
-ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} ALTER COLUMN {ColumnName} COMMENT '{column_comment_max_1024_chars}';
--- ... one ALTER per column (same comments as primary target) ...
+ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} ALTER COLUMN `{ColumnName}` COMMENT '{column_comment_max_1024_chars}';
+-- ... one ALTER per column (ALWAYS backtick-quote column names, same comments as primary target) ...
 ```
 
 ---
@@ -261,8 +261,9 @@ ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} ALTER COLUMN {ColumnName} COM
 6. **Preserve `Same meaning as Dim_Position.*`** references — these help the AI assistant cross-reference
 7. **Single quotes in values**: Escape any single quotes in descriptions with `''` (SQL standard)
 8. **One ALTER per column**: Each column gets its own `ALTER TABLE ... ALTER COLUMN ... COMMENT` statement on a single line
-9. **Column name validation**: When UC is available, verify each column exists in the target table before generating its ALTER COLUMN statement. Use `DESCRIBE TABLE {uc_catalog}.{uc_schema}.{uc_table}` to get the actual column list. Skip columns that don't exist in UC (they may have been dropped or renamed) and note them in the review sidecar
-10. **UC-only columns**: If `DESCRIBE TABLE` reveals columns that exist in UC but not in Synapse (e.g., partition columns like `etr_y`, `etr_ym`, `etr_ymd`), generate `ALTER COLUMN ... COMMENT` statements for them with a description noting they are Databricks-layer additions (e.g., partition pruning columns)
+9. **ALWAYS backtick-quote column names**: Every `ALTER COLUMN` statement MUST wrap the column name in backticks: `` ALTER COLUMN `ColumnName` COMMENT '...' ``. This is mandatory because Synapse columns may start with digits (`2FA`), contain hyphens (`BNY-eToro_Units`), slashes (`Buy/Sell`), percent signs (`UnitsNOP+1%`), or other special characters that are valid in Synapse but cause syntax errors in Databricks SQL without quoting. Backtick-quoting standard alphanumeric names is harmless; omitting them on special names causes runtime failures
+10. **Column name validation**: When UC is available, verify each column exists in the target table before generating its ALTER COLUMN statement. Use `DESCRIBE TABLE {uc_catalog}.{uc_schema}.{uc_table}` to get the actual column list. Skip columns that don't exist in UC (they may have been dropped or renamed) and note them in the review sidecar
+11. **UC-only columns**: If `DESCRIBE TABLE` reveals columns that exist in UC but not in Synapse (e.g., partition columns like `etr_y`, `etr_ym`, `etr_ymd`), generate `ALTER COLUMN ... COMMENT` statements for them with a description noting they are Databricks-layer additions (e.g., partition pruning columns)
 
 ---
 
