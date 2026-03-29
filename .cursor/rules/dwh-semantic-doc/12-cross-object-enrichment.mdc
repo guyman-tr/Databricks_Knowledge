@@ -79,10 +79,26 @@ Scan all `.md` files in `knowledge/synapse/Wiki/`:
 | Inconsistent element description | Use richer description in both |
 | Missing production lineage link | Add link to upstream wiki |
 | Missing cross-reference | Add "See also" |
+| **⛔ Same-source column with different description** | **Copy from canonical dimension verbatim — HARD FIX** |
+| **⛔ Same-source column with different tier** | **Inherit tier from canonical dimension — HARD FIX** |
+
+### Step 2b: ⛔ Cross-Object Description Consistency Scan (HARD RULE)
+
+For every pair of wikis in the batch + existing wikis:
+1. Read both `.lineage.md` files
+2. For each column in wiki A, find its production source (e.g., `Trade.PositionTbl.Amount`)
+3. Search wiki B for any column tracing to the same production source
+4. If found, compare descriptions character-by-character (ignoring leading/trailing whitespace)
+5. If they differ: the **canonical dimension** wins (hierarchy: `Dim_*` > `Fact_*` > `BI_DB_*`)
+6. Fix the non-canonical wiki by copying the description verbatim
+
+**Emit**: `CONSISTENCY SCAN: checked {N} column pairs across {M} wikis, found {K} mismatches — {PASS/FAIL}`
+
+This is NOT optional. A mismatch where lineage proves same source = same column but descriptions differ is a HARD BUG that must be fixed before the batch is considered complete.
 
 ### Step 3: Apply Fixes
 
-Only ADD or ALIGN -- never delete. Preserve original content.
+Only ADD or ALIGN -- never delete. Preserve original content. Exception: description alignment for same-source columns REPLACES the non-canonical description (this is not deletion — it is correction).
 
 ### Step 4: Update Semantic Index
 
@@ -112,7 +128,7 @@ Regenerate `knowledge/synapse/Wiki/_semantic_index.md`:
 ## Enrichment Rules
 
 1. Never remove information -- enrichment only ADDS or ALIGNS
-2. Richer description wins
+2. **⛔ SAME SOURCE = SAME DESCRIPTION (HARD RULE)**: When two columns in different tables trace to the SAME production source column (verified via `.lineage.md`), their descriptions MUST be identical — same wording, same tier, same source attribution. The canonical owner is the dimension/master table (e.g., `Dim_Position` owns position columns, `Dim_Customer` owns customer columns, `Dim_Mirror` owns mirror columns). All downstream tables (facts, BI_DB aggregates, snapshots) inherit from the dimension verbatim. Paraphrasing is a bug. Tier drift (e.g., Tier 1 in the dimension but Tier 4 in a fact for the same source) is a bug. During batch enrichment, scan for these mismatches and fix them by copying from the canonical owner.
 3. Preserve original timestamps; add `Enriched: {date}` to footer
 4. Idempotent -- running multiple times produces same result
 5. Log all changes

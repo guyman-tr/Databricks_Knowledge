@@ -86,7 +86,7 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 
 ### Dimension 2: Upstream Fidelity (Weight: 25%)
 
-**Question**: For Tier 1 columns, is the description actually from the upstream wiki?
+**Question**: For Tier 1 columns, is the description actually from the upstream wiki? And for columns shared with other DWH wikis (same production source), are descriptions identical?
 
 **Verification protocol**:
 
@@ -95,6 +95,7 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 3. Compare descriptions — they should be verbatim (not paraphrased, not "inspired by")
 4. The tier tag origin should trace to the ORIGINAL source, not an intermediate relay
 5. If descriptions are rewritten/hallucinated but marked Tier 1, that is a HARD failure
+6. **Cross-object consistency check**: Read the `.lineage.md` file. For each column with a production source, search existing wikis in `knowledge/synapse/Wiki/` for OTHER tables documenting the same production source column. If found, descriptions and tiers MUST match. If they differ (paraphrased, different tier, different source attribution), deduct 2 points per mismatch (this is the #1 cross-object bug). Same source = same description, always.
 
 | Fidelity | Score |
 |----------|-------|
@@ -120,6 +121,8 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 - [ ] Summary line (under H1) has row count and date range
 - [ ] Dictionary columns with <=15 values have inline key=value pairs
 - [ ] `.review-needed.md` does NOT contain `## 4. Elements`
+- [ ] If `.alter.sql` exists: every `ALTER TABLE <name>` uses a single dotted identifier (`^[A-Za-z0-9_.]+$`, no spaces — not datalake paths or status prose). Reject if `<name>` looks like English sentences or contains `/`
+- [ ] **No lazy view shortcuts**: Elements table does NOT contain `All {X} columns`, `a.*`, or `See [X.md]` rows that delegate to another wiki instead of listing every column individually. Each column must have its own numbered row. A view with `SELECT a.* FROM Table a` must expand every column from Table — auto-fail if any row groups multiple columns
 
 | Checks passing | Score |
 |----------------|-------|

@@ -22,7 +22,11 @@ You are running the DWH Semantic Documentation pipeline for schema BI_DB_dbo.
    - `.md` (main wiki)
    - `.review-needed.md` (review sidecar)
    - `.alter.sql` (ALTER script with table comment + column comments + tags)
-   After writing all 4 files, verify ALTER COLUMN count matches wiki element count. Do NOT proceed to the next object until all 4 files exist and the column count check passes. Then run Phase 16 (adversarial evaluation). If evaluator scores < 7.5, re-run Phase 11 with feedback (max 1 retry).
+   After writing all 4 files:
+   - Verify ALTER COLUMN count matches wiki element count.
+   - Verify cross-object consistency: for every column with lineage to a production source that is ALSO documented in an existing wiki (especially DWH_dbo dimension tables like Dim_Position, Dim_Customer, Dim_Mirror), the description and tier MUST match verbatim. Same source = same description. No paraphrasing.
+   - Do NOT proceed to the next object until all checks pass.
+   - Then run Phase 16 (adversarial evaluation). If evaluator scores < 7.5, re-run Phase 11 with feedback (max 1 retry).
 
 4. **Finalize** -- After completing all objects:
    - Bulk-update `_index.md` with results

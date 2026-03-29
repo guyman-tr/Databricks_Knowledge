@@ -61,7 +61,7 @@ Schema DWH_dbo documentation is **complete**. 130 objects documented across 15 b
 | 20 | DWH_dbo.Dim_ExchangeInfo | Table | 7.2 | 7.4 | Done — Atlassian sources |
 | 21 | DWH_dbo.Fact_CustomerUnrealized_PnL_UserAPI | Table | 7.2 | 7.5 | Done — T4 upgraded, Atlassian |
 | 22 | DWH_dbo.History_CurrencyPrice | Table | 7.2 | 7.4 | Done — T4 upgraded, Atlassian |
-| 23 | DWH_dbo.V_Dim_Date_For_DWHRep | View | 7.2 | 7.5 | Done — Atlassian sources |
+| 23 | DWH_dbo.V_Dim_Date_For_DWHRep | View | 7.2 | 7.5 | Pending (re-doc: view column expansion) |
 | 24 | DWH_dbo.Dim_Affiliate | Table | 7.5 | 7.8 | Done — Atlassian sources |
 | 25 | DWH_dbo.Dim_Channel | Table | 7.5 | 7.7 | Done — Atlassian sources |
 | 26 | DWH_dbo.Fact_BillingRedeem | Table | 7.5 | 7.7 | Done — Atlassian sources |
@@ -69,14 +69,14 @@ Schema DWH_dbo documentation is **complete**. 130 objects documented across 15 b
 | 28 | DWH_dbo.Fact_Deposit_State | Table | 7.5 | 8.2 | Done — T4 upgraded, Atlassian |
 | 29 | DWH_dbo.Fact_FirstCustomerAction | Table | 7.5 | 7.7 | Done — T4 upgraded, Atlassian |
 | 30 | DWH_dbo.STS_User_Operations_Data_History | Table | 7.5 | 7.6 | Done — Atlassian sources |
-| 31 | DWH_dbo.V_Dim_Instrument_Correlation | View | 7.5 | 7.8 | Done — Atlassian sources |
-| 32 | DWH_dbo.V_Dim_Instrument_Correlation_Test_Full | View | 7.5 | 7.8 | Done — Atlassian sources |
-| 33 | DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep | View | 7.5 | 7.8 | Done — Atlassian sources |
-| 34 | DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep | View | 7.5 | 7.6 | Done — Atlassian sources |
-| 35 | DWH_dbo.VU_FactBilling_ForBigQuery | View | 7.5 | 7.8 | Done — Atlassian sources |
-| 36 | DWH_dbo.v_Dim_Mirror | View | 7.5 | 7.8 | Done — Atlassian sources |
-| 37 | DWH_dbo.V_Dim_Date | View | 7.8 | 8.0 | Done — Atlassian sources |
-| 38 | DWH_dbo.Vw_STS_User_Operations_Data_History | View | 7.8 | 8.0 | Done — Atlassian sources |
+| 31 | DWH_dbo.V_Dim_Instrument_Correlation | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
+| 32 | DWH_dbo.V_Dim_Instrument_Correlation_Test_Full | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
+| 33 | DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
+| 34 | DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep | View | 7.5 | 7.6 | Pending (re-doc: view column expansion) |
+| 35 | DWH_dbo.VU_FactBilling_ForBigQuery | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
+| 36 | DWH_dbo.v_Dim_Mirror | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
+| 37 | DWH_dbo.V_Dim_Date | View | 7.8 | 8.0 | Pending (re-doc: view column expansion) |
+| 38 | DWH_dbo.Vw_STS_User_Operations_Data_History | View | 7.8 | 8.0 | Pending (re-doc: view column expansion) |
 
 ---
 
@@ -101,19 +101,19 @@ Completed: 2026-03-19
 | # | Object | Type | Quality | Status |
 |---|--------|------|---------|--------|
 | 1 | [DWH_dbo.Fact_SnapshotEquity](Tables/Fact_SnapshotEquity.md) | Table | 8.5 | Done |
-| 2 | [DWH_dbo.V_Fact_SnapshotEquity_FromDateID](Views/V_Fact_SnapshotEquity_FromDateID.md) | View | 8.0 | Done |
-| 3 | [DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep](Views/V_Fact_SnapshotEquity_ForDWHRep.md) | View | 7.5 | Done |
-| 4 | [DWH_dbo.V_Fact_SnapshotCustomer_FromDateID](Views/V_Fact_SnapshotCustomer_FromDateID.md) | View | 8.0 | Done |
-| 5 | [DWH_dbo.V_Fact_SnapshotCustomer](Views/V_Fact_SnapshotCustomer.md) | View | 8.0 | Done |
-| 6 | [DWH_dbo.V_Dim_Instrument_Correlation_Test_Full](Views/V_Dim_Instrument_Correlation_Test_Full.md) | View | 7.5 | Done |
-| 7 | [DWH_dbo.V_Dim_Instrument_Correlation](Views/V_Dim_Instrument_Correlation.md) | View | 7.5 | Done |
-| 8 | [DWH_dbo.V_FCA_NumOfLogins_mean_1q](Views/V_FCA_NumOfLogins_mean_1q.md) | View | 8.0 | Done |
-| 9 | [DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep](Views/V_Fact_CustomerUnrealized_PnL_For_DWH_Rep.md) | View | 7.5 | Done |
-| 10 | [DWH_dbo.V_Fact_RegulationTransfer](Views/V_Fact_RegulationTransfer.md) | View | 8.5 | Done |
-| 11 | [DWH_dbo.V_Fact_SnapshotEquity](Views/V_Fact_SnapshotEquity.md) | View | 8.5 | Done |
-| 12 | [DWH_dbo.V_Liabilities](Views/V_Liabilities.md) | View | 8.0 | Done |
-| 13 | [DWH_dbo.V_Dim_Customer](Views/V_Dim_Customer.md) | View | 8.0 | Done |
-| 14 | [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md) | View | 7.5 | Done |
+| 2 | [DWH_dbo.V_Fact_SnapshotEquity_FromDateID](Views/V_Fact_SnapshotEquity_FromDateID.md) | View | 8.0 | Pending (re-doc: view column expansion) |
+| 3 | [DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep](Views/V_Fact_SnapshotEquity_ForDWHRep.md) | View | 7.5 | Pending (re-doc: view column expansion) |
+| 4 | [DWH_dbo.V_Fact_SnapshotCustomer_FromDateID](Views/V_Fact_SnapshotCustomer_FromDateID.md) | View | 8.0 | Pending (re-doc: view column expansion) |
+| 5 | [DWH_dbo.V_Fact_SnapshotCustomer](Views/V_Fact_SnapshotCustomer.md) | View | 8.0 | Pending (re-doc: view column expansion) |
+| 6 | [DWH_dbo.V_Dim_Instrument_Correlation_Test_Full](Views/V_Dim_Instrument_Correlation_Test_Full.md) | View | 7.5 | Pending (re-doc: view column expansion) |
+| 7 | [DWH_dbo.V_Dim_Instrument_Correlation](Views/V_Dim_Instrument_Correlation.md) | View | 7.5 | Pending (re-doc: view column expansion) |
+| 8 | [DWH_dbo.V_FCA_NumOfLogins_mean_1q](Views/V_FCA_NumOfLogins_mean_1q.md) | View | 8.0 | Pending (re-doc: view column expansion) |
+| 9 | [DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep](Views/V_Fact_CustomerUnrealized_PnL_For_DWH_Rep.md) | View | 7.5 | Pending (re-doc: view column expansion) |
+| 10 | [DWH_dbo.V_Fact_RegulationTransfer](Views/V_Fact_RegulationTransfer.md) | View | 8.5 | Pending (re-doc: view column expansion) |
+| 11 | [DWH_dbo.V_Fact_SnapshotEquity](Views/V_Fact_SnapshotEquity.md) | View | 8.5 | Pending (re-doc: view column expansion) |
+| 12 | [DWH_dbo.V_Liabilities](Views/V_Liabilities.md) | View | 8.0 | Pending (re-doc: view column expansion) |
+| 13 | [DWH_dbo.V_Dim_Customer](Views/V_Dim_Customer.md) | View | 8.0 | Pending (re-doc: view column expansion) |
+| 14 | [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md) | View | 7.5 | Pending (re-doc: view column expansion) |
 
 Note: Synapse MCP unavailable — P2/P3 (live data sampling/distribution analysis) skipped. Batch included 1 table (Fact_SnapshotEquity with full SP analysis) and 13 views. V_Liabilities is the primary liability computation view with 8 computed columns. V_Dim_Customer resolves 7 FK IDs to names across 91 columns. VU_FactBilling_ForBigQuery sanitizes ~70 string columns via RemoveSpecialChars for BigQuery export.
 
@@ -126,8 +126,8 @@ Completed: 2026-03-19
 | # | Object | Type | Quality | Status |
 |---|--------|------|---------|--------|
 | 1 | [DWH_dbo.Dim_Channel](Tables/Dim_Channel.md) | Table | 7.5 | Done |
-| 2 | [DWH_dbo.Vw_STS_User_Operations_Data_History](Views/Vw_STS_User_Operations_Data_History.md) | View | 7.8 | Done |
-| 3 | [DWH_dbo.Dim_Instrument_Correlation](Views/Dim_Instrument_Correlation.md) | View | 8.0 | Done |
+| 2 | [DWH_dbo.Vw_STS_User_Operations_Data_History](Views/Vw_STS_User_Operations_Data_History.md) | View | 7.8 | Pending (re-doc: view column expansion) |
+| 3 | [DWH_dbo.Dim_Instrument_Correlation](Views/Dim_Instrument_Correlation.md) | View | 8.0 | Pending (re-doc: view column expansion) |
 | 4 | [DWH_dbo.Dim_Affiliate](Tables/Dim_Affiliate.md) | Table | 7.5 | Done |
 | 5 | [DWH_dbo.Fact_FirstCustomerAction](Tables/Fact_FirstCustomerAction.md) | Table | 7.5 | Done |
 | 6 | [DWH_dbo.Fact_RegulationTransfer](Tables/Fact_RegulationTransfer.md) | Table | 7.8 | Done |
@@ -150,11 +150,11 @@ Completed: 2026-03-19
 | 3 | [DWH_dbo.Fact_Settlement_Prices](Tables/Fact_Settlement_Prices.md) | Table | 7.8 | Done (Recovery) |
 | 4 | [DWH_dbo.Fact_SnapshotCustomer](Tables/Fact_SnapshotCustomer.md) | Table | 8.0 | Done (Recovery) |
 | 5 | [DWH_dbo.STS_User_Operations_Data_History](Tables/STS_User_Operations_Data_History.md) | Table | 7.5 | Done |
-| 6 | [DWH_dbo.V_Dim_Date](Views/V_Dim_Date.md) | View | 7.8 | Done |
-| 7 | [DWH_dbo.V_Dim_Date_For_DWHRep](Views/V_Dim_Date_For_DWHRep.md) | View | 7.2 | Done |
-| 8 | [DWH_dbo.V_M2M_Date_DateRange](Views/V_M2M_Date_DateRange.md) | View | 8.0 | Done |
+| 6 | [DWH_dbo.V_Dim_Date](Views/V_Dim_Date.md) | View | 7.8 | Pending (re-doc: view column expansion) |
+| 7 | [DWH_dbo.V_Dim_Date_For_DWHRep](Views/V_Dim_Date_For_DWHRep.md) | View | 7.2 | Pending (re-doc: view column expansion) |
+| 8 | [DWH_dbo.V_M2M_Date_DateRange](Views/V_M2M_Date_DateRange.md) | View | 8.0 | Pending (re-doc: view column expansion) |
 | 9 | [DWH_dbo.Fact_Guru_Copiers](Tables/Fact_Guru_Copiers.md) | Table | 8.5 | Done |
-| 10 | [DWH_dbo.V_Customers](Views/V_Customers.md) | View | 8.2 | Done |
+| 10 | [DWH_dbo.V_Customers](Views/V_Customers.md) | View | 8.2 | Pending (re-doc: view column expansion) |
 
 Note: Items #1-4 were recovery items (files existed from prior session, verified complete, marked Done). STS_User_Operations_Data_History had partial Synapse MCP availability (P2/P3 limited). V_Dim_Date adds ~20 dynamic temporal CASE flags relative to T-1. Fact_Guru_Copiers aggregates AUC per copier using V_M2M_Date_DateRange bridge. V_Customers flattens Fact_SnapshotCustomer with ISNULL defaults and DateKey < TODAY filter.
 
@@ -166,8 +166,8 @@ Completed: 2026-03-19
 
 | # | Object | Type | Quality | Status |
 |---|--------|------|---------|--------|
-| 1 | [DWH_dbo.Dim_Instrument_Correlation_UnionedPartitions](Views/Dim_Instrument_Correlation_UnionedPartitions.md) | View | 8.4 | Done (Recovery) |
-| 2 | [DWH_dbo.v_Dim_Mirror](Views/v_Dim_Mirror.md) | View | 7.5 | Done |
+| 1 | [DWH_dbo.Dim_Instrument_Correlation_UnionedPartitions](Views/Dim_Instrument_Correlation_UnionedPartitions.md) | View | 8.4 | Pending (re-doc: view column expansion) |
+| 2 | [DWH_dbo.v_Dim_Mirror](Views/v_Dim_Mirror.md) | View | 7.5 | Pending (re-doc: view column expansion) |
 | 3 | [DWH_dbo.Dim_State_and_Province](Tables/Dim_State_and_Province.md) | Table | 8.0 | Done |
 | 4 | [DWH_dbo.Dim_ThreeDsResponseTypes](Tables/Dim_ThreeDsResponseTypes.md) | Table | 8.5 | Done |
 | 5 | [DWH_dbo.Dim_VerificationLevel](Tables/Dim_VerificationLevel.md) | Table | 8.5 | Done |
