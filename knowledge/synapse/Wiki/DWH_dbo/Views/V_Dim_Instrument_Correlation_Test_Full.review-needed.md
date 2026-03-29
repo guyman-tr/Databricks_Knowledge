@@ -1,17 +1,13 @@
 # Review Sidecar — DWH_dbo.V_Dim_Instrument_Correlation_Test_Full
 
-## Confidence Summary
+## Unverified Claims (Tier 3-4)
 
-| Tier | Count | Description |
-|------|-------|-------------|
-| Tier 2 | 10 | All columns — from view DDL and Dim_Instrument_Correlation architecture (documented in Batch 10/12) |
+No Tier 3-4 claims — all columns inherited from Dim_Instrument_Correlation_UnionedPartitions wiki (Tier 1).
+
+## Open Questions
+
+1. **Test vs production**: This view reads from `Dim_Instrument_Correlation_Half_Records` (singular), not the 20 numbered partition tables. Confirm whether this table is actively populated or a legacy test artifact.
 
 ## Reviewer Corrections
 
-*(None yet — pending reviewer pass)*
-
-## Quality Breakdown
-
-| Dimension | Score | Notes |
-|-----------|-------|-------|
-| **Overall** | **7.5/10** | Test view — limited production relevance |
+*(Empty — awaiting reviewer input)*

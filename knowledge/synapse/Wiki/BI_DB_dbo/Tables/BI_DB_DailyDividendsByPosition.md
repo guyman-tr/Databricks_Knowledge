@@ -62,7 +62,7 @@ Read-only checks executed **2026-03-20** against Azure Synapse dedicated pool (O
 | 8 | Amount | money | YES | Dividend amount credited (customer action amount). (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.Amount) |
 | 9 | IsValidCustomer | int | YES | From snapshot for report date. (Tier 2 -- SP_DailyDividendsByPosition, Fact_SnapshotCustomer.IsValidCustomer) |
 | 10 | IsCreditReportValidCB | int | YES | Credit-report validity for CB reporting. (Tier 2 -- SP_DailyDividendsByPosition, Fact_SnapshotCustomer.IsCreditReportValidCB) |
-| 11 | IsSettled | int | YES | Settled flag after applying first post-date position change log for change type 13 when present. (Tier 2 -- SP_DailyDividendsByPosition, Dim_PositionChangeLog.PreviousIsSettled / Dim_Position.IsSettled) |
+| 11 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | 12 | Regulation | varchar(50) | YES | Regulation name. (Tier 2 -- SP_DailyDividendsByPosition, Dim_Regulation.Name) |
 | 13 | DividendID | int | YES | Corporate action / index dividend id on the action. (Tier 2 -- SP_DailyDividendsByPosition, Fact_CustomerAction.DividendID) |
 | 14 | Status | int | YES | Index dividend processing status from `#IndexDiv` when matched (`etoro_Trade_IndexDividends.Status`); NULL when no index-dividend join. (Tier 2 -- SP_DailyDividendsByPosition, etoro_Trade_IndexDividends.Status) |

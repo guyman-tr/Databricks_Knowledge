@@ -40,7 +40,7 @@ One row = one PositionID for one weekly window (StartDate → EndDate, where End
 | `PositionID` | bigint | Position identifier |
 | `InstrumentDisplayName` | nvarchar | Instrument name from Dim_Instrument |
 | `Leverage` | int | Position leverage |
-| `IsSettled` | int | Settlement flag |
+| `IsSettled` | int | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | `OpenOccurred` | datetime | Exact timestamp when position was opened |
 | `Club` | varchar | Client club tier from Dim_PlayerLevel |
 | `Regulation` | varchar | Regulatory jurisdiction name |

@@ -52,8 +52,8 @@ Supports **UK regulatory panel** submissions: multi-currency notionals (USD/GBP/
 | 10 | InstrumentName | varchar(50) | YES | Instrument display name. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.Name) |
 | 11 | CID | bigint | YES | Customer ID on the position. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.CID) |
 | 12 | PositionID | bigint | YES | Platform position identifier. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.PositionID) |
-| 13 | IsSettled_OnOpen | int | YES | Settlement at open from `Fact_CustomerAction` for action types 1–3; `-1` when not applicable (close rows). (Tier 2 -- SP_Finance_Panel_Reports, Fact_CustomerAction.IsSettled) |
-| 14 | IsSettled_OnClose | int | YES | Settlement at close from `Dim_Position` on close rows; `-1` when not applicable (open/change rows). (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.IsSettled) |
+| 13 | IsSettled_OnOpen | int | YES | 1 = real asset, 0 = CFD asset; `-1` when not applicable. From `Fact_CustomerAction` for open-day actions (types 1–3). (Tier 5 — Expert Review) |
+| 14 | IsSettled_OnClose | int | YES | 1 = real asset, 0 = CFD asset; `-1` when not applicable. From `Dim_Position` on close rows. (Tier 5 — Expert Review) |
 | 15 | Leverage | int | YES | Position leverage from `Dim_Position` (change path may join position for consistency). (Tier 2 -- SP_Finance_Panel_Reports, Dim_Position.Leverage) |
 | 16 | SellCurrencyID | int | YES | Quote/sell currency id for FX conversion routing. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.SellCurrencyID) |
 | 17 | SellCurrency | varchar(50) | YES | Sell currency code/name from dimension. (Tier 2 -- SP_Finance_Panel_Reports, Dim_Instrument.SellCurrency) |

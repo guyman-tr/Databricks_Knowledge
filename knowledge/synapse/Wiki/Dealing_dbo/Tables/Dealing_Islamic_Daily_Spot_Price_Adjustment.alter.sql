@@ -44,7 +44,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_s
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN ExchangeID COMMENT 'Always 0 — not used in this SP';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN IsBuy COMMENT '1=long, 0=short';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Leverage COMMENT 'Position leverage';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN IsSettled COMMENT '0 for CFD positions';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN AmountInUnitsDecimal COMMENT 'Position size in instrument units';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Days_Open COMMENT 'Effective days open (Count_Fri rule)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Days_To_Charge COMMENT '3 on Fri, 1 on Mon–Thu, 0 weekend';

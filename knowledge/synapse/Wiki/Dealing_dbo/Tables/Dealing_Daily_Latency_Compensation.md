@@ -88,7 +88,7 @@ Read-only checks executed **2026-03-21**.
 | 23 | RequestTimeFromEMS | datetime | YES | Request time as recorded in the EMS order log. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.RequestTime) |
 | 24 | ExecutionID | int | YES | EMS execution identifier linking to the LP order. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.ExecutionID) |
 | 25 | CID | int | YES | Customer identifier. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.CID) |
-| 26 | IsSettled | int | YES | Settled flag (1=Real stocks, 0=CFD). (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.IsSettled) |
+| 26 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | 27 | PnLVersion | int | YES | P&L version indicator for the position. (Tier 2 -- SP_Latency_Report, DWH_dbo.Dim_Position.PnLVersion) |
 | 28 | OrderID | int | YES | Order identifier from the EMS system. (Tier 2 -- SP_Latency_Report, CopyFromLake.eToroLogs_Real_Hedge_EMSOrders.OrderID) |
 | 29 | ClientToDbLatency | int | YES | Milliseconds from client request to DB entry. (Tier 2 -- SP_Latency_Report, computed from timestamps) |

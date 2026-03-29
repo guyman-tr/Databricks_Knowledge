@@ -24,7 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl SET
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN Column COMMENT 'Description';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN CID COMMENT 'Customer ID. Grouping key for all PnL aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key, part of PK. (Tier 2 — SP_Fact_CustomerUnrealized_PnL)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN DateModified COMMENT 'Date key in YYYYMMDD integer format. Part of PK. One row per CID per day. (Tier 2 — SP_Fact_CustomerUnrealized_PnL)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN PositionPnL COMMENT 'Total unrealized PnL in USD across all open positions for this CID on this date. Uses V1 formula (PnLInDollars from staging). This is the primary PnL metric. "The difference between Realized Equity and Unrealized Equity is the Position PnL" (Confluence). (Tier 2 — SP_Fact_CustomerUnrealized_PnL)';
@@ -84,7 +83,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALT
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN PositionPnLStocksMargin COMMENT 'Unrealized PnL from stock margin positions (SettlementTypeID = 5). Uses PnLInDollars. Added 2025-09-25. (Tier 2 — SP_Fact_CustomerUnrealized_PnL)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN Column SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN CID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN DateModified SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN PositionPnL SET TAGS ('pii' = 'none');

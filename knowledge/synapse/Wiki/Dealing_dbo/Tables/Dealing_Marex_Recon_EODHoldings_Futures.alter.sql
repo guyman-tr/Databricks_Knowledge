@@ -24,8 +24,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eod
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ★★★ COMMENT '`(Tier 2 — SP_Marex_Recon)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ★★ COMMENT '`(Tier 3 — DDL/live)`';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Date COMMENT 'EOD snapshot date. SP parameter; DELETE-INSERT by Date. (Tier 2 — SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN PositionID COMMENT 'Marex position identifier. Unique identifier for the futures position in Marex''s system. (Tier 2 — SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN CID COMMENT 'eToro client identifier. Granularity key — each client''s position is recorded separately. FK → DWH_dbo.Dim_Customer. (Tier 2 — SP_Marex_Recon)';
@@ -64,8 +62,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eod
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN OrderID COMMENT 'Marex order identifier. Links to specific order in Marex system. (Tier 2 — SP_Marex_Recon)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ★★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ★★ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Date SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN PositionID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN CID SET TAGS ('pii' = 'none');

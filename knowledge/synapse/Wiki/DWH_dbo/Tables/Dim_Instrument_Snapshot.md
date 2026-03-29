@@ -12,7 +12,7 @@
 | **Synapse Distribution** | ROUND_ROBIN |
 | **Synapse Index** | CLUSTERED INDEX (DateID ASC, InstrumentID ASC) |
 | | |
-| **UC Target** | Gold/sql_dp_prod_we/DWH_dbo/Dim_Instrument_Snapshot/ (uc_table not assigned) |
+| **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_snapshot` (`_generic_pipeline_mapping.json`, generic_id=1861) |
 | **UC Format** | delta |
 | **UC Partitioned By** | None (Append strategy; partitioned logically by DateID) |
 | **UC Table Type** | Gold export (Generic Pipeline, Append, 1440min) |

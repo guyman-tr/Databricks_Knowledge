@@ -88,29 +88,29 @@ _Pending — resolved during write-objects._
 
 All descriptions inherited from `STS_User_Operations_Data_History.md` (Batch 11).
 
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 1 | Gcid | int | YES | Global Customer ID — unique cross-platform identifier linking Real and Demo accounts. Distribution key on base table. (Tier 2 — SP_Fact_CustomerAction_DL_To_Synapse, inherited from STS_User_Operations_Data_History) |
-| 2 | RealCid | int | YES | Real-money account Customer ID. NULL when the session is Demo-only. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 3 | DemoCid | int | YES | Virtual/demo account Customer ID. NULL when the session is Real-only. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 4 | ApplicationIdentifier | nvarchar(100) | YES | Client application: `retoro` (web), `retoroios` (iOS), `retoroandroid` (Android). (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 5 | ApplicationVersion | nvarchar(20) | YES | Build version of the client application, e.g. `340.0.10`. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 6 | ClientIp | varchar(20) | YES | IPv4 address of the client at the time of the session event. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 7 | ClientName | nvarchar(100) | YES | Server-side service name processing the auth request. Consistently `STS.WebAPI`. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 8 | CreatedAt | datetime | YES | Business event timestamp when the authentication/session event occurred in STS. Not the ETL load time. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 9 | UserAgent | nvarchar(512) | YES | Full HTTP User-Agent string from client browser or mobile WebView. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 10 | AccessTokenHashed | nvarchar(256) | YES | Hashed authentication access token for security audit. Not reversible. Sparsely populated. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 11 | ClientDeviceId | nvarchar(max) | YES | UUID-format device identifier. Computed in view: `CAST([ClientDeviceId] AS nvarchar(max))` — widened from base table's nvarchar(50). Populated primarily for mobile app sessions; typically NULL for web. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 12 | ParentSessionId | bigint | YES | Session ID of the parent session for chained sessions. Value `0` = root session (no parent). (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 13 | AccountTypeName | varchar(100) | YES | Account context: `Real` (live trading) or `Demo` (virtual portfolio). (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 14 | LoginTypeName | varchar(100) | YES | Authentication event type: `Login`, `Authenticate`, `TokenExchange`, `Logout`. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 15 | SessionId | bigint | YES | Unique monotonically increasing session identifier from STS service. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 16 | GatewayAppId | int | YES | API gateway application ID that routed the request. Commonly 1 or 2. (Tier 2 — STS_Audit_UserOperationsData, inherited from STS_User_Operations_Data_History) |
-| 17 | DateID | int | YES | Date partition key in YYYYMMDD format. Computed in ETL from @Yesterday parameter. (Tier 2 — SP_Fact_CustomerAction_DL_To_Synapse, inherited from STS_User_Operations_Data_History) |
-| 18 | UpdateDate | datetime | YES | ETL load timestamp — GETDATE() during ETL execution. Not the business event time. (Tier 2 — SP_Fact_CustomerAction_DL_To_Synapse, inherited from STS_User_Operations_Data_History) |
-| 19 | ProxyType | nvarchar(max) | YES | Type of proxy detected for client IP (e.g. VPN, TOR). Sparsely populated — mostly NULL. (Tier 3 — data sampling, inherited from STS_User_Operations_Data_History) |
-| 20 | CountryISOCode | nvarchar(max) | YES | ISO country code resolved from ClientIp. Sparsely populated — mostly NULL. (Tier 3 — data sampling, inherited from STS_User_Operations_Data_History) |
-| 21 | AdditionalData | nvarchar(max) | YES | Extensible JSON or free-text field for additional session metadata. Sparsely populated. (Tier 3 — data sampling, inherited from STS_User_Operations_Data_History) |
+| # | Column | Type | Nullable | Source | Description |
+|---|--------|------|----------|--------|-------------|
+| 1 | Gcid | int | YES | STS_User_Operations_Data_History.Gcid | Global Customer ID — unique cross-platform identifier linking Real and Demo accounts for the same person. Distribution key. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 2 | RealCid | int | YES | STS_User_Operations_Data_History.RealCid | Real-money account Customer ID. NULL when the session is Demo-only. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 3 | DemoCid | int | YES | STS_User_Operations_Data_History.DemoCid | Virtual/demo account Customer ID. NULL when the session is Real-only. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 4 | ApplicationIdentifier | nvarchar(100) | YES | STS_User_Operations_Data_History.ApplicationIdentifier | Client application that initiated the session. Known values: `retoro` (web/generic), `retoroios` (iOS app), `retoroandroid` (Android app). (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 5 | ApplicationVersion | nvarchar(20) | YES | STS_User_Operations_Data_History.ApplicationVersion | Build version of the client application, e.g. `340.0.10`, `355.0.1`. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 6 | ClientIp | varchar(20) | YES | STS_User_Operations_Data_History.ClientIp | IPv4 address of the client at the time of the session event. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 7 | ClientName | nvarchar(100) | YES | STS_User_Operations_Data_History.ClientName | Server-side service name that processed the authentication request. Consistently `STS.WebAPI` across all observed data. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 8 | CreatedAt | datetime | YES | STS_User_Operations_Data_History.CreatedAt | Timestamp when the authentication/session event occurred in the STS service. This is the business event time (not the ETL load time). (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 9 | UserAgent | nvarchar(512) | YES | STS_User_Operations_Data_History.UserAgent | Full HTTP User-Agent string from the client browser or mobile WebView. Contains OS, browser, and app metadata. May be NULL for some mobile token exchanges. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 10 | AccessTokenHashed | nvarchar(256) | YES | STS_User_Operations_Data_History.AccessTokenHashed | Hashed authentication access token for security audit trail. Not reversible. Sparsely populated. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 11 | ClientDeviceId | nvarchar(max) | YES | CAST(STS_User_Operations_Data_History.ClientDeviceId AS nvarchar(max)) | UUID-format device identifier (e.g. `3c24d4e9-8ef0-405f-...`). **Widened from base table's nvarchar(50) to nvarchar(max) via CAST in this view.** Populated primarily for mobile app sessions; typically NULL or empty for web. (Tier 1 — inherited from STS_User_Operations_Data_History wiki, with type widening) |
+| 12 | ParentSessionId | bigint | YES | STS_User_Operations_Data_History.ParentSessionId | Session ID of the parent session for linked/chained sessions. Value `0` indicates a root session (no parent). Enables session chain tracing. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 13 | AccountTypeName | varchar(100) | YES | STS_User_Operations_Data_History.AccountTypeName | Account context for the session: `Real` (live trading) or `Demo` (virtual portfolio). (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 14 | LoginTypeName | varchar(100) | YES | STS_User_Operations_Data_History.LoginTypeName | Type of authentication event. Known values: `Login` (new session), `Authenticate` (credential re-validation), `TokenExchange` (token refresh), `Logout` (session end). (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 15 | SessionId | bigint | YES | STS_User_Operations_Data_History.SessionId | Unique session identifier assigned by the STS service. Monotonically increasing. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 16 | GatewayAppId | int | YES | STS_User_Operations_Data_History.GatewayAppId | Identifier of the API gateway application that routed the request. Commonly `1` or `2`. NULL for some Logout events. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 17 | DateID | int | YES | STS_User_Operations_Data_History.DateID | Date partition key in YYYYMMDD integer format (e.g. `20210901`). Computed in ETL from the `@Yesterday` parameter. Clustered index and partition column. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 18 | UpdateDate | datetime | YES | STS_User_Operations_Data_History.UpdateDate | Timestamp when this row was loaded into the DWH, set to `GETDATE()` during ETL execution. Not the business event time. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 19 | ProxyType | nvarchar(max) | YES | STS_User_Operations_Data_History.ProxyType | Type of proxy detected for the client IP connection (e.g. VPN, TOR). Sparsely populated — NULL in most observed rows. Added after initial table creation. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 20 | CountryISOCode | nvarchar(max) | YES | STS_User_Operations_Data_History.CountryISOCode | ISO country code resolved from the ClientIp address. Sparsely populated — NULL in most observed rows. Added after initial table creation. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
+| 21 | AdditionalData | nvarchar(max) | YES | STS_User_Operations_Data_History.AdditionalData | Extensible JSON or free-text field for additional session metadata. Sparsely populated. (Tier 1 — inherited from STS_User_Operations_Data_History wiki) |
 
 ---
 
@@ -222,6 +222,6 @@ WHERE child.Gcid = @gcid
 
 ---
 
-*Generated: 2026-03-19 | Quality: 8.0/10 (★★★★☆) | Phases: 6/14 (view — inherited from base table)*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Phases: 6/14 (view — inherited from base table) | Batch: 16*
 *Tiers: 0 T1, 18 T2, 3 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 5/10, Relationships: 5/10, Sources: 10/10*
 *Object: DWH_dbo.Vw_STS_User_Operations_Data_History | Type: View | Production Source: STS_User_Operations_Data_History (base table)*

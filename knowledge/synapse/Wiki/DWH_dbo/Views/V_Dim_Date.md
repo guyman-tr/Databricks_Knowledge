@@ -30,31 +30,73 @@ All computed flags return `'Yes'` or `'No'` strings. The `PartitionID` column fr
 
 | # | Column | Type | Source | Description |
 |---|--------|------|--------|-------------|
-| 1-42 | *(All Dim_Date columns)* | *(inherited)* | Dim_Date | All base date dimension columns except PartitionID — DateKey, FullDate, calendar/fiscal hierarchies, day/month/week names, format variants, holiday/weekend flags. See Dim_Date documentation. (Tier 2 — Dim_Date DDL) |
-| 43 | CalculatedWeekNumber | int | Computed | `DATEDIFF(dd, '2000-01-02', FullDate) / 7` — sequential week number since 2000-01-02 (Monday-aligned). (Tier 2 — view DDL) |
-| 44 | IsCurrentDay | varchar | Computed | `'Yes'` when FullDate equals yesterday (T-1). (Tier 2 — view DDL) |
-| 45 | IsCurrentMonth | varchar | Computed | `'Yes'` when FullDate falls in yesterday's calendar month. (Tier 2 — view DDL) |
-| 46 | IsCurrentQuarter | varchar | Computed | `'Yes'` when FullDate falls in yesterday's calendar quarter. (Tier 2 — view DDL) |
-| 47 | IsCurrentYear | varchar | Computed | `'Yes'` when FullDate falls in yesterday's calendar year. (Tier 2 — view DDL) |
-| 48 | IsPreviousYearClosingDate | varchar | Computed | `'Yes'` for Dec 31 of the year before yesterday's year. (Tier 2 — view DDL) |
-| 49 | IsPreviousQuarterClosingDate | varchar | Computed | `'Yes'` for the last day of the quarter before yesterday's quarter. (Tier 2 — view DDL) |
-| 50 | IsPreviousMonthClosingDate | varchar | Computed | `'Yes'` for the last day of the month before yesterday's month. (Tier 2 — view DDL) |
-| 51 | IsPreviousYearOpeningDate | varchar | Computed | `'Yes'` for Jan 1 of the year before yesterday's year. (Tier 2 — view DDL) |
-| 52 | IsPreviousQuarterOpeningDate | varchar | Computed | `'Yes'` for the first day of the quarter before yesterday's quarter. (Tier 2 — view DDL) |
-| 53 | IsPreviousMonthOpeningDate | varchar | Computed | `'Yes'` for the first day of the month before yesterday's month. (Tier 2 — view DDL) |
-| 54 | SSYearAndWeekNumber | varchar | Computed | SQL Server-style year+week string, e.g. `2026W12`. Zero-padded week number. (Tier 2 — view DDL) |
-| 55 | IsCurrentWeek | varchar | Computed | `'Yes'` when FullDate falls in yesterday's ISO-style week (Sunday to Saturday). (Tier 2 — view DDL) |
-| 56 | IsPreviousWeekClosingDate | varchar | Computed | `'Yes'` for the last day of the week before yesterday's week. (Tier 2 — view DDL) |
-| 57 | IsPreviousWeekOpeningDate | varchar | Computed | `'Yes'` for the first day of the week before yesterday's week. (Tier 2 — view DDL) |
-| 58 | IsCurrentWeekClosingDate | varchar | Computed | `'Yes'` for the last day of yesterday's current week. Note: column name has typo `IscURRENTWeekClosingDate` in source DDL. (Tier 2 — view DDL) |
-| 59 | IsCurrentWeekOpeningDate | varchar | Computed | `'Yes'` for the first day of yesterday's current week. (Tier 2 — view DDL) |
-| 60 | Is8wBenchmark | varchar | Computed | `'Yes'` for same-weekday dates within the last 8 weeks before yesterday — used for week-over-week benchmarking. (Tier 2 — view DDL) |
-| 61 | IsCurrentYearOpeningDate | varchar | Computed | `'Yes'` for Jan 1 of yesterday's year. (Tier 2 — view DDL) |
-| 62 | IsCurrentQuarterOpeningDate | varchar | Computed | `'Yes'` for the first day of yesterday's current quarter. (Tier 2 — view DDL) |
-| 63 | IsCurrentMonthOpeningDate | varchar | Computed | `'Yes'` for the first day of yesterday's current month. (Tier 2 — view DDL) |
-| 64 | IsCurrentYearClosingDate | varchar | Computed | `'Yes'` for Dec 31 of yesterday's year. (Tier 2 — view DDL) |
-| 65 | IsCurrentQuarterClosingDate | varchar | Computed | `'Yes'` for the last day of yesterday's current quarter. (Tier 2 — view DDL) |
-| 66 | IsCurrentMonthClosingDate | varchar | Computed | `'Yes'` for the last day of yesterday's current month. (Tier 2 — view DDL) |
+| 1 | DateKey | int | Dim_Date.DateKey | PK. Date as YYYYMMDD integer. Clustered index key. REPLICATE distribution. (Tier 3 — DDL inference) |
+| 2 | FullDate | date | Dim_Date.FullDate | Calendar date value. Reference date for all computed flags. (Tier 3 — DDL inference) |
+| 3 | MonthNumberOfYear | tinyint | Dim_Date.MonthNumberOfYear | Month number (1–12). (Tier 3 — DDL inference) |
+| 4 | MonthNumberOfQuarter | tinyint | Dim_Date.MonthNumberOfQuarter | Month position within the quarter (1–3). (Tier 3 — DDL inference) |
+| 5 | ISOYearAndWeekNumber | char(7) | Dim_Date.ISOYearAndWeekNumber | ISO year + week (e.g., '2026W13'). (Tier 3 — DDL inference) |
+| 6 | ISOWeekNumberOfYear | tinyint | Dim_Date.ISOWeekNumberOfYear | ISO week number (1–53). (Tier 3 — DDL inference) |
+| 7 | SSWeekNumberOfYear | tinyint | Dim_Date.SSWeekNumberOfYear | SQL Server week number (DATEPART WEEK). (Tier 3 — DDL inference) |
+| 8 | ISOWeekNumberOfQuarter_454_Pattern | tinyint | Dim_Date.ISOWeekNumberOfQuarter_454_Pattern | ISO week within quarter using 4-5-4 retail calendar pattern. (Tier 3 — DDL inference) |
+| 9 | SSWeekNumberOfQuarter_454_Pattern | tinyint | Dim_Date.SSWeekNumberOfQuarter_454_Pattern | SQL Server week within quarter using 4-5-4 retail pattern. (Tier 3 — DDL inference) |
+| 10 | SSWeekNumberOfMonth | tinyint | Dim_Date.SSWeekNumberOfMonth | Week number within the month (SQL Server). (Tier 3 — DDL inference) |
+| 11 | DayNumberOfYear | smallint | Dim_Date.DayNumberOfYear | Day of year (1–366). (Tier 3 — DDL inference) |
+| 12 | DaysSince1900 | int | Dim_Date.DaysSince1900 | Days elapsed since 1900-01-01. Useful for date arithmetic. (Tier 3 — DDL inference) |
+| 13 | DayNumberOfFiscalYear | smallint | Dim_Date.DayNumberOfFiscalYear | Day of fiscal year (1–366). Fiscal year starts July 1. (Tier 3 — DDL inference) |
+| 14 | DayNumberOfQuarter | smallint | Dim_Date.DayNumberOfQuarter | Day position within the quarter (1–92). (Tier 3 — DDL inference) |
+| 15 | DayNumberOfMonth | tinyint | Dim_Date.DayNumberOfMonth | Day of month (1–31). (Tier 3 — DDL inference) |
+| 16 | DayNumberOfWeek_Sun_Start | tinyint | Dim_Date.DayNumberOfWeek_Sun_Start | Day of week (1=Sunday, 7=Saturday). (Tier 3 — DDL inference) |
+| 17 | MonthName | varchar(10) | Dim_Date.MonthName | Full month name (e.g., 'January'). (Tier 3 — DDL inference) |
+| 18 | MonthNameAbbreviation | char(3) | Dim_Date.MonthNameAbbreviation | 3-letter month abbreviation (e.g., 'Jan'). (Tier 3 — DDL inference) |
+| 19 | DayName | varchar(10) | Dim_Date.DayName | Full day name (e.g., 'Monday'). (Tier 3 — DDL inference) |
+| 20 | DayNameAbbreviation | char(3) | Dim_Date.DayNameAbbreviation | 3-letter day abbreviation (e.g., 'Mon'). (Tier 3 — DDL inference) |
+| 21 | CalendarYear | smallint | Dim_Date.CalendarYear | Calendar year (e.g., 2026). (Tier 3 — DDL inference) |
+| 22 | CalendarYearMonth | char(7) | Dim_Date.CalendarYearMonth | Year-month string (e.g., '2026-03'). (Tier 3 — DDL inference) |
+| 23 | CalendarYearQtr | char(7) | Dim_Date.CalendarYearQtr | Year-quarter string (e.g., '2026-Q1'). (Tier 3 — DDL inference) |
+| 24 | CalendarSemester | tinyint | Dim_Date.CalendarSemester | Half-year (1 or 2). (Tier 3 — DDL inference) |
+| 25 | CalendarQuarter | tinyint | Dim_Date.CalendarQuarter | Calendar quarter (1–4). (Tier 3 — DDL inference) |
+| 26 | FiscalYear | smallint | Dim_Date.FiscalYear | Fiscal year. Starts July 1. (Tier 3 — DDL inference) |
+| 27 | FiscalMonth | tinyint | Dim_Date.FiscalMonth | Fiscal month (1–12, starting from fiscal year start). (Tier 3 — DDL inference) |
+| 28 | FiscalQuarter | tinyint | Dim_Date.FiscalQuarter | Fiscal quarter (1–4). (Tier 3 — DDL inference) |
+| 29 | FiscalYearMonth | char(7) | Dim_Date.FiscalYearMonth | Fiscal year-month string. (Tier 3 — DDL inference) |
+| 30 | FiscalYearQtr | char(8) | Dim_Date.FiscalYearQtr | Fiscal year-quarter string. (Tier 3 — DDL inference) |
+| 31 | QuarterNumber | int | Dim_Date.QuarterNumber | Absolute quarter number (monotonically increasing across years). (Tier 3 — DDL inference) |
+| 32 | YYYYMMDD | char(8) | Dim_Date.YYYYMMDD | Date formatted as 'YYYYMMDD' string. (Tier 3 — DDL inference) |
+| 33 | MM/DD/YYYY | char(10) | Dim_Date.MM/DD/YYYY | Date formatted as 'MM/DD/YYYY'. US format. (Tier 3 — DDL inference) |
+| 34 | YYYY/MM/DD | char(10) | Dim_Date.YYYY/MM/DD | Date formatted as 'YYYY/MM/DD'. (Tier 3 — DDL inference) |
+| 35 | YYYY-MM-DD | char(10) | Dim_Date.YYYY-MM-DD | Date formatted as 'YYYY-MM-DD'. ISO 8601. (Tier 3 — DDL inference) |
+| 36 | MonDDYYYY | char(11) | Dim_Date.MonDDYYYY | Date formatted as 'Mon DD YYYY' (e.g., 'Mar 28 2026'). (Tier 3 — DDL inference) |
+| 37 | IsLastDayOfMonth | char(1) | Dim_Date.IsLastDayOfMonth | 'Y' if date is the last day of its month, 'N' otherwise. (Tier 3 — DDL inference) |
+| 38 | IsWeekday | char(1) | Dim_Date.IsWeekday | 'Y' if Monday–Friday, 'N' otherwise. (Tier 3 — DDL inference) |
+| 39 | IsWeekend | char(1) | Dim_Date.IsWeekend | 'Y' if Saturday–Sunday, 'N' otherwise. (Tier 3 — DDL inference) |
+| 40 | IsWorkday | char(1) | Dim_Date.IsWorkday | 'Y' if working day (weekday and not holiday). DEFAULT 'N'. (Tier 3 — DDL inference) |
+| 41 | IsFederalHoliday | char(1) | Dim_Date.IsFederalHoliday | 'Y' if federal holiday. DEFAULT 'N'. (Tier 3 — DDL inference) |
+| 42 | IsBankHoliday | char(1) | Dim_Date.IsBankHoliday | 'Y' if bank holiday. DEFAULT 'N'. (Tier 3 — DDL inference) |
+| 43 | IsCompanyHoliday | char(1) | Dim_Date.IsCompanyHoliday | 'Y' if company holiday. DEFAULT 'N'. (Tier 3 — DDL inference) |
+| 44 | CalculatedWeekNumber | int | Computed | `DATEDIFF(dd, '2000-01-02', FullDate) / 7` — sequential week number since 2000-01-02 (Monday-aligned). (Tier 2 — view DDL) |
+| 45 | IsCurrentDay | varchar | Computed | `'Yes'` when FullDate equals yesterday (T-1). (Tier 2 — view DDL) |
+| 46 | IsCurrentMonth | varchar | Computed | `'Yes'` when FullDate falls in yesterday's calendar month. (Tier 2 — view DDL) |
+| 47 | IsCurrentQuarter | varchar | Computed | `'Yes'` when FullDate falls in yesterday's calendar quarter. (Tier 2 — view DDL) |
+| 48 | IsCurrentYear | varchar | Computed | `'Yes'` when FullDate falls in yesterday's calendar year. (Tier 2 — view DDL) |
+| 49 | IsPreviousYearClosingDate | varchar | Computed | `'Yes'` for Dec 31 of the year before yesterday's year. (Tier 2 — view DDL) |
+| 50 | IsPreviousQuarterClosingDate | varchar | Computed | `'Yes'` for the last day of the quarter before yesterday's quarter. (Tier 2 — view DDL) |
+| 51 | IsPreviousMonthClosingDate | varchar | Computed | `'Yes'` for the last day of the month before yesterday's month. (Tier 2 — view DDL) |
+| 52 | IsPreviousYearOpeningDate | varchar | Computed | `'Yes'` for Jan 1 of the year before yesterday's year. (Tier 2 — view DDL) |
+| 53 | IsPreviousQuarterOpeningDate | varchar | Computed | `'Yes'` for the first day of the quarter before yesterday's quarter. (Tier 2 — view DDL) |
+| 54 | IsPreviousMonthOpeningDate | varchar | Computed | `'Yes'` for the first day of the month before yesterday's month. (Tier 2 — view DDL) |
+| 55 | SSYearAndWeekNumber | varchar | Computed | SQL Server-style year+week string, e.g. `2026W12`. Zero-padded week number. (Tier 2 — view DDL) |
+| 56 | IsCurrentWeek | varchar | Computed | `'Yes'` when FullDate falls in yesterday's ISO-style week (Sunday to Saturday). (Tier 2 — view DDL) |
+| 57 | IsPreviousWeekClosingDate | varchar | Computed | `'Yes'` for the last day of the week before yesterday's week. (Tier 2 — view DDL) |
+| 58 | IsPreviousWeekOpeningDate | varchar | Computed | `'Yes'` for the first day of the week before yesterday's week. (Tier 2 — view DDL) |
+| 59 | IscURRENTWeekClosingDate | varchar | Computed | `'Yes'` for the last day of yesterday's current week. Note: column name has mixed-case typo in source DDL. (Tier 2 — view DDL) |
+| 60 | IsCurrentWeekOpeningDate | varchar | Computed | `'Yes'` for the first day of yesterday's current week. (Tier 2 — view DDL) |
+| 61 | Is8wBenchmark | varchar | Computed | `'Yes'` for same-weekday dates within the last 8 weeks before yesterday — used for week-over-week benchmarking. (Tier 2 — view DDL) |
+| 62 | IsCurrentYearOpeningDate | varchar | Computed | `'Yes'` for Jan 1 of yesterday's year. (Tier 2 — view DDL) |
+| 63 | IsCurrentQuarterOpeningDate | varchar | Computed | `'Yes'` for the first day of yesterday's current quarter. (Tier 2 — view DDL) |
+| 64 | IsCurrentMonthOpeningDate | varchar | Computed | `'Yes'` for the first day of yesterday's current month. (Tier 2 — view DDL) |
+| 65 | IsCurrentYearClosingDate | varchar | Computed | `'Yes'` for Dec 31 of yesterday's year. (Tier 2 — view DDL) |
+| 66 | IsCurrentQuarterClosingDate | varchar | Computed | `'Yes'` for the last day of yesterday's current quarter. (Tier 2 — view DDL) |
+| 67 | IsCurrentMonthClosingDate | varchar | Computed | `'Yes'` for the last day of yesterday's current month. (Tier 2 — view DDL) |
 
 ---
 
@@ -126,6 +168,6 @@ SELECT DateKey, FullDate, DayName FROM [DWH_dbo].[V_Dim_Date] WHERE Is8wBenchmar
 
 ---
 
-*Generated: 2026-03-19 | Quality: 8.0/10 (★★★★☆) | Phases: 8/14*
-*Tiers: 0 T1, 24 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 9/10, Logic: 8/10, Relationships: 6/10, Sources: 8/10*
-*Object: DWH_dbo.V_Dim_Date | Type: View | Base Table: DWH_dbo.Dim_Date*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Phases: 8/14 | Column expansion: 67 cols documented individually (43 static + 24 computed)*
+*Tiers: 0 T1, 24 T2, 43 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 8/10, Relationships: 6/10, Sources: 8/10*
+*Object: DWH_dbo.V_Dim_Date | Type: View | Base Table: DWH_dbo.Dim_Date (no upstream wiki — static cols Tier 3 DDL inference)*

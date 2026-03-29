@@ -64,4 +64,4 @@ Each transfer captures a full equity snapshot at the moment of transfer: positio
 | Row doubling | Info | Every base row produces 2 view rows — consumers must account for this when counting transfers vs. transfer events. |
 
 ---
-*Generated: 2026-03-19 | Quality: 8.5/10 | Directional regulation transfer view*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Batch: 16 | Directional regulation transfer view*

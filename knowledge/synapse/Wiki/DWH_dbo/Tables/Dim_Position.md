@@ -387,8 +387,8 @@ Note: Upstream production wikis available for Trade.PositionTbl and Trade.OpenPo
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 93 | IsSettled | int | YES | LEGACY: 1 = real stock, 0 = CFD. NOT settlement complete. Predates SettlementTypeID. (Tier 1 — Trade.PositionTbl) |
-| 94 | IsSettledOnOpen | int | YES | 1=position was settled at the time of open (pre-settlement flag). (Tier 4 - [UNVERIFIED]) |
+| 93 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
+| 94 | IsSettledOnOpen | int | YES | 1 = real asset, 0 = CFD asset. Value at position open (snapshot); same 0/1 encoding as IsSettled. (Tier 5 — Expert Review) |
 | 95 | RedeemStatus | tinyint | YES | Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl) |
 | 96 | RedeemID | int | YES | Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl) |
 | 97 | FullCommissionOnCloseOrig | money | YES | Original FullCommissionOnClose before reopen. ETL default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |

@@ -120,7 +120,7 @@ _Pending — resolved during write-objects._
 | 3 | RealCID | int | YES | Customer identifier. Renamed from `CID` in `Function_PnL_Single_Day`. Distribution key. (Tier 2 — SP_DDR_Fact_PnL) |
 | 4 | InstrumentTypeID | int | YES | Instrument asset class. Join-enriched from `Dim_Instrument.InstrumentTypeID` via `frfc.InstrumentID = di.InstrumentID`. Common values: 4=Indices, 5=Stocks, 6=Commodities, 10=Crypto, 12=ETFs, 73=Currencies. (Tier 2 — SP_DDR_Fact_PnL) |
 | 5 | IsCopy | int | YES | Copy-trade flag. `CASE WHEN frfc.MirrorID > 0 THEN 1 ELSE 0 END`. 1=position opened via CopyTrader, 0=manual/independent. (Tier 2 — SP_DDR_Fact_PnL) |
-| 6 | IsSettled | int | YES | Settlement type flag from source position. 1=real/settled position (physical ownership), 0=CFD (contract for difference). Direct passthrough from `Function_PnL_Single_Day.IsSettled`. (Tier 2 — SP_DDR_Fact_PnL) |
+| 6 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | 7 | UnrealizedPnLChange | decimal(16,6) | YES | Day-over-day change in unrealized P&L in USD. `SUM(frfc.UnrealizedPnLChange)` aggregated across all positions in the group. Represents the daily mark-to-market movement for open positions. (Tier 2 — SP_DDR_Fact_PnL) |
 | 8 | NetProfit | decimal(16,6) | YES | Realized net profit in USD from positions closed on this date. `SUM(frfc.NetProfit)` aggregated across closed positions in the group. Zero for groups with no closes. (Tier 2 — SP_DDR_Fact_PnL) |
 | 9 | CountPositions | int | YES | Number of positions contributing to this row's PnL. `COUNT(frfc.PositionID)` within the group. (Tier 2 — SP_DDR_Fact_PnL) |

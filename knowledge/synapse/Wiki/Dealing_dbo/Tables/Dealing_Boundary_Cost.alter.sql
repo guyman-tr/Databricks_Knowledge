@@ -24,10 +24,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost S
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★★★★ COMMENT '`(Tier 1 — DWH_dbo.Dim_Instrument)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★★★ COMMENT '`(Tier 2 — SP_Boundary_Cost)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★★ COMMENT '`(Tier 3 — live data)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★ COMMENT '`[UNVERIFIED] (Tier 4 — inferred)`';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN Date COMMENT 'The reporting date for which this set of minute snapshots was computed. All rows in a given batch share the same Date value. Set to `@Date` parameter in SP_Boundary_Cost. (Tier 2 — SP_Boundary_Cost)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN DateID COMMENT 'Integer representation of Date in YYYYMMDD format (e.g., 20240317). Used as the clustered index key for efficient date-range filtering. Computed as `CONVERT(NVARCHAR, @Date, 112)`. (Tier 2 — SP_Boundary_Cost)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN FromDate COMMENT 'Start of the one-minute time window for this row. Truncated to the minute boundary. Together with ToDate, defines the 1-minute bucket this row represents. (Tier 2 — SP_Boundary_Cost)';
@@ -56,15 +52,11 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost A
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN FX_Bid COMMENT 'FX conversion rate to USD for this instrument''s sell currency. Sourced from `Fact_CurrencyPriceWithSplit` for the reporting date. For USD-denominated instruments (SellCurrencyID=1), FX_Bid=1.0. For EUR instruments, FX_Bid = 1/EUR_Bid. Used to normalize NOP and volume metrics to USD equivalents. (Tier 2 — SP_Boundary_Cost)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN InstrumentTypeID COMMENT 'Instrument type category: 1=Currencies (forex), 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies. Note TypeIDs 3, 7, 8, 9 are unused gaps. Used for boundary default logic (Stocks/ETFs get defaults when no boundary configured). (Tier 1 — DWH_dbo.Dim_Instrument)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN HedgeServerID COMMENT 'Identifier for the hedge server holding these positions. Positions can be distributed across multiple hedge servers; this dimension tracks per-HS NOP separately. HS assignment at `@Date` is resolved via `Dim_PositionHedgeServerChangeLog_Snapshot` (handles same-day HS migrations). NULL for rows in the UNION ALL that only have NOP carry-forward data. (Tier 2 — SP_Boundary_Cost)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN IsSettled COMMENT 'Flag distinguishing real-asset (settled) positions from CFD positions: 1=settled (real stocks/ETFs/crypto held in custody), 0=CFD (contract for difference, no underlying asset). This dimension separates client exposure by settlement type, as hedging strategies differ. (Tier 2 — SP_Boundary_Cost)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN PriceRatio COMMENT 'Stock split-adjusted price ratio sourced from `DWH_dbo.Dim_HistorySplitRatio`. Applied only to the first minute of the day (ROW_NUMBER()=1 per instrument×HS×IsSettled) when a split occurred on `@Date`. Used to adjust NOP calculations when a stock split changes the unit count. 1.0 when no split occurred or for non-split instruments. (Tier 2 — SP_Boundary_Cost)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN HS_Moved_Units COMMENT 'Net units transferred between HedgeServers during `@Date` for this instrument×HS×IsSettled. Tracked via `Dim_PositionChangeLog` ChangeTypeID=12 (HedgeServer change events). Positive values indicate units arriving at this HS; negative values indicate units leaving. Used to reconcile NOP changes that are not due to new client trades but due to HS rebalancing. Zero when no HS moves occurred. (Tier 2 — SP_Boundary_Cost)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★★★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN ★ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN Date SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN DateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN FromDate SET TAGS ('pii' = 'none');

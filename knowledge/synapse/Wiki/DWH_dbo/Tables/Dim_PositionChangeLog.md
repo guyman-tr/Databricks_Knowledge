@@ -124,8 +124,8 @@ Data source is `etoro_History_PositionChangeLog` loaded daily via DELETE (yester
 | 6 | PreviousAmount | money | NO | Position amount (USD) before this change. NOT NULL -- always captured. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
 | 7 | AmountChanged | money | NO | Change in amount (can be positive or negative). AmountChanged = NewAmount - PreviousAmount. NOT NULL. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
 | 8 | NewAmount | numeric(16,8) | YES | Position amount after this change. Nullable -- may be absent for non-amount change types. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
-| 9 | PreviousIsSettled | int | YES | Settlement status before this change (0=not settled, 1=settled). Cast from bit staging column. NULL if this event didn't involve settlement change. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
-| 10 | IsSettled | int | YES | Settlement status after this change. Cast from bit staging column. Used by Dim_Position ETL to backfill IsSettled corrections. NULL if no settlement change. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 9 | PreviousIsSettled | int | YES | Before the change: 1 = real asset, 0 = CFD asset. Cast from bit in staging. NULL if this event did not involve a settlement change. (Tier 5 — Expert Review) |
+| 10 | IsSettled | int | YES | After the change: 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | 11 | PreviousStopRate | numeric(16,8) | NO | Stop-loss rate before this change. NOT NULL. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
 | 12 | StopRate | numeric(16,8) | NO | Stop-loss rate after this change. NOT NULL. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
 | 13 | PreviousAmountInUnits | numeric(16,6) | YES | Unit count (shares/coins) before this change. Added for futures/unit-based positions. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |

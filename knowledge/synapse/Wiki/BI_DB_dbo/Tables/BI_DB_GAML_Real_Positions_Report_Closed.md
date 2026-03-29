@@ -40,7 +40,7 @@ Supports GAML reporting and reconciliation alongside the instrument-level financ
 | 6 | ISINCode | varchar(30) | YES | ISIN from `Dim_Instrument`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Instrument.ISINCode) |
 | 7 | Initial_Amount | money | YES | Initial margin/notional in USD: `Dim_Position.InitialAmountCents / 100`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Position.InitialAmountCents) |
 | 8 | Regulation_on_Open | tinyint | YES | Regulation ID at open (`Dim_Position.RegulationIDOnOpen`). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Position.RegulationIDOnOpen) |
-| 9 | Current_IsSettled | int | YES | Settlement flag from `BI_DB_PositionPnL.IsSettled` on run date. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, BI_DB_PositionPnL.IsSettled) |
+| 9 | Current_IsSettled | int | YES | 1 = real asset, 0 = CFD asset. From `BI_DB_PositionPnL.IsSettled` on run date. (Tier 5 — Expert Review) |
 | 10 | UpdateDate | datetime | YES | Load timestamp `GETDATE()` on insert. (Tier 3 -- SP_Finance_Non_US_Settlement_Report, GETDATE()) |
 | 11 | CloseOccurred | datetime | YES | Close event timestamp from `Dim_Position`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Position.CloseOccurred) |
 | 12 | CloseEOM | date | YES | Month-end date of close (`EOMONTH(CloseOccurred)`). (Tier 2 -- SP_Finance_Non_US_Settlement_Report, EOMONTH(Dim_Position.CloseOccurred)) |

@@ -108,7 +108,7 @@ One row per **Date × PositionID** for each Islamic-eligible futures position op
 | ExchangeID | int | Always 0 — not used in this SP | Tier 2 | Hardcoded; no ExchangeInfo join |
 | IsBuy | int | 1=long, 0=short | Tier 1 | From Dim_Position |
 | Leverage | int | Position leverage | Tier 1 | From Dim_Position |
-| IsSettled | int | 0 for CFD positions | Tier 1 | From Dim_Position |
+| IsSettled | int | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) | Tier 5 — Expert Review | From Dim_Position |
 | AmountInUnitsDecimal | decimal(16,6) | Position size in instrument units | Tier 1 | From Dim_Position |
 | Days_Open | int | Effective days open (Count_Fri rule) | Tier 2 | SP-computed from Dim_Date |
 | Days_To_Charge | int | 3 on Fri, 1 on Mon–Thu, 0 weekend | Tier 2 | SP-computed |

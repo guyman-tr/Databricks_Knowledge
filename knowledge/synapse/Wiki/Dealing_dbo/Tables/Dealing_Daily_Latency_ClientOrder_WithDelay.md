@@ -55,7 +55,7 @@ Position-level latency detail for **orders with execution delay** — a filtered
 | RequestTimeFromEMS | datetime | EMS-side request timestamp. (Tier 2 — CopyFromLake.eToroLogs_Real_Hedge_EMSOrders) |
 | ExecutionID | int | EMS execution record ID. (Tier 2 — DWH_dbo.Dim_Position) |
 | CID | int | Client identifier. (Tier 2 — DWH_dbo.Dim_Position) |
-| IsSettled | int | 1 if position is settled (real stock). Note: `int` here vs `bit` in AllPositions. (Tier 2 — DWH_dbo.Dim_Position) |
+| IsSettled | int | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | PnLVersion | int | P&L calculation version identifier. Indicates which pricing methodology was applied. (Tier 2 — DWH_dbo.Dim_Position) |
 | OrderID | int | Order identifier that triggered this position. (Tier 2 — DWH_dbo.Dim_Position) |
 | ClientToExecutionLatency | int | ms from RequestOccurred to ExecutionTime. Primary latency KPI. Floored at 0. (Tier 2 — computed) |

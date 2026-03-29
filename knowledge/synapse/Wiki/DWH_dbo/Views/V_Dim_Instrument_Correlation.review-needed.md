@@ -1,23 +1,14 @@
 # Review Sidecar — DWH_dbo.V_Dim_Instrument_Correlation
 
-## Confidence Summary
+## Unverified Claims (Tier 3-4)
 
-| Tier | Count | Description |
-|------|-------|-------------|
-| Tier 2 | 10 | All columns — from view DDL and prior correlation architecture docs |
+No Tier 3-4 claims — all columns inherited from Dim_Instrument_Correlation_UnionedPartitions wiki (Tier 1).
 
-## Unverified Claims
+## Open Questions
 
-| # | Claim | Source | Confidence |
-|---|-------|--------|------------|
-| 1 | Data before 20250202 is already full matrix (not half-matrix) | View logic inference | Medium — needs verification |
+1. **Hardcoded date split**: `20250202` marks the half-matrix cutover in `Dim_Instrument_Correlation_Active`. Verify whether this date is still relevant or if the Active table has been fully migrated to half-matrix format.
+2. **Dim_Instrument_Correlation_Active vs UnionedPartitions**: This view reads from a separate `Active` table, not through the UnionedPartitions view. Confirm whether `Active` is populated independently or is a synonym/subset.
 
 ## Reviewer Corrections
 
-*(None yet — pending reviewer pass)*
-
-## Quality Breakdown
-
-| Dimension | Score | Notes |
-|-----------|-------|-------|
-| **Overall** | **7.5/10** | |
+*(Empty — awaiting reviewer input)*

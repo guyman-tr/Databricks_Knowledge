@@ -89,7 +89,7 @@ At documentation time the table held on the order of **~39.6 million rows** from
 | 23 | FX_Bid | decimal(16,6) | YES | **FX bid** rate for **USD conversion** of instrument prices. (Tier 2 — DDL / schema inference) |
 | 24 | InstrumentTypeID | int | YES | **Instrument type** code — expect **indices** type ids. (Tier 2 — DDL / schema inference) |
 | 25 | HedgeServerID | int | YES | **Hedge server** identifier for this NOP observation. (Tier 2 — DDL / schema inference) |
-| 26 | IsSettled | int | YES | **Settlement / boundary flag** — documented as **1** settled vs **0** open at boundary; **confirm SME meaning**. (Tier 2 — DDL / schema inference) |
+| 26 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 
 ## 5. Lineage
 

@@ -37,7 +37,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 A
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN Ask COMMENT 'Ask price at snapshot time';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN ConversionRate COMMENT 'FX rate to USD';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UnitsNOP COMMENT 'Current net open position in units';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN IsSettled COMMENT 'Settlement flag';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UnitsNOP+1%` … `UnitsNOP+900% COMMENT 'Simulated NOP value if price increases by X% (15 tiers: 1,2,3,4,5,10,15,20,25,30,35,40,50,100,900)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UnitsNOP-1%` … `UnitsNOP-100% COMMENT 'Simulated NOP value if price decreases by X% (11 tiers: 1,2,3,4,5,10,15,20,25,50,100)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UpdateDate COMMENT 'ETL timestamp (2024-06-02 08:02:49)';

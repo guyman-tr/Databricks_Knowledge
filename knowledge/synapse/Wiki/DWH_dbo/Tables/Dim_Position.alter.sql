@@ -116,8 +116,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPar
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseChild COMMENT '1=this position is the child (remainder) of a partial close event. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsPartialCloseChildFromReOpen COMMENT '1=partial close child that was created via a ReOpen flow. (Tier 4 - [UNVERIFIED])';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN CommissionOnCloseOrig COMMENT 'Original CommissionOnClose before reopen adjustments. ETL: CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettled COMMENT 'LEGACY: 1 = real stock, 0 = CFD. NOT settlement complete. Predates SettlementTypeID. (Tier 1 — Trade.PositionTbl)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettledOnOpen COMMENT '1=position was settled at the time of open (pre-settlement flag). (Tier 4 - [UNVERIFIED])';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN IsSettledOnOpen COMMENT '1 = real asset, 0 = CFD asset. Value at position open (snapshot); same 0/1 encoding as IsSettled. (Tier 5 — Expert Review)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RedeemStatus COMMENT 'Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN RedeemID COMMENT 'Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position ALTER COLUMN FullCommissionOnCloseOrig COMMENT 'Original FullCommissionOnClose before reopen. ETL default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse)';

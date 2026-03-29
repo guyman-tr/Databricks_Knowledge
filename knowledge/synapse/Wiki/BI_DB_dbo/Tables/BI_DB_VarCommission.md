@@ -44,7 +44,7 @@ Commission revenue has two components: **FullCommission** (the fixed commission 
 | 3 | InstrumentType | varchar(50) | YES | Instrument type from Dim_Instrument.InstrumentType. Values: "Stocks", "Currencies", "Indices", "Commodities", "Crypto", "ETFs". (Tier 2 -- SP_VarCommission, Dim_Instrument.InstrumentType) |
 | 4 | CalendarYearMonth | char(7) | YES | Year-month from Dim_Date.CalendarYearMonth. Format: "2025-04". (Tier 2 -- SP_VarCommission, Dim_Date.CalendarYearMonth) |
 | 5 | MonthName | varchar(10) | YES | Month name from Dim_Date.MonthName. Values: "January", "February", etc. (Tier 2 -- SP_VarCommission, Dim_Date.MonthName) |
-| 6 | IsSettled | int | YES | Settlement flag from Dim_Position. 1 = real/settled, 0 = CFD. (Tier 2 -- SP_VarCommission, Dim_Position.IsSettled) |
+| 6 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. From Dim_Position.IsSettled. (Tier 5 — Expert Review) |
 | 7 | FullCommission | money | YES | Total fixed commission charged. Combines opening (FullCommissionByUnits) and closing (FullCommissionOnClose) commissions. (Tier 2 -- SP_VarCommission, Dim_Position) |
 | 8 | VarCommission | money | YES | Total spread-based commission (variable). `Units * Spread * USDRate` for both openings and closings. (Tier 2 -- SP_VarCommission, computed from Dim_Position forex fields) |
 | 9 | VarCommission_Openings | money | YES | Spread-based commission from positions opened on this date only. (Tier 2 -- SP_VarCommission, computed) |

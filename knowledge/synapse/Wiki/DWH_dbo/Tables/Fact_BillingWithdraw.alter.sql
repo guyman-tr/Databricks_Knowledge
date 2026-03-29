@@ -24,7 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN Column COMMENT 'Description';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN CID COMMENT 'Customer ID. FK to Customer.CustomerStatic. (Tier 1 — Billing.Withdraw)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN WithdrawID COMMENT 'Withdrawal request identifier. Primary key, IDENTITY starting at 1. HASH distribution key and clustered index column. (Tier 1 — Billing.Withdraw)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN CurrencyID COMMENT 'Currency of the withdrawal amount. FK to Dictionary.Currency. (Tier 1 — Billing.Withdraw)';
@@ -110,7 +109,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLU
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN CardCategory COMMENT 'Card category (Debit, Credit, Prepaid, etc.) looked up from BIN code via post-load enrichment JOIN to Dim_CountryBin.CardCategory. NULL when BIN code not found. (Tier 2 — SP_Fact_BillingWithdraw)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN Column SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN CID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN WithdrawID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN CurrencyID SET TAGS ('pii' = 'none');

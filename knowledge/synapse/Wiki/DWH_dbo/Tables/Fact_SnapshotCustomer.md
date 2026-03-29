@@ -12,7 +12,7 @@
 | **Synapse Distribution** | HASH(RealCID) |
 | **Synapse Index** | CLUSTERED COLUMNSTORE INDEX + NCI(RealCID ASC) |
 | | |
-| **UC Target** | Not directly exported. V_Fact_SnapshotCustomer_FromDateID view is exported (generic_id=1115) |
+| **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` (masked; matches `_generic_pipeline_mapping.json` generic_id=1115, `business_group` DWH). Unmasked PII export: `main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid`. |
 | **UC Format** | delta |
 | **UC Partitioned By** | N/A (view is unpartitioned) |
 | **UC Table Type** | Two UC targets: `pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid` (unmasked) + `dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` (masked) |

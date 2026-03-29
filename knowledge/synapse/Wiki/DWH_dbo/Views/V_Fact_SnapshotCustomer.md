@@ -26,10 +26,39 @@ JOIN DWH_dbo.Dim_Date d ON d.DateKey BETWEEN FromDateID AND ToDateID
 
 ## 4. Elements
 
-| # | Column | Source | Description |
-|---|--------|--------|-------------|
-| 1 | `DateKey` | Dim_Date.DateKey | Specific date within the snapshot range (YYYYMMDD integer). One row per day per customer. (Tier 2 — view DDL) |
-| 2+ | All Fact_SnapshotCustomer columns | `a.*` | See [Fact_SnapshotCustomer.md](../Tables/Fact_SnapshotCustomer.md). (Tier 2 — inherited) |
+| # | Column | Type | Source | Description |
+|---|--------|------|--------|-------------|
+| 1 | DateKey | int | Dim_Date.DateKey | Specific date within the snapshot range (YYYYMMDD integer). One row per day per customer. (Tier 2 — view DDL) |
+| 2 | GCID | int | Fact_SnapshotCustomer.GCID | Global Customer ID — cross-platform identifier linking RealCID to demo and external systems. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 3 | RealCID | int | Fact_SnapshotCustomer.RealCID | Real (funded) customer ID. Hash distribution key. Primary customer identifier. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 4 | DemoCID | int | Fact_SnapshotCustomer.DemoCID | [UNVERIFIED] Legacy: Demo account customer ID. NOT populated by current SP. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 5 | CustomerChangeTypeID | tinyint | Fact_SnapshotCustomer.CustomerChangeTypeID | [UNVERIFIED] Legacy: type of change that created this snapshot row. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 6 | CurentValue | int | Fact_SnapshotCustomer.CurentValue | [UNVERIFIED] Legacy: current value of changed attribute. NOT populated. Typo in name ("Curent"). (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 7 | PreviousValue | int | Fact_SnapshotCustomer.PreviousValue | [UNVERIFIED] Legacy: previous value of changed attribute. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 8 | CountryID | int | Fact_SnapshotCustomer.CountryID | Customer's registered country. FK to Dim_Country. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 9 | LabelID | int | Fact_SnapshotCustomer.LabelID | Brand/label (e.g., eToro UK). FK to Dim_Label. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 10 | LanguageID | int | Fact_SnapshotCustomer.LanguageID | Preferred interface language. FK to Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 11 | VerificationLevelID | int | Fact_SnapshotCustomer.VerificationLevelID | KYC verification level. FK to Dim_VerificationLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 12 | DocsOK | smallint | Fact_SnapshotCustomer.DocsOK | [UNVERIFIED] Legacy: documents verified flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 13 | PlayerStatusID | int | Fact_SnapshotCustomer.PlayerStatusID | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 14 | Bankruptcy | smallint | Fact_SnapshotCustomer.Bankruptcy | [UNVERIFIED] Legacy: bankruptcy flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 15 | RiskStatusID | int | Fact_SnapshotCustomer.RiskStatusID | Customer risk assessment status. FK to Dim_RiskStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 16 | RiskClassificationID | int | Fact_SnapshotCustomer.RiskClassificationID | Risk classification tier for compliance. FK to Dim_RiskClassification. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 17 | CommunicationLanguageID | int | Fact_SnapshotCustomer.CommunicationLanguageID | Preferred communication language. FK to Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 18 | PremiumAccount | smallint | Fact_SnapshotCustomer.PremiumAccount | [UNVERIFIED] Legacy: premium account flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 19 | Evangelist | smallint | Fact_SnapshotCustomer.Evangelist | [UNVERIFIED] Legacy: evangelist flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
+| 20 | GuruStatusID | smallint | Fact_SnapshotCustomer.GuruStatusID | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 21 | UpdateDate | datetime | Fact_SnapshotCustomer.UpdateDate | DWH load timestamp. Not the customer event date. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 22 | RegulationID | tinyint | Fact_SnapshotCustomer.RegulationID | Customer's regulatory jurisdiction. FK to Dim_Regulation. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 23 | AccountStatusID | int | Fact_SnapshotCustomer.AccountStatusID | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 24 | AccountManagerID | int | Fact_SnapshotCustomer.AccountManagerID | Assigned account manager. FK to Dim_Manager. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 25 | PlayerLevelID | int | Fact_SnapshotCustomer.PlayerLevelID | Account tier (4=demo). FK to Dim_PlayerLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 26 | AccountTypeID | int | Fact_SnapshotCustomer.AccountTypeID | Account type (7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 27 | DateRangeID | bigint | Fact_SnapshotCustomer.DateRangeID | SCD2 range key: 12-digit bigint. Join to Dim_Range for FromDateID/ToDateID. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 28 | IsDepositor | bit | Fact_SnapshotCustomer.IsDepositor | 1 if customer has deposited. Never reverted to 0. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 29 | PendingClosureStatusID | tinyint | Fact_SnapshotCustomer.PendingClosureStatusID | Pending account closure status. FK to Dim_PendingClosureStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 30 | DocumentStatusID | int | Fact_SnapshotCustomer.DocumentStatusID | KYC document review status. FK to Dim_DocumentStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 31 | SuitabilityTestStatusID | int | Fact_SnapshotCustomer.SuitabilityTestStatusID | MiFID suitability test status. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
 
 ## 5. Access Patterns
 
@@ -40,4 +69,4 @@ WHERE CID = @CID AND DateKey BETWEEN @FromDate AND @ToDate;
 ```
 
 ---
-*Generated: 2026-03-19 | Quality: 7.5/10 | View delegates to Fact_SnapshotCustomer for column semantics*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Batch: 17 | 31 columns expanded (30 Tier 1 from Fact_SnapshotCustomer wiki + 1 DateKey) | Sources: SSDT DDL, Fact_SnapshotCustomer.md*

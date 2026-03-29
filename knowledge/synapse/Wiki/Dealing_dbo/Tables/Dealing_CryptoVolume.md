@@ -37,7 +37,7 @@ This table was designed to capture hourly crypto trading volumes across three pe
 | UpdateDate | datetime | Yes | ETL metadata: row write timestamp | T4 | Unknown |
 | MM_Crypto_Spot_Units | float | Yes | Market maker spot crypto units (separate from CFD) | T4 | Unknown |
 | MM_Crypto_Spot_Volume | float | Yes | Market maker spot crypto trade count | T4 | Unknown |
-| IsSettled | int | Yes | Settlement flag: 1=settled, 0=unsettled | T4 | Unknown |
+| IsSettled | int | Yes | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) | T4 | Unknown |
 
 ## 4. Relationships
 | Related Object | Relationship | Join Condition |

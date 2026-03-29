@@ -12,7 +12,7 @@
 | **Index** | CLUSTERED COLUMNSTORE; NCI on CID |
 | **Column Count** | 32 |
 | **Synapse Pool** | sql_dp_prod_we |
-| **UC Table** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_snapshotequity` |
+| **UC export** | Base table **Fact_SnapshotEquity** is not listed as its own `uc_table` in `_generic_pipeline_mapping.json` (this snapshot). Unity Catalog carries the **views**: `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity` (**V_Fact_SnapshotEquity**, generic_id=416, parquet) and `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid` (**V_Fact_SnapshotEquity_FromDateID**, generic_id=1121, delta). `V_Liabilities` and other consumers read equity through these (expanded dates / FromDateID). |
 | **Refresh** | Daily |
 | **ETL Pattern** | Multi-SP orchestration: staging extract → position aggregation → equity assembly → MERGE |
 

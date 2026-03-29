@@ -24,8 +24,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdi
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN ★★★ COMMENT '`(Tier 2 — SP_Apex_Recon)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN ★★ COMMENT '`(Tier 3 — live data)`';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN Date COMMENT 'Reporting date (@Date parameter). Clustered index key. (Tier 2 — SP_Apex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN InstrumentID COMMENT 'Instrument identifier. FK to DWH_dbo.Dim_Instrument. NULL when Apex reports a position eToro cannot match to an InstrumentID. (Tier 2 — SP_Apex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN InstrumentDisplayName COMMENT 'User-facing instrument name. From Dim_Instrument or Apex file. (Tier 2 — SP_Apex_Recon)';
@@ -47,8 +45,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdi
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN AccountNumber COMMENT 'Apex LP account number from #Fivetran mapping (lp_accounts). Identifies which specific Apex sub-account holds this position. (Tier 2 — SP_Apex_Recon)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN ★★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN ★★ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN Date SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN InstrumentDisplayName SET TAGS ('pii' = 'none');

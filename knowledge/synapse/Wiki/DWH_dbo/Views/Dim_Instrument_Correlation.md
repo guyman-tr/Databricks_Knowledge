@@ -134,18 +134,18 @@ _Pending — resolved during write-objects._
 
 ## 4. Elements
 
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 1 | DateID | int | NO | Date the correlation was computed for, in YYYYMMDD format. The correlation uses price data from 3 months before this date. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 2 | InstrumentID_a | int | NO | First instrument in the correlation pair. In the underlying storage, this is always <= InstrumentID_b; the view reconstructs both orderings. JOINs to Dim_Instrument.InstrumentID. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 3 | InstrumentID_b | int | NO | Second instrument in the correlation pair. Swapped with InstrumentID_a in the view's second UNION ALL leg. JOINs to Dim_Instrument.InstrumentID. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 4 | SampleSize | int | NO | Number of matching hourly price candle pairs used for the correlation computation. Higher = more statistically robust. Typically 2000+ for liquid instruments over 3 months. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 5 | StandardDeviation_a | decimal(38,20) | NO | Population standard deviation of hourly price changes for instrument A over the 3-month window. STDEVP(PriceChange_a). Swapped with StandardDeviation_b in the symmetric reconstruction. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 6 | StandardDeviation_b | decimal(38,20) | NO | Population standard deviation of hourly price changes for instrument B over the 3-month window. STDEVP(PriceChange_b). Swapped with StandardDeviation_a in the symmetric reconstruction. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 7 | Covariance | decimal(38,20) | NO | Sample covariance between price changes of instruments A and B. Formula: `SUM(a*b)/N - SUM(a)*SUM(b)/N²`. Positive = instruments move together; negative = opposite directions. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 8 | PearsonCorrelation | decimal(38,20) | YES | Pearson correlation coefficient: `Covariance / (StdDev_a * StdDev_b)`. Range: -1.0 (perfect inverse) to +1.0 (perfect correlation). NULL when either StdDev is zero (flat price). (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 9 | InsertDate | datetime | YES | Timestamp when the correlation row was first computed and inserted. Set to GETDATE() during ETL. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
-| 10 | UpdateDate | datetime | YES | Timestamp when the row was last updated. In practice, same as InsertDate since correlations are DELETE+INSERT per date, not MERGE. (Tier 2 — SP_Dim_Instrument_Correlation_FilterByInstrumentID) |
+| # | Column | Type | Nullable | Source | Description |
+|---|--------|------|----------|--------|-------------|
+| 1 | DateID | int | NO | UnionedPartitions.DateID + Archive.DateID | Integer date key in YYYYMMDD format identifying the calculation date for this correlation snapshot. Matches the @auxdate parameter passed to SP_Dim_Instrument_Correlation_Half_Records. Filter by this column for performance. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 2 | InstrumentID_a | int | NO | UnionedPartitions.InstrumentID_a (+ swapped _b) | ID of the first financial instrument in the pair. In the full-symmetric view, this can be any instrument (not limited to <= InstrumentID_b). Resolves to Dim_Currency.CurrencyID for the instrument name. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 3 | InstrumentID_b | int | NO | UnionedPartitions.InstrumentID_b (+ swapped _a) | ID of the second financial instrument in the pair. In the full-symmetric view, this can be any instrument (not limited to >= InstrumentID_a). Resolves to Dim_Currency.CurrencyID for the instrument name. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 4 | SampleSize | int | NO | UnionedPartitions.SampleSize + Archive.SampleSize | Number of hourly candle data points where both instruments had valid prices in the 3-month lookback window. Higher values = more reliable correlation estimate. Low values (< 100) indicate sparse data. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 5 | StandardDeviation_a | decimal(38,20) | NO | UnionedPartitions.StandardDeviation_a (+ swapped _b) | Population standard deviation of hourly price returns for InstrumentID_a over the 3-month window. Computed via STDEVP(PriceChange). Always > 0 (HAVING clause excludes zero-variance rows). Swapped with StandardDeviation_b in the symmetric reconstruction leg. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 6 | StandardDeviation_b | decimal(38,20) | NO | UnionedPartitions.StandardDeviation_b (+ swapped _a) | Population standard deviation of hourly price returns for InstrumentID_b over the 3-month window. Computed via STDEVP(PriceChange). Always > 0 (HAVING clause excludes zero-variance rows). Swapped with StandardDeviation_a in the symmetric reconstruction leg. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 7 | Covariance | decimal(38,20) | NO | UnionedPartitions.Covariance + Archive.Covariance | Raw covariance between the hourly price returns of the two instruments. Formula: sum(a*b)/n - (sum(a)*sum(b))/n^2. Used as numerator in PearsonCorrelation formula. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 8 | PearsonCorrelation | decimal(38,20) | YES | UnionedPartitions.PearsonCorrelation + Archive.PearsonCorrelation | Pearson correlation coefficient between the two instruments' hourly price returns over the 3-month window. Range -1.0 (perfect negative) to +1.0 (perfect positive). 0 = no linear correlation. Formula: Covariance / (StandardDeviation_a * StandardDeviation_b). (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 9 | InsertDate | datetime | YES | UnionedPartitions.InsertDate + Archive.InsertDate | Timestamp when the correlation row was first computed. Set to GETDATE() by the ETL SP. (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
+| 10 | UpdateDate | datetime | YES | UnionedPartitions.UpdateDate + Archive.UpdateDate | Timestamp when the correlation row was last updated. Set to GETDATE() by the ETL SP (same as InsertDate on initial load; may differ on re-computation). (Tier 1 — inherited from Dim_Instrument_Correlation_UnionedPartitions wiki) |
 
 ---
 
@@ -244,6 +244,6 @@ No Atlassian sources searched — DWH-internal computation with no external busi
 
 ---
 
-*Generated: 2026-03-19 | Quality: 8.0/10 (★★★★☆) | Phases: 7/14 (view — P2,P3 skipped, no Atlassian needed)*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Phases: 7/14 (view — P2,P3 skipped) | Batch: 16*
 *Tiers: 0 T1, 10 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 10/10, Relationships: 8/10, Sources: 8/10*
 *Object: DWH_dbo.Dim_Instrument_Correlation | Type: View | Production Source: DWH-computed from price candles*

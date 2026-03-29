@@ -24,34 +24,34 @@ All columns use `ISNULL(column, 0)` to replace NULLs with zero, ensuring clean a
 
 ## 2. Elements
 
-| # | Column | Type | Description |
-|---|--------|------|-------------|
-| 1 | GCID | int | Global Customer ID — unique cross-platform identifier. ISNULL → 0. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 2 | DateID | int | Calendar date in YYYYMMDD format from V_M2M_Date_DateRange. Not from Fact_SnapshotCustomer directly. (Tier 2 — view DDL) |
-| 3 | RealCID | int | Real-money account Customer ID. ISNULL → 0. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 4 | DemoCID | int | Demo account Customer ID. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 5 | CustomerChangeTypeID | int | Change type that triggered this snapshot row. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 6 | CurentValue | int | Current attribute value at time of change. Legacy — always 0 in current ETL. Note typo: "Curent" not "Current". (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 7 | PreviousValue | int | Previous attribute value before change. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 8 | CountryID | int | Customer's registered country. FK → Dim_Country. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 9 | LabelID | int | Business label/brand the customer belongs to. FK → Dim_Label. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 10 | LanguageID | int | Customer's preferred language. FK → Dim_Language. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 11 | VerificationLevelID | int | KYC verification level. FK → Dim_VerificationLevel. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 12 | DocsOK | int | Document verification status. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 13 | PlayerStatusID | int | Current account status (active, blocked, closed, etc.). FK → Dim_PlayerStatus. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 14 | Bankruptcy | int | Bankruptcy flag. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 15 | RiskStatusID | int | Risk assessment status. FK → Dim_RiskStatus. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 16 | RiskClassificationID | int | Risk classification tier. FK → Dim_RiskClassification. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 17 | CommunicationLanguageID | int | Language used for customer communications. FK → Dim_Language. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 18 | PremiumAccount | int | Premium account flag. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 19 | Evangelist | int | Evangelist program flag. Legacy — always 0 in current ETL. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 20 | GuruStatusID | int | Popular Investor (PI) status. FK → Dim_GuruStatus. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 21 | RegulationID | int | Regulatory jurisdiction. FK → Dim_Regulation. Sourced from RegulationChangeLog, not BO. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 22 | AccountStatusID | int | Account lifecycle status. FK → Dim_AccountStatus. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 23 | AccountManagerID | int | Assigned account manager. FK → Dim_Manager. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 24 | PlayerLevelID | int | Gamification/tier level. FK → Dim_PlayerLevel. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 25 | AccountTypeID | int | Account type (Real=1, Demo=2, CopyFund=9, etc.). FK → Dim_AccountType. (Tier 1 — Fact_SnapshotCustomer wiki) |
-| 26 | IsDepositor | bit | Whether the customer has ever deposited. Not wrapped in ISNULL. (Tier 1 — Fact_SnapshotCustomer wiki) |
+| # | Column | Type | Source | Description |
+|---|--------|------|--------|-------------|
+| 1 | GCID | int | ISNULL(Fact_SnapshotCustomer.GCID, 0) | Global Customer ID — unique cross-platform identifier. ISNULL → 0 when NULL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 2 | DateID | int | V_M2M_Date_DateRange.DateKey | Calendar date in YYYYMMDD format from the date range expansion view. Not from Fact_SnapshotCustomer directly — derived via DateRangeID JOIN. (Tier 2 — view DDL) |
+| 3 | RealCID | int | ISNULL(Fact_SnapshotCustomer.RealCID, 0) | Real-money account Customer ID. ISNULL → 0. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 4 | DemoCID | int | ISNULL(Fact_SnapshotCustomer.DemoCID, 0) | Demo account Customer ID. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 5 | CustomerChangeTypeID | int | ISNULL(Fact_SnapshotCustomer.CustomerChangeTypeID, 0) | Change type that triggered this snapshot row. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 6 | CurentValue | int | ISNULL(Fact_SnapshotCustomer.CurentValue, 0) | Current attribute value at time of change. Legacy — always 0 in current ETL. Note typo: "Curent" not "Current". (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 7 | PreviousValue | int | ISNULL(Fact_SnapshotCustomer.PreviousValue, 0) | Previous attribute value before change. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 8 | CountryID | int | ISNULL(Fact_SnapshotCustomer.CountryID, 0) | Customer's registered country. FK → Dim_Country. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 9 | LabelID | int | ISNULL(Fact_SnapshotCustomer.LabelID, 0) | Business label/brand the customer belongs to. FK → Dim_Label. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 10 | LanguageID | int | ISNULL(Fact_SnapshotCustomer.LanguageID, 0) | Customer's preferred language. FK → Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 11 | VerificationLevelID | int | ISNULL(Fact_SnapshotCustomer.VerificationLevelID, 0) | KYC verification level. FK → Dim_VerificationLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 12 | DocsOK | int | ISNULL(Fact_SnapshotCustomer.DocsOK, 0) | Document verification status. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 13 | PlayerStatusID | int | ISNULL(Fact_SnapshotCustomer.PlayerStatusID, 0) | Current account status (active, blocked, closed, etc.). FK → Dim_PlayerStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 14 | Bankruptcy | int | ISNULL(Fact_SnapshotCustomer.Bankruptcy, 0) | Bankruptcy flag. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 15 | RiskStatusID | int | ISNULL(Fact_SnapshotCustomer.RiskStatusID, 0) | Risk assessment status. FK → Dim_RiskStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 16 | RiskClassificationID | int | ISNULL(Fact_SnapshotCustomer.RiskClassificationID, 0) | Risk classification tier. FK → Dim_RiskClassification. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 17 | CommunicationLanguageID | int | ISNULL(Fact_SnapshotCustomer.CommunicationLanguageID, 0) | Language used for customer communications. FK → Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 18 | PremiumAccount | int | ISNULL(Fact_SnapshotCustomer.PremiumAccount, 0) | Premium account flag. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 19 | Evangelist | int | ISNULL(Fact_SnapshotCustomer.Evangelist, 0) | Evangelist program flag. Legacy — always 0 in current ETL. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 20 | GuruStatusID | int | ISNULL(Fact_SnapshotCustomer.GuruStatusID, 0) | Popular Investor (PI) status. FK → Dim_GuruStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 21 | RegulationID | int | ISNULL(Fact_SnapshotCustomer.RegulationID, 0) | Regulatory jurisdiction. FK → Dim_Regulation. Sourced from RegulationChangeLog, not BO. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 22 | AccountStatusID | int | ISNULL(Fact_SnapshotCustomer.AccountStatusID, 0) | Account lifecycle status. FK → Dim_AccountStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 23 | AccountManagerID | int | ISNULL(Fact_SnapshotCustomer.AccountManagerID, 0) | Assigned account manager. FK → Dim_Manager. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 24 | PlayerLevelID | int | ISNULL(Fact_SnapshotCustomer.PlayerLevelID, 0) | Gamification/tier level. FK → Dim_PlayerLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 25 | AccountTypeID | int | ISNULL(Fact_SnapshotCustomer.AccountTypeID, 0) | Account type (Real=1, Demo=2, CopyFund=9, etc.). FK → Dim_AccountType. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 26 | IsDepositor | bit | Fact_SnapshotCustomer.IsDepositor | Whether the customer has ever deposited. Not wrapped in ISNULL — only column passed through without null coercion. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
 
 ---
 
@@ -152,6 +152,6 @@ GROUP BY RegulationID;
 
 ---
 
-*Generated: 2026-03-19 | Quality: 8.2/10 (★★★★☆) | Phases: 9/14*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Phases: 9/14 | Batch: 16*
 *Tiers: 23 T1, 2 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 9/10, Logic: 8/10, Relationships: 9/10, Sources: 7/10*
 *Object: DWH_dbo.V_Customers | Type: View | Base Tables: DWH_dbo.Fact_SnapshotCustomer, DWH_dbo.V_M2M_Date_DateRange*

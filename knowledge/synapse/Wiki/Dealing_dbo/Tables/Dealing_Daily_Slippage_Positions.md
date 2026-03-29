@@ -98,7 +98,7 @@ Read-only checks executed **2026-03-21**.
 | 34 | OpenSession | int | YES | Market session identifier at the time of the action. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.OpenSession) |
 | 35 | Volume | int | YES | Trading volume associated with the position action. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.Volume) |
 | 36 | Regulation | varchar(50) | YES | Customer regulatory jurisdiction. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Regulation.Name) |
-| 37 | IsSettled | tinyint | YES | 1=Real stocks, 0=CFD position. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.IsSettled) |
+| 37 | IsSettled | tinyint | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 
 ---
 

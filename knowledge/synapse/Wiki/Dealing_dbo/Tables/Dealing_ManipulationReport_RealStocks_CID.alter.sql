@@ -24,8 +24,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationrep
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN ★★★ COMMENT '`(Tier 2 — SP_ManipulationReport_RealStocks)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN ★★ COMMENT '`(Tier 3 — live data)`';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN Date COMMENT 'The reporting date. Matches `@dd` parameter. Clustered index key. Weekdays only. (Tier 2 — SP_ManipulationReport_RealStocks)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN CID COMMENT 'Customer ID — the flagged customer''s account identifier. FK to DWH_dbo.Dim_Customer. **PII field.** (Tier 2 — SP_ManipulationReport_RealStocks)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN UserName COMMENT 'The customer''s eToro username. **PII field.** Sourced from Dim_Customer or Fact_SnapshotCustomer via #All_Positions_Data. (Tier 2 — SP_ManipulationReport_RealStocks)';
@@ -46,8 +44,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationrep
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN UpdateDate COMMENT 'ETL metadata: `GETDATE()` at time SP ran. Not a business timestamp. (Tier 2 — SP_ManipulationReport_RealStocks)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN ★★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN ★★ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN Date SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN CID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid ALTER COLUMN UserName SET TAGS ('pii' = 'none');

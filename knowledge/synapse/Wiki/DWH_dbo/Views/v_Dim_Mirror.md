@@ -74,13 +74,35 @@ Since this is `SELECT *` over an 11.1M-row table, always add filters when queryi
 
 ## 4. Elements
 
-All columns from `DWH_dbo.Dim_Mirror` are inherited by `SELECT *`. For full element descriptions, see [DWH_dbo.Dim_Mirror § Elements](../Tables/Dim_Mirror.md).
-
-The view adds one column beyond Dim_Mirror:
-
-| # | Element | Type | Description |
-|---|---------|------|-------------|
-| +1 | snapshot_date | date | Current calendar date at query execution time. `CAST(GETDATE() AS DATE)`. Used as a daily snapshot label for dashboards and snapshot exports. Changes on every query invocation — not a stable historical timestamp. (Tier 2 — view DDL) |
+| # | Column | Type | Nullable | Source | Description |
+|---|--------|------|----------|--------|-------------|
+| 1 | MirrorID | int | NO | Dim_Mirror.MirrorID | Primary key. Allocated by identity on INSERT via Trade.RegisterMirror. Referenced by Trade.Position.MirrorID, History.Mirror. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 2 | CID | int | NO | Dim_Mirror.CID | Copier customer ID. The user who allocates money to follow the leader. Trade.ValidateNumOfActiveMirrors counts mirrors per CID. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 3 | ParentCID | int | YES | Dim_Mirror.ParentCID | Leader customer ID. The user whose trades are copied. Trade.GetActiveCopiersForParents filters by ParentCID. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 4 | ParentUserName | varchar(50) | YES | Dim_Mirror.ParentUserName | Leader username at mirror creation. Denormalized for display; Trade.RegisterMirror passes from caller. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 5 | Amount | numeric(16,8) | YES | Dim_Mirror.Amount | Allocation amount in dollars. Credit allocated to this mirror. Trade.RegisterMirror sets from @AmountInCents/100. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 6 | OpenOccurred | datetime | YES | Dim_Mirror.OpenOccurred | Datetime the copy relationship was opened (started). From Trade.Mirror.Occurred. Covers back to 2011-06-13 (first CopyTrader launch). (Tier 1 — inherited from Dim_Mirror wiki) |
+| 7 | OpenDateID | int | YES | Dim_Mirror.OpenDateID | yyyymmdd integer of OpenOccurred. Clustered index key -- use for efficient date-range filtering. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 8 | CloseOccurred | datetime | YES | Dim_Mirror.CloseOccurred | Datetime the copy relationship was closed. '1900-01-01 00:00:00' sentinel = still open (CloseDateID=0). (Tier 1 — inherited from Dim_Mirror wiki) |
+| 9 | CloseDateID | int | YES | Dim_Mirror.CloseDateID | yyyymmdd integer of CloseOccurred. 0 = open mirror (active); > 0 = closed on that date. Primary filter for open/closed status. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 10 | MirrorTypeID | int | YES | Dim_Mirror.MirrorTypeID | 1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType). Determines mirror behavior. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 11 | CloseMirrorActionType | int | YES | Dim_Mirror.CloseMirrorActionType | Why mirror closed: 0=Customer, 1=Stop Loss, 2=BSL, 3=Manual Liquidation, 4=BackOffice, 5=Customer Detach, 6=BackOffice Detach. NULL when active. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 12 | IsActive | tinyint | YES | Dim_Mirror.IsActive | 1=mirror is live (copier follows leader), 0=mirror closed. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 13 | IsOpenOpen | bit | YES | Dim_Mirror.IsOpenOpen | Flag for open-on-open copy behavior. NULL in sample data. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 14 | PauseCopy | bit | YES | Dim_Mirror.PauseCopy | 0=copying, 1=paused. No new positions when paused. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 15 | MirrorSL | money | YES | Dim_Mirror.MirrorSL | Absolute mirror stop-loss threshold in dollars. Trade.RegisterMirror validates against MirrorSLPercentage. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 16 | MirrorSLPercentage | money | YES | Dim_Mirror.MirrorSLPercentage | MSL as percentage. Default 2. Trade.RegisterMirror validates MirrorSL = Amount * (MirrorSLPercentage/100). (Tier 1 — inherited from Dim_Mirror wiki) |
+| 17 | RealizedEquity | money | YES | Dim_Mirror.RealizedEquity | Realized equity for this mirror. Used with MirrorCalculationType=0 for MSL. Updated on position close. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 18 | InitialInvestment | money | YES | Dim_Mirror.InitialInvestment | Initial allocation. Trade.RegisterMirror sets from @AmountInDollars or @InitialInvestment. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 19 | WithdrawalSummary | money | YES | Dim_Mirror.WithdrawalSummary | Sum of withdrawals from mirror. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 20 | DepositSummary | money | YES | Dim_Mirror.DepositSummary | Sum of deposits into mirror. Trade.RegisterMirror accepts from caller. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 21 | RealziedPnL | money | YES | Dim_Mirror.RealziedPnL | Net realized profit/loss of the mirror in USD. NOTE: column name has a typo ('Realzied' not 'Realized'). For closed mirrors: final P&L from History.Mirror.NetProfit. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 22 | GuruTPV | money | YES | Dim_Mirror.GuruTPV | Guru/leader take-profit value. NULL in sample. Optional override. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 23 | UseCopyDividend | tinyint | YES | Dim_Mirror.UseCopyDividend | 1=copy dividends to copier, 0=do not. Trade.MirrorDividendWithdrawal checks. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 24 | UpdateDate | datetime | YES | Dim_Mirror.UpdateDate | ETL run timestamp from the last SP update that touched this row. Set to GETDATE() on each UPDATE/INSERT by the SP. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 25 | SessionID | bigint | YES | Dim_Mirror.SessionID | Session identifier from History.Mirror.SessionID at the mirror open event. Links the mirror opening to a specific trading session. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 26 | IsCopyFundMirror | int | YES | Dim_Mirror.IsCopyFundMirror | 1 if the ParentCID is an eToro Fund account (BackOffice AccountTypeID=9); 0 or NULL for regular customer-to-customer copies. (Tier 1 — inherited from Dim_Mirror wiki) |
+| 27 | snapshot_date | date | NO | Computed: CAST(GETDATE() AS DATE) | Current calendar date at query execution time. Used as a daily snapshot label for dashboards and snapshot exports. Non-deterministic — changes on every query invocation. (Tier 2 — view DDL) |
 
 ---
 
@@ -160,6 +182,4 @@ SELECT COUNT_BIG(*) FROM [DWH_dbo].[Dim_Mirror]      -- baseline
 
 ---
 
-*Generated: 2026-03-19 | Quality: 7.8/10 | Phases: 5/14 (simple view — P2/P3/P4/P8/P9/P9B/P10 not applicable)*
-*Tiers: 0 T1, 1 T2 (view DDL), 0 T3, 0 T4-Inferred | Elements: 8.0/10, Logic: 7.0/10, Relationships: 7.0/10, Sources: 9/10*
-*Object: DWH_dbo.v_Dim_Mirror | Type: View | Production Source: DWH_dbo.Dim_Mirror (passthrough + snapshot_date)*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Batch: 17 | 27 columns expanded (26 Tier 1 inherited from Dim_Mirror wiki + 1 computed) | Sources: SSDT DDL, Dim_Mirror.md*

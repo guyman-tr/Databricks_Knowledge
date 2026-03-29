@@ -60,7 +60,7 @@ Daily aggregate latency report for eToro trade execution — covers positions op
 | Avg Routed Latency (millisec) | int | Average ClientToRouted latency (ms). Complements `Avg Latency` — shows how quickly orders are routed to the LP vs. fully filled. Added SR-274939 Oct 2024. (Tier 2 — SP_Latency_Report) |
 | Max Routed Latency (millisec) | int | Maximum ClientToRouted latency (ms) in the group. Added SR-274939 Oct 2024. (Tier 2 — SP_Latency_Report) |
 | Sum Routed Latency (millisec) | bigint | Sum of ClientToRouted latencies in the group. Added SR-274939 Oct 2024. (Tier 2 — SP_Latency_Report) |
-| IsSettled | tinyint | Flag: 1 if the position was settled (i.e., traded on a real stock exchange). Sourced from `DWH_dbo.Dim_Position.IsSettled`. Added SR-276858 Oct 2024. (Tier 2 — DWH_dbo.Dim_Position) |
+| IsSettled | tinyint | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 
 ## 5. Business Rules & Relationships
 

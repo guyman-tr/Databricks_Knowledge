@@ -138,7 +138,7 @@ _Pending — resolved during write-objects._
 | 2 | Date | date | YES | Calendar date. `CONVERT(DATE, CONVERT(VARCHAR(8), ftv.DateID), 112)`. Derived from DateID in SP. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
 | 3 | RealCID | int | YES | Customer identifier. Renamed from `Function_Trading_Volume_PositionLevel.CID`. Distribution key. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
 | 4 | InstrumentTypeID | int | YES | Instrument asset class. From `Dim_Instrument.InstrumentTypeID` via function. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 5 | IsSettled | int | YES | Settlement flag. 1=real/settled, 0=CFD. Direct from function → `Dim_Position.IsSettled`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
+| 5 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | 6 | IsCopy | int | YES | Copy-trade flag. `CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END` in function. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
 | 7 | IsBuy | int | YES | Trade direction. 1=buy/long, 0=sell/short. Direct from function → `Dim_Position.IsBuy`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
 | 8 | IsLeverage | int | YES | Leverage flag. `CASE WHEN ftv.Leverage > 1 THEN 1 ELSE 0 END`. Note: named `IsLeverage` (not `IsLeveraged`). (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |

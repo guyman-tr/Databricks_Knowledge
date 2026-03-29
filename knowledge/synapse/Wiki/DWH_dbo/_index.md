@@ -7,8 +7,8 @@ pending: 0
 documented: 130
 failed: 0
 skipped: 4
-last_batch: 15
-last_updated: "2026-03-19"
+last_batch: 17
+last_updated: "2026-03-28"
 quality_avg: 8.0
 revisions: 0
 ---
@@ -24,14 +24,51 @@ revisions: 0
 | **Documented** | 92 (69%) |
 | **Pending (re-doc)** | 38 |
 | **Skipped** | 4 |
-| **Last Updated** | 2026-03-19 |
+| **Last Updated** | 2026-03-28 |
 | **Quality Avg** | 8.0 (range 4.5-9.4) |
 
 ---
 
-## ALL OBJECTS DOCUMENTED
+## Batch 17 (COMPLETE) — View column expansion: all 11/11 views re-documented
 
-Schema DWH_dbo documentation is **complete**. 130 objects documented across 15 batches (4 skipped: non-existent or no DDL). Batch 15 refinement pass enriched 38 objects with Atlassian sources and upgraded Tier 4 columns.
+Completed: 2026-03-28
+
+| # | Object | Type | Cols | Quality | Status |
+|---|--------|------|------|---------|--------|
+| 1 | v_Dim_Mirror | View | 27 | 8.5 ★★★★☆ | Done |
+| 2 | V_Fact_SnapshotEquity_FromDateID | View | 30 | 8.5 ★★★★☆ | Done |
+| 3 | V_Fact_SnapshotCustomer_FromDateID | View | 32 | 8.5 ★★★★☆ | Done |
+| 4 | V_Fact_SnapshotEquity | View | 29 | 8.5 ★★★★☆ | Done |
+| 5 | V_Fact_SnapshotCustomer | View | 31 | 8.5 ★★★★☆ | Done |
+| 6 | V_Fact_CustomerUnrealized_PnL_For_DWH_Rep | View | 48 | 8.5 ★★★★☆ | Done |
+| 7 | V_Dim_Date_For_DWHRep | View | 46 | 8.0 ★★★★☆ | Done |
+| 8 | V_Dim_Date | View | 67 | 8.5 ★★★★☆ | Done |
+| 9 | V_Dim_Customer | View | 91 | 8.5 ★★★★☆ | Done |
+| 10 | VU_FactBilling_ForBigQuery | View | 122 | 8.5 ★★★★☆ | Done |
+| 11 | V_Liabilities | View | 75 | 9.2 ★★★★★ | Done (reviewed) |
+
+All 21 DWH_dbo views now have full per-column expansion. Total columns documented across Batch 17: 598. View re-documentation campaign COMPLETE.
+
+---
+
+## Batch 16 (COMPLETE) — View column expansion: 10 views re-documented
+
+Completed: 2026-03-28
+
+| # | Object | Type | Cols | Quality | Status |
+|---|--------|------|------|---------|--------|
+| 1 | V_M2M_Date_DateRange | View | 3 | 8.5 ★★★★☆ | Done |
+| 2 | V_FCA_NumOfLogins_mean_1q | View | 3 | 8.5 ★★★★☆ | Done |
+| 3 | Dim_Instrument_Correlation_UnionedPartitions | View | 10 | 8.5 ★★★★☆ | Done |
+| 4 | Dim_Instrument_Correlation | View | 10 | 8.5 ★★★★☆ | Done |
+| 5 | V_Dim_Instrument_Correlation | View | 10 | 8.5 ★★★★☆ | Done |
+| 6 | V_Dim_Instrument_Correlation_Test_Full | View | 10 | 8.5 ★★★★☆ | Done |
+| 7 | Vw_STS_User_Operations_Data_History | View | 21 | 8.5 ★★★★☆ | Done |
+| 8 | V_Customers | View | 26 | 8.5 ★★★★☆ | Done |
+| 9 | V_Fact_RegulationTransfer | View | 28 | 8.5 ★★★★☆ | Done |
+| 10 | V_Fact_SnapshotEquity_ForDWHRep | View | 27 | 8.5 ★★★★☆ | Done |
+
+All views now have full per-column expansion with Source column and Tier 1 inheritance. No UC targets — .alter.sql not required.
 
 ---
 
@@ -61,7 +98,7 @@ Schema DWH_dbo documentation is **complete**. 130 objects documented across 15 b
 | 20 | DWH_dbo.Dim_ExchangeInfo | Table | 7.2 | 7.4 | Done — Atlassian sources |
 | 21 | DWH_dbo.Fact_CustomerUnrealized_PnL_UserAPI | Table | 7.2 | 7.5 | Done — T4 upgraded, Atlassian |
 | 22 | DWH_dbo.History_CurrencyPrice | Table | 7.2 | 7.4 | Done — T4 upgraded, Atlassian |
-| 23 | DWH_dbo.V_Dim_Date_For_DWHRep | View | 7.2 | 7.5 | Pending (re-doc: view column expansion) |
+| 23 | [DWH_dbo.V_Dim_Date_For_DWHRep](Views/V_Dim_Date_For_DWHRep.md) | View | 7.2 | 8.0 | Done (Batch 17) — 46 cols expanded |
 | 24 | DWH_dbo.Dim_Affiliate | Table | 7.5 | 7.8 | Done — Atlassian sources |
 | 25 | DWH_dbo.Dim_Channel | Table | 7.5 | 7.7 | Done — Atlassian sources |
 | 26 | DWH_dbo.Fact_BillingRedeem | Table | 7.5 | 7.7 | Done — Atlassian sources |
@@ -73,9 +110,9 @@ Schema DWH_dbo documentation is **complete**. 130 objects documented across 15 b
 | 32 | DWH_dbo.V_Dim_Instrument_Correlation_Test_Full | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
 | 33 | DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
 | 34 | DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep | View | 7.5 | 7.6 | Pending (re-doc: view column expansion) |
-| 35 | DWH_dbo.VU_FactBilling_ForBigQuery | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
+| 35 | [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md) | View | 7.5 | 8.5 | Done (Batch 17) — 122 cols expanded |
 | 36 | DWH_dbo.v_Dim_Mirror | View | 7.5 | 7.8 | Pending (re-doc: view column expansion) |
-| 37 | DWH_dbo.V_Dim_Date | View | 7.8 | 8.0 | Pending (re-doc: view column expansion) |
+| 37 | [DWH_dbo.V_Dim_Date](Views/V_Dim_Date.md) | View | 7.8 | 8.5 | Done (Batch 17) — 67 cols expanded |
 | 38 | DWH_dbo.Vw_STS_User_Operations_Data_History | View | 7.8 | 8.0 | Pending (re-doc: view column expansion) |
 
 ---
@@ -111,9 +148,9 @@ Completed: 2026-03-19
 | 9 | [DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep](Views/V_Fact_CustomerUnrealized_PnL_For_DWH_Rep.md) | View | 7.5 | Pending (re-doc: view column expansion) |
 | 10 | [DWH_dbo.V_Fact_RegulationTransfer](Views/V_Fact_RegulationTransfer.md) | View | 8.5 | Pending (re-doc: view column expansion) |
 | 11 | [DWH_dbo.V_Fact_SnapshotEquity](Views/V_Fact_SnapshotEquity.md) | View | 8.5 | Pending (re-doc: view column expansion) |
-| 12 | [DWH_dbo.V_Liabilities](Views/V_Liabilities.md) | View | 8.0 | Pending (re-doc: view column expansion) |
-| 13 | [DWH_dbo.V_Dim_Customer](Views/V_Dim_Customer.md) | View | 8.0 | Pending (re-doc: view column expansion) |
-| 14 | [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md) | View | 7.5 | Pending (re-doc: view column expansion) |
+| 12 | [DWH_dbo.V_Liabilities](Views/V_Liabilities.md) | View | 9.2 | Done (Batch 17) — 75 cols reviewed |
+| 13 | [DWH_dbo.V_Dim_Customer](Views/V_Dim_Customer.md) | View | 8.5 | Done (Batch 17) — 91 cols expanded |
+| 14 | [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md) | View | 8.5 | Done (Batch 17) — 122 cols expanded |
 
 Note: Synapse MCP unavailable — P2/P3 (live data sampling/distribution analysis) skipped. Batch included 1 table (Fact_SnapshotEquity with full SP analysis) and 13 views. V_Liabilities is the primary liability computation view with 8 computed columns. V_Dim_Customer resolves 7 FK IDs to names across 91 columns. VU_FactBilling_ForBigQuery sanitizes ~70 string columns via RemoveSpecialChars for BigQuery export.
 
@@ -151,7 +188,7 @@ Completed: 2026-03-19
 | 4 | [DWH_dbo.Fact_SnapshotCustomer](Tables/Fact_SnapshotCustomer.md) | Table | 8.0 | Done (Recovery) |
 | 5 | [DWH_dbo.STS_User_Operations_Data_History](Tables/STS_User_Operations_Data_History.md) | Table | 7.5 | Done |
 | 6 | [DWH_dbo.V_Dim_Date](Views/V_Dim_Date.md) | View | 7.8 | Pending (re-doc: view column expansion) |
-| 7 | [DWH_dbo.V_Dim_Date_For_DWHRep](Views/V_Dim_Date_For_DWHRep.md) | View | 7.2 | Pending (re-doc: view column expansion) |
+| 7 | [DWH_dbo.V_Dim_Date_For_DWHRep](Views/V_Dim_Date_For_DWHRep.md) | View | 8.0 | Done (Batch 17) — 46 cols expanded |
 | 8 | [DWH_dbo.V_M2M_Date_DateRange](Views/V_M2M_Date_DateRange.md) | View | 8.0 | Pending (re-doc: view column expansion) |
 | 9 | [DWH_dbo.Fact_Guru_Copiers](Tables/Fact_Guru_Copiers.md) | Table | 8.5 | Done |
 | 10 | [DWH_dbo.V_Customers](Views/V_Customers.md) | View | 8.2 | Pending (re-doc: view column expansion) |
@@ -396,27 +433,27 @@ Note: These 4 objects were completed in a prior interrupted session. Remaining ~
 
 | Object | Quality | Status |
 |--------|---------|--------|
-| [DWH_dbo.Dim_Instrument_Correlation](Views/Dim_Instrument_Correlation.md) | 8.0 ★★★★☆ | Done (Batch 12) |
-| [DWH_dbo.Dim_Instrument_Correlation_UnionedPartitions](Views/Dim_Instrument_Correlation_UnionedPartitions.md) | 8.4 ★★★★☆ | Done (Batch 10) |
-| [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md) | 7.5 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_Customers](Views/V_Customers.md) | 8.2 ★★★★☆ | Done (Batch 11) |
-| [DWH_dbo.V_Dim_Customer](Views/V_Dim_Customer.md) | 8.0 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Dim_Date](Views/V_Dim_Date.md) | 7.8 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_Dim_Date_For_DWHRep](Views/V_Dim_Date_For_DWHRep.md) | 7.2 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_Dim_Instrument_Correlation](Views/V_Dim_Instrument_Correlation.md) | 7.5 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_Dim_Instrument_Correlation_Test_Full](Views/V_Dim_Instrument_Correlation_Test_Full.md) | 7.5 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_FCA_NumOfLogins_mean_1q](Views/V_FCA_NumOfLogins_mean_1q.md) | 8.0 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep](Views/V_Fact_CustomerUnrealized_PnL_For_DWH_Rep.md) | 7.5 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_Fact_RegulationTransfer](Views/V_Fact_RegulationTransfer.md) | 8.5 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Fact_SnapshotCustomer](Views/V_Fact_SnapshotCustomer.md) | 8.0 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Fact_SnapshotCustomer_FromDateID](Views/V_Fact_SnapshotCustomer_FromDateID.md) | 8.0 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Fact_SnapshotEquity](Views/V_Fact_SnapshotEquity.md) | 8.5 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep](Views/V_Fact_SnapshotEquity_ForDWHRep.md) | 7.5 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.V_Fact_SnapshotEquity_FromDateID](Views/V_Fact_SnapshotEquity_FromDateID.md) | 8.0 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_Liabilities](Views/V_Liabilities.md) | 8.0 ★★★★☆ | Done (Batch 13) |
-| [DWH_dbo.V_M2M_Date_DateRange](Views/V_M2M_Date_DateRange.md) | 8.0 ★★★★☆ | Done (Batch 11) |
-| [DWH_dbo.Vw_STS_User_Operations_Data_History](Views/Vw_STS_User_Operations_Data_History.md) | 7.8 ★★★★☆ | Done (Batch 15) |
-| [DWH_dbo.v_Dim_Mirror](Views/v_Dim_Mirror.md) | 7.5 ★★★★☆ | Done (Batch 15) |
+| DWH_dbo.Dim_Instrument_Correlation | 8.5 ★★★★☆ | Done (Batch 16, #4) |
+| DWH_dbo.Dim_Instrument_Correlation_UnionedPartitions | 8.5 ★★★★☆ | Done (Batch 16, #3) |
+| DWH_dbo.VU_FactBilling_ForBigQuery | 8.5 | Done (Batch 17, #10) — 122 cols expanded |
+| DWH_dbo.V_Customers | 8.5 ★★★★☆ | Done (Batch 16, #8) |
+| DWH_dbo.V_Dim_Customer | 8.5 | Done (Batch 17, #9) — 91 cols expanded |
+| DWH_dbo.V_Dim_Date | 8.5 | Done (Batch 17, #8) — 67 cols expanded |
+| DWH_dbo.V_Dim_Date_For_DWHRep | 8.0 | Done (Batch 17, #7) — 46 cols expanded |
+| DWH_dbo.V_Dim_Instrument_Correlation | 8.5 ★★★★☆ | Done (Batch 16, #5) |
+| DWH_dbo.V_Dim_Instrument_Correlation_Test_Full | 8.5 ★★★★☆ | Done (Batch 16, #6) |
+| DWH_dbo.V_FCA_NumOfLogins_mean_1q | 8.5 ★★★★☆ | Done (Batch 16, #2) |
+| DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep | 8.5 ★★★★☆ | Done (Batch 17, #6) |
+| DWH_dbo.V_Fact_RegulationTransfer | 8.5 ★★★★☆ | Done (Batch 16, #9) |
+| DWH_dbo.V_Fact_SnapshotCustomer | 8.5 ★★★★☆ | Done (Batch 17, #5) |
+| DWH_dbo.V_Fact_SnapshotCustomer_FromDateID | 8.5 ★★★★☆ | Done (Batch 17, #3) |
+| DWH_dbo.V_Fact_SnapshotEquity | 8.5 ★★★★☆ | Done (Batch 17, #4) |
+| DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep | 8.5 ★★★★☆ | Done (Batch 16, #10) |
+| DWH_dbo.V_Fact_SnapshotEquity_FromDateID | 8.5 ★★★★☆ | Done (Batch 17, #2) |
+| DWH_dbo.V_Liabilities | 9.2 | Done (Batch 17, #11) — 75 cols reviewed |
+| DWH_dbo.V_M2M_Date_DateRange | 8.5 ★★★★☆ | Done (Batch 16, #1) |
+| DWH_dbo.Vw_STS_User_Operations_Data_History | 8.5 ★★★★☆ | Done (Batch 16, #7) |
+| DWH_dbo.v_Dim_Mirror | 8.5 ★★★★☆ | Done (Batch 17, #1) |
 
 ## Skipped (4)
 

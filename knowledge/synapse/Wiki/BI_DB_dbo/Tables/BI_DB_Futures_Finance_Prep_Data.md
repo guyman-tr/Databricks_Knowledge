@@ -134,8 +134,8 @@ _Pending — resolved during write-objects._
 | 7 | PreviousAmount | decimal(18,6) | NULL | Position amount before this change. For Hold rows, set equal to NewAmount (zero delta). (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse, SP-adjusted) |
 | 8 | AmountChanged | decimal(18,6) | NULL | Change in amount. For Hold rows, set to 0. Otherwise = NewAmount − PreviousAmount. (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse, SP-adjusted) |
 | 9 | NewAmount | decimal(18,6) | NULL | Position amount after this change. Passthrough from Dim_PositionChangeLog. (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse) |
-| 10 | PreviousIsSettled | int | NULL | Settlement status before this change (0/1). NULL if event didn't involve settlement. Passthrough from Dim_PositionChangeLog. (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse) |
-| 11 | IsSettled | int | NULL | Settlement status after this change. COALESCE of changelog value with Dim_Position.IsSettled as fallback. (Tier 2 — SP_Futures_Finance_Prep_Data) |
+| 10 | PreviousIsSettled | int | NULL | Before the change: 1 = real asset, 0 = CFD asset. NULL if the event did not involve settlement. From Dim_PositionChangeLog. (Tier 5 — Expert Review) |
+| 11 | IsSettled | int | NULL | After the change: 1 = real asset, 0 = CFD asset. COALESCE(changelog, Dim_Position.IsSettled). (Tier 5 — Expert Review) |
 | 12 | PreviousStopRate | decimal(18,6) | NULL | Stop-loss rate before this change. Passthrough from Dim_PositionChangeLog. (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse) |
 | 13 | StopRate | decimal(18,6) | NULL | Stop-loss rate after this change. Passthrough from Dim_PositionChangeLog. (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse) |
 | 14 | PreviousAmountInUnits | decimal(18,6) | NULL | Unit count (lots/shares) before this change. Passthrough from Dim_PositionChangeLog. (Tier 2 — SP_Dim_PositionChangeLog_DL_To_Synapse) |

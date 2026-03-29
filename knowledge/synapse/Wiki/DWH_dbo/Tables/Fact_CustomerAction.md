@@ -209,17 +209,17 @@ WHERE fca.ActionTypeID = 14
 | 7 | IsReal | tinyint | NO | Account type flag. Always 1 in this table (real accounts only). (Tier 3 — ETL-assigned) |
 | 8 | ActionTypeID | smallint | NO | Event type classifier. References `DWH_dbo.Dim_ActionType.ActionTypeID` — JOIN for Name, Category, CategoryID. See Section 2.1 for full mapping. Key filter column — drives which other columns are populated. (Tier 1 — ETL-derived from CreditTypeID/source) |
 | 9 | PlatformTypeID | smallint | NO | Legacy platform type. 0=default (most rows), 99=STS source. Values 1-9 for specific platforms. (Tier 3 — ETL-assigned) |
-| 10 | InstrumentID | int | NO | Financial instrument. References `Dim_Instrument`. 0 for non-position events. Same meaning as `Dim_Position.InstrumentID`. (Tier 1 — Trade.OpenPositionEndOfDay / History.ClosePositionEndOfDay) |
-| 11 | Amount | decimal(11,2) | NO | Event amount in account currency (USD). For position opens: invested amount. For deposits: deposit amount. For fees: fee amount (negative). (Tier 1 — source-dependent) |
-| 12 | Leverage | int | NO | Leverage multiplier for position events. 0 for non-position events. 1=no leverage. Same meaning as `Dim_Position.Leverage`. (Tier 1 — Trade.OpenPositionEndOfDay) |
-| 13 | NetProfit | money | NO | Realized P&L for position closes. 0 for opens and non-position events. Same meaning as `Dim_Position.NetProfit`. (Tier 1 — History.ClosePositionEndOfDay) |
-| 14 | Commission | money | NO | eToro markup (spread) at position open, in account currency. 0 for non-position events. Same meaning as `Dim_Position.Commission`. (Tier 5 — domain expert) |
-| 15 | PositionID | bigint | NO | Position identifier for position events. 0 for non-position events. Same meaning as `Dim_Position.PositionID`. (Tier 1 — Trade positions) |
+| 10 | InstrumentID | int | NO | FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl) |
+| 11 | Amount | decimal(11,2) | NO | Position size in currency. Must be >= 0. Stored in dollars (PositionOpen divides by 100 from cents). (Tier 1 — Trade.PositionTbl) |
+| 12 | Leverage | int | NO | Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl) |
+| 13 | NetProfit | money | NO | Realized PnL. 0 when open; set on close. In position currency. (Tier 1 — Trade.PositionTbl) |
+| 14 | Commission | money | NO | Open commission in dollars. PositionOpen stores @Commission/100 (cents to dollars). (Tier 1 — Trade.PositionTbl) |
+| 15 | PositionID | bigint | NO | Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl) |
 | 16 | CampaignID | int | NO | Marketing campaign identifier. 0 if not campaign-related. References `DWH_dbo.Dim_Campaign.CampaignID` — JOIN for Code, Description, StartDate, EndDate, MaxBonusAmount, IsActive. (Tier 5 — domain expert) |
 | 17 | BonusTypeID | smallint | NO | Bonus type for bonus events (ActionTypeID=9). 0 for non-bonus events. References `DWH_dbo.Dim_BonusType.BonusTypeID` — JOIN for Name, IsWithdrawable, IsActive. (Tier 5 — domain expert) |
 | 18 | FundingTypeID | smallint | NO | Payment method used for deposits/withdrawals. 0 for non-deposit events. References `DWH_dbo.Dim_FundingType.FundingTypeID` — JOIN for Name, IsNewStyle, IsSingleFunding, IsCashoutActive. (Tier 5 — domain expert) |
 | 19 | LoginID | int | NO | Login session identifier from `Billing.Login`. 0 for non-login events. (Tier 1 — Billing.Login) |
-| 20 | MirrorID | int | NO | Copy-trade relationship ID. 0=manual action, >0=action within a copy-trade. Same meaning as `Dim_Position.MirrorID`. (Tier 1 — Trade positions) |
+| 20 | MirrorID | int | NO | FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. (Tier 1 — Trade.PositionTbl) |
 | 21 | WithdrawID | int | NO | Withdrawal request ID for cashout events. 0 for non-cashout events. (Tier 1 — History.Credit) |
 | 22 | DurationInSeconds | int | YES | Duration of a login session in seconds. NULL for non-login events. (Tier 1 — Billing.Login) |
 | 23 | PostID | uniqueidentifier | YES | Social post/comment GUID for social engagement events (ActionTypeID 21-26). NULL for non-social events. (Tier 1 — Social platform) |
@@ -231,45 +231,45 @@ WHERE fca.ActionTypeID = 14
 | 29 | PreviousOccurred | datetime | YES | Deprecated/unused column. NULL for most rows — not reliably populated. Do not use. (Tier 5 — domain expert) |
 | 30 | CompensationReasonID | int | NO | Compensation reason for compensation events (ActionTypeID=36) and position opens (for airdrop identification). References `BackOffice.CompensationReason`. 0 for non-compensation events. (Tier 1 — History.Credit, updated 2025-12-21) |
 | 31 | WithdrawPaymentID | int | NO | Payment processing ID for cashout/withdrawal events. 0 for non-cashout events. Used to deduplicate WithdrawProcessingID rows in the ETL. (Tier 1 — History.Credit) |
-| 32 | CommissionOnClose | money | NO | eToro markup (spread) at position close. 0 for opens and non-position events. For reopened positions: adjusted = new - original. Same meaning as `Dim_Position.CommissionOnClose`. (Tier 5 — domain expert) |
+| 32 | CommissionOnClose | money | NO | Commission charged on close. DWH note: adjusted by SP_Dim_Position when position is reopened; CommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl) |
 | 33 | IsPlug | bit | YES | Deprecated/unused column. Always NULL. (Tier 5 — domain expert) |
 | 34 | DepositID | int | YES | Deposit transaction identifier. NULL for non-deposit events. (Tier 1 — History.Credit) |
 | 35 | PostRootID | varchar(200) | YES | Root post ID for social engagement events. NULL for non-social events. (Tier 1 — Social platform) |
-| 36 | FullCommission | money | YES | Full spread at position open = market spread + eToro markup. NULL for non-position events. Same meaning as `Dim_Position.FullCommission`. (Tier 5 — domain expert) |
-| 37 | FullCommissionOnClose | money | YES | Full spread at position close. NULL for non-position events. For reopened positions: adjusted. Same meaning as `Dim_Position.FullCommissionOnClose`. (Tier 5 — domain expert) |
-| 38 | RedeemID | int | YES | Crypto redemption transaction reference. NULL when not a redeem. Same meaning as `Dim_Position.RedeemID`. (Tier 1 — Billing.Redeem) |
-| 39 | RedeemStatus | int | YES | Crypto redemption status: 0=N/A, 1=Pending, 6=Closed by redeem, 20=Terminated, 21=FailedToCancel. Same meaning as `Dim_Position.RedeemStatus`. (Tier 5 — domain expert) |
+| 36 | FullCommission | money | YES | Full commission including spread. PositionOpen stores @FullCommission/100. (Tier 1 — Trade.PositionTbl) |
+| 37 | FullCommissionOnClose | money | YES | Full commission on close. DWH note: adjusted by SP_Dim_Position when position is reopened; FullCommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl) |
+| 38 | RedeemID | int | YES | Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl) |
+| 39 | RedeemStatus | int | YES | Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl) |
 | 40 | SessionID | bigint | YES | STS session identifier for logins and position opens. For manual opens: from login session. For copy opens: from mirror session. NULL for other events. (Tier 1 — STS) |
 | 41 | IsRedeem | int | YES | Redeem flag. 0=not a redeem, 1=is a redeem. NULL for non-position events. Same meaning as `Dim_Position.IsRedeem` (via RedeemStatus mapping). (Tier 3 — ETL-derived) |
-| 42 | RegulationIDOnOpen | int | YES | Regulatory jurisdiction at position open time. Same mapping as `Dim_Position.RegulationIDOnOpen`: 0=None, 1=CySEC, 2=FCA, 4=ASIC, 5=BVI, 9=FSA Seychelles, etc. NULL for non-position events. (Tier 2 — BackOffice.Customer) |
+| 42 | RegulationIDOnOpen | int | YES | Regulatory jurisdiction ID at time of position open. ETL-computed via JOIN to etoro_History_BackOfficeCustomer (customer's regulation history). ISNULL(..., 0) when no regulation match found. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
 | 43 | PlatformID | int | YES | Product/platform identifier — badly named, actually references `Dim_Product.ProductID` (not a standalone platform enum). Resolves to Product, Platform, and SubPlatform via JOIN to `DWH_dbo.Dim_Product`. Only populated for ActionTypeID=14 (logins) and 41 (registrations). (Tier 5 — domain expert) |
-| 44 | ReopenForPositionID | bigint | YES | For reopened positions: the PositionID of the original closed position. Same meaning as `Dim_Position.ReopenForPositionID`. (Tier 1 — Trade positions) |
-| 45 | IsReOpen | int | YES | Reopen flag: 1 = position created by reopening. Same meaning as `Dim_Position.IsReOpen`. (Tier 1 — Trade positions) |
-| 46 | CommissionOnCloseOrig | money | YES | Original CommissionOnClose before reopen adjustment. Same meaning as `Dim_Position.CommissionOnCloseOrig`. (Tier 2 — ETL reopen logic) |
-| 47 | FullCommissionOnCloseOrig | money | YES | Original FullCommissionOnClose before reopen adjustment. Same meaning as `Dim_Position.FullCommissionOnCloseOrig`. (Tier 2 — ETL reopen logic) |
-| 48 | OriginalPositionID | bigint | YES | For partial-close children: the parent PositionID. When `OriginalPositionID ≠ PositionID`, this is a partial-close child. Same meaning as `Dim_Position.OriginalPositionID`. (Tier 2 — ETL-derived) |
-| 49 | IsPartialCloseParent | int | YES | Flag: 1 = this position has had partial close children. Set by `SP_Fact_CustomerAction_IsParitalCloseParent`. Same meaning as `Dim_Position.IsPartialCloseParent`. (Tier 2 — post-load SP) |
-| 50 | IsPartialCloseChild | int | YES | Flag: 1 = this position was created by partial close. Filter out when counting positions. Same meaning as `Dim_Position.IsPartialCloseChild`. (Tier 2 — ETL-derived) |
-| 51 | InitialUnits | decimal(16,6) | YES | Original unit count at position open. Same meaning as `Dim_Position.InitialUnits`. (Tier 1 — Trade positions) |
+| 44 | ReopenForPositionID | bigint | YES | When position was reopened: references the erroneously closed PositionID. (Tier 1 — Trade.PositionTbl) |
+| 45 | IsReOpen | int | YES | 1=this position was reopened from ReopenForPositionID. ETL-computed: CASE WHEN ReopenForPositionID IS NOT NULL THEN 1. Default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 46 | CommissionOnCloseOrig | money | YES | Original CommissionOnClose before reopen adjustments. ETL: CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 47 | FullCommissionOnCloseOrig | money | YES | Original FullCommissionOnClose before reopen. ETL default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 48 | OriginalPositionID | bigint | YES | Original position ID for positions split by partial close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 49 | IsPartialCloseParent | int | YES | 1=this position was partially closed (is the parent in a partial close event). (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 50 | IsPartialCloseChild | int | YES | 1=this position is the child (remainder) of a partial close event. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 51 | InitialUnits | decimal(16,6) | YES | Original unit count at open. Used for partial close ratio. (Tier 1 — Trade.PositionTbl) |
 | 52 | PaymentStatusID | int | YES | Payment processing status for deposit/cashout events. NULL for non-payment events. References `DWH_dbo.Dim_PaymentStatus.PaymentStatusID` — JOIN for Name. (Tier 5 — domain expert) |
-| 53 | IsDiscounted | int | YES | Discounted pricing flag: 0=standard, 1=discounted (VIP/partner). Same meaning as `Dim_Position.IsDiscounted`. (Tier 1 — Trade.PositionTreeInfo) |
-| 54 | IsSettled | int | YES | Real ownership flag: 1=settled (customer owns asset), 0=CFD. NULL for non-position events. The ETL also derives IsSettled when source is NULL: `IsBuy=1 AND Leverage=1 AND InstrumentTypeID IN (10,5,6) → 1`. Same meaning as `Dim_Position.IsSettled`. (Tier 1 — Trade positions, with ETL fallback) |
-| 55 | CommissionByUnits | decimal(38,6) | YES | Commission prorated by units: `(AmountInUnitsDecimal / InitialUnits) * Commission`. Same meaning as `Dim_Position.CommissionByUnits`. (Tier 5 — domain expert) |
-| 56 | FullCommissionByUnits | decimal(38,6) | YES | Full spread prorated by units. Same meaning as `Dim_Position.FullCommissionByUnits`. (Tier 5 — domain expert) |
+| 53 | IsDiscounted | int | YES | 1=position received a discounted rate. DWH note: CAST from bit to int. (Tier 1 — Trade.PositionTbl) |
+| 54 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
+| 55 | CommissionByUnits | decimal(38,6) | YES | Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position) |
+| 56 | FullCommissionByUnits | decimal(38,6) | YES | Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission. (Tier 1 — Trade.Position) |
 | 57 | IsFTD | int | YES | First-Time Deposit flag: 1 = this is the customer's first deposit. NULL for non-deposit events. (Tier 2 — ETL-computed) |
 | 58 | CountryIDByIP | int | YES | Country determined by IP geolocation. Populated for logins and registrations. References `DWH_dbo.Dim_Country.CountryID` — JOIN for country name. Also see `DWH_dbo.Dim_CountryIP` for IP-to-country resolution. (Tier 5 — domain expert) |
 | 59 | IsAnonymousIP | int | YES | Anonymous IP flag: 1 = connection via anonymous proxy/VPN. NULL for most rows. (Tier 1 — IP geolocation) |
 | 60 | ProxyType | varchar(3) | YES | Proxy classification: DCH=datacenter, VPN=VPN, PUB=public proxy, SES=session proxy, TOR=Tor exit node, WEB=web proxy. NULL for non-proxy connections. (Tier 1 — STS) |
 | 61 | IsFeeDividend | int | YES | Fee sub-type for ActionTypeID=35: 1=overnight/weekend fee, 2=dividend, 3=SDRT, 4=ticket fees (OpenTotalFees/CloseTotalFees). NULL for non-fee events. See Section 2.2 and DSM-1463. (Tier 2 — ETL-derived from Description) |
-| 62 | IsAirDrop | int | YES | Airdrop flag: 1 = position created by eToro on behalf of customer. Same meaning as `Dim_Position.IsAirDrop`. (Tier 5 — domain expert, via Trade.PositionAirdropLog) |
+| 62 | IsAirDrop | int | YES | 1=position was created via an airdrop event (crypto). ETL-computed: JOIN to etoro_Trade_PositionAirdropLog. NULL=not an airdrop. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
 | 63 | DividendID | int | YES | Dividend event identifier for dividend-related fees. NULL for non-dividend events. (Tier 1 — Trade positions) |
 | 64 | MoveMoneyReasonID | int | YES | Reason for money movement: 1=Adjustment, 5=InternalTransfer Trade, 6=InternalTransfer, 8=Recurring Deposit, 9=Recurring Investment. References `Dictionary.MoveMoneyReason`. (Tier 1 — History.Credit) |
-| 65 | SettlementTypeID | int | YES | Settlement mechanism: 0=CFD, 1=Real asset, 2/4/5=other. NULL for non-position events. Same meaning as `Dim_Position.SettlementTypeID`. (Tier 1 — Trade positions) |
-| 66 | DLTOpen | smallint | YES | DLT (German crypto broker) flag at open: 0=not executed via DLT broker, 1=opened on DLT broker platform. NULL for non-position events. Same meaning as `Dim_Position.DLTOpen`. (Tier 5 — domain expert, added 2024-06) |
-| 67 | DLTClose | smallint | YES | DLT broker flag at close: 1=closed on DLT broker platform. Same meaning as `Dim_Position.DLTClose`. (Tier 5 — domain expert, added 2024-06) |
-| 68 | OpenMarkupByUnits | money | YES | Open markup prorated by units: `OpenMarkup * AmountInUnitsDecimal / InitialUnits`. Same meaning as `Dim_Position.OpenMarkupByUnits`. (Tier 5 — domain expert) |
+| 65 | SettlementTypeID | int | YES | Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled. (Tier 1 — Trade.PositionTbl) |
+| 66 | DLTOpen | smallint | YES | DLT flag at open. Added 2024-06-02 (Ofir A). (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 67 | DLTClose | smallint | YES | DLT flag at close. Added 2024-06-02. NULL for open positions and older positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 68 | OpenMarkupByUnits | money | YES | Prorated open markup for partial close. Formula: OpenMarkup * AmountInUnitsDecimal / InitialUnits. (Tier 1 — Trade.Position) |
 | 69 | Description | varchar(255) | YES | Human-readable description. Populated mainly for ActionTypeID=35 (fees): "Over night fee", "Payment caused by dividend", "Weekend fee", "OpenTotalFees", "CloseTotalFees", "SDRT Charge". For ActionTypeID=32: "edit stop loss by customer". For deposits: "Processed By eToro.Payments.Deposit", etc. (Tier 1 — History.Credit, added 2024-08) |
-| 70 | IsBuy | bit | YES | Trade direction: True=Buy (long), False=Sell (short). NULL for non-position events. Same meaning as `Dim_Position.IsBuy`. (Tier 1 — Trade positions, added 2024-09) |
+| 70 | IsBuy | bit | YES | 1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl) |
 | 71 | CreditID | bigint | YES | Reference to the source `History.Credit.CreditID`. Enables join back to credit history for audit. (Tier 1 — History.Credit, added 2025-07) |
 
 ---

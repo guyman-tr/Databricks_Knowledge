@@ -62,7 +62,7 @@ The table is used by the Dealing desk to report total holdings to BNY Mellon (th
 | `Units` | decimal(16,6) | YES | Net position in units: `SUM((2*IsBuy-1)*Units)`. Positive=long, negative=short. Aggregated across all HS in the IsSettled group. (Tier 2 — SP_Holdings_RealStocks) |
 | `Amount_USD` | decimal(16,6) | YES | Net position USD market value: `SUM((2*IsBuy-1)*Units*EOD_Price*ConversionRate)`. EOD price from Fact_CurrencyPriceWithSplit (Bid for Buy, Ask for Sell). (Tier 2 — SP_Holdings_RealStocks) |
 | `UpdateDate` | datetime | YES | ETL metadata: `GETDATE()` at SP execution time. |
-| `IsSettled` | varchar(50) | YES | Settlement type: 'Real' (HS 3,9,102,128,112,125,126 — BNY Mellon settled) or 'CFD' (HS 2,101,129 — contracts for difference). (Tier 2 — SP_Holdings_RealStocks) |
+| `IsSettled` | varchar(50) | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 
 ---
 

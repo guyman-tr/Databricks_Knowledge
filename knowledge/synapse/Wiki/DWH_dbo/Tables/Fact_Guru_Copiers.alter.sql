@@ -24,7 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN Column COMMENT 'Description';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN CID COMMENT 'Customer ID of the copier — the person allocating funds to copy a Popular Investor. This is the copier''s RealCID, not the guru''s. Distribution key. (Tier 2 — SP_Fact_Guru_Copiers)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN DateID COMMENT 'Date key in YYYYMMDD format for the snapshot day. Part of composite PK. (Tier 2 — SP_Fact_Guru_Copiers)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN Cash COMMENT 'Sum of available cash across all active copy relationships for this copier on this day. Cash not yet deployed into positions. (Tier 2 — Ext_FGC_Guru_Copiers / AUM Life Cycle confluence)';
@@ -36,7 +35,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN 
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN UpdateDate COMMENT 'Timestamp when this row was loaded into the DWH via `GETDATE()`. (Tier 2 — SP_Fact_Guru_Copiers)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN Column SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN CID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN DateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers ALTER COLUMN Cash SET TAGS ('pii' = 'none');

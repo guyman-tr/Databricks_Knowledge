@@ -53,6 +53,8 @@ The 60-day metrics count activity in the 30–60 day range only (not cumulative 
 | Real Stocks/ETF | `IsSettledOnOpen = 1 AND InstrumentTypeID IN (5, 6)` |
 | CFDs | `IsSettledOnOpen = 0` (any instrument, leveraged) |
 
+_Encoding for `Dim_Position.IsSettledOnOpen` in the rules above: **1 = real asset, 0 = CFD asset** (Tier 5 — Expert Review)._
+
 ### 2.5 Sentinel Values
 
 | Sentinel | Meaning |

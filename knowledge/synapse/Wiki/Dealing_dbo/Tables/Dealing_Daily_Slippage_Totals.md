@@ -117,7 +117,7 @@ GROUP BY InstrumentType
 | [Total Volume] | bigint | Sum of Volume for all positions in this group. (Tier 2 — SP_Slippage_Report) |
 | Regulation | varchar(50) | Customer's regulatory jurisdiction at time of trade. From Dim_Regulation via Fact_SnapshotCustomer. (Tier 2 — SP_Slippage_Report) |
 | WithinFirst5Minutes_MarketHours | bit | 1 if `RequestCloseOccurred` is within 5 minutes of market open. Added Sep 2024 (SR-273115). NULL for pre-Sep-2024 data. (Tier 2 — SP_Slippage_Report) |
-| IsSettled | tinyint | From Dim_Position.IsSettled. 1 = position delivery has settled. Relevant for stocks/crypto. Added Oct 2024 (SR-276862). NULL for pre-Oct-2024 data. (Tier 2 — SP_Slippage_Report) |
+| IsSettled | tinyint | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 
 ## 5. Lineage
 

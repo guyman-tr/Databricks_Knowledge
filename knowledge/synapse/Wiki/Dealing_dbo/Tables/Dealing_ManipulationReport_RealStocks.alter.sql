@@ -24,8 +24,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationrep
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN ★★★ COMMENT '`(Tier 2 — SP_ManipulationReport_RealStocks)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN ★★ COMMENT '`(Tier 3 — live data)`';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN Date COMMENT 'The reporting date (weekdays only). All rows in a batch share the same Date. Clustered index key. Corresponds to `@dd` SP parameter. (Tier 2 — SP_ManipulationReport_RealStocks)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN KPI COMMENT 'The manipulation signal category. Values: `First10Minutes`, `Last10Minutes`, `Flag2`, `Top20_Volume`, `Top20_Volume_LowMktCap`, `Top20_Volume_20Min`, `Top20_Volume_20Min_LowMktCap`, `AvgVolume`. Each KPI detects a different behavioral pattern. An instrument may appear in multiple KPI rows for the same date. (Tier 2 — SP_ManipulationReport_RealStocks)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN InstrumentID COMMENT 'Instrument identifier for the flagged stock or ETF. FK to DWH_dbo.Dim_Instrument. Only real stocks/ETFs (InstrumentTypeID 5,6, IsSettled=1). (Tier 2 — SP_ManipulationReport_RealStocks)';
@@ -42,8 +40,6 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationrep
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN UpdateDate COMMENT 'ETL metadata: `GETDATE()` at time SP ran. Not a business timestamp. (Tier 2 — SP_ManipulationReport_RealStocks)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN ★★★ SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN ★★ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN Date SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN KPI SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');

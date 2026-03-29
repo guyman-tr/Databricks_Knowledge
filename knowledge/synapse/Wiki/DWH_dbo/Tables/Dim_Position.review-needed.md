@@ -22,7 +22,6 @@ The following columns have Tier 4 (name-inferred) descriptions due to absence of
 | PositionSegment | Internal segment | What are the valid values and their meanings? |
 | IsOpenOpen | Opened at market open price | When is this set? Scheduled open orders? |
 | RedeemStatus / RedeemID | Redemption state | What are valid RedeemStatus values? |
-| IsSettledOnOpen | Settled at open | How does this differ from IsSettled? |
 | IsComputeForHedge | Hedge accounting flag | What triggers this? |
 | SettlementTypeID | Settlement mechanism | FK to which table? What are values? |
 | Close_PriceType | Price type at close | Valid values? Bid=0, Ask=1, Mid=2? |

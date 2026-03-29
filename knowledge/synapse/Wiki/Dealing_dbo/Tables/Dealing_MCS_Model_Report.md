@@ -48,7 +48,7 @@ One row = one position (`PositionID`) on one `Date`. A position that was both op
 | `OpenOccurred` | datetime | Exact open timestamp |
 | `CloseOccurred` | datetime | Exact close timestamp |
 | `Leverage` | int | Position leverage |
-| `IsSettled` | int | Settlement flag (1=settled) |
+| `IsSettled` | int | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | `IsBuy` | bit | 1=Long, 0=Short |
 | `Units` | decimal(16,6) | Position size in units (AmountInUnitsDecimal) |
 | `Commission` | money | Full commission charged (FullCommission) |

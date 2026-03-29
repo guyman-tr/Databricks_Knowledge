@@ -138,18 +138,18 @@ Most pairs show low correlation, which is expected for diverse instrument univer
 | ★★★ | Tier 2 | Synapse SP code (computed formula verified) |
 | ★★ | Tier 3 | Live data sampling + DDL structure |
 
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 1 | DateID | int | NULL | Integer date key in YYYYMMDD format identifying the calculation date for this correlation snapshot. Matches the @auxdate parameter passed to SP_Dim_Instrument_Correlation_Half_Records. Filter by this column for performance. (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 2 | InstrumentID_a | int | NULL | ID of the first financial instrument in the pair (always <= InstrumentID_b in this half-matrix view). Resolves to Dim_Currency.CurrencyID for the instrument name. (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 3 | InstrumentID_b | int | NULL | ID of the second financial instrument in the pair (always >= InstrumentID_a in this half-matrix view). Resolves to Dim_Currency.CurrencyID for the instrument name. (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 4 | SampleSize | int | NULL | Number of hourly candle data points where both instruments had valid prices in the 3-month lookback window. Higher values = more reliable correlation estimate. Low values (< 100) indicate sparse data. (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 5 | StandardDeviation_a | decimal(38,20) | NULL | Population standard deviation of hourly price returns for InstrumentID_a over the 3-month window. Computed via STDEVP(PriceChange). Always > 0 (HAVING clause excludes zero-variance rows). (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 6 | StandardDeviation_b | decimal(38,20) | NULL | Population standard deviation of hourly price returns for InstrumentID_b over the 3-month window. Computed via STDEVP(PriceChange). Always > 0 (HAVING clause excludes zero-variance rows). (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 7 | Covariance | decimal(38,20) | NULL | Raw covariance between the hourly price returns of the two instruments. Formula: sum(a*b)/n - (sum(a)*sum(b))/n^2. Used as numerator in PearsonCorrelation formula. (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 8 | PearsonCorrelation | decimal(38,20) | NULL | Pearson correlation coefficient between the two instruments' hourly price returns over the 3-month window. Range -1.0 (perfect negative) to +1.0 (perfect positive). 0 = no linear correlation. Formula: Covariance / (StandardDeviation_a * StandardDeviation_b). (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 9 | InsertDate | datetime | NULL | Timestamp when the correlation row was first computed. Set to GETDATE() by the ETL SP. (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
-| 10 | UpdateDate | datetime | NULL | Timestamp when the correlation row was last updated. Set to GETDATE() by the ETL SP (same as InsertDate on initial load; may differ on re-computation). (Tier 2 — SP_Dim_Instrument_Correlation_Half_Records) |
+| # | Column | Type | Nullable | Source | Description |
+|---|--------|------|----------|--------|-------------|
+| 1 | DateID | int | NULL | Half_Records_1…20.DateID | Integer date key in YYYYMMDD format identifying the calculation date for this correlation snapshot. Matches the @auxdate parameter passed to SP_Dim_Instrument_Correlation_Half_Records. Filter by this column for performance. (Tier 2 — SP code) |
+| 2 | InstrumentID_a | int | NULL | Half_Records_1…20.InstrumentID_a | ID of the first financial instrument in the pair (always <= InstrumentID_b in this half-matrix view). Resolves to Dim_Currency.CurrencyID for the instrument name. (Tier 2 — SP code) |
+| 3 | InstrumentID_b | int | NULL | Half_Records_1…20.InstrumentID_b | ID of the second financial instrument in the pair (always >= InstrumentID_a in this half-matrix view). Resolves to Dim_Currency.CurrencyID for the instrument name. (Tier 2 — SP code) |
+| 4 | SampleSize | int | NULL | Half_Records_1…20.SampleSize | Number of hourly candle data points where both instruments had valid prices in the 3-month lookback window. Higher values = more reliable correlation estimate. Low values (< 100) indicate sparse data. (Tier 2 — SP code) |
+| 5 | StandardDeviation_a | decimal(38,20) | NULL | Half_Records_1…20.StandardDeviation_a | Population standard deviation of hourly price returns for InstrumentID_a over the 3-month window. Computed via STDEVP(PriceChange). Always > 0 (HAVING clause excludes zero-variance rows). (Tier 2 — SP code) |
+| 6 | StandardDeviation_b | decimal(38,20) | NULL | Half_Records_1…20.StandardDeviation_b | Population standard deviation of hourly price returns for InstrumentID_b over the 3-month window. Computed via STDEVP(PriceChange). Always > 0 (HAVING clause excludes zero-variance rows). (Tier 2 — SP code) |
+| 7 | Covariance | decimal(38,20) | NULL | Half_Records_1…20.Covariance | Raw covariance between the hourly price returns of the two instruments. Formula: sum(a*b)/n - (sum(a)*sum(b))/n^2. Used as numerator in PearsonCorrelation formula. (Tier 2 — SP code) |
+| 8 | PearsonCorrelation | decimal(38,20) | NULL | Half_Records_1…20.PearsonCorrelation | Pearson correlation coefficient between the two instruments' hourly price returns over the 3-month window. Range -1.0 (perfect negative) to +1.0 (perfect positive). 0 = no linear correlation. Formula: Covariance / (StandardDeviation_a * StandardDeviation_b). (Tier 2 — SP code) |
+| 9 | InsertDate | datetime | NULL | Half_Records_1…20.InsertDate | Timestamp when the correlation row was first computed. Set to GETDATE() by the ETL SP. (Tier 2 — SP code) |
+| 10 | UpdateDate | datetime | NULL | Half_Records_1…20.UpdateDate | Timestamp when the correlation row was last updated. Set to GETDATE() by the ETL SP (same as InsertDate on initial load; may differ on re-computation). (Tier 2 — SP code) |
 
 ---
 
@@ -252,6 +252,6 @@ No Atlassian sources found for this object.
 
 ---
 
-*Generated: 2026-03-19 | Quality: 8.4/10 (★★★★☆) | Phases: 9/14*
+*Generated: 2026-03-28 | Quality: 8.5/10 (★★★★☆) | Phases: 9/14 | Batch: 16*
 *Tiers: 0 T1, 10 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 10/10, Relationships: 8/10, Sources: 6/10*
 *Object: DWH_dbo.Dim_Instrument_Correlation_UnionedPartitions | Type: View | Production Source: Derived (DWH-computed Pearson correlation)*

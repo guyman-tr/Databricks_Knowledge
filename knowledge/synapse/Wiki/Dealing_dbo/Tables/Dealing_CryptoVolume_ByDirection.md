@@ -24,7 +24,7 @@ This table provides the active daily-grain replacement for the stale `Dealing_Cr
 | DateID | int | No | Date integer key (YYYYMMDD) — distribution and clustering key | T2 | SP_CryptoVolume_ByDirection: @DateID parameter |
 | FullDate | datetime | No | Full date as datetime | T2 | SP_CryptoVolume_ByDirection: `CONVERT(DATETIME, @Date)` |
 | Leverage | int | No | Position leverage multiplier | T2 | DWH_dbo.Dim_Position.Leverage |
-| IsSettled | int | Yes | Settlement flag: 1=settled position, 0=CFD | T2 | DWH_dbo.Dim_Position.IsSettled |
+| IsSettled | int | Yes | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) | T2 | DWH_dbo.Dim_Position.IsSettled |
 | InstrumentID | int | No | Crypto instrument ID (InstrumentTypeID=10) | T2 | DWH_dbo.Dim_Instrument (InstrumentTypeID=10 filter) |
 | Instrument | varchar(50) | No | Crypto instrument name (e.g., BTC/USD, ETH/USD) | T2 | DWH_dbo.Dim_Instrument.InstrumentName |
 | IsBuy | bit | No | Trade direction: 1=buy/open, 0=sell/close. NOTE: for close trades, IsBuy is inverted from position direction — a buy position close is recorded as IsBuy=0 | T2 | SP_CryptoVolume_ByDirection: `CASE WHEN IsBuy=1 THEN 0 ELSE 1 END` for closes |

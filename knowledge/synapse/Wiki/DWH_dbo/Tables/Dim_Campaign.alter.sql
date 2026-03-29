@@ -36,6 +36,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN Parti
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN InsertDate COMMENT 'ETL load date. For ID=0 placeholder: set to @ddate (CAST(GETDATE() AS DATE) = midnight). Would be GETDATE() for live rows if INSERT were active. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN UpdateDate COMMENT 'ETL load date. For ID=0 placeholder: set to @ddate (CAST(GETDATE() AS DATE) = midnight). Would be GETDATE() for live rows if INSERT were active. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN Description COMMENT 'Human-readable campaign description. MASKED WITH default() - non-privileged users see NULL. NULL in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign)';
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN CampaignID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN CampaignGroupID SET TAGS ('pii' = 'none');

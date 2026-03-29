@@ -38,8 +38,8 @@
 | InstrumentName | Dim_Instrument | Name | Passthrough |
 | CID | Dim_Position / ChangeLog | CID | Passthrough |
 | PositionID | Dim_Position / ChangeLog | PositionID | Passthrough |
-| IsSettled_OnOpen | Fact_CustomerAction | IsSettled | Join on open `DateID`; `-1` if N/A |
-| IsSettled_OnClose | Dim_Position | IsSettled | Close rows; `-1` if N/A |
+| IsSettled_OnOpen | Fact_CustomerAction | IsSettled | 1 = real asset, 0 = CFD; join on open `DateID`; `-1` if N/A |
+| IsSettled_OnClose | Dim_Position | IsSettled | 1 = real asset, 0 = CFD; close rows; `-1` if N/A |
 | Leverage | Dim_Position | Leverage | Passthrough; change path may use FCA leverage |
 | SellCurrencyID | Dim_Instrument | SellCurrencyID | Passthrough |
 | SellCurrency | Dim_Instrument | SellCurrency | Passthrough |

@@ -40,7 +40,7 @@ Complements `BI_DB_GAML_Real_Positions_Report_Closed` (same SP): **opened** side
 | 6 | ISINCode | varchar(30) | YES | `Dim_Instrument.ISINCode`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Instrument.ISINCode) |
 | 7 | Initial_Amount | money | YES | `Dim_Position.InitialAmountCents / 100`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Position.InitialAmountCents) |
 | 8 | Regulation_on_Open | tinyint | YES | `Dim_Position.RegulationIDOnOpen`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Position.RegulationIDOnOpen) |
-| 9 | Current_IsSettled | int | YES | `BI_DB_PositionPnL.IsSettled` on run date. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, BI_DB_PositionPnL.IsSettled) |
+| 9 | Current_IsSettled | int | YES | 1 = real asset, 0 = CFD asset. From `BI_DB_PositionPnL.IsSettled` on run date. (Tier 5 — Expert Review) |
 | 10 | UpdateDate | datetime | YES | `GETDATE()` at insert. (Tier 3 -- SP_Finance_Non_US_Settlement_Report, GETDATE()) |
 | 11 | OpenOccurred | datetime | YES | `Dim_Position.OpenOccurred`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, Dim_Position.OpenOccurred) |
 | 12 | OpenEOM | date | YES | `EOMONTH(OpenOccurred)`. (Tier 2 -- SP_Finance_Non_US_Settlement_Report, EOMONTH(Dim_Position.OpenOccurred)) |

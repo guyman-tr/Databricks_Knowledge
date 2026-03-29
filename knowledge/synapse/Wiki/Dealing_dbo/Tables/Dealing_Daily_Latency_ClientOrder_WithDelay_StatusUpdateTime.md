@@ -55,7 +55,7 @@ StatusUpdateTime variant of `Dealing_Daily_Latency_ClientOrder_WithDelay` — us
 | RequestTimeFromEMS | datetime | EMS-side request timestamp. (Tier 2 — CopyFromLake.eToroLogs_Real_Hedge_EMSOrders) |
 | ExecutionID | int | EMS execution record ID. (Tier 2 — DWH_dbo.Dim_Position) |
 | CID | int | Client identifier. (Tier 2 — DWH_dbo.Dim_Position) |
-| IsSettled | int | 1 if settled position. (Tier 2 — DWH_dbo.Dim_Position) |
+| IsSettled | int | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
 | PnLVersion | int | PnL calculation version. (Tier 2 — DWH_dbo.Dim_Position) |
 | OrderID | int | Triggering order ID. (Tier 2 — DWH_dbo.Dim_Position) |
 | ClientToExecutionLatency | int | ms from RequestOccurred to StatusUpdateTime (routing, not fill). Floored at 0. (Tier 2 — computed) |
