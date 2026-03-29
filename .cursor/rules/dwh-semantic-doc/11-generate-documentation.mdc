@@ -1,5 +1,5 @@
 ---
-description: "Phase 11 - Generate Documentation (Wiki Only) for DWH Semantic Documentation. Wiki + sidecar + lineage output only — ALTER/deployment handled by Phase 11W (11w-write-objects.mdc)."
+description: "Phase 11 - Generate Documentation for DWH Semantic Documentation. Produces ALL 4 files per object: wiki (.md), sidecar (.review-needed.md), lineage (.lineage.md), and ALTER (.alter.sql). ALTER column count MUST match wiki column count. Deployment/execution handled by Phase 11W."
 globs:
 alwaysApply: false
 ---
@@ -196,14 +196,15 @@ Before generating, execute the Pre-Read step from `12-cross-object-enrichment.md
 3. Read existing docs and extract: element descriptions, value maps, relationships
 4. Use absorbed knowledge for consistency across docs
 
-## Output Path — THREE FILES PER OBJECT
+## Output Path — FOUR FILES PER OBJECT
 
 > **⛔ CRITICAL: The `.md` file IS the wiki. The `.review-needed.md` is a lightweight sidecar. These are DIFFERENT files with DIFFERENT purposes. Writing wiki content into `.review-needed.md` and skipping `.md` is a HARD FAILURE that has happened before — see batch 8 postmortem.**
 
 ```
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md       ← PRODUCTION LINEAGE MAP (from Phase 10B Column Lineage) — written FIRST
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.md              ← THE WIKI DOC (full 8-section template, Elements table, 100+ lines)
 knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.review-needed.md ← REVIEW SIDECAR (Tier 4 items, reviewer corrections, questions — NOT the wiki)
-knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md       ← PRODUCTION LINEAGE MAP (from Phase 10B Column Lineage)
+knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.alter.sql        ← ALTER SCRIPT (UC table comment + column comments + tags)
 ```
 
 ### File Identity Rules (DO NOT CONFUSE THESE)
@@ -213,22 +214,27 @@ knowledge/synapse/Wiki/{Schema}/{ObjectType}/{ObjectName}.lineage.md       ← P
 | **`.md`** | Full 8-section wiki template (Business Meaning, Business Logic, Query Advisory, Elements, Lineage, Relationships, Sample Queries, Atlassian). This is the PRIMARY artifact. | N/A — this is the complete document |
 | **`.review-needed.md`** | Reviewer Corrections table, Tier 4 UNVERIFIED list, Clarification questions, Structural questions | The Elements table. Section headers like `## 1. Business Meaning`. Full column descriptions. If you see these, you're writing to the WRONG file. |
 | **`.lineage.md`** | Column-level source mapping from Phase 10B | Wiki prose, element descriptions |
+| **`.alter.sql`** | SET TBLPROPERTIES (table comment), SET TAGS, ALTER COLUMN COMMENT for EVERY column | Wiki prose. Must have one ALTER COLUMN per wiki element row. |
 
 Object type folders: `Tables/`, `Views/`, `Functions/`
 
 > Stored Procedures are not documentation targets. They are analyzed as inputs during table/view documentation (Phases 8, 9, 9B) but do not produce their own wiki files. Functions **are** documentation targets and produce wiki files in the `Functions/` folder.
 
-All three files are mandatory outputs. The `.lineage.md` file captures the production-to-DWH column mapping from Phase 10B Column Lineage (SP code lineage analysis).
+All four files are mandatory outputs. The `.lineage.md` file captures the production-to-DWH column mapping from Phase 10B Column Lineage (SP code lineage analysis). The `.alter.sql` file is generated inline during Phase 11 — do NOT defer to Phase 11W.
 
-> **ALTER scripts, downstream propagation, and deployment reports** are produced separately by Phase 11W (`11w-write-objects.mdc`) via the `write-objects-dwh` command. They are NOT generated during wiki build.
+> **Downstream propagation and deployment reports** are produced separately by Phase 11W (`11w-write-objects.mdc`) via the `write-objects-dwh` command. ALTER script GENERATION is part of Phase 11. ALTER script EXECUTION is part of Phase 11W.
 
 ### Write Order (MANDATORY)
 
-1. **FIRST**: Write `{ObjectName}.md` — the wiki doc. Use the Write tool with the `.md` path. Verify the file contains all 8 `## N.` section headers.
-2. **SECOND**: Write `{ObjectName}.review-needed.md` — the review sidecar. This is a SHORT file listing Tier 4 items and questions. It does NOT duplicate the wiki.
-3. **THIRD**: Write `{ObjectName}.lineage.md` — the lineage map (or confirm it was already written by Phase 10B).
+1. **FIRST**: Confirm `{ObjectName}.lineage.md` exists (written by Phase 10B). If missing, Phase 11 cannot proceed.
+2. **SECOND**: Write `{ObjectName}.md` — the wiki doc. Use the Write tool with the `.md` path. Verify the file contains all 8 `## N.` section headers.
+3. **THIRD**: Write `{ObjectName}.review-needed.md` — the review sidecar. This is a SHORT file listing Tier 4 items and questions. It does NOT duplicate the wiki.
+4. **FOURTH**: Write `{ObjectName}.alter.sql` — the ALTER script. Generate from the wiki Elements table. Every column row in the wiki MUST produce one ALTER COLUMN COMMENT statement per UC target table. Read `11w-write-objects.mdc` for the ALTER template (header, TBLPROPERTIES, TAGS, column comments). For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables.
 
-**Self-check after each object**: Read back the `.md` file path and confirm it is non-empty and contains `## 4. Elements`. If the `.md` file is empty or missing, Phase 11 has FAILED for this object.
+**Self-check after each object**:
+- Read back the `.md` file path and confirm it is non-empty and contains `## 4. Elements`. If the `.md` file is empty or missing, Phase 11 has FAILED for this object.
+- Count element rows in the wiki (lines matching `| N |` in section 4). Count ALTER COLUMN statements in the `.alter.sql` file (per UC target). They MUST match. Emit: `ALTER COLUMN CHECK: wiki={N} alter={M} — PASS/FAIL`. If FAIL, fix the ALTER file before proceeding to the next object.
+- Confirm all 4 files exist on disk: `.lineage.md`, `.md`, `.review-needed.md`, `.alter.sql`. A missing file is a HARD FAIL.
 
 ## STRICT RULES
 

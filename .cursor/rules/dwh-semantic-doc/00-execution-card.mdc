@@ -25,8 +25,9 @@ alwaysApply: false
 10   Atlassian          Search Jira/Confluence for business context     10-atlassian         SOFT    PHASE 10 CHECKPOINT: PASS
 10A  Upstream Wiki      Generic Pipeline → production source → read    13-prod-lineage §1-3 HARD*   PHASE 10A CHECKPOINT: PASS
 10B  Column Lineage     Write .lineage.md (BEFORE doc!)                13-prod-lineage §2-6 HARD    PHASE 10B CHECKPOINT: PASS
-11   Generate Doc       Read .lineage.md → write .md (WIKI!) then .review-needed (sidecar)  11-generate-doc      HARD    (shape check)
+11   Generate Doc       Read .lineage.md → write .md, .review-needed, .alter.sql (ALL 4 FILES)  11-generate-doc  HARD    (shape check)
      ── validate-wiki.ps1 + validate-tier1-coverage.ps1 ──
+     ── ALTER COLUMN CHECK: wiki={N} alter={M} — must match ──
 16   Eval (EXPERIMENT)  Adversarial review: score against source material, regen if <7.5   16-adversarial-eval  SOFT    (evaluator score)
 12   Cross-Enrich       Pre-Read is embedded in P11; batch pass later  12-cross-enrich      —       —
 ```
@@ -65,6 +66,9 @@ PHASE GATE CHECK — {ObjectName}:
   [x] P5 JOIN  [x] P6 BizLogic [x] P7 Views  [x] P8 SP-scan
   [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
+OUTPUT CHECK — {ObjectName}:
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists
+  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS
 ```
 
 For simple-dictionary fast-path, unchecked boxes are marked `[-]` (skipped by fast-path):
@@ -74,6 +78,9 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
   [-] P5 JOIN  [-] P6 BizLogic [-] P7 Views  [x] P8 SP-scan
   [-] P9 SP-logic [-] P9B ETL  [-] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
+OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists
+  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS
 ```
 
 **Phase 11 MUST refuse to generate if any `[ ]` (unchecked, non-skipped) box remains.**
@@ -83,11 +90,13 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
 - **⛔ ONE BATCH PER SESSION**: After end-of-batch banner → STOP. Do NOT start the next batch. New session required.
 - **⛔ TIER SUFFIX ON EVERY DESCRIPTION (Rule 19)**: Every column description MUST end with `(Tier N — source.table)`. This suffix is written verbatim to Unity Catalog by Phase 11W. No exceptions.
 - **⛔ LINEAGE BEFORE DOCS**: Write `.lineage.md` BEFORE `.md`. Phase 11 READS the lineage file to assign tiers. See `GATE-lineage-contract.mdc`.
-- **⛔ THREE FILES PER OBJECT — WRITE ORDER IS SACRED**: Phase 11 produces exactly THREE files per object. Write them in THIS order:
-  1. `{ObjectName}.md` ← **THE WIKI** (full 8-section template, 100+ lines). This is the primary artifact.
-  2. `{ObjectName}.review-needed.md` ← **SIDECAR** (Tier 4 items, questions, reviewer corrections). This is NOT the wiki. It is a lightweight review checklist.
-  3. `{ObjectName}.lineage.md` ← **LINEAGE** (column-level source mapping from Phase 10B).
-  **The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.**
+- **⛔ FOUR FILES PER OBJECT — ALL MANDATORY, WRITE ORDER IS SACRED**: Phase 11 produces exactly FOUR files per object. Write them in THIS order:
+  1. `{ObjectName}.lineage.md` ← **LINEAGE** (column-level source mapping from Phase 10B). Written FIRST because the wiki reads it.
+  2. `{ObjectName}.md` ← **THE WIKI** (full 8-section template, 100+ lines). This is the primary artifact.
+  3. `{ObjectName}.review-needed.md` ← **SIDECAR** (Tier 4 items, questions, reviewer corrections). This is NOT the wiki. It is a lightweight review checklist.
+  4. `{ObjectName}.alter.sql` ← **ALTER SCRIPT** (UC table comment + column comments + tags). Every column in the wiki Elements table MUST have a corresponding ALTER COLUMN statement. For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables.
+  **Do NOT proceed to the next object until all 4 files exist on disk.** A missing file is a HARD FAIL for the object. The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.
+- **⛔ ALTER COLUMN COUNT MUST MATCH WIKI COLUMN COUNT**: The number of ALTER COLUMN statements per UC target in `.alter.sql` MUST equal the number of element rows in the wiki `.md` file. If the wiki documents 47 columns, the ALTER file must have exactly 47 ALTER COLUMN statements per UC target table. A mismatch is a HARD FAIL — fix before proceeding. Count both sides and emit: `ALTER COLUMN CHECK: wiki={N} alter={M} — {PASS/FAIL}`.
 - **⛔ TWO VALIDATIONS**: After each wiki doc, run BOTH `validate-wiki.ps1` (structural) AND `validate-tier1-coverage.ps1` (semantic). Both must pass before proceeding.
 - **⛔ PHASE 9 IS HARD**: Read the SP code. Trace column assignments to source tables. The SP tells you WHERE each column comes from — you don't need to guess. If Phase 9 is skipped, Phase 10B lineage will be wrong, Phase 11 tiers will be wrong, and the semantic validation will fail.
 - **⛔ CHECKPOINT MARKERS ARE NOT OPTIONAL**: Every phase MUST emit its `PHASE {N} CHECKPOINT: PASS/FAIL` marker at completion. Every HARD phase must show PASS before the next phase begins. The GATE verifies the full checkpoint chain before Phase 11 runs. A missing checkpoint is treated the same as a failed checkpoint.

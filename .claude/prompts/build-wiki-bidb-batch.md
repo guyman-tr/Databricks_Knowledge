@@ -17,11 +17,12 @@ You are running the DWH Semantic Documentation pipeline for schema BI_DB_dbo.
 
 2. **Plan batch** -- Read `knowledge/synapse/Wiki/BI_DB_dbo/_index.md`. Find all objects with status "Pending". Pick the next batch per batch-orchestration rules (up to DEFAULT_BATCH_SIZE objects, ordered by priority).
 
-3. **Execute pipeline** -- For each object in the batch, run the full pipeline as defined in the execution card (Phases 1 through 11, then Phase 16 adversarial evaluation). Load phase-specific rules on demand. Generate three files per object:
+3. **Execute pipeline** -- For each object in the batch, run the full pipeline as defined in the execution card (Phases 1 through 11, then Phase 16 adversarial evaluation). Load phase-specific rules on demand. Generate FOUR files per object (all mandatory):
+   - `.lineage.md` (column lineage -- written first by Phase 10B)
    - `.md` (main wiki)
-   - `.lineage.md` (column lineage)
    - `.review-needed.md` (review sidecar)
-   After validation scripts pass, run Phase 16 (adversarial evaluation) as an independent quality check. If the evaluator scores < 7.5, re-run Phase 11 with the evaluator's feedback (max 1 retry). Record evaluator_score, evaluator_attempt, and evaluator_verdict.
+   - `.alter.sql` (ALTER script with table comment + column comments + tags)
+   After writing all 4 files, verify ALTER COLUMN count matches wiki element count. Do NOT proceed to the next object until all 4 files exist and the column count check passes. Then run Phase 16 (adversarial evaluation). If evaluator scores < 7.5, re-run Phase 11 with feedback (max 1 retry).
 
 4. **Finalize** -- After completing all objects:
    - Bulk-update `_index.md` with results
