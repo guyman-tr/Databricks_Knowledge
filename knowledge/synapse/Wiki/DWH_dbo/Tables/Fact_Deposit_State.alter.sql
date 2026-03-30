@@ -133,3 +133,10 @@ ALTER COLUMN UpdateDate COMMENT 'DWH load timestamp. Set to GETDATE() at ETL exe
 -- =============================================================================
 -- END OF ALTER SCRIPT
 -- =============================================================================
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:32:40 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 0/31 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near 'found'. SQLSTATE: 42601 (line 1, pos 17) == SQL == ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_ -----------------^^^ ALTER COLUMN UpdateDate COMMENT 'DWH load timestamp. Set to GETDATE() at ETL execution time. Tracks when this row was last written to Synapse. (Tier 2 - SP_Fact_Deposit_State)';
+-- ====================

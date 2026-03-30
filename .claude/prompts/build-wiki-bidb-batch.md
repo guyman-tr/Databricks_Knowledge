@@ -15,7 +15,7 @@ You are running the DWH Semantic Documentation pipeline for schema BI_DB_dbo.
    - `.cursor/rules/dwh-semantic-doc/10.5b-tier1-enforcement.mdc`
    - `.cursor/rules/dwh-semantic-doc/16-adversarial-evaluation.mdc`
 
-2. **Plan batch** -- Read `knowledge/synapse/Wiki/BI_DB_dbo/_index.md`. Find all objects with status "Pending". Pick the next batch per batch-orchestration rules (up to DEFAULT_BATCH_SIZE objects, ordered by priority).
+2. **Plan batch** -- Read `knowledge/synapse/Wiki/BI_DB_dbo/_index.md`. If `knowledge/synapse/Wiki/BI_DB_dbo/_parity_gate_last_run.txt` exists and starts with `STATUS=FAIL`, **prioritize** fixing wiki/ALTER COMMENT parity (see `_parity_last_report.json` and `python tools/audit_wiki_alter_comment_parity.py --under BI_DB_dbo`) before taking new Pending objects. Then find all objects with status "Pending". Pick the next batch per batch-orchestration rules (up to DEFAULT_BATCH_SIZE objects, ordered by priority).
 
 3. **Execute pipeline** -- For each object in the batch, run the full pipeline as defined in the execution card (Phases 1 through 11, then Phase 16 adversarial evaluation). Load phase-specific rules on demand. Generate FOUR files per object (all mandatory):
    - `.lineage.md` (column lineage -- written first by Phase 10B)

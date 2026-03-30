@@ -62,3 +62,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa ALTER C
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa ALTER COLUMN MifidCategorization SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa ALTER COLUMN PlayerLevel SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa ALTER COLUMN PlayerStatus SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 15:45:53 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 42/42 succeeded
+-- ====================

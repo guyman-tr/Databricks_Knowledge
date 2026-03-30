@@ -58,3 +58,9 @@ ALTER TABLE main.general.gold_sql_dp_prod_we_dealing_dbo_dealing_commoditiesintr
 ALTER TABLE main.general.gold_sql_dp_prod_we_dealing_dbo_dealing_commoditiesintrahour_clients ALTER COLUMN Bid SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_dealing_dbo_dealing_commoditiesintrahour_clients ALTER COLUMN Ask SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_dealing_dbo_dealing_commoditiesintrahour_clients ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 13:58:34 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 34/34 succeeded
+-- ====================

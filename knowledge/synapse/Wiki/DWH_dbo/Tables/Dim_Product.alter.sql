@@ -38,3 +38,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_dim_product ALTER COLUMN Plat
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_dim_product ALTER COLUMN SubPlatform SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_dim_product ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_dim_product ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:26:07 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 14/14 succeeded
+-- ====================

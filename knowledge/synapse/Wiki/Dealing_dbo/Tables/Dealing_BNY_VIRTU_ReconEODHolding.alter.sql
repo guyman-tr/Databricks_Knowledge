@@ -82,3 +82,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_recon
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_FXRate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN activity SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 13:57:01 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 46/58 succeeded
+-- Error: [INVALID_IDENTIFIER] The unquoted identifier BNY-eToro_Rate is invalid and must be back quoted as: `BNY-eToro_Rate`. Unquoted identifiers can only contain ASCII letters ('a' - 'z', 'A' - 'Z'), digits ('0' - '9'), and underbar ('_'). Unquoted identifiers must also not start with a digit. Different data sources and meta stores may impose additional restrictions on valid identifiers. SQLSTATE: 42602 (line 1, pos 107) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_vir
+-- ====================

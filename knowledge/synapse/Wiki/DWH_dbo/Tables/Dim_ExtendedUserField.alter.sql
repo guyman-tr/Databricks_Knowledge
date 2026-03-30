@@ -34,3 +34,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_extendeduserfield ALTER COL
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_extendeduserfield ALTER COLUMN FieldTypeID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_extendeduserfield ALTER COLUMN ExtendedUserFieldName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_extendeduserfield ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:21:48 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 10/10 succeeded
+-- ====================

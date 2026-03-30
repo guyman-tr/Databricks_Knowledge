@@ -11,9 +11,10 @@ alwaysApply: true
 ## Trigger Detection
 
 If ANY of these are true, this gate is ACTIVE:
-- The user's message contains `build-wiki-dwh`
+- The user's message contains `build-wiki-dwh`, `generate-alter-dwh`, or `deploy-alter-dwh`
 - The conversation summary mentions `build-wiki-dwh`, `DWH_dbo`, or wiki documentation for Synapse objects
 - You are about to write a `.md` file under `knowledge/synapse/Wiki/`
+- You are about to write or rewrite a `.alter.sql` file under `knowledge/synapse/Wiki/` (wiki ↔ ALTER COMMENT parity applies — see `batch-orchestration.mdc` and `tools/audit_wiki_alter_comment_parity.py`)
 
 ## MANDATORY: Load Before You Generate
 

@@ -17,7 +17,7 @@ The `_deploy-index.md` file tracks which wiki-documented objects have been deplo
 | File | Purpose |
 |------|---------|
 | `_index.md` | Tracks wiki documentation build progress (Pending, Done, Failed, Queued) |
-| `_deploy-index.md` | Tracks UC deployment status (Pending, Deployed, Failed, Stale) |
+| `_deploy-index.md` | Tracks **ALTER generation + UC deployment** (Pending → Generated → Deployed, Failed, Stale) |
 
 Every object in `_deploy-index.md` must have status `Done` in `_index.md`.
 
@@ -32,8 +32,10 @@ Every object in `_deploy-index.md` must have status `Done` in `_index.md`.
 schema: DWH_dbo
 database: Synapse DWH
 total_deployable: 23
+generated: 20
 deployed: 18
 failed: 1
+last_generate_batch: 2
 last_deploy_batch: 4
 last_updated: "2026-03-16"
 ---
@@ -44,27 +46,36 @@ last_updated: "2026-03-16"
 | `schema` | string | yes | Schema name (e.g., `DWH_dbo`) |
 | `database` | string | yes | Database identifier (e.g., `Synapse DWH`) |
 | `total_deployable` | int | yes | Total objects in the file (must equal object count) |
-| `deployed` | int | yes | Count of objects with status `Deployed` |
+| `generated` | int | recommended | Count with status `Generated` / `Generated (Batch N)` |
+| `deployed` | int | yes | Count of objects with status `Deployed (Batch N)` |
 | `failed` | int | yes | Count of objects with status `Failed` |
-| `last_deploy_batch` | int | yes | Most recently completed deploy batch number |
+| `last_generate_batch` | int | optional | Last `generate-alter-dwh` batch number |
+| `last_deploy_batch` | int | yes | Most recently completed **UC execution** batch number |
 | `last_updated` | string | yes | ISO date of last update |
 
 ### Markdown Body
 
 1. **Metrics Table** — summary stats
 2. **Completed Deploy Batches** — one section per completed batch (newest first)
-3. **Object Type Sections** — Tables, Views (alphabetical within each) with status column
+3. **Object Type Sections** — Tables, Views, **Functions** (alphabetical within each) with status column
 
 ---
 
 ## Status Values (Exhaustive)
 
+Two-command lifecycle: **`generate-alter-dwh`** then **`deploy-alter-dwh`**. Status must reflect where the object sits.
+
 | Status | Meaning |
 |--------|---------|
-| `Deployed (Batch N)` | Successfully deployed in deploy batch N |
-| `Pending` | Wiki done, not yet deployed |
-| `Failed (Batch N) — {reason}` | Deployment failed |
-| `Stale — wiki updated` | Wiki was modified after last deploy |
+| `Pending` | Wiki `Done`, **no** `.alter.sql` yet (or not processed by generate-alter) |
+| `Generated (Batch N)` | `.alter.sql` written in generate-alter batch N; **not** executed in UC (or stub-only — see below) |
+| `Deployed (Batch N)` | Executable ALTERs ran successfully in deploy batch N |
+| `Stub only — not in UC` | `.alter.sql` is **comment-only** (e.g. BI_DB `Functions/` with `_Not_Migrated`). Never queued for UC execution; counts toward `generated` for file completeness, not toward `deployed`. |
+| `Failed (generate) — {reason}` | ALTER generation failed (parse, no UC target when required, etc.) |
+| `Failed (deploy) — {reason}` | UC execution failed (permissions, missing column, etc.) |
+| `Stale — wiki updated` | Wiki `.md` newer than last generate or last deploy (re-run generate + deploy) |
+
+**Legacy shorthand**: Older indexes may show `Deployed` without batch id — treat as `Deployed (Batch ?)` when reconciling.
 
 ---
 
@@ -110,6 +121,8 @@ last_updated: "2026-03-16"
 
 3. **Continue**: The batch continues with the next object. Failed objects do not block subsequent objects.
 
+4. **Single-line failure text (MANDATORY — 2026-03-30)**: `{error reason}` MUST fit on **one table row** — no embedded newlines, no raw `|` characters. Multiline Databricks stack traces break markdown tables. Batch scripts MUST sanitize (collapse whitespace, replace `|`, truncate ~120 chars). See `tools/dwh_dbo_deploy_resume_batch.py` (`sanitize_one_line`) and spec FR-016 in `.specify/specs/003-synapse-knowledge/spec.md`.
+
 ### Format for Completed Deploy Batch Section:
 
 ```markdown
@@ -142,60 +155,75 @@ Planned: 2026-03-16 | Completed: 2026-03-16
 
 ---
 
-## Protocol 3: STATUS DISPLAY (Read-Only)
+## Protocol 4: STATUS DISPLAY (Read-Only)
 
-**When**: Operator runs the command with `status` scope.
+**When**: Operator runs `generate-alter-dwh {Schema} status` or `deploy-alter-dwh {Schema} status`.
 
 **Steps**:
 
-1. **Read `_deploy-index.md`**: Parse YAML frontmatter for aggregate metrics. Parse Object Type sections for per-type counts.
+1. **Read `_deploy-index.md`**. If **missing**: print a single loud line — `ERROR: _deploy-index.md not found — run generate-alter-dwh {Schema} once to CREATE the index (Protocol 1) before status/deploy.` Do not pretend progress is zero without the file.
 
-2. **Compute per-type breakdown**: For each type (Tables, Views): count Deployed, Pending, Failed, Stale.
+2. **Parse YAML frontmatter**: `total_deployable`, `generated`, `deployed`, `failed`, last batch ids, `last_updated`.
 
-3. **Identify next deployment batch**: Objects with status `Pending` or `Stale`, ordered by `_dependency_order.json`.
+3. **Per-type breakdown** (Tables, Views, Functions): count Pending, Generated, Deployed, Stub only, Failed (generate), Failed (deploy), Stale.
 
-4. **Display compact summary**:
+4. **Next actions**:
+   - **Next generate batch**: objects still `Pending` (no ALTER file).
+   - **Next deploy batch**: objects `Generated` (executable ALTERs only — exclude `Stub only`).
+
+5. **Display compact summary** (copy-paste friendly):
 
 ```
-Schema: DWH_dbo (Deployment)
-═══════════════════════════════════
-Progress:  18/23 deployed (78%)
-Failed:    1
-Stale:     2 (wiki updated after last deploy)
+Schema: DWH_dbo — Deploy index
+════════════════════════════════════
+Total deployable:  23
+Generated:        20  |  Deployed: 18  |  Failed: 1  |  Stale: 2
+Stub-only (no UC): 3
 
-By type:
-  Tables:     12/15 deployed
-  Views:       6/8 deployed
+By type:  Tables … / Views … / Functions …
 
-Next deploy batch: 5 objects (4 Pending, 1 Stale)
-  1. DWH_dbo.Fact_Revenue (Table)
-  2. DWH_dbo.Dim_ActionType (Table) — Stale
-  3. DWH_dbo.vw_RevenueDaily (View)
-  ...
-
-Recent failures: DWH_dbo.Dim_Sector — UC target not found
-═══════════════════════════════════
+Next: generate 3 Pending | deploy 2 Generated (executable)
+Recent failures: …
+════════════════════════════════════
 ```
 
-5. **Exit without modifying any files.** Status scope is strictly read-only.
+6. **Exit without modifying any files.**
 
 ---
 
-## Protocol 4: STALE DETECTION
+## Protocol 5: STALE DETECTION
 
-**Purpose**: Identify objects whose wiki was updated after their last deployment. These should be re-deployed (the `re-deploy` scope in write-objects-dwh).
+**Purpose**: Identify objects whose wiki was updated after their last **generate** or **deploy**. These should be re-run through `generate-alter-dwh regenerate` and/or `deploy-alter-dwh`.
 
 **Detection logic**:
 
-1. For each object with status `Deployed (Batch N)` in `_deploy-index.md`, get the wiki `.md` file path: `knowledge/synapse/Wiki/{Schema}/{TypeFolder}/{ObjectName}.md`.
+1. For each object with status `Deployed (Batch N)` or `Generated (Batch N)` in `_deploy-index.md`, get the wiki `.md` file path: `knowledge/synapse/Wiki/{Schema}/{TypeFolder}/{ObjectName}.md`.
 
 2. Read the wiki file's last-modified date (from git or filesystem).
 
-3. Compare against the object's last deploy timestamp. If the deploy batch completion time is stored, use that; otherwise use `last_updated` from frontmatter as a proxy for the schema's last deploy.
+3. Compare against the object's last deploy timestamp **or** `.alter.sql` mtime (whichever tracking you store; if none, use `last_updated` from frontmatter as a coarse proxy).
 
-4. If the wiki `.md` file is **newer** than the last deploy → mark as `Stale — wiki updated`.
+4. If the wiki `.md` file is **newer** than the last recorded action → mark as `Stale — wiki updated`.
 
-5. Stale objects are included in the `re-deploy` scope. They are re-processed through the per-object pipeline and their status is updated to `Deployed (Batch N)` after successful re-deployment.
+5. Stale objects are included in regenerate / re-deploy scopes.
+
+---
+
+## Protocol 6: End-of-Command Reporting (MANDATORY)
+
+Every **`generate-alter-dwh`** and **`deploy-alter-dwh`** run that touches a schema MUST end with a **structured text summary** (chat + optional log line), even when `_deploy-index.md` was not updated (agent gap = bug).
+
+Minimum content:
+
+| Block | Content |
+|-------|---------|
+| **Schema** | `{Schema}` |
+| **Index file** | Path to `_deploy-index.md` + **Created / Updated / Missing** |
+| **Counts** | Pending → Generated → Deployed; Failed; Stub-only (functions) |
+| **This run** | Objects touched (names or count); batch id if applicable |
+| **Next step** | e.g. "Run deploy-alter-dwh" or "Create _deploy-index.md per Protocol 1" |
+
+**Never** report "deployment complete" without stating whether `_deploy-index.md` was updated. If the file is missing, the summary MUST say so and instruct Protocol 1.
 
 ---
 
@@ -205,23 +233,27 @@ These rules MUST hold for every `_deploy-index.md` file. The agent should verify
 
 1. **Index alignment**: Every object in `_deploy-index.md` must have status `Done` in `_index.md`.
 2. **Total count consistency**: `total_deployable` MUST equal the count of objects in the Object Type sections.
-3. **Deployed count consistency**: `deployed` in frontmatter MUST equal the count of `Deployed` status rows.
-4. **Failed count consistency**: `failed` in frontmatter MUST equal the count of `Failed` status rows.
+3. **Deployed count consistency**: `deployed` in frontmatter MUST equal the count of `Deployed (Batch N)` rows.
+4. **Failed count consistency**: `failed` MUST equal `Failed (generate)` + `Failed (deploy)` rows (or split into two frontmatter fields if you prefer explicitness).
+5. **Generated consistency**: If `generated` is present, it MUST match rows in `Generated` + `Stub only` states.
 
 ---
 
 ## Metrics Table Format
 
 ```markdown
-## Schema Deployment Progress
+## Schema ALTER + Deployment Progress
 
 | Metric | Value |
 |--------|-------|
 | **Schema** | {Schema} |
 | **Total Deployable** | {total_deployable} |
-| **Deployed** | {deployed} ({pct}%) |
+| **Generated (ALTER on disk)** | {generated} |
+| **Deployed (UC)** | {deployed} ({pct}%) |
+| **Stub-only (no UC)** | {stub_only} |
 | **Failed** | {failed} |
 | **Stale** | {stale} |
+| **Last Generate Batch** | {last_generate_batch} |
 | **Last Deploy Batch** | {last_deploy_batch} |
 | **Last Updated** | {last_updated} |
 ```

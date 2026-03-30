@@ -36,3 +36,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_state_and_province ALTER CO
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_state_and_province ALTER COLUMN ShortName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_state_and_province ALTER COLUMN Name SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_state_and_province ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:27:01 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 12/12 succeeded
+-- ====================

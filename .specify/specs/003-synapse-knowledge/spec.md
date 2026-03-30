@@ -160,6 +160,13 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 - Q: Should sampling results override upstream wiki enum values? → A: Never. Sampling adds newly discovered values; it never drops documented upstream values absent from a filtered sample. The first run dropped SettlementTypeID values 2 (TRS) and 3 (CMT) because they filtered to 2025 data only.
 - Q: Should element descriptions include runtime statistics? → A: No. Phase 11 rule #3: "No environment-specific statistics." The first run included "~85% Buy", "~69% leverage=1", "~79% settled", "2.64B rows" in descriptions. These belong in query advisory or working notes.
 
+### Session 2026-03-30 (UC ALTER deploy — regression prevention)
+
+- **Failure**: Batch UC deploy emitted `ALTER COLUMN Tier 4` / `Tier 1` … — parser treated `Tier` and `4` as separate tokens (`PARSE_SYNTAX_ERROR` near `4`). **Cause**: generator treated documentation tier legend rows as column names. **Rule**: `ALTER COLUMN` names MUST match real DDL columns only; tier tags appear only inside `COMMENT '...'` strings.
+- **Failure**: `ALTER COLUMN Organic/Paid` without quoting — slash broke Databricks SQL. **Fix**: backtick-quote identifiers with `/` (and other special characters): `` `Organic/Paid` ``.
+- **Failure**: `ALTER TABLE Not in Generic Pipeline mapping - not exported…` — prose pasted as object name. **Fix**: comment-only stub or omit file; never executable `ALTER` without `main.{uc_table}`.
+- **Failure**: Multiline Databricks error text in `_deploy-index.md` broke markdown tables. **Fix**: sanitize failure strings to one line in deploy batch scripts.
+
 ## Requirements
 
 ### Functional Requirements
@@ -175,6 +182,12 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 - **FR-009**: Pipeline MUST produce a `.review-needed.md` sidecar alongside each wiki file, listing all Tier 4 (column-name-inferred) items with specific questions for domain experts. Columns without any source documentation must be flagged `[UNVERIFIED]`, not given fabricated descriptions.
 - **FR-010**: Pipeline MUST NOT include environment-specific statistics (row counts, percentages, date ranges) in wiki column descriptions. These belong in working notes or query advisory metadata, not in the Elements table.
 - **FR-011**: Pipeline MUST search the entire upstream wiki folder (tables, views, related objects across all schemas) before labeling any column as DWH-specific or unresolved. The source table wiki alone is insufficient — columns may be documented on related tables, views, or history schemas.
+- **FR-012 (UC ALTER — column identifiers)**: Generated `.alter.sql` MUST emit `ALTER COLUMN` only for real Synapse/UC column names taken from the wiki Elements table (and DDL). MUST NOT emit `ALTER COLUMN Tier 1` … `ALTER COLUMN Tier 5` — those strings are documentation-tier markers inside prose, not columns. (2026-03-30: batch deploy failures from Tier rows treated as columns.)
+- **FR-013 (UC ALTER — special identifiers)**: Databricks SQL identifiers that contain `/`, spaces, or other non-regular characters MUST be backtick-quoted in `ALTER COLUMN` (e.g. `` ALTER COLUMN `Organic/Paid` COMMENT ... ``). (2026-03-30: `Dim_Channel` failed until quoted.)
+- **FR-014 (UC ALTER — no prose table targets)**: When Generic Pipeline / UC has no resolved `uc_table`, the pipeline MUST emit a **comment-only stub** `.alter.sql` (no executable `ALTER TABLE` lines) or omit the file per generator contract. MUST NOT paste wiki prose such as `Not in Generic Pipeline mapping - not exported to Gold/UC` into the `ALTER TABLE` object position. (2026-03-30: invalid SQL and failed deploys.)
+- **FR-015 (Post-gen validation)**: After generating or changing `.alter.sql` for a schema, run `python tools/audit_alter_uc_mapping.py knowledge/synapse/Wiki/{Schema}` (directory accepted; structural pass; optional `--mapping`). The audit MUST flag bogus Tier columns and unquoted slash identifiers in addition to invalid `ALTER TABLE` targets. A full-repo scan may still list **legacy** issues in other schemas until those files are migrated — the **deploy target schema** MUST pass before batch UC deploy.
+- **FR-016 (Deploy index integrity)**: Batch deploy tooling that writes failure reasons into `_deploy-index.md` MUST sanitize error text to a **single line** (strip newlines/pipes/truncate) so markdown tables cannot split across rows. (2026-03-30: corrupted `_deploy-index.md` from multiline Databricks errors.)
+- **FR-017 (Wiki ↔ ALTER COMMENT text)**: For every object with both `{Object}.md` and `{Object}.alter.sql`, each column’s `COMMENT` literal MUST match the wiki **## 4. Elements** description for that column name (same encoding as `sql_string_for_comment` in `merge_wiki_column_comments_into_alter.py`). Prevents wrong text on wrong columns and drift. Verified by `tools/audit_wiki_alter_comment_parity.py` (schema: `--under {Schema}`; single: path to `.md`). Cursor: `.cursor/scripts/validate-wiki.ps1` enforces per object when `.alter.sql` exists. Documented in `.cursor/rules/semantic-layer-core/batch-orchestration.mdc` and Cursor commands `/build-wiki-dwh`, `/generate-alter-dwh`, `/deploy-alter-dwh`.
 
 ### Key Entities
 
@@ -194,3 +207,6 @@ Distribution keys, recommended JOIN patterns, common WHERE clauses, performance 
 - **SC-005**: An AI assistant reading the wiki can answer "What does StatusID=2 mean in Dim_Position?" correctly
 - **SC-006**: Pipeline is reusable -- can be run against any Synapse table by changing the target object name
 - **SC-007**: Upstream knowledge sources are configurable -- adding a new source only requires a config entry, not code changes
+- **SC-008**: For each schema **in active UC deploy** (e.g. `DWH_dbo`), `python tools/audit_alter_uc_mapping.py knowledge/synapse/Wiki/{Schema}` exits 0 (no bogus Tier-as-column lines, no unquoted `Col/Name` identifiers, valid `ALTER TABLE` targets). Other schemas may be non-zero until legacy `.alter.sql` files are fixed.
+- **SC-009**: No **newly generated** `.alter.sql` in an active deploy schema contains `ALTER TABLE` followed by English prose or “Not in Generic Pipeline…” as the object name (structural audit)
+- **SC-010**: For each schema targeted for UC comment deployment, `python tools/audit_wiki_alter_comment_parity.py --under {Schema}` exits 0 (wiki Elements ↔ `ALTER COLUMN ... COMMENT` parity per FR-017), or the team explicitly accepts drift with a tracked remediation plan

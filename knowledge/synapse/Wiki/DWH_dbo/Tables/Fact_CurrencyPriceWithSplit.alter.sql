@@ -24,11 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit SET
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 5 COMMENT 'Expert-confirmed';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 1 COMMENT 'Upstream wiki verbatim';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 2 COMMENT 'From SSDT SP or DDL analysis';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 3 COMMENT 'From sampling or DDL';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 4 COMMENT 'Inferred, needs expert review';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN ProviderID COMMENT 'Price provider identifier. 3 distinct values in production. Indicates which data provider sourced the price candle. Passed through from DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN InstrumentID COMMENT 'Financial instrument identifier. Foreign key to DWH_dbo.Dim_Instrument. HASH distribution column - include in all JOINs for optimal Synapse performance. 15,416 distinct instruments in production. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Occurred COMMENT 'Exact timestamp when the price was recorded. Sub-day precision. Use OccurredDate or OccurredDateID for date-level aggregations. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse)';
@@ -45,11 +40,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALT
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN ConvertRateIsBuy_0 COMMENT 'Pre-computed USD conversion rate for sell-side positions (IsBuy=0). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Ask; otherwise cross-rate. NULL where no cross-rate could be determined. Added 2023-02-26. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 5 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Tier 4 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN ProviderID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN Occurred SET TAGS ('pii' = 'none');
@@ -64,3 +54,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALT
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN ConvertRateIsBuy_1 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit ALTER COLUMN ConvertRateIsBuy_0 SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:30:24 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 30/30 succeeded
+-- ====================

@@ -275,3 +275,9 @@ ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate ALTER COLUMN
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate ALTER COLUMN Telephone SET TAGS ('pii' = 'direct');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate ALTER COLUMN SubChannel SET TAGS ('pii' = 'none');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate ALTER COLUMN Channel SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:38:15 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 228/228 succeeded
+-- ====================

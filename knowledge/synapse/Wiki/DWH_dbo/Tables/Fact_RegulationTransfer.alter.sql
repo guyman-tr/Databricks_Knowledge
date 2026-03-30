@@ -88,3 +88,9 @@ ALTER TABLE main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer 
 ALTER TABLE main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer ALTER COLUMN InvestedStocksMargin SET TAGS ('pii' = 'none');
 ALTER TABLE main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer ALTER COLUMN PositionPnLStocksMargin SET TAGS ('pii' = 'none');
 ALTER TABLE main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer ALTER COLUMN TotalStockMarginLoanValue SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:33:47 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 64/64 succeeded
+-- ====================

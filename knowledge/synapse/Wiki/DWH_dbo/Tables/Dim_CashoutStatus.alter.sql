@@ -24,9 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Tier 1 COMMENT 'Verbatim from upstream production wiki';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Tier 2 COMMENT 'Confirmed from Synapse ETL SP code';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Tier 3 COMMENT 'Observed from MCP live data sampling';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN CashoutStatusID COMMENT 'Primary key. DWH values: 0=N/A (placeholder), 1=Pending, 2=InProcess, 3=Processed, 4=Canceled. Note: production has 17 states (IDs 5-17 missing from DWH). Stored in withdrawal request records and updated as requests progress. (Tier 1 - upstream wiki, Dictionary.CashoutStatus)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Name COMMENT 'Human-readable status label. Values: "N/A", "Pending", "InProcess", "Processed", "Canceled". UNIQUE at production level (not enforced in DWH DDL). Used in reports and monitoring. (Tier 1 - upstream wiki, Dictionary.CashoutStatus)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN DWHCashoutStatusID COMMENT 'DWH surrogate - always equal to CashoutStatusID. Set by SP_Dictionaries as `[CashoutStatusID] as [DWHCashoutStatusID]`. No analytical value; redundant pattern used for consistency across DWH dictionary tables. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
@@ -35,12 +32,15 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN 
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN InsertDate COMMENT 'ETL insert timestamp. GETDATE() for staging rows; @ddate (midnight) for the ID=0 placeholder. Same value as UpdateDate (full reload on each run). (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN CashoutStatusID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN Name SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN DWHCashoutStatusID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN StatusID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:27:04 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 14/14 succeeded
+-- ====================

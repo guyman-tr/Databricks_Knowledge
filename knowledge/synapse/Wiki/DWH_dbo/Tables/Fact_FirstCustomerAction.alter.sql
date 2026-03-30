@@ -82,3 +82,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction ALTER 
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction ALTER COLUMN DepositID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction ALTER COLUMN HistoryID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction ALTER COLUMN FirstEver SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:33:03 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 58/58 succeeded
+-- ====================

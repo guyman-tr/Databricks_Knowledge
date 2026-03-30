@@ -141,9 +141,17 @@ For PII Masked tables, also include:
    - **Repo fallback** (when Databricks MCP unavailable): `knowledge/synapse/Wiki/_generic_pipeline_mapping.json` — find the row where `database_name` matches the Synapse pool (e.g. `sql_dp_prod_we`), `schema_name` matches the Synapse schema (e.g. `DWH_dbo`), and `table_name` matches the Synapse object **or** the exported UC view/table that replaces it. Use the `uc_table` value exactly: emit `main.{uc_table}`.
 3. **Empty or missing `uc_table`**: Do **not** invent a name from naming conventions or wiki prose. Do **not** emit `ALTER TABLE` against a datalake path. Either skip `.alter.sql` for this object or emit a **comment-only** stub stating that UC mapping has no `uc_table` yet.
 4. **Never** use an unverified guess as the executable `ALTER TABLE` target. If the name was not resolved from UC or from `uc_table` in the JSON, there must be **no** executable ALTER against that string.
-5. **Post-generation check**: Run `python tools/audit_alter_uc_mapping.py` on new or changed `.alter.sql` files (structural pass). Use `--mapping` when validating against the static JSON allowlist.
+5. **Post-generation check**: Run `python tools/audit_alter_uc_mapping.py` on new or changed `.alter.sql` files (structural pass). Use `--mapping` when validating against the static JSON allowlist. The same tool flags **bogus `ALTER COLUMN Tier N` lines** and **unquoted slash column names** (see §4h).
 
 **Wiki vs SQL**: The wiki property table **may** use long prose in **UC Target** for analysts (export notes, generic_id, multiple paths). The `.alter.sql` file must use **only** the resolved `main.{uc_table}` (or second UC for PII) in `ALTER TABLE` — never copy the prose cell verbatim into SQL.
+
+### 4h. ALTER COLUMN — real columns only + Databricks quoting (2026-03-30)
+
+**Spec**: `.specify/specs/003-synapse-knowledge/spec.md` FR-012, FR-013.
+
+1. **Tier labels are not columns**: Descriptions end with `(Tier N - source)` inside the COMMENT string. **Never** add `ALTER COLUMN Tier 1` … `Tier 5` — those are not physical columns and break UC SQL parsers.
+2. **Special identifiers**: For column names containing `/`, spaces, or other non-identifier characters, use **backticks**: `` ALTER COLUMN `Organic/Paid` COMMENT '...' ``.
+3. **Batch generators** (`_batch_generate_lib.py`, merge tools): when expanding the Elements table into ALTER statements, bind **only** to column names from structure analysis / wiki Elements **Column** column — not to tier legend rows or markdown table headers.
 
 ---
 
@@ -281,6 +289,8 @@ ALTER TABLE {pii_catalog}.{pii_schema}.{pii_table} ALTER COLUMN `{ColumnName}` C
 10. **Column name validation**: When UC is available, verify each column exists in the target table before generating its ALTER COLUMN statement. Use `DESCRIBE TABLE {uc_catalog}.{uc_schema}.{uc_table}` to get the actual column list. Skip columns that don't exist in UC (they may have been dropped or renamed) and note them in the review sidecar
 11. **UC-only columns**: If `DESCRIBE TABLE` reveals columns that exist in UC but not in Synapse (e.g., partition columns like `etr_y`, `etr_ym`, `etr_ymd`), generate `ALTER COLUMN ... COMMENT` statements for them with a description noting they are Databricks-layer additions (e.g., partition pruning columns)
 12. **Single-line executable ALTER**: Each `ALTER TABLE ... ALTER COLUMN ... COMMENT` statement MUST be one physical line with the keyword `COMMENT` intact (no accidental line breaks inside `COMMENT`). Validate with `python tools/fix_uc_sql_mojibake.py --check` after bulk generation.
+13. **UTF-8 file encoding on ALL writes (HARD RULE — 2026-03-30)**: Every file write (`.alter.sql`, `.md`, `.review-needed.md`, `.lineage.md`) MUST use explicit `encoding="utf-8"` in Python `open()` calls. Never rely on system default encoding (Windows CP1252/CP1255 corrupts tier tags). The sanitizer is a safety net, not a substitute for writing UTF-8 from the start.
+14. **Name-level ALTER-wiki parity (HARD — 2026-03-30)**: Count-only matching is NOT sufficient. Every ALTER COLUMN name (after stripping backticks and lowercasing) must match a wiki Element Name (lowercased), and vice versa. Run `python tools/audit_wiki_alter_comment_parity.py` on the generated `.alter.sql` to validate both column name parity and description text parity.
 
 ---
 
@@ -442,12 +452,12 @@ Generate a Python script at `{wiki_output_dir}/{ObjectName}_deploy.py` that:
 
 1. Reads the Databricks connection config from the Databricks connection skill (workspace host, HTTP path, token/OAuth)
 2. Opens ONE `databricks.sql.connect()` session
-3. Reads the `.alter.sql` file, extracts each executable statement (lines NOT starting with `--`)
-4. Executes each statement sequentially via `cursor.execute(stmt)`
-5. Logs success/failure per statement, continues on error
-6. Then reads the `.downstream.alter.sql` file and does the same
-7. Prints a structured execution summary
-8. Writes the execution log to the end of the `.alter.sql` file
+3. Reads the `.alter.sql` file, extracts each executable statement (skip `--` lines). If the file is **comment-only** (BI_DB `Functions/` stub for `_Not_Migrated` — header contains `Knowledge-only` and there is no `ALTER TABLE` / `ALTER VIEW` statement), **do not** open a UC session for that object; mark deploy as **Skipped — stub only** in `_deploy-index.md` / deploy report.
+4. Executes each runnable statement sequentially via `cursor.execute(stmt)`.
+5. Logs success/failure per statement, continues on error.
+6. Then reads the `.downstream.alter.sql` file (tables only) and does the same.
+7. Prints a structured execution summary (include Protocol 6 index path + state).
+8. Writes the execution log to the end of the `.alter.sql` file.
 
 ```python
 """

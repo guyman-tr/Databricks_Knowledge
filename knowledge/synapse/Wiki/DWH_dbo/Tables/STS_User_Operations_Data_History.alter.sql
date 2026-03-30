@@ -64,3 +64,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_histor
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history ALTER COLUMN ProxyType SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history ALTER COLUMN CountryISOCode SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history ALTER COLUMN AdditionalData SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:35:47 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 44/44 succeeded
+-- ====================

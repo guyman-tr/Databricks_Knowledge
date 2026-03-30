@@ -164,3 +164,9 @@ ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_repor
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN IsChild SET TAGS ('pii' = 'none');
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN IsParent SET TAGS ('pii' = 'none');
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN OriginalPositionID SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:02:43 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 140/140 succeeded
+-- ====================

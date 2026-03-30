@@ -32,3 +32,10 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdatei
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN All Fact_SnapshotEquity columns SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:36:15 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 6/8 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near 'Fact_SnapshotEquity'. SQLSTATE: 42601 (line 1, pos 99) == SQL == ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN All Fact_SnapshotEquity columns SET TAGS ('pii' = 'none'); ---------------------------------------------------------------------------------------------------^^^
+-- ====================

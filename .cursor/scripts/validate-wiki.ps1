@@ -3,7 +3,9 @@
     Validates a DWH wiki .md file against the Phase 11 spec.
 .DESCRIPTION
     Deterministic checks that MUST pass before a wiki doc is considered complete.
-    Run after writing each .md file. Exit code 0 = PASS, 1 = FAIL.
+    When a sibling .alter.sql exists, also verifies Elements text matches each
+    ALTER COLUMN ... COMMENT (tools/audit_wiki_alter_comment_parity.py).
+    Exit code 0 = PASS, 1 = FAIL.
 .PARAMETER Path
     Path to the wiki .md file to validate (e.g. Tables/Dim_Customer.md).
 .PARAMETER ObjectType
@@ -207,6 +209,37 @@ else {
     $failedChecks++
     Write-Host "  [FAIL] Quality footer missing (no 'Quality: N.N' in last 10 lines)" -ForegroundColor Red
     $failDetails += "Quality footer missing"
+}
+
+# ============================================================
+# CHECK 6: Wiki Elements vs .alter.sql COMMENT literals (if ALTER exists)
+# ============================================================
+$alterPath = Join-Path $dir "$baseName.alter.sql"
+if (Test-Path $alterPath) {
+    $totalChecks++
+    $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+    $parityScript = Join-Path $repoRoot "tools\audit_wiki_alter_comment_parity.py"
+    if (-not (Test-Path $parityScript)) {
+        $failedChecks++
+        Write-Host "  [FAIL] Parity script not found: $parityScript" -ForegroundColor Red
+        $failDetails += "audit_wiki_alter_comment_parity.py missing"
+    }
+    else {
+        Push-Location $repoRoot
+        try {
+            & python $parityScript $Path 2>&1 | ForEach-Object { Write-Host $_ }
+            if ($LASTEXITCODE -ne 0) {
+                $failedChecks++
+                Write-Host "  [FAIL] Wiki/ALTER COMMENT parity (Elements vs ALTER COLUMN ... COMMENT)" -ForegroundColor Red
+                $failDetails += "Wiki vs ALTER COMMENT parity failed — run: python tools/audit_wiki_alter_comment_parity.py `"$Path`""
+            }
+            else {
+                Write-Host "  [PASS] Wiki/ALTER COMMENT parity" -ForegroundColor Green
+            }
+        } finally {
+            Pop-Location
+        }
+    }
 }
 
 # ============================================================

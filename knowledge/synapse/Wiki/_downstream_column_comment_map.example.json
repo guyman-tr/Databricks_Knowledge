@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "description": "Copy to _downstream_column_comment_map.json and fill in. Each column binds COMMENT text by NAME — never by ordinal position.",
+  "tables": [
+    {
+      "uc_fqn": "main.etoro_kpi.ftd_funnel_v",
+      "columns": [
+        {
+          "target_column": "GCID",
+          "source_alter": "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Customer.alter.sql",
+          "source_column": "GCID"
+        },
+        {
+          "target_column": "CID",
+          "source_wiki": "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Customer.md",
+          "source_column": "RealCID"
+        }
+      ]
+    }
+  ]
+}

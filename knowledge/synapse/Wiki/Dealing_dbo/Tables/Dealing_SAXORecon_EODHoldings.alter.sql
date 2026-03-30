@@ -92,3 +92,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodho
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings ALTER COLUMN MaxTradeDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings ALTER COLUMN LastExecutionTime SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings ALTER COLUMN Symbol SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:06:19 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 54/68 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near '/'. SQLSTATE: 42601 (line 1, pos 108) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings ALTER COLUMN illiquid/liquid SET TAGS ('pii' = 'none'); ------------------------------------------------------------------------------------------------------------^^^
+-- ====================

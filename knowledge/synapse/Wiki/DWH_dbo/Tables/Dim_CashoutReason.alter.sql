@@ -24,19 +24,17 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 1 COMMENT 'Verbatim from upstream production wiki';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 2 COMMENT 'Confirmed from Synapse ETL SP code';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 3 COMMENT 'Observed from MCP live data sampling';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 4 COMMENT 'Column name inference only';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN CashoutReasonID COMMENT 'Primary key identifying the withdrawal reason. Values 1-19 in DWH. Stored in Billing.Withdraw and History.WithdrawAction on production. Special routing for IN (12, 14, 15) in Billing.WithdrawToFundingProcess. Default 16 (Requested by User) set in Billing.WithdrawRequestAdd. See Section 2.1 for full value map. (Tier 1 - upstream wiki, Dictionary.CashoutReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Name COMMENT 'Human-readable withdrawal reason label. E.g., "Requested by User" (most common), "PI Payment", "Foreclose account". Displayed in BackOffice withdrawal screens and used in audit trails. (Tier 1 - upstream wiki, Dictionary.CashoutReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp set to GETDATE() on each daily reload. Reflects when SP_Dictionaries_DL_To_Synapse last ran - NOT when the reason was added or changed in production. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Tier 4 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN CashoutReasonID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN Name SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:26:59 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

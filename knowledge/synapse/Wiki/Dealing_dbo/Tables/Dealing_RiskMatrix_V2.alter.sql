@@ -60,3 +60,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 A
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UnitsNOP+1%` … `UnitsNOP+900% SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UnitsNOP-1%` … `UnitsNOP-100% SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:05:43 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 32/36 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near '1'. SQLSTATE: 42601 (line 1, pos 101) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2 ALTER COLUMN UnitsNOP-1%` … `UnitsNOP-100% SET TAGS ('pii' = 'none'); -----------------------------------------------------------------------------------------------------^^^
+-- ====================

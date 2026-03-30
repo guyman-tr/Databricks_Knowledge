@@ -10,7 +10,11 @@ description: Generate ALTER scripts from existing DWH wiki documentation. Resolv
 
 ## Purpose
 
-Parse existing wiki `.md` files (produced by `build-wiki-dwh`) and generate `.alter.sql` scripts for Unity Catalog deployment. Each script contains ALTER statements for table/view/function comment, column comments, table tags, and column PII tags. Functions are scanned from `Functions/` alongside `Tables/` and `Views/` — most will have no UC counterpart (expected), but any that do will get ALTER scripts.
+Parse existing wiki `.md` files (produced by `build-wiki-dwh`) and generate `.alter.sql` scripts for Unity Catalog deployment. Each script contains ALTER statements for table/view comment, column comments, table tags, and column PII tags when a UC gold object exists.
+
+**Functions** (`Functions/`): wikis with **`UC Target: _Not_Migrated`** (Synapse-only TVFs/scalars) receive a **comment-only stub** `.alter.sql` (no executable `ALTER`) via `_batch_generate_lib.py` — this fixes the previous bug where `_Not_Migrated` was treated as "already resolved" and skipped entirely. Stubs are **not** UC deployment targets. Also ensure **`.lineage.md`** exists (one-time: `python tools/bootstrap_function_wiki_artifacts.py --schema BI_DB_dbo`).
+
+**`_deploy-index.md`**: MUST be **created or updated** on every schema pass per `deploy-index-management.mdc` (status `Generated` / `Stub only — not in UC`). **Protocol 6** requires an end-of-run summary naming the index file state.
 
 **This command generates files only — it does NOT execute anything against Databricks.** Use `deploy-alter-dwh` to execute the generated scripts.
 
@@ -48,6 +52,7 @@ Parse existing wiki `.md` files (produced by `build-wiki-dwh`) and generate `.al
 |-------|--------|----------|------|
 | `_index.md` | Local filesystem | **MANDATORY** | Must exist — lists Done objects eligible for ALTER generation |
 | Wiki `.md` files | Local filesystem | **MANDATORY** | Per-object wiki must exist with UC Target property |
+| Wiki ↔ ALTER parity | `tools/audit_wiki_alter_comment_parity.py` | **RECOMMENDED** | After generation: `--under {schema}` — see Check 3 |
 | Databricks MCP | Network | **OPTIONAL** | When available: resolves `_Pending` UC targets and backfills wikis. When unavailable: skips `_Pending` objects |
 
 ### Check 1: Schema Files
@@ -58,7 +63,20 @@ Verify `knowledge/synapse/Wiki/{Schema}/_index.md` exists. If missing → **STOP
 
 Each wiki `.md` must have a `| **UC Target** | ... |` row in its property table. If missing or blank → mark as Failed with reason "No UC target in wiki".
 
-### Check 3: Databricks MCP Connectivity
+### Check 3: Wiki ↔ ALTER comment parity (before or after generation)
+
+**Spec**: `.specify/specs/003-synapse-knowledge/spec.md` (wiki/ALTER parity). **Rule**: `.cursor/rules/semantic-layer-core/batch-orchestration.mdc`.
+
+- After writing or updating `.alter.sql` files, run  
+  `python tools/audit_wiki_alter_comment_parity.py --under {schema_name}`  
+  and fix mismatches (wrong comment on wrong column, drift vs wiki).
+- Single-object:  
+  `python tools/audit_wiki_alter_comment_parity.py knowledge/synapse/Wiki/{Schema}/Tables/{Object}.md`
+- Per-object validation: `.cursor/scripts/validate-wiki.ps1` already runs parity when `.alter.sql` exists.
+
+Non-zero exit = mismatches or missing COMMENT lines for wiki columns — **resolve before** treating generation as complete or before `/deploy-alter-dwh` at scale.
+
+### Check 4: Databricks MCP Connectivity
 
 Test Databricks MCP with a lightweight query (e.g., `SELECT 1`). Record result as `dbx_available = true/false`.
 

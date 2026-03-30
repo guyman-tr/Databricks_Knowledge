@@ -94,3 +94,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid ALTER 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid ALTER COLUMN Real_Units_Staking_OptIn SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid ALTER COLUMN Real_Units_Staking_OptOut SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid ALTER COLUMN IsDLTUser SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 15:58:47 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 74/74 succeeded
+-- ====================

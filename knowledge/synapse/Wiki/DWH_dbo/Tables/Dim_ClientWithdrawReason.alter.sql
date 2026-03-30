@@ -24,15 +24,17 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason SET TA
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN Tier 1 COMMENT 'Verbatim from upstream production wiki';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN Tier 2 COMMENT 'Confirmed from Synapse ETL SP code';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN ClientWithdrawReasonID COMMENT 'Primary key. Values 1-7. Referenced by Billing.Withdraw via FK on production. Passed as @ClientWithdrawReasonID to WithdrawalService_WithdrawRequestAdd on production. DWH DDL defines as nullable - this is a DDL quirk (production column is NOT NULL). (Tier 1 - upstream wiki, Dictionary.ClientWithdrawReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN ClientWithdrawReasonName COMMENT 'Human-readable reason label shown in the withdrawal form. DWH note: column renamed from production `Name` to `ClientWithdrawReasonName` by SP_Dictionaries_DL_To_Synapse. E.g., "Withdrawing profits", "Moving to a competitor", "None of the reasons above". (Tier 1 - upstream wiki, Dictionary.ClientWithdrawReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp set to GETDATE() on each daily reload. Not a business change date - reflects SP_Dictionaries_DL_To_Synapse execution time. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN ClientWithdrawReasonID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN ClientWithdrawReasonName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:27:13 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

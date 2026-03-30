@@ -50,3 +50,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem ALTER COLUMN
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem ALTER COLUMN LastModificationDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem ALTER COLUMN ModificationDateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:28:24 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 26/26 succeeded
+-- ====================

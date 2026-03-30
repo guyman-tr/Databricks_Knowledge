@@ -37,7 +37,7 @@ Execute previously generated `.alter.sql` scripts against Databricks Unity Catal
 - **Second arg is `status`** → Status mode (read-only)
 - **Second arg is `resume`** → Resume mode
 - **Second arg is `dry-run`** → Validation mode (no writes)
-- **Second arg absent** → Schema mode (deploy all Generated objects)
+- **Second arg absent** → Schema mode (deploy all **`Generated`** objects per `_deploy-index.md` — **not** `Stub only`, not `Pending`)
 
 ---
 
@@ -55,11 +55,33 @@ Run `SELECT 1 AS ConnectionTest` via `user-databricks_sql-execute_sql_read_only`
 
 ### Check 2: ALTER Scripts Exist
 
-For schema mode: scan `knowledge/synapse/Wiki/{Schema}/Tables/*.alter.sql` and `Views/*.alter.sql`. If zero files → **STOP**: "No ALTER scripts found. Run `/generate-alter-dwh {Schema}` first."
+For schema mode: scan `Tables/*.alter.sql`, `Views/*.alter.sql`, and **`Functions/*.alter.sql`**. If **zero executable** scripts (see below) → **STOP**: "No ALTER scripts found. Run `/generate-alter-dwh {Schema}` first."
+
+**Comment-only stubs (BI_DB `Functions/`, `_Not_Migrated`)**: Files whose body has **no** lines starting with `ALTER TABLE` / `ALTER VIEW` (after stripping comments) are **skipped** for UC execution — they still satisfy "ALTER file exists" for repo completeness but must **not** be passed to `DESCRIBE TABLE` or `cursor.execute`.
 
 ### Check 3: Deploy Index
 
-Verify `_deploy-index.md` exists. If missing → **STOP**: "Run `/generate-alter-dwh {Schema}` first."
+Verify `_deploy-index.md` exists. If missing → **STOP** with explicit operator text: "`_deploy-index.md` missing — run `/generate-alter-dwh {Schema}` once to **CREATE** the deploy index (see `deploy-index-management.mdc` Protocol 1), then resume deploy." Do not deploy batches without updating the index in the same session once the file exists.
+
+### Check 3b: ALTER script sanity (regression guard — spec FR-012–FR-015)
+
+Before large batches, spot-check or run:
+
+`python tools/audit_alter_uc_mapping.py knowledge/synapse/Wiki/{Schema}` (pass the **schema folder**; see tool help).
+
+The audit flags: invalid `ALTER TABLE` targets, **bogus `ALTER COLUMN Tier N` lines**, and **`ALTER COLUMN Col/Name` without backticks**. These caused 2026-03-30 UC deploy failures; see `.specify/specs/003-synapse-knowledge/spec.md` Session 2026-03-30. A full-repo audit may still hit legacy Dealing_dbo files — **gate the schema you deploy**.
+
+### Check 3c: Wiki ↔ ALTER **comment** parity (semantic)
+
+Wrong `COMMENT` text (column-order bugs, drift vs wiki) does not show up in `audit_alter_uc_mapping.py`. Before large deploys, run:
+
+`python tools/audit_wiki_alter_comment_parity.py --under {schema_name}`
+
+Non-zero = Elements vs `ALTER COLUMN ... COMMENT` mismatch — fix wiki or `.alter.sql` per `.cursor/commands/generate-alter-dwh.md` Check 3 and `batch-orchestration.mdc`.
+
+### Check 4: End-of-Run Reporting
+
+Per **`deploy-index-management.mdc` Protocol 6**: every deploy run MUST print a summary that states **Created / Updated / Missing** for `_deploy-index.md`, counts (Deployed / Failed / Skipped stub), and **next step**.
 
 ---
 

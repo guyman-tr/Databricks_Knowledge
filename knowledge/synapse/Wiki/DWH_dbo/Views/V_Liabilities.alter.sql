@@ -175,3 +175,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities ALTER COLUMN NOP_
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities ALTER COLUMN PositionPnLStocksMargin SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities ALTER COLUMN TotalStocksMargin SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities ALTER COLUMN TotalStockMarginLoanValue SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:37:46 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 152/152 succeeded
+-- ====================

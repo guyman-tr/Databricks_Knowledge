@@ -50,3 +50,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends ALTER
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends ALTER COLUMN IsValidCustomer SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends ALTER COLUMN IsCreditReportValidCB SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 15:59:16 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 30/30 succeeded
+-- ====================

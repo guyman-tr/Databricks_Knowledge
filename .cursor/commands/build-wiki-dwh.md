@@ -285,6 +285,21 @@ When argument is `review-rerun`:
 
 ---
 
+## Wiki ↔ ALTER comment parity (Cursor + repo — not Claude-only)
+
+Whenever a sibling **`{ObjectName}.alter.sql`** exists (from `/generate-alter-dwh` or manual creation), **column `COMMENT` text must match** the wiki **## 4. Elements** descriptions using the same encoding as `merge_wiki_column_comments_into_alter.py` / `sql_string_for_comment`.
+
+| Scope | Command / script |
+|-------|------------------|
+| **Single wiki** | `python tools/audit_wiki_alter_comment_parity.py path/to/Object.md` |
+| **Schema** | `python tools/audit_wiki_alter_comment_parity.py --under {schema_name}` |
+| **Validate wiki (includes parity if `.alter.sql` exists)** | `.cursor/scripts/validate-wiki.ps1 -Path path\to\Object.md` |
+| **Last run status (batch loop / operator)** | `knowledge/synapse/Wiki/{Schema}/_parity_gate_last_run.txt` and optional `_parity_last_report.json` on FAIL |
+
+See `.cursor/rules/dwh-semantic-doc/00-execution-card.mdc` (THREE VALIDATIONS + batch parity) and `.cursor/rules/semantic-layer-core/batch-orchestration.mdc` (parity subsection).
+
+---
+
 ## Error Recovery
 
 | Issue | Solution |

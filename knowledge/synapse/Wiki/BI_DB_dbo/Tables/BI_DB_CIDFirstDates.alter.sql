@@ -313,16 +313,7 @@ ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COL
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastActionDateForLifeStage SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-15 22:00
--- Main: 141/141 succeeded | Downstream: 515/515 succeeded
--- Failures: 0
--- Main breakdown:
---   Table comment:    OK
---   Table tags:       OK
---   Column comments:  139/139 succeeded
---   PII tags:         139/139 succeeded
--- Downstream breakdown:
---   Tables:  139/139 statements across 1 table (main.bi_db...masked)
---   Views:   376/376 statements across 5 views
---   Skipped: 2 (METRIC_VIEWs)
+-- Timestamp: 2026-03-30 15:49:05 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 280/280 succeeded
 -- ====================

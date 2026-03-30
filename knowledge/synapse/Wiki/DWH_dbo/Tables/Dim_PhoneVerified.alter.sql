@@ -32,3 +32,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_phoneverified ALTER COLUMN 
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_phoneverified ALTER COLUMN PhoneVerifiedID SET TAGS ('pii' = 'direct');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_phoneverified ALTER COLUMN PhoneVerifiedName SET TAGS ('pii' = 'direct');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_phoneverified ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:24:59 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

@@ -108,3 +108,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum ALTER CO
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum ALTER COLUMN CreditGlobal SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum ALTER COLUMN OptionsTotalEquity SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 16:03:52 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 88/88 succeeded
+-- ====================

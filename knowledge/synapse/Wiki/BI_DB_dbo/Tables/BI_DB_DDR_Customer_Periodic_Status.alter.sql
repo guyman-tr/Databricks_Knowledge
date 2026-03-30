@@ -104,3 +104,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status ALTER COLUMN DepositedOptions_ThisWeek SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status ALTER COLUMN ReDepositedOptions_ThisWeek SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status ALTER COLUMN MoneyFarmFirstDeposited_ThisWeek SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 16:02:52 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 84/84 succeeded
+-- ====================

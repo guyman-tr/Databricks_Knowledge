@@ -140,3 +140,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALT
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN CommissionByUnitsFuturesReal SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN NOP_StocksMargin SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl ALTER COLUMN PositionPnLStocksMargin SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:32:37 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 116/116 succeeded
+-- ====================

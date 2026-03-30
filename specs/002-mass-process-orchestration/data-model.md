@@ -355,6 +355,12 @@ deploy-alter-dwh
 propagate-downstream-dwh (future) ──► downstream UC updates
 ```
 
+### Deploy reporting (operator visibility)
+
+Agents implementing `generate-alter-dwh` and `deploy-alter-dwh` MUST follow **`deploy-index-management.mdc` Protocol 6**: each run ends with an explicit summary (schema, `_deploy-index.md` path + created/updated/missing, counts, next step). This is separate from the index file contents but is required so operators are never left inferring state from silent success.
+
+**BI_DB functions**: Synapse TVFs/scalars with `_Not_Migrated` get **stub** `.alter.sql` (comments only) + repo **`.lineage.md`**; they appear in `_deploy-index.md` as **`Stub only — not in UC`** (not `Deployed`).
+
 ### Dependency Rules
 
 1. An object must have status `Done` in `_index.md` before `generate-alter-dwh` can emit `.alter.sql` for it (and before `deploy-alter-dwh` can execute)

@@ -116,3 +116,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclos
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsIBANClick SET TAGS ('pii' = 'direct');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsFTDClick SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsLowTouch SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 13:58:16 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 84/92 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near 'of'. SQLSTATE: 42601 (line 1, pos 110) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Size of Tickets SET TAGS ('pii' = 'none'); --------------------------------------------------------------------------------------------------------------^^^
+-- ====================

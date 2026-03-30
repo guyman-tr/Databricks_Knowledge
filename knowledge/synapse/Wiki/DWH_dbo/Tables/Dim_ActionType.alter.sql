@@ -24,11 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 5 COMMENT 'Domain expert confirmed';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 1 COMMENT 'Upstream production wiki verbatim';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 2 COMMENT 'Synapse SP code or migration DDL';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 3 COMMENT 'Live data sampling or DDL structure';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 4 COMMENT 'Inferred from column name only';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN ActionTypeID COMMENT 'Primary key. Integer identifier for the customer action type. Values 1-45 active; 0 = N/A placeholder. Referenced by Fact_CustomerAction.ActionTypeID. DWH note: smallint in DWH vs int in legacy DWH_Migration DDL (type narrowed during migration). (Tier 2 - DWH_Migration.Dim_ActionType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Name COMMENT 'Human-readable name of the action type. Key values: 1=ManualPositionOpen, 2=CopyPositionOpen, 3=CopyPlusPositionOpen, 4=ManualPositionClose, 5=CopyPositionClose, 6=CopyPlusPositionClose, 7=Deposit, 8=Cashout, 9=Bonus, 10=Cashout request, 11=Chargeback, 12=Refund, 13=Refund As ChargeBack, 14=LoggedIn, 15=Account balance to mirror, 16=Mirror balance to account, 17=Register new mirror, 18=Unregister mirror, 19=Detach position from mirror, 20=Detach Stock From Mirror, 21=Publish Post, 22=Publish Comment, 23=Publish Like, 24=Recived Post On Wall, 25=Recived Comment On Wall, 26=Recived Like On Wall, 27=DepositAttempt, 28=DetachedPositionClose, 29=Cashier Loggin, 30=Processed Cashout, 31=Open CRM Case, 32=Edit StopLoss, 34=Open Stock Order, 35=End Of The Week Fee, 36=Compensation, 37=Reverse cashout, 38=Affiliate Deposit, 39=PositionOpenTypeUnknown, 40=PositionCloseTypeUnknown, 41=Customer Registration, 42=Cashout Rollback, 43=Reverse Deposit, 44=InternalDeposit, 45=InternalWithdraw. (Tier 3 - live data, DWH_dbo.Dim';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN UpdateDate COMMENT 'Production UpdateDate from legacy DWH SQL Server - passthrough, not ETL load time. Represents when the action type was last updated in the source system. Most rows = 2013-07-17 (initial migration); newer rows reflect when they were added. (Tier 2 - DWH_Migration.Dim_ActionType)';
@@ -37,14 +32,15 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Cat
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN CategoryID COMMENT 'Business category integer code grouping multiple action types. Values: 0=N/A, 1=Account balance to mirror, 2=Bonus, 3=Cashier Loggin, 4=Cashout/Withdraw, 5=Cashout request, 6=Chargeback, 7=Compensation, 8=Deposit, 9=DepositAttempt, 10=DetachPosition, 11=Edit StopLoss, 12=End Of The Week Fee, 13=LoggedIn, 14=Mirror balance to account, 15=Open CRM Case, 16=Open Stock Order, 17=PositionClose, 18=PositionOpen, 19=Processed Cashout, 20=Refund, 21=Refund As ChargeBack, 22=Register new mirror, 23=Reverse cashout, 24=Unregister mirror, 25=UserEngagement, 26=WallEngagement, 27=Customer Registration, 28=Reverse Deposit. Used in SP_Validation_Cycle_Gap MINO filter: CategoryID IN (2,4,6,7,8,12,17,19,20,21,23). (Tier 3 - live data, DWH_dbo.Dim_ActionType)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 5 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Tier 4 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN ActionTypeID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Name SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN Category SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype ALTER COLUMN CategoryID SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:36:08 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 14/14 succeeded
+-- ====================

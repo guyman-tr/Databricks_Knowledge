@@ -103,6 +103,45 @@ except: pass
     echo -e "\e[33m    Cost   : \$$total_cost_usd USD\e[0m"
     echo -e "\e[33m----------------------------------------\e[0m"
 
+    # Parity check: wiki vs ALTER COMMENT (loop continues on FAIL — next iteration fixes)
+    PARITY_SCRIPT="$REPO_ROOT/tools/audit_wiki_alter_comment_parity.py"
+    if [ ! -f "$PARITY_SCRIPT" ]; then
+        echo -e "\e[31mERROR: Parity script missing: $PARITY_SCRIPT\e[0m"
+        exit 1
+    fi
+    echo ""
+    echo -e "\e[36m  WIKI/ALTER COMMENT PARITY ($SCHEMA_NAME)...\e[0m"
+    (cd "$REPO_ROOT" && python3 "$PARITY_SCRIPT" --under "$SCHEMA_NAME")
+    parity_exit=$?
+    PARITY_JSON="$REPO_ROOT/knowledge/synapse/Wiki/${SCHEMA_NAME}/_parity_last_report.json"
+    PARITY_STATUS="$REPO_ROOT/knowledge/synapse/Wiki/${SCHEMA_NAME}/_parity_gate_last_run.txt"
+    if [ "$parity_exit" -ne 0 ]; then
+        (cd "$REPO_ROOT" && python3 "$PARITY_SCRIPT" --under "$SCHEMA_NAME" --json > "$PARITY_JSON")
+        echo ""
+        echo -e "\e[31m  PARITY CHECK: FAIL — wiki vs .alter.sql COMMENT mismatch or missing.\e[0m"
+        echo -e "\e[33m  Next iteration continues; read _parity_gate_last_run.txt and fix before new objects.\e[0m"
+        echo -e "\e[90m  Report: knowledge/synapse/Wiki/${SCHEMA_NAME}/_parity_last_report.json\e[0m"
+        {
+            echo "STATUS=FAIL"
+            echo "SCHEMA=$SCHEMA_NAME"
+            echo "RUN_AT=$(date '+%Y-%m-%d %H:%M:%S')"
+            echo ""
+            echo "Next batch iteration: align wiki ## 4. Elements with ALTER COLUMN ... COMMENT per column."
+            echo "Machine-readable report: _parity_last_report.json (same folder)."
+            echo "Re-audit: python3 tools/audit_wiki_alter_comment_parity.py --under $SCHEMA_NAME"
+        } > "$PARITY_STATUS"
+    else
+        rm -f "$PARITY_JSON"
+        {
+            echo "STATUS=PASS"
+            echo "SCHEMA=$SCHEMA_NAME"
+            echo "RUN_AT=$(date '+%Y-%m-%d %H:%M:%S')"
+            echo ""
+            echo "Last audit: wiki Elements match ALTER COMMENT literals for all columns under this schema."
+        } > "$PARITY_STATUS"
+        echo -e "\e[32m  Parity gate: PASS\e[0m"
+    fi
+
     schema_complete=false
     index_path="knowledge/synapse/Wiki/${SCHEMA_NAME}/_index.md"
     if [ -f "$index_path" ]; then

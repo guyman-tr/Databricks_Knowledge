@@ -13,6 +13,9 @@ Examples:
     python _batch_generate_lib.py DWH_dbo
     python _batch_generate_lib.py Dealing_dbo --force
     python _batch_generate_lib.py BI_DB_dbo --dry-run
+    python _batch_generate_lib.py BI_DB_dbo --offline   # stubs for _Not_Migrated functions
+
+Function `.lineage.md` backfill (one-time / optional): repo `tools/bootstrap_function_wiki_artifacts.py`.
 """
 
 import os, re, json, argparse, sys
@@ -229,7 +232,10 @@ def parse_section1(content: str) -> str:
 
 def parse_section4_columns(content: str) -> list:
     cols = []
-    m = re.search(r'## (?:\d+\.\s*)?(?:Column Details|Elements|Column Descriptions|Key Columns?(?:\s*(?:&|and)\s*Elements)?|Key Column Enhancement|Columns)', content)
+    m = re.search(
+        r'## (?:\d+\.\s*)?(?:Column Details|Elements|Output Columns|Column Descriptions|Key Columns?(?:\s*(?:&|and)\s*Elements)?|Key Column Enhancement|Columns)',
+        content,
+    )
     if not m:
         return cols
     section_text = content[m.end():]
@@ -287,6 +293,23 @@ def is_pending(uc_val: str) -> bool:
         return True
     low = uc_val.lower()
     return '_pending' in low or 'resolved during' in low
+
+
+def is_uc_knowledge_only(uc_val: str) -> bool:
+    """True when the wiki explicitly marks no UC gold export (functions, etc.).
+
+    These objects must NOT take the 'already_resolved' fast-path: previously
+    `_Not_Migrated` was treated as resolved and skipped, so no `.alter.sql` was
+    ever written. See deploy-index / generate-alter specs.
+    """
+    if not uc_val or not uc_val.strip():
+        return False
+    low = uc_val.lower().replace(' ', '')
+    if '_not_migrated' in low or 'notmigrated' in low:
+        return True
+    if 'nounc' in low or 'no_uctable' in low:
+        return True
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -437,6 +460,33 @@ def generate_alter_sql(object_name: str, target: UCTarget,
     return '\n'.join(lines) + '\n'
 
 
+def write_knowledge_only_stub(
+    schema_name: str,
+    object_name: str,
+    alter_dir: str,
+    uc_marker: str,
+    table_comment: str,
+) -> None:
+    """Comment-only `.alter.sql` for objects with no UC gold mapping (BI_DB TVFs, etc.)."""
+    safe_comment = (table_comment or "").replace("'", "''")[:900]
+    lines = [
+        "-- =============================================================================",
+        f"-- Databricks ALTER Script: {schema_name}.{object_name}",
+        f"-- UC Target: {uc_marker.strip()}",
+        "-- Classification: Knowledge-only — Synapse function not exported as UC table/TVF",
+        "-- under gold_sql_dp_prod_we_* naming. No executable ALTER statements.",
+        "-- When a UC mapping exists, replace this file via generate-alter-dwh.",
+        "-- =============================================================================",
+        "",
+        "-- Business summary (from wiki §1, truncated):",
+        f"-- {safe_comment}" if safe_comment else "-- (no Section 1 text parsed)",
+        "",
+    ]
+    alter_path = os.path.join(alter_dir, f"{object_name}.alter.sql")
+    with open(alter_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines) + '\n')
+
+
 # ---------------------------------------------------------------------------
 # Batch Processing — main entry point
 # ---------------------------------------------------------------------------
@@ -514,7 +564,8 @@ def process_schema(schema_name: str, cursor=None, uc_cache: dict = None,
 
     results = {
         "resolved_this_run": [], "already_resolved": [], "no_uc_table": [],
-        "parse_failure": [], "views_no_uc": [], "functions_no_uc": []
+        "parse_failure": [], "views_no_uc": [], "functions_no_uc": [],
+        "knowledge_only_stub": [],
     }
 
     for object_name, wiki_path, dir_label in wiki_entries:
@@ -525,6 +576,32 @@ def process_schema(schema_name: str, cursor=None, uc_cache: dict = None,
         props = parse_wiki_header(content)
 
         uc_target_val = props.get('UC Target', '')
+
+        if dir_label == "Tables":
+            alter_dir = tables_dir
+        elif dir_label == "Views":
+            alter_dir = views_dir
+        else:
+            alter_dir = functions_dir
+
+        # Synapse-only functions (and similar): always emit stub unless file exists and not forcing
+        if is_uc_knowledge_only(uc_target_val):
+            stub_path = os.path.join(alter_dir, f"{object_name}.alter.sql")
+            if os.path.isfile(stub_path) and not force:
+                results["already_resolved"].append(GenerationResult(
+                    object_name=object_name, status="already_resolved",
+                    uc_target=uc_target_val.strip('`').strip(),
+                    detail="knowledge-only stub present",
+                ))
+                continue
+            table_comment = parse_section1(content)
+            if not dry_run:
+                write_knowledge_only_stub(
+                    schema_name, object_name, alter_dir, uc_target_val, table_comment
+                )
+            results["knowledge_only_stub"].append(object_name)
+            continue
+
         already_had = not is_pending(uc_target_val)
 
         if already_had and not force:
@@ -587,12 +664,6 @@ def process_schema(schema_name: str, cursor=None, uc_cache: dict = None,
         alter_sql = generate_alter_sql(object_name, target, resolution,
                                         table_comment, columns, props,
                                         schema_name=schema_name)
-        if dir_label == "Views":
-            alter_dir = views_dir
-        elif dir_label == "Functions":
-            alter_dir = functions_dir
-        else:
-            alter_dir = tables_dir
         alter_path = os.path.join(alter_dir, f"{object_name}.alter.sql")
         with open(alter_path, 'w', encoding='utf-8') as f:
             f.write(alter_sql)
@@ -617,6 +688,8 @@ def process_schema(schema_name: str, cursor=None, uc_cache: dict = None,
         print(f"  (of which views:      {len(results['views_no_uc'])})")
     if results['functions_no_uc']:
         print(f"  (of which functions:  {len(results['functions_no_uc'])})")
+    if results.get('knowledge_only_stub'):
+        print(f"Knowledge-only stubs:   {len(results['knowledge_only_stub'])}")
     print(f"Parse failures:         {len(results['parse_failure'])}")
     total = (len(results['resolved_this_run']) + len(results['already_resolved']))
     print(f"Total ALTER scripts:    {total}")
@@ -678,7 +751,11 @@ def main():
     if cursor:
         cursor.close()
 
-    total_generated = len(results.get('resolved_this_run', [])) + len(results.get('already_resolved', []))
+    total_generated = (
+        len(results.get('resolved_this_run', []))
+        + len(results.get('already_resolved', []))
+        + len(results.get('knowledge_only_stub', []))
+    )
     sys.exit(0 if total_generated > 0 else 1)
 
 

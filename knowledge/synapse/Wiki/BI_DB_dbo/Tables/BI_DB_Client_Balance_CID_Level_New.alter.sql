@@ -370,3 +370,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_le
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new ALTER COLUMN TotalStockMarginLoanValue SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new ALTER COLUMN NetTransferCommission SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new ALTER COLUMN C2P SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 15:57:25 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 350/350 succeeded
+-- ====================

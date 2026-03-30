@@ -88,3 +88,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost A
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN IsSettled SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN PriceRatio SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost ALTER COLUMN HS_Moved_Units SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 13:57:27 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 64/64 succeeded
+-- ====================

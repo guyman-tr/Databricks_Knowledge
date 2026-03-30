@@ -32,3 +32,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:21:36 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

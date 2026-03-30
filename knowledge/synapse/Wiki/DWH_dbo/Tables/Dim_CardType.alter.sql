@@ -24,23 +24,19 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 5 COMMENT 'Domain expert confirmed';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 1 COMMENT 'Upstream production wiki verbatim';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 2 COMMENT 'Synapse SP code or migration DDL';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 3 COMMENT 'Live data sampling or DDL structure';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 4 COMMENT 'Inferred from column name only';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN CardTypeID COMMENT 'Card network identifier. Active brands (IsActive=1 as of 2019): 0=None (unknown/fallback), 1=Visa, 2=Master Card, 3=Diners. Inactive: 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro (active in production today), 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital. DWH note: snapshot covers IDs 0-17 only; production has 32 types including newer IDs. (Tier 1 - upstream wiki, Dictionary.CardType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN CarTypeName COMMENT 'Card brand name. DDL note: column has a typo ("Car" instead of "Card") - historical artifact from legacy DWH SQL Server migration. Key values: Visa, Master Card, MasterCard, Diners, Amex, American Express, Maestro, Discover, China Union Pay. (Tier 1 - upstream wiki, Dictionary.CardType, column: Name)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN IsActive COMMENT 'Whether this card brand was accepted for deposits as of the 2019 migration snapshot: 1=active, 0=inactive. DWH note: production uses bit type; DWH uses int. This snapshot may not reflect current production acceptance (e.g., Maestro/ID=8 is active in production but shows 0 here). (Tier 1 - upstream wiki, Dictionary.CardType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN UpdateDate COMMENT 'ETL migration timestamp. All 18 rows = 2019-06-30 - the date this table was migrated from the legacy DWH SQL Server. Not a production field from Dictionary.CardType (which has no UpdateDate). (Tier 2 - DWH_Migration.Dim_CardType)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 5 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN Tier 4 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN CardTypeID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN CarTypeName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN IsActive SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:26:48 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 10/10 succeeded
+-- ====================

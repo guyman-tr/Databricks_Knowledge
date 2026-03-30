@@ -38,3 +38,9 @@ ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_dailypo
 ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_dailypool ALTER COLUMN DailyTotalStakingPool SET TAGS ('pii' = 'none');
 ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_dailypool ALTER COLUMN Avg_DailyTotalStakingPool SET TAGS ('pii' = 'none');
 ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_dailypool ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:06:30 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 14/14 succeeded
+-- ====================

@@ -60,3 +60,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog ALTER COL
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog ALTER COLUMN LotCountDecimal SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog ALTER COLUMN PreviousLotCountDecimal SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:25:58 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 36/36 succeeded
+-- ====================

@@ -192,3 +192,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLU
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN BankName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw ALTER COLUMN CardCategory SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:30:03 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 168/168 succeeded
+-- ====================

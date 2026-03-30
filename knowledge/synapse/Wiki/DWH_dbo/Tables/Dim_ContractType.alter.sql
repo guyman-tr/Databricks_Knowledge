@@ -24,23 +24,19 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 5 COMMENT 'Domain expert confirmed';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 1 COMMENT 'Upstream production wiki verbatim';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 2 COMMENT 'Synapse SP code or migration DDL';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 3 COMMENT 'Live data sampling or DDL structure';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 4 COMMENT 'Inferred from column name only';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN ContractTypeID COMMENT 'Affiliate commission model identifier. Values: 0=N/A (unknown/fallback), 1=CPR (Cost Per Registration), 2=CPA (Cost Per Acquisition), 3=Rev (Revenue Share), 4=Hyb (Hybrid), 5=Other, 6=eCost, 7=ZeroCost, 8=CPL (Cost Per Lead). SP_Dim_Affiliate derives these values via CASE on ContractName text. (Tier 2 - DWH_Migration.Dim_ContractType DDL)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Name COMMENT 'Abbreviated commission model name: N/A, CPR, CPA, Rev, Hyb, Other, eCost, ZeroCost, CPL. Short abbreviations used as display labels in affiliate reporting. No description column exists - analyst reference only. (Tier 3 - live data sampling, SELECT * FROM Dim_ContractType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN InsertDate COMMENT 'Migration load timestamp. All 9 rows are NULL - this column was populated as varchar(50) in the DWH_Migration staging DDL but the values were not carried over (or were NULL in the legacy DWH SQL Server source). Not useful for row age determination. (Tier 2 - DWH_Migration.Dim_ContractType DDL + Tier 3 live data)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN UpdateDate COMMENT 'Last update timestamp. All 9 rows are NULL - same as InsertDate, no values were populated during migration. Table is effectively static since initial load. (Tier 2 - DWH_Migration.Dim_ContractType DDL + Tier 3 live data)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 5 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Tier 4 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN ContractTypeID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN Name SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contracttype ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:27:28 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 10/10 succeeded
+-- ====================

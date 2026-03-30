@@ -64,3 +64,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdi
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN CUSIP SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN Exchange SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings ALTER COLUMN AccountNumber SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 13:56:20 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 40/40 succeeded
+-- ====================

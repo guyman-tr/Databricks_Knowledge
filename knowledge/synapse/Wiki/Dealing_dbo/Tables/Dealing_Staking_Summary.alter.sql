@@ -88,3 +88,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary ALTER COLUMN MonthlyPool SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary ALTER COLUMN IntroDays SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:08:07 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 64/64 succeeded
+-- ====================

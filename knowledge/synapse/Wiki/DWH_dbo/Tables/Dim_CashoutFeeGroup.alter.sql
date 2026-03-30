@@ -32,3 +32,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutfeegroup ALTER COLUM
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutfeegroup ALTER COLUMN CashoutFeeGroupID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutfeegroup ALTER COLUMN CashoutFeeGroupName SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutfeegroup ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:26:51 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

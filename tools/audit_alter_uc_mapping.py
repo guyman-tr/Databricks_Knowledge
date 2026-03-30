@@ -11,6 +11,10 @@ Wiki *.alter.sql — Unity Catalog target validation.
    `knowledge/synapse/Wiki/_generic_pipeline_mapping.json` as `uc_table`, either
    exactly or prefixed with `main.` (both forms are accepted).
 
+3) **ALTER COLUMN sanity (2026-03-30):** reject lines that look like
+   `ALTER COLUMN Tier 1` … `Tier 5` (documentation tiers mistaken for columns),
+   and `ALTER COLUMN Foo/Bar` without backticks (Databricks requires `` `Foo/Bar` ``).
+
 The mapping file is a point-in-time backup; `--mapping` may report many rows until
 the snapshot matches all generated alters.
 
@@ -39,6 +43,28 @@ ALTER_TABLE_RE = re.compile(
 
 # Valid UC path fragment: no spaces, no prose — catalog.schema.table style
 VALID_DOTTED_ID = re.compile(r"^[A-Za-z_][A-Za-z0-9_.]*$")
+
+# Documentation tier accidentally emitted as a column name (not a real DDL column)
+BOGUS_TIER_COLUMN = re.compile(r"ALTER\s+COLUMN\s+Tier\s+\d+\b", re.IGNORECASE)
+
+
+def bad_unquoted_slash_column(line: str) -> bool:
+    """Column token contains / but is not backtick-wrapped (Databricks needs `` `a/b` ``)."""
+    if "ALTER COLUMN" not in line or "/" not in line:
+        return False
+    m = re.search(
+        r"ALTER\s+COLUMN\s+(?!`)(\S+)\s+(COMMENT|SET\s+TAGS)\b",
+        line,
+        re.IGNORECASE,
+    )
+    if not m:
+        return False
+    col = m.group(1).strip()
+    if col.startswith("`"):
+        return False
+    if col.startswith("["):
+        return False  # SQL Server bracket identifier; migrate to backticks separately
+    return "/" in col
 
 
 def load_valid_targets() -> set[str]:
@@ -69,6 +95,18 @@ def scan_file(
     return issues
 
 
+def scan_column_lines(path: Path) -> list[tuple[int, str, str]]:
+    """ALTER COLUMN anti-patterns that break Databricks deploy."""
+    text = path.read_text(encoding="utf-8")
+    issues: list[tuple[int, str, str]] = []
+    for line_no, line in enumerate(text.splitlines(), 1):
+        if BOGUS_TIER_COLUMN.search(line):
+            issues.append((line_no, line.strip()[:100], "bogus_tier_as_column"))
+        if bad_unquoted_slash_column(line):
+            issues.append((line_no, line.strip()[:100], "unquoted_slash_column"))
+    return issues
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Audit wiki alter.sql UC targets.")
     parser.add_argument(
@@ -94,7 +132,14 @@ def main() -> int:
             return 2
 
     if args.paths:
-        files = [Path(p) for p in args.paths]
+        files: list[Path] = []
+        for p in args.paths:
+            pp = Path(p).resolve()
+            if pp.is_dir():
+                files.extend(sorted(pp.rglob("*.alter.sql")))
+            elif pp.is_file():
+                files.append(pp)
+        files = sorted(set(files))
     else:
         files = sorted(WIKI_ROOT.rglob("*.alter.sql"))
 
@@ -103,10 +148,13 @@ def main() -> int:
         if not fp.is_file():
             print(f"Skip (not a file): {fp}", file=sys.stderr)
             continue
+        rel = fp.relative_to(ROOT)
         for line_no, target, reason in scan_file(fp, valid, args.mapping):
             total += 1
-            rel = fp.relative_to(ROOT)
             print(f"{rel}:{line_no}: {reason}: {target}")
+        for line_no, snippet, reason in scan_column_lines(fp):
+            total += 1
+            print(f"{rel}:{line_no}: {reason}: {snippet}")
 
     if total:
         msg = f"{total} issue(s)."

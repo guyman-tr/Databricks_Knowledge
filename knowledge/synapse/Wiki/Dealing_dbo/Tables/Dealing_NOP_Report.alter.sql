@@ -54,3 +54,10 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN ExchangeRate SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN NOP_USD SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:05:29 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 10/30 succeeded
+-- Error: [COLUMN_NOT_FOUND_IN_TABLE] Column 'NOP_USD' not found in table 'main'.'bi_db'.'gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report''. SQLSTATE: 42703
+-- ====================

@@ -77,6 +77,11 @@ After deployment, review results and handle any issues:
 3. For objects with review sidecar items: use `/wiki-review` to walk through Tier 4 and unverified items.
 4. When upstream DB_Schema wikis are updated: re-run `build-wiki-dwh` for affected objects (staleness threshold handles this), then `generate-alter-dwh` + `deploy-alter-dwh`.
 
+### Deploy index + reporting
+
+- **`_deploy-index.md`** lives next to `_index.md` under `knowledge/synapse/Wiki/{Schema}/`. It tracks **Generated** (`.alter.sql` on disk) vs **Deployed** (UC execution), **Stub only** (BI_DB functions with `_Not_Migrated`), and failures.
+- Every `generate-alter-dwh` / `deploy-alter-dwh` run must end with a **structured summary** that states whether the index file was **Created / Updated / Missing** (see `.cursor/rules/semantic-layer-core/deploy-index-management.mdc` Protocol 6). Silent runs without index updates are spec violations.
+
 ---
 
 ## Workflow: Document a Single Object

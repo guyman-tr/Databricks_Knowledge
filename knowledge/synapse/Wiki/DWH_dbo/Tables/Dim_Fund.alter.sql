@@ -44,3 +44,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fund ALTER COLUMN MinCopyAm
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fund ALTER COLUMN RefreshIntervalMonths SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fund ALTER COLUMN FundType SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fund ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:21:56 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 20/20 succeeded
+-- ====================

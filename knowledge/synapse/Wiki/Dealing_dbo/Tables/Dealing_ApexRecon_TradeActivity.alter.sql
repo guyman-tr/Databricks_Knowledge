@@ -56,3 +56,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_trade
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity ALTER COLUMN HedgeServerID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity ALTER COLUMN AccountNumber SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 13:56:33 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 32/32 succeeded
+-- ====================

@@ -120,3 +120,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit ALTER COLUM
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit ALTER COLUMN IsAftSupportedAsBool SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit ALTER COLUMN IsAftEligibleAsBool SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit ALTER COLUMN IsAftProcessedAsBool SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:28:14 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 96/96 succeeded
+-- ====================

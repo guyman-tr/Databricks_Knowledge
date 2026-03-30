@@ -153,6 +153,57 @@ while ($true) {
     Write-Host "    Total  : `$$([math]::Round($totalCostUsd, 4)) USD" -ForegroundColor Yellow
     Write-Host "----------------------------------------" -ForegroundColor Yellow
 
+    # Parity check: wiki Elements vs ALTER COLUMN COMMENT (loop continues on FAIL — next iteration fixes)
+    $parityScript = Join-Path $repoRoot "tools\audit_wiki_alter_comment_parity.py"
+    $parityStatusPath = Join-Path $repoRoot "knowledge\synapse\Wiki\$SchemaName\_parity_gate_last_run.txt"
+    $parityJsonPath = Join-Path $repoRoot "knowledge\synapse\Wiki\$SchemaName\_parity_last_report.json"
+    if (-not (Test-Path $parityScript)) {
+        Write-Host ""
+        Write-Host "  ERROR: Parity script missing: $parityScript" -ForegroundColor Red
+        exit 1
+    }
+    Write-Host ""
+    Write-Host "  WIKI/ALTER COMMENT PARITY ($SchemaName)..." -ForegroundColor Cyan
+    Push-Location $repoRoot
+    try {
+        & python $parityScript --under $SchemaName
+        $parityExit = $LASTEXITCODE
+        if ($parityExit -ne 0) {
+            & python $parityScript --under $SchemaName --json | Set-Content -Encoding UTF8 $parityJsonPath
+        }
+        else {
+            Remove-Item $parityJsonPath -Force -ErrorAction SilentlyContinue
+        }
+    } finally {
+        Pop-Location
+    }
+    if ($parityExit -ne 0) {
+        Write-Host ""
+        Write-Host "  PARITY CHECK: FAIL — wiki Elements vs .alter.sql COMMENT mismatch or missing." -ForegroundColor Red
+        Write-Host "  Next iteration continues; read _parity_gate_last_run.txt and fix before new objects." -ForegroundColor Yellow
+        Write-Host "  Report: knowledge\synapse\Wiki\$SchemaName\_parity_last_report.json" -ForegroundColor DarkGray
+        @(
+            "STATUS=FAIL",
+            "SCHEMA=$SchemaName",
+            "RUN_AT=$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+            "",
+            "Next batch iteration: prioritize aligning wiki ## 4. Elements with ALTER COLUMN ... COMMENT per column.",
+            "Use the same text encoding as merge_wiki_column_comments_into_alter.py (sql_string_for_comment).",
+            "Machine-readable report: _parity_last_report.json (same folder).",
+            "Re-audit: python tools\audit_wiki_alter_comment_parity.py --under $SchemaName",
+        ) | Set-Content -Encoding UTF8 $parityStatusPath
+    }
+    else {
+        Write-Host "  Parity gate: PASS" -ForegroundColor Green
+        @(
+            "STATUS=PASS",
+            "SCHEMA=$SchemaName",
+            "RUN_AT=$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+            "",
+            "Last audit: wiki Elements match ALTER COMMENT literals for all columns under this schema."
+        ) | Set-Content -Encoding UTF8 $parityStatusPath
+    }
+
     $schemaComplete = $false
     if (Test-Path $indexPath) {
         $content = Get-Content $indexPath -Raw -ErrorAction SilentlyContinue

@@ -62,3 +62,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily ALTER C
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily ALTER COLUMN StatusID SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily ALTER COLUMN MonthlyTaxPercentage SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 16:06:14 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 42/42 succeeded
+-- ====================

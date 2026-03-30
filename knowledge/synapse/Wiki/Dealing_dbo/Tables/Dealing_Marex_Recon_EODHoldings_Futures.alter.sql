@@ -98,3 +98,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eod
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ForexRate_AfterADJ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ADJ_Value SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN OrderID SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:05:20 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 66/74 succeeded
+-- Error: [INVALID_IDENTIFIER] The unquoted identifier Marex-Clients_Price is invalid and must be back quoted as: `Marex-Clients_Price`. Unquoted identifiers can only contain ASCII letters ('a' - 'z', 'A' - 'Z'), digits ('0' - '9'), and underbar ('_'). Unquoted identifiers must also not start with a digit. Different data sources and meta stores may impose additional restrictions on valid identifiers. SQLSTATE: 42602 (line 1, pos 115) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_deali
+-- ====================

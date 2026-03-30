@@ -999,6 +999,81 @@ def generate_downstream_alter_sql(tree_path: str, output_path: str,
 
     print(f"  Wrote {stmt_count} statements to {os.path.basename(output_path)}")
 
+
+def generate_merged_downstream_alter_sql(
+    nodes: list,
+    output_path: str,
+    sources_meta: list,
+    title: str = "MERGED multi-root deep lineage",
+):
+    """
+    Write a single SQL file from a **merged** list of node dicts (same shape as tree.nodes).
+
+    Use after merging multiple discover_tree() runs so COMMENT text is emitted with the same
+    escape_sql_comment_value() path as generate_downstream_alter_sql (UC sanitization / CP1255 repair).
+
+    sources_meta: list of dicts with keys like source_synapse, source_uc, alter_path (for header only).
+    """
+    lines = []
+    lines.append("-- =============================================================================")
+    lines.append(f"-- Databricks Deep Lineage Column Comment Propagation: {title}")
+    lines.append(f"-- Generated: {datetime.now().strftime('%Y-%m-%d')} | regenerate_downstream_column_comments")
+    lines.append("--")
+    lines.append("-- Sources (merged):")
+    for i, sm in enumerate(sources_meta, 1):
+        ss = sm.get("source_synapse", "?")
+        uc = sm.get("source_uc", "")
+        ap = sm.get("alter_path", "")
+        lines.append(f"--   [{i}] Synapse: {ss}")
+        if uc:
+            lines.append(f"--       UC: {uc}")
+        if ap:
+            lines.append(f"--       alter: {ap}")
+    lines.append("--")
+
+    sorted_nodes = sorted(nodes, key=lambda n: (n.get("full_name", ""),))
+    tables = [n for n in sorted_nodes if "VIEW" not in n.get("object_type", "").upper()]
+    views = [n for n in sorted_nodes if "VIEW" in n.get("object_type", "").upper()]
+
+    if tables:
+        lines.append(f"-- Target tables ({len(tables)}):")
+        for t in tables:
+            col_count = len(t.get("columns", []))
+            lines.append(f"--   {t['full_name']}  ({t.get('object_type', 'TABLE')}, {col_count} cols)")
+    if views:
+        lines.append(f"-- Target views ({len(views)}):")
+        for v in views:
+            col_count = len(v.get("columns", []))
+            lines.append(f"--   {v['full_name']}  ({v.get('object_type', 'VIEW')}, {col_count} cols)")
+
+    lines.append("-- =============================================================================")
+    lines.append("")
+
+    stmt_count = 0
+    for node in sorted_nodes:
+        full_name = node["full_name"]
+        obj_type = node.get("object_type", "TABLE")
+        columns = node.get("columns", [])
+        if not columns:
+            continue
+
+        lines.append(f"-- {full_name} ({obj_type}, {len(columns)} columns)")
+        for col_data in columns:
+            target_col = col_data["target_column"]
+            desc = escape_sql_comment_value(col_data["description"])
+            if "VIEW" in obj_type.upper():
+                lines.append(f"COMMENT ON COLUMN {full_name}.`{target_col}` IS '{desc}';")
+            else:
+                lines.append(f"ALTER TABLE {full_name} ALTER COLUMN `{target_col}` COMMENT '{desc}';")
+            stmt_count += 1
+        lines.append("")
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+    print(f"  Merged file: {stmt_count} statements -> {os.path.basename(output_path)}")
+
+
 # ---------------------------------------------------------------------------
 # T018: generate_scope_report
 # ---------------------------------------------------------------------------

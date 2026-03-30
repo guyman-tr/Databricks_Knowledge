@@ -92,3 +92,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriatenes
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market ALTER COLUMN DesignatedRegulationName SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market ALTER COLUMN BlockSubReasonID SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market ALTER COLUMN BlockSubReasonDesc SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 16:07:26 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Statements: 72/72 succeeded
+-- ====================

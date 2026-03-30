@@ -50,3 +50,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin ALTER COLUMN Sho
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin ALTER COLUMN MinAmountFor3ds SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin ALTER COLUMN IsPrepaid SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:16:37 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 26/26 succeeded
+-- ====================

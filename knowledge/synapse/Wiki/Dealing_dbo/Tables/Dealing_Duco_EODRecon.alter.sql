@@ -78,3 +78,10 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALT
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN Clients_NOP_Sell SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN FXratetoUSD SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN CUSIP SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 14:01:46 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Statements: 52/54 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near '/'. SQLSTATE: 42601 (line 1, pos 93) == SQL == ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN Buy/Sell SET TAGS ('pii' = 'none'); ---------------------------------------------------------------------------------------------^^^
+-- ====================

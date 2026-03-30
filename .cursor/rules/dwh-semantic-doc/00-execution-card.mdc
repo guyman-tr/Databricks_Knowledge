@@ -55,8 +55,9 @@ Functions follow the standard pipeline with these adaptations:
 - **P7**: Reverse — find which views/SPs CALL this function (CROSS APPLY / scalar reference)
 - **P8-P9**: Find SPs that call the function → understand execution context
 - **P10.5**: Functions are Synapse-only; no UC target expected (UC Target: `_Not_Migrated`)
+- **P10B**: Emit **`.lineage.md`** (repo-local: §3 Source Objects → referenced tables/views). UC External Lineage API does not apply until a UC entity exists.
 - **P11**: Document using the standard template (Section 4 = parameters + return columns)
-- **ALTER**: Only if function happens to exist in UC (rare). Most will be knowledge-only.
+- **ALTER**: **`generate-alter-dwh`** writes a **comment-only stub** `.alter.sql` for `_Not_Migrated` functions (`_batch_generate_lib.is_uc_knowledge_only`). Executable ALTER only if a UC mapping appears later.
 
 ## Phase Gate Checklist (emit before Phase 11)
 
@@ -67,7 +68,7 @@ PHASE GATE CHECK — {ObjectName}:
   [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 OUTPUT CHECK — {ObjectName}:
-  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (or [-] No UC target)
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (stub OK for `_Not_Migrated` functions)
   [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS (or [-] No UC target)
 ```
 
@@ -79,7 +80,7 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
   [-] P9 SP-logic [-] P9B ETL  [-] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
-  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (or [-] No UC target)
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (stub OK for `_Not_Migrated` functions)
   [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS (or [-] No UC target)
 ```
 
@@ -97,7 +98,10 @@ OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
   4. `{ObjectName}.alter.sql` ← **ALTER SCRIPT** (UC table comment + column comments + tags). Every column in the wiki Elements table MUST have a corresponding ALTER COLUMN statement. For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables. **Exception**: If the object has no UC target (UC Target = `_Not_Migrated` or no generic pipeline mapping exists), the `.alter.sql` file is NOT required — skip it and note "No UC target" in the output check. **`ALTER TABLE` target** = `main.{uc_table}` from mapping or live UC only — never wiki prose (no spaces in the name). See `11w-write-objects.mdc` §4g.
   **Do NOT proceed to the next object until all required files exist on disk.** A missing file (other than `.alter.sql` when no UC target) is a HARD FAIL for the object. The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.
 - **⛔ ALTER COLUMN COUNT MUST MATCH WIKI COLUMN COUNT**: The number of ALTER COLUMN statements per UC target in `.alter.sql` MUST equal the number of element rows in the wiki `.md` file. If the wiki documents 47 columns, the ALTER file must have exactly 47 ALTER COLUMN statements per UC target table. A mismatch is a HARD FAIL — fix before proceeding. Count both sides and emit: `ALTER COLUMN CHECK: wiki={N} alter={M} — {PASS/FAIL}`.
-- **⛔ TWO VALIDATIONS**: After each wiki doc, run BOTH `validate-wiki.ps1` (structural) AND `validate-tier1-coverage.ps1` (semantic). Both must pass before proceeding.
+- **⛔ ALTER COLUMN NAMES MUST MATCH WIKI ELEMENT NAMES**: Count-only matching is NOT sufficient. Every ALTER COLUMN name (after stripping backticks and lowercasing) must match a wiki Element Name (lowercased), and every wiki element must have a matching ALTER COLUMN. A count-match-but-name-mismatch is a HARD FAIL — descriptions would land on the wrong UC column. Emit: `ALTER NAME PARITY: {N} matched, {M} wiki-only, {K} alter-only — PASS/FAIL`. Run `python tools/audit_wiki_alter_comment_parity.py` to validate.
+- **⛔ UTF-8 FILE ENCODING ON ALL WRITES**: Every file write (`.md`, `.review-needed.md`, `.lineage.md`, `.alter.sql`) MUST use explicit `encoding="utf-8"`. Never rely on system default encoding. Python: `open(path, "w", encoding="utf-8")`. The sanitizer is a safety net, not a substitute for correct encoding at write time.
+- **⛔ THREE VALIDATIONS**: After each wiki doc, run `validate-wiki.ps1` (structural **and** wiki-vs-ALTER COMMENT parity when `.alter.sql` exists), then `validate-tier1-coverage.ps1` (semantic). All must pass before proceeding. Parity is enforced by `tools/audit_wiki_alter_comment_parity.py` (same encoding as `merge_wiki_column_comments_into_alter.py`).
+- **⛔ BATCH LOOP PARITY**: `run-dwh-wiki-batch-loop.ps1` / `.sh` runs `python tools/audit_wiki_alter_comment_parity.py --under <SchemaName>` after **every** iteration. On failure it writes `knowledge/synapse/Wiki/<Schema>/_parity_gate_last_run.txt` (and `_parity_last_report.json`) and **does not stop** — the next iteration should fix parity before new work. On PASS, both files reflect success.
 - **⛔ PHASE 9 IS HARD**: Read the SP code. Trace column assignments to source tables. The SP tells you WHERE each column comes from — you don't need to guess. If Phase 9 is skipped, Phase 10B lineage will be wrong, Phase 11 tiers will be wrong, and the semantic validation will fail.
 - **⛔ CHECKPOINT MARKERS ARE NOT OPTIONAL**: Every phase MUST emit its `PHASE {N} CHECKPOINT: PASS/FAIL` marker at completion. Every HARD phase must show PASS before the next phase begins. The GATE verifies the full checkpoint chain before Phase 11 runs. A missing checkpoint is treated the same as a failed checkpoint.
 - **⛔ GOLDEN REFERENCE**: Read `GOLDEN-REFERENCE.mdc` once per batch. Your output must match the golden skeleton shape. Dictionary columns with <=15 values get inline key=value pairs.

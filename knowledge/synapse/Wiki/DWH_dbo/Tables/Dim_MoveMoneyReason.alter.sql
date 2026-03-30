@@ -24,21 +24,17 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 5 COMMENT 'Domain expert confirmed';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 1 COMMENT 'Upstream production wiki verbatim';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 2 COMMENT 'Synapse SP code or migration DDL';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 3 COMMENT 'Live data sampling or DDL structure';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 4 COMMENT 'Inferred from column name only';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN MoveMoneyReasonID COMMENT 'Internal money movement reason identifier. DWH values: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 4=Airdrop (DWH-only label). Production has additional IDs 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment - all absent from DWH. ID=5 is critical: used in SP_Fact_CustomerAction to derive ActionTypeID 44 (internal deposit) and 45 (internal withdrawal). (Tier 1 - upstream wiki, Dictionary.MoveMoneyReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN MoveMoneyReason COMMENT 'Human-readable money movement reason label. DWH labels: Adjustment, Bonus Abuser, Staking, Airdrop. Column name intentionally matches table name (denormalized pattern per upstream wiki). Used in financial reporting and account statements. Note: DWH label "Airdrop" for ID=4 diverges from production where ID=4 is marked deprecated. (Tier 1 - upstream wiki, Dictionary.MoveMoneyReason + Tier 3 - live data sampling)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN UpdateDate COMMENT 'Last update timestamp for the row. IDs 1-3: 2022-03-27 (initial load batch); ID 4: 2022-11-13 (added 8 months later). Suggests manual DBA inserts; not populated by an automated pipeline. Not present in production Dictionary.MoveMoneyReason (DWH-specific audit field). (Tier 3 - live data sampling)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 5 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 3 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN Tier 4 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN MoveMoneyReasonID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN MoveMoneyReason SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:24:46 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

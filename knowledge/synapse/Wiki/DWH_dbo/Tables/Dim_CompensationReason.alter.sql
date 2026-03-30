@@ -24,8 +24,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason SET TAGS
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN Tier 1 COMMENT 'Verbatim from upstream production wiki';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN Tier 2 COMMENT 'Confirmed from Synapse ETL SP code';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN CompensationReasonID COMMENT 'Primary key. Unique reason identifier, 0-134 (IDs 5 and 130 absent). ID=0 is ETL-inserted N/A placeholder. Used as FK in Accounting.BalanceHistory and Fact_BillingCompensation. (Tier 1 - upstream wiki, BackOffice.CompensationReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN ParentID COMMENT 'Parent reason ID for 2-level hierarchy. NULL for root categories. Non-null values point directly to a root category row. Roots: 1=Custom, 4=Marketing, 9=Accounting/Ops, 10=R&D, 16=ACT, 23=Obsolete, 35=MT4, 45=Dividend, 48=Inactivity Fee For Non Depositor. (Tier 1 - upstream wiki, BackOffice.CompensationReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN Name COMMENT 'Human-readable reason label used in BackOffice UI and reports. E.g., "Satisfaction Bonus", "Cash Dividend", "Dormant Fee". Passed through unchanged from production. (Tier 1 - upstream wiki, BackOffice.CompensationReason)';
@@ -35,8 +33,6 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER CO
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN InsertDate COMMENT 'ETL insert timestamp set to GETDATE() on each daily reload for standard rows; CAST(GETDATE() AS DATE) for ID=0 placeholder. Not the date the reason was originally created in production. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN Tier 1 SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN Tier 2 SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN CompensationReasonID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN ParentID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN Name SET TAGS ('pii' = 'none');
@@ -44,3 +40,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER CO
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN StatusID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:27:24 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 16/16 succeeded
+-- ====================

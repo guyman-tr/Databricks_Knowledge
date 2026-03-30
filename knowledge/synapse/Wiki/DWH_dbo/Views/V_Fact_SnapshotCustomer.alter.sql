@@ -30,3 +30,10 @@ ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer AL
 -- ---- Column PII Tags ----
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN DateKey SET TAGS ('pii' = 'none');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN All Fact_SnapshotCustomer columns SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:36:02 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 4/6 succeeded
+-- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near 'Fact_SnapshotCustomer'. SQLSTATE: 42601 (line 1, pos 95) == SQL == ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN All Fact_SnapshotCustomer columns SET TAGS ('pii' = 'none'); -----------------------------------------------------------------------------------------------^^^
+-- ====================

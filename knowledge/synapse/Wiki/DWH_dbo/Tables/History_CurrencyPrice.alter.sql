@@ -78,3 +78,9 @@ ALTER TABLE main.dealing.bronze_pricelog_history_currencyprice ALTER COLUMN Mark
 ALTER TABLE main.dealing.bronze_pricelog_history_currencyprice ALTER COLUMN etr_y SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.bronze_pricelog_history_currencyprice ALTER COLUMN etr_ym SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.bronze_pricelog_history_currencyprice ALTER COLUMN etr_ymd SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:35:29 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 54/54 succeeded
+-- ====================

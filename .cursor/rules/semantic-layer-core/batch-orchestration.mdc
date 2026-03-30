@@ -27,6 +27,21 @@ For V1, these are edited in this rule file directly. Command-argument overrides 
 
 ---
 
+## Wiki ↔ ALTER comment parity (semantic — Cursor, Claude, CLI)
+
+Whenever **`{Object}.alter.sql`** exists beside **`{Object}.md`** (from `/generate-alter-dwh`, Phase 11W, or manual edits), each **`ALTER COLUMN ... COMMENT '...'`** must encode the same string as the wiki **## 4. Elements** description for that column (via `sql_string_for_comment` — see `merge_wiki_column_comments_into_alter.py`).
+
+| Mechanism | Use |
+|-----------|-----|
+| **Audit** | `python tools/audit_wiki_alter_comment_parity.py --under {SchemaName}` or pass a single `.md` path |
+| **Per-wiki validate** | `.cursor/scripts/validate-wiki.ps1 -Path ...` (includes parity when `.alter.sql` exists) |
+| **Structural UC audit** | `python tools/audit_alter_uc_mapping.py` — **different** check (valid targets, no bogus `Tier` columns); run **both** before large deploys |
+| **Operator status** | `knowledge/synapse/Wiki/{Schema}/_parity_gate_last_run.txt`; JSON detail on FAIL: `_parity_last_report.json` |
+
+**Spec**: `.specify/specs/003-synapse-knowledge/spec.md` (FR-017). **Commands**: `/build-wiki-dwh`, `/generate-alter-dwh`, `/deploy-alter-dwh` cross-link this subsection.
+
+---
+
 ## Object Discovery (Research R1)
 
 Object discovery uses **two complementary data sources** depending on the target schema. The goal is to build a unified object list with priority, dependencies, and object type for each entry.

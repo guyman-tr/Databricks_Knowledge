@@ -44,3 +44,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio ALTER COL
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio ALTER COLUMN PriceRatioUnAdjusted SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio ALTER COLUMN AmountRatioUnAdjusted SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:22:27 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 20/20 succeeded
+-- ====================
