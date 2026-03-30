@@ -40,9 +40,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALT
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN InitForexRate COMMENT 'Opening price of the position';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN EndForexRate COMMENT 'Closing price with protection applied';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN StopRate COMMENT 'Stop-loss rate that was active';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN NoProtectionRate COMMENT 'Market price at close time ignoring stop — what price would have been';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN NoProtectionRate COMMENT 'Market price at close time ignoring stop - what price would have been';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN LastOpConversionRate COMMENT 'USD conversion rate at position close';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN DeltaLoss COMMENT 'Additional loss prevented by stop-loss: NoRestrictionNetProfit − NetProfit (positive = client protected)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN DeltaLoss COMMENT 'Additional loss prevented by stop-loss: NoRestrictionNetProfit - NetProfit (positive = client protected)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss ALTER COLUMN UpdateDate COMMENT 'ETL metadata: row write timestamp';
 
 -- ---- Column PII Tags ----

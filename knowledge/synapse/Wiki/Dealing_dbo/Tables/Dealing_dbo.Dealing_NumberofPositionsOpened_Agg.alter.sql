@@ -8,7 +8,7 @@
 -- =============================================================================
 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg SET TBLPROPERTIES (
-    'comment' = 'Daily aggregate counting the number of positions opened, broken down by instrument type and geographic region. Serves as a high-level summary of trading activity for the Dealing Dashboard. | Property | Value | |----------|-------| | **Schema** | Dealing_dbo | | **Object Type** | Table | | **Distribution** | ROUND_ROBIN | | **Index** | Clustered (DateID ASC) | | **Row Count** | ~173K | | **Date Range** | 2022-01-01 → present | | **Grain** | One row per DateID × InstrumentType × Region | | **Refresh** | Daily, via SP_DealingDashboard_Clients |'
+    'comment' = 'Daily aggregate counting the number of positions opened, broken down by instrument type and geographic region. Serves as a high-level summary of trading activity for the Dealing Dashboard. | Property | Value | |----------|-------| | **Schema** | Dealing_dbo | | **Object Type** | Table | | **Distribution** | ROUND_ROBIN | | **Index** | Clustered (DateID ASC) | | **Row Count** | ~173K | | **Date Range** | 2022-01-01 -> present | | **Grain** | One row per DateID × InstrumentType × Region | | **Refresh** | Daily, via SP_DealingDashboard_Clients |'
 );
 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg SET TAGS (

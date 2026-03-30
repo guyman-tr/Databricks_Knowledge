@@ -8,7 +8,7 @@
 -- =============================================================================
 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon SET TBLPROPERTIES (
-    'comment' = '**Daily end-of-day reconciliation** between eToro''s LP (liquidity provider) hedge holdings and client NOP (net open position). Each row compares what eToro''s hedge servers hold at EOD for a given liquidity account and instrument versus what the aggregated client position demands, expressed in units and USD amounts. The table is the **primary foundation for all LP broker reconciliation pipelines** — 11+ downstream recon tables (Apex, GS, IB, IG, JPM, SAXO, VISION, BNY VIRTU, CloseOnly) depend on it. **Row grain**: `Date` + `LiquidityAccountID` + `InstrumentID` + `Buy/Sell` direction.'
+    'comment' = '**Daily end-of-day reconciliation** between eToro''s LP (liquidity provider) hedge holdings and client NOP (net open position). Each row compares what eToro''s hedge servers hold at EOD for a given liquidity account and instrument versus what the aggregated client position demands, expressed in units and USD amounts. The table is the **primary foundation for all LP broker reconciliation pipelines** - 11+ downstream recon tables (Apex, GS, IB, IG, JPM, SAXO, VISION, BNY VIRTU, CloseOnly) depend on it. **Row grain**: `Date` + `LiquidityAccountID` + `InstrumentID` + `Buy/Sell` direction.'
 );
 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon SET TAGS (
@@ -38,7 +38,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALT
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN eToroUSDAmount COMMENT 'LP hedge position value converted to USD via FXratetoUSD. (Tier 2 -- SP_DataForDuco, computed: eToroLocalAmount × FXratetoUSD)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN ClientAmount COMMENT 'Client NOP position value in USD. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN eToroRate COMMENT 'Average rate of the eToro hedge holding (LP-side weighted average price). (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Rate)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN HedgingPercent COMMENT 'eToro_Units / ClientUnits — hedge coverage ratio (1.0 = fully hedged). (Tier 2 -- SP_DataForDuco, computed: eToro_Units / NULLIF(ClientUnits, 0))';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN HedgingPercent COMMENT 'eToro_Units / ClientUnits - hedge coverage ratio (1.0 = fully hedged). (Tier 2 -- SP_DataForDuco, computed: eToro_Units / NULLIF(ClientUnits, 0))';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN UpdateDate COMMENT 'Batch execution timestamp (GETDATE()). (Tier 3 -- SP_DataForDuco, GETDATE())';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN Symbol COMMENT 'Instrument ticker symbol. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.Symbol)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN SellCurrency COMMENT 'Trade currency of the instrument. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.SellCurrency)';

@@ -15,6 +15,10 @@ import sys
 from pathlib import Path
 
 WIKI_ROOT = Path(__file__).resolve().parents[1] / "knowledge" / "synapse" / "Wiki"
+if str(WIKI_ROOT) not in sys.path:
+    sys.path.insert(0, str(WIKI_ROOT))
+
+from _uc_comment_sanitize import sanitize_uc_sql_comment_text
 SCHEMAS = ["DWH_dbo", "BI_DB_dbo", "Dealing_dbo"]
 
 # Only skip tokens that appear as *header* labels in element tables, not real SQL columns.
@@ -125,7 +129,7 @@ def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
 
 
 def sql_string_for_comment(text: str, max_len: int = 1024) -> str:
-    t = text.replace("'", "''")
+    t = sanitize_uc_sql_comment_text(text).replace("'", "''")
     if len(t) > max_len:
         t = t[: max_len - 3] + "..."
     return t

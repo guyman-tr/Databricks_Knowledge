@@ -20,6 +20,8 @@ from datetime import datetime
 from dataclasses import dataclass, field, asdict
 from typing import Optional
 
+from _uc_comment_sanitize import sanitize_uc_sql_comment_text
+
 sys.stdout.reconfigure(line_buffering=True)
 
 WIKI_BASE = os.path.dirname(os.path.abspath(__file__))
@@ -319,7 +321,7 @@ def backfill_wiki(filepath: str, target: UCTarget):
 # ---------------------------------------------------------------------------
 
 def escape_sql(s: str) -> str:
-    return s.replace("'", "''")
+    return sanitize_uc_sql_comment_text(s or "").replace("'", "''")
 
 
 def infer_domain(name: str) -> str:

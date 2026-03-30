@@ -13,6 +13,8 @@ from datetime import datetime, timezone
 from collections import defaultdict
 from typing import Optional
 
+from _uc_comment_sanitize import escape_sql_comment_value
+
 sys.stdout.reconfigure(line_buffering=True)
 
 # ---------------------------------------------------------------------------
@@ -889,7 +891,7 @@ def execute_batches(tree_path: str, progress_path: str,
 
             for col_data in node.get("columns", []):
                 target_col = col_data["target_column"]
-                desc = col_data["description"].replace("'", "''")
+                desc = escape_sql_comment_value(col_data["description"])
 
                 if "VIEW" in obj_type.upper():
                     stmt = f"COMMENT ON COLUMN {full_name}.`{target_col}` IS '{desc}'"
@@ -984,7 +986,7 @@ def generate_downstream_alter_sql(tree_path: str, output_path: str,
         lines.append(f"-- {full_name} ({obj_type}, {len(columns)} columns)")
         for col_data in columns:
             target_col = col_data["target_column"]
-            desc = col_data["description"].replace("'", "''")
+            desc = escape_sql_comment_value(col_data["description"])
             if "VIEW" in obj_type.upper():
                 lines.append(f"COMMENT ON COLUMN {full_name}.`{target_col}` IS '{desc}';")
             else:

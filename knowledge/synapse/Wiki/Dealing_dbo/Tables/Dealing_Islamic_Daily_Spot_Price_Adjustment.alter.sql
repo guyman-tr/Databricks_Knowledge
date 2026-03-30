@@ -24,7 +24,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_s
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Date COMMENT 'Report date; Sunday input → Friday''s date';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Date COMMENT 'Report date; Sunday input -> Friday''s date';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN DateID COMMENT 'YYYYMMDD of Date';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN PositionID COMMENT 'Position identifier';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN RealCID COMMENT 'Client ID (Islamic account holder)';
@@ -41,18 +41,18 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_s
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN InstrumentID COMMENT 'One of: 17, 22, 339, 340, 341, 343, 344';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN InstrumentName COMMENT 'Instrument display name';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Exchange COMMENT 'Exchange name';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN ExchangeID COMMENT 'Always 0 — not used in this SP';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN ExchangeID COMMENT 'Always 0 - not used in this SP';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN IsBuy COMMENT '1=long, 0=short';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Leverage COMMENT 'Position leverage';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 - Expert Review)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN AmountInUnitsDecimal COMMENT 'Position size in instrument units';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Days_Open COMMENT 'Effective days open (Count_Fri rule)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Days_To_Charge COMMENT '3 on Fri, 1 on Mon–Thu, 0 weekend';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Days_To_Charge COMMENT '3 on Fri, 1 on Mon - Thu, 0 weekend';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Front COMMENT 'Front contract close price from Fivetran';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Next COMMENT 'Next contract close price from Fivetran';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Days_Between_Expiration COMMENT 'Days until front contract expires';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Final_Fee COMMENT 'Roll-cost fee in USD; positive or negative';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Fee_Type_ID COMMENT 'Always 2 — spot price adjustment';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN Fee_Type_ID COMMENT 'Always 2 - spot price adjustment';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment ALTER COLUMN UpdateDate COMMENT 'ETL metadata: row write timestamp';
 
 -- ---- Column PII Tags ----

@@ -24,10 +24,10 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype SET TAGS 
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN AffiliateCostTypeID COMMENT 'Primary key identifying the affiliate cost type. Values 0-10; ID=0 is the standard N/A placeholder row for fact JOINs. (Tier 3 — live data, DWH_dbo.Dim_AffiliateCostType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN Name COMMENT 'Human-readable label for the affiliate cost category. See value map in Section 2.1 for all 10 active categories plus the N/A placeholder. Note: ID=9 "Copys" is likely a typo for "Copy" (copy-trade commissions). (Tier 3 — live data, DWH_dbo.Dim_AffiliateCostType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN InsertDate COMMENT 'Migration artifact — always NULL. In a live ETL table this would record the row creation timestamp; this table has no active ETL and was never populated during the DWH_Migration one-time load. (Tier 2b — DWH_Migration DDL)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN UpdateDate COMMENT 'Migration artifact — always NULL. In a live ETL table this would record the last ETL refresh timestamp. No active ETL writes to this table. (Tier 2b — DWH_Migration DDL)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN AffiliateCostTypeID COMMENT 'Primary key identifying the affiliate cost type. Values 0-10; ID=0 is the standard N/A placeholder row for fact JOINs. (Tier 3 - live data, DWH_dbo.Dim_AffiliateCostType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN Name COMMENT 'Human-readable label for the affiliate cost category. See value map in Section 2.1 for all 10 active categories plus the N/A placeholder. Note: ID=9 "Copys" is likely a typo for "Copy" (copy-trade commissions). (Tier 3 - live data, DWH_dbo.Dim_AffiliateCostType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN InsertDate COMMENT 'Migration artifact - always NULL. In a live ETL table this would record the row creation timestamp; this table has no active ETL and was never populated during the DWH_Migration one-time load. (Tier 2b - DWH_Migration DDL)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN UpdateDate COMMENT 'Migration artifact - always NULL. In a live ETL table this would record the last ETL refresh timestamp. No active ETL writes to this table. (Tier 2b - DWH_Migration DDL)';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype ALTER COLUMN AffiliateCostTypeID SET TAGS ('pii' = 'none');

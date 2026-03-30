@@ -8,7 +8,7 @@
 -- =============================================================================
 
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report SET TBLPROPERTIES (
-    'comment' = 'Daily position-level report of all open and closed positions belonging to employee accounts (AccountTypeID IN 7, 13). Contains both current open positions and positions closed on the reporting date, enriched with P&L, pricing, equity, and gain metrics. The largest table in this batch at ~231.4M rows. | Property | Value | |----------|-------| | **Schema** | Dealing_dbo | | **Object Type** | Table | | **Distribution** | HASH(CID) | | **Index** | Clustered (Date ASC) | | **Row Count** | ~231.4M | | **Date Range** | Historical → present (last: 2026-03-10) | | **Grain** | One row per Date × PositionID (open + closed) | | **Refresh** | Daily, via SP_Employees_Report |'
+    'comment' = 'Daily position-level report of all open and closed positions belonging to employee accounts (AccountTypeID IN 7, 13). Contains both current open positions and positions closed on the reporting date, enriched with P&L, pricing, equity, and gain metrics. The largest table in this batch at ~231.4M rows. | Property | Value | |----------|-------| | **Schema** | Dealing_dbo | | **Object Type** | Table | | **Distribution** | HASH(CID) | | **Index** | Clustered (Date ASC) | | **Row Count** | ~231.4M | | **Date Range** | Historical -> present (last: 2026-03-10) | | **Grain** | One row per Date × PositionID (open + closed) | | **Refresh** | Daily, via SP_Employees_Report |'
 );
 
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report SET TAGS (
@@ -44,7 +44,7 @@ ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_repor
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN PositionPnL COMMENT 'Current P&L: for open positions = BI_DB_PositionPnL; for closed = final NetProfit';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN DateID COMMENT 'Date integer key (YYYYMMDD)';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN NOP COMMENT 'Net open position value';
-ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN DailyPnL COMMENT 'Daily P&L: open=PositionPnL.DailyPnL; same-day close=NetProfit; prior-day close=NetProfit−previos_Position_PnL';
+ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN DailyPnL COMMENT 'Daily P&L: open=PositionPnL.DailyPnL; same-day close=NetProfit; prior-day close=NetProfit - previos_Position_PnL';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN BonusCredit COMMENT 'Employee bonus credit balance';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN RealizedEquity COMMENT 'Realized equity value';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN UpdateDate COMMENT 'ETL metadata: row write timestamp';
@@ -75,7 +75,7 @@ ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_repor
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN VolumeOnClose COMMENT 'Trade close click count';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN OpenDateID COMMENT 'Open date integer key';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN CloseDateID COMMENT 'Close date integer key';
-ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN previos_Position_PnL COMMENT 'Prior day''s PositionPnL — used for DailyPnL calculation on prior-day closes (typo: ''previos'' not ''previous'')';
+ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN previos_Position_PnL COMMENT 'Prior day''s PositionPnL - used for DailyPnL calculation on prior-day closes (typo: ''previos'' not ''previous'')';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN InitForexRate COMMENT 'Opening price';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN EndForexRate COMMENT 'Closing price';
 ALTER TABLE main.trading.gold_sql_dp_prod_we_dealing_dbo_dealing_employees_report ALTER COLUMN Price COMMENT 'Current market price';

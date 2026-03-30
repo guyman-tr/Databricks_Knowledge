@@ -24,8 +24,8 @@ ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer SE
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN DateKey COMMENT 'Specific date within the snapshot range (YYYYMMDD integer). One row per day per customer. (Tier 2 — view DDL)';
-ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN All Fact_SnapshotCustomer columns COMMENT 'See [Fact_SnapshotCustomer.md](../Tables/Fact_SnapshotCustomer.md). (Tier 2 — inherited)';
+ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN DateKey COMMENT 'Specific date within the snapshot range (YYYYMMDD integer). One row per day per customer. (Tier 2 - view DDL)';
+ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN All Fact_SnapshotCustomer columns COMMENT 'See [Fact_SnapshotCustomer.md](../Tables/Fact_SnapshotCustomer.md). (Tier 2 - inherited)';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN DateKey SET TAGS ('pii' = 'none');

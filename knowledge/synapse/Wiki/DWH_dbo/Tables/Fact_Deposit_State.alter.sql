@@ -81,7 +81,7 @@ ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
 ALTER COLUMN BaseExchangeRate COMMENT 'Base (pre-fee) exchange rate between deposit currency and USD. Used to calculate the USD equivalent before exchange fees. (Tier 2 - SP_Fact_Deposit_State)';
 
 ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
-ALTER COLUMN ExchangeFee COMMENT 'Exchange fee indicator; CS deposit conversion guidance references **fee in PIPs** and exchange fee in USD alongside base vs effective rate — consistent with fee encoded as points/tier (observed 0, 52, 70, 101). (Tier 4 — Confluence, Deposit conversion fee)';
+ALTER COLUMN ExchangeFee COMMENT 'Exchange fee indicator; CS deposit conversion guidance references **fee in PIPs** and exchange fee in USD alongside base vs effective rate - consistent with fee encoded as points/tier (observed 0, 52, 70, 101). (Tier 4 - Confluence, Deposit conversion fee)';
 
 ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
 ALTER COLUMN ExchangeRate COMMENT 'Effective exchange rate applied to the deposit (post-fee). AmountInUSD = Amount * ExchangeRate. Compare to BaseExchangeRate to derive the fee impact. (Tier 2 - SP_Fact_Deposit_State)';
@@ -114,7 +114,7 @@ ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
 ALTER COLUMN TransactionType COMMENT 'Transaction event type classification. 10 values: Deposit, Refund, Chargeback, ChargebackReversal, CancelledRefund, ReversedDeposit, CancelledChargeback, CancelledReversedDeposit, CancelledChargebackReversal, CancelledRefundReversal. (Tier 2 - SP_Fact_Deposit_State)';
 
 ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
-ALTER COLUMN PIPsInUSD COMMENT '**PIP in USD** — finance definition: conversion-fee revenue in USD (original amount × spread between base and effective rate, or amount × conversion fee / 10000 per FC playbook). Aligns with small USD amounts on deposit lines. Observed 0.00–5.30. (Tier 4 — Confluence, Conversion fee Revenue Calculation (PIP in USD))';
+ALTER COLUMN PIPsInUSD COMMENT '**PIP in USD** - finance definition: conversion-fee revenue in USD (original amount × spread between base and effective rate, or amount × conversion fee / 10000 per FC playbook). Aligns with small USD amounts on deposit lines. Observed 0.00 - 5.30. (Tier 4 - Confluence, Conversion fee Revenue Calculation (PIP in USD))';
 
 ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
 ALTER COLUMN FeeInPercentage COMMENT 'Fee applied to the deposit expressed as a percentage (e.g., 0.4498343 = 0.45% fee). (Tier 2 - SP_Fact_Deposit_State)';
