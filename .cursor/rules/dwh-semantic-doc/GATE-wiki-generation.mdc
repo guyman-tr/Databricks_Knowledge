@@ -75,6 +75,16 @@ SHAPE CHECK — {ObjectName}:
   [y/n] Dictionary columns with <=15 values have inline values
 ```
 
+```
+ALTER SHAPE CHECK — {ObjectName} (if .alter.sql generated):
+  [y/n] ALTER COLUMN count = wiki Element count (FR-012/FR-017)
+  [y/n] ALTER COLUMN names match wiki Element names (backtick-stripped, lowercased) (FR-018)
+  [y/n] Every ALTER COLUMN identifier is backtick-quoted (FR-020)
+  [y/n] No ALTER COLUMN Tier N lines (FR-012)
+  [y/n] ALTER TABLE target matches ^[A-Za-z0-9_.]+$ (FR-014)
+  [y/n] File written with encoding="utf-8" (FR-019)
+```
+
 **If ANY [n] on a HARD assertion (see GOLDEN-REFERENCE.mdc Section B): fix BEFORE writing.**
 
 ## Critical Reminders

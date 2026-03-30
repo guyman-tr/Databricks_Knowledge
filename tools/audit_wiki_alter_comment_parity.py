@@ -52,7 +52,7 @@ COMMENT_LITERAL_RE = re.compile(r"COMMENT\s+'((?:[^']|'')*)'\s*;", re.IGNORECASE
 
 def find_all_md_alter_pairs() -> list[tuple[Path, Path]]:
     pairs: list[tuple[Path, Path]] = []
-    for sub in ("Tables", "Views"):
+    for sub in ("Tables", "Views", "Functions"):
         base = WIKI_ROOT
         for md in sorted(base.rglob(f"{sub}/*.md")):
             if md.name.endswith(".lineage.md") or md.name.endswith(".review-needed.md"):
@@ -74,7 +74,7 @@ def _is_under(path: Path, base: Path) -> bool:
 
 
 def find_pairs_under_schema(schema_name: str) -> list[tuple[Path, Path]]:
-    """Only *.md under knowledge/synapse/Wiki/<schema_name>/(Tables|Views)/."""
+    """Only *.md under knowledge/synapse/Wiki/<schema_name>/(Tables|Views|Functions)/."""
     base = (WIKI_ROOT / schema_name.strip().replace("\\", "/")).resolve()
     if not base.is_dir():
         return []
