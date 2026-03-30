@@ -29,10 +29,10 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN InstrumentID COMMENT 'Instrument primary key.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN InstrumentName COMMENT 'Instrument name. Denormalized from Dim_Instrument.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN AssetClass COMMENT 'Asset class grouping (e.g., Stocks, FX, Crypto).';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN NOP COMMENT 'Net Open Position with this LP (in USD or native units — varies by LP).';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN NOP COMMENT 'Net Open Position with this LP (in USD or native units - varies by LP).';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN Margin COMMENT 'Margin held at this LP for this instrument position.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN OpenPremium COMMENT 'Open premium value (relevant for options/structured products).';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN [Unrealised_P&L/VariationMargin] COMMENT '⚠️ Contains `&` and `/` — quote in SQL. Unrealised P&L or variation margin posted at this LP.';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN [Unrealised_P&L/VariationMargin] COMMENT '⚠️ Contains `&` and `/` - quote in SQL. Unrealised P&L or variation margin posted at this LP.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN NOPDirection COMMENT '''Long'' or ''Short'' indicating net direction of the position.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN Currency COMMENT 'Currency of the NOP/margin figures.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_nop_report ALTER COLUMN ExchangeRate COMMENT 'FX rate used to convert to reporting currency.';

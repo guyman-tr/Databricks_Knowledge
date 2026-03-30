@@ -24,9 +24,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN ExchangeID COMMENT 'Primary key. Exchange identifier. Production values 1-56; test values 99+. (Tier 1 — Dictionary.ExchangeInfo)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN ExchangeDescription COMMENT 'Exchange name or abbreviation. (Tier 1 — Dictionary.ExchangeInfo)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp set to GETDATE() when SP_Dictionaries_DL_To_Synapse runs. Does not reflect production data update time. (Tier 2 — SP_Dictionaries_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN ExchangeID COMMENT 'Primary key. Exchange identifier. Production values 1-56; test values 99+. (Tier 1 - Dictionary.ExchangeInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN ExchangeDescription COMMENT 'Exchange name or abbreviation. (Tier 1 - Dictionary.ExchangeInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp set to GETDATE() when SP_Dictionaries_DL_To_Synapse runs. Does not reflect production data update time. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo ALTER COLUMN ExchangeID SET TAGS ('pii' = 'none');

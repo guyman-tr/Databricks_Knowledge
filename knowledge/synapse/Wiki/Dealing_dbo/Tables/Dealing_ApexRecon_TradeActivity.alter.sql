@@ -8,7 +8,7 @@
 -- =============================================================================
 
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity SET TBLPROPERTIES (
-    'comment' = '**Daily trade activity reconciliation between eToro and Apex Clearing** for real stocks. Each row compares eToro''s trade execution units and average rate against Apex''s reported trade activity for the same instrument, direction, and liquidity account on the given date. Discrepancies (Etoro_Units ≠ Apex_Units, Etoro_Rate ≠ Apex_Rate) trigger investigation. This is one of three Apex reconciliation tables written by `SP_Apex_Recon` (alongside `Dealing_ApexRecon_Holdings` and `Dealing_ApexRecon_Hedging`). **Row grain**: `Date` + `LiquidityAccountID` + `InstrumentID` + `IsBuy` direction.'
+    'comment' = '**Daily trade activity reconciliation between eToro and Apex Clearing** for real stocks. Each row compares eToro''s trade execution units and average rate against Apex''s reported trade activity for the same instrument, direction, and liquidity account on the given date. Discrepancies (Etoro_Units != Apex_Units, Etoro_Rate != Apex_Rate) trigger investigation. This is one of three Apex reconciliation tables written by `SP_Apex_Recon` (alongside `Dealing_ApexRecon_Holdings` and `Dealing_ApexRecon_Hedging`). **Row grain**: `Date` + `LiquidityAccountID` + `InstrumentID` + `IsBuy` direction.'
 );
 
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity SET TAGS (

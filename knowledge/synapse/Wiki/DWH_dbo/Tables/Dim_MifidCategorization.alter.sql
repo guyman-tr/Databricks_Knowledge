@@ -24,8 +24,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization SET TAG
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN MifidCategorizationID COMMENT 'MiFID II client classification tier: 0=None (non-EU), 1=Retail (full protection, default), 2=Professional (reduced protection), 3=Elective Professional (opted-in retail), 4=Retail Pending (under review), 5=Pending (assessment incomplete). Referenced by BackOffice.Customer.MifidCategorizationID (FK, DEFAULT 1) and History.BackOfficeCustomer. Feeds into computed column TradingRiskStatusID. (Tier 1 — Dictionary.MifidCategorization)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN Name COMMENT 'Human-readable classification label. Used in compliance dashboards and regulatory reports. (Tier 1 — Dictionary.MifidCategorization)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN MifidCategorizationID COMMENT 'MiFID II client classification tier: 0=None (non-EU), 1=Retail (full protection, default), 2=Professional (reduced protection), 3=Elective Professional (opted-in retail), 4=Retail Pending (under review), 5=Pending (assessment incomplete). Referenced by BackOffice.Customer.MifidCategorizationID (FK, DEFAULT 1) and History.BackOfficeCustomer. Feeds into computed column TradingRiskStatusID. (Tier 1 - Dictionary.MifidCategorization)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN Name COMMENT 'Human-readable classification label. Used in compliance dashboards and regulatory reports. (Tier 1 - Dictionary.MifidCategorization)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -- SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----

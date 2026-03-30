@@ -24,14 +24,14 @@ ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_paramet
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN InstrumentID COMMENT 'Crypto instrument identifier (100xxx range). E.g., 100001=ETH, 100017=ADA, 100026=TRX, 100063=SOL. (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN Currency COMMENT 'Crypto symbol. E.g., ETH, ADA, TRX, SOL, DOT, NEAR, ATOM, AVAX, SUI, POL, ETHEUR, SOLEUR, ADAEUR. (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN IntroDays COMMENT 'Days before staking yields begin for new positions. 7 (standard), 9 (ADA), 60 (ETH). (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN LiquidityBuffer COMMENT 'Fraction of staked pool reserved for liquidity. 0.60-1.00. Higher = more reserved, lower yield for stakers. (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN DailyPool_StartDate COMMENT 'Date when daily pool calculation begins for this crypto. (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN WelcomeEmail_StartDate COMMENT 'Date when welcome staking emails start being sent for this crypto. (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN Distribution_StartDate COMMENT 'Date when reward distribution begins. Always >= DailyPool_StartDate (pool must accumulate before distribution). (Tier 3 — live data)';
-ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN UpdateDate COMMENT 'Last configuration update timestamp. (Tier 3 — live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN InstrumentID COMMENT 'Crypto instrument identifier (100xxx range). E.g., 100001=ETH, 100017=ADA, 100026=TRX, 100063=SOL. (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN Currency COMMENT 'Crypto symbol. E.g., ETH, ADA, TRX, SOL, DOT, NEAR, ATOM, AVAX, SUI, POL, ETHEUR, SOLEUR, ADAEUR. (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN IntroDays COMMENT 'Days before staking yields begin for new positions. 7 (standard), 9 (ADA), 60 (ETH). (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN LiquidityBuffer COMMENT 'Fraction of staked pool reserved for liquidity. 0.60-1.00. Higher = more reserved, lower yield for stakers. (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN DailyPool_StartDate COMMENT 'Date when daily pool calculation begins for this crypto. (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN WelcomeEmail_StartDate COMMENT 'Date when welcome staking emails start being sent for this crypto. (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN Distribution_StartDate COMMENT 'Date when reward distribution begins. Always >= DailyPool_StartDate (pool must accumulate before distribution). (Tier 3 - live data)';
+ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN UpdateDate COMMENT 'Last configuration update timestamp. (Tier 3 - live data)';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');

@@ -24,8 +24,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype ALTER COLUMN MirrorTypeID COMMENT 'Primary key identifying the copy relationship type. 1=Regular (standard copy), 2=CopyMe (legacy), 3=Social Index (algorithmic), 4=Fund (managed). (Tier 1 — Dictionary.MirrorType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype ALTER COLUMN MirrorTypeName COMMENT 'Short code name used in code branching and API responses. (Tier 1 — Dictionary.MirrorType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype ALTER COLUMN MirrorTypeID COMMENT 'Primary key identifying the copy relationship type. 1=Regular (standard copy), 2=CopyMe (legacy), 3=Social Index (algorithmic), 4=Fund (managed). (Tier 1 - Dictionary.MirrorType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype ALTER COLUMN MirrorTypeName COMMENT 'Short code name used in code branching and API responses. (Tier 1 - Dictionary.MirrorType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp -- GETDATE() at load time. (Tier 2 -- SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----

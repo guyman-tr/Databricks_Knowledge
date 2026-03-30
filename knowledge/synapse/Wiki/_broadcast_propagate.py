@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 sys.stdout.reconfigure(line_buffering=True)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _deep_propagate_lib as lib
+from _uc_comment_sanitize import escape_sql_comment_value
 
 BROADCAST_BATCH_SIZE = 100
 LOG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_broadcast_propagation.log")
@@ -98,7 +99,7 @@ def broadcast(dry_run: bool = False):
         for batch_idx, batch in enumerate(batches):
             for inst in batch:
                 full_name = inst["full_name"]
-                desc_escaped = description.replace("'", "''")
+                desc_escaped = escape_sql_comment_value(description)
 
                 if inst["is_view"]:
                     stmt = f"COMMENT ON COLUMN {full_name}.`{col_name}` IS '{desc_escaped}'"

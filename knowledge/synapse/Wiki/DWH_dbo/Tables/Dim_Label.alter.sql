@@ -24,8 +24,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN LabelID COMMENT 'Primary key identifying the platform brand/label. 0/1/9=eToro (primary), 2=RetailFX, 10-26=white-label partners, 14=eToroUSA, 27=Partners, 29=eToroRussia, 30=Dealing, 31=eToroChina. Stored in customer records and referenced across billing, reporting, and registration procedures. (Tier 1 — Dictionary.Label)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN Name COMMENT 'Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = ''eToro''). (Tier 1 — Dictionary.Label)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN LabelID COMMENT 'Primary key identifying the platform brand/label. 0/1/9=eToro (primary), 2=RetailFX, 10-26=white-label partners, 14=eToroUSA, 27=Partners, 29=eToroRussia, 30=Dealing, 31=eToroChina. Stored in customer records and referenced across billing, reporting, and registration procedures. (Tier 1 - Dictionary.Label)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN Name COMMENT 'Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = ''eToro''). (Tier 1 - Dictionary.Label)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN DWHLabelID COMMENT 'Always equal to LabelID. Standard DWH DWH{X}ID redundancy pattern (ETL: `[LabelID] as [DWHLabelID]`). Do not use for JOINs. (Tier 2 -- SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN StatusID COMMENT 'Hardcoded to 1 for all rows (ETL: `1 as StatusID`). Conveys no business information. (Tier 2 -- SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp -- GETDATE() at load time. Does not reflect production modification date. (Tier 2 -- SP_Dictionaries_DL_To_Synapse)';

@@ -24,8 +24,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype ALTER COLUMN FundTypeID COMMENT 'Primary key identifying the fund category. 1=TopTraders (copy-based), 2=Partners (external strategist), 3=Market (thematic index). Referenced by Trade.Fund to classify each CopyFund/SmartPortfolio. Replicated to SettingsDB for configuration management. (Tier 1 — Dictionary.FundType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype ALTER COLUMN FundTypeName COMMENT 'Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting. Describes the fundamental strategy approach of the fund category. (Tier 1 — Dictionary.FundType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype ALTER COLUMN FundTypeID COMMENT 'Primary key identifying the fund category. 1=TopTraders (copy-based), 2=Partners (external strategist), 3=Market (thematic index). Referenced by Trade.Fund to classify each CopyFund/SmartPortfolio. Replicated to SettingsDB for configuration management. (Tier 1 - Dictionary.FundType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype ALTER COLUMN FundTypeName COMMENT 'Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting. Describes the fundamental strategy approach of the fund category. (Tier 1 - Dictionary.FundType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. Set to GETDATE() when SP_Dictionaries_DL_To_Synapse runs. NOT NULL. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----

@@ -24,8 +24,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus ALTER COLUMN GuruStatusID COMMENT 'Primary key identifying the PI program state. 0=No (non-PI), 1=Certified, 2=Cadet, 3=Rising Star, 4=Champion, 5=Elite, 6=Elite Pro, 7=Removed, 8=Rejected. Referenced by BackOffice.Customer (FK), Billing.GuruStatusToCashoutFeeGroup (FK). Filtered as IN (2,3,4,5) for active PIs or IN (2,3,4,5,6) including Elite Pro. (Tier 1 — Dictionary.GuruStatus)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus ALTER COLUMN GuruStatusName COMMENT 'Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. (Tier 1 — Dictionary.GuruStatus)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus ALTER COLUMN GuruStatusID COMMENT 'Primary key identifying the PI program state. 0=No (non-PI), 1=Certified, 2=Cadet, 3=Rising Star, 4=Champion, 5=Elite, 6=Elite Pro, 7=Removed, 8=Rejected. Referenced by BackOffice.Customer (FK), Billing.GuruStatusToCashoutFeeGroup (FK). Filtered as IN (2,3,4,5) for active PIs or IN (2,3,4,5,6) including Elite Pro. (Tier 1 - Dictionary.GuruStatus)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus ALTER COLUMN GuruStatusName COMMENT 'Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. (Tier 1 - Dictionary.GuruStatus)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. Set to GETDATE() when SP_Dictionaries_DL_To_Synapse runs. NOT NULL. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----

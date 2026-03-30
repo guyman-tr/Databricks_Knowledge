@@ -24,9 +24,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusID COMMENT 'Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. (Tier 1 — Dictionary.DocumentStatus)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusName COMMENT 'Human-readable status label. Used in compliance review UI, customer communications, and regulatory reporting. (Tier 1 — Dictionary.DocumentStatus)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. Set to GETDATE() on each daily full reload by SP_Dictionaries_DL_To_Synapse. Reflects ETL run time, not source data change time. (Tier 2 — SP_Dictionaries_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusID COMMENT 'Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. (Tier 1 - Dictionary.DocumentStatus)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusName COMMENT 'Human-readable status label. Used in compliance review UI, customer communications, and regulatory reporting. (Tier 1 - Dictionary.DocumentStatus)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. Set to GETDATE() on each daily full reload by SP_Dictionaries_DL_To_Synapse. Reflects ETL run time, not source data change time. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus ALTER COLUMN DocumentStatusID SET TAGS ('pii' = 'none');

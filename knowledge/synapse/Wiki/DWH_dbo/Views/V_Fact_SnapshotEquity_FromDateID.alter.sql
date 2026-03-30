@@ -24,9 +24,9 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdatei
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID COMMENT 'Start date of the equity snapshot range (YYYYMMDD integer). (Tier 2 — view DDL)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID COMMENT 'End date of the equity snapshot range (YYYYMMDD integer). Active rows have ToDateID = YYYY1231. (Tier 2 — view DDL)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN All Fact_SnapshotEquity columns COMMENT 'See [Fact_SnapshotEquity.md](../Tables/Fact_SnapshotEquity.md) for full column documentation. (Tier 2 — inherited)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID COMMENT 'Start date of the equity snapshot range (YYYYMMDD integer). (Tier 2 - view DDL)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID COMMENT 'End date of the equity snapshot range (YYYYMMDD integer). Active rows have ToDateID = YYYY1231. (Tier 2 - view DDL)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN All Fact_SnapshotEquity columns COMMENT 'See [Fact_SnapshotEquity.md](../Tables/Fact_SnapshotEquity.md) for full column documentation. (Tier 2 - inherited)';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID SET TAGS ('pii' = 'none');

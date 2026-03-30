@@ -8,7 +8,7 @@
 -- =============================================================================
 
 ALTER TABLE main.general.gold_sql_dp_prod_we_dealing_dbo_dealing_indiciesintrahour_etoro SET TBLPROPERTIES (
-    'comment' = 'Minute-by-minute LP/eToro-side hedging activity for index instruments (SPX500=27, DJ30=28, NSDQ100=32). Shows the LP''s net open position, hedge volumes, and mark-to-market value at each minute, broken down by liquidity account and hedge server. | Property | Value | |----------|-------| | **Schema** | Dealing_dbo | | **Object Type** | Table | | **Distribution** | ROUND_ROBIN | | **Index** | Clustered (Date ASC) | | **Row Count** | ~8.4M | | **Date Range** | 2022-05-22 → present | | **Grain** | One row per Date × Minute × InstrumentID × LiquidityAccountID × HedgeServerID | | **Refresh** | Daily, via SP_IntraHourIndexReport |'
+    'comment' = 'Minute-by-minute LP/eToro-side hedging activity for index instruments (SPX500=27, DJ30=28, NSDQ100=32). Shows the LP''s net open position, hedge volumes, and mark-to-market value at each minute, broken down by liquidity account and hedge server. | Property | Value | |----------|-------| | **Schema** | Dealing_dbo | | **Object Type** | Table | | **Distribution** | ROUND_ROBIN | | **Index** | Clustered (Date ASC) | | **Row Count** | ~8.4M | | **Date Range** | 2022-05-22 -> present | | **Grain** | One row per Date × Minute × InstrumentID × LiquidityAccountID × HedgeServerID | | **Refresh** | Daily, via SP_IntraHourIndexReport |'
 );
 
 ALTER TABLE main.general.gold_sql_dp_prod_we_dealing_dbo_dealing_indiciesintrahour_etoro SET TAGS (

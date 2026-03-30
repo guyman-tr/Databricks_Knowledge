@@ -24,11 +24,11 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN FundingTypeID COMMENT 'Primary key identifying the payment method. (Tier 1 — Dictionary.FundingType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN Name COMMENT 'Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). (Tier 1 — Dictionary.FundingType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN IsNewStyle COMMENT 'Whether this payment method uses the newer integration style. Affects which code path handles the transaction. (Tier 1 — Dictionary.FundingType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN IsSingleFunding COMMENT 'Whether this is a one-time payment method (cannot be saved for repeat use). 1=single-use, 0=can be saved. (Tier 1 — Dictionary.FundingType)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN IsCashoutActive COMMENT 'Whether withdrawals (cashouts) are supported via this method. 1=supports cashout, 0=deposit-only. (Tier 1 — Dictionary.FundingType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN FundingTypeID COMMENT 'Primary key identifying the payment method. (Tier 1 - Dictionary.FundingType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN Name COMMENT 'Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). (Tier 1 - Dictionary.FundingType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN IsNewStyle COMMENT 'Whether this payment method uses the newer integration style. Affects which code path handles the transaction. (Tier 1 - Dictionary.FundingType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN IsSingleFunding COMMENT 'Whether this is a one-time payment method (cannot be saved for repeat use). 1=single-use, 0=can be saved. (Tier 1 - Dictionary.FundingType)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN IsCashoutActive COMMENT 'Whether withdrawals (cashouts) are supported via this method. 1=supports cashout, 0=deposit-only. (Tier 1 - Dictionary.FundingType)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN DWHFundingTypeID COMMENT 'DWH copy of FundingTypeID. SET in ETL as `[FundingTypeID] as [DWHFundingTypeID]`. Currently identical to FundingTypeID for all rows. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN StatusID COMMENT 'Hardcoded to 1 for all rows (both staging rows and N/A sentinel). Likely means active. No corresponding Dim_Status table found. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. Set to GETDATE() (stored as @ddate variable). (Tier 2 - SP_Dictionaries_DL_To_Synapse)';

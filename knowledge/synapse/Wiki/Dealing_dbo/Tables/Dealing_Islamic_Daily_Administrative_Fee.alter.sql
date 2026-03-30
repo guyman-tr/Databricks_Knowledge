@@ -49,10 +49,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_a
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Admin_Fee_USD COMMENT 'Fee rate per unit-equivalent per day';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Days_Open COMMENT 'Effective days open using exchange-appropriate counting';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN GracePeriod COMMENT 'Days before fee starts accruing';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Days_Admin_Fee COMMENT 'Days_Open − GracePeriod (net chargeable days)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Days_Admin_Fee COMMENT 'Days_Open - GracePeriod (net chargeable days)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Days_To_Charge COMMENT 'Actual multiplier for today''s charge: 0/1/2/3';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Final_Fee COMMENT 'Computed fee in USD; always ≤ 0';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Fee_Type_ID COMMENT 'Always 1 — administrative fee';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Final_Fee COMMENT 'Computed fee in USD; always <= 0';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Fee_Type_ID COMMENT 'Always 1 - administrative fee';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN UpdateDate COMMENT 'ETL metadata: row write timestamp';
 
 -- ---- Column PII Tags ----
