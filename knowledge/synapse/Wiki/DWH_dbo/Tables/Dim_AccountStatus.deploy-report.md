@@ -55,7 +55,7 @@ No failures. All 12 statements executed successfully.
 
 ## Notes
 
-- **`_deploy-index.md`**: Created at `knowledge/synapse/Wiki/DWH_dbo/_deploy-index.md` (130 deployable objects; `Dim_AccountStatus` = Deployed). Regenerate with `python tools/build_deploy_index_dwh_dbo.py` after bulk generate/deploy.
+- **`_deploy-index.md`**: Created at `knowledge/synapse/Wiki/DWH_dbo/_deploy-index.md` (130 deployable objects; `Dim_AccountStatus` = Deployed). Regenerate with `python tools/build_deploy_index.py --schema DWH_dbo` after bulk generate/deploy.
 
 ## Protocol 6 — deploy summary
 

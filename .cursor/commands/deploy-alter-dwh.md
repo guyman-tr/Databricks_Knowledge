@@ -61,7 +61,7 @@ For schema mode: scan `Tables/*.alter.sql`, `Views/*.alter.sql`, and **`Function
 
 ### Check 3: Deploy Index
 
-Verify `_deploy-index.md` exists. If missing → **STOP** with explicit operator text: "`_deploy-index.md` missing — run `/generate-alter-dwh {Schema}` once to **CREATE** the deploy index (see `deploy-index-management.mdc` Protocol 1), then resume deploy." Do not deploy batches without updating the index in the same session once the file exists.
+Verify `_deploy-index.md` exists. If missing → **STOP** with explicit operator text: "`_deploy-index.md` missing — run `python tools/build_deploy_index.py --schema {Schema}` to CREATE the deploy index, then resume deploy." Do not deploy batches without updating the index in the same session once the file exists.
 
 ### Check 3b: ALTER script sanity (regression guard — spec FR-012–FR-015)
 

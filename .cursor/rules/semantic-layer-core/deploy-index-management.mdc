@@ -121,7 +121,7 @@ Two-command lifecycle: **`generate-alter-dwh`** then **`deploy-alter-dwh`**. Sta
 
 3. **Continue**: The batch continues with the next object. Failed objects do not block subsequent objects.
 
-4. **Single-line failure text (MANDATORY — 2026-03-30)**: `{error reason}` MUST fit on **one table row** — no embedded newlines, no raw `|` characters. Multiline Databricks stack traces break markdown tables. Batch scripts MUST sanitize (collapse whitespace, replace `|`, truncate ~120 chars). See `tools/dwh_dbo_deploy_resume_batch.py` (`sanitize_one_line`) and spec FR-016 in `.specify/specs/003-synapse-knowledge/spec.md`.
+4. **Single-line failure text (MANDATORY — 2026-03-30)**: `{error reason}` MUST fit on **one table row** — no embedded newlines, no raw `|` characters. Multiline Databricks stack traces break markdown tables. Batch scripts MUST sanitize (collapse whitespace, replace `|`, truncate ~120 chars). See `tools/deploy_alter_batch.py` (`sanitize_one_line`) and spec FR-016 in `.specify/specs/003-synapse-knowledge/spec.md`.
 
 ### Format for Completed Deploy Batch Section:
 
