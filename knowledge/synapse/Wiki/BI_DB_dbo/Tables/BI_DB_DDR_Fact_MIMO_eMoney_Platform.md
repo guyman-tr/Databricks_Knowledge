@@ -161,7 +161,7 @@ _Pending — resolved during write-objects._
 | 10 | FundingTypeID | int | YES | Payment method type. `CASE WHEN TxTypeID IN (5) THEN 33 ELSE 0 END` (deposits) / `CASE WHEN TxTypeID IN (6) THEN 33 ELSE 0 END` (withdrawals). 33 = internal transfer, 0 = external. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
 | 11 | CurrencyID | int | YES | Currency identifier. Deposits: `eMoney_Currency_Instrument_Mapping_Static.SellCurrencyID` via ISO match. Withdrawals: `Dim_Currency.CurrencyID` via abbreviation match. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
 | 12 | Currency | varchar(20) | YES | Currency ISO code. Direct from `eMoney_Fact_Transaction_Status.HolderCurrencyDesc`. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 13 | IsFTD | int | YES | Platform-level first-time deposit flag. `CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END` from #FTDIBAN match; `ISNULL(..., 0)`. Updated by FTD recovery for DateID >= 20250901. 645K deposits flagged out of 11.7M. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 13 | IsFTD | int | YES | Platform-level first-time deposit flag. `CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END` from #FTDIBAN match; `ISNULL(..., 0)`. Updated by FTD recovery for DateID >= 20250901. 645K deposits flagged out of 11.7M. (Tier 1 — Function_MIMO_First_Deposit_All_Platforms) |
 | 14 | IsInternalTransfer | int | YES | Internal fund transfer flag. `CASE WHEN TxTypeID IN (5) THEN 1 ELSE 0 END` (deposits) / `... IN (6) ...` (withdrawals). `ISNULL(..., 0)`. 1 = transfer between eMoney and trading platform. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
 | 15 | IsRedeem | int | YES | Redemption flag. Always `ISNULL(NULL, 0) = 0`. Placeholder for schema compatibility with AllPlatforms union; never populated. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
 | 16 | TxTypeID | int | YES | eMoney transaction type. Direct from `eMoney_Fact_Transaction_Status.TxTypeID`. Values: 5=internal deposit, 6=internal withdrawal, 7=external deposit, 8=trade open withdrawal, 14=crypto-to-fiat. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
@@ -291,5 +291,5 @@ No Atlassian sources found for this object.
 ---
 
 *Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
-*Tiers: 0 T1, 21 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
+*Tiers: 1 T1, 20 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
 *Object: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform | Type: Table | Production Source: eMoney_Fact_Transaction_Status + Dim_Customer*

@@ -162,9 +162,9 @@ ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COL
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN ProfessionalApplicationDate COMMENT 'Date the customer applied for professional (non-retail) classification. From ComplianceStateDB.Compliance.CustomerProfessionalQuestionnaireResult. (Tier 2 - SP code, ComplianceStateDB)';
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastCampaignSentDate COMMENT 'Date of the most recent marketing campaign sent to this customer. (Tier 2 - SP code)';
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN NewMarketingRegion COMMENT 'Updated marketing region classification. From Dim_Country.MarketingRegionManualName. Values: SEA, UK, French, Latam, German, CEE, Arabic, USA, Italian, ROW, Nordics, Spain, Australia. (Tier 2 - SP code, Dim_Country)';
-ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN IsFundedNew COMMENT 'Whether customer is currently "funded" - meeting active depositor criteria. 1 = funded, 0 = not funded. Determined by Function_Population_Funded. (Tier 2 - SP code, Function_Population_Funded)';
-ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN FirstNewFundedDate COMMENT 'First date the customer became "funded." From Function_Population_First_Time_Funded. Set once, never overwritten. (Tier 2 - SP code, Function_Population_First_Time_Funded)';
-ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastNewFundedDate COMMENT 'Most recent date the customer was in "funded" status. From DDR daily status and Function_Population_Funded. Updated daily. (Tier 2 - SP code)';
+ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN IsFundedNew COMMENT 'Funded status flag. 1 if ALL four criteria hold on the balance date: (1) real deposit excl. bad-FTD cohort (Aug 18-20 2025); (2) KYC verification level 3; (3) at least one non-airdrop activity (TP trade, copy IOB, or Options trade); (4) positive equity across TP/eMoney/Options. Updated daily for all customers. Source: Function_Population_Funded. (Tier 1)';
+ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN FirstNewFundedDate COMMENT 'First date customer crossed the fully-funded threshold. Computed as GREATEST(FTDDateID, FirstVerifiedDateID, LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID)) -- the date when all four funded criteria were first simultaneously satisfied. Set once via WHERE FirstNewFundedDate IS NULL, never overwritten. Source: Function_Population_First_Time_Funded. (Tier 1)';
+ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastNewFundedDate COMMENT 'Most recent date the customer held funded status. COALESCE of yesterday''s Function_Population_Funded result and MAX(Date) from BI_DB_DDR_Customer_Daily_Status WHERE IsFunded=1. Updated daily. Source: Function_Population_Funded + DDR daily status. (Tier 1)';
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN IsAirDropBefore COMMENT 'Whether customer received a crypto airdrop in the last 30 days AND has deposited. 1 = received airdrop. From Fact_CustomerAction (ActionTypeID=1, IsAirDrop=1, InstrumentTypeID=5). (Tier 2 - SP code, Fact_CustomerAction)';
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN SignedW8Date COMMENT '[UNVERIFIED] Date the customer signed the W-8BEN tax form (for non-US customers trading US securities). Not populated by current SP (section disabled). (Tier 4 - column name inference)';
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastCashoutDate COMMENT 'Most recent withdrawal/cashout date. From Fact_CustomerAction where ActionTypeID=8 (MAX). (Tier 2 - SP code, Fact_CustomerAction)';
@@ -311,9 +311,8 @@ ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COL
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastCashoutDate SET TAGS ('pii' = 'none');
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastPublishedPostDate SET TAGS ('pii' = 'none');
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastActionDateForLifeStage SET TAGS ('pii' = 'none');
-
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 15:49:05 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 1
+-- Timestamp: 2026-04-16 08:46:56 UTC
+-- TVF DDR enrichment deploy
 -- Statements: 280/280 succeeded
 -- ====================

@@ -68,8 +68,8 @@ PHASE GATE CHECK — {ObjectName}:
   [x] P9 SP-logic [x] P9B ETL  [x] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 OUTPUT CHECK — {ObjectName}:
-  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (stub OK for `_Not_Migrated` functions)
-  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS (or [-] No UC target)
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists
+  [-] .alter.sql — deferred to /generate-alter-dwh
 ```
 
 For simple-dictionary fast-path, unchecked boxes are marked `[-]` (skipped by fast-path):
@@ -80,8 +80,8 @@ PHASE GATE CHECK — {ObjectName} [SIMPLE-DICT]:
   [-] P9 SP-logic [-] P9B ETL  [-] P10 Jira  [x] P10A Upstream  [x] P10B Lineage
   → Ready for P11
 OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
-  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists   [x] .alter.sql exists (stub OK for `_Not_Migrated` functions)
-  [x] ALTER COLUMN CHECK: wiki={N} alter={N} — PASS (or [-] No UC target)
+  [x] .lineage.md exists   [x] .md exists   [x] .review-needed.md exists
+  [-] .alter.sql — deferred to /generate-alter-dwh
 ```
 
 **Phase 11 MUST refuse to generate if any `[ ]` (unchecked, non-skipped) box remains.**
@@ -89,20 +89,21 @@ OUTPUT CHECK — {ObjectName} [SIMPLE-DICT]:
 ## Hard Enforcement Reminders
 
 - **⛔ ONE BATCH PER SESSION**: After end-of-batch banner → STOP. Do NOT start the next batch. New session required.
+- **⛔ BATCH SIZE**: DWH_dbo=8, BI_DB_dbo=4, Dealing/EXW/eMoney=6, default=5. DDR tables (100+ cols) count as 3 slots — may need solo batch. See `batch-orchestration.mdc` for weighted sizing.
 - **⛔ TIER SUFFIX ON EVERY DESCRIPTION (Rule 19)**: Every column description MUST end with `(Tier N — source.table)`. This suffix is written verbatim to Unity Catalog by Phase 11W. No exceptions.
 - **⛔ LINEAGE BEFORE DOCS**: Write `.lineage.md` BEFORE `.md`. Phase 11 READS the lineage file to assign tiers. See `GATE-lineage-contract.mdc`.
-- **⛔ FOUR FILES PER OBJECT — ALL MANDATORY, WRITE ORDER IS SACRED**: Phase 11 produces exactly FOUR files per object. Write them in THIS order:
+- **⛔ THREE FILES PER OBJECT IN WIKI BUILD, WRITE ORDER IS SACRED**: Phase 11 in wiki-only mode produces exactly THREE files per object. Write them in THIS order:
   1. `{ObjectName}.lineage.md` ← **LINEAGE** (column-level source mapping from Phase 10B). Written FIRST because the wiki reads it.
   2. `{ObjectName}.md` ← **THE WIKI** (full 8-section template, 100+ lines). This is the primary artifact.
   3. `{ObjectName}.review-needed.md` ← **SIDECAR** (Tier 4 items, questions, reviewer corrections). This is NOT the wiki. It is a lightweight review checklist.
-  4. `{ObjectName}.alter.sql` ← **ALTER SCRIPT** (UC table comment + column comments + tags). Every column in the wiki Elements table MUST have a corresponding ALTER COLUMN statement. For dual UC targets (masked + PII), duplicate all ALTER COLUMN statements for both tables. **Exception**: If the object has no UC target (UC Target = `_Not_Migrated` or no generic pipeline mapping exists), the `.alter.sql` file is NOT required — skip it and note "No UC target" in the output check. **`ALTER TABLE` target** = `main.{uc_table}` from mapping or live UC only — never wiki prose (no spaces in the name). See `11w-write-objects.mdc` §4g.
-  **Do NOT proceed to the next object until all required files exist on disk.** A missing file (other than `.alter.sql` when no UC target) is a HARD FAIL for the object. The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.
-- **⛔ ALTER COLUMN COUNT MUST MATCH WIKI COLUMN COUNT**: The number of ALTER COLUMN statements per UC target in `.alter.sql` MUST equal the number of element rows in the wiki `.md` file. If the wiki documents 47 columns, the ALTER file must have exactly 47 ALTER COLUMN statements per UC target table. A mismatch is a HARD FAIL — fix before proceeding. Count both sides and emit: `ALTER COLUMN CHECK: wiki={N} alter={M} — {PASS/FAIL}`.
-- **⛔ ALTER COLUMN NAMES MUST MATCH WIKI ELEMENT NAMES**: Count-only matching is NOT sufficient. Every ALTER COLUMN name (after stripping backticks and lowercasing) must match a wiki Element Name (lowercased), and every wiki element must have a matching ALTER COLUMN. A count-match-but-name-mismatch is a HARD FAIL — descriptions would land on the wrong UC column. Emit: `ALTER NAME PARITY: {N} matched, {M} wiki-only, {K} alter-only — PASS/FAIL`. Run `python tools/audit_wiki_alter_comment_parity.py` to validate.
+  **ALTER scripts (`.alter.sql`) are generated SEPARATELY** via `/generate-alter-dwh` after wiki quality is reviewed. Do NOT generate `.alter.sql` during wiki build.
+  **Do NOT proceed to the next object until all 3 files exist on disk.** A missing file is a HARD FAIL for the object. The `.md` file is the wiki. The `.review-needed.md` is the sidecar. Do NOT put wiki content in the sidecar. Do NOT skip the `.md` file. If you find yourself writing the Elements table into `.review-needed.md`, you are writing to the WRONG file — STOP and write to `.md` first.
+- **⛔ ALTER COLUMN PARITY (enforced at ALTER generation time, not wiki build)**: When `.alter.sql` exists (created by `/generate-alter-dwh`), the number of ALTER COLUMN statements per UC target MUST equal the number of element rows in the wiki. Column names must also match. Run `python tools/audit_wiki_alter_comment_parity.py` to validate. This check is deferred — wiki build does NOT produce `.alter.sql`.
 - **⛔ UTF-8 FILE ENCODING ON ALL WRITES**: Every file write (`.md`, `.review-needed.md`, `.lineage.md`, `.alter.sql`) MUST use explicit `encoding="utf-8"`. Never rely on system default encoding. Python: `open(path, "w", encoding="utf-8")`. The sanitizer is a safety net, not a substitute for correct encoding at write time.
 - **⛔ THREE VALIDATIONS**: After each wiki doc, run `validate-wiki.ps1` (structural **and** wiki-vs-ALTER COMMENT parity when `.alter.sql` exists), then `validate-tier1-coverage.ps1` (semantic). All must pass before proceeding. Parity is enforced by `tools/audit_wiki_alter_comment_parity.py` (same encoding as `merge_wiki_column_comments_into_alter.py`).
 - **⛔ BATCH LOOP PARITY**: `run-dwh-wiki-batch-loop.ps1` / `.sh` runs `python tools/audit_wiki_alter_comment_parity.py --under <SchemaName>` after **every** iteration. On failure it writes `knowledge/synapse/Wiki/<Schema>/_parity_gate_last_run.txt` (and `_parity_last_report.json`) and **does not stop** — the next iteration should fix parity before new work. On PASS, both files reflect success.
 - **⛔ PHASE 9 IS HARD**: Read the SP code. Trace column assignments to source tables. The SP tells you WHERE each column comes from — you don't need to guess. If Phase 9 is skipped, Phase 10B lineage will be wrong, Phase 11 tiers will be wrong, and the semantic validation will fail.
+- **⛔ SYNAPSE MCP IS MANDATORY**: Phase 2 (sampling) and Phase 3 (distribution) require a live Synapse MCP connection. If MCP is unavailable, emit `PHASE 2 GATE: FAILED — MCP unavailable` and **STOP THE BATCH**. Do NOT proceed with code-only documentation. Do NOT mark phases as `(MCP-unavail)` and continue. A wiki without data evidence is incomplete and will receive a FAIL score from the adversarial evaluator. The loop script pre-validates MCP connectivity before starting — if you reach Phase 2 and MCP is down, something broke mid-batch.
 - **⛔ CHECKPOINT MARKERS ARE NOT OPTIONAL**: Every phase MUST emit its `PHASE {N} CHECKPOINT: PASS/FAIL` marker at completion. Every HARD phase must show PASS before the next phase begins. The GATE verifies the full checkpoint chain before Phase 11 runs. A missing checkpoint is treated the same as a failed checkpoint.
 - **⛔ GOLDEN REFERENCE**: Read `GOLDEN-REFERENCE.mdc` once per batch. Your output must match the golden skeleton shape. Dictionary columns with <=15 values get inline key=value pairs.
 - **⛔ VIEWS ARE EQUAL CITIZENS — EVERY COLUMN GETS ITS OWN ROW**: A view wiki MUST list every column individually in the Elements table — no `2+ | All X columns | a.* | See X.md` shortcuts. If the view does `SELECT a.* FROM Fact_X a`, expand all columns from `Fact_X`'s wiki verbatim. Pass-through columns copy the base table description exactly (same tier, same source). View-added columns (JOINs, computed) get their own descriptions. A view with 130 inherited columns has 130+ Element rows.

@@ -19,9 +19,23 @@ This rule file defines how schema-level mass documentation is planned, executed,
 ## Configuration Constants
 
 ```
-DEFAULT_BATCH_SIZE       = 10      # Objects per wiki batch. Lowered from 25 to prevent context degradation on later objects.
+DEFAULT_BATCH_SIZE       = 5       # Objects per wiki batch. DWH objects are 3-10x heavier than production objects.
 STALENESS_THRESHOLD_DAYS = 30      # Skip objects documented within this many days (FR-008).
 ```
+
+**Schema-specific overrides** (see Batch Sizing Guidelines below):
+
+```
+BATCH_SIZE_OVERRIDES = {
+    "DWH_dbo":     8,      # mixed: simple dims + heavy facts, average out at 8
+    "BI_DB_dbo":   4,      # wide DDR tables, function reads, multi-source External tables
+    "Dealing_dbo": 6,      # medium complexity
+    "EXW_dbo":     6,      # medium complexity
+    "eMoney_dbo":  6,      # medium complexity
+}
+```
+
+Use the schema override if the target schema is listed; otherwise use `DEFAULT_BATCH_SIZE`.
 
 For V1, these are edited in this rule file directly. Command-argument overrides are deferred to a future iteration.
 
@@ -163,9 +177,11 @@ Dependencies are classified by schema to determine blocking behavior:
    **Cycle handling**: If a cycle is detected (object encountered while already being resolved), break the cycle by adding the object without waiting for the cyclic dependency. Log a warning: `CYCLE DETECTED: {A} ↔ {B} — breaking cycle, documenting {A} first`.
 
 6. **Segment the queue into batches**: Walk through the queue sequentially:
-   - Fill each batch up to `DEFAULT_BATCH_SIZE`.
+   - Determine the batch capacity from `BATCH_SIZE_OVERRIDES[{Schema}]` or `DEFAULT_BATCH_SIZE`.
+   - Fill each batch using **weighted object sizing**: sum object weights (see Batch Sizing Guidelines) against the batch capacity. A simple dim (weight 0.5) takes half a slot; a DDR table (weight 3) takes three slots.
    - **Dependency integrity**: Never place an object in a batch unless ALL of its intra-schema dependencies are either (a) already `Done`/`Skipped` in `_index.md`, or (b) assigned to an earlier batch in this plan. If a batch boundary would split an object from its last unresolved dependency, pull the object into the next batch.
-   - **Large dependency chains**: If a single dependency chain exceeds `DEFAULT_BATCH_SIZE`, split across multiple batches — the chain's leaf dependencies go first, the chain's root (the high-priority object) goes in a later batch.
+   - **Large dependency chains**: If a single dependency chain exceeds the batch capacity, split across multiple batches — the chain's leaf dependencies go first, the chain's root (the high-priority object) goes in a later batch.
+   - **Solo batches**: If a single object's weight equals or exceeds the batch capacity (e.g., a DDR table with 170 cols in BI_DB_dbo), give it a solo batch.
 
 7. **Assign batch numbers**: Number batches sequentially starting from the next batch number after the last completed batch (from `_index.md`).
 
@@ -191,16 +207,39 @@ Dependencies are classified by schema to determine blocking behavior:
 
 ### Batch Sizing Guidelines (Research R2)
 
-| Object type | Wiki Build (build-wiki-dwh) | Deployment (write-objects-dwh) |
-|-------------|---------------------------|-------------------------------|
-| Tables (dim ≤15 cols) | 10 | 25 |
-| Tables (medium 15-40 cols) | 8 | 25 |
-| Tables (large 40+ cols) | 5 | 25 |
-| Views | 10 | 25 |
-| Functions (TVF/scalar) | 10 | 25 |
-| Mixed (tables + views + functions) | 8 | 25 |
+DWH tables consume 3-10x more context than production OLTP tables due to wider columns, heavier ETL SPs, multi-source External table tracing, upstream wiki reads, and function analysis. Batch sizes are tuned to prevent quality degradation on later objects in the batch.
 
-Wiki build uses inline serial execution within the parent agent. No subagent dispatch. Deployment uses a separate batch size — governed by `deploy-index-management.mdc`, not this rule.
+**Per-schema batch sizes (Wiki Build):**
+
+| Schema | Batch Size | Rationale |
+|--------|-----------|-----------|
+| **DWH_dbo** | **8** | Mix of simple dims (5-15 cols) and heavy facts (30-80 cols). Simple dicts use fast-path so effective load is lower. |
+| **BI_DB_dbo** | **4** | Wide DDR tables (50-170 cols), function reads (5-10 per SP), multi-source External table tracing. Single DDR object can consume 80-120K tokens. |
+| **Dealing_dbo** | **6** | Medium complexity, moderate column counts. |
+| **EXW_dbo** | **6** | Medium complexity. |
+| **eMoney_dbo** | **6** | Medium complexity. |
+| **Default (unknown schema)** | **5** | Conservative default. |
+
+**Per-object-type modifiers (within a batch):**
+
+| Object type | Effective weight | Notes |
+|-------------|-----------------|-------|
+| Tables (dim ≤15 cols, simple-dict eligible) | 0.5x | Fast-path skips 6 phases |
+| Tables (medium 15-40 cols) | 1x | Standard weight |
+| Tables (large 40+ cols) | 2x | Count as 2 objects for batch capacity |
+| Tables (DDR 100+ cols with functions) | 3x | Count as 3 objects — may need a solo batch |
+| Views | 0.7x | No ETL SP, lighter phases |
+| Functions (TVF/scalar) | 0.5x | Code-only analysis |
+
+When a batch contains a mix of object types, sum their weights against the batch capacity. Example: BI_DB_dbo batch capacity = 4. A DDR table (weight 3) + a simple dim (weight 0.5) = 3.5 → fits. A DDR table (3) + a medium table (1) = 4 → fits at limit.
+
+**Deployment batch sizes** are separate — governed by `deploy-index-management.mdc`:
+
+| Deployment type | Batch Size |
+|----------------|-----------|
+| ALTER scripts (write-objects-dwh) | 25 |
+
+Wiki build uses inline serial execution within the parent agent. No subagent dispatch.
 
 > **Important:** Tables, Views, and Functions are documentation targets — all are tracked in `_index.md` and queued for batch processing. Stored Procedures are **not** documentation targets; they serve as analysis inputs during Phases 8, 9, and 9B — their code is read to understand ETL logic, transformation rules, and lineage for the tables/views they populate.
 >

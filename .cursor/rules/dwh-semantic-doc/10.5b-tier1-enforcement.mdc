@@ -25,43 +25,60 @@ alwaysApply: false
 
 The DWH ETL doesn't always pull from the primary source table directly. Data flows
 through views, staging views, and history tables that ADD columns not present in the
-base table. You MUST search ALL of these.
+base table. You MUST search ALL of these — across ALL upstream repos, not just DB_Schema.
+
+### Step 0: Load the Routing File
+
+```
+Read: knowledge/synapse/Wiki/_upstream_wiki_routing.json
+```
+
+This file maps every database with wiki documentation to its repo path. Use it to
+determine WHERE to search. If the file doesn't exist, run `python tools/scan_upstream_wikis.py`.
 
 ### Search Order (mandatory, in this sequence):
 
 ```
 For each DWH column without a Tier 1 match:
 
-1. Primary source table wiki
-   Path: DB_Schema/etoro/Wiki/{Schema}/Tables/{Schema}.{Table}.md
+1. Primary source table wiki (in the CORRECT upstream repo)
+   Use routing file: upstream_databases[{database_name}] → repo_path + wiki_path
+   Path: {repo_path}/{wiki_path}/{Schema}/Tables/{Schema}.{Table}.md
+
+   Examples:
+   - etoro.Trade.PositionTbl → DB_Schema/etoro/Wiki/Trade/Tables/Trade.PositionTbl.md
+   - fiktivo.AffiliateCommission.CreditCommission → ExperianceDBs/fiktivo/Wiki/AffiliateCommission/Tables/...
+   - WalletDB.Wallet.CryptoPosition → CryptoDBs/WalletDB/Wiki/Wallet/Tables/...
 
 2. Staging views (the view the Generic Pipeline actually exports)
-   Path: DB_Schema/etoro/Wiki/{Schema}/Views/{Schema}.{ViewName}.md
-   Common: Trade.OpenPositionEndOfDay, Trade.Position, History.ClosePositionEndOfDay
-   These add computed columns (PnL, fees, conversion rates) on top of the base table.
+   Path: {repo_path}/{wiki_path}/{Schema}/Views/{Schema}.{ViewName}.md
+   Check if the pipeline mapping table_name ends in "VW" — if so, the view wiki exists.
 
 3. Related views and functions referenced by the ETL SP
-   Grep the writer SP for FROM/JOIN references, then check if those objects have wikis.
+   Grep the writer SP for FROM/JOIN references, then check if those objects have wikis
+   in the CORRECT upstream repo (use routing file to resolve).
 
 4. History schema equivalents
-   Path: DB_Schema/etoro/Wiki/History/Tables/History.{Table}.md
+   Path: {repo_path}/{wiki_path}/History/Tables/History.{Table}.md
    Closed positions often come from History tables with different column sets.
 
 5. Dictionary/lookup tables
    Some columns are join-enriched from Dictionary tables that DO have wikis.
+   Check {repo_path}/{wiki_path}/Dictionary/ in the source repo.
 ```
 
 ### The Search Must Be GREEDY
 
 For ANY DWH column that doesn't match the primary table by name:
-- Grep `DB_Schema/etoro/Wiki/` recursively for the column name
+- Identify the source database from the routing file
+- Grep `{repo_path}/{wiki_path}/` recursively for the column name
 - Check Tables, Views, Functions, and Stored Procedures wiki folders
-- A match in ANY documented object is a potential Tier 1 source
+- A match in ANY documented object across ANY upstream repo is a potential Tier 1 source
 
-**FAILURE MODE TO AVOID**: Searching only Trade.PositionTbl and missing that
-`PnLInDollars` is documented in `Trade.OpenPositionEndOfDay` (the staging view).
-Or missing that `CommissionOnClose` exists in PositionTbl but gets adjusted by
-the DWH SP — still Tier 1, but needs a DWH note.
+**FAILURE MODE TO AVOID**: Searching only the primary table and missing that
+the column is documented in a view, a different schema, or a completely different
+upstream repo (e.g., missing that `AffiliateTypeID` is documented in
+`ExperianceDBs/fiktivo/Wiki/AffiliateCommission/`).
 
 ## 2. TIER ASSIGNMENT RULES — THE DECISION TREE
 
@@ -77,8 +94,11 @@ Q1: Does the column name (or a known rename) appear in ANY upstream
 Q2: Does the DWH SP transform this column's VALUE beyond passthrough?
     (renames don't count — only computation, CASE logic, JOINs, or adjustments)
     
-    NO  → Tier 1 verbatim. Copy the upstream description exactly.
-          Tag: (Tier 1 — {Schema}.{Table or View})
+    NO  → Tier 1 verbatim. COPY-PASTE the upstream description AS-IS.
+          Do NOT rephrase. Do NOT summarize. Do NOT "improve."
+          Only strip snapshot stats (percentages, row counts).
+          Only addition allowed: "Passthrough from {relay table}." at end.
+          Tag with ORIGIN: (Tier 1 — {Schema}.{Table or View})
     
     YES → Q3
 
@@ -122,6 +142,87 @@ Q3: Is the upstream description still the BEST starting point for understanding
 - InitForex_Ask in Dim_Position — from PriceLog_History_CurrencyPrice_Active (no wiki)
 - Description: "Raw ask price at open from price book. (Tier 2 — SP_Dim_Position_DL_To_Synapse)"
 
+## 2b. ⛔ UPSTREAM INHERITANCE — HARD ENFORCED, NON-NEGOTIABLE
+
+**WHY THIS EXISTS**: Agents read the upstream wiki, acknowledge the description, then
+**paraphrase** it into a shorter, vaguer version that loses critical details. This is
+the #1 quality bug across all batches and it stops NOW.
+
+### The Rule (simple enough for a 5-year-old)
+
+**If a column has no transformation (passthrough or rename), bring the upstream wiki
+description AS-IS. Do not touch it. Do not rephrase it. Do not "improve" it. Do not
+summarize it. COPY. PASTE. DONE.**
+
+The ONLY modifications allowed on a Tier 1 passthrough description:
+
+1. **Strip snapshot-specific statistics** — row counts (`(94%)`, `698K rows`), percentages,
+   date ranges. These are stale tomorrow and refer to the source table, not this one.
+2. **Add DWH relay context** — you MAY append "Passthrough from Dim_Customer." or similar
+   to note which intermediate table this was inherited through. This is optional but useful.
+3. **Preserve the tier tag origin** — if Dim_Customer says `(Tier 1 — BackOffice.Customer)`,
+   you say `(Tier 1 — BackOffice.Customer)`. The origin is BackOffice.Customer, not
+   Dim_Customer, not SP_Whatever. The relay is invisible.
+
+**NOTHING ELSE CHANGES.** Not one word. Not one phrase. Not one vendor name. Not one
+NULL semantic. Not one FK target. Not one value mapping. If the upstream says "Score or
+decision from automated identity verification vendors (Onfido, Au10tix). NULL if not
+yet processed." — that is EXACTLY what you write. You do not write "identity verification
+outcome." You do not drop "Onfido, Au10tix." You do not drop "NULL if not yet processed."
+
+### The Mechanical Process
+
+```
+1. Read the upstream wiki column description (the FULL text between pipes in the Elements table)
+2. Copy it into your clipboard / working memory
+3. Remove any (NN%) or (NNN,NNN rows) patterns — these are snapshot stats
+4. Paste it as-is into your Elements table
+5. Append the tier tag with the ORIGIN source: (Tier 1 — {original production source})
+6. Optionally append "Passthrough from {relay table}." if helpful
+7. DONE. Move to next column. Do NOT re-read what you wrote and "polish" it.
+```
+
+Step 7 is critical. The paraphrasing bug happens because the agent writes the description,
+re-reads it, thinks "I can say this better," and rewrites it. NO. You cannot say it better.
+The upstream wiki already went through the full code-is-king pipeline. Your job is to
+be a photocopier, not an editor.
+
+### Failure Example (REAL — from batch 5)
+
+**WRONG** (paraphrased, lost details, wrong tier):
+```
+EvMatchStatus — Electronic verification match status (identity verification outcome).
+From Dim_Customer. (Tier 2 — SP_EXW_DimUser_Enriched via Dim_Customer)
+```
+
+**RIGHT** (copied from upstream, correct tier):
+```
+EvMatchStatus — Electronic verification match result. Score or decision from automated
+identity verification vendors (Onfido, Au10tix). NULL if not yet processed. FK to
+Dim_EvMatchStatus. (Tier 1 — BackOffice.Customer)
+```
+
+What went wrong: The agent read the upstream wiki, then wrote from memory instead of
+copying. It changed "match result" to "match status." It dropped "Onfido, Au10tix."
+It dropped "NULL if not yet processed." It dropped the FK target. It assigned Tier 2
+instead of Tier 1. It attributed to the SP instead of the origin. Every single one of
+these is a violation. The description should have been an exact copy with stats stripped.
+
+### Enforcement Gate
+
+After writing ALL Tier 1 descriptions, the agent MUST re-read the upstream wiki and
+produce a verification log:
+
+```
+T1 COPY VERIFICATION:
+  EvMatchStatus: upstream 47 words → wiki 47 words — IDENTICAL (stats stripped: none)
+  PlayerLevelID: upstream 31 words → wiki 29 words — IDENTICAL (stats stripped: "(94%)")
+  RegulationID: upstream 22 words → wiki 18 words — ⚠ MISMATCH — re-copy
+```
+
+If ANY column shows MISMATCH, re-copy from upstream before proceeding. Do NOT
+rationalize the difference. Do NOT explain why your version is "equivalent." Re-copy.
+
 ## 3. POST-WRITE SEMANTIC VALIDATION
 
 After writing a wiki file, perform this check BEFORE marking the object as done:
@@ -156,18 +257,20 @@ For each column tagged Tier 1:
 
 These DWH tables have MULTIPLE upstream sources. Search ALL of them:
 
-| DWH Table | Primary Source | Also Search |
-|-----------|---------------|-------------|
-| Dim_Position | Trade.PositionTbl | Trade.OpenPositionEndOfDay, History.ClosePositionEndOfDay, Trade.Position, Trade.PositionTreeInfo |
-| Dim_Customer | Customer.CustomerStatic | BackOffice.Customer, Customer.Customer |
-| Fact_BillingWithdraw | Billing.Withdraw | Billing.WithdrawToFunding, Billing.Funding |
-| Fact_BillingDeposit | Billing.Deposit | Billing.Funding |
-| Dim_Mirror | Trade.Mirror | — |
-| Dim_Instrument | Trade.Instrument | — |
-| Fact_Guru_Copiers | — (check Trade.Mirror, BackOffice.Customer) | Trade.CopyRelationCloseActions |
+| DWH Table | Primary Source | Also Search | Upstream Repo |
+|-----------|---------------|-------------|---------------|
+| Dim_Position | Trade.PositionTbl | Trade.OpenPositionEndOfDay, History.ClosePositionEndOfDay, Trade.Position, Trade.PositionTreeInfo | DB_Schema (etoro) |
+| Dim_Customer | Customer.CustomerStatic | BackOffice.Customer, Customer.Customer | DB_Schema (etoro) |
+| Fact_BillingWithdraw | Billing.Withdraw | Billing.WithdrawToFunding, Billing.Funding | DB_Schema (etoro) |
+| Fact_BillingDeposit | Billing.Deposit | Billing.Funding | DB_Schema (etoro) |
+| Dim_Mirror | Trade.Mirror | — | DB_Schema (etoro) |
+| Dim_Instrument | Trade.Instrument | — | DB_Schema (etoro) |
+| Fact_Guru_Copiers | — (check Trade.Mirror, BackOffice.Customer) | Trade.CopyRelationCloseActions | DB_Schema (etoro) |
+| SP_AffiliateCOAbuse | fiktivo.AffiliateCommission.CreditCommission | AffiliateCommission.Credit, dbo.tblaff_Affiliates | ExperianceDBs (fiktivo) |
 
-This table is NOT exhaustive. For any DWH table not listed, always run the exhaustive
-search from Section 1.
+This table is NOT exhaustive. For any DWH table not listed, always use the routing
+file (`_upstream_wiki_routing.json`) to discover which repo holds the upstream wiki.
+The routing file covers 14 databases across 6 repos — not just DB_Schema/etoro.
 
 ## 5. RENAME MAPPING — COMMON DWH COLUMN RENAMES
 

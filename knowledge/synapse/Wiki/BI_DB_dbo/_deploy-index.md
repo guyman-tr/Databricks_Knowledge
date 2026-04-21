@@ -4,12 +4,12 @@
 database: Synapse DWH
 total_deployable: 71
 generated: 0
-deployed: 23
-failed: 1
+deployed: 24
+failed: 0
 stub_only: 47
 last_generate_batch: 0
 last_deploy_batch: 1
-last_updated: "2026-03-30"
+last_updated: "2026-04-12"
 
 ## Schema ALTER + Deployment Progress
 
@@ -19,13 +19,13 @@ last_updated: "2026-03-30"
 | **Total deployable**               | 71  |
 | **Pending (no .alter.sql)**        | 0          |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 23         |
+| **Deployed (UC)**                  | 24         |
 | **Stub-only (no UC)**              | 47   |
-| **Failed**                         | 1         |
+| **Failed**                         | 0         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
 | **Last deploy batch**              | 1          |
-| **Last updated**                   | 2026-03-30       |
+| **Last updated**                   | 2026-04-12       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed in this index pass. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
 
@@ -50,7 +50,7 @@ last_updated: "2026-03-30"
 | [BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status](Tables/BI_DB_DDR_Customer_Periodic_Status.md)                                 | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_DDR_Fact_AUM](Tables/BI_DB_DDR_Fact_AUM.md)                                                                 | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms](Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md)                                     | Deployed (Batch 1) — 2026-03-30|
-| [BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md)                   | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_reven|
+| [BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions](Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md)                   | Deployed (re-apply 2026-04-12) — table was dropped+recreated; 56 stmts re-applied (1 TBLPROPERTIES + 1 SET TAGS + 27 COMMENT + 27 PII SET TAGS) |
 | [BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts](Tables/BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.md)                 | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_DepositWithdrawFee](Tables/BI_DB_DepositWithdrawFee.md)                                                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_InterestDaily](Tables/BI_DB_InterestDaily.md)                                                               | Deployed (Batch 1) — 2026-03-30|

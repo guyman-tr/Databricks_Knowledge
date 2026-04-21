@@ -179,8 +179,8 @@ _Pending — resolved during write-objects._
 | 3 | RealCID | int | YES | Customer identifier. Distribution key. From revenue functions (CID renamed to RealCID for some). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
 | 4 | ActionTypeID | int | YES | Trading action type. From `Function_Revenue_FullCommissions/Commissions.ActionTypeID` for trading fees; `ISNULL(...,-1)` — sentinel -1 for non-trading metrics. Values: 1=Open, 39=Close. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
 | 5 | ActionType | varchar(50) | YES | Action or revenue stream label. `Dim_ActionType.Name` for commissions; literal string for others ('Rollover', 'SDRT', 'CashoutFeeExclRedeem', etc.). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 6 | InstrumentTypeID | int | YES | Instrument asset class. From revenue functions. `ISNULL(...,-1)` — sentinel -1 for account-level fees (CashoutFee, ConversionFee, DormantFee, InterestFee). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 7 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
+| 6 | InstrumentTypeID | int | YES | **Instrument asset class ID.** Values: 1=Stocks, 2=Currencies, 3=Commodities, 4=Indices, 5=Crypto, 6=ETFs. `ISNULL(...,-1)` — sentinel -1 for account-level fees (CashoutFee, ConversionFee, DormantFee, InterestFee have no instrument). From Function_Revenue_* TVFs. (Tier 1 — Function_Revenue_FullCommissions) |
+| 7 | IsSettled | int | YES | **1 = real/settled asset** (stocks, ETFs, crypto with actual ownership; eligible for dividends and share lending, no overnight rollover). **0 = CFD** (derivative without ownership; subject to spread and rollover fees). **Sentinel -1** = not applicable (account-level fees: DormantFee, ConversionFee, CashoutFee have no instrument). From Function_Revenue_* TVFs via Dim_Instrument.IsSettled. (Tier 1) |
 | 8 | IsCopy | int | YES | Copy-trade flag. `CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END`; `ISNULL(...,-1)`. C2F forced to -1. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
 | 9 | Metric | varchar(50) | YES | Revenue stream identifier. 18 distinct values: 'FullCommission', 'Commission', 'RollOverFee', 'Dividends', 'SDRT', 'TicketFee', 'TicketFeeByPercent', 'CashoutFeeExclRedeem', 'ConversionFee', 'DormantFee', 'InterestFee', 'TransferCoinFee', 'AdminFee', 'SpotPriceAdjustment', 'ShareLending', 'CryptoToFiatFee', 'StakingLagOneMonth', 'Options_PFOF'. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
 | 10 | Amount | decimal(16,6) | YES | Revenue amount in USD. `SUM(fee_column)` aggregated per CID × Metric × flags group. Positive = revenue, negative possible for dividends paid out. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
@@ -321,5 +321,5 @@ No Atlassian sources found for this object.
 ---
 
 *Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
-*Tiers: 0 T1, 27 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
+*Tiers: 2 T1, 25 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
 *Object: BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions | Type: Table | Production Source: 16+ Function_Revenue_* TVFs + Dim_Revenue_Metrics*

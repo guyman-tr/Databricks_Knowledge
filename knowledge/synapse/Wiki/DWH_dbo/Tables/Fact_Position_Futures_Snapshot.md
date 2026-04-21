@@ -115,7 +115,7 @@ _Pending — resolved during write-objects._
 | 14 | InitForexRate | decimal(16,8) | YES | Opening price / forex rate at position open. Used in mark-to-market PnL calculation. (Tier 2 — Dim_Position) |
 | 15 | EndForexRate | decimal(16,8) | YES | Closing price / forex rate at position close. NULL for open positions. (Tier 2 — Dim_Position) |
 | 16 | IsPartialCloseParent | int | YES | 1 = position has been partially closed (some lots removed). 0 = full position. Reconstructed from changelog. (Tier 2 — SP_Fact_Position_Futures_Snapshot) |
-| 17 | IsPartialCloseChild | int | YES | 1 = this is a child position created by a partial close. 0 = original or parent position. (Tier 2 — SP_Fact_Position_Futures_Snapshot) |
+| 17 | IsPartialCloseChild | int | YES | 1=this position is the child (remainder) of a partial close event. Generally filter out child positions from most metrics on OPEN when aggregating, but not all (e.g., volume is already pro-rated so excluding these is wrong). NEVER filter these out on CLOSE. (Tier 5 — domain expert, SP_Fact_Position_Futures_Snapshot) |
 | 18 | IsBuy | bit | YES | Direction: 1 = long (buy), 0 = short (sell). (Tier 2 — Dim_Position) |
 | 19 | ProviderID | int | YES | Liquidity provider for this futures instrument. From Dim_Instrument_Snapshot. (Tier 2 — Dim_Instrument_Snapshot) |
 | 20 | Multiplier | decimal(38,18) | YES | Contract size multiplier. From Dim_Instrument_Snapshot. Used in PnL: LotCount × Multiplier × Price. (Tier 2 — Dim_Instrument_Snapshot) |

@@ -69,6 +69,55 @@ Search the cache for all rows where `table_name` starts with that pattern. Class
 | Rows in other schemas (e.g., `bi_output`) | **Non-standard** | Use the matched `catalog.schema.table` | — |
 | 0 rows | **Not in UC** | — (mark as "No UC table exists") | — |
 
+### 4b-VP. View Proxy Fallback (2026-04-12)
+
+**Applies when**: Per-Object Matching (§4b) returns 0 rows — the Synapse base table has no direct UC entry.
+
+Some Synapse fact tables (e.g. `Fact_SnapshotEquity`) are never exported directly to UC. Instead, the Generic Pipeline exports a view wrapping the base table (e.g. `V_Fact_SnapshotEquity`) as the UC Gold object. The base table's wiki contains the real column descriptions, but the UC target is the view's entry.
+
+#### VP Steps (run in order after a 0-row match):
+
+1. **Scan the Generic Pipeline mapping** (`knowledge/synapse/Wiki/_generic_pipeline_mapping.json`) for all entries in the same Synapse schema where `table_name` starts with `V_`, `v_`, `VW_`, or `VU_` (view name prefixes).
+
+2. **For each candidate view**, read its DDL from the DataPlatform repo at:
+   `SynapseSQLPool1/sql_dp_prod_we/{Schema}/Views/{Schema}.{ViewName}.sql`
+
+3. **Confirm proxy relationship**: Check if the DDL selects all columns from the current base table — i.e., contains `FROM {Schema}.{BaseTableName}` as its primary FROM clause AND uses `{alias}.*` or selects all columns in the SELECT list (meaning all base table columns flow through into the view output).
+
+4. **Confirm UC existence**: The view's `uc_table` field in the mapping must be non-empty AND confirmed to exist in the bulk UC cache from §4a. If it is absent from UC, this proxy path is also blocked → go to step 6.
+
+5. **If proxy confirmed and UC-present**: Add that view's UC path (`main.{schema}.{uc_table}`) to the **downstream propagation scope** for this base table. Do NOT use it as the primary `ALTER TABLE` target in the main `.alter.sql`.
+
+   Record in the `.alter.sql` header:
+   ```sql
+   -- UC Target: None (no direct pipeline entry)
+   -- View Proxy: main.{view_uc_table} (V_{BaseName} selects {alias}.* from this base table)
+   -- Downstream: descriptions propagated via {BaseName}.downstream.alter.sql
+   ```
+
+   The main `.alter.sql` becomes a **comment-only stub** (no executable ALTERs). Column descriptions from the base table wiki are written to `.downstream.alter.sql` targeting the proxy view's UC path.
+
+6. **If primary proxy UC-absent — fall through to sibling views**: When the expected primary proxy view (e.g. `V_Fact_SnapshotEquity`) is absent from UC, **do not immediately stub**. Instead, search the bulk UC cache for other entries where `table_name` contains the base table name fragment (lowercased, underscore-normalized). For example, if `V_Fact_SnapshotEquity` is absent, search for `%fact_snapshotequity%` and check what IS present (e.g. `gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid`). Validate each candidate:
+   - Its DDL selects columns from the same base table (confirmed via the DataPlatform repo)
+   - It exists in the bulk UC cache
+   If one or more candidates are found, use them as downstream propagation targets — column descriptions go into those views' `.alter.sql` files (append section) or into `{BaseName}.downstream.alter.sql` targeting those UC paths. Record in the stub header which downstream targets were used.
+
+   **Only stub if NO downstream candidates exist at all.** A true stub means `0` UC targets of any kind — neither the primary proxy nor any sibling view — were found for the base table's columns.
+
+   Record `Deployed via downstream YYYY-MM-DD — {N} cols to {TargetViewName}` in `_deploy-index.md` (not `Stub only — not in UC`) when any downstream propagation succeeds.
+
+#### VP Stub Header Format:
+
+```sql
+-- =============================================================================
+-- STUB: {BaseTable} — no direct Unity Catalog entry.
+-- View Proxy Fallback applied (§4b-VP): {ProxyViewName} was the expected UC proxy,
+-- but {proxy_uc_path} does NOT exist in UC (confirmed {date} via system.information_schema.tables).
+-- No downstream.alter.sql generated — proxy target absent from UC.
+-- Deploy status: Stub only — not in UC
+-- =============================================================================
+```
+
 ### 4c. PII Masking Detection
 
 The Generic Pipeline exports tables with PII columns as TWO copies:
@@ -141,7 +190,8 @@ For PII Masked tables, also include:
    - **Repo fallback** (when Databricks MCP unavailable): `knowledge/synapse/Wiki/_generic_pipeline_mapping.json` — find the row where `database_name` matches the Synapse pool (e.g. `sql_dp_prod_we`), `schema_name` matches the Synapse schema (e.g. `DWH_dbo`), and `table_name` matches the Synapse object **or** the exported UC view/table that replaces it. Use the `uc_table` value exactly: emit `main.{uc_table}`.
 3. **Empty or missing `uc_table`**: Do **not** invent a name from naming conventions or wiki prose. Do **not** emit `ALTER TABLE` against a datalake path. Either skip `.alter.sql` for this object or emit a **comment-only** stub stating that UC mapping has no `uc_table` yet.
 4. **Never** use an unverified guess as the executable `ALTER TABLE` target. If the name was not resolved from UC or from `uc_table` in the JSON, there must be **no** executable ALTER against that string.
-5. **Post-generation check**: Run `python tools/audit_alter_uc_mapping.py` on new or changed `.alter.sql` files (structural pass). Use `--mapping` when validating against the static JSON allowlist. The same tool flags **bogus `ALTER COLUMN Tier N` lines** and **unquoted slash column names** (see §4h).
+5. **Table name pre-flight validation (2026-04-12)**: Before writing any `.alter.sql` file, validate that every `ALTER TABLE {name}` target matches `^[A-Za-z0-9_.]+$` (letters, digits, underscore, dots only — no spaces, slashes, hyphens, parentheses, or leading underscores from sentinel strings like `_Not found in generic pipeline mapping…`). If any target fails this check: (a) prefix every executable ALTER with `--` to comment it out, (b) add a `-- STUB: {reason}` header at the top of the file, and (c) record status `Stub only — not in UC` in `_deploy-index.md`. Sentinel strings from wiki prose (e.g. `_Not found in generic pipeline mapping - custom Billing pipeline_`) are the primary trigger for this rule — they must **never** be allowed into executable SQL.
+6. **Post-generation check**: Run `python tools/audit_alter_uc_mapping.py` on new or changed `.alter.sql` files (structural pass). Use `--mapping` when validating against the static JSON allowlist. The same tool flags **bogus `ALTER COLUMN Tier N` lines** and **unquoted slash column names** (see §4h).
 
 **Wiki vs SQL**: The wiki property table **may** use long prose in **UC Target** for analysts (export notes, generic_id, multiple paths). The `.alter.sql` file must use **only** the resolved `main.{uc_table}` (or second UC for PII) in `ALTER TABLE` — never copy the prose cell verbatim into SQL.
 
@@ -152,6 +202,7 @@ For PII Masked tables, also include:
 1. **Tier labels are not columns**: Descriptions end with `(Tier N - source)` inside the COMMENT string. **Never** add `ALTER COLUMN Tier 1` … `Tier 5` — those are not physical columns and break UC SQL parsers.
 2. **Special identifiers**: For column names containing `/`, spaces, or other non-identifier characters, use **backticks**: `` ALTER COLUMN `Organic/Paid` COMMENT '...' ``.
 3. **Batch generators** (`_batch_generate_lib.py`, merge tools): when expanding the Elements table into ALTER statements, bind **only** to column names from structure analysis / wiki Elements **Column** column — not to tier legend rows or markdown table headers.
+4. **No bulk wildcard ALTER COLUMN (2026-04-12)**: When a view wiki documents inherited columns with a prose annotation like "All {BaseTable} columns" or "See {BaseTable}.md" in the Elements section, the generator MUST NOT emit `ALTER COLUMN All {BaseTable} columns COMMENT '...'` or `ALTER COLUMN All {BaseTable} columns SET TAGS (...)`. That prose is a wiki annotation, not a SQL column identifier. Either enumerate physical columns by running `DESCRIBE TABLE {uc_target}` to get the actual column list, or omit the inherited columns entirely (they will be covered by that base table's own `.alter.sql` or the View Proxy mechanism — see §4b-VP).
 
 ---
 
@@ -346,6 +397,50 @@ ALTER TABLE {uc_catalog}.{uc_schema}.{uc_table} ALTER COLUMN {ColumnName} SET TA
 7. **Default** — if no match, use `none`
 
 Generate PII tags in a `-- ---- Column PII Tags ----` section after column comments, grouped together for readability.
+
+---
+
+## 11a-UP. Upstream Fill — Precursor to Downstream Propagation (MANDATORY ORDERING)
+
+**Rule**: Upstream column fill (§4b-VP propagation to view UC targets) **MUST complete and deploy before** downstream deep-lineage propagation (§11) runs from those same view UC targets.
+
+### Why ordering matters
+
+The deep-lineage BFS (§11, Step D2) reads **live UC column metadata** — it finds downstream objects by traversing `system.access.column_lineage` and then checks what column descriptions the source UC object currently has. If a view has no column descriptions yet (because upstream fill has not run), the deep-lineage traversal finds nothing to propagate downstream, silently producing an empty result.
+
+Correct execution order:
+```
+Step A — Upstream fill (§4b-VP):
+  base table wiki → view UC object
+  (deploys column descriptions to the view)
+
+Step B — Downstream propagation (§11):
+  view UC object → downstream UC artifacts of that view
+  (BFS traversal; reads descriptions now live in UC from Step A)
+```
+
+### Precondition check before running §11
+
+Before executing Step D1 (generate deep propagation script) for any view UC target, verify:
+
+1. The view's `.alter.sql` file contains a `-- Inherited from {BaseName}` section, OR
+2. The view's UC column metadata already has descriptions for its base-table-inherited columns (run `DESCRIBE TABLE {uc_target}` and check that non-view-only columns have comments)
+
+If condition 1 or 2 is NOT met, **run upstream fill first** (`tools/propagate_upstream_cols.py` or equivalent) before proceeding to §11.
+
+### Documenting the gap
+
+If upstream fill was skipped for a view (e.g., the base table has no wiki yet), document this explicitly:
+```sql
+-- UPSTREAM FILL SKIPPED: {BaseName} wiki not available at time of propagation.
+-- Deep-lineage downstream propagation will propagate incomplete metadata.
+-- Re-run propagate_upstream_cols.py after {BaseName}.md is generated.
+```
+
+Record the gap in `_deploy-index.md` as:
+```
+Deployed (partial) — upstream fill pending for {BaseName}; downstream propagation carries incomplete metadata
+```
 
 ---
 

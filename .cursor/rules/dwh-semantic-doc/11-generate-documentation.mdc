@@ -257,7 +257,19 @@ All four files are mandatory outputs. The `.lineage.md` file captures the produc
 
 1. **Use the query-brain template below** for ALL object types
 2. **Copy the template EXACTLY** -- do not change section names, numbering, or order
-3. **No environment-specific statistics** -- no row counts, percentages, date ranges
+3. **⛔ No table-level statistics in COLUMN descriptions — HARD ENFORCED** -- Column descriptions in the Elements table (Section 4) MUST NOT contain row counts, percentages, date ranges, or any snapshot-specific statistics. These numbers are stale tomorrow and waste context window for consumers. Examples of FORBIDDEN content in column descriptions:
+   - `1=Standard (94%)` — the 94% is a snapshot stat. Write `1=Standard` instead
+   - `698,747 rows (99.9%) have value=1` — row count, remove entirely
+   - `132 test accounts (0.02%)` — row count + percentage, remove
+   - `Top values: CySEC=7.39M, BVI=7.30M` — row counts per value, remove
+   - `NULL for 107,646 users (15.4%)` — replace with `NULL when {semantic reason}`
+   - `39,048 users (5.6%) are over their declared KYC limit (avg equity $46K vs avg limit $25.6K)` — move to Section 2 (Business Logic) if relevant, remove from column description
+   
+   **WHAT IS ALLOWED in column descriptions**: Dictionary value mappings (e.g., `0=Disabled, 1=Enabled`), FK references, computation formulas, NULL semantics (e.g., "NULL if not yet processed"), and business meaning. These are structural facts that don't change with time.
+   
+   **WHERE table stats belong**: Section 1 (Business Meaning) and Section 2 (Business Logic) may include row counts and distribution summaries at the TABLE level — these sections set context. Section 3 (Query Advisory) Gotchas may reference value distributions for analyst guidance. Column descriptions must be timeless.
+   
+   **When inheriting T1 descriptions from upstream wikis**: If the upstream wiki description contains percentages or row counts (e.g., `1=Standard (94%)`), strip the stats during inheritance. Copy the semantic content verbatim but remove snapshot-specific numbers. The upstream stats refer to the upstream table's distribution, which is doubly irrelevant in a downstream context
 4. **DO include lookup value mappings** -- these define the system
 5. **DO include query advisory** -- this is the core differentiator
 6. **Every `{PLACEHOLDER}` must be replaced** with real content
@@ -270,7 +282,7 @@ All four files are mandatory outputs. The `.lineage.md` file captures the produc
    
    **Views are equal citizens.** A view that does `SELECT a.* FROM TableX a` has the SAME number of Element rows as `TableX`. If `TableX` has 130 columns, the view wiki has 130+ Element rows (plus any view-added columns like `DateKey`). For pass-through/untransformed columns, copy the description verbatim from the base table's wiki (same description, same tier, same source attribution). This is easy -- the base table wiki already exists, just read it and copy each row. For transformed columns or view-added columns (JOINs, CASE expressions, computed columns), write a new description with the appropriate tier. The view documentation exists because the VIEW is the object mapped to UC, queries hit the view, and the AI assistant needs every column described to help analysts.
 9. **CODE IS KING** -- when sources conflict, the hierarchy from Constitution Section II is absolute: **Tier 5** (domain expert / glossary) > **Tier 1** (upstream wiki) > **Tier 2** (Synapse code from SSDT repo) > **Tier 2b** (DWH_Migration / BI_DB_Migration DDLs) > **Tier 3** (live data / sampling) > **Tier 3b** (DDL structure from SSDT repo) > **Tier 4-Atlassian** (Confluence/Jira — business meaning, not flagged `[UNVERIFIED]`) > **Tier 4-Inferred** (column name guessing — MUST flag `[UNVERIFIED]`). The upstream wiki has already gone through strict code-is-king analysis on production sources and is our authoritative starting point. Synapse code wins only for DWH-specific transformations and derived columns. DWH_Migration DDLs are authoritative for frozen dimensions unique to Synapse (e.g., Dim_AccountType). If Phase 2 sampling found 5 enum values but Confluence documents only 3, include all 5 and note the undocumented ones. Confluence provides business meaning and intent; upstream wiki and Synapse code/data provide truth.
-10. **VERBATIM UPSTREAM INHERITANCE** -- when a column exists in an upstream wiki, copy its description verbatim into the Elements table. Do not paraphrase, summarize, or rewrite. Only APPEND DWH-specific notes (prefixed with "DWH note:") if the DWH transforms that column differently. The upstream wiki's descriptions have already been validated through the full code-is-king pipeline — rewriting them introduces errors and loses context.
+10. **⛔ VERBATIM UPSTREAM INHERITANCE — HARD ENFORCED** -- when a column has no transformation (passthrough or rename) and an upstream wiki description exists, COPY-PASTE that description AS-IS into the Elements table. Do NOT rephrase, summarize, rewrite, or "improve" it. The ONLY modifications allowed: (a) strip snapshot-specific statistics like `(94%)` or `698K rows` — these are stale tomorrow, (b) optionally append "Passthrough from {relay table}." to note the DWH intermediate source. The upstream wiki's descriptions have already been validated through the full code-is-king pipeline. Your job is to be a photocopier, not an editor. If the upstream says "Score or decision from automated identity verification vendors (Onfido, Au10tix). NULL if not yet processed." — that is EXACTLY what you write. You do not drop vendor names. You do not drop NULL semantics. You do not change "match result" to "match status." See `10.5b-tier1-enforcement.mdc` Section 2b for the full enforcement protocol and the real failure example that triggered this rule.
 11. **CONFIDENCE TIERS** -- every element description must be traceable to a source tier from the unified hierarchy in Constitution Section II. For the Elements table Confidence Tier Legend, tiers are grouped by star rating (sub-tiers share the same star count):
 
 | Stars | Tiers | Tag | `[UNVERIFIED]`? |
@@ -747,9 +759,15 @@ After writing each object's output files, run this validation **before moving to
    - **`.lineage.md` file**: Must exist and contain the column lineage table.
 7. **Formula vagueness check (Rule 20) — SAFETY NET**: Grep the wiki file for EVERY phrase in the Rule 20 Forbidden Vague Phrases blacklist. Use case-insensitive search for: `specific reason IDs`, `specific fee type`, `fee types related to`, `specific conditions`, `certain conditions`, `deposit-like`, `cashout-related`, `PI-specific`, `affiliate-specific`, `dividend fee type`, `specific money movement`, `subset of compensation` (without following filter). If ANY match is found in a Tier 2 element description, the description is INVALID — go back to the SP code, extract the actual filter values, and rewrite. This check has the same enforcement weight as check 4 (tier suffix) — a single vague phrase blocks completion. **NOTE**: If the "Pre-Read: Computation Formulas" step was executed properly, this check should find ZERO matches. If it fires on more than 5 columns, the pre-read was skipped or incomplete — go back and redo the formula pre-pass for all failing columns in one batch, not one at a time.
 
+8. **⛔ Table stats in column descriptions check (Rule 3) — HARD ENFORCED**: Grep all Element descriptions for patterns that indicate snapshot-specific statistics:
+   - Row counts: any number followed by "rows" or "users" or "accounts" (e.g., `698,747 rows`, `132 test accounts`)
+   - Percentages in parentheses after values: `(94%)`, `(0.02%)`, `(60.8%)`
+   - Absolute counts after enum values: `CySEC=7.39M`
+   If ANY match is found in a column description, rewrite it by removing the stats and keeping only semantic content. Emit: `COLUMN STATS CHECK: {N} descriptions contain table-level stats — PASS/FAIL`.
+
 If any check fails, fix the doc immediately — do not move on and report partial success.
 
-8. **Golden reference shape check**: Compare against GOLDEN-REFERENCE.mdc Section B assertions. All HARD assertions must pass:
+9. **Golden reference shape check**: Compare against GOLDEN-REFERENCE.mdc Section B assertions. All HARD assertions must pass:
    - All 8 `## N.` sections present
    - Every Element description ends with `(Tier N — source)`
    - Elements table has 5 columns

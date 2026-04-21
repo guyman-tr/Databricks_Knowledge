@@ -84,16 +84,17 @@ The table was created in July 2024 by Guy Manova. Significant changelog includes
 
 ### 2.4 Account Segmentation
 
-**What**: Classifies each customer into mutually exclusive account activity segments.
+**What**: Classifies each customer into one of three mutually exclusive DDR engagement tiers using three TVFs. Top tier wins — evaluation is in priority order.
 
 **Columns Involved**: `ActiveTraded`, `BalanceOnlyAccount`, `Portfolio_Only`, `AccountActive`, `AccountInActive`
 
-**Rules**:
-- `ActiveTraded` = from `Function_Population_Active_Traders` (traded on the date)
-- `BalanceOnlyAccount` = from `Function_Population_Balance_Only_Accounts` (has balance, no trading)
-- `Portfolio_Only` = from `Function_Population_Portfolio_Only` (has portfolio, not actively trading)
-- `AccountActive` = ActiveTraded OR Portfolio_Only
-- `AccountInActive` = not in any of the three active segments
+**Tier hierarchy (mutually exclusive, priority top-to-bottom)**:
+1. **Active Traders** (`ActiveTraded = 1`): Customer explicitly opened a new position (ActionTypeID 1 or 39), opened or added capital to a copy mirror (ActionTypeID 15=OpenMirror, 17=AddMirror), or placed an Options trade on this date. Auto-created copy positions — positions auto-generated when a copied trader opens a position — do NOT qualify; only deliberate mirror opens/additions count. Sourced from `Function_Population_Active_Traders`.
+2. **Portfolio Only** (`Portfolio_Only = 1`): Customer holds at least one open TP position or Options position (via Apex buy-power data) but placed no qualifying trading actions in the period. The HODL segment — investors who traded historically and still hold. Includes copy positions (MirrorID>0) and CopyFund/Smart Portfolio (MirrorTypeID=4) positions. Explicitly excludes anyone in Active Traders. Sourced from `Function_Population_Portfolio_Only`.
+3. **Balance Only** (`BalanceOnlyAccount > 0`): Customer has positive equity on at least one platform (TP, eMoney/IBAN, or Options) but holds no open positions and placed no trading actions in the period. The lowest engagement tier — cash at eToro, no portfolio. Returns the customer's maximum total equity (numeric, not 0/1). Excludes both Active Traders and Portfolio Only customers. Sourced from `Function_Population_Balance_Only_Accounts`.
+
+- `AccountActive` = `CASE WHEN ActiveTraded = 1 OR Portfolio_Only = 1 THEN 1 ELSE 0 END`
+- `AccountInActive` = customer is in none of the three active tiers
 
 ### 2.5 Login Activity
 
@@ -190,9 +191,9 @@ _Pending — resolved during write-objects._
 | 24 | TPFirstDeposited | int | YES | First deposit on Trading Platform today. From MIMO IsPlatformFTD. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 25 | IBANFirstDeposited | int | YES | First deposit on IBAN/eMoney today. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 26 | TPExternalFirstDeposited | int | YES | First external TP deposit today (excl FundingTypeID=33 internal). (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 27 | ActiveTraded | int | YES | Actively traded on this date. From Function_Population_Active_Traders. (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 28 | BalanceOnlyAccount | decimal(16,6) | YES | Balance-only account (has balance, no trading/portfolio). From Function_Population_Balance_Only_Accounts. Returns equity value, not 0/1. (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 29 | Portfolio_Only | int | YES | Portfolio-only (has portfolio, not actively trading). From Function_Population_Portfolio_Only. (Tier 2 — SP_DDR_Customer_Daily_Status) |
+| 27 | ActiveTraded | int | YES | **DDR top engagement tier.** 1 if the customer explicitly opened a new position (ActionTypeID 1 or 39), opened/added capital to a copy mirror (ActionTypeID 15=OpenMirror, 17=AddMirror), or placed an Options trade on this date. Auto-created copy positions (generated when a copied trader opens) do NOT qualify — only deliberate mirror opens/additions count. Includes Options trading via Function_Revenue_OptionsPlatform. Source: Function_Population_Active_Traders. (Tier 1 — Function_Population_Active_Traders) |
+| 28 | BalanceOnlyAccount | decimal(16,6) | YES | **DDR lowest engagement tier — cash at eToro, no portfolio (numeric equity, not 0/1).** Customer has positive equity on any platform (TP NWA+Liability, eMoney ClosingBalanceBO×FXRate, Options TotalEquity from Apex buy-power) but holds no open positions and placed no qualifying trading actions in the period. Returns the customer’s maximum combined equity across all platforms. Excludes Active Traders and Portfolio Only (higher tiers win). Source: Function_Population_Balance_Only_Accounts. (Tier 1 — Function_Population_Balance_Only_Accounts) |
+| 29 | Portfolio_Only | int | YES | **DDR middle engagement tier — the HODL segment.** 1 if the customer holds at least one open TP position or Options position (Apex buy-power) but placed no qualifying trading actions in the period. Includes copy positions (MirrorID>0) and CopyFund/Smart Portfolio (MirrorTypeID=4). Excludes Active Traders (higher priority wins). Source: Function_Population_Portfolio_Only. (Tier 1 — Function_Population_Portfolio_Only) |
 | 30 | AccountActive | int | YES | Account is active. CASE WHEN ActiveTraded=1 OR Portfolio_Only=1 THEN 1 ELSE 0. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 31 | AccountInActive | int | YES | Account is completely inactive (not in any of the 3 active segments). (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 32 | RegulationID | int | YES | Regulation ID from Fact_SnapshotCustomer for the date range. FK → DWH_dbo.Dim_Regulation. (Tier 2 — SP_DDR_Customer_Daily_Status) |
@@ -206,9 +207,9 @@ _Pending — resolved during write-objects._
 | 40 | MifidCategorizationID | decimal(16,6) | YES | MiFID categorization ID from Fact_SnapshotCustomer. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 41 | PlayerLevelID | int | YES | Player level ID from Fact_SnapshotCustomer. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 42 | IsDepositor | int | YES | TP depositor flag from Fact_SnapshotCustomer (SCD-based). (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 43 | IsFunded | int | YES | Currently funded. 1 when customer appears in Function_Population_Funded. (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 44 | FirstTimeFunded | int | YES | First time funded today. CASE WHEN FirstFundedDateID = @dateID THEN 1. (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 45 | FirstFundedDateID | int | YES | Date of first funding (YYYYMMDD). From Function_Population_First_Time_Funded. Sentinel 30000101 = never funded. (Tier 2 — SP_DDR_Customer_Daily_Status) |
+| 43 | IsFunded | int | YES | **1 if the customer meets ALL four funded criteria on this date:** (1) real deposit per Dim_Customer.IsDepositor=1 (excludes 13K bad-FTD cohort:  FTDs on Aug 18-20 2025 with no subsequent real deposit); (2) KYC verified to level 3 (VerificationLevelID=3); (3) at least one non-airdrop activity completed — a TP trade (Dim_Position.IsAirDrop=0), IOB interest credit (Fact_CustomerAction ActionTypeID=36/CompensationReasonID=57), or Options trade; AND (4) positive equity on this date across TP, eMoney, or Options. All four conditions must hold simultaneously. Source: Function_Population_Funded. (Tier 1 — Function_Population_Funded) |
+| 44 | FirstTimeFunded | int | YES | **1 on the exact date the customer first crossed the fully-funded threshold.** Computed as CASE WHEN FirstFundedDateID = @dateID THEN 1 ELSE 0. This date is always on or after the first deposit date — it only fires when KYC (level 3) and first qualifying activity (trade/IOB/options) are also complete simultaneously. A customer who deposited months ago but only recently verified will fire FirstTimeFunded on their verification date (if they had prior activity). Source: Function_Population_First_Time_Funded. (Tier 1 — Function_Population_First_Time_Funded) |
+| 45 | FirstFundedDateID | int | YES | **Permanent graduation date (YYYYMMDD) — the LATEST of the three funded milestones.** Computed as GREATEST(FTDDateID, FirstVerifiedDateID, LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID)). Counterintuitively this is NOT the first deposit date — it is the last day on which all three conditions were simultaneously satisfied for the first time. Example: deposited Jan 1, verified Jan 5, first trade Jan 10 → FirstFundedDateID = 20260110. Sentinel 30000101 = not yet funded. Source: Function_Population_First_Time_Funded. (Tier 1 — Function_Population_First_Time_Funded) |
 | 46 | FirstActionType | varchar(50) | YES | First trading action type (e.g., 'Crypto', 'Forex', 'Stocks'). From Function_Population_First_Trading_Action. 'NoAction' if none or future. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 47 | FirstActionDateID | int | YES | Date of first trading action (YYYYMMDD). Sentinel 30000101 = no action. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 48 | LoggedIn | int | YES | Logged in today. 1 when ActionTypeID=14 in Fact_CustomerAction. (Tier 2 — SP_DDR_Customer_Daily_Status) |
@@ -216,8 +217,8 @@ _Pending — resolved during write-objects._
 | 50 | LoggedInIBANDepositor | int | YES | Logged in today AND is an IBAN depositor. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 51 | LoggedInGlobalDepositor | int | YES | Logged in today AND is a global depositor (any platform). (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 52 | UpdateDate | datetime | YES | ETL load timestamp — GETDATE() at insert time. (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 53 | FirstIOBDateID | int | YES | First Instrument Open Balance date (YYYYMMDD). From Function_Population_First_Time_Funded. Added Aug 2025. (Tier 2 — SP_DDR_Customer_Daily_Status) |
-| 54 | FirstIOBTime | datetime | YES | First IOB timestamp. From Function_Population_First_Time_Funded. (Tier 2 — SP_DDR_Customer_Daily_Status) |
+| 53 | FirstIOBDateID | int | YES | **Date of first Interest on Balance (IOB) credit (YYYYMMDD).** IOB is an interest payment credited to customer accounts (Fact_CustomerAction, ActionTypeID=36, CompensationReasonID=57). Added Aug 2025 as an alternative qualifying activity for Funded status alongside trading a position or Options trade. A customer who never traded but receives IOB interest while meeting deposit+KYC criteria counts as Funded. NULL = no IOB credit ever received. Source: Function_Population_First_Time_Funded. (Tier 1 — Function_Population_First_Time_Funded) |
+| 54 | FirstIOBTime | datetime | YES | **Exact timestamp of the customer’s first Interest on Balance credit.** Used alongside FTDDateID and FirstVerifiedDateID inside Function_Population_First_Time_Funded when computing FirstFundedDateID via GREATEST(). NULL if no IOB credit was ever received. (Tier 1 — Function_Population_First_Time_Funded) |
 | 55 | Options_FTD_DateID | int | YES | Options platform first-time deposit date (YYYYMMDD). From Dim_Customer where FTDPlatformID=2. Added Oct 2025. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 56 | Options_FTD_Date | datetime | YES | Options platform first-time deposit datetime. (Tier 2 — SP_DDR_Customer_Daily_Status) |
 | 57 | Options_FTDA | decimal(16,6) | YES | Options platform first-time deposit amount in USD. (Tier 2 — SP_DDR_Customer_Daily_Status) |

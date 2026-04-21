@@ -1,0 +1,30 @@
+---
+description: "MCP visibility — user must get immediate signal when live DB tools are in use or stuck, so they do not wait minutes before checking MCP status."
+alwaysApply: true
+---
+
+# MCP Latency Signal (User-Facing)
+
+## Problem
+
+If the assistant invokes Synapse or Databricks MCP **without saying so**, the user cannot tell whether the model is thinking, the tool is slow, or **MCP is red / dead**. They may stare at the screen for minutes.
+
+## Rules (NON-NEGOTIABLE)
+
+1. **Before the first MCP tool call in a reply** (or before any batch of MCP calls for the same user request), the assistant MUST output a **short, explicit line to the user** in natural language, for example:
+   - *Running a live query via Databricks MCP — if nothing follows in ~10–15 seconds, check **Settings → MCP** (server may be disconnected).*
+   - Same pattern for `user-synapse_sql` / `user-synapse_prod_sql`.
+
+2. **If an MCP tool errors** with missing tool, timeout, or connection failure, the assistant MUST **in the same turn** tell the user to **open the MCP / Tools panel** and confirm the server is green — not only retry silently.
+
+3. **Do not** chain many sequential MCP SQL calls without either:
+   - a one-line progress note between steps, or  
+   - switching to a single Python `databricks.sql` / batch script for heavy work (per `databricks-connection` skill).
+
+4. **Databricks MCP failures:** After **one** failed or missing `user-databricks_sql-*` tool call, run **`python tools/dbx_query.py "<sql>"`** from `Databricks_Knowledge` via Shell (same auth as MCP — see `databricks-connection` skill). Do not loop on MCP alone.
+
+5. **Optional:** For long-running Databricks statements that return `statement_id`, use **`poll_sql_result`** if available; otherwise use **`dbx_query.py`** instead of MCP.
+
+## What this does NOT fix
+
+This rule improves **assistant behavior** only. A **3-second UI banner** when MCP is red requires **Cursor / IDE product changes** — suggest the user file feedback if they want native notifications.

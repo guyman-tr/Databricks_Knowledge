@@ -142,7 +142,7 @@ _Pending — resolved during write-objects._
 | 9 | FundingTypeID | int | YES | Funding type ID. From Fact_BillingDeposit.FundingTypeID (deposits) or Fact_BillingWithdraw.FundingTypeID_Funding (withdrawals). 33 = internal IBAN transfer. (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
 | 10 | CurrencyID | int | YES | Currency ID from Fact_BillingDeposit.CurrencyID (deposits) or Fact_BillingWithdraw.ProcessCurrencyID (withdrawals). (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
 | 11 | Currency | varchar(20) | YES | Currency abbreviation from Dim_Currency.Abbreviation (e.g., USD, EUR, GBP). (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
-| 12 | IsFTD | int | YES | First-time deposit on Trading Platform. 1 when Dim_Customer.FTDTransactionID = DepositID (FTDPlatformID=1). Post-insert UPDATE recovers late-arriving FTDs for DateID ≥ 20250901. (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
+| 12 | IsFTD | int | YES | First-time deposit on Trading Platform. 1 when Dim_Customer.FTDTransactionID = DepositID (FTDPlatformID=1). Post-insert UPDATE recovers late-arriving FTDs for DateID ≥ 20250901. (Tier 1 — Function_MIMO_First_Deposit_All_Platforms) |
 | 13 | IsInternalTransfer | int | YES | Internal IBAN-to-TP transfer flag. CASE WHEN FundingTypeID = 33 THEN 1 ELSE 0. These can create FTDs via MoveMoneyReasonID=6. (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
 | 14 | IsRedeem | int | YES | Billing redeem flag. From Fact_CustomerAction.IsRedeem for withdrawals; always 0 for deposits. (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
 | 15 | UpdateDate | datetime | YES | ETL load timestamp — GETDATE() at insert time. (Tier 2 — SP_DDR_Fact_MIMO_Trading_Platform) |
@@ -251,5 +251,5 @@ No Atlassian sources found for this object. The DDR framework is documented via 
 ---
 
 *Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 12/14*
-*Tiers: 0 T1, 19 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 8/10*
+*Tiers: 1 T1, 18 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 8/10*
 *Object: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform | Type: Table | Production Source: SP_DDR_Fact_MIMO_Trading_Platform*

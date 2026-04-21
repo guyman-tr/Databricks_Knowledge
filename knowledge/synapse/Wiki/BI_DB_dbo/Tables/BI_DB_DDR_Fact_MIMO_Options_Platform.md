@@ -127,7 +127,7 @@ _Pending — resolved during write-objects._
 | 9 | FundingTypeID | int | YES | Funding type identifier. Hardcoded 0 — Options platform has no funding type concept. (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
 | 10 | CurrencyID | int | YES | Currency identifier. Hardcoded 1 (USD). Options platform uses USD only. (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
 | 11 | Currency | varchar(20) | YES | Currency code. Hardcoded 'USD'. Options platform uses USD only. (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
-| 12 | IsFTD | int | YES | First-time deposit on Options platform. 1 if this is the customer's first Options deposit (FinalFTD CTE match in function). (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
+| 12 | IsFTD | int | YES | First-time deposit on Options platform. 1 if this is the customer's first Options deposit (FinalFTD CTE match in function). (Tier 1 — Function_MIMO_First_Deposit_All_Platforms) |
 | 13 | IsGlobalFTD | int | YES | Global first-time deposit across all eToro platforms. 1 if this is the customer's first deposit on ANY platform, cross-referencing Dim_Customer first-deposit data for platform 2. (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
 | 14 | IsInternalTransfer | int | YES | Internal transfer flag. CASE WHEN TerminalID='OMJNL' THEN 1 ELSE 0. Journal entries, not customer-initiated. (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
 | 15 | UpdateDate | datetime | YES | ETL load timestamp — GETDATE() at insert time. (Tier 2 — SP_DDR_Fact_MIMO_Options_Platform) |
@@ -233,5 +233,5 @@ No Atlassian sources found for this object.
 ---
 
 *Generated: 2026-03-26 | Quality: 8.0/10 (★★★★☆) | Phases: 11/14*
-*Tiers: 0 T1, 15 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 8/10, Relationships: 7/10, Sources: 7/10*
+*Tiers: 1 T1, 14 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 8/10, Relationships: 7/10, Sources: 7/10*
 *Object: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform | Type: Table | Production Source: SP_DDR_Fact_MIMO_Options_Platform*

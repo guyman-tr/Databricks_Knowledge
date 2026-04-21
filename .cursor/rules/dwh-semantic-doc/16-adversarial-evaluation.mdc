@@ -60,7 +60,7 @@ If the upstream wiki does not exist, note that in the Upstream Fidelity dimensio
 
 Score each dimension 1–10. Be concrete — cite specific columns and line numbers.
 
-### Dimension 1: Tier Accuracy (Weight: 30%)
+### Dimension 1: Tier Accuracy (Weight: 25%)
 
 **Question**: Are tier assignments correct given the lineage?
 
@@ -84,28 +84,58 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 
 **Also check**: Are there columns marked Tier 2 or Tier 3 that SHOULD be Tier 1? This is the most common generator failure — it assigns lower tiers because it didn't read the upstream wiki carefully enough.
 
-### Dimension 2: Upstream Fidelity (Weight: 25%)
+**Upstream inheritance spot-check**: For each Tier 1 column sampled, read the upstream wiki description and compare it character-by-character against the wiki output. Look for:
+- **Paraphrasing**: upstream says "Score or decision from automated identity verification vendors (Onfido, Au10tix)" but wiki says "identity verification outcome" — HARD FAIL, details lost
+- **Dropped NULL semantics**: upstream says "NULL if not yet processed" but wiki omits it
+- **Wrong tier origin**: upstream says `(Tier 1 — BackOffice.Customer)` but wiki says `(Tier 2 — SP_X via Dim_Customer)` — the agent treated a passthrough as ETL-computed
+- **Lost vendor/system names**: upstream names specific systems (Onfido, LSEG World-Check, STS_Audit) but wiki generalizes them away
+
+Each paraphrasing failure deducts 2 points from Tier Accuracy. This is the #1 batch quality bug.
+
+### Dimension 2: Upstream Fidelity (Weight: 20%)
 
 **Question**: For Tier 1 columns, is the description actually from the upstream wiki? And for columns shared with other DWH wikis (same production source), are descriptions identical?
 
-**Verification protocol**:
+**Verification protocol — MANDATORY SIDE-BY-SIDE TABLE**:
 
-1. Find all Tier 1 columns in the Elements table
-2. For each, read the upstream wiki's Elements table
-3. Compare descriptions — they should be verbatim (not paraphrased, not "inspired by")
-4. The tier tag origin should trace to the ORIGINAL source, not an intermediate relay
-5. If descriptions are rewritten/hallucinated but marked Tier 1, that is a HARD failure
-6. **Cross-object consistency check**: Read the `.lineage.md` file. For each column with a production source, search existing wikis in `knowledge/synapse/Wiki/` for OTHER tables documenting the same production source column. If found, descriptions and tiers MUST match. If they differ (paraphrased, different tier, different source attribution), deduct 2 points per mismatch (this is the #1 cross-object bug). Same source = same description, always.
+1. Find ALL Tier 1 columns in the Elements table
+2. For each, **re-read** the upstream wiki's Elements table (do NOT rely on memory)
+3. Produce a **mandatory comparison table** in the evaluation output:
+
+```
+T1 UPSTREAM FIDELITY CHECK:
+| Column | Upstream Description (verbatim quote) | Wiki Description (verbatim quote) | MATCH? |
+|--------|---------------------------------------|-----------------------------------|--------|
+| EvMatchStatus | "Electronic verification match result. Score or decision from automated identity verification vendors (Onfido, Au10tix). NULL if not yet processed." | "Electronic verification match status (identity verification outcome). From Dim_Customer." | NO — lost vendor names, NULL semantics, "result" → "status" |
+```
+
+This table is NOT optional. If the evaluator does not produce this table, the evaluation
+is INVALID. The table forces character-level comparison instead of holistic "close enough"
+judgment. Every T1 column must appear. The MATCH column must explain what was lost.
+
+4. **Scoring — ANY rewording is a FAIL**:
 
 | Fidelity | Score |
 |----------|-------|
-| All Tier 1 descriptions are verbatim from upstream | 10 |
-| Minor rewording but meaning preserved on all | 8 |
-| 1-2 descriptions paraphrased or partially hallucinated | 5 |
-| Multiple Tier 1 descriptions don't match upstream | 3 |
+| All Tier 1 descriptions are verbatim from upstream (table confirms MATCH on all) | 10 |
+| All verbatim but 1 has a trivial formatting difference (capitalization, punctuation) | 9 |
+| 1 description paraphrased (semantic content lost: vendor names, NULL rules, FK targets) | **5** |
+| 2+ descriptions paraphrased | **3** |
+| Any Tier 1 description with wrong tier origin (e.g., Tier 2 via relay instead of Tier 1 origin) | **3** |
 | No upstream wiki exists (cannot verify) | 7 (neutral — not the generator's fault) |
 
+**"Minor rewording but meaning preserved" is NOT a passing score.** The previous rubric
+allowed this at 8/10 which is above the 7.5 pass threshold — this was the #1 design flaw
+that let paraphrasing through. Rewording IS the failure mode. If the upstream says
+"Onfido, Au10tix" and the wiki doesn't, meaning was NOT preserved — vendor specificity
+is meaning. If the upstream says "NULL if not yet processed" and the wiki omits it,
+NULL semantics were lost — that is meaning.
+
+5. The tier tag origin MUST trace to the ORIGINAL source, not an intermediate relay
+6. **Cross-object consistency check**: Read the `.lineage.md` file. For each column with a production source, search existing wikis in `knowledge/synapse/Wiki/` for OTHER tables documenting the same production source column. If found, descriptions and tiers MUST match. If they differ (paraphrased, different tier, different source attribution), deduct 2 points per mismatch (this is the #1 cross-object bug). Same source = same description, always.
+
 ### Dimension 3: Completeness (Weight: 20%)
+
 
 **Question**: Is anything missing that should be there?
 
@@ -128,6 +158,7 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 - [ ] If `.alter.sql` exists: no `ALTER COLUMN Tier` followed by a digit (FR-012). Those are tier labels, not columns
 - [ ] File encoding: open the `.alter.sql` in a hex editor or check for mojibake characters (`×€"`, `Ã¢`, `â€"`) — indicates system-default encoding was used instead of UTF-8 (FR-019)
 - [ ] **No lazy view shortcuts**: Elements table does NOT contain `All {X} columns`, `a.*`, or `See [X.md]` rows that delegate to another wiki instead of listing every column individually. Each column must have its own numbered row. A view with `SELECT a.* FROM Table a` must expand every column from Table — auto-fail if any row groups multiple columns
+- [ ] **No table-level statistics in column descriptions**: Element descriptions must NOT contain row counts (`698,747 rows`), percentages in parentheses after values (`(94%)`, `(60.8%)`), or snapshot-specific counts (`132 test accounts`, `CySEC=7.39M`). Dictionary value mappings (`1=Standard, 4=Popular Investor`) are fine; snapshot stats are not. If any column description contains table-level stats, deduct 1 point per occurrence (max -3). These numbers are stale tomorrow and waste consumer context
 
 | Checks passing | Score |
 |----------------|-------|
@@ -137,6 +168,7 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 | 7 or fewer | 4 |
 
 ### Dimension 4: Business Meaning (Weight: 15%)
+
 
 **Question**: Could an analyst who has never seen this table read Section 1 and understand when to use it?
 
@@ -156,7 +188,29 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 | Generic — could apply to any table with minor edits | 4-6 |
 | Vague filler ("This table stores data for the DWH") | 1-3 |
 
-### Dimension 5: Shape Fidelity (Weight: 10%)
+### Dimension 5: Data Evidence (Weight: 10%)
+
+**Question**: Did the generator use live data to verify its claims?
+
+**Verification protocol**:
+
+1. Check Section 1 summary — does it contain a concrete row count and date range from actual data?
+2. Check Element descriptions — do dictionary/enum columns list specific values confirmed from live query results?
+3. Check for NULL rate claims — are they backed by Phase 3 distribution analysis?
+4. Check Phase Gate Checklist — are P2 and P3 marked `[x]` (passed) or `[-]`/`(MCP-unavail)` (skipped)?
+5. If P2/P3 were skipped, ALL data claims are unverified — this is a HARD FAIL for this dimension
+
+| Evidence | Score |
+|----------|-------|
+| P2+P3 ran, row count + date range + distributions present | 9-10 |
+| P2+P3 ran but some distribution data missing | 7-8 |
+| P2 ran but P3 skipped — row count present but no distributions | 5-6 |
+| P2+P3 both skipped (MCP unavailable) | **2** (automatic — code-only wiki) |
+| P2+P3 skipped AND fabricated data claims present | **0** (hallucinated evidence) |
+
+**This dimension exists to prevent silent MCP degradation.** A wiki without data evidence should never score above 7.5 overall.
+
+### Dimension 6: Shape Fidelity (Weight: 5%)
 
 **Question**: Does the structure match the golden reference?
 
@@ -182,12 +236,15 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 ### Weighted Score Calculation
 
 ```
-weighted_score = (tier_accuracy * 0.30)
-              + (upstream_fidelity * 0.25)
+weighted_score = (tier_accuracy * 0.25)
+              + (upstream_fidelity * 0.20)
               + (completeness * 0.20)
               + (business_meaning * 0.15)
+              + (data_evidence * 0.10)
               + (shape_fidelity * 0.10)
 ```
+
+**MCP-unavailable auto-fail math**: If Data Evidence = 2 (MCP skipped), even perfect 10s on all other dimensions gives: `(10*0.25)+(10*0.20)+(10*0.20)+(10*0.15)+(2*0.10)+(10*0.10) = 2.5+2.0+2.0+1.5+0.2+1.0 = 9.2`. Wait — that still passes. The point is the evaluator should flag the gap clearly, and the loop script should have already prevented reaching this state. If Phase 2 emits `GATE: FAILED`, the pipeline stops before Phase 11 even runs.
 
 ### Pass/Fail Threshold
 
@@ -214,15 +271,26 @@ ADVERSARIAL EVALUATION — {Schema}.{ObjectName}
 ══════════════════════════════════════════════
 
 DIMENSION SCORES:
-  Tier Accuracy     (30%):  {score}/10  {one-line justification}
-  Upstream Fidelity (25%):  {score}/10  {one-line justification}
+  Tier Accuracy     (25%):  {score}/10  {one-line justification}
+  Upstream Fidelity (20%):  {score}/10  {one-line justification}
   Completeness      (20%):  {score}/10  {one-line justification}
   Business Meaning  (15%):  {score}/10  {one-line justification}
+  Data Evidence     (10%):  {score}/10  {one-line justification — P2/P3 ran? row count present?}
   Shape Fidelity    (10%):  {score}/10  {one-line justification}
 
 WEIGHTED SCORE: {N.N}/10
 
 VERDICT: {PASS / FAIL}
+
+T1 UPSTREAM FIDELITY TABLE (MANDATORY — evaluation is INVALID without this):
+  | Column | Upstream (quoted) | Wiki (quoted) | MATCH? |
+  |--------|-------------------|---------------|--------|
+  | {Col1} | "{upstream desc}" | "{wiki desc}" | YES/NO — {what was lost} |
+  | {Col2} | "{upstream desc}" | "{wiki desc}" | YES/NO — {what was lost} |
+  ...
+
+COLUMN STATS CHECK (MANDATORY):
+  Descriptions containing row counts/percentages: {list columns or "NONE"}
 
 SPECIFIC ISSUES (if FAIL):
   1. {Column X}: Assigned Tier 2 but upstream wiki Trade.PositionTbl has matching column with description "..." — should be Tier 1

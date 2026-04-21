@@ -3,10 +3,17 @@
     "allow": [
       "mcp__synapse_sql__execute_sql_read_only",
       "mcp__synapse_sql__execute_sql",
+      "mcp__synapse_prod_sql__execute_sql_read_only",
+      "mcp__synapse_prod_sql__execute_sql",
       "mcp__databricks_sql__execute_sql_read_only",
       "mcp__databricks_sql__execute_sql",
       "mcp__databricks_sql__poll_sql_result",
       "mcp__atlassian__*"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "synapse_sql",
+    "synapse_prod_sql",
+    "databricks_sql"
+  ]
 }
