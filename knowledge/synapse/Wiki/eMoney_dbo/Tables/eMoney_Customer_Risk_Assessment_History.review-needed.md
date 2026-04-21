@@ -1,64 +1,44 @@
-# Review Needed — eMoney_Customer_Risk_Assessment_History
+# eMoney_Customer_Risk_Assessment_History — Review Needed
 
-**Generated**: 2026-04-21 | **Batch**: 9 | **Reviewer**: eMoney & Wallet Data Analytics Team
-
----
-
-## Tier 4 Items (Uncertain — Needs Confirmation)
-
-None. All 120 columns are Tier 1 or Tier 2 (fully confirmed from SP source code and upstream wikis). Column descriptions are verbatim-identical to eMoney_Customer_Risk_Assessment.
-
----
+> Sidecar checklist for wiki reviewer. All wiki content is in `eMoney_Customer_Risk_Assessment_History.md`.
 
 ## Open Questions
 
-| # | Column(s) | Question | Priority |
-|---|-----------|----------|----------|
-| Q1 | ClientRiskDate | The sample shows 529,939 customers (26.1%) with only 1 History row — their first classification. Do these customers all have PreviousClientRisk=NULL, or are some carrying over from a pre-2024-07-17 system? | Low |
-| Q2 | UpdateDate | The sample shows UpdateDate=2026-04-12 06:53:22 for all rows in the latest batch. Does the SP run at a fixed time each day (post-Group-One), or is the schedule flexible? | Low |
-| Q3 | (table) | Between 2025-02-25 and 2025-03-12, the trigger was score-change-based. Were any of those excess rows cleaned up, or do they remain in History? This affects how analysts should interpret the row count per CID in that period. | Medium |
-| Q4 | (table) | Is there a retention policy for this table? At 8.1M rows growing by ~50K–100K per day (class-change rate), the table will reach significant size within 2–3 years. | Low |
+| # | Column / Topic | Question | Priority |
+|---|---------------|----------|---------|
+| 1 | Score-change rows (2025-02-25 → 2025-03-12) | Do any downstream reports consume History row counts as a proxy for class-transition frequency? If so, the inflated rows during this 16-day window (score-change trigger) would distort those metrics. | High |
+| 2 | History maximum rows per CID (387) | The max of 387 History rows for a single CID suggests either very frequent class oscillation or a remnant of the 2025-02-25 score-change period. Confirm whether this outlier is expected or a data quality flag. | Medium |
+| 3 | CID IS NOT NULL in DDL | The DDL marks CID NOT NULL. Confirm no orphan CID=0 rows exist in History (cancelled accounts). The population comes from eMoney_Dim_Account which may include GCID=0 rows. | Low |
+| 4 | Self-referential read timing | Step 27 reads History BEFORE Step 30-31 truncates/rebuilds CRA. This is correct. Confirm no race condition risk if SP runs concurrently with any direct reads of History. | Low |
+| 5 | All open questions from CRA sidecar | Questions 1-11 in eMoney_Customer_Risk_Assessment.review-needed.md apply equally to History (same schema, same SP). See CRA sidecar for full list. | Various |
 
----
+## Tier 1 Copy Verification
 
-## Data Quality Flags (Observed in Phase 2)
+*Identical to eMoney_Customer_Risk_Assessment — all five Tier 1 columns (CID, GCID, VerificationLevelID, DateOfBirth, DateOfReg) use verbatim upstream descriptions per cross-object consistency rule.*
 
-| Flag | Detail | Severity |
-|------|--------|----------|
-| Score-change period (Feb–Mar 2025) | 14 days of score-change-triggered rows exist in History. These rows are indistinguishable by column values from genuine class-change rows. Analysts doing class-change analysis should be aware of this confound. | Medium |
-| PreviousClientRisk='None' (NULL) on first rows | First-time History entries have PreviousClientRisk=NULL and PreviousClientRiskDate=NULL. In display tools this renders as 'None'/''. This is expected behavior. | Low |
+| Column | Upstream Source | Stripped Items | Status |
+|--------|----------------|----------------|--------|
+| CID | Dim_Customer.md (RealCID) — Customer.CustomerStatic | None; DWH rename note appended | IDENTICAL to CRA |
+| GCID | Dim_Customer.md — Customer.CustomerStatic | None | IDENTICAL to CRA |
+| VerificationLevelID | Dim_Customer.md — BackOffice.Customer | Stats stripped: "(34.2%)", "(12.4%)", "(6.2%)", "(47.1%)" | IDENTICAL to CRA |
+| DateOfBirth | Dim_Customer.md (BirthDate) — Customer.CustomerStatic | None; DWH CAST+rename note appended | IDENTICAL to CRA |
+| DateOfReg | Dim_Customer.md (RegisteredReal) — Customer.CustomerStatic | None; DWH CAST+rename note appended | IDENTICAL to CRA |
 
----
+## Items Confirmed by Reviewer
 
-## Reviewer Corrections Log
-
-*Empty — no corrections received yet. Reviewers: add your corrections here with date and initials.*
-
----
+- [ ] Score-change rows (2025-02-25 → 2025-03-12) assessed for downstream impact
+- [ ] Max 387 rows per CID confirmed as expected/anomaly
+- [ ] CID NOT NULL confirmed — no GCID=0 / cancelled-account rows in History
+- [ ] All CRA review items confirmed (same schema)
 
 ## Phase 16 Adversarial Evaluation
 
-**Evaluator**: Claude Sonnet 4.6 (independent review)
-**Date**: 2026-04-21
-
-### Dimension Scores
-
-| Dimension | Weight | Score | Notes |
-|-----------|--------|-------|-------|
-| Tier Accuracy | 25% | 9.5 | All 120 column tiers identical to CRA snapshot (cross-object consistency enforced). 5 Tier 1 / 115 Tier 2 verified. |
-| Upstream Fidelity | 20% | 9.5 | Verbatim-identical descriptions to CRA snapshot. Cross-object consistency declaration included. No paraphrasing introduced. |
-| Completeness | 20% | 9.0 | All 120 columns documented. History-specific semantics (append-only, class-change-only, trigger reversion timeline) fully documented in Sections 1–2. Score-change period confound documented. |
-| Business Meaning | 15% | 9.0 | Self-referential design (Step 27 reads History, Step 32 writes back) clearly explained. Trigger reversion history and volume constraint context documented. Historical risk distribution vs current snapshot contrast provided. |
-| Data Evidence | 10% | 9.0 | Phase 2 live data: 8.1M rows, 2.03M distinct CIDs, date range, rows-per-CID distribution (45.2% have 3-5 rows). Sample showing NULL PreviousClientRisk for new customers confirmed. |
-| Shape Fidelity | 10% | 9.5 | 8-section structure, property table (12 rows), 120-row Elements table (all with Tier suffix), ETL diagram with trigger timeline, sample queries. |
-
-**Composite Score**: 9.2 / 10.0
-
-**PASS** (threshold: 7.5)
-
-### Evaluator Notes
-
-- **Strength**: The trigger reversion history (class→score→class) with dates and business reason is a critical non-obvious operational detail, correctly documented.
-- **Strength**: The self-referential design (History feeds the snapshot, snapshot writes back to History) is clearly explained in both Business Meaning and the ETL diagram.
-- **Strength**: Cross-object consistency correctly enforced — all 120 descriptions verbatim-identical to the CRA snapshot.
-- **Minor gap**: The score-change period (Feb–Mar 2025) creates a confound for class-change analysis. This is flagged in the review section but could also appear in Section 3 Query Advisory.
+| Dimension | Score | Notes |
+|-----------|-------|-------|
+| Business Meaning | 9.5 | Audit log purpose clear; class-change vs score-change distinction documented; self-referential loop explained; anomaly period noted |
+| Grain & Lifecycle | 9.5 | Append-only, multi-row per CID, insert condition explicit, no TRUNCATE confirmed |
+| Technical Accuracy | 9.0 | Step 32 logic matches SP code exactly; WHERE clause reproduced; timing of Step 27 read documented |
+| Column Completeness | 8.5 | All 120 columns documented with cross-object consistency note; same P32/section order cosmetic note |
+| Tier Accuracy | 9.0 | 5 Tier 1 verified verbatim; 115 Tier 2; cross-object consistency rule applied |
+| Gotchas & Flags | 9.5 | No grain constraint (multi-row per CID); score-change anomaly window; P10 NULL; UpdateDate not business date; PreviousClientRisk semantics |
+| **Average** | **9.2** | **PASS (≥7.5 threshold)** |

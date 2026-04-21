@@ -51,9 +51,12 @@ Write-Host ""
 # This is a HARD gate — the loop refuses to start if Synapse is unreachable.
 Write-Host "Pre-flight: testing Synapse MCP connection..." -ForegroundColor Yellow
 
-$mcpJson = Join-Path $repoRoot ".mcp.json"
+$mcpJson = Join-Path $env:USERPROFILE ".cursor\mcp.json"
 if (-not (Test-Path $mcpJson)) {
-    Write-Host "HARD FAIL: .mcp.json not found at $mcpJson" -ForegroundColor Red
+    $mcpJson = Join-Path $repoRoot ".mcp.json"
+}
+if (-not (Test-Path $mcpJson)) {
+    Write-Host "HARD FAIL: mcp.json not found at ~/.cursor/mcp.json or $repoRoot\.mcp.json" -ForegroundColor Red
     Write-Host "Cannot start wiki loop without MCP configuration." -ForegroundColor Red
     exit 1
 }

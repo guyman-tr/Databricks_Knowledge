@@ -1,370 +1,333 @@
----
-object: eMoney_Customer_Risk_Assessment_History
-schema: eMoney_dbo
-database: Synapse DWH
-type: Table
-columns: 120
-documented: 2026-04-21
-batch: 9
-quality_score: 9.0
----
-
 # eMoney_dbo.eMoney_Customer_Risk_Assessment_History
+
+> Append-only audit log of AML/KYC risk class-change events for eToro Money customers: 8,113,383 rows (avg 3.99 events per customer), one row inserted per customer each time their Low/Medium/High/Error classification changes, sharing the identical 120-column schema as eMoney_Customer_Risk_Assessment but with no TRUNCATE — it grows continuously.
 
 | Property | Value |
 |----------|-------|
-| **Object** | `eMoney_dbo.eMoney_Customer_Risk_Assessment_History` |
-| **Type** | Table (HEAP, HASH(CID)) |
-| **Production Source** | SP_eMoney_Customer_Risk_Assessment Step 32 (conditional INSERT, class-change-only) |
-| **Refresh Pattern** | Conditional INSERT appended daily; runs as final step of SP_eMoney_Customer_Risk_Assessment |
-| **Row Count** | 8,113,383 (as of 2026-04-12) |
-| **Date Range** | 2024-07-17 — 2026-04-12 (ClientRiskDate) |
-| **Grain** | One row per CID per risk class change event (append-only) |
-| **Distinct CIDs** | 2,031,882 (same population as snapshot) |
-| **Distribution** | HASH(CID) |
-| **Index** | HEAP |
-| **UC Target** | `_Not_Migrated` |
-| **Author** | eMoney & Wallet Data Analytics Team |
-| **Created** | 2023-12-13 |
+| **Schema** | eMoney_dbo |
+| **Object Type** | Table (Append-Only Event Log) |
+| **Production Sources** | Same as eMoney_Customer_Risk_Assessment (see CRA wiki) |
+| **Refresh** | Append-only INSERT at Step 32 of SP_eMoney_Customer_Risk_Assessment (class-change trigger) |
+| **Synapse Distribution** | HASH(CID) |
+| **Synapse Index** | HEAP |
+| **Row Count** | 8,113,383 (sampled 2026-04-12) |
+| **Rows per CID** | avg 3.99; 26.1% with 1 row; max 387 rows |
+| **Writer SP** | SP_eMoney_Customer_Risk_Assessment (Step 32 only) |
+| **UC Target** | `emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history` |
 
 ---
 
 ## 1. Business Meaning
 
-`eMoney_Customer_Risk_Assessment_History` is the **append-only audit trail** of AML risk classification changes for eToro Money customers. While the companion `eMoney_Customer_Risk_Assessment` table holds the current snapshot (fully rebuilt daily), History accumulates a row for each customer every time their risk class transitions (Low → Medium, Medium → High, etc.).
+`eMoney_Customer_Risk_Assessment_History` is the **class-change audit log** for the eToro Money AML/KYC risk engine. Where `eMoney_Customer_Risk_Assessment` holds exactly one current-state row per customer (rebuilt daily via TRUNCATE + INSERT), History accumulates one row for each time a customer's risk class (`ClientRisk`) changes.
 
-**Key characteristic**: This is NOT a daily full-copy history — it is a **class-change log**. A customer appears in History only when their risk classification changes (or on their first scoring). A customer who remains 'Low' for 12 months will have exactly one History row (their initial classification), not 12 × 30 rows.
+The same 120-column schema is shared across both tables, including all parameter scores (P1–P32) and supporting customer attributes. Each History row is a complete snapshot of the customer's state at the moment of the class change — not just a diff.
 
-**Size context**: 8.1M rows across 2.03M distinct customers (~4 rows per customer on average) reflects the full classification history from July 2024 to April 2026. The 3-5 rows per CID band (45.2% of customers) represents the most common pattern.
+**When a History row is inserted** (Step 32 of SP_eMoney_Customer_Risk_Assessment):
+- First time the customer appears in CRA (no prior History row for this CID)
+- The customer's `ClientRisk` class changes from the last History row (e.g., Low → Medium)
 
-**Historical risk distribution (all time)**: Low=62.7%, Medium=33.1%, High=4.1%, Error=0.03%. The current snapshot shows lower Medium/High percentages (21.8%/1.7%), indicating the customer population's risk profile has improved over time.
+**When a History row is NOT inserted**:
+- The customer's class is unchanged from the last History row (Low stays Low)
+- Note: even if `Risk_Final_Result` changes (score movement within a class), no row is inserted
 
-**Self-referential design**: Step 27 of the SP reads this History table to populate `PreviousClientRisk` in the new snapshot before writing it. Step 32 then writes back to History if a class change occurred. The table simultaneously serves as a lookup source and a write target within the same SP run.
+**Self-referential loop** (important for understanding both tables):
+1. Step 27 reads History (latest row per CID) to populate `PreviousClientRisk` / `PreviousClientRiskDate` and determine `ClientRiskDate` preservation
+2. Step 30: TRUNCATE snapshot table (CRA)
+3. Step 31: INSERT new snapshot (CRA)
+4. Step 32: INSERT new History rows (WHERE class changed vs Step 27 read)
+
+This means the History comparison is always against the **previous SP run's** final state — even if the snapshot was just truncated.
+
+**Schema anomaly period**: From 2025-02-25 to 2025-03-12, the History insert trigger was changed to score-change (`Risk_Final_Result <>`). Rows inserted during this period represent score movements within the same class and DO NOT represent actual class transitions. Reverted 2025-03-12 by Ofir Ovadia.
+
+**Key statistics** (2026-04-12):
+- 8,113,383 total History rows
+- 26.1% of customers have only 1 History row (class assigned once, never changed)
+- Max 387 History rows for a single CID
+- Average 3.99 History rows per customer
 
 ---
 
 ## 2. Business Logic
 
-### Step 32 — History Insert Trigger
+### 2.1 Insert Condition
 
+**What**: The History table only grows when a class-change event occurs.
+
+**Rule** (Step 32 WHERE clause):
 ```sql
--- Step 32 (simplified): Conditional INSERT into History
-INSERT INTO eMoney_Customer_Risk_Assessment_History
-SELECT src.*
-FROM eMoney_Customer_Risk_Assessment src
-LEFT JOIN eMoney_Customer_Risk_Assessment_History trg
-    ON src.CID = trg.CID
-    AND trg.ClientRiskDate = (
-        SELECT MAX(ClientRiskDate) FROM eMoney_Customer_Risk_Assessment_History
-        WHERE CID = src.CID
-    )
-WHERE trg.CID IS NULL                      -- New customer, never in History
-   OR src.ClientRisk <> trg.ClientRisk     -- Risk class changed
+WHERE trg.CID IS NULL             -- new customer: no prior History
+   OR (src.ClientRisk <> trg.ClientRisk)  -- class changed from last History row
+```
+`trg` = latest History row per CID (from Step 27 ROW_NUMBER PARTITION BY CID ORDER BY ClientRiskDate DESC = 1)
+
+### 2.2 Relationship to CRA Snapshot
+
+**What**: History and CRA share identical DDL. The CRA snapshot always reflects the most recent SP run; History reflects all past class transitions.
+
+**Pattern to get class duration**: 
+```sql
+-- Time spent at each class level per customer
+SELECT h.CID, h.ClientRisk, h.ClientRiskDate,
+       LEAD(h.ClientRiskDate) OVER (PARTITION BY h.CID ORDER BY h.ClientRiskDate) AS NextClassDate
+FROM eMoney_Customer_Risk_Assessment_History h
 ```
 
-### Trigger Condition History
+### 2.3 Score-Change Anomaly Period
 
-| Period | Trigger Condition | Reason |
-|--------|------------------|--------|
-| 2023-12-13 — 2025-02-24 | Class change only | Original design |
-| 2025-02-25 — 2025-03-11 | Score change (any Risk_Final_Result change) | Changed to capture more granular history |
-| 2025-03-12 — present | Class change only | **Reverted** — score-change triggered too many rows for Tribe system to handle |
+**What**: Rows inserted 2025-02-25 to 2025-03-12 used score-change trigger, not class-change.
 
-### Step 27 — Previous Risk Lookup (feeds snapshot)
+**Impact**: History row counts are inflated for customers whose score changed intra-class during this window. If analysing class stability or transition frequency, exclude or handle this 16-day window separately.
 
-Before writing the new snapshot (Step 31), Step 27 reads History to find the most recent class for each CID:
+### 2.4 32-Parameter Scores in History
 
-```sql
--- Step 27 (simplified): Read previous risk from History
-SELECT CID, ClientRisk AS PreviousClientRisk, ClientRiskDate AS PreviousClientRiskDate
-FROM (
-    SELECT *, ROW_NUMBER() OVER (PARTITION BY CID ORDER BY ClientRiskDate DESC) AS rn
-    FROM eMoney_Customer_Risk_Assessment_History
-) t WHERE rn = 1
-```
+**What**: All P{n}_Response and P{n}_Risk columns are populated in History rows exactly as in CRA, reflecting the full scoring state at the time of class change.
 
-The result is JOINed into the snapshot calculation. Customers with no History row have PreviousClientRisk=NULL.
+**P10 Note**: Always NULL in History rows for the same reason as CRA (permanently cancelled).
 
 ---
 
 ## 3. Query Advisory
 
-### Gotchas
+### 3.1 Common Query Patterns
 
-| Gotcha | Detail |
-|--------|--------|
-| **Not daily-granular** | History does NOT have one row per day per customer. It is event-driven (class changes only). Do not use for daily status reconstruction without understanding this. |
-| **Score-change gap (Feb–Mar 2025)** | Between 2025-02-25 and 2025-03-11, rows were inserted on score changes (not just class changes). These rows are indistinguishable from genuine class-change rows. Some customers may have unusually many rows in that period. |
-| **P10 always NULL** | Same as snapshot — P10_Response and P10_Risk are always NULL. Do not use. |
-| **PreviousClientRisk=NULL** | For a customer's FIRST History row (new customer), PreviousClientRisk=NULL. 'None' in display tools is NULL in the database. |
-| **Dynamic thresholds** | Risk threshold boundaries were changeable over time (Fivetran classification table). Historical Low/Medium/High labels reflect whatever thresholds were active at the time of each class change. |
-| **UpdateDate is ETL timestamp** | UpdateDate = GETDATE() at Step 32 INSERT time. Use ClientRiskDate for the effective classification date. |
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Current risk classification | Use eMoney_Customer_Risk_Assessment (faster — single row per CID) |
+| First time customer went High | WHERE ClientRisk='High', MIN(ClientRiskDate) GROUP BY CID |
+| Class upgrade/downgrade events | Self-join or LEAD/LAG on CID ORDER BY ClientRiskDate |
+| Customers who improved from High to Low | Filter consecutive rows: prev='High' AND curr='Low' |
+| History row count per customer | GROUP BY CID COUNT(*) — identifies complex risk trajectories |
+| Score-change period anomaly | WHERE ClientRiskDate BETWEEN '2025-02-25' AND '2025-03-12' |
 
-### Recommended Filters
+### 3.2 JOINs
 
-```sql
--- Latest risk class per customer (reproduces current snapshot logic)
-SELECT CID, ClientRisk, ClientRiskDate
-FROM (
-    SELECT *, ROW_NUMBER() OVER (PARTITION BY CID ORDER BY ClientRiskDate DESC) AS rn
-    FROM eMoney_dbo.eMoney_Customer_Risk_Assessment_History
-) t WHERE rn = 1
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| eMoney_dbo.eMoney_Customer_Risk_Assessment | ON h.CID = cra.CID | Current state alongside historical events |
+| DWH_dbo.Dim_Customer | ON h.CID = dc.RealCID | Trading platform enrichment |
 
--- Customers who moved from Low to High at any point
-SELECT CID, PreviousClientRisk, ClientRisk, ClientRiskDate
-FROM eMoney_dbo.eMoney_Customer_Risk_Assessment_History
-WHERE PreviousClientRisk = 'Low' AND ClientRisk = 'High'
+### 3.3 Gotchas
 
--- Risk class transitions in the last 30 days
-WHERE ClientRiskDate >= DATEADD(DAY, -30, CAST(GETDATE() AS DATE))
-```
+- **No grain constraint**: Multiple rows per CID are normal and expected. Do not use without GROUP BY or windowing.
+- **Score-change rows (2025-02-25 → 2025-03-12)**: These rows do not represent class transitions. Filter by ClientRiskDate range to exclude.
+- **P10 always NULL**: See CRA wiki. Same behaviour in History.
+- **PreviousClientRisk in History**: Reflects the class BEFORE the change event recorded in the row. `PreviousClientRisk='Low'` + `ClientRisk='Medium'` = upgraded row.
+- **UpdateDate = GETDATE()** at SP execution time — marks when the row was inserted, not the business event date. Use ClientRiskDate for the business event.
+- **CID NOT NULL**: Both CID and GCID are NOT NULL in DDL. All History rows have valid customer identifiers.
 
 ---
 
 ## 4. Elements
 
-All column descriptions are verbatim-identical to `eMoney_Customer_Risk_Assessment` (same production sources, same tier assignments) per cross-object consistency rules. Column values represent the customer state **at the time of each class change event**.
+### Confidence Tier Legend
 
-| # | Column | Type | Nullable | Description |
-|---|--------|------|----------|-------------|
-| 1 | CID | int | NOT NULL | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic) |
-| 2 | GCID | int | NOT NULL | Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. DWH note: NOT NULL in this table — customers without a GCID are excluded from CRA scoring. (Tier 1 — Customer.CustomerStatic) |
-| 3 | ClientRiskDate | date | NULL | Effective date of the current risk classification. Preserved from the previous run if the risk class is unchanged; set to GETDATE() when a class change occurs or on first assignment. Updated immediately by Step 29 PEP/Manual overrides. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 4 | ClientRisk | varchar(10) | NULL | Current AML risk classification. Values: 'Low', 'Medium', 'High', 'Error'. Derived by comparing Risk_Final_Result against dynamic @RiskLowerCut/@RiskUpperCut thresholds. 'Error' when composite score is NULL (all parameter lookups failed). Overridden to 'High' for PEP customers in Step 29. Distribution: Low=76.3%, Medium=21.8%, High=1.7%, Error=0.1%. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 5 | ClientRiskAssignmentType | varchar(50) | NULL | Source of the risk classification. Values: 'Regular' (automated composite score, 99.99%), 'PEP Override' (ScreeningStatus='PEP', 201 rows), 'Manual Override' (compliance ops via Google Sheets, 1 row). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 6 | Risk_Final_Result | float | NULL | Composite AML risk score (numeric). Sum of (P_RiskID × P_Weight) for all 32 parameters. NULL when any required classification table lookup fails entirely, resulting in ClientRisk='Error'. Threshold boundary values for Low/Medium/High are in the Fivetran classification table (ParameterID=98/99). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 7 | PreviousClientRisk | varchar(10) | NULL | Risk classification from the most recent History row for this CID, read before today's run (Step 27: ROW_NUMBER() PARTITION BY CID ORDER BY ClientRiskDate DESC). NULL if no History row exists for this customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 8 | PreviousClientRiskDate | date | NULL | Effective date of the previous risk classification from History. Same Step 27 window function as PreviousClientRisk. NULL if no History row exists. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 9 | VerificationLevelID | int | NULL | KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Default=0. (Tier 1 — BackOffice.Customer) |
-| 10 | IsValidCustomer | int | NULL | DWH-computed flag: 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used to filter non-standard customers in reporting. Passthrough from Dim_Customer (computed in that table's ETL). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 11 | IsDepositor | int | NULL | DWH-computed flag: 1 if customer has made at least one deposit on the trading platform. Passthrough from Dim_Customer (updated post-load from FTD data). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 12 | AccountType | varchar(50) | NULL | Trading platform account type name. Resolved via Dim_AccountType lookup on AccountTypeID from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 13 | Regulation | varchar(50) | NULL | Regulatory entity governing this customer's account. Resolved via Dim_Regulation lookup on RegulationID from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 14 | Club | varchar(50) | NULL | eToro Club / loyalty tier name. Resolved via Dim_PlayerLevel lookup on PlayerLevelID from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 15 | ClientAge | int | NULL | Customer age in years as of the ETL run date (DATEDIFF(YEAR, BirthDate, GETDATE())). Value 99999 indicates NULL BirthDate or implausible age (>120 or <=0). Used as input to P1 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 16 | DateOfBirth | date | NULL | Customer date of birth. Used in LinkedAccountHash1 for duplicate detection and in KYC age verification. DWH note: CAST(BirthDate AS DATE) — time component stripped. (Tier 1 — Customer.CustomerStatic) |
-| 17 | DateOfReg | date | NULL | Account registration date (renamed from Registered). Default=getdate(). DWH note: CAST(RegisteredReal AS DATE) — time component stripped. (Tier 1 — Customer.CustomerStatic) |
-| 18 | DateOfFTD | date | NULL | First trading platform deposit date. CAST(FirstDepositDate AS DATE) from Dim_Customer. NULL for non-depositors. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 19 | BusinessDuration | int | NULL | Categorical FTD tenure. Values: 1=<1 year since FTD, 2=1–3 years, 3=>3 years, 99999=no deposit or calculation error. Used as input to P11 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 20 | CountryAddress | varchar(50) | NULL | Country name for customer's registered address. Resolved via Dim_Country lookup on Dim_Customer.CountryID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 21 | CountryCitizenship | varchar(50) | NULL | Country name for customer's citizenship. Resolved via Dim_Country lookup on CitizenshipCountryID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 22 | CountryPOB | varchar(50) | NULL | Country name for customer's place of birth. Resolved via Dim_Country lookup on POBCountryID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 23 | CountryTIN | varchar(50) | NULL | Country associated with the customer's Tax Identification Number. Resolved from BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField (FieldId=6) with COALESCE priority: address-matching TIN country > HRC different TIN country > non-HRC different TIN country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 24 | CountryAddress_IsHRC | int | NULL | High Risk Country flag for the address country. Values: 0=not HRC, 1=HRC per Fivetran Google Sheets country risk mapping, 99999=NULL country. Input to P2 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 25 | CountryCitizenship_IsHRC | int | NULL | High Risk Country flag for the citizenship country. Values: 0=not HRC, 1=HRC, 99999=NULL. Input to P3 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 26 | CountryPOB_IsHRC | int | NULL | High Risk Country flag for place of birth country. Values: 0=not HRC, 1=HRC, 99999=NULL. Input to P4 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 27 | CountryTIN_IsHRC | int | NULL | High Risk Country flag for the TIN country. Values: 0=not HRC, 1=HRC, 99999=NULL or no TIN data. Input to P16 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 28 | AccountStatus | varchar(50) | NULL | Trading platform account status name. Resolved via Dim_AccountStatus lookup on AccountStatusID from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 29 | PlayerStatus | varchar(50) | NULL | Trading platform player status name. Resolved via Dim_PlayerStatus lookup on PlayerStatusID from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 30 | PlayerStatusReason | varchar(50) | NULL | Reason for the player status. Resolved via Dim_PlayerStatusReasons lookup on PlayerStatusReasonID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 31 | PlayerStatusSubReason | varchar(50) | NULL | Sub-reason for the player status. Resolved via Dim_PlayerStatusSubReasons lookup on PlayerStatusSubReasonID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 32 | ScreeningStatus | varchar(255) | NULL | Sanctions/PEP screening status name. Resolved via Dim_ScreeningStatus lookup on ScreeningStatusID (ISNULL → 99999 before lookup). 'PEP' value triggers PEP Override classification in Step 29. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 33 | EVStatus | varchar(30) | NULL | Electronic verification (identity verification) status name. Resolved via Dim_EvMatchStatus lookup on EvMatchStatus (ISNULL → 99999 before lookup). Input to P15 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 34 | DocumentStatus | varchar(50) | NULL | Customer document verification status name. Resolved via Dim_DocumentStatus lookup on DocumentStatusID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 35 | PhoneStatus | varchar(50) | NULL | Phone verification status name. Resolved via Dim_PhoneVerified lookup on PhoneVerifiedID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 36 | DocsOK | tinyint | NULL | Composite document verification OK flag. 1=all required documents accepted. Passthrough from Dim_Customer (computed in that table's ETL). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 37 | IsIDProof | int | NULL | Identity proof document status indicator. ISNULL(dc.IsIDProof, 99999) applied — 99999 when no ID proof record. Input to P18 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 38 | IsAddressProof | int | NULL | Address proof document status indicator. ISNULL(dc.IsAddressProof, 99999) applied — 99999 when no address proof record. Input to P19 risk parameter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 39 | IsPhoneVerified | bit | NULL | Phone verification flag. 1=phone verified. Passthrough from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 40 | IsValidETM | int | NULL | Composite flag: customer has exactly one valid eToro Money account (GCID_Unique_Count=1 in eMoney_Dim_Account AND matched in Panel_FirstDates INNER JOIN). NULL=no valid eTM account or multiple eTM accounts (20.9%), 0=invalid eTM account (0.06%), 1=valid single eTM account (79.0%). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 41 | eTM_CurrencyBalanceID | int | NULL | eTM currency balance record identifier from eMoney_Dim_Account. NULL when IsValidETM is NULL or 0. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 42 | eTM_CurrencyBalanceCreateDate | date | NULL | Date the eTM currency balance was created. From eMoney_Dim_Account. NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 43 | eTM_CurrencyBalanceStatus | varchar(50) | NULL | eTM currency balance status name (name-resolved in eMoney_Dim_Account ETL). NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 44 | eTM_AccountID | int | NULL | eTM account identifier from eMoney_Dim_Account. NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 45 | eTM_AccountCreateDate | date | NULL | Date the eTM account was created. From eMoney_Dim_Account. NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 46 | eTM_AccountStatus | varchar(50) | NULL | eTM account status name (name-resolved in eMoney_Dim_Account ETL). NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 47 | eTM_AccountProgram | varchar(50) | NULL | eTM account program name (0=Unknown, 1=Card, 2=IBAN; name-resolved in eMoney_Dim_Account ETL). NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 48 | eTM_AccountSubProgram | varchar(50) | NULL | eTM account sub-program name (country-specific card/IBAN variant; name-resolved in eMoney_Dim_Account ETL). NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 49 | eTM_HasCard | int | NULL | Flag: customer has a physical eTM card. From eMoney_Dim_Account. NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 50 | eTM_CardStatus | varchar(50) | NULL | eTM card status name (name-resolved in eMoney_Dim_Account ETL). NULL when no valid eTM account or no card. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 51 | eTM_ProviderHolderID | int | NULL | eTM provider holder identifier (Tribe-side customer ID). From eMoney_Dim_Account. NULL when no valid eTM account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 52 | eTM_FMI_Date | date | NULL | First Money In date for the eTM account (first IBAN load or card top-up). From eMoney_Panel_FirstDates. NULL when no eTM inbound activity. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 53 | eTM_FMI_Source | varchar(50) | NULL | Source of the first money-in event (e.g., IBAN transfer, card load). From eMoney_Panel_FirstDates. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 54 | eTM_FMO_Date | date | NULL | First Money Out date for the eTM account (first IBAN unload or card spend). From eMoney_Panel_FirstDates. NULL when no eTM outbound activity. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 55 | eTM_FMO_Target | varchar(50) | NULL | Target of the first money-out event. From eMoney_Panel_FirstDates. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 56 | P1_Response | varchar(255) | NULL | Parameter 1 (Client Age) response description from Fivetran classification table. ResponseID matched on ClientAge band. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 57 | P1_Risk | varchar(30) | NULL | Parameter 1 (Client Age) risk level text (e.g., 'Low', 'Medium', 'High'). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 58 | P2_Response | varchar(255) | NULL | Parameter 2 (Address Country HRC flag) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 59 | P2_Risk | varchar(30) | NULL | Parameter 2 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 60 | P3_Response | varchar(255) | NULL | Parameter 3 (Citizenship Country HRC flag) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 61 | P3_Risk | varchar(30) | NULL | Parameter 3 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 62 | P4_Response | varchar(255) | NULL | Parameter 4 (Place of Birth Country HRC flag) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 63 | P4_Risk | varchar(30) | NULL | Parameter 4 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 64 | P5_Response | varchar(255) | NULL | Parameter 5 (KYC Q10 Annual Income) response description from Fivetran classification table. ResponseID matched on declared annual income band. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 65 | P5_Risk | varchar(30) | NULL | Parameter 5 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 66 | P6_Response | varchar(255) | NULL | Parameter 6 (KYC Q11 Total Assets) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 67 | P6_Risk | varchar(30) | NULL | Parameter 6 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 68 | P7_Response | varchar(255) | NULL | Parameter 7 (KYC Q14 Investment Amount) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 69 | P7_Risk | varchar(30) | NULL | Parameter 7 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 70 | P8_Response | varchar(255) | NULL | Parameter 8 (KYC Q15 Main Source of Income) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 71 | P8_Risk | varchar(30) | NULL | Parameter 8 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 72 | P9_Response | varchar(255) | NULL | Parameter 9 (KYC Q18 Occupation Category) response description from Fivetran classification table. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 73 | P9_Risk | varchar(30) | NULL | Parameter 9 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 74 | P10_Response | varchar(255) | NULL | Parameter 10 (Citizenship by Investment Program, Q46) — CANCELLED. Hardcoded NULL in SP. Weight=0 in classification table. Do not use. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 75 | P10_Risk | varchar(30) | NULL | Parameter 10 risk level text — CANCELLED. Always NULL. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 76 | P11_Response | varchar(255) | NULL | Parameter 11 (Business Duration / FTD Tenure) response description from Fivetran classification table. ResponseID matched on BusinessDuration categorical value (1/2/3/99999). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 77 | P11_Risk | varchar(30) | NULL | Parameter 11 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 78 | P12_Response | varchar(255) | NULL | Parameter 12 (Source of Income document) response description. ResponseID: 1=document provided (DocType 16/17 accepted), 2=not provided and lifetime IBAN load <=50K, 3=not provided and lifetime IBAN load >50K. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 79 | P12_Risk | varchar(30) | NULL | Parameter 12 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 80 | P13_Response | varchar(255) | NULL | Parameter 13 (Selfie verification) response description. Accepted document types: 15 (selfie) or 18 (selfie variant) from BackOffice.CustomerDocument. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 81 | P13_Risk | varchar(30) | NULL | Parameter 13 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 82 | P14_Response | varchar(255) | NULL | Parameter 14 (Screening Status / PEP / Sanctions) response description. ResponseID matched on ScreeningStatusID from Dim_ScreeningStatus. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 83 | P14_Risk | varchar(30) | NULL | Parameter 14 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 84 | P15_Response | varchar(255) | NULL | Parameter 15 (Electronic Verification result) response description. ResponseID matched on EVStatusID from Dim_EvMatchStatus. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 85 | P15_Risk | varchar(30) | NULL | Parameter 15 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 86 | P16_Response | varchar(255) | NULL | Parameter 16 (TIN Country HRC flag) response description. ResponseID matched on CountryTIN_IsHRC value. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 87 | P16_Risk | varchar(30) | NULL | Parameter 16 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 88 | P17_Response | varchar(255) | NULL | Parameter 17 (TIN Country matches Address Country) response description. ResponseID: 1=TIN country matches address country, 0=mismatch, 99999=no TIN data in ExtendedUserField. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 89 | P17_Risk | varchar(30) | NULL | Parameter 17 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 90 | P18_Response | varchar(255) | NULL | Parameter 18 (Proof of Identity document) response description. ResponseID matched on IsIDProof value. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 91 | P18_Risk | varchar(30) | NULL | Parameter 18 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 92 | P19_Response | varchar(255) | NULL | Parameter 19 (Proof of Address document) response description. ResponseID matched on IsAddressProof value. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 93 | P19_Risk | varchar(30) | NULL | Parameter 19 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 94 | P20_Response | varchar(255) | NULL | Parameter 20 (IBAN Loads from Multiple Countries) response description. ResponseID: 11=no loads ever, 22=loads from 0 distinct countries, 33=1 country, 44=2–3 countries, 55=4+ countries. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 95 | P20_Risk | varchar(30) | NULL | Parameter 20 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 96 | P21_Response | varchar(255) | NULL | Parameter 21 (IBAN Load Country Matches KYC Country) response description. Checks if any load source country matches the customer's KYC address country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 97 | P21_Risk | varchar(30) | NULL | Parameter 21 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 98 | P22_Response | varchar(255) | NULL | Parameter 22 (IBAN Load Country is HRC) response description. Checks if any load source country is a High Risk Country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 99 | P22_Risk | varchar(30) | NULL | Parameter 22 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 100 | P23_Response | varchar(255) | NULL | Parameter 23 (IBAN Unloads to Multiple Countries) response description. Same structure as P20 but for outbound transactions (TxTypeID=8 unloads). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 101 | P23_Risk | varchar(30) | NULL | Parameter 23 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 102 | P24_Response | varchar(255) | NULL | Parameter 24 (IBAN Unload Country Matches KYC Country) response description. Checks if any unload destination country matches the customer's KYC address country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 103 | P24_Risk | varchar(30) | NULL | Parameter 24 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 104 | P25_Response | varchar(255) | NULL | Parameter 25 (IBAN Unload Country is HRC) response description. Checks if any unload destination country is a High Risk Country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 105 | P25_Risk | varchar(30) | NULL | Parameter 25 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 106 | P26_Response | varchar(255) | NULL | Parameter 26 (High Net Worth Individual threshold) response description. ResponseID: 11=lifetime IBAN loads <=500K USD, 22=lifetime IBAN loads >500K USD. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 107 | P26_Risk | varchar(30) | NULL | Parameter 26 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 108 | P27_Response | varchar(255) | NULL | Parameter 27 (VPN/TOR Usage) response description. ResponseID: 11=>40% of logins detected as VPN/TOR in STS_User_Operations_Data_History, 22=<=40%, 99999=no login history. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 109 | P27_Risk | varchar(30) | NULL | Parameter 27 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 110 | P28_Response | varchar(255) | NULL | Parameter 28 (Citizenship matches Place of Birth Country) response description. ResponseID: 1=same country, 0=different country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 111 | P28_Risk | varchar(30) | NULL | Parameter 28 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 112 | P29_Response | varchar(255) | NULL | Parameter 29 (Citizenship matches KYC Address Country) response description. ResponseID: 1=same country, 0=different country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 113 | P29_Risk | varchar(30) | NULL | Parameter 29 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 114 | P30_Response | varchar(255) | NULL | Parameter 30 (KYC Q26 Source of Funds) response description from Fivetran classification table. ResponseID matched on Q26 answer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 115 | P30_Risk | varchar(30) | NULL | Parameter 30 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 116 | P31_Response | varchar(255) | NULL | Parameter 31 (Declared vs Actual Income Match) response description. Actual income = total TP deposits (Fact_CustomerAction ActionTypeID=7/8, FundingTypeID<>33) + lifetime IBAN loads; compared against KYC Q10 declared maximum annual income band. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 117 | P31_Risk | varchar(30) | NULL | Parameter 31 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 118 | P32_Response | varchar(255) | NULL | Parameter 32 (Total IBAN Inflow Amount) response description. ResponseID: 11=lifetime IBAN loads <=10K USD, 22=10K–200K USD, 33=>200K USD. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 119 | P32_Risk | varchar(30) | NULL | Parameter 32 risk level text. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
-| 120 | UpdateDate | datetime | NULL | Row insert timestamp (GETDATE() at Step 31 INSERT). Reflects ETL run time, not business date. Use ClientRiskDate for the risk classification effective date. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| Tier | Meaning |
+|------|---------|
+| Tier 1 | Description copied verbatim from upstream production wiki (Customer.CustomerStatic or BackOffice.Customer via Dim_Customer.md) |
+| Tier 2 | Description written from ETL SP code analysis (SP_eMoney_Customer_Risk_Assessment) |
 
----
+*All column descriptions are identical to eMoney_Customer_Risk_Assessment.md per cross-object consistency rule. Business semantics of each column in History rows are the same as in the CRA snapshot — they represent the customer's state at the time of the class-change event.*
 
-## 5. Lineage
+### 4.1 Identity
 
-### ETL Pipeline
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | CID | int | NO | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. DWH note: column renamed from RealCID (Dim_Customer) for eMoney context; joins back via CID=RealCID. (Tier 1 — Customer.CustomerStatic) |
+| 2 | GCID | int | NO | Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. (Tier 1 — Customer.CustomerStatic) |
 
-```
-[Same 29 upstream sources as eMoney_Customer_Risk_Assessment]
-                      |
-                      v
-      [SP_eMoney_Customer_Risk_Assessment]
-                      |
-              Step 31: INSERT all customers
-                      |
-                      v
-      [eMoney_Customer_Risk_Assessment]  (snapshot, daily rebuild)
-                      |
-              Step 32: Conditional INSERT
-              WHERE trg.CID IS NULL
-                 OR src.ClientRisk <> trg.ClientRisk
-                      |
-                      v
-[eMoney_Customer_Risk_Assessment_History]  (append-only, class-change-only)
-                      |
-              (Step 27 next day:)
-              Read latest row per CID
-              to populate PreviousClientRisk
-                      |
-                      v
-              [Next day's snapshot computation]
-```
+### 4.2 Risk Classification Output
 
-### Trigger Reversion Timeline
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 3 | ClientRiskDate | date | YES | Date the current ClientRisk class was first assigned. Preserved across daily runs while class is unchanged; reset to @Date (today) when class changes. For PEP overrides: ISNULL(last history date, @Date). For manual overrides: ExecutedDate from override sheet. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 4 | ClientRisk | varchar(10) | YES | Customer AML risk classification. Values: Low (score ≤ @RiskLowerCut), Medium (> LowerCut ≤ UpperCut), High (≥ @RiskUpperCut), Error (unresolvable). Thresholds are dynamic (ParameterID=98/99 in Fivetran classification table). Overridden to 'High' for PEP customers; overridden to custom value for manual override CIDs. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 5 | ClientRiskAssignmentType | varchar(50) | YES | Method by which ClientRisk was assigned. Values: 'Regular' (algorithm), 'PEP Override' (ScreeningStatus='PEP'), 'Manual Override' (CID in override Google Sheet). Override types take precedence over Regular in that order. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 6 | Risk_Final_Result | float | YES | Weighted risk score: SUM(P1_RiskID×P1_Weight + P2_RiskID×P2_Weight + … + P32_RiskID×P32_Weight). P10 always contributes 0 (cancelled). Missing parameters contribute 99999-code row from classification table. Used to derive ClientRisk via threshold comparison. NOT modified by override logic — a PEP-forced customer retains the algorithm score. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 7 | PreviousClientRisk | varchar(10) | YES | ClientRisk from the most recent row in eMoney_Customer_Risk_Assessment_History (latest ClientRiskDate DESC). ISNULL→'None' for customers with no history. Used in ClientRiskDate preservation logic and History insert filter. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 8 | PreviousClientRiskDate | date | YES | ClientRiskDate from the most recent row in eMoney_Customer_Risk_Assessment_History. NULL for customers with no history. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 
-```
-2023-12-13: Created (class-change-only)
-2025-02-25: Changed to score-change trigger (any Risk_Final_Result delta)
-2025-03-12: REVERTED to class-change-only (Tribe volume constraint)
-2026-04-01: ExecutedDate format fix + classification table perf fix
-```
+### 4.3 Customer Profile
 
----
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 9 | VerificationLevelID | int | YES | KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Default=0. (Tier 1 — BackOffice.Customer) |
+| 10 | IsValidCustomer | int | YES | DWH-computed validity flag from Dim_Customer. 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and CountryID≠250. Used for filtering non-standard customer profiles. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 11 | IsDepositor | int | YES | 1 if the customer has made at least one deposit on the eToro trading platform. Sourced from Dim_Customer. Used in certain eTM analytics filters. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 12 | AccountType | varchar(50) | YES | Trading platform account type display name, resolved from DWH_dbo.Dim_AccountType via AccountTypeID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 13 | Regulation | varchar(50) | YES | Regulatory jurisdiction display name, resolved from DWH_dbo.Dim_Regulation via RegulationID. Top values: CySEC, FCA, BVI, ASIC, GAML. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 14 | Club | varchar(50) | YES | eToro Club tier display name, resolved from DWH_dbo.Dim_PlayerLevel via PlayerLevelID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 
-## 6. Relationships
+### 4.4 Demographics & Dates
 
-| Relationship | Type | Join Key |
-|-------------|------|----------|
-| `eMoney_dbo.eMoney_Customer_Risk_Assessment` | Immediate source (Step 31 → Step 32) | CID (class-change condition) |
-| `eMoney_dbo.eMoney_Customer_Risk_Assessment` | Consumer (Step 27 reads History for PreviousClientRisk) | CID; latest ClientRiskDate |
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 15 | ClientAge | int | YES | Customer's age in years at SP execution date, computed as DATEDIFF(YEAR, BirthDate, @Date). Sentinel 99999 used when age > 120, ≤ 0, or BirthDate is NULL. This integer value feeds into P1 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 16 | DateOfBirth | date | YES | Customer date of birth. Used in LinkedAccountHash1 for duplicate detection and in KYC age verification. DWH note: CAST from datetime to date (time component removed); column renamed from BirthDate. (Tier 1 — Customer.CustomerStatic) |
+| 17 | DateOfReg | date | YES | Account registration date (renamed from Registered). Default=getdate(). DWH note: CAST from datetime to date; column renamed from RegisteredReal in Dim_Customer. (Tier 1 — Customer.CustomerStatic) |
+| 18 | DateOfFTD | date | YES | Date of first trading platform deposit. CAST(FirstDepositDate AS DATE) from Dim_Customer. Sentinel '19000101' for non-depositors. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 19 | BusinessDuration | int | YES | Bucketed tenure as eToro depositor, based on years since DateOfFTD. Values: 99999 (no FTD or sentinel '19000101'), 1 (<1 year), 2 (1–3 years), 3 (>3 years). Feeds into P11 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 
----
+### 4.5 Country Attributes
 
-## 7. Sample Queries
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 20 | CountryAddress | varchar(50) | YES | KYC address country display name, resolved from #dim_country (Dim_Country) via CountryID. Reflects the customer's declared residential country. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 21 | CountryCitizenship | varchar(50) | YES | Citizenship country display name, resolved from #dim_country via CitizenshipCountryID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 22 | CountryPOB | varchar(50) | YES | Place of birth country display name, resolved from #dim_country via POBCountryID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 23 | CountryTIN | varchar(50) | YES | Tax identification number (TIN) country display name. Resolved via a prioritised lookup: address-matching country > HRC country > non-HRC country from BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField (FieldId=6). NULL when no TIN country is registered. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 24 | CountryAddress_IsHRC | int | YES | High-risk country flag for the KYC address country. 0=not high risk, 1=high risk, 99999=not classified in CRA mapping. Sourced from Fivetran country risk map. Feeds into P2 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 25 | CountryCitizenship_IsHRC | int | YES | High-risk country flag for the citizenship country. 0=not high risk, 1=high risk, 99999=not classified. Feeds into P3 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 26 | CountryPOB_IsHRC | int | YES | High-risk country flag for the place of birth country. 0=not high risk, 1=high risk, 99999=not classified. Feeds into P4 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 27 | CountryTIN_IsHRC | int | YES | High-risk country flag for the TIN country. 0=not high risk, 1=high risk, 99999=not classified or no TIN. Feeds into P16 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 
-```sql
--- Full risk class change timeline for a specific customer
-SELECT
-    CID,
-    ClientRiskDate,
-    ClientRisk,
-    PreviousClientRisk,
-    Risk_Final_Result,
-    ClientRiskAssignmentType
-FROM eMoney_dbo.eMoney_Customer_Risk_Assessment_History
-WHERE CID = <target_cid>
-ORDER BY ClientRiskDate ASC;
+### 4.6 Account & Player Status
 
--- All customers who escalated from Low to High (direct or via Medium)
-SELECT h.CID, h.PreviousClientRisk, h.ClientRisk, h.ClientRiskDate
-FROM eMoney_dbo.eMoney_Customer_Risk_Assessment_History h
-WHERE h.ClientRisk = 'High'
-  AND h.PreviousClientRisk IN ('Low', 'Medium')
-ORDER BY h.ClientRiskDate DESC;
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 28 | AccountStatus | varchar(50) | YES | Trading platform account lifecycle status display name, resolved from DWH_dbo.Dim_AccountStatus via AccountStatusID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 29 | PlayerStatus | varchar(50) | YES | Trading platform compliance status display name, resolved from DWH_dbo.Dim_PlayerStatus via PlayerStatusID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 30 | PlayerStatusReason | varchar(50) | YES | Reason for the PlayerStatus (e.g., account closure reason), resolved from DWH_dbo.Dim_PlayerStatusReasons via PlayerStatusReasonID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 31 | PlayerStatusSubReason | varchar(50) | YES | Sub-reason providing further granularity below PlayerStatusReason, resolved from DWH_dbo.Dim_PlayerStatusSubReasons via PlayerStatusSubReasonID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 32 | ScreeningStatus | varchar(255) | YES | AML/sanctions screening status display name, resolved from DWH_dbo.Dim_ScreeningStatus. Source ID is ISNULL(ScreeningStatusID, 99999) before lookup. 'PEP' value triggers PEP Override logic. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 33 | EVStatus | varchar(30) | YES | Electronic verification (identity check) status display name, resolved from DWH_dbo.Dim_EvMatchStatus. Source ID is ISNULL(EvMatchStatus, 99999) before lookup. Feeds into P15 classification. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 34 | DocumentStatus | varchar(50) | YES | KYC document verification status display name, resolved from DWH_dbo.Dim_DocumentStatus via DocumentStatusID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 35 | PhoneStatus | varchar(50) | YES | Phone verification status display name, resolved from DWH_dbo.Dim_PhoneVerified via PhoneVerifiedID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 
--- Monthly new High-risk designations
-SELECT
-    YEAR(ClientRiskDate) AS Yr,
-    MONTH(ClientRiskDate) AS Mo,
-    COUNT(*) AS NewHighRisk
-FROM eMoney_dbo.eMoney_Customer_Risk_Assessment_History
-WHERE ClientRisk = 'High'
-  AND (PreviousClientRisk <> 'High' OR PreviousClientRisk IS NULL)
-GROUP BY YEAR(ClientRiskDate), MONTH(ClientRiskDate)
-ORDER BY Yr, Mo;
+### 4.7 KYC Document Flags
 
--- Latest risk state per customer from History (matches current snapshot)
-SELECT CID, ClientRisk, ClientRiskDate, Risk_Final_Result
-FROM (
-    SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY CID ORDER BY ClientRiskDate DESC) AS rn
-    FROM eMoney_dbo.eMoney_Customer_Risk_Assessment_History
-) t
-WHERE rn = 1;
-```
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 36 | DocsOK | tinyint | YES | Composite flag from Dim_Customer indicating all required KYC documents are accepted. Business definition follows Dim_Customer logic. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 37 | IsIDProof | int | YES | Proof of identity status from Dim_Customer. ISNULL(raw value, 99999). Feeds into P18 classification. 99999=not available/unknown. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 38 | IsAddressProof | int | YES | Proof of address status from Dim_Customer. ISNULL(raw value, 99999). Feeds into P19 classification. 99999=not available/unknown. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 39 | IsPhoneVerified | bit | YES | 1 if the customer's phone number has been verified. Sourced from Dim_Customer. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.8 eToro Money Account
+
+*Sourced from eMoney_Dim_Account (primary account row, RN_Duplicates=1) and eMoney_Panel_FirstDates. Reflects eTM state at the time the class-change row was generated.*
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 40 | IsValidETM | int | YES | eToro Money validity flag from eMoney_Dim_Account. 1 when IsValidCustomer=1 AND IsTestAccount=0 AND IsCancelledAccount=0. NULL when the customer has no eTM account (LEFT JOIN). (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 41 | eTM_CurrencyBalanceID | int | YES | eTM currency balance identifier (FiatCurrencyBalances.Id). Primary key of the customer's eTM money account. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 42 | eTM_CurrencyBalanceCreateDate | date | YES | Date the eTM currency balance was created. Sourced from eMoney_Dim_Account.CurrencyBalanceCreateDate. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 43 | eTM_CurrencyBalanceStatus | varchar(50) | YES | Current status of the eTM currency balance (e.g., Active, Suspended). Sourced from eMoney_Dim_Account.CurrencyBalanceStatus. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 44 | eTM_AccountID | int | YES | eTM fiat account identifier (FiatAccount.Id). Parent account of the currency balance. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 45 | eTM_AccountCreateDate | date | YES | Date the eTM fiat account was created. Sourced from eMoney_Dim_Account.AccountCreateDate. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 46 | eTM_AccountStatus | varchar(50) | YES | Current lifecycle status of the eTM fiat account (e.g., Active, Deleted). Sourced from eMoney_Dim_Account.AccountStatus. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 47 | eTM_AccountProgram | varchar(50) | YES | eTM account programme type (e.g., iban, card). Sourced from eMoney_Dim_Account.AccountProgram. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 48 | eTM_AccountSubProgram | varchar(50) | YES | eTM account sub-programme variant (e.g., IBAN EU Green, IBAN Standard UK). Sourced from eMoney_Dim_Account.AccountSubProgram. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 49 | eTM_HasCard | int | YES | 1 if the customer has an associated eTM card; 0 otherwise. Sourced from eMoney_Dim_Account.HasCard. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 50 | eTM_CardStatus | varchar(50) | YES | Current card status (e.g., Activated, Blocked). Sourced from eMoney_Dim_Account.CardStatus. NULL if HasCard=0. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 51 | eTM_ProviderHolderID | int | YES | Provider-side customer holder identifier (Tribe payment provider). Sourced from eMoney_Dim_Account.ProviderHolderID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 52 | eTM_FMI_Date | date | YES | Date of the customer's first money-in (FMI) transaction on the eTM platform. Sourced from eMoney_Panel_FirstDates via AccountID JOIN. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 53 | eTM_FMI_Source | varchar(50) | YES | Transaction type (channel) of the first money-in event. Sourced from eMoney_Panel_FirstDates.FMI_Source. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 54 | eTM_FMO_Date | date | YES | Date of the customer's first money-out (FMO) transaction on the eTM platform. Sourced from eMoney_Panel_FirstDates.FMO_Date. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 55 | eTM_FMO_Target | varchar(50) | YES | Transaction type (channel) of the first money-out event. Sourced from eMoney_Panel_FirstDates.FMO_Target. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.9 P1–P4: Country & Age Risk Parameters
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 56 | P1_Response | varchar(255) | YES | Classification response description for P1 (Client Age). ResponseID = ClientAge integer. Matched from Fivetran classification table ParameterID=1. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 57 | P1_Risk | varchar(30) | YES | Risk tier label for P1 (Client Age). Contributes P1_RiskID × P1_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 58 | P2_Response | varchar(255) | YES | Classification response description for P2 (Address Country High Risk). ResponseID = CountryAddress_IsHRC (0/1/99999). ParameterID=2. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 59 | P2_Risk | varchar(30) | YES | Risk tier label for P2 (Address Country High Risk). Contributes P2_RiskID × P2_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 60 | P3_Response | varchar(255) | YES | Classification response description for P3 (Citizenship Country High Risk). ResponseID = CountryCitizenship_IsHRC. ParameterID=3. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 61 | P3_Risk | varchar(30) | YES | Risk tier label for P3 (Citizenship Country High Risk). Contributes P3_RiskID × P3_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 62 | P4_Response | varchar(255) | YES | Classification response description for P4 (Place of Birth Country High Risk). ResponseID = CountryPOB_IsHRC. ParameterID=4. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 63 | P4_Risk | varchar(30) | YES | Risk tier label for P4 (Place of Birth Country High Risk). Contributes P4_RiskID × P4_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.10 P5–P11: KYC Declarations & Business Duration
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 64 | P5_Response | varchar(255) | YES | Classification response description for P5 (Annual Income — KYC Q10). ResponseID = Q10_AnswerID. ParameterID=5. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 65 | P5_Risk | varchar(30) | YES | Risk tier label for P5 (Annual Income). Contributes P5_RiskID × P5_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 66 | P6_Response | varchar(255) | YES | Classification response description for P6 (Total Assets — KYC Q11). ResponseID = Q11_AnswerID. ParameterID=6. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 67 | P6_Risk | varchar(30) | YES | Risk tier label for P6 (Total Assets). Contributes P6_RiskID × P6_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 68 | P7_Response | varchar(255) | YES | Classification response description for P7 (Planned Investment Amount — KYC Q14). ResponseID = Q14_AnswerID. ParameterID=7. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 69 | P7_Risk | varchar(30) | YES | Risk tier label for P7 (Planned Investment Amount). Contributes P7_RiskID × P7_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 70 | P8_Response | varchar(255) | YES | Classification response description for P8 (Main Source of Income — KYC Q15). ResponseID = Q15_AnswerID. ParameterID=8. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 71 | P8_Risk | varchar(30) | YES | Risk tier label for P8 (Main Source of Income). Contributes P8_RiskID × P8_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 72 | P9_Response | varchar(255) | YES | Classification response description for P9 (Occupation Category — KYC Q18). ResponseID = Q18_AnswerID. ParameterID=9. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 73 | P9_Risk | varchar(30) | YES | Risk tier label for P9 (Occupation Category). Contributes P9_RiskID × P9_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 74 | P10_Response | varchar(255) | YES | ALWAYS NULL. Parameter 10 (KYC Q46 Citizenship By Investment Program) was permanently cancelled. P10_RiskID=0 and P10_Weight=0; this parameter contributes nothing to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 75 | P10_Risk | varchar(30) | YES | ALWAYS NULL. P10 is permanently cancelled — see P10_Response. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 76 | P11_Response | varchar(255) | YES | Classification response description for P11 (Business Duration as eToro depositor). ResponseID = BusinessDuration bucket (99999/1/2/3). ParameterID=11. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 77 | P11_Risk | varchar(30) | YES | Risk tier label for P11 (Business Duration). Contributes P11_RiskID × P11_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.11 P12–P13: Document Verification
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 78 | P12_Response | varchar(255) | YES | Classification response description for P12 (Source of Income Document). ResponseID: 1=document provided, 2=absent with IBAN MoneyIn ≤50K, 3=absent with IBAN MoneyIn >50K. ParameterID=12. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 79 | P12_Risk | varchar(30) | YES | Risk tier label for P12 (Source of Income Document). Contributes P12_RiskID × P12_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 80 | P13_Response | varchar(255) | YES | Classification response description for P13 (Selfie Verification Document). ResponseID: 1=selfie provided (DocType 15 or 18, no rejection), 0=not provided. ParameterID=13. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 81 | P13_Risk | varchar(30) | YES | Risk tier label for P13 (Selfie Verification). Contributes P13_RiskID × P13_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.12 P14–P19: BackOffice & TIN Risk
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 82 | P14_Response | varchar(255) | YES | Classification response description for P14 (AML Screening Status). ResponseID = ScreeningStatusID (ISNULL→99999). ParameterID=14. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 83 | P14_Risk | varchar(30) | YES | Risk tier label for P14 (Screening Status). Contributes P14_RiskID × P14_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 84 | P15_Response | varchar(255) | YES | Classification response description for P15 (Electronic Verification / EV Match Status). ResponseID = EvMatchStatus (ISNULL→99999). ParameterID=15. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 85 | P15_Risk | varchar(30) | YES | Risk tier label for P15 (Electronic Verification). Contributes P15_RiskID × P15_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 86 | P16_Response | varchar(255) | YES | Classification response description for P16 (TIN Country High Risk). ResponseID = CountryTIN_IsHRC (0/1/99999). ParameterID=16. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 87 | P16_Risk | varchar(30) | YES | Risk tier label for P16 (TIN Country High Risk). Contributes P16_RiskID × P16_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 88 | P17_Response | varchar(255) | YES | Classification response description for P17 (TIN Country matches KYC Address Country). ResponseID: 1=match, 0=mismatch, 99999=no TIN. ParameterID=17. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 89 | P17_Risk | varchar(30) | YES | Risk tier label for P17 (TIN Country Match). Contributes P17_RiskID × P17_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 90 | P18_Response | varchar(255) | YES | Classification response description for P18 (Proof of Identity). ResponseID = IsIDProof (ISNULL→99999). ParameterID=18. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 91 | P18_Risk | varchar(30) | YES | Risk tier label for P18 (Proof of Identity). Contributes P18_RiskID × P18_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 92 | P19_Response | varchar(255) | YES | Classification response description for P19 (Proof of Address). ResponseID = IsAddressProof (ISNULL→99999). ParameterID=19. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 93 | P19_Risk | varchar(30) | YES | Risk tier label for P19 (Proof of Address). Contributes P19_RiskID × P19_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.13 P20–P26, P32: IBAN MIMO Risk
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 94 | P20_Response | varchar(255) | YES | Classification response description for P20 (IBAN Load — Number of Source Countries). ResponseID encoded: 11=no IBAN loads, 33=1 country, 44=2-3 countries, 55=≥4 countries. ParameterID=20. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 95 | P20_Risk | varchar(30) | YES | Risk tier label for P20 (IBAN Load Country Diversity). Contributes P20_RiskID × P20_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 96 | P21_Response | varchar(255) | YES | Classification response description for P21 (Last IBAN Load Country matches KYC Address Country). ResponseID: 11=no loads, 22=match, 33=mismatch, 44=missing country data. ParameterID=21. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 97 | P21_Risk | varchar(30) | YES | Risk tier label for P21 (IBAN Load Country vs KYC). Contributes P21_RiskID × P21_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 98 | P22_Response | varchar(255) | YES | Classification response description for P22 (Last IBAN Load Country is High Risk). ResponseID: 11=no loads, 22=not HRC, 33=HRC, 44=missing HRC data. ParameterID=22. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 99 | P22_Risk | varchar(30) | YES | Risk tier label for P22 (IBAN Load Country HRC). Contributes P22_RiskID × P22_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 100 | P23_Response | varchar(255) | YES | Classification response description for P23 (IBAN Unload — Number of Destination Countries). Same ResponseID encoding as P20. ParameterID=23. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 101 | P23_Risk | varchar(30) | YES | Risk tier label for P23 (IBAN Unload Country Diversity). Contributes P23_RiskID × P23_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 102 | P24_Response | varchar(255) | YES | Classification response description for P24 (Last IBAN Unload Country matches KYC Address Country). Same encoding as P21. ParameterID=24. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 103 | P24_Risk | varchar(30) | YES | Risk tier label for P24 (IBAN Unload Country vs KYC). Contributes P24_RiskID × P24_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 104 | P25_Response | varchar(255) | YES | Classification response description for P25 (Last IBAN Unload Country is High Risk). Same encoding as P22. ParameterID=25. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 105 | P25_Risk | varchar(30) | YES | Risk tier label for P25 (IBAN Unload Country HRC). Contributes P25_RiskID × P25_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 106 | P26_Response | varchar(255) | YES | Classification response description for P26 (High Net Worth Individual). ResponseID: 11=MoneyIn_IBAN ≤500K USD, 22=>500K USD. ParameterID=26. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 107 | P26_Risk | varchar(30) | YES | Risk tier label for P26 (High Net Worth). Contributes P26_RiskID × P26_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 118 | P32_Response | varchar(255) | YES | Classification response description for P32 (Total IBAN Money In Volume). ResponseID: 11=≤$10K, 22=>$10K–$200K, 33=>$200K. MoneyIn_IBAN = sum of TxTypeID=5 and TxTypeID=7 amounts. ParameterID=32. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 119 | P32_Risk | varchar(30) | YES | Risk tier label for P32 (IBAN Total Volume). Contributes P32_RiskID × P32_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.14 P27–P31: Behavioural & Cross-Platform Risk
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 108 | P27_Response | varchar(255) | YES | Classification response description for P27 (VPN/TOR Usage). ResponseID: 11=VPN/TOR ratio >40% of logins, 22=≤40%, 99999=no login history. Sourced from STS_User_Operations_Data_History (login events). ParameterID=27. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 109 | P27_Risk | varchar(30) | YES | Risk tier label for P27 (VPN/TOR Usage). Contributes P27_RiskID × P27_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 110 | P28_Response | varchar(255) | YES | Classification response description for P28 (Citizenship Country = Place of Birth Country). ResponseID: 1=match, 0=mismatch, 99999=missing data. ParameterID=28. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 111 | P28_Risk | varchar(30) | YES | Risk tier label for P28 (Citizenship = POB). Contributes P28_RiskID × P28_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 112 | P29_Response | varchar(255) | YES | Classification response description for P29 (Citizenship Country = KYC Address Country). ResponseID: 1=match, 0=mismatch, 99999=missing data. ParameterID=29. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 113 | P29_Risk | varchar(30) | YES | Risk tier label for P29 (Citizenship = Address). Contributes P29_RiskID × P29_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 114 | P30_Response | varchar(255) | YES | Classification response description for P30 (Source of Funds — KYC Q26). ResponseID = Q26_AnswerID. ParameterID=30. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 115 | P30_Risk | varchar(30) | YES | Risk tier label for P30 (Source of Funds). Contributes P30_RiskID × P30_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 116 | P31_Response | varchar(255) | YES | Classification response description for P31 (Total Ecosystem Money In vs Declared Max Income). MoneyIn_Total = TP deposits (Fact_CustomerAction) + IBAN loads. Compared against Q10_AnswerID-derived max declared income. ResponseID: 11=within/under declared, 22=up to 130% of declared, 33=exceeds 130% of declared. ParameterID=31. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 117 | P31_Risk | varchar(30) | YES | Risk tier label for P31 (Ecosystem Money vs Declared). Contributes P31_RiskID × P31_Weight to Risk_Final_Result. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+
+### 4.15 Metadata
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 120 | UpdateDate | datetime | YES | SP execution timestamp (GETDATE() at INSERT time). Not a business date; marks when the class-change row was inserted. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 
 ---
 
-## 8. Atlassian Knowledge Sources
-
-| Source | Notes |
-|--------|-------|
-| SP_eMoney_Customer_Risk_Assessment header | Step 27 (prev risk lookup) and Step 32 (conditional History insert) documented in SP header comments |
-| eMoney & Wallet Data Analytics Team | Trigger reversion decision (2025-03-12) made by team due to Tribe volume constraints |
-
----
-
-## Tier Legend
-
-| Tier | Meaning | Count |
-|------|---------|-------|
-| Tier 1 | Verbatim copy from upstream production DB wiki (no value transformation) | 5 |
-| Tier 2 | Confirmed from SP source code and ETL column-to-source tracing | 115 |
-
----
-
-## Cross-Object Consistency Declaration
-
-All 120 column descriptions in this wiki are **verbatim-identical** to `eMoney_Customer_Risk_Assessment.md` (same production source, same SP, same tier assignments). No column description was modified. The only wiki differences are: property table values, Sections 1–3 (History-specific semantics), Section 5 (History ETL diagram), and Section 7 (History sample queries).
-
-PHASE 10.5b CHECKPOINT: PASS (inherited from CRA snapshot — same T1=5, T2=115 assignment, same upstream wiki sources)
+_Generated by DWH Semantic Documentation Pipeline · Batch 10 · 2026-04-21_
+_Writer SP: `eMoney_dbo.SP_eMoney_Customer_Risk_Assessment` · Lineage: `eMoney_Customer_Risk_Assessment_History.lineage.md`_

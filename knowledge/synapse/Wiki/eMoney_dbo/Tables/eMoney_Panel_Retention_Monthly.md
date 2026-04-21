@@ -26,7 +26,7 @@ All 84 metric and classification columns — MIMO volumes (Value_*), transaction
 | **Storage** | HEAP |
 | **Writer SP** | SP_eMoney_Panel_Retention |
 | **ETL pattern** | TRUNCATE + full rebuild from Daily (post WHILE-loop) |
-| **UC Target** | _Not_Migrated |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_retention_monthly` |
 
 ---
 

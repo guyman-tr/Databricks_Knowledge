@@ -1,187 +1,280 @@
-# Column Lineage — eMoney_dbo.eMoney_Customer_Risk_Assessment
+# eMoney_dbo.eMoney_Customer_Risk_Assessment — Production Lineage Map
 
-**Generated**: 2026-04-21 | **Writer SP**: SP_eMoney_Customer_Risk_Assessment (1730 lines, 32 steps)
-**ETL Pattern**: Daily TRUNCATE TABLE + INSERT; runs after Group One pipeline
-**Distribution**: HASH(CID) | **Index**: HEAP
+## Source Resolution
 
----
+| Property | Value |
+|----------|-------|
+| **Production Database** | eToro Money operational data (eTM); DWH_dbo enrichment; BI_DB_dbo BackOffice/KYC externals |
+| **Population Seed** | eMoney_dbo.eMoney_Dim_Account (all CID/GCID pairs with eTM account) |
+| **Primary Customer Source** | DWH_dbo.Dim_Customer (joined via RealCID=CID) |
+| **Risk Classification Source** | eMoney_dbo.emoney_customer_risk_assessment_classification_table (Fivetran/Google Sheets) |
+| **Country HRC Source** | BI_DB_dbo.External_Fivetran_google_sheet_cracountryriskmapping (Fivetran/Google Sheets) |
+| **Manual Override Source** | BI_DB_dbo.External_Fivetran_google_sheets_eMoney_Customer_Risk_Assessment_Manual_Override_Table |
+| **KYC Source** | BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data (QuestionID 10,11,14,15,18,26) |
+| **TIN Source** | BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField (FieldId=6) |
+| **Document Source** | BI_DB_dbo.External_etoro_BackOffice_CustomerDocument + CustomerDocumentToDocumentType |
+| **IBAN MIMO Source** | eMoney_dbo.eMoney_Dim_Transaction (TxTypeID=5/7/8, IsTxSettled=1) |
+| **TP MIMO Source** | DWH_dbo.Fact_CustomerAction (ActionTypeID=7/8, FundingTypeID≠33) |
+| **VPN/TOR Source** | DWH_dbo.STS_User_Operations_Data_History (login events) |
+| **History Source** | eMoney_dbo.eMoney_Customer_Risk_Assessment_History (previous classification) |
+| **ETL SP** | SP_eMoney_Customer_Risk_Assessment (1729 lines, TRUNCATE + INSERT daily) |
+| **Upstream Wiki** | knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Customer.md |
+| **UC Target** | _Not_Migrated |
 
-## Source Objects
+## ETL Pipeline Summary
 
-| Source Object | Role | Schema |
-|---------------|------|--------|
-| `eMoney_dbo.eMoney_Dim_Account` | eTM account identity (GCID_Unique_Count=1 only) | eMoney_dbo |
-| `eMoney_dbo.eMoney_Panel_FirstDates` | FMI/FMO dates for eTM account | eMoney_dbo |
-| `eMoney_dbo.eMoney_Dim_Transaction` | IBAN MIMO settlement transactions (TxTypeID 5,7,8) | eMoney_dbo |
-| `DWH_dbo.Dim_Customer` | Trading platform customer profile (RealCID, GCID, compliance, dates) | DWH_dbo |
-| `DWH_dbo.Dim_AccountType` | AccountType name lookup | DWH_dbo |
-| `DWH_dbo.Dim_Regulation` | Regulation name lookup | DWH_dbo |
-| `DWH_dbo.Dim_PlayerLevel` | Club/PlayerLevel name lookup | DWH_dbo |
-| `DWH_dbo.Dim_AccountStatus` | AccountStatus name lookup | DWH_dbo |
-| `DWH_dbo.Dim_PlayerStatus` | PlayerStatus name lookup | DWH_dbo |
-| `DWH_dbo.Dim_PlayerStatusReasons` | PlayerStatusReason name lookup | DWH_dbo |
-| `DWH_dbo.Dim_PlayerStatusSubReasons` | PlayerStatusSubReason name lookup | DWH_dbo |
-| `DWH_dbo.Dim_ScreeningStatus` | ScreeningStatus name lookup | DWH_dbo |
-| `DWH_dbo.Dim_EvMatchStatus` | EVStatus name lookup | DWH_dbo |
-| `DWH_dbo.Dim_DocumentStatus` | DocumentStatus name lookup | DWH_dbo |
-| `DWH_dbo.Dim_PhoneVerified` | PhoneStatus name lookup | DWH_dbo |
-| `DWH_dbo.Fact_CustomerAction` | TP deposit/cashout amounts (ActionTypeID 7,8; FundingTypeID<>33) | DWH_dbo |
-| `DWH_dbo.STS_User_Operations_Data_History` | VPN/TOR login detection | DWH_dbo |
-| `DWH_dbo.Dim_Country` | Country name resolution for address/citizenship/POB/TIN | DWH_dbo |
-| `eMoney_dbo.eMoney_Country_Codes_Mapping_ISO` | ISO numeric → DWH CountryID bridge | eMoney_dbo |
-| `eMoney_dbo.eMoney_Customer_Risk_Assessment_History` | Previous risk classification lookup (Step 27) | eMoney_dbo |
-| `BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data` | KYC answers (Q10,Q11,Q14,Q15,Q18,Q26) | BI_DB_dbo |
-| `BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField` | TIN country data (FieldId=6) | BI_DB_dbo |
-| `BI_DB_dbo.External_Fivetran_google_sheets_emoney_customer_risk_assessment_classification_table` | Risk classification weights (Fivetran → Google Sheets) | BI_DB_dbo |
-| `BI_DB_dbo.External_Fivetran_google_sheets_eMoney_Customer_Risk_Assessment_Manual_Override_Table` | Manual risk override entries | BI_DB_dbo |
-| `BI_DB_dbo.External_Fivetran_google_sheet_cracountryriskmapping` | Country HRC mapping (Google Sheets) | BI_DB_dbo |
-| `BI_DB_dbo.External_etoro_BackOffice_CustomerDocument` | Selfie and source-of-income document records | BI_DB_dbo |
-| `BI_DB_dbo.External_etoro_BackOffice_CustomerDocumentToDocumentType` | Document type/status resolution | BI_DB_dbo |
-| `BI_DB_dbo.External_etoro_Dictionary_DocumentType` | Document type dictionary | BI_DB_dbo |
-| `BI_DB_dbo.External_etoro_Dictionary_DocumentRejectReason` | Reject reason dictionary | BI_DB_dbo |
+```
+Step 01: #temp — copy of emoney_customer_risk_assessment_classification_table (Fivetran)
+         @RiskLowerCut = ParameterWeight * 100 WHERE ParameterID=98 (dynamic Low/Medium threshold)
+         @RiskUpperCut = ParameterWeight * 100 WHERE ParameterID=99 (dynamic Medium/High threshold)
 
----
+Step 02: #risk_classification_table — HASH(ParameterID); all P1-P32 rows (excludes ParameterID 98/99)
+         #risk_manual_override_table — HASH(CID); CID-level manual ClientRisk overrides from Google Sheets
+         #manual_country_risk_classification — HASH(eToroDWHCountryID); IsHighRiskCountry per country from Google Sheets
+         #dim_country — HASH(CountryID); Dim_Country + eMoney_Country_Codes_Mapping_ISO + HRC flags
+
+Step 03: #pop — DISTINCT CID, GCID from eMoney_Dim_Account (all eTM customers)
+
+Step 04: #dim_customer — HASH(GCID); full trading platform customer profile
+         Source: Dim_Customer INNER JOIN #pop ON RealCID=CID
+         Lookups: Dim_AccountType, Dim_Regulation, Dim_PlayerLevel, #dim_country (×3),
+                  Dim_AccountStatus, Dim_PlayerStatus, Dim_PlayerStatusReasons, Dim_PlayerStatusSubReasons,
+                  Dim_ScreeningStatus, Dim_EvMatchStatus, Dim_RiskStatus, Dim_DocumentStatus, Dim_PhoneVerified
+         Computes: ClientAge (DATEDIFF YEAR; 99999 if >120/≤0/NULL)
+                   DateOfBirth = CAST(BirthDate AS DATE)
+                   DateOfReg = CAST(RegisteredReal AS DATE)
+                   DateOfFTD = CAST(FirstDepositDate AS DATE)
+                   BusinessDuration (CASE: 99999 if sentinel/NULL, 1 if <1yr, 2 if 1-3yr, 3 if >3yr)
+                   CountryAddress/Citizenship/POB IsHRC = ISNULL(CRA_IsHighRiskCountry, 99999)
+                   P28 = Citizenship == POB (0/1/99999)
+                   P29 = Citizenship == Address (0/1/99999)
+                   ScreeningStatusID/EVStatusID = ISNULL(raw ID, 99999)
+                   IsIDProof/IsAddressProof = ISNULL(raw, 99999)
+
+Step 05: #dim_account — HASH(CID); eTM account snapshot for each CID
+         Source: eMoney_Dim_Account INNER JOIN #pop (GCID_Unique_Count=1)
+                 INNER JOIN eMoney_Panel_FirstDates ON AccountID (FMI/FMO dates)
+         Dedup: ROW_NUMBER() PARTITION BY CID ORDER BY CID DESC → RN_Duplicates=1
+
+Step 06: #risk_customer_info — P1/2/3/4/11/28/29 scores
+         P1 = ClientAge → ParameterID=1 (Client Age)
+         P2 = CountryAddress_IsHRC → ParameterID=2 (Address Country HRC)
+         P3 = CountryCitizenship_IsHRC → ParameterID=3 (Citizenship Country HRC)
+         P4 = CountryPOB_IsHRC → ParameterID=4 (POB Country HRC)
+         P11 = BusinessDuration → ParameterID=11 (Business Duration)
+         P28 = CitizenshipCountryID==POBCountryID → ParameterID=28
+         P29 = CitizenshipCountryID==CountryID → ParameterID=29
+
+Steps 07-08: KYC Q&A compilation and leveling
+         Source: BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data
+         Questions: Q10=Annual Income, Q11=Total Assets, Q14=Planned Investment,
+                    Q15=Main SoI, Q18=Occupation, Q26=Source of Funds [Q46 CANCELLED]
+         Leveled: MAX per GCID, ISNULL(answer, 99999)
+
+Step 09: #risk_kyc — P5/6/7/8/9/10/30 scores
+         P5 = Q10_AnswerID → ParameterID=5 (Annual Income)
+         P6 = Q11_AnswerID → ParameterID=6 (Total Assets)
+         P7 = Q14_AnswerID → ParameterID=7 (Planned Investment)
+         P8 = Q15_AnswerID → ParameterID=8 (Main Source of Income)
+         P9 = Q18_AnswerID → ParameterID=9 (Occupation Category)
+         P10 = ALWAYS NULL (Q46 Citizenship By Investment Program — CANCELLED)
+         P30 = Q26_AnswerID → ParameterID=30 (Source of Funds)
+
+Steps 10-11: TIN compilation and leveling
+         Source: BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField (FieldId=6, GCID join)
+         Priority: matching address country > HRC country > non-HRC country
+         Resolves: CountryTIN, CountryTIN_IsHRC, IsKYCCountryMatchingTINCountry
+
+Step 12: #risk_tin — P16/17 scores
+         P16 = CountryTIN_IsHRC → ParameterID=16 (TIN Country HRC)
+         P17 = IsKYCCountryMatchingTINCountry → ParameterID=17 (TIN = Address Country)
+
+Steps 13-14: BackOffice document compilation (Selfie + Source of Income)
+         Source: External_etoro_BackOffice_CustomerDocument + CustomerDocumentToDocumentType
+         Filter: SuggestedDocTypeID or Response_DocTypeID IN (7=SOI, 15=Selfie, 18=Selfie) AND RejectReasonID IS NULL
+         Selfie: DocType 15 or 18; IsSelfieProvided=1/0
+         SOI: DocType 7; IsSourceOfIncomeProvided=1/2/3 (1=provided; 2=absent≤50K; 3=absent>50K IBAN in)
+
+Step 15: #risk_selfie — P13 score
+         P13 = IsSelfieProvided → ParameterID=13 (Selfie Verification)
+
+Step 16: #risk_backoffice — P14/15/18/19 scores
+         P14 = ScreeningStatusID → ParameterID=14 (Screening Status)
+         P15 = EVStatusID → ParameterID=15 (Electronic Verification)
+         P18 = IsIDProof → ParameterID=18 (Proof of Identity)
+         P19 = IsAddressProof → ParameterID=19 (Proof of Address)
+
+Steps 17-21: IBAN MIMO processing
+         Source: eMoney_Dim_Transaction (TxTypeID=5 card_load, 7=IBAN_load, 8=IBAN_unload; IsTxSettled=1)
+         Country match: TxLocalCountryNumericISO → ISO_CountryNumericCode → #dim_country
+         Aggregates: count/sum per TxTypeID; distinct countries; last country IsHRC; MoneyIn_IBAN = TxTypeID IN (5,7)
+         P20 = IBAN load countries count (11/22/33/44/55 codes) → ParameterID=20
+         P21 = last IBAN load country == KYC address → ParameterID=21
+         P22 = last IBAN load country IsHRC → ParameterID=22
+         P23 = IBAN unload countries count → ParameterID=23
+         P24 = last IBAN unload country == KYC address → ParameterID=24
+         P25 = last IBAN unload country IsHRC → ParameterID=25
+         P26 = MoneyIn_IBAN >500000 USD → ParameterID=26 (High Net Worth)
+         P32 = MoneyIn_IBAN buckets ≤10K/≤200K/>200K → ParameterID=32
+
+Steps 22-23: Source of income document — P12
+         P12 = IsSourceOfIncomeProvided → ParameterID=12
+
+Steps 24-25: TP MIMO (trading platform deposits/cashouts) — P31
+         Source: Fact_CustomerAction (ActionTypeID=7=deposit, 8=cashout; FundingTypeID≠33)
+         MoneyIn_Total = TP deposits + IBAN loads; vs Q10 declared max income
+         P31 = Declared/Actual ratio buckets → ParameterID=31
+
+Step 26: VPN/TOR — P27
+         Source: STS_User_Operations_Data_History (LoginTypeName IN (TokenExchange,Login,Authenticate,DeviceAdded,FirstLogin))
+         P27 = Count_VPN_TOR_Proxy/Count_Total >0.4 → ParameterID=27
+
+Step 27: #eMoney_Customer_Risk_Assessment_History — latest history row per CID
+         Source: eMoney_Customer_Risk_Assessment_History (ROW_NUMBER PARTITION BY CID ORDER BY ClientRiskDate DESC WHERE LastRiskRow=1)
+
+Step 28: #final — assembles all sources; computes final risk classification
+         Risk_Final_Result = SUM(P1_RiskID×P1_Weight + P2_RiskID×P2_Weight + … + P32_RiskID×P32_Weight)
+         ClientRisk = 'Low' (≤LowerCut) / 'Medium' (>LowerCut ≤UpperCut) / 'High' (≥UpperCut) / 'Error' (else)
+         ClientRiskDate = preserved if ClientRisk unchanged, else @Date (today)
+         ClientRiskAssignmentType = 'Regular'
+         PreviousClientRisk = ISNULL(hst.ClientRisk, 'None')
+         PreviousClientRiskDate = hst.ClientRiskDate
+
+Step 29: UPDATE #final — override logic (applied after Regular calculation)
+         PEP Override: SET ClientRisk='High', ClientRiskAssignmentType='PEP Override' WHERE ScreeningStatus='PEP'
+         Manual Override: SET ClientRisk=override_value, ClientRiskAssignmentType='Manual Override' WHERE CID in override table
+
+Step 30: TRUNCATE TABLE eMoney_Customer_Risk_Assessment
+         (Changed 2024-07-22 by EitanLi from DELETE FROM)
+
+Step 31: INSERT INTO eMoney_Customer_Risk_Assessment (all 120 columns) FROM #final + GETDATE() as UpdateDate
+
+Step 32: INSERT INTO eMoney_Customer_Risk_Assessment_History FROM #final
+         WHERE trg.CID IS NULL OR (src.ClientRisk <> trg.ClientRisk)
+         (Reverted 2025-03-12 from score-change trigger back to class-change trigger)
+```
 
 ## Column Lineage
 
-| # | Column | Source Table | Source Column | Transform | Tier |
-|---|--------|-------------|---------------|-----------|------|
-| 1 | CID | DWH_dbo.Dim_Customer | RealCID | Rename only (Step 4: `dc.RealCID AS 'CID'`) | Tier 1 |
-| 2 | GCID | DWH_dbo.Dim_Customer | GCID | Direct passthrough | Tier 1 |
-| 3 | ClientRiskDate | ETL-computed | — | Same as PreviousClientRiskDate if risk unchanged, else GETDATE(); updated by Step 29 overrides | Tier 2 |
-| 4 | ClientRisk | ETL-computed | — | Low/Medium/High based on @RiskLowerCut/@RiskUpperCut thresholds; overridden by Manual/PEP in Step 29 | Tier 2 |
-| 5 | ClientRiskAssignmentType | ETL-computed | — | 'Regular' (default); 'Manual Override' (Google Sheets list); 'PEP Override' (ScreeningStatus='PEP') | Tier 2 |
-| 6 | Risk_Final_Result | ETL-computed | — | Sum of (P_RiskID × P_Weight) for all 32 parameters; NULL when classification table has no match for any required parameter | Tier 2 |
-| 7 | PreviousClientRisk | eMoney_Customer_Risk_Assessment_History | ClientRisk | Latest row per CID (Step 27: ROW_NUMBER PARTITION BY CID ORDER BY ClientRiskDate DESC) | Tier 2 |
-| 8 | PreviousClientRiskDate | eMoney_Customer_Risk_Assessment_History | ClientRiskDate | Latest row per CID (same Step 27 window) | Tier 2 |
-| 9 | VerificationLevelID | DWH_dbo.Dim_Customer | VerificationLevelID | Direct passthrough | Tier 1 |
-| 10 | IsValidCustomer | DWH_dbo.Dim_Customer | IsValidCustomer | Direct passthrough (DWH-computed flag in Dim_Customer) | Tier 2 |
-| 11 | IsDepositor | DWH_dbo.Dim_Customer | IsDepositor | Direct passthrough (DWH-computed flag in Dim_Customer) | Tier 2 |
-| 12 | AccountType | DWH_dbo.Dim_AccountType | Name | Name lookup via AccountTypeID | Tier 2 |
-| 13 | Regulation | DWH_dbo.Dim_Regulation | Name | Name lookup via RegulationID | Tier 2 |
-| 14 | Club | DWH_dbo.Dim_PlayerLevel | Name | Name lookup via PlayerLevelID | Tier 2 |
-| 15 | ClientAge | ETL-computed | — | DATEDIFF(YEAR, BirthDate, today); 99999 if NULL, >120, or <=0 | Tier 2 |
-| 16 | DateOfBirth | DWH_dbo.Dim_Customer | BirthDate | CAST to DATE (strip time) | Tier 1 |
-| 17 | DateOfReg | DWH_dbo.Dim_Customer | RegisteredReal | CAST to DATE (strip time) | Tier 1 |
-| 18 | DateOfFTD | DWH_dbo.Dim_Customer | FirstDepositDate | CAST to DATE (DWH-computed from FTD data) | Tier 2 |
-| 19 | BusinessDuration | ETL-computed | — | Categorical from FTD tenure: 1=<1yr, 2=1-3yr, 3=>3yr, 99999=no deposit or error | Tier 2 |
-| 20 | CountryAddress | DWH_dbo.Dim_Country (via #dim_country) | CountryName | Name lookup via CountryID (from Dim_Customer.CountryID) | Tier 2 |
-| 21 | CountryCitizenship | DWH_dbo.Dim_Country (via #dim_country) | CountryName | Name lookup via CitizenshipCountryID | Tier 2 |
-| 22 | CountryPOB | DWH_dbo.Dim_Country (via #dim_country) | CountryName | Name lookup via POBCountryID | Tier 2 |
-| 23 | CountryTIN | ETL-computed (Steps 10-11) | — | TIN country resolved via BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField FieldId=6; COALESCE priority: matching-address > HRC-different > non-HRC-different | Tier 2 |
-| 24 | CountryAddress_IsHRC | ETL-computed (#dim_country) | — | 0=not high risk, 1=high risk per Fivetran Google Sheets country risk mapping; ISNULL→99999 | Tier 2 |
-| 25 | CountryCitizenship_IsHRC | ETL-computed (#dim_country) | — | Same HRC logic applied to CitizenshipCountryID | Tier 2 |
-| 26 | CountryPOB_IsHRC | ETL-computed (#dim_country) | — | Same HRC logic applied to POBCountryID | Tier 2 |
-| 27 | CountryTIN_IsHRC | ETL-computed (Step 12) | — | HRC flag for resolved TIN country | Tier 2 |
-| 28 | AccountStatus | DWH_dbo.Dim_AccountStatus | AccountStatusName | Name lookup via AccountStatusID | Tier 2 |
-| 29 | PlayerStatus | DWH_dbo.Dim_PlayerStatus | Name | Name lookup via PlayerStatusID | Tier 2 |
-| 30 | PlayerStatusReason | DWH_dbo.Dim_PlayerStatusReasons | Name | Name lookup via PlayerStatusReasonID | Tier 2 |
-| 31 | PlayerStatusSubReason | DWH_dbo.Dim_PlayerStatusSubReasons | PlayerStatusSubReasonName | Name lookup via PlayerStatusSubReasonID | Tier 2 |
-| 32 | ScreeningStatus | DWH_dbo.Dim_ScreeningStatus | Name | Name lookup via ScreeningStatusID; ISNULL→99999 before lookup | Tier 2 |
-| 33 | EVStatus | DWH_dbo.Dim_EvMatchStatus | EvMatchStatusName | Name lookup via EvMatchStatus; ISNULL→99999 before lookup | Tier 2 |
-| 34 | DocumentStatus | DWH_dbo.Dim_DocumentStatus | DocumentStatusName | Name lookup via DocumentStatusID | Tier 2 |
-| 35 | PhoneStatus | DWH_dbo.Dim_PhoneVerified | PhoneVerifiedName | Name lookup via PhoneVerifiedID | Tier 2 |
-| 36 | DocsOK | DWH_dbo.Dim_Customer | DocsOK | Direct passthrough | Tier 2 |
-| 37 | IsIDProof | DWH_dbo.Dim_Customer | IsIDProof | ISNULL(dc.IsIDProof, 99999) | Tier 2 |
-| 38 | IsAddressProof | DWH_dbo.Dim_Customer | IsAddressProof | ISNULL(dc.IsAddressProof, 99999) | Tier 2 |
-| 39 | IsPhoneVerified | DWH_dbo.Dim_Customer | IsPhoneVerified | Direct passthrough | Tier 2 |
-| 40 | IsValidETM | eMoney_dbo.eMoney_Dim_Account | IsValidETM | Direct passthrough (NULL when GCID_Unique_Count>1 or Panel_FirstDates INNER JOIN excludes) | Tier 2 |
-| 41 | eTM_CurrencyBalanceID | eMoney_dbo.eMoney_Dim_Account | CurrencyBalanceID | Direct passthrough | Tier 2 |
-| 42 | eTM_CurrencyBalanceCreateDate | eMoney_dbo.eMoney_Dim_Account | CurrencyBalanceCreateDate | Direct passthrough | Tier 2 |
-| 43 | eTM_CurrencyBalanceStatus | eMoney_dbo.eMoney_Dim_Account | CurrencyBalanceStatus | Direct passthrough | Tier 2 |
-| 44 | eTM_AccountID | eMoney_dbo.eMoney_Dim_Account | AccountID | Direct passthrough | Tier 2 |
-| 45 | eTM_AccountCreateDate | eMoney_dbo.eMoney_Dim_Account | AccountCreateDate | Direct passthrough | Tier 2 |
-| 46 | eTM_AccountStatus | eMoney_dbo.eMoney_Dim_Account | AccountStatus | Direct passthrough (name-resolved in Dim_Account) | Tier 2 |
-| 47 | eTM_AccountProgram | eMoney_dbo.eMoney_Dim_Account | AccountProgram | Direct passthrough (name-resolved in Dim_Account) | Tier 2 |
-| 48 | eTM_AccountSubProgram | eMoney_dbo.eMoney_Dim_Account | AccountSubProgram | Direct passthrough (name-resolved in Dim_Account) | Tier 2 |
-| 49 | eTM_HasCard | eMoney_dbo.eMoney_Dim_Account | HasCard | Direct passthrough | Tier 2 |
-| 50 | eTM_CardStatus | eMoney_dbo.eMoney_Dim_Account | CardStatus | Direct passthrough (name-resolved in Dim_Account) | Tier 2 |
-| 51 | eTM_ProviderHolderID | eMoney_dbo.eMoney_Dim_Account | ProviderHolderID | Direct passthrough | Tier 2 |
-| 52 | eTM_FMI_Date | eMoney_dbo.eMoney_Panel_FirstDates | FMI_Date | Direct passthrough | Tier 2 |
-| 53 | eTM_FMI_Source | eMoney_dbo.eMoney_Panel_FirstDates | FMI_Source | Direct passthrough | Tier 2 |
-| 54 | eTM_FMO_Date | eMoney_dbo.eMoney_Panel_FirstDates | FMO_Date | Direct passthrough | Tier 2 |
-| 55 | eTM_FMO_Target | eMoney_dbo.eMoney_Panel_FirstDates | FMO_Target | Direct passthrough | Tier 2 |
-| 56 | P1_Response | Fivetran risk classification table | ResponseDescription | ParameterID=1 (Client Age): matched on ClientAge value vs ResponseID | Tier 2 |
-| 57 | P1_Risk | Fivetran risk classification table | RiskText | Risk level text for P1 response | Tier 2 |
-| 58 | P2_Response | Fivetran risk classification table | ResponseDescription | ParameterID=2 (Address Country HRC) | Tier 2 |
-| 59 | P2_Risk | Fivetran risk classification table | RiskText | Risk text for P2 | Tier 2 |
-| 60 | P3_Response | Fivetran risk classification table | ResponseDescription | ParameterID=3 (Citizenship Country HRC) | Tier 2 |
-| 61 | P3_Risk | Fivetran risk classification table | RiskText | Risk text for P3 | Tier 2 |
-| 62 | P4_Response | Fivetran risk classification table | ResponseDescription | ParameterID=4 (POB Country HRC) | Tier 2 |
-| 63 | P4_Risk | Fivetran risk classification table | RiskText | Risk text for P4 | Tier 2 |
-| 64 | P5_Response | Fivetran risk classification table | ResponseDescription | ParameterID=5 (KYC Q10 Annual Income) | Tier 2 |
-| 65 | P5_Risk | Fivetran risk classification table | RiskText | Risk text for P5 | Tier 2 |
-| 66 | P6_Response | Fivetran risk classification table | ResponseDescription | ParameterID=6 (KYC Q11 Total Assets) | Tier 2 |
-| 67 | P6_Risk | Fivetran risk classification table | RiskText | Risk text for P6 | Tier 2 |
-| 68 | P7_Response | Fivetran risk classification table | ResponseDescription | ParameterID=7 (KYC Q14 Investment Amount) | Tier 2 |
-| 69 | P7_Risk | Fivetran risk classification table | RiskText | Risk text for P7 | Tier 2 |
-| 70 | P8_Response | Fivetran risk classification table | ResponseDescription | ParameterID=8 (KYC Q15 Main Source of Income) | Tier 2 |
-| 71 | P8_Risk | Fivetran risk classification table | RiskText | Risk text for P8 | Tier 2 |
-| 72 | P9_Response | Fivetran risk classification table | ResponseDescription | ParameterID=9 (KYC Q18 Occupation Category) | Tier 2 |
-| 73 | P9_Risk | Fivetran risk classification table | RiskText | Risk text for P9 | Tier 2 |
-| 74 | P10_Response | ETL-hardcoded NULL | — | ParameterID=10 (Citizenship By Investment) CANCELLED; always NULL | Tier 2 |
-| 75 | P10_Risk | ETL-hardcoded NULL | — | CANCELLED; always NULL; weight=0 | Tier 2 |
-| 76 | P11_Response | Fivetran risk classification table | ResponseDescription | ParameterID=11 (Business Duration) | Tier 2 |
-| 77 | P11_Risk | Fivetran risk classification table | RiskText | Risk text for P11 | Tier 2 |
-| 78 | P12_Response | Fivetran risk classification table | ResponseDescription | ParameterID=12 (Source of Income document): 1=provided, 2=not provided & IBAN<=50K, 3=not provided & IBAN>50K | Tier 2 |
-| 79 | P12_Risk | Fivetran risk classification table | RiskText | Risk text for P12 | Tier 2 |
-| 80 | P13_Response | Fivetran risk classification table | ResponseDescription | ParameterID=13 (Selfie verification): DocTypes 15 or 18 accepted | Tier 2 |
-| 81 | P13_Risk | Fivetran risk classification table | RiskText | Risk text for P13 | Tier 2 |
-| 82 | P14_Response | Fivetran risk classification table | ResponseDescription | ParameterID=14 (Screening Status): matched on ScreeningStatusID | Tier 2 |
-| 83 | P14_Risk | Fivetran risk classification table | RiskText | Risk text for P14 | Tier 2 |
-| 84 | P15_Response | Fivetran risk classification table | ResponseDescription | ParameterID=15 (Electronic Verification): matched on EVStatusID | Tier 2 |
-| 85 | P15_Risk | Fivetran risk classification table | RiskText | Risk text for P15 | Tier 2 |
-| 86 | P16_Response | Fivetran risk classification table | ResponseDescription | ParameterID=16 (TIN Country HRC) | Tier 2 |
-| 87 | P16_Risk | Fivetran risk classification table | RiskText | Risk text for P16 | Tier 2 |
-| 88 | P17_Response | Fivetran risk classification table | ResponseDescription | ParameterID=17 (TIN Country matches Address Country): 1=match, 0=mismatch, 99999=no TIN | Tier 2 |
-| 89 | P17_Risk | Fivetran risk classification table | RiskText | Risk text for P17 | Tier 2 |
-| 90 | P18_Response | Fivetran risk classification table | ResponseDescription | ParameterID=18 (Proof of Identity): matched on IsIDProof | Tier 2 |
-| 91 | P18_Risk | Fivetran risk classification table | RiskText | Risk text for P18 | Tier 2 |
-| 92 | P19_Response | Fivetran risk classification table | ResponseDescription | ParameterID=19 (Proof of Address): matched on IsAddressProof | Tier 2 |
-| 93 | P19_Risk | Fivetran risk classification table | RiskText | Risk text for P19 | Tier 2 |
-| 94 | P20_Response | Fivetran risk classification table | ResponseDescription | ParameterID=20 (IBAN Load Multiple Countries): 11=no loads, 22=0 countries, 33=1 country, 44=2-3, 55=4+ | Tier 2 |
-| 95 | P20_Risk | Fivetran risk classification table | RiskText | Risk text for P20 | Tier 2 |
-| 96 | P21_Response | Fivetran risk classification table | ResponseDescription | ParameterID=21 (IBAN Load Country Matches KYC Country) | Tier 2 |
-| 97 | P21_Risk | Fivetran risk classification table | RiskText | Risk text for P21 | Tier 2 |
-| 98 | P22_Response | Fivetran risk classification table | ResponseDescription | ParameterID=22 (IBAN Load Country Is HRC) | Tier 2 |
-| 99 | P22_Risk | Fivetran risk classification table | RiskText | Risk text for P22 | Tier 2 |
-| 100 | P23_Response | Fivetran risk classification table | ResponseDescription | ParameterID=23 (IBAN Unload Multiple Countries) | Tier 2 |
-| 101 | P23_Risk | Fivetran risk classification table | RiskText | Risk text for P23 | Tier 2 |
-| 102 | P24_Response | Fivetran risk classification table | ResponseDescription | ParameterID=24 (IBAN Unload Country Matches KYC Country) | Tier 2 |
-| 103 | P24_Risk | Fivetran risk classification table | RiskText | Risk text for P24 | Tier 2 |
-| 104 | P25_Response | Fivetran risk classification table | ResponseDescription | ParameterID=25 (IBAN Unload Country Is HRC) | Tier 2 |
-| 105 | P25_Risk | Fivetran risk classification table | RiskText | Risk text for P25 | Tier 2 |
-| 106 | P26_Response | Fivetran risk classification table | ResponseDescription | ParameterID=26 (High Net Worth Individual): 11=MoneyIn_IBAN<=500K, 22=MoneyIn_IBAN>500K | Tier 2 |
-| 107 | P26_Risk | Fivetran risk classification table | RiskText | Risk text for P26 | Tier 2 |
-| 108 | P27_Response | Fivetran risk classification table | ResponseDescription | ParameterID=27 (VPN/TOR Usage): 11=>40% of logins are VPN/TOR, 22=<=40%, 99999=no login history | Tier 2 |
-| 109 | P27_Risk | Fivetran risk classification table | RiskText | Risk text for P27 | Tier 2 |
-| 110 | P28_Response | Fivetran risk classification table | ResponseDescription | ParameterID=28 (Citizenship = POB Country): 1=same, 0=different | Tier 2 |
-| 111 | P28_Risk | Fivetran risk classification table | RiskText | Risk text for P28 | Tier 2 |
-| 112 | P29_Response | Fivetran risk classification table | ResponseDescription | ParameterID=29 (Citizenship = KYC Country): 1=same, 0=different | Tier 2 |
-| 113 | P29_Risk | Fivetran risk classification table | RiskText | Risk text for P29 | Tier 2 |
-| 114 | P30_Response | Fivetran risk classification table | ResponseDescription | ParameterID=30 (KYC Q26 Source of Funds) | Tier 2 |
-| 115 | P30_Risk | Fivetran risk classification table | RiskText | Risk text for P30 | Tier 2 |
-| 116 | P31_Response | Fivetran risk classification table | ResponseDescription | ParameterID=31 (Declared vs Actual Income Match): from Fact_CustomerAction TP + IBAN vs KYC Q10 declared max | Tier 2 |
-| 117 | P31_Risk | Fivetran risk classification table | RiskText | Risk text for P31 | Tier 2 |
-| 118 | P32_Response | Fivetran risk classification table | ResponseDescription | ParameterID=32 (Sum Money Into IBAN): 11=<=10K, 22=10K-200K, 33=>200K | Tier 2 |
-| 119 | P32_Risk | Fivetran risk classification table | RiskText | Risk text for P32 | Tier 2 |
-| 120 | UpdateDate | ETL-computed | — | GETDATE() at INSERT time (Step 31) | Tier 2 |
-
----
-
-## Tier Summary
-
-| Tier | Count | Columns |
-|------|-------|---------|
-| Tier 1 | 5 | CID, GCID, VerificationLevelID, DateOfBirth, DateOfReg |
-| Tier 2 | 115 | All remaining columns (ETL-computed scores, lookups, Fivetran classification, DWH-computed) |
-
----
-
-## Key Lineage Notes
-
-- **P10 always NULL**: ParameterID=10 (Citizenship by Investment Program) was CANCELLED; P10_Response and P10_Risk are hardcoded NULL/0 in the SP. Weight=0.
-- **Risk threshold is dynamic**: @RiskLowerCut and @RiskUpperCut are derived from the Fivetran classification table at runtime (ParameterID=98/99 rows). Thresholds can change without code changes.
-- **Step 32 conditional insert**: History receives a new row only if `trg.CID IS NULL OR src.ClientRisk <> trg.ClientRisk` (class-change-only, not score-change). This was reverted from a score-change trigger on 2025-03-12 (too many new rows per day for Tribe system).
-- **GCID_Unique_Count=1 filter**: Only primary eTM accounts (one per customer) contribute eTM data. Customers with multiple eTM accounts contribute only the primary account's data.
-- **NULL risk score ('Error' class)**: When ALL parameter joins fail (all P_RiskID=NULL), the composite sum is NULL → Risk_Final_Result=NULL → ClientRisk='Error'. 2,043 rows affected as of 2026-04-12.
+| # | DWH Column | Source Table | Source Column | Transform |
+|---|-----------|-------------|---------------|-----------|
+| 1 | CID | DWH_dbo.Dim_Customer | RealCID | Rename: RealCID→CID |
+| 2 | GCID | DWH_dbo.Dim_Customer | GCID | Passthrough |
+| 3 | ClientRiskDate | eMoney_Customer_Risk_Assessment_History | ClientRiskDate | Preserved if ClientRisk unchanged; else @Date |
+| 4 | ClientRisk | Fivetran classification table | RiskText thresholds | CASE on Risk_Final_Result vs @RiskLowerCut/@RiskUpperCut; overridden by PEP/Manual |
+| 5 | ClientRiskAssignmentType | Computed | — | 'Regular' (default); 'PEP Override'; 'Manual Override' |
+| 6 | Risk_Final_Result | Fivetran classification table | RiskID × ParameterWeight | SUM(P1_RiskID×P1_Weight + … + P32_RiskID×P32_Weight) |
+| 7 | PreviousClientRisk | eMoney_Customer_Risk_Assessment_History | ClientRisk | Latest history row (ROW_NUMBER DESC); ISNULL→'None' |
+| 8 | PreviousClientRiskDate | eMoney_Customer_Risk_Assessment_History | ClientRiskDate | Latest history row (ROW_NUMBER DESC) |
+| 9 | VerificationLevelID | DWH_dbo.Dim_Customer | VerificationLevelID | Passthrough |
+| 10 | IsValidCustomer | DWH_dbo.Dim_Customer | IsValidCustomer | Passthrough |
+| 11 | IsDepositor | DWH_dbo.Dim_Customer | IsDepositor | Passthrough |
+| 12 | AccountType | DWH_dbo.Dim_AccountType | Name | JOIN on AccountTypeID |
+| 13 | Regulation | DWH_dbo.Dim_Regulation | Name | JOIN on RegulationID |
+| 14 | Club | DWH_dbo.Dim_PlayerLevel | Name | JOIN on PlayerLevelID |
+| 15 | ClientAge | DWH_dbo.Dim_Customer | BirthDate | DATEDIFF(YEAR, BirthDate, @Date); 99999 if >120/≤0/NULL |
+| 16 | DateOfBirth | DWH_dbo.Dim_Customer | BirthDate | CAST(BirthDate AS DATE) — rename from BirthDate |
+| 17 | DateOfReg | DWH_dbo.Dim_Customer | RegisteredReal | CAST(RegisteredReal AS DATE) — rename |
+| 18 | DateOfFTD | DWH_dbo.Dim_Customer | FirstDepositDate | CAST(FirstDepositDate AS DATE) |
+| 19 | BusinessDuration | DWH_dbo.Dim_Customer | FirstDepositDate | CASE: 99999 sentinel/NULL; 1=<1yr; 2=1-3yr; 3=>3yr |
+| 20 | CountryAddress | #dim_country | CountryName | JOIN on CountryID (KYC address country) |
+| 21 | CountryCitizenship | #dim_country | CountryName | JOIN on CitizenshipCountryID |
+| 22 | CountryPOB | #dim_country | CountryName | JOIN on POBCountryID |
+| 23 | CountryTIN | #dim_country | CountryName | JOIN via TIN priority resolution (matching/HRC/non-HRC) |
+| 24 | CountryAddress_IsHRC | Fivetran country risk map | IsHighRiskCountry | ISNULL(CRA_IsHighRiskCountry, 99999) for address country |
+| 25 | CountryCitizenship_IsHRC | Fivetran country risk map | IsHighRiskCountry | ISNULL(CRA_IsHighRiskCountry, 99999) for citizenship country |
+| 26 | CountryPOB_IsHRC | Fivetran country risk map | IsHighRiskCountry | ISNULL(CRA_IsHighRiskCountry, 99999) for POB country |
+| 27 | CountryTIN_IsHRC | Fivetran country risk map | IsHighRiskCountry | ISNULL(CRA_IsHighRiskCountry, 99999) for TIN country |
+| 28 | AccountStatus | DWH_dbo.Dim_AccountStatus | AccountStatusName | JOIN on AccountStatusID |
+| 29 | PlayerStatus | DWH_dbo.Dim_PlayerStatus | Name | JOIN on PlayerStatusID |
+| 30 | PlayerStatusReason | DWH_dbo.Dim_PlayerStatusReasons | Name | JOIN on PlayerStatusReasonID |
+| 31 | PlayerStatusSubReason | DWH_dbo.Dim_PlayerStatusSubReasons | PlayerStatusSubReasonName | JOIN on PlayerStatusSubReasonID |
+| 32 | ScreeningStatus | DWH_dbo.Dim_ScreeningStatus | Name | JOIN on ScreeningStatusID (ISNULL→99999 before join) |
+| 33 | EVStatus | DWH_dbo.Dim_EvMatchStatus | EvMatchStatusName | JOIN on EvMatchStatus (ISNULL→99999 before join) |
+| 34 | DocumentStatus | DWH_dbo.Dim_DocumentStatus | DocumentStatusName | JOIN on DocumentStatusID |
+| 35 | PhoneStatus | DWH_dbo.Dim_PhoneVerified | PhoneVerifiedName | JOIN on PhoneVerifiedID |
+| 36 | DocsOK | DWH_dbo.Dim_Customer | DocsOK | Passthrough |
+| 37 | IsIDProof | DWH_dbo.Dim_Customer | IsIDProof | ISNULL(IsIDProof, 99999) |
+| 38 | IsAddressProof | DWH_dbo.Dim_Customer | IsAddressProof | ISNULL(IsAddressProof, 99999) |
+| 39 | IsPhoneVerified | DWH_dbo.Dim_Customer | IsPhoneVerified | Passthrough |
+| 40 | IsValidETM | eMoney_dbo.eMoney_Dim_Account | IsValidETM | Passthrough (primary row, RN_Duplicates=1) |
+| 41 | eTM_CurrencyBalanceID | eMoney_dbo.eMoney_Dim_Account | CurrencyBalanceID | Passthrough — rename |
+| 42 | eTM_CurrencyBalanceCreateDate | eMoney_dbo.eMoney_Dim_Account | CurrencyBalanceCreateDate | Passthrough — rename |
+| 43 | eTM_CurrencyBalanceStatus | eMoney_dbo.eMoney_Dim_Account | CurrencyBalanceStatus | Passthrough — rename |
+| 44 | eTM_AccountID | eMoney_dbo.eMoney_Dim_Account | AccountID | Passthrough — rename |
+| 45 | eTM_AccountCreateDate | eMoney_dbo.eMoney_Dim_Account | AccountCreateDate | Passthrough — rename |
+| 46 | eTM_AccountStatus | eMoney_dbo.eMoney_Dim_Account | AccountStatus | Passthrough — rename |
+| 47 | eTM_AccountProgram | eMoney_dbo.eMoney_Dim_Account | AccountProgram | Passthrough — rename |
+| 48 | eTM_AccountSubProgram | eMoney_dbo.eMoney_Dim_Account | AccountSubProgram | Passthrough — rename |
+| 49 | eTM_HasCard | eMoney_dbo.eMoney_Dim_Account | HasCard | Passthrough — rename |
+| 50 | eTM_CardStatus | eMoney_dbo.eMoney_Dim_Account | CardStatus | Passthrough — rename |
+| 51 | eTM_ProviderHolderID | eMoney_dbo.eMoney_Dim_Account | ProviderHolderID | Passthrough — rename |
+| 52 | eTM_FMI_Date | eMoney_dbo.eMoney_Panel_FirstDates | FMI_Date | Passthrough via JOIN on AccountID — rename |
+| 53 | eTM_FMI_Source | eMoney_dbo.eMoney_Panel_FirstDates | FMI_Source | Passthrough via JOIN on AccountID — rename |
+| 54 | eTM_FMO_Date | eMoney_dbo.eMoney_Panel_FirstDates | FMO_Date | Passthrough via JOIN on AccountID — rename |
+| 55 | eTM_FMO_Target | eMoney_dbo.eMoney_Panel_FirstDates | FMO_Target | Passthrough via JOIN on AccountID — rename |
+| 56 | P1_Response | Fivetran classification table | ResponseDescription | ParameterID=1 (Client Age); ResponseID=ClientAge |
+| 57 | P1_Risk | Fivetran classification table | RiskText | ParameterID=1 |
+| 58 | P2_Response | Fivetran classification table | ResponseDescription | ParameterID=2 (Address Country HRC); ResponseID=CountryAddress_IsHRC |
+| 59 | P2_Risk | Fivetran classification table | RiskText | ParameterID=2 |
+| 60 | P3_Response | Fivetran classification table | ResponseDescription | ParameterID=3 (Citizenship Country HRC); ResponseID=CountryCitizenship_IsHRC |
+| 61 | P3_Risk | Fivetran classification table | RiskText | ParameterID=3 |
+| 62 | P4_Response | Fivetran classification table | ResponseDescription | ParameterID=4 (POB Country HRC); ResponseID=CountryPOB_IsHRC |
+| 63 | P4_Risk | Fivetran classification table | RiskText | ParameterID=4 |
+| 64 | P5_Response | Fivetran classification table | ResponseDescription | ParameterID=5 (KYC Q10 Annual Income); ResponseID=Q10_AnswerID |
+| 65 | P5_Risk | Fivetran classification table | RiskText | ParameterID=5 |
+| 66 | P6_Response | Fivetran classification table | ResponseDescription | ParameterID=6 (KYC Q11 Total Assets); ResponseID=Q11_AnswerID |
+| 67 | P6_Risk | Fivetran classification table | RiskText | ParameterID=6 |
+| 68 | P7_Response | Fivetran classification table | ResponseDescription | ParameterID=7 (KYC Q14 Planned Investment); ResponseID=Q14_AnswerID |
+| 69 | P7_Risk | Fivetran classification table | RiskText | ParameterID=7 |
+| 70 | P8_Response | Fivetran classification table | ResponseDescription | ParameterID=8 (KYC Q15 Main Source of Income); ResponseID=Q15_AnswerID |
+| 71 | P8_Risk | Fivetran classification table | RiskText | ParameterID=8 |
+| 72 | P9_Response | Fivetran classification table | ResponseDescription | ParameterID=9 (KYC Q18 Occupation Category); ResponseID=Q18_AnswerID |
+| 73 | P9_Risk | Fivetran classification table | RiskText | ParameterID=9 |
+| 74 | P10_Response | CANCELLED | — | Always NULL (KYC Q46 Citizenship By Investment Program cancelled) |
+| 75 | P10_Risk | CANCELLED | — | Always NULL |
+| 76 | P11_Response | Fivetran classification table | ResponseDescription | ParameterID=11 (Business Duration); ResponseID=BusinessDuration |
+| 77 | P11_Risk | Fivetran classification table | RiskText | ParameterID=11 |
+| 78 | P12_Response | Fivetran classification table | ResponseDescription | ParameterID=12 (Source of Income doc); ResponseID=IsSourceOfIncomeProvided |
+| 79 | P12_Risk | Fivetran classification table | RiskText | ParameterID=12 |
+| 80 | P13_Response | Fivetran classification table | ResponseDescription | ParameterID=13 (Selfie doc); ResponseID=IsSelfieProvided |
+| 81 | P13_Risk | Fivetran classification table | RiskText | ParameterID=13 |
+| 82 | P14_Response | Fivetran classification table | ResponseDescription | ParameterID=14 (Screening Status); ResponseID=ScreeningStatusID |
+| 83 | P14_Risk | Fivetran classification table | RiskText | ParameterID=14 |
+| 84 | P15_Response | Fivetran classification table | ResponseDescription | ParameterID=15 (Electronic Verification); ResponseID=EVStatusID |
+| 85 | P15_Risk | Fivetran classification table | RiskText | ParameterID=15 |
+| 86 | P16_Response | Fivetran classification table | ResponseDescription | ParameterID=16 (TIN Country HRC); ResponseID=CountryTIN_IsHRC |
+| 87 | P16_Risk | Fivetran classification table | RiskText | ParameterID=16 |
+| 88 | P17_Response | Fivetran classification table | ResponseDescription | ParameterID=17 (TIN Country = Address Country); ResponseID=IsKYCCountryMatchingTINCountry |
+| 89 | P17_Risk | Fivetran classification table | RiskText | ParameterID=17 |
+| 90 | P18_Response | Fivetran classification table | ResponseDescription | ParameterID=18 (Proof of Identity); ResponseID=IsIDProof |
+| 91 | P18_Risk | Fivetran classification table | RiskText | ParameterID=18 |
+| 92 | P19_Response | Fivetran classification table | ResponseDescription | ParameterID=19 (Proof of Address); ResponseID=IsAddressProof |
+| 93 | P19_Risk | Fivetran classification table | RiskText | ParameterID=19 |
+| 94 | P20_Response | Fivetran classification table | ResponseDescription | ParameterID=20 (IBAN Load Countries count); ResponseID from IBAN load country count buckets |
+| 95 | P20_Risk | Fivetran classification table | RiskText | ParameterID=20 |
+| 96 | P21_Response | Fivetran classification table | ResponseDescription | ParameterID=21 (IBAN Load Country = KYC Address); last IBAN load country vs CountryIDAddress |
+| 97 | P21_Risk | Fivetran classification table | RiskText | ParameterID=21 |
+| 98 | P22_Response | Fivetran classification table | ResponseDescription | ParameterID=22 (IBAN Load Country HRC); last IBAN load country IsHighRiskCountry |
+| 99 | P22_Risk | Fivetran classification table | RiskText | ParameterID=22 |
+| 100 | P23_Response | Fivetran classification table | ResponseDescription | ParameterID=23 (IBAN Unload Countries count); ResponseID from IBAN unload country count buckets |
+| 101 | P23_Risk | Fivetran classification table | RiskText | ParameterID=23 |
+| 102 | P24_Response | Fivetran classification table | ResponseDescription | ParameterID=24 (IBAN Unload Country = KYC Address); last IBAN unload country vs CountryIDAddress |
+| 103 | P24_Risk | Fivetran classification table | RiskText | ParameterID=24 |
+| 104 | P25_Response | Fivetran classification table | ResponseDescription | ParameterID=25 (IBAN Unload Country HRC); last IBAN unload country IsHighRiskCountry |
+| 105 | P25_Risk | Fivetran classification table | RiskText | ParameterID=25 |
+| 106 | P26_Response | Fivetran classification table | ResponseDescription | ParameterID=26 (High Net Worth Individual); MoneyIn_IBAN > 500000 USD threshold |
+| 107 | P26_Risk | Fivetran classification table | RiskText | ParameterID=26 |
+| 108 | P27_Response | Fivetran classification table | ResponseDescription | ParameterID=27 (VPN/TOR Usage); VPN+TOR login ratio > 40% = high |
+| 109 | P27_Risk | Fivetran classification table | RiskText | ParameterID=27 |
+| 110 | P28_Response | Fivetran classification table | ResponseDescription | ParameterID=28 (Citizenship = POB Country); CitizenshipCountryID == POBCountryID |
+| 111 | P28_Risk | Fivetran classification table | RiskText | ParameterID=28 |
+| 112 | P29_Response | Fivetran classification table | ResponseDescription | ParameterID=29 (Citizenship = Address Country); CitizenshipCountryID == CountryID |
+| 113 | P29_Risk | Fivetran classification table | RiskText | ParameterID=29 |
+| 114 | P30_Response | Fivetran classification table | ResponseDescription | ParameterID=30 (KYC Q26 Source of Funds); ResponseID=Q26_AnswerID |
+| 115 | P30_Risk | Fivetran classification table | RiskText | ParameterID=30 |
+| 116 | P31_Response | Fivetran classification table | ResponseDescription | ParameterID=31 (Total Ecosystem vs Declared); MoneyIn_Total vs Q10_MaxDeclaredNumber |
+| 117 | P31_Risk | Fivetran classification table | RiskText | ParameterID=31 |
+| 118 | P32_Response | Fivetran classification table | ResponseDescription | ParameterID=32 (IBAN Total MoneyIn); MoneyIn_IBAN buckets ≤10K/≤200K/>200K |
+| 119 | P32_Risk | Fivetran classification table | RiskText | ParameterID=32 |
+| 120 | UpdateDate | Computed | GETDATE() | SP execution timestamp — not a business date |

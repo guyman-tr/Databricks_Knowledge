@@ -233,7 +233,7 @@ def parse_section1(content: str) -> str:
 def parse_section4_columns(content: str) -> list:
     cols = []
     m = re.search(
-        r'## (?:\d+\.\s*)?(?:Column Details|Elements|Output Columns|Column Descriptions|Key Columns?(?:\s*(?:&|and)\s*Elements)?|Key Column Enhancement|Columns)',
+        r'## (?:\d+\.\s*)?(?:Column Details|Data Elements|Column Elements|Elements|Output Columns|Column Descriptions|Key Columns?(?:\s*(?:&|and)\s*Elements)?|Key Column Enhancement|Columns)',
         content,
     )
     if not m:

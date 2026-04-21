@@ -1,15 +1,15 @@
 ---
 schema: eMoney_dbo
 database: Synapse DWH
-total_objects: 93
+total_objects: 94
 blacklisted: 42
-pending: 31
-documented: 17
+pending: 0
+documented: 49
 failed: 0
 skipped: 0
-last_batch: 9
+last_batch: 18
 last_updated: "2026-04-21"
-quality_avg: 9.05
+quality_avg: 8.99
 revisions: 0
 ---
 
@@ -18,15 +18,15 @@ revisions: 0
 | Metric | Value |
 |--------|-------|
 | **Schema** | eMoney_dbo |
-| **Total Objects** | 93 (91 tables + 2 views) |
-| **Active (to document)** | 48 |
+| **Total Objects** | 94 (92 tables + 2 views) |
+| **Active (to document)** | 49 |
 | **Blacklisted** | 42 (20 FiatDwhDB mirrors + 7 ETL staging + 15 temp/test/dup) |
-| **Documented (files on disk)** | 17 |
-| **Pending** | 31 |
+| **Documented (files on disk)** | 49 |
+| **Pending** | 0 |
 | **Skipped** | 0 |
 | **Last Updated** | 2026-04-21 |
 
-> **Note**: Batch 9 completed 2 objects (eMoney_Customer_Risk_Assessment + History, each 120 cols / 3 slots = 6 total slots). Both are AML/compliance DDR tables. Total on-disk files now 17. Batch 8 completed 8 objects (6 dict fast-path + 2 large tables). Batches 1–7 historical notes: batches 2–6 analysis was in _batch_context.json only; batch 7 produced 3 on-disk files.
+> **Note**: Batches 3-6 ran WITHOUT Synapse MCP — all non-dictionary objects from those batches were REVOKED and rebuilt with live MCP. CRA + CRA_History (originally batch 6, REVOKED) were rebuilt in batch 10 (2026-04-21). Batch 11 (2026-04-21) documented the 8 revoked batch 4 objects (6 dictionaries + 2 ISO mapping tables) using live MCP enum data — prior batch context had WRONG values and was discarded. v_Card_Instance_Summary (batch 5 REVOKED) remains Pending. Batch 13 (2026-04-21): eMoney_Reports_ClubUpgrade (8.8), eMoney_Account_Mappings (9.1), eMoney_Currency_Instrument_Mapping_Static (9.3), eMoney_EntityByCurrencyISO_MappingStatic (9.5) — 4 objects, quality avg 9.07. Batch 14 (2026-04-21): eMoney_Card_Instance_Summary (8.9), eMoney_Card_Monthly_Snapshot (9.0), eMoney_Snapshot_Settled_Balance (8.9), eMoney_BankPaymentsUK (8.8) — 4 objects, quality avg 9.05 (cumulative). Batch 15 (2026-04-21): eMoney_Aggregated_Tribe_Balance (8.9), eMoney_Daily_MIMO_New_Reports_Action (9.0), eMoney_Reports_MIMO_Actions (8.8), eMoney_Daily_Shortfall_CID_Level (8.8) — 4 objects, quality avg 9.03 (cumulative). Batch 16 (2026-04-21): eMoney_AM_Target (8.8), eMoney_Marketing_EmailTracking (8.5), eMoney_UserData_Marketing (8.9), v_eMoney_Card_Instance_Summary (8.9) — 4 objects, quality avg 9.01 (cumulative). Batch 17 (2026-04-21): eMoney_Client_Balance_Check_Exceptions_Gap (8.5), eMoney_Client_Balance_Check_Opening_Balance (8.5), eMoneyProcessStatusLog (9.0), v_eMoney_Dim_Account (8.9) — 4 objects, quality avg 8.99 (cumulative). Batch 18 (2026-04-21): eMoney_Dictionary_TransactionCategory (9.0) — 1 new object discovered in SSDT re-scan; quality avg 8.99 (cumulative). SCHEMA COMPLETE — all 49 active objects documented. MCP pre-flight is mandatory — see build-wiki-dwh-batch.md.
 
 ---
 
@@ -50,45 +50,46 @@ revisions: 0
 | eMoney_Dictionary_AccountSubProgram | Table | 5 | **Documented** | 10/16 rows (IDs 11-16 AUS/DK missing); FLAGGED HIGH; 4 T1 / 1 T2; 9.1/10 |
 | eMoneyClientBalance | Table | 72 | **Documented** | Daily account-level balance; HASH(AccountId); 72 cols live (SSDT stale at 45); 0 T1 / 72 T2; 9.0/10 |
 | eMoney_Calculated_Balance | Table | 48 | **Documented** | Daily TxTypeID-aggregated cumulative balance; STALE MaxDate=2025-06-09; 0 T1 / 48 T2; 9.1/10 |
-| eMoney_Dim_Country_Rollout | Table | 7 | Pending | |
-| eMoney_Panel_FirstDates | Table | 65 | Pending | |
-| eMoney_Reports_AcquisitionFunnel | Table | 15 | Pending | |
-| eMoney_Reports_AcquisitionFunnelAggregated | Table | 5 | Pending | |
-| eMoney_Reports_ClubUpgrade | Table | 13 | Pending | |
-| eMoney_Dictionary_AuthorizationType | Table | 3 | Pending | |
-| eMoney_Dictionary_CardStatus | Table | 3 | Pending | |
-| eMoney_Dictionary_CurrencyBalanceStatus | Table | 3 | Pending | |
-| eMoney_Dictionary_PaymentSchemaType | Table | 3 | Pending | |
-| eMoney_Dictionary_PaymentSpecificationType | Table | 3 | Pending | |
-| eMoney_Dictionary_TribeScriptStatus | Table | 3 | Pending | |
-| eMoney_Account_Mappings | Table | 24 | Pending | |
-| eMoney_Country_Codes_Mapping_ISO | Table | 6 | Pending | |
-| eMoney_Currency_Instrument_Mapping_Static | Table | 10 | Pending | |
-| eMoney_Currency_Mapping_ISO | Table | 4 | Pending | |
-| eMoney_EntityByCurrencyISO_MappingStatic | Table | 7 | Pending | |
-| eMoney_Card_Instance_Summary | Table | 18 | Pending | |
-| eMoney_Card_Monthly_Snapshot | Table | 23 | Pending | |
-| eMoney_Snapshot_Settled_Balance | Table | 27 | Pending | |
-| eMoney_BankPaymentsUK | Table | 18 | Pending | |
-| eMoney_Aggregated_Tribe_Balance | Table | 28 | Pending | |
-| eMoney_Customer_Risk_Assessment | Table | 120 | **Documented** | Daily AML/risk snapshot — 32-param scoring; 5 T1 / 115 T2; 9.1/10 |
-| eMoney_Customer_Risk_Assessment_History | Table | 120 | **Documented** | Class-change-only audit trail; append-only; 5 T1 / 115 T2; 9.2/10 |
-| eMoney_Client_Balance_Check_Exceptions_Gap | Table | — | Pending | |
-| eMoney_Client_Balance_Check_Opening_Balance | Table | — | Pending | |
-| eMoney_Daily_MIMO_New_Reports_Action | Table | — | Pending | |
-| eMoney_Daily_Shortfall_CID_Level | Table | — | Pending | |
-| eMoney_Marketing_EmailTracking | Table | — | Pending | |
-| eMoney_Reports_MIMO_Actions | Table | — | Pending | |
-| eMoney_UserData_Marketing | Table | — | Pending | |
-| eMoneyProcessStatusLog | Table | — | Pending | |
-| eMoney_AM_Target | Table | — | Pending | |
+| eMoney_Dim_Country_Rollout | Table | 7 | **Documented** | 34-country eToro Money rollout dimension; hardcoded SP launch dates; REPLICATE HEAP; 3 T2 / 4 T4; 8.5/10 |
+| eMoney_Panel_FirstDates | Table | 65 | **Documented** | Per-account FMI/FMO milestone panel; 2,031,884 rows; HASH(CID) HEAP; primary FMI/FMO signal source; 3 T1 / 62 T2; 9.0/10 |
+| eMoney_Reports_AcquisitionFunnel | Table | 15 | **Documented** | Customer-grain eMoney acquisition funnel; 3.67M rows; HASH(CID) HEAP; IsValidForFunnel filter; 2 T1 / 13 T2; 8.9/10 |
+| eMoney_Reports_AcquisitionFunnelAggregated | Table | 5 | **Documented** | (FunnelStage, Country, Club) funnel aggregation; 1,863 rows; REPLICATE HEAP; 9 stages; 0 T1 / 5 T2; 9.0/10 |
+| eMoney_Reports_ClubUpgrade | Table | 13 | **Documented** | Club upgrade event log (eTM-eligible); 1,178,170 rows; 2 T1 / 11 T2; Is_eTM point-in-time; 8.8/10 |
+| eMoney_Dictionary_AuthorizationType | Table | 3 | **Documented** | 15 vals (0=Unknown to 14=AccountFunding); pre-auth/reversal flows; SIMPLE-DICT; 2 T1 / 1 T2; 9.2/10 |
+| [eMoney_Dictionary_TransactionCategory](Tables/eMoney_Dictionary_TransactionCategory.md) | Table | 3 | **Done (Batch 18)** | 5 vals (0=Unknown to 4=BalanceAdjustmentTransaction); manual load 2023-06-12; static (no writer SP); 2 T1 / 1 T2; 9.0/10 |
+| eMoney_Dictionary_CardStatus | Table | 3 | **Documented** | 9 vals (0=NotActivated to 8=Fraud); terminal vs reversible; SIMPLE-DICT; 2 T1 / 1 T2; 9.2/10 |
+| eMoney_Dictionary_CurrencyBalanceStatus | Table | 3 | **Documented** | 5 vals (0=Active to 4=Blocked); partial restriction states; SIMPLE-DICT; 2 T1 / 1 T2; 9.2/10 |
+| eMoney_Dictionary_PaymentSchemaType | Table | 3 | **Documented** | 8 vals (0=Unknown to 7=SEPAdirectDebit); SEPAstandart typo preserved; SIMPLE-DICT; 2 T1 / 1 T2; 9.2/10 |
+| eMoney_Dictionary_PaymentSpecificationType | Table | 3 | **Documented** | 2 vals (0=Unknown, 1=DirectDebit); minimal; SIMPLE-DICT; 2 T1 / 1 T2; 9.2/10 |
+| eMoney_Dictionary_TribeScriptStatus | Table | 3 | **Documented** | 3 vals (0=Unapproved, 1=Approved, 2=Executed); approval workflow; SIMPLE-DICT; 2 T1 / 1 T2; 9.2/10 |
+| eMoney_Account_Mappings | Table | 24 | **Documented** | CurrencyBalance→Account→Card→Provider cross-reference; 2,034,012 rows; DELETE+INSERT; PII cols; 20 T1 / 4 T2; 9.1/10 |
+| eMoney_Country_Codes_Mapping_ISO | Table | 6 | **Documented** | 248 rows; ISO 3166-1 bridge → eToroDWHCountryID; HASH(eToroDWHCountryID); manual load 2024-06-24; 0 T1 / 6 T2; 8.8/10 |
+| eMoney_Currency_Instrument_Mapping_Static | Table | 10 | **Documented** | 145-row FX instrument lookup; 21 currencies; manual load 2022-11-21; static; 0 T1 / 10 T2; 9.3/10 |
+| eMoney_Currency_Mapping_ISO | Table | 4 | **Documented** | 168 rows; ISO 4217 bridge → CurrencyAlphaThreeCode; HASH(CurrencyNumericCode_ISO); manual load 2024-06-24; 0 T1 / 4 T2; 8.8/10 |
+| eMoney_EntityByCurrencyISO_MappingStatic | Table | 7 | **Documented** | 4-row entity mapping (UK/Malta/AUS); DKK→EUR reporting; manual load 2025-09-29/11-26; 0 T1 / 7 T2; 9.5/10 |
+| eMoney_Card_Instance_Summary | Table | 18 | **Documented** | Card instance timeline (1 row/instance); TRUNCATE+INSERT daily; 130K rows; 6 T1/12 T2; 8.9/10 |
+| eMoney_Card_Monthly_Snapshot | Table | 23 | **Documented** | 566M-row monthly EOM eligible-customer panel (27 snapshots); card funnel signals; 2 T1/21 T2; 9.0/10 |
+| eMoney_Snapshot_Settled_Balance | Table | 27 | **Documented** | Daily settled balance snapshot; 1.29M rows; 4 currencies; DELETE+full rebuild; 3 T1/24 T2; 8.9/10 |
+| eMoney_BankPaymentsUK | Table | 18 | **Documented** | GBP bank payment log; 468K rows; HASH(TransactionId)+CCI; incremental append; 2 T1/16 T2; 8.8/10 |
+| eMoney_Aggregated_Tribe_Balance | Table | 28 | **Documented** | CASS/NegativeBalances aggregate by Entity/Currency; DELETE+INSERT daily; 0 T1/28 T2; 8.9/10 |
+| eMoney_Customer_Risk_Assessment | Table | 120 | **Documented** | Daily CID-grain AML/KYC risk snapshot; 32-param weighted score; HASH(CID) HEAP; 2,031,882 rows; 5 T1 / 115 T2; 9.0/10 |
+| eMoney_Customer_Risk_Assessment_History | Table | 120 | **Documented** | Class-change audit log (append-only); 8,113,383 rows; avg 3.99/CID; same schema as CRA; 5 T1 / 115 T2; 9.2/10 |
+| [eMoney_Client_Balance_Check_Exceptions_Gap](Tables/eMoney_Client_Balance_Check_Exceptions_Gap.md) | Table | 3 | **Done (Batch 17)** | Balance reconciliation check (exceptions only); 0 rows expected clean state; TRUNCATE+INSERT; 0 T1/3 T2; 8.5/10 |
+| [eMoney_Client_Balance_Check_Opening_Balance](Tables/eMoney_Client_Balance_Check_Opening_Balance.md) | Table | 3 | **Done (Batch 17)** | Opening balance reconciliation check; 0 rows expected; "Openning" typo preserved; TRUNCATE+INSERT; 0 T1/3 T2; 8.5/10 |
+| eMoney_Daily_MIMO_New_Reports_Action | Table | 21 | **Documented** | MIMO daily report (successor to eMoney_Reports_MIMO_Actions from 2024-10-12); FundingTypeID=33 split; 0 T1/21 T2; 9.0/10 |
+| eMoney_Daily_Shortfall_CID_Level | Table | 18 | **Documented** | Daily overdrawn account snapshot; EtoroDeposits>0 filter; Shortfall<0 only; HASH(CID); 0 T1/18 T2; 8.8/10 |
+| [eMoney_Marketing_EmailTracking](Tables/eMoney_Marketing_EmailTracking.md) | Table | 16 | **Done (Batch 16)** | 0 rows (SP suspended); SFMC email campaign tracking; 0 T1 / 16 T2; 8.5/10 |
+| eMoney_Reports_MIMO_Actions | Table | 20 | **Documented** | MIMO daily report legacy table (FROZEN 2024-10-12); predecessor to eMoney_Daily_MIMO_New_Reports_Action; 0 T1/20 T2; 8.8/10 |
+| [eMoney_UserData_Marketing](Tables/eMoney_UserData_Marketing.md) | Table | 13 | **Done (Batch 16)** | 2,010,838 rows; customer marketing snapshot; 3 T1 / 10 T2; 8.9/10 |
+| [eMoneyProcessStatusLog](Tables/eMoneyProcessStatusLog.md) | Table | 5 | **Done (Batch 17)** | ETL process audit log; FROZEN 2023-10-30; 16,726 rows; append-only; 0 T1/5 T2; 9.0/10 |
+| [eMoney_AM_Target](Tables/eMoney_AM_Target.md) | Table | 31 | **Done (Batch 16)** | 385M rows, 2023-07-01 to 2026-04-11; AM MIMO targets (SP suspended); 2 T1 / 29 T2; 8.8/10 |
 
 ### Views — Active (to document)
 
 | Object | Type | Cols | Status | Notes |
 |--------|------|------|--------|-------|
-| v_eMoney_Card_Instance_Summary | View | 17 | **Documented** | SELECT wrapper for Card_Instance_Summary; excludes MaskedPAN |
-| v_eMoney_Dim_Account | View | — | Pending | |
+| [v_eMoney_Card_Instance_Summary](Views/v_eMoney_Card_Instance_Summary.md) | View | 17 | **Done (Batch 16)** | Column-projection view of eMoney_Card_Instance_Summary (excludes MaskedPAN); 4 T1 / 13 T2; 8.9/10 |
+| [v_eMoney_Dim_Account](Views/v_eMoney_Dim_Account.md) | View | 78 | **Done (Batch 17)** | Live-state view of eMoney_Dim_Account (refresh-day only); TOP(1000) no ORDER BY; 27 T1/51 T2; 8.9/10 |
 
 ### Tables — Blacklisted
 
