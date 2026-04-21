@@ -3,6 +3,18 @@
 You are running the DWH Semantic Documentation pipeline for a Synapse DWH schema.
 **Wiki-only mode** — generate documentation files only. ALTER scripts are generated separately later via `/generate-alter-dwh`.
 
+## ⛔ MCP PRE-FLIGHT — NON-NEGOTIABLE, CHECK BEFORE ANYTHING ELSE
+
+Before loading rules, before reading the index, before planning anything:
+
+1. **Test Synapse MCP**: Call `mcp__synapse_sql__execute_sql_read_only` with `SELECT 1 AS mcp_preflight`
+2. **If it fails or the tool does not exist**: Print `BATCH ABORT: Synapse MCP unavailable` and **EXIT IMMEDIATELY**. Do NOT proceed. Do NOT fall back to "prior batch context data". Do NOT use a "schema practice" of skipping MCP. A wiki without live data sampling is INCOMPLETE and WILL NOT PASS the adversarial evaluator. STOP HERE.
+3. **If it succeeds**: Print `MCP PRE-FLIGHT: PASS` and continue to Instructions.
+
+There is NO exception to this rule. No "prior context", no "code-only documentation", no "graceful degradation". MCP down = batch aborted. Period.
+
+---
+
 ## Instructions
 
 1. **Load rules** -- Read the following files IN ORDER before doing anything else:
