@@ -10,7 +10,7 @@
 | **Refresh** | Daily — SP_EXW_FinanceReportsBalancesNew @d DATE; DELETE by BalanceDateID + INSERT |
 | **Synapse Distribution** | ROUND_ROBIN |
 | **Synapse Index** | CLUSTERED INDEX (BalanceDateID ASC, RealCID ASC) |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A — Synapse-only finance reconciliation snapshot |

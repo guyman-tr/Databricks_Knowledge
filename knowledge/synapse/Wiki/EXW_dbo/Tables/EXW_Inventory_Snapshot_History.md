@@ -13,7 +13,7 @@
 | **Date Range** | [Date for Report]: 2020-01-01 — 2026-04-11 |
 | **Synapse Distribution** | HASH(BlockchainCryptoId) |
 | **Synapse Index** | HEAP |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_inventory_snapshot_history` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A |

@@ -3,13 +3,13 @@ schema: eMoney_dbo
 database: Synapse DWH
 total_objects: 93
 blacklisted: 42
-pending: 33
-documented: 15
+pending: 31
+documented: 17
 failed: 0
 skipped: 0
-last_batch: 8
-last_updated: "2026-04-20"
-quality_avg: 9.0
+last_batch: 9
+last_updated: "2026-04-21"
+quality_avg: 9.05
 revisions: 0
 ---
 
@@ -21,12 +21,12 @@ revisions: 0
 | **Total Objects** | 93 (91 tables + 2 views) |
 | **Active (to document)** | 48 |
 | **Blacklisted** | 42 (20 FiatDwhDB mirrors + 7 ETL staging + 15 temp/test/dup) |
-| **Documented (files on disk)** | 15 |
-| **Pending** | 33 |
+| **Documented (files on disk)** | 17 |
+| **Pending** | 31 |
 | **Skipped** | 0 |
-| **Last Updated** | 2026-04-20 |
+| **Last Updated** | 2026-04-21 |
 
-> **Note**: Batch 8 completed 8 objects (6 dict fast-path + 2 large tables), bringing total on-disk files to 15. Batches 1–7 historical notes: batches 2–6 analysis was in _batch_context.json only; batch 7 produced 3 on-disk files; batch 8 produced all 8 on-disk files for its objects.
+> **Note**: Batch 9 completed 2 objects (eMoney_Customer_Risk_Assessment + History, each 120 cols / 3 slots = 6 total slots). Both are AML/compliance DDR tables. Total on-disk files now 17. Batch 8 completed 8 objects (6 dict fast-path + 2 large tables). Batches 1–7 historical notes: batches 2–6 analysis was in _batch_context.json only; batch 7 produced 3 on-disk files.
 
 ---
 
@@ -71,8 +71,8 @@ revisions: 0
 | eMoney_Snapshot_Settled_Balance | Table | 27 | Pending | |
 | eMoney_BankPaymentsUK | Table | 18 | Pending | |
 | eMoney_Aggregated_Tribe_Balance | Table | 28 | Pending | |
-| eMoney_Customer_Risk_Assessment | Table | 120 | Pending | |
-| eMoney_Customer_Risk_Assessment_History | Table | 120 | Pending | |
+| eMoney_Customer_Risk_Assessment | Table | 120 | **Documented** | Daily AML/risk snapshot — 32-param scoring; 5 T1 / 115 T2; 9.1/10 |
+| eMoney_Customer_Risk_Assessment_History | Table | 120 | **Documented** | Class-change-only audit trail; append-only; 5 T1 / 115 T2; 9.2/10 |
 | eMoney_Client_Balance_Check_Exceptions_Gap | Table | — | Pending | |
 | eMoney_Client_Balance_Check_Opening_Balance | Table | — | Pending | |
 | eMoney_Daily_MIMO_New_Reports_Action | Table | — | Pending | |

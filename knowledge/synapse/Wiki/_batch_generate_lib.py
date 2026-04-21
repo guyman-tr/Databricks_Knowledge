@@ -406,7 +406,7 @@ def generate_alter_section(uc_fqn: str, object_name: str, table_comment: str,
     for col_name, col_desc in columns:
         if col_name and col_desc:
             desc = col_desc[:1024] if len(col_desc) > 1024 else col_desc
-            lines.append(f"ALTER TABLE {uc_fqn} ALTER COLUMN {col_name} COMMENT '{escape_sql(desc)}';")
+            lines.append(f"ALTER TABLE {uc_fqn} ALTER COLUMN `{col_name}` COMMENT '{escape_sql(desc)}';")
     lines.append("")
 
     lines.append(f"-- ---- Column PII Tags ----")
@@ -418,7 +418,7 @@ def generate_alter_section(uc_fqn: str, object_name: str, table_comment: str,
                     if pattern in col_name.lower():
                         pii_val = "direct"
                         break
-            lines.append(f"ALTER TABLE {uc_fqn} ALTER COLUMN {col_name} SET TAGS ('pii' = '{pii_val}');")
+            lines.append(f"ALTER TABLE {uc_fqn} ALTER COLUMN `{col_name}` SET TAGS ('pii' = '{pii_val}');")
 
     return lines
 
@@ -584,25 +584,31 @@ def process_schema(schema_name: str, cursor=None, uc_cache: dict = None,
         else:
             alter_dir = functions_dir
 
-        # Synapse-only functions (and similar): always emit stub unless file exists and not forcing
+        # Synapse-only functions (and similar): emit stub UNLESS the UC cache
+        # now has a real entry (object may have been exported since last run).
         if is_uc_knowledge_only(uc_target_val):
-            stub_path = os.path.join(alter_dir, f"{object_name}.alter.sql")
-            if os.path.isfile(stub_path) and not force:
-                results["already_resolved"].append(GenerationResult(
-                    object_name=object_name, status="already_resolved",
-                    uc_target=uc_target_val.strip('`').strip(),
-                    detail="knowledge-only stub present",
-                ))
+            lookup_key_check = object_name.lower()
+            if uc_lookup and lookup_key_check in uc_lookup:
+                pass  # UC cache overrides — fall through to real ALTER generation
+            else:
+                stub_path = os.path.join(alter_dir, f"{object_name}.alter.sql")
+                if os.path.isfile(stub_path) and not force:
+                    results["already_resolved"].append(GenerationResult(
+                        object_name=object_name, status="already_resolved",
+                        uc_target=uc_target_val.strip('`').strip(),
+                        detail="knowledge-only stub present",
+                    ))
+                    continue
+                table_comment = parse_section1(content)
+                if not dry_run:
+                    write_knowledge_only_stub(
+                        schema_name, object_name, alter_dir, uc_target_val, table_comment
+                    )
+                results["knowledge_only_stub"].append(object_name)
                 continue
-            table_comment = parse_section1(content)
-            if not dry_run:
-                write_knowledge_only_stub(
-                    schema_name, object_name, alter_dir, uc_target_val, table_comment
-                )
-            results["knowledge_only_stub"].append(object_name)
-            continue
 
-        already_had = not is_pending(uc_target_val)
+        needs_resolution = is_pending(uc_target_val) or is_uc_knowledge_only(uc_target_val)
+        already_had = not needs_resolution
 
         if already_had and not force:
             results["already_resolved"].append(GenerationResult(
@@ -656,7 +662,7 @@ def process_schema(schema_name: str, cursor=None, uc_cache: dict = None,
             continue
 
         # Backfill wiki
-        if is_pending(uc_target_val):
+        if needs_resolution:
             backfill_wiki(wiki_path, target)
 
         # Generate ALTER

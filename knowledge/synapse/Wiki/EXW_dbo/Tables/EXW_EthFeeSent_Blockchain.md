@@ -12,7 +12,7 @@
 | **Data Coverage** | ETH blockchain transactions from Jan 2021 to present |
 | **Synapse Distribution** | HASH (GCID) |
 | **Synapse Index** | HEAP |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_ethfeesent_blockchain` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A — Synapse-only operational table |

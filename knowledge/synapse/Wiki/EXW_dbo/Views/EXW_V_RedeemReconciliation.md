@@ -12,7 +12,7 @@
 | **Row Count** | 1,117,023 (as of 2026-04-11) |
 | **Synapse Distribution** | N/A (view) |
 | **Synapse Index** | N/A (view) |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A |

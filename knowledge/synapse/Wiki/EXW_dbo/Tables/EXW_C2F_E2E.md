@@ -13,7 +13,7 @@
 | **Date Range** | ConversionDateTime: active C2F conversions only |
 | **Synapse Distribution** | HASH(GCID) |
 | **Synapse Index** | HEAP |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A |

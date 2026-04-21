@@ -13,7 +13,7 @@
 | **Date Range** | UpdateDate: 2021-05-24 to 2026-04-12 |
 | **Synapse Distribution** | HASH(GCID) |
 | **Synapse Index** | CLUSTERED INDEX (GCID ASC) |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A |

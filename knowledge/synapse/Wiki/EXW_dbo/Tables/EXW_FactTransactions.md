@@ -11,7 +11,7 @@
 | **Synapse Distribution** | HASH(GCID) |
 | **Synapse Index** | HEAP |
 | **Grain** | One row per transaction × action type (TranID + ActionTypeID) |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions` |
 
 ---
 

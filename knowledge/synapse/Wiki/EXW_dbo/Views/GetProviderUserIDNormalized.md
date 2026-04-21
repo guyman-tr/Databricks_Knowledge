@@ -12,7 +12,7 @@
 | **Data Coverage** | AML submission events 2020-05-27 to 2026-04-11 |
 | **Synapse Distribution** | N/A (view) |
 | **Synapse Index** | N/A (view) |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A — not exported to data lake |

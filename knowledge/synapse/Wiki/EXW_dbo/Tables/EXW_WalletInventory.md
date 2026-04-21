@@ -10,7 +10,7 @@
 | **Refresh** | Daily TRUNCATE + INSERT via SP_EXW_WalletInventory (UpdateDate = today) |
 | **Synapse Distribution** | HASH(GCID) |
 | **Synapse Index** | HEAP |
-| **UC Target** | `_Not_Migrated` |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory` |
 | **UC Format** | N/A |
 | **UC Partitioned By** | N/A |
 | **UC Table Type** | N/A |

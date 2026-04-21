@@ -10,7 +10,7 @@
 | **Refresh** | Daily; DELETE WHERE DateID=@d_i + INSERT (full snapshot replacement per date) |
 | **Synapse Distribution** | HASH(GCID) |
 | **Synapse Index** | CLUSTERED INDEX(DateID ASC) |
-| **UC Target** | _Not_Migrated |
+| **UC Target** | `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity` |
 | **Author / First Created** | Inessa, 2024-12-15 |
 | **Last SP Change** | 2026-02-16 — Added group tag for UK, new logic for non-signed population |
 
