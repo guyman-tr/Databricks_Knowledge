@@ -1,149 +1,2105 @@
 {
   "schema": "BI_DB_dbo",
-  "last_batch": 9,
-  "last_updated": "2026-03-26",
-  "batch_9_summary": {
+  "last_batch": 96,
+  "last_updated": "2026-04-26",
+  "batch_96_summary": {
     "status": "COMPLETE",
-    "objects_documented": 5,
-    "total_columns_documented": 117,
-    "domain": "DDR redo with improved harness — Batch 7 items 4-8 redone for quality uplift",
+    "objects_documented": 4,
+    "total_columns_documented": 155,
+    "domain": "Operations compliance — fraud detection scoring (56 cols), deposit compensation abuse monitoring (12 cols), KYC verification SLA tracking (29 cols), master-sub account KYC alignment (58 cols).",
+    "capacity_used": "5.5/4.0 (OPS_Fraud_Alert_Analysis=2.0x [56 cols], OPS_HighCompensationsVsDeposits=0.5x [12 cols], OPS_KYC_Verification=1.0x [29 cols], OPS_MastersAndSubAccounts_AlignmentMonitoringReport=2.0x [58 cols]) — heavy-cap batch (>50 cols on Objects 1 and 4)",
     "objects": [
       {
-        "name": "BI_DB_DDR_Fact_PnL",
+        "name": "BI_DB_OPS_Fraud_Alert_Analysis",
         "type": "Table",
-        "columns": 15,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_PnL",
+        "columns": 56,
+        "priority": 0,
+        "writer_sp": "SP_OPS_Fraud_Alert_Analysis",
         "quality": 8.5,
-        "notes": "Daily P&L fact. SUM(UnrealizedPnLChange), SUM(NetProfit), COUNT(PositionID) from Function_PnL_Single_Day. 9-dimensional GROUP BY (CID x InstrumentType x 7 flags). 8.8B rows. ~111 lines. Redo: added lineage.md, computation formulas, mechanical tier2 assignments."
+        "notes": "1.47M-row ROUND_ROBIN HEAP daily TRUNCATE+INSERT. 3-month rolling fraud scoring: 15+ binary signals (fake names, disposable emails, IP clustering, geo/language mismatch, fast VL transitions) + weighted composite score (0-15). Sources: Dim_Customer + 9 dim JOINs + History.BackOfficeCustomer + BackOffice docs + Fact_BillingDeposit. Michail Vryoni 2025-06-25. 14T1, 40T2, 0T3."
       },
       {
-        "name": "BI_DB_DDR_Fact_MIMO_AllPlatforms",
+        "name": "BI_DB_OPS_HighCompensationsVsDeposits",
         "type": "Table",
-        "columns": 21,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_Fact_MIMO_AllPlatforms",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "SP_OPS_HighCompensationsVsDeposits",
         "quality": 8.5,
-        "notes": "Unified MIMO across 4 platforms (TP, eMoney, Options, MoneyFarm). UNION ALL sub-platform tables + global FTD JOIN + FTD recovery UPDATEs + C2USD UPDATE. 91.5M rows. ~422 lines. Redo: improved dual-FTD logic documentation, IBAN rename clarity."
+        "notes": "3-row ROUND_ROBIN HEAP daily TRUNCATE+INSERT. Dual-path fraud detection: compensation-to-deposit ratio > 50% (>3 comps, >$2K) OR rapid deposits (>3 in 24hrs via ACH/PWMB/Trustly/Sofort/Giropay). Sources: External_Billing_Deposit + Fact_CustomerAction + Dim_Customer + 3 dims. UC: _Not_Migrated. 4T1, 8T2, 0T3."
       },
       {
-        "name": "BI_DB_DDR_Fact_MIMO_eMoney_Platform",
+        "name": "BI_DB_OPS_KYC_Verification",
         "type": "Table",
-        "columns": 21,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_MIMO_eMoney_Platform",
+        "columns": 29,
+        "priority": 0,
+        "writer_sp": "SP_OPS_KYC_Verification",
         "quality": 8.5,
-        "notes": "eMoney (IBAN) deposits/withdrawals from eMoney_Fact_Transaction_Status. TxTypeID classification (7=deposit, 5=internal, 14=C2F, 8=trade, 6=internal out). Dedup by TransactionID. FTD recovery UPDATE. 23.2M rows. ~228 lines."
+        "notes": "1.76M-row ROUND_ROBIN HEAP daily TRUNCATE+INSERT. KYC verification SLA: DaysToVerify, HoursToVerify, MinutesToVerify from effective-date waterfall, FirstTouch SLA, VerificationMethod (EV 50%, Docs 18%, NA 31%), KYCFlow from ComplianceStateDB. VL2+ in last year, IsValidCustomer=1, RiskGroupID NOT IN 1,2. Pavlina Masoura 2025-02-07. 8T1, 21T2, 0T3."
       },
       {
-        "name": "BI_DB_DDR_Fact_Revenue_Generating_Actions",
+        "name": "BI_DB_OPS_MastersAndSubAccounts_AlignmentMonitoringReport",
         "type": "Table",
-        "columns": 27,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_Revenue_Generating_Actions",
-        "quality": 8.5,
-        "notes": "Master revenue fact table — 18 distinct metrics from 16+ Function_Revenue_* TVFs. Three insertion strategies: daily, Options full reload, Staking monthly lag. -1 sentinel convention (not 0). Position enrichment: IBAN, Recurring, CopyFund, C2P. 3.1B rows. ~1709 lines."
-      },
-      {
-        "name": "BI_DB_DDR_Fact_Trading_Volumes_And_Amounts",
-        "type": "Table",
-        "columns": 27,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_Trading_Volumes_And_Amounts",
-        "quality": 8.5,
-        "notes": "Trading volume/invested amounts from Function_Trading_Volume_PositionLevel. GROUP BY 14 dimensions, SUM 9 measures. QA dump to BI_DB_VolumeQA. IsOpenedFromIBAN DDL as varchar(100) anomaly noted. 793M rows. ~200 lines."
+        "columns": 58,
+        "priority": 0,
+        "writer_sp": "SP_OPS_MastersAndSubAccounts_AlignmentMonitoringReport",
+        "quality": 8.0,
+        "notes": "44K-row ROUND_ROBIN HEAP daily TRUNCATE+INSERT. Master-sub compliance monitoring: 20.3K masters + 23.7K subs. 11 KYC Q-A pairs (Q2-Q26 from KYC_Panel + Q12/Q32/Q150 from V_CustomerAnswers), PII, compliance attributes, financial aggregations (deposits, compensations, withdrawals, redeems, pending). Selfie doc check. Pavlina Masoura 2025-04-14. UC: _Not_Migrated. 12T1, 46T2, 0T3."
       }
     ]
   },
-  "batch_8_summary": {
+  "batch_95_summary": {
     "status": "COMPLETE",
-    "objects_documented": 6,
-    "total_columns_documented": 276,
+    "objects_documented": 4,
+    "total_columns_documented": 186,
+    "domain": "Operations Monthly KPIs (Cashouts/Verifications/Wires) + KYC Onboarding Flow: daily cashout SLA tracking (44 cols), KYC verification metrics (38 cols, STALE), deposit handling KPIs (19 cols), KYC onboarding flow tracker (85 cols).",
+    "capacity_used": "7.0/4.0 (Operations_Monthly_KPIs_Cashouts=2.0x [44 cols], Operations_Monthly_KPIs_Verifications=2.0x [38 cols], Operations_Monthly_KPIs_Wires=1.0x [19 cols], Operations_Onboarding_Flow_UserKPIs=3.0x [85 cols]) — heavy-cap batch (>50 cols on Object 4)",
     "objects": [
       {
-        "name": "BI_DB_DDR_Fact_AUM",
+        "name": "BI_DB_Operations_Monthly_KPIs_Cashouts",
         "type": "Table",
-        "columns": 40,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_AUM",
-        "quality": 8.5,
-        "notes": "Multi-platform AUM aggregation: TP equity, IBAN balance, Options equity, MoneyFarm equity. FULL OUTER JOIN across 4 sources. Global + TP-specific totals. Sources: BI_DB_Client_Balance_CID_Level_New, V_Liabilities, Function_AUM_OptionsPlatform, MoneyFarm_Fact_AccountsDaily. ~195 lines."
+        "columns": 44,
+        "priority": 0,
+        "writer_sp": "SP_Operations_Monthly_KPIs_FullData",
+        "quality": 7.5,
+        "notes": "13.4M-row ROUND_ROBIN CI(ModificationDateID,CID) daily DELETE+INSERT. Withdrawal SLA tracking from Fact_BillingWithdraw+Dim_Customer/Country/Regulation/FundingType. Complex SLA rules: 3 tiers (SLA/SLA48/SLA5days), day-of-week aware, funding-type specific (Wire/ACH/PWMB), currency specific (GBP/AUD), era split 2019-12-22. Only CashoutStatusID=3 (approved). ModificationDateID always NULL (not in INSERT). Guy Manova 2018, Pavlina Masoura. 14T1, 20T2, 10T3."
       },
       {
-        "name": "BI_DB_DDR_Fact_MIMO_Options_Platform",
+        "name": "BI_DB_Operations_Monthly_KPIs_Verifications",
+        "type": "Table",
+        "columns": 38,
+        "priority": 0,
+        "writer_sp": "SP_Operations_Monthly_KPIs_FullData (REMOVED 2025-04-14)",
+        "quality": 5.5,
+        "notes": "811K-row ROUND_ROBIN CI(RealCID) STALE since 2025-07-28. KYC verification tracking: VL progression, DaysToVerify, FirstTouch SLA, verification method (EV/Docs/NA). Writer SP code removed from SP_Operations_Monthly_KPIs_FullData Apr 2025; new SP not in SSDT. Column with space: 'Uploaded 2 Docs (not EV)'. 9T1, 4T2, 25T3."
+      },
+      {
+        "name": "BI_DB_Operations_Monthly_KPIs_Wires",
+        "type": "Table",
+        "columns": 19,
+        "priority": 0,
+        "writer_sp": "SP_Operations_Monthly_KPIs_FullData",
+        "quality": 8.0,
+        "notes": "27.7M-row ROUND_ROBIN CI(ModificationDateID,CID) daily DELETE+INSERT. Deposit handling KPIs from Fact_BillingDeposit+Dim_FundingType/Customer/Country/Regulation. HandlingDays (ValueDate→ModificationDate working days), FromStartToFinish (PaymentDate→ModificationDate). PaymentStatusID=2 only. Amount converted by ExchangeRate. ModificationDateID always NULL. 9T1, 10T2, 0T3."
+      },
+      {
+        "name": "BI_DB_Operations_Onboarding_Flow_UserKPIs",
+        "type": "Table",
+        "columns": 85,
+        "priority": 0,
+        "writer_sp": "SP_Operations_Onboarding_Flow_UserKPIs",
+        "quality": 7.5,
+        "notes": "9.9M-row HASH(CID) CI(CID) daily TRUNCATE+INSERT 24-month window. KYC onboarding flow: VL progression (VL0→VL3 timing), AML screening (WorldCheck via ScreeningService), electronic verification (25 EV-eligible countries), POI/POA doc processing (Onfido/Au10tix/Sumsub), STP metrics, NonVerificationReason classification. Sources: 15+ tables including Dim_Customer, ComplianceStateDB, ScreeningService, BackOffice docs, First5Actions, LTV_BI_Actual. 12T1, 73T2, 0T3."
+      }
+    ]
+  },
+  "batch_94_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 154,
+    "domain": "CRM enrichment + Risk Dashboard + Management Dashboard MIMO: daily Marketing Cloud CRM export (98 cols), CopyTrader asset allocation (7 cols), deposit pipeline (27 cols), withdrawal pipeline (22 cols).",
+    "capacity_used": "5.0/4.0 (MarketingCloudDaily=3.0x [98 cols], Mirror_Assets_Allocation=0.5x [7 cols], Money_In_New_Management_Dashboard=1.0x [27 cols], Money_Out_New_Management_Dashboard=1.0x [22 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_MarketingCloudDaily",
+        "type": "Table",
+        "columns": 98,
+        "priority": 0,
+        "writer_sp": "SP_MarketingCloudDaily",
+        "quality": 8.0,
+        "notes": "47.1M-row HASH(CID) CI(UpdateDate) daily incremental merge. One-row-per-CID CRM enrichment dataset for Salesforce Marketing Cloud SFTP upload. 20+ DWH/BI_DB/eMoney sources. 98 columns: watchlist activity, gain metrics, eMoney fiat/card, KYC, equity/balance, ISA portfolios, RAF. 5 legacy all-NULL columns (eMoneyIsInRollout, AirDropRemainder, AirdropServeyDate). Ben Einav 2023-08-23."
+      },
+      {
+        "name": "BI_DB_Mirror_Assets_Allocation",
+        "type": "Table",
+        "columns": 7,
+        "priority": 0,
+        "writer_sp": "SP_rsk_AgregatedRisk",
+        "quality": 8.5,
+        "notes": "6-row ROUND_ROBIN CI(Date) daily TRUNCATE+INSERT. CopyTrader (non-CopyFund) equity allocation by 6 instrument types (Stocks $1.13B, ETF $202M, Crypto $43.7M, Indices, Commodities, Currencies) with LW/LM/YTD comparison. Part of Risk Dashboard suite. Gil Alpert 2023-10-12."
+      },
+      {
+        "name": "BI_DB_Money_In_New_Management_Dashboard",
+        "type": "Table",
+        "columns": 27,
+        "priority": 0,
+        "writer_sp": "SP_Money_In_New_Management_Dashboard",
+        "quality": 8.5,
+        "notes": "6.23M-row ROUND_ROBIN HEAP daily DELETE+INSERT. Deposit transactions for management dashboard. Fact_BillingDeposit + 9 dims. Enriched with DepositStatus (Approved/Declined/Exclude), first attempt indicator, 24h approval rate, eMoney eligibility, conversion fee revenue. 7-month rolling window. Artyom Bogomolsky 2022-03-27."
+      },
+      {
+        "name": "BI_DB_Money_Out_New_Management_Dashboard",
+        "type": "Table",
+        "columns": 22,
+        "priority": 0,
+        "writer_sp": "SP_Money_Out_New_Management_Dashboard",
+        "quality": 8.5,
+        "notes": "4.19M-row ROUND_ROBIN CI(UpdateDate) daily DELETE+INSERT. Withdrawal transactions for management dashboard. Fact_BillingWithdraw + 6 dims. Auto-approval (96%), SLA hours, preparation mode (Auto Create 96%), execution approval, crypto redeem indicator. 7-month rolling window. Adi Meidan 2022-07-13."
+      }
+    ]
+  },
+  "batch_93_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 6,
+    "total_columns_documented": 68,
+    "domain": "AML compliance + ESMA regulatory + customer lifecycle + SB stub: AML account closure monitoring (14 cols), AML finance equity+login report (9 cols), ESMA CFD profitability by regulation (16 cols), ESMA CFD profitability by instrument (18 cols), LifeStage transition matrix (10 cols), SB fiktive placeholder (1 col).",
+    "capacity_used": "4.5/6.0 (M_AML_Account_Closed=1.0x [14 cols], M_AML_Finance_Report=0.5x [9 cols], M_ESMA_ProfitableClients_CFD_Last12Months=1.0x [16 cols], M_ESMA_ProfitableClients_CFD_Last12Months_Instrument=1.0x [18 cols], M_LifeStage_Matrix=0.5x [10 cols], M_SB_Fiktive_Table=0.5x [1 col])",
+    "objects": [
+      {
+        "name": "BI_DB_M_AML_Account_Closed",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_M_AML_Account_Closed",
+        "quality": 8.0,
+        "notes": "2.1K-row ROUND_ROBIN HEAP monthly delete-insert by EOM. Blocked/BlockedUponRequest customers with AML reason classification. Source: Fact_SnapshotCustomer + SF_Cases_Panel + History_BackOfficeCustomer. Jan 2022-Apr 2024 (may be stale). Column typo: Regualtion."
+      },
+      {
+        "name": "BI_DB_M_AML_Finance_Report",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_M_AML_Finance_Report",
+        "quality": 8.0,
+        "notes": "102.2M-row ROUND_ROBIN HEAP monthly delete-insert by EOM. Normal/Warning funded verified customers with equity (V_Liabilities) and last login (Fact_CustomerAction). Excludes NFA/BVI/eToroUS. ~3.5M rows/month."
+      },
+      {
+        "name": "BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months",
+        "type": "Table",
+        "columns": 16,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months",
+        "quality": 8.5,
+        "notes": "6.4K-row ROUND_ROBIN CCI daily delete-insert. ESMA % profitable CFD clients by regulation over rolling 12M windows. Retail-only (MifidCat!=2,3). By Yarden Sabadra."
+      },
+      {
+        "name": "BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months_Instrument",
+        "type": "Table",
+        "columns": 18,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months",
+        "quality": 8.5,
+        "notes": "36.7K-row ROUND_ROBIN CCI daily delete-insert. Same SP as parent — adds InstrumentTypeID/InstrumentType breakdown (6 types: Stocks/Currencies/Commodities/Indices/ETF/Crypto). Customer overcounting across instrument types."
+      },
+      {
+        "name": "BI_DB_M_LifeStage_Matrix",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "SP_M_LifeStage_Matrix",
+        "quality": 8.5,
+        "notes": "35.9K-row ROUND_ROBIN CI(ToMonthFull) monthly delete-insert. Month-to-month life stage transition counts by 14 regions and 11 consolidated statuses. Source: CID_LifeStageDefinition + CIDFirstDates. By Ben Einav. March 2024 fake reg exclusion."
+      },
+      {
+        "name": "BI_DB_M_SB_Fiktive_Table",
+        "type": "Table",
+        "columns": 1,
+        "priority": 0,
+        "writer_sp": "SP_M_Notifications_by_LifeStage",
+        "quality": 7.5,
+        "notes": "0-row ROUND_ROBIN CCI. Fiktive (placeholder) table — SP is no-op stub (print('1')). Service Broker scheduling anchor. Never populated."
+      }
+    ]
+  },
+  "batch_92_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 8,
+    "total_columns_documented": 138,
+    "domain": "Investors unclustered + KYC DOB/knowledge/score + limited accounts SLA + FX MIMO + LTV by FTD MOP + affiliate fraud monitoring: daily investor report without cluster (12 cols), elderly KYC watchlist (15 cols), Q23 assessment 3 versions (23 cols), behavioral cluster scoring (11 cols), blocked account SLA (22 cols), local currency FX revenue (17 cols), LTV by deposit method (24 cols), affiliate fraud relations (14 cols).",
+    "capacity_used": "8.0/8.0 (Investors_Unclustered=1.0x [12 cols], KYC_DOBover85=1.0x [15 cols], KYC_Knowledge_Assessment=1.0x [23 cols], KYC_Score_CID_Level=0.5x [11 cols], LimitedAccountsWithReasonsNEW=1.0x [22 cols], Local_Currencies_MIMO=1.0x [17 cols], LTV_By_FTD_MOP=1.0x [24 cols], M_Affiliates_FraudMonitoring_Relations=1.0x [14 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_Investors_Unclustered",
+        "type": "Table",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "SP_InvestorReport",
+        "quality": 8.0,
+        "notes": "~75M-row ROUND_ROBIN CI(Date) daily delete-insert. Unclustered companion to BI_DB_Investors (no ClusterSF). 3-way UNION: Manual (position open/close) + Copy (mirror-based) + Balance (V_Liabilities credit). Jan 2021 to present."
+      },
+      {
+        "name": "BI_DB_KYC_DOBover85",
         "type": "Table",
         "columns": 15,
         "priority": 0,
-        "writer_sp": "SP_DDR_Fact_MIMO_Options_Platform",
+        "writer_sp": "SP_KYC_DOBover85",
+        "quality": 8.5,
+        "notes": "3.1K-row ROUND_ROBIN HEAP daily TRUNCATE. Verified customers aged 85+ at registration. Dim_Customer source with selfie/liveliness proof flag from External BackOffice docs. 3 Tier 1 columns from Customer.CustomerStatic."
+      },
+      {
+        "name": "BI_DB_KYC_Knowledge_Assessment",
+        "type": "Table",
+        "columns": 23,
+        "priority": 0,
+        "writer_sp": "SP_KYC_Panel",
+        "quality": 8.5,
+        "notes": "15.6M-row HASH(GCID) CI(GCID) daily incremental DELETE+INSERT. Q23 Trading Knowledge Assessment results across 3 versions: 142-146 (scored, 7.1M), 101-104 (single answer, 8.4M), 84-87 (boolean, 32K). 76% pass rate."
+      },
+      {
+        "name": "BI_DB_KYC_Score_CID_Level",
+        "type": "Table",
+        "columns": 11,
+        "priority": 0,
+        "writer_sp": "SP_KYC_Score_CID_Level",
         "quality": 8.0,
-        "notes": "Options (Apex) platform deposits/withdrawals. Simple TRUNCATE+INSERT from Function_MIMO_Options_Platform. Hardcoded USD-only, FundingTypeID=0, CurrencyID=1. OrigIdentifier always 'ApexTxID'. ~30 lines."
+        "notes": "19.6M-row HASH(RealCID) CI(UpdateDate) daily TRUNCATE. Behavioral cluster (1-10) from 3 KYC dimensions: Q11 liquid assets, age at reg, Q33/Q35/Q2 experience. Via Rev_Cluster_Dict 3-way key lookup."
       },
       {
-        "name": "BI_DB_DDR_Fact_MIMO_Trading_Platform",
+        "name": "BI_DB_LimitedAccountsWithReasonsNEW",
         "type": "Table",
-        "columns": 19,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_MIMO_Trading_Platform",
+        "columns": 22,
+        "priority": 0,
+        "writer_sp": "SP_LimitedAccountsWithReasonsNEW",
         "quality": 8.5,
-        "notes": "TP deposits/withdrawals with multi-currency support. Complex multi-source: Fact_CustomerAction, Fact_BillingDeposit, Fact_BillingWithdraw, Dim_Currency. UNION deposits+withdrawals with dedup. Post-insert FTD recovery UPDATE from Dim_Customer. Flags: IBAN, Recurring, C2F, Redeem. ~350 lines."
+        "notes": "117.8K-row ROUND_ROBIN HEAP daily TRUNCATE. Blocked account SLA monitoring. 60+ hardcoded CASE rules for PlayerStatusGrouping (IN/OUT) and PendingClosureStatusGrouping. 98.4% OUT of SLA. AML 70%. By Izmini Nicolaou."
       },
       {
-        "name": "BI_DB_DDR_Fact_Non_Revenue_Generating_Actions",
+        "name": "BI_DB_Local_Currencies_MIMO",
         "type": "Table",
-        "columns": 8,
-        "priority": 60,
-        "writer_sp": "SP_DDR_Fact_Non_Revenue_Generating_Actions",
-        "quality": 8.5,
-        "notes": "Engagement/operational actions (logins, registrations, verifications, copy). Aggregated from Fact_CustomerAction + Dim_ActionType + Dim_CompensationReason. Complex action-type classification via CASE mapping. IsCopyFund detection via Dim_Mirror workaround. Depositor login split. ~200 lines."
-      },
-      {
-        "name": "BI_DB_DDR_Customer_Daily_Status",
-        "type": "Table",
-        "columns": 64,
-        "priority": 99,
-        "writer_sp": "SP_DDR_Customer_Daily_Status",
-        "quality": 8.5,
-        "notes": "Central customer segmentation snapshot — one row per CID per day. 5-layer population build (TP, IBAN-only, Options-only, Options MIMO, MoneyFarm). Platform-specific FTD flags, daily MIMO flags with coercion, account segmentation (active/balance-only/portfolio-only/inactive). 13.3B rows. ~1250 lines."
-      },
-      {
-        "name": "BI_DB_DDR_Customer_Periodic_Status",
-        "type": "Table",
-        "columns": 130,
-        "priority": 100,
-        "writer_sp": "SP_DDR_Customer_Periodic_Status",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "SP_Local_Currencies_MIMO",
         "quality": 8.0,
-        "notes": "Pre-aggregation of Customer_Daily_Status for dashboard performance. Rolling periods: ThisWeek/ThisMonth/ThisQuarter/ThisYear. Semantics: MAX for snapshot attrs (latest-day), MAX for activity flags (ever-happened), SUM for event counts, special IsFunded logic (last-day). 12.7B rows. ~460 lines."
+        "notes": "2.2M-row ROUND_ROBIN HEAP daily delete-insert. FX revenue tracking for non-major currency deposits/withdrawals. FX Income/Cost/Revenue per transaction. 89% deposits. By Adi Meidan."
+      },
+      {
+        "name": "BI_DB_LTV_By_FTD_MOP",
+        "type": "Table",
+        "columns": 24,
+        "priority": 0,
+        "writer_sp": "SP_LTV_By_FTD_MOP",
+        "quality": 8.0,
+        "notes": "41.5K-row ROUND_ROBIN HEAP daily TRUNCATE. LTV by FTD method of payment. 2-year rolling window. Current + FTD-time demographics. Revenue30/60/90/180/360 + 8-year LTV. CreditCard 76%."
+      },
+      {
+        "name": "BI_DB_M_Affiliates_FraudMonitoring_Relations",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_M_Affiliates_FraudMonitoring_Relations",
+        "quality": 8.0,
+        "notes": "14M-row ROUND_ROBIN HEAP monthly delete-insert by YYYYMM. Affiliate fraud: FundingRelation (shared FundingID, 0.03% flagged) + PersonalDetailsRelation (shared name+DOB, 1.7% flagged). By Pavlina Masuora."
       }
     ]
   },
-  "batch_7_summary": {
+  "batch_91_summary": {
     "status": "COMPLETE",
     "objects_documented": 8,
-    "total_columns_documented": 170,
-    "domain": "Mixed priority 60-90: Futures, Interest, UsageTracking + 5 DDR fact tables",
-    "objects": ["BI_DB_Futures_Finance_Prep_Data", "BI_DB_InterestDaily", "BI_DB_UsageTracking_SF", "BI_DB_DDR_Fact_PnL", "BI_DB_DDR_Fact_MIMO_AllPlatforms", "BI_DB_DDR_Fact_MIMO_eMoney_Platform", "BI_DB_DDR_Fact_Revenue_Generating_Actions", "BI_DB_DDR_Fact_Trading_Volumes_And_Amounts"]
+    "total_columns_documented": 135,
+    "domain": "ICF regulatory + index dividends alert + instrument overview/bid-ask + interest monthly + investment monthly/PIMeetup + investors: monthly ICF equity report (19 cols), BuyTax NULL DQ alert (4 cols), daily+monthly instrument activity (35 cols), daily bid/ask snapshot (22 cols), monthly CID-level interest accrual (9 cols), monthly copy-trading PnL (20 cols), daily PI Meetup copy performance (13 cols), daily investor activity report (13 cols).",
+    "capacity_used": "7.5/8.0 (ICF_Report=1.0x [19 cols], IndexDividends_Alert=0.5x [4 cols], Instrument_Overview=2.0x [35 cols], Instruments_BidAndAsk=1.0x [22 cols], InterestMonthly=0.5x [9 cols], Investment_Monthly_Data=1.0x [20 cols], Investment_PIMeetup=1.0x [13 cols], Investors=0.5x [13 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_ICF_Report",
+        "type": "Table",
+        "columns": 19,
+        "priority": 0,
+        "writer_sp": "SP_ICF_Report",
+        "quality": 8.0,
+        "notes": "15.4K-row ROUND_ROBIN HEAP monthly EOM. ICF regulatory equity snapshot by Regulation/PlayerStatus/MifidCategory. FCA/CySEC/BVI/NFA/None. ECB EUR conversion, 20K threshold. Source: BI_DB_Client_Balance_CID_Level_New + BI_DB_ECB_RateExtractFromAPI. By Guy Manova."
+      },
+      {
+        "name": "BI_DB_IndexDividends_Alert",
+        "type": "Table",
+        "columns": 4,
+        "priority": 0,
+        "writer_sp": "SP_IndexDividend_Alert",
+        "quality": 8.0,
+        "notes": "0-row ROUND_ROBIN HEAP daily TRUNCATE. DQ alert: NULL BuyTax in 3 dividend tables (30-day window). Empty when healthy."
+      },
+      {
+        "name": "BI_DB_Instrument_Overview",
+        "type": "Table",
+        "columns": 35,
+        "priority": 0,
+        "writer_sp": "SP_Instrument_Overview",
+        "quality": 8.5,
+        "notes": "3.19M-row HASH(DWHInstrumentID) HEAP daily+monthly. Instrument activity: trading volume, revenue, watchlist, first actions. 6 asset types. 7-month rolling window. By Artyom Bogomolsky 2022-11-16."
+      },
+      {
+        "name": "BI_DB_Instruments_BidAndAsk",
+        "type": "Table",
+        "columns": 22,
+        "priority": 0,
+        "writer_sp": "SP_Instruments_BidAndAsk",
+        "quality": 8.5,
+        "notes": "460-row HASH(InstrumentID) HEAP daily TRUNCATE. Instrument attributes + latest bid/ask from Dim_GetSpreadedPriceCandle60MinSplitted. 80% crypto."
+      },
+      {
+        "name": "BI_DB_InterestMonthly",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_InterestMonthly",
+        "quality": 8.0,
+        "notes": "4.86M-row ROUND_ROBIN CI(MonthOfInterest) monthly. CID-level interest accrual from Interest.Trade.InterestMonthly external table. StatusID=3 only. 2-month lag. By Adi Meidan 2024-04-30."
+      },
+      {
+        "name": "BI_DB_Investment_Monthly_Data",
+        "type": "Table",
+        "columns": 20,
+        "priority": 0,
+        "writer_sp": "SP_Investment_Monthly_Data",
+        "quality": 8.0,
+        "notes": "2.11M-row ROUND_ROBIN HEAP monthly EOM. Copy-trading investment PnL: copier vs copied person equity/instrument replication per mirror. 7 position lifecycle scenarios. PI 67%, Portfolio 31%, Non-PI 2%."
+      },
+      {
+        "name": "BI_DB_Investment_PIMeetup",
+        "type": "Table",
+        "columns": 13,
+        "priority": 0,
+        "writer_sp": "SP_CID_Investment_PIMeetup",
+        "quality": 8.0,
+        "notes": "121.4M-row ROUND_ROBIN CI(DateID) daily. PI Meetup copy relationship: NMI/MoneyIn/MoneyOut/Platform_NetValue/Platform_Pnl. Positions >= 2025-08-01 MeetUpDate. All IDs varchar(8)."
+      },
+      {
+        "name": "BI_DB_Investors",
+        "type": "Table",
+        "columns": 13,
+        "priority": 0,
+        "writer_sp": "SP_InvestorReport_Cluster",
+        "quality": 8.0,
+        "notes": "132.9M-row ROUND_ROBIN CI(DateID) daily. Investor activity: Customers/Amount/AUM_AUA by AM/Country/Regulation/ActionType(Manual/Copy/Balance)/AssetType/ClusterSF. From BI_DB_Investors_STG + BI_DB_CID_DailyCluster."
+      }
+    ]
   },
-  "ddr_domain_knowledge": {
-    "architecture": "CID_Level → Daily_Aggregated → TimeRange_Aggregated (3-tier aggregation pyramid)",
-    "fact_tables": "PnL, MIMO (AllPlatforms/eMoney/Trading/Options), Revenue, Trading Volumes, AUM, Non-Revenue Actions — all feed DDR_CID_Level or are standalone DDR components",
-    "customer_tables": "Customer_Daily_Status (daily snapshot, 64 cols, 13.3B rows) → Customer_Periodic_Status (pre-agg, 130 cols, 12.7B rows) — population & segmentation backbone",
-    "auxiliary_pattern": "Separate CID_Level_Aux + Daily_Aggregated_Aux tables for fees added post-initial design",
-    "revenue_functions": "18+ Function_Revenue_* functions are the foundational building blocks. Each calculates a specific revenue metric.",
-    "mimo_platforms": "Trading Platform, eMoney (IBAN), Options (Gatsby/Apex), MoneyFarm — each has a dedicated fact table feeding into AllPlatforms union",
-    "population_sources": "5 mutually exclusive: TP (Fact_CustomerAction), IBAN-only (eMoney_Fact_Account_Status), Options-only (Gatsby_Fact_Account_Status), Options MIMO (DDR_Fact_MIMO_Options_Platform), MoneyFarm (MoneyFarm_Fact_AccountsDaily)",
-    "unique_user_caveat": "Time-range aggregations attribute users to last day's dimension values",
-    "datasource_pattern": "TimeRange table uses DataSource column to partition standard vs auxiliary data",
-    "aum_sources": "4 pillars: TP equity (Client_Balance_CID_Level_New), IBAN balance (V_Liabilities), Options equity (Function_AUM_OptionsPlatform), MoneyFarm equity (MoneyFarm_Fact_AccountsDaily)"
+  "batch_90_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 100,
+    "domain": "Cashout operations + high-cashout management analysis + hourly withdrawal monitoring: hourly SEA OnlineBanking/UnionPay pending cashout snapshot, daily $50K+ cashout alert archive with SF contact tracking, hourly crypto wallet redeem PIVOT report, hourly non-crypto withdrawal PIVOT report.",
+    "capacity_used": "4.5/4.0 (H_SEA_CashoutsEstimation=0.5x [12 cols], High_Cashout_Emails=2.0x [36 cols], HourlyReport_Redeems=1.0x [26 cols], HourlyReport_Withdraws=1.0x [26 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_H_SEA_CashoutsEstimation",
+        "type": "Table",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "SP_H_SEA_CashoutsEstimation",
+        "quality": 8.0,
+        "notes": "0-row ROUND_ROBIN HEAP hourly TRUNCATE. OnlineBanking (28) + UnionPay (22) pending/InProcess/PendingReview cashouts. Dual SCREEN path: WD Requests Screen vs PaymentsToSend. Billing.Withdraw source with Dim_FundingType/Currency/CashoutStatus/Customer/Regulation lookups. By Pavlina Masuora 2021-07-15."
+      },
+      {
+        "name": "BI_DB_High_Cashout_Emails_For_Management_Analysis",
+        "type": "Table",
+        "columns": 36,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_High_Cashout_Emails_For_Management_Analysis",
+        "quality": 8.0,
+        "notes": "17.9K-row HASH(CID) HEAP daily. Historical archive of $50K+ cashout alerts. 25 Snapshot_ columns from BI_DB_Daily_HighCashoutEmailsForManagement + enrichment with Fact_BillingWithdraw lifecycle + SF contact attempts (Phone_Calls, Completed_Email, Attemp_Phone_Call, Attemp_Email). 3 brackets: 50K-100K (65%), 100K-250K (27%), >250K (8%). By Jan Iablunovskey 2024-07-16."
+      },
+      {
+        "name": "BI_DB_HourlyReport_Redeems",
+        "type": "Table",
+        "columns": 26,
+        "priority": 0,
+        "writer_sp": "SP_H_HourlyReport_Redeems",
+        "quality": 8.0,
+        "notes": "4.1K-row ROUND_ROBIN HEAP hourly TRUNCATE. eToroCryptoWallet (FundingTypeID=27) withdrawals, 30-day window, PIVOT of vWithdrawToFunding amounts by CashoutStatusID 1-13. Companion to HourlyReport_Withdraws. By Pavlina Masoura 2021-03-11."
+      },
+      {
+        "name": "BI_DB_HourlyReport_Withdraws",
+        "type": "Table",
+        "columns": 26,
+        "priority": 0,
+        "writer_sp": "SP_H_Ops_HourlyReport_Withdraws",
+        "quality": 8.0,
+        "notes": "288.7K-row ROUND_ROBIN HEAP hourly TRUNCATE PK(WithdrawID NOT ENFORCED). All non-crypto withdrawals (FundingTypeID!=27), 15-day window, same PIVOT structure as Redeems. Companion to HourlyReport_Redeems. By Guy Manova 2018-04-09."
+      }
+    ]
   },
-  "next_batch_plan": {
-    "batch_number": 10,
-    "target_objects": [
-      "BI_DB_DDR_CID_Level (P60) — key bridge table from fact tables to aggregated layers",
-      "BI_DB_DDR_CID_Level_Aux (P60) — auxiliary fees extension",
-      "BI_DB_DDR_Daily_Aggregated (P60) — aggregated DDR metrics",
-      "BI_DB_DDR_Daily_Aggregated_Aux (P60) — auxiliary fees aggregation",
-      "BI_DB_DDR_TimeRange_Aggregated (P60) — period-level aggregation"
+  "batch_89_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 54,
+    "domain": "Revenue milestone + FSRA regulatory + German crypto batch: first-time $5 commission threshold tracking, FSRA Abu Dhabi weekly regulatory report (position-level activity), German crypto Tangany wallet transition onboarding funnel, and daily aggregated German crypto position exposure.",
+    "capacity_used": "3.0/4.0 (FirstTimeRev5=0.5x [7 cols], FSRA_Weekly_Report=1.0x [21 cols], German_Crypto_Transition=1.0x [18 cols], German_Open_Real_Crypto=0.5x [8 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_FirstTimeRev5",
+        "type": "Table",
+        "columns": 7,
+        "priority": 0,
+        "writer_sp": "SP_FirstTimeRev5",
+        "quality": 8.0,
+        "notes": "994K-row ROUND_ROBIN CI(DateID) daily. First position where cumulative commission exceeds $5 per CID. Running SUM window function on Dim_Position commissions. By Tal Cohen 2022-04-25, migrated Chen Largman 2023-06-28."
+      },
+      {
+        "name": "BI_DB_FSRA_Weekly_Report",
+        "type": "Table",
+        "columns": 21,
+        "priority": 0,
+        "writer_sp": "SP_W_Wed_BI_DB_FSRA_Weekly_Report",
+        "quality": 8.0,
+        "notes": "6.4M-row HASH(RealCID) TRUNCATE weekly Wednesday. FSRA RegulationID=11 Abu Dhabi customer-position pairs. 3-way UNION of closed/opened/current-open positions. 3 client classifications, 7 instrument types. By Yarden Sabadra 2024-03-11."
+      },
+      {
+        "name": "BI_DB_German_Crypto_Transition_To_Tangany",
+        "type": "Table",
+        "columns": 18,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_German_Crypto_Transition_To_Tangany",
+        "quality": 8.0,
+        "notes": "226K-row HASH(RealCID) HEAP TRUNCATE daily. German users with Tangany crypto wallet IDs. 3-step interaction funnel (T&C ID=45, Selfie ID=46, Confirmation ID=47) from ComplianceStateDB. 6 Tangany statuses including MicaCustomer."
+      },
+      {
+        "name": "BI_DB_German_Open_Real_Crypto_Positions_Daily",
+        "type": "Table",
+        "columns": 8,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_German_Open_Real_Crypto_Positions_Daily",
+        "quality": 8.0,
+        "notes": "83K-row ROUND_ROBIN HEAP daily delete+insert. German CountryID=79, registered<2023-07-13, crypto InstrumentTypeID=10, IsSettled=1. Instrument-level aggregation: COUNT(DISTINCT CID), SUM(units), SUM(equity). 189 instruments, $648M equity."
+      }
+    ]
+  },
+  "batch_88_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 154,
+    "domain": "Finance settlement + futures custody batch: daily stock/ETF settlement with T+1/T+2 by exchange (2023 legacy + 2025 replacement with LP/LA resolution and close-price metrics), real futures position-level custody transfers to Marex broker (complex MTM/PnL/margin/transfer chain with SQF adjustments), and monthly crypto staking AirDrop + Compensations summary by regulation.",
+    "capacity_used": "6.5/4.0 (heavy-cap batch: Non_US_2023=1.0x [29 cols], Non_US_2025=2.0x [44 cols], Real_Futures=3.0x [75 cols], Staking=0.5x [6 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_Finance_Non_US_Settlement_New_2023",
+        "type": "Table",
+        "columns": 29,
+        "priority": 0,
+        "writer_sp": "SP_Finance_Non_US_Settlement_2023",
+        "quality": 8.0,
+        "notes": "106.1M-row daily stock/ETF settlement. ROUND_ROBIN, CI(DateID). 32 exchanges, T+1 US/CA T+2 others. Hardcoded hedge server → provider mapping (24 entries). Sources: BI_DB_PositionPnL + Dim_Instrument + Dim_Position + Fact_SnapshotCustomer + Fact_CurrencyPriceWithSplit + exchange calendar. By Guy Manova 2023-08-07."
+      },
+      {
+        "name": "BI_DB_Finance_Non_US_Settlement_New_2025",
+        "type": "Table",
+        "columns": 44,
+        "priority": 0,
+        "writer_sp": "SP_Finance_Non_US_Settlement_2025",
+        "quality": 8.0,
+        "notes": "49.3M-row daily 2025 replacement. HASH(ISINCode), CI(DateID). 15 new columns: IsValidCustomer, LP/LA details, close-price P&L/rates, TotalStockMarginLoan. Dynamic 3-tier provider mapping (Karen's Fivetran + etoro LA + fallback). Also writes BI_DB_Finance_eToro_vs_Positions. By Guy Manova + Inessa K 2025-01-28."
+      },
+      {
+        "name": "BI_DB_Finance_Real_Futures_Custody_And_Transfers",
+        "type": "Table",
+        "columns": 75,
+        "priority": 0,
+        "writer_sp": "SP_Finance_Real_Futures_Custody_And_Transfers",
+        "quality": 8.0,
+        "notes": "1.22M-row HASH(CID) CCI real futures position-event ledger. 75 cols. Marex broker custody/MTM/PnL/margin/transfer chain. SQF adjustment from Google Sheets via Fivetran. Tag50 trader IDs from Dealing_dbo. 25 instruments (SP500, NatGas, Gold, Oil, DOW30). 96 CIDs. CySEC 97%. Loop @date-2 to @date for holiday coverage. By Guy Manova 2025-02-13."
+      },
+      {
+        "name": "BI_DB_Finance_Staking_Report",
+        "type": "Table",
+        "columns": 6,
+        "priority": 0,
+        "writer_sp": "SP_Finance_Staking_Report",
+        "quality": 8.0,
+        "notes": "~500-row HEAP monthly crypto staking summary. AirDrop (InstrumentID 100017/100026, IsAirDrop=1) + Compensations (BI_DB_Staking_Platform_Compensations). By regulation × staking month. Nov 2020–present."
+      }
+    ]
+  },
+  "batch_87_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 8,
+    "total_columns_documented": 158,
+    "domain": "Mixed finance/risk/marketing batch: USD conversion rates (cross-currency triangulation), EOM client vs LP risk exposure, Fact_CustomerAction performance derivative (3.4B rows), KYC failed verification MA, Facebook Ads attribution (partially inactive), ASIC regulatory position lifecycle, finance settlement reconciliation, and IFR K-factor KTCD regulatory capital.",
+    "capacity_used": "11.0/8.0 (EOD_USD_cr=0.5x [6 cols], EOMExposures=1.0x [12 cols], Fact_Customer_Action_Position_Distribution=2.0x [37 cols], Failed_Verification_MA=0.5x [10 cols], FB_Report=1.0x [16 cols], Finance_ASIC_MP=2.0x [32 cols], Finance_eToro_vs_Positions=2.0x [37 cols], Finance_IFRS_KTCD_eToro_Side=0.5x [8 cols])",
+    "objects": [
+      {"name": "BI_DB_EOD_USD_cr", "type": "Table", "columns": 6, "priority": 0, "writer_sp": "SP_EOD_USD_cr", "quality": 8.5, "notes": "17.6M-row daily USD conversion rates per instrument. Bid-based Long + Ask-based Short. Cross-rate triangulation via Fact_CurrencyPriceWithSplit. By Amir Gurewitz 2020-06-15."},
+      {"name": "BI_DB_EOMExposures", "type": "Table", "columns": 12, "priority": 0, "writer_sp": "SP_M_EOMExposures", "quality": 8.5, "notes": "344.7K-row monthly client NOP vs LP hedging NOP per instrument. 6 asset types. Uncovered exposure = Client - LP. Sign-flip for BuyCurrencyID=1 currencies."},
+      {"name": "BI_DB_Fact_Customer_Action_Position_Distribution", "type": "Table", "columns": 37, "priority": 0, "writer_sp": "SP_Fact_Customer_Action_Position_Distribution", "quality": 8.5, "notes": "3.4B-row HASH(PositionID) derivative for fee/comp/detach actions. COALESCE position attributes from Dim_Position. SCD customer snapshot via Dim_Range. Post-insert integrity check. By Guy Manova 2024-09-05."},
+      {"name": "BI_DB_Failed_Verification_MA", "type": "Table", "columns": 10, "priority": 0, "writer_sp": "SP_Failed_Verification_MA", "quality": 8.0, "notes": "1.1K-row TRUNCATE MA table. VL2-not-VL3 users with docs rejected in 3 days. 22 POI/POA reason codes. By Eti Rozolio 2025-05-04."},
+      {"name": "BI_DB_FB_Report", "type": "Table", "columns": 16, "priority": 0, "writer_sp": "SP_FB_Report", "quality": 8.0, "notes": "102K-row FB Ads attribution (Smartly only). FB API vs DB counts. Partially inactive since 2026-01-07. By Jan Iablunovskey 2021-11-29."},
+      {"name": "BI_DB_Finance_ASIC_MP", "type": "Table", "columns": 32, "priority": 0, "writer_sp": "SP_Finance_ASIC_MP", "quality": 8.0, "notes": "334M-row ASIC regulatory position lifecycle. Opens/closes/IsSettled changes. Multi-currency USD/GBP/EUR. RegulationID 4,10."},
+      {"name": "BI_DB_Finance_eToro_vs_Positions", "type": "Table", "columns": 37, "priority": 0, "writer_sp": "SP_Finance_Non_US_Settlement_2025", "quality": 8.0, "notes": "10.4M-row daily settlement reconciliation. Omnibus netting vs client positions. eToroUSDAmount permanently NULL after Oct 2025 Duco migration."},
+      {"name": "BI_DB_Finance_IFRS_Automation_KTCD_eToro_Side", "type": "Table", "columns": 8, "priority": 0, "writer_sp": "SP_Finance_IFRS_Automation_KTCD_eToro_Side", "quality": 8.5, "notes": "8.7K-row daily IFR K-factor KTCD. 6 reports (A-F) per date. EV/OwnFunds/CollateralAfterHaircut."}
+    ]
+  },
+  "batch_86_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 8,
+    "total_columns_documented": 104,
+    "domain": "Mixed analytics/operations batch: investment diversification (EOM+15th PIVOT), DLT/Tangany crypto recon (3 bug-fix formulas), KYC document vendor classification (Au10tix/Onfido/Sumsub), SB infrastructure placeholder, employee crypto NWA, employee trading program eligibility, and hourly payments ops dashboards (cashouts + redeems).",
+    "capacity_used": "5.0/8.0 (Diversification=1.0x [22 cols], DLT_Tangany=1.0x [19 cols], Document_Vendors=1.0x [20 cols], Dummy=0.5x [1 col], Employee_Crypto_NWA=0.5x [5 cols], Employees_Program=1.0x [24 cols], EndOfDayReport_Cashouts=0.5x [6 cols], EndOfDayReport_Redeems=0.5x [7 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_Diversification",
+        "type": "Table",
+        "columns": 22,
+        "priority": 0,
+        "writer_sp": "SP_Diversification",
+        "quality": 8.5,
+        "notes": "358.9M-row EOM+15th investment diversification snapshot. 4 asset class PIVOT (Copy/Crypto/Stocks-ETF/CFD). Single-asset concentration detection. AUA/Balance/Equity/30d-Revenue. Country=US/Rest. HASH(CID). By Shir Yablon 2021-06-09."
+      },
+      {
+        "name": "BI_DB_DLT_Tangany_Trades_Netting",
+        "type": "Table",
+        "columns": 19,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_DLT_Tangany_Trades_Netting",
+        "quality": 8.5,
+        "notes": "17.7M-row daily crypto trade recon. 3 AmountBugFix formulas by Leverage/UnitMargin. Sign-flipped amounts for netting. InstrumentTypeID=10, IsSettled=1. IsDLTUser 3.4%. TicketFeeByPercent + CommissionVersion. By Guy Manova 2024-11-10."
+      },
+      {
+        "name": "BI_DB_Document_Vendors",
+        "type": "Table",
+        "columns": 20,
+        "priority": 0,
+        "writer_sp": "SP_Document_Vendors",
+        "quality": 8.0,
+        "notes": "992.7K-row TRUNCATE 4-month KYC doc classification. 3 vendors: Onfido(63.7%)/Sumsub(36.3%)/Au10tix. 5 doc types. Complex OriginalOutcome/FinalOutcome per vendor. All varchar(max). By Pavlina Masoura 2022-10-03."
+      },
+      {
+        "name": "BI_DB_Dummy",
+        "type": "Table",
+        "columns": 1,
+        "priority": 0,
+        "writer_sp": "SP_Dummy",
+        "quality": 7.5,
+        "notes": "0-row SB infrastructure placeholder. SP prints Hello World. By Eyal Boas 2023-05-08."
+      },
+      {
+        "name": "BI_DB_Employee_Crypto_NWA",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "SP_Employee_Crypto_NWA",
+        "quality": 8.5,
+        "notes": "3K-row EOM employee crypto holdings by instrument. SUM(AmountInUnitsDecimal) across internal accounts. EOD_Bid_Price from Crypto_NOP. 185 instruments. By Adi Meidan 2024-05-09."
+      },
+      {
+        "name": "BI_DB_Employees_Program",
+        "type": "Table",
+        "columns": 24,
+        "priority": 0,
+        "writer_sp": "SP_M_EmployeesProgram",
+        "quality": 8.5,
+        "notes": "2K-row TRUNCATE employee trading program. IsEligible via AvgInvestment>=50% OR (100+ actions AND 10x vol/equity). Annual Apr 5 reset. PII: FirstName/LastName/UserName/Email. By Dan 2021."
+      },
+      {
+        "name": "BI_DB_EndOfDayReport_Cashouts",
+        "type": "Table",
+        "columns": 6,
+        "priority": 0,
+        "writer_sp": "SP_H_EndOfDayReport_Cashouts",
+        "quality": 8.0,
+        "notes": "16-row hourly TRUNCATE cashout ops dashboard. COStatus x TimeFrame x CashoutStatus grouping. 3-month window. SB_Hourly."
+      },
+      {
+        "name": "BI_DB_EndOfDayReport_Redeems",
+        "type": "Table",
+        "columns": 7,
+        "priority": 0,
+        "writer_sp": "SP_H_EndOfDayReport_Redeems",
+        "quality": 8.0,
+        "notes": "111-row hourly TRUNCATE redeem ops dashboard. NoOfRedees typo. RequestDate per-day granularity. SB_Hourly."
+      }
+    ]
+  },
+  "batch_84_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 8,
+    "total_columns_documented": 115,
+    "domain": "Mixed operational/analytical batch: crypto engagement churn/winback panel, onboarding first-trade analysis (3 sibling tables sharing SP_CustomerFirst5OpenPositions), CySEC ICF regulatory balance submission, affiliate cashout fraud detection, dividend tax reporting, and high-value cashout management alerts.",
+    "capacity_used": "7.5/8.0 (Crypto_Active_Open_Churn_Winback=1.0x [13 cols], CustomerCross=0.5x [5 cols], CustomerCross_New=0.5x [5 cols], CustomerFirst5OpenPositions=0.5x [11 cols], CySEC_Submission_ICF=1.0x [15 cols], Daily_AffiliatesPaidAndCashout=1.0x [14 cols], Daily_CID_Dividend_TaxReport=1.0x [15 cols], Daily_HighCashoutEmailsForManagement=1.5x [27 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_Crypto_Active_Open_Churn_Winback",
+        "type": "Table",
+        "columns": 13,
+        "priority": 0,
+        "writer_sp": "SP_Crypto_Active_Open_Churn_Winback",
+        "quality": 8.5,
+        "notes": "213.5M-row monthly crypto engagement panel (Jun 2022–Apr 2026, 5.4M CIDs). Binary flags for 4 crypto activity types (Manual/Copy/Real/CFD). Active_Open conjunctive: needs BOTH trade-type AND settlement-type. Churn/Win_Back via LAG over Active_Open. Population: Fact_SnapshotCustomer verified depositors. HASH(RealCID). By Adva Jakobson 2024-09-24."
+      },
+      {
+        "name": "BI_DB_CustomerCross",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "SP_CustomerFirst5OpenPositions",
+        "quality": 8.5,
+        "notes": "11.2M-row first-action per detailed asset class (Crypto/Real Stocks-ETFs/CFD Stocks-ETFs/FX-Commodities-Indices/Copy/Copy Fund). MIN(Occurred) per (RealCID, ActionType_Detailed). Sibling of CustomerCross_New."
+      },
+      {
+        "name": "BI_DB_CustomerCross_New",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "SP_CustomerFirst5OpenPositions",
+        "quality": 8.5,
+        "notes": "10.1M-row coarser sibling (Crypto/FX-Commodities/Stocks-ETFs-Indices/Copy/Copy Fund). Indices grouped with Stocks instead of FX."
+      },
+      {
+        "name": "BI_DB_CustomerFirst5OpenPositions",
+        "type": "Table",
+        "columns": 11,
+        "priority": 0,
+        "writer_sp": "SP_CustomerFirst5OpenPositions",
+        "quality": 8.5,
+        "notes": "22.9M rows, first <=5 open positions per CID. ROW_NUMBER by Occurred. ActionTypeID IN (1=Open, 17=Copy Open). IsBuy from Dim_Position LEFT JOIN. Feeds CustomerCross/CustomerCross_New. By Dan 2020-08-31."
+      },
+      {
+        "name": "BI_DB_CySEC_Submission_ICF",
+        "type": "Table",
+        "columns": 15,
+        "priority": 0,
+        "writer_sp": "SP_CySEC_Submission_ICF",
+        "quality": 8.5,
+        "notes": "178.9M-row monthly CySEC ICF regulatory submission (Dec 2023–Apr 2026, 6.8M CIDs). ClosingBalanceAdj excludes real crypto. EUR via ECB rate. ISClosingBalanceAdj_EUR>20000 threshold. Includes ALL regulations despite CySEC name. Bracket-quote required for >-in-name columns."
+      },
+      {
+        "name": "BI_DB_Daily_AffiliatesPaidAndCashout",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_AffiliatesPaidAndCashout",
+        "quality": 8.0,
+        "notes": "831K rows (Mar 2021–Mar 2026, 2,475 CIDs). Approved cashouts matched to paid affiliates via TradingAccount_RealCID. PII: Contact/WebSiteURL/Email. HEAP."
+      },
+      {
+        "name": "BI_DB_Daily_CID_Dividend_TaxReport",
+        "type": "Table",
+        "columns": 15,
+        "priority": 0,
+        "writer_sp": "SP_Daily_CID_Dividend_TaxReport",
+        "quality": 8.0,
+        "notes": "723.5M rows (Jan 2019–Apr 2026, 2.6M CIDs, 104K dividends). Per-position dividend tax report with ISINCode/TaxCode/BuyTax. SUM(Amount)=TotalDividendPaid. ALWAYS filter by PaymentDate. CLUSTERED INDEX(PaymentDate)."
+      },
+      {
+        "name": "BI_DB_Daily_HighCashoutEmailsForManagement",
+        "type": "Table",
+        "columns": 27,
+        "priority": 0,
+        "writer_sp": "SP_Daily_HighCashoutEmailsForManagement",
+        "quality": 8.5,
+        "notes": "~28 rows daily TRUNCATE+INSERT. Cashouts >= $50K pending review. Categories 50K-100K/100K-250K/>250K. AML/Risk comments, selfie/POI/SF contact checks, V_Liabilities equity/balance. RequestorComments column unpopulated. By Pavlina Masuora 2021-05-17. PII-sensitive."
+      }
+    ]
+  },
+  "batch_83_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 6,
+    "total_columns_documented": 91,
+    "domain": "AML detection suite — KYT crypto feed (decommissioned) + Multiple Accounts Deposit/Device shared-entity detection (4 tables) + Periodic Review MOP risk classification support table. All 6 tables ROUND_ROBIN HEAP, all UC Not_Migrated, all on-demand or unknown schedule (not in OpsDB SB_Daily).",
+    "capacity_used": "4.0/4.0 (AML_Email_for_KYT=1.0x [27 cols, decommissioned], AML_Multiple_Accounts_Dep=0.5x [8 cols], AML_Multiple_Accounts_Dep_fulldata=1.0x [38 cols], AML_Multiple_Accounts_DeviceID=0.5x [3 cols], AML_Multiple_Accounts_DeviceID_FullData=0.5x [12 cols], AML_Periodic_Review_MOP=0.5x [3 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_AML_Email_for_KYT",
+        "type": "Table",
+        "columns": 27,
+        "priority": 0,
+        "writer_sp": "JUNK_SP_AML_Email_for_KYT (DECOMMISSIONED)",
+        "quality": 8.35,
+        "notes": "DECOMMISSIONED — 0 rows. Was a KYT (Know Your Transaction) blockchain risk alert feed from Google Sheets via Fivetran. Identity resolution: crypto provider user_id → eToro CID via EXW_AMLProviderID JOIN with COLLATE Latin1_General_100_BIN. Also joins EXW_FactTransactions (tx_hash), EXW_UserSettingsWalletAllowance, Dim_Customer (x2), Dim_PlayerStatus (x2), Dim_Country (x2), Dim_Regulation (x2). Not in OpsDB. JUNK_ prefix = intentional decommission marker. Columns: alert metadata (severity/category/alert_type/exposure/direction/alert_amount), crypto metadata (asset/tx_hash/tx_index/output_address/network/symbol/alert_id), plus CID/GCID/Country/Regulation/PlayerStatus/UserWalletAllowance. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Multiple_Accounts_Dep",
+        "type": "Table",
+        "columns": 8,
+        "priority": 0,
+        "writer_sp": "SP_AML_Multiple_Accounts (on-demand, NOT in OpsDB)",
+        "quality": 8.93,
+        "notes": "116K-row FundingID-level summary of deposit funding entities shared by ≥2 verified depositors. Source: Fact_BillingDeposit GROUP BY FundingID HAVING COUNT(DISTINCT CID)>=2. Filters: FundingID NOT IN (1-7), IsValidCustomer=1, IsDepositor=1, VerificationLevelID>=2. IsBlocked from External_etoro_Billing_Funding. Group_Type CASE: '5 to 20'(75%)/  '21 to 50'(16%)/'51 to 500'(7%)/'above 500'(2%). Last_Deposit_Date=MAX, Total_Approved_Deposit=SUM, Num_Approved_Deposit=COUNT. SP by Lior Ben Dor 2023-11-13, migrated to Synapse. Not in OpsDB. Drives _Dep_fulldata as input set. Gotcha: Group_Type NULL gap for 2-4 CID groups. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Multiple_Accounts_Dep_fulldata",
+        "type": "Table",
+        "columns": 38,
+        "priority": 0,
+        "writer_sp": "SP_AML_Multiple_Accounts (on-demand, NOT in OpsDB)",
+        "quality": 8.63,
+        "notes": "265K-row per-(FundingID,CID) customer detail expansion of _Dep. Full Dim_Customer profile enriched with Dim_Regulation/Country/PlayerStatus/Club/EvMatchStatus. V_Liabilities point-in-time at @DateID (Liabilities/RealizedEquity/PositionPnL/TotalEquity). Latest Alert Service record per CID (ROW_NUMBER DESC ModificationDate). VerLevel: 3(85.6%)/2(14.4%). Regulation: CySEC(66%)/FCA(17%)/ASIC&GAML(7%)/FSASey(4%)/ASIC(3%). Countries: Germany(16%)/France(11%)/UK(10%)/Italy(8%)/UAE(4%). Alert: 62% NULL, AccountStatusChange(27%), HighRiskLogin(3%), KycRelations(1.6%). PII: UserName/BirthDate/Gender/City/Zip/BuildingNumber. Gotcha: CID appears multiple times if sharing multiple FundingIDs. Not in OpsDB. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Multiple_Accounts_DeviceID",
+        "type": "Table",
+        "columns": 3,
+        "priority": 0,
+        "writer_sp": "SP_AML_Multiple_Accounts (on-demand, NOT in OpsDB)",
+        "quality": 9.08,
+        "notes": "758K-row device-level summary. STS_User_Operations_Data_History WHERE DateID>=20230101 AND ClientDeviceId<>'00000000-0000-0000-0000-000000000000' GROUP BY ClientDeviceId HAVING COUNT(DISTINCT RealCid)>1. No VerificationLevelID filter (unlike Dep tables). Cols: NumOfClientsSameDeviceID, ClientDeviceId, UpdateDate. Drives _DeviceID_FullData as input set. Not in OpsDB. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Multiple_Accounts_DeviceID_FullData",
+        "type": "Table",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "SP_AML_Multiple_Accounts (on-demand, NOT in OpsDB)",
+        "quality": 8.68,
+        "notes": "2.5M-row per-(ClientDeviceId,CID) detail expansion of _DeviceID. STS_User_Operations_Data_History JOIN on shared DeviceIDs → all CIDs per device. Latest Alert per CID (ROW_NUMBER DESC ModificationDate). AlertType: blank(62%)/AccountStatusChange(27%)/HighRiskLogin(3%)/KycRelations(1.6%)/PossibleCompromisedAccount(0.9%). StatusType: blank(62%)/Active(32%)/Clear(6.4%)/FollowUp(<0.1%). CategoryName: blank(62%)/eToroMoney(27%)/KYC(5%)/Risk(5%)/AML(<1%). CRITICAL GOTCHA: a CID sharing N devices appears N times — same alert repeated — must use COUNT(DISTINCT CID) in aggregations. Not in OpsDB. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Periodic_Review_MOP",
+        "type": "Table",
+        "columns": 3,
+        "priority": 0,
+        "writer_sp": "UNKNOWN — no SSDT SP or OpsDB entry. Likely extracted from SP_AML_Periodic_Review #mop temp table",
+        "quality": 8.43,
+        "notes": "151K-row (CID,MOP) pairs for fully-verified active depositors who used high-risk deposit MOP since 2023. Population: Dim_Customer WHERE VerificationLevelID=3, IsValidCustomer=1, IsDepositor=1, PlayerStatus NOT IN (2,4). Source: Fact_CustomerAction ActionTypeID=7, DateID>=20230101, FundingTypeID NOT IN (1,2,3,4,11,13,15,17,29,30,32,33,34,35,36,37,38). MOP=Dim_FundingType.Name. Distribution: OnlineBanking(67%)/MoneyBookers(21%)/Neteller(8%)/SEPA(1.4%)/FastPay(0.9%)/WireTransfer(0.7%). Feeds Is_High_MOP_Deposit flag in _HR/_MR/_AR periodic review tables. No writer SP in SSDT or OpsDB — update mechanism unknown. Gotcha: multiple rows per CID if multiple high-risk MOPs. UC: Not_Migrated."
+      }
+    ]
+  },
+  "batch_82_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 74,
+    "domain": "Cross-Selling product-holdings panels (daily + EOM siblings) + Crypto analytics dashboard + Crypto marketing segmentation list. All 4 tables are P0, ROUND_ROBIN, UC _Not_Migrated.",
+    "capacity_used": "3.5/4.0 (Cross_Selling_Daily=1.0x [18 cols], Cross_Selling_Monthly=1.0x [18 cols], CryptoDashboardNew=1.0x [28 cols], CryptoMarketingList=0.5x [10 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_Cross_Selling_Daily",
+        "type": "Table",
+        "columns": 18,
+        "priority": 0,
+        "writer_sp": "SP_Cross_Selling_Daily",
+        "quality": 9.3,
+        "notes": "887.8M-row daily cross-selling product panel (Feb 2025–Apr 2026, 418 dates, 2.69M CIDs/day). Population: IsValidCustomer=1, IsDepositor=1. 8 product dimensions: ETF_Hold, Smart_Portfolios_Hold, Copy_Trader_Hold (open at @date), CFD_ActiveOpen3M (count, 3M window), Real_Crypto/Non_US_Stocks/US_Stocks (Hold OR ActiveOpen3M union), eMoney_ActiveOpen3M (ActionTypeID=44, from Apr 2024, ValidETM accounts). [High_Bronze+] must be bracket-quoted (+in name). Total_Products 1-8 (INSERT WHERE >0). EOM_Club from beginning-of-month snapshot. 3T1(CID/Country/EOM_Club), 13T2, 1T3(Region), 1Propagation. ROUND_ROBIN HEAP. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_Cross_Selling_Monthly",
+        "type": "Table",
+        "columns": 18,
+        "priority": 0,
+        "writer_sp": "SP_Cross_Selling_Monthly",
+        "quality": 9.4,
+        "notes": "145.4M-row EOM-only sibling of Cross_Selling_Daily (Jan 2017–Mar 2026, 111 months, 5.07M distinct CIDs). SP guard: IF @date=EOMONTH(@date) — silent abort on non-EOM dates. Key differences from daily: (1) Hold columns have EOM suffix (ETF_HoldEOM/Smart_Portfolios_HoldEOM/Copy_Trader_HoldEOM), (2) 'ActiveOpen3M' window = 2 months not 3 (DATEADD(month,-2,beginning_of_Month)), (3) eMoney lookback also 2 months. Same 8 product dimensions. Total_Products 1-8. 3T1(CID/Country/EOM_Club), 13T2, 1T3(Region), 1Propagation. ROUND_ROBIN HEAP. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CryptoDashboardNew",
+        "type": "Table",
+        "columns": 28,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_CryptoDashboardNew",
+        "quality": 9.4,
+        "notes": "308.6M-row daily crypto analytics dashboard (Jan 2022–Apr 2026, 1562 dates). Scope: InstrumentTypeID=10 (Real Crypto) only. Grain: (DateID × Regulation × Country × BuyCurrency × Real_CFD × Manual_Copy × Club × Seniority_daily_FTD_Group). Excludes Internal accounts (PlayerLevelID<>4). Metrics: AUA=SUM(Amount+PnL), Amount_in_Units, PnL (all from BI_DB_PositionPnL), Revenue=commissions+rollover, num_of_FA_Crypto/FA_Amount_Total (first-action new crypto adopters), Opened_Positions/Open_Positions, Active_Hold_by_Inst. CRITICAL: Active_Hold/Active_Hold_Real/Active_Hold_CFD are date-level scalars (same value on all rows for a date) — use MAX not SUM. On 2026-04-12: 1,523,400 holders (Real: 1,496,781, CFD: 80,437). Club+Seniority_daily_FTD_Group added 2024-08-17. WeekofMonth SP computation suspected bug. 3T1(Regulation/Country/Club), 24T2, 1Propagation. ROUND_ROBIN CLUSTERED(DateID ASC). UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CryptoMarketingList",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "SP_CryptoMarketingList",
+        "quality": 9.6,
+        "notes": "11.3M-row daily TRUNCATE+INSERT crypto marketing segmentation list (1.77M distinct GCIDs — NOT CID/RealCID). Three segments: 'Holded Postions' [SP TYPO — missing i] (61.8%, one row per GCID×instrument), 'Opened/Closed Positions' (38.2%, one row per GCID), 'Crypto Leads' (2864 rows — FunnelFromID=57 registrants with no first action). IsOptIn='Yes'=not opted-out (ResourceId=5564, SelectedValue='2'); ~79% Yes. HoldedEligibleCoins: hardcoded InstrumentIDs (100000-100020). HoldedAbove: holding duration buckets (<1M through >5M). CryptoHolded: IsMajor='Yes' → InstrumentDisplayName. HasWallet from Dim_Customer. KEY: use GCID (not CID) for joins. Category value 'Holded Postions' has permanent SP typo. 2T1(Regulation/Country), 7T2, 1Propagation. ROUND_ROBIN HEAP. UC: Not_Migrated."
+      }
+    ]
+  },
+  "batch_81_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 3,
+    "total_columns_documented": 87,
+    "domain": "AML document management + daily alert archive. Documents_Dashboard: AML team document classification dashboard (23 cols, 71K rows, 23 hardcoded AML analyst names, full rebuild daily). Documents_Request: AML compliance workbench (48 cols, ~31M rows, all non-blocked VerLevel>1 customers, 5 document categories POI/POA/POIncome/Selfie/VideoIdent). Daily_Alerts_History: empty archive of AML daily alerts (16 cols, 0 rows, AlertDetails bounded at 2048 chars).",
+    "capacity_used": "4.0/4.0 (AML_Documents_Dashboard=1.0x [23 cols, pre-existing], AML_Documents_Request=2.0x [48 cols, pre-existing], AML_Daily_Alerts_History=1.0x [16 cols, new])",
+    "objects": [
+      {
+        "name": "BI_DB_AML_Documents_Dashboard",
+        "type": "Table",
+        "columns": 23,
+        "priority": 20,
+        "writer_sp": "SP_AML_Documents_Dashboard",
+        "quality": 9.0,
+        "notes": "71K-row daily TRUNCATE+INSERT AML document classification dashboard. Filtered to 23 hardcoded AML team member names (dm.FirstName+LastName in SP code — name changes require SP update). Sources: 6 external tables → BackOffice.CustomerDocumentToDocumentType (primary) + CustomerDocument + BackOffice.Customer + Dictionary.DocumentStatus/Type/RejectReason. Enriched with Dim_Customer demographics (LEFT JOIN). DocumentStatus: New Upload(41%), Accepted(32%), POIApproved(11%), Rejected(7%), Reviewed(7%). ClassificationOccured DDL typo (missing second 'r'). 7T1, 16T2. UC: Not_Migrated. Pre-existing from prior session; UC Target placeholder fixed to Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Documents_Request",
+        "type": "Table",
+        "columns": 48,
+        "priority": 0,
+        "writer_sp": "SP_AML_Documents_Request",
+        "quality": 9.3,
+        "notes": "~31M-row daily TRUNCATE+INSERT AML compliance workbench. Population: all active non-blocked VerLevel>1 customers (INNER JOIN Dim_PlayerStatus excludes Blocked/BUR=PlayerStatusID 2/4). Grain: per-CID per-regulation (~16.4M distinct CIDs). 5 document categories: POI, POA, POIncome, Selfie, VideoIdent — each with DocumentType/DateAdded/SuggestedType (accepted docs only via RejectReasonName IS NULL). Equity=V_Liabilities(Liabilities+ActualNWA). AML_Rank from Dim_Country.RiskGroupID. Is_HRC=AML_Rank>=2. RiskScoreName from External_RiskClassification. SP_W_AML_PEP_Customers (weekly) reads DocumentDateAdded_Selfie/POIncome as downstream. 15T1, 29T2, 1T3, 1BL. UC: Not Migrated. Pre-existing from prior session."
+      },
+      {
+        "name": "BI_DB_AML_Daily_Alerts_History",
+        "type": "Table",
+        "columns": 16,
+        "priority": 0,
+        "writer_sp": "None (no SSDT SP found — archive process unknown)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. Historical archive of BI_DB_AML_Daily_Alerts. Same 16-col schema. ROUND_ROBIN CLUSTERED(AlertDate ASC). AlertDetails nvarchar(2048) — bounded (matches From_oglesheet staging, not unbounded main table) — suggests older DDL origin or populated directly from staging. No SSDT writer SP. Not in OpsDB. CID was bigint in Nov 2024 backup (changed to int same as siblings). Pipeline chain: Google Sheet → From_oglesheet → Daily_Alerts → this History (archive). All three sibling tables empty. 0T1, 0T2, 5T3, 10T4, 1T5. UC: Not_Migrated."
+      }
+    ]
+  },
+  "batch_80_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 6,
+    "total_columns_documented": 65,
+    "domain": "AML cluster — decommissioned/inactive AML benchmarking, compliance reporting, and daily alert tables. All 6 tables empty (0 rows as of 2026-04-23). Batch theme: external AML tool feeds + Google Sheet import pipeline.",
+    "capacity_used": "4.0/4.0 (BI_DB_AGGSilverpopCampaign_ByDomain=0.5 [10 cols], BI_DB_AMLComment_Risk_Score_Report_Ext=0.5 [2 cols], BI_DB_AML_Benchmarks_AML_Alerts=0.5 [11 cols], BI_DB_AML_Benchmarks_Risk_Classification=0.5 [10 cols], BI_DB_AML_Daily_Alerts=1.0 [16 cols], BI_DB_AML_Daily_Alerts_From_oglesheet=1.0 [16 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_AGGSilverpopCampaign_ByDomain",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "None (decommissioned Silverpop platform export)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. Domain-clustered sibling of BI_DB_AGGSilverpopCampaign (CampaignDate-clustered). Weekly email performance by domain: Year, WeekOfYear, Domain, MailsSent, BounceRatio, Opened, Click, Emails (no unique open/click/unsubscribe/bounce split unlike sibling). ROUND_ROBIN CLUSTERED(Domain ASC). Same Silverpop→Optimove decommission context as sibling. 0T1, 0T2, 9T3, 0T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AMLComment_Risk_Score_Report_Ext",
+        "type": "Table",
+        "columns": 2,
+        "priority": 0,
+        "writer_sp": "None (external AML compliance tool — unknown)",
+        "quality": 5.0,
+        "notes": "0 rows as of 2026-04-23. Only 2 columns: CID (int NOT NULL), AuditDate (date NULL). ROUND_ROBIN HEAP. No writer SP found. 'Ext' suffix suggests external staging table for AML compliance tool. Purpose unknown — may drive a risk score comment report or act as an audit date filter. 0T1, 0T2, 0T3, 2T4, 0T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Benchmarks_AML_Alerts",
+        "type": "Table",
+        "columns": 11,
+        "priority": 0,
+        "writer_sp": "None (external AML compliance tool — no SSDT SP found)",
+        "quality": 7.0,
+        "notes": "0 rows as of 2026-04-23. AML benchmarking: tracks AML alert-driven PlayerStatus change events. Cols: CID (int NOT NULL), GCID (int NULL), PlayerStatusID (FK to Dim_PlayerStatus, 16 values 0=N/A thru 15=Block Deposit & Trading), PlayerStatusName, PlayerStatusReasonID, PlayerStatusReason, PlayerStatusSubReasonID, PlayerStatusSubReason, AMLAlert_ChangeDateTime (NOT NULL), AMLAlert_ChangeDate (derived), UpdateDate (Tier5). ROUND_ROBIN CLUSTERED(CID ASC). Companion to BI_DB_AML_Benchmarks_Risk_Classification. PlayerStatus values confirmed from live Dim_PlayerStatus. 0T1, 0T2, 6T3, 4T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Benchmarks_Risk_Classification",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "None (external AML compliance tool — no SSDT SP found)",
+        "quality": 7.0,
+        "notes": "0 rows as of 2026-04-23. AML benchmarking: tracks AML-driven risk classification changes. Key anomaly: CID is NULL (nullable) while GCID is NOT NULL — reversed from typical eToro tables; GCID is the effective grain. Cols: CID (int NULL), GCID (int NOT NULL), RiskClassID, RiskClassDesc, PreviousRiskClassID, PreviousRiskClassDesc, RiskClassChangeDateID (int YYYYMMDD), RiskClassChangeDate (date), RowNumber (bigint, dedup/ordering purpose), UpdateDate (Tier5). RiskClass values from live Dim_RiskClassification: 0=High/100, 1=Medium/50, 2=Low/0, 3=Unacceptable/200, 4=Medium High/75, 5=Medium Low/25. ROUND_ROBIN CLUSTERED(CID ASC). 0T1, 0T2, 6T3, 4T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Daily_Alerts",
+        "type": "Table",
+        "columns": 16,
+        "priority": 0,
+        "writer_sp": "None (external AML system + Google Sheet — no SSDT SP found)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. Active through at least Nov 2024 (backup_20241117 confirms prior data). AML daily alert log: AlertID, AlertType, CID (int, was bigint in Nov 2024 backup — schema change), Name/Country/AccountType/Regulation (denormalized from Dim_Customer), AlertDate (cluster key, datetime), RelatedAccounts (nvarchar(max) — multi-value free-text, likely comma-separated CIDs), PlayerStatus/PreviousStatus (stored as name strings not integer IDs), AlertStatus, Assigned (analyst name), AlertDetails (nvarchar(max)), UpdateDate (Tier5), AlertCategory. ROUND_ROBIN CLUSTERED(AlertDate ASC). Population pipeline: Google Sheet → BI_DB_AML_Daily_Alerts_From_oglesheet (staging) → this table → BI_DB_AML_Daily_Alerts_History (archive). 0T1, 0T2, 5T3, 10T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Daily_Alerts_From_oglesheet",
+        "type": "Table",
+        "columns": 16,
+        "priority": 0,
+        "writer_sp": "None (Google Sheet direct import via external script)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. Google Sheet staging for BI_DB_AML_Daily_Alerts. 'oglesheet' = Googlesheet (Google Sheet). Bounded nvarchar widths: 256 for most cols, 2048 for AlertDetails, 512 for PreviousStatus (vs nvarchar(max) in main table). CRITICAL: DDL typo — column 2 is named 'AlertCatery' (missing 'gro') instead of 'AlertCategory'. Typo present since at least Nov 2024 backup; all queries must use 'AlertCatery'. AlertCatery maps to AlertCategory in main table. Column ordering differs from main table (AlertCatery is col 2 here vs AlertCategory as col 16 in main table). RelatedAccounts truncated at 256 chars at import. ROUND_ROBIN CLUSTERED(AlertDate ASC). 0T1, 0T2, 5T3, 10T4, 1T5. UC: Not_Migrated."
+      }
     ],
-    "notes": "DDR aggregation pyramid tables — the core DDR reporting chain. These complete the DDR domain documentation."
+    "next_batch_hint": "Continue alphabetically after BI_DB_AML_Daily_Alerts_From_oglesheet. Next candidates likely: BI_DB_AML_German_Video_Ident (recently added), BI_DB_AML_InstrumentMetaData_Daily_Email, or next alphabetical AML/ASIC/AppFlyer tables. Check git status for recently added wiki files to avoid re-documenting."
+  },
+  "batch_79_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 74,
+    "domain": "ABook hedging ecosystem completion + AML compliance history + decommissioned email marketing. 2 empty ABook siblings (History + NOPHedged active), AML PWMB compliance flags (empty, truncated Nov 2024), Silverpop email campaign aggregate (empty, platform migrated to Optimove 2024).",
+    "capacity_used": "4.0/4.0 (BI_DB_ABook_Exposure_History=1.0 [17 cols], BI_DB_ABook_Exposure_NOPHedged=1.0 [16 cols], BI_DB_ACH_PWMB_Flag_Report_History=1.0 [23 cols], BI_DB_AGGSilverpopCampaign=1.0 [18 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_ABook_Exposure_History",
+        "type": "Table",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "None (discontinued ABook hedging engine feed)",
+        "quality": 7.0,
+        "notes": "0 rows as of 2026-04-23. DATE-clustered historical log companion to BI_DB_ABook_Exposure (HedgeServerID-clustered). Same 17-col schema: HedgeServerID, InstrumentID, InstrumentName(varchar41), InstrumentType(varchar41), DATE, NOP_unhedged, NOP, Nop_Units_unhedged, Nop_Units, OpenPositions_unhedged, OpenPositions, Short_unhedged, Short, Long_unhedged, Long, NOPHedged, UpdateDate. DDL column order: NOPHedged=16, UpdateDate=17 (sibling wiki has them reversed). All column descriptions copied verbatim from BI_DB_ABook_Exposure.md (shared source rule). Active successor: BI_DB_ABook_Exposure_NOPHedged (Generic Pipeline #471). ROUND_ROBIN CLUSTERED(DATE). 0T1, 0T2, 16T3, 0T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_ABook_Exposure_NOPHedged",
+        "type": "Table",
+        "columns": 16,
+        "priority": 0,
+        "writer_sp": "None (ABook hedging engine direct feed to Synapse)",
+        "quality": 7.5,
+        "notes": "15,178 rows all from 2024-02-15 (Override snapshot, stale 2+ years). Generic Pipeline #471 (Override, 60 min, SynapseSourceWithoutSecret). UC target: bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_abook_exposure_nophedged. Gold path: Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_ABook_Exposure_NOPHedged/. ROUND_ROBIN CLUSTERED(Date). 16 cols: Date, InstrumentID, InstrumentIDToHedge(85% NULL=same instrument), InstrumentID_Final(COALESCE resolved), InstrumentName(varchar45), InstrumentType(varchar45), HedgeServerID(38 distinct), LiquidityAccountID(44 accounts, 25% NULL), LiquidityAccountName(varchar100), NOP, Nop_Units, NOPHedged, OpenPositions, Short, Long, UpdateDate. Net-only (no _unhedged columns). LiquidityAccount FK: External_etoro_Hedge_HedgeServerToLiquidityAccount (Bronze/etoro/Hedge/HedgeServerToLiquidityAccount). Top LP accounts: APEX Traffix 3032, EMSX JPM 2591, Horizon OMS Apex 1254. NOPHedged can exceed NOP (over-hedging observed). 0T1, 0T2, 15T3, 0T4, 1T5. UC: Active."
+      },
+      {
+        "name": "BI_DB_ACH_PWMB_Flag_Report_History",
+        "type": "Table",
+        "columns": 23,
+        "priority": 0,
+        "writer_sp": "None (unknown external AML compliance reporting system)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. Backup from 2024-11-17 confirms prior data (RealCID was bigint, now int — schema change). AML compliance flag history for customers using ACH (FundingTypeID=29) or PWMB (FundingTypeID=32) US bank transfer methods with multi-country IP activity. ROUND_ROBIN CLUSTERED(ReportDate). 23 cols: RealCID(int, was bigint), Regulation(nvarchar1000, e.g. NYDFS+FINRA), Age, LastMultiIPDaily(bigint YYYYMMDD), FirstMultiIPDaily(bigint YYYYMMDD), TotalDaysMultiCountry, VerifiedPhoneCounty(typo for Country), RegCountry, PhoneVerificationDate, PhoneNumber(bigint), FundingType(ACH/PWMB name), TotalAccountsConnected, Opened_New_SameDay, PlayerStatusID(nvarchar not int), IsDepositor, NumberOfFlags, ReportDate, FirstReported, TotalPendingCOForUser(money, CO ambiguous — Tier 4), UpdateDate(Tier5), OnlyNonUSLogins60Days, FirstMultiIPDayCountries(varchar1000), LastMultiIPDayCountries(varchar1000). SP_AML_BI_Alerts_New uses PWMB/ACH for AML_NY001/NY002. 0T1, 0T2, 21T3, 1T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AGGSilverpopCampaign",
+        "type": "Table",
+        "columns": 18,
+        "priority": 0,
+        "writer_sp": "None (Silverpop platform direct export — decommissioned)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. IBM Silverpop email marketing platform campaign aggregate. Platform migrated to Optimove circa 2024 (JUNK_ prefix on DWH Dim_SilverpopMailing/Subject/EventType/Groups/IPs + Dim_SilverToOpti_Mail_Rel mapping). ROUND_ROBIN CLUSTERED(CampaignDate). 18 cols (NOT NULL: MailingID, CampaignID, CampaignDate): MailingID(FK to BI_DB_SilverpopCampaignDictionary), CampaignID, CampaignDate, TotalCustomers, MailsSent, Seeded, Suppressed, HardBounce, SoftBounce, UniqueOpen, TotalOpen, UniqueClick, TotalClick, Unsubscribed, ReportedAbuse, UpdateDate(Tier5), EmailDomainID, Domain(varchar50). Sibling: BI_DB_AGGSilverpopCampaign_ByDomain (Domain-clustered, Year/Week/Sent/Bounce/Opened/Click). BI_DB_SilverpopCampaignDictionary has MailingName/CampaignNumber/CampaignName/Subject. Historical data still queryable in DWH.mailtracking.Fact_MailTracking (SilverpopEventID=16 for sent). UniqueOpen≤TotalOpen; UniqueClick≤TotalClick; Seeded included in MailsSent. 0T1, 0T2, 17T3, 0T4, 1T5. UC: Not_Migrated."
+      }
+    ],
+    "next_batch_hint": "Continue alphabetically after BI_DB_AGGSilverpopCampaign. Next candidates: BI_DB_AGGSilverpopCampaign_ByDomain (10 cols, Domain-clustered sibling — 0.5x), BI_DB_ASIC_ClientBalanceFinance (documented but reviewed-needed), or continue to BI_DB_AGGSilverpopCampaign_ByDomain + next alphabetical set. Cross-reference: BI_DB_ABook_Exposure_History.review-needed.md, BI_DB_ABook_Exposure_NOPHedged.review-needed.md, BI_DB_ACH_PWMB_Flag_Report_History.review-needed.md, BI_DB_AGGSilverpopCampaign.review-needed.md all flagged for domain expert review."
+  },
+  "batch_78_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 6,
+    "total_columns_documented": 62,
+    "domain": "Legacy/dormant table cluster — 4 empty tables (0 rows) + 1 frozen snapshot (Apex 2024-01-25) + 1 historical AB_Test log. No active writer SPs. Batch theme: pre-2020s to 2023 artifacts.",
+    "capacity_used": "3.5/4.0 (AML_Alerts_OPS_Report=0.5 [12 cols], Apex_UserProgramEnrolment_2024_01_25=0.5 [5 cols], BI_CLData_AllTimeData_Optimove=0.5 [11 cols], BI_DB_AB_Test=0.5 [8 cols], BI_DB_AB_Test_Data=0.5 [9 cols], BI_DB_ABook_Exposure=1.0 [17 cols])",
+    "objects": [
+      {
+        "name": "AML_Alerts_OPS_Report",
+        "type": "Table",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "None (unknown external AML OPS tool)",
+        "quality": 7.0,
+        "notes": "0 rows as of 2026-04-23. All 12 cols Tier 4 — no writer SP found. Backup AML_Alerts_OPS_Report_Backup_20241117 confirms data existed historically (CID bigint in backup vs int in live DDL). Tracks alert assignment/handling lifecycle: AlertIdentifier, AlertType, CID, Assigned, Regulation, FirstAlert, FirstHandled, FirstAssigned, AssignedNotHandled, AssignedAndHandled, NotAssigned, UpdateDate. ROUND_ROBIN CLUSTERED(CID ASC). 0T1, 0T2, 0T3, 11T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "Apex_UserProgramEnrolment_2024_01_25",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "None (manual one-time snapshot from External_USABroker_Apex_UserProgramEnrolment)",
+        "quality": 8.0,
+        "notes": "13,649 frozen rows (2024-01-25 snapshot). All 5 cols Tier 3 from External_USABroker_Apex_UserProgramEnrolment DDL. All UserProgramID=2 (Apex Staking/Money Market). 86.3% active (StatusID=2, 11,783 rows), 13.7% inactive (StatusID=1, 1,866 rows). EndTime=9999-12-31 SCD2 open-ended sentinel for all rows. GCID-based (US Apex customers). Active SPs (SP_Crypto_NOP, SP_CMR_Automation_RealCrypto_Main_CryptoNOP_ALLRegs_USA_Staking) use live External table not this snapshot. Source: Bronze/USABroker/apex/UserProgramEnrolment (parquet). Predecessor: USABroker_Apex_UserProgramEnrolment_old. BeginTime range: 2021-04-20 to 2024-01-25. ROUND_ROBIN HEAP. 0T1, 0T2, 5T3, 0T4, 0T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_CLData_AllTimeData_Optimove",
+        "type": "Table",
+        "columns": 11,
+        "priority": 0,
+        "writer_sp": "None (discontinued Optimove Credit Line feed)",
+        "quality": 6.5,
+        "notes": "0 rows as of 2026-04-23. Optimove marketing platform feed for Credit Line data (CL = ActionTypeID=9, BonusTypeID=71 in Fact_CustomerAction). AllTimeData adds monthly bucketing (MONTH, Year, MonthYear, DailySum) + all-time cumulative (TotalCLEver) to companion BI_DB_CreditLineData_Optimove (also empty). Companion also empty — both feeds discontinued. 9 Tier 3 (inferred from BI_DB_CreditLineData_Optimove schema + SP_Daily_CreditLine domain), 1 Tier 4 (Rounds — date-typed, semantics unclear), 1 Tier 5. Column name typo: PostiveTotalCLAmount (missing 'i'). ROUND_ROBIN HEAP. 0T1, 0T2, 9T3, 1T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AB_Test",
+        "type": "Table",
+        "columns": 8,
+        "priority": 0,
+        "writer_sp": "None (unknown A/B experiment management tool)",
+        "quality": 7.5,
+        "notes": "314,240 rows, all Tier 3 from live data. Last update 2023-04-30 (stale). Daily-grain A/B experiment log: one row per customer-test-day. 2 tests: AB_Test_lead_conv_202202 (2022-03-02→2023-04-29, 239,186 CIDs, BI:Tom Boksenbojm/Biz:Elie Edery, 33,840 control/205,346 treatment); AB_Test_Onboarding_202007 (2020-06-10→2022-03-01, ~73,675 CIDs, BI:Tom Boksenbojm/Biz:Steven Freedman, ALL IsControl=1 no treatment rows). IsControl: 1=control, 0=treatment. HASH(RealCID) CLUSTERED(DateID,Name). Migration in BI_DB_Migration schema (ROUND_ROBIN CCI). 0T1, 0T2, 7T3, 0T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AB_Test_Data",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "None (manual Data Science team insert)",
+        "quality": 7.0,
+        "notes": "5,000 rows, loaded 2019-09-03, never updated. Period-based A/B assignment: one row per customer-test (not daily). Single test: DataScienceSeptemberExperimentAM (Sept 2019 portfolio anchoring experiment). FromDateID=20190902, ToDateID=20190930. Treatment (IsControl=0): IsPortfolioAnchored=1; Control (IsControl=1): IsPortfolioAnchored=NULL. IsControlPortfolioEnabled and ServiceLevelAnchored all-NULL (Tier 4). JUNK migration table exists (BI_DB_Migration.JUNK_BI_DB_AB_Test_Data). HASH(RealCID) CLUSTERED(RealCID). 0T1, 0T2, 6T3, 2T4, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_ABook_Exposure",
+        "type": "Table",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "None (discontinued ABook hedging engine feed)",
+        "quality": 7.0,
+        "notes": "0 rows as of 2026-04-23. ABook hedging NOP exposure snapshot. Column pairs: {metric}_unhedged = gross pre-hedge, {metric} = net post-hedge; NOPHedged = hedged portion (NOP ≈ NOP_unhedged − NOPHedged). Per HedgeServerID + InstrumentID + DATE. ROUND_ROBIN CLUSTERED(HedgeServerID). Related tables: BI_DB_ABook_Exposure_History (same schema, DATE-clustered historical log), BI_DB_ABook_Exposure_NOPHedged (different schema + LiquidityAccountID/Name/InstrumentIDToHedge, active Generic Pipeline #471 60min, UC: bi_db.gold...abook_exposure_nophedged). HedgeServerID references External_etoro_Trade_HedgeServer (Bronze/etoro/Trade/HedgeServer). 0T1, 0T2, 16T3, 0T4, 1T5. UC: Not_Migrated."
+      }
+    ],
+    "next_batch_hint": "Completed by Batch 79: BI_DB_ABook_Exposure_History + BI_DB_ABook_Exposure_NOPHedged + BI_DB_ACH_PWMB_Flag_Report_History + BI_DB_AGGSilverpopCampaign."
+  },
+  "batch_77_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 5,
+    "total_columns_documented": 68,
+    "domain": "AML Affiliate Abuse monitoring suite — SP disabled 2024-12-31 (Lior Ben Dor request); all 5 tables are frozen historical snapshots",
+    "capacity_used": "3.0/4.0 (Agg=0.5 [10 cols], SameDeviceID=0.5 [4 cols], SameIP=0.5 [6 cols], Aff_data=0.5 [15 cols], Users=1.0 [33 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_AML_Affiliate_Abuse_Agg",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "SP_AML_Affiliate_Abuse (DISABLED 2024-12-31)",
+        "quality": 8.5,
+        "notes": "10-col monthly cashout/deposit/trading aggregation per affiliate x channel x year x month. 20,627 rows, frozen. Affiliate scope: SubChannelID IN (20,31,39,40,41,42,44), AccountActivated=1, YearMonthID>=202301. Approved_CO=COUNT DISTINCT WithdrawID WHERE CashoutStatusID_Funding=3; Unapproved_CO≠3; Approved_Deposits=PaymentStatusID=2; Has_Open_Trade=COUNT DISTINCT RealCID from Dim_Position. Three-way JOIN via temp tables #CO+#deposit+#positions on AffiliateID+Channel+Year+Month. ROUND_ROBIN HEAP. 0T1, 9T2, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Affiliate_Abuse_SameDeviceID",
+        "type": "Table",
+        "columns": 4,
+        "priority": 0,
+        "writer_sp": "SP_AML_Affiliate_Abuse (DISABLED 2024-12-31)",
+        "quality": 8.0,
+        "notes": "4-col device-sharing risk signal table. 74 rows (HAVING COUNT(DISTINCT RealCid)>1 threshold). Source: STS_User_Operations_Data_History JOIN Fact_BillingDeposit ON SessionId (PaymentStatusID=2 approved deposits only). Excludes ClientDeviceId='00000000-0000-0000-0000-000000000000'. DateID>=20220101. Columns: AffiliateID, NumOfClientsSameDeviceID, ClientDeviceId, UpdateDate. ROUND_ROBIN HEAP. 0T1, 3T2, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Affiliate_Abuse_SameIP",
+        "type": "Table",
+        "columns": 6,
+        "priority": 0,
+        "writer_sp": "SP_AML_Affiliate_Abuse (DISABLED 2024-12-31)",
+        "quality": 8.0,
+        "notes": "6-col IP-clustering risk table. 1,178,451 rows (all IP groups, no HAVING filter). [Group]=CHECKSUM(IP) — 32-bit integer hash, collision risk exists. [%SameIP]=ROUND(NumOfClientsSameIP*100.0/TotalClients,2) but stored as decimal(18,0) — integer precision only (DDL/SP discrepancy, flagged in review-needed). TotalClients=SUM OVER PARTITION BY AffiliateID. V_Liabilities INNER JOIN affects denominator (financially-inactive customers excluded). ROUND_ROBIN HEAP. 0T1, 5T2, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Affiliate_Abuse_Aff_data",
+        "type": "Table",
+        "columns": 15,
+        "priority": 0,
+        "writer_sp": "SP_AML_Affiliate_Abuse (DISABLED 2024-12-31)",
+        "quality": 8.5,
+        "notes": "15-col monthly affiliate marketing economics companion. 37,933 rows, YearMonthID 202301-202412. Passthrough from BI_DB_MarketingMonthlyRawData + Dim_Affiliate filter. Profitability=ISNULL(NetRevenues,0)-ISNULL(TotalCost,0). All SUM aggregates ISNULL→0. FTD→FTDs rename. ContractType codes: 0=N/A, 2=CPA, 3=RevShare, 4=Hybrid, 6=eCost, 7=Zero Commission, 8=CPL/CPR. Contact=affiliate representative PII (email/name). ROUND_ROBIN HEAP. 0T1, 14T2, 1T5. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_AML_Affiliate_Abuse_Users",
+        "type": "Table",
+        "columns": 33,
+        "priority": 0,
+        "writer_sp": "SP_AML_Affiliate_Abuse (DISABLED 2024-12-31)",
+        "quality": 9.0,
+        "notes": "33-col CID-level affiliate abuse risk profile. 1,208,122 rows (V_Liabilities INNER JOIN filtered). RegisteredReal>=2023-01-01. Equity snapshot @DateID=2024-12-30. 30-day flags from FirstDepositDate: Is_CO_30 (CashoutStatusID_Funding=3), Is_Dep_30 (PaymentStatusID=2), Count_Positions_30 (Dim_Position.OpenOccurred within 30d+>=2023-01-01), Is_Open_Trade_30=CASE Count_Positions_30≠0. Is_Blocked=PlayerStatusID NOT IN(1,5). User_Age=DATEDIFF(YEAR,BirthDate,GETDATE()) at runtime; 1900-01-02 sentinel→0 (exact CASE not confirmed in SP). TotalEquity=ISNULL(Liabilities,0)+ISNULL(ActualNWA,0). EOM_FTD/EOM_Reg=EOMONTH() derivations. FirstAction/FirstActionDate/FirstInstrument from BI_DB_First5Actions LEFT JOIN. Contains IP (PII) — GDPR consideration. 10T1 (from Dim_Customer wiki: CID, FirstDepositDate, RegisteredReal, FirstDepositAmount, VerificationLevelID, IsValidCustomer, IsDepositor, Gender, IP, Country), 22T2, 1T5. UC: Not_Migrated."
+      }
+    ]
+  },
+  "batch_76_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 3,
+    "total_columns_documented": 25,
+    "domain": "AML table cluster — German Video Ident KYC + Instrument Metadata Daily Email + DayToDay Changes (pre-existing files registered from prior aborted session)",
+    "capacity_used": "2.0/4.0 (AML_German_Video_Ident=1.0 [17 cols], AML_InstrumentMetaData_Daily_Email=0.5 [3 cols], AML_InstrumentMetaData_Daily_Email_DayToDay_Changes=0.5 [5 cols])",
+    "objects": [
+      {
+        "name": "AML_German_Video_Ident",
+        "type": "Table",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "unknown (pre-existing file from prior session)",
+        "quality": 8.8,
+        "notes": "17-col AML German video identification table. Pre-existing wiki file from prior aborted session; registered in Batch 76."
+      },
+      {
+        "name": "AML_InstrumentMetaData_Daily_Email",
+        "type": "Table",
+        "columns": 3,
+        "priority": 0,
+        "writer_sp": "unknown (pre-existing file from prior session)",
+        "quality": 9.0,
+        "notes": "3-col AML instrument metadata daily email table. Pre-existing wiki file from prior aborted session; registered in Batch 76."
+      },
+      {
+        "name": "AML_InstrumentMetaData_Daily_Email_DayToDay_Changes",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "unknown (pre-existing file from prior session)",
+        "quality": 9.0,
+        "notes": "5-col AML instrument metadata day-to-day changes table. Pre-existing wiki file from prior aborted session; registered in Batch 76."
+      }
+    ]
+  },
+  "batch_75_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 89,
+    "domain": "AML Singapore risk classification + Copy milestone tracking + Copycats of CopyFunds + CopyFund significant allocation",
+    "capacity_used": "4.0/4.0 (AML_Singapore=2.0 [45 cols], CopyMilestone=1.0 [22 cols], CopycatsOfCopyfunds=0.5 [9 cols], Copyfunds_SignificantAllocation=0.5 [13 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_AML_Singapore_Risk_Classification",
+        "type": "Table",
+        "columns": 45,
+        "priority": 0,
+        "writer_sp": "SP_AML_Singapore_Risk_Classification",
+        "quality": 8.5,
+        "notes": "45-col daily MAS (Singapore) AML risk scoring table for RegulationID=13 customers (VerificationLevelID>=2, IsDepositor=1, PlayerStatusID NOT IN 2,4). ROUND_ROBIN HEAP. 1,355 rows. TRUNCATE+INSERT. 10 scoring dimensions via temp tables: ScreeningStauts_Final_Score (DDL typo; Domestic PEP=50, Foreign PEP/Risk Match=200; split by nationality Singapore/CountryID=183), Sources_of_funds_Final_Score (Q26 KYC panel; Lottery/Gambling=100), Occupation_Final_Score (Q18; 29 high-risk IDs=50), Employment_Status_Final_Score (Q216; Self-emp/Retired=50), Annual_Income_Final_Score (Q10; $1M-$5M=50), Liquid_Assets_Final_Score (Q11; >$1M=50), Net_Deposits_Final_Score (net >$1M=100), MAX(Nationality/POB/KYC_Country/Citizenship_Sec)=country risk from Fivetran GRC Google Sheet (Low=0/Med=50/High=100/Blocked=300), Redeem_Score (IsRedeem=1=100), Instrument_Risk_Score (settled crypto InstrumentTypeID=10=50). Final_Score=sum; Risk_Score=Low(<100)/Medium(100-199)/High(>=200)/Blocked (any _B_ flag='Blocked'). DDL typo: ScreeningStauts_Final_Score. CountryIDByIP stores country NAME (varchar misleading). TIN_CountryName '()' cleaned to NULL. Sanctions excluded from scoring (#ScreeningB separate). 11T1, 33T2, 1P. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CopyMilestone",
+        "type": "Table",
+        "columns": 22,
+        "priority": 0,
+        "writer_sp": "SP_CopyMilestone",
+        "quality": 8.7,
+        "notes": "22-col append-mode (DELETE WHERE @date=Date + INSERT) daily milestone tracking for ALL active PIs and CopyPortfolios. 5.9M rows, 8,225 distinct CIDs, 2,377 dates (2019-08-25 to 2026-04-11). ROUND_ROBIN. Sources: BI_DB_CopyDailyData (base population + 7-day copier diff + historical high-water mark) + DWH_GainDaily (Gain_m, Gain_y for streaks). Streak flags: Months6InRow (6 consecutive month-end Gain_m>0), Month12InRow (12), Year3/4/5InRow (calendar year-starts). MTD flags: Up/Down5Percent30Days — MISNOMER, uses Gain_m (month-to-date) not rolling 30d. Copier crossing flags: first-time historical max logic; PI bands 1K/1.5K/2K/2.5K/3K/3.5K/4K (exclusive range); Portfolio: 1K_Investors. DDL typos: Year5inRow (lowercase i), GainMoreThen100Copiers (Then vs Than). PI_Passing_1500/2500/3500 nullable (later additions, treat NULL as 0). Latest date: PI=3,850 (96.8%), Portfolio=126 (3.2%). 2T1, 19T2, 1P. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CopycatsOfCopyfunds",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_CopycatsOfCopyfunds",
+        "quality": 8.5,
+        "notes": "9-col TRUNCATE+INSERT daily snapshot of retail customers with >80% equity concentrated in CopyFund copy relationships. 234,571 rows, 74,476 distinct CIDs (NOT unique — one row per copy relationship). Population: Dim_Mirror WHERE ParentCID is a CopyFund (AccountTypeID=9), copier NOT AccountTypeID=9, NOT Diamond (PlayerLevelID!=4), V_Liabilities.RealizedEquity>0 AND Dim_Mirror.RealizedEquity/V_Liabilities.RealizedEquity>0.8. Excluded: BI_DB_dbo.External_etoro_Customer_BlockedCustomerOperations (OperationTypeID=2). % Copying outliers (avg 753,100%) due to V_Liabilities/Dim_Mirror timing mismatch. IS PI ?: Not PI=234,495, PI=76. # of Copiers and AUM: 0 for Not PI (join c.CID=ca.ParentCID only matches when copier IS a CopyFund manager in etoroGeneral_History_GuruCopiers). @Date incremented +1 day in SP body. 2T1, 6T2, 1P. UC: Not_Migrated."
+      },
+      {
+        "name": "BI_DB_Copyfunds_SignificantAllocation",
+        "type": "Table",
+        "columns": 13,
+        "priority": 99,
+        "writer_sp": "SP_Copyfunds_SignificantAllocation",
+        "quality": 8.8,
+        "notes": "13-col TRUNCATE+INSERT daily operational alert for customers with significant CopyFund money flows (ActionTypeID 15-18). Threshold: |net| >= $10K OR (AddMoneyIn >= $200K AND AddMoneyOut >= $200K). 24 rows typical. HASH(CID). Priority 99 (FinanceReportSPS). CRITICAL naming issues: NetMoneyOut stores NET MONEY IN (positive=inflow, negative=outflow); AddMoneyOut is negative (SP negates already-positive withdrawal amounts). SILENT EXCLUSION: INNER JOIN to #Contact (BI_DB_UsageTracking_SF) — customers with no Salesforce contact history are excluded. Balance=V_Liabilities.Credit (cash only, NOT total equity). Manager=account manager (NOT CopyFund manager). CopyfundsListing=STRING_AGG of copied CopyFund/PI usernames. No @Date param — hardcoded GETDATE()-1, cannot reprocess history. PI_CopyPortfolio_ind: 'PI','CopyPortfolio','Both PI and CopyPortfolio'. Threshold history: $5K→$10K (2025-03-31), added bilateral $200K clause (2025-11-12). 3T1, 9T2, 1P. UC: Not_Migrated."
+      }
+    ]
+  },
+  "batch_74_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 83,
+    "domain": "Copy domain — blocked PI AUM snapshot, blocked PI AUM history, PI daily performance, Copy Fund positions",
+    "capacity_used": "4.0/4.0 (CopyBlockedAUM=1.0 [19 cols], CopyBlockedAUMHistory=0.5 [10 cols], CopyDailyData=2.0 [44 cols], CopyFund_Positions=0.5 [10 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_CopyBlockedAUM",
+        "type": "Table",
+        "columns": 19,
+        "priority": 0,
+        "writer_sp": "SP_CopyBlockedAUM",
+        "quality": 9.0,
+        "notes": "19-col daily TRUNCATE+INSERT snapshot of PIs whose copy portfolio is blocked (OperationTypeID=2). 691 rows. HASH(CID). Dan 2021-11-22; Synapse: Tom Boksenbojm 2023-12-18. Risk score columns from DWH_CIDsDailyRisk (151-day lookback): DaysUnderRisk6 (nvarchar(5), '31+'=over 31 days, NULL=equity zero), AvgRiskPreviousMonth (INT), DaysSinceMaxRiskScore8 (-1=never reached 8). AUM=SUM(Cash+Investment+PnL+Detached+Dit_PnL). Population gate: IsDepositor=1, IsValidCustomer=1, GuruStatusID>=2 OR (AUM>0 AND BlockReasonID=13). 5T1, 13T2, 1P. UC: _Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CopyBlockedAUMHistory",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "SP_CopyBlockedAUM",
+        "quality": 9.0,
+        "notes": "10-col TRUNCATE+INSERT daily history of block events from etoro.Customer.History_BlockedCustomerOperations. CRITICAL: filtered via JOIN to #blockedusers — only currently-blocked PIs appear; unblocked PIs lose ALL history on next refresh. DaysBlocked=DATEDIFF(BlockStart,BlockEnd), NULL for active blocks. UserName/Country/GuruStatusID reflect current values not historical. HASH(CID). PII columns (FirstName, LastName) removed 2022-03-13. 4T1, 5T2, 1P. UC: _Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CopyDailyData",
+        "type": "Table",
+        "columns": 44,
+        "priority": 0,
+        "writer_sp": "SP_CopyDailyData",
+        "quality": 9.2,
+        "notes": "44-col append-mode (DELETE WHERE Date=@date + INSERT) daily PI+Portfolio performance table. ROUND_ROBIN. Population from Fact_SnapshotCustomer+Dim_Range (GuruStatusID>=2 OR AccountTypeID=9). commission accumulates from 2011-01-01 (NOT a daily delta). 4 DDL typos: CurrenyEquity (→CurrentEquity), ProtfoilioType (→PortfolioType), MifidCatigorization (→MifidCategorization), DaysInCurrnetStatus (→DaysInCurrentStatus). Language=char(500) over-provisioned. LastContactDate='1900-01-01' sentinel (no contact). MIMO from Fact_CustomerAction ActionTypes 15-18. DaysAsPI does not reset on demotion/re-promotion. PnL section commented out. 12T1, 31T2, 1P. UC: _Not_Migrated."
+      },
+      {
+        "name": "BI_DB_CopyFund_Positions",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "SP_CopyFund_Positions",
+        "quality": 9.1,
+        "notes": "10-col append-mode (DELETE+INSERT by OpenDateID/CloseDateID+IsPartialCloseChild) position-level pre-join of Dim_Position + Dim_Mirror for MirrorTypeID=4 (Copy Fund) only. ~325.9M rows. HASH(PositionID). CLUSTERED COLUMNSTORE INDEX. Author: Guy Manova 2025-03-07 (3 subsequent bugfixes). Post-load dedupe keeps MAX(CloseDateID,UpdateDate) for rare duplicate PositionIDs. IsPartialCloseChild stored as int (not bit). CloseDateID=0 means open. 9T1 (all from Dim_Position+Dim_Mirror), 1P. UC: _Not_Migrated."
+      }
+    ]
+  },
+  "batch_73_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 102,
+    "domain": "Compliance Surveillance suite (KYC PnL monitoring, short-term trades, open position snapshot) + VP Vulnerable Persons Monthly MI",
+    "capacity_used": "4.0/4.0 (KYC_PnL_Monitoring=1.0 [27 cols], ShortTermTrades=1.0 [33 cols], Snapshot=1.0 [28 cols], VP_Monthly_MI=1.0 [14 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_Compliance_Surveillance_KYC_PnL_Monitoring",
+        "type": "Table",
+        "columns": 27,
+        "priority": 0,
+        "writer_sp": "SP_D_Compliance_Surveillance_KYC_PnL_Monitoring",
+        "quality": 9.6,
+        "notes": "27-col daily Compliance Surveillance report comparing declared KYC financials (Q10=net income, Q11=savings, Q14=planned investment) against actual trading PnL and equity. 2.74M rows, 1 per L3-verified active depositor. HASH(RealCID). TRUNCATE+INSERT. Equity gate (UnrealisedEquity>0). 12-month activity filter OR has_open_position. PnL split self-directed (MirrorID=0) vs copy (MirrorID>0). 8T1 (CustomerStatic, Dim_Regulation, Dim_Language), 18T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compliance_Surveillance_ShortTermTrades",
+        "type": "Table",
+        "columns": 33,
+        "priority": 0,
+        "writer_sp": "SP_D_Compliance_Surveillance_ShortTermTrades",
+        "quality": 9.6,
+        "notes": "33-col daily Compliance short round-trip trades report. Stocks/ETFs (InstrumentTypeID 5,6) closed yesterday with ≤300 min duration. 61,282 rows, 15,772 CIDs, PositionID grain. 64.4% copy. HASH(CID). Uses DesignatedRegulationID. Empty-string sentinels for L3 dates and ParentCID. LastIPAddress from Fact_CustomerAction ActionTypeID=14 via IPNumToIPAddress(). SP history: @min_num_trades 5→1, @max_roundtrip_duration 180→300 mins (2024-06-13). 21T1, 11T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compliance_Surveillance_Snapshot",
+        "type": "Table",
+        "columns": 28,
+        "priority": 0,
+        "writer_sp": "SP_D_Compliance_Surveillance_Snapshot",
+        "quality": 9.6,
+        "notes": "28-col daily Compliance open-position snapshot for Fivetran/Google Sheets instrument list. 53,215 rows, 98 instruments, PositionID grain. Open at last working day end (Mon/Tue→Friday snap, else yesterday). @lookbackdays from Fivetran sheet min entry if <100. Two UnrealisedPnL cols: snapshot DateID + yesterday DateID. eToro employees included (Region=eToro). CloseOccurred=1900-01-01 sentinel for open positions. Uses DesignatedRegulationID. Empty-string sentinels. 18T1, 9T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compliance_VP_Monthly_MI",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_Compliance_VP_Monthly_MI",
+        "quality": 9.7,
+        "notes": "14-col all-time trading activity MI for 56 FCA Vulnerable Persons clients (Fivetran CID list). ROUND_ROBIN. TRUNCATE+INSERT. TradesExecuted = opens (AT 1-3) + closes (AT 4-6); double-counts complete round trips. NotionalAmount = Σclose_notional − Σopen_notional (net flow). Asset-class split: CFD (IsSettled=0), Stocks/ETF (IsSettled=1, TypeID 5/6), Crypto (IsSettled=1, TypeID 10). Uses primary RegulationID (NOT DesignatedRegulationID). UpdateDate NOT NULL datetime. 6T1, 7T2, 1P."
+      }
+    ]
+  },
+  "batch_72_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 5,
+    "total_columns_documented": 75,
+    "domain": "Mixed P0 — Club loyalty Google remarketing audience snapshot, FCA compensation activity reporting (reason-level + regulation-level), monthly compliance EOM position audit, daily compliance illegal-trade alert log",
+    "capacity_used": "4.0/4.0 (ClubUsersDataRemarketingGoogle=0.5 [9 cols], CompensationReason=0.5 [5 cols], Regulation=0.5 [6 cols], EOM_Pos=0.5 [14 cols], Illegal_Trades_Alerts=2.0 [41 cols])",
+    "objects": [
+      {
+        "name": "BI_DB_ClubUsersDataRemarketingGoogle",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_ClubUsersDataRemarketingGoogle",
+        "quality": 8.5,
+        "notes": "9-col daily Club loyalty customer snapshot for Google Ads remarketing (1.22M rows; TRUNCATE+INSERT; Club tier >= Silver). ROUND_ROBIN HEAP. 0T1, 8T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compensation_Activity_Data_CompensationReason",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "SP_Compensation_Activity_Data",
+        "quality": 8.0,
+        "notes": "5-col monthly FCA compensation breakdown by reason (916 rows; TRUNCATE+INSERT). FCA only (RegulationID=2, IsValidCustomer=1). CompensationReasonID IN(3,26,125,126,127,128). Source: Fact_CustomerAction + Dim_CompensationReason. Prev calendar month computed from GETDATE(). 2T1 (RealCID via Customer.CustomerStatic; CompensationReason via Dim_CompensationReason wiki), 2T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compensation_Activity_Data_Regulation",
+        "type": "Table",
+        "columns": 6,
+        "priority": 0,
+        "writer_sp": "SP_Compensation_Activity_Data",
+        "quality": 8.5,
+        "notes": "6-col monthly active-trader compensation breakdown by regulation (7 rows, one per regulation; TRUNCATE+INSERT). CategoryID IN(17,18) = PositionClose+PositionOpen. ASIC merged: RegulationID 4+10 combined as 'ASIC and ASIC&GAML'. WHERE Regulation <> 'Other'. Same SP as CompensationReason (both written in single SP run). 0T1, 5T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compliance_Clients_Dashboard_EOM_Pos",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_Compliance_BI_Clients_Dashboard",
+        "quality": 8.5,
+        "notes": "14-col monthly EOM compliance position audit (150,063 rows across 51 EOM dates; DELETE WHERE DateID + INSERT). CRITICAL: RealCID column = COUNT(RealCID) — customer count not ID. EOM gate: Dim_Date.IsLastDayOfMonth='Y'. PositionType always 'Opened_EOD' (hardcoded). New_Customers: DATEDIFF(DAY, FirstDepositDate, @Date) <= 60. IsSettledTypeDetailed: 6-way CASE on InstrumentTypeID + IsSettled. MAS addition 2025-12-03. ROUND_ROBIN, CLUSTERED INDEX(DateID). 2T1 (Regulation, Country), 11T2, 1P."
+      },
+      {
+        "name": "BI_DB_Compliance_Illegal_Trades_Alerts",
+        "type": "Table",
+        "columns": 41,
+        "priority": 0,
+        "writer_sp": "SP_Compliance_Forbidden_Trades",
+        "quality": 8.0,
+        "notes": "41-col daily compliance illegal-trade alert log (259,077 rows, 798 dates; DELETE WHERE Date=@Date + INSERT). SP = 3531 lines, Guy Manova (2020-07-15), 30+ rules in BU/BC/PC families. RealCID is VARCHAR(100) — always CAST(RealCID AS INT) for joins. RecordID NULL pre-2025-03-09 (max=90,608; remaining rows NULL). Sparse column model — most cols NULL for most alert types. HASH(RealCID varchar), CLUSTERED INDEX(Date ASC). DLT1-4 rules deactivated 2025-11-04 (historical rows remain). 3T1 (RealCID/Country/Regulation), 27T2, 6T3 (InvestedAmount, Leverage, TranID, Occurred, AmountUSD, State, CryptoName, CryptoID), 1P."
+      }
+    ]
+  },
+  "batch_71_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 175,
+    "domain": "Mixed P0 — cashout pipeline health monitor, DDR deposit reconciliation alert, Capital Guarantee Alpha program panel, AML-Account Closed customer balance snapshot",
+    "capacity_used": "4.0/4.0 (Cashout_Performance_Monitoring=0.5, ClientBalance_DDR_Data_Integrity_Alert=0.5, CapitalGuarantee_Panel=1.0, Client_Balance_CID_Level_New_Blocked=2.0)",
+    "deferred_to_batch_72": [
+      "BI_DB_MarketingMonthlyRawData (deferred from batch 70 — now documented, unblock check needed)"
+    ],
+    "objects": [
+      {
+        "name": "BI_DB_Cashout_Performance_Monitoring",
+        "type": "Table",
+        "columns": 6,
+        "priority": 0,
+        "writer_sp": "SP_Client_Balance_and_DailyZero_TreeSize_Alert (secondary INSERT)",
+        "quality": 9.65,
+        "notes": "6-col daily cashout pipeline health monitor. 0 rows = healthy state; TRUNCATE+INSERT; only writes when cashout discrepancy detected between BI_DB_Client_Balance_CID_Level_New and BI_DB_DailyZero_TreeSize_NEW. ROUND_ROBIN HEAP. Metric pairs: Cashout_CB vs Cashout_ZeroTree, TotalCashoutAmount_CB vs _ZeroTree. ThresholdBreach flag. 0T1, 5T2, 1P."
+      },
+      {
+        "name": "BI_DB_ClientBalance_DDR_Data_Integrity_Alert",
+        "type": "Table",
+        "columns": 8,
+        "priority": 0,
+        "writer_sp": "SP_ClientBalance_DDR_Data_Integrity_Alert",
+        "quality": 8.5,
+        "notes": "8-col dual-track deposit reconciliation alert table. 0 rows = healthy state; TRUNCATE+INSERT. Two-track comparison: CB track uses FCADeposits (ActionTypeID 7+44); DDR track uses DepositDDR (ActionTypeID=7 ONLY, NOT stored). CASE logic ORs 5 mismatch conditions across CB CID/Agg levels and DDR CID/Agg/Daily-Agg levels; DataIntegrityProblem=1 on any mismatch. ActionTypeID=44 asymmetry intentional — DDR pipeline never processes AT=44. No alert history (TRUNCATE wipes). 0T1, 5T2, 3T4 (blacklisted DDR sources), 0P."
+      },
+      {
+        "name": "BI_DB_CapitalGuarantee_Panel",
+        "type": "Table",
+        "columns": 32,
+        "priority": 0,
+        "writer_sp": "SP_Capital_Guarantee_Panel",
+        "quality": 9.0,
+        "notes": "32-col Capital Guarantee Alpha program daily panel (60.6M rows, 2025-01-01 to 2026-04-12). HASH(CID), CLUSTERED COLUMNSTORE. SP_Capital_Guarantee_Panel: @date param always overridden to GETDATE()-1 (any passed value ignored). Mirror filter: dm.OpenOccurred >= '20250101' (hard-coded program start). AccountTypeID=9 = Smart Portfolio parent accounts. FirstTimeOpenID=MAX(OpenDateID) (vs FirstTimeOpen=MIN(OpenOccurred) — intentional? multi-position investor quirk). CopyPnL: WHERE DateID >= @dateID (not =; picks up all running PnL from program start). MoneyIn/MoneyOut = negated FCA amounts (AT 15/17 and 16/18). AvailableBalance=V_Liabilities.Credit (INNER JOIN — investors without record dropped). DELETE+INSERT per DateID. 10T1, 21T2, 1T3, 1P."
+      },
+      {
+        "name": "BI_DB_Client_Balance_CID_Level_New_Blocked",
+        "type": "Table",
+        "columns": 129,
+        "priority": 0,
+        "writer_sp": "SP_Client_Balance_CID_Level_New_Blocked",
+        "quality": 8.5,
+        "notes": "129-col snapshot of AML-Account Closed customers (5 rows current; all blocked since 2022-10-19 or earlier; all 'Over 2 Months' TimeBucket; near-zero balances). ROUND_ROBIN HEAP. SP created 2022-01-18: explicit INSERT column list frozen at creation date — post-2022 base table additions (TRS crypto, futures, DLT, margin stocks, etc.) NOT present (only first 121 of 174+ base cols). Filter: dc.PlayerStatusReasonID=6, Date=GETDATE()-2. BlockedTime=MIN(FullDate) WHERE Fact_SnapshotCustomer.PlayerStatusID matches current. BlockedReasonTime=MIN(FullDate) WHERE PlayerStatusReasonID matches. TimeBucket/BlockedReasonBucket: CASE on GETDATE() reference (not data date). TRUNCATE+INSERT (no history). 120 abbreviated T1 (passthrough from BI_DB_Client_Balance_CID_Level_New), 8T2 (new blocking metadata cols), 1P."
+      }
+    ]
+  },
+  "batch_70_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 5,
+    "total_columns_documented": 69,
+    "domain": "Mixed P0 — risk portfolio snapshot, KYC questionnaire responses, revenue milestone tracking, account manager deposit report, canonical LTV output",
+    "capacity_used": "3.5/4.0 (rsk_Portfolio=0.5, KYC_Row_Data=0.5, FirstTimeRev10=0.5, NewBonusReport=1.0, LTV_BI_Actual=1.0)",
+    "deferred_to_batch_71": [
+      "BI_DB_MarketingMonthlyRawData (now unblocked: FirstTimeRev10 documented)"
+    ],
+    "objects": [
+      {
+        "name": "BI_DB_rsk_Portfolio",
+        "type": "Table",
+        "columns": 8,
+        "priority": 0,
+        "writer_sp": "SP_rsk_Portfolio",
+        "quality": 8.7,
+        "notes": "Daily portfolio exposure staging table for Risk Dashboard. 390M rows/day, 2021-01-01 to 2026-04-13. ROUND_ROBIN, CLUSTERED INDEX(Date,CID). 4T1, 3T2, 1P. OpsDB mis-attributes SP_rsk_AgregatedRisk as writer — actual writer is SP_rsk_Portfolio (confirmed via SP code). Date semantics: SP receives @sd (yesterday), stores Date=@sd+1 (today). Net_USD_Vol signed (long+/short-); USD_Vol unsigned for covariance weights. Key review: OpsDB writer discrepancy, SP_rsk_RiskCorelation_PIs downstream table tracking."
+      },
+      {
+        "name": "BI_DB_KYC_Questions_Answers_Row_Data",
+        "type": "Table",
+        "columns": 7,
+        "priority": 0,
+        "writer_sp": "External ETL (no Synapse SP writer found)",
+        "quality": 8.1,
+        "notes": "Raw KYC questionnaire responses. 467M rows, 30M GCIDs, 2013-12-01 to 2026-04-12. HASH(GCID), CCI. NOT in OpsDB. No Synapse SP writes it — external ADF/SQL Agent pipeline from UserApiDB. Uses GCID (not CID). Multi-select questions produce multiple rows per GCID+QuestionId. Text denormalized at submission time (QuestionText/AnswerText snapshot). Avg 1.33 answers per GCID/question; max 13. Dimensions: External_UserApiDB_KYC_Questions (MultipleSelection flag), External_UserApiDB_KYC_Answers. 1T1(GCID), 5T2, 1P."
+      },
+      {
+        "name": "BI_DB_FirstTimeRev10",
+        "type": "Table",
+        "columns": 7,
+        "priority": 0,
+        "writer_sp": "SP_FirstTimeRev10",
+        "quality": 8.3,
+        "notes": "First-time ≥$10 commission milestone per CID. Exactly 1 row per CID (2.9M rows). HASH(CID), CLUSTERED INDEX(Date). OpsDB: Priority 0, Daily, SB_Daily. SP code unavailable (empty sys.sql_modules). Confirmed $10 threshold: min AggregatedCommission=$10.01. Part of Rev5/Rev10/Rev30 series. PositionID=qualifying trade. Upstream of SP_Marketing_Cube/MarketingMonthlyRawData. 1T1(CID), 5T2, 1P."
+      },
+      {
+        "name": "BI_DB_NewBonusReport",
+        "type": "Table",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "SP_NewBonusReport",
+        "quality": 7.8,
+        "notes": "Account manager deposit + cash-out event report. 56.7M rows, 4.9M CIDs, 2017-08-31 to 2026-04-11. HASH(RealCID), CLUSTERED INDEX(DateID). Also writes BI_DB_Depositors_By_Managers. SP code unavailable. Per-transaction grain (avg 1.21 rows/CID/day). TotalDepositAmount and TotalCoAmount mutually exclusive per row ('CO' meaning unconfirmed — likely Cash Out). IsContacted=1 for 3% of rows. 6 Club tiers. Manager assignment + contact tracking (ContactByManager, DaysSinceContact). 1T1, 8T2, 7T3, 1P. Review: CO meaning, SP logic, IsContacted update mechanism."
+      },
+      {
+        "name": "BI_DB_LTV_BI_Actual",
+        "type": "Table",
+        "columns": 30,
+        "priority": 0,
+        "writer_sp": "SP_LTV_BI_Actual",
+        "quality": 9.0,
+        "notes": "Canonical customer LTV output. ~5.84M rows, ~1 per CID. HASH(CID), HEAP. OpsDB: Priority 0, Daily, SB_Daily. SP code unavailable. FTD range 2007-2026. Two LTV families: (1) multiplier-model LTV_1Y/3Y/8Y/VolFix/GroupLevel — hybrid predicted/actual (crossover at Seniority ≥ 12/36/96 months); VolFix preferred; (2) Revenue8Y new-methodology (6 variants: standard/NoExtreme × WO_GroupLTV/GroupLTV/bare). Revenue8Y_LTV_New_Group_LTV = recommended primary signal. Currency='USD'/'Non_USD' (binary, not actual code). WO_Group_LTV=0 where group LTV applied (not NULL). Downstream: BI_DB_LTV_BI_Actual_Daily_Snapshot (P20, 4.54B rows), LTV_FromDB_ToBigQuery, 13 BI_DB_dbo deps. 2T1(CID/GCID), 28T2, 1P. Column info from BI_DB_LTV_Predictions wiki + Daily_Snapshot wiki."
+      }
+    ]
+  },
+  "batch_69_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 1,
+    "total_columns_documented": 174,
+    "domain": "P0 CRM mega-panel. Weekly per-depositor customer panel — weekly sibling of DailyPanel (183 cols) and MonthlyPanel (189 cols). ~5.87M CIDs per week.",
+    "capacity_used": "3.0/4.0 (CID_WeeklyPanel_FullData=3.0 [174 cols, solo batch])",
+    "deferred_to_batch_70": [],
+    "objects": [
+      {
+        "name": "BI_DB_CID_WeeklyPanel_FullData",
+        "type": "Table",
+        "columns": 174,
+        "priority": 0,
+        "writer_sp": "SP_CID_WeeklyPanel_FullData",
+        "sp_author": "Dan Iliescu (2021-06-29), extended by Or Filizer through 2025-08-13",
+        "quality": 9.02,
+        "phase16_score": 9.02,
+        "notes": "Weekly CRM panel for all eToro depositors. 174 cols, HASH(CID), CLUSTERED INDEX(FirstDayOfWeek ASC, CID ASC). ~5.87M CIDs per weekly slice (April 2026). Priority 0 SB_Daily DELETE WHERE FirstDayOfWeek + INSERT. Source: BI_DB_CID_DailyPanel_FullData exclusively (aggregated weekly via 3 temp tables). Two-source JOIN: #dailysum (SUM/MAX over week's days) LEFT JOIN #lastdayattributes (EOW snapshot WHERE DateID=@dateID). Same 6-instrument taxonomy + Lev1/LevCFD split as DailyPanel. Activity flags: MAX across week. Flow metrics (NewTrades/Revenue/PnL/Deposits/CashoutsAdjusted): SUM. ACC_ columns: SUM of daily running totals — NOT self-referencing (unusual semantics, documented with warning §2.6). EOW_* renamed from DailyPanel's EOD_*. Weekly_Classification always empty string. Excluded vs DailyPanel: AccountManager, IsIslamic, IsContacted, IsContactedAmount, ACC_ChurnDays, FirstNewFundedDate, ACC_Transactional_Revenue_Total, Active_Month/ActiveDate/FTD_Month/FirstAction/FirstInstrument. OpsDB dep: SP_CID_DailyPanel_FullData → BI_DB_CID_DailyPanel_FullData. 5T1 (CID/Region/Country/V2/V3 via DailyPanel wiki), 169T2. UC: _Not_Migrated. Review items: ACC_ semantics intent, Weekly_Classification status, IsReg_ThisD/IsFTD_ThisD naming, Lifestage column gap, historical date range."
+      }
+    ]
+  },
+  "batch_68_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 1,
+    "total_columns_documented": 189,
+    "domain": "P0 CRM mega-panel. Primary monthly panel for all eToro depositors — 353.8M rows, 5.87M CIDs, data from 2007-08.",
+    "capacity_used": "3.0/4.0 (CID_MonthlyPanel_FullData=3.0 [189 cols, solo batch])",
+    "deferred_to_batch_69": [
+      "BI_DB_CID_WeeklyPanel_FullData (~150+ cols, weight 3 — solo batch required)"
+    ],
+    "objects": [
+      {
+        "name": "BI_DB_CID_MonthlyPanel_FullData",
+        "type": "Table",
+        "columns": 189,
+        "priority": 0,
+        "writer_sp": "SP_CID_MonthlyPanel_FullData",
+        "sp_author": "Amir Gurewitz (2019-07-18), extended by TomB/GuyM/LudaG/OrFilizer/AdvaJ/EdenW/EtiR/TalC/Boris through 2025-07-13",
+        "quality": 8.88,
+        "phase16_score": 8.88,
+        "notes": "Primary monthly CRM analytics panel for all eToro depositors. 189 cols, HASH(CID), CLUSTERED INDEX(ActiveDate ASC, CID ASC). 353.8M rows total; 5.87M CIDs; 2007-08 to 2026-04. Priority 0 SB_Daily DELETE+INSERT + 4 POST-INSERT UPDATEs. Same 6-instrument taxonomy + Lev1/LevCFD as DailyPanel. 22 ACC_ accumulators via self-reference (prior month). Dual revenue formula: Revenue_Total (legacy FullCommissions) vs Revenue_Total_New (2025 Or Filizer: + 5 function fees); Transactional_Revenue_Total = Revenue_Total_New - ConversionFees. LTV_1Y/3Y/8Y hardcoded 0; written by SP_LTV_BI_Actual (separate run, loop prevention). IsChurn_ThisM/IsWB_ThisM: POST-INSERT UPDATE from prior month IsFunded_New comparison. Seniority_FundedNew: POST-INSERT from MAX(FTD/FirstAction/V3 dates). LastAMLTicketDate: POST-INSERT from BI_DB_SF_Cases_Panel. EOM_LSD: 17-value life stage from BI_DB_CID_LifeStageDefinition. EOM_Club: LowBronze(<$1K)/HighBronze/Silver-Diamond. EOM_Regulation: 15 jurisdiction values. KNOWN BUG: duplicate #Cashier definition in SP (first with DateID=single-day, second with BETWEEN month window — second overwrites, correct behavior, but first is dead code). Deps: BI_DB_DailyCommisionReport, BI_DB_PositionPnL, BI_DB_CIDFirstDates, BI_DB_First5Actions, BI_DB_CID_DailyCluster, BI_DB_CID_LifeStageDefinition, BI_DB_V_DDR_Daily_Panel, BI_DB_SF_Cases_Panel, 5 revenue functions, External_BI_OUTPUT_Customer_ProfessionalCustomers. 20+ downstream SPs. 3T1(CID/EOM_Club/CountryID), 186T2. UC: _Not_Migrated."
+      }
+    ]
+  },
+  "batch_67_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 1,
+    "total_columns_documented": 183,
+    "domain": "P0 CRM mega-panel. Primary daily panel for all eToro depositors — broadest customer panel in BI_DB_dbo.",
+    "capacity_used": "3.0/4.0 (CID_DailyPanel_FullData=3.0 [183 cols, solo batch])",
+    "deferred_to_batch_68": [
+      "BI_DB_CID_MonthlyPanel_FullData (190 cols, weight 3 — solo batch required)",
+      "BI_DB_CID_WeeklyPanel_FullData (~150+ cols, weight 3 — solo batch required)"
+    ],
+    "objects": [
+      {
+        "name": "BI_DB_CID_DailyPanel_FullData",
+        "type": "Table",
+        "columns": 183,
+        "priority": 0,
+        "writer_sp": "SP_CID_DailyPanel_FullData",
+        "sp_author": "Dan Iliescu (2020-02-02), extended by Eti/Adi/Maor/Amir/TomB/Or Filizer through 2025-07-29",
+        "quality": 9.33,
+        "phase16_score": 9.33,
+        "notes": "Primary daily CRM panel for ALL depositors (IsDepositor=1). 183 cols, HASH(CID), CLUSTERED INDEX(DateID), daily partitions 20180101-20260531. ~64.5M rows/month, ~5.9M CIDs/day. Priority 0 SB_Daily DELETE+INSERT. 6 instrument types (Copy/Real_Stocks/CFD_Stocks/Real_Crypto/CFD_Crypto/FX_Comm_Ind) + Lev1/LevCFD secondary split. 14 ACC_ running totals from prior day self-join. Revenue_Total=commissions+rollover+TicketFees+TicketFeeByPercent+ConversionFees+IslamicFees; Transactional_Revenue_Total excludes Islamic. EOD_Club: LowBronze(<$1K)/HighBronze/Silver-Diamond. Daily_Classification empty in 2025-2026 (UpdateCluster SP non-operational). 1460 distinct UpdateDate values (daily ETL confirmed). Deps: BI_DB_DailyCommisionReport(P20), BI_DB_CIDFirstDates(P90), BI_DB_V_DDR_Daily_Panel (CashoutsAdjusted). 5 revenue functions. 3T1(CID/Region/Country), 177T2, 3T4. UC: _Not_Migrated. Key review items: Daily_Classification status, IsOTD semantics (AT=7=deposit not trade), ACC_ChurnDays definition, OpsDB priority inconsistency, BI_DB_V_DDR_Daily_Panel priority conflict."
+      }
+    ]
+  },
+  "batch_66_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 94,
+    "domain": "P0 customer behavioral segmentation domain. Club loyalty daily panel, daily life-stage SCD2 assignment, KYC first-achievement tracker, and daily cashout cluster classification.",
+    "capacity_used": "4.0/4.0 (CID_DailyPanel_Club=2.0 [67 cols], CID_LifeStageDefinition=0.5 [9 cols], CID_VerificationLevel=0.5 [5 cols], CO_Cluster_Daily=0.5 [13 cols])",
+    "deferred_to_batch_67": [
+      "BI_DB_CID_DailyPanel_FullData (183 cols, weight 3 — solo batch required)",
+      "BI_DB_CID_MonthlyPanel_FullData (190 cols, weight 3 — solo batch required)",
+      "BI_DB_CID_WeeklyPanel_FullData (~150+ cols, weight 3 — solo batch required)"
+    ],
+    "objects": [
+      {
+        "name": "BI_DB_CID_DailyPanel_Club",
+        "type": "Table",
+        "columns": 67,
+        "priority": 0,
+        "writer_sp": "SP_CID_DailyPanel_Club",
+        "sp_author": "Unknown (pre-2023 codebase, 3-branch evolution through 2023-08-23)",
+        "quality": 8.84,
+        "phase16_score": 8.84,
+        "notes": "1.6B-row daily panel for Club loyalty members (67 cols, ROUND_ROBIN, CLUSTERED(DateID)). WHILE loop, DELETE+INSERT per date. 3 SP branches: pre-2023-01-01 (no eMoney/Moneyfarm), 2023-01-01 to 2023-08-22 (adds eMoney+Moneyfarm, revenue from Fact_CustomerAction), post-2023-08-23 (revenue from BI_DB_DailyCommisionReport). RealizedEquityClub=non-CFD+eMoney+Moneyfarm added 2023-01-01. TierChangeType dual spelling: 'FirstClub'/'First Club'. 14 deprecated cols present. UC: _Not_Migrated. 2T1, 65T2."
+      },
+      {
+        "name": "BI_DB_CID_LifeStageDefinition",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_CID_LifeStageDefinition",
+        "sp_author": "Unknown (pre-2022 codebase, SB_Daily Priority 0)",
+        "quality": 8.7,
+        "phase16_score": 8.7,
+        "notes": "SCD2 daily life-stage assignment (9 cols, HASH(RealCID), CLUSTERED(RealCID,DateID)). WHILE loop daily gap-fill. 19 LSD values with priority CASE. Self-references table for Winback/sticky-period logic. Date column is varchar(10) not DATE. PlayerLevelID>=2 = all non-Bronze (Silver=5 included). Churn gate uses prev LSD. MIN(DateID)=20220101. Current distribution: Dump_Lead=38.3M dominant. UC: _Not_Migrated. 0T1, 9T2."
+      },
+      {
+        "name": "BI_DB_CID_VerificationLevel",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "SP_CID_VerificationLevel",
+        "sp_author": "Unknown (SB_Daily Priority 0)",
+        "quality": 8.5,
+        "phase16_score": 8.5,
+        "notes": "First-achievement KYC level tracker (5 cols, ROUND_ROBIN HEAP+NCI(FromDateID)). Append-only via LEFT JOIN anti-join dedup. Cross-join expands customers to levels 1/2/3. Level 0 excluded. FromDateID=FSC SCD2 change date (not exact KYC timestamp). 54.2M rows, L1=24.6M, L2=19.6M, L3=10.0M CIDs. RANK() function in SP is a no-op (dead code). UC: _Not_Migrated. 1T1(Dim_VerificationLevel), 4T2."
+      },
+      {
+        "name": "BI_DB_CO_Cluster_Daily",
+        "type": "Table",
+        "columns": 13,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_CO_Cluster_Daily",
+        "sp_author": "Unknown (SB_Daily Priority 0)",
+        "quality": 8.75,
+        "phase16_score": 8.75,
+        "notes": "Daily cashout cluster classification (13 cols, HASH(CID) HEAP). Population: customers who cashed out (ActionTypeID=8) on @Date only. Cumulative CO history pulled for all. 6 clusters: Null_Equity, Churn_CO (equity<$10), OTC (first=last CO), Regular_CO, Occasional_CO, Uncategorized. Thresholds: $10 equity, 360-day gap/seniority, 3/5 cashout count. Current_Day_CO_Amount is INT (possible truncation). Data from 2024-01-01 only. 4.6M rows, 1.7M CIDs. UC: _Not_Migrated. 0T1, 13T2."
+      }
+    ]
+  },
+  "batch_65_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 30,
+    "domain": "P0 mixed domain. Assignment Tool task outcome log, BO compensation credit log, orphaned BuyTax_Fix stub, and CBZero/TreesizeZero reconciliation alert table.",
+    "capacity_used": "2.0/4.0 (AssignmentToolVolumes=0.5 [12 cols], BO_Generated_Compensations=0.5 [13 cols], BuyTax_Fix=0.0 [1 col], CBZero_TreesizeZero_Alert=0.5 [4 cols])",
+    "deferred_to_batch_66": [],
+    "objects": [
+      {
+        "name": "BI_DB_AssignmentToolVolumes",
+        "type": "Table",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "SP_H_AssignmentToolVolumes",
+        "sp_author": "Pavlina Masoura (2020-02-16)",
+        "quality": 8.2,
+        "phase16_score": 8.2,
+        "notes": "10.6M-row hourly task outcome log for Assignment Tool ops (ROUND_ROBIN CLUSTERED(BeginTimeID)). DELETE WHERE BeginTimeID=@dateID + INSERT. UNION History+Current task views deduped (TaskID,Outcome) earliest BeginTime. BeginTimeID derived from OutcomeDate not BeginTime. Team via ManagerID→#finalmanagers. UC: _Not_Migrated. 0T1, 11T2, 1P."
+      },
+      {
+        "name": "BI_DB_BO_Generated_Compensations",
+        "type": "Table",
+        "columns": 13,
+        "priority": 0,
+        "writer_sp": "SP_BO_Generated_Compensations",
+        "sp_author": "Unknown (~2021)",
+        "quality": 8.5,
+        "phase16_score": 8.5,
+        "notes": "26.8M-row daily log of BO compensation credits (HASH(CID) HEAP). Daily DELETE WHERE Time>=@Date AND <@Date+1 + INSERT. CreditTypeID=6 only. Excludes PlayerLevelID=4 + CountryID=250. KNOWN BUG: Manager=CONCAT(FirstName,'',LastName) no space. Reason NULL ~87%. Exported via V_BI_DB_BO_Generated_Compensations (renames [Player Level]→Player_level, [Country (Reg Form)]→Country_Reg_Form). UC: general.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_bo_generated_compensations. 0T1, 12T2, 1P."
+      },
+      {
+        "name": "BI_DB_BuyTax_Fix",
+        "type": "Table",
+        "columns": 1,
+        "priority": 0,
+        "writer_sp": "None (orphaned)",
+        "sp_author": "Unknown",
+        "quality": 7.6,
+        "phase16_score": 7.6,
+        "notes": "Vestigial/orphaned table. 0 rows, 1 col (Date date NULL), ROUND_ROBIN HEAP. SP_BuyTax_Fix exists but does NOT write here — it reruns SP_DailyDividendsByPosition + SP_Index_Divident_TaxReport + SP_Index_Divident_TaxReport_CID_Level. No other writer SPs identified. UC: _Not_Migrated. 0T1, 1T4."
+      },
+      {
+        "name": "BI_DB_CBZero_TreesizeZero_Alert",
+        "type": "Table",
+        "columns": 4,
+        "priority": 0,
+        "writer_sp": "SP_Client_Balance_and_DailyZero_TreeSize_Alert",
+        "sp_author": "Unknown",
+        "quality": 8.0,
+        "phase16_score": 8.0,
+        "notes": "Reconciliation alert table (ROUND_ROBIN HEAP). 0 rows in healthy state. TRUNCATE+INSERT; only writes when (ABS(CBZero-TreesizeZero)/ABS(CBZero))*100 >= 0.5%. Sources: BI_DB_Client_Balance_CID_Level_New + BI_DB_DailyZero_TreeSize_NEW. No historical alerts preserved (TRUNCATE wipes prior runs). UC: _Not_Migrated. 0T1, 4T2."
+      }
+    ]
+  },
+  "batch_64_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 83,
+    "domain": "P0 AML alert domain. Accumulating daily AML alert logs for main/master-subaccount/Singapore populations plus SOF compliance cross-reference.",
+    "capacity_used": "2.5/4.0 (AML_BI_Alerts_New=0.5 [14 cols], Master_SubAccount=0.5 [14 cols], Singapore=0.5 [15 cols], AML_KYC_SOF=1.0 [40 cols])",
+    "deferred_to_batch_65": [],
+    "objects": [
+      {
+        "name": "BI_DB_AML_BI_Alerts_New",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_AML_BI_Alerts_New",
+        "sp_author": "Pavlina Masoura (last mod 2026-03-30)",
+        "quality": 9.2,
+        "phase16_score": 9.2,
+        "notes": "273K-row accumulating daily AML alert log (ROUND_ROBIN HEAP). DELETE WHERE AlertDate=@Date + INSERT. 30+ alert types in 4 categories: MIMO-Deposit (48%), OnBoarding (37%), MIMO-Deposits (15%), MIMO..."
+      },
+      {
+        "name": "BI_DB_AML_BI_Alerts_New_Master_SubAccount",
+        "type": "Table",
+        "columns": 14,
+        "priority": 0,
+        "writer_sp": "SP_AML_BI_Alerts_New_Master_SubAccount",
+        "sp_author": "Georgios Kyriakou (2025-02-10), Pavlina Masoura (2025-11-10 employee excl.)",
+        "quality": 9.2,
+        "phase16_score": 9.2,
+        "notes": "1,495-row daily AML alert log for master/sub-account groups (ROUND_ROBIN HEAP). Accumulating DELETE+INSERT. Population: customers with MasterAccountCID IS NOT NULL (linked accounts). MasterAccountC..."
+      },
+      {
+        "name": "BI_DB_AML_BI_Alerts_New_Singapore",
+        "type": "Table",
+        "columns": 15,
+        "priority": 0,
+        "writer_sp": "SP_AML_BI_Alerts_New_Singapore",
+        "sp_author": "Pavlina Masoura (2025-02-20, last mod 2025-08-25)",
+        "quality": 9.1,
+        "phase16_score": 9.1,
+        "notes": "2,133-row daily AML alert log for MAS-regulated customers (ROUND_ROBIN HEAP). Accumulating DELETE+INSERT. Population: RegulationID=13 OR DesignatedRegulationID=13 (MAS). 20+ Singapore-specific aler..."
+      },
+      {
+        "name": "BI_DB_AML_KYC_SOF",
+        "type": "Table",
+        "columns": 40,
+        "priority": 0,
+        "writer_sp": "SP_AML_KYC_SOF",
+        "sp_author": "Unknown",
+        "quality": 8.1,
+        "phase16_score": 8.1,
+        "notes": "5.37M-row VL3 depositor SOF compliance cross-reference (ROUND_ROBIN HEAP). TRUNCATE+INSERT (full refresh). Population: all VL3 depositors with KYC questionnaire records (no player status or documen..."
+      }
+    ]
+  },
+  "batch_63_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 173,
+    "domain": "P0 deposit analytics + customer segmentation domain. Daily all-deposits report, SCD2 daily cluster assignment, club tier change event log, customer LTV milestone cohort table.",
+    "capacity_used": "4.0/4.0 (AllDeposits=2.0 [126 cols], CID_DailyCluster=0.5 [10 cols], ClubChangeLog=0.5 [12 cols], CID_BalanceDays=1.0 [25 cols])",
+    "deferred_to_batch_64": [],
+    "objects": [
+      {
+        "name": "BI_DB_AllDeposits",
+        "type": "Table",
+        "columns": 126,
+        "priority": 0,
+        "writer_sp": "SP_AllDeposits",
+        "sp_author": "Adi F (2024-03-03 / 2024-07-08), Eitan L (2024-06-30)",
+        "quality": 9.4,
+        "phase16_score": 9.4,
+        "notes": "Daily all-deposits report (126 cols, ROUND_ROBIN, CLUSTERED(ModificationDateID ASC)). P0 Daily SQL. DELETE by DepositID match + INSERT (not date-range delete). Population: Fact_BillingDeposit WHERE..."
+      },
+      {
+        "name": "BI_DB_CID_DailyCluster",
+        "type": "Table",
+        "columns": 10,
+        "priority": 0,
+        "writer_sp": "SP_CID_DailyCluster",
+        "sp_author": "Unknown (pre-2024 codebase)",
+        "quality": 9.1,
+        "phase16_score": 9.1,
+        "notes": "SCD2 daily cluster assignment per customer (10 cols, ROUND_ROBIN HEAP). P0 Daily SQL. MERGE-based SCD2: closes old period + INSERTs new period only when cluster changes. ToDateID=99991231 = current..."
+      },
+      {
+        "name": "BI_DB_ClubChangeLog",
+        "type": "Table",
+        "columns": 12,
+        "priority": 0,
+        "writer_sp": "SP_ClubChangeLog",
+        "sp_author": "Guy Barkat (2019-04-18), Tom Boksenbojm (multiple revisions through 2023)",
+        "quality": 9.2,
+        "phase16_score": 9.2,
+        "notes": "Club tier change event log (12 cols, ROUND_ROBIN, CLUSTERED(CID)). P0 Daily SQL. DELETE WHERE CreateDate>=@dd + INSERT Upgrades (daily) + First Club (daily) + Downgrades (month-end, PRE-2023 ONLY)...."
+      },
+      {
+        "name": "BI_DB_CID_BalanceDays",
+        "type": "Table",
+        "columns": 25,
+        "priority": 0,
+        "writer_sp": "SP_CID_BalanceDays",
+        "sp_author": "Dan (2020-08-23), revenue source updated by Eti (2023-09-07)",
+        "quality": 9.2,
+        "phase16_score": 9.22,
+        "notes": "Customer LTV milestone cohort table — one row per depositor (25 cols, ROUND_ROBIN, CLUSTERED(CID ASC)). P0 Daily SQL. Population: Dim_Customer WHERE IsDepositor=1, IsValidCustomer=1, DATEDIFF(FTD, ..."
+      }
+    ]
+  },
+  "batch_62_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 91,
+    "domain": "P99 FinanceReportSPS regulatory finance reports + P0 Assignment Tool operations tables. ASIC daily balance report + credit-validity-transition outliers + SLA compliance log + current-task snapshot.",
+    "capacity_used": "4.0/4.0 (ASIC_ClientBalanceFinance=1.0 [19 cols], Outliers_New=1.0 [30 cols], AssignmentToolSLAs=1.0 [21 cols], AssignmentToolTasks=1.0 [21 cols])",
+    "deferred_to_batch_63": [],
+    "objects": [
+      {
+        "name": "BI_DB_ASIC_ClientBalanceFinance",
+        "type": "Table",
+        "columns": 19,
+        "priority": 99,
+        "writer_sp": "SP_ASIC_ClientBalanceFinance",
+        "sp_author": "Katy F (2019-07-30)",
+        "quality": 9.5,
+        "phase16_score": 9.5,
+        "notes": "565M-row daily ASIC regulatory finance report (19 cols, ROUND_ROBIN, CLUSTERED(Date,CID)). P99 FinanceReportSPS. DELETE+INSERT by Date. Population: ASIC-regulated clients only (RegulationID IN(4,10..."
+      },
+      {
+        "name": "BI_DB_Outliers_New",
+        "type": "Table",
+        "columns": 30,
+        "priority": 99,
+        "writer_sp": "SP_Outliers_New",
+        "sp_author": "Katy F (2018-08-16)",
+        "quality": 9.5,
+        "phase16_score": 9.5,
+        "notes": "6,552-row daily credit-validity-transition report across all regulations (30 cols, REPLICATE HEAP). P99 FinanceReportSPS. DELETE+INSERT by DateID. Population: customers whose IsCreditReportValidCB ..."
+      },
+      {
+        "name": "BI_DB_AssignmentToolSLAs",
+        "type": "Table",
+        "columns": 21,
+        "priority": 0,
+        "writer_sp": "SP_H_AssignmentToolSLAs",
+        "sp_author": "Pavlina Masoura (2021-05-11)",
+        "quality": 9.4,
+        "phase16_score": 9.4,
+        "notes": "4.97M-row historical SLA compliance log for Assignment Tool (21 cols, ROUND_ROBIN HEAP). P0 Hourly SQL. DELETE+INSERT by OutcomeDateID. Population: tasks completed (OutcomeDate=@StartDate) from Ext..."
+      },
+      {
+        "name": "BI_DB_AssignmentToolTasks",
+        "type": "Table",
+        "columns": 21,
+        "priority": 0,
+        "writer_sp": "SP_H_AssignmentToolTasks",
+        "sp_author": "Pavlina Masoura (2022-05-21)",
+        "quality": 9.3,
+        "phase16_score": 9.3,
+        "notes": "190K-row rolling current-state snapshot of Assignment Tool tasks (~1-2 month window, CreateDate>=first day of prev month) (21 cols, ROUND_ROBIN HEAP). P0 Hourly SQL. No @StartDate param — TRUNCATE+..."
+      }
+    ]
+  },
+  "batch_61_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 3,
+    "total_columns_documented": 102,
+    "domain": "P0 AML domain continuation — re-documentation of Batch 43/44 objects with GOLDEN-REFERENCE format. AML post-review state tracker (PostReview), ASIC high-risk compliance watchlist, and eMoney multi-account MIMO structuring alert log.",
+    "capacity_used": "4.0/4.0 (AMLPeriodicReview_PostReview=2.0 [65 cols], AML_ASIC_Dashboard=1.0 [18 cols], AML_BI_Alerts_MultipleAccountseMoney=1.0 [19 cols])",
+    "deferred_to_batch_62": [],
+    "objects": [
+      {
+        "name": "BI_DB_AMLPeriodicReview_PostReview",
+        "type": "Table",
+        "columns": 65,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_AMLPeriodicReview_PostReview",
+        "quality": 8.85,
+        "phase16_score": 8.85,
+        "notes": "1.49M-row cumulative AML post-review compliance state tracker (65 cols, ROUND_ROBIN HEAP). Companion to BI_DB_AMLPeriodicReview. UPSERT (DELETE per CID batch + INSERT). Re-evaluates compliance stat..."
+      },
+      {
+        "name": "BI_DB_AML_ASIC_Dashboard",
+        "type": "Table",
+        "columns": 18,
+        "priority": 0,
+        "writer_sp": "SP_AML_ASIC_Dashboard",
+        "quality": 8.85,
+        "phase16_score": 8.85,
+        "notes": "4,307-row daily ASIC/ASIC&GAML high-risk customer compliance watchlist (18 cols, ROUND_ROBIN HEAP). TRUNCATE+INSERT. Population: RegulationID IN(4,10), RiskScoreName='High', IsValidCustomer=1, IsDe..."
+      },
+      {
+        "name": "BI_DB_AML_BI_Alerts_MultipleAccountseMoney",
+        "type": "Table",
+        "columns": 19,
+        "priority": 0,
+        "writer_sp": "SP_AML_BI_Alerts_MultipleAccountseMoney",
+        "quality": 9.36,
+        "phase16_score": 9.36,
+        "notes": "93-row accumulating eMoney multi-account AML alert log (19 cols, ROUND_ROBIN HEAP). SP_AML_BI_Alerts_MultipleAccountseMoney (Pavlina Masoura, 2025-05-05). DELETE WHERE AlertDate=@Date + INSERT. 5 I..."
+      }
+    ]
+  },
+  "batch_60_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 26,
+    "domain": "P15 CMR Phase 2 Finance automation suite — FINRA real stocks reconciliation (FinraGap), FINRA non-cash corporate action log (Finra_NonCash_Comps), EU/ASIC liability decomposition (LiabilityDecomp), US Apex-adjusted balance cycle (USA_CustomerBalance_ApexAdjusted). Re-documentation of Batch 41 objects with structural fixes and fresh live data sampling.",
+    "capacity_used": "2.0/4.0 (FinraGap=0.5 [6 cols], Finra_NonCash_Comps=0.5 [6 cols], LiabilityDecomp=0.5 [8 cols], USA_CustomerBalance_ApexAdjusted=0.5 [6 cols])",
+    "deferred_to_batch_61": [],
+    "objects": [
+      {
+        "name": "BI_DB_CMR_Phase2_FinraGap",
+        "type": "Table",
+        "columns": 6,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Automation_Phase2_FinraGap",
+        "quality": 9.1,
+        "phase16_score": 9.1,
+        "notes": "17,193-row daily FINRA real stocks balance cycle reconciliation (6 cols, ROUND_ROBIN, CLUSTERED(DateID)). 11-branch UNION ALL pivot from CBCAN. Filter: Regulation='FinCEN+FINRA', IsCreditReportVali..."
+      },
+      {
+        "name": "BI_DB_CMR_Phase2_Finra_NonCash_Comps",
+        "type": "Table",
+        "columns": 6,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Phase2_Finra_NonCash_Comps",
+        "quality": 9.2,
+        "phase16_score": 9.2,
+        "notes": "18,683-row CID-grain FINRA non-cash corporate action compensation log (6 cols, ROUND_ROBIN, CLUSTERED(DateID)). ActionTypeID=36, CompensationReasonID IN(45,60,62-72,75,76,78,79,81-89,92), Regulatio..."
+      },
+      {
+        "name": "BI_DB_CMR_Phase2_LiabilityDecomp",
+        "type": "Table",
+        "columns": 8,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Phase2_LiabilityDecomp",
+        "quality": 9.0,
+        "phase16_score": 9.0,
+        "notes": "423,009-row daily EU/ASIC client money liability decomposition (8 cols, ROUND_ROBIN, CLUSTERED(DateID)). 9-branch UNION ALL pivot from CBCAN. Filter: Regulation IN CySEC/BVI/NFA/None/ASIC/ASIC & GA..."
+      },
+      {
+        "name": "BI_DB_CMR_Phase2_USA_CustomerBalance_ApexAdjusted",
+        "type": "Table",
+        "columns": 6,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Phase2_USA_CustomerBalance_ApexAdjusted",
+        "quality": 9.0,
+        "phase16_score": 9.0,
+        "notes": "46,000-row daily US balance cycle with Apex Clearing adjustments (6 cols, ROUND_ROBIN, CLUSTERED(DateID)). Two-phase: #temp wide staging (CASE WHEN Regulation='FinCEN+FINRA' subtracts real stocks f..."
+      }
+    ]
+  },
+  "batch_59_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 101,
+    "domain": "P0 AML domain — ISIN email feeds (instrument metadata), German Video Ident/Bank Ident monitoring, and periodic review workbook.",
+    "capacity_used": "4.0/4.0 (AML_InstrumentMetaData_Daily_Email=0.5 [3 cols], AML_InstrumentMetaData_Daily_Email_DayToDay_Changes=0.5 [5 cols], AML_German_Video_Ident=1.0 [23 cols], BI_DB_AMLPeriodicReview=2.0 [70 cols])",
+    "deferred_to_batch_60": [
+      "BI_DB_AMLPeriodicReview_PostReview"
+    ],
+    "objects": [
+      {
+        "name": "AML_InstrumentMetaData_Daily_Email",
+        "type": "Table",
+        "columns": 3,
+        "priority": 0,
+        "writer_sp": "SP_AML_Sanctions_Trade_InstrumentMetaData_For_Email",
+        "quality": 9.0,
+        "phase16_score": 9.0,
+        "notes": "12,124-row daily feed of tradable instruments with valid ISINs for AML email process. Source: etoro.Trade.InstrumentMetaData. Filters: Tradable=1, 6-pattern ISIN validity check (not NULL/empty/null..."
+      },
+      {
+        "name": "AML_InstrumentMetaData_Daily_Email_DayToDay_Changes",
+        "type": "Table",
+        "columns": 5,
+        "priority": 0,
+        "writer_sp": "SP_AML_Sanctions_Trade_InstrumentMetaData_For_Email_DayToDay_Changes",
+        "quality": 9.0,
+        "phase16_score": 9.0,
+        "notes": "Event-driven ISIN change log. 0 rows 2026-04-23. Two-snapshot diff: External_etoro_Trade_InstrumentMetaData (#currentIsins, Tradable=1, valid ISIN) vs External_etoro_History_InstrumentMetaData (#ye..."
+      },
+      {
+        "name": "AML_German_Video_Ident",
+        "type": "Table",
+        "columns": 23,
+        "priority": 0,
+        "writer_sp": "SP_AML_German_Video_Ident",
+        "quality": 8.8,
+        "phase16_score": 8.8,
+        "notes": "198,613-row daily AML monitoring of German KYC3 customers with crypto exposure (HasWallet=1 OR Has_Open_RealCrypto=1). Population: CountryID=79 (Germany), VerificationLevelID=3, IsValidCustomer=1, ..."
+      },
+      {
+        "name": "BI_DB_AMLPeriodicReview",
+        "type": "Table",
+        "columns": 70,
+        "priority": 0,
+        "writer_sp": "SP_BI_AMLPeriodicReview",
+        "quality": 8.5,
+        "phase16_score": 8.5,
+        "notes": "573,216-row cumulative AML periodic review workbook. DELETE+INSERT per @Date (not TRUNCATE — rows accumulate historically). 4 AlertCategories: GROUP A (3yr Medium Risk, RiskClassificationID=1), GRO..."
+      }
+    ]
+  },
+  "batch_58_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 45,
+    "domain": "P20 unrealized crypto rebate (deferred from Batch 57) + P15 CMR Phase2 client money reconciliation suite (ClientBalance, CycleGap, EU_Outliers). Finance and compliance domains.",
+    "capacity_used": "2.5/4.0 (Dealing_Unrealized_CryptoRebate=1.0 [21 cols], CMR_Phase2_ClientBalance=0.5 [11 cols], CMR_Phase2_CycleGap=0.5 [6 cols], CMR_Phase2_EU_Outliers=0.5 [7 cols])",
+    "deferred_to_batch_59": [],
+    "objects": [
+      {
+        "name": "Dealing_Unrealized_CryptoRebate",
+        "type": "Table",
+        "columns": 21,
+        "priority": 20,
+        "writer_sp": "SP_M_CryptoRebateDiamond",
+        "quality": 9.28,
+        "phase16_score": 9.28,
+        "notes": "786K-row monthly unrealized crypto rebate for Diamond+Platinum Plus club members (21 cols, ROUND_ROBIN, CLUSTERED(MonthEndDate)). SP_M_CryptoRebateDiamond second INSERT (after Dealing_CryptoRebate)..."
+      },
+      {
+        "name": "BI_DB_CMR_Phase2_ClientBalance",
+        "type": "Table",
+        "columns": 11,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Phase2_ClientBalance",
+        "quality": 9.15,
+        "phase16_score": 9.15,
+        "notes": "19.5M-row daily client money balance cycle reconciliation (11 cols, ROUND_ROBIN, CLUSTERED(DateID)). DELETE+INSERT daily. 34 distinct metrics (ExcelOrder 1-34) per Regulation x PlayerStatus x IsCre..."
+      },
+      {
+        "name": "BI_DB_CMR_Phase2_CycleGap",
+        "type": "Table",
+        "columns": 6,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Phase2_CycleGap",
+        "quality": 9.15,
+        "phase16_score": 9.15,
+        "notes": "1,209-row daily cycle gap exception table (6 cols, ROUND_ROBIN, CLUSTERED(DateID)). DELETE+INSERT daily. All rows non-zero Gap -- exception-only table. 4 stored combinations: Regulation ('ASIC' or ..."
+      },
+      {
+        "name": "BI_DB_CMR_Phase2_EU_Outliers",
+        "type": "Table",
+        "columns": 7,
+        "priority": 15,
+        "writer_sp": "SP_CMR_Phase2_EU_Outliers",
+        "quality": 9.2,
+        "phase16_score": 9.2,
+        "notes": "16,254-row daily EU outlier balance movement tracker (7 cols, ROUND_ROBIN, CLUSTERED(DateID)). DELETE+INSERT daily. Always 21 rows per date (all metrics inserted regardless of zero values). SP DEFE..."
+      }
+    ]
+  },
+  "batch_57_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 3,
+    "total_columns_documented": 83,
+    "domain": "P20 club history + dealing (crypto rebate) + finance PnL/commission breakdown. ClubChangeLogProduct was Phase 16 validated (pre-existing wiki from Batch 18). Dealing_CryptoRebate and Client_Balance_Breakdown_Instrument_Level were regenerated with correct filenames (prior Batch 40 had BI_DB_ prefix bug).",
+    "capacity_used": "3.5/4.0 (ClubChangeLogProduct=0.5 [11 cols], Dealing_CryptoRebate=1.0 [19 cols], Client_Balance_Breakdown_Instrument_Level=2.0 [53 cols])",
+    "deferred_to_batch_58": [
+      "Dealing_Unrealized_CryptoRebate"
+    ],
+    "deferred_resolved_in_batch_58": true,
+    "objects": [
+      {
+        "name": "BI_DB_ClubChangeLogProduct",
+        "type": "Table",
+        "columns": 11,
+        "priority": 20,
+        "writer_sp": "SP_ClubChangeLogs",
+        "sp_author": "Ofir Chloe Gal",
+        "quality": 9.55,
+        "phase16_score": 9.55,
+        "notes": "49.4M-row daily club tier change event log (11 cols, ROUND_ROBIN, CLUSTERED INDEX(Date ASC)). TRUNCATE+INSERT daily. Source: DWH_dbo.Dim_ClubChangeLogProduct. Grain: CID × Date × PLChangeType. 1T1(..."
+      },
+      {
+        "name": "Dealing_CryptoRebate",
+        "type": "Table",
+        "columns": 19,
+        "priority": 20,
+        "writer_sp": "SP_M_CryptoRebateDiamond",
+        "sp_author": "Tom Boksenbojm (orig); Eden Winkler 2023-12-21 migration; Ofir Chloe Gal 2025-09-30 BI_DB move",
+        "quality": 9.35,
+        "phase16_score": 9.35,
+        "notes": "210K-row monthly crypto rebate for Diamond+Platinum Plus members (19 cols, ROUND_ROBIN, CLUSTERED INDEX(MonthEndDate)). DELETE+INSERT monthly. Sources: Fact_SnapshotCustomer (club membership, Playe..."
+      },
+      {
+        "name": "Client_Balance_Breakdown_Instrument_Level",
+        "type": "Table",
+        "columns": 53,
+        "priority": 20,
+        "writer_sp": "SP_Client_Balance_Breakdown",
+        "sp_author": "Guy Manova (2023-04-20)",
+        "quality": 9.2,
+        "phase16_score": 9.2,
+        "notes": "~5M-row/day (>2B total) daily PnL+commission breakdown at finest grain (53 cols, ROUND_ROBIN, CLUSTERED COLUMNSTORE). DELETE+INSERT daily. 4 position lifecycle types: OpenBeforeClosedDuring/OpenBef..."
+      }
+    ]
+  },
+  "batch_56_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 4,
+    "total_columns_documented": 93,
+    "domain": "Compliance (appropriateness test + FTP), BO compensation ledger, KYC assignment backlog, affiliate monthly scoring model.",
+    "capacity_used": "4.0/4 (ApproperiatenessTest_FTP_CID_Level=0.5 [11 cols, small], BODailyCompensations=0.5 [11 cols, small], AssignmentToolBacklog=1.0 [17 cols], AffiliateScore=2.0 [54 cols, large])",
+    "deferred_to_batch_57": [],
+    "objects": [
+      {
+        "name": "BI_DB_ApproperiatenessTest_FTP_CID_Level",
+        "type": "Table",
+        "columns": 11,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_ApproperiatenessTest_FTP_CID_Level",
+        "sp_author": "Unknown (no author comment)",
+        "quality": 8.7,
+        "phase16_score": 8.7,
+        "notes": "1,052,545-row daily CID-level appropriateness test and FTP completion status table (11 cols, HASH(RealCID), CLUSTERED COLUMNSTORE). TRUNCATE+INSERT. Sources: ComplianceStateDB CustomerInteractionAc..."
+      },
+      {
+        "name": "BI_DB_BODailyCompensations",
+        "type": "Table",
+        "columns": 11,
+        "priority": 0,
+        "writer_sp": "SP_BI_DB_BODailyCompensations",
+        "sp_author": "Pavlina Masoura (no date in SP)",
+        "quality": 9.06,
+        "phase16_score": 9.06,
+        "notes": "22.4M-row daily BO compensation credit ledger (11 cols, ROUND_ROBIN, HEAP). DELETE WHERE Occurred>=@Date AND <@Date+1 + INSERT (daily window replace). Source: External_etoro_history_credit_Pavlina ..."
+      },
+      {
+        "name": "BI_DB_AssignmentToolBacklog",
+        "type": "Table",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "SP_AssignmentToolBacklog",
+        "sp_author": "Pavlina Masoura (2022-06-10)",
+        "quality": 9.11,
+        "phase16_score": 9.11,
+        "notes": "27,060-row daily active KYC documentation backlog snapshot (17 cols, ROUND_ROBIN, HEAP). TRUNCATE+INSERT, IsActive=1 only. Source: External_Assignment_Assignment_V_Tasks (primary); ManagerTeam unio..."
+      },
+      {
+        "name": "BI_DB_AffiliateScore",
+        "type": "Table",
+        "columns": 54,
+        "priority": 0,
+        "writer_sp": "SP_M_AffiliateScore",
+        "sp_author": "Eti Rozolio (2022-03-21; Revenue30d source changed 2024-07-01 Or Filizer)",
+        "quality": 9.23,
+        "phase16_score": 9.23,
+        "notes": "23,079-row monthly affiliate quality scorecard (54 cols, ROUND_ROBIN, HEAP). DELETE WHERE YearMonth=@YearMonth + INSERT; WHILE loop over last 4 months. Grain: AffiliateID × YearMonth (YYYYMM). FTD ..."
+      }
+    ]
+  },
+  "rolling_history_batches_40_to_55": {
+    "note": "DISTILLED — see individual wiki files and _index.md batch notes for full detail. Batch 47 (5 obj P0 AML PI abuse): BI_DB_AML_PI_Abuse (66 cols, ~11.9x fan-out bug via SameFID_AS_PI Cartesian, AUC_Top2-5 are cumulative not individual, 8.75/10); BI_DB_AML_PI_Abuse_SameIP (5 cols, IP sharing detail, 8.75/10); BI_DB_AML_PI_Abuse_DeviceID_AS_PI (3 cols, 933 rows 18% PI coverage, 8.93/10); BI_DB_AML_PI_Abuse_DeviceID_Copiers (3 cols, 3835 rows 75% PI coverage, 8.93/10); BI_DB_AML_PI_Abuse_DeviceID_Copy_Side (4 cols, 3.93M rows raw device detail, 9.0/10). Batch 46 (3 obj P0 AML): BI_DB_AML_KYC_Process (27 cols, 923K rows, UAE_Pass_Status='Completed' never observed, Equiy_IBAN typo, orphaned #deposits dead code, 8.3/10); BI_DB_AML_KYC_SOF (40 cols, 5.37M rows, Max_Q14_Answer=0 unhandled ELSE (~1505 rows), Q10_Annual_Income contains full question text not answer code, 8.1/10); BI_DB_AML_PI_Abuse_CopierTable (28 cols, 449K rows, 4 never-populated DDL cols, HIGH PII, effectively daily full refresh, 8.7/10). Batch 45 (3 obj P0 AML): BI_DB_AML_Documents_Request (46 cols, ~590K rows, SP_W_AML_PEP_Customers READS not writes, OpsDB metadata error, 9.3/10); BI_DB_AML_High_Risk_Wallet (19 cols, ~566K rows, Risk_before_Wallet CASE 2 semantically ambiguous, 9.1/10); BI_DB_AML_IOB_Report (22 cols, ~4.97M rows, CRITICAL fan-out 15.6x from AML_Documents_Request join, Payment_interest_June hardcoded June 2025 forever, 8.8/10). Batch 44 (3 obj P0): BI_DB_AMLPeriodicReview_PostReview (1.49M UPSERT, POA_ExpiryDate stores IssueDate bug, 65 cols, 8.8/10); BI_DB_AML_ASIC_Dashboard (4307 rows, Has_Open_AML_Case=0 always, 18 cols, 9.2/10); BI_DB_AML_Gatsby_Alerts (808 rows all Dummy Line sentinels, no real alerts since 2024-01-17, 12 cols, 9.3/10). Batch 43 (4 obj P0 AML): BI_DB_AML_BI_Alerts_New (273K rows, SG GEO005 58.4%, AlertID=NEWID() unstable, MIMO Deposits typo, 14 cols, 9.63/10); _Master_SubAccount (1495 rows MA-series, 15 cols, 9.65/10); _Singapore (2133 rows MAS, FCA 75.4% due to DesignatedRegulationID=13, 15 cols, 9.48/10); _MultipleAccountseMoney (93 rows eMoney multi-IBAN, 19 cols, 9.65/10). Batch 42 (4 obj P0): AML_InstrumentMetaData_Daily_Email (12124 rows ISIN 3 cols, 9.8/10); DayToDay_Changes (delta 4 cols, 9.8/10); AML_German_Video_Ident (198613 rows 23 cols, EquityRealCrypto always NULL, 9.3/10); BI_DB_AMLPeriodicReview (573216 rows 70 cols, 2 duplicate column pairs, 9.4/10). Batch 41 (7 obj P15 CMR Phase2 EAV pivot): ClientBalance/CycleGap/EU_Outliers/FinraGap/Finra_NonCash_Comps/LiabilityDecomp/USA_CustomerBalance_ApexAdjusted (8.9-9.1/10). Batch 40 (3 obj P20): Client_Balance_Breakdown_Instrument_Level (4.82B rows 55 cols, NEVER GROUP BY CID+Regulation, 9.6/10); Dealing_CryptoRebate/Unrealized_CryptoRebate (21-22 cols, 9.5/10).; Batch 48 (P0 AML PI abuse detection — payment instrument (FID) and dev): AML_PI_Abuse_FID_PI_Side(9.3), AML_PI_Abuse_FID_Copy_Side(9.3), AML_PI_Abuse_DeviceID_PI_Side(9.5), AML_PI_Abuse_FID_Same_Copy(9.3), AML_PI_Abuse_FID_Same_as_pi(9.5); Batch 49 (P0 AML periodic review — all-records base table and high-ris): AML_Periodic_Review_AR(8.9), AML_Periodic_Review_HR(9.0); Batch 50 (P0 AML periodic review strictest-FTD subset (MR) + Singapore): AML_Periodic_Review_MR(9.3), AML_Singapore_Risk_Classification(9.4); Batch 51 (Acquisition/marketing domain — AppFlyer mobile attribution (): AppFlyer_Geo(8.67), AppFlyer_Reports(8.75), AcquisitionFunnel_AGG(9.17); Batch 52 (Intraday acquisition dashboard + LTV model suite (prediction): LiveAcquisitionDashboard(8.6), LTV_Predictions(9.2), LTV_Revenue_Multipliers(8.9), LargeCashoutReport(8.7); Batch 53 (SP_Marketing_Cube affiliate performance cube — Dai): MarketingDailyRawData(8.6), MarketingMonthlyRawData(8.5); Batch 54 (ASIC/FCA CFD regulatory monitoring + affiliate com): ASIC_GAML_Invested_Amount(9.4), ASIC_Monitoring_CFD_W_Sun(9.3), Affiliate_Guidlines_Report(9.4), Affiliates_FraudMonitoring(9.3); Batch 55 (Account management + affiliate domain — AM Portfol): AM_Portfolio_Summary(9.0), AffiliateCOAbuse(9.2), AffiliatePayment(8.5)"
+  },
+  "batch_85_summary": {
+    "status": "COMPLETE",
+    "objects_documented": 8,
+    "total_columns_documented": 168,
+    "domain": "Mixed risk/marketing/operations batch: Rankings gain history, NOP risk exposure, PI risk alert dashboard, Taboola+Affwiz marketing reconciliation, DCM media campaign dashboard, demo account trading panel, manager deposit performance, wire deposit operations.",
+    "objects": [
+      {
+        "name": "BI_DB_DailyGain_History",
+        "type": "Table",
+        "columns": 17,
+        "priority": 0,
+        "writer_sp": "SP_DailyGain_History",
+        "quality": 7.5,
+        "notes": "412.7M-row daily cumulative history of Rankings MonthlyGainAnon. Bronze Parquet source. ID=Dim_Customer.ID (GUID). Downstream: SP_PI_Gain."
+      },
+      {
+        "name": "BI_DB_DailyNOP_ByInstrument",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_DailyNOP_ByInstrument",
+        "quality": 8.5,
+        "notes": "40.4M-row daily NOP by instrument+hedge server. 12.5K instruments, 41 hedge servers."
+      },
+      {
+        "name": "BI_DB_DailyRiskAlert",
+        "type": "Table",
+        "columns": 40,
+        "priority": 0,
+        "writer_sp": "SP_DailyRiskAlert",
+        "quality": 8.5,
+        "notes": "5.4K-row daily PI risk dashboard. 9 alert flags. BuyPercent/SellPercent swapped. Author: Bar 2024-03-01."
+      },
+      {
+        "name": "BI_DB_DailyTaboolaCombineAffwiz",
+        "type": "Table",
+        "columns": 21,
+        "priority": 0,
+        "writer_sp": "SP_Taboola",
+        "quality": 8.5,
+        "notes": "917K-row Taboola API + Affwiz reconciliation. AffiliateID=45729. Author: Eti Rozolio 2021-01-07."
+      },
+      {
+        "name": "BI_DB_DCM_Dashboard",
+        "type": "Table",
+        "columns": 40,
+        "priority": 0,
+        "writer_sp": "SP_DCM_Dashboard",
+        "quality": 8.0,
+        "notes": "6M-row DCM media dashboard. 3 LOD levels. Author: Jan Iablunovskey 2021-10-18."
+      },
+      {
+        "name": "BI_DB_Demo_CID_Panel",
+        "type": "Table",
+        "columns": 9,
+        "priority": 0,
+        "writer_sp": "SP_Demo_CID_Panel",
+        "quality": 8.0,
+        "notes": "4.55M-row demo account trading panel. Author: Eti 2025-01-27."
+      },
+      {
+        "name": "BI_DB_Depositors_By_Managers",
+        "type": "Table",
+        "columns": 6,
+        "priority": 0,
+        "writer_sp": "SP_NewBonusReport",
+        "quality": 8.5,
+        "notes": "28K-row monthly EOM-only manager deposit performance."
+      },
+      {
+        "name": "BI_DB_Deposits_WiresFromGooglesheets",
+        "type": "Table",
+        "columns": 26,
+        "priority": 0,
+        "writer_sp": "SP_H_Deposits_Wires_From_Googlesheet",
+        "quality": 8.0,
+        "notes": "48K-row TRUNCATE+INSERT wire deposit ops. Google Sheets. PII. Author: Guy Manova 2021-02-18."
+      }
+    ]
+  },
+  "glossary": {
+    "NOP": "Net Open Position - total directional market exposure per instrument",
+    "AUM": "Assets Under Management - total copy portfolio value for a Popular Investor",
+    "DCM": "DoubleClick Campaign Manager (now Google Campaign Manager 360)",
+    "LOD": "Level of Detail - grain indicator in DCM_Dashboard",
+    "Affwiz": "eToro internal affiliate tracking/attribution system"
   }
 }

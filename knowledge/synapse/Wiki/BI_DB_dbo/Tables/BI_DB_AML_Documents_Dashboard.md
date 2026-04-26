@@ -12,10 +12,10 @@
 | **Synapse Distribution** | ROUND_ROBIN |
 | **Synapse Index** | HEAP |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
-| **UC Format** | _Pending — resolved during write-objects_ |
-| **UC Partitioned By** | _Pending — resolved during write-objects_ |
-| **UC Table Type** | _Pending — resolved during write-objects_ |
+| **UC Target** | Not_Migrated |
+| **UC Format** | — |
+| **UC Partitioned By** | — |
+| **UC Table Type** | — |
 
 ---
 
@@ -75,10 +75,6 @@ Data is sourced from 6 external tables pointing to production `etoro.BackOffice.
 ### 3.1 Synapse Distribution & Index
 
 **In Synapse**, this table is ROUND_ROBIN distributed with a HEAP (no index). With 71K rows, full table scans are fast. No distribution key optimization needed — filter on CID, DocumentStatus, or DocumentType for targeted queries.
-
-### 3.1b UC (Databricks) Storage & Partitioning
-
-_Pending — resolved during write-objects._
 
 ### 3.2 Common Query Patterns
 

@@ -57,7 +57,7 @@ Check whether the target is a **table** or a **view**.
 
 ### Step 2: Sample Data
 
-**For Small/Lookup Tables:**
+**For Small/Lookup Tables (< 10K rows expected):**
 ```sql
 SELECT * FROM [{Schema}].[{Table}] ORDER BY 1
 ```
@@ -67,18 +67,42 @@ SELECT * FROM [{Schema}].[{Table}] ORDER BY 1
 SELECT TOP 10 * FROM [{Schema}].[{Table}]
 ```
 
-### Step 3: Row Count
+### Step 3: Row Count (APPROXIMATE — never full scan)
+
+**⛔ NEVER run `SELECT COUNT(*) FROM` on large tables.** Use the DMV estimate instead:
 
 ```sql
-SELECT COUNT(*) AS TotalRows FROM [{Schema}].[{Table}]
+SELECT SUM(row_count) AS ApproxRows
+FROM sys.dm_pdw_nodes_db_partition_stats
+WHERE object_id = OBJECT_ID('[{Schema}].[{Table}]')
+  AND index_id < 2
+  AND pdw_node_id NOT IN (SELECT pdw_node_id FROM sys.dm_pdw_nodes WHERE type = 'CONTROL')
 ```
 
-### Step 4: Date Range (if datetime columns exist)
+This returns instantly (metadata only, no table scan). The count is approximate but sufficient for documentation purposes. Only use exact `COUNT(*)` for small tables (< 100K rows expected).
+
+### Step 4: Date Range (if datetime/date/int date columns exist)
+
+**⛔ NEVER run unfiltered MIN/MAX on large tables.** Use a bounded query:
 
 ```sql
 SELECT MIN([{DateCol}]) AS Earliest, MAX([{DateCol}]) AS Latest
 FROM [{Schema}].[{Table}]
+WHERE [{DateCol}] >= '2026-01-01'
 ```
+
+For `*DateID` (int YYYYMMDD) columns:
+```sql
+SELECT MIN([{DateCol}]) AS Earliest, MAX([{DateCol}]) AS Latest
+FROM [{Schema}].[{Table}]
+WHERE [{DateCol}] >= 20260101
+```
+
+If the table has an index on the date column, the optimizer will use it. For the earliest date, the bounded query gives you freshness evidence (is the table active?). If you need the true earliest for documentation, add a second cheap query:
+```sql
+SELECT TOP 1 [{DateCol}] FROM [{Schema}].[{Table}] ORDER BY [{DateCol}] ASC
+```
+This uses the index if one exists and is fast even on large tables.
 
 ### Step 5: NULL Pattern Analysis
 

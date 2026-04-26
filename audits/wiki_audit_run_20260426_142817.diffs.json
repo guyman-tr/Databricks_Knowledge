@@ -1,0 +1,292 @@
+[
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_AML_Documents_Dashboard",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_AML_Documents_Dashboard.md",
+    "column": "Country",
+    "line_no": 130,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Customer country of residence. Join-enriched via Dim_Customer.CountryID → Dim_Country.Name. (Tier 2 — SP_AML_Documents_Dashboard, join-enriched via Dim_Country)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Country",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+    "merge": {
+      "column": "Country",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Customer country of residence (full country name in English). Join-enriched via Dim_Customer.CountryID → Dim_Country.Name. Used in compliance documents and analytical reports.",
+      "attribution": "(Tier 1 - Dim_Country.Name; Tier 2 - SP_AML_Documents_Dashboard, join-enriched via Dim_Country)",
+      "notes": "Upstream adds semantic context: English-language full name, usage in compliance/reporting. Downstream join mechanics preserved.",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "NewMarketingRegion",
+    "line_no": 226,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~30w vs downstream ~10w; adds [label]"
+    },
+    "downstream_desc": "Marketing team region classification (e.g., 'Arabic', 'French', 'Norway', 'ROW') (Tier 2 - Dim_Country.MarketingRegionManualName)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Country",
+    "upstream_column": "MarketingRegionManualName",
+    "upstream_tier": "3",
+    "upstream_desc": "Manual override name for the marketing region, from Ext_Dim_Country. May differ from Region (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Used when the automated MarketingRegion label needs a business-friendly correction. (Tier 3 - Ext_Dim_Country live data)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+    "merge": {
+      "column": "NewMarketingRegion",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Marketing team region classification (e.g., 'Arabic', 'French', 'Norway', 'ROW'). Manual override name from Ext_Dim_Country; may differ from the automated Region label (e.g., Albania: Region=ROE but MarketingRegionManualName=CEE). Used when the automated MarketingRegion needs a business-friendly correction.",
+      "attribution": "(Tier 1 - Dim_Country.MarketingRegionManualName; Tier 2 - SP_CID_DailyPanel local mapping)",
+      "notes": "Upstream clarifies this is a manual override that can diverge from Region, adding actionable context for analysts",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "Country",
+    "line_no": 227,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~19w vs downstream ~6w; adds [customer]"
+    },
+    "downstream_desc": "Customer's country name at snapshot date (Tier 1 - DWH_dbo.Dim_Country.Name via Fact_SnapshotCustomer.CountryID)",
+    "downstream_tier": "1",
+    "upstream_table": "Fact_SnapshotCustomer",
+    "upstream_column": "CountryID",
+    "upstream_tier": "2",
+    "upstream_desc": "Customer's registered country. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CountryID (CC). FK to Dim_Country. Key filter for valid customer segmentation (CountryID=250 excluded). (Tier 2 - SP_Fact_SnapshotCustomer)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_SnapshotCustomer.md",
+    "merge": {
+      "column": "Country",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Customer's registered country name at snapshot date, resolved via Fact_SnapshotCustomer.CountryID → Dim_Country.Name. DEFAULT 0. Sourced from Ext_FSC_Real_Customer_Customer.CountryID (CC). CountryID=250 is excluded as invalid for customer segmentation.",
+      "attribution": "(Tier 1 - Dim_Country.Name via Fact_SnapshotCustomer.CountryID; Tier 2 - SP_Fact_SnapshotCustomer for DEFAULT/exclusion logic)",
+      "notes": "Upstream adds DEFAULT 0, CC source system, and the CountryID=250 exclusion rule which analysts should know",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "SubChannel",
+    "line_no": 229,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~17w vs downstream ~3w; adds [affiliate, marketing]"
+    },
+    "downstream_desc": "Acquisition sub-channel detail (Tier 2 - BI_DB_CIDFirstDates.SubChannel)",
+    "downstream_tier": "2",
+    "upstream_table": "BI_DB_CIDFirstDates",
+    "upstream_column": "SubChannel",
+    "upstream_tier": "2",
+    "upstream_desc": "Marketing sub-channel. Resolved from Dim_Channel.SubChannel via Dim_Affiliate.SubChannelID. ISNULL(,'Direct'). Values: Direct, Google Brand, Affiliate, etc. (Tier 2 — SP_CIDFirstDates, Dim_Channel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CIDFirstDates.md",
+    "merge": {
+      "column": "SubChannel",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Marketing sub-channel detail. Resolved from Dim_Channel.SubChannel via Dim_Affiliate.SubChannelID. ISNULL defaults to 'Direct'. Values include Direct, Google Brand, Affiliate, etc.",
+      "attribution": "(Tier 1 - Dim_Channel.SubChannel via Dim_Affiliate.SubChannelID; Tier 2 - SP_CIDFirstDates for ISNULL/Direct default)",
+      "notes": "Upstream adds resolution path through Dim_Affiliate and the ISNULL→Direct default logic",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "AffiliateID",
+    "line_no": 230,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Affiliate serial ID for affiliate-acquired customers; NULL for direct/organic (Tier 2 - BI_DB_CIDFirstDates.SerialID)",
+    "downstream_tier": "2",
+    "upstream_table": "BI_DB_CIDFirstDates",
+    "upstream_column": "SerialID",
+    "upstream_tier": "1",
+    "upstream_desc": "Affiliate (partner) ID under which the customer was acquired. Sourced from Dim_Customer.AffiliateID (renamed). (Tier 1 — Customer.CustomerStatic)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CIDFirstDates.md",
+    "merge": {
+      "column": "AffiliateID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Affiliate (partner) ID under which the customer was acquired. Sourced from Dim_Customer.AffiliateID (renamed to SerialID in CIDFirstDates). NULL for direct/organic acquisitions.",
+      "attribution": "(Tier 1 - Customer.CustomerStatic via Dim_Customer.AffiliateID; Tier 2 - BI_DB_CIDFirstDates.SerialID for NULL/direct logic)",
+      "notes": "Upstream provides Tier 1 lineage to CustomerStatic and clarifies the AffiliateID→SerialID rename",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "EOD_Club",
+    "line_no": 246,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Loyalty tier at EOD: 'LowBronze', 'HighBronze', 'Silver', 'Gold', 'Platinum', 'Platinum Plus', 'Diamond' (Tier 2 - Dim_PlayerLevel.Name with LowBronze/HighBronze split at $1K equity)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_PlayerLevel",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. (Tier 1 - upstream wiki, Dictionary.PlayerLevel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerLevel.md",
+    "merge": {
+      "column": "EOD_Club",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Loyalty tier at end-of-day. Base tiers from Dim_PlayerLevel.Name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. Bronze is locally split into LowBronze (equity < $1K) and HighBronze (equity >= $1K). Used in BackOffice reporting and customer-facing UI. Internal and N/A tiers exist upstream but may not appear in panel output.",
+      "attribution": "(Tier 1 - Dictionary.PlayerLevel via Dim_PlayerLevel.Name; Tier 2 - SP_CID_DailyPanel for LowBronze/HighBronze split at $1K equity)",
+      "notes": "Upstream adds the full tier list and UI/reporting usage; downstream adds the local Bronze split logic — both matter",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "IsContacted",
+    "line_no": 453,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~22w vs downstream ~11w; adds [status]"
+    },
+    "downstream_desc": "1 if customer was contacted through bonus/CRM channel on this date (Tier 2 - BI_DB_NewBonusReport.IsContacted)",
+    "downstream_tier": "2",
+    "upstream_table": "BI_DB_NewBonusReport",
+    "upstream_column": "IsContacted",
+    "upstream_tier": "3",
+    "upstream_desc": "Contact status flag: 1 = account manager has contacted this customer about the event; 0 = not yet contacted. 97% of rows are 0 (uncontacted) in recent data. (Tier 3 — data evidence)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_NewBonusReport.md",
+    "merge": {
+      "column": "IsContacted",
+      "recommendation": "SKIP",
+      "merged_desc": "",
+      "attribution": "",
+      "notes": "Upstream is Tier 3 (data evidence only) and adds statistical distribution info (97% zeros) rather than business meaning. Downstream already covers the semantics adequately.",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_CID_DailyPanel_FullData",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CID_DailyPanel_FullData.md",
+    "column": "FirstNewFundedDate",
+    "line_no": 456,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Date when customer first satisfied the IsFunded_New criteria (first VL3-verified funded day). NULL if never funded under new definition (Tier 2 - BI_DB_CIDFirstDates.FirstNewFundedDate)",
+    "downstream_tier": "2",
+    "upstream_table": "BI_DB_CIDFirstDates",
+    "upstream_column": "FirstNewFundedDate",
+    "upstream_tier": "1",
+    "upstream_desc": "**First date the customer crossed the fully-funded threshold.** Computed as GREATEST(FTDDateID, FirstVerifiedDateID, LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID)) — the date when all four funded criteria were first simultaneously satisfied. Set once via WHERE FirstNewFundedDate IS NULL, never overwritten. Source: Function_Population_First_Time_Funded. (Tier 1 — Function_Population_First_Time_Funded)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_CIDFirstDates.md",
+    "merge": {
+      "column": "FirstNewFundedDate",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Date when customer first satisfied the fully-funded threshold. Computed as GREATEST(FTDDateID, FirstVerifiedDateID, LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID)) — the date all four funded criteria were first simultaneously met. Set once via WHERE FirstNewFundedDate IS NULL, never overwritten. NULL if never funded. Source: Function_Population_First_Time_Funded.",
+      "attribution": "(Tier 1 - Function_Population_First_Time_Funded; Tier 2 - BI_DB_CIDFirstDates.FirstNewFundedDate for NULL passthrough)",
+      "notes": "Upstream provides the exact GREATEST/LEAST formula and immutability guarantee — critical business logic missing from downstream",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_LiveAcquisitionDashboard_Daily",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_LiveAcquisitionDashboard_Daily.md",
+    "column": "FunnelName",
+    "line_no": 153,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Name of the acquisition funnel the customer entered, from `DWH_dbo.Dim_Funnel.Name` on `Dim_Customer.FunnelID`. NULL if no funnel. (Tier 2 — Dim_Funnel.Name via Dim_Customer.FunnelID)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Funnel",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. (Tier 1 — Dictionary.Funnel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Funnel.md",
+    "merge": {
+      "column": "FunnelName",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Name of the acquisition funnel the customer entered. A unique human-readable label describing the campaign, channel, or product that drove registration; used in marketing reports, BackOffice customer views, and attribution analytics. Sourced from Dim_Funnel.Name via Dim_Customer.FunnelID. NULL if no funnel is assigned.",
+      "attribution": "(Tier 1 - Dim_Funnel.Name; Tier 2 - lookup via Dim_Customer.FunnelID, NULL on missing funnel)",
+      "notes": "Upstream adds business context: funnel labels describe campaign/channel/product and are used in marketing and attribution reporting. Downstream mechanics (LEFT JOIN, NULL behaviour) preserved.",
+      "source": "llm"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_LiveAcquisitionDashboard_Daily",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_LiveAcquisitionDashboard_Daily.md",
+    "column": "FunnelFromName",
+    "line_no": 154,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Name of the source funnel (referral funnel), from `DWH_dbo.Dim_Funnel.Name` on `Dim_Customer.FunnelFromID`. LEFT JOIN — NULL when no source funnel. (Tier 2 — Dim_Funnel.Name via Dim_Customer.FunnelFromID)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Funnel",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. (Tier 1 — Dictionary.Funnel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Funnel.md",
+    "merge": {
+      "column": "FunnelFromName",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Name of the source (referral) funnel. A unique human-readable label describing the campaign, channel, or product that drove the referring customer's registration; used in marketing reports, BackOffice customer views, and attribution analytics. Sourced from Dim_Funnel.Name via Dim_Customer.FunnelFromID. NULL when no source funnel exists.",
+      "attribution": "(Tier 1 - Dim_Funnel.Name; Tier 2 - lookup via Dim_Customer.FunnelFromID, LEFT JOIN NULL on missing source funnel)",
+      "notes": "Upstream adds same business context as FunnelName. Downstream referral-funnel semantics and LEFT JOIN NULL behaviour preserved.",
+      "source": "llm"
+    }
+  }
+]

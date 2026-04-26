@@ -80,7 +80,7 @@
         }
       },
       "object_blacklist": {
-        "description": "Objects matching these patterns are SKIPPED during documentation — frozen/archived tables not worth documenting. Applied across ALL target schemas.",
+        "description": "Objects matching these patterns are SKIPPED during documentation — frozen/archived tables not worth documenting. Applied across ALL target schemas. Get-NextBatch.ps1 ALSO unions this with each schema's per-schema curated lists at knowledge/synapse/Wiki/{schema}/_blacklist.json and the 'Blacklisted' sections of {schema}/_index.md.",
         "name_patterns": [
           {
             "pattern": "*_HOLD",
@@ -90,38 +90,104 @@
               "Dealing_dbo": ["Daily_Slippage_Positions_HOLD", "Dealing_Best_Execution_Compensation_CBH_HOLD", "Dealing_Best_Execution_Compensation_HBC_HOLD"],
               "BI_DB_dbo": ["BI_DB_Daily_Slippage_Totals_HOLD", "BI_DB_Daily_Latency_HOLD", "BI_DB_Daily_Latency_Compensation_HOLD", "BI_DB_Daily_Latency_ClientOrder_WithDelay_HOLD"]
             }
+          },
+          {
+            "pattern": "*_Backup_*",
+            "reason": "Dated backup snapshot of another table (e.g., _Backup_20241114). Frozen point-in-time copy, not a live target. Verified empirically 2026-04-21 — all surveyed _Backup_ tables had 0 rows or were stale.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_Backup[0-9]*",
+            "reason": "Dated backup snapshot variant (e.g., _Backup20240616 — no underscore between Backup and date). Same rationale as *_Backup_*.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_Snapshot_[0-9]*",
+            "reason": "Dated point-in-time snapshot (e.g., Dim_Instrument_Snapshot_12022025). Frozen, not refreshed.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_back[0-9]*",
+            "reason": "Abbreviated dated backup (e.g., Dim_Instrument_back20260325). Frozen point-in-time copy. Verified empirically 2026-04-21 — sampled DWH_dbo._back* tables had 0 rows since creation.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_back_[0-9]*",
+            "reason": "Abbreviated dated backup with underscore separator (e.g., Dim_Instrument_back_20260325).",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]",
+            "reason": "Bare date suffix YYYYMMDD with no other tag (e.g., Dim_Customer_Channel_20260322). 8-digit suffix is a strong dormant snapshot signal. Verified empirically 2026-04-21 — sampled tables had 0 rows since creation.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_tmp",
+            "reason": "Temp table suffix. Developer scratch / transient ETL state. Not a documentation target.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_tmp[0-9]*",
+            "reason": "Temp table variant (e.g., _tmp1, _tmp2). Same rationale as *_tmp.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_OLD",
+            "reason": "Old/superseded version of another table. Replaced in production but still present.",
+            "action": "skip"
+          },
+          {
+            "pattern": "*_copy",
+            "reason": "Copy of another table — backup or fork. Not a documentation target.",
+            "action": "skip"
+          },
+          {
+            "pattern": "ofir_*",
+            "reason": "Developer-prefixed scratch tables (legacy convention).",
+            "action": "skip"
+          },
+          {
+            "pattern": "Ofir*_tmp*",
+            "reason": "Developer-prefixed scratch tables (legacy convention, alt casing).",
+            "action": "skip"
           }
         ],
         "explicit_blacklist": [
           {
             "schema": "BI_DB_dbo",
             "table": "BI_DB_DDR_CID_Level",
-            "reason": "DDR aggregation pyramid — too wide (172 cols), deferred"
+            "reason": "DEPRECATED — scheduled for decommission. Do NOT document. Skip permanently.",
+            "action": "skip_permanent"
           },
           {
             "schema": "BI_DB_dbo",
             "table": "BI_DB_DDR_CID_Level_Auxiliary_Metrics",
-            "reason": "DDR auxiliary metrics sidecar for CID_Level, deferred"
+            "reason": "DDR auxiliary metrics sidecar for CID_Level — decommissioned alongside parent. Skip permanently.",
+            "action": "skip_permanent"
           },
           {
             "schema": "BI_DB_dbo",
             "table": "BI_DB_DDR_Daily_Aggregated",
-            "reason": "DDR aggregation pyramid — too wide (137 cols), deferred"
+            "reason": "DDR aggregation pyramid — too wide (137 cols), deferred",
+            "action": "skip"
           },
           {
             "schema": "BI_DB_dbo",
             "table": "BI_DB_DDR_Daily_Aggregated_Auxiliary_Metrics",
-            "reason": "DDR auxiliary metrics sidecar for Daily_Aggregated, deferred"
+            "reason": "DDR auxiliary metrics sidecar for Daily_Aggregated, deferred",
+            "action": "skip"
           },
           {
             "schema": "BI_DB_dbo",
             "table": "BI_DB_DDR_Process_Monitor",
-            "reason": "DDR internal process monitoring, not an analytics table"
+            "reason": "DDR internal process monitoring, not an analytics table",
+            "action": "skip_permanent"
           },
           {
             "schema": "BI_DB_dbo",
             "table": "BI_DB_DDR_TimeRange_Aggregated_Country_Level",
-            "reason": "DDR aggregation pyramid — too wide (141 cols), deferred"
+            "reason": "DDR aggregation pyramid — too wide (141 cols), deferred",
+            "action": "skip"
           }
         ]
       },

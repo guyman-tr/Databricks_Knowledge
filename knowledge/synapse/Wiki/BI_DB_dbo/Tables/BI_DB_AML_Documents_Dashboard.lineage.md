@@ -3,7 +3,7 @@
 | Property | Value |
 |----------|-------|
 | **DWH Table** | `BI_DB_dbo.BI_DB_AML_Documents_Dashboard` |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target** | Not_Migrated |
 | **Primary Source** | `External_etoro_BackOffice_CustomerDocumentToDocumentType` (→ `etoro.BackOffice.CustomerDocumentToDocumentType`) |
 | **ETL SP** | `SP_AML_Documents_Dashboard` |
 | **Secondary Sources** | `Dim_Customer`, `Dim_Regulation`, `Dim_PlayerLevel`, `Dim_PlayerStatus`, `Dim_Country`, `Dim_Manager`, `External_etoro_BackOffice_CustomerDocument`, `External_etoro_BackOffice_Customer`, `External_etoro_Dictionary_DocumentStatus`, `External_etoro_Dictionary_DocumentType` (×2), `External_etoro_Dictionary_DocumentRejectReason` |

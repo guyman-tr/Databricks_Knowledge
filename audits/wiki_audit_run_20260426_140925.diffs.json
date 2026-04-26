@@ -1,0 +1,951 @@
+[
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "DateID",
+    "line_no": 46,
+    "rules": [
+      "MECH_ONLY"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "MECH_ONLY": "only mechanical verbs, no business nouns (4 content tokens)"
+    },
+    "downstream_desc": "Business date as **YYYYMMDD** for the load (**@StartDateID**). (Tier 2 -- SP_DepositWithdrawFee, @StartDateID)",
+    "downstream_tier": "2",
+    "upstream_table": null,
+    "upstream_column": null,
+    "upstream_tier": null,
+    "upstream_desc": null,
+    "upstream_wiki_path": null,
+    "merge": null
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "CID",
+    "line_no": 47,
+    "rules": [
+      "CONFLUENCE_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "CONFLUENCE_GAP": "upstream wiki has Confluence sources; downstream has none",
+      "LENGTH_GAP": "upstream ~23w vs downstream ~9w; adds [in]"
+    },
+    "downstream_desc": "Internal customer id (**RealCID**) from deposit or cashout state. (Tier 2 -- SP_DepositWithdrawFee, Fact_Deposit_State.CID / Fact_Cashout_State.CID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_Deposit_State",
+    "upstream_column": "CID",
+    "upstream_tier": "2",
+    "upstream_desc": "Customer ID. Unique identifier for the eToro customer who made the deposit. CLUSTERED INDEX key -- use in WHERE/JOIN for efficient customer-level queries. (Tier 2 - SP_Fact_Deposit_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Deposit_State.md",
+    "merge": {
+      "column": "CID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Customer ID. Unique identifier for the eToro customer who made the deposit. CLUSTERED INDEX key -- use in WHERE/JOIN for efficient customer-level queries. Local handling: Internal customer id (**RealCID**) from deposit or cashout state.",
+      "attribution": "(Tier 2 - Fact_Deposit_State.CID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "DepositWithdrawID",
+    "line_no": 48,
+    "rules": [
+      "CONFLUENCE_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "CONFLUENCE_GAP": "upstream wiki has Confluence sources; downstream has none"
+    },
+    "downstream_desc": "**DepositID** or **WithdrawID** depending on path -- stable id for the cash event. (Tier 2 -- SP_DepositWithdrawFee, Fact_Deposit_State.DepositID / Fact_Cashout_State.WithdrawID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_Deposit_State",
+    "upstream_column": "DepositID",
+    "upstream_tier": "2",
+    "upstream_desc": "Unique deposit transaction identifier. 19.37M distinct DepositIDs (near 1:1 with rows). Primary business key for tracing individual deposits. (Tier 2 - SP_Fact_Deposit_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Deposit_State.md",
+    "merge": {
+      "column": "DepositWithdrawID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Unique deposit transaction identifier. 19.37M distinct DepositIDs (near 1:1 with rows). Primary business key for tracing individual deposits. Local handling: **DepositID** or **WithdrawID** depending on path -- stable id for the cash event.",
+      "attribution": "(Tier 2 - Fact_Deposit_State.DepositID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Occurred",
+    "line_no": 49,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~15w vs downstream ~6w; adds [cashout]"
+    },
+    "downstream_desc": "Event timestamp (**ModificationDate** from state fact). (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.ModificationDate)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "ModificationDate",
+    "upstream_tier": "2",
+    "upstream_desc": "UTC timestamp of the most recent modification to this cashout record. Source value from production. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "Occurred",
+      "recommendation": "PROMOTE",
+      "merged_desc": "UTC timestamp of the most recent modification to this cashout record. Source value from production. Local handling: Event timestamp (**ModificationDate** from state fact).",
+      "attribution": "(Tier 2 - Fact_*_State.ModificationDate; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Date",
+    "line_no": 52,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~15w vs downstream ~4w; adds [cashout]"
+    },
+    "downstream_desc": "Calendar date of **ModificationDate**. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.ModificationDate)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "ModificationDate",
+    "upstream_tier": "2",
+    "upstream_desc": "UTC timestamp of the most recent modification to this cashout record. Source value from production. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "Date",
+      "recommendation": "PROMOTE",
+      "merged_desc": "UTC timestamp of the most recent modification to this cashout record. Source value from production. Local handling: Calendar date of **ModificationDate**.",
+      "attribution": "(Tier 2 - Fact_*_State.ModificationDate; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "TransactionType",
+    "line_no": 54,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~22w vs downstream ~10w; adds [card, cashout, context, credit, label]"
+    },
+    "downstream_desc": "Type string from state (**Deposit**, **Withdraw**, chargebacks, refunds, rollbacks, etc.). (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.TransactionType)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "TransactionType",
+    "upstream_tier": "3",
+    "upstream_desc": "Classification of the withdrawal transaction method (e.g., credit card, wire transfer, e-wallet). String label providing context for the cashout routing path. (Tier 3 — column naming)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "TransactionType",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Classification of the withdrawal transaction method (e.g., credit card, wire transfer, e-wallet). String label providing context for the cashout routing path. Local handling: Type string from state (**Deposit**, **Withdraw**, chargebacks, refunds, rollbacks, etc.).",
+      "attribution": "(Tier 3 - Fact_*_State.TransactionType; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "PaymentMethod",
+    "line_no": 55,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~12w vs downstream ~5w; adds [payment]"
+    },
+    "downstream_desc": "Funding type name (**Dim_FundingType.Name**). (Tier 2 -- SP_DepositWithdrawFee, Dim_FundingType.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_FundingType",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). (Tier 1 — Dictionary.FundingType)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_FundingType.md",
+    "merge": {
+      "column": "PaymentMethod",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). Local handling: Funding type name (**Dim_FundingType.Name**).",
+      "attribution": "(Tier 1 - Dim_FundingType.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Currency",
+    "line_no": 57,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~29w vs downstream ~4w; adds [crypto, exchange, forex, instrument, stocks]"
+    },
+    "downstream_desc": "Currency code (**Dim_Currency.Abbreviation**). (Tier 2 -- SP_DepositWithdrawFee, Dim_Currency.Abbreviation)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Currency",
+    "upstream_column": "Abbreviation",
+    "upstream_tier": "1",
+    "upstream_desc": "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification. (Tier 1 - Dictionary.Currency upstream wiki)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Currency.md",
+    "merge": {
+      "column": "Currency",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification. Local handling: Currency code (**Dim_Currency.Abbreviation**).",
+      "attribution": "(Tier 1 - Dim_Currency.Abbreviation; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "ExchangeRate",
+    "line_no": 58,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~15w vs downstream ~6w; adds [cashout, currency, exchange, fee, markup]"
+    },
+    "downstream_desc": "FX rate on the state row. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.ExchangeRate)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "ExchangeRate",
+    "upstream_tier": "2",
+    "upstream_desc": "Applied exchange rate from cashout currency to USD, including fee markup. Higher precision (23,8) than BaseExchangeRate (16,8). (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "ExchangeRate",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Applied exchange rate from cashout currency to USD, including fee markup. Higher precision (23,8) than BaseExchangeRate (16,8). Local handling: FX rate on the state row.",
+      "attribution": "(Tier 2 - Fact_*_State.ExchangeRate; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "AmountUSD",
+    "line_no": 59,
+    "rules": [
+      "MECH_ONLY"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "MECH_ONLY": "only mechanical verbs, no business nouns (4 content tokens)"
+    },
+    "downstream_desc": "USD amount; **ABS** at insert then signed like **Amount**. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.AmountInUSD)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "AmountInUSD",
+    "upstream_tier": "2",
+    "upstream_desc": "Cashout amount converted to USD (Amount × ExchangeRate). Pre-computed for reporting convenience. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "AmountUSD",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Cashout amount converted to USD (Amount × ExchangeRate). Pre-computed for reporting convenience. Local handling: USD amount; **ABS** at insert then signed like **Amount**.",
+      "attribution": "(Tier 2 - Fact_*_State.AmountInUSD; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "PlayerLevelID",
+    "line_no": 62,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~20w vs downstream ~5w; adds [tier]"
+    },
+    "downstream_desc": "Player level id from snapshot. (Tier 2 -- SP_DepositWithdrawFee, Fact_SnapshotCustomer.PlayerLevelID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_SnapshotCustomer",
+    "upstream_column": "PlayerLevelID",
+    "upstream_tier": "2",
+    "upstream_desc": "Account tier: 4=demo, other values=real tiers. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerLevelID (CC). FK to Dim_PlayerLevel. Critical for IsValidCustomer (PlayerLevelID=4 excluded). (Tier 2 - SP_Fact_SnapshotCustomer)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_SnapshotCustomer.md",
+    "merge": {
+      "column": "PlayerLevelID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Account tier: 4=demo, other values=real tiers. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerLevelID (CC). FK to Dim_PlayerLevel. Critical for IsValidCustomer (PlayerLevelID=4 excluded). Local handling: Player level id from snapshot.",
+      "attribution": "(Tier 2 - Fact_SnapshotCustomer.PlayerLevelID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Regulation",
+    "line_no": 63,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~17w vs downstream ~4w; adds [in]"
+    },
+    "downstream_desc": "Regulation name (**Dim_Regulation.Name**). (Tier 2 -- SP_DepositWithdrawFee, Dim_Regulation.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Regulation",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Regulation.md",
+    "merge": {
+      "column": "Regulation",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. Local handling: Regulation name (**Dim_Regulation.Name**).",
+      "attribution": "(Tier 1 - Dim_Regulation.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Label",
+    "line_no": 64,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~21w vs downstream ~4w; adds [in]"
+    },
+    "downstream_desc": "Label name (**Dim_Label.Name**). (Tier 2 -- SP_DepositWithdrawFee, Dim_Label.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Label",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = 'eToro'). (Tier 1 — Dictionary.Label)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Label.md",
+    "merge": {
+      "column": "Label",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = 'eToro'). Local handling: Label name (**Dim_Label.Name**).",
+      "attribution": "(Tier 1 - Dim_Label.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "IsValidCustomer",
+    "line_no": 65,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~21w vs downstream ~3w; adds [customer]"
+    },
+    "downstream_desc": "Snapshot validity flag. (Tier 2 -- SP_DepositWithdrawFee, Fact_SnapshotCustomer.IsValidCustomer)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_SnapshotCustomer",
+    "upstream_column": "IsValidCustomer",
+    "upstream_tier": "2",
+    "upstream_desc": "1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See §2.2. Approx 98% of current rows = 1. (Tier 2 - SP_Fact_SnapshotCustomer)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_SnapshotCustomer.md",
+    "merge": {
+      "column": "IsValidCustomer",
+      "recommendation": "PROMOTE",
+      "merged_desc": "1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See §2.2. Approx 98% of current rows = 1. Local handling: Snapshot validity flag.",
+      "attribution": "(Tier 2 - Fact_SnapshotCustomer.IsValidCustomer; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "BaseExchangeRate",
+    "line_no": 67,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~18w vs downstream ~5w; adds [exchange, fee, markup, spread]"
+    },
+    "downstream_desc": "Base FX rate from state. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.BaseExchangeRate)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "BaseExchangeRate",
+    "upstream_tier": "2",
+    "upstream_desc": "Reference exchange rate before fee markup. Used to compute the exchange fee spread: ExchangeRate - BaseExchangeRate = fee per unit. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "BaseExchangeRate",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Reference exchange rate before fee markup. Used to compute the exchange fee spread: ExchangeRate - BaseExchangeRate = fee per unit. Local handling: Base FX rate from state.",
+      "attribution": "(Tier 2 - Fact_*_State.BaseExchangeRate; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "ExchangeFee",
+    "line_no": 68,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~10w vs downstream ~4w; adds [in]"
+    },
+    "downstream_desc": "Exchange fee from state. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.ExchangeFee)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "ExchangeFee",
+    "upstream_tier": "2",
+    "upstream_desc": "Exchange fee in a provider-specific integer encoding (typically basis points). (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "ExchangeFee",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Exchange fee in a provider-specific integer encoding (typically basis points). Local handling: Exchange fee from state.",
+      "attribution": "(Tier 2 - Fact_*_State.ExchangeFee; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "ExternalTransactionID",
+    "line_no": 69,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~12w vs downstream ~4w; adds [cashout, payment]"
+    },
+    "downstream_desc": "Provider transaction id (**ExTransactionID**). (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.ExTransactionID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "ExTransactionID",
+    "upstream_tier": "2",
+    "upstream_desc": "External (payment provider) transaction ID for this cashout. Used for provider-side reconciliation. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "ExternalTransactionID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "External (payment provider) transaction ID for this cashout. Used for provider-side reconciliation. Local handling: Provider transaction id (**ExTransactionID**).",
+      "attribution": "(Tier 2 - Fact_*_State.ExTransactionID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Depot",
+    "line_no": 70,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~22w vs downstream ~4w; adds [in]"
+    },
+    "downstream_desc": "Billing depot name (**Dim_BillingDepot**). (Tier 2 -- SP_DepositWithdrawFee, Dim_BillingDepot.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_BillingDepot",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Human-readable depot name (e.g., 'MoneyBookers USD', 'Neteller', 'Wire'). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports. (Tier 1 - upstream wiki, Billing.Depot)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_BillingDepot.md",
+    "merge": {
+      "column": "Depot",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Human-readable depot name (e.g., 'MoneyBookers USD', 'Neteller', 'Wire'). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports. Local handling: Billing depot name (**Dim_BillingDepot**).",
+      "attribution": "(Tier 1 - Dim_BillingDepot.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "MIDValue",
+    "line_no": 71,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~20w vs downstream ~8w; adds [payment]"
+    },
+    "downstream_desc": "Merchant id value on the state row (**MID**). (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.MID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "MID",
+    "upstream_tier": "2",
+    "upstream_desc": "Merchant ID string — the actual MID identifier used with the payment processor. String representation of the MID for reporting/display. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "MIDValue",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Merchant ID string — the actual MID identifier used with the payment processor. String representation of the MID for reporting/display. Local handling: Merchant id value on the state row (**MID**).",
+      "attribution": "(Tier 2 - Fact_*_State.MID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "Club",
+    "line_no": 72,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~21w vs downstream ~6w; adds [in, tier]"
+    },
+    "downstream_desc": "Player level / club name (**Dim_PlayerLevel.Name**). (Tier 2 -- SP_DepositWithdrawFee, Dim_PlayerLevel.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_PlayerLevel",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. (Tier 1 - upstream wiki, Dictionary.PlayerLevel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerLevel.md",
+    "merge": {
+      "column": "Club",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Local handling: Player level / club name (**Dim_PlayerLevel.Name**).",
+      "attribution": "(Tier 1 - Dim_PlayerLevel.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "PlayerStatus",
+    "line_no": 73,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~30w vs downstream ~5w; adds [compliance, in]"
+    },
+    "downstream_desc": "Player status label (**Dim_PlayerStatus.Name**). (Tier 2 -- SP_DepositWithdrawFee, Dim_PlayerStatus.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_PlayerStatus",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. (Tier 1 - upstream wiki, Dictionary.PlayerStatus)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerStatus.md",
+    "merge": {
+      "column": "PlayerStatus",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. Local handling: Player status label (**Dim_PlayerStatus.Name**).",
+      "attribution": "(Tier 1 - Dim_PlayerStatus.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "RegCountry",
+    "line_no": 75,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~17w vs downstream ~5w; adds [compliance, in]"
+    },
+    "downstream_desc": "Registration country from snapshot **CountryID**. (Tier 2 -- SP_DepositWithdrawFee, Dim_Country.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Country",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+    "merge": {
+      "column": "RegCountry",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Local handling: Registration country from snapshot **CountryID**.",
+      "attribution": "(Tier 1 - Dim_Country.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "RegCountryByIP",
+    "line_no": 76,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~17w vs downstream ~4w; adds [compliance, in]"
+    },
+    "downstream_desc": "Country from customer **CountryIDByIP**. (Tier 2 -- SP_DepositWithdrawFee, Dim_Country.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Country",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+    "merge": {
+      "column": "RegCountryByIP",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Local handling: Country from customer **CountryIDByIP**.",
+      "attribution": "(Tier 1 - Dim_Country.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "BinCountry",
+    "line_no": 79,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~17w vs downstream ~7w; adds [compliance, in]"
+    },
+    "downstream_desc": "Country from BIN country id on billing. (Tier 2 -- SP_DepositWithdrawFee, Dim_Country.Name)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Country",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+    "merge": {
+      "column": "BinCountry",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Local handling: Country from BIN country id on billing.",
+      "attribution": "(Tier 1 - Dim_Country.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "IsIBANTrade",
+    "line_no": 82,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "**1** when deposit **FlowID** = 1 or withdraw **FlowID** = 2 on billing fact. (Tier 2 -- SP_DepositWithdrawFee, Fact_BillingDeposit.FlowID / Fact_BillingWithdraw.FlowID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_BillingWithdraw",
+    "upstream_column": "FlowID",
+    "upstream_tier": "1",
+    "upstream_desc": "Processing flow identifier. NULL=legacy, 0=standard, 2=eToroMoney (triggers MoveMoneyReasonID=5), 3=alternate (triggers MoveMoneyReasonID=6). (Tier 1 — Billing.Withdraw)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_BillingWithdraw.md",
+    "merge": {
+      "column": "IsIBANTrade",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Processing flow identifier. NULL=legacy, 0=standard, 2=eToroMoney (triggers MoveMoneyReasonID=5), 3=alternate (triggers MoveMoneyReasonID=6). Local handling: **1** when deposit **FlowID** = 1 or withdraw **FlowID** = 2 on billing fact.",
+      "attribution": "(Tier 1 - Fact_BillingWithdraw.FlowID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "MIDName",
+    "line_no": 83,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~15w vs downstream ~5w; adds [in, label, mid]"
+    },
+    "downstream_desc": "Merchant display name from state. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.MIDName)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "MIDName",
+    "upstream_tier": "3",
+    "upstream_desc": "Human-readable label for the Merchant ID configuration. Display name for the MID used in reporting. (Tier 3 — column naming)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "MIDName",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Human-readable label for the Merchant ID configuration. Display name for the MID used in reporting. Local handling: Merchant display name from state.",
+      "attribution": "(Tier 3 - Fact_*_State.MIDName; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "GuruStatus",
+    "line_no": 84,
+    "rules": [
+      "TIER_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1",
+      "LENGTH_GAP": "upstream ~26w vs downstream ~5w; adds [customer, in, tier, trade]"
+    },
+    "downstream_desc": "Guru status from snapshot (**Dim_GuruStatus**). (Tier 2 -- SP_DepositWithdrawFee, Dim_GuruStatus.GuruStatusName)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_GuruStatus",
+    "upstream_column": "GuruStatusName",
+    "upstream_tier": "1",
+    "upstream_desc": "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. (Tier 1 — Dictionary.GuruStatus)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_GuruStatus.md",
+    "merge": {
+      "column": "GuruStatus",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. Local handling: Guru status from snapshot (**Dim_GuruStatus**).",
+      "attribution": "(Tier 1 - Dim_GuruStatus.GuruStatusName; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "PreviousTransactionStatus",
+    "line_no": 85,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~21w vs downstream ~6w; adds [cashout, label]"
+    },
+    "downstream_desc": "Prior status on state (**PreviousStatus** / **PreviousStatus**). (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.PreviousStatus)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "PreviousStatus",
+    "upstream_tier": "3",
+    "upstream_desc": "String label of the cashout status immediately before the current state. Enables state transition analysis without joining to a history table. (Tier 3 — column naming)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "PreviousTransactionStatus",
+      "recommendation": "PROMOTE",
+      "merged_desc": "String label of the cashout status immediately before the current state. Enables state transition analysis without joining to a history table. Local handling: Prior status on state (**PreviousStatus** / **PreviousStatus**).",
+      "attribution": "(Tier 3 - Fact_*_State.PreviousStatus; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "TransactionStatus",
+    "line_no": 86,
+    "rules": [
+      "CONFLUENCE_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "CONFLUENCE_GAP": "upstream wiki has Confluence sources; downstream has none",
+      "LENGTH_GAP": "upstream ~17w vs downstream ~5w; adds [approved, chargeback, deposit, label, refund]"
+    },
+    "downstream_desc": "Current status (**DepositStatus** or **CashoutStatus**). (Tier 2 -- SP_DepositWithdrawFee, Fact_Deposit_State.DepositStatus / Fact_Cashout_State.CashoutStatus)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_Deposit_State",
+    "upstream_column": "DepositStatus",
+    "upstream_tier": "2",
+    "upstream_desc": "Current deposit status label. 7 values: Deposit (99.9%), Refund, Chargeback, ChargebackReversal, Approved, ReversedDeposit, RefundReversal. Reflects the state at ModificationDate. (Tier 2 - SP_Fact_Deposit_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Deposit_State.md",
+    "merge": {
+      "column": "TransactionStatus",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Current deposit status label. 7 values: Deposit (99.9%), Refund, Chargeback, ChargebackReversal, Approved, ReversedDeposit, RefundReversal. Reflects the state at ModificationDate. Local handling: Current status (**DepositStatus** or **CashoutStatus**).",
+      "attribution": "(Tier 2 - Fact_Deposit_State.DepositStatus; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "DepositID",
+    "line_no": 87,
+    "rules": [
+      "CONFLUENCE_GAP",
+      "LENGTH_GAP"
+    ],
+    "severity": 2,
+    "rule_detail": {
+      "CONFLUENCE_GAP": "upstream wiki has Confluence sources; downstream has none",
+      "LENGTH_GAP": "upstream ~17w vs downstream ~8w; adds [transaction]"
+    },
+    "downstream_desc": "Populated on deposit rows; **NULL** on withdraw rows. (Tier 2 -- SP_DepositWithdrawFee, Fact_Deposit_State.DepositID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_Deposit_State",
+    "upstream_column": "DepositID",
+    "upstream_tier": "2",
+    "upstream_desc": "Unique deposit transaction identifier. 19.37M distinct DepositIDs (near 1:1 with rows). Primary business key for tracing individual deposits. (Tier 2 - SP_Fact_Deposit_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Deposit_State.md",
+    "merge": {
+      "column": "DepositID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Unique deposit transaction identifier. 19.37M distinct DepositIDs (near 1:1 with rows). Primary business key for tracing individual deposits. Local handling: Populated on deposit rows; **NULL** on withdraw rows.",
+      "attribution": "(Tier 2 - Fact_Deposit_State.DepositID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "WithdrawPaymentID",
+    "line_no": 88,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Populated on withdraw rows; **NULL** on deposit rows. (Tier 2 -- SP_DepositWithdrawFee, Fact_BillingWithdraw.WithdrawPaymentID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_BillingWithdraw",
+    "upstream_column": "WithdrawPaymentID",
+    "upstream_tier": "1",
+    "upstream_desc": "Surrogate primary key of the WithdrawToFunding execution leg. Renamed from ID. (Tier 1 — Billing.WithdrawToFunding)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_BillingWithdraw.md",
+    "merge": {
+      "column": "WithdrawPaymentID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Surrogate primary key of the WithdrawToFunding execution leg. Renamed from ID. Local handling: Populated on withdraw rows; **NULL** on deposit rows.",
+      "attribution": "(Tier 1 - Fact_BillingWithdraw.WithdrawPaymentID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_DepositWithdrawFee",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DepositWithdrawFee.md",
+    "column": "CreditID",
+    "line_no": 89,
+    "rules": [
+      "LENGTH_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "LENGTH_GAP": "upstream ~24w vs downstream ~9w; adds [cashout]"
+    },
+    "downstream_desc": "Credit id from state (**CreditID**) for reconciliation to **Fact_CustomerAction**. (Tier 2 -- SP_DepositWithdrawFee, Fact_*_State.CreditID)",
+    "downstream_tier": "2",
+    "upstream_table": "Fact_*_State",
+    "upstream_column": "CreditID",
+    "upstream_tier": "2",
+    "upstream_desc": "Credit account identifier associated with this cashout. Added 2025-08-13 by guym to support credit account tracking. NULL for cashouts not linked to a credit account. (Tier 2 — SP_Fact_Cashout_State)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_Cashout_State.md",
+    "merge": {
+      "column": "CreditID",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Credit account identifier associated with this cashout. Added 2025-08-13 by guym to support credit account tracking. NULL for cashouts not linked to a credit account. Local handling: Credit id from state (**CreditID**) for reconciliation to **Fact_CustomerAction**.",
+      "attribution": "(Tier 2 - Fact_*_State.CreditID; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  }
+]

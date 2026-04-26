@@ -25,7 +25,9 @@ alwaysApply: false
 
 The DWH ETL doesn't always pull from the primary source table directly. Data flows
 through views, staging views, and history tables that ADD columns not present in the
-base table. You MUST search ALL of these — across ALL upstream repos, not just DB_Schema.
+base table. You MUST search ALL of these — and crucially, **the local Synapse wiki
+in THIS repo is the FIRST place to look for downstream schemas (BI_DB, EXW, eMoney,
+Dealing, etc.)**, not just the production upstream repos.
 
 ### Step 0: Load the Routing File
 
@@ -41,7 +43,40 @@ determine WHERE to search. If the file doesn't exist, run `python tools/scan_ups
 ```
 For each DWH column without a Tier 1 match:
 
-1. Primary source table wiki (in the CORRECT upstream repo)
+0. ⛔ LOCAL SYNAPSE WIKI (this repo) — SEARCH FIRST for downstream schemas
+   When this object lives in BI_DB_dbo / EXW_dbo / eMoney_dbo / Dealing_dbo / etc.,
+   the upstream is almost always a sibling Synapse object that is ALREADY documented
+   in this repo. Skipping this step is the #1 cause of business-blind Tier 2
+   descriptions on downstream tables.
+
+   Path: knowledge/synapse/Wiki/{SourceSchema}/Tables/{SourceTable}.md
+         knowledge/synapse/Wiki/{SourceSchema}/Views/{SourceTable}.md
+         knowledge/synapse/Wiki/{SourceSchema}/Functions/{SourceObject}.md
+
+   Examples (BI_DB / EXW / eMoney downstream patterns):
+   - BI_DB_DepositWithdrawFee sources from DWH_dbo.Fact_Deposit_State
+       → knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_Deposit_State.md
+   - BI_DB_DDR_Fact_Revenue_*.ActionTypeID sources from Function_Revenue_FullCommissions
+       → unwrap function (read its SQL FROM clause) → DWH_dbo.Fact_CustomerAction
+       → knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md
+   - EXW_dbo aggregates that read from DWH_dbo.Dim_Customer
+       → knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Customer.md
+
+   Tier transitivity: when the local wiki carries a (Tier N — {production_origin})
+   suffix, copy the DEEPER production origin into your wiki — NOT the local relay.
+   E.g., DWH_dbo.Dim_Position says `(Tier 1 — Trade.PositionTbl)` → BI_DB downstream
+   says `(Tier 1 — Trade.PositionTbl)`, never `(Tier 1 — DWH_dbo.Dim_Position)`.
+
+   Tier 4-Confluence inheritance: if the local upstream column is Tier 4-Confluence
+   (richly defined business term, e.g., `Fact_Deposit_State.PIPsInUSD` carries the FC
+   playbook formula), inherit that EXACT tier tag — DO NOT downgrade to Tier 2 just
+   because your SP only does an ABS() on the value.
+
+   TVF / Function unwrap: if the lineage source is `Function_*`, read the function's
+   SQL from `Dataplatform/.../Functions/{Function_Name}.sql`, grep `FROM`/`JOIN` for
+   the first non-temp table, then re-enter this step with the resolved table.
+
+1. Primary production source table wiki (in the CORRECT upstream repo)
    Use routing file: upstream_databases[{database_name}] → repo_path + wiki_path
    Path: {repo_path}/{wiki_path}/{Schema}/Tables/{Schema}.{Table}.md
 
@@ -85,21 +120,54 @@ upstream repo (e.g., missing that `AffiliateTypeID` is documented in
 ```
 For each DWH column:
 
-Q1: Does the column name (or a known rename) appear in ANY upstream
-    DB_Schema wiki element table?
-    
+Q1: Does the column name (or a known rename) appear in ANY upstream wiki —
+    LOCAL Synapse wiki (knowledge/synapse/Wiki/) OR production wiki
+    (DB_Schema/etoro/Wiki/, ExperianceDBs/, CryptoDBs/, etc.) — element table?
+
+    The local Synapse wiki MUST be checked first for any object in a downstream
+    schema (BI_DB_dbo, EXW_dbo, eMoney_dbo, Dealing_dbo, etc.). If the lineage
+    source is a TVF (Function_*), unwrap the function to its underlying table
+    before searching.
+
     YES → Q2
     NO  → Tier 2 (SP code) or Tier 4 (inferred). NOT Tier 1.
 
 Q2: Does the DWH SP transform this column's VALUE beyond passthrough?
-    (renames don't count — only computation, CASE logic, JOINs, or adjustments)
-    
+    What COUNTS as a transform:
+      - Computation (arithmetic, formula, ABS, CAST that changes meaning)
+      - CASE / IIF logic that picks among different inputs
+      - Aggregation (SUM, COUNT, MIN/MAX, AVG)
+      - Concatenation (FirstName + ' ' + LastName)
+      - Adjustments (post-insert UPDATE that mutates the value)
+
+    What does NOT count as a transform (these are PASSTHROUGHS):
+      - Pure column rename (e.g., ParentCID ← ParentCustomerID)
+      - CAST that preserves meaning (bit → int, varchar(20) → varchar(50))
+      - Simple type widening / NULL handling that does not mutate the value
+      - ⛔ DIM-LOOKUP JOIN — when the SP joins to a documented dim table on an
+        FK and selects the dim's Name / Code / Region / Status / FirstName /
+        LastName / etc. column AS-IS. Example:
+            JOIN Dim_Country dc ON c.CountryID = dc.CountryID
+            SELECT dc.Region AS Region
+        → `Region` is a Tier 1 PASSTHROUGH from Dim_Country.Region (which
+        itself carries an origin like `(Tier 1 — Dictionary.Country)`).
+        The JOIN syntax does NOT make this a Tier 2 SP transform. The dim's
+        column came pre-documented; you are relaying it, not computing it.
+        Same logic for: Dim_Customer.UserName, Dim_PlayerStatus.Name,
+        Dim_Currency.Symbol, Dim_Instrument.Symbol, Dim_Manager.FirstName, etc.
+
     NO  → Tier 1 verbatim. COPY-PASTE the upstream description AS-IS.
           Do NOT rephrase. Do NOT summarize. Do NOT "improve."
           Only strip snapshot stats (percentages, row counts).
           Only addition allowed: "Passthrough from {relay table}." at end.
           Tag with ORIGIN: (Tier 1 — {Schema}.{Table or View})
-    
+
+          For dim-lookup passthroughs: the ORIGIN is whatever the dim wiki
+          says is its origin. If Dim_Country.Region carries `(Tier 1 — Dictionary.Country)`,
+          your wiki says `(Tier 1 — Dictionary.Country)` — never `(Tier 2 — SP_X)`,
+          never `(Tier 1 — Dim_Country)`. Tier transitivity applies through dims
+          exactly like through facts.
+
     YES → Q3
 
 Q3: Is the upstream description still the BEST starting point for understanding
@@ -123,6 +191,25 @@ Q3: Is the upstream description still the BEST starting point for understanding
 **Renamed passthrough (Tier 1 verbatim)**:
 - `ClosePositionReasonID` in Dim_Position ← `ActionType` in Trade.PositionTbl
 - Description: "Close reason. 0=Customer, 1=Stop Loss, 5=Take Profit, 9=Hierarchical Close. (Tier 1 — Trade.PositionTbl)"
+
+**⛔ Dim-lookup passthrough (Tier 1 verbatim — THIS IS THE #2 BATCH BUG)**:
+- `Region` in BI_DB_NonPI_HighAUM ← `Dim_Country.Region` via `JOIN Dim_Country dc ON c.CountryID = dc.CountryID; SELECT dc.Region`
+- Dim_Country.Region wiki says: "Marketing region grouping for the country. (Tier 1 — Dictionary.Country)"
+- ✅ CORRECT: "Marketing region grouping for the country. Passthrough from Dim_Country. (Tier 1 — Dictionary.Country)"
+- ❌ WRONG: "Marketing region from Dim_Country via Dim_Customer.CountryID. (Tier 2 — SP_NonPI_HighAUM, Dim_Country.Region)"
+
+The wrong version: (1) paraphrases the upstream description, (2) attributes the SP as origin instead of Dictionary.Country, (3) downgrades to Tier 2 because there's a JOIN. ALL THREE are violations.
+
+Same pattern applies to:
+- `UserName` ← `Dim_Customer.UserName` (which itself is `Tier 1 — Customer.CustomerStatic`) — JOIN-lookup passthrough = Tier 1 from Customer.CustomerStatic
+- `PlayerStatus` ← `Dim_PlayerStatus.Name` — Tier 1 from whatever Dim_PlayerStatus says is its origin
+- `CurrencyCode` ← `Dim_Currency.Code` — Tier 1 from Dictionary.Currency
+- `InstrumentSymbol` ← `Dim_Instrument.Symbol` — Tier 1 from Dictionary.Instrument
+
+**Concatenated passthrough — borderline (Tier 1 + DWH note OR Tier 2)**:
+- `AM` in BI_DB_NonPI_HighAUM ← `Dim_Manager.FirstName + ' ' + Dim_Manager.LastName`
+- Tier 2 is acceptable here ("Account manager full name (FirstName + ' ' + LastName from Dim_Manager). (Tier 2 — SP_NonPI_HighAUM)") because the value didn't exist as-is in the upstream.
+- Tier 1 + DWH note is also defensible if Dim_Manager has a FullName column already documented; in that case inherit FullName's Tier 1 description and append `DWH note: assembled from FirstName + ' ' + LastName.`
 
 **View-computed (Tier 1 from view wiki)**:
 - `PnLInDollars` in Dim_Position ← Trade.OpenPositionEndOfDay (staging view)

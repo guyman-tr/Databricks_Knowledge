@@ -3,6 +3,18 @@
 You are running the DWH Semantic Documentation pipeline for schema BI_DB_dbo.
 **Wiki-only mode** — generate documentation files only. ALTER scripts are generated separately later via `/generate-alter-dwh`.
 
+## ⛔ MCP PRE-FLIGHT — NON-NEGOTIABLE, CHECK BEFORE ANYTHING ELSE
+
+Before loading rules, before reading the index, before planning anything:
+
+1. **Test Synapse MCP**: Call `mcp__synapse_sql__execute_sql_read_only` with `SELECT 1 AS mcp_preflight`
+2. **If it fails or the tool does not exist**: Print `BATCH ABORT: Synapse MCP unavailable` and **EXIT IMMEDIATELY**. Do NOT proceed. Do NOT fall back to "prior batch context data". Do NOT use a "schema practice" of skipping MCP. A wiki without live data sampling is INCOMPLETE and WILL NOT PASS the adversarial evaluator. STOP HERE.
+3. **If it succeeds**: Print `MCP PRE-FLIGHT: PASS` and continue to Instructions.
+
+There is NO exception to this rule. No "prior context", no "code-only documentation", no "graceful degradation". MCP down = batch aborted. Period.
+
+---
+
 ## Instructions
 
 1. **Load rules** -- Read the following files IN ORDER before doing anything else:
@@ -16,7 +28,10 @@ You are running the DWH Semantic Documentation pipeline for schema BI_DB_dbo.
    - `.cursor/rules/dwh-semantic-doc/10.5b-tier1-enforcement.mdc`
    - `.cursor/rules/dwh-semantic-doc/16-adversarial-evaluation.mdc`
 
-2. **Plan batch** -- Read `knowledge/synapse/Wiki/BI_DB_dbo/_index.md`. If `knowledge/synapse/Wiki/BI_DB_dbo/_parity_gate_last_run.txt` exists and starts with `STATUS=FAIL`, **prioritize** fixing wiki/ALTER COMMENT parity (see `_parity_last_report.json` and `python tools/audit_wiki_alter_comment_parity.py --under BI_DB_dbo`) before taking new Pending objects. Then find all objects with status "Pending". Pick the next batch per batch-orchestration rules (batch size = 4 for BI_DB_dbo).
+2. **Plan batch** -- Read `knowledge/synapse/Wiki/BI_DB_dbo/_index.md`. Read `.specify/Configs/dwh-semantic-doc-config.json` and check `object_blacklist.explicit_blacklist` and `object_blacklist.name_patterns` — any object matching the blacklist is **PERMANENTLY SKIPPED**, regardless of priority, batch context plans, or dependency pull-forward. If `knowledge/synapse/Wiki/BI_DB_dbo/_parity_gate_last_run.txt` exists and starts with `STATUS=FAIL`, **prioritize** fixing wiki/ALTER COMMENT parity (see `_parity_last_report.json` and `python tools/audit_wiki_alter_comment_parity.py --under BI_DB_dbo`) before taking new Pending objects. Then find all objects with status "Pending". Pick the next batch per batch-orchestration rules:
+   - **Default batch size = 8 for BI_DB_dbo** (was 4 — doubled to amortize per-batch fixed-overhead tax of ~50K tokens for re-reading 9 rule files + index + config).
+   - **Weighted exception**: if ANY object in the candidate batch has > 50 columns, cap batch at 4 (heavy objects need more per-object reasoning budget).
+   - **Weighted exception**: if the candidate batch contains a writer-SP-shared cluster (3+ objects refreshed by the same SP), keep them in one batch even if it pushes >8.
 
 3. **Execute pipeline** -- For each object in the batch, run the full pipeline as defined in the execution card (Phases 1 through 11, then Phase 16 adversarial evaluation). Load phase-specific rules on demand. Generate THREE files per object:
    - `.lineage.md` (column lineage -- written first by Phase 10B)

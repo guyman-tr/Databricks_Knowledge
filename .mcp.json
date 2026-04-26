@@ -1,12 +1,41 @@
 {
   "mcpServers": {
     "synapse_sql": {
-      "type": "sse",
-      "url": "http://127.0.0.1:8766/sse"
+      "type": "stdio",
+      "command": "C:\\Python311\\python.exe",
+      "args": [
+        "C:\\Users\\guyman\\.cursor\\synapse-mcp-server.py"
+      ],
+      "env": {}
     },
     "synapse_prod_sql": {
-      "type": "sse",
-      "url": "http://127.0.0.1:8767/sse"
+      "type": "stdio",
+      "command": "C:\\Python311\\python.exe",
+      "args": [
+        "C:\\Users\\guyman\\.cursor\\synapse-mcp-server.py"
+      ],
+      "env": {
+        "SYNAPSE_SERVER": "prod-synapse-dataplatform-we.sql.azuresynapse.net",
+        "SYNAPSE_DATABASE": "sql_dp_prod_we"
+      }
+    },
+    "databricks_sql": {
+      "type": "stdio",
+      "command": "C:\\Python311\\python.exe",
+      "args": [
+        "C:\\Users\\guyman\\.cursor\\databricks-mcp-server.py"
+      ],
+      "env": {}
+    },
+    "atlassian": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.atlassian.com/v1/sse"
+      ],
+      "env": {}
     }
   }
 }
