@@ -1,4 +1,5 @@
 # Column Lineage — BI_DB_dbo.BI_DB_ASIC_ClientBalanceFinance
+<!-- Refreshed 2026-04-23 batch 61 -->
 
 **Writer SP**: `BI_DB_dbo.SP_ASIC_ClientBalanceFinance` (Priority 99 — FinanceReportSPS)
 **ETL Pattern**: DELETE-INSERT by Date (daily incremental, one day per execution)

@@ -30,7 +30,7 @@ There is NO exception to this rule. No "prior context", no "code-only documentat
 
 2. **Use the schema** specified in the "Schema argument" section at the bottom of this prompt. Do NOT process objects from other schemas.
 
-3. **Plan batch** -- Read `knowledge/synapse/Wiki/{Schema}/_index.md`. Find all objects with status "Pending". Pick the next batch per batch-orchestration rules (use schema-specific batch size from BATCH_SIZE_OVERRIDES). Cross-schema dependencies are NOT documentation targets -- they are read-only context sources (Tier 4).
+3. **Plan batch** -- Read `knowledge/synapse/Wiki/{Schema}/_index.md`. Read `.specify/Configs/dwh-semantic-doc-config.json` and check `object_blacklist.explicit_blacklist` and `object_blacklist.name_patterns` — any object matching the blacklist is **PERMANENTLY SKIPPED**, regardless of priority, batch context plans, or dependency pull-forward. Find all objects with status "Pending". Pick the next batch per batch-orchestration rules (use schema-specific batch size from BATCH_SIZE_OVERRIDES). Cross-schema dependencies are NOT documentation targets -- they are read-only context sources (Tier 4).
 
 4. **Execute pipeline** -- For each object in the batch, run the full pipeline as defined in the execution card (Phases 1 through 11, then Phase 16 adversarial evaluation). Load phase-specific rules on demand. Generate THREE files per object:
    - `.lineage.md` (column lineage -- written first by Phase 10B)

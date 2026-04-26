@@ -1,0 +1,89 @@
+[
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_AML_Documents_Dashboard",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_AML_Documents_Dashboard.md",
+    "column": "Country",
+    "line_no": 130,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Customer country of residence. Join-enriched via Dim_Customer.CountryID → Dim_Country.Name. (Tier 2 — SP_AML_Documents_Dashboard, join-enriched via Dim_Country)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Country",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+    "merge": {
+      "column": "Country",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Local handling: Customer country of residence. Join-enriched via Dim_Customer.CountryID → Dim_Country.Name.",
+      "attribution": "(Tier 1 - Dim_Country.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_LiveAcquisitionDashboard_Daily",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_LiveAcquisitionDashboard_Daily.md",
+    "column": "FunnelName",
+    "line_no": 153,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Name of the acquisition funnel the customer entered, from `DWH_dbo.Dim_Funnel.Name` on `Dim_Customer.FunnelID`. NULL if no funnel. (Tier 2 — Dim_Funnel.Name via Dim_Customer.FunnelID)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Funnel",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. (Tier 1 — Dictionary.Funnel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Funnel.md",
+    "merge": {
+      "column": "FunnelName",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Local handling: Name of the acquisition funnel the customer entered, from `DWH_dbo.Dim_Funnel.Name` on `Dim_Customer.FunnelID`. NULL if no funnel.",
+      "attribution": "(Tier 1 - Dim_Funnel.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  },
+  {
+    "schema": "BI_DB_dbo",
+    "object": "BI_DB_LiveAcquisitionDashboard_Daily",
+    "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_LiveAcquisitionDashboard_Daily.md",
+    "column": "FunnelFromName",
+    "line_no": 154,
+    "rules": [
+      "TIER_GAP"
+    ],
+    "severity": 1,
+    "rule_detail": {
+      "TIER_GAP": "downstream Tier 2 vs upstream Tier 1"
+    },
+    "downstream_desc": "Name of the source funnel (referral funnel), from `DWH_dbo.Dim_Funnel.Name` on `Dim_Customer.FunnelFromID`. LEFT JOIN — NULL when no source funnel. (Tier 2 — Dim_Funnel.Name via Dim_Customer.FunnelFromID)",
+    "downstream_tier": "2",
+    "upstream_table": "Dim_Funnel",
+    "upstream_column": "Name",
+    "upstream_tier": "1",
+    "upstream_desc": "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. (Tier 1 — Dictionary.Funnel)",
+    "upstream_wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Funnel.md",
+    "merge": {
+      "column": "FunnelFromName",
+      "recommendation": "PROMOTE",
+      "merged_desc": "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Local handling: Name of the source funnel (referral funnel), from `DWH_dbo.Dim_Funnel.Name` on `Dim_Customer.FunnelFromID`. LEFT JOIN — NULL when no source funnel.",
+      "attribution": "(Tier 1 - Dim_Funnel.Name; Tier 2 - downstream local logic)",
+      "notes": "stub: LLM unavailable, deterministic concat used",
+      "source": "stub"
+    }
+  }
+]

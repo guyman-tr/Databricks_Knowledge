@@ -22,12 +22,14 @@ SELECT * FROM [dbo].[dim_position] WITH (NOLOCK)
 
 | Table Pattern | Expected Size | Query Strategy |
 |---------------|---------------|----------------|
-| `dim_*` | Medium-Large (100K - 10M) | `TOP 10` sample + `COUNT(*)` + `GROUP BY` |
-| `fact_*` | Large (millions+) | `TOP 10` sample + aggregates only |
+| `dim_*` | Medium-Large (100K - 10M) | `TOP 10` sample + DMV row count + date-filtered `GROUP BY` |
+| `fact_*`, `DDR_*` | Large (millions+) | `TOP 10` sample + DMV row count + date-filtered `GROUP BY` (WHERE DateID >= 20260101) |
 | `*_lookup`, `*_ref` | Small (< 10K) | `SELECT *` (ALL rows) |
-| `stg_*` | Variable | `SELECT COUNT(*)` first, then sample |
+| `stg_*` | Variable | DMV row count first, then sample |
 | `*_config`, `*_settings` | Small (< 1K) | `SELECT *` (ALL rows) |
-| Unknown | Check first | `SELECT COUNT(*)` first |
+| Unknown | Check first | DMV row count first |
+
+**⛔ NEVER run `SELECT COUNT(*)` or unfiltered `GROUP BY` on tables with > 1M rows.** Use `sys.dm_pdw_nodes_db_partition_stats` for row counts and date-bounded WHERE clauses for distributions. See Phase 2 Step 3 and Phase 3 for exact query templates.
 
 ## Rule 3: Never Modify Data
 

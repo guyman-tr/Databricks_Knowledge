@@ -45,14 +45,31 @@ The evaluator receives these files. Read ALL of them before scoring.
 | **Lineage file** | `knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.lineage.md` | Column-level source mapping |
 | **Review sidecar** | `knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.review-needed.md` | Should NOT contain wiki content |
 | **DDL source** | `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Tables\{Schema}.{Object}.sql` | Ground truth for columns, types, nullability |
-| **Upstream wiki** | `DB_Schema\etoro\Wiki\{UpstreamSchema}\Tables\{UpstreamTable}.md` (if exists) | Ground truth for Tier 1 descriptions |
+| **Local upstream wiki** | `knowledge\synapse\Wiki\{UpstreamSchema}\Tables\{UpstreamTable}.md` (this repo, when source is a Synapse-resident schema) | Ground truth for downstream Tier 1 inheritance — most BI_DB / EXW / eMoney aggregates inherit from here |
+| **Production upstream wiki** | `{repo_path}\{wiki_path}\{UpstreamSchema}\Tables\{UpstreamTable}.md` via `_upstream_wiki_routing.json` | Ground truth for Tier 1 descriptions when source is production |
 | **ETL SP code** | `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Stored Procedures\{SP}.sql` | Ground truth for transformations |
 
-**Finding the upstream wiki**: Read the lineage file's `## Column Lineage` table. The `Source Table` column tells you the production source. Map it to a DB_Schema wiki path:
-- `etoro_Trade_PositionTbl` → `DB_Schema\etoro\Wiki\Trade\Tables\Trade.PositionTbl.md`
-- `etoro_eMoney_Fact_Transaction_Status` → check `DB_Schema\etoro\Wiki\eMoney\Tables\` directory
+**⛔ Finding the upstream wiki — search order is MANDATORY (mirrors Phase 11 Pre-Read):**
 
-If the upstream wiki does not exist, note that in the Upstream Fidelity dimension — the generator cannot be faulted for missing Tier 1 on columns without an upstream wiki.
+Read the lineage file's `## Column Lineage` table. The `Source Table` column tells you the upstream. Search in this exact order:
+
+1. **LOCAL SYNAPSE WIKI (this repo) — FIRST.** When the source is a Synapse-resident schema (`DWH_dbo`, `BI_DB_dbo`, `eMoney_dbo`, `EXW_dbo`, `Dealing_dbo`, `CryptoDB_dbo`, etc.):
+   - `knowledge\synapse\Wiki\{Schema}\Tables\{Object}.md`
+   - `knowledge\synapse\Wiki\{Schema}\Views\{Object}.md`
+   - Examples:
+     - `DWH_dbo.Fact_Deposit_State` → `knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_Deposit_State.md`
+     - `DWH_dbo.Dim_Customer` → `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Customer.md`
+
+2. **TVF / Function unwrap.** If the source is `Function_*`, read `Dataplatform\...\Functions\{Function}.sql`, take the first non-temp `FROM` / `JOIN` table, and re-enter step 1 with that resolved table.
+
+3. **PRODUCTION UPSTREAM WIKI** via `knowledge\synapse\Wiki\_upstream_wiki_routing.json`:
+   - `etoro.Trade.PositionTbl` → `DB_Schema\etoro\Wiki\Trade\Tables\Trade.PositionTbl.md`
+   - `fiktivo.AffiliateCommission.*` → `ExperianceDBs\fiktivo\Wiki\AffiliateCommission\Tables\...`
+   - `WalletDB.Wallet.*` → `CryptoDBs\WalletDB\Wiki\Wallet\Tables\...`
+
+If you only check production paths and skip the local Synapse wiki, you will **falsely score Upstream Fidelity = 7 (neutral)** on downstream tables that are actually under-inheriting from a sibling object — the worst evaluator failure mode. For BI_DB / EXW / aggregate objects this is a HARD error in the evaluation.
+
+If neither local nor production wiki exists for a source, note that in the Upstream Fidelity dimension — the generator cannot be faulted for missing Tier 1 on columns without ANY upstream wiki.
 
 ---
 
@@ -98,8 +115,18 @@ Each paraphrasing failure deducts 2 points from Tier Accuracy. This is the #1 ba
 
 **Verification protocol — MANDATORY SIDE-BY-SIDE TABLE**:
 
-1. Find ALL Tier 1 columns in the Elements table
-2. For each, **re-read** the upstream wiki's Elements table (do NOT rely on memory)
+1. Find ALL Tier 1 columns in the Elements table.
+2. For each, **re-read** the upstream wiki's Elements table (do NOT rely on memory). Use the search order from "Finding the upstream wiki" above — local Synapse wiki FIRST, then production. If the wiki being evaluated is in a downstream schema (BI_DB_dbo / EXW_dbo / eMoney_dbo / Dealing_dbo / etc.), the evaluator MUST attempt `knowledge\synapse\Wiki\{SourceSchema}\Tables\{SourceTable}.md` for every lineage source before falling back to the routing file.
+2b. **Independent inheritance probe — for downstream wikis only**: even for columns the writer marked Tier 2 / Tier 3, scan the local wiki of each lineage source and check whether the SAME column name (or a documented rename) carries a Tier 1 / Tier 4-Confluence definition there. If yes, that's a missed inheritance and counts as a fidelity failure (deduct 2 per missed inheritance, capped at -6). This catches the writer skipping Pre-Read step 2(a).
+
+2c. **Dim-lookup JOIN mis-tagging probe — HARD CHECK for every BI_DB / EXW / aggregate wiki**: read the lineage file's Source Objects table and identify every row whose source is a documented Synapse dim (Dim_Country, Dim_Customer, Dim_PlayerStatus, Dim_Manager, Dim_Currency, Dim_Instrument, Dim_FundingType, Dim_AccountType, Dim_Regulation, Dim_KYCStatus, Dim_Affiliate, Dim_Range, etc.). For every column the writer sourced from such a dim:
+   - If the dim's wiki documents that column as Tier 1 (with an origin like `Dictionary.Country`, `Customer.CustomerStatic`, etc.), AND the writer's column is a pure passthrough (no arithmetic / CASE / aggregation — just `SELECT dim.X AS X`), then the writer's tier MUST be Tier 1 with the dim's origin (NOT Tier 2 SP_X, NOT Tier 1 Dim_X).
+   - Mismatch = HARD FAIL: deduct 2 points per mismatched column, capped at -8 (this can drive the wiki below 7.5 / fail Phase 16 outright). The agent's #2 batch failure mode is treating dim-lookup JOINs as Tier 2 transforms; this probe is the gate that catches it.
+
+   Example mismatch (REAL — from batch 30):
+   - BI_DB_NonPI_HighAUM.Region: writer wrote "Marketing region from Dim_Country via Dim_Customer.CountryID. (Tier 2 — SP_NonPI_HighAUM, Dim_Country.Region)"
+   - Dim_Country.Region wiki says: "Marketing region grouping for the country. (Tier 1 — Dictionary.Country)"
+   - Verdict: MISMATCH — should be `(Tier 1 — Dictionary.Country)` with the dim's verbatim text. -2 points.
 3. Produce a **mandatory comparison table** in the evaluation output:
 
 ```

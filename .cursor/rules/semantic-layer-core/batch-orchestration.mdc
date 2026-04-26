@@ -146,7 +146,12 @@ Dependencies are classified by schema to determine blocking behavior:
 
 1. **Filter**: Take the unified object list for the target schema.
 
-2. **Exclude**: Remove objects that are `Done` or `Skipped` in `_index.md` (if it exists).
+2. **Exclude**: Remove objects matching ANY of these criteria:
+   - Status is `Done` or `Skipped` or `Blacklisted` in `_index.md` (if it exists).
+   - Object matches a `name_patterns` entry in `dwh-semantic-doc-config.json → object_blacklist → name_patterns` (e.g., `*_HOLD` suffix).
+   - Object appears in `dwh-semantic-doc-config.json → object_blacklist → explicit_blacklist` for this schema. **This is a HARD skip — these objects are NEVER documented regardless of priority, batch context plans, or dependency pull-forward.**
+   
+   **⛔ Blacklist enforcement is NON-NEGOTIABLE.** The config blacklist overrides everything: OpsDB priority, batch context `next_batch_plan`, dependency pull-forward, and manual index entries. If an object is on the blacklist, it does not enter the queue. Period. Log: `BLACKLISTED: {object} — {reason}`.
 
 3. **Build intra-schema dependency graph**: From OpsDB dependency rows (or `_dependency_order.json` for non-OpsDB schemas), build an adjacency map: `object → [list of intra-schema objects it depends on]`. Discard non-core-schema dependencies (Dealing_dbo, EXW_dbo, etc.) — they do not affect ordering.
 

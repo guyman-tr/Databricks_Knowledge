@@ -44,6 +44,18 @@ Analyze EVERY column with these data types:
 
 ### Query Template
 
+**⛔ NEVER run unfiltered GROUP BY on tables with > 1M rows.** Use a date-bounded window to keep queries fast. The distribution of enum/flag/status values is stable — a recent slice is representative.
+
+**For tables with a date column (DateID, ReportDate, UpdateDate, etc.):**
+```sql
+SELECT [{Column}], COUNT(*) AS [Count]
+FROM [{Schema}].[{Table}]
+WHERE [{DateCol}] >= 20260101  -- or '2026-01-01' for datetime
+GROUP BY [{Column}]
+ORDER BY [Count] DESC
+```
+
+**For small tables (< 100K rows) or tables with no date column:**
 ```sql
 SELECT [{Column}], COUNT(*) AS [Count]
 FROM [{Schema}].[{Table}]
@@ -55,9 +67,12 @@ For columns with high cardinality (> 100 distinct values), use:
 ```sql
 SELECT TOP 20 [{Column}], COUNT(*) AS [Count]
 FROM [{Schema}].[{Table}]
+WHERE [{DateCol}] >= 20260101
 GROUP BY [{Column}]
 ORDER BY [Count] DESC
 ```
+
+**Identifying the date column for filtering:** Use the table's clustered index key or distribution key from Phase 1. For DDR tables, `DateID` or `ReportDateID` is almost always the right filter. For Fact tables, look for `*DateID` columns. If no date column exists, use TOP-based sampling instead of full GROUP BY.
 
 ### Distribution Classification Rules
 

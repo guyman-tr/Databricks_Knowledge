@@ -21,8 +21,38 @@ if ($SchemaName -eq "BI_DB_dbo") {
     $basePromptFile = Join-Path $repoRoot ".claude\prompts\build-wiki-dwh-batch.md"
 }
 $promptFile = Join-Path $env:TEMP "claude_wiki_prompt_$SchemaName.md"
-$promptContent = (Get-Content $basePromptFile -Raw) + "`n`n## Schema argument`n`nSchema: $SchemaName`n`nProcess ONLY objects from the $SchemaName schema. Do NOT document objects from other schemas, even if they appear as cross-schema dependencies. Cross-schema dependencies are treated as Tier 4 (best available knowledge) - read their data if available but do NOT create wiki files for them.`n"
-[System.IO.File]::WriteAllText($promptFile, $promptContent, [System.Text.UTF8Encoding]::new($false))
+
+# Per-schema default batch size (heavy weighted exception applied inside Get-NextBatch).
+$schemaBatchSize = switch ($SchemaName) {
+    "BI_DB_dbo"   { 8 }
+    "DWH_dbo"     { 4 }
+    "Dealing_dbo" { 4 }
+    "eMoney_dbo"  { 6 }
+    "EXW_dbo"     { 6 }
+    default       { 4 }
+}
+
+# Dot-source the shared batch picker (Workstream 1c).
+$libPath = Join-Path $PSScriptRoot "lib\Get-NextBatch.ps1"
+if (Test-Path $libPath) {
+    . $libPath
+    $usePrePicker = $true
+} else {
+    Write-Host "WARN: Get-NextBatch.ps1 not found at $libPath - falling back to in-prompt discovery." -ForegroundColor Yellow
+    $usePrePicker = $false
+}
+
+# Dot-source the quality drift guard (Workstream 1d). Kicks in once the loop
+# has produced a baseline of completed batches; throttles batch size on mild
+# drift, kills the loop on severe drift to prevent burning tokens on garbage.
+$driftPath = Join-Path $PSScriptRoot "lib\Test-QualityDrift.ps1"
+if (Test-Path $driftPath) {
+    . $driftPath
+    $useDriftGuard = $true
+} else {
+    Write-Host "WARN: Test-QualityDrift.ps1 not found at $driftPath - drift guard disabled." -ForegroundColor Yellow
+    $useDriftGuard = $false
+}
 
 if (-not (Test-Path $claudePath)) {
     Write-Host "ERROR: claude not found at $claudePath" -ForegroundColor Red
@@ -168,16 +198,50 @@ Write-Host ""
 
 $iteration = 1
 $totalCostUsd = 0
+$consecutiveZeroIterations = 0
+# $effectiveBatchSize is the size used for the NEXT iteration. Starts at the
+# schema default; the drift guard may temporarily lower it after each iteration.
+$effectiveBatchSize = $schemaBatchSize
 
 while ($true) {
     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Iteration $iteration started..." -ForegroundColor Green
     Write-Host ""
 
+    # ---- Build per-iteration prompt -----------------------------------------
+    # Base prompt + schema scope footer + (optional) BATCH ASSIGNMENT block from picker.
+    $basePromptContent = Get-Content $basePromptFile -Raw
+    $schemaScopeFooter = "`n`n## Schema argument`n`nSchema: $SchemaName`n`nProcess ONLY objects from the $SchemaName schema. Do NOT document objects from other schemas, even if they appear as cross-schema dependencies. Cross-schema dependencies are treated as Tier 4 (best available knowledge) - read their data if available but do NOT create wiki files for them.`n"
+    $batchBlock = ""
+    if ($usePrePicker) {
+        try {
+            if ($effectiveBatchSize -ne $schemaBatchSize) {
+                Write-Host "  [DRIFT GUARD] Using throttled batch size: $effectiveBatchSize (schema default: $schemaBatchSize)." -ForegroundColor Yellow
+            }
+            $batchInfo = Get-NextBatch -SchemaName $SchemaName -BatchSize $effectiveBatchSize -RepoRoot $repoRoot
+            if ($batchInfo.Empty) {
+                Write-Host ""
+                Write-Host "============================================================" -ForegroundColor Magenta
+                Write-Host "  PRE-PICKER: No pending objects in $SchemaName" -ForegroundColor Magenta
+                Write-Host "  All SSDT tables either documented or blacklisted." -ForegroundColor Magenta
+                Write-Host "  Total cost: `$$([math]::Round($totalCostUsd, 4)) USD" -ForegroundColor Magenta
+                Write-Host "============================================================" -ForegroundColor Magenta
+                break
+            }
+            $batchBlock = $batchInfo.Block
+            Write-Host "  Pre-picker selected $($batchInfo.Count) objects (HeavyCap=$($batchInfo.HeavyCap))." -ForegroundColor Cyan
+        } catch {
+            Write-Host "  WARN: Pre-picker failed: $_ - falling back to in-prompt discovery." -ForegroundColor Yellow
+            $batchBlock = ""
+        }
+    }
+    $promptContent = $basePromptContent + $schemaScopeFooter + $batchBlock
+    [System.IO.File]::WriteAllText($promptFile, $promptContent, [System.Text.UTF8Encoding]::new($false))
+
     $inputTokens = 0
     $outputTokens = 0
     $costUsd = 0
 
-    $batchMaxSeconds = 2700  # 45 min ceiling — DWH objects with 50-90 col tables need 20-40 min per batch
+    $batchMaxSeconds = 3000  # 50 min ceiling — accommodates batch size 8 (was 1800/30min for batch size 4)
     $postResultGrace = 30    # kill 30s after "result" event (conversation done but process lingers)
 
     $tempOut = Join-Path $env:TEMP "claude_wiki_batch_$iteration.jsonl"
@@ -287,6 +351,16 @@ while ($true) {
         if ($proc -and -not $proc.HasExited) {
             Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
         }
+        # Pre-deletion scan: capture rate-limit signature from stdout before file is removed.
+        $rateLimitFromStdout = $null
+        if (Test-Path $tempOut) {
+            try {
+                $stdoutRaw = Get-Content $tempOut -Raw -ErrorAction SilentlyContinue
+                if ($stdoutRaw -and $stdoutRaw -match "(You['\u2019]ve hit your limit|usage limit reached)") {
+                    $rateLimitFromStdout = $stdoutRaw
+                }
+            } catch { }
+        }
         Remove-Item $tempOut -Force -ErrorAction SilentlyContinue
         # Keep stderr for MCP debugging: $tempErr
         # Remove-Item $tempErr -Force -ErrorAction SilentlyContinue
@@ -307,11 +381,66 @@ while ($true) {
     # Parity is enforced later by the ALTER generation loop (run-dwh-alter-batch-loop.ps1).
     Write-Host "  Wiki-only mode - parity check skipped (no ALTER files)." -ForegroundColor DarkGray
 
+    # ---- Drift guard ---------------------------------------------------------
+    # Run AFTER each productive iteration to evaluate the just-completed batch.
+    # The guard reads the canonical _index.md (post-write) and compares the
+    # most recent batch's quality scores against the rolling baseline. It can:
+    #   * leave $effectiveBatchSize at the schema default (no drift)
+    #   * lower $effectiveBatchSize for the next iteration (mild drift -> throttle)
+    #   * exit the loop entirely (severe drift OR consecutive drift kill switch)
+    if ($useDriftGuard -and $inputTokens -gt 0) {
+        try {
+            $drift = Test-QualityDrift `
+                -SchemaName $SchemaName `
+                -RepoRoot $repoRoot `
+                -DefaultBatchSize $schemaBatchSize `
+                -ThrottledBatchSize 4
+
+            $color = switch ($drift.DriftLevel) {
+                "severe" { "Red" }
+                "mild"   { "Yellow" }
+                default  { "DarkGreen" }
+            }
+            Write-Host ""
+            Write-Host "  [DRIFT GUARD] Batch $($drift.LastBatchNumber) -- $($drift.DriftLevel.ToUpper())" -ForegroundColor $color
+            if ($drift.LastBatchAvg -ge 0) {
+                Write-Host ("    Recent avg     : {0} (min {1}, n={2})" -f $drift.LastBatchAvg, $drift.LastBatchMin, $drift.LastBatchScores.Count) -ForegroundColor $color
+            }
+            if ($drift.BaselineMedian -ge 0) {
+                Write-Host ("    Baseline median: {0} (n={1})" -f $drift.BaselineMedian, $drift.BaselineSampleN) -ForegroundColor $color
+            }
+            Write-Host "    Decision       : $($drift.Reason)" -ForegroundColor $color
+
+            $effectiveBatchSize = $drift.NextBatchSize
+
+            if ($drift.ShouldKill) {
+                Write-Host ""
+                Write-Host "============================================================" -ForegroundColor Red
+                Write-Host "  KILL SWITCH (drift guard) -- $($drift.Reason)" -ForegroundColor Red
+                Write-Host "  See state log: $repoRoot\.claude\state\quality_drift_history_$SchemaName.jsonl" -ForegroundColor Red
+                Write-Host "  Restart manually after investigating recent wiki output." -ForegroundColor Red
+                Write-Host "============================================================" -ForegroundColor Red
+                exit 4
+            }
+        } catch {
+            Write-Host "  WARN: Drift guard failed: $_ -- continuing at default batch size." -ForegroundColor Yellow
+            $effectiveBatchSize = $schemaBatchSize
+        }
+    }
+
     $schemaComplete = $false
     if (Test-Path $indexPath) {
         $content = Get-Content $indexPath -Raw -ErrorAction SilentlyContinue
-        if ($content -and ($content -notmatch "Pending") -and ($content -notmatch "Queued")) {
-            $schemaComplete = $true
+        if ($content) {
+            $hasPending = ($content -match "Pending") -or ($content -match "Queued")
+            $pendingCount = if ($content -match 'pending:\s*(\d+)') { [int]$Matches[1] } else { -1 }
+            if (-not $hasPending -and $pendingCount -eq 0) {
+                $schemaComplete = $true
+            }
+            elseif (-not $hasPending -and $pendingCount -eq -1) {
+                Write-Host "  WARNING: No 'Pending' text found in index but no 'pending: 0' either." -ForegroundColor Yellow
+                Write-Host "  Index may be old-format (batch history only). Continuing loop." -ForegroundColor Yellow
+            }
         }
     }
 
@@ -326,10 +455,99 @@ while ($true) {
     }
 
     if ($inputTokens -eq 0 -and $costUsd -eq 0) {
+        $consecutiveZeroIterations++
         Write-Host ""
-        Write-Host "  WARNING: No tokens used - iteration may have failed." -ForegroundColor Red
-        Write-Host "  Pausing 10 seconds before retry..." -ForegroundColor Red
-        Start-Sleep -Seconds 10
+        Write-Host "  WARNING: No tokens used - iteration may have failed (consecutive: $consecutiveZeroIterations)." -ForegroundColor Red
+
+        # Scan captured stdout (pre-delete) and stderr for the Anthropic rate-limit signature.
+        $rateLimitHit = $false
+        $resetText = $null
+        $scanSources = @()
+        if ($rateLimitFromStdout) { $scanSources += $rateLimitFromStdout }
+        if (Test-Path $tempErr) {
+            $errContent = Get-Content $tempErr -Raw -ErrorAction SilentlyContinue
+            if ($errContent) { $scanSources += $errContent }
+        }
+        foreach ($scanContent in $scanSources) {
+            if ($scanContent -match "(You['\u2019]ve hit your limit|usage limit reached|rate.?limit)") {
+                $rateLimitHit = $true
+                if ($scanContent -match "resets ([A-Za-z0-9, :apm()UTC]+)") {
+                    $resetText = $Matches[1].Trim()
+                }
+                break
+            }
+        }
+
+        if ($rateLimitHit) {
+            Write-Host ""
+            Write-Host "============================================================" -ForegroundColor Magenta
+            Write-Host "  RATE LIMIT DETECTED — Anthropic plan quota exhausted" -ForegroundColor Magenta
+            if ($resetText) {
+                Write-Host "  Quota resets: $resetText" -ForegroundColor Magenta
+
+                # Try to parse the reset time. Format examples: "May 1, 12am (UTC)", "Apr 24, 5pm (UTC)"
+                $resetDateTime = $null
+                try {
+                    $cleaned = ($resetText -replace '\(UTC\)', '').Trim()
+                    # Inject current year if missing
+                    if ($cleaned -notmatch '\d{4}') { $cleaned = "$cleaned $(Get-Date -Format yyyy)" }
+                    $resetDateTime = [DateTime]::ParseExact(
+                        $cleaned,
+                        @('MMM d, htt yyyy','MMM d, hhtt yyyy','MMM dd, htt yyyy','MMM dd, hhtt yyyy','MMM d, h:mmtt yyyy'),
+                        [System.Globalization.CultureInfo]::InvariantCulture,
+                        [System.Globalization.DateTimeStyles]::AssumeUniversal
+                    )
+                } catch { }
+
+                if ($resetDateTime) {
+                    $now = (Get-Date).ToUniversalTime()
+                    $waitSeconds = [int]($resetDateTime.ToUniversalTime() - $now).TotalSeconds
+                    if ($waitSeconds -gt 14400) {
+                        Write-Host "  Reset is $([math]::Round($waitSeconds/3600,1))h away (>4h). Exiting loop — restart manually after reset." -ForegroundColor Red
+                        Write-Host "============================================================" -ForegroundColor Magenta
+                        exit 2
+                    }
+                    elseif ($waitSeconds -gt 0) {
+                        Write-Host "  Sleeping $([math]::Round($waitSeconds/60,1)) minutes until reset, then resuming..." -ForegroundColor Yellow
+                        Write-Host "============================================================" -ForegroundColor Magenta
+                        Start-Sleep -Seconds ($waitSeconds + 30)
+                        $consecutiveZeroIterations = 0
+                    }
+                    else {
+                        Write-Host "  Reset time has already passed — retrying in 60s..." -ForegroundColor Yellow
+                        Write-Host "============================================================" -ForegroundColor Magenta
+                        Start-Sleep -Seconds 60
+                    }
+                }
+                else {
+                    Write-Host "  Could not parse reset time. Sleeping 1h then retrying." -ForegroundColor Yellow
+                    Write-Host "============================================================" -ForegroundColor Magenta
+                    Start-Sleep -Seconds 3600
+                }
+            }
+            else {
+                Write-Host "  No reset time captured. Sleeping 1h then retrying." -ForegroundColor Yellow
+                Write-Host "============================================================" -ForegroundColor Magenta
+                Start-Sleep -Seconds 3600
+            }
+        }
+        elseif ($consecutiveZeroIterations -ge 3) {
+            Write-Host ""
+            Write-Host "============================================================" -ForegroundColor Red
+            Write-Host "  KILL SWITCH: 3 consecutive zero-token iterations" -ForegroundColor Red
+            Write-Host "  No 'rate limit' signature found — likely auth/MCP failure." -ForegroundColor Red
+            Write-Host "  Exiting to prevent another 1700-iteration death loop." -ForegroundColor Red
+            Write-Host "  Check tempErr file: $tempErr" -ForegroundColor Red
+            Write-Host "============================================================" -ForegroundColor Red
+            exit 3
+        }
+        else {
+            Write-Host "  Pausing 10 seconds before retry..." -ForegroundColor Red
+            Start-Sleep -Seconds 10
+        }
+    }
+    else {
+        $consecutiveZeroIterations = 0
     }
 
     Write-Host ""

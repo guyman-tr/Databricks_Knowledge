@@ -95,24 +95,89 @@ Read `.cursor/rules/dwh-semantic-doc/GOLDEN-REFERENCE.mdc` once per batch (or pe
 
 ## Pre-Read: Upstream Wiki (Tier 1 Descriptions) — MANDATORY
 
-The lineage file tells you the source tables. Now read the upstream wikis for those sources:
+The lineage file tells you the source tables. Now read the upstream wikis for those sources.
 
-1. From the lineage file's column mapping, collect ALL unique source tables
-2. For EACH source table, build the upstream wiki path:
-   - `DB_Schema\etoro\Wiki\{schema_name}\Tables\{schema_name}.{table_name}.md`
-   - Also check: `DB_Schema\etoro\Wiki\{schema_name}\Views\{schema_name}.{table_name}.md`
-3. **Read each upstream wiki file**. Extract the `## 4. Elements` table.
+**⛔ SEARCH ORDER IS MANDATORY. The local Synapse wiki is searched FIRST, not last.** Most BI_DB / EXW / aggregate-style downstream tables source from DWH_dbo / BI_DB_dbo / eMoney_dbo facts and dims that are themselves wiki-documented in THIS repo. Skipping the local wiki and going straight to DB_Schema is the #1 reason downstream tables end up Tier 2 mechanical when they should inherit Tier 1 / Tier 4-Confluence semantics from a sibling object.
+
+1. From the lineage file's column mapping, collect ALL unique source tables. The "source table" includes anything in the `Source Table` / `Production Table` columns of `## Column Lineage` — including `DWH_dbo.*`, `BI_DB_dbo.*`, `eMoney_dbo.*`, `EXW_dbo.*`, `etoro.*`, `fiktivo.*`, etc.
+
+2. For EACH source table, build candidate upstream wiki paths and search **in this exact order**:
+
+   **a. LOCAL SYNAPSE WIKI (this repo) — SEARCH FIRST.** When the source is a Synapse-resident schema (`DWH_dbo`, `BI_DB_dbo`, `eMoney_dbo`, `EXW_dbo`, `Dealing_dbo`, `CryptoDB_dbo`, etc.), the upstream wiki lives here:
+   - `knowledge\synapse\Wiki\{source_schema}\Tables\{source_table}.md`
+   - `knowledge\synapse\Wiki\{source_schema}\Views\{source_table}.md`
+   - `knowledge\synapse\Wiki\{source_schema}\Functions\{source_table}.md`
+   
+   Strip `dbo.` prefix from `source_schema` if present in the lineage (e.g., `DWH_dbo.Fact_Deposit_State` → schema `DWH_dbo`, table `Fact_Deposit_State`). If the source recorded in the lineage is unqualified (e.g., just `Dim_Customer`), try the most plausible Synapse schema first (`DWH_dbo`) and then the schema of the object you are documenting.
+   
+   **TVF / Function lineage**: If the lineage source is `Function_*` (a TVF), do NOT stop there. Read the function's SQL from `Dataplatform\SynapseSQLPool1\sql_dp_prod_we\{Schema}\Functions\{Function_Name}.sql` (already a Phase 9 artifact). Grep for `FROM` / `JOIN` clauses, take the first non-temp / non-CTE table reference, and use THAT as the effective upstream — then re-enter step (a) with the resolved table. Example: lineage says `Function_Revenue_FullCommissions.ActionTypeID` → function reads from `DWH_dbo.Fact_CustomerAction` → search `knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_CustomerAction.md`.
+
+   **b. PRODUCTION UPSTREAM WIKI (DB_Schema and other upstream repos).** When the source is a production schema (`Trade.PositionTbl`, `Customer.CustomerStatic`, `Billing.Deposit`, `dbo.FiatCards`, `fiktivo.*.*`, `WalletDB.*.*`, etc.), use the routing file:
+   - `Read: knowledge\synapse\Wiki\_upstream_wiki_routing.json`
+   - Look up `database_name` in `upstream_databases` to get `repo_path` and `wiki_path`
+   - Build: `{repo_path}\{wiki_path}\{Schema}\Tables\{Schema}.{Table}.md` (also try `\Views\` and `\Functions\`)
+   - Examples:
+     - `etoro.Trade.PositionTbl` → `DB_Schema\etoro\Wiki\Trade\Tables\Trade.PositionTbl.md`
+     - `fiktivo.AffiliateCommission.CreditCommission` → `ExperianceDBs\fiktivo\Wiki\AffiliateCommission\Tables\AffiliateCommission.CreditCommission.md`
+     - `WalletDB.Wallet.CryptoPosition` → `CryptoDBs\WalletDB\Wiki\Wallet\Tables\Wallet.CryptoPosition.md`
+
+   **c. FALLBACK** — if neither (a) nor (b) yields a hit, the column is genuinely Tier 2 / Tier 3 / Tier 4. Document that absence in the lineage notes; do not silently downgrade without recording the search attempt.
+
+3. **Read each upstream wiki file found — INCLUDING DIM TABLES JOINED FOR LOOKUP.** Extract the `## 4. Elements` table.
+
+   ⛔ **Dim tables are NOT optional.** Every entry in the lineage file's `## Source Objects` table whose schema is a Synapse-resident schema (DWH_dbo, BI_DB_dbo, etc.) — even ones with role "JOIN lookup" / "lookup" / "enrichment" / "dictionary" — MUST have its wiki opened with the Read tool. This includes ALL of:
+   - `DWH_dbo.Dim_Customer`, `Dim_Country`, `Dim_PlayerStatus`, `Dim_Manager`, `Dim_Currency`, `Dim_Instrument`, `Dim_FundingType`, `Dim_AccountType`, `Dim_Regulation`, `Dim_Affiliate`, `Dim_KYCStatus`, etc.
+   - Fact tables (`Fact_BillingDeposit`, `Fact_BillingWithdraw`, `Fact_CustomerAction`, etc.)
+   - Sibling BI_DB / EXW / eMoney tables when the lineage shows them as a source
+
+   **WHY**: When the SP does `JOIN Dim_Country dc ... SELECT dc.Region`, your wiki needs Dim_Country's Tier 1 description for `Region` — verbatim. Skipping the read forces you to write a paraphrase, which (1) loses semantic content, (2) gets stamped Tier 2 because you can't see the dim's origin tier, (3) breaks Phase 16's cross-object consistency check.
+
+   **The agent's #2 batch failure mode is**: lineage file says `JOIN Dim_X` → agent acknowledges Dim_X exists → agent does NOT open Dim_X.md → agent paraphrases from memory → stamps Tier 2. Stop doing this. Open the dim wiki.
+
 4. For EVERY DWH column that maps to an upstream wiki column (per the lineage file):
    - Copy the upstream description **VERBATIM**
    - **INHERIT the origin tier tag** from the upstream description. Parse the `(Tier N — {origin})` suffix from the upstream column. That origin traces through ALL relay layers unchanged. Example: if Dim_Position says `Commission ... (Tier 1 — Trade.PositionTbl)`, BI_DB's passthrough says `(Tier 1 — Trade.PositionTbl)` — NOT `(Tier 1 — DWH_dbo.Dim_Position)`. The relay is invisible.
+   - If the upstream wiki found in path (a) was itself Tier 4-Confluence (e.g., `Fact_Deposit_State.PIPsInUSD` says `(Tier 4 — Confluence, Conversion fee Revenue Calculation)`), inherit that EXACT tier tag — not Tier 2. Confluence-grade business definitions propagate downstream just like Tier 1 does.
    - If the upstream column has no parseable tier tag, use the upstream table as origin: `(Tier 1 — {upstream_schema}.{upstream_table})`
    - If the upstream column is itself Tier 2 (ETL-computed), the passthrough inherits Tier 2 — tiers don't upgrade by passing through a relay
    - Do NOT paraphrase, summarize, or rewrite
    - Only APPEND schema-specific transform notes (e.g., "BI_DB transform: {what changed}") if the lineage shows a transform. Keep the origin tier tag.
-5. If no upstream wiki exists for a source table, fall through to Tier 2
+
+5. If no upstream wiki exists in either (a) or (b), fall through to Tier 2.
 
 > **This is the #1 quality driver.** Without it, every column defaults to Tier 2-4.
 > Also read: `10.5b-tier1-enforcement.mdc` for the exhaustive search protocol and examples.
+
+### ⛔ Pre-Read Self-Check (MANDATORY before writing any element description)
+
+Before writing the Elements table, emit this check. The check must enumerate **every** entry in the lineage file's `## Source Objects` section (facts, dims, lookups, dictionaries — no exclusions):
+
+```
+UPSTREAM SEARCH LOG — {ObjectName}:
+  Lineage source objects (from .lineage.md):
+    1. {SourceTable_1} (role: {fact / dim lookup / passthrough source / etc.})
+    2. {SourceTable_2} (role: {...})
+    ...
+  For each source:
+    {SourceTable}
+      (a) Local wiki search: knowledge/synapse/Wiki/{schema}/Tables/{table}.md → FOUND/NOT_FOUND
+          Read tool issued: YES/NO  ← MUST BE YES IF FOUND
+      (b) Production wiki search: {routing-resolved path} → FOUND/NOT_FOUND
+          Read tool issued: YES/NO  ← MUST BE YES IF FOUND
+      Effective upstream: {chosen path or "none — fall through to Tier 2"}
+  Columns expected to inherit Tier 1 from each source:
+    Dim_Country: Region, CountryName, RiskGroupID  → 3 columns
+    Dim_Customer: UserName, CID, GCID  → 3 columns
+    Fact_X: ...
+  Tier-1-eligible columns identified: {N}
+```
+
+**FAILURE TRIGGERS — STOP AND REDO if any of these are true:**
+
+1. The log shows ZERO local wiki searches for a downstream schema (BI_DB / EXW / aggregate). You skipped step (a).
+2. A source was marked FOUND but `Read tool issued: NO`. Knowing the file exists is not the same as reading it. The agent's most common failure is acknowledging the dim wiki without opening it.
+3. The log lists fewer source objects than the `.lineage.md` file's Source Objects table. Every entry there must be enumerated — including ones tagged "lookup" / "JOIN lookup" / "dictionary lookup" / "enrichment".
+4. `Tier-1-eligible columns identified: 0` for a downstream object whose lineage shows joins to documented Synapse dims. This is the "0% Tier 1 regression" pattern from batch 30+. If you see this, you missed dim-lookup passthroughs.
 
 ## Pre-Read: Computation Formulas (Tier 2 Columns) — MANDATORY
 
