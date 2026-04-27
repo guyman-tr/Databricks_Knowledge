@@ -20,7 +20,11 @@ if ($SchemaName -eq "BI_DB_dbo") {
 } else {
     $basePromptFile = Join-Path $repoRoot ".claude\prompts\build-wiki-dwh-batch.md"
 }
-$promptFile = Join-Path $env:TEMP "claude_wiki_prompt_$SchemaName.md"
+# Per-iteration prompt files use the iteration number to guarantee a fresh path
+# every time, so a leaked file handle on a previous iteration's prompt cannot
+# block the next write. The path is set inside the loop; below is the pattern
+# used for display only.
+$promptFilePattern = Join-Path $env:TEMP ("claude_wiki_prompt_{0}_<iter>.md" -f $SchemaName)
 
 # Per-schema default batch size (heavy weighted exception applied inside Get-NextBatch).
 $schemaBatchSize = switch ($SchemaName) {
@@ -67,7 +71,7 @@ Write-Host ""
 Write-Host "============================================================" -ForegroundColor Cyan
 Write-Host "  Wiki Batch Loop (wiki-only - no ALTER generation)" -ForegroundColor Cyan
 Write-Host "  Schema:  $SchemaName" -ForegroundColor Cyan
-Write-Host "  Prompt:  $promptFile" -ForegroundColor Cyan
+Write-Host "  Prompts: $promptFilePattern" -ForegroundColor Cyan
 if ($DocLevel) {
     Write-Host "  Filter:  $DocLevel" -ForegroundColor Cyan
 }
@@ -196,6 +200,29 @@ Write-Host ""
 Write-Host "Press Ctrl+C to stop between iterations." -ForegroundColor Gray
 Write-Host ""
 
+# ── STARTUP SWEEP: clear stale temp files from previous runs ─────────────────
+# A leaked file handle on $env:TEMP\claude_wiki_prompt_<schema>.md from a hung
+# claude.exe (or its parent shell) can poison subsequent runs even after the
+# process is killed, because Windows takes time to release the handle and the
+# old static-path scheme tried to overwrite the same locked path forever.
+# Per-iteration filenames (set inside the loop) prevent this going forward,
+# but we still proactively delete anything older than 1 hour at startup.
+$staleAge = New-TimeSpan -Hours 1
+$stalePatterns = @("claude_wiki_prompt_*.md", "claude_wiki_batch_*.jsonl", "claude_wiki_batch_err_*.tmp")
+$sweptCount = 0
+$lockedCount = 0
+foreach ($pat in $stalePatterns) {
+    Get-ChildItem (Join-Path $env:TEMP $pat) -ErrorAction SilentlyContinue |
+      Where-Object { ((Get-Date) - $_.LastWriteTime) -gt $staleAge } |
+      ForEach-Object {
+          try   { Remove-Item $_.FullName -Force -ErrorAction Stop; $sweptCount++ }
+          catch { $lockedCount++ }
+      }
+}
+if (($sweptCount + $lockedCount) -gt 0) {
+    Write-Host "Startup sweep: removed $sweptCount stale temp files; $lockedCount still locked (will be skipped — per-iteration filenames avoid them)." -ForegroundColor DarkGray
+}
+
 $iteration = 1
 $totalCostUsd = 0
 $consecutiveZeroIterations = 0
@@ -235,6 +262,9 @@ while ($true) {
         }
     }
     $promptContent = $basePromptContent + $schemaScopeFooter + $batchBlock
+    # Unique-per-iteration prompt file — prevents file-lock issues if a previous
+    # iteration's claude.exe (or shell) leaked a handle on the path.
+    $promptFile = Join-Path $env:TEMP ("claude_wiki_prompt_{0}_{1}.md" -f $SchemaName, $iteration)
     [System.IO.File]::WriteAllText($promptFile, $promptContent, [System.Text.UTF8Encoding]::new($false))
 
     $inputTokens = 0
@@ -364,6 +394,11 @@ while ($true) {
         Remove-Item $tempOut -Force -ErrorAction SilentlyContinue
         # Keep stderr for MCP debugging: $tempErr
         # Remove-Item $tempErr -Force -ErrorAction SilentlyContinue
+        # Best-effort cleanup of this iteration's prompt file. If the OS still
+        # holds a stale handle (e.g. claude.exe is being torn down), the next
+        # iteration writes to a different filename anyway, so this is safe to
+        # silently skip.
+        Remove-Item $promptFile -Force -ErrorAction SilentlyContinue
     }
 
     $totalCostUsd += $costUsd
