@@ -1,0 +1,76 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AdvancedDeposit_Ext",
+    "elapsed_seconds":  288,
+    "exit_code":  null,
+    "cost_usd":  0.8615,
+    "input_tokens":  5,
+    "output_tokens":  12307,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AdvancedDeposit_Ext",
+                    "weighted_score":  6.60,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "critical",
+                                       "column_or_section":  "ALL 47 columns",
+                                       "problem":  "Defective upstream bundle reported \u0027NO UPSTREAM WIKI was resolvable\u0027 but wikis exist in the repo for Fact_BillingDeposit, Dim_PaymentStatus, Dim_Customer, Dim_Country, Dim_Funnel, Dim_CountryBin, Dim_CardType, Dim_BillingDepot, Dim_Affiliate. ~40 columns should be Tier 1 with verbatim descriptions but are all tagged Tier 2."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "DepositID",
+                                       "problem":  "Description paraphrases upstream. Upstream: \u0027Primary distribution key (HASH). Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY). Clustered index key in DWH.\u0027 Wiki: \u0027Unique identifier for each deposit attempt.\u0027 Lost HASH distribution key, IDENTITY, clustered index key."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PaymentStatusID",
+                                       "problem":  "Upstream has rich enum values: \u00271=New, 2=Approved (73%), 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE (10.2%). Full 39-value enum.\u0027 Wiki drops all enum values and distributions."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Amount",
+                                       "problem":  "Upstream notes: \u0027As of 2025-04-17, capped via CASE expression in ETL to prevent extreme outlier values from distorting aggregations.\u0027 Wiki drops the ETL capping rule entirely."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country, Funnel, FunnelFrom, AcquisitionFunnel, PaymentStatus_Name",
+                                       "problem":  "Dim-lookup passthroughs cite SP relay (Tier 2 — SP_H_Deposits) instead of root dictionary origin. Country should be Tier 1 — Dictionary.Country, Funnel/FunnelFrom/AcquisitionFunnel should be Tier 1 — Dictionary.Funnel, PaymentStatus_Name should be Tier 1 — Dictionary.PaymentStatus."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RiskManagementStatusID",
+                                       "problem":  "Upstream has \u002769 distinct risk reason codes. Key codes: 1=Success, 35=DeclineByRRE, 47=ML, 49=CustomerToFundingViolation.\u0027 Wiki retains NULL semantics but drops all enum details."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 Elements",
+                                       "problem":  "No inline enum key=value pairs for PaymentStatus_Name or IsFTD despite upstream wikis documenting them. PaymentStatus has 7+ known values, IsFTD has binary 0/1 with ~60.6% FTD=1 distribution."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with corrected bundle: (1) Include upstream wikis from knowledge/synapse/Wiki/DWH_dbo/Tables/ for Fact_BillingDeposit, Dim_PaymentStatus, Dim_Customer, Dim_Country, Dim_Funnel, Dim_CountryBin, Dim_CardType, Dim_BillingDepot, Dim_Affiliate. (2) Re-tag ~40 columns as Tier 1 with root origins (e.g. Tier 1 — Billing.Deposit, Tier 1 — Dictionary.Country). (3) Copy upstream descriptions VERBATIM — preserve enum values, NULL semantics, ETL cap rules, FK targets. (4) Keep OldPaymentID, Code as Tier 2 (hardcoded NULLs); keep CardSubType, CardCategory as Tier 2 (upstream Dim_CountryBin marks them Tier 2). (5) Add inline enum key=value pairs for PaymentStatusID, IsFTD from upstream wikis.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3 (0 rows — justified)",
+                                                               "P7 (dormant — justified)",
+                                                               "P10 (none found)"
+                                                           ]
+                                    }
+                }
+}

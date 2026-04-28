@@ -1,0 +1,77 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_Payment_Allowed_Country",
+    "elapsed_seconds":  157,
+    "exit_code":  null,
+    "cost_usd":  0.528,
+    "input_tokens":  4,
+    "output_tokens":  7545,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_Payment_Allowed_Country",
+                    "weighted_score":  7.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer.",
+                                                  "wiki_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. In this table, used as the country dimension key for the country–crypto permission matrix. Passthrough from Dim_Country.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer\u0027 and replaced with local EXW context"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country (Name → Country rename).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream text preserved verbatim; only appended rename provenance suffix"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CountryID",
+                                       "problem":  "Tier 1 paraphrase: dropped \u0027Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer\u0027 from Dim_Country wiki and substituted EXW-specific context. Tier 1 requires verbatim upstream text."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "AllowedUserTagType, PaymentAllowed, AllowedUserSelectedValue",
+                                       "problem":  "Dictionary columns with \u003c=15 distinct values should list inline key=value pairs in the Elements table. AllowedUserTagType has 5 known values, PaymentAllowed has 2 (0/1), AllowedUserSelectedValue has 2 (true/false). Values are described in prose but not enumerated inline per spec."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist with P2/P3 checkmarks. Footer says \u0027Phases: 13/14\u0027 but does not show which phases were completed vs. skipped, making it impossible to verify data evidence methodology."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Bundle resolver failed to include DWH_dbo.Dim_Country and DWH_dbo.Dim_State_and_Province wikis (both exist locally). Writer correctly found them independently. Bundle resolver should be fixed for future runs."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Country",
+                                       "problem":  "Minor Tier 1 fidelity deviation: appended \u0027Passthrough from Dim_Country (Name → Country rename)\u0027 to the upstream-verbatim text. Core meaning preserved but strictly not verbatim."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace CountryID description with verbatim Dim_Country wiki text, then append local context AFTER the upstream quote. (2) Add inline key=value pairs for AllowedUserTagType, PaymentAllowed, and AllowedUserSelectedValue in the Elements table. (3) Add explicit Phase Gate Checklist showing P2/P3 completion status.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 52,548 rows, 250 countries, 174 cryptos, 53 US regions, 9,222 US rows, single UpdateDate 2026-04-15, all PaymentAllowed=0"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not explicitly shown; footer claims 13/14 phases"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,118 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Failed_Verification_MA",
+    "elapsed_seconds":  175,
+    "exit_code":  null,
+    "cost_usd":  0.6657,
+    "input_tokens":  4,
+    "output_tokens":  10205,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Failed_Verification_MA",
+                    "weighted_score":  5.0,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  1,
+                                             "upstream_fidelity":  1,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Global Customer ID — cross-platform identifier. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs. FK to Dim_Customer.",
+                                                  "match":  "NO",
+                                                  "loss":  "\"Group\" changed to \"Global\", \"cross-product identity key\" changed to \"cross-platform identifier\", NULL semantics dropped, root origin Customer.CustomerStatic lost"
+                                              },
+                                              {
+                                                  "column":  "CountryName",
+                                                  "upstream_quote":  "Full country name in English. Unique per country.",
+                                                  "wiki_quote":  "Customer\u0027s registered country name. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "NO",
+                                                  "loss":  "Complete rewrite; \"Unique per country\" dropped, root origin Dictionary.Country lost"
+                                              },
+                                              {
+                                                  "column":  "CurrentRegulation",
+                                                  "upstream_quote":  "Current regulation name for the customer (via Dim_Customer.RegulationID -\u003e Dim_Regulation.Name). May differ from DesignatedRegulation if customer\u0027s regulation changed after registration.",
+                                                  "wiki_quote":  "Customer\u0027s current regulatory jurisdiction. Values: BVI, CySEC, FCA, ASIC, FSA Seychelles, eToroUS, FINRAONLY, etc. Passthrough from source.",
+                                                  "match":  "NO",
+                                                  "loss":  "Resolution path (Dim_Customer.RegulationID -\u003e Dim_Regulation.Name) dropped, DesignatedRegulation diff note dropped, root origin Dictionary.Regulation lost"
+                                              },
+                                              {
+                                                  "column":  "RejectionReasonPOA",
+                                                  "upstream_quote":  "Rejection reason text for the POA document. NULL if POA was approved or not submitted.",
+                                                  "wiki_quote":  "Raw Proof of Address rejection reason text from source. NULL if only POI was rejected. Used as input to ReasonNumber/RejectReasonName mapping.",
+                                                  "match":  "NO",
+                                                  "loss":  "NULL semantics inverted: upstream says NULL when \u0027approved or not submitted\u0027, wiki says NULL when \u0027only POI was rejected\u0027 — different conditions"
+                                              },
+                                              {
+                                                  "column":  "RejectionReasonPOI",
+                                                  "upstream_quote":  "Rejection reason text for the POI document. NULL if POI was approved or not submitted.",
+                                                  "wiki_quote":  "Raw Proof of Identity rejection reason text from source. NULL if only POA was rejected. Used as input to ReasonNumber/RejectReasonName mapping.",
+                                                  "match":  "NO",
+                                                  "loss":  "NULL semantics inverted: upstream says NULL when \u0027approved or not submitted\u0027, wiki says NULL when \u0027only POA was rejected\u0027 — different conditions"
+                                              },
+                                              {
+                                                  "column":  "NonVerificationReason",
+                                                  "upstream_quote":  "Reason why a VL2 customer has not reached VL3. CASE logic: \u0027Docs not Approved\u0027, \u0027Missing Docs\u0027, \u0027User Screening Issue\u0027, \u0027Phone Not Verified\u0027, \u0027Others\u0027, \u0027Not Relevant\u0027. Only meaningful for VL2 customers.",
+                                                  "wiki_quote":  "Reason for non-verification. Always \u0027Docs not Approved\u0027 in this table (filter condition).",
+                                                  "match":  "NO",
+                                                  "loss":  "All 6 CASE values dropped, \u0027Only meaningful for VL2 customers\u0027 note dropped"
+                                              },
+                                              {
+                                                  "column":  "EV_MatchStatus",
+                                                  "upstream_quote":  "Human-readable EV match status label (None, PartiallyVerified, Verified, NotVerified). Resolved via Dim_EvMatchStatus.",
+                                                  "wiki_quote":  "Electronic verification match status. Never \u0027Verified\u0027 (filter condition). 4 values: blank (64%), NotVerified (27%), PartiallyVerified (9%), None (\u003c1%).",
+                                                  "match":  "NO",
+                                                  "loss":  "Resolution source (Dim_EvMatchStatus) dropped, canonical value list replaced with filtered distribution"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "critical",
+                                       "column_or_section":  "ALL passthrough columns (GCID, CountryName, CurrentRegulation, RejectionReasonPOA, RejectionReasonPOI, NonVerificationReason, EV_MatchStatus)",
+                                       "problem":  "All 7 passthrough columns tagged Tier 2 — SP_Failed_Verification_MA. Upstream wiki BI_DB_Operations_Onboarding_Flow_UserKPIs exists and was provided in the bundle. Per tier rules, all passthroughs with upstream wiki present must be Tier 1 with verbatim descriptions."
+                                   },
+                                   {
+                                       "severity":  "critical",
+                                       "column_or_section":  "GCID",
+                                       "problem":  "Tagged Tier 2 but upstream documents as Tier 1 — Customer.CustomerStatic. Description rewrites \u0027Group Customer ID\u0027 as \u0027Global Customer ID\u0027 and drops NULL semantics (\u0027NULL for older accounts predating GCID introduction\u0027)."
+                                   },
+                                   {
+                                       "severity":  "critical",
+                                       "column_or_section":  "CountryName",
+                                       "problem":  "Tagged Tier 2 but upstream documents as Tier 1 — Dictionary.Country. Description is a complete rewrite: \u0027Full country name in English. Unique per country.\u0027 became \u0027Customer\u0027s registered country name.\u0027 Root origin Dictionary.Country lost."
+                                   },
+                                   {
+                                       "severity":  "critical",
+                                       "column_or_section":  "CurrentRegulation",
+                                       "problem":  "Tagged Tier 2 but upstream documents as Tier 1 — Dictionary.Regulation. Resolution path (Dim_Customer.RegulationID -\u003e Dim_Regulation.Name) and the important note \u0027May differ from DesignatedRegulation if customer\u0027s regulation changed after registration\u0027 both dropped."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "RejectionReasonPOI, RejectionReasonPOA",
+                                       "problem":  "NULL semantics inverted. Upstream: \u0027NULL if POI/POA was approved or not submitted\u0027. Wiki: \u0027NULL if only POA/POI was rejected\u0027. These describe different conditions — a reader would misunderstand when NULLs appear."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 4 — Tier Legend and Footer",
+                                       "problem":  "Tier legend only lists Tier 2 and Tier 5. Footer shows \u00270 T1\u0027 — should be 7 T1, 2 T2, 0 T3, 0 T4, 1 T5."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag all 7 passthrough columns (GCID, CountryName, CurrentRegulation, RejectionReasonPOA, RejectionReasonPOI, NonVerificationReason, EV_MatchStatus) as Tier 1 using VERBATIM descriptions from the upstream BI_DB_Operations_Onboarding_Flow_UserKPIs wiki. (2) For GCID use root origin Customer.CustomerStatic, for CountryName use Dictionary.Country, for CurrentRegulation use Dictionary.Regulation — these are the root origins declared in the upstream wiki. (3) Fix RejectionReasonPOA/POI NULL semantics: upstream says \u0027NULL if POA/POI was approved or not submitted\u0027, not \u0027NULL if only POI/POA was rejected\u0027. (4) For NonVerificationReason, include the full CASE value list from upstream even though this table filters to one value. (5) Update Section 4 tier legend to include Tier 1 and fix footer tier counts to 7 T1, 2 T2, 0 T3, 0 T4, 1 T5. (6) Add concrete date context to Section 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "ReasonNumber: top values with percentages (11=31%, 10=21%, 8=13%)",
+                                                                                  "EV_MatchStatus: distribution with percentages (blank 64%, NotVerified 27%, PartiallyVerified 9%, None \u003c1%)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

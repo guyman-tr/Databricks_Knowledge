@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_AccountType",
+    "elapsed_seconds":  97,
+    "exit_code":  null,
+    "cost_usd":  0.3596,
+    "input_tokens":  2,
+    "output_tokens":  4261,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_AccountType",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2.1 (Account Category Groups)",
+                                       "problem":  "The Retail/Corporate/Partner/Internal/Managed groupings are fabricated by the writer. No SP code, upstream wiki, or application source defines these categories. Could mislead analysts into treating them as official system classifications."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P1/P2/P3 completion markers. Data claims appear live-backed but validation phases are unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2 (Referenced By)",
+                                       "problem":  "12 downstream references listed without stated discovery methodology. May be incomplete — missing references could leave analysts unaware of downstream impact."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "AccountTypeID=18 (Trust)",
+                                       "problem":  "Correctly flagged in gotchas as potentially undocumented upstream. Honest handling of uncertain data."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "AccountTypeID, Name",
+                                       "problem":  "Both columns are Tier 3 because no etoro.Dictionary.AccountType wiki exists. The bundle provided USABroker.Dictionary.AccountType (Apex Clearing, 3 rows: CASH/MARGIN/OPTION) which is the wrong system. Writer correctly rejected it."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add disclaimer to Section 2.1 that account category groupings (Retail, Corporate, Partner, Internal, Managed) are analyst-suggested, not system-defined. (2) Add explicit Phase Gate Checklist section with P1/P2/P3 markers. (3) When etoro.Dictionary.AccountType wiki is created, re-run to upgrade AccountTypeID and Name to Tier 1 with verbatim descriptions. (4) Document discovery methodology for Section 6.2 Referenced By.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 19 rows, last refresh 2026-04-27 02:11 UTC, UpdateDate range 2026-04-27 00:00:00 – 2026-04-27 02:11:39"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section absent from wiki body"
+                                                           ]
+                                    }
+                }
+}

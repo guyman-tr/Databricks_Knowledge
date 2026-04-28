@@ -1,0 +1,77 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL",
+    "elapsed_seconds":  171,
+    "exit_code":  null,
+    "cost_usd":  0.6999,
+    "input_tokens":  4,
+    "output_tokens":  7245,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL",
+                    "weighted_score":  7.45,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "wiki_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables. Passthrough from Dim_Instrument via Symbol/ISIN/CUSIP matching against Apex staging data.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped sentinel/range info (\u0027Ranges from 0 (system placeholder) to ~21 million IDs allocated\u0027). Injected non-upstream lineage text about passthrough mechanism."
+                                              },
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries.",
+                                                  "wiki_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries. Passthrough from Dim_Instrument.",
+                                                  "match":  "NO",
+                                                  "loss":  "Missed inheritance: dim-lookup passthrough should be Tier 1 with Dim_Instrument wiki description verbatim, but tagged as Tier 2. Added non-upstream text \u0027Passthrough from Dim_Instrument\u0027."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentDisplayName (#14)",
+                                       "problem":  "Tagged Tier 2 (SP_Dim_Instrument, etoro_Trade_InstrumentMetaData) but this is a dim-lookup passthrough (SELECT Dim_Instrument.InstrumentDisplayName with no transform). Per tier rules, should be Tier 1 with the Dim_Instrument wiki description verbatim."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentID (#13)",
+                                       "problem":  "Tier 1 description paraphrased: dropped \u0027Ranges from 0 (system placeholder) to ~21 million IDs allocated\u0027 from upstream wiki. Injected non-upstream lineage text (\u0027Passthrough from Dim_Instrument via Symbol/ISIN/CUSIP matching against Apex staging data\u0027) that belongs in Section 5, not in a Tier 1 verbatim description."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Lineage file — InstrumentDisplayName",
+                                       "problem":  "Lineage file marks InstrumentDisplayName as Tier 2 with \u0027Dim-lookup passthrough\u0027 note, contradicting the dim-lookup passthrough rule which requires Tier 1."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 13/14\u0027 but doesn\u0027t identify which phase was skipped or provide P2/P3 completion evidence."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Zero (#21)",
+                                       "problem":  "Description says \u0027Not included in the main PnL formula\u0027 but the column\u0027s purpose relative to downstream consumption is ambiguous — is it purely informational or expected to be used by consumers for adjusted reconciliation?"
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag InstrumentDisplayName as Tier 1 using verbatim Dim_Instrument wiki description: \u0027User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries.\u0027 (2) Fix InstrumentID Tier 1 description to restore dropped text: \u0027Ranges from 0 (system placeholder) to ~21 million IDs allocated.\u0027 and remove injected passthrough mechanism text. (3) Update lineage file to mark InstrumentDisplayName as Tier 1. (4) Add explicit Phase Gate Checklist section. (5) Update footer tier counts to 2 T1 / 19 T2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section"
+                                                           ]
+                                    }
+                }
+}

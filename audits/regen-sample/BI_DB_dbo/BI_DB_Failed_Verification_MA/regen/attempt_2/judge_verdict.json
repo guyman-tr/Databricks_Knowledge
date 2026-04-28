@@ -1,0 +1,112 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Failed_Verification_MA",
+    "elapsed_seconds":  442,
+    "exit_code":  null,
+    "cost_usd":  0.82,
+    "input_tokens":  3,
+    "output_tokens":  427,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Failed_Verification_MA",
+                    "weighted_score":  9.10,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note; missing DWH note about DDL NOT NULL constraint contradicting upstream NULL semantics"
+                                              },
+                                              {
+                                                  "column":  "CountryName",
+                                                  "upstream_quote":  "Full country name in English. Unique per country.",
+                                                  "wiki_quote":  "Full country name in English. Unique per country. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "CurrentRegulation",
+                                                  "upstream_quote":  "Current regulation name for the customer (via Dim_Customer.RegulationID -\u003e Dim_Regulation.Name). May differ from DesignatedRegulation if customer\u0027s regulation changed after registration.",
+                                                  "wiki_quote":  "Current regulation name for the customer (via Dim_Customer.RegulationID -\u003e Dim_Regulation.Name). May differ from DesignatedRegulation if customer\u0027s regulation changed after registration. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "RejectionReasonPOA",
+                                                  "upstream_quote":  "Rejection reason text for the POA document. NULL if POA was approved or not submitted.",
+                                                  "wiki_quote":  "Rejection reason text for the POA document. NULL if POA was approved or not submitted. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RejectionReasonPOI",
+                                                  "upstream_quote":  "Rejection reason text for the POI document. NULL if POI was approved or not submitted.",
+                                                  "wiki_quote":  "Rejection reason text for the POI document. NULL if POI was approved or not submitted. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "NonVerificationReason",
+                                                  "upstream_quote":  "Reason why a VL2 customer has not reached VL3. CASE logic: \u0027Docs not Approved\u0027, \u0027Missing Docs\u0027, \u0027User Screening Issue\u0027, \u0027Phone Not Verified\u0027, \u0027Others\u0027, \u0027Not Relevant\u0027. Only meaningful for VL2 customers.",
+                                                  "wiki_quote":  "Reason why a VL2 customer has not reached VL3. CASE logic: \u0027Docs not Approved\u0027, \u0027Missing Docs\u0027, \u0027User Screening Issue\u0027, \u0027Phone Not Verified\u0027, \u0027Others\u0027, \u0027Not Relevant\u0027. Only meaningful for VL2 customers. DWH note: in this table, always \u0027Docs not Approved\u0027 due to WHERE filter. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH note (enrichment, no semantic loss)"
+                                              },
+                                              {
+                                                  "column":  "EV_MatchStatus",
+                                                  "upstream_quote":  "Human-readable EV match status label (None, PartiallyVerified, Verified, NotVerified). Resolved via Dim_EvMatchStatus.",
+                                                  "wiki_quote":  "Human-readable EV match status label (None, PartiallyVerified, Verified, NotVerified). Resolved via Dim_EvMatchStatus. DWH note: in this table, \u0027Verified\u0027 is excluded by the WHERE filter; observed values are empty/NULL, NotVerified, PartiallyVerified. Passthrough from BI_DB_Operations_Onboarding_Flow_UserKPIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH note (enrichment, no semantic loss)"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "GCID",
+                                       "problem":  "DDL defines GCID as NOT NULL but the inherited upstream description states \u0027NULL for older accounts predating GCID introduction\u0027. Writer added DWH notes for NonVerificationReason and EV_MatchStatus but omitted one for this DDL/description contradiction. Should add a DWH note explaining the NOT NULL constraint."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No explicit date range stated. The 3-day rolling window is described conceptually but no concrete date bounds are given (e.g., \u0027covering the 3-day window ending at last SP execution\u0027)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x] marks for P2/P3. Footer says \u0027Phases: 11/14\u0027 but doesn\u0027t enumerate which phases were completed. Data evidence appears genuine but the audit trail is incomplete."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "No Jira or Confluence sources searched due to regen harness mode. Business context validation relies entirely on SP code and upstream wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 (@Date parameter)",
+                                       "problem":  "Gotcha correctly notes the unused @Date parameter but doesn\u0027t flag the implication: if an orchestrator passes a date expecting historical replay, the SP silently ignores it and always uses GETDATE()."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required (PASS at 9.10). Optional polish: (1) Add DWH note to GCID element about DDL NOT NULL constraint. (2) Add concrete date range note in Section 1. (3) Strengthen @Date parameter gotcha to note silent-ignore risk for orchestrators.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,77 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Dictionary_TransactionType",
+    "elapsed_seconds":  107,
+    "exit_code":  null,
+    "cost_usd":  0.249,
+    "input_tokens":  2,
+    "output_tokens":  5503,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Dictionary_TransactionType",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "TransactionTypeID",
+                                                  "upstream_quote":  "Lookup identifier. Primary key.",
+                                                  "wiki_quote":  "Lookup identifier. Primary key. 0=Unknown, 1=CardPayment, 2=Contactless, 3=OnlinePayment, 4=CashWithdrawal, 5=TransferReceived, 6=Transfer, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBA, 12=DebitBA, 13=DirectDebit, 14=CryptoToFiat.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive only — inline enum values appended per \u003c=15 dictionary rule. No semantic loss."
+                                              },
+                                              {
+                                                  "column":  "TransactionType",
+                                                  "upstream_quote":  "Human-readable name for this value.",
+                                                  "wiki_quote":  "Human-readable name for this value. 0=Unknown, 1=CardPayment, 2=Contactless, 3=OnlinePayment, 4=CashWithdrawal, 5=TransferReceived, 6=Transfer, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBA, 12=DebitBA, 13=DirectDebit, 14=CryptoToFiat.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive only — inline enum values appended per \u003c=15 dictionary rule. No semantic loss."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "T1 COPY VERIFICATION debug block leaked into wiki output. This is the writer\u0027s self-check, not end-user content. Should be removed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Missing section",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer implies \u0027Phases: 8/11\u0027 but the formal checklist is absent."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "UpdateDate static value (2023-06-12) mentioned only in header summary, not in Section 1 body. Analyst skimming Section 1 could miss this."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Referenced-By list includes 10 downstream objects but does not clarify which are direct JOINs to this dictionary vs. indirect references via TxTypeID on fact/dim tables. Most SPs reference TxTypeID through eMoney_Fact_Transaction_Status, not this dictionary directly."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "UC Target",
+                                       "problem":  "UC target main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_transactiontype is unresolved in the bundle. May not exist yet or may use a different naming convention."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor polish only: (1) Remove the T1 COPY VERIFICATION debug block from the footer. (2) Add an explicit Phase Gate Checklist section or integrate P2/P3 status into footer. (3) Mention static UpdateDate (2023-06-12) in Section 1 body. (4) Clarify direct vs. indirect references in Section 6.2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 phase gate checklist section absent — phases implied in footer but not explicit"
+                                                           ]
+                                    }
+                }
+}

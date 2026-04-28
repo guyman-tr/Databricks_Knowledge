@@ -1,0 +1,66 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Currency_Instrument_Mapping_Static",
+    "elapsed_seconds":  136,
+    "exit_code":  null,
+    "cost_usd":  0.2452,
+    "input_tokens":  2,
+    "output_tokens":  5752,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Currency_Instrument_Mapping_Static",
+                    "weighted_score":  7.05,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  4,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All sections",
+                                       "problem":  "Sections use descriptive headers (## Overview, ## Source System) instead of the required numbered format (## 1. Purpose \u0026 Business Context, ## 2. Source System, etc.). Every section header deviates from the golden template."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Missing section",
+                                       "problem":  "No Phase Gate Checklist section exists. P2 (live data sampling) and P3 (distribution analysis) are neither marked completed nor skipped, despite data claims (145 rows, 21 currencies, specific pair counts) appearing throughout the wiki."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5.2 equivalent",
+                                       "problem":  "No ETL pipeline ASCII diagram in the wiki body. The lineage file has a rudimentary diagram but the wiki itself lacks one."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "ETL / Load Pattern table",
+                                       "problem":  "Property table uses non-standard labels (Writer SP, Load strategy) instead of required labels (Production Source, Distribution). Distribution (ROUND_ROBIN, HEAP) is mentioned in Overview text but not in the property table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7 equivalent",
+                                       "problem":  "No sample SQL section. A JOIN pattern showing how consuming SPs (SP_eMoney_Snapshot_Settled_Balance, SP_eMoney_Calculated_Balance) reference this table would help analysts understand usage."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Renumber all sections to ## 1. … ## 8. golden format. (2) Add Phase Gate Checklist section with P1/P2/P3 completion status. (3) Add tier legend block at top of Column Inventory. (4) Embed ETL pipeline ASCII diagram in wiki body (even trivial: Manual INSERT → table → SP consumers). (5) Standardize property table labels to Production Source, Refresh, Distribution, UC Target. (6) Add Section 7 with sample SQL JOIN pattern.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3",
+                                                               "Phase Gate Checklist section entirely absent"
+                                                           ]
+                                    }
+                }
+}

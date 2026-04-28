@@ -1,0 +1,130 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "V_Liabilities",
+    "elapsed_seconds":  180,
+    "exit_code":  null,
+    "cost_usd":  0.5459,
+    "input_tokens":  2,
+    "output_tokens":  9961,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "V_Liabilities",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK.",
+                                                  "wiki_quote":  "Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TotalPositionsAmount",
+                                                  "upstream_quote":  "Sum of all open position amounts (NewAmount) for this CID on this date. Includes all asset classes: CFD, stocks, crypto, futures, margin. Source: open positions (Trade.OpenPositionEndOfDay) + same-day closed positions (History.ClosePositionEndOfDay) minus History.Credit CreditTypeID=13 adjustments.",
+                                                  "wiki_quote":  "Sum of all open position amounts (NewAmount) for this CID on this date. Includes all asset classes: CFD, stocks, crypto, futures, margin. Source: open positions (Trade.OpenPositionEndOfDay) + same-day closed positions (History.ClosePositionEndOfDay) minus History.Credit CreditTypeID=13 adjustments.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TotalCash",
+                                                  "upstream_quote":  "Customer\u0027s total cash balance for the day. Computed as: previous day\u0027s TotalCash (from last row in current year) + sum of TotalCashChange from History.ActiveCredit for @dt. This running-balance approach was introduced 2020-06-07 replacing the direct History.Credit.TotalCash read.",
+                                                  "wiki_quote":  "Customer\u0027s total cash balance for the day. Computed as: previous day\u0027s TotalCash (from last row in current year) + sum of TotalCashChange from History.ActiveCredit for @dt. This running-balance approach was introduced 2020-06-07 replacing the direct History.Credit.TotalCash read.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RealizedEquity",
+                                                  "upstream_quote":  "Total account value. If History.ActiveCredit.RealizedEquity is non-zero, taken directly; otherwise computed as TotalCash + TotalPositionsAmount + InProcessCashouts. Confluence definition: \"Unrealized Equity — the total funds in the account, including profit/loss from open positions. The Portfolio value figure represented on the platform is Unrealized equity.\"",
+                                                  "wiki_quote":  "Total account value. If History.ActiveCredit.RealizedEquity is non-zero, taken directly; otherwise computed as TotalCash + TotalPositionsAmount + InProcessCashouts. Confluence definition: \"Unrealized Equity — the total funds in the account, including profit/loss from open positions. The Portfolio value figure represented on the platform is Unrealized equity.\"",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TotalStockPositionAmount",
+                                                  "upstream_quote":  "Sum of position amounts where InstrumentTypeID IN (5,6) AND instrument is NOT a future. Represents CFD and real stock positions (excluding futures that also have InstrumentTypeID 5/6). Added with mutual exclusivity fix (Guy M, 2025-07-29).",
+                                                  "wiki_quote":  "Sum of position amounts where InstrumentTypeID IN (5,6) AND instrument is NOT a future. Represents CFD and real stock positions (excluding futures that also have InstrumentTypeID 5/6).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped changelog note: \u0027Added with mutual exclusivity fix (Guy M, 2025-07-29)\u0027"
+                                              },
+                                              {
+                                                  "column":  "TotalCryptoPositionAmount",
+                                                  "upstream_quote":  "Sum of position amounts where InstrumentTypeID = 10 AND instrument is NOT a future. Represents CFD and real crypto positions. Confluence: \"TotalCryptoPositionAmount + TotalStockPositionAmount = TotalPositionsAmount\" (approximately, excluding other types).",
+                                                  "wiki_quote":  "Sum of position amounts where InstrumentTypeID = 10 AND instrument is NOT a future. Represents CFD and real crypto positions.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped Confluence relationship note about TotalCryptoPositionAmount + TotalStockPositionAmount ≈ TotalPositionsAmount"
+                                              },
+                                              {
+                                                  "column":  "Total_TRSCrypto",
+                                                  "upstream_quote":  "Sum of crypto position amounts where IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2. CFD-style crypto positions under TRS settlement (not yet settled to real ownership). Added 2022-01-27.",
+                                                  "wiki_quote":  "Sum of crypto position amounts where IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2. CFD-style crypto positions under TRS settlement (not yet settled to real ownership).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped changelog date: \u0027Added 2022-01-27\u0027"
+                                              },
+                                              {
+                                                  "column":  "TotalRealFutures",
+                                                  "upstream_quote":  "Sum of all futures position amounts. Identified via JOIN to Dim_Instrument_Snapshot where IsFuture = 1 for the snapshot DateID. Added 2024-10-30.",
+                                                  "wiki_quote":  "Sum of all futures position amounts. Identified via JOIN to Dim_Instrument_Snapshot where IsFuture = 1 for the snapshot DateID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped changelog date: \u0027Added 2024-10-30\u0027"
+                                              },
+                                              {
+                                                  "column":  "TotalStockMarginLoanValue",
+                                                  "upstream_quote":  "Loan value for leveraged stock margin positions: InitForexRate × AmountInUnitsDecimal × InitConversionRate - NewAmount. Only computed when SettlementTypeID = 5 AND Leverage \u003c\u003e 1. Formula updated 2025-12-10 to use InitConversionRate.",
+                                                  "wiki_quote":  "Loan value for leveraged stock margin positions: InitForexRate × AmountInUnitsDecimal × InitConversionRate - NewAmount. Only computed when SettlementTypeID = 5 AND Leverage \u003c\u003e 1.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped changelog note: \u0027Formula updated 2025-12-10 to use InitConversionRate\u0027"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Missing explicit \u0027Distribution\u0027 row in the property table. HASH(CID) info is documented in Section 3.1 but not in the structured property table that tooling may parse."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TotalCryptoPositionAmount",
+                                       "problem":  "Dropped upstream Confluence relationship note: \u0027TotalCryptoPositionAmount + TotalStockPositionAmount = TotalPositionsAmount (approximately, excluding other types)\u0027. This is a useful analyst hint about column relationships."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (28 columns from Fact_CustomerUnrealized_PnL)",
+                                       "problem":  "28 columns from Fact_CustomerUnrealized_PnL tagged Tier 1 but no upstream wiki exists in the bundle. Descriptions are well-written from DDL/SP logic but cannot be \u0027verbatim copies\u0027 since there is nothing to copy from. A Tier Legend footnote would clarify this."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Shape — Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section in the wiki body; completed phases only listed in the footer line."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "TotalStockMarginLoanValue",
+                                       "problem":  "Dropped \u0027Formula updated 2025-12-10 to use InitConversionRate\u0027 — minor changelog metadata but could be useful for analysts debugging historical formula changes."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. For polish: (1) Add \u0027Distribution: HASH(CID) — inherited from base tables\u0027 to property table. (2) Preserve Confluence relationship note on TotalCryptoPositionAmount. (3) Add Tier Legend footnote explaining that Tier 1 columns from Fact_CustomerUnrealized_PnL are confirmed passthroughs via DDL but lack an upstream wiki to quote from.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "ActualNWA: ~0.06% nonzero (4,145 of 6.8M)",
+                                                                                  "Liabilities: 64.5% nonzero",
+                                                                                  "WA_Liabilities: 54.3% nonzero",
+                                                                                  "Liabilities_InUsedMargin: 39.5% nonzero",
+                                                                                  "CopyFundAUM: NULL for ~98.6% of CIDs"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,83 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_AccountType",
+    "elapsed_seconds":  168,
+    "exit_code":  null,
+    "cost_usd":  0.4626,
+    "input_tokens":  2,
+    "output_tokens":  8391,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_AccountType",
+                    "weighted_score":  5.65,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  6,
+                                             "business_meaning":  7,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "AccountTypeID",
+                                                  "upstream_quote":  "Primary key. Typo in column name (missing \u0027o\u0027 - should be AccountTypeID). Values: 1=CASH, 2=MARGIN, 3=OPTION. Referenced by Apex.UserData.AccountTypeID.",
+                                                  "wiki_quote":  "Primary key identifying the account classification. 0=N/A (DWH placeholder), 1=Private, 2=Corporate, 3=IB Account, 4=Joint Account, 5=White Label, 6=Affiliate Private, 7=Employee, 8=Custodian, 9=Fund, 10=eToro Group, 11=News, 12=White List, 13=Analyst, 14=SMSF, 15=Affiliate Corporate, 16=Administrated, 17=Funded Employee, 18=Trust. Controls feature access, regulatory treatment, fee structures, and compliance monitoring level. Referenced by Dim_Customer.AccountTypeID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely different domain. Upstream describes Apex Clearing brokerage types (CASH/MARGIN/OPTION, 3 rows); wiki describes eToro account ownership types (Private/Corporate/IB/etc., 19 rows). FK target changed from Apex.UserData to Dim_Customer. Column typo note (AccuntTypeID) dropped. Bundle resolved etoro.Dictionary.AccountType to wrong wiki (USABroker.Dictionary.AccountType)."
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Display name for the account type. UPPERCASE format matching Apex Clearing\u0027s API conventions.",
+                                                  "wiki_quote":  "Human-readable account type label. Maps to Dictionary.AccountType.AccountTypeName in production (renamed in DWH). Used in reporting to display account classification.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped vendor name (Apex Clearing), dropped UPPERCASE format convention, completely rewritten description. Upstream describes Apex Clearing naming conventions; wiki describes generic DWH labeling."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "critical",
+                                       "column_or_section":  "AccountTypeID, Name (Tier 1 claims)",
+                                       "problem":  "Upstream bundle resolved etoro.Dictionary.AccountType to USABroker.Dictionary.AccountType — a completely different system (Apex Clearing, 3 brokerage types: CASH/MARGIN/OPTION). DWH table contains eToro account types (19 rows: Private/Corporate/IB/etc.). Tier 1 tags claim verbatim inheritance from a wiki describing a different domain. Either the bundle resolution is wrong or these should be Tier 3."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 1, Section 2, Section 3.4 (ID=0 origin)",
+                                       "problem":  "Wiki claims \u0027ID=0 (N/A) is a DWH placeholder row from the production source itself (no separate placeholder insert in the SP).\u0027 The SP explicitly contains: INSERT INTO Dim_AccountType VALUES (0,\u0027N/A\u0027,0,1,@ddate,@ddate) after the staging load. The 0-row IS a DWH placeholder inserted by the SP, contradicting the wiki\u0027s claim."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Name, StatusID, UpdateDate, InsertDate (nullable)",
+                                       "problem":  "DDL declares Name as varchar(50) NULL, StatusID as int NULL, UpdateDate as datetime NULL, InsertDate as datetime NULL. Wiki Elements table marks all four as NOT NULL. 4 out of 6 columns have incorrect nullable reporting."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4, review-needed sidecar",
+                                       "problem":  "No acknowledgment anywhere that the upstream wiki (USABroker.Dictionary.AccountType) describes a completely different system than what the DWH table contains. The review-needed sidecar flags ID=18 Trust and DWHAccountTypeID redundancy but misses the fundamental domain mismatch between upstream wiki and actual data."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2 (business logic categories)",
+                                       "problem":  "Category groupings (Retail, Corporate, Partner, Internal, Managed), system references (BackOffice, Trade, Hedge, Billing, Compliance), and behavioral claims (copy trading routing, fund allocation) are not grounded in any source in the bundle. With P3/P5 skipped, these are unverifiable domain assertions presented as fact."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag AccountTypeID and Name as Tier 3 (no matching upstream wiki available) OR fix the bundle resolution to find the correct etoro.Dictionary.AccountType wiki before claiming Tier 1. (2) Fix ID=0 origin: the SP explicitly inserts (0,\u0027N/A\u0027,0,1,@ddate,@ddate) — this IS a DWH SP placeholder, not from production source. (3) Fix nullable values for Name, StatusID, UpdateDate, InsertDate — all NULL per DDL, not NOT NULL. (4) Add upstream wiki mismatch note to review-needed sidecar: USABroker.Dictionary.AccountType describes Apex Clearing (3 brokerage types), not eToro account types. (5) Mark Section 2 business logic groupings as unverified domain assertions or ground them in a citable source.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1 claims 19 rows (IDs 0-18)",
+                                                                                  "Section 2 full value map with 19 rows and category assignments"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3 (data profiling)",
+                                                               "P5",
+                                                               "P6",
+                                                               "P7",
+                                                               "P9B",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

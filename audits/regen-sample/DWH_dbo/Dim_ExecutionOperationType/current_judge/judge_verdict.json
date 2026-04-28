@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ExecutionOperationType",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.3489,
+    "input_tokens":  2,
+    "output_tokens":  4323,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ExecutionOperationType",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "OperationTypeId (Section 4)",
+                                       "problem":  "Wiki calls OperationTypeId a \u0027Primary key\u0027 but DDL declares it as [int] NULL with a CLUSTERED INDEX, not a PRIMARY KEY constraint. A nullable column cannot be a PK. Should say \u0027Clustered index key\u0027 or \u0027Logical identifier\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "The 6-category operation taxonomy (Standard Orders, Position Events, Operational, Direct, Limit/Rate, Admin) is presented as fact but is inferred from names with no authoritative classification source. The review-needed sidecar flags this but the wiki does not qualify it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Point-in-time staleness claim (\u0027Last updated 2026-03-11, ~8 days stale as of 2026-03-19\u0027) will rot immediately. Should be removed or reworded."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 7/14\u0027 without enumerating which phases passed or failed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3 / Section 6.2",
+                                       "problem":  "Join to Fact_History_Cost marked \u0027(pending)\u0027 is speculative — should be confirmed or omitted."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Change \u0027Primary key\u0027 in OperationTypeId description to \u0027Clustered index key / logical identifier\u0027 — DDL is nullable with no PK constraint. (2) Qualify the 6-category operation taxonomy as inferred from naming conventions. (3) Remove point-in-time staleness claim. (4) Add explicit Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase gate checklist section missing from wiki body"
+                                                           ]
+                                    }
+                }
+}

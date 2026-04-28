@@ -1,0 +1,69 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AffData",
+    "elapsed_seconds":  183,
+    "exit_code":  null,
+    "cost_usd":  0.4866,
+    "input_tokens":  4,
+    "output_tokens":  8513,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AffData",
+                    "weighted_score":  8.20,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u0027Phases: 7/14\u0027 but lists 6 skipped phases (P4,P5,P7,P9,P9B,P10), yielding 14-6=8 completed, not 7. Arithmetic error."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Data Evidence",
+                                       "problem":  "0-row claim is not backed by a cited live query result or timestamp. Reader cannot verify when dormancy was last confirmed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2 (Upstream Search Log)",
+                                       "problem":  "Search log claims Dim_Affiliate.md and Dim_Customer.md were found and read, but the authoritative upstream bundle states \u0027NO UPSTREAM WIKI was resolvable\u0027. Process inconsistency — content is unaffected since Tier 3b was correctly assigned."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Tier Legend)",
+                                       "problem":  "Tier legend only shows Tier 3b. Full tier scale (T1-T5) would help analysts unfamiliar with the system understand the confidence spectrum."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ContractType",
+                                       "problem":  "Element #7 discusses Dim_Affiliate\u0027s tinyint codes (0=N/A, 2=CPA, etc.) but does not resolve whether this varchar(20) column stores text labels or stringified numeric codes. Correctly flagged in review-needed sidecar."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only (PASS): (1) Add explicit dormancy-check evidence — include the SELECT COUNT(*) result and timestamp. (2) Fix footer phase arithmetic: 14-6=8, not 7. (3) Reconcile upstream search log with the bundle\u0027s \u0027no upstream wiki resolvable\u0027 statement. (4) Expand Section 4 tier legend to show the full T1–T5 scale.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P4",
+                                                               "P5",
+                                                               "P7",
+                                                               "P9",
+                                                               "P9B",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

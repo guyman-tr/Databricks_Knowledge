@@ -1,0 +1,162 @@
+{
+  "schema": "Dealing_dbo",
+  "object": "Dealing_Apex_PnL",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Tables\\Dealing_dbo.Dealing_Apex_PnL.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_Apex_PnL\\current\\Dealing_Apex_PnL.lineage.md",
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_Apex_PnL.sql"
+  ],
+  "candidates_found": 12,
+  "resolved_synapse": 5,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 6,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_Apex_PnL\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 100155,
+  "resolutions": [
+    {
+      "raw_name": "DWH_dbo.Dim_Instrument",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Instrument",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Instrument.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_dbo.SP_Apex_PnL",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "SP_Apex_PnL",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_Apex_PnL.sql",
+      "bytes_read": 27457,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Date",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Date",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.PriceLog_History_CurrencyPrice",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "PriceLog_History_CurrencyPrice",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.LP_APEX_EXT872_3EU_217314",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "LP_APEX_EXT872_3EU_217314",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.LP_APEX_EXT982_3EU",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "LP_APEX_EXT982_3EU",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.LP_APEX_EXT869_3EU",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "LP_APEX_EXT869_3EU",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.LP_APEX_EXT981_3EU",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "LP_APEX_EXT981_3EU",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_DailyZeroPnL_Stocks",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_DailyZeroPnL_Stocks",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_DailyZeroPnL_Stocks.md",
+      "sp_path": null,
+      "bytes_read": 9584,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_Apex_PnL_EE",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_Apex_PnL_EE",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_Apex_PnL_EE.md",
+      "sp_path": null,
+      "bytes_read": 7875,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_Apex_PnL_Daily",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_Apex_PnL_Daily",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_Apex_PnL_Daily.md",
+      "sp_path": null,
+      "bytes_read": 10088,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_Apex_PnL_EE_Daily",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_Apex_PnL_EE_Daily",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_Apex_PnL_EE_Daily.md",
+      "sp_path": null,
+      "bytes_read": 7339,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

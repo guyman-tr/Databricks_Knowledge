@@ -1,0 +1,70 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AB_Test",
+    "elapsed_seconds":  89,
+    "exit_code":  null,
+    "cost_usd":  0.3115,
+    "input_tokens":  4,
+    "output_tokens":  3601,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AB_Test",
+                    "weighted_score":  9.15,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "match":  "YES",
+                                                  "loss":  "None. Verbatim match. However, sourced from Dim_Customer wiki which was NOT included in the upstream bundle."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RealCID",
+                                       "problem":  "Tier 1 attribution sourced from Dim_Customer wiki which was explicitly excluded from the upstream bundle (\u0027NO UPSTREAM WIKI was resolvable\u0027). Content is correct and verbatim, but the writer contradicted the bundle without flagging the discrepancy."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Summary blockquote is excessively long (single sentence). Could be split for readability."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "References \u0027Phases: 8/14\u0027 but no explicit Phase Gate Checklist section exists to show which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3 (BI_DB_AB_Test_Data join)",
+                                       "problem":  "Join condition to BI_DB_AB_Test_Data suggested but not validated against companion table DDL. Column name mismatch (Name vs TestName) noted but unverified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RealCID",
+                                       "problem":  "Tier 1 attribution assumes RealCID values originate from Customer.CustomerStatic domain, but since the table was manually loaded, actual data provenance is unproven."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 and P3 not explicitly shown in a Phase Gate Checklist, but data evidence throughout the wiki suggests they were performed"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,210 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_FactTransactions",
+    "elapsed_seconds":  169,
+    "exit_code":  null,
+    "cost_usd":  0.5214,
+    "input_tokens":  2,
+    "output_tokens":  11923,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_FactTransactions",
+                    "weighted_score":  9.60,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Global Customer ID of the wallet owner. Resolved by joining the final output to Wallet.Wallets via WalletId. Gcid=0 indicates omnibus/system wallets. From Wallet.Wallets.Gcid.",
+                                                  "wiki_quote":  "Global Customer ID of the wallet owner. Resolved by joining the final output to Wallet.Wallets via WalletId. Gcid=0 indicates omnibus/system wallets. From Wallet.Wallets.Gcid.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CryptoId",
+                                                  "upstream_quote":  "The cryptocurrency of this transaction. FK to Wallet.CryptoTypes.CryptoID. From SentTransactions.CryptoId or ReceivedTransactions.CryptoId.",
+                                                  "wiki_quote":  "The cryptocurrency of this transaction. FK to Wallet.CryptoTypes.CryptoID. From SentTransactions.CryptoId or ReceivedTransactions.CryptoId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "WalletID",
+                                                  "upstream_quote":  "The wallet involved in this transaction. From SentTransactions.WalletId or ReceivedTransactions.WalletId.",
+                                                  "wiki_quote":  "The wallet involved in this transaction. From SentTransactions.WalletId or ReceivedTransactions.WalletId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranID",
+                                                  "upstream_quote":  "Transaction identifier. SentTransactions.Id for sends, ReceivedTransactions.Id for receives. Not globally unique across action types - combine with ActionTypeId to distinguish.",
+                                                  "wiki_quote":  "Transaction identifier. SentTransactions.Id for sends, ReceivedTransactions.Id for receives. Not globally unique across action types - combine with ActionTypeId to distinguish.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranStatusID",
+                                                  "upstream_quote":  "Latest status ID. Resolved via correlated subquery: `SELECT TOP 1 StatusId FROM *Statuses ORDER BY Id DESC`. FK to Dictionary.TransactionStatus.",
+                                                  "wiki_quote":  "Latest status ID. Resolved via correlated subquery: `SELECT TOP 1 StatusId FROM *Statuses ORDER BY Id DESC`. FK to Dictionary.TransactionStatus.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranStatus",
+                                                  "upstream_quote":  "Human-readable status name from Dictionary.TransactionStatus. Values: Pending, Verified, Error, Done, Cancelled, NeedsApproval.",
+                                                  "wiki_quote":  "Human-readable status name from Dictionary.TransactionStatus. Values: Pending, Verified, Error, Done, Cancelled, NeedsApproval.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranDate",
+                                                  "upstream_quote":  "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate.",
+                                                  "wiki_quote":  "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Transaction amount in native crypto units. From SentTransactionOutputs.Amount (sends) or ReceivedTransactions.Amount (receives). ISNULL defaults to 0 for \"other\" types.",
+                                                  "wiki_quote":  "Transaction amount in native crypto units. From SentTransactionOutputs.Amount (sends) or ReceivedTransactions.Amount (receives). ISNULL defaults to 0 for \u0027other\u0027 types.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Double quotes around \u0027other\u0027 changed to single quotes — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "ProviderFees",
+                                                  "upstream_quote":  "External provider fees. Only populated for Payment transactions (type 7) from PaymentTransactions.ProviderFeeCalculated. NULL for all other types.",
+                                                  "wiki_quote":  "External provider fees. Only populated for Payment transactions (type 7) from PaymentTransactions.ProviderFeeCalculated. NULL for all other types.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FeeExchangeRate",
+                                                  "upstream_quote":  "Exchange rate for fee currency conversion. ConversionOut: source/dest USD rate ratio. Payment: 1/ExchangeRate. Others: 1. NULL for receives.",
+                                                  "wiki_quote":  "Exchange rate for fee currency conversion. ConversionOut: source/dest USD rate ratio. Payment: 1/ExchangeRate. Others: 1. NULL for receives.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BlockchainFees",
+                                                  "upstream_quote":  "Actual blockchain network fee (gas/miner fee). For redemptions: counted once per transaction (ROW_NUMBER=1). From SentTransactions.BlockchainFee. NULL for receives.",
+                                                  "wiki_quote":  "Actual blockchain network fee (gas/miner fee). For redemptions: counted once per transaction (ROW_NUMBER=1). From SentTransactions.BlockchainFee. NULL for receives.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EstimatedBlockchainFee",
+                                                  "upstream_quote":  "Estimated/effective blockchain fee for fee calculations. Redemptions: EstimatedBlockchainFee + InitialFeeAmount. Conversions/Payments: EstimatedBlockChainFee. Staking: BlockchainEstFee. NULL for receives.",
+                                                  "wiki_quote":  "Estimated/effective blockchain fee for fee calculations. Redemptions: EstimatedBlockchainFee + InitialFeeAmount. Conversions/Payments: EstimatedBlockChainFee. Staking: BlockchainEstFee. NULL for receives.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ActionTypeID",
+                                                  "upstream_quote":  "Transaction direction: 1=Sent (outgoing), 2=Recive (incoming). Hard-coded per CTE block.",
+                                                  "wiki_quote":  "Transaction direction: 1=Sent (outgoing), 2=Recive (incoming). Hard-coded per CTE block.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ActionTypeName",
+                                                  "upstream_quote":  "Human-readable direction: \u0027Sent\u0027 or \u0027Recive\u0027 (legacy misspelling preserved for backward compatibility).",
+                                                  "wiki_quote":  "Human-readable direction: \u0027Sent\u0027 or \u0027Recive\u0027 (legacy misspelling preserved for backward compatibility).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SenderAddress",
+                                                  "upstream_quote":  "Sender\u0027s blockchain address. Sends: from WalletPool.PublicAddress (wallet\u0027s own address). Receives: from ReceivedTransactions.SenderAddress (external sender).",
+                                                  "wiki_quote":  "Sender\u0027s blockchain address. Sends: from WalletPool.PublicAddress (wallet\u0027s own address). Receives: from ReceivedTransactions.SenderAddress (external sender).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ReciverAddress",
+                                                  "upstream_quote":  "Receiver\u0027s blockchain address (legacy misspelling \"Reciver\"). Sends: from SentTransactionOutputs.ToAddress. Receives: from ReceivedTransactions.ReceiverAddress.",
+                                                  "wiki_quote":  "Receiver\u0027s blockchain address (legacy misspelling \u0027Reciver\u0027). Sends: from SentTransactionOutputs.ToAddress. Receives: from ReceivedTransactions.ReceiverAddress.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Double quotes around \u0027Reciver\u0027 changed to single quotes — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "BlockchainTransactionId",
+                                                  "upstream_quote":  "On-chain transaction hash. Unique identifier on the blockchain for tracking and verification. From SentTransactions or ReceivedTransactions.",
+                                                  "wiki_quote":  "On-chain transaction hash. Unique identifier on the blockchain for tracking and verification. From SentTransactions or ReceivedTransactions.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TransactionTypeID",
+                                                  "upstream_quote":  "Sent transaction type: 0=Redeem, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking. NULL for received transactions. FK to Dictionary.TransactionTypes.",
+                                                  "wiki_quote":  "Sent transaction type: 0=Redeem, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking. NULL for received transactions. FK to Dictionary.TransactionTypes.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TransactionType",
+                                                  "upstream_quote":  "Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions.",
+                                                  "wiki_quote":  "Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred.",
+                                                  "wiki_quote":  "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "LastStatusUpdateOccurred",
+                                                  "upstream_quote":  "Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables \"time since last update\" monitoring and SLA tracking. New in this version (not in TransactionViewOld).",
+                                                  "wiki_quote":  "Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables \u0027time since last update\u0027 monitoring and SLA tracking. New in this version (not in TransactionViewOld).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Double quotes around \u0027time since last update\u0027 changed to single quotes — no semantic loss"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property table — UC Target",
+                                       "problem":  "Wiki claims UC Target is `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions` but lineage file says `_Not_Migrated`. The writer appears to have constructed the UC name from a naming convention rather than verified it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Amount (#12)",
+                                       "problem":  "Upstream uses escaped double quotes around \u0027other\u0027; wiki uses single quotes. Trivial formatting difference, no semantic loss."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ReciverAddress (#26)",
+                                       "problem":  "Upstream uses escaped double quotes around \u0027Reciver\u0027; wiki uses single quotes. Trivial formatting difference, no semantic loss."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LastStatusUpdateOccurred (#43)",
+                                       "problem":  "Upstream uses escaped double quotes around \u0027time since last update\u0027; wiki uses single quotes. Trivial formatting difference, no semantic loss."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer self-assigns Quality: 9.4/10 and a P16 adversarial score of 9.45. This pre-judges the independent review and is not meaningful until externally scored."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed (PASS). For polish: (1) Reconcile UC Target — verify whether `bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions` actually exists or update to `_Not_Migrated` per lineage. (2) Match upstream quote characters exactly (escaped double quotes, not single quotes) in Amount, ReciverAddress, and LastStatusUpdateOccurred descriptions. (3) Remove self-assessed quality/adversarial scores from footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P10 — Atlassian (no MCP configured)"
+                                                           ]
+                                    }
+                }
+}

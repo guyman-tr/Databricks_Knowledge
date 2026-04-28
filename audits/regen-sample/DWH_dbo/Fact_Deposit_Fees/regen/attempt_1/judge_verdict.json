@@ -1,0 +1,69 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Fact_Deposit_Fees",
+    "elapsed_seconds":  114,
+    "exit_code":  null,
+    "cost_usd":  0.289,
+    "input_tokens":  2,
+    "output_tokens":  4837,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Fact_Deposit_Fees",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / SP code",
+                                       "problem":  "SP WHERE clause is entirely commented out — each run inserts ALL staging rows. Wiki mentions \u0027append-only mode\u0027 in Gotchas but Section 1 should state duplicate risk more prominently given the full-reload-without-delete pattern."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "DepositCollarAmount",
+                                       "problem":  "Description states \u0027Deposit amount converted to a base currency (USD equivalent)\u0027 as fact, but this is inferred from data patterns with no upstream documentation. Should be phrased as observed/inferred."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Claims \u0027~99.99% Approved in 2024 data\u0027 but 2024 data only covers H1 (through June 2024). The percentage scope should match the stated data scope."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ExchangeRate",
+                                       "problem":  "Description says \u0027May differ from BaseExchangeRate due to spread or fee adjustments\u0027 — this is speculative with no upstream documentation confirming the relationship."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian scan skipped for dormant table. Potential Jira/Confluence context about decommissioning rationale is missing."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. For polish: (1) Move duplicate-risk warning from Gotchas into Section 1 summary. (2) Mark DepositCollarAmount USD-equivalent interpretation as inferred. (3) Mark ExchangeRate vs BaseExchangeRate relationship as inferred. (4) Upgrade Tier 3 columns to Tier 1 if BackOffice.BillingDepositsPCIVersion wiki is ever created.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 14.4M rows, 2021-12-01 to 2024-06-30",
+                                                                                  "Section 1: CreditCard 56%, eToroMoney 28%, PayPal 12%",
+                                                                                  "Section 1: CySEC 55%, FCA 26%",
+                                                                                  "Riskstatus: ~96% empty",
+                                                                                  "FTD: ~8% in 2024",
+                                                                                  "DepositStatus: ~99.99% Approved"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "2 of 14 phases skipped per footer — specific phases not identified"
+                                                           ]
+                                    }
+                }
+}

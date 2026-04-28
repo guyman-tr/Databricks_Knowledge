@@ -1,0 +1,88 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_Conversion_Allowed_Country",
+    "elapsed_seconds":  258,
+    "exit_code":  null,
+    "cost_usd":  0.6666,
+    "input_tokens":  4,
+    "output_tokens":  13913,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_Conversion_Allowed_Country",
+                    "weighted_score":  4.50,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  4,
+                                             "completeness":  4,
+                                             "business_meaning":  7,
+                                             "data_evidence":  4,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+                                                  "wiki_quote":  "Country name from DWH_dbo.Dim_Country.Name. Text label for the country. (Tier 2 — SP_EXW_WalletElligibleCountries)",
+                                                  "match":  "NO",
+                                                  "loss":  "Wrong tier (2 instead of 1). Paraphrased: lost \u0027English\u0027, \u0027Unique per row\u0027, usage context. Wrong origin (should be Dictionary.Country, not SP)."
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. (Tier 1 - Dictionary.Country upstream wiki)",
+                                                  "wiki_quote":  "DWH country dimension key. FK to DWH_dbo.Dim_Country.CountryID. HASH distribution key. For US (CountryID=219), one row per state. (Tier 2 — SP_EXW_WalletElligibleCountries)",
+                                                  "match":  "NO",
+                                                  "loss":  "Wrong tier (2 instead of 1). Lost 0=Not available sentinel, lost 1-250 range. Wrong origin (should be Dictionary.Country)."
+                                              },
+                                              {
+                                                  "column":  "RegionByIP_ID",
+                                                  "upstream_quote":  "Primary join key. Auto-incrementing surrogate PK from Dictionary.RegionByIP (IDENTITY NOT FOR REPLICATION). Stored in Customer.CustomerStatic.RegionByIP_ID and used to identify the sub-country region detected from a customer\u0027s IP address at registration. (Tier 1 — upstream wiki, Dictionary.RegionByIP)",
+                                                  "wiki_quote":  "Geographic region identifier from Dim_State_and_Province.RegionByIP_ID for US states; NULL for non-US countries. (Tier 3 — inferred)",
+                                                  "match":  "NO",
+                                                  "loss":  "Wrong tier (3 instead of 1). Lost Dictionary.RegionByIP origin, IDENTITY semantics, CustomerStatic FK reference. Completely rewritten description."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "16 of 21 columns (Country, StateProvince, CryptoID, Crypto, AllowedUserResource, AllowedUserTagType, AllowedUserTagValue, AllowedUserSelectedValue, FromResourceName, FromTagType, FromTagValue, FromSelectedValue, ToResourceName, ToTagType, ToTagValue, ToSelectedValue)",
+                                       "problem":  "DDL type mismatches: varchar(50) written as nvarchar(100) for Country, varchar(100) as nvarchar(100) for StateProvince, nvarchar(256) shrunk to nvarchar(100) for Crypto, CryptoID NOT NULL shown as nullable, and 12 tag/resource columns have inflated lengths (nvarchar(50)→100/200, nvarchar(100)→200). An analyst trusting the Elements table will have wrong schema assumptions."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country, CountryID",
+                                       "problem":  "Tagged Tier 2 (SP_EXW_WalletElligibleCountries) but these are dim-lookup passthroughs from Dim_Country, which documents them as Tier 1 from Dictionary.Country. Descriptions are paraphrased. CountryID lost the 0=Not available sentinel value."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "RegionByIP_ID",
+                                       "problem":  "Tagged Tier 3 (inferred) but is a dim-lookup passthrough from Dim_State_and_Province.RegionByIP_ID, which is Tier 1 from Dictionary.RegionByIP. Description completely rewritten — lost upstream origin, IDENTITY semantics, and CustomerStatic FK reference."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No row count or date range. Business meaning is otherwise good but lacks quantitative grounding."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No Section 5.2 ETL pipeline ASCII diagram. Only a 5.1 source table is present. The lineage file has a pipeline diagram but the wiki itself does not."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix all 16 DDL type mismatches — use DDL types verbatim: varchar(50) for Country, NOT NULL for CryptoID, nvarchar(256) for Crypto, nvarchar(50) for all tag columns, nvarchar(100) for resource columns. (2) Re-tag Country and CountryID as Tier 1 — Dictionary.Country using verbatim descriptions from Dim_Country wiki elements #4 and #1. (3) Re-tag RegionByIP_ID as Tier 1 — Dictionary.RegionByIP using verbatim description from Dim_State_and_Province wiki element #1. (4) Re-tag StateProvince as Tier 2 since Dim_State_and_Province.Name is Tier 2. (5) Add row count and date range to Section 1. (6) Add Section 5.2 ETL pipeline ASCII diagram. (7) List inline values for FromConversionAllowed and ToConversionAllowed. (8) Ensure upstream bundle includes Dim_Country and Dim_State_and_Province wikis.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "AllowedUserSelectedValue: \u0027Currently false for all rows\u0027",
+                                                                                  "FromSelectedValue: \u0027Currently false for all rows\u0027",
+                                                                                  "ToSelectedValue: \u0027Currently false for all rows\u0027",
+                                                                                  "FromConversionAllowed: \u0027Currently 0 for all rows\u0027",
+                                                                                  "ToConversionAllowed: \u0027Currently 0 for all rows\u0027"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 and P3 not explicitly shown in Phase Gate Checklist — footer claims 13/14 but no visible checklist"
+                                                           ]
+                                    }
+                }
+}

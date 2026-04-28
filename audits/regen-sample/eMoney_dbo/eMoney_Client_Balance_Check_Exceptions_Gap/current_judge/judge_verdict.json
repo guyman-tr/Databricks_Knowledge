@@ -1,0 +1,55 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Client_Balance_Check_Exceptions_Gap",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.3993,
+    "input_tokens":  2,
+    "output_tokens":  4290,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Client_Balance_Check_Exceptions_Gap",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate (Element #3, Section 3.4)",
+                                       "problem":  "Wiki claims \u0027Date and UpdateDate can be different\u0027 and that UpdateDate \u0027represents the execution date of the SP, which may differ from Date.\u0027 In the SP code, both Date and UpdateDate derive from the same @Date parameter: Date = CAST(CONVERT(DATETIME, CONVERT(CHAR(8), @DateID))) and UpdateDate = @Date, where @DateID = CAST(CONVERT(CHAR(8), @Date, 112) AS INT). They are algebraically identical in every normal SP call."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Statement that SP is \u0027called with an explicit @Date parameter\u0027 is slightly misleading — the orchestrator SP_eMoney_ClientBalance passes its own @d parameter automatically, not an independently chosen date."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Phase notation \u0027P1-P10A/14 (P3 empty table, P10 skipped)\u0027 does not explicitly address P2 (data profiling) status. Should state P2 skipped/N/A due to empty table."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Correct UpdateDate description in Element #3 — remove claim that Date and UpdateDate \u0027may differ\u0027; state both derive from the same @Date parameter and are always equal in normal operation. (2) Fix Section 3.4 \u0027Date vs UpdateDate\u0027 gotcha to reflect they are identical, not potentially different. (3) Clarify P2 status in footer as skipped/N/A due to 0-row table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 status ambiguous",
+                                                               "P10 skipped"
+                                                           ]
+                                    }
+                }
+}

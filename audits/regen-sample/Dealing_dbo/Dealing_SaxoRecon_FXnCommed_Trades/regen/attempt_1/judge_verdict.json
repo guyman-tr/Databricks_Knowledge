@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_SaxoRecon_FXnCommed_Trades",
+    "elapsed_seconds":  90,
+    "exit_code":  null,
+    "cost_usd":  0.2359,
+    "input_tokens":  2,
+    "output_tokens":  3868,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_SaxoRecon_FXnCommed_Trades",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "All 22 columns",
+                                       "problem":  "100% Tier 3 — every column description is inferred from DDL + data + sibling SP pattern. No writer SP code or upstream wiki available. Inherent to orphaned status but means all descriptions are unconfirmed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Commission",
+                                       "problem":  "Currency is unconfirmed — wiki says \u0027likely USD given the column context\u0027 which is a guess. Review-needed sidecar correctly flags this."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Clients_Units, Clients_AmountUSD",
+                                       "problem":  "Client-side data source is speculative (\u0027DWH_dbo.Dim_Position or risk matrix — inferred\u0027). The sibling SP\u0027s EOD section uses Dealing_Duco_EODRecon but the Trades section may have used a different source."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SAXO-eToro_Units, SAXO-Clients_Units, SAXO-eToro_Rate, SAXO-eToro_AmountUSD, SAXO-Clients_AmountUSD",
+                                       "problem":  "Differential formulas (e.g., SAXO_Units − eToro_Units) are inferred from sibling SP pattern and data values, not confirmed from actual SP code."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Three Atlassian links are tangentially related (general trade reporting, SAXO connectivity, SOD recon) but none is specific to this table. Acknowledged by the writer."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P9",
+                                                               "P9B"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ContactType",
+    "elapsed_seconds":  91,
+    "exit_code":  null,
+    "cost_usd":  0.1813,
+    "input_tokens":  2,
+    "output_tokens":  3525,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ContactType",
+                    "weighted_score":  8.5,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  8,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No explicit Phase Gate Checklist subsection present. Footer claims \u0027Phases: 11/14\u0027 but reader cannot verify which phases were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range stated. Should explicitly say \u0027No date range — table has never been populated\u0027 rather than omitting silently."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Name",
+                                       "problem":  "Description includes speculative examples (\u0027e.g., expected values like phone, email, chat\u0027) that are unverifiable for a 0-row table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "Pipeline diagram uses generic placeholders throughout. Could be simplified to \u0027No ETL pipeline exists\u0027 for a dormant table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Quality self-assessment at 5/10 with Logic 3/10 and Lineage 2/10 subscores are honest but the Phase Gate detail that supports them is missing from the body."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section not present — cannot verify P2/P3 status"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,68 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Dictionary_AccountProgram",
+    "elapsed_seconds":  84,
+    "exit_code":  null,
+    "cost_usd":  0.1961,
+    "input_tokens":  2,
+    "output_tokens":  3744,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Dictionary_AccountProgram",
+                    "weighted_score":  9.05,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "AccountProgramID",
+                                                  "upstream_quote":  "Lookup identifier. Primary key.",
+                                                  "wiki_quote":  "Lookup identifier. Primary key. 0=Unknown, 1=card, 2=iban.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No semantic loss — upstream text preserved verbatim; enum values appended from upstream Section 3"
+                                              },
+                                              {
+                                                  "column":  "AccountProgram",
+                                                  "upstream_quote":  "Human-readable name for this value.",
+                                                  "wiki_quote":  "Human-readable name for this value. 0=Unknown, 1=card, 2=iban.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No semantic loss — upstream text preserved verbatim; enum values appended from upstream Section 3"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist with P2/P3 checkboxes. Data evidence claims (3 rows, enum values, 2023-06-12 date) cannot be verified as live-queried vs. copied from upstream wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer uses non-standard quality breakdown format instead of canonical phases-completed list."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "AccountProgramID, AccountProgram",
+                                       "problem":  "Tier 1 descriptions append enum values (0=Unknown, 1=card, 2=iban) not present in upstream Element descriptions, though values come from upstream Section 3. Additive, not lossy."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

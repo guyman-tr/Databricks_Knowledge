@@ -1,0 +1,99 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_Payment_Allowed_Country",
+    "elapsed_seconds":  286,
+    "exit_code":  null,
+    "cost_usd":  0.8992,
+    "input_tokens":  11,
+    "output_tokens":  14326,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_Payment_Allowed_Country",
+                    "weighted_score":  5.10,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  4,
+                                             "business_meaning":  7,
+                                             "data_evidence":  4,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer. (Tier 1 - Dictionary.Country upstream wiki)",
+                                                  "wiki_quote":  "DWH country dimension key. FK to DWH_dbo.Dim_Country.CountryID. HASH distribution key. For US (CountryID=219), one row per state. (Tier 2 — SP_EXW_WalletElligibleCountries)",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire Tier 1 upstream description dropped. Sentinel value 0, range 1-250, referenced-by list all lost. Wrong tier (Tier 2 instead of Tier 1)."
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+                                                  "wiki_quote":  "Country name from DWH_dbo.Dim_Country.Name. Text label for the country whose payment eligibility is represented. (Tier 2 — SP_EXW_WalletElligibleCountries)",
+                                                  "match":  "NO",
+                                                  "loss":  "Upstream description replaced with generic paraphrase. \u0027Unique per row\u0027 and usage context dropped. Wrong tier (Tier 2 instead of Tier 1)."
+                                              },
+                                              {
+                                                  "column":  "StateProvince",
+                                                  "upstream_quote":  "Full human-readable geographic name of the region — state, province, or territory. Sourced from Dictionary.RegionName.Name. Examples: \"California\", \"New York\", \"Ontario\". Used in reporting to display readable geographic labels. (Tier 2 — SP_Dictionaries_DL_To_Synapse)",
+                                                  "wiki_quote":  "US state name from DWH_dbo.Dim_State_and_Province.Name for US rows; NULL for other countries. (Tier 3 — inferred)",
+                                                  "match":  "NO",
+                                                  "loss":  "Examples dropped, production source (Dictionary.RegionName) lost, narrowed from \u0027state, province, or territory\u0027 to \u0027US state\u0027. Wrong tier (Tier 3 instead of Tier 1)."
+                                              },
+                                              {
+                                                  "column":  "RegionByIP_ID",
+                                                  "upstream_quote":  "Primary join key. Auto-incrementing surrogate PK from Dictionary.RegionByIP (IDENTITY NOT FOR REPLICATION). Stored in Customer.CustomerStatic.RegionByIP_ID and used to identify the sub-country region detected from a customer\u0027s IP address at registration. (Tier 1 — upstream wiki, Dictionary.RegionByIP)",
+                                                  "wiki_quote":  "Geographic region identifier from Dim_State_and_Province.RegionByIP_ID for US states; NULL for non-US countries. (Tier 3 — inferred)",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire upstream description dropped: identity semantics, customer usage context, Dictionary.RegionByIP origin. Wrong tier (Tier 3 instead of Tier 1)."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country, Crypto, AllowedUserResource, AllowedUserTagType, AllowedUserTagValue, AllowedUserSelectedValue, CryptosResourceName, CryptosTagType, CryptosTagValue, CryptosSelectedValue, StateProvince",
+                                       "problem":  "11 of 16 columns have fabricated data types. DDL says Country is varchar(50), wiki says nvarchar(100). DDL says Crypto is nvarchar(256), wiki says nvarchar(100). All 8 Settings-derived columns have inflated lengths (e.g., DDL nvarchar(50) → wiki nvarchar(100) or nvarchar(200)). StateProvince is varchar(100) in DDL but nvarchar(100) in wiki."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CountryID, Country, StateProvince, RegionByIP_ID",
+                                       "problem":  "All four dim-lookup passthrough columns are mis-tiered. CountryID and Country should be Tier 1 (Dictionary.Country, via Dim_Country wiki). StateProvince and RegionByIP_ID should be Tier 1 (via Dim_State_and_Province wiki). Writer tagged them Tier 2 and Tier 3 respectively."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Upstream bundle",
+                                       "problem":  "Bundle claimed no upstream wikis were resolvable, but DWH_dbo.Dim_Country.md and DWH_dbo.Dim_State_and_Province.md both exist in the repo. This caused 0 Tier 1 columns where there should be at least 4."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1, Property table (Refresh)",
+                                       "problem":  "SP change history (2026-04-14) explicitly removes payment, staking, and conversion sections. Table is orphaned — will never be refreshed again. Wiki says \u0027Full refresh (TRUNCATE + INSERT)\u0027 which is now false. Should say \u0027Orphaned — SP payment section removed 2026-04-14\u0027."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "CryptoID, Crypto",
+                                       "problem":  "Crypto source identified only as \u0027crypto lookup dimension\u0027 and \u0027Crypto dimension (no upstream wiki)\u0027. Actual source is EXW_Wallet.CryptoTypes (SP lines 995-999). Writer failed to trace the source table."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5, Section 1",
+                                       "problem":  "Missing Section 5.2 ETL pipeline ASCII diagram. Missing row count and date range in Section 1. Missing inline key=value for PaymentAllowed {0=not allowed, 1=allowed}."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix all 11 data type mismatches — read DDL exactly: Country varchar(50), Crypto nvarchar(256), AllowedUserResource nvarchar(100), AllowedUserTagType nvarchar(50), etc. (2) Re-tag CountryID and Country as Tier 1 (Dictionary.Country) using verbatim descriptions from Dim_Country wiki. (3) Re-tag StateProvince and RegionByIP_ID as Tier 1 using verbatim descriptions from Dim_State_and_Province wiki. (4) Update Refresh to note SP payment section removed 2026-04-14 — table is orphaned. (5) Name crypto source as EXW_Wallet.CryptoTypes explicitly. (6) Add Section 5.2 ETL pipeline diagram. (7) Add row count and date range to Section 1. (8) Add inline key=value for PaymentAllowed. (9) Include upstream bundle with Dim_Country and Dim_State_and_Province wikis in next run.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "PaymentAllowed: \u0027Currently 0 for all rows\u0027 — no P2 evidence",
+                                                                                  "AllowedUserSelectedValue: \u0027Currently false for all rows\u0027 — no P2 evidence",
+                                                                                  "CryptosSelectedValue: \u0027Currently false for all rows\u0027 — no P2 evidence"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 (live data sampling) — no row count or date range",
+                                                               "P3 (distribution analysis) — no NULL-rate or value distribution"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,79 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_AccountType",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.84,
+    "input_tokens":  5,
+    "output_tokens":  4564,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_AccountType",
+                    "weighted_score":  6.40,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  4,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "AccountTypeID",
+                                                  "upstream_quote":  "No valid upstream wiki for etoro.Dictionary.AccountType exists on disk. Bundle provided USABroker.Dictionary.AccountType (Apex Clearing: AccuntTypeID, 3 rows: CASH/MARGIN/OPTION) which is the wrong table entirely.",
+                                                  "wiki_quote":  "Primary key identifying the account classification. 0=N/A (DWH sentinel), 1=Private, 2=Corporate, 3=IB Account, 4=Joint, 5=White Label, 6=Affiliate Private, 7=Employee, 8=Custodian, 9=Fund, 10=eToro Group, 11=News, 12=White List, 13=Analyst, 14=SMSF, 15=Affiliate Corporate, 16=Administrated, 17=Funded Employee, 18=Trust. Controls feature access, regulatory treatment, fee structures, and compliance monitoring level. (Tier 1 — Dictionary.AccountType)",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire description is original composition, not inherited. No etoro.Dictionary.AccountType wiki exists to quote from. Should be Tier 3."
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "No valid upstream wiki for etoro.Dictionary.AccountType exists on disk. Bundle provided USABroker.Dictionary.AccountType.Name: \u0027Display name for the account type. UPPERCASE format matching Apex Clearing API conventions.\u0027 — wrong system entirely.",
+                                                  "wiki_quote":  "Human-readable label for the account type. Used in BackOffice UI, compliance reporting, and DWH exports. Renamed from AccountTypeName in production. (Tier 1 — Dictionary.AccountType)",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire description is original composition, not inherited. No etoro.Dictionary.AccountType wiki exists to quote from. Should be Tier 3."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "AccountTypeID, Name",
+                                       "problem":  "Both columns tagged (Tier 1 — Dictionary.AccountType) but etoro.Dictionary.AccountType wiki does not exist on disk. The bundle provided USABroker.Dictionary.AccountType (Apex Clearing, 3 rows: CASH/MARGIN/OPTION) which is a completely different system. Writer correctly rejected the wrong wiki but fabricated descriptions and labeled them Tier 1. Should be Tier 3."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Harness resolved Dictionary.AccountType to USABroker.Dictionary.AccountType (wrong database). The etoro.Dictionary.AccountType wiki does not exist, breaking the entire Tier 1 provenance chain. Writer documented this in review-needed but the wiki still claims Tier 1 inheritance."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "References \u0027Various Fact_* tables\u0027 as a placeholder instead of enumerating specific consuming objects. This is lazy documentation that provides no actionable information."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No Phase Gate Checklist section documenting which data validation phases (P1/P2/P3) were completed. Data claims (19 rows, enum values, AccountTypeID=18 Trust) appear but are not formally validated."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range or UpdateDate range in Section 1 summary. For a daily-refreshed table, the last refresh timestamp would indicate freshness."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Generate the etoro.Dictionary.AccountType upstream wiki FIRST, then re-run this wiki to properly inherit Tier 1 descriptions verbatim. (2) Until that wiki exists, re-tag AccountTypeID and Name as Tier 3 (no upstream wiki available) — do NOT claim Tier 1 without a quotable source. (3) Replace \u0027Various Fact_* tables\u0027 in Section 6.2 with specific object names from a DWH schema dependency scan. (4) Add a Phase Gate Checklist section. (5) Add UpdateDate range to Section 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "19 rows (Section 1)",
+                                                                                  "AccountTypeID=18 Trust noted as live data discovery"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

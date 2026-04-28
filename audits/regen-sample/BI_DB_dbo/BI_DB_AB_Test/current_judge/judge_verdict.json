@@ -1,0 +1,69 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AB_Test",
+    "elapsed_seconds":  104,
+    "exit_code":  null,
+    "cost_usd":  0.2144,
+    "input_tokens":  2,
+    "output_tokens":  4188,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AB_Test",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5.1",
+                                       "problem":  "Production Sources table presents speculative origins assertively (e.g., \u0027etoro production (Customer)\u0027 for RealCID) despite the upstream bundle confirming no upstream wiki was resolvable. Lineage file correctly says \u0027Unknown\u0027 but the wiki Section 5.1 does not."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "All columns",
+                                       "problem":  "No NULL-rate statistics reported for any of the 8 nullable columns despite live data access being available."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "Join to Fact_CustomerAction is hypothetical — no evidence this table exists with the assumed schema. The LIKE-based join to BI_DB_AB_Test_Data is fragile and untested."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "BI_Owner, Business_Owner, Name",
+                                       "problem":  "varchar length warnings repeated in element descriptions, Section 2.3, and Section 3.4 Gotchas — redundant."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-assessed quality score of 7.5/10 is cosmetic but conveniently lands on the pass threshold."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. Optional improvements: (1) Add NULL-rate stats for all 8 columns. (2) Mark Section 5.1 sources as explicitly speculative. (3) Label Fact_CustomerAction join as hypothetical. (4) Deduplicate varchar length warnings.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3",
+                                                               "P5",
+                                                               "P7",
+                                                               "P9",
+                                                               "P9B",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

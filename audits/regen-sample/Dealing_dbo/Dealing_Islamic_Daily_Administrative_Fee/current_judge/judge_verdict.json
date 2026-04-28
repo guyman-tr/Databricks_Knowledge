@@ -1,0 +1,170 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Islamic_Daily_Administrative_Fee",
+    "elapsed_seconds":  257,
+    "exit_code":  null,
+    "cost_usd":  0.7844,
+    "input_tokens":  2,
+    "output_tokens":  16008,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Islamic_Daily_Administrative_Fee",
+                    "weighted_score":  4.20,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  2,
+                                             "completeness":  4,
+                                             "business_meaning":  7,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "PositionID",
+                                                  "upstream_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Position identifier",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped PK status, allocation source (Internal.GetPositionID_Bigint), uniqueness guarantee"
+                                              },
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Client ID (Islamic account holder)",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped platform-internal PK, registration assignment, universal identifier role, etoro DB scope"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0. (Tier 1 — Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Client country",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped FK target (Dictionary.Country), regulatory/instrument/leverage semantics, Default=0"
+                                              },
+                                              {
+                                                  "column":  "OpenDateID",
+                                                  "upstream_quote":  "ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. (Tier 2 - SP_Dim_Position_DL_To_Synapse)",
+                                                  "wiki_quote":  "Date position opened",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped YYYYMMDD int format, derivation from OpenOccurred, example value, Dim_Date advisory"
+                                              },
+                                              {
+                                                  "column":  "OpenOccurred",
+                                                  "upstream_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate(). (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Exact open timestamp",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027persisted\u0027 semantics, production mapping (Occurred), default value getutcdate()"
+                                              },
+                                              {
+                                                  "column":  "CloseDateID",
+                                                  "upstream_quote":  "ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. Partition column. Always include in WHERE clause. (Tier 2 - SP_Dim_Position_DL_To_Synapse)",
+                                                  "wiki_quote":  "Date position closed; 0 if still open",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped 19000101 transient state, YYYYMMDD format, partition column status, WHERE clause advisory"
+                                              },
+                                              {
+                                                  "column":  "CloseOccurred",
+                                                  "upstream_quote":  "When close was persisted. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Exact close timestamp",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Slight rewording; meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Instrument identifier",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped FK target (Trade.Instrument), \u0027Financial instrument being traded\u0027"
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "1=long, 0=short",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027(profit when price rises)\u0027 and \u0027Sell\u0027 label"
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Position leverage",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped multiplier values (1, 5, 10, etc.), margin/settlement type semantics"
+                                              },
+                                              {
+                                                  "column":  "AmountInUnitsDecimal",
+                                                  "upstream_quote":  "Position size in units/shares. Fractional lots. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Position size in instrument units",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Rewording \u0027units/shares\u0027 to \u0027instrument units\u0027; lost \u0027Fractional lots\u0027"
+                                              },
+                                              {
+                                                  "column":  "InstrumentTypeID",
+                                                  "upstream_quote":  null,
+                                                  "wiki_quote":  "1=FX, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto",
+                                                  "match":  "NO",
+                                                  "loss":  "No Dim_Instrument upstream wiki in bundle; tagged Tier 1 but source wiki unavailable for verification"
+                                              },
+                                              {
+                                                  "column":  "ExchangeID",
+                                                  "upstream_quote":  null,
+                                                  "wiki_quote":  "Exchange ID (day-counting rule selector)",
+                                                  "match":  "NO",
+                                                  "loss":  "No Dim_ExchangeInfo upstream wiki in bundle; tagged Tier 1 but source wiki unavailable for verification"
+                                              },
+                                              {
+                                                  "column":  "Final_Fee",
+                                                  "upstream_quote":  null,
+                                                  "wiki_quote":  "Computed fee in USD; always ≤ 0",
+                                                  "match":  "NO",
+                                                  "loss":  "WRONG TIER: tagged Tier 1 but is SP-derived (instrument-type-specific formula × Days_To_Charge × -1). Should be Tier 2."
+                                              },
+                                              {
+                                                  "column":  "UpdateDate",
+                                                  "upstream_quote":  null,
+                                                  "wiki_quote":  "ETL metadata: row write timestamp",
+                                                  "match":  "NO",
+                                                  "loss":  "WRONG TIER: tagged Tier 1 but is GETDATE() at INSERT time. Should be Tier 2."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Elements (Section 6)",
+                                       "problem":  "12 DDL columns missing from Elements table: NewCloseOccurred, InstrumentType, InstrumentName, InstrumentType_ID_InstrumentGroup, InstrumentName_InstrumentGroup, Exchange, IsSettled, ClosedOnWeekend, Bid, Ask, ConvertRateIsBuy_1, ConvertRateIsBuy_0. DDL has 42 columns, wiki documents only 30."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Final_Fee, UpdateDate",
+                                       "problem":  "Final_Fee tagged Tier 1 but is SP-derived (instrument-type formula × Days_To_Charge × -1). UpdateDate tagged Tier 1 but is GETDATE() at INSERT time. Both should be Tier 2."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "GCID, UserName",
+                                       "problem":  "Both are direct passthroughs from Dim_Customer (upstream wiki available in bundle, both documented as Tier 1 from Customer.CustomerStatic). Writer tagged them Tier 2, losing the upstream provenance chain. Missed inheritance."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PositionID, RealCID, CountryID, OpenDateID, OpenOccurred, CloseDateID, InstrumentID, Leverage",
+                                       "problem":  "8 Tier 1 columns have fully paraphrased descriptions with significant semantic loss. FK targets (Trade.PositionTbl, Dictionary.Country, Trade.Instrument), NULL semantics, default values, format details (YYYYMMDD), and operational advisories are consistently dropped."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Overall shape",
+                                       "problem":  "Non-standard wiki structure: sections numbered 1-10 instead of 1-8, Elements table uses non-standard headers (no Nullable column), no tier legend, no footer with tier breakdown and phases-completed list."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Add all 12 missing DDL columns to Elements: NewCloseOccurred, InstrumentType, InstrumentName, InstrumentType_ID_InstrumentGroup, InstrumentName_InstrumentGroup, Exchange, IsSettled, ClosedOnWeekend, Bid, Ask, ConvertRateIsBuy_1, ConvertRateIsBuy_0. (2) Re-tag Final_Fee and UpdateDate as Tier 2. (3) Re-tag GCID and UserName as Tier 1 from Dim_Customer with verbatim upstream descriptions. (4) Replace all Tier 1 descriptions with verbatim quotes from upstream wikis — do NOT paraphrase. (5) Restructure to standard 8-section shape with Nullable column in Elements, tier legend, and standard footer. (6) Add row count and date range to Section 1 body text.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "row_count: 17,614,575 (frontmatter)",
+                                                                                  "Final_Fee range: -2444.12 to 0.00 (Section 6)",
+                                                                                  "Volume breakdown by InstrumentType (Section 8)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

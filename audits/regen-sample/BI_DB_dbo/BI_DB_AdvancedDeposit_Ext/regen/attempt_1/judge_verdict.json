@@ -1,0 +1,171 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AdvancedDeposit_Ext",
+    "elapsed_seconds":  161,
+    "exit_code":  null,
+    "cost_usd":  0.3674,
+    "input_tokens":  2,
+    "output_tokens":  7907,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AdvancedDeposit_Ext",
+                    "weighted_score":  5.15,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "DepositID",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY). Passthrough from Fact_BillingDeposit.",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire Tier 1 claim fabricated — no upstream wiki was available to quote from"
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Deposit amount in the deposit currency (CurrencyID). DWH note: as of 2025-04-17, capped via CASE expression in upstream ETL to prevent extreme outlier values from distorting aggregations. Passthrough from Fact_BillingDeposit.",
+                                                  "match":  "NO",
+                                                  "loss":  "Description invented without wiki source; specific DWH note may be from code but not from a documented wiki"
+                                              },
+                                              {
+                                                  "column":  "PaymentStatusID",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Current deposit status. Key values: 1=New, 2=Approved, 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE. Full 39-value enum in upstream wiki. Passthrough from Fact_BillingDeposit.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated reference to \u0027upstream wiki\u0027 that does not exist; enum values not verifiable from any provided wiki"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Dim-lookup passthrough from Dim_Country.Name via Dim_Customer.CountryID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 claim from Dictionary.Country; description invented"
+                                              },
+                                              {
+                                                  "column":  "Funnel",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Dim-lookup passthrough from Dim_Funnel.Name via fbd.FunnelID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 claim from Dictionary.Funnel; identical description copy-pasted across 3 funnel columns"
+                                              },
+                                              {
+                                                  "column":  "FunnelFrom",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Dim-lookup passthrough from Dim_Funnel.Name via Dim_Customer.FunnelFromID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Identical copy-paste from Funnel column; fabricated Tier 1"
+                                              },
+                                              {
+                                                  "column":  "AcquisitionFunnel",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Dim-lookup passthrough from Dim_Funnel.Name via Dim_Customer.FunnelID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Identical copy-paste from Funnel column; fabricated Tier 1"
+                                              },
+                                              {
+                                                  "column":  "CreditCardType",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Card brand name. DDL note: source column has a typo (\u0027CarTypeName\u0027 instead of \u0027CardTypeName\u0027) — historical artifact from legacy DWH SQL Server migration. Key values: Visa, Master Card, MasterCard, Diners, Amex, American Express, Maestro, Discover, China Union Pay. Dim-lookup passthrough from Dim_CardType.CarTypeName via fbd.CardTypeIDAsInteger.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Dictionary.CardType; card brand list not sourced from any wiki"
+                                              },
+                                              {
+                                                  "column":  "DepoName",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports. Dim-lookup passthrough from Dim_BillingDepot.Name via fbd.DepotID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Billing.Depot; vendor names (MoneyBookers, Neteller) not sourced from any wiki"
+                                              },
+                                              {
+                                                  "column":  "BINCountry",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Dim-lookup passthrough from Dim_Country.Name via fbd.BinCountryIDAsInteger. May differ from customer\u0027s registration country (Country column) — useful for fraud detection.",
+                                                  "match":  "NO",
+                                                  "loss":  "Copy-paste of Country description with fraud note appended; fabricated Tier 1"
+                                              },
+                                              {
+                                                  "column":  "Registered",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Account registration date (renamed from Registered). Default=getdate(). Dim-lookup passthrough from Dim_Customer.RegisteredReal.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Customer.CustomerStatic; no wiki exists"
+                                              },
+                                              {
+                                                  "column":  "SerialID",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations. Dim-lookup passthrough from Dim_Customer.AffiliateID (renamed from Customer.CustomerStatic.SerialID).",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Customer.CustomerStatic; NULL semantics not verifiable"
+                                              },
+                                              {
+                                                  "column":  "PaymentStatus_PaymentStatusID",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally. Denormalized dim-lookup passthrough from Dim_PaymentStatus.PaymentStatusID on fbd.PaymentStatusID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Dictionary.PaymentStatus; enum values not from any wiki"
+                                              },
+                                              {
+                                                  "column":  "PaymentStatus_Name",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Human-readable status label. UNIQUE constraint. Used in back-office payment management UI and reconciliation reports. Denormalized dim-lookup passthrough from Dim_PaymentStatus.Name on fbd.PaymentStatusID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Dictionary.PaymentStatus"
+                                              },
+                                              {
+                                                  "column":  "FundingType",
+                                                  "upstream_quote":  "NO UPSTREAM WIKI EXISTS IN BUNDLE",
+                                                  "wiki_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). Dim-lookup passthrough from Dim_FundingType.Name via External_etoro_Billing_Funding_Datafactory.FundingTypeID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 from Dictionary.FundingType; payment method examples not from any wiki"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All 34 claimed Tier 1 columns",
+                                       "problem":  "The upstream bundle explicitly states \u0027NO UPSTREAM WIKI was resolvable for any source listed in the lineage.\u0027 Every Tier 1 tag is invalid — no wiki existed to quote verbatim from. All 34 should be Tier 2 (SP code-traced) or Tier 3."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PaymentStatusID (#6)",
+                                       "problem":  "Description states \u0027Full 39-value enum in upstream wiki\u0027 — this upstream wiki does not exist per the bundle. This is a fabricated source reference."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Funnel (#39), FunnelFrom (#40), AcquisitionFunnel (#41)",
+                                       "problem":  "All three columns share an identical copy-pasted description despite representing three different join paths with different business semantics (deposit funnel vs. source funnel vs. current funnel)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Country (#34), BINCountry (#45)",
+                                       "problem":  "Near-identical descriptions copy-pasted. Country is customer registration country; BINCountry is card-issuing bank country. Core description should differentiate these."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 13/14\u0027 but no Phase Gate Checklist section exists in the document. Cannot verify which phases were completed or skipped."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag ALL 34 Tier 1 columns to Tier 2 — no upstream wiki was available in the bundle, so Tier 1 inheritance is impossible. Use \u0027(Tier 2 — SP_H_Deposits code analysis)\u0027 or equivalent. (2) Remove fabricated \u0027upstream wiki\u0027 reference in PaymentStatusID. (3) Write distinct descriptions for Funnel, FunnelFrom, and AcquisitionFunnel explaining the different join paths and business meanings. (4) Differentiate Country (customer registration) vs BINCountry (card issuer) descriptions. (5) Add a Phase Gate Checklist section or remove the \u0027Phases: 13/14\u0027 footer claim. (6) Update footer tier breakdown to 0 T1, ~47 T2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "PaymentStatusID: claims \u002739-value enum in upstream wiki\u0027 — upstream wiki does not exist",
+                                                                                  "PaymentStatus_PaymentStatusID: lists 7 enum values without wiki source",
+                                                                                  "CreditCardType: lists 9 card brand values without wiki source",
+                                                                                  "FundingType: lists 7 payment method examples without wiki source"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section entirely absent — cannot determine which phases were skipped"
+                                                           ]
+                                    }
+                }
+}

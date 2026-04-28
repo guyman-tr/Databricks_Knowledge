@@ -1,0 +1,78 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CME_Reporting",
+    "elapsed_seconds":  157,
+    "exit_code":  null,
+    "cost_usd":  0.4339,
+    "input_tokens":  2,
+    "output_tokens":  7332,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CME_Reporting",
+                    "weighted_score":  4.30,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  4,
+                                             "business_meaning":  7,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  6
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)",
+                                                  "wiki_quote":  "Instrument display name for this row. Crude oil futures all map to \u0027Crude Oil Future\u0027.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped examples (\u0027Apple Inc.\u0027 vs \u0027Apple\u0027), dropped NULL semantics, dropped origin (Trade.InstrumentMetaData). Upstream wiki tags this as Tier 2 (SP_Dim_Instrument), not Tier 1. Additionally, CASE transform in SP_M_CME_Reporting normalizes crude oil variants, making this Tier 2 in the CME table."
+                                              },
+                                              {
+                                                  "column":  "UpdateDate",
+                                                  "upstream_quote":  null,
+                                                  "wiki_quote":  "ETL metadata: timestamp when row was last written.",
+                                                  "match":  "NO",
+                                                  "loss":  "No upstream exists — column is GETDATE() in SP_M_CME_Reporting. Wrongly tagged Tier 1; should be Tier 2 (SP-computed)."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Monthly_Volume",
+                                       "problem":  "DDL declares Monthly_Volume as bigint NULL but wiki says decimal(38,6). Type mismatch will mislead analysts about precision and storage."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentDisplayName",
+                                       "problem":  "Tagged Tier 1 from DWH_dbo.Dim_Instrument but: (a) Dim_Instrument wiki tags InstrumentDisplayName as Tier 2 (SP_Dim_Instrument, join-enriched from Trade.InstrumentMetaData), (b) SP_M_CME_Reporting applies a CASE transform normalizing crude oil variants. Should be Tier 2. Description is paraphrased — dropped examples, NULL semantics, and Trade.InstrumentMetaData origin."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged Tier 1 \u0027ETL metadata (blacklist canonical)\u0027 but it is GETDATE() in SP_M_CME_Reporting — no upstream inheritance. Should be Tier 2."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "## 4. Elements",
+                                       "problem":  "Elements table uses non-standard format (Column|Type|Description|Tier|Notes) instead of required (#|Element|Type|Nullable|Description). Missing Nullable column — all 5 DDL columns are NULL-able but this is not shown. Tier annotation should be inline at end of description, not a separate column."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Structure",
+                                       "problem":  "Missing tier legend in Section 4, no ETL ASCII pipeline diagram, no tier breakdown footer, no Phase Gate Checklist. Section 1 lacks row count and date range."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix Monthly_Volume type from decimal(38,6) to bigint to match DDL. (2) Re-tag InstrumentDisplayName as Tier 2 (SP_M_CME_Reporting CASE transform on Dim_Instrument.InstrumentDisplayName). (3) Re-tag UpdateDate as Tier 2 (SP_M_CME_Reporting GETDATE()). (4) Restructure Elements table to # | Element | Type | Nullable | Description format with inline (Tier N — source) at end of each description. (5) Add Tier Legend subsection in Section 4. (6) Add ETL ASCII pipeline diagram: Dim_Position + Dim_Instrument + Dim_Customer → #Ins → #Positions → DELETE+INSERT → Dealing_CME_Reporting. (7) Move row count (690) and date range to Section 1. (8) Add tier breakdown footer: Tier 1: 0 | Tier 2: 5. (9) Add Phase Gate Checklist or explicitly note P2/P3 skipped.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

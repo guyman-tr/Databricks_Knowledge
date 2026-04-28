@@ -1,0 +1,231 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_FactTransactions",
+    "elapsed_seconds":  298,
+    "exit_code":  null,
+    "cost_usd":  1.0492,
+    "input_tokens":  49,
+    "output_tokens":  19413,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_FactTransactions",
+                    "weighted_score":  9.30,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Global Customer ID of the wallet owner. Resolved by joining the final output to Wallet.Wallets via WalletId. Gcid=0 indicates omnibus/system wallets. From Wallet.Wallets.Gcid.",
+                                                  "wiki_quote":  "Global Customer ID of the wallet owner. Resolved by joining the final output to Wallet.Wallets via WalletId. Gcid=0 indicates omnibus/system wallets. From Wallet.Wallets.Gcid.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer via GCID lookup.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH routing context (\u0027Passthrough from Dim_Customer via GCID lookup\u0027); no upstream text lost"
+                                              },
+                                              {
+                                                  "column":  "CryptoId",
+                                                  "upstream_quote":  "The cryptocurrency of this transaction. FK to Wallet.CryptoTypes.CryptoID. From SentTransactions.CryptoId or ReceivedTransactions.CryptoId.",
+                                                  "wiki_quote":  "The cryptocurrency of this transaction. FK to Wallet.CryptoTypes.CryptoID. From SentTransactions.CryptoId or ReceivedTransactions.CryptoId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "WalletID",
+                                                  "upstream_quote":  "The wallet involved in this transaction. From SentTransactions.WalletId or ReceivedTransactions.WalletId.",
+                                                  "wiki_quote":  "The wallet involved in this transaction. From SentTransactions.WalletId or ReceivedTransactions.WalletId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranID",
+                                                  "upstream_quote":  "Transaction identifier. SentTransactions.Id for sends, ReceivedTransactions.Id for receives. Not globally unique across action types - combine with ActionTypeId to distinguish.",
+                                                  "wiki_quote":  "Transaction identifier. SentTransactions.Id for sends, ReceivedTransactions.Id for receives. Not globally unique across action types - combine with ActionTypeId to distinguish.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranStatusID",
+                                                  "upstream_quote":  "Latest status ID. Resolved via correlated subquery: `SELECT TOP 1 StatusId FROM *Statuses ORDER BY Id DESC`. FK to Dictionary.TransactionStatus.",
+                                                  "wiki_quote":  "Latest status ID. Resolved via correlated subquery: `SELECT TOP 1 StatusId FROM *Statuses ORDER BY Id DESC`. FK to Dictionary.TransactionStatus.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranStatus",
+                                                  "upstream_quote":  "Human-readable status name from Dictionary.TransactionStatus. Values: Pending, Verified, Error, Done, Cancelled, NeedsApproval.",
+                                                  "wiki_quote":  "Human-readable status name from Dictionary.TransactionStatus. Values: Pending, Verified, Error, Done, Cancelled, NeedsApproval.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranDate",
+                                                  "upstream_quote":  "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate.",
+                                                  "wiki_quote":  "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Transaction amount in native crypto units. From SentTransactionOutputs.Amount (sends) or ReceivedTransactions.Amount (receives). ISNULL defaults to 0 for \"other\" types.",
+                                                  "wiki_quote":  "Transaction amount in native crypto units. From SentTransactionOutputs.Amount (sends) or ReceivedTransactions.Amount (receives). ISNULL defaults to 0 for \"other\" types.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ProviderFees",
+                                                  "upstream_quote":  "External provider fees. Only populated for Payment transactions (type 7) from PaymentTransactions.ProviderFeeCalculated. NULL for all other types.",
+                                                  "wiki_quote":  "External provider fees. Only populated for Payment transactions (type 7) from PaymentTransactions.ProviderFeeCalculated. NULL for all other types.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FeeExchangeRate",
+                                                  "upstream_quote":  "Exchange rate for fee currency conversion. ConversionOut: source/dest USD rate ratio. Payment: 1/ExchangeRate. Others: 1. NULL for receives.",
+                                                  "wiki_quote":  "Exchange rate for fee currency conversion. ConversionOut: source/dest USD rate ratio. Payment: 1/ExchangeRate. Others: 1. NULL for receives.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BlockchainFees",
+                                                  "upstream_quote":  "Actual blockchain network fee (gas/miner fee). For redemptions: counted once per transaction (ROW_NUMBER=1). From SentTransactions.BlockchainFee. NULL for receives.",
+                                                  "wiki_quote":  "Actual blockchain network fee (gas/miner fee). For redemptions: counted once per transaction (ROW_NUMBER=1). From SentTransactions.BlockchainFee. NULL for receives.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EstimatedBlockchainFee",
+                                                  "upstream_quote":  "Estimated/effective blockchain fee for fee calculations. Redemptions: EstimatedBlockchainFee + InitialFeeAmount. Conversions/Payments: EstimatedBlockChainFee. Staking: BlockchainEstFee. NULL for receives.",
+                                                  "wiki_quote":  "Estimated/effective blockchain fee for fee calculations. Redemptions: EstimatedBlockchainFee + InitialFeeAmount. Conversions/Payments: EstimatedBlockChainFee. Staking: BlockchainEstFee. NULL for receives.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ActionTypeID",
+                                                  "upstream_quote":  "Transaction direction: 1=Sent (outgoing), 2=Recive (incoming). Hard-coded per CTE block.",
+                                                  "wiki_quote":  "Transaction direction: 1=Sent (outgoing), 2=Recive (incoming). Hard-coded per CTE block.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ActionTypeName",
+                                                  "upstream_quote":  "Human-readable direction: \u0027Sent\u0027 or \u0027Recive\u0027 (legacy misspelling preserved for backward compatibility).",
+                                                  "wiki_quote":  "Human-readable direction: \u0027Sent\u0027 or \u0027Recive\u0027 (legacy misspelling preserved for backward compatibility).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SenderAddress",
+                                                  "upstream_quote":  "Sender\u0027s blockchain address. Sends: from WalletPool.PublicAddress (wallet\u0027s own address). Receives: from ReceivedTransactions.SenderAddress (external sender).",
+                                                  "wiki_quote":  "Sender\u0027s blockchain address. Sends: from WalletPool.PublicAddress (wallet\u0027s own address). Receives: from ReceivedTransactions.SenderAddress (external sender).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ReciverAddress",
+                                                  "upstream_quote":  "Receiver\u0027s blockchain address (legacy misspelling \"Reciver\"). Sends: from SentTransactionOutputs.ToAddress. Receives: from ReceivedTransactions.ReceiverAddress.",
+                                                  "wiki_quote":  "Receiver\u0027s blockchain address (legacy misspelling \"Reciver\"). Sends: from SentTransactionOutputs.ToAddress. Receives: from ReceivedTransactions.ReceiverAddress.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BlockchainTransactionId",
+                                                  "upstream_quote":  "On-chain transaction hash. Unique identifier on the blockchain for tracking and verification. From SentTransactions or ReceivedTransactions.",
+                                                  "wiki_quote":  "On-chain transaction hash. Unique identifier on the blockchain for tracking and verification. From SentTransactions or ReceivedTransactions.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TransactionTypeID",
+                                                  "upstream_quote":  "Sent transaction type: 0=Redeem, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking. NULL for received transactions. FK to Dictionary.TransactionTypes.",
+                                                  "wiki_quote":  "Sent transaction type: 0=Redeem, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking. NULL for received transactions. FK to Dictionary.TransactionTypes.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TransactionType",
+                                                  "upstream_quote":  "Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions.",
+                                                  "wiki_quote":  "Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred.",
+                                                  "wiki_quote":  "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "TranDateTime",
+                                                  "upstream_quote":  "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate.",
+                                                  "wiki_quote":  "Transaction date. For sends: SentTransactions.Occurred. For receives: ReceivedTransactions.BlockchainTransactionDate. DWH note: identical to TranDate source (TransDate from the view) but stored as datetime instead of date.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH type note after verbatim upstream text; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "DateOccured",
+                                                  "upstream_quote":  "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred.",
+                                                  "wiki_quote":  "When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred. DWH note: CAST of Occurred to DATE, dropping the time component. Intentional misspelling \u0027Occured\u0027.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH note after verbatim upstream text; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "LastStatusUpdateOccurred",
+                                                  "upstream_quote":  "Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables \"time since last update\" monitoring and SLA tracking. New in this version (not in TransactionViewOld).",
+                                                  "wiki_quote":  "Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables \"time since last update\" monitoring and SLA tracking. New in this version (not in TransactionViewOld).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u002722 T1, 23 T2\u0027 but actual element count is 24 Tier 1 and 21 Tier 2. Off by 2 in each direction."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No formal Phase Gate Checklist section. Footer says \u0027Phases: 12/14\u0027 without specifying which phases were completed or skipped. Cannot verify P2/P3 status."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RealCID",
+                                       "problem":  "Tier 1 description adds \u0027Passthrough from Dim_Customer via GCID lookup.\u0027 beyond verbatim upstream text from Dim_Customer wiki. No semantic loss but technically non-verbatim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TranDateTime, DateOccured",
+                                       "problem":  "Both columns append \u0027DWH note:\u0027 clauses after verbatim upstream text. Informative additions but deviate from pure Tier 1 verbatim standard."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TransactionTypeID",
+                                       "problem":  "Enum list omits type 4 (Funding), which is referenced by IsFunding flag (TransactionTypeID=4 for sent). This matches the upstream verbatim text which also omits it (type 4 falls into the \u0027other_transactions\u0027 catch-all CTE), but analysts may be confused by the inconsistency."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Correct footer tier counts from \u002722 T1, 23 T2\u0027 to \u002724 T1, 21 T2\u0027. (2) Add a formal Phase Gate Checklist section or expand footer to list which phases were completed/skipped. (3) Optional: note TransactionTypeID=4 (Funding) in the enum values for consistency with IsFunding flag documentation.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as formal section; footer says 12/14 without detail"
+                                                           ]
+                                    }
+                }
+}

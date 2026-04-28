@@ -1,0 +1,73 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Dictionary_AccountProgram",
+    "elapsed_seconds":  75,
+    "exit_code":  null,
+    "cost_usd":  0.1885,
+    "input_tokens":  2,
+    "output_tokens":  3334,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Dictionary_AccountProgram",
+                    "weighted_score":  9.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "AccountProgramID",
+                                                  "upstream_quote":  "Lookup identifier. Primary key.",
+                                                  "wiki_quote":  "Lookup identifier. Primary key. 0=Unknown, 1=card, 2=iban.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — upstream text preserved verbatim; live enum values appended"
+                                              },
+                                              {
+                                                  "column":  "AccountProgram",
+                                                  "upstream_quote":  "Human-readable name for this value.",
+                                                  "wiki_quote":  "Human-readable name for this value. 0=Unknown, 1=card, 2=iban.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — upstream text preserved verbatim; live enum values appended"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AccountProgramID, AccountProgram",
+                                       "problem":  "DDL defines both columns as NULL but upstream source has them as NOT NULL with a clustered PK on Id. The nullability widening is not documented in the wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "Wiki asserts \u00270=Unknown should be rare in active data\u0027 but P3 distribution analysis was skipped — this claim is not evidence-backed."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Static-since-2023-06-12 claim is based on P2 sample only. Generic Pipeline may still be scheduled; review-needed sidecar correctly flags this."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3",
+                                                               "P5",
+                                                               "P6",
+                                                               "P7",
+                                                               "P9",
+                                                               "P9B",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

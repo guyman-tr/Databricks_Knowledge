@@ -1,0 +1,65 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_ReportingBalances",
+    "elapsed_seconds":  111,
+    "exit_code":  null,
+    "cost_usd":  0.2677,
+    "input_tokens":  2,
+    "output_tokens":  4930,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_ReportingBalances",
+                    "weighted_score":  7.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  3,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 (multiple columns)",
+                                       "problem":  "Dictionary columns KnownIssueWallet (0/1), Has Dif with TrackerBalance (Y/N), Closed Country AND Regulation (Y/No), User was Compensated (Y/No), MTD Flag (Y/NULL) have ≤15 values but lack systematic inline key=value pair listings."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section structure",
+                                       "problem":  "No formal Phase Gate Checklist section. Footer references \u0027Phases: 9/14\u0027 but P2/P3 skipped status is implicit rather than structured."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Closed Country AND Regulation",
+                                       "problem":  "Description says values are \u0027Y\u0027 or \u0027No\u0027 — asymmetric value lengths (1-char vs 2-char) in a varchar(2) NOT NULL column. Should be highlighted as a gotcha for WHERE clause filtering."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "ETL pipeline diagram is minimal — names only the target table and a generic \u0027[External reporting ETL]\u0027 box. Could reference the likely sources from Section 5.1 (WalletDB, WalletBalancesReportDB, CRM)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2",
+                                       "problem":  "Business rules inferred from EXW_EOMReportingBalances lack consistent confidence markers. Rules are stated as facts rather than flagged as inferred/speculative."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (PASS): (1) Add inline key=value dictionaries for all flag/enum columns with ≤15 values. (2) Add formal Phase Gate Checklist section noting P2/P3 as SKIPPED — empty table. (3) Call out Y vs No asymmetry in Closed Country AND Regulation and User was Compensated as a gotcha. (4) Enrich Section 5.2 diagram with likely source systems from Section 5.1. (5) Tag all Section 2 business rules with \u0027(inferred from EXW_EOMReportingBalances)\u0027 marker.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 — data profiling (table empty)",
+                                                               "P3 — distribution analysis (table empty)"
+                                                           ]
+                                    }
+                }
+}

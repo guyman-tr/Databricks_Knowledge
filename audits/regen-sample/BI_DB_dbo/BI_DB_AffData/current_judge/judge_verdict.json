@@ -1,0 +1,66 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AffData",
+    "elapsed_seconds":  79,
+    "exit_code":  null,
+    "cost_usd":  0.1818,
+    "input_tokens":  2,
+    "output_tokens":  3474,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AffData",
+                    "weighted_score":  7.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "ContractName, AffGroup, Channel",
+                                       "problem":  "Speculative enum examples (e.g., \u0027CPA, Revenue Share, Hybrid\u0027 for ContractName; \u0027VIP, Standard, Premium\u0027 for AffGroup; \u0027web, social, email\u0027 for Channel) are invented from column names with no data backing. Should be qualified as speculative or removed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u0027Phases: 14/14\u0027 but no Phase Gate Checklist section is present to verify this claim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AffiliateID",
+                                       "problem":  "Description references \u0027fiktivo affiliate system\u0027 — appears to be a placeholder/anonymized vendor name rather than a real system. Should be \u0027Unknown affiliate platform\u0027 if not verified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "Pipeline diagram is prose-based NOTE block rather than a true lineage diagram. Acceptable for dormant table but minimal."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Claim \u0027Only referenced in permission/masking scripts\u0027 is unverified — other objects may reference this table in JOINs not discovered."
+                                   }
+                               ],
+                    "regeneration_feedback":  "PASS — minor improvements: (1) Qualify speculative enum examples in ContractName, AffGroup, Channel with \u0027(speculative)\u0027 tag or remove them. (2) Add explicit Phase Gate Checklist section or remove \u0027Phases: 14/14\u0027 from footer. (3) Replace \u0027fiktivo affiliate system\u0027 with \u0027Unknown affiliate platform\u0027 if vendor name is unverified.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "ContractName — speculative enum \u0027CPA, Revenue Share, Hybrid\u0027",
+                                                                                  "AffGroup — speculative enum \u0027VIP, Standard, Premium\u0027",
+                                                                                  "Channel — speculative enum \u0027web, social, email\u0027"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section missing — cannot verify P2/P3 execution"
+                                                           ]
+                                    }
+                }
+}

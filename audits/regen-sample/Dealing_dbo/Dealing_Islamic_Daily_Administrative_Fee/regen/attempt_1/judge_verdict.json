@@ -1,0 +1,140 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Islamic_Daily_Administrative_Fee",
+    "elapsed_seconds":  270,
+    "exit_code":  null,
+    "cost_usd":  0.7822,
+    "input_tokens":  2,
+    "output_tokens":  14284,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Islamic_Daily_Administrative_Fee",
+                    "weighted_score":  6.70,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "PositionID",
+                                                  "upstream_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position.",
+                                                  "wiki_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "OpenOccurred",
+                                                  "upstream_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate().",
+                                                  "wiki_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate(). Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CloseOccurred",
+                                                  "upstream_quote":  "When close was persisted.",
+                                                  "wiki_quote":  "When close was persisted. Passthrough from Dim_Position. 1900-01-01 for open positions.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u00271900-01-01 for open positions\u0027 not present in upstream wiki"
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "wiki_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "AmountInUnitsDecimal",
+                                                  "upstream_quote":  "Position size in units/shares. Fractional lots.",
+                                                  "wiki_quote":  "Position size in instrument units (e.g., shares, crypto coins). Fractional lots. Passthrough from Dim_Position.",
+                                                  "match":  "NO",
+                                                  "loss":  "Paraphrased \u0027units/shares\u0027 to \u0027instrument units (e.g., shares, crypto coins)\u0027 — injected \u0027crypto coins\u0027 not in upstream, changed wording"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0.",
+                                                  "wiki_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Bid, Ask, ConvertRateIsBuy_1, ConvertRateIsBuy_0 (columns 28-31)",
+                                       "problem":  "Tagged Tier 2 via SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse but Fact_CurrencyPriceWithSplit wiki IS in the bundle and these are direct passthroughs (SELECT f.Bid, f.Ask, etc.). Should be Tier 1 with verbatim upstream descriptions. ConvertRateIsBuy_1 drops NULL semantics and cross-rate logic details."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "AmountInUnitsDecimal (#33)",
+                                       "problem":  "Upstream says \u0027Position size in units/shares. Fractional lots.\u0027 but wiki paraphrases to \u0027Position size in instrument units (e.g., shares, crypto coins). Fractional lots.\u0027 — rewording and injection of \u0027crypto coins\u0027 not in upstream."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00278 T1, 34 T2\u0027 but actual element count is 11 T1, 31 T2. Three Tier 1 columns are miscounted."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "OpenDateID, CloseDateID (columns 7-8)",
+                                       "problem":  "Tagged Tier 2 but pass through from Dim_Position whose wiki is in the bundle. Should be Tier 1. OpenDateID drops \u0027E.g., 20260310\u0027 and \u0027NOT a FK to Dim_Date by default\u0027. CloseDateID drops \u0027Partition column. Always include in WHERE clause.\u0027"
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Admin_Fee_USD, GracePeriod, InstrumentGroup, InstrumentName_InstrumentGroup, InstrumentType_ID_InstrumentGroup, Units_per_Contract",
+                                       "problem":  "Config table passthrough columns have upstream wikis in the bundle (Dealing_Islamic_Admin_Fee_Per_Group, Dealing_Islamic_Instruments_Groups, Dealing_Islamic_Units_Per_Contract) but are tagged Tier 2 instead of Tier 1."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag Bid, Ask, ConvertRateIsBuy_1, ConvertRateIsBuy_0 as Tier 1 using verbatim Fact_CurrencyPriceWithSplit wiki descriptions — include NULL semantics and cross-rate logic for ConvertRate columns. (2) Fix AmountInUnitsDecimal to verbatim upstream: \u0027Position size in units/shares. Fractional lots.\u0027 (3) Re-tag OpenDateID and CloseDateID as Tier 1 with full upstream descriptions including example value and partition column note. (4) Re-tag config table passthrough columns (Admin_Fee_USD, GracePeriod, InstrumentGroup, InstrumentName_InstrumentGroup, InstrumentType_ID_InstrumentGroup, Units_per_Contract) as Tier 1 with verbatim upstream wiki descriptions. (5) Fix footer tier breakdown to match actual element counts after re-tagging.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}
