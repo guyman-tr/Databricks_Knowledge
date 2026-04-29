@@ -647,10 +647,24 @@ def find_migration_mirrors(schema: str, obj: str) -> List[str]:
         if cand.exists():
             self_ddl = cand
             break
-    self_cols = _extract_ddl_columns(self_ddl)
-    # Need at least 3 columns for the overlap check to be meaningful. If we
-    # can't read the self-DDL we still proceed but rely on name match alone.
-    have_self_cols = len(self_cols) >= 3
+
+    # Three modes for the overlap check:
+    #   1. self DDL missing entirely  -> name-match-only fallback (low risk:
+    #      table is out-of-band so mirrors are still informative)
+    #   2. self DDL exists but trivial (<3 cols)  -> REJECT outright (mirrors
+    #      of 2-column lookup tables are usually false positives, e.g. every
+    #      Dim_X has Code/Description and overlap inflates artificially)
+    #   3. self DDL has >=3 cols  -> require >=70% overlap with each mirror
+    self_cols: Set[str] = set()
+    have_self_cols = False
+    if self_ddl is None:
+        # mode 1 -> name-match-only
+        pass
+    else:
+        self_cols = _extract_ddl_columns(self_ddl)
+        if 0 < len(self_cols) < 3:
+            return []  # mode 2
+        have_self_cols = len(self_cols) >= 3  # mode 3
 
     out: List[str] = []
     for other_schema, other_prefixes in SCHEMA_TABLE_PREFIXES.items():
