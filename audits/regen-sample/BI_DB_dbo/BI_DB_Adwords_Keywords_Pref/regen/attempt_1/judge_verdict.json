@@ -1,0 +1,58 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Keywords_Pref",
+    "elapsed_seconds":  102,
+    "exit_code":  null,
+    "cost_usd":  0.6398,
+    "input_tokens":  2,
+    "output_tokens":  4038,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Keywords_Pref",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Phase completion (12/14) only appears in footer line, making it unclear which phases were skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Conversions (#23)",
+                                       "problem":  "Description claims \u0027Unlike Keywords_Conv which breaks down by funnel stage, this is the aggregate total\u0027 — useful comparative context but the \u0027aggregate total\u0027 characterization of the Fivetran conversions field is editorial, not verifiable from SP code."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count: 223,519",
+                                                                                  "Date range: 2023-06-19 to 2023-09-17",
+                                                                                  "Device distribution: DESKTOP 56%, MOBILE 41%, TABLET 3%",
+                                                                                  "Match type: EXACT 46%, PHRASE 45%, BROAD 9%",
+                                                                                  "Quality score distribution: 0=32%, 5=17%, 3=15%, 7=8%, 1=8%",
+                                                                                  "cost \u003e 0: 17%",
+                                                                                  "clicks \u003e 0: 17%",
+                                                                                  "Conversions \u003e 0: 0.8%",
+                                                                                  "UpdateDate uniform: 2023-09-18 16:37:31",
+                                                                                  "9 Google Ads accounts, all USD"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

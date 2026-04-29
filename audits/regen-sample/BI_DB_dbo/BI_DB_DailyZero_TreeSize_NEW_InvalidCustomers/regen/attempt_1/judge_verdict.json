@@ -1,0 +1,126 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_DailyZero_TreeSize_NEW_InvalidCustomers",
+    "elapsed_seconds":  213,
+    "exit_code":  null,
+    "cost_usd":  0.6324,
+    "input_tokens":  2,
+    "output_tokens":  15463,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_DailyZero_TreeSize_NEW_InvalidCustomers",
+                    "weighted_score":  6.70,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  4,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "HedgeServerID",
+                                                  "upstream_quote":  "FK to Trade.HedgeServer. Hedge server managing this position.",
+                                                  "wiki_quote":  "FK to Trade.HedgeServer. Hedge server managing the positions in this aggregation bucket.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "\u0027this position\u0027 reworded to \u0027the positions in this aggregation bucket\u0027 — minor contextual adjustment"
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. ISNULL defaults to \u0027Unknown\u0027.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "SP-level ISNULL default appended — accurate addition, no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country via Fact_SnapshotCustomer.CountryID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Routing note appended — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "PlayerLevel",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Passthrough from Dim_PlayerLevel via Fact_SnapshotCustomer.PlayerLevelID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Routing note appended — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "GuruStatus",
+                                                  "upstream_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration.",
+                                                  "wiki_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. Passthrough from Dim_GuruStatus via Fact_SnapshotCustomer.GuruStatusID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Routing note appended — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "MifID",
+                                                  "upstream_quote":  "MiFID II client categorization (Retail/Professional/Eligible Counterparty). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.MifidCategorizationID (BO). FK to Dim_MifidCategorization.",
+                                                  "wiki_quote":  "MiFID II client categorization (Retail/Professional/Eligible Counterparty) from Fact_SnapshotCustomer.MifidCategorizationID. Renamed in SP.",
+                                                  "match":  "NO",
+                                                  "loss":  "Missed inheritance: should be Tier 1 from Fact_SnapshotCustomer. \u0027DEFAULT 0\u0027 and \u0027FK to Dim_MifidCategorization\u0027 dropped. Tagged Tier 2 instead of Tier 1."
+                                              },
+                                              {
+                                                  "column":  "IsValidCustomer",
+                                                  "upstream_quote":  "1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID. See §2.2. Approx 98% of current rows = 1.",
+                                                  "wiki_quote":  "Always 0 in this table (SP filters WHERE IsValidCustomer=0). 1 if the customer is a valid retail customer for analytics purposes. ETL-computed from PlayerLevelID, LabelID, CountryID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Missed inheritance: should be Tier 1 from Fact_SnapshotCustomer. \u0027Approx 98% of current rows = 1\u0027 dropped. Tagged Tier 2 instead of Tier 1."
+                                              },
+                                              {
+                                                  "column":  "IsCreditReportValidCB",
+                                                  "upstream_quote":  "1 if customer is eligible for CreditBureau credit report validation. ETL-computed. See §2.3.",
+                                                  "wiki_quote":  "1 if customer is eligible for CreditBureau credit report validation. ETL-computed. Passthrough from Fact_SnapshotCustomer.",
+                                                  "match":  "NO",
+                                                  "loss":  "Missed inheritance: should be Tier 1 from Fact_SnapshotCustomer. Tagged Tier 2 instead of Tier 1. §2.3 detail reference dropped."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "MifID",
+                                       "problem":  "Tagged (Tier 2 — SP_Fact_SnapshotCustomer) but b.MifidCategorizationID AS MifID is a direct rename from Fact_SnapshotCustomer whose wiki is in the bundle. Must be Tier 1 from Fact_SnapshotCustomer. Description drops \u0027DEFAULT 0\u0027 and \u0027FK to Dim_MifidCategorization\u0027."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsValidCustomer",
+                                       "problem":  "Tagged (Tier 2 — SP_Fact_SnapshotCustomer) but b.IsValidCustomer is a direct passthrough from Fact_SnapshotCustomer (upstream wiki available). Should be Tier 1 from Fact_SnapshotCustomer. \u0027Approx 98% of current rows = 1\u0027 distribution stat dropped."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsCreditReportValidCB",
+                                       "problem":  "Tagged (Tier 2 — SP_Fact_SnapshotCustomer) but b.IsCreditReportValidCB is a direct passthrough from Fact_SnapshotCustomer (upstream wiki available). Should be Tier 1 from Fact_SnapshotCustomer."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "## 2. Properties table",
+                                       "problem":  "UC Target row is absent from the property table. The Completeness checklist requires Production Source, Refresh, Distribution, and UC Target. Only the first three are present."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "## 1. Business Meaning / ## 3.4 Gotchas",
+                                       "problem":  "Sparse 2025 data (~20K rows vs ~6.15M in 2021-2024) is documented in the review-needed sidecar but not surfaced in Section 1 or Section 3.4. Analysts using this table for 2025 analysis will encounter unexpected empty results with no warning."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag MifID as (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) and quote verbatim: \u0027MiFID II client categorization (Retail/Professional/Eligible Counterparty). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.MifidCategorizationID (BO). FK to Dim_MifidCategorization.\u0027 Add SP rename note. (2) Re-tag IsValidCustomer as (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) using verbatim FSC description; retain the always-0 table-specific note. (3) Re-tag IsCreditReportValidCB as (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) using verbatim FSC description. (4) Add UC Target to the property table — check sister table BI_DB_DailyZero_TreeSize_NEW for the target path pattern. (5) Add gotcha in Section 3.4: \u0027Sparse 2025 data — only ~20K rows exist for 2025 vs ~6.15M for 2021–2024. Possible ETL gap or table deprecation. Verify SP is still running before using for 2025 analysis.\u0027",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "3 phases of 14 unaccounted for (footer reports 11/14); data claims appear grounded in live sampling so P2/P3 likely not skipped"
+                                                           ]
+                                    }
+                }
+}

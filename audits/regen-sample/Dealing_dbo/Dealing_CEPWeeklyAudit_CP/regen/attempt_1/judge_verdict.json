@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_CP",
+    "elapsed_seconds":  112,
+    "exit_code":  null,
+    "cost_usd":  0.4531,
+    "input_tokens":  2,
+    "output_tokens":  4845,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_CP",
+                    "weighted_score":  8.70,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 — Tier Legend",
+                                       "problem":  "Tier legend only lists Tier 2 and Tier 4. Should include all four tiers as reference rows even when unused, so analysts understand the full classification system."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3/4 — Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist subsection with P2/P3 checkboxes. Data claims are specific enough to imply live queries, but the formal checkpoint is missing."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "Description presents ~72% NULL rate as definitive, but review-needed sidecar flags it as an open question (expected behavior vs data gap in source system). Wiki should note the uncertainty."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeServerID",
+                                       "problem":  "Leading description says \u0027Hedge server / action type identifier\u0027 — the dual identity could confuse analysts. The parenthetical clarification (HedgeRuleActionTypeID lineage) helps but the primary label is ambiguous."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 — Gotchas",
+                                       "problem":  "Does not mention CPName vs CP_Name cross-table naming inconsistency with Dealing_CEPWeeklyAudit_CPToRule, though review-needed sidecar correctly flags it."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

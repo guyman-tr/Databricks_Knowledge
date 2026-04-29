@@ -1,0 +1,217 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AML_Multiple_Accounts_Withdrawfulldata",
+    "elapsed_seconds":  385,
+    "exit_code":  null,
+    "cost_usd":  0.9877,
+    "input_tokens":  2,
+    "output_tokens":  27703,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AML_Multiple_Accounts_Withdrawfulldata",
+                    "weighted_score":  7.05,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "FundingID",
+                                                  "upstream_quote":  "FK to Billing.Funding — the payment instrument to which the withdrawal is paid. NULL if no specific instrument selected.",
+                                                  "wiki_quote":  "FK to Billing.Funding -- the payment instrument to which the withdrawal is paid. NULL if no specific instrument selected. This table only contains FundingIDs shared by 2+ customers; IDs 1-7 (reserved/internal) are excluded.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds table-specific context not in upstream source; core meaning preserved verbatim"
+                                              },
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID -- platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Renamed from RealCID in Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds rename note; otherwise verbatim"
+                                              },
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Group Customer ID -- cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "BirthDate",
+                                                  "upstream_quote":  "Customer date of birth. Used in LinkedAccountHash1 for duplicate detection and in KYC age verification.",
+                                                  "wiki_quote":  "Customer date of birth. Used in LinkedAccountHash1 for duplicate detection and in KYC age verification. DWH note: CAST to DATE in SP (time component discarded), stored as datetime in this table. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds SP cast note; verbatim core"
+                                              },
+                                              {
+                                                  "column":  "PhoneVerifiedName",
+                                                  "upstream_quote":  "Human-readable verification state label. Note: ID=2 has value \u0027ManualyVerified\u0027 -- a production typo (single \u0027l\u0027) preserved verbatim from etoro.Dictionary.PhoneVerified. Displayed in customer cards, verification reports, and compliance dashboards.",
+                                                  "wiki_quote":  "Human-readable verification state label for the customer\u0027s phone number. Values: NotVerified, AutomaticallyVerified, ManualyVerified (production typo preserved), Initiated, Rejected, AbuseFlag.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027Displayed in customer cards, verification reports, and compliance dashboards\u0027; restructures with values list not present in upstream elements description"
+                                              },
+                                              {
+                                                  "column":  "RegisteredReal",
+                                                  "upstream_quote":  "Account registration date (renamed from Registered). Default=getdate().",
+                                                  "wiki_quote":  "Account registration date (renamed from Registered). Default=getdate(). Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "VerificationLevelID",
+                                                  "upstream_quote":  "KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified (34.2%), 1=partial (12.4%), 2=intermediate (6.2%), 3=fully verified (47.1%). Default=0.",
+                                                  "wiki_quote":  "KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. This table only contains customers with VerificationLevelID \u003e= 2. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops distribution percentages and Default=0; adds table-specific filter note"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulatory entity governing this customer\u0027s account. Used in analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Changes \u0027Short code for the regulation\u0027 to \u0027Short code for the regulatory entity governing this customer\u0027s account\u0027; drops \u0027Used in V_Dim_Customer\u0027"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label for the customer\u0027s account. Values: Normal, Blocked, Blocked Upon Request, Warning, Under Investigation, Chat Blocked, Trade \u0026 MIMO Blocked, Deposit Blocked, Copy Block, Pending Verification, Failed Verification, Block Deposit \u0026 Trading, and others. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027Used in BackOffice UI, compliance reports, and monitoring dashboards\u0027; adds values list not sourced from upstream elements description"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatusReason",
+                                                  "upstream_quote":  "Human-readable reason label (nullable). Key values: None (0), Failed Verification (1), Chargeback (5), AML-Account Closed (6), HRC (7), AML (10), AML review (11), WCH match (18), Right to be forgotten (20), Self-Service (21), eToro Money Restriction (33), Abusive Trading (34), Hacked Account (35), Tax (41). Used in BackOffice reporting and customer history views.",
+                                                  "wiki_quote":  "Human-readable reason label for the customer\u0027s current account status change (nullable). Key values: None, Failed Verification, Chargeback, AML-Account Closed, HRC, AML, AML review, WCH match, Right to be forgotten, Self-Service, CloseAccountByUser.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops eToro Money Restriction (33), Abusive Trading (34), Hacked Account (35), Tax (41) — four AML-relevant reason codes; drops all ID numbers; drops \u0027Used in BackOffice reporting and customer history views\u0027; adds \u0027CloseAccountByUser\u0027 sourced from §2.1 of upstream wiki (business logic) rather than elements key-values list"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatusSubReasonName",
+                                                  "upstream_quote":  "Human-readable sub-reason label (renamed from production `Name`). Nullable. Key abbreviations: CHBK=Chargeback, POI=Proof of Identity, POA=Proof of Address, FTD=First Time Deposit, MOP=Method of Payment, PWMB=eToro Money, SAR=Suspicious Activity Report, WCH=World Check. Key values: Fraud (1), Fake docs (2), ACH CHBK (35), Credit Card CHBK (36), PayPal CHBK (37), SAR filed (73), FATCA (66), W-8BEN (76), Vulnerable Client (75).",
+                                                  "wiki_quote":  "Human-readable sub-reason label for the customer\u0027s account status change (nullable). Provides second-level detail beneath PlayerStatusReason. Key abbreviations: CHBK=Chargeback, POI=Proof of Identity, POA=Proof of Address. Renamed from production `Name`.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops FTD, MOP, PWMB, SAR, WCH abbreviations; drops all 9 key value=ID pairs (Fraud, ACH CHBK, Credit Card CHBK, PayPal CHBK, SAR filed, FATCA, W-8BEN, Vulnerable Client, Fake docs)"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "eToro Club tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027Used in BackOffice reporting JOINs and customer-facing UI\u0027"
+                                              },
+                                              {
+                                                  "column":  "AffiliateID",
+                                                  "upstream_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations.",
+                                                  "wiki_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "City",
+                                                  "upstream_quote":  "City in Unicode.",
+                                                  "wiki_quote":  "City in Unicode. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "Zip",
+                                                  "upstream_quote":  "Postal code. Used in LinkedAccountHash1.",
+                                                  "wiki_quote":  "Postal code. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027Used in LinkedAccountHash1\u0027 — relevant for duplicate detection in AML context"
+                                              },
+                                              {
+                                                  "column":  "BuildingNumber",
+                                                  "upstream_quote":  "Building/apartment number. Separate from Address for structured address storage.",
+                                                  "wiki_quote":  "Building/apartment number. Separate from Address for structured address storage. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "Gender",
+                                                  "upstream_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only. Used in LinkedAccountHash1.",
+                                                  "wiki_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only in production. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027Used in LinkedAccountHash1\u0027"
+                                              },
+                                              {
+                                                  "column":  "HasWallet",
+                                                  "upstream_quote":  "1 if the customer has an active eToro Money wallet linked to their trading account. Default=0.",
+                                                  "wiki_quote":  "1 if the customer has an active eToro Money wallet linked to their trading account. Default=0. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Adds passthrough note only"
+                                              },
+                                              {
+                                                  "column":  "RealizedEquity",
+                                                  "upstream_quote":  "V_Liabilities row 4: Direct passthrough from Fact_SnapshotEquity.RealizedEquity (T1; no extended description in V_Liabilities wiki body)",
+                                                  "wiki_quote":  "Customer realized equity snapshot from Fact_SnapshotEquity via V_Liabilities. Passthrough from V_Liabilities.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "V_Liabilities wiki provides no description for this column; wiki adds reasonable lineage context"
+                                              },
+                                              {
+                                                  "column":  "PositionPnL",
+                                                  "upstream_quote":  "V_Liabilities row 17: Direct passthrough from Fact_CustomerUnrealized_PnL.PositionPnL (T1; no extended description in V_Liabilities wiki body)",
+                                                  "wiki_quote":  "Unrealized profit/loss on open positions from Fact_CustomerUnrealized_PnL via V_Liabilities. Passthrough from V_Liabilities.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "V_Liabilities wiki provides no description for this column; wiki adds reasonable lineage context"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PlayerStatusSubReasonName",
+                                       "problem":  "Tier 1 column with major semantic loss. Drops 5 abbreviations (FTD=First Time Deposit, MOP=Method of Payment, PWMB=eToro Money, SAR=Suspicious Activity Report, WCH=World Check) and all 9 key value=ID pairs (Fraud (1), Fake docs (2), ACH CHBK (35), Credit Card CHBK (36), PayPal CHBK (37), SAR filed (73), FATCA (66), W-8BEN (76), Vulnerable Client (75)) from Dim_PlayerStatusSubReasons upstream. For an AML-focused table this is critical missing context."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PlayerStatusReason",
+                                       "problem":  "Tier 1 column with semantic loss. Drops eToro Money Restriction (33), Abusive Trading (34), Hacked Account (35), Tax (41) — four AML-relevant reason codes directly applicable to this table. Drops ID numbers from remaining values. Drops \u0027Used in BackOffice reporting and customer history views\u0027. Adds \u0027CloseAccountByUser\u0027 sourced from upstream §2.1 business logic section rather than the elements key-values list — mixes text from different upstream sections."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer tier count",
+                                       "problem":  "Footer states \u002719 T1, 9 T2, 9 T3\u0027 but body tag counting yields 22 T1, 6 T2, 9 T3 (total = 37 in both cases). The 3-column discrepancy in the tier breakdown undermines the audit trail. Either 3 columns tagged T1 in the body should be T2, or the footer count is wrong and must be corrected."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "EvMatchStatusName",
+                                       "problem":  "Tier tag reads \u0027(Tier 2 -- SP_Dictionaries_DL_To_Synapse)\u0027. SP_Dictionaries_DL_To_Synapse is the SP that built Dim_EvMatchStatus, not the SP that writes this table (SP_AML_Multiple_Accounts). An analyst following this tag to understand data pipeline dependency would trace to the wrong ETL. Should read \u0027(Tier 2 -- SP_AML_Multiple_Accounts, via Dim_EvMatchStatus)\u0027 or equivalent."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Zip / Gender",
+                                       "problem":  "Both columns drop \u0027Used in LinkedAccountHash1\u0027 from upstream Dim_Customer descriptions. In the AML context of this specific table — which exists to detect multi-account patterns — the knowledge that Zip and Gender feed the linked-account deduplication hash is highly relevant context and should be preserved verbatim."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) PlayerStatusSubReasonName — restore full upstream verbatim from Dim_PlayerStatusSubReasons.PlayerStatusSubReasonName: add FTD, MOP, PWMB, SAR, WCH to abbreviation glossary; add all key value=ID pairs (Fraud (1), Fake docs (2), ACH CHBK (35), Credit Card CHBK (36), PayPal CHBK (37), SAR filed (73), FATCA (66), W-8BEN (76), Vulnerable Client (75)). (2) PlayerStatusReason — restore eToro Money Restriction (33), Abusive Trading (34), Hacked Account (35), Tax (41); add ID numbers for all values; add \u0027Used in BackOffice reporting and customer history views\u0027; source only from elements key-values section of Dim_PlayerStatusReasons, not §2.1. (3) EvMatchStatusName tier tag — change from \u0027(Tier 2 -- SP_Dictionaries_DL_To_Synapse)\u0027 to \u0027(Tier 2 -- SP_AML_Multiple_Accounts, via Dim_EvMatchStatus)\u0027. (4) Zip and Gender — add \u0027Used in LinkedAccountHash1\u0027 back per upstream Dim_Customer. (5) Footer tier counts — recount from body tags: body shows 22 T1 / 6 T2 / 9 T3; reconcile with footer \u002719 T1 / 9 T2 / 9 T3\u0027 discrepancy.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,208 @@
+{
+  "scope": {
+    "repo": "C:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we",
+    "files_scanned": 1459,
+    "files_classified": 1459,
+    "files_no_destination": 712
+  },
+  "archetype_legend": {
+    "A": "Customer-keyed snapshot",
+    "B": "Per-customer money aggregate",
+    "C": "Dim-grain rollup with validity gate (REGULATOR-RISK)",
+    "D": "Money-flow at transaction grain",
+    "E": "Population headcount",
+    "F": "Non-customer dim grain (no validity gate)",
+    "X": "No destination INSERT detected"
+  },
+  "recommended_action_by_archetype": {
+    "A": "filter-synthetics-from-population OR enrich-dest-with-master_CID",
+    "B": "aggregate-to-master via JOIN Dim_MasterGCID + GROUP BY master_CID",
+    "C": "decide-IsValidCustomer-policy-for-synthetics (REGULATOR RISK)",
+    "D": "enrich-dest-with-master_CID column for downstream rollup",
+    "E": "swap COUNT(DISTINCT CID/GCID) -> COUNT(DISTINCT master_GCID)",
+    "F": "policy decision \u2014 sub-account positions show separately or roll to master",
+    "X": "manual review \u2014 no INSERT destination detected"
+  },
+  "by_archetype": [
+    {
+      "archetype": "A",
+      "label": "Customer-keyed snapshot",
+      "count": 189,
+      "confidence_breakdown": {
+        "high": 119,
+        "medium": 70
+      }
+    },
+    {
+      "archetype": "B",
+      "label": "Per-customer money aggregate",
+      "count": 114,
+      "confidence_breakdown": {
+        "high": 53,
+        "medium": 61
+      }
+    },
+    {
+      "archetype": "C",
+      "label": "Dim-grain rollup with validity gate (REGULATOR-RISK)",
+      "count": 96,
+      "confidence_breakdown": {
+        "high": 96
+      }
+    },
+    {
+      "archetype": "D",
+      "label": "Money-flow at transaction grain",
+      "count": 81,
+      "confidence_breakdown": {
+        "high": 81
+      }
+    },
+    {
+      "archetype": "E",
+      "label": "Population headcount",
+      "count": 13,
+      "confidence_breakdown": {
+        "high": 12,
+        "medium": 1
+      }
+    },
+    {
+      "archetype": "F",
+      "label": "Non-customer dim grain (no validity gate)",
+      "count": 155,
+      "confidence_breakdown": {
+        "high": 155
+      }
+    },
+    {
+      "archetype": "X",
+      "label": "No destination INSERT detected",
+      "count": 811,
+      "confidence_breakdown": {
+        "low": 811
+      }
+    }
+  ],
+  "by_archetype_priority": {
+    "A|0": 112,
+    "A|10": 2,
+    "A|20": 29,
+    "A|21": 1,
+    "A|60": 7,
+    "A|90": 2,
+    "A|99": 1,
+    "A|unscheduled": 35,
+    "B|0": 52,
+    "B|10": 6,
+    "B|15": 1,
+    "B|20": 17,
+    "B|21": 1,
+    "B|60": 11,
+    "B|70": 1,
+    "B|80": 1,
+    "B|99": 6,
+    "B|unscheduled": 18,
+    "C|0": 50,
+    "C|1": 1,
+    "C|15": 1,
+    "C|20": 20,
+    "C|21": 1,
+    "C|90": 4,
+    "C|99": 4,
+    "C|unscheduled": 15,
+    "D|0": 36,
+    "D|10": 6,
+    "D|20": 6,
+    "D|60": 6,
+    "D|90": 1,
+    "D|99": 5,
+    "D|unscheduled": 21,
+    "E|0": 4,
+    "E|20": 2,
+    "E|60": 1,
+    "E|unscheduled": 6,
+    "F|0": 67,
+    "F|10": 2,
+    "F|15": 2,
+    "F|20": 15,
+    "F|21": 3,
+    "F|60": 3,
+    "F|98": 1,
+    "F|99": 2,
+    "F|unscheduled": 60,
+    "X|0": 126,
+    "X|1": 3,
+    "X|10": 2,
+    "X|15": 3,
+    "X|20": 65,
+    "X|21": 1,
+    "X|60": 8,
+    "X|70": 2,
+    "X|90": 1,
+    "X|99": 3,
+    "X|unscheduled": 597
+  },
+  "by_recommended_action": {
+    "manual review \u2014 no INSERT destination detected": 811,
+    "policy decision \u2014 sub-account positions show separately or roll to master": 155,
+    "filter-synthetics-from-population OR enrich-dest-with-master_CID": 189,
+    "aggregate-to-master via JOIN Dim_MasterGCID + GROUP BY master_CID": 114,
+    "swap COUNT(DISTINCT CID/GCID) -> COUNT(DISTINCT master_GCID)": 13,
+    "decide-IsValidCustomer-policy-for-synthetics (REGULATOR RISK)": 96,
+    "enrich-dest-with-master_CID column for downstream rollup": 81
+  },
+  "high_priority_examples": {
+    "A": [
+      "BI_DB_dbo.SP_CIDFirstDates (pri=90)",
+      "BI_DB_dbo.SP_DDR_Customer_Daily_Status (pri=60)",
+      "BI_DB_dbo.SP_DDR_Customer_Periodic_Status (pri=60)",
+      "BI_DB_dbo.SP_FirstTimeFunded (pri=90)",
+      "BI_DB_dbo.SP_M_Crypto_RECON (pri=99)",
+      "eMoney_dbo.SP_eMoney_Customer_Risk_Assessment (pri=60)"
+    ],
+    "B": [
+      "BI_DB_dbo.SP_ASIC_ClientBalanceFinance (pri=99)",
+      "BI_DB_dbo.SP_CB_Gap_Categorization (pri=99)",
+      "BI_DB_dbo.SP_CID_Daily_NWA (pri=99)",
+      "BI_DB_dbo.SP_Crypto_NOP (pri=99)",
+      "BI_DB_dbo.SP_Daily_CreditLine (pri=99)",
+      "BI_DB_dbo.SP_DDR_Fact_AUM (pri=60)"
+    ],
+    "C": [
+      "BI_DB_dbo.SP_Client_Balance_New (pri=99)",
+      "BI_DB_dbo.SP_DDR (pri=90)",
+      "BI_DB_dbo.SP_DDR_Aggregated (pri=90)",
+      "BI_DB_dbo.SP_DDR_Aggregated_Auxiliary_Metrics (pri=90)",
+      "BI_DB_dbo.SP_DDR_Auxiliary_Metrics (pri=90)",
+      "BI_DB_dbo.SP_Finance_Non_US_Settlement_Report (pri=99)"
+    ],
+    "D": [
+      "BI_DB_dbo.SP_CycleGap (pri=99)",
+      "BI_DB_dbo.SP_DailyDividendsByPosition (pri=99)",
+      "BI_DB_dbo.SP_DDR_Fact_Fact_MIMO_AllPlatforms (pri=60)",
+      "BI_DB_dbo.SP_DDR_Fact_MIMO_eMoney_Platform (pri=60)",
+      "BI_DB_dbo.SP_DepositWithdrawFee (pri=99)",
+      "BI_DB_dbo.SP_Finance_Panel_Reports (pri=99)"
+    ],
+    "E": [
+      "EXW_dbo.SP_EXW_FirstTimeWalletsAndUsers (pri=60)"
+    ],
+    "F": [
+      "BI_DB_dbo.SP_Daily_Dividends (pri=99)",
+      "BI_DB_dbo.SP_ECB_ExchangeRateAPI_Update_Columns (pri=98)",
+      "BI_DB_dbo.SP_RollOverFee_Dividends (pri=99)",
+      "eMoney_dbo.SP_eMoney_Client_Balance_Check_Exceptions_Gap (pri=60)",
+      "eMoney_dbo.SP_eMoney_Client_Balance_Check_Opening_Balance (pri=60)",
+      "EXW_dbo.SP_EXW_FactRedeemTransactions (pri=60)"
+    ],
+    "X": [
+      "BI_DB_dbo.SP_DailyZero_TreeSize_NEW (pri=99)",
+      "BI_DB_dbo.SP_Daily_CB_Gaps_All (pri=99)",
+      "BI_DB_dbo.SP_PositionPnL (pri=99)",
+      "BI_DB_dbo.SP_UsageTracking_SF (pri=70)",
+      "DE_dbo.SP_Extract_eMoney_CMR_to_lake_for_snapshot (pri=60)",
+      "eMoney_dbo.SP_eMoney_Reconciliation_ETLs (pri=70)"
+    ]
+  }
+}

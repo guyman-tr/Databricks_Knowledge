@@ -1,0 +1,65 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Dictionary_AdGroup",
+    "elapsed_seconds":  93,
+    "exit_code":  null,
+    "cost_usd":  0.6471,
+    "input_tokens":  2,
+    "output_tokens":  4102,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Dictionary_AdGroup",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ad_group_id",
+                                       "problem":  "Wiki flags non-uniqueness (27,565 distinct across 31,322 rows) but doesn\u0027t explicitly explain the root cause: SELECT DISTINCT grain includes campaign_id, so the same ad_group_id appearing under multiple campaigns creates multiple rows."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] checkboxes. Footer says 12/14 phases but doesn\u0027t enumerate which 2 were skipped."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No explicit data date range stated. For a TRUNCATE+INSERT dictionary this is acceptable (snapshot, not time-series), but could be clearer that the data reflects the state of all ad groups as of the last Fivetran sync before 2023-09-18."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Lists 8 referencing tables but SP processes 12 total tables. The list appears correct (not all SP tables necessarily JOIN on ad_group_id) but completeness is not independently verifiable from the bundle alone."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Minor polish: (1) Add explicit Phase Gate Checklist section. (2) Clarify ad_group_id non-uniqueness root cause in gotchas.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "31,322 rows",
+                                                                                  "2,192 campaigns",
+                                                                                  "27,565 distinct ad groups",
+                                                                                  "13 Google Ads accounts",
+                                                                                  "ENABLED=20,893 (67%)",
+                                                                                  "PAUSED=7,233 (23%)",
+                                                                                  "REMOVED=3,196 (10%)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,66 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_Rules",
+    "elapsed_seconds":  122,
+    "exit_code":  null,
+    "cost_usd":  0.4791,
+    "input_tokens":  2,
+    "output_tokens":  5588,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_Rules",
+                    "weighted_score":  8.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No formal Phase Gate Checklist section with P2/P3 checkboxes. Data claims appear genuine but lack formal phase-completion markers."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2",
+                                       "problem":  "IsActive is used for Activated/Deactivated change detection but the current activation state is not stored in this table. Could be noted more explicitly to prevent analyst confusion."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "V_Dealing_CEPDailyAudit_Rules_Last180Days listed as referencing view but existence cannot be verified from the bundle."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "SP alias chain is confusing (PreviousAppLoginName is actually COALESCE of both) but wiki correctly describes final semantics."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer lacks \u0027Phases completed\u0027 list — minor shape deviation."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 1,052 rows, 2023-12-13 to 2026-04-16",
+                                                                                  "TypeOfChange: 0 NULLs in production",
+                                                                                  "LoginName: trailing NULL bytes from CEP source"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 checkboxes not present in wiki body — data claims appear sampled but formal markers absent"
+                                                           ]
+                                    }
+                }
+}

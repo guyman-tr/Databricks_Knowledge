@@ -3,7 +3,8 @@ param(
     [Parameter(Mandatory=$true)]  [string] $Schema,
     [Parameter(Mandatory=$true)]  [string] $ObjectName,
     [Parameter(Mandatory=$false)] [int]    $Attempt = 1,
-    [Parameter(Mandatory=$false)] [int]    $TimeoutSeconds = 2400
+    [Parameter(Mandatory=$false)] [int]    $TimeoutSeconds = 2400,
+    [Parameter(Mandatory=$false)] [string] $Model = ""    # claude-cli model alias or full ID; "" = use claude.cmd default (currently Opus)
 )
 
 # ---------------------------------------------------------------------------
@@ -47,6 +48,10 @@ Remove-Item $tempOut, $tempErr -Force -ErrorAction SilentlyContinue
 # Databricks). The writer runs in a working directory of the repo root so its
 # relative `Read` tool calls match the repo layout the rules expect.
 $argList = "--dangerously-skip-permissions --verbose --output-format stream-json --print"
+if ($Model) {
+    $argList = "$argList --model $Model"
+    Write-Host ("  [writer] Model override: {0}" -f $Model) -ForegroundColor DarkGray
+}
 
 $proc = Start-Process -FilePath $claudePath `
     -ArgumentList $argList `

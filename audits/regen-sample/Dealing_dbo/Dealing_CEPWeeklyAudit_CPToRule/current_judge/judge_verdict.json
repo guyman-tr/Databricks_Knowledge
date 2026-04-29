@@ -1,0 +1,66 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_CPToRule",
+    "elapsed_seconds":  150,
+    "exit_code":  null,
+    "cost_usd":  0.5043,
+    "input_tokens":  2,
+    "output_tokens":  7453,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_CPToRule",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged `[UNVERIFIED] (Tier 4 — inferred)` but SP clearly shows `GETDATE()`. Should be `(Tier 4 — SP_W_CEPWeeklyAudit)` to match sibling wikis."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Lineage file — RuleName",
+                                       "problem":  "Lineage file says RuleName source is `#CPLog (latest CP-to-Rule state)` but the INSERT takes RuleName from `#Dim_CPtoRule` which resolves from `#RulesLog` (Rules temporal chain), not `#CPLog` (CompoundProperties chain)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Phase Gate Checklist (missing section)",
+                                       "problem":  "No Phase Gate Checklist section exists. Data claims (row count, date range, enum values) are present but there is no auditable record of which verification phases were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeServerID",
+                                       "problem":  "Description says \u0027from dimension join path in SP\u0027 but omits that the source field is `HedgeRuleActionTypeID` (a rename). Sibling wiki Dealing_CEPWeeklyAudit_Rules documents this explicitly."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5 / Footer",
+                                       "problem":  "Section 5 lacks 5.1/5.2 subsection structure; footer lacks a phases-completed list — minor shape deviations from golden reference."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Change UpdateDate tag from `[UNVERIFIED] (Tier 4 — inferred)` to `(Tier 4 — SP_W_CEPWeeklyAudit)`. (2) Fix lineage file: RuleName source should be `#Dim_CPtoRule → #RulesLog.Name (RN_Desc=1)`, not `#CPLog`. (3) Add Phase Gate Checklist section. (4) Enrich HedgeServerID description with `HedgeRuleActionTypeID` origin. (5) Add 5.1/5.2 subsection structure and phases-completed footer line.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 (live stats verification)",
+                                                               "P3 (distribution analysis)",
+                                                               "Phase Gate Checklist section"
+                                                           ]
+                                    }
+                }
+}

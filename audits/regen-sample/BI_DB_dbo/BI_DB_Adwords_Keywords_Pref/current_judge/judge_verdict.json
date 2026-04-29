@@ -1,0 +1,65 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Keywords_Pref",
+    "elapsed_seconds":  94,
+    "exit_code":  null,
+    "cost_usd":  0.6121,
+    "input_tokens":  2,
+    "output_tokens":  3657,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Keywords_Pref",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims 12/14 phases completed but does not specify which 2 were skipped. Data claims (row count, date range, keyword examples) are present despite partial phase completion — unclear if all are verified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "cost",
+                                       "problem":  "Description says \u0027Renamed from cost_micros\u0027 which could imply value conversion. More precise: \u0027Column renamed from Fivetran cost_micros; value remains in micros.\u0027"
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "external_customer_id",
+                                       "problem":  "Description says \u0027Always equals customer_id — redundant duplicate\u0027 but doesn\u0027t clarify this is SP-assigned (SELECT customer_id into both columns), not a Fivetran-side duplication."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "States \u0027No known consumers\u0027 but the table is explicitly paired with Keywords_Conv for complete keyword analysis — could reference the JOIN pattern from Section 3.3."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Tier legend omits Tier 1 and Tier 3 rows since none exist. Acceptable but differs from golden shape which typically shows all tiers."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P13",
+                                                               "P14"
+                                                           ]
+                                    }
+                }
+}

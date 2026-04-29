@@ -1,0 +1,98 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide",
+    "elapsed_seconds":  196,
+    "exit_code":  null,
+    "cost_usd":  0.5598,
+    "input_tokens":  2,
+    "output_tokens":  13798,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "SymbolFull",
+                                                  "upstream_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "wiki_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CopyEquity",
+                                                  "upstream_quote":  "Total AUM managed by this PI through copy relationships: ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0). Source: etoroGeneral_History_GuruCopiers.",
+                                                  "wiki_quote":  "Total AUM managed by this PI through copy relationships: ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0). Source: etoroGeneral_History_GuruCopiers.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream (BI_DB_CopyDailyData) marks CopyAUM as Tier 2; wiki promotes to Tier 1. Description is verbatim but source annotation adds \u0027via etoroGeneral_History_GuruCopiers\u0027 implying direct root provenance, obscuring that relay is through BI_DB_CopyDailyData."
+                                              },
+                                              {
+                                                  "column":  "NumOfCopiers",
+                                                  "upstream_quote":  "Number of valid depositor customers currently copying this PI as of @date. Source: COUNT(*) from etoroGeneral_History_GuruCopiers.",
+                                                  "wiki_quote":  "Number of valid depositor customers currently copying this PI as of @date. Source: COUNT(*) from etoroGeneral_History_GuruCopiers.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream marks as Tier 2; wiki promotes to Tier 1. Description is verbatim. Source annotation adds \u0027via etoroGeneral_History_GuruCopiers\u0027 instead of citing BI_DB_CopyDailyData as the immediate upstream."
+                                              },
+                                              {
+                                                  "column":  "Manager",
+                                                  "upstream_quote":  "Account manager display name: FirstName + \u0027 \u0027 + LastName from Dim_Manager.",
+                                                  "wiki_quote":  "Account manager display name: FirstName + \u0027 \u0027 + LastName from Dim_Manager.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream marks as Tier 2; wiki promotes to Tier 1. Description is verbatim. Should cite BI_DB_CopyDailyData.Manager as the immediate upstream source."
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 — DWH_dbo.Dim_Country via Dictionary.Country)",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 — Dictionary.Country)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Source annotation drops intermediate hop \u0027DWH_dbo.Dim_Country via\u0027. Upstream wiki explicitly documents the relay through Dim_Country before reaching Dictionary.Country."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Country",
+                                       "problem":  "Source annotation reads \u0027(Tier 1 — Dictionary.Country)\u0027 but the upstream wiki (BI_DB_CopyDailyData.Country) documents it as \u0027(Tier 1 — DWH_dbo.Dim_Country via Dictionary.Country)\u0027. The intermediate Dim_Country hop is dropped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CopyEquity, NumOfCopiers, Manager",
+                                       "problem":  "Source annotations claim provenance \u0027via etoroGeneral_History_GuruCopiers\u0027 and \u0027via DWH_dbo.Dim_Manager\u0027 respectively, implying direct root provenance. These columns are computed (Tier 2) in BI_DB_CopyDailyData and this table passes them through. The Tier 1 designation is defensible (passthrough rule) but the \u0027via root\u0027 suffix is misleading — the correct immediate upstream is BI_DB_CopyDailyData."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Columns 3-9, 13-15 (10 T3 columns)",
+                                       "problem":  "CID, UserName, PI_level, Acc_RiskIndex, IsBlocked, Classification, TraderType, Last_Day_Performance, YTD, MTD all degrade to Tier 3 because BI_DB_PI_Dashboard has no upstream wiki. Not a writer error, but limits analytical utility significantly — correctly escalated in review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Phase completion shown as narrative \u0027P1 P2 P3 P4...\u0027 rather than [x] checkbox format. Cannot programmatically confirm P2 (live data query) and P3 (distribution analysis) actually executed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Value_percenet (col 11)",
+                                       "problem":  "The elements table description does not flag the column name as a DDL typo inline. The gotcha in Section 3.4 mentions it, but an analyst reading only the elements reference will not know the name is a persistent typo until consulting another section."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only — no regeneration required for PASS. If re-running: (1) Fix Country annotation to \u0027(Tier 1 — DWH_dbo.Dim_Country via Dictionary.Country)\u0027. (2) Fix CopyEquity, NumOfCopiers, Manager annotations to cite BI_DB_CopyDailyData as the immediate upstream, not the root source. (3) Add inline typo note to Value_percenet elements description. (4) Convert footer phase list to [x] checkbox format.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

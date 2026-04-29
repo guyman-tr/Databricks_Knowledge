@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_ConditionToCP",
+    "elapsed_seconds":  101,
+    "exit_code":  null,
+    "cost_usd":  0.4468,
+    "input_tokens":  2,
+    "output_tokens":  4719,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_ConditionToCP",
+                    "weighted_score":  7.70,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged Tier 4 (inferred) but SP_CEPDailyAudit INSERT statement clearly uses GETDATE() as the 11th column. This is verifiable from SP code and should be Tier 2."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No Phase Gate Checklist (P1/P2/P3) section present. Data claims (row count ~1,219, date range 2023-12-12 to 2026-03-09) appear without formal phase completion attestation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer omits phases-completed list (e.g. \u0027Phases: P1 [x] P2 [x] P3 [x]\u0027) expected by the golden reference shape."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6 — Relationships",
+                                       "problem":  "Missing direct relationship entry for Dealing_CEPDailyAudit_Rules, which is joinable on RuleID + Date and is a sibling audit table in the same SP."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "SP inserts PreviousAppLoginName (which is the COALESCE result) aliased as AppLoginName. Wiki description is functionally correct but could note the SP alias chain more precisely."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit) and remove [UNVERIFIED] — GETDATE() is explicit in the SP INSERT. (2) Add a Phase Gate Checklist section with P1/P2/P3 status. (3) Add phases-completed entry to the footer. (4) Add Dealing_CEPDailyAudit_Rules to Section 6 Relationships (joinable on RuleID + Date).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

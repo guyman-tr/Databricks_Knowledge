@@ -1,0 +1,210 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CIDFirstDates",
+    "elapsed_seconds":  254,
+    "exit_code":  null,
+    "cost_usd":  2.4318,
+    "input_tokens":  3,
+    "output_tokens":  13657,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CIDFirstDates",
+                    "weighted_score":  4.80,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  2,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  6,
+                                             "business_meaning":  8,
+                                             "data_evidence":  4,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Sourced from Dim_Customer.RealCID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Unique within etoro DB. Used as the universal customer identifier across all tables.\u0027"
+                                              },
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Group Customer ID — cross-product identity key linking the same person across eToro products/entities. NULL for older accounts.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027predating GCID introduction\u0027"
+                                              },
+                                              {
+                                                  "column":  "OriginalCID",
+                                                  "upstream_quote":  "Original customer ID from the source provider. Together with OriginalProviderID, enables tracing of migrated accounts. Default=0.",
+                                                  "wiki_quote":  "Original customer ID from the source provider. Together with OriginalProviderID, enables tracing of migrated accounts. Default=0.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. PII — dynamic data masking in UC.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped uniqueness constraint, case-insensitivity, UserName_LOWER index enforcement; replaced with PII note not from upstream"
+                                              },
+                                              {
+                                                  "column":  "SerialID",
+                                                  "upstream_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations.",
+                                                  "wiki_quote":  "Affiliate (partner) ID under which the customer was acquired. Sourced from Dim_Customer.AffiliateID (renamed).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped FK target (BackOffice.Affiliate) and NULL semantics for direct/organic registrations"
+                                              },
+                                              {
+                                                  "column":  "Email",
+                                                  "upstream_quote":  "Customer email address. Unique (case-insensitive via LowerEmail computed column). Email changes trigger Customer.LastChanges update via trigger.",
+                                                  "wiki_quote":  "Customer email address. PII — masked with FUNCTION = \u0027default()\u0027.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped uniqueness, case-insensitivity, trigger semantics; replaced with PII note"
+                                              },
+                                              {
+                                                  "column":  "Gender",
+                                                  "upstream_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only. Used in LinkedAccountHash1.",
+                                                  "wiki_quote":  "Gender: M, F, or U (Unknown). PII.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped CHECK constraint (CCST_GENDER), LinkedAccountHash1 usage"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0.",
+                                                  "wiki_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Default=0\u0027"
+                                              },
+                                              {
+                                                  "column":  "BirthDate",
+                                                  "upstream_quote":  "Customer date of birth. Used in LinkedAccountHash1 for duplicate detection and in KYC age verification.",
+                                                  "wiki_quote":  "Customer date of birth. PII.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped LinkedAccountHash1 duplicate detection and KYC age verification usage"
+                                              },
+                                              {
+                                                  "column":  "ReferralID",
+                                                  "upstream_quote":  "Referral CID - the customer who referred this customer (for RAF program tracking).",
+                                                  "wiki_quote":  "Referral CID — the customer who referred this customer (for RAF program tracking).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DownloadID",
+                                                  "upstream_quote":  "Platform download source ID. Legacy tracking for which platform installer the customer used.",
+                                                  "wiki_quote":  "Platform download source ID. Legacy acquisition tracking.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Slight rewording: \u0027which platform installer the customer used\u0027 → \u0027acquisition tracking\u0027"
+                                              },
+                                              {
+                                                  "column":  "BannerID",
+                                                  "upstream_quote":  "Advertising banner ID that led to registration. Legacy acquisition tracking.",
+                                                  "wiki_quote":  "Advertising banner ID that led to registration. Legacy acquisition tracking.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SubAffiliateID",
+                                                  "upstream_quote":  "Sub-affiliate identifier string. Can be up to 1024 chars for complex affiliate tracking paths.",
+                                                  "wiki_quote":  "Sub-affiliate identifier string. Sourced from Dim_Customer.SubSerialID (renamed).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Can be up to 1024 chars for complex affiliate tracking paths\u0027"
+                                              },
+                                              {
+                                                  "column":  "PrivacyPolicyID",
+                                                  "upstream_quote":  "Version of the privacy policy the customer has accepted. FK to Dictionary.PrivacyPolicy.",
+                                                  "wiki_quote":  "Version of the privacy policy the customer has accepted.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped FK reference to Dictionary.PrivacyPolicy"
+                                              },
+                                              {
+                                                  "column":  "IP",
+                                                  "upstream_quote":  "Registration IP address.",
+                                                  "wiki_quote":  "Registration IP address (stored as bigint). PII — masked.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added type info and PII note; no upstream content lost"
+                                              },
+                                              {
+                                                  "column":  "RegulationID",
+                                                  "upstream_quote":  "Regulatory entity governing this account. FK to Dictionary.Regulation. Top values: CySEC=7.39M, BVI=7.30M, FCA=1.17M. Changes trigger RegulationChangeDate update.",
+                                                  "wiki_quote":  "Regulatory entity governing this account. FK to Dictionary.Regulation. Top values: CySEC, BVI, FCA.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped specific counts (7.39M, 7.30M, 1.17M) and RegulationChangeDate trigger semantics"
+                                              },
+                                              {
+                                                  "column":  "EvMatchStatus",
+                                                  "upstream_quote":  "Electronic verification match result. Score or decision from automated identity verification vendors (Onfido, Au10tix). NULL if not yet processed.",
+                                                  "wiki_quote":  "Electronic verification match result. Synced from Dim_Customer.EvMatchStatus with change detection (only updated when value differs).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped vendor names (Onfido, Au10tix) and NULL semantics; replaced with SP implementation detail"
+                                              },
+                                              {
+                                                  "column":  "DesignatedRegulationID",
+                                                  "upstream_quote":  "Secondary/override regulation for accounts subject to multiple jurisdictions. FK to Dictionary.Regulation.",
+                                                  "wiki_quote":  "Secondary/override regulation for accounts subject to multiple jurisdictions. Synced from Dim_Customer.DesignatedRegulationID with change detection.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped FK to Dictionary.Regulation; added implementation detail"
+                                              },
+                                              {
+                                                  "column":  "IsFundedNew",
+                                                  "upstream_quote":  "N/A — no upstream wiki exists for Function_Population_Funded",
+                                                  "wiki_quote":  "Funded status flag. 1 if ALL four criteria hold on the balance date...",
+                                                  "match":  "NO",
+                                                  "loss":  "Mis-tiered as Tier 1. No upstream wiki exists for this function. Should be Tier 2."
+                                              },
+                                              {
+                                                  "column":  "FirstNewFundedDate",
+                                                  "upstream_quote":  "N/A — no upstream wiki exists for Function_Population_First_Time_Funded",
+                                                  "wiki_quote":  "First date the customer crossed the fully-funded threshold...",
+                                                  "match":  "NO",
+                                                  "loss":  "Mis-tiered as Tier 1. No upstream wiki exists. Should be Tier 2."
+                                              },
+                                              {
+                                                  "column":  "LastNewFundedDate",
+                                                  "upstream_quote":  "N/A — no upstream wiki exists for Function_Population_Funded",
+                                                  "wiki_quote":  "Most recent date the customer held funded status...",
+                                                  "match":  "NO",
+                                                  "loss":  "Mis-tiered as Tier 1. No upstream wiki exists. Should be Tier 2."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country, Region, Language, Club, Channel, SubChannel, LabelName, PotentialDesk, FunnelName, FunnelFromName, CommunicationLanguage, Verified, Manager, State, NewMarketingRegion",
+                                       "problem":  "All 16 dimension lookup columns tagged Tier 2 (SP_CIDFirstDates, Dim_X) but they are dim-lookup passthroughs (SELECT dim.Name with no transform). Per tier rules, these should be Tier 1 with the dim\u0027s root origin (e.g., Dictionary.Country for Country/Region, Dictionary.Language for Language, Dictionary.PlayerLevel for Club, etc.)."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsFundedNew, FirstNewFundedDate, LastNewFundedDate",
+                                       "problem":  "Tagged Tier 1 but no upstream wiki exists for Function_Population_Funded or Function_Population_First_Time_Funded. These are ETL-computed within SP_CIDFirstDates via inline function calls. Should be Tier 2 — SP_CIDFirstDates."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "EvMatchStatus",
+                                       "problem":  "Tier 1 column paraphrased: dropped vendor names (Onfido, Au10tix) and NULL semantics (\u0027NULL if not yet processed\u0027). Replaced upstream content with SP implementation detail (\u0027change detection\u0027)."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "FirstDepositDate, FirstDepositAmount",
+                                       "problem":  "Tagged Tier 2 (SP_Dim_Customer ← CustomerFinanceDB) but these are direct reads from Dim_Customer (alias dc, confirmed in lineage). Dim_Customer wiki documents both columns. Should be Tier 1 quoting Dim_Customer wiki verbatim."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No row count or date range. Section 1 says \u0027for every valid customer\u0027 but never quantifies. P3 (live data sampling) was skipped. Self-assessed quality of 9.5/10 is not supported by evidence."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tier all 16 dim-lookup columns as Tier 1 using each dim\u0027s root production origin (e.g., Country → Tier 1 — Dictionary.Country, Region → Tier 1 — Dictionary.Country, Language → Tier 1 — Dictionary.Language, Club → Tier 1 — Dictionary.PlayerLevel). Quote the dim wiki description verbatim. (2) Re-tier IsFundedNew, FirstNewFundedDate, LastNewFundedDate as Tier 2 — SP_CIDFirstDates, Function_Population_Funded. (3) Re-tier FirstDepositDate and FirstDepositAmount as Tier 1, quoting Dim_Customer wiki verbatim. (4) Fix all 18 Tier 1 descriptions to verbatim-quote the upstream Dim_Customer wiki — specifically restore: EvMatchStatus vendor names (Onfido, Au10tix) and NULL semantics; UserName uniqueness constraint; Email uniqueness and trigger; Gender CHECK constraint; SerialID FK and NULL for organic; RegulationID specific counts. (5) Run P3 live data sampling to add row count and date range to Section 1. (6) Correct self-assessed quality score from 9.5 to reflect actual tier and fidelity state.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

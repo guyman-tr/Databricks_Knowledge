@@ -1,38 +1,45 @@
-# Review Sidecar -- Dealing_dbo.Dealing_Apex_PnL
+# Review Needed: Dealing_dbo.Dealing_Apex_PnL
 
-## Auto-generated verification
+## Summary
 
-| Check | Status | Notes |
-|-------|--------|-------|
-| Writer SP | OK | `Dealing_dbo.SP_Apex_PnL` (shared with Daily / EE variants) |
-| Stale data flag | **ATTENTION** | Last row **2024-06-07**; last load **2024-06-08** — confirm pipeline status with Ops |
-| Lineage sidecar | OK | `Dealing_Apex_PnL.lineage.md` present; LP external staging path |
-| Tier suffixes in wiki | OK | All element descriptions end with `(Tier 2 — SP_Apex_PnL)` |
-| Atlassian Phase 10 | OK | No sources — Section 8 placeholder retained |
+| Metric | Value |
+|--------|-------|
+| Tier 1 columns | 2 |
+| Tier 2 columns | 19 |
+| Tier 3 columns | 0 |
+| Tier 4 columns | 0 |
+| Total columns | 21 |
 
-## Items for human review
+## Items for Human Review
 
-| # | Column / topic | Confidence | Question |
-|---|----------------|------------|----------|
-| 1 | Pipeline / LP | Medium | Was the **Apex Clearing** relationship ended or replaced around **June 2024**? What is the current US equities LP if not Apex? |
-| 2 | Staging name | Low | What does **`EXT872_3EU_217314`** denote in **`LP_APEX_EXT872_3EU_217314`** (contract, account, feed version)? |
-| 3 | Zero column | Medium | Confirm **`Zero`** from **`Dealing_DailyZeroPnL_Stocks`** is understood as **positions fully closed to zero units** within the window — any carve-outs? |
-| 4 | PnL_DBPrice use | Medium | Is **`PnL_DBPrice`** used in a **formal reconciliation** pack vs Apex, or only ad hoc investigation? |
-| 5 | Consumer inventory | Low | Which **Middle Office** reports or dashboards still reference this table post-2024-06? |
+### 1. Low Tier 1 Coverage (Expected)
 
-## Reviewer corrections
+Only 2 of 21 columns (InstrumentID, InstrumentDisplayName) have Tier 1 coverage. This is expected because the table's primary data sources are Apex Clearing Corporation staging files (LP_APEX_EXT982_3EU, LP_APEX_EXT872_3EU_217314, LP_APEX_EXT869_3EU) which have no upstream wikis. The only columns with a documented upstream are InstrumentID and InstrumentDisplayName via the DWH_dbo.Dim_Instrument wiki (which itself inherits from Trade.Instrument / Trade.InstrumentMetaData).
 
-*(Empty -- awaiting human review)*
+### 2. Hardcoded Account-to-HedgeServer Mapping
 
-## Tier distribution (wiki)
+The SP contains a hardcoded mapping of 5 Apex accounts to HedgeServerIDs (3EU05026=9, 3EU05025=112, 3EU05027=102, 3EU00101=223, 3EU05028=3). If new accounts are added to Apex, this mapping must be manually updated in the SP. Reviewer should confirm whether this mapping is still current and complete.
 
-| Tier | Count | Examples |
-|------|-------|----------|
-| Tier 2 | 21 | All columns traced to `SP_Apex_PnL` / staging joins |
-| Tier 4 | 0 | — |
+### 3. Data Freshness
 
-**Quality score (target):** 7.5
+The data ranges from 2021-02-10 to 2024-06-07. The last load date is over a year old. Reviewer should confirm whether this table is still actively maintained or if the Apex clearing relationship/SP execution has been discontinued.
 
----
+### 4. Zero Column Semantics
 
-*Generated: 2026-03-21 | Batch: 7 (redo)*
+The `Zero` column from `Dealing_DailyZeroPnL_Stocks` is present in the output but is NOT included in the PnL/PnL_DBPrice formula. It is present as a separate reference for reconciliation comparison. Reviewer should confirm whether this is intentional (informational reference for comparison) or if it should be factored into the reconciliation formula.
+
+### 5. No UC Migration Target
+
+This table is not in the Generic Pipeline mapping and has no Unity Catalog target. Reviewer should confirm whether this is expected for Dealing_dbo Middle Office tables or if migration is planned.
+
+### 6. Easter 2022 Manual Fix
+
+The SP contains a hardcoded fix: `WHEN @FridayBefore = '2022-04-15' THEN 20220414` with comment "manual fix, in our DB this day (easter) is wrongly considered as a workday." This fix is permanent but only affects historical data for that specific date. Consider whether the underlying Dim_Date bank holiday data has been corrected.
+
+### 7. Jira Search Skipped
+
+Phase 10 (Atlassian search) was skipped in regen harness mode. A production run should search for related Jira tickets or Confluence pages about Apex clearing reconciliation.
+
+### 8. NULL InstrumentID Rows
+
+135,419 rows (4.5%) have NULL InstrumentID where Apex symbol could not be matched to Dim_Instrument. Reviewer should assess whether these are delisted instruments, OTC securities, or matching failures that need SP correction.

@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_NameLists",
+    "elapsed_seconds":  118,
+    "exit_code":  null,
+    "cost_usd":  0.4514,
+    "input_tokens":  2,
+    "output_tokens":  4648,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_NameLists",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "End-date path description omits the SysEndTime \u003c \u00279999-01-01\u0027 guard from the SP. Wiki says \u0027RN_desc=1 + SysEndDate=@Date\u0027 but SP also requires SysEndTime \u003c \u00279999-01-01\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "Statement \u0027Both paths can produce rows for the same list on the same date if the list was modified and then deleted\u0027 is narrower than reality — both paths produce \u0027Change In CIDs\u0027 for non-deletion changes too, which gotchas section covers better."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No phases-completed list (P1/P2/P3 checkmarks) in footer — minor shape deviation from golden reference."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Gotchas / review-needed",
+                                       "problem":  "Review-needed flags potential duplicate rows from UNION of both temporal paths. Wiki covers this in gotchas but frames as expected behavior rather than flagging as potential SP logic issue."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "Description says COALESCE(AppLoginName, PreviousAppLoginName) which is functionally correct but elides the aliasing chain: LEAD() produces PreviousAppLoginName in #NameLists_Log, COALESCE result is re-aliased as PreviousAppLoginName in #NameLists_ChangesFinal, then inserted as AppLoginName."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

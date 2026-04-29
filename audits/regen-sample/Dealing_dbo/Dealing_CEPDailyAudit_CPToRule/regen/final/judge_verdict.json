@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_CPToRule",
+    "elapsed_seconds":  145,
+    "exit_code":  null,
+    "cost_usd":  0.5115,
+    "input_tokens":  2,
+    "output_tokens":  6505,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_CPToRule",
+                    "weighted_score":  8.6,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  10,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Structure",
+                                       "problem":  "No Phase Gate Checklist section. Data claims (39,440 rows, event breakdowns) cannot be verified as grounded in live queries without P2/P3 confirmation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged Tier 2 based on visible GETDATE() in SP code, but all sibling CEPDailyAudit tables tag the identical pattern as Tier 4 — inferred. Creates family-wide inconsistency."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IsTrue",
+                                       "problem":  "Element description does not clarify that on \u0027CP Removed from Rule\u0027 events, the stored value is the last known truth-polarity before unlinking, not a current state."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Dealing_CEPWeeklyAudit_CPToRule listed as \u0027weekly rollup counterpart\u0027 but no wiki or DDL for it appears in the bundle. Reference is plausible but unverified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RuleName",
+                                       "problem":  "Wiki does not note that RuleName resolution via #RulesLog (RN_Desc=1) can return names of deleted or inactive rules — analyst may assume non-NULL RuleName implies an active rule."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required (PASS). For polish: (1) Add Phase Gate Checklist confirming P1/P2/P3 completion. (2) Align UpdateDate tier tag with sibling CEPDailyAudit convention. (3) Add note to IsTrue element that removal events store last-known polarity. (4) Verify Dealing_CEPWeeklyAudit_CPToRule exists before listing in Section 6.2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

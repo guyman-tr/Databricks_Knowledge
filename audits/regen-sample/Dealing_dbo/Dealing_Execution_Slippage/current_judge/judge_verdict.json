@@ -1,0 +1,76 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Execution_Slippage",
+    "elapsed_seconds":  149,
+    "exit_code":  null,
+    "cost_usd":  0.5504,
+    "input_tokens":  2,
+    "output_tokens":  7557,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Execution_Slippage",
+                    "weighted_score":  7.90,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  6,
+                                             "business_meaning":  8,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "wiki_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "match":  "YES",
+                                                  "loss":  "None — verbatim match. However, tier classification is debatable (see issues)."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing tier breakdown counts. Footer has quality score and phases but no \u0027Tiers: 1 T1, 20 T2, 0 T3, 0 T4\u0027 summary line."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Row count (4.78M) and date range (Jan 2023–Oct 2024) appear only in Section 3.1, not in Section 1 where the rubric requires them."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Tagged Tier 1 (upstream wiki, Trade.Instrument) but the data arrives via Etoro_Hedge_ExecutionLog.InstrumentID, not Dim_Instrument. The SP uses er.InstrumentID from staging directly. Being an FK to a documented dimension does not make the column Tier 1 when the direct source is unresolved."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Slippage / SlippageInDollar",
+                                       "problem":  "Elements #12 and #13 have opposite sign conventions (positive Slippage = cost; positive SlippageInDollar = gain). Section 2.1 documents this but the element descriptions do not cross-reference each other\u0027s inverted sign convention."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "All columns",
+                                       "problem":  "No NULL-rate analysis provided for any column despite P2/P3 being marked as completed. KustoTime and Kusto_Price are particularly relevant since the Kusto feed is known to be stale."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Move row count (4.78M) and date range (Jan 2023–Oct 2024) from Section 3.1 into Section 1. (2) Add tier breakdown counts to footer: \u0027Tiers: 1 T1, 20 T2, 0 T3, 0 T4\u0027. (3) Consider re-tagging InstrumentID as Tier 2 with FK note. (4) Add cross-reference warning in Slippage/SlippageInDollar elements about inverted sign conventions.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "row count 4.78M in Section 3.1",
+                                                                                  "date range Jan 2023–Oct 2024 in Section 3.1"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P4",
+                                                               "P5",
+                                                               "P6",
+                                                               "P7",
+                                                               "P9B",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

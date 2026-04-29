@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_ConditionToCP",
+    "elapsed_seconds":  107,
+    "exit_code":  null,
+    "cost_usd":  0.43,
+    "input_tokens":  2,
+    "output_tokens":  4473,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_ConditionToCP",
+                    "weighted_score":  8.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No phases-completed list in footer (e.g., \u0027Phases: P1 ✓, P2 skip, P3 skip\u0027). Minor shape gap vs golden reference."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "Description says \u0027temporal / login resolution per SP\u0027 but SP simply passes through AppLoginName directly — slight embellishment."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "DELETE + INSERT load pattern not mentioned in Section 1 summary (appears only later in the wiki)."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Phase Gate",
+                                       "problem":  "No explicit P2/P3 phase gate checklist visible in the wiki. Data claims appear credible but phases are undeclared."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged [UNVERIFIED] Tier 4 but GETDATE() is plainly visible in SP INSERT — UNVERIFIED flag is unnecessarily cautious."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor polish only: (1) Add phases-completed list to footer. (2) Simplify LoginName description to remove \u0027temporal / login resolution\u0027 embellishment — it is a direct AppLoginName passthrough. (3) Promote UpdateDate from [UNVERIFIED] Tier 4 to confirmed Tier 4.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

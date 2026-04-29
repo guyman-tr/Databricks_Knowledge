@@ -25,7 +25,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 TARGET_ROOT = REPO_ROOT / "audits" / "regen-sample"
-MANIFEST = TARGET_ROOT / "manifest.csv"
+MANIFEST = TARGET_ROOT / "manifest.csv"  # default; can be overridden via --manifest
 
 T4_INFERRED_RE = re.compile(r"\(Tier\s*4[^)]*inferred", re.IGNORECASE)
 
@@ -112,11 +112,22 @@ def load_judge_cost(obj_dir: Path) -> Tuple[float, int, int]:
 
 
 def main() -> int:
-    if not MANIFEST.exists():
-        print(f"ERROR: manifest missing: {MANIFEST}")
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--manifest", default=str(MANIFEST),
+                    help="manifest CSV to summarize (default: audits/regen-sample/manifest.csv)")
+    ap.add_argument("--output-name", default="_summary",
+                    help="basename for output files in audits/regen-sample/ (default: _summary -> _summary.md + _summary.csv)")
+    args = ap.parse_args()
+
+    manifest_path = Path(args.manifest)
+    if not manifest_path.is_absolute():
+        manifest_path = (REPO_ROOT / manifest_path).resolve()
+    if not manifest_path.exists():
+        print(f"ERROR: manifest missing: {manifest_path}")
         return 1
 
-    rows = list(csv.DictReader(MANIFEST.open("r", encoding="utf-8-sig")))
+    rows = list(csv.DictReader(manifest_path.open("r", encoding="utf-8-sig")))
 
     table: List[Dict[str, Any]] = []
     total_cost = 0.0
@@ -182,7 +193,7 @@ def main() -> int:
     out: List[str] = []
     out.append("# Regen Harness Summary")
     out.append("")
-    out.append(f"_Generated from `{MANIFEST.name}` -- {len(table)} objects._")
+    out.append(f"_Generated from `{manifest_path.name}` -- {len(table)} objects._")
     out.append("")
 
     # Headline counts
@@ -279,12 +290,12 @@ def main() -> int:
         out.append("- **No clear signal**. Inspect individual compare.md files.")
     out.append("")
 
-    summary_md = TARGET_ROOT / "_summary.md"
+    summary_md = TARGET_ROOT / f"{args.output_name}.md"
     summary_md.write_text("\n".join(out), encoding="utf-8")
     print(f"Wrote {summary_md}")
 
     # ---- CSV ----
-    csv_path = TARGET_ROOT / "_summary.csv"
+    csv_path = TARGET_ROOT / f"{args.output_name}.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Schema","Object","Bucket","Q_self","Q_judge_current","Q_judge_regen","Slop_before","Slop_after","Verdict","Score_delta"])

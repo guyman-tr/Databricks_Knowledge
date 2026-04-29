@@ -6,7 +6,9 @@ param(
     [Parameter(Mandatory=$false)] [int]    $WriterTimeoutSeconds = 2400,
     [Parameter(Mandatory=$false)] [int]    $JudgeTimeoutSeconds = 900,
     [Parameter(Mandatory=$false)] [switch] $SkipPreload,
-    [Parameter(Mandatory=$false)] [switch] $RunCompare
+    [Parameter(Mandatory=$false)] [switch] $RunCompare,
+    [Parameter(Mandatory=$false)] [string] $WriterModel = "",   # "" = claude.cmd default (Opus). "sonnet" / "opus" / full model ID accepted.
+    [Parameter(Mandatory=$false)] [string] $JudgeModel  = ""    # "" = default. Recommended: "sonnet" (judge is structural, doesn't need Opus reasoning).
 )
 
 # ---------------------------------------------------------------------------
@@ -93,7 +95,8 @@ for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
         -Schema $Schema `
         -ObjectName $ObjectName `
         -Attempt $attempt `
-        -TimeoutSeconds $WriterTimeoutSeconds
+        -TimeoutSeconds $WriterTimeoutSeconds `
+        -Model $WriterModel
     $writerExit = $LASTEXITCODE
     if ($writerExit -ne 0) {
         Write-Host ("  Writer attempt {0} FAILED (exit {1}). Skipping judge for this attempt." -f $attempt, $writerExit) -ForegroundColor Red
@@ -131,7 +134,8 @@ for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
         -DdlPath $ddlPath `
         -UpstreamBundlePath $bundlePath `
         -OutDir $attemptDir `
-        -TimeoutSeconds $JudgeTimeoutSeconds
+        -TimeoutSeconds $JudgeTimeoutSeconds `
+        -Model $JudgeModel
     $judgeExit = $LASTEXITCODE
 
     $verdictPath = Join-Path $attemptDir "judge_verdict.json"

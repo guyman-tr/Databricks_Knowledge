@@ -1,0 +1,71 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AML_Multiple_Accounts_Withdraw",
+    "elapsed_seconds":  133,
+    "exit_code":  null,
+    "cost_usd":  0.9972,
+    "input_tokens":  2,
+    "output_tokens":  6465,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AML_Multiple_Accounts_Withdraw",
+                    "weighted_score":  9.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "FundingID",
+                                                  "upstream_quote":  "FK to Billing.Funding — the payment instrument to which the withdrawal is paid. NULL if no specific instrument selected.",
+                                                  "wiki_quote":  "FK to Billing.Funding — the payment instrument to which the withdrawal is paid. Used here as the grouping key for multi-account detection. Only FundingIDs shared by 2+ customers and with ID \u003e 7 are included.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027NULL if no specific instrument selected\u0027 — contextually irrelevant since table only includes FundingIDs with 2+ users and ID \u003e 7"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2.1 — Group_Type",
+                                       "problem":  "Wiki claims rows with 2-4 users get NULL Group_Type. Incorrect: the SP CASE uses `WHEN COUNT(DISTINCT CID) \u003c= 20 THEN \u00275-20\u0027`, which covers all values from 2 (HAVING minimum) to 20. Rows with 2-4 users get \u00275-20\u0027, not NULL."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FundingID",
+                                       "problem":  "Dropped \u0027NULL if no specific instrument selected\u0027 from Fact_BillingWithdraw upstream description. Contextually justified but deviates from verbatim Tier 1 inheritance."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Group_Type",
+                                       "problem":  "SP code defines \u0027500+\u0027 bucket as \u0027500+ \u0027 (trailing space). Wiki lists it as \u0027500+\u0027 without trailing space. May cause exact-match query issues."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Lists \u0027AML Multiple Accounts Dashboard\u0027 as a downstream consumer with \u0027Power BI / reporting dashboard\u0027 — speculative without Atlassian confirmation (Phase 10 skipped)."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Fix Section 2.1 Group_Type logic — rows with 2-4 users get \u00275-20\u0027 not NULL, since the CASE uses \u003c= 20. (2) Note trailing space in \u0027500+ \u0027 bucket label from SP source. (3) Optionally add transparency note about dropped NULL semantics on FundingID Tier 1 description.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 20,282",
+                                                                                  "IsBlocked values 2-151",
+                                                                                  "Total_Users values 0-1",
+                                                                                  "Group_Type 99.7% \u00275-20\u0027",
+                                                                                  "Last_Withdraw_Date range 2013-12-18 to 2025-03-12",
+                                                                                  "UpdateDate 2025-03-13"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "7",
+                                                               "10"
+                                                           ]
+                                    }
+                }
+}

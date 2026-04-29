@@ -1,0 +1,77 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_MoveMoneyReason",
+    "elapsed_seconds":  100,
+    "exit_code":  null,
+    "cost_usd":  0.2623,
+    "input_tokens":  2,
+    "output_tokens":  5342,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_MoveMoneyReason",
+                    "weighted_score":  7.05,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "MoveMoneyReasonID",
+                                                  "upstream_quote":  "Unique identifier for the money movement reason: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment. Gap at ID 4. Referenced by 50+ credit/balance procedures.",
+                                                  "wiki_quote":  "Internal money movement reason identifier. DWH values: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 4=Airdrop (DWH-only label). Production has additional IDs 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment - all absent from DWH. ID=5 is critical: used in SP_Fact_CustomerAction to derive ActionTypeID 44 (internal deposit) and 45 (internal withdrawal).",
+                                                  "match":  "NO",
+                                                  "loss":  "Rewrote opening (\u0027Unique identifier for the money movement reason\u0027 → \u0027Internal money movement reason identifier\u0027). Dropped \u0027Referenced by 50+ credit/balance procedures\u0027."
+                                              },
+                                              {
+                                                  "column":  "MoveMoneyReason",
+                                                  "upstream_quote":  "Human-readable reason label. Note: column name matches table name (denormalized pattern). Displayed in account statements, credit history, and BackOffice audit screens.",
+                                                  "wiki_quote":  "Human-readable money movement reason label. DWH labels: Adjustment, Bonus Abuser, Staking, Airdrop. Column name intentionally matches table name (denormalized pattern per upstream wiki). Used in financial reporting and account statements. Note: DWH label \"Airdrop\" for ID=4 diverges from production where ID=4 is marked deprecated.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027credit history\u0027 and \u0027BackOffice audit screens\u0027 from display contexts. Substituted \u0027financial reporting\u0027 which does not appear in upstream. Rewrote \u0027Displayed in\u0027 → \u0027Used in\u0027."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "MoveMoneyReasonID",
+                                       "problem":  "Tier 1 description is paraphrased. Upstream says \u0027Unique identifier for the money movement reason\u0027 — wiki says \u0027Internal money movement reason identifier\u0027. \u0027Referenced by 50+ credit/balance procedures\u0027 is dropped entirely."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "MoveMoneyReason",
+                                       "problem":  "Tier 1 description is paraphrased. Upstream lists \u0027Displayed in account statements, credit history, and BackOffice audit screens\u0027 — wiki drops \u0027credit history\u0027 and \u0027BackOffice audit screens\u0027, substitutes \u0027financial reporting\u0027 (not in upstream)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "MoveMoneyReason (tier tag)",
+                                       "problem":  "Hybrid tier tag \u0027(Tier 1 - upstream wiki, Dictionary.MoveMoneyReason + Tier 3 - live data sampling)\u0027 is ambiguous. Base description should be verbatim T1 with DWH observations appended separately."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with P1/P2/P3 checkboxes despite footer claiming 11/14 phases."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Writer self-score of 7.3/10 is generous given verbatim fidelity failures on both Tier 1 columns."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) For MoveMoneyReasonID, start description with upstream verbatim: \u0027Unique identifier for the money movement reason: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment. Gap at ID 4. Referenced by 50+ credit/balance procedures.\u0027 Then append DWH-specific context (ID=4 Airdrop, missing IDs, SP impact) clearly separated. (2) For MoveMoneyReason, start with upstream verbatim: \u0027Human-readable reason label. Note: column name matches table name (denormalized pattern). Displayed in account statements, credit history, and BackOffice audit screens.\u0027 Then append DWH-specific observations. (3) Do not drop vendor/system names — \u0027BackOffice audit screens\u0027 and \u0027credit history\u0027 must remain. (4) Add explicit Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section"
+                                                           ]
+                                    }
+                }
+}

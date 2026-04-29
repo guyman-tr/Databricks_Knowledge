@@ -1,0 +1,40 @@
+{
+  "schema": "DWH_dbo",
+  "object": "Dim_MoveMoneyReason",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Tables\\DWH_dbo.Dim_MoveMoneyReason.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_MoveMoneyReason\\current\\Dim_MoveMoneyReason.lineage.md",
+  "writer_sps_discovered": [],
+  "candidates_found": 2,
+  "resolved_synapse": 0,
+  "resolved_production": 1,
+  "resolved_sp": 0,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_MoveMoneyReason\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 9553,
+  "resolutions": [
+    {
+      "raw_name": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason",
+      "db": null,
+      "schema": "dwh",
+      "object": "gold_sql_dp_prod_we_dwh_dbo_dim_movemoneyreason",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "etoro.Dictionary.MoveMoneyReason",
+      "db": "etoro",
+      "schema": "Dictionary",
+      "object": "MoveMoneyReason",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.MoveMoneyReason.md",
+      "sp_path": null,
+      "bytes_read": 7822,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

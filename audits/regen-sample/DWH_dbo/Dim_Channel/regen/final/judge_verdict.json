@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_Channel",
+    "elapsed_seconds":  127,
+    "exit_code":  null,
+    "cost_usd":  0.2224,
+    "input_tokens":  2,
+    "output_tokens":  4102,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_Channel",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 + Section 2.3",
+                                       "problem":  "Email alerting described as active (\u0027an HTML email is sent\u0027) but SP code shows sp_send_dbmail is commented out. Wiki body is misleading — analyst would assume the alert is operational."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.3",
+                                       "problem":  "Email subject mismatch: wiki says \u0027New Channels in Affwizz - Need mapping ASAP\u0027 but SP code shows @subject = \u0027New Channels in Affwizz\u0027 (without \u0027Need mapping ASAP\u0027)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2 (missing)",
+                                       "problem":  "SP INSERT logic includes WHERE SubChannelID != 0, silently excluding zero-valued IDs. This filter is not documented anywhere in the wiki or lineage."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Quality score is \u0027pending/10\u0027 — unfilled placeholder."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "Pipeline diagram shows SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse as loader but relationship to orchestrator SP_Dictionaries_DL_To_Synapse could be clearer."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Update Section 1 and Section 2.3 to note that the sp_send_dbmail alerting block is commented out in current SSDT code — do not describe it as active. (2) Correct email subject to match SP code verbatim: \u0027New Channels in Affwizz\u0027. (3) Document the WHERE SubChannelID != 0 filter in Section 2 or Section 3.4. (4) Fill in the quality score in the footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P10 — Atlassian"
+                                                           ]
+                                    }
+                }
+}

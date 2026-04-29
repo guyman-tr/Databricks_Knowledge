@@ -150,7 +150,9 @@ The lineage file tells you the source tables. Now read the upstream wikis for th
 
 ### ⛔ Pre-Read Self-Check (MANDATORY before writing any element description)
 
-Before writing the Elements table, emit this check. The check must enumerate **every** entry in the lineage file's `## Source Objects` section (facts, dims, lookups, dictionaries — no exclusions):
+Before writing the Elements table, emit this check. The check must enumerate **every** entry in the lineage file's `## Source Objects` section (facts, dims, lookups, dictionaries — no exclusions).
+
+**This block is not just an internal scratchpad — it MUST be written into the final `.md` wiki file** (in a fenced `text` code block at the end of `## 5. Lineage`, after section 5.2 ETL Pipeline). Rule B6 check 8b grep-tests for it; missing-but-eligible wikis are appended to `audits/patch15-must-fix.txt` by the batch runner's `Test-Patch15Compliance` guardrail and forced through a re-grading pass.
 
 ```
 UPSTREAM SEARCH LOG — {ObjectName}:
@@ -830,6 +832,19 @@ After writing each object's output files, run this validation **before moving to
    - Absolute counts after enum values: `CySEC=7.39M`
    If ANY match is found in a column description, rewrite it by removing the stats and keeping only semantic content. Emit: `COLUMN STATS CHECK: {N} descriptions contain table-level stats — PASS/FAIL`.
 
+8b. **⛔ UPSTREAM SEARCH LOG must be present in the wiki — HARD ENFORCED (2026-04-27)**: The Pre-Read Self-Check section above defines an `UPSTREAM SEARCH LOG — {ObjectName}:` block that enumerates every entry in the lineage's `## Source Objects` table, records whether each upstream wiki was FOUND/NOT_FOUND, and asserts a Read tool was issued for every FOUND source. **This block MUST appear inside the wiki `.md` file itself**, not just be reasoned about internally — its absence is the fingerprint of a Phase 11 that bypassed the Pre-Read step. Place it in a fenced `text` code block at the end of `## 5. Lineage` (after section 5.2 ETL Pipeline, before section 6). The post-write check is:
+   - Grep the wiki for `UPSTREAM SEARCH LOG`
+   - If missing AND the lineage file's `## Source Objects` table contains at least one Synapse-resident schema (`DWH_dbo`, `BI_DB_dbo`, `eMoney_dbo`, `EXW_dbo`, `Dealing_dbo`, `CryptoDB_dbo`), the wiki is INVALID — **regenerate it** with the search log included. The block is short (10–25 lines for typical objects) and exists specifically so this check is mechanical.
+   - Emit: `UPSTREAM SEARCH LOG CHECK: {present/missing} — PASS/FAIL`.
+
+   **Why this is HARD ENFORCED**: An automated guardrail in the batch runner (`Test-Patch15Compliance`) scans for this exact pattern after every iteration:
+   - `.lineage.md` correctly says "passthrough" from `Dim_X`
+   - `Dim_X.md` exists in this repo (so Tier 1 inheritance is feasible)
+   - `.md` file tags every such column Tier 2 anyway
+   - `UPSTREAM SEARCH LOG` block missing
+   
+   Wikis that match this fingerprint are appended to `audits/patch15-must-fix.txt` and **will be re-graded by the post-run wiki auditor** — meaning a half-skipped Pre-Read costs the team a full audit pass per object. Emitting the search log block protects the agent from this rework loop and keeps Tier 1 coverage where Patch 1.5 promised it.
+
 If any check fails, fix the doc immediately — do not move on and report partial success.
 
 9. **Golden reference shape check**: Compare against GOLDEN-REFERENCE.mdc Section B assertions. All HARD assertions must pass:
@@ -840,6 +855,7 @@ If any check fails, fix the doc immediately — do not move on and report partia
    - Section 5.2 has ETL pipeline ASCII diagram
    - Footer has tier breakdown counts
    - Property table has Production Source, Refresh, Distribution, UC Target
+   - `UPSTREAM SEARCH LOG` block present in the wiki when lineage references Synapse-resident sources (see check 8b)
    - `.review-needed.md` does NOT contain `## 4. Elements`
    - `.lineage.md` exists
 

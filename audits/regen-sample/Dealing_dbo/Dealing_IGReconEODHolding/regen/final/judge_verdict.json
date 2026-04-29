@@ -1,0 +1,54 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_IGReconEODHolding",
+    "elapsed_seconds":  119,
+    "exit_code":  null,
+    "cost_usd":  0.5205,
+    "input_tokens":  2,
+    "output_tokens":  5215,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_IGReconEODHolding",
+                    "weighted_score":  9.05,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IG_Units",
+                                       "problem":  "Wiki collapses two-step computation (ABS+oil multiplier in #IG_EOD, then sign adjustment in #IG_EOD_Final) into single formula. Accurate but simplified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IG_LocalAmount",
+                                       "problem":  "Wiki says \u0027TRY_CONVERT\u0027 but SP actually uses TRY_CONVERT(DECIMAL) with TRY_CONVERT(FLOAT) fallback chain. Minor precision omission."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "No downstream consumers documented beyond companion table Dealing_IGReconTrades. May be a reporting endpoint with no known readers."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

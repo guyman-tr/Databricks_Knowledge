@@ -58,6 +58,20 @@ if (Test-Path $driftPath) {
     $useDriftGuard = $false
 }
 
+# Dot-source the Patch 1.5 compliance check. Catches the 2026-04-27 failure
+# mode where the agent's lineage correctly identifies passthrough rows from
+# documented Synapse dims but the wiki tags them Tier 2 instead of Tier 1
+# AND skips the UPSTREAM SEARCH LOG self-check. Hard violations are written
+# to audits/patch15-must-fix.txt for the post-run wiki auditor to re-grade.
+$patchCheckPath = Join-Path $PSScriptRoot "lib\Test-Patch15Compliance.ps1"
+if (Test-Path $patchCheckPath) {
+    . $patchCheckPath
+    $usePatch15Check = $true
+} else {
+    Write-Host "WARN: Test-Patch15Compliance.ps1 not found at $patchCheckPath - Patch 1.5 guardrail disabled." -ForegroundColor Yellow
+    $usePatch15Check = $false
+}
+
 if (-not (Test-Path $claudePath)) {
     Write-Host "ERROR: claude not found at $claudePath" -ForegroundColor Red
     exit 1
@@ -233,6 +247,11 @@ $effectiveBatchSize = $schemaBatchSize
 while ($true) {
     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Iteration $iteration started..." -ForegroundColor Green
     Write-Host ""
+
+    # Capture the wall-clock start of this iteration so the Patch 1.5 guardrail
+    # can scope its scan to wikis that were actually written by THIS iteration
+    # (not pre-existing files that happen to be flawed).
+    $iterationStart = Get-Date
 
     # ---- Build per-iteration prompt -----------------------------------------
     # Base prompt + schema scope footer + (optional) BATCH ASSIGNMENT block from picker.
@@ -460,6 +479,43 @@ while ($true) {
         } catch {
             Write-Host "  WARN: Drift guard failed: $_ -- continuing at default batch size." -ForegroundColor Yellow
             $effectiveBatchSize = $schemaBatchSize
+        }
+    }
+
+    # ---- Patch 1.5 compliance check -----------------------------------------
+    # Detect the dim-lookup-passthrough mis-tagging fingerprint:
+    #   * .lineage.md correctly says "passthrough" from Dim_X
+    #   * Dim_X.md exists in this repo (so Tier 1 inheritance is feasible)
+    #   * .md tags every such column Tier 2 anyway
+    #   * UPSTREAM SEARCH LOG self-check block is missing
+    # Wikis that match this pattern are appended to audits/patch15-must-fix.txt
+    # so the post-run auditor can re-grade them once the big run finishes.
+    # We do NOT kill the loop on hits -- the rest of the wiki may still be
+    # useful, and re-running mid-batch wastes tokens. The auditor handles fixes.
+    if ($usePatch15Check -and $inputTokens -gt 0) {
+        try {
+            $p15 = Test-Patch15Compliance -SchemaName $SchemaName -Since $iterationStart -RepoRoot $repoRoot
+            $hard = @($p15 | Where-Object IsViolation)
+            $soft = @($p15 | Where-Object { -not $_.IsViolation })
+            if ($p15.Count -gt 0) {
+                $color = if ($hard.Count -gt 0) { "Red" } else { "Yellow" }
+                Write-Host ""
+                Write-Host ("  [PATCH 1.5 GUARDRAIL] {0} hard, {1} soft signals in this iteration" -f $hard.Count, $soft.Count) -ForegroundColor $color
+                foreach ($h in $hard) {
+                    Write-Host ("    HARD: {0} ({1})" -f $h.Object, $h.Reason) -ForegroundColor $color
+                }
+                foreach ($s in $soft) {
+                    Write-Host ("    soft: {0} ({1})" -f $s.Object, $s.Reason) -ForegroundColor DarkYellow
+                }
+                $added = Add-Patch15MustFix -Findings $p15 -RepoRoot $repoRoot
+                if ($added -gt 0) {
+                    Write-Host ("    Appended {0} object(s) to audits\patch15-must-fix.txt" -f $added) -ForegroundColor $color
+                }
+            } else {
+                Write-Host "  [PATCH 1.5 GUARDRAIL] No violations in this iteration." -ForegroundColor DarkGreen
+            }
+        } catch {
+            Write-Host "  WARN: Patch 1.5 guardrail failed: $_ -- continuing." -ForegroundColor Yellow
         }
     }
 

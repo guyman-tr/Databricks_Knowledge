@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_CP",
+    "elapsed_seconds":  115,
+    "exit_code":  null,
+    "cost_usd":  0.446,
+    "input_tokens":  2,
+    "output_tokens":  4596,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_CP",
+                    "weighted_score":  7.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but SP INSERT clearly shows GETDATE() as the 11th column. Should be Tier 2 — SP_CEPDailyAudit. Description text is correct but contradicts its own tier tag."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No Phase Gate Checklist section. Data claims (314 rows, date range Dec 2023 – 2026-03-09) are present but P2/P3 attestation is missing, so live-data provenance is unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2 (Sentinel Row Pattern)",
+                                       "problem":  "Wiki documents sentinel rows with NULL TypeOfChange but the SP code for the CP INSERT does not show an explicit sentinel-row INSERT path. The DELETE for @Date with no matching #CPChangesFinal rows would produce zero rows, not a sentinel. Verify whether sentinel pattern actually applies to this table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "SP inserts PreviousAppLoginName AS AppLoginName where PreviousAppLoginName is already the COALESCE result. Wiki correctly describes COALESCE behavior but could note the SP alias indirection for traceability."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer tier count says \u00270 T1, 10 T2, 0 T3, 1 T4\u0027 — UpdateDate fix would make it \u00270 T1, 11 T2, 0 T3, 0 T4\u0027."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit) — GETDATE() is visible in SP code. (2) Add Phase Gate Checklist or P2/P3 attestation in footer. (3) Verify sentinel row pattern — SP code shows DELETE+INSERT with no explicit sentinel INSERT for CP table; if no changes occur, zero rows may be written rather than a sentinel row. Clarify or remove Section 2.2 if sentinel pattern does not apply.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

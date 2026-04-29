@@ -1,0 +1,72 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AML_Multiple_Accounts_SameIP",
+    "elapsed_seconds":  92,
+    "exit_code":  null,
+    "cost_usd":  0.9181,
+    "input_tokens":  2,
+    "output_tokens":  3976,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AML_Multiple_Accounts_SameIP",
+                    "weighted_score":  9.8,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "IP",
+                                                  "upstream_quote":  "Registration IP address. (Tier 1 — Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Registration IP address. (Tier 1 — Customer.CustomerStatic)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "UpdateDate is 2025-03-13, suggesting over a year of staleness. Row count 370,638 may be outdated but is presented without staleness caveat in the main body."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3 Common JOINs",
+                                       "problem":  "JOIN to FullData table described as \u0027IP-based correlation\u0027 but FullData uses CHECKSUM(IP) as HashIP — direct join is not possible without recomputing checksum or going through Dim_Customer."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section showing P2/P3 completion. Footer says 11/14 phases but doesn\u0027t enumerate data-validation phase status."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Element: IP",
+                                       "problem":  "Description is correct and verbatim but could note the varchar(15) to nvarchar(250) type widening flagged in the review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "References \u0027Step 16\u0027 which is correct in the SP but the SP source has duplicate step numbering (two Step 14s, then Step 16/17). Minor source-code oddity, not a wiki error."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Wiki scores 9.8 weighted. Optional polish: (1) Add explicit Phase Gate Checklist section. (2) Note varchar(15)-\u003envarchar(250) widening in IP element. (3) Clarify FullData JOIN mechanism in Section 3.3.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "NumOfClientsSameIP: range 2-374, 66.1% at value 2",
+                                                                                  "row count 370,638"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P7 — no views",
+                                                               "P10 — no Atlassian"
+                                                           ]
+                                    }
+                }
+}

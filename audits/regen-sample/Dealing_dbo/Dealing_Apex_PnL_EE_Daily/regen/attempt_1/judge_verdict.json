@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL_EE_Daily",
+    "elapsed_seconds":  117,
+    "exit_code":  null,
+    "cost_usd":  0.5155,
+    "input_tokens":  2,
+    "output_tokens":  5361,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL_EE_Daily",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (tier legend)",
+                                       "problem":  "Tier legend only lists Tier 2 row. While accurate, should explicitly acknowledge absence of Tier 1/3/4 so readers know it is intentional, not an omission."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2 (ETL pipeline)",
+                                       "problem":  "Dividends FULL OUTER JOIN in SP uses ON e.AccountNumber = d.AccountNumber (keyed to #Equity_Daily), meaning dividend-only accounts with no equity record rely on FULL OUTER JOIN behavior to surface. Wiki diagram does not surface this subtlety."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gates",
+                                       "problem":  "No explicit Phase Gate Checklist section with P1/P2/P3 checkboxes. Data evidence is present in descriptions but the formal verification structure is absent."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1 (PnL formula)",
+                                       "problem":  "Section 2.1 states PnL = Equity_End - Equity_Start - Transfers but SP computes ISNULL(Equity_End,0) - ISNULL(Equity_Start,0) - ISNULL(Transfers,0). Elements section correctly shows ISNULL wrapping but the Business Logic formula omits it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "All Elements (formatting)",
+                                       "problem":  "Wiki uses double-hyphen \u0027--\u0027 in tier tags (e.g. \u0027Tier 2 -- SP_Apex_PnL\u0027) while sibling wikis use em-dash. Cosmetic inconsistency across the Apex PnL family."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed (PASS). For polish: (1) Add Phase Gate Checklist section with P1/P2/P3 checkboxes. (2) Show ISNULL wrapping in Section 2.1 formula. (3) Standardize tier tag dashes to em-dash. (4) Note dividends FULL OUTER JOIN key subtlety in Section 5.2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

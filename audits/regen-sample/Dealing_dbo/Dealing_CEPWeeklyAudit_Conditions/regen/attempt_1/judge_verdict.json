@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_Conditions",
+    "elapsed_seconds":  106,
+    "exit_code":  null,
+    "cost_usd":  0.4608,
+    "input_tokens":  2,
+    "output_tokens":  4485,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_Conditions",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing explicit phases-completed list (e.g., \u0027Phases: P1 P2 P3\u0027) in footer line. Golden reference shape expects this."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 / general",
+                                       "problem":  "No Phase Gate Checklist with P2/P3 checkboxes despite clearly live-data-derived statistics (12,661 rows, distribution counts, NULL rates)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 tier legend",
+                                       "problem":  "Tier legend only lists Tier 2 and Tier 4. Including Tier 1 and Tier 3 as N/A entries would match the full golden reference shape."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 2.2 / ConditionID",
+                                       "problem":  "Condition Deleted detection uses RN=1 AND RN_Desc=1, potentially undercounting deletions for multi-record conditions. Wiki correctly flags this — no documentation defect, just a noted SP behavior."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "Null-byte padding correctly documented with remediation advice. No documentation defect."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required — wiki passes at 8.75. Optional polish: (1) Add Phase Gate Checklist or footer line explicitly marking P2/P3 as completed. (2) Add Tier 1/Tier 3 as N/A rows in the Section 4 legend. (3) Add \u0027Phases: P1 P2 P3\u0027 to footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 not explicitly marked but data evidence suggests they were executed"
+                                                           ]
+                                    }
+                }
+}

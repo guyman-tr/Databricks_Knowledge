@@ -1,0 +1,66 @@
+{
+  "schema": "DWH_dbo",
+  "object": "Dim_HistorySplitRatio",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Tables\\DWH_dbo.Dim_HistorySplitRatio.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_HistorySplitRatio\\current\\Dim_HistorySplitRatio.lineage.md",
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Dim_HistorySplitRatio_DL_To_Synapse.sql"
+  ],
+  "candidates_found": 4,
+  "resolved_synapse": 0,
+  "resolved_production": 1,
+  "resolved_sp": 1,
+  "unresolved": 2,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_HistorySplitRatio\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 22746,
+  "resolutions": [
+    {
+      "raw_name": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "db": null,
+      "schema": "dwh",
+      "object": "gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "PriceLog.History.SplitRatio",
+      "db": "etoro",
+      "schema": "History",
+      "object": "SplitRatio",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.SplitRatio.md",
+      "sp_path": null,
+      "bytes_read": 18635,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.SP_Dim_HistorySplitRatio_DL_To_Synapse",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "SP_Dim_HistorySplitRatio_DL_To_Synapse",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Dim_HistorySplitRatio_DL_To_Synapse.sql",
+      "bytes_read": 1122,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_staging.etoro_History_SplitRatio",
+      "db": null,
+      "schema": "DWH_staging",
+      "object": "etoro_History_SplitRatio",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Copyfunds_Watched_Not_Invested",
+    "elapsed_seconds":  211,
+    "exit_code":  null,
+    "cost_usd":  0.506,
+    "input_tokens":  2,
+    "output_tokens":  14552,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Copyfunds_Watched_Not_Invested",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "FundName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Here this is the username of the eToro-managed fund account (AccountTypeID=9) that the investor followed.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Here this identifies the investor (the user who followed the fund).",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Here this is the investor\u0027s username.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FundCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Here this is the RealCID of the eToro-managed fund account (dc2.RealCID).",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "AccountManagerID",
+                                                  "upstream_quote":  "Currently assigned BackOffice sales/service agent (renamed from ManagerID). FK to BackOffice.Manager. NULL = unassigned.",
+                                                  "wiki_quote":  "Currently assigned BackOffice sales/service agent (renamed from ManagerID). FK to BackOffice.Manager. NULL = unassigned. Here this is the investor\u0027s assigned account manager ID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MoneyAvailable",
+                                                  "upstream_quote":  "(V_Liabilities output-column table lists Credit as a T1 direct passthrough from Fact_SnapshotEquity.Credit with no description text; Fact_SnapshotEquity wiki not in bundle)",
+                                                  "wiki_quote":  "Renamed from V_Liabilities.Credit — the customer available credit balance as of yesterday (DateID = @ddID). Direct passthrough from Fact_SnapshotEquity.Credit via V_Liabilities. Range: -$2,572.79 to $855,862.42 (avg $7,186.34); 32.2% of rows show zero credit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description text available in bundle for Fact_SnapshotEquity.Credit; V_Liabilities wiki documents Credit only as a passthrough reference without prose description"
+                                              },
+                                              {
+                                                  "column":  "LiquidAssetsAnswer",
+                                                  "upstream_quote":  "Answer text for Q11.",
+                                                  "wiki_quote":  "Answer text for Q11. Self-reported liquid assets bracket from the investor\u0027s KYC questionnaire (Q11). Values include \u0027Up to $10K\u0027, \u0027$10K-$50K\u0027, \u0027$50K-$200K\u0027, \u0027$200K-$500k\u0027, \u0027$500K-$1M\u0027, \u0027$1M-$5M\u0027. NULL if investor has no Q11 KYC response (Q11_AnswerID IS NULL in BI_DB_KYC_Panel).",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "[Account Manager]",
+                                       "problem":  "DDL defines [Account Manager] as [varchar](50) NULL (nullable), but the Elements table lists Nullable = NO. The INNER JOIN to Dim_Manager guarantees zero NULLs at runtime, but the declared DDL nullability should be reflected as YES in the Elements table with a note explaining the runtime guarantee."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2",
+                                       "problem":  "Two consecutive subsections are both numbered \u0027### 2.5\u0027: \u0027MoneyAvailable = Yesterday\u0027s Credit\u0027 and \u0027LiquidAssetsAnswer = KYC Q11 Self-Reported Bracket\u0027. The second 2.5 should be 2.6, and the existing \u00272.6 #final Fan-Out Bug\u0027 should shift to 2.7."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 / Section 5 ETL diagram",
+                                       "problem":  "The SP uses an INNER JOIN to V_Liabilities (ON t.RealCID = vl.CID AND vl.DateID = @ddID), meaning investors with no V_Liabilities row for yesterday are silently excluded. Only the Dim_Manager INNER JOIN exclusion is flagged with a warning in Section 1 and the ETL diagram. V_Liabilities INNER JOIN exclusion is not called out with an equivalent ⚠ note."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Elements)",
+                                       "problem":  "The Elements section omits the canonical Tier Legend reference table (format: \u0027| Stars | Tier | Tag |\u0027) that is present in upstream wikis like Dim_Mirror and Dim_Manager. Tier information is only in the footer."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "MoneyAvailable",
+                                       "problem":  "Fact_SnapshotEquity wiki was not included in the upstream bundle, so the verbatim upstream description for Fact_SnapshotEquity.Credit (the root source of MoneyAvailable) could not be confirmed or quoted. Already flagged in review-needed sidecar #6. Not a writer failure — bundle limitation."
+                                   }
+                               ],
+                    "regeneration_feedback":  "This is a high-quality wiki requiring only minor in-place edits, not a full regeneration. Fix: (1) Change [Account Manager] Nullable from NO to YES; add sentence noting zero NULLs in practice due to INNER JOIN guarantee. (2) Renumber Section 2.5 (LiquidAssetsAnswer) to 2.6 and shift Fan-Out Bug to 2.7. (3) Add ⚠ note on V_Liabilities INNER JOIN line in Section 5 ETL diagram and add a sentence in Section 1 noting that investors without a V_Liabilities snapshot for yesterday are excluded. (4) Add Tier Legend table at the top of Section 4 matching the format in Dim_Mirror/Dim_Manager wikis.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "MoneyAvailable: \u0027Range: -$2,572.79 to $855,862.42 (avg $7,186.34); 32.2% of rows show zero credit\u0027",
+                                                                                  "CopyEquity: \u0027Max observed: $82,886.67\u0027",
+                                                                                  "CopyPortfolioEquity: \u0027Max observed: $64,842.40\u0027"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

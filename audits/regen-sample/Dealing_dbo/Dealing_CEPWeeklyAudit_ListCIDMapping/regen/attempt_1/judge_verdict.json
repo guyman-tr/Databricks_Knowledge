@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_ListCIDMapping",
+    "elapsed_seconds":  124,
+    "exit_code":  null,
+    "cost_usd":  0.4482,
+    "input_tokens":  2,
+    "output_tokens":  4585,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_ListCIDMapping",
+                    "weighted_score":  8.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer states \u0027Phases: 12/14\u0027 but no Phase Gate Checklist section enumerates which phases were completed or skipped. Cannot verify P2/P3 completion."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Six sibling tables listed as \u0027Referenced By\u0027 are peer tables loaded by the same SP, not objects that reference this table via FK or JOIN in their own ETL. Relationship type is correctly labeled as \u0027Sibling\u0027 but placement under \u0027Referenced By\u0027 could mislead."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "NameListID",
+                                       "problem":  "Source column is NamedListID (with \u0027d\u0027) but element description does not flag the positional rename. Lineage table catches it but element description omits it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ListName",
+                                       "problem":  "Element description references temp table #NameLists_Log rather than the actual production source (External_Etoro_CEP_NamedLists.Name / External_Etoro_History_NamedLists.Name)."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4 Gotchas",
+                                       "problem":  "Does not mention that this table\u0027s INSERT uses the correct JOIN pattern (unlike the NameLists path\u0027s suspected fdtd.ToDate = fdtd.ToDate bug). Review-needed sidecar covers this but the wiki\u0027s Gotchas section does not."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,179 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AML_Terror_Monitor_Dashboard",
+    "elapsed_seconds":  221,
+    "exit_code":  null,
+    "cost_usd":  0.6403,
+    "input_tokens":  2,
+    "output_tokens":  13740,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AML_Terror_Monitor_Dashboard",
+                    "weighted_score":  8.0,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Renamed from Dim_Customer.RealCID. (Tier 1 — Customer.CustomerStatic)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Renamed from Dim_Customer.RealCID\u0027 — factually correct context, meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. Resolved from DWH_dbo.Dim_Regulation via Dim_Customer.RegulationID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join routing context; core description verbatim"
+                                              },
+                                              {
+                                                  "column":  "KYC_Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Resolved from DWH_dbo.Dim_Country via Dim_Customer.CountryID (customer\u0027s KYC country of residence).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join routing; verbatim core preserved"
+                                              },
+                                              {
+                                                  "column":  "CitizenshipCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Resolved from DWH_dbo.Dim_Country via Dim_Customer.CitizenshipCountryID. NULL if CitizenshipCountryID is NULL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join routing and NULL note"
+                                              },
+                                              {
+                                                  "column":  "POBCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Resolved from DWH_dbo.Dim_Country via Dim_Customer.POBCountryID (place of birth). NULL if POBCountryID is NULL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join routing and NULL note"
+                                              },
+                                              {
+                                                  "column":  "CountryByIP_Residency",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Resolved from DWH_dbo.Dim_Country via Dim_Customer.CountryIDByIP (country detected from registration IP). NULL if CountryIDByIP is NULL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join routing and NULL note"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. Only Normal (ID=1) and Warning (ID=5) appear in this table due to the SP population filter.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added population filter note; core verbatim"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Resolved from DWH_dbo.Dim_PlayerLevel via Dim_Customer.PlayerLevelID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join routing; verbatim core preserved"
+                                              },
+                                              {
+                                                  "column":  "HasWallet",
+                                                  "upstream_quote":  "1 if the customer has an active eToro Money wallet linked to their trading account. Default=0.",
+                                                  "wiki_quote":  "1 if the customer has an active eToro Money wallet linked to their trading account. Default=0. Passthrough from DWH_dbo.Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "RegisteredReal",
+                                                  "upstream_quote":  "Account registration date (renamed from Registered). Default=getdate().",
+                                                  "wiki_quote":  "Account registration date (renamed from Registered). Default=getdate(). Passthrough from DWH_dbo.Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "FirstDepositDate",
+                                                  "upstream_quote":  "Date of first deposit. DEFAULT=\u002719000101\u0027. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. (Tier 2 — SP_Dim_Customer)",
+                                                  "wiki_quote":  "Date of first deposit. DEFAULT=\u002719000101\u0027. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. Passthrough from DWH_dbo.Dim_Customer. (Tier 1 — Dim_Customer, Tier 2 in source: SP_Dim_Customer)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core text verbatim; hybrid tier labeling is non-standard but honest"
+                                              },
+                                              {
+                                                  "column":  "FirstDepositAmount",
+                                                  "upstream_quote":  "Amount of first deposit (in USD). Updated from FTDAmountInUsd. (Tier 2 — SP_Dim_Customer)",
+                                                  "wiki_quote":  "Amount of first deposit (in USD). Updated from FTDAmountInUsd. Passthrough from DWH_dbo.Dim_Customer. (Tier 1 — Dim_Customer, Tier 2 in source: SP_Dim_Customer)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core verbatim; hybrid tier labeling"
+                                              },
+                                              {
+                                                  "column":  "ScreeningStatus",
+                                                  "upstream_quote":  "Internal code name for the screening outcome. Passthrough from ScreeningService.Dictionary.ScreeningStatus. Used in compliance reporting and case management.",
+                                                  "wiki_quote":  "Internal code name for the screening outcome. Passthrough from ScreeningService.Dictionary.ScreeningStatus. Used in compliance reporting and case management. Resolved from DWH_dbo.Dim_ScreeningStatus via Dim_Customer.ScreeningStatusID (LEFT JOIN — NULL if no screening record). Live values: NoMatch (99.9%), PendingInvestigation (0.07%), PEP (0.01%).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added join context and live values; core description verbatim"
+                                              },
+                                              {
+                                                  "column":  "AMLEntity",
+                                                  "upstream_quote":  "N/A — BI_DB_AML_SubEntity_Categorization wiki documents 9 elements (CID, GCID, CountryID, Country, RegulationID, Regulation, UpdateDate, VerificationLevelID, AML_Sub_Entity). AMLEntity is not among them.",
+                                                  "wiki_quote":  "Primary AML legal entity assignment for this customer, passthrough from BI_DB_dbo.BI_DB_AML_SubEntity_Categorization.AMLEntity (LEFT JOIN on CID). In this population (high-risk country connection), only \u0027eToro_Gibraltar\u0027 is observed (28,615 rows = customers with crypto wallets outside Germany under CySEC/FCA/ASIC/ASIC\u0026GAML/FSA Seychelles). NULL for customers not qualifying for any primary AML entity (89% of population). (Tier 1 — BI_DB_AML_SubEntity_Categorization)",
+                                                  "match":  "NO",
+                                                  "loss":  "No verbatim source exists in upstream wiki; entire description inferred from SP code and live data observation. Tier 1 claim is unsupported."
+                                              },
+                                              {
+                                                  "column":  "AMLSubEntity",
+                                                  "upstream_quote":  "N/A — column not documented in BI_DB_AML_SubEntity_Categorization wiki",
+                                                  "wiki_quote":  "Secondary AML legal entity assignment, passthrough from BI_DB_dbo.BI_DB_AML_SubEntity_Categorization.AMLSubEntity (LEFT JOIN on CID). Observed values: \u0027eToro_Money_UK\u0027 (6,566 rows), \u0027eToro_Germany\u0027 (6,191 rows). NULL when no secondary entity qualifies. (Tier 1 — BI_DB_AML_SubEntity_Categorization)",
+                                                  "match":  "NO",
+                                                  "loss":  "No verbatim source exists in upstream wiki; description entirely inferred. Tier 1 claim unsupported."
+                                              },
+                                              {
+                                                  "column":  "AMLSubEntity_2",
+                                                  "upstream_quote":  "N/A — column not documented in BI_DB_AML_SubEntity_Categorization wiki",
+                                                  "wiki_quote":  "Tertiary AML legal entity assignment, passthrough from BI_DB_dbo.BI_DB_AML_SubEntity_Categorization.AMLSubEntity_2 (LEFT JOIN on CID). Observed values: \u0027eToro_Money_Malta\u0027 (509 rows). NULL when no tertiary entity qualifies. (Tier 1 — BI_DB_AML_SubEntity_Categorization)",
+                                                  "match":  "NO",
+                                                  "loss":  "No verbatim source exists in upstream wiki; description entirely inferred. Tier 1 claim unsupported."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "AMLEntity / AMLSubEntity / AMLSubEntity_2",
+                                       "problem":  "All three tagged (Tier 1 — BI_DB_AML_SubEntity_Categorization) but the upstream wiki for that table documents only 9 elements, none of which is AMLEntity, AMLSubEntity, or AMLSubEntity_2. The descriptions are inferred from SP source code and live data observation — not quoted verbatim from any upstream wiki. These should be downgraded to (Tier 2 — SP_AML_Terror_Monitor_Dashboard) until the upstream wiki is updated."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 1 / UpdateDate",
+                                       "problem":  "Table appears dormant: all 270,341 rows have UpdateDate = \u00272024-12-28 04:47:13.517\u0027, approximately 16 months before the generation date (2026-04-28). Section 1 presents the table as an actively refreshed daily feed without any staleness caveat. A compliance dashboard depending on this table would be consuming 16-month-old data. This risk is documented in the review-needed sidecar but is absent from the main wiki body."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BI_DB_AML_SubEntity_Categorization upstream wiki",
+                                       "problem":  "The upstream wiki for BI_DB_AML_SubEntity_Categorization is structurally incomplete — it only documents AML_Sub_Entity (the STRING_AGG column). The SP actually reads three separate decomposed columns (AMLEntity, AMLSubEntity, AMLSubEntity_2) that are not reflected in the upstream wiki\u0027s Elements table. Both wikis need to be updated in tandem."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FirstDepositDate / FirstDepositAmount",
+                                       "problem":  "Hybrid tier label \u0027(Tier 1 — Dim_Customer, Tier 2 in source: SP_Dim_Customer)\u0027 breaks the one-tier-per-column contract of the tier legend. The upstream Dim_Customer wiki explicitly marks both columns as Tier 2. While the hybrid label is honest, it creates inconsistency. Standard practice should be (Tier 1 — Dim_Customer) since Dim_Customer has a wiki, with the Tier 2 origin noted in the lineage file."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ScreeningStatus",
+                                       "problem":  "Tier citation points to \u0027ScreeningService.Dictionary.ScreeningStatus\u0027 as root origin, skipping the relay (Dim_ScreeningStatus). Dim_ScreeningStatus wiki explicitly documents the Name column as Tier 3 (no upstream wiki found). While tracing to the original source is correct per rubric, the Dim_ScreeningStatus intermediary\u0027s Tier 3 status should be noted to warn users that the column value provenance is only inferred, not verified against a production dictionary wiki."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag AMLEntity, AMLSubEntity, AMLSubEntity_2 from Tier 1 to Tier 2 — \u0027(Tier 2 — SP_AML_Terror_Monitor_Dashboard)\u0027 — since BI_DB_AML_SubEntity_Categorization wiki does not document these columns individually; add review-needed item requesting upstream wiki update. (2) Add data staleness warning to Section 1: note that all rows show UpdateDate = \u00272024-12-28\u0027 (~16 months stale as of generation date) and direct users to verify SP_AML_Terror_Monitor_Dashboard scheduling before using the table for current compliance reporting. (3) Normalize FirstDepositDate and FirstDepositAmount to single-tier format: \u0027(Tier 1 — Dim_Customer)\u0027; move the \u0027Tier 2 in source\u0027 note to the lineage file.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "AMLEntity: \u002728,615 rows\u0027 in element description",
+                                                                                  "AMLSubEntity: \u00276,566 rows\u0027, \u00276,191 rows\u0027 in element description",
+                                                                                  "AMLSubEntity_2: \u0027509 rows\u0027 in element description",
+                                                                                  "ScreeningStatus: \u0027NoMatch (99.9%), PendingInvestigation (0.07%), PEP (0.01%)\u0027 in element description",
+                                                                                  "RiskScoreName: \u0027Medium (87.4%), High (12.3%), Low (0.2%), NULL (0.2%)\u0027 in element description"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P10 (Jira/Confluence) — explicitly noted in footer and Section 8"
+                                                           ]
+                                    }
+                }
+}

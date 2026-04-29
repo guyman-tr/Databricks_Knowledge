@@ -1,0 +1,133 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CID_NPS_Panel",
+    "elapsed_seconds":  205,
+    "exit_code":  null,
+    "cost_usd":  0.5687,
+    "input_tokens":  2,
+    "output_tokens":  13420,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CID_NPS_Panel",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RegisteredReal",
+                                                  "upstream_quote":  "Account registration date (renamed from Registered). Default=getdate().",
+                                                  "wiki_quote":  "Account registration date (renamed from Registered). Default=getdate(). NULL when RealCID is unresolved.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              },
+                                              {
+                                                  "column":  "FirstDepositDate",
+                                                  "upstream_quote":  "Date of first deposit. DEFAULT=\u002719000101\u0027. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic.",
+                                                  "wiki_quote":  "Date of first deposit. DEFAULT=\u002719000101\u0027. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. NULL when RealCID is unresolved.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only; 1900-01-01 sentinel for non-depositor matches not mentioned"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Reflects the customer\u0027s registered country as of the survey date (sourced from Fact_SnapshotCustomer → Dim_Country).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              },
+                                              {
+                                                  "column":  "ClubTier",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Reflects loyalty tier as of the survey date. Distribution: Bronze 60.1%, Gold 13.8%, Silver 13.4%, Platinum 6.7%, Platinum Plus 5.2%, Diamond 0.5%. NULL when unresolved.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. Reflects the customer\u0027s regulatory jurisdiction as of the survey date. Top values: CySEC (55.5%), FCA (30.0%), ASIC \u0026 GAML (8.4%). NULL when unresolved.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data — apply RTRIM() for string comparisons. Reflects status as of the survey date. 97.0% of matched rows are Normal.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Em-dash substituted for double-dash; additive context only"
+                                              },
+                                              {
+                                                  "column":  "MifCategory",
+                                                  "upstream_quote":  "Human-readable classification label. Used in compliance dashboards and regulatory reports.",
+                                                  "wiki_quote":  "Human-readable classification label. Used in compliance dashboards and regulatory reports. Reflects MiFID II categorization as of the survey date. Distribution: Retail 51.1%, Retail Pending 46.1%, Pending 2.2%, Elective Professional 0.2%. NULL when unresolved.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              },
+                                              {
+                                                  "column":  "FirstAction",
+                                                  "upstream_quote":  "First position asset class using the new 3-way taxonomy. CASE on ActionTypeNew: \u0027Crypto\u0027, \u0027FX/Commodities\u0027 (typeID 1/2), \u0027Stocks/ETFs/Indices\u0027 (typeID 4/5/6), \u0027Copy Fund\u0027, \u0027Copy\u0027. Merges Indices into Stocks bucket vs. legacy.",
+                                                  "wiki_quote":  "First position asset class using the new 3-way taxonomy. CASE on ActionTypeNew: \u0027Crypto\u0027, \u0027FX/Commodities\u0027 (typeID 1/2), \u0027Stocks/ETFs/Indices\u0027 (typeID 4/5/6), \u0027Copy Fund\u0027, \u0027Copy\u0027. Merges Indices into Stocks bucket vs. legacy. NULL when customer has no recorded first position (~1.6% of rows). Distribution: Stocks/ETFs/Indices 37.9%, Crypto 36.9%, Copy 15.8%, FX/Commodities 6.8%, Copy Fund 1.2%.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              },
+                                              {
+                                                  "column":  "FirstActionDate",
+                                                  "upstream_quote":  "Datetime of 1st open position. From BI_DB_CustomerCross PIVOT (rn=1, MAX(Occurred)).",
+                                                  "wiki_quote":  "Datetime of 1st open position. From BI_DB_CustomerCross PIVOT (rn=1, MAX(Occurred)). NULL when customer has no recorded first position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "None — additive context only"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Phase Gate Checklist / Footer",
+                                       "problem":  "No Phase Gate Checklist present in the document. Footer reads \u0027Quality: pending judge evaluation\u0027 with no phases-completed list. All data claims (row counts, distributions, NULL rates) are internally consistent and specific but cannot be formally verified as live-data-backed without the P2/P3 checklist."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FirstDepositDate",
+                                       "problem":  "Description says \u0027NULL when RealCID is unresolved\u0027 but does not mention that matched customers who have never deposited will have \u00271900-01-01\u0027 sentinel value (the Dim_Customer DEFAULT). Analysts filtering for real deposit dates need: WHERE FirstDepositDate \u003e \u00271900-01-01\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ClubTier, PlayerStatus, MifCategory, Regulation",
+                                       "problem":  "Dictionary/enum varchar columns list names in descriptions but omit the numeric ID→Name mappings from the underlying dimension tables (e.g., PlayerLevelID 1=Bronze, 2=Platinum, 3=Gold; PlayerStatusID 1=Normal, 2=Blocked, etc.). Analysts cannot resolve status IDs to names without opening separate dim wikis."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 — Atlassian",
+                                       "problem":  "States \u0027No Atlassian MCP search performed.\u0027 For a core NPS analytics table likely referenced in CX/Product Confluence pages, this is a known gap that future regenerations should address."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer quality score",
+                                       "problem":  "Footer says \u0027Quality: pending judge evaluation\u0027 — should be updated post-review to enable quality drift tracking across regeneration attempts."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki PASSES at 8.55. Optional improvements for next pass: (1) Add \u00271900-01-01\u0027 sentinel note to FirstDepositDate description for matched non-depositors. (2) Add Phase Gate Checklist section (P1–P3) with checkboxes and replace footer \u0027pending\u0027 with judge score. (3) For ClubTier/PlayerStatus/MifCategory, add numeric ID→Name mappings inline for analyst self-service. (4) Run Atlassian MCP search for NPS-related Confluence pages.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count ~159,441 (property table header)",
+                                                                                  "Date range 2021-01-01 to 2025-07-10 (property table header)",
+                                                                                  "NULL RealCID: ~630 rows (~0.4%) (Section 1 + col 3)",
+                                                                                  "Comment NULL: ~51,415 rows (32.2%) (Section 3.4 + col 16)",
+                                                                                  "NPS Promoters 38.3%, Passives 37.1%, Detractors 24.6% (Section 2.4)",
+                                                                                  "ClubTier distribution: Bronze 60.1%, Gold 13.8%, Silver 13.4%… (col 9)",
+                                                                                  "FirstAction distribution: Stocks/ETFs/Indices 37.9%, Crypto 36.9%… (col 13)",
+                                                                                  "Country top values: UK 26,857, Germany 15,658, Italy 15,038 (col 8)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present — phases unknown"
+                                                           ]
+                                    }
+                }
+}

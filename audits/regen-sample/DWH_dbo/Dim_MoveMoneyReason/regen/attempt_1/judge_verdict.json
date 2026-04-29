@@ -1,0 +1,73 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_MoveMoneyReason",
+    "elapsed_seconds":  100,
+    "exit_code":  null,
+    "cost_usd":  0.2423,
+    "input_tokens":  2,
+    "output_tokens":  5101,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_MoveMoneyReason",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "MoveMoneyReasonID",
+                                                  "upstream_quote":  "Unique identifier for the money movement reason: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment. Gap at ID 4. Referenced by 50+ credit/balance procedures.",
+                                                  "wiki_quote":  "Unique identifier for the money movement reason: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment. Gap at ID 4. Referenced by 50+ credit/balance procedures.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MoveMoneyReason",
+                                                  "upstream_quote":  "Human-readable reason label. Note: column name matches table name (denormalized pattern). Displayed in account statements, credit history, and BackOffice audit screens.",
+                                                  "wiki_quote":  "Human-readable reason label. Note: column name matches table name (denormalized pattern). Displayed in account statements, credit history, and BackOffice audit screens.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing phases-completed list in footer. Golden shape expects explicit P1/P2/P3 completion indicators."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No explicit min/max date range for UpdateDate. States \u00272022\u0027 generically instead of precise range."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "Lists \u00274 = Airdrop\u0027 as DWH value while Element description (correctly verbatim from upstream) says \u0027Gap at ID 4\u0027. The tension is explained in Section 2.2 but could be clearer in 2.1."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 — MoveMoneyReasonID",
+                                       "problem":  "Production source has NOT NULL constraint on MoveMoneyReasonID but DWH DDL is NULL. Element correctly shows YES but a note about the nullability difference would help analysts."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add phases-completed indicator to footer. (2) Add explicit min/max UpdateDate range in Section 1 if live data was queried. (3) Clarify in Section 2.1 header that values listed are DWH-observed vs upstream-documented.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

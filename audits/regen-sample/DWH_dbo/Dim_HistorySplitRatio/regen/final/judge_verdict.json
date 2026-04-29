@@ -1,0 +1,109 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_HistorySplitRatio",
+    "elapsed_seconds":  116,
+    "exit_code":  null,
+    "cost_usd":  0.3476,
+    "input_tokens":  2,
+    "output_tokens":  6968,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_HistorySplitRatio",
+                    "weighted_score":  9.50,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "ID",
+                                                  "upstream_quote":  "Surrogate primary key, auto-incremented. NOT FOR REPLICATION indicates replication topology. Uniquely identifies each split event.",
+                                                  "wiki_quote":  "Surrogate primary key, auto-incremented. NOT FOR REPLICATION indicates replication topology. Uniquely identifies each split event.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "The stock instrument this split applies to. FK to Trade.Instrument. CHECK constraint enforces InstrumentID \u003e 1000 - only stock instruments (not forex or crypto).",
+                                                  "wiki_quote":  "The stock instrument this split applies to. FK to Trade.Instrument. CHECK constraint enforces InstrumentID \u003e 1000 — only stock instruments (not forex or crypto).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Hyphen replaced with em-dash — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "MinDate",
+                                                  "upstream_quote":  "Start of the period this split ratio is effective. Default \u00272000-01-01\u0027 means \"from the beginning of the instrument\u0027s history.\" The split adjustment applies to transactions from this date forward until MaxDate.",
+                                                  "wiki_quote":  "Start of the period this split ratio is effective. Default \u00272000-01-01\u0027 means \"from the beginning of the instrument\u0027s history.\" The split adjustment applies to transactions from this date forward until MaxDate.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MaxDate",
+                                                  "upstream_quote":  "End of the period this split ratio is effective (exclusive). Sentinel value \u00272100-01-01\u0027 means \"currently active - no end date set.\" When a new split occurs, the current active row\u0027s MaxDate is set to the new split\u0027s MinDate.",
+                                                  "wiki_quote":  "End of the period this split ratio is effective (exclusive). Sentinel value \u00272100-01-01\u0027 means \"currently active — no end date set.\" When a new split occurs, the current active row\u0027s MaxDate is set to the new split\u0027s MinDate.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Hyphen replaced with em-dash — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "PriceRatio",
+                                                  "upstream_quote":  "Multiplier applied to historical prices after this split. Equal to UnitsBefore/UnitsAfter. For a 2-for-1 split: PriceRatio=0.5 (price halved). For a 1-for-2 reverse split: PriceRatio=2. CHECK constraint enforces \u003e 0. Default 1 = no adjustment.",
+                                                  "wiki_quote":  "Multiplier applied to historical prices after this split. Equal to UnitsBefore/UnitsAfter. For a 2-for-1 split: PriceRatio=0.5 (price halved). For a 1-for-2 reverse split: PriceRatio=2. CHECK constraint enforces \u003e 0. Default 1 = no adjustment.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "AmountRatio",
+                                                  "upstream_quote":  "Multiplier applied to position unit counts after this split. Equal to UnitsAfter/UnitsBefore. For a 2-for-1 split: AmountRatio=2 (units doubled). For a 1-for-2 reverse split: AmountRatio=0.5. CHECK constraint enforces \u003e 0. Default 1 = no adjustment.",
+                                                  "wiki_quote":  "Multiplier applied to position unit counts after this split. Equal to UnitsAfter/UnitsBefore. For a 2-for-1 split: AmountRatio=2 (units doubled). For a 1-for-2 reverse split: AmountRatio=0.5. CHECK constraint enforces \u003e 0. Default 1 = no adjustment.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PriceRatioUnAdjusted",
+                                                  "upstream_quote":  "Original unadjusted price ratio stored as money type. Before cumulative split adjustments are applied. Used for audit and comparison.",
+                                                  "wiki_quote":  "Original unadjusted price ratio stored as money type. Before cumulative split adjustments are applied. Used for audit and comparison. DWH note: stored as decimal(19,4) in Synapse (money in production).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "DWH type-cast note appended — no upstream text removed"
+                                              },
+                                              {
+                                                  "column":  "AmountRatioUnAdjusted",
+                                                  "upstream_quote":  "Original unadjusted amount ratio stored as money type. Before cumulative adjustments.",
+                                                  "wiki_quote":  "Original unadjusted amount ratio stored as money type. Before cumulative adjustments. DWH note: stored as decimal(19,4) in Synapse (money in production).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "DWH type-cast note appended — no upstream text removed"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID, MaxDate",
+                                       "problem":  "Hyphen-to-em-dash substitution in Tier 1 descriptions. Trivial but not byte-identical to upstream."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "[UNVERIFIED] tag in tier counts is unnecessary — all columns are verified against the bundle."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims Phases: 11/11 but the checklist is not rendered."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Optional polish: (1) Replace em-dashes back to hyphens in InstrumentID and MaxDate descriptions for byte-perfect upstream fidelity. (2) Add explicit Phase Gate Checklist section. (3) Remove [UNVERIFIED] from footer tier counts.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

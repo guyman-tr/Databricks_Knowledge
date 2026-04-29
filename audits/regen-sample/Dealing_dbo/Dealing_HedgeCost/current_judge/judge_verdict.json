@@ -1,0 +1,84 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_HedgeCost",
+    "elapsed_seconds":  192,
+    "exit_code":  null,
+    "cost_usd":  0.7722,
+    "input_tokens":  2,
+    "output_tokens":  9363,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_HedgeCost",
+                    "weighted_score":  4.20,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  4,
+                                             "business_meaning":  7,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Instrument name as defined in Trade.Instrument. For forex: pair notation (e.g., EUR/USD). For stocks: company name (e.g., Apple, Alphabet). For crypto: token name. This is the internal instrument name, not necessarily the display name shown to users (see InstrumentDisplayName). (Tier 3 -- live data, etoro.Trade.GetInstrument)",
+                                                  "wiki_quote":  "Instrument name from DWH_dbo.Dim_Instrument.Name (internal name, e.g., \u0027COP.US/USD\u0027). Note: in Phase 1 DDL this is varchar(50) which may truncate long names; prefer InstrumentDisplayName from Dim_Instrument for display. (Tier 2 — SP_HedgeCost)",
+                                                  "match":  "NO",
+                                                  "loss":  "Not tagged Tier 1. Upstream description fully paraphrased. Forex/stock/crypto examples dropped. \u0027Not necessarily the display name\u0027 detail partially preserved but reworded."
+                                              },
+                                              {
+                                                  "column":  "HedgeServerID",
+                                                  "upstream_quote":  "FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "The HedgeServer that managed these positions. IDs {9, 102, 112, 125, 126} are classified as \u0027Real\u0027 (settled assets); all others are \u0027CFD\u0027. Key dimension for separating settled-stock hedging from CFD hedging. (Tier 2 — SP_HedgeCost)",
+                                                  "match":  "NO",
+                                                  "loss":  "Not tagged Tier 1. Upstream FK reference to Trade.HedgeServer dropped. Description rewritten with business logic that belongs in Section 2."
+                                              },
+                                              {
+                                                  "column":  "VariableSpread",
+                                                  "upstream_quote":  "Total spread-based commission (variable). `Units * Spread * USDRate` for both openings and closings. (Tier 2 -- SP_VarCommission, computed from Dim_Position forex fields)",
+                                                  "wiki_quote":  "Variable spread commission from BI_DB_dbo.BI_DB_VarCommission for this instrument×HedgeServer×IsSettled on Date. Represents the variable component of spread revenue. (Tier 2 — SP_HedgeCost)",
+                                                  "match":  "NO",
+                                                  "loss":  "Not tagged Tier 1. Formula \u0027Units * Spread * USDRate\u0027 dropped. \u0027Both openings and closings\u0027 detail dropped. Fully paraphrased."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsSettled",
+                                       "problem":  "Description says \u00271 = real asset, 0 = CFD asset\u0027 but the SP produces varchar values \u0027Real\u0027 and \u0027CFD\u0027 via CASE WHEN HedgeServerID IN (9,102,112,125,126) THEN \u0027Real\u0027 ELSE \u0027CFD\u0027. The lineage file\u0027s own note (\u0027String (not int)\u0027) was ignored. Also tagged Tier 5 when SP code is fully visible — should be Tier 2."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Name, HedgeServerID, VariableSpread",
+                                       "problem":  "Zero Tier 1 columns despite upstream wikis being available in the bundle for Dim_Instrument, Dim_Position, and BI_DB_VarCommission. These passthrough/rename columns should be Tier 1 with verbatim upstream quotes."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsSettled",
+                                       "problem":  "Tagged Tier 5 (Expert Review) but the CASE derivation from HedgeServerID is fully visible in SP_HedgeCost code. Should be Tier 2."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 8 (missing)",
+                                       "problem":  "No Section 8 (Sample Queries) exists. No SQL samples anywhere in the wiki."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No row count or date range in Section 1. The Quality Score section mentions \u00272026-03-10\u0027 but Section 1 — the primary entry point — lacks this context."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix IsSettled: values are \u0027Real\u0027/\u0027CFD\u0027 varchar, not 1/0 int; re-tag as Tier 2 with the CASE derivation. (2) Re-tag Name as Tier 1 — Dim_Instrument.Name, quote Dim_Instrument wiki element #4 verbatim. (3) Re-tag HedgeServerID as Tier 1 — Dim_Position.HedgeServerID, quote Dim_Position wiki element #80 verbatim. (4) Re-tag VariableSpread as Tier 1 — BI_DB_VarCommission.VarCommission, quote upstream element #8 verbatim. (5) Add Section 8 with sample SQL queries. (6) Add row count and date range to Section 1. (7) Add tier breakdown counts to footer. (8) Add ETL pipeline ASCII diagram. (9) Add UC Target to property table. (10) Add Tier 5 to legend or reclassify IsSettled to Tier 2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

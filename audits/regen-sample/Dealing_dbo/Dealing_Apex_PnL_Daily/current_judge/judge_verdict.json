@@ -1,0 +1,70 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL_Daily",
+    "elapsed_seconds":  161,
+    "exit_code":  null,
+    "cost_usd":  0.5656,
+    "input_tokens":  2,
+    "output_tokens":  8027,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL_Daily",
+                    "weighted_score":  7.0,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)",
+                                                  "wiki_quote":  "eToro-facing instrument name for reporting. (Tier 2 — SP_Apex_PnL)",
+                                                  "match":  "NO",
+                                                  "loss":  "Tagged Tier 2 instead of Tier 1 via Dim_Instrument; dropped origin reference (Trade.InstrumentMetaData), NULL semantics, Name comparison; paraphrased \u0027User-facing\u0027 to \u0027eToro-facing\u0027"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentDisplayName",
+                                       "problem":  "Tagged Tier 2 (SP_Apex_PnL) but is a dim-lookup passthrough from DWH_dbo.Dim_Instrument. Should be Tier 1 with Dim_Instrument\u0027s verbatim description including NULL semantics and origin (etoro_Trade_InstrumentMetaData)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No ETL pipeline ASCII diagram in the wiki body. Section 5 defers to lineage file but the completeness checklist requires the diagram in the wiki itself at Section 5.2."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 / Footer",
+                                       "problem":  "No formal Phase Gate Checklist with [x] markers. P2 mentioned narratively but P3 not addressed. Footer missing phases-completed list."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentDisplayName",
+                                       "problem":  "Description paraphrased: \u0027eToro-facing instrument name for reporting\u0027 loses Trade.InstrumentMetaData origin, NULL semantics for instruments without metadata, and comparison to Name column."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer has tier breakdown and quality score but no explicit phases-completed list (e.g., \u0027Phases: P1 ✓, P2 ✓, P3 ✗\u0027)."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag InstrumentDisplayName as Tier 1 — Dim_Instrument (etoro_Trade_InstrumentMetaData) using verbatim description from Dim_Instrument wiki. (2) Add Section 5.2 ETL pipeline ASCII diagram directly in the wiki showing daily temp tables (#NOPStart_ApexFiles_Daily, #Trades_ApexFiles_Daily, #Dividends_ApexFiles_Daily, #Zero_Daily). (3) Add Phase Gate Checklist with [x]/[ ] markers for P1/P2/P3. (4) Add phases-completed list to footer. (5) Update tier counts to 1 T1, 20 T2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

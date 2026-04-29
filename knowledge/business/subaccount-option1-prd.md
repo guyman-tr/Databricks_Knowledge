@@ -4,146 +4,174 @@
 
 **Source of truth:**
 - Snapshot of OpsDB Service Broker scheduling: [`_objectsstatus_snapshot.csv`](./_objectsstatus_snapshot.csv) — 936 distinct procedures, Synapse-only schemas (BI_DB / DWH / Dealing / eMoney / EXW / DE / general / dbo). Bronze/Silver/Gold data-lake paths excluded per scope clarification.
-- Static scanner: [`_build_option1_blast_radius.py`](./_build_option1_blast_radius.py)
-- Touchpoint catalogue: [`subaccount-option1-touchpoints.csv`](./subaccount-option1-touchpoints.csv) — 1,174 touched objects out of 4,019 SQL files scanned.
+- Static scanner: [`_build_option1_archetypes.py`](./_build_option1_archetypes.py)
+- **Per-SP triage CSV:** [`subaccount-option1-triage.csv`](./subaccount-option1-triage.csv) — 1,459 SQL files (SPs / Functions / Views) classified into one of 6 archetypes (A–F) plus X for "no destination INSERT detected". One row per object with: archetype, confidence, destination tables, parsed customer-key / money / count / dim / txn-grain / population-flag column lists, validity-gate evidence with line+snippet, GROUP-BY-on-customer-key evidence, recommended action, key insight.
+- **Quantitative summary:** [`subaccount-option1-archetype-summary.json`](./subaccount-option1-archetype-summary.json) — counts by archetype, archetype × priority, recommended action; high-priority example SPs per archetype.
+- **Archetype reference (engineer-facing):** [`subaccount-option1-archetypes.md`](./subaccount-option1-archetypes.md) — decision tree, definitions, sampled SP worked-examples, treatment recipes per archetype.
 
 ---
 
 ## TL;DR
 
-1. **The whole problem reduces to one column choice:** does sub-account `CID_sub` have its own `Dim_Customer` row with a NEW flag `IsBotAccount = 1`, OR does it share its parent's `RealCID`? Pick the wrong design and 200+ SPs become tickets.
-2. **151 stored objects** in the Synapse pool MUST be inspected and modified. They share one signature: `IsValidCustomer = 1` (or equivalent) AND a user-count signal (`FTD`, `Registration`, `Funded`, `COUNT(DISTINCT CID)`, or `GROUP BY CID` aimed at user metrics). 28 of these are scheduled at priority 20 (daily), 96 at priority 0 (called transitively), 2 at priority 99 (FinanceReportSPS).
-3. **6 priority-99 finance SPs** already `GROUP BY CID` **without** a validity filter (`SP_CB_Gap_Categorization`, `SP_Client_Balance_New`, `SP_CycleGap`, `SP_Daily_CB_Gaps_All`, `SP_Finance_Non_US_Settlement_Report`, `SP_Outliers_New`). They are arguably brittle today; Option 1 turns latent into actual.
-4. **8 priority-99 finance SPs** read `Dim_Customer` for enrichment and need only the schema migration — no logic change. They are recompile-and-deploy targets.
-5. **Recommended rollout: 6 phases over ~10 weeks** with a hard gate at Phase 2 (Tier A user-count fix) before any sub-account is provisioned in production. A single column rename (`IsValidCustomer` semantics) is the cheapest mitigation, but not the safest. The PRD recommends the additive-flag path (§ Decision 1).
+1. **The problem reduces to one new helper table.** Build `general.Dim_MasterGCID(CID, GCID, master_CID, master_GCID, is_synthetic, sub_account_kind)` mapping every CID — real or synthetic — to the human "master" customer it belongs to. Every Option 1 fix is one of three operations on this table: `JOIN` it, swap a `GROUP BY` key, or filter `is_synthetic`.
+
+2. **Every active Synapse SP falls into one of six archetypes** depending on the destination grain of its `INSERT INTO <real-table>` statement. The archetype determines the synthetic-user treatment:
+
+   | # | Archetype | Treatment | Count | Priority-99 hits |
+   |---|-----------|-----------|------:|-----------------:|
+   | A | Customer-keyed snapshot (CID + flag/date cols) | filter synthetics OR enrich dest with `master_CID` | 189 | 1 |
+   | B | Per-customer money aggregate (CID + money + GROUP BY CID) | swap `GROUP BY CID` → `GROUP BY master_CID` | 114 | 6 |
+   | **C** | **Dim-grain rollup with `IsValidCustomer` validity gate** (NO CID in dest) — **REGULATOR-RISK** | **per-SP policy decision: do synthetics count as "valid"?** | **96** | **4** |
+   | D | Money-flow at transaction grain (CID + PositionID/TransactionID) | enrich dest table with `master_CID` column | 81 | 5 |
+   | E | Population headcount (NewUsers / NewWallets cols) | swap `COUNT(DISTINCT CID/GCID)` → `COUNT(DISTINCT master_GCID)` | 13 | 0 |
+   | F | Non-customer dim grain, no validity gate | policy decision (usually no-op) | 155 | 2 |
+   | X | No INSERT destination detected (views, functions, dispatchers, dynamic SQL) | manual review | 811 | 3 |
+
+3. **Archetype C is the regulator-facing hot zone.** 96 SPs have NO customer key in their destination but their *source* filters `IsValidCustomer = 1` before aggregating. Whether a synthetic counts as "valid" silently determines whether their commission / volume / NWA gets reported to the regulator. **9 of these are priority ≥ 90 finance-package SPs** including KPMG IFR Capital-Adequacy submission and the four DDR aggregators. The non-mechanical labor lives entirely here.
+
+4. **Archetypes A, B, D, E are mechanical.** Once `Dim_MasterGCID` exists, the fix for these 397 SPs is a templatable code edit — usually a `JOIN Dim_MasterGCID` plus one keyword swap. The CI gate is "every fixed SP produces identical output on baseline data (no synthetics) before deploy".
+
+5. **Archetype F is mostly no-op.** 155 SPs aggregate at instrument / LP / HedgeServer / currency grain with no customer-level filter. Synthetics' positions naturally pass-through these (positions live once in `tradonomi`). Only 9 priority ≥ 21 F-SPs need explicit policy review.
+
+6. **Archetype X is the manual-review backlog.** 811 files have no detectable INSERT destination — overwhelmingly views, functions, dispatcher SPs, and unscheduled legacy code. Of these, only ~17 are scheduled at priority ≥ 60 (most are dispatchers that auto-resolve once their callees are fixed; `SP_PositionPnL` is the one priority-99 outlier that uses dynamic SQL and needs eyes-on).
+
+7. **The schema-migration write path is tiny.** Three places need to populate `Dim_MasterGCID`: the SP that builds `Dim_Customer`, the upstream `External_*Customer*` source for the `is_synthetic` flag, and a one-time backfill script. `RealCID` semantics are NOT touched.
+
+8. **Recommended rollout: 6 phases over ~10 weeks**, with Phase 2 split into 2a (mechanical A/B/D/E fix — scriptable) and 2b (per-SP C policy review — needs Finance + Compliance sign-off). 2a can run in parallel with 2b; 2b is the critical path.
 
 ---
 
 ## 1. The fundamental risk
 
-Option 1 mints a synthetic real customer per sub-account: new `GCID_sub`, new `CID_sub`, full row in `UserApiDB.Customer.Customers` and downstream in `Dim_Customer`. Every existing `JOIN`, every `WHERE CID = X`, every aggregation key continues to work mechanically. **That is the danger** — the joins do not break, but the semantics silently shift.
+Option 1 mints a synthetic real customer per sub-account: new `GCID_sub`, new `CID_sub`, full row in `UserApiDB.Customer.Customers` and downstream in `Dim_Customer`. Every existing `JOIN ON CID = CID`, every `WHERE CID = X`, every aggregation key continues to work mechanically. **That is the danger** — the joins do not break, but the semantics silently shift. There is no error message; there is just a different number on a regulator-facing report.
 
-| Metric class      | Today                                  | After Option 1 (no fix)                                      | After fix |
-|-------------------|----------------------------------------|--------------------------------------------------------------|-----------|
-| User counts (FTDs, Registrations, Funded, KYC pop., AML pop.) | counts real customers | inflates by ~Nx (N = avg sub-accounts per customer) | filtered |
-| Money flow (revenue, MIMO, AUM, P&L, balances, fees, NOP)     | aggregates real money | still correct — money does flow through CID_sub      | unchanged |
-| Reconciliation (CycleGap, CB_Gaps, NWA, Crypto_RECON)         | reconciles real CIDs  | reconciles all CIDs incl. sub-accounts — semantically OK if money flows are summed; brittle if it filters on validity | needs explicit decision |
+The risk is shaped by the destination grain of each SP, not by which patterns it uses internally. Three failure modes, mapped to archetypes:
 
-The fix is to make user-count consumers exclude `IsBotAccount = 1` rows while leaving money-flow consumers untouched. The blast radius is the size of the "user-count consumer" set.
+| Failure mode | Archetypes affected | Fix shape |
+|--------------|---------------------|-----------|
+| **User-count inflation.** Each synthetic is counted as a new active / funded / registered customer. FTD numbers, KYC populations, AML pop counts inflate by Nx. | A (189), E (13) | Filter at population definition: `WHERE m.is_synthetic = 0` (Archetype A) or `COUNT(DISTINCT master_GCID)` (Archetype E). |
+| **Money-flow split across master + synthetic.** Each synthetic generates its own row of money sums; the regulator sees "customer X has $100" + "customer X-sub-1 has $50" instead of "customer X has $150". | B (114), D (81) | Aggregate to master via `JOIN Dim_MasterGCID m` + `GROUP BY m.master_CID`. For transaction-grain (D), enrich the destination with a `master_CID` column so downstream B-SPs don't each have to redo the join. |
+| **Validity-gate ambiguity.** Source filters `IsValidCustomer = 1` *before* aggregating to a non-customer dim grain. Whether a synthetic gets `IsValidCustomer = 1` (inheriting from master) or `0` (excluded) silently changes the dim aggregate without any flag in the output. | **C (96)** | **Per-SP policy decision** — does the regulator's view want the synthetic's flow rolled to master, excluded entirely, or kept as a separate row? Cannot be defaulted; must be reviewed with Finance + Compliance. |
 
----
+The first two failure modes (A/E and B/D) are **mechanical** — once the
+design is signed off, the fix is a templatable code edit. The third one (C)
+is **non-mechanical** — it's a per-SP decision touching 96 SPs of which 9
+are priority ≥ 90.
 
-## 2. The IsBotAccount design — three choices, one recommendation
-
-### Decision 1 (RECOMMENDED): additive flag + redefined validity column
-
-- Add `IsBotAccount BIT NOT NULL DEFAULT 0` on `Dim_Customer` and on the upstream `External_*Customer*Customers` source.
-- **Redefine `IsValidCustomer = 1`** to mean "valid AND `IsBotAccount = 0`". The column name keeps backward compatibility for the ~150 user-count SPs that already filter on it.
-- Add a NEW column `IsValidCustomer_IncludingSubAccounts BIT` that is `1` for all rows that currently satisfy the legacy definition. Money-flow SPs migrate to this column on a per-SP basis as needed.
-
-**Pros:** smallest immediate touch list — Tier A SPs continue to work without code change once the column semantics shift. Money-flow SPs that should include sub-accounts get migrated incrementally.
-
-**Cons:** column-semantics change is a foot-gun. Anyone with a downstream model or BI extract that filters on `IsValidCustomer = 1` and ALSO needs sub-account inclusion will break silently. Mitigation: announce in advance and pair with column comments + Genie/wiki updates.
-
-### Decision 2: additive flag + manual filter everywhere
-
-- Add `IsBotAccount` exactly as in Decision 1 but DO NOT change `IsValidCustomer` semantics.
-- Every Tier A SP gets a manual `AND IsBotAccount = 0` clause appended to its existing `IsValidCustomer = 1` filter.
-
-**Pros:** explicit, auditable, no surprises.
-
-**Cons:** every Tier A SP becomes a code change ticket. ~151 SPs. Even a 30-minute change × 151 SPs ≈ 75 dev-hours, plus testing. Realistic estimate: 6–8 weeks of one engineer.
-
-### Decision 3: parameter-based gating (use existing pattern)
-
-- The codebase already has the precedent: `Function_DDR_Aggregation_Yesterday`, `Function_MIMO_First_Deposit_All_Platforms`, `Function_Trading_Volume`, `Function_Population_*` all expose `@OnlyValidCustomers BIT` parameters that gate `IsValidCustomer = 1`.
-- Extend the same pattern: add `@IncludeSubAccounts BIT` to functions and the SPs that call them.
-
-**Pros:** uses an established codebase pattern, lets each consumer make an explicit choice.
-
-**Cons:** only useful for the function-based subset (~30 functions); ad-hoc SPs still need direct edits. Best used as a complement to Decision 1, not a replacement.
-
-**Recommendation:** Decision 1 + Decision 3 hybrid. Decision 1 covers ad-hoc SPs at zero touch cost. Decision 3 covers the structured Function_* layer cleanly. Decision 2 is the fallback if column-semantics change is rejected.
+> **What this PRD explicitly does NOT touch:** `RealCID` semantics. The
+> previous regex-based scanner flagged 7,820 `RealCID` references as
+> in-scope; ~all of them were noise. `RealCID` is legacy mirror-account
+> scaffolding from the copy-trading domain. The new identity column is
+> `master_CID` on the new `Dim_MasterGCID` table — **not** a redefinition
+> of `RealCID`. See § 4.1 for the half-page on why.
 
 ---
 
-## 3. Summary tables
+## 2. The `Dim_MasterGCID` design — one table, three operations
 
-### 3.1 Touchpoints by tier × priority
+```sql
+CREATE TABLE general.Dim_MasterGCID (
+    CID                 BIGINT       NOT NULL,    -- every CID in the system, real or synthetic
+    GCID                BIGINT       NOT NULL,    -- the GCID this CID belongs to
+    master_CID          BIGINT       NOT NULL,    -- the "real customer" CID for this group
+    master_GCID         BIGINT       NOT NULL,    -- the "real customer" GCID (= GCID for non-synthetic rows)
+    is_synthetic        BIT          NOT NULL,    -- 1 = sub-account / bot-trader / etc, 0 = real customer
+    sub_account_kind    VARCHAR(40)  NULL,        -- 'real' | 'sub_currency' | 'sub_strategy' | 'bot_trader'
+    valid_from          DATE         NOT NULL,    -- as-of date when this mapping became active
+    valid_to            DATE         NULL         -- NULL = current
+);
+CREATE STATISTICS Stat_Dim_MasterGCID_CID         ON general.Dim_MasterGCID(CID);
+CREATE STATISTICS Stat_Dim_MasterGCID_master_GCID ON general.Dim_MasterGCID(master_GCID);
+```
 
-Source: `subaccount-option1-summary.json`.
+For every existing real customer, `is_synthetic = 0` and `master_CID = CID`, `master_GCID = GCID` (self-reference). For every synthetic CID minted by Option 1, `is_synthetic = 1` and `master_CID` / `master_GCID` point at the human user behind the sub-account.
 
-| Priority | Tier A (MUST FIX) | Tier B (REVIEW) | Tier C (RESIDUAL) | Service Broker process |
-|---------:|------------------:|----------------:|------------------:|------------------------|
-|       99 |                 2 |              19 |                 0 | FinanceReportSPS       |
-|       98 |                 0 |               0 |                 0 | FinanceReportSPS       |
-|       90 |                 1 |               5 |                 0 | SB_Daily               |
-|       85 |                 0 |               0 |                 0 | SB_Daily               |
-|       80 |                 0 |               0 |                 0 | SB_Daily               |
-|       70 |                 0 |               2 |                 0 | SB_Daily               |
-|       60 |                 0 |              28 |                 1 | SB_Daily               |
-|       21 |                 2 |               5 |                 0 | SB_Daily               |
-|       20 |                28 |              63 |                 2 | SB_Daily               |
-|       15 |                 0 |               1 |                 1 | SB_Daily               |
-|       10 |                 0 |              13 |                 0 | SB_Daily               |
-|        1 |                 0 |               1 |                 0 | COPY DATA              |
-|        0 |                96 |             205 |                 4 | SB_Daily (fan-out)     |
-| unscheduled (views, functions, legacy SPs not in ObjectsStatus) | 22 | 669 | 4 | n/a |
-| **Total** |          **151** |        **1,011** |             **12** |                        |
+**Three operations cover every archetype's fix:**
 
-> "Unscheduled" = files in the Synapse repo with no row in `OpsDB.dbo.ObjectsStatus`. Includes views, functions (priority is implicit via the SPs that call them), and legacy/quarantined SPs.
+| Op | Where to use | SQL pattern |
+|----|--------------|-------------|
+| `JOIN Dim_MasterGCID` + filter `is_synthetic = 0` | Archetype A (filter at population) | `LEFT JOIN general.Dim_MasterGCID m ON m.CID = src.CID WHERE m.is_synthetic = 0` |
+| `JOIN Dim_MasterGCID` + replace `GROUP BY` key | Archetype B | `JOIN general.Dim_MasterGCID m ON m.CID = src.CID ... GROUP BY m.master_CID` |
+| `JOIN Dim_MasterGCID` + enrich destination | Archetype D, optionally A | add `master_CID BIGINT` to dest, populate from join |
 
-### 3.2 Tier B sub-buckets (priority-99 sample)
+**Population:**
 
-The 19 Tier B priority-99 finance reports split into three orthogonal sub-buckets:
+- **At customer-creation time (OLTP).** When `UserApiDB.Customer.Customers` mints a new row, an OLTP trigger or service writes the corresponding `Dim_MasterGCID` row. Simplest: a single OLTP service owns the table.
+- **At `Dim_Customer`-build time (DWH).** The SP that builds `DWH_dbo.Dim_Customer` joins `Dim_MasterGCID` and re-asserts the mapping. Acts as the consistency check.
+- **One-time backfill.** All existing CIDs get `master_CID = CID`, `is_synthetic = 0`. ~50M rows. Single-pass CTAS, completes in minutes on Synapse.
 
-| Sub-bucket                                                            |  Count | What it means                                                                                                 |
-|-----------------------------------------------------------------------|-------:|---------------------------------------------------------------------------------------------------------------|
-| `validity-filter only` (likely money-flow)                            |     5  | Filters on `IsValidCustomer`/`IsCreditReportValidCB` but no user-count signal. Confirm sub-accounts are included. |
-| `user-count without validity filter` (likely already buggy)            |     6  | `GROUP BY CID` with no validity filter. Already brittle today; Option 1 amplifies the bug.                    |
-| `Dim_Customer enrichment only` (schema-add consumer)                   |     8  | Reads `Dim_Customer` columns for enrichment. Needs the new column to exist; no logic change.                  |
+### 2.1 Why `Dim_MasterGCID` and not `Dim_Customer.master_CID`?
 
-Same three sub-buckets exist at every priority tier (proportions vary).
+Putting the mapping on `Dim_Customer` would seem cheaper (no new table). It's not, for three reasons:
 
-### 3.3 The 21 priority-99 finance SPs by name
+- **`Dim_Customer` recompiles cascade.** Every SP that reads `Dim_Customer` schemas-recompiles when the table changes. Adding a column triggers recompilation of ~390 SPs. A separate table doesn't.
+- **The mapping is small and dense.** 50M rows × 5 cols × HASH(CID) distribution → fits in a single distribution unit. `Dim_Customer` is wider and serves a different purpose (customer attributes, KYC, risk).
+- **Independent ownership.** The mapping has its own SLA (must be populated for every active CID before downstream SPs run) and its own backfill semantics. Cleaner to govern as a standalone table.
 
-| Tier | SP                                              | Bucket                    |
-|------|-------------------------------------------------|---------------------------|
-|  A   | `SP_Crypto_NOP`                                 | validity-filter + user-count |
-|  A   | `SP_M_Crypto_RECON`                             | validity-filter + user-count |
-|  B   | `SP_ASIC_ClientBalanceFinance`                  | validity-filter only      |
-|  B   | `SP_DailyZero_TreeSize_NEW`                     | validity-filter only      |
-|  B   | `SP_RealCrypto_Lev2`                            | validity-filter only      |
-|  B   | `SP_RollOverFee_Dividends`                      | validity-filter only      |
-|  B   | `SP_VarCommission`                              | validity-filter only      |
-|  B   | `SP_CB_Gap_Categorization`                      | user-count, NO validity   |
-|  B   | `SP_Client_Balance_New`                         | user-count, NO validity   |
-|  B   | `SP_CycleGap`                                   | user-count, NO validity   |
-|  B   | `SP_Daily_CB_Gaps_All`                          | user-count, NO validity   |
-|  B   | `SP_Finance_Non_US_Settlement_Report`           | user-count, NO validity   |
-|  B   | `SP_Outliers_New`                               | user-count, NO validity   |
-|  B   | `SP_CID_Daily_NWA`                              | Dim_Customer enrichment   |
-|  B   | `SP_DailyDividendsByPosition`                   | Dim_Customer enrichment   |
-|  B   | `SP_Daily_CreditLine`                           | Dim_Customer enrichment   |
-|  B   | `SP_Daily_Dividends`                            | Dim_Customer enrichment   |
-|  B   | `SP_DepositWithdrawFee`                         | Dim_Customer enrichment   |
-|  B   | `SP_Finance_Panel_Reports`                      | Dim_Customer enrichment   |
-|  B   | `SP_PositionPnL`                                | Dim_Customer enrichment   |
-|  B   | `SP_Real_Crypto_Loans`                          | Dim_Customer enrichment   |
+---
 
-### 3.4 The Tier A high-priority anchor list
+## 3. The 6 archetypes — distribution by service-broker priority
 
-Top-priority Tier A SPs that need explicit MUST-FIX treatment in Phase 2:
+Source: [`subaccount-option1-archetype-summary.json`](./subaccount-option1-archetype-summary.json). Severity ordering for picking the dominant archetype when an SP has multiple INSERT destinations: **C > A > B > D > E > F > X**.
 
-| Priority | Object                                                                  |
-|---------:|-------------------------------------------------------------------------|
-|   99     | `BI_DB_dbo.SP_Crypto_NOP`                                               |
-|   99     | `BI_DB_dbo.SP_M_Crypto_RECON`                                           |
-|   90     | `BI_DB_dbo.SP_CIDFirstDates` (the FTD/Funded master dates SP)           |
-|   21     | `BI_DB_dbo.SP_PositionPnL_Agg_daily_Staking`                            |
-|   21     | `BI_DB_dbo.SP_W_Tue_Reg_UK_Compliance_KYC_Weekly_Export` (UK regulator) |
-|   21     | `BI_DB_dbo.SP_W_Tue_Reg_UK_Compliance_Professional_OptUp` (UK regulator) |
-|   20     | 28 SPs (see CSV — includes `SP_AML_SAR_Report`, `SP_AML_SubEntity_Categorization`, `SP_CIDFunnelFlow`, `SP_CryptoDashboard`, `SP_Daily_TradeData`, `SP_DepositUsersFirstTouchPoints`, `SP_IFRS_15_Balance`, `SP_Inactivity_Fees`, …) |
+### 3.1 Archetype × priority matrix
+
+| Priority | A | B | **C** | D | E | F | X | Total |
+|---------:|--:|--:|------:|--:|--:|--:|--:|------:|
+| 99 (FinanceReportSPS) | 1 | 6 | **4** | 5 | 0 | 2 | 3 | 21 |
+| 98 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
+| 90 | 2 | 0 | **4** | 1 | 0 | 0 | 1 | 8 |
+| 80 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| 70 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 3 |
+| 60 | 7 | 11 | 0 | 6 | 1 | 3 | 8 | 36 |
+| 21 | 1 | 1 | **1** | 0 | 0 | 3 | 1 | 7 |
+| 20 | 29 | 17 | **20** | 6 | 2 | 15 | 65 | 154 |
+| 15 | 0 | 1 | 1 | 0 | 0 | 2 | 3 | 7 |
+| 10 | 2 | 6 | 0 | 6 | 0 | 2 | 2 | 18 |
+| 1 | 0 | 0 | 1 | 0 | 0 | 0 | 3 | 4 |
+| 0 | 112 | 52 | **50** | 36 | 4 | 67 | 126 | 447 |
+| unscheduled | 35 | 18 | 15 | 21 | 6 | 60 | 597 | 752 |
+| **Total** | **189** | **114** | **96** | **81** | **13** | **155** | **811** | **1,459** |
+
+### 3.2 The C-archetype priority ≥ 90 hot list (regulator-facing)
+
+These 9 SPs concentrate the entire non-mechanical labor of the project. Mistakes here go straight to a regulator filing.
+
+| Pri | Object | What it produces | Note |
+|---:|--------|------------------|------|
+| 99 | `BI_DB_dbo.SP_VarCommission` | LP variable-commission settlement at Regulation × Instrument grain | Affects LP commission payouts |
+| 99 | `BI_DB_dbo.SP_Client_Balance_New` | Daily client-balance reconciliation (hybrid: CID + IsValidCustomer gate) | Highest volume |
+| 99 | `BI_DB_dbo.SP_Finance_Non_US_Settlement_Report` | Non-US settlement report | Per-instrument |
+| 99 | `BI_DB_dbo.SP_Real_Crypto_Loans` | Crypto loan principal at Regulation grain | New product line |
+| 90 | `BI_DB_dbo.SP_DDR` | Daily Detailed Report top-level | Tier-1 finance feed |
+| 90 | `BI_DB_dbo.SP_DDR_Aggregated` | DDR rollup | |
+| 90 | `BI_DB_dbo.SP_DDR_Aggregated_Auxiliary_Metrics` | DDR aux metrics | |
+| 90 | `BI_DB_dbo.SP_DDR_Auxiliary_Metrics` | DDR aux | |
+| 21 | `Dealing_dbo.SP_Capital_Adequacy_IFR_KPMG` | KPMG IFR capital-adequacy submission | Direct regulator filing |
+
+Plus `Dealing_dbo.SP_DealingDashboard_Clients` (pri=20, internal but high-visibility).
+
+### 3.3 The A/B/D priority ≥ 90 mechanical-fix anchor list
+
+These 21 SPs are the mechanical-fix campaign for Phase 2a. Each one gets a templatable `Dim_MasterGCID` join + keyword swap.
+
+| Archetype | Pri | Object |
+|-----------|----:|--------|
+| A | 99 | `BI_DB_dbo.SP_M_Crypto_RECON` |
+| A | 90 | `BI_DB_dbo.SP_CIDFirstDates` |
+| A | 90 | `BI_DB_dbo.SP_FirstTimeFunded` |
+| B | 99 | `BI_DB_dbo.SP_ASIC_ClientBalanceFinance` |
+| B | 99 | `BI_DB_dbo.SP_CB_Gap_Categorization` |
+| B | 99 | `BI_DB_dbo.SP_CID_Daily_NWA` |
+| B | 99 | `BI_DB_dbo.SP_Crypto_NOP` |
+| B | 99 | `BI_DB_dbo.SP_Daily_CreditLine` |
+| B | 99 | `BI_DB_dbo.SP_Outliers_New` |
+| D | 99 | `BI_DB_dbo.SP_CycleGap` |
+| D | 99 | `BI_DB_dbo.SP_DailyDividendsByPosition` |
+| D | 99 | `BI_DB_dbo.SP_DepositWithdrawFee` |
+| D | 99 | `BI_DB_dbo.SP_Finance_Panel_Reports` |
+| D | 99 | `BI_DB_dbo.SP_RealCrypto_Lev2` |
+| D | 90 | `BI_DB_dbo.SP_Futures_Finance_Prep_Data` |
 
 Functions of equal weight (unscheduled, but called by the above):
 
@@ -154,181 +182,229 @@ Functions of equal weight (unscheduled, but called by the above):
 - `BI_DB_dbo.Function_Population_First_Trading_Action`
 - `BI_DB_dbo.Function_Trading_Volume`
 
-These functions are the natural injection points for `@IncludeSubAccounts` (Decision 3).
+These functions are the natural injection points for an `@IncludeSubAccounts BIT = 0` parameter to make the Dim_MasterGCID gate explicit at the call site.
+
+### 3.4 The X-archetype priority ≥ 60 manual-review queue
+
+These 17 priority ≥ 60 X-rows have no detectable INSERT destination; manual review is needed. Most are dispatchers that auto-resolve once their callees are fixed; the priority-99 outliers are the first concern.
+
+| Priority | Object | Likely shape |
+|---------:|--------|--------------|
+| 99 | `BI_DB_dbo.SP_DailyZero_TreeSize_NEW` | Dispatcher / dynamic SQL |
+| 99 | `BI_DB_dbo.SP_Daily_CB_Gaps_All` | Dispatcher (calls SP_Daily_CB_Gaps_*) |
+| 99 | `BI_DB_dbo.SP_PositionPnL` | **Dynamic SQL — eyes-on required** |
+| 90 | `general.SP_Run_Tangany_ADF` | ADF trigger wrapper |
+| 70 | `BI_DB_dbo.SP_UsageTracking_SF` | Snowflake export |
+| 70 | `eMoney_dbo.SP_eMoney_Reconciliation_ETLs` | Dispatcher |
+| 60 | (8 SPs) | Mostly EXW / DE extraction wrappers |
 
 ---
 
-## 4. The RealCID design landmine
+## 4. Identity-column design
 
-`Dim_Customer` has a column `RealCID` whose meaning today is "the master CID for a customer when there are mirror/sub-accounts under the same GCID". Many priority-90/99/20 SPs use `RealCID` as the user-identity rollup key:
+### 4.1 Why `RealCID` is NOT the answer (half-page)
 
-```sql
-JOIN [DWH_dbo].[Dim_Customer] b ON a.CID = b.RealCID            -- SP_CIDFirstDates L1211
-GROUP BY pp.CID,dft.Name                                          -- SP_AML_SAR_Report L84
-GROUP BY ffca.RealCID                                             -- SP_ClusteringDailyPrepData L43
-GROUP BY a.RealCID                                                -- SP_Outliers_New L101
-GROUP BY cc.RealCID                                               -- SP_ChargebackReport L72
-```
+Earlier drafts of this PRD treated `RealCID` as the master-customer column for sub-accounts. That was wrong. `RealCID` is legacy mirror-account scaffolding from the copy-trading domain:
 
-**The landmine:** for an Option 1 sub-account, what is `RealCID`?
+- When a child account copies a parent in the copy-trading product, the child gets its own `CID` while `RealCID` keeps pointing at the parent.
+- `RealCID` is currently used as a rollup key in DDR / AML / Compliance SPs (`GROUP BY RealCID`, `JOIN ON CID = RealCID`).
+- Sub-accounts under Option 1 have their OWN `RealCID` (which equals their own `CID` if they're not also a copy-mirror). They do not naturally reuse the legacy column.
 
-| Choice                                                                | Implication                                                                                          |
-|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| **A. `RealCID = CID_sub`** (sub-account is its own master)            | Money/PnL aggregates correctly stay at the sub-account level. User counts that GROUP BY RealCID inflate by Nx — exactly the bug we're trying to avoid. Many AML/Compliance SPs use RealCID. |
-| **B. `RealCID = CID_parent`** (sub-account rolls up to parent)         | User counts via `GROUP BY RealCID` collapse correctly. Money/PnL via `GROUP BY RealCID` re-aggregates parent + all sub-accounts together — masking the per-sub-account view that's the whole point of the feature. |
+Trying to overload `RealCID` to mean both "copy-trading mirror master" and "sub-account master" double-binds the column. Every existing AML / Compliance SP that uses `RealCID` for the copy-trading meaning would silently shift if Option 1 redefined it. **Don't do that.**
 
-Neither is universally correct. The PRD recommends:
+The correct shape is two orthogonal mappings:
+- `RealCID` (existing) — for the copy-trading domain. **Untouched** by Option 1.
+- `Dim_MasterGCID.master_CID` (new) — for sub-accounts under Option 1. Always populated for every CID.
 
-- **Set `RealCID = CID_sub`** (Choice A) — preserves per-sub-account money flows.
-- **Pair with `IsBotAccount`** so user-count consumers explicitly exclude sub-accounts.
-- **Add a new column `ParentCustomerCID`** on `Dim_Customer` for sub-accounts. Set to the parent customer's CID. Lets SPs that NEED the rollup view (Compliance/AML "people behind accounts" reporting) opt in explicitly.
+A synthetic sub-account can have both: `RealCID = its own CID` (it isn't a copy-mirror) and `master_CID = the real human's CID` (it's a sub-account). They answer different questions.
 
-This is the single biggest design question Option 1 raises. **Without this resolution, the rollout cannot proceed past Phase 1.**
+### 4.2 The `Dim_MasterGCID` write path
+
+Three places need to populate `Dim_MasterGCID`:
+
+1. **OLTP customer-creation.** When the customer-service mints a new GCID/CID for a sub-account, it writes `Dim_MasterGCID` in the same transaction. The OLTP team owns this path.
+2. **DWH dim-build SPs.** `DWH_dbo.SP_Dim_Customer` and the `External_*Customer*Customers` ingestion path read `Dim_MasterGCID` and join it onto the dimension build. Acts as a re-assertion check that the OLTP-side mapping is consistent.
+3. **One-time backfill.** All existing CIDs get `master_CID = CID`, `is_synthetic = 0`, `valid_from = '1970-01-01'`. Single-pass CTAS.
+
+Total schema-write footprint: 3 code paths, 1 new table. **No `Dim_Customer` schema change.** No `External_*` schema changes (the synthetic flag derives from the customer-source's `CustomerType` or equivalent; if no such flag exists, OLTP must add one — but that's the OLTP side, not DWH).
 
 ---
 
 ## 5. Phased rollout
 
-Each phase is gated by the prior phase's deploy + 7-day stability window. Total: ~10 weeks one engineer + 2 weeks regulator-facing review for Phase 6.
+Each phase is gated by the prior phase's deploy + 7-day stability window. Total: ~10 weeks one engineer + 2 weeks regulator-facing review for Phase 6. **Phase 2a (mechanical) and 2b (policy) run in parallel.**
 
-| Phase | Goal                                                                                  | Touchpoints                                       | Duration |
-|-------|---------------------------------------------------------------------------------------|---------------------------------------------------|----------|
-| 0     | Decisions 1–3 sign-off. RealCID semantics decision. Schema migration plan reviewed.    | docs only                                         | 1 week   |
-| 1     | Schema add: `IsBotAccount`, `ParentCustomerCID`, `IsValidCustomer_IncludingSubAccounts` columns on `Dim_Customer` and the External_*Customer*Customers source. Default 0 / NULL everywhere. Backfill: trivially 0 for all existing rows. | 8 priority-99 SPs (Tier B "Dim_Customer enrichment") will recompile and pass. | 1 week   |
-| 2     | **HARD GATE**: Tier A user-count fix. Apply Decision 1 (redefine `IsValidCustomer = 1` semantics) OR Decision 2 (add `AND IsBotAccount = 0` to 151 SPs). Add `@IncludeSubAccounts` parameter to the 14 functions that already use `@OnlyValidCustomers`. | 151 Tier A SPs, 14 functions                      | 4 weeks  |
-| 3     | Tier B "user-count without validity filter" cleanup. Decide for each whether the missing filter is a pre-existing bug (fix it) or intentional (annotate). | 6 priority-99 SPs + ~30 lower-priority SPs        | 2 weeks  |
-| 4     | Tier B "validity-filter only (money-flow)" review. For each SP, decide whether sub-account CIDs should be included in the metric. If yes, leave alone (Decision 1 already handled it). If no, add explicit `IncludeSubAccounts=0`. | 5 priority-99 SPs + ~50 lower-priority SPs        | 1 week   |
-| 5     | Genie/Wiki/Glossary updates. Update column descriptions for `IsValidCustomer`, `RealCID`, `IsBotAccount`. Re-run Wiki batch jobs.                                  | docs only                                         | 1 week   |
-| 6     | UAT + first sub-account provisioned in production behind a feature flag, monitored for 7 days. Regulator notification (UK FCA: SP_W_Tue_Reg_UK_Compliance_*).      | end-to-end                                        | 2 weeks  |
+| Phase | Goal | Touchpoints | Duration |
+|:--|:--|:--|:--|
+| 0 | Sign-off on `Dim_MasterGCID` design + Phase-2b policy framework. AML / Finance / Compliance review of the C-archetype hot list (§ 3.2). | docs only | 1 week |
+| 1 | Schema add: create `general.Dim_MasterGCID`. Implement OLTP write path. One-time backfill for all existing CIDs with `is_synthetic = 0`. Rebuild `DWH_dbo.SP_Dim_Customer` to assert the mapping. No consumer-side changes yet. | 1 new table + 3 SPs | 1 week |
+| **2a** | **Mechanical fix campaign for archetypes A, B, D, E.** Apply templatable `Dim_MasterGCID` join + keyword swap to the 397 A+B+D+E SPs. Heavily scriptable. CI gate: every fixed SP produces identical output on baseline data (no synthetics) before deploy. Includes adding `@IncludeSubAccounts BIT = 0` to the 14 affected `Function_*` siblings. | 397 SPs (189 A + 114 B + 81 D + 13 E), 14 functions | 4 weeks |
+| **2b** | **Policy-driven fix for archetype C.** 96 SPs need explicit per-SP decision: do synthetics' money flows roll into the master at the dim aggregate (`m.master_CID` join), get excluded entirely (`m.is_synthetic = 0`), or stay separate? **Critical path** — Phase 6 is gated by 2b sign-off. | 96 C-archetype SPs (especially the 9 priority ≥ 90 hot list) | 4 weeks (parallel with 2a) |
+| 3 | Archetype F sweep. Most are no-op; ~10 priority ≥ 21 F-SPs need explicit policy review (instrument-level dedup question). | 9 F-SPs at priority ≥ 21 + spot checks | 1 week |
+| 4 | Archetype X manual review. The 17 priority ≥ 60 X-SPs are walked individually. `SP_PositionPnL` (dynamic SQL) is the one priority-99 X-row that needs real attention. | 17 X-SPs | 1 week |
+| 5 | Genie / Wiki / Glossary updates. New column docs for `Dim_MasterGCID.master_CID`, `master_GCID`, `is_synthetic`. Decision matrix for archetype C SPs documented. Re-run Wiki batch jobs. | docs only | 1 week |
+| 6 | UAT. First sub-account provisioned in production behind a feature flag, monitored for 7 days. Regulator notification (UK FCA Compliance SPs, KPMG IFR). Parallel-run for 2 weeks. | end-to-end | 2 weeks |
 
-**Phase 2 cannot be skipped.** If Decision 1 is taken, Phase 2 collapses to "redefine the column comment, run a query that asserts every Tier A SP still references `IsValidCustomer = 1`". If Decision 2 is taken, Phase 2 is the actual 151-SP edit campaign.
+**Phase 2a is templatable.** A single transformation script can rewrite the 397 A+B+D+E SPs. Estimated 30 minutes per SP × 397 SPs ≈ 200 dev-hours / 5 weeks at 1 engineer; with templating, closer to 4 weeks.
+
+**Phase 2b is the actual project.** 96 SPs × ~2-hour-per-SP review with Finance + Compliance ≈ 24 days of meeting-time spread over 4 weeks of calendar.
 
 ---
 
 ## 6. Risk register
 
-| ID  | Risk                                                                                              | Likelihood | Impact | Mitigation                                                                                     |
-|-----|---------------------------------------------------------------------------------------------------|-----------:|-------:|------------------------------------------------------------------------------------------------|
-| R1  | A user-count SP slips through Phase 2, FTD/Reg/Funded counts inflate post-Phase 6.                |    Medium  |  High  | Scanner re-run as a CI gate before Phase 6 launches. Diff Tier A list pre/post-fix.            |
-| R2  | A money-flow SP gets caught by the redefined `IsValidCustomer` and starts excluding sub-accounts. |    Medium  |  High  | Decision 1's `IsValidCustomer_IncludingSubAccounts` column gives an opt-back-in path. Phase 4 audit. |
-| R3  | `RealCID` semantics ambiguity. AML/Compliance "people behind accounts" reports break.             |    Medium  |  High  | Phase 0 decision + `ParentCustomerCID` column. AML team review of SP_AML_SAR_Report, SP_AML_SubEntity_Categorization, SP_AML_PI_Abuse, SP_BI_AMLPeriodicReview before Phase 2 deploy. |
-| R4  | The 6 priority-99 "user-count without validity filter" SPs have been quietly wrong for years; fixing them changes regulator-facing numbers. |    High    | Medium | Phase 3 dedicated review with Finance. Run side-by-side comparison for 30 days before cutover.|
-| R5  | An External_* table upstream of `Dim_Customer` doesn't propagate the new flag.                    |       Low  |  High  | Phase 1 includes upstream SP_CopyLakeToSynapse adjustments. CTAS dependency chain regenerated. |
-| R6  | Regulator-facing reports (`SP_W_Tue_Reg_UK_Compliance_KYC_Weekly_Export`, `SP_W_Tue_Reg_UK_Compliance_Professional_OptUp`) submit a different number to the FCA the day after deploy. |    Medium  |  High  | Phase 6 includes 2-week regulator-aware window with both old and new figures parallel-run.    |
-| R7  | `Function_DDR_Aggregation_*` are called by Power BI / external Genie consumers; signature change of adding a parameter breaks them. |    High    | Medium | Add new param with `DEFAULT 0`. Deprecate old call signature gradually.                       |
-| R8  | A 3rd-party tool (Tableau extract, Genie, Salesforce sync) caches the legacy `IsValidCustomer` semantics. |    Medium  | Medium | Phase 5 communication + cache-invalidation plan.                                              |
+| ID | Risk | Likelihood | Impact | Mitigation |
+|:--|:--|:--:|:--:|:--|
+| **R0** | **Archetype C ambiguity. Regulator-facing dim-grain SPs silently corrupt KPMG / ASIC / FCA submissions either by inflation (synthetic flow attributed to master AND included under synthetic's own validity = double count) or invisibility (synthetic flow excluded from gated source AND not reattributed to master).** | **High** | **Critical** | Phase 2b: every C-archetype SP gets an explicit policy decision recorded in the triage CSV. Pre-deploy: 14-day parallel run of legacy vs new `SP_VarCommission`, `SP_Capital_Adequacy_IFR_KPMG`, all 4 `SP_DDR*` SPs. Investigate divergence > 0.1%. |
+| R1 | An A or E archetype SP slips through Phase 2a; FTD / Registration / Funded counts inflate post-Phase 6. | Medium | High | Scanner re-run as a CI gate before Phase 6 launches. Diff archetype list pre/post-fix to confirm coverage. |
+| R2 | A B or D archetype SP gets the master_CID swap wrong (e.g. forgets to swap `GROUP BY` key after adding the join, producing duplicate rows). | Medium | High | Phase 2a CI gate: assert every B/D SP produces identical output on baseline data. Code review: every PR includes a before/after row-count check. |
+| R3 | The OLTP-side `is_synthetic` flag is set incorrectly at customer creation (e.g. defaults to 0 for synthetics). Every fix downstream silently breaks. | Medium | Critical | OLTP team owns Phase 1 acceptance test: insert a fake synthetic, verify `Dim_MasterGCID` reflects `is_synthetic = 1` within 5 minutes of customer creation. End-to-end smoke test as part of Phase 6 UAT. |
+| R4 | A priority-99 archetype-X SP (e.g. `SP_PositionPnL` with dynamic SQL) is silently affected. | Medium | High | Phase 4 manual review of the 17 priority ≥ 60 X-SPs. `SP_PositionPnL` gets dedicated investigation. |
+| R5 | An External_* upstream of `Dim_Customer` doesn't propagate the `is_synthetic` flag. | Low | High | Phase 1 includes upstream ingestion review. Source-of-truth = OLTP `UserApiDB.Customer.Customers.IsSynthetic` (or equivalent). |
+| R6 | Power BI / Tableau / Genie consumers cache the old DDR / NOP semantics. Customer-facing dashboards show stale numbers. | Medium | Medium | Phase 5 communication + cache-invalidation plan. Genie spaces re-published. |
+| R7 | The `@IncludeSubAccounts` parameter added to `Function_*` siblings breaks existing callers if they pass positional arguments. | Medium | Medium | Add new param with `DEFAULT 0`. Audit existing callers; all current calls go through named-parameter syntax — safe. |
+| R8 | An archetype-F SP that was correctly classified as "no-op" is actually computing per-Wallet metrics that double-count when synthetic wallets exist. | Low | Medium | Phase 3 audit of priority ≥ 21 F-SPs. Spot-check: does removing `m.is_synthetic = 1` rows from input change output? |
 
 ---
 
 ## 7. Test plan
 
-### 7.1 Pre-deploy unit-equivalent tests
+### 7.1 Pre-deploy unit-equivalent tests (Phase 2a CI gate)
 
-For each Tier A SP, run:
+For each archetype A/B/D/E SP, run before the deploy:
 
 ```sql
--- before-after equivalence on baseline data (no sub-accounts yet)
+-- before-after equivalence on baseline data (no synthetics yet, so master_CID = CID for everyone)
 EXEC <SP> @AsOf = '2026-04-25';
--- Expect: row counts, sums, distinct CID counts unchanged ±0 on a day with no Option 1 sub-accounts active.
+-- Expect: row counts, sums, distinct CID counts unchanged ±0.
 ```
 
-Automated as part of Phase 2 CI. Fails the deploy if any SP changes its output on baseline data.
+Automated as part of Phase 2a CI. Fails the deploy if any SP changes its output on baseline data. This catches the 99% of mistakes (forgot to swap GROUP BY, joined the wrong direction, etc.).
 
-### 7.2 Synthetic sub-account injection tests
+### 7.2 Synthetic-injection regression (Phase 6 pre-launch)
 
-Before Phase 6, inject 100 fake sub-accounts into a stg branch of `Dim_Customer` with `IsBotAccount = 1`. Run all priority-99 + priority-90 + priority-20 Tier A SPs and verify:
+Inject 100 fake sub-accounts into a stg branch of `Dim_MasterGCID` with `is_synthetic = 1`. Run all priority ≥ 60 archetype A+B+D+E SPs and verify:
 
-- User-count outputs unchanged (FTD, Registration, Funded, KYC pop counts).
-- Money-flow outputs increase by exactly the sum of money flowing through those 100 sub-accounts.
+- **A-archetype outputs**: row count of "active customers" / "funded customers" / "FTD users" unchanged (synthetics filtered out).
+- **B/D-archetype outputs**: money totals shift to the master CID's row (or the master_CID column is populated correctly), with no double-counting.
+- **E-archetype outputs**: `NewUsers`, `NewWallets` counts unchanged.
 
-### 7.3 Regulator-facing diff
+### 7.3 Archetype C parallel run (Phase 6 mandatory)
 
-For 14 days post-Phase 6 launch, run both legacy and new versions of:
+For 14 days post-Phase 6 launch, run both legacy and new versions of the 9 priority ≥ 90 C-archetype SPs:
 
-- `SP_ASIC_ClientBalanceFinance`
-- `SP_W_Tue_Reg_UK_Compliance_KYC_Weekly_Export`
-- `SP_W_Tue_Reg_UK_Compliance_Professional_OptUp`
-- `SP_AML_SAR_Report`
+- `SP_VarCommission`
+- `SP_Client_Balance_New`
+- `SP_Finance_Non_US_Settlement_Report`
+- `SP_Real_Crypto_Loans`
+- `SP_DDR`, `SP_DDR_Aggregated`, `SP_DDR_Aggregated_Auxiliary_Metrics`, `SP_DDR_Auxiliary_Metrics`
+- `SP_Capital_Adequacy_IFR_KPMG`
 
-Compare row counts and key aggregates. Investigate any divergence > 0.1%.
+Compare row counts and key aggregates. Investigate any divergence > 0.1%. **Any archetype-C SP that diverges signals an unresolved policy decision and must be rolled back.**
 
-### 7.4 RealCID regression test
+### 7.4 `Dim_MasterGCID` consistency test (continuous)
 
-Build a query that for every priority ≥ 20 SP, counts:
-
-- `COUNT(*) WHERE GROUP BY RealCID is used`
-- `COUNT(*) WHERE GROUP BY CID is used`
-- ratio change pre/post sub-account injection.
-
-If RealCID-based aggregates change unexpectedly, Phase 0 RealCID decision was wrong — abort and revisit.
+Daily check: every `CID` in `Dim_Customer` has exactly one row in `Dim_MasterGCID`. Every `is_synthetic = 1` row in `Dim_MasterGCID` has a `master_CID` that resolves to a real customer (`is_synthetic = 0`) row. Alarm if violated.
 
 ---
 
 ## 8. Open questions
 
-1. **Does Decision 1 (redefining `IsValidCustomer`) get sign-off from Finance, AML, Compliance, RegTech?** If any says no, the project is Decision 2 and 4 weeks turns into 6–8 weeks.
-2. **`RealCID = CID_sub` or `RealCID = CID_parent`?** The PRD's recommendation is the former + a new `ParentCustomerCID` column. AML team review required.
-3. **What's the upstream source of truth for `IsBotAccount`?** Is the flag set at OLTP customer-creation time, or computed in DWH at Dim_Customer-build time? Affects which team owns the lineage.
-4. **Do Genie spaces and Power BI extracts cache `IsValidCustomer` semantics?** Phase 5 effort scales with cache touch points.
-5. **Sub-account count target.** N = 2? N = 5? N = 50? The `IsBotAccount`-based filter is correct at any N, but at N > 10 the storage and ETL side-effects on `BI_DB_PositionPnL`, `Fact_*`, and the External_* CDC streams become non-trivial. Out of scope here but blocks Phase 6 sign-off.
-6. **Does any Power BI semantic model use `Dim_Customer.IsValidCustomer` directly as a filter?** The Power BI catalog needs to be scanned in parallel; not in scope of the Synapse repo scanner.
+1. **Where does the `is_synthetic` flag originate?** OLTP customer-creation service must set it explicitly. Out of scope for the DWH PRD; gates Phase 1.
+2. **Sub-account count target.** N = 2? N = 5? N = 50? The `Dim_MasterGCID` design works at any N, but at N > 10 the storage and ETL side-effects on transaction-grain tables (`BI_DB_PositionPnL`, `Fact_*`, External CDC streams) become non-trivial. Out of scope here but blocks Phase 6 sign-off.
+3. **Does Power BI semantic-model use any of the `IsValidCustomer = 1` filters directly?** The Power BI catalog needs to be scanned in parallel; not in scope of the Synapse repo scanner.
+4. **For each priority ≥ 90 C-archetype SP, what is the correct policy?** Pre-Phase-2b sign-off required from Finance + Compliance.
+5. **Are there any cross-database SPs (e.g. `Tracking.dbo.SP_*` or `FinanceAPI.dbo.SP_*`) that consume Synapse outputs?** Scope of this PRD is Synapse-only; OLTP-side audit is a parallel workstream.
 
 ---
 
 ## 9. Appendices
 
-### A. Scanner pattern catalogue (excerpt)
+### Appendix A — Archetype detection logic
+
+The scanner [`_build_option1_archetypes.py`](./_build_option1_archetypes.py) classifies each SQL file by destination grain.
+
+#### A.1 INSERT extraction
+
+Regex: `INSERT\s+INTO\s+<table>\s*[(<col_list>)]\s*(SELECT|EXEC|VALUES|WITH)`. Comment-aware (block and line comments stripped before matching). Skips `#temp` tables and table variables. Multi-destination SPs are picked by severity-max (C > A > B > D > E > F > X).
+
+#### A.2 Column classification (precedence ordered)
+
+For each destination column in the parsed col list:
+
+| Bucket | Test | Examples |
+|--------|------|----------|
+| `customer_keys` | exact lowercase match in `{cid, gcid, realcid, accountid, customerid, walletid, holderid, userid, brokercid, providercid, ...}` | `CID`, `GCID`, `RealCID`, `AccountID`, `WalletID` |
+| `pop_flag_cols` | exact lowercase match in `POPULATION_FLAG_NAMES` (~50 names) OR contains a substring in `FIRST_EVENT_SUBSTRINGS` (`1st`, `2nd`, `first`, `last_`, `lastlog`, `fmi_`, `fmo_`, `ftd`, `registration`) | `IsFunded`, `IsValidCustomer`, `1stActionDate`, `FirstFundedDate`, `RegistrationDate`, `FMI_Date` |
+| `txn_cols` | substring match in `TXN_GRAIN_SUBSTRINGS` (`transactionid`, `positionid`, `eventid`, `orderid`, `chargeid`, `depositwithdrawid`, `tradeid`, `actionid`, ...) | `PositionID`, `TransactionID`, `DepositID`, `Occurred` |
+| `count_cols` | substring match in `COUNT_SUBSTRINGS` (`count_`, `_count`, `newuser`, `newwallet`, `headcount`, `_users`, `_wallets`, `activeuser`) | `NewUsers`, `NewWallets`, `ActiveTraders`, `account_id` |
+| `money_cols` | substring match in `MONEY_SUBSTRINGS` (`amount`, `balance`, `commission`, `_fee`, `pnl`, `volume`, `rollover`, `dividend`, `revenue`, `shortfall`, `equity`, `margin`, `loss`, `profit`, ...) | `FullCommission`, `Equity`, `Cashouts`, `Balance`, `BankPayIns` |
+| `dim_cols` | substring match in `DIM_SUBSTRINGS` (`region`, `country`, `instrument`, `regulation`, `mifid`, `hedgeserver`, `crypto`, `currency`) | `Regulation`, `InstrumentID`, `HedgeServer`, `CountryID` |
+| `other` | none of the above | (residual) |
+
+#### A.3 Source-side signal detection
+
+Run on the comment-stripped SQL of the entire file:
+
+| Signal | Regex / detection | Used for |
+|--------|-------------------|----------|
+| `has_validity_filter` | `\b(IsValidCustomer|IsCreditReportValid(CB)?)\s*=\s*1` | Promote to Archetype C if no customer key in dest |
+| `has_population_filter` | `\b(IsDepositor|IsFunded|IsRegistered|IsActive|IsTestCustomer|IsFTDed|FundedAccount)\s*[=<>!]+\s*[01]` OR `\b(VerificationLevelID|PlayerStatusID)\s*(=|<>|!=|NOT IN|IN)\b` | Same |
+| `has_group_by_customer_key` | `GROUP\s+BY` clause containing any token in customer-key set | Distinguish B (per-customer aggregate) from A |
+| `touches_fact_snapshot_customer` | `\bFact_SnapshotCustomer\b` | Diagnostic only — strong indicator of validity gate |
+| `touches_dim_customer` | `\bDim_Customer\b` | Diagnostic only |
+
+#### A.4 Archetype assignment rules
 
 ```python
-VALIDITY_PATTERNS = {
-  "IsValidCustomer":     r"\bIsValidCustomer\b\s*=\s*1",
-  "IsCreditReportValid": r"\bIsCreditReportValid\b\s*=\s*1",
-  "IsTestCustomer":      r"\bIsTestCustomer\b\s*=\s*0",
-  "IsBotAccount":        r"\bIsBot(?:Account)?\b\s*=\s*0",
-  "IsInternal":          r"\bIsInternal\b\s*=\s*0",
-  "Customer_Status":     r"\bCustomer_?Status\b\s*=\s*N?'Active'",
-}
+if not has_customer_key:
+    if has_count and not has_money:                  return E (high)
+    if has_count and not has_money and n_count >= 2: return E (medium)
+    if has_validity_filter or has_population_filter: return C (high)  # REGULATOR-RISK
+    return F (high)
 
-USER_COUNT_PATTERNS = {
-  "COUNT_DISTINCT_CID":  r"\bCOUNT\s*\(\s*DISTINCT\s+(?:[A-Za-z_]+\.)?CID\b\s*\)",
-  "COUNT_DISTINCT_GCID": r"\bCOUNT\s*\(\s*DISTINCT\s+(?:[A-Za-z_]+\.)?GCID\b\s*\)",
-  "FTD":                 r"\b(?:FTD(?:_?Date)?|FirstTimeDeposit|IsFTDed|First[_ ]?Time[_ ]?Deposit)\b",
-  "Registration":        r"\b(?:IsRegistered|Registration_?Date|RegistrationDate)\b",
-  "Funded":              r"\b(?:IsFunded|Funded_?Date|FundedAccount|FirstFunded)\b",
-  "GROUP_BY_CID":        r"GROUP\s+BY[^;]{0,200}\bCID\b",
-  "GROUP_BY_GCID":       r"GROUP\s+BY[^;]{0,200}\bGCID\b",
-}
-
-JOIN_FANOUT_PATTERNS = {
-  "GCID_eq_GCID":        r"ON\s+\w+\.GCID\s*=\s*\w+\.GCID",
-  "CID_eq_CID":          r"ON\s+\w+\.CID\s*=\s*\w+\.CID",
-}
-
-CUSTOMER_TOUCH_PATTERNS = {
-  "Dim_Customer":             r"\bDim_Customer\b",
-  "External_Customer":         r"\bExternal_[A-Za-z0-9_]*Customer[A-Za-z0-9_]*\b",
-  "UserApiDB_Customer":        r"\bUserApiDB[\.\s]*Customer\b",
-  "Dim_Mirror":                r"\bDim_Mirror\b",
-  "MirrorID_or_ParentCID":     r"\b(?:MirrorID|MirrorTypeID|ParentCID|RealCID|MasterAccountCID|SubAccountCID)\b",
-}
+# has_customer_key in dest
+if has_txn_grain and has_money:                      return D (high)
+if n_count > n_money + n_pop_flag and n_count >= 1:  return E (medium)
+if n_money >= 3 and n_money > n_pop_flag:            return B (high if has GROUP BY CID, else medium)
+if n_pop_flag >= 3 or (n_pop_flag >= 1 and n_money <= 1): return A (high)
+if n_money >= 1:                                     return B (medium)  # borderline A/B
+return A (medium)                                                       # customer-keyed, grain unclear
 ```
 
-Tier classification:
+**Confidence** = `high` if destination grain is unambiguous, `medium` if column-class shape is on the A/B or A/D borderline, `low` only on archetype X.
 
-- **Tier A** = has at least one VALIDITY hit AND at least one USR hit.
-- **Tier B** = any of: VALIDITY without USR; USR without VALIDITY; GCID=GCID join; CUST touch.
-- **Tier C** = only `JOIN.CID_eq_CID` with no other signals.
+#### A.5 Recommended-action mapping
 
-### B. Regenerating the artefacts
+| Archetype | Action label |
+|-----------|--------------|
+| A | `filter-synthetics-from-population OR enrich-dest-with-master_CID` |
+| B | `aggregate-to-master via JOIN Dim_MasterGCID + GROUP BY master_CID` |
+| C | `decide-IsValidCustomer-policy-for-synthetics (REGULATOR RISK)` |
+| D | `enrich-dest-with-master_CID column for downstream rollup` |
+| E | `swap COUNT(DISTINCT CID/GCID) -> COUNT(DISTINCT master_GCID)` |
+| F | `policy decision — sub-account positions show separately or roll to master` |
+| X | `manual review — no INSERT destination detected` |
 
-```bash
+### Appendix B — Regenerating the artefacts
+
+```powershell
 python knowledge\business\_build_objectsstatus_snapshot.py
-python knowledge\business\_build_option1_blast_radius.py
-python knowledge\business\_inspect_touchpoints.py | Out-File touchpoints_review.txt
+python knowledge\business\_build_option1_archetypes.py
+python knowledge\business\_validate_archetypes.py    # sanity check vs 12 manually-classified SPs
+python knowledge\business\_top_archetypes.py         # print top high-priority examples per archetype
 ```
 
-### C. Cross-references
+The scanner reads SQL files from `C:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we` and writes:
+
+- `subaccount-option1-triage.csv` — one row per SP/Function/View
+- `subaccount-option1-archetype-summary.json` — counts and high-priority examples
+
+Heuristics tunable in the scanner header (column-name lists). Re-run after any heuristic change; the diff in the triage CSV shows what reclassified.
+
+### Appendix C — Cross-references
 
 - Five-option dual assessment: [`subaccount-effort-risk-v2.md`](./subaccount-effort-risk-v2.md)
 - Slide deck: [`subaccount-effort-risk-v2.pptx`](./subaccount-effort-risk-v2.pptx)
+- Archetype reference (engineer-facing): [`subaccount-option1-archetypes.md`](./subaccount-option1-archetypes.md)
 - Source PDF: `SubAccount alternatives.pdf` (CTO inbox, not in repo)

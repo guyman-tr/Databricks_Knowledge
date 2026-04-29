@@ -8,7 +8,8 @@ param(
     [Parameter(Mandatory=$false)] [string] $OnlyBucket = "",
     [Parameter(Mandatory=$false)] [switch] $SkipFinishedObjects,
     [Parameter(Mandatory=$false)] [switch] $SkipCompare,
-    [Parameter(Mandatory=$false)] [int]    $StartAt = 1
+    [Parameter(Mandatory=$false)] [int]    $StartAt = 1,
+    [Parameter(Mandatory=$false)] [string] $SummaryOutputName = "_summary"
 )
 
 # ---------------------------------------------------------------------------
@@ -104,14 +105,14 @@ Write-Host ""
 # ---------- Compare phase (judge against current/, write per-object compare.md) ----------
 if (-not $SkipCompare) {
     Write-Host "Running compare_one.py for every object..." -ForegroundColor Yellow
-    & python (Join-Path $harnessRoot "compare_one.py") --all
+    & python (Join-Path $harnessRoot "compare_one.py") --all --manifest $ManifestPath
 }
 
 # ---------- Summary ----------
 Write-Host "Running summarize.py..." -ForegroundColor Yellow
-& python (Join-Path $harnessRoot "summarize.py")
+& python (Join-Path $harnessRoot "summarize.py") --manifest $ManifestPath --output-name $SummaryOutputName
 
-$summaryPath = Join-Path $repoRoot "audits\regen-sample\_summary.md"
+$summaryPath = Join-Path $repoRoot ("audits\regen-sample\{0}.md" -f $SummaryOutputName)
 if (Test-Path $summaryPath) {
     Write-Host ""
     Write-Host ("Summary written: {0}" -f $summaryPath) -ForegroundColor Green

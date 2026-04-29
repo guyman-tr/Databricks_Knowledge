@@ -1,14 +1,14 @@
 # Compare — `Dealing_dbo.Dealing_Apex_PnL`
 
-**Bucket**: `median`
+**Bucket**: `slop`
 
-**Verdict**: **BETTER**  (score delta +2.85; slop 1 -> 1 (delta +0))
+**Verdict**: **BETTER**  (score delta +1.15; slop 1 -> 1 (delta +0))
 
 ## Header
 
 | Metric | Current | Regen | Delta |
 |---|---|---|---|
-| Judge weighted score | 6.15 | 9.0 | 2.85 |
+| Judge weighted score | 7.85 | 9.0 | 1.15 |
 | Slop hits (`Tier 4 ... inferred`) | 1 | 1 | +0 |
 | Element rows | 21 | 21 | +0 |
 | Untagged count | 0 | 0 | +0 |
@@ -21,12 +21,12 @@
 
 | Dimension | Current | Regen |
 |---|---|---|
-| business_meaning | 8 | 9 |
+| business_meaning | 9 | 9 |
 | completeness | 6 | 10 |
 | data_evidence | 6 | 9 |
 | shape_fidelity | 8 | 9 |
-| tier_accuracy | 7 | 9 |
-| upstream_fidelity | 3 | 8 |
+| tier_accuracy | 10 | 9 |
+| upstream_fidelity | 7 | 8 |
 
 ## Top 10 column changes (by edit distance)
 

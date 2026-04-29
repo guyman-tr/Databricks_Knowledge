@@ -1,0 +1,67 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL_EE",
+    "elapsed_seconds":  124,
+    "exit_code":  null,
+    "cost_usd":  0.5386,
+    "input_tokens":  2,
+    "output_tokens":  6246,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL_EE",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AccountNumber (Element #2)",
+                                       "problem":  "Element description says \u00276 distinct accounts\u0027 but does not list them inline. Values are in Section 1 but Elements table should be self-contained."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No Phase Gate Checklist section or footer line confirming P2/P3 live data verification was performed. Data claims (NULL rates, row counts) are plausible but unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.3",
+                                       "problem":  "Account-to-HedgeServer mapping (3EU05026→HS9, etc.) is used only by #Zero for per-symbol sibling tables, not by this equity-level table. Inclusion is contextually useful but slightly misleading about this table\u0027s own ETL."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing phases-completed line in footer (golden shape expects \u0027Phases: P1 [x] P2 [x] P3 [x]\u0027)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AccountNumber (Section 1)",
+                                       "problem":  "Wiki lists 3EU05000 as one of 6 accounts but SP\u0027s #AccountToHS mapping only has 5 (no HS for 3EU05000). Wiki does not explain this gap."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor polish only (PASS): (1) List 6 account numbers inline in Element #2 description. (2) Add Phase Gate Checklist or footer phases-completed line. (3) Clarify Section 2.3 that Account→HS mapping is for sibling per-symbol tables, not this EE table. (4) Note that 3EU05000 has no hedge-server mapping in the SP.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 5,130 in Section 1",
+                                                                                  "NULL rates: 57% Transfers, 54% Dividends, 14% Equity_End, 4% Equity_Start in Element descriptions",
+                                                                                  "6 distinct AccountNumber values in Section 1",
+                                                                                  "Last ETL update 2024-06-08 09:19 in Section 1"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "No Phase Gate Checklist section present in wiki"
+                                                           ]
+                                    }
+                }
+}

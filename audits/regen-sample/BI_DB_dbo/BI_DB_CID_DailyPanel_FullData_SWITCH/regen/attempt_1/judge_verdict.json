@@ -1,0 +1,85 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CID_DailyPanel_FullData_SWITCH",
+    "elapsed_seconds":  231,
+    "exit_code":  null,
+    "cost_usd":  0.5303,
+    "input_tokens":  2,
+    "output_tokens":  13601,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CID_DailyPanel_FullData_SWITCH",
+                    "weighted_score":  6.50,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "eToro customer ID (Real CID). Only depositors (IsDepositor=1) present. FK to DWH_dbo.Dim_Customer.RealCID",
+                                                  "wiki_quote":  "eToro customer ID (Real CID). Only depositors (IsDepositor=1) present. FK to DWH_dbo.Dim_Customer.RealCID. Passthrough from BI_DB_CID_DailyPanel_FullData.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive phrase appended; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Geographic region label (e.g., \u0027French\u0027, \u0027Arabic GCC\u0027, \u0027Australia\u0027, \u0027North Europe\u0027)",
+                                                  "wiki_quote":  "Geographic region label (e.g., \u0027French\u0027, \u0027Arabic GCC\u0027, \u0027Australia\u0027, \u0027North Europe\u0027). Passthrough from BI_DB_CID_DailyPanel_FullData.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive phrase appended; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Customer\u0027s country name at snapshot date",
+                                                  "wiki_quote":  "Customer\u0027s country name at snapshot date. Passthrough from BI_DB_CID_DailyPanel_FullData.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive phrase appended; no semantic loss"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All 169 columns (DateID, Channel, Revenue_Total, EOD_Equity_Copy, and 160 others)",
+                                       "problem":  "All 169 columns are passhthroughs from BI_DB_CID_DailyPanel_FullData via ALTER TABLE ... SWITCH PARTITION — a metadata-only operation with zero ETL. With the parent wiki present in the bundle, the rubric requires every column to be Tier 1 from BI_DB_CID_DailyPanel_FullData. Writer labeled 164 as T2 (relaying the parent\u0027s SP lineage) and 2 as T4. Only CID, Region, Country are correctly T1."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 4 — Tier Legend",
+                                       "problem":  "Tier Legend defines T2 as \u0027ETL-computed in the parent table\u0027s writer SP (SP_CID_DailyPanel_FullData)\u0027. This SWITCH table performs zero ETL — no column is ETL-computed in this table. T2 should not appear in the legend. The correct legend for this object is T1 (passthrough from parent) and T4 (deprecated)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "FirstAction, FirstInstrument, Daily_Classification",
+                                       "problem":  "Tagged T4 in the wiki. These are deprecated/NULL columns that are passhthroughs of T4 columns in the parent table. For the SWITCH table they should still be labeled Tier 1 from BI_DB_CID_DailyPanel_FullData with the deprecated note in the description body, not a different tier label."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table — Synapse Index",
+                                       "problem":  "Property table shows \u0027CLUSTERED COLUMNSTORE INDEX\u0027 (SSDT DDL value). Section 3.1 correctly notes SP_CREATE_SWITCH_SINGLE creates \u0027CLUSTERED INDEX (DateID ASC)\u0027 at runtime. Property table should reflect runtime state or note the discrepancy."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 — Tier Legend",
+                                       "problem":  "Tier 3 is absent from the tier legend. While no T3 columns exist, the standard legend template requires T3 to be defined so analysts know it was considered and found inapplicable."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag ALL 169 columns as (Tier 1 — BI_DB_CID_DailyPanel_FullData). This table performs zero ETL; ALTER TABLE SWITCH is a metadata-only operation. Quote each column description verbatim from BI_DB_CID_DailyPanel_FullData wiki. (2) Rewrite Section 4 Tier Legend: define T1=passthrough from BI_DB_CID_DailyPanel_FullData, T3=no traceable source (unused), T4=deprecated/NULL inherited from parent. Remove T2 entirely. (3) For FirstAction, FirstInstrument, Daily_Classification: keep T1 tier label, note deprecated/NULL status in description body. (4) Fix Synapse Index property to CLUSTERED INDEX (DateID ASC) reflecting runtime SP behavior. (5) Update footer tier breakdown to 169 T1, 0 T2, 0 T3, 0 T4.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

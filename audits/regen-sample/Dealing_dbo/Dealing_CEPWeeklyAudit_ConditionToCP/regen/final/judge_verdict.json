@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_ConditionToCP",
+    "elapsed_seconds":  122,
+    "exit_code":  null,
+    "cost_usd":  0.4775,
+    "input_tokens":  2,
+    "output_tokens":  5710,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_ConditionToCP",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No Phase Gate Checklist or phases-completed marker. Data claims (row counts, distributions) appear credible but lack formal provenance documentation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Tier Legend)",
+                                       "problem":  "Tier legend lists only Tier 2 and Tier 4. Including Tier 1/3 as \u0027not applicable\u0027 would be more consistent with the golden reference shape."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeServerID",
+                                       "problem":  "Description correctly traces HedgeRuleActionTypeID lineage but the term \u0027action type identifier\u0027 alongside \u0027Hedge server\u0027 could confuse analysts. The column name is a legacy misnomer from the SP alias."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Dealing_CEPDailyAudit_ConditionToCP listed as related object but has no wiki — cross-reference consistency unverifiable."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "\u0027History from 2021-09-26 to present\u0027 — \u0027present\u0027 is imprecise. Use the concrete max date (2026-04-19) for durability."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. For polish: (1) Add Phase Gate Checklist or phases-completed footer marker. (2) Note HedgeServerID is aliased from HedgeRuleActionTypeID. (3) Replace \u0027to present\u0027 with concrete max date.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

@@ -406,12 +406,11 @@ def process_one(schema: str, obj: str, skip_current_judge: bool = False, bucket:
     }
 
 
-def load_manifest_buckets() -> Dict[Tuple[str, str], str]:
+def load_manifest_buckets(manifest_path: Path) -> Dict[Tuple[str, str], str]:
     out: Dict[Tuple[str, str], str] = {}
-    p = TARGET_ROOT / "manifest.csv"
-    if not p.exists():
+    if not manifest_path.exists():
         return out
-    for row in csv.DictReader(p.open("r", encoding="utf-8-sig")):
+    for row in csv.DictReader(manifest_path.open("r", encoding="utf-8-sig")):
         out[(row["Schema"], row["Object"])] = row.get("Bucket", "")
     return out
 
@@ -421,14 +420,19 @@ def main() -> int:
     ap.add_argument("--schema")
     ap.add_argument("--object", dest="obj")
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--manifest", default=str(TARGET_ROOT / "manifest.csv"),
+                    help="manifest CSV to drive --all (default: audits/regen-sample/manifest.csv)")
     ap.add_argument("--skip-current-judge", action="store_true",
                     help="Reuse existing current_judge/judge_verdict.json instead of re-running the judge.")
     args = ap.parse_args()
 
-    buckets = load_manifest_buckets()
+    manifest = Path(args.manifest)
+    if not manifest.is_absolute():
+        manifest = (REPO_ROOT / manifest).resolve()
+
+    buckets = load_manifest_buckets(manifest)
 
     if args.all:
-        manifest = TARGET_ROOT / "manifest.csv"
         if not manifest.exists():
             print(f"manifest missing: {manifest}")
             return 1

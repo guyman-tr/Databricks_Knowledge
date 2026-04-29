@@ -1,0 +1,66 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Dictionary_AdGroup",
+    "elapsed_seconds":  103,
+    "exit_code":  null,
+    "cost_usd":  0.6389,
+    "input_tokens":  2,
+    "output_tokens":  4157,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Dictionary_AdGroup",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Row count (31,322) appears only in blockquote header, not restated in the Section 1 body paragraphs."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer/Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says 12/14 phases but does not identify which 2 were skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ad_group_name",
+                                       "problem":  "Example values (\u0027EN_KW_ETF-LowIntent\u0027, \u0027AR_Stocks_Intent_Phrase\u0027) are specific but unverifiable without P2 data phase completion."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "The 10 upstream wikis in the bundle are actually downstream consumers (Geo_Pref, Ad_Pref, etc.), not sources. Not a writer error but could confuse future reviewers."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "target_cpa",
+                                       "problem":  "Correctly identified as always NULL (Tier 4). Review-needed sidecar appropriately flags for reviewer action."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "row_count_31322_in_header",
+                                                                                  "ad_group_status_enum_values",
+                                                                                  "ad_group_name_examples"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "unknown_2_of_14_skipped"
+                                                           ]
+                                    }
+                }
+}

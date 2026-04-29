@@ -1,0 +1,73 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Boundary_Cost",
+    "elapsed_seconds":  221,
+    "exit_code":  null,
+    "cost_usd":  1.057,
+    "input_tokens":  2,
+    "output_tokens":  12170,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Boundary_Cost",
+                    "weighted_score":  6.95,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "wiki_quote":  "Financial instrument identifier. FK to DWH_dbo.Dim_Instrument. Filtered to tradable, externally visible instruments in specific type categories (Commodities, Indices, Stocks, ETF, and USD-quoted Crypto). 5,499 distinct instruments observed.",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely rewritten. Lost: \u0027Primary key\u0027 identity, Trade.InstrumentAdd allocation origin, ID range (0 to ~21M), cross-table reference list (Dim_Currency, Dim_HistorySplitRatio)."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentType (#7), InstrumentTypeID (#27)",
+                                       "problem":  "Both are direct passthroughs from DWH_dbo.Dim_Instrument (which has a wiki in the bundle) but are tagged Tier 2 — SP_Dim_Instrument. Should be Tier 1 with descriptions quoted verbatim from the Dim_Instrument wiki."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsSettled (#29)",
+                                       "problem":  "Direct passthrough from Dim_Position.IsSettled. Dim_Position wiki is in the bundle and documents IsSettled as \u00271 = real asset, 0 = CFD asset.\u0027 Tagged Tier 5 — Expert Review instead of Tier 1 — Dim_Position."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentID (#5)",
+                                       "problem":  "Tagged Tier 1 correctly but description is completely paraphrased. Upstream says \u0027Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd...\u0027 but wiki rewrites to \u0027Financial instrument identifier. FK to DWH_dbo.Dim_Instrument...\u0027 — losing allocation origin, ID range, and cross-table references."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentName (#6)",
+                                       "problem":  "Renamed from Dim_Instrument.InstrumentDisplayName (SP: InstrumentDisplayName AS InstrumentName). Dim_Instrument wiki documents InstrumentDisplayName. Tagged Tier 2 instead of Tier 1."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00271 T1, 28 T2, 0 T3, 0 T4, 2 T5\u0027 but at least 5 columns should be Tier 1 (InstrumentID, InstrumentName, InstrumentType, InstrumentTypeID, IsSettled). Tier breakdown is incorrect."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag InstrumentType as Tier 1 — Dim_Instrument with verbatim quote from Dim_Instrument wiki. (2) Re-tag InstrumentTypeID as Tier 1 — Dim_Instrument with verbatim quote. (3) Re-tag IsSettled as Tier 1 — Dim_Position with verbatim quote \u00271 = real asset, 0 = CFD asset.\u0027 (4) Re-tag InstrumentName as Tier 1 — Dim_Instrument with verbatim quote from InstrumentDisplayName entry. (5) Replace InstrumentID description with verbatim upstream text from Dim_Instrument wiki, adding filtering context as supplementary. (6) Update footer tier breakdown to reflect corrected Tier 1 count (~5 T1, ~26 T2, 0 T3, 0 T4, 0 T5).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "5,499 distinct instruments (InstrumentID #5)",
+                                                                                  "42 distinct hedge servers (HedgeServerID #28)",
+                                                                                  "827 trading days (Section 1)",
+                                                                                  "~5.7M rows per weekday (Section 1)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 checkbox status unclear — footer says 11/14 but no Phase Gate Checklist section in wiki body"
+                                                           ]
+                                    }
+                }
+}

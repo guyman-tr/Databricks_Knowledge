@@ -603,8 +603,42 @@ def _build_argparser() -> argparse.ArgumentParser:
     p.add_argument("--llm-timeout", type=int, default=240, help="Per-object LLM call timeout in seconds.")
     p.add_argument("--objects", help="Comma-separated explicit object names (skips random sampling).")
     p.add_argument("--all", action="store_true", help="Audit every object in the schema (overrides --sample).")
+    p.add_argument(
+        "--must-fix-list",
+        help=(
+            "Path to a file with one '{Schema}/{ObjectName}' per line (e.g. "
+            "audits/patch15-must-fix.txt produced by the wiki batch loop's "
+            "Patch 1.5 guardrail). Only entries matching --schema are used; "
+            "they replace --sample/--all. Lines starting with '#' are comments."
+        ),
+    )
     p.add_argument("--repo-root", default=str(REPO_ROOT_DEFAULT), help="Repo root override.")
     return p
+
+
+def _read_must_fix_list(path: Path, schema: str) -> set[str]:
+    """Read a must-fix list file, returning object names matching `schema`.
+
+    File format: one entry per line, '{Schema}/{ObjectName}'. '#' starts a
+    comment. Blank lines ignored. Object names are returned without the
+    schema prefix so they match what `discover_objects` produces.
+    """
+    if not path.exists():
+        raise FileNotFoundError(f"must-fix list not found: {path}")
+    out: set[str] = set()
+    schema_lower = schema.lower()
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "/" not in line:
+            # Tolerate bare object names too -- assume they belong to --schema.
+            out.add(line)
+            continue
+        sch, obj = line.split("/", 1)
+        if sch.strip().lower() == schema_lower and obj.strip():
+            out.add(obj.strip())
+    return out
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -619,7 +653,36 @@ def main(argv: Optional[list[str]] = None) -> int:
     glossary_terms = load_glossary_terms(_glossary_path(repo_root))
 
     objects = discover_objects(schema_folder)
-    if args.objects:
+    if args.must_fix_list:
+        list_path = Path(args.must_fix_list)
+        if not list_path.is_absolute():
+            list_path = (repo_root / list_path).resolve()
+        try:
+            wanted = _read_must_fix_list(list_path, args.schema)
+        except FileNotFoundError as exc:
+            print(f"[error] {exc}", file=sys.stderr)
+            return 2
+        if not wanted:
+            print(
+                f"[error] must-fix list {list_path} has no entries for schema {args.schema}",
+                file=sys.stderr,
+            )
+            return 2
+        before = len(objects)
+        objects = [p for p in objects if p.stem in wanted]
+        missing = wanted - {p.stem for p in objects}
+        print(
+            f"[info] must-fix list: matched {len(objects)}/{before} discovered objects "
+            f"(list size {len(wanted)}; {len(missing)} unmatched)"
+        )
+        if missing:
+            preview = ", ".join(sorted(missing)[:5])
+            suffix = "..." if len(missing) > 5 else ""
+            print(f"[warn] not found in {args.schema}: {preview}{suffix}", file=sys.stderr)
+        if not objects:
+            print(f"[error] no matching objects in {args.schema}", file=sys.stderr)
+            return 2
+    elif args.objects:
         explicit = {n.strip() for n in args.objects.split(",") if n.strip()}
         objects = [p for p in objects if p.stem in explicit]
         if not objects:

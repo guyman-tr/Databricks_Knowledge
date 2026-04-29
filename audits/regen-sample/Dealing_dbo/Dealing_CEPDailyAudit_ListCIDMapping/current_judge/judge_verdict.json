@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_ListCIDMapping",
+    "elapsed_seconds":  103,
+    "exit_code":  null,
+    "cost_usd":  0.4349,
+    "input_tokens":  2,
+    "output_tokens":  4311,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_ListCIDMapping",
+                    "weighted_score":  7.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate (Element #8)",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but GETDATE() is clearly the 8th positional value in the SP INSERT INTO Dealing_dbo.Dealing_CEPDailyAudit_ListCIDMapping statement. Should be (Tier 2 — SP_CEPDailyAudit). The description body itself correctly identifies the source as GETDATE()."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 — Activity note",
+                                       "problem":  "Uses hedging language \u0027About 532 rows\u0027 for what should be a precise sampled count."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / missing section",
+                                       "problem":  "No Phase Gate Checklist section documenting which verification phases (P1-P3) were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName (Element #6)",
+                                       "problem":  "Element description does not mention COALESCE(AppLoginName, PreviousAppLoginName) logic documented in Section 2 — minor inconsistency in description depth."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "SP uses PreviousAppLoginName AS AppLoginName for the INSERT column; wiki correctly documents the COALESCE in Section 2 but not in the element row. Cosmetic."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit) and remove [UNVERIFIED] — GETDATE() is explicitly in the SP INSERT. (2) Add Phase Gate Checklist or footer annotation for P1-P3 completion status. (3) Optionally add COALESCE note to LoginName element description for consistency with Section 2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

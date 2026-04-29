@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL_EE_Daily",
+    "elapsed_seconds":  107,
+    "exit_code":  null,
+    "cost_usd":  0.4897,
+    "input_tokens":  2,
+    "output_tokens":  5221,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL_EE_Daily",
+                    "weighted_score":  7.40,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged as `[UNVERIFIED] (Tier 4 — inferred)` but SP_Apex_PnL explicitly sets `GETDATE() AS UpdateDate` in the EE_Daily INSERT. Should be `(Tier 2 — SP_Apex_PnL)`."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No ETL pipeline ASCII diagram (Section 5.2). The daily-specific temp table chain (#Equity_Daily, #Transfers_Daily, #Dividends_PerAcc_Daily from LP_APEX_EXT981_3EU and LP_APEX_EXT869_3EU) is not visualized."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No Phase Gate Checklist present. Data evidence claims (row count ~2,491, date range, last ETL timestamp) cannot be verified against explicit phase completion markers."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer is missing a phases-completed list (e.g., \u0027Phases: P1 ✓ P2 ✓ P3 ✓\u0027). Only tier counts and sub-scores are present."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Lineage sidecar",
+                                       "problem":  "Lineage file is 10 lines and defers entirely to the EE sibling. The daily-specific temp table chain deserves its own column-level mapping table."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as `(Tier 2 — SP_Apex_PnL)` citing GETDATE() at insert — remove [UNVERIFIED]. (2) Add Section 5.2 ETL pipeline ASCII diagram showing LP_APEX_EXT981_3EU → #EquityStart/End_ApexFiles_Daily → #Equity_Daily and LP_APEX_EXT869_3EU → #Transfers_Daily + #Dividends_PerAcc_Daily → FULL OUTER JOIN → final INSERT. (3) Add Phase Gate Checklist section with explicit P2/P3 markers. (4) Add phases-completed to footer. (5) Expand lineage sidecar with column-level source mapping specific to the daily path.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

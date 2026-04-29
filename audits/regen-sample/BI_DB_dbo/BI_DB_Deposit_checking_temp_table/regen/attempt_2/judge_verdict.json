@@ -1,0 +1,66 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Deposit_checking_temp_table",
+    "elapsed_seconds":  138,
+    "exit_code":  null,
+    "cost_usd":  0.3099,
+    "input_tokens":  2,
+    "output_tokens":  8716,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Deposit_checking_temp_table",
+                    "weighted_score":  7.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged Tier 2 (\u0027Derived from SP code\u0027) but the wiki\u0027s own tier legend explicitly defines Tier 3 as \u0027ETL-assigned constant (GETDATE, NULL placeholder)\u0027 with GETDATE named as the canonical example. UpdateDate = GETDATE() at INSERT time is textbook Tier 3, not Tier 2."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer tier counts",
+                                       "problem":  "Footer reports \u00270 T1, 5 T2, 0 T3, 0 T4\u0027 but should be \u00270 T1, 4 T2, 1 T3, 0 T4\u0027 once UpdateDate is corrected to Tier 3."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Deposits_CB",
+                                       "problem":  "Description omits the ISNULL wrappers present in the SP: wiki says \u0027SUM(Deposits) - SUM(InternalTransferDeposits)\u0027 but SP code uses \u0027SUM(ISNULL(Deposits,0)) - SUM(ISNULL(InternalTransferDeposits,0))\u0027. The lineage file has the correct formula; the wiki description simplified it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6",
+                                       "problem":  "Section 6 contains only \u00276.1 Source Upstream\u0027 with no 6.2 Referenced By subsection. The Referenced By content is in Section 5.4 but is not mirrored in Section 6 per the standard shape."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Footer quality score",
+                                       "problem":  "Self-reported quality score is 8.2/10; adversarial judge scores 7.80. Optimism gap of 0.4 — still a PASS but writer\u0027s self-assessment is slightly inflated."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as \u0027(Tier 3 — ETL-assigned constant)\u0027 — GETDATE is the canonical Tier 3 example in the tier legend; update footer counts from \u00275 T2, 0 T3\u0027 to \u00274 T2, 1 T3\u0027. (2) Restore ISNULL wrappers in Deposits_CB description: \u0027SUM(ISNULL(Deposits,0)) - SUM(ISNULL(InternalTransferDeposits,0))\u0027. (3) Optionally add Section 6.2 Referenced By mirroring Section 5.4 content.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P12",
+                                                               "P13",
+                                                               "P14"
+                                                           ]
+                                    }
+                }
+}

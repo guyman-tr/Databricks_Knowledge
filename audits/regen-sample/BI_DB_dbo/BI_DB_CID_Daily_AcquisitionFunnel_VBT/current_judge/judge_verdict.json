@@ -1,0 +1,145 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CID_Daily_AcquisitionFunnel_VBT",
+    "elapsed_seconds":  289,
+    "exit_code":  null,
+    "cost_usd":  0.8151,
+    "input_tokens":  2,
+    "output_tokens":  15939,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CID_Daily_AcquisitionFunnel_VBT",
+                    "weighted_score":  6.30,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values. (Tier 2 - SP_Fact_SnapshotCustomer)",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key for the customer. Sourced from Fact_SnapshotCustomer.RealCID. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT)",
+                                                  "match":  "NO",
+                                                  "loss":  "Lost \u0027funded\u0027, \u0027Hash distribution key\u0027, \u0027primary customer identifier in DWH ecosystem\u0027, FK reference, cardinality. Should be Tier 1 — Fact_SnapshotCustomer."
+                                              },
+                                              {
+                                                  "column":  "Desk",
+                                                  "upstream_quote":  "Sales desk assignment. Resolved from Dim_Country.Desk via CountryID. (Tier 2 — SP_CIDFirstDates, Dim_Country)",
+                                                  "wiki_quote":  "Sales desk assignment for the customer. Resolved from Dim_Country.Desk via CountryID in BI_DB_CIDFirstDates. Reflects acquisition-time desk, not necessarily current. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via BI_DB_CIDFirstDates)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core preserved. Added contextual notes. Should be Tier 1 — BI_DB_CIDFirstDates."
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Geographic region name. Resolved from Dim_Country.Region via CountryID. Values: North Europe, French, Eastern Europe, Other EU, LATAM, etc. (Tier 2 — SP_CIDFirstDates, Dim_Country)",
+                                                  "wiki_quote":  "Geographic region name. Resolved from Dim_Country.Region via CountryID in BI_DB_CIDFirstDates. Values: North Europe, French, Eastern Europe, Other EU, LATAM, USA, UK, German, Italian, Asia, ROW, etc. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via BI_DB_CIDFirstDates)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core preserved; expanded value list. Should be Tier 1 — BI_DB_CIDFirstDates."
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Country of residence name. Resolved from Dim_Country.Name via CountryID. (Tier 2 — SP_CIDFirstDates, Dim_Country)",
+                                                  "wiki_quote":  "Country of residence name. Resolved from Dim_Country.Name via CountryID in BI_DB_CIDFirstDates. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via BI_DB_CIDFirstDates)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core preserved. Should be Tier 1 — BI_DB_CIDFirstDates."
+                                              },
+                                              {
+                                                  "column":  "Channel",
+                                                  "upstream_quote":  "Marketing acquisition channel. Resolved from Dim_Channel.Channel via Dim_Affiliate.SubChannelID. ISNULL(,\u0027Direct\u0027). Values: Direct, Affiliate, SEM, etc. (Tier 2 — SP_CIDFirstDates, Dim_Channel)",
+                                                  "wiki_quote":  "Marketing acquisition channel. Resolved from Dim_Channel.Channel via Dim_Affiliate.SubChannelID in BI_DB_CIDFirstDates. Values: Direct, Affiliate, SEM, SEO, Media Performance, Friend Referral, etc. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via BI_DB_CIDFirstDates)",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped ISNULL(,\u0027Direct\u0027) default behavior — analysts won\u0027t know NULL maps to \u0027Direct\u0027. Should be Tier 1 — BI_DB_CIDFirstDates."
+                                              },
+                                              {
+                                                  "column":  "SubChannel",
+                                                  "upstream_quote":  "Marketing sub-channel. Resolved from Dim_Channel.SubChannel via Dim_Affiliate.SubChannelID. ISNULL(,\u0027Direct\u0027). Values: Direct, Google Brand, Affiliate, etc. (Tier 2 — SP_CIDFirstDates, Dim_Channel)",
+                                                  "wiki_quote":  "Marketing sub-channel detail. Resolved from Dim_Channel.SubChannel in BI_DB_CIDFirstDates. Values: Direct, Direct Mobile, Google Brand, Affiliate, YT, etc. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via BI_DB_CIDFirstDates)",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped ISNULL(,\u0027Direct\u0027) default and Dim_Affiliate source chain. Should be Tier 1 — BI_DB_CIDFirstDates."
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+                                                  "wiki_quote":  "Current regulatory entity governing this customer\u0027s account. Resolved from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID (DWHRegulationID). (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via Dim_Regulation)",
+                                                  "match":  "NO",
+                                                  "loss":  "Complete rewrite — lost \u0027short code\u0027 framing, V_Dim_Customer context, Dictionary.Regulation origin. Should be Tier 1 — Dictionary.Regulation (dim\u0027s root origin)."
+                                              },
+                                              {
+                                                  "column":  "DesignatedRegulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+                                                  "wiki_quote":  "Designated regulatory entity (can differ from Regulation for cross-border accounts). Resolved from Dim_Regulation.Name via Fact_SnapshotCustomer.DesignatedRegulationID. Same value set as Regulation. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via Dim_Regulation)",
+                                                  "match":  "NO",
+                                                  "loss":  "Complete rewrite. Should be Tier 1 — Dictionary.Regulation."
+                                              },
+                                              {
+                                                  "column":  "FTDA",
+                                                  "upstream_quote":  "Amount of first successful deposit in USD. Read directly from Dim_Customer.FirstDepositAmount (alias dc), which is sourced from CustomerFinanceDB.Customer.FirstTimeDeposits (FTDAmountInUsd). Default 0. (Tier 2 — SP_Dim_Customer ← CustomerFinanceDB.FirstTimeDeposits)",
+                                                  "wiki_quote":  "Customer\u0027s first deposit amount in USD. Passthrough of BI_DB_CIDFirstDates.FirstDepositAmount. Populated for all rows (including FTD=0 rows) showing the historical FTD amount. 0.0 if no deposit. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via BI_DB_CIDFirstDates)",
+                                                  "match":  "NO",
+                                                  "loss":  "Lost entire source chain (Dim_Customer → CustomerFinanceDB.Customer.FirstTimeDeposits), \u0027FTDAmountInUsd\u0027 source column name, \u0027first successful deposit\u0027 qualifier. Should be Tier 1 — BI_DB_CIDFirstDates."
+                                              },
+                                              {
+                                                  "column":  "PlayerStatusID",
+                                                  "upstream_quote":  "Customer lifecycle status (e.g., Active, Blocked, Pending). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusID (CC). FK to Dim_PlayerStatus. (Tier 2 - SP_Fact_SnapshotCustomer)",
+                                                  "wiki_quote":  "Customer account status ID at time of ETL run. From Fact_SnapshotCustomer. Excludes 2=Blocked/4=Fraudster/13=AML Limited. Present values: 1=Normal (98.7%), 9=Trade\u0026MIMO Blocked, 10=Deposit Blocked, 15=Block Deposit \u0026 Trading, 5=Warning. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via Fact_SnapshotCustomer)",
+                                                  "match":  "NO",
+                                                  "loss":  "Lost \u0027lifecycle status\u0027 framing, DEFAULT 0, production source (Ext_FSC_Real_Customer_Customer), FK reference. Should be Tier 1 — Fact_SnapshotCustomer."
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. (Tier 1 - upstream wiki, Dictionary.PlayerStatus)",
+                                                  "wiki_quote":  "Customer account status name. Resolved from Dim_PlayerStatus.Name via PlayerStatusID. Values mirror PlayerStatusID. (Tier 2 — SP_CID_Daily_AcquisitionFunnel_VBT via Dim_PlayerStatus)",
+                                                  "match":  "NO",
+                                                  "loss":  "Lost \u0027restriction state\u0027 framing, uniqueness guarantee, BackOffice/compliance/monitoring context, trailing-space warning. Should be Tier 1 — Dictionary.PlayerStatus (dim\u0027s root origin)."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All 26 columns",
+                                       "problem":  "Systematic Tier 2 mislabeling: ALL columns tagged Tier 2 with zero Tier 1. The bundle contained wikis for Fact_SnapshotCustomer, BI_DB_CIDFirstDates, Dim_PlayerStatus, Dim_Regulation, and Dim_Range. At least 14 passthrough/dim-lookup columns should be Tier 1 with verbatim upstream descriptions."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Regulation, DesignatedRegulation",
+                                       "problem":  "Tagged Tier 2 via Dim_Regulation but Dim_Regulation.Name is documented as Tier 1 from Dictionary.Regulation. Writer should use the dim\u0027s root origin (Tier 1 — Dictionary.Regulation) per the dim-lookup passthrough rule, not relay through the SP."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PlayerStatus",
+                                       "problem":  "Tagged Tier 2 via Dim_PlayerStatus but Dim_PlayerStatus.Name is Tier 1 from Dictionary.PlayerStatus. Lost \u0027restriction state\u0027 framing, trailing-space warning, BackOffice/compliance context. Should be Tier 1 — Dictionary.PlayerStatus with verbatim description."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Channel, SubChannel",
+                                       "problem":  "Dropped ISNULL(,\u0027Direct\u0027) default behavior documented in CIDFirstDates wiki. Analysts won\u0027t know that NULL channels default to \u0027Direct\u0027 in the upstream, which affects filtering and aggregation logic."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "FTDA",
+                                       "problem":  "Lost entire source chain from CIDFirstDates wiki: \u0027Read directly from Dim_Customer.FirstDepositAmount... sourced from CustomerFinanceDB.Customer.FirstTimeDeposits (FTDAmountInUsd)\u0027. Wiki only says \u0027Passthrough of BI_DB_CIDFirstDates.FirstDepositAmount\u0027 — one hop instead of the full lineage."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag all passthrough columns from BI_DB_CIDFirstDates (Desk, Region, Country, Channel, SubChannel, FTDA, Reg_Date, V2_Date, V3_Date, FTD_Date, FirstPosOpen_Date) as Tier 1 using VERBATIM descriptions from the CIDFirstDates wiki. (2) Re-tag CID as Tier 1 with verbatim description from Fact_SnapshotCustomer.RealCID. (3) Re-tag Regulation and DesignatedRegulation as Tier 1 — Dictionary.Regulation using the dim\u0027s root origin per dim-lookup passthrough rule. (4) Re-tag PlayerStatusID as Tier 1 — Fact_SnapshotCustomer and PlayerStatus as Tier 1 — Dictionary.PlayerStatus, preserving trailing-space warning. (5) Restore ISNULL(,\u0027Direct\u0027) default in Channel/SubChannel descriptions. (6) Add Tier 1 row to Section 4 Confidence Tier Legend. (7) Update footer tier counts to ~14 T1, ~12 T2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Registration 2026 YTD 82%/18%",
+                                                                                  "V2 2026 YTD 55%/45%",
+                                                                                  "FTD 2026 YTD 90%/10%",
+                                                                                  "IsVBT 2026 YTD 51%/49%",
+                                                                                  "PlayerStatusID 1=98.7%",
+                                                                                  "Regulation BVI 81%, CySEC 7.4%"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

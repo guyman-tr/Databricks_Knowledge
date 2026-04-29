@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_CPToRule",
+    "elapsed_seconds":  113,
+    "exit_code":  null,
+    "cost_usd":  0.4569,
+    "input_tokens":  2,
+    "output_tokens":  4788,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_CPToRule",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 — Tier Legend",
+                                       "problem":  "Only Tier 2 and Tier 4 listed in the confidence tier legend. The standard four-tier legend (T1–T4) should be present even when tiers are unused, to orient readers."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / missing section",
+                                       "problem":  "No explicit Phase Gate Checklist section. Data claims appear backed by live queries (specific counts, percentages) but the formal P1/P2/P3 checkboxes are absent."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName (Section 3.4 Gotchas)",
+                                       "problem":  "Review-needed sidecar documents null-byte padding in LoginName values (e.g. \u0027jasonha\\0\\0\\0...\u0027) requiring RTRIM/strip, but this is omitted from the wiki Gotchas section."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2 header",
+                                       "problem":  "Header says \u0027Referenced By (other objects point to this)\u0027 but lists sibling/counterpart tables that do not actually reference this table. Should be \u0027Related Objects\u0027 or \u0027Sibling Tables\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RuleName (#4), HedgeServerID (#5)",
+                                       "problem":  "Element descriptions note the dimension join but do not explicitly warn that RuleName/HedgeServerID may refer to a different rule than RuleID when a CP is mapped to multiple rules. The JOIN is on CompoundPropertyID, not RuleID."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Expand Section 4 tier legend to include all four tiers. (2) Add Phase Gate Checklist indicating P1/P2/P3 completion status. (3) Add LoginName null-byte padding warning to Section 3.4 Gotchas. (4) Rename Section 6.2 to \u0027Related Objects\u0027 — these are siblings, not dependents. (5) Add explicit mismatch warning to RuleName/HedgeServerID element descriptions regarding the CompoundPropertyID-based dimension join.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

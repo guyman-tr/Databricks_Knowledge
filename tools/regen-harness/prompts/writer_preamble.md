@@ -20,6 +20,59 @@ No exceptions. No "code-only documentation" fallback. No "I'll skip Phase 2 beca
 
 ---
 
+## ⛔ REGEN-HARNESS BREVITY OVERRIDE
+
+This is a regen-harness run; we are optimising for token efficiency. The judge's
+HARD assertions (8 sections present; ETL diagram in 5.2; Element table shape; row
+count = DDL column count; Tier suffix on every Element row) all REMAIN MANDATORY.
+Soft prose around them is CAPPED — defer to these caps even when the
+GOLDEN-REFERENCE example (Dim_Mirror) shows verbose prose.
+
+| Section | Cap |
+|---|---|
+| 1. Business Meaning | <=120 words. One paragraph. Must include row count, date range, ETL SP, source. |
+| 2. Business Logic | <=2 subsections; each <=80 words What/Columns/Rules. Skip section entirely if no non-trivial logic. |
+| 3.1 Distribution & Index | <=2 sentences. |
+| 3.2 Common Query Patterns | Table only, max 3 rows, no commentary. |
+| 3.3 Common JOINs | Table only, max 3 rows, no commentary. |
+| 3.4 Gotchas | <=4 bullets, one line each. |
+| 4. Elements | Each row Description: ONE sentence ending `(Tier N — source)`. No multi-sentence per-column descriptions. Inline dictionary values when <=15 distinct (per GOLDEN-REFERENCE Section C). |
+| 5.2 ETL Pipeline | Diagram + 1 sentence below. No additional prose. |
+| 6. Relationships | Tables only, no prose around them. |
+| 7. Sample Queries | EXACTLY 2 queries. One sentence header each, no explanation paragraph. |
+| 8. Atlassian Knowledge | Bullets only. |
+
+These caps cut output from ~22K tokens to ~10K tokens per object. Keep the
+information density HIGH, drop the explanation/narrative prose. The wiki is for
+analysts and AI agents who already know the domain — they do not need essay-style
+context.
+
+---
+
+## ⛔ PHASE 3 DISTRIBUTION CAP
+
+Phase 3 (distribution analysis) is capped at **at most 3 categorical columns**
+per object. Pick those whose names match the regex
+`Status|Type|Code|Country|Region|Currency|Category|Reg|Score|Group|Kind|Class`.
+Skip free-text columns entirely (Email, Description, Comment, Note, Address,
+Name, Url, Subject, Body, Reason).
+
+If fewer than 3 columns match the regex, run distribution queries on however
+many DO match — running zero distribution queries is OK if the table has no
+obviously-categorical columns.
+
+---
+
+## ⛔ OUTPUT DIRECTORY GUARANTEE
+
+The directory listed under **Absolute output directory** in the Object Header
+ALREADY EXISTS, was created by the harness, and is empty (apart from the
+writer_prompt.md you are reading). DO NOT run `Bash ls` to check it. DO NOT
+run `Bash mkdir`. Just call `Write` directly with the absolute paths from the
+Object Header for the three required files.
+
+---
+
 ## ⛔ PRE-RESOLVED UPSTREAM CONTEXT — your Tier 1 inheritance source is below, USE IT
 
 The block titled **"## PRE-RESOLVED UPSTREAM BUNDLE"** in this prompt was

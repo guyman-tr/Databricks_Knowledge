@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Search_Conv",
+    "elapsed_seconds":  108,
+    "exit_code":  null,
+    "cost_usd":  0.6748,
+    "input_tokens":  2,
+    "output_tokens":  5262,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Search_Conv",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 3.1",
+                                       "problem":  "Claims Search_Perf is \u0027also HASH on customer_id\u0027 enabling co-located JOINs, but Search_Perf wiki documents ROUND_ROBIN distribution. JOIN advice based on incorrect distribution assumption."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u0027Elements: 25/25\u0027 and \u002722 T2\u0027 but wiki lists 26 elements and there are 23 Tier 2 columns (23+2+1=26). Arithmetic error in footer tier/element counts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "JOIN to Search_Perf omits ad_group_id and account_currency_code from the join condition. SP GROUP BY for both tables includes these as grain columns — omitting them would produce incorrect fan-out."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.4",
+                                       "problem":  "Conflates the two DELETE statements: describes \u0027DELETE months older than 1 year\u0027 and \u0027DELETE + INSERT for 4-month rolling window\u0027 but the SP uses @FirstDayOfMonthYearAgo for the floor and @FromMonth/@FirstDayOfNextMonth for the overlap window. The description is approximately right but imprecise."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "JOIN to Dictionary_Campaign does not note that Search_Conv is HASH(customer_id) while dictionary tables likely use different distributions, causing broadcast data movement."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Correct Section 3.1 — Search_Perf is ROUND_ROBIN, not HASH. Remove co-location claim. (2) Fix footer element count from 25/25 to 26/26 and Tier 2 count from 22 to 23. (3) Add ad_group_id and account_currency_code to the Search_Perf JOIN condition in Section 3.3.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phases 13-14 appear skipped per footer (12/14)"
+                                                           ]
+                                    }
+                }
+}

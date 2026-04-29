@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Keywords_Conv",
+    "elapsed_seconds":  117,
+    "exit_code":  null,
+    "cost_usd":  0.6654,
+    "input_tokens":  2,
+    "output_tokens":  4494,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Keywords_Conv",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u0027Phases: 12/14\u0027 but does not identify which 2 phases were skipped. Cannot confirm whether data validation phases (P2/P3) were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.6",
+                                       "problem":  "Rolling window description is accurate but omits SP variable names (@FirstDayOfMonthYearAgo, @FromDate) that would help developers trace back to source code."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "OpenTrade_iOS2",
+                                       "problem":  "Naming inconsistency correctly flagged in Section 2.4, element #37, and review-needed sidecar. Maps to \u0027eToro: Investing made social (iOS) Open Trade\u0027 not the iOS2 app. Well-documented."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "id",
+                                       "problem":  "Correctly identified as Tier 4, always NULL, SP has \u0027--,ad_id\u0027 commented out. Properly flagged in review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4 (NULL vs 0)",
+                                       "problem":  "ELSE 0 vs no-ELSE inconsistency between 1st-gen and 2nd-gen app columns is thoroughly documented across multiple sections. No action needed."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Footer indicates 12/14 phases but does not identify which 2 were skipped"
+                                                           ]
+                                    }
+                }
+}

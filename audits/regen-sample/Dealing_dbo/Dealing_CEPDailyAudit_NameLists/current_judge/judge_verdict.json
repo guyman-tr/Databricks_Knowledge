@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_NameLists",
+    "elapsed_seconds":  113,
+    "exit_code":  null,
+    "cost_usd":  0.4574,
+    "input_tokens":  2,
+    "output_tokens":  5199,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_NameLists",
+                    "weighted_score":  7.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but GETDATE() is explicitly visible in the SP INSERT block for Dealing_CEPDailyAudit_NameLists. Should be (Tier 2 — SP_CEPDailyAudit)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Overall",
+                                       "problem":  "No Phase Gate Checklist section — data claims (row count 275, date range 2023-12-19 to 2026-01-26) lack provenance confirmation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2 — Event typing",
+                                       "problem":  "Wiki says SysEndDate=@Date with latest-row semantics → Name List Deleted, but SP also produces \u0027Change In CIDs\u0027 on the SysEndDate branch when RN_desc \u003e 1. Second path omitted."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "NameListID",
+                                       "problem":  "DDL column is NameListID but SP source column is NamedListID (with \u0027d\u0027). Column rename not noted in lineage."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName",
+                                       "problem":  "SP INSERT uses PreviousAppLoginName AS AppLoginName — the alias is actually the COALESCE result, not the raw field. Aliasing subtlety not documented."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit) — GETDATE() is explicit in SP. (2) Add Phase Gate Checklist section. (3) Clarify SysEndDate branch produces both \u0027Name List Deleted\u0027 (RN_desc=1) and \u0027Change In CIDs\u0027 (RN_desc\u003e1). (4) Note NamedListID → NameListID rename in lineage.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

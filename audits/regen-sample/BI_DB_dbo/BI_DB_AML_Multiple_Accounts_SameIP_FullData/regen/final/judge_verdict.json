@@ -1,0 +1,60 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AML_Multiple_Accounts_SameIP_FullData",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.9328,
+    "input_tokens":  2,
+    "output_tokens":  4591,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AML_Multiple_Accounts_SameIP_FullData",
+                    "weighted_score":  9.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer.RealCID. Only includes customers where IsValidCustomer=1, IsDepositor=1, and VerificationLevelID=3 whose registration IP is shared by at least one other qualifying customer.",
+                                                  "match":  "YES",
+                                                  "loss":  "None — upstream text preserved verbatim, additional filter context appended"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Data staleness (UpdateDate = 2025-03-13, over a year stale) is noted in Gotchas and review-needed but could be more prominently flagged in Section 1 as the table may be abandoned."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "JOIN advisory for BI_DB_AML_Multiple_Accounts_SameIP says \u0027ON HashIP = IP\u0027 but this join cannot work — one is CHECKSUM int-as-string, the other is raw IP string. The note acknowledges it but should say explicitly this is NOT a viable join."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4",
+                                       "problem":  "No formal Phase Gate Checklist table with [x] checkboxes. Phases listed in footer but structured checklist format missing."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Minor improvements: (1) Add formal Phase Gate Checklist. (2) Strengthen Section 3.3 SameIP join warning. (3) Add prominent stale-data banner.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

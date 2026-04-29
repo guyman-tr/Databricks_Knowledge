@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_Rules",
+    "elapsed_seconds":  112,
+    "exit_code":  null,
+    "cost_usd":  0.4586,
+    "input_tokens":  2,
+    "output_tokens":  5217,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_Rules",
+                    "weighted_score":  7.30,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but SP INSERT explicitly passes GETDATE() as column 11. Writer describes the source correctly in the description text but contradicts with the tier tag. Should be (Tier 2 — SP_CEPDailyAudit)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 / Footer",
+                                       "problem":  "No Phase Gate Checklist present. Cannot verify whether P2 (live sample queries) or P3 (distribution/NULL analysis) were executed. Data claims (row count ~1,003, date range, TypeOfChange enum values) are unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "Missing ### 5.2 ETL Pipeline subsection header — diagram content is correct but structure deviates from golden reference shape."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer has tier counts and quality score but no phases-completed checklist (e.g., P1/P2/P3 markers)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2",
+                                       "problem":  "Mentions IsActive in business logic context without clarifying it is a source column used for change detection, not a column in this table. Could mislead analysts."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit), removing [UNVERIFIED] — SP INSERT clearly shows GETDATE(). (2) Add Phase Gate Checklist section with P1/P2/P3 checkboxes. (3) Add ### 5.2 ETL Pipeline subsection label. (4) Add phases-completed markers to footer. (5) Clarify in Section 2 that IsActive is a source column for change detection, not present in this table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

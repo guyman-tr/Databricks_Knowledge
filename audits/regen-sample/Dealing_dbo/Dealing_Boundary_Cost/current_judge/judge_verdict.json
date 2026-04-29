@@ -1,0 +1,99 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Boundary_Cost",
+    "elapsed_seconds":  283,
+    "exit_code":  null,
+    "cost_usd":  1.0763,
+    "input_tokens":  2,
+    "output_tokens":  14417,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Boundary_Cost",
+                    "weighted_score":  4.25,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  4,
+                                             "business_meaning":  8,
+                                             "data_evidence":  4,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "wiki_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Referenced by virtually every trading fact table. FK to DWH_dbo.Dim_Instrument.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped sentinel range info (ID=0 placeholder, ~21M allocated), dropped Dim_Currency/Dim_HistorySplitRatio references, added non-upstream FK note"
+                                              },
+                                              {
+                                                  "column":  "InstrumentType",
+                                                  "upstream_quote":  "Text label for InstrumentTypeID -- DWH-computed via CASE: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else=Other. Use InstrumentTypeID for filtering; InstrumentType for display.",
+                                                  "wiki_quote":  "Text label for the instrument category: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies. DWH-computed via CASE on InstrumentTypeID. Use InstrumentTypeID for filtering; InstrumentType for display.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027else=Other\u0027 catch-all; rephrased \u0027for InstrumentTypeID\u0027 to \u0027for the instrument category\u0027; reordered sentences"
+                                              },
+                                              {
+                                                  "column":  "InstrumentTypeID",
+                                                  "upstream_quote":  "Instrument type category: 1=Currencies (forex), 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies. Note TypeIDs 3, 7, 8, 9 are unused gaps. Distribution: Stocks 82%, ETF 8%, Crypto 4%, Commodities 3%, Indices 2%, Currencies 1%.",
+                                                  "wiki_quote":  "Instrument type category: 1=Currencies (forex), 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies. Note TypeIDs 3, 7, 8, 9 are unused gaps. Used for boundary default logic (Stocks/ETFs get defaults when no boundary configured).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped distribution percentages (Stocks 82%, ETF 8%, etc.); added non-upstream boundary context"
+                                              },
+                                              {
+                                                  "column":  "InstrumentName (MISSED INHERITANCE)",
+                                                  "upstream_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries.",
+                                                  "wiki_quote":  "User-facing instrument display name from Dim_Instrument.InstrumentDisplayName. More descriptive than the internal Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries.",
+                                                  "match":  "NO",
+                                                  "loss":  "Missed inheritance: rename of Dim_Instrument.InstrumentDisplayName tagged Tier 2 instead of Tier 1. Paraphrased source reference (\u0027Trade.InstrumentMetaData\u0027 → \u0027Dim_Instrument.InstrumentDisplayName\u0027)."
+                                              },
+                                              {
+                                                  "column":  "IsSettled (MISSED INHERITANCE)",
+                                                  "upstream_quote":  "1 = real asset, 0 = CFD asset.",
+                                                  "wiki_quote":  "1 = real asset, 0 = CFD asset.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Missed inheritance: passthrough from Dim_Position.IsSettled tagged Tier 5 instead of Tier 1. Description is verbatim but tier classification is wrong."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Column count listed as 33 but DDL has 31 columns. Elements table correctly lists 31."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentName (#6)",
+                                       "problem":  "Tagged Tier 2 (SP_Boundary_Cost, via Dim_Instrument) but this is a rename of Dim_Instrument.InstrumentDisplayName with upstream wiki available. Should be Tier 1 — DWH_dbo.Dim_Instrument with verbatim upstream text."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsSettled (#29)",
+                                       "problem":  "Tagged Tier 5 (Expert Review) but this is a passthrough from Dim_Position.IsSettled with upstream wiki available. Should be Tier 1 — DWH_dbo.Dim_Position. Writer copied the upstream\u0027s own tier classification instead of applying inheritance rules."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "InstrumentID (#5), InstrumentType (#7), InstrumentTypeID (#27)",
+                                       "problem":  "All 3 declared Tier 1 columns have paraphrased descriptions instead of verbatim quotes from DWH_dbo.Dim_Instrument upstream wiki. InstrumentID dropped sentinel range info, InstrumentType dropped \u0027else=Other\u0027, InstrumentTypeID dropped distribution percentages."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Sections 5/7/8, Footer",
+                                       "problem":  "Missing Section 8 (Sample Queries), no ETL pipeline ASCII diagram in wiki body, Section 7 is Quality Score instead of SQL samples, footer lacks tier breakdown counts and phases-completed list."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix property table column count from 33 to 31. (2) Re-tag InstrumentName as Tier 1 — DWH_dbo.Dim_Instrument and use verbatim text from Dim_Instrument wiki InstrumentDisplayName entry. (3) Re-tag IsSettled as Tier 1 — DWH_dbo.Dim_Position and use verbatim text from Dim_Position wiki. (4) Replace all Tier 1 descriptions with character-for-character copies from upstream wikis (InstrumentID from Dim_Instrument #1, InstrumentType from #3, InstrumentTypeID from #2). (5) Add Section 8 with SQL samples, add ETL pipeline diagram to Section 5, add tier breakdown to footer. (6) Retry row count query for Section 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 (row count query timed out)",
+                                                               "P3 (no Phase Gate Checklist present)"
+                                                           ]
+                                    }
+                }
+}

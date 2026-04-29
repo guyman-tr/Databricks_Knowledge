@@ -1,0 +1,127 @@
+{
+  "schema": "DWH_dbo",
+  "object": "Fact_CurrencyPriceWithSplit",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Tables\\DWH_dbo.Fact_CurrencyPriceWithSplit.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Fact_CurrencyPriceWithSplit\\current\\Fact_CurrencyPriceWithSplit.lineage.md",
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse.sql",
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER.sql"
+  ],
+  "candidates_found": 9,
+  "resolved_synapse": 0,
+  "resolved_production": 0,
+  "resolved_sp": 2,
+  "unresolved": 7,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Fact_CurrencyPriceWithSplit\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 16018,
+  "resolutions": [
+    {
+      "raw_name": "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "db": null,
+      "schema": "dwh",
+      "object": "gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse.sql",
+      "bytes_read": 6439,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER.sql",
+      "bytes_read": 5231,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView",
+      "db": null,
+      "schema": "DWH_staging",
+      "object": "PriceLog_Candles_CurrencyPriceMaxDateWithSplitView",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_staging.etoro_History_SplitRatio",
+      "db": null,
+      "schema": "DWH_staging",
+      "object": "etoro_History_SplitRatio",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_dbo.Ext_FCPWS_History_SplitRatio",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Ext_FCPWS_History_SplitRatio",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory",
+      "db": null,
+      "schema": "DWH_staging",
+      "object": "PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_staging.etoro_Trade_GetInstrument",
+      "db": null,
+      "schema": "DWH_staging",
+      "object": "etoro_Trade_GetInstrument",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_dbo.Ext_FCPWS_Instrument",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Ext_FCPWS_Instrument",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    }
+  ]
+}

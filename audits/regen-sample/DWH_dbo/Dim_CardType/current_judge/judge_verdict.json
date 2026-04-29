@@ -1,0 +1,84 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_CardType",
+    "elapsed_seconds":  121,
+    "exit_code":  null,
+    "cost_usd":  0.2862,
+    "input_tokens":  2,
+    "output_tokens":  6633,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_CardType",
+                    "weighted_score":  6.45,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  4,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CardTypeID",
+                                                  "upstream_quote":  "Card network identifier. Active brands: 1=Visa, 2=MasterCard, 3=Diners, 8=Maestro. Inactive: 0=None, 4=Amex, 5=FirePay, 6=JCB, 7=American Express, 9=Laser, 10=Switch, 11=UK Local, 12=Discover, 13=Local Card, 14=China UnionPay, 15=Solo, 16=Cirrus, 17=GE Capital, 18=Unknown, 19-31=various regional/legacy brands.",
+                                                  "wiki_quote":  "Card network identifier. Active brands (IsActive=1 as of 2019): 0=None (unknown/fallback), 1=Visa, 2=Master Card, 3=Diners. Inactive: 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro (active in production today), 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "match":  "NO",
+                                                  "loss":  "Active set rewritten to DWH snapshot state (Maestro moved active→inactive, None moved inactive→active). Brand names reformatted: MasterCard→Master Card, FirePay→Fire Pay, China UnionPay→China Union Pay, UK Local→UK Local Credit Card. IDs 18-31 dropped entirely."
+                                              },
+                                              {
+                                                  "column":  "CarTypeName",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates. Used in payment UI, transaction records, and fraud reporting.",
+                                                  "wiki_quote":  "Card brand name. DDL note: column has a typo (\"Car\" instead of \"Card\") — historical artifact from legacy DWH SQL Server migration. Key values: Visa, Master Card, MasterCard, Diners, Amex, American Express, Maestro, Discover, China Union Pay.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped unique constraint reference, dropped usage context (payment UI, transaction records, fraud reporting). Replaced with DWH-specific typo notes and value list not in upstream."
+                                              },
+                                              {
+                                                  "column":  "IsActive",
+                                                  "upstream_quote":  "Whether this card brand is currently accepted for deposits: 1=accepted, 0=rejected. DEFAULT 1 (new card types are active by default). Only 4 of 32 are currently active.",
+                                                  "wiki_quote":  "Whether this card brand was accepted for deposits as of the 2019 migration snapshot: 1=active, 0=inactive. DWH note: production uses bit type; DWH uses int. This snapshot may not reflect current production acceptance (e.g., Maestro/ID=8 is active in production but shows 0 here).",
+                                                  "match":  "NO",
+                                                  "loss":  "Changed temporality (currently→as of 2019). Dropped DEFAULT 1 semantics. Dropped \u0027Only 4 of 32 are currently active.\u0027 Added DWH-specific cast and snapshot notes not in upstream."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CardTypeID",
+                                       "problem":  "Upstream active set {1=Visa, 2=MasterCard, 3=Diners, 8=Maestro} rewritten to DWH snapshot state {0=None, 1=Visa, 2=Master Card, 3=Diners}. Brand names reformatted (MasterCard→Master Card, FirePay→Fire Pay, China UnionPay→China Union Pay). IDs 18-31 dropped. Must quote upstream verbatim then add DWH notes."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CarTypeName",
+                                       "problem":  "Upstream description (\u0027Unique constraint prevents duplicates. Used in payment UI, transaction records, and fraud reporting.\u0027) entirely replaced with DWH-specific typo notes. Must quote upstream verbatim first."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsActive",
+                                       "problem":  "Upstream description rewritten: \u0027currently accepted\u0027 changed to \u0027as of 2019 migration snapshot\u0027, DEFAULT 1 semantics dropped, \u00274 of 32\u0027 count dropped. Must quote upstream verbatim then add DWH snapshot notes."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 (all Tier 1 columns)",
+                                       "problem":  "Writer treated Tier 1 as \u0027adapt upstream meaning to DWH context\u0027 instead of \u0027quote verbatim, then annotate\u0027. All 3 Tier 1 descriptions are contextual rewrites, not inheritance."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CardTypeID element",
+                                       "problem":  "Element description presents DWH snapshot values (None=active, Maestro=inactive) as canonical truth rather than quoting upstream active set first and noting DWH divergence as an addendum."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Quote upstream Dictionary.CardType descriptions VERBATIM for CardTypeID, CarTypeName, and IsActive — do not adapt temporality, active sets, or brand name spellings. (2) Append DWH-specific notes (frozen snapshot, type cast, typo) as clearly separated \u0027DWH note:\u0027 addenda AFTER the upstream quote. (3) Restore upstream brand name spellings: MasterCard (not Master Card), FirePay (not Fire Pay), China UnionPay (not China Union Pay), UK Local (not UK Local Credit Card). (4) Restore upstream active set in CardTypeID description: 1=Visa, 2=MasterCard, 3=Diners, 8=Maestro. (5) Include IDs 18-31 from upstream (\u002718=Unknown, 19-31=various regional/legacy brands\u0027) with note that only 0-17 exist in DWH snapshot.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

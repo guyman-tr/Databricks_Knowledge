@@ -8,7 +8,8 @@ param(
     [Parameter(Mandatory=$true)]  [string] $DdlPath,
     [Parameter(Mandatory=$false)] [string] $UpstreamBundlePath = "",
     [Parameter(Mandatory=$true)]  [string] $OutDir,
-    [Parameter(Mandatory=$false)] [int]    $TimeoutSeconds = 900
+    [Parameter(Mandatory=$false)] [int]    $TimeoutSeconds = 900,
+    [Parameter(Mandatory=$false)] [string] $Model = ""    # claude-cli model alias or full ID; "" = use claude.cmd default
 )
 
 # ---------------------------------------------------------------------------
@@ -101,6 +102,10 @@ Remove-Item $tempOut, $tempErr -Force -ErrorAction SilentlyContinue
 # Allowed tools: Read only. The judge must NOT modify files. Bash is permitted
 # so the judge can `head/find/etc.` but write tools are off-limits.
 $argList = "--dangerously-skip-permissions --verbose --output-format stream-json --print --allowedTools Read,Bash,Grep,Glob"
+if ($Model) {
+    $argList = "$argList --model $Model"
+    Write-Host ("  [judge] Model override: {0}" -f $Model) -ForegroundColor DarkGray
+}
 
 $repoRoot = (Get-Item (Join-Path $harnessRoot "..\..\")).FullName
 $proc = Start-Process -FilePath $claudePath `

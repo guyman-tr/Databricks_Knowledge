@@ -22,7 +22,9 @@ function Get-NextBatch {
         [Parameter(Mandatory=$true)] [string] $SchemaName,
         [int]    $BatchSize        = 8,
         [string] $RepoRoot         = "C:\Users\guyman\Documents\github\Databricks_Knowledge",
-        [string] $DataPlatformRoot = "C:\Users\guyman\Documents\github\DataPlatform"
+        [string] $DataPlatformRoot = "C:\Users\guyman\Documents\github\DataPlatform",
+        [switch] $AlterScopeOnly,
+        [string] $AlterScopeJson   = ""
     )
 
     $configPath  = Join-Path $RepoRoot ".specify\Configs\dwh-semantic-doc-config.json"
@@ -33,6 +35,31 @@ function Get-NextBatch {
 
     if (-not (Test-Path $configPath)) { throw "Config not found: $configPath" }
     if (-not (Test-Path $ssdtTables)) { throw "SSDT path not found: $ssdtTables" }
+
+    # ---- Load ALTER scope (optional gate) --------------------------------
+    # When -AlterScopeOnly is set, only objects that are in the lake-bound
+    # ALTER scope (mapped to UC OR downstream of mapped) are eligible. This
+    # shifts the wiki build to match the ALTER scope so we stop spending
+    # tokens on objects that will never produce ALTER description files.
+    $scopeSet = $null
+    if ($AlterScopeOnly) {
+        if (-not $AlterScopeJson) {
+            $AlterScopeJson = Join-Path $RepoRoot "audits\regen-sample\_alter_scope.json"
+        }
+        if (-not (Test-Path $AlterScopeJson)) {
+            throw "AlterScopeOnly requested but scope file not found: $AlterScopeJson (run tools/regen-harness/build_alter_scope.py)"
+        }
+        $scopeData = Get-Content $AlterScopeJson -Raw | ConvertFrom-Json
+        $scopeSet = New-Object System.Collections.Generic.HashSet[string]
+        foreach ($r in $scopeData.in_scope) {
+            if ($r.schema -eq $SchemaName) {
+                [void]$scopeSet.Add($r.name.ToLowerInvariant())
+            }
+        }
+        if ($scopeSet.Count -eq 0) {
+            Write-Warning "AlterScopeOnly: no in-scope objects found for schema '$SchemaName' in $AlterScopeJson."
+        }
+    }
 
     # ---- Load blacklist ---------------------------------------------------
     # Three sources unioned: (a) central config explicit + patterns,
@@ -147,6 +174,13 @@ function Get-NextBatch {
         }
         if ($skipped) { continue }
 
+        # ALTER scope gate: drop candidates that are not in the lake-bound
+        # scope (mapped to UC or downstream of mapped). Only active when
+        # -AlterScopeOnly was supplied.
+        if ($scopeSet -ne $null) {
+            if (-not $scopeSet.Contains($t.ToLowerInvariant())) { continue }
+        }
+
         $priority = if ($priorityMap.ContainsKey($t)) { $priorityMap[$t] } else { 99 }
         $writerSp = if ($procMap.ContainsKey($t))     { $procMap[$t]     } else { $null }
 
@@ -215,6 +249,9 @@ function Get-NextBatch {
     [void]$sb.AppendLine("Schema: ``$SchemaName``")
     [void]$sb.AppendLine("Batch size: $($picked.Count) (orchestrator-picked, weighted)")
     if ($heavyCap) { [void]$sb.AppendLine("Heavy-cap applied: yes (one candidate has > 50 columns; size limited to 4)") }
+    if ($scopeSet -ne $null) {
+        [void]$sb.AppendLine("ALTER scope filter: ON ($($scopeSet.Count) in-scope objects available in this schema)")
+    }
     [void]$sb.AppendLine("")
     [void]$sb.AppendLine("| # | Object | Priority | Writer SP | Columns |")
     [void]$sb.AppendLine("|---|--------|----------|-----------|---------|")
