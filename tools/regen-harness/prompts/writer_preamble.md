@@ -71,7 +71,19 @@ For every column in the object:
    drop NULL semantics. The judge will run a character-by-character
    comparison.
 2. **ETL-computed** (CASE / arithmetic / aggregation visible in the SP source) →
-   **Tier 2** with the transform stated.
+   **Tier 2** with the transform stated. The source after `(Tier 2 — …)` MUST
+   name the **upstream TABLE the transform reads from**, NOT the SP that
+   performs the transform. The SP is the tool; the table is the data source.
+   Examples:
+   - `ABS(Fact_Deposit_State.Amount)` → `(Tier 2 — Fact_Deposit_State)`
+   - `CASE WHEN x.IsSettled = 1 THEN 'Real' END` → `(Tier 2 — Fact_BillingDeposit)`
+   - Pure passthrough from a DWH fact (no production wiki) →
+     `(Tier 2 — Fact_X)`, NOT `(Tier 2 — SP_X)`.
+   - Multi-source UNION → list both tables, slash-separated:
+     `(Tier 2 — Fact_Deposit_State / Fact_Cashout_State)`.
+   The ONLY case where an SP name belongs in the source is when the column is
+   purely synthesized inside the SP with no input table column (e.g.
+   `GETDATE()`, `@StartDateID`, fixed literal). Then write `(Tier 2 — SP_X)`.
 3. **Dim-lookup passthrough** (`SELECT dim.X` with no transform AND `Dim_X`
    has its own Tier 1 origin documented in the bundle) → **Tier 1 with the
    dim's origin** (e.g. `Dictionary.Country`), NOT `Tier 2 via SP_X` and NOT

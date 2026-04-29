@@ -144,6 +144,25 @@ Example from Dim_Mirror:
 | 10 | MirrorTypeID | int | YES | 1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType). Determines mirror behavior. (Tier 1 — Trade.Mirror) |
 ```
 
+## C2. Tier 2 Source Convention — Upstream TABLE, Not the SP
+
+The source after `(Tier 2 — …)` names the **upstream table the transform reads from**, NOT the SP that performs the transform. This mirrors the Tier 1 convention: the source is always the data origin, never the loader.
+
+| Column situation | RIGHT | WRONG |
+|---|---|---|
+| Passthrough from DWH fact, no production wiki | `(Tier 2 — Fact_Deposit_State)` | `(Tier 2 — SP_DepositWithdrawFee)` |
+| ABS / sign correction on a fact column | `(Tier 2 — Fact_Deposit_State)` | `(Tier 2 — SP_DepositWithdrawFee)` |
+| CASE/IF on a fact column | `(Tier 2 — Fact_BillingDeposit)` | `(Tier 2 — SP_BI_DB_Deposits)` |
+| Multi-source UNION ALL | `(Tier 2 — Fact_Deposit_State / Fact_Cashout_State)` | `(Tier 2 — SP_DepositWithdrawFee)` |
+| GETDATE() / @StartDateID / literal — no input column at all | `(Tier 2 — SP_DepositWithdrawFee)` | n/a — SP is correct here |
+
+The only case where an SP name belongs in the source is when the column is purely synthesized inside the SP with NO input table column. For everything else, name the upstream table.
+
+Example for a Tier 2 ETL-computed column:
+```
+| 11 | Amount | numeric(38,8) | YES | Trade amount in deposit currency. ABS() then signed via #amountDirections post-INSERT. (Tier 2 — Fact_Deposit_State) |
+```
+
 ## D. Anti-Patterns — What Drift Looks Like
 
 These are concrete examples of BAD output observed in actual production runs. If your output matches any of these, STOP and fix.
