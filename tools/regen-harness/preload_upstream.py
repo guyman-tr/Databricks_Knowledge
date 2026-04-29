@@ -44,45 +44,6 @@ TARGET_ROOT = REPO_ROOT / "audits" / "regen-sample"
 
 MAX_BYTES_PER_UPSTREAM = 30 * 1024  # 30 KB per upstream wiki, truncate beyond
 
-# DDL parsing helpers - kept available for callers (e.g. auto_verify.py) even
-# though the migration-mirror feature that originally needed them was removed.
-_DDL_COLUMNS_BLOCK_RE = re.compile(
-    r"CREATE\s+TABLE[^\(]+\((.*?)\)\s*(?:WITH\b|\Z)",
-    re.IGNORECASE | re.DOTALL,
-)
-_DDL_NON_COLUMN_PREFIXES = (
-    "CONSTRAINT", "PRIMARY KEY", "FOREIGN KEY", "INDEX", "UNIQUE",
-    "CHECK", "WITH", "DISTRIBUTION", "CLUSTERED",
-)
-
-
-def _extract_ddl_columns(ddl_path: Optional[Path]) -> Set[str]:
-    """Best-effort: pull the column-name set out of a CREATE TABLE statement.
-
-    Lower-cased so callers can do simple set intersections regardless of the
-    casing the writer used.
-    """
-    if not ddl_path or not ddl_path.exists():
-        return set()
-    text = ddl_path.read_text(encoding="utf-8", errors="replace")
-    text = re.sub(r"--[^\n]*", "", text)
-    text = re.sub(r"/\*[\s\S]*?\*/", "", text)
-    m = _DDL_COLUMNS_BLOCK_RE.search(text)
-    if not m:
-        return set()
-    body = m.group(1)
-    cols: Set[str] = set()
-    for line in body.split("\n"):
-        s = line.strip().rstrip(",")
-        if not s:
-            continue
-        if s.upper().startswith(_DDL_NON_COLUMN_PREFIXES):
-            continue
-        first = s.split()[0].strip("[]`\"")
-        if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", first):
-            cols.add(first.lower())
-    return cols
-
 # Synapse schemas we treat as "local Synapse-resident" upstreams.
 LOCAL_SYNAPSE_SCHEMAS = {
     "BI_DB_dbo",

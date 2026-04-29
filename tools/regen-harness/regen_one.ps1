@@ -7,10 +7,8 @@ param(
     [Parameter(Mandatory=$false)] [int]    $JudgeTimeoutSeconds = 900,
     [Parameter(Mandatory=$false)] [switch] $SkipPreload,
     [Parameter(Mandatory=$false)] [switch] $RunCompare,
-    [Parameter(Mandatory=$false)] [string] $WriterModel = "",   # "" = claude.cmd default (Opus). "sonnet" / "opus" / full model ID accepted.
-    [Parameter(Mandatory=$false)] [string] $JudgeModel  = "",   # "" = default. Recommended: "sonnet" (judge is structural, doesn't need Opus reasoning).
-    [Parameter(Mandatory=$false)] [switch] $EnableAutoVerify,    # enable mechanical pre-judge check that issues synthetic PASS for trivially-simple objects (skips LLM judge entirely)
-    [Parameter(Mandatory=$false)] [int]    $AutoVerifyMaxCols = 5,  # column-count threshold for the triviality gate
+    [Parameter(Mandatory=$false)] [string] $WriterModel = "",   # "" = claude.cmd default (Opus). "sonnet" / "opus" / full model ID accepted. Manual override knob.
+    [Parameter(Mandatory=$false)] [string] $JudgeModel  = "",   # "" = claude.cmd default (Opus). Manual override knob.
     [Parameter(Mandatory=$false)] [switch] $NoLiveWrite          # suppress writing the best attempt into knowledge/synapse/Wiki/ (default = always write directly)
 )
 
@@ -127,53 +125,19 @@ for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
         "(DDL not found in DataPlatform SSDT)" | Out-File -FilePath $ddlPath -Encoding utf8
     }
 
-    # ---------- 4a. Auto-verify (optional, skips LLM judge for trivially-simple objects) ----------
-    $skipLlmJudge = $false
-    if ($EnableAutoVerify) {
-        Write-Host ("  [4a/5] auto_verify.py (attempt {0})" -f $attempt) -ForegroundColor Yellow
-        $resolutionPath = Join-Path $regenDir "_upstream_resolution.json"
-        if (Test-Path $resolutionPath) {
-            & python (Join-Path $harnessRoot "auto_verify.py") `
-                --regen-dir $attemptDir `
-                --ddl-path $ddlPath `
-                --upstream-bundle $bundlePath `
-                --upstream-resolution $resolutionPath `
-                --object-name $ObjectName `
-                --schema $Schema `
-                --max-trivial-cols $AutoVerifyMaxCols
-            $autoExit = $LASTEXITCODE
-            if ($autoExit -eq 0) {
-                Write-Host "         AUTO-VERIFY PASSED -- skipping LLM judge for this attempt." -ForegroundColor Green
-                $skipLlmJudge = $true
-            } elseif ($autoExit -eq 2) {
-                Write-Host "         AUTO-VERIFY: not trivially simple; running LLM judge." -ForegroundColor DarkGray
-            } elseif ($autoExit -eq 1) {
-                Write-Host "         AUTO-VERIFY: mechanical check failed; running LLM judge to confirm." -ForegroundColor DarkYellow
-            } else {
-                Write-Host ("         AUTO-VERIFY: unexpected exit {0}; running LLM judge." -f $autoExit) -ForegroundColor DarkYellow
-            }
-        } else {
-            Write-Host "         AUTO-VERIFY: _upstream_resolution.json missing; running LLM judge." -ForegroundColor DarkGray
-        }
-    }
-
-    if (-not $skipLlmJudge) {
-        Write-Host ("  [4/5] run_judge.ps1 (attempt {0})" -f $attempt) -ForegroundColor Yellow
-        & (Join-Path $harnessRoot "run_judge.ps1") `
-            -Schema $Schema `
-            -ObjectName $ObjectName `
-            -WikiPath $wikiPath `
-            -LineagePath $lineagePath `
-            -ReviewPath $reviewPath `
-            -DdlPath $ddlPath `
-            -UpstreamBundlePath $bundlePath `
-            -OutDir $attemptDir `
-            -TimeoutSeconds $JudgeTimeoutSeconds `
-            -Model $JudgeModel
-        $judgeExit = $LASTEXITCODE
-    } else {
-        $judgeExit = 0
-    }
+    Write-Host ("  [4/5] run_judge.ps1 (attempt {0})" -f $attempt) -ForegroundColor Yellow
+    & (Join-Path $harnessRoot "run_judge.ps1") `
+        -Schema $Schema `
+        -ObjectName $ObjectName `
+        -WikiPath $wikiPath `
+        -LineagePath $lineagePath `
+        -ReviewPath $reviewPath `
+        -DdlPath $ddlPath `
+        -UpstreamBundlePath $bundlePath `
+        -OutDir $attemptDir `
+        -TimeoutSeconds $JudgeTimeoutSeconds `
+        -Model $JudgeModel
+    $judgeExit = $LASTEXITCODE
 
     $verdictPath = Join-Path $attemptDir "judge_verdict.json"
     $verdictObj = $null

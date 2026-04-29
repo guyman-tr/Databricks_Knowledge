@@ -36,38 +36,12 @@ param(
     [Parameter(Mandatory=$false)] [switch]   $NoPromote,                    # leave everything in audits/ even on PASS
     [Parameter(Mandatory=$false)] [switch]   $DryRun,                       # show what would be picked, don't call regen_one
 
-    # ── Cost-control levers (Lever 1: model routing) ────────────────────────
-    # Writer model is chosen per object based on column count:
-    #   cols <= $SimpleColThreshold  -> $WriterModelSimple
-    #   cols >  $SimpleColThreshold  -> $WriterModelComplex
-    # Setting either to "" falls back to claude.cmd default (currently Opus).
-    # Judge always uses $JudgeModel (it's structural, doesn't need Opus).
-    [Parameter(Mandatory=$false)] [string]   $WriterModelSimple  = "sonnet",
-    [Parameter(Mandatory=$false)] [string]   $WriterModelComplex = "opus",
-    [Parameter(Mandatory=$false)] [string]   $JudgeModel         = "sonnet",
-
-    # ── Cost lever: skip the LLM judge for trivially-simple objects (cols<=N,
-    #    single-mirror upstream, all rows passthrough). Wraps a deterministic
-    #    pre-check + synthetic verdict so the loop stops calling claude-cli for
-    #    cases where the judge always returns PASS anyway.
-    [Parameter(Mandatory=$false)] [switch]   $EnableAutoVerify,
-    [Parameter(Mandatory=$false)] [int]      $AutoVerifyMaxCols  = 5,
-
     # ── Live-write behaviour ────────────────────────────────────────────────
     # regen_one.ps1 ALWAYS writes the best attempt directly into
     # knowledge/synapse/Wiki/{Schema}/{Tables|Views|Functions}/. Pass
     # -NoLiveWrite to keep the regen output in audits/regen-sample/ only.
     # Existing live files are backed up to <name>.bak before overwrite.
-    [Parameter(Mandatory=$false)] [switch]   $NoLiveWrite,
-    [Parameter(Mandatory=$false)] [int]      $SimpleColThreshold = 30,
-
-    # ── Throughput lever (T3: parallel regen_one) ───────────────────────────
-    # Number of regen_one.ps1 invocations to run concurrently within a single
-    # picked batch. Default 1 = serial (legacy behaviour). N>1 fans out via
-    # PowerShell background jobs; per-object verdict/promote/rate-limit logic
-    # runs as each job completes. Anthropic 5-h token quota is global, so
-    # higher Parallelism burns the quota proportionally faster.
-    [Parameter(Mandatory=$false)] [int]      $Parallelism        = 1
+    [Parameter(Mandatory=$false)] [switch]   $NoLiveWrite
 )
 
 $ErrorActionPreference = 'Continue'
@@ -127,13 +101,7 @@ Write-Host "  Batch:    $BatchSize objects/iter (regen_one called serially)" -Fo
 Write-Host "  Promote:  $($PromoteVerdicts -join ', ')$( if ($NoPromote) { '  (DISABLED via -NoPromote)' } )" -ForegroundColor Cyan
 Write-Host "  Max iter: $( if ($MaxIterations -gt 0) { $MaxIterations } else { 'unlimited' } )" -ForegroundColor Cyan
 Write-Host "  Max objs: $( if ($MaxObjects -gt 0) { $MaxObjects } else { 'unlimited' } )" -ForegroundColor Cyan
-Write-Host ("  Parallel: {0} concurrent regen_one job(s) per batch" -f $Parallelism) -ForegroundColor Cyan
-Write-Host ("  Writer:   simple<={0}cols -> {1}   complex>{0}cols -> {2}" -f `
-    $SimpleColThreshold, `
-    $(if ($WriterModelSimple)  { $WriterModelSimple }  else { '<default>' }), `
-    $(if ($WriterModelComplex) { $WriterModelComplex } else { '<default>' })) -ForegroundColor Cyan
-Write-Host ("  Judge:    {0}" -f $(if ($JudgeModel) { $JudgeModel } else { '<default>' })) -ForegroundColor Cyan
-Write-Host ("  AutoVerify: {0}" -f $(if ($EnableAutoVerify) { "ON (max-trivial-cols={0})" -f $AutoVerifyMaxCols } else { "OFF (every object goes through LLM judge)" })) -ForegroundColor Cyan
+Write-Host "  Mode:     serial (one regen_one at a time, claude.cmd default model)" -ForegroundColor Cyan
 Write-Host ("  LiveWrite: {0}" -f $(if ($NoLiveWrite) { "OFF (-NoLiveWrite set; output stays in audits/regen-sample/)" } else { "ON (best attempt written directly into knowledge/synapse/Wiki/, .bak written if file existed)" })) -ForegroundColor Cyan
 Write-Host "  Repo:     $repoRoot" -ForegroundColor Cyan
 Write-Host "  Started:  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Cyan
@@ -373,11 +341,6 @@ $totalCostUsd     = 0
 $consecutiveZero  = 0
 $loopStart = Get-Date
 
-# Script-scoped accumulator used by the parallel fan-out to consolidate
-# rate-limit sleeps. Initialised here so the first iteration's
-# "$script:_pendingRateLimitSleepSec -gt 0" check is well-defined.
-$script:_pendingRateLimitSleepSec = 0
-
 while ($true) {
     if ($MaxIterations -gt 0 -and $iteration -ge $MaxIterations) {
         Write-Host "Reached -MaxIterations=$MaxIterations. Stopping." -ForegroundColor Yellow
@@ -431,280 +394,140 @@ while ($true) {
         continue
     }
 
-    # ── T3: job-controlled fan-out across $Parallelism slots ────────────────
-    # We fan out up to $Parallelism regen_one jobs at once. Each job runs in
-    # its own PowerShell runspace (Start-Job) so claude.cmd processes truly
-    # run in parallel. As each job completes we run the existing per-object
-    # verdict / cost / promote / rate-limit logic. State that needed to span
-    # job boundaries is stored in $jobMeta (keyed by job.Id).
-    #
-    # At -Parallelism 1 the fan-out degenerates to serial: at most one job
-    # is in-flight at any moment, behaviour matches legacy.
-    #
-    # Per-object output from Start-Job is buffered until job completion and
-    # then flushed via Receive-Job. We sacrifice real-time per-object stream
-    # (the user sees a wall of text per object after it finishes) for actual
-    # wall-clock throughput. The individual writer_log.md / judge_log.md
-    # files in audits/regen-sample/ remain the authoritative live trace.
+    # ── Serial inner loop: one regen_one.ps1 at a time, inline ──────────────
+    # No parallelism, no Start-Job, no model routing. Each object inherits
+    # claude.cmd's default model (Opus). regen_one streams Write-Host directly
+    # to this terminal, so the user sees per-object progress live.
+    $breakOuter = $false
+    $idx = $objectsProcessed
 
-    $jobMeta = @{}            # job.Id -> @{ Object; ObjDir; ObjStart; WriterModel; Cols; Idx }
-    $pendingQueue = New-Object System.Collections.Generic.Queue[object]
-    foreach ($p in $batchInfo.Picked) { $pendingQueue.Enqueue($p) }
-    $breakOuter = $false      # set when rate-limit is so far away we should bail
-    $idx = $objectsProcessed   # 1-based display index across the whole loop
-
-    while (($pendingQueue.Count -gt 0 -or $jobMeta.Count -gt 0) -and -not $breakOuter) {
-
-        # ── Fan out: launch jobs up to the parallelism cap ──────────────────
-        while ($jobMeta.Count -lt $Parallelism -and $pendingQueue.Count -gt 0 -and -not $breakOuter) {
-            # Honour MaxObjects across the whole loop (in-flight + processed)
-            if ($MaxObjects -gt 0 -and ($objectsProcessed + $jobMeta.Count) -ge $MaxObjects) { break }
-
-            $p = $pendingQueue.Dequeue()
-            $obj = $p.Name
-            $objDir = Join-Path $repoRoot "audits\regen-sample\$SchemaName\$obj"
-            if (-not (Test-Path $objDir)) {
-                New-Item -ItemType Directory -Force -Path $objDir | Out-Null
-            }
-
-            # ── Lever 1: pick writer model based on object complexity ───────
-            $cols = 0
-            if ($p.PSObject.Properties.Name -contains 'Columns' -and $p.Columns) { $cols = [int]$p.Columns }
-            $writerModel = if ($cols -gt 0 -and $cols -le $SimpleColThreshold) { $WriterModelSimple } else { $WriterModelComplex }
-
-            $idx++
-
-            # Build named-arg splat once, used by both inline and Start-Job paths.
-            $regenSplat = @{
-                Schema               = $SchemaName
-                ObjectName           = $obj
-                MaxAttempts          = 2
-                WriterTimeoutSeconds = $WriterTimeout
-                JudgeTimeoutSeconds  = $JudgeTimeout
-                WriterModel          = $writerModel
-                JudgeModel           = $JudgeModel
-            }
-            if ($EnableAutoVerify) {
-                $regenSplat['EnableAutoVerify'] = $true
-                $regenSplat['AutoVerifyMaxCols'] = $AutoVerifyMaxCols
-            }
-            if ($NoLiveWrite) {
-                $regenSplat['NoLiveWrite'] = $true
-            }
-
-            if ($Parallelism -le 1) {
-                # Serial path: call regen_one.ps1 inline. Avoids Start-Job's
-                # ArgumentList marshalling (which silently dropped values when
-                # any positional arg was empty). Wrap in a fake "job" object
-                # so the rest of the loop's job-tracking logic still works.
-                & $regenOne @regenSplat
-                $regenExit = $LASTEXITCODE
-                $job = [pscustomobject]@{
-                    Id          = $idx
-                    State       = 'Completed'
-                    InlineOutput = "REGEN_EXIT_CODE=$regenExit"
-                    Inline      = $true
-                }
-            } else {
-                # Parallel path: Start-Job. Pass the splat hashtable as ONE
-                # argument (no per-value flattening) and reconstruct inside.
-                $job = Start-Job -ScriptBlock {
-                    param($regenOne, $splatHash)
-                    & $regenOne @splatHash
-                    "REGEN_EXIT_CODE=$LASTEXITCODE"
-                } -ArgumentList $regenOne, $regenSplat
-            }
-
-            $jobMeta[$job.Id] = @{
-                Object      = $obj
-                ObjDir      = $objDir
-                ObjStart    = Get-Date
-                WriterModel = $writerModel
-                Cols        = $cols
-                Idx         = $idx
-                Job         = $job
-            }
-            Write-Host ""
-            Write-Host ("  >>> [$idx] $SchemaName.$obj launched (job $($job.Id), cols=$cols, writer=$writerModel, judge=$JudgeModel) -- $($jobMeta.Count)/$Parallelism slot(s) busy") -ForegroundColor Green
+    foreach ($p in $batchInfo.Picked) {
+        if ($breakOuter) { break }
+        if ($MaxObjects -gt 0 -and $objectsProcessed -ge $MaxObjects) {
+            Write-Host "  Reached -MaxObjects=$MaxObjects. Stopping." -ForegroundColor Yellow
+            $breakOuter = $true
+            break
         }
 
-        if ($jobMeta.Count -eq 0) { break }   # nothing in flight, queue drained
-
-        # ── Collect finished jobs ───────────────────────────────────────────
-        # Inline jobs (Parallelism=1 path) are already complete the moment
-        # they're enqueued. Real Start-Job jobs need Wait-Job.
-        $allJobs = $jobMeta.Values | ForEach-Object { $_.Job }
-        $inlineJobs = @($allJobs) | Where-Object { $_.Inline }
-        $realJobs   = @($allJobs) | Where-Object { -not $_.Inline }
-
-        $finishedJobs = @($inlineJobs)   # always done
-        if ($realJobs.Count -gt 0) {
-            $finishedSet = Wait-Job -Job $realJobs -Any
-            $finishedJobs += @($finishedSet) | Where-Object { $_.State -ne 'Running' -and $_.State -ne 'NotStarted' }
-            foreach ($j in $realJobs) {
-                if ($j.State -ne 'Running' -and $j.State -ne 'NotStarted' -and ($finishedJobs -notcontains $j)) {
-                    $finishedJobs += $j
-                }
-            }
+        $obj = $p.Name
+        $objDir = Join-Path $repoRoot "audits\regen-sample\$SchemaName\$obj"
+        if (-not (Test-Path $objDir)) {
+            New-Item -ItemType Directory -Force -Path $objDir | Out-Null
         }
+        $cols = 0
+        if ($p.PSObject.Properties.Name -contains 'Columns' -and $p.Columns) { $cols = [int]$p.Columns }
+        $idx++
+        $objStart = Get-Date
 
-        foreach ($f in $finishedJobs) {
-            if (-not $jobMeta.ContainsKey($f.Id)) { continue }
-            $meta = $jobMeta[$f.Id]
-            $obj      = $meta.Object
-            $objDir   = $meta.ObjDir
-            $objStart = $meta.ObjStart
-            $cols     = $meta.Cols
+        Write-Host ""
+        Write-Host ("  >>> [$idx] $SchemaName.$obj  (cols=$cols)") -ForegroundColor Green
 
-            $regenExit = -1
-            if ($f.Inline) {
-                # Inline path: regen_one.ps1 already streamed Write-Host to the
-                # parent terminal. Just parse the captured exit-code line.
-                if ($f.InlineOutput -match '^REGEN_EXIT_CODE=(-?\d+)') {
-                    $regenExit = [int]$matches[1]
-                }
-            } else {
-                # Job path: drain the buffered Write-Host output and replay it
-                # under a per-object banner so log lines are attributable.
-                $jobOutput = Receive-Job -Job $f -Keep
-                foreach ($line in $jobOutput) {
-                    $s = [string]$line
-                    if ($s -match '^REGEN_EXIT_CODE=(-?\d+)') {
-                        $regenExit = [int]$matches[1]
-                    } else {
-                        Write-Host "    [$($meta.Idx) $obj]  $s"
-                    }
-                }
-                Remove-Job -Job $f -Force | Out-Null
-            }
-            $jobMeta.Remove($f.Id) | Out-Null
-            $objElapsed = [math]::Round(((Get-Date) - $objStart).TotalSeconds, 1)
-            $objectsProcessed++
+        $regenSplat = @{
+            Schema               = $SchemaName
+            ObjectName           = $obj
+            MaxAttempts          = 2
+            WriterTimeoutSeconds = $WriterTimeout
+            JudgeTimeoutSeconds  = $JudgeTimeout
+        }
+        if ($NoLiveWrite) { $regenSplat['NoLiveWrite'] = $true }
 
-            # ── Verdict-gated promotion (per object, unchanged logic) ──────
-            $v = Read-VerdictForObject -ObjDir $objDir
-            $shouldPromote = (-not $NoPromote) -and ($PromoteVerdicts -contains $v.Verdict) -and ($regenExit -eq 0)
+        & $regenOne @regenSplat
+        $regenExit = $LASTEXITCODE
+        $objElapsed = [math]::Round(((Get-Date) - $objStart).TotalSeconds, 1)
+        $objectsProcessed++
 
-            $verdictColor = switch ($v.Verdict) {
-                "PASS"         { "Green" }
-                "PARTIAL_PASS" { "DarkYellow" }
-                "FAIL"         { "Red" }
-                default        { "DarkGray" }
-            }
-            Write-Host ("  <<< [$($meta.Idx)] $obj  Verdict: $($v.Verdict)  Score: $($v.Score)  Elapsed: ${objElapsed}s  regen_exit=$regenExit") -ForegroundColor $verdictColor
+        # ── Verdict-gated promotion ─────────────────────────────────────────
+        $v = Read-VerdictForObject -ObjDir $objDir
+        $shouldPromote = (-not $NoPromote) -and ($PromoteVerdicts -contains $v.Verdict) -and ($regenExit -eq 0)
 
-            # Per-object cost = sum of writer attempts + sum of judge attempts.
-            $objCost = 0
-            Get-ChildItem (Join-Path $objDir "regen\attempt_*\writer_summary.json") -ErrorAction SilentlyContinue | ForEach-Object {
-                try {
-                    $w = Get-Content $_.FullName -Raw | ConvertFrom-Json
-                    if ($w.cost_usd) { $objCost += [double]$w.cost_usd }
-                } catch { }
-            }
-            Get-ChildItem (Join-Path $objDir "regen\attempt_*\judge_verdict.json") -ErrorAction SilentlyContinue | ForEach-Object {
-                try {
-                    $j2 = Get-Content $_.FullName -Raw | ConvertFrom-Json
-                    if ($j2.cost_usd) { $objCost += [double]$j2.cost_usd }
-                } catch { }
-            }
-            $totalCostUsd += $objCost
-            Write-Host ("    [$($meta.Idx)] cost: `$$([math]::Round($objCost,4)) USD  (running total: `$$([math]::Round($totalCostUsd,4)))") -ForegroundColor DarkGray
+        $verdictColor = switch ($v.Verdict) {
+            "PASS"         { "Green" }
+            "PARTIAL_PASS" { "DarkYellow" }
+            "FAIL"         { "Red" }
+            default        { "DarkGray" }
+        }
+        Write-Host ("  <<< [$idx] $obj  Verdict: $($v.Verdict)  Score: $($v.Score)  Elapsed: ${objElapsed}s  regen_exit=$regenExit") -ForegroundColor $verdictColor
 
-            if ($shouldPromote) {
-                try {
-                    $r = Promote-RegenOutput -Schema $SchemaName -Object $obj -ObjDir $objDir
-                    Write-Host ("    [$($meta.Idx)] PROMOTED -> Wiki\$SchemaName\$($r.Subdir)\  ($($r.FilesPromoted) files)") -ForegroundColor Green
-                    $objectsPromoted++
-                } catch {
-                    Write-Host ("    [$($meta.Idx)] PROMOTE FAILED: $_") -ForegroundColor Red
-                    $objectsFailed++
-                }
-            } elseif ($v.Verdict -eq "FAIL" -or $v.Verdict -eq "MISSING" -or $v.Verdict -eq "PARSE_ERROR") {
+        # Per-object cost = sum of writer attempts + sum of judge attempts.
+        $objCost = 0
+        Get-ChildItem (Join-Path $objDir "regen\attempt_*\writer_summary.json") -ErrorAction SilentlyContinue | ForEach-Object {
+            try {
+                $w = Get-Content $_.FullName -Raw | ConvertFrom-Json
+                if ($w.cost_usd) { $objCost += [double]$w.cost_usd }
+            } catch { }
+        }
+        Get-ChildItem (Join-Path $objDir "regen\attempt_*\judge_verdict.json") -ErrorAction SilentlyContinue | ForEach-Object {
+            try {
+                $j2 = Get-Content $_.FullName -Raw | ConvertFrom-Json
+                if ($j2.cost_usd) { $objCost += [double]$j2.cost_usd }
+            } catch { }
+        }
+        $totalCostUsd += $objCost
+        Write-Host ("    [$idx] cost: `$$([math]::Round($objCost,4)) USD  (running total: `$$([math]::Round($totalCostUsd,4)))") -ForegroundColor DarkGray
+
+        if ($shouldPromote) {
+            try {
+                $r = Promote-RegenOutput -Schema $SchemaName -Object $obj -ObjDir $objDir
+                Write-Host ("    [$idx] PROMOTED -> Wiki\$SchemaName\$($r.Subdir)\  ($($r.FilesPromoted) files)") -ForegroundColor Green
+                $objectsPromoted++
+            } catch {
+                Write-Host ("    [$idx] PROMOTE FAILED: $_") -ForegroundColor Red
                 $objectsFailed++
-                Add-Content -Path $failedLog -Value "$(Get-Date -Format 's')`t$SchemaName.$obj`tverdict=$($v.Verdict)`tscore=$($v.Score)`treason=$($v.Reason)"
-                Write-Host ("    [$($meta.Idx)] Left in audits/, logged to $failedLog") -ForegroundColor Yellow
-            } else {
-                $objectsSkipped++
-                Write-Host ("    [$($meta.Idx)] Verdict $($v.Verdict) not in -PromoteVerdicts; left in audits/ (not promoted, not failed)") -ForegroundColor DarkYellow
             }
+        } elseif ($v.Verdict -eq "FAIL" -or $v.Verdict -eq "MISSING" -or $v.Verdict -eq "PARSE_ERROR") {
+            $objectsFailed++
+            Add-Content -Path $failedLog -Value "$(Get-Date -Format 's')`t$SchemaName.$obj`tverdict=$($v.Verdict)`tscore=$($v.Score)`treason=$($v.Reason)"
+            Write-Host ("    [$idx] Left in audits/, logged to $failedLog") -ForegroundColor Yellow
+        } else {
+            $objectsSkipped++
+            Write-Host ("    [$idx] Verdict $($v.Verdict) not in -PromoteVerdicts; left in audits/ (not promoted, not failed)") -ForegroundColor DarkYellow
+        }
 
-            # ── Rate-limit watchdog (per-object, unchanged logic) ──────────
-            $isZeroCostFail = ($objCost -le 0) -and ($v.Verdict -in @('MISSING','PARSE_ERROR','FAIL'))
-            if ($isZeroCostFail) {
-                $rlim = Find-RateLimitReset -ObjDir $objDir -Since $objStart
-                if ($rlim) {
-                    Write-Host ""
-                    Write-Host "  RATE LIMIT DETECTED ($($rlim.Type)) on object [$($meta.Idx)] $obj" -ForegroundColor Magenta
-                    if ($rlim.ResetDateTime) {
-                        $now = (Get-Date).ToUniversalTime()
-                        $waitSec = [int]($rlim.ResetDateTime - $now).TotalSeconds + 30
-                        if ($waitSec -le 0) {
-                            Write-Host ("  Reset time {0:HH:mm:ss UTC} has already passed -- retrying immediately." -f $rlim.ResetDateTime) -ForegroundColor Yellow
-                            $consecutiveZero = 0
-                        } elseif ($waitSec -gt 14400) {
-                            Write-Host ("  Reset is {0:N1} h away (>4h) -- draining in-flight jobs then exiting. Restart after {1:HH:mm UTC}." -f ($waitSec/3600), $rlim.ResetDateTime) -ForegroundColor Red
-                            Write-Host "============================================================" -ForegroundColor Red
-                            $breakOuter = $true
-                        } else {
-                            # In parallel mode every other in-flight job is
-                            # almost certainly also rate-limited (same global
-                            # quota). Drain them first so we know their state,
-                            # THEN sleep once for the whole batch.
-                            if ($jobMeta.Count -gt 0) {
-                                Write-Host ("  Draining {0} other in-flight job(s) before sleeping (they're likely also rate-limited)..." -f $jobMeta.Count) -ForegroundColor Yellow
-                            }
-                            # Sleep gets re-evaluated after draining so the
-                            # batched sleep happens once at the end.
-                            $script:_pendingRateLimitSleepSec = [Math]::Max($script:_pendingRateLimitSleepSec, $waitSec)
-                        }
-                    } else {
-                        Write-Host "  Rate-limit hit but no reset epoch found in stream. Will sleep 30 min after batch drains." -ForegroundColor Yellow
-                        $script:_pendingRateLimitSleepSec = [Math]::Max($script:_pendingRateLimitSleepSec, 1800)
-                    }
-                } else {
-                    $consecutiveZero++
-                    if ($consecutiveZero -ge 3) {
-                        Write-Host ""
-                        Write-Host "  3 consecutive zero-cost failures with no rate-limit signal. Likely auth / MCP / writer-prompt issue. EXITING to prevent wasted iterations." -ForegroundColor Red
-                        Write-Host "  Inspect: $failedLog" -ForegroundColor Red
+        # ── Rate-limit watchdog (per-object) ───────────────────────────────
+        $isZeroCostFail = ($objCost -le 0) -and ($v.Verdict -in @('MISSING','PARSE_ERROR','FAIL'))
+        if ($isZeroCostFail) {
+            $rlim = Find-RateLimitReset -ObjDir $objDir -Since $objStart
+            if ($rlim) {
+                Write-Host ""
+                Write-Host "  RATE LIMIT DETECTED ($($rlim.Type)) on object [$idx] $obj" -ForegroundColor Magenta
+                if ($rlim.ResetDateTime) {
+                    $now = (Get-Date).ToUniversalTime()
+                    $waitSec = [int]($rlim.ResetDateTime - $now).TotalSeconds + 30
+                    if ($waitSec -le 0) {
+                        Write-Host ("  Reset time {0:HH:mm:ss UTC} has already passed -- retrying immediately." -f $rlim.ResetDateTime) -ForegroundColor Yellow
+                        $consecutiveZero = 0
+                    } elseif ($waitSec -gt 14400) {
+                        Write-Host ("  Reset is {0:N1} h away (>4h) -- exiting. Restart after {1:HH:mm UTC}." -f ($waitSec/3600), $rlim.ResetDateTime) -ForegroundColor Red
                         Write-Host "============================================================" -ForegroundColor Red
                         $breakOuter = $true
+                    } else {
+                        $resetAt = (Get-Date).AddSeconds($waitSec)
+                        Write-Host ("  Sleeping {0:N1} min (rate-limit) until ~{1:HH:mm:ss}..." -f ($waitSec/60), $resetAt) -ForegroundColor Yellow
+                        Start-Sleep -Seconds $waitSec
+                        Write-Host "  Resuming after rate-limit sleep." -ForegroundColor Green
+                        $consecutiveZero = 0
                     }
+                } else {
+                    Write-Host "  Rate-limit hit but no reset epoch in stream. Sleeping 30 min." -ForegroundColor Yellow
+                    Start-Sleep -Seconds 1800
+                    Write-Host "  Resuming after rate-limit sleep." -ForegroundColor Green
+                    $consecutiveZero = 0
                 }
             } else {
-                $consecutiveZero = 0
+                $consecutiveZero++
+                if ($consecutiveZero -ge 3) {
+                    Write-Host ""
+                    Write-Host "  3 consecutive zero-cost failures with no rate-limit signal. Likely auth / MCP / writer-prompt issue. EXITING to prevent wasted iterations." -ForegroundColor Red
+                    Write-Host "  Inspect: $failedLog" -ForegroundColor Red
+                    Write-Host "============================================================" -ForegroundColor Red
+                    $breakOuter = $true
+                }
             }
-
-            if ($MaxObjects -gt 0 -and $objectsProcessed -ge $MaxObjects) {
-                Write-Host "  Reached -MaxObjects=$MaxObjects (drained all current in-flight jobs). Stopping after batch." -ForegroundColor Yellow
-                # We allow the inner foreach to continue draining the rest of
-                # the finished jobs so we don't lose their verdict/promote
-                # state, but we set $breakOuter so no NEW jobs get started.
-                $breakOuter = $true
-            }
-        }
-
-        # ── Batched rate-limit sleep ────────────────────────────────────────
-        # If any of the just-completed jobs detected a rate-limit and ALL
-        # in-flight jobs have now drained, perform a single consolidated sleep
-        # so we don't multiply per-object sleeps in parallel mode.
-        if ($script:_pendingRateLimitSleepSec -gt 0 -and $jobMeta.Count -eq 0 -and -not $breakOuter) {
-            $waitSec = $script:_pendingRateLimitSleepSec
-            $script:_pendingRateLimitSleepSec = 0
-            $resetAt = (Get-Date).AddSeconds($waitSec)
-            Write-Host ("  Sleeping {0:N1} min (consolidated rate-limit) until ~{1:HH:mm:ss}..." -f ($waitSec/60), $resetAt) -ForegroundColor Yellow
-            Start-Sleep -Seconds $waitSec
-            Write-Host "  Resuming after rate-limit sleep." -ForegroundColor Green
+        } else {
             $consecutiveZero = 0
         }
     }
 
-    # Reset the per-batch rate-limit accumulator for the next iteration.
-    $script:_pendingRateLimitSleepSec = 0
-
-    # If the inner loop set $breakOuter (rate-limit reset >4h, three
-    # consecutive zero-cost failures, or MaxObjects reached), bail the outer
-    # while-true.
     if ($breakOuter) { break }
 
     Write-Host ""
