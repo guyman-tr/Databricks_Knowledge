@@ -9,8 +9,10 @@ param(
     [Parameter(Mandatory=$false)] [switch] $RunCompare,
     [Parameter(Mandatory=$false)] [string] $WriterModel = "",   # "" = claude.cmd default (Opus). "sonnet" / "opus" / full model ID accepted.
     [Parameter(Mandatory=$false)] [string] $JudgeModel  = "",   # "" = default. Recommended: "sonnet" (judge is structural, doesn't need Opus reasoning).
-    [Parameter(Mandatory=$false)] [switch] $EnableAutoVerify,   # enable mechanical pre-judge check that issues synthetic PASS for trivially-simple objects (skips LLM judge entirely)
-    [Parameter(Mandatory=$false)] [int]    $AutoVerifyMaxCols = 5  # column-count threshold for the triviality gate
+    [Parameter(Mandatory=$false)] [switch] $EnableAutoVerify,    # enable mechanical pre-judge check that issues synthetic PASS for trivially-simple objects (skips LLM judge entirely)
+    [Parameter(Mandatory=$false)] [int]    $AutoVerifyMaxCols = 5,  # column-count threshold for the triviality gate
+    [Parameter(Mandatory=$false)] [switch] $EnableAutoPromote,    # auto-promote regen/final/ over live wiki tree when judge score >= AutoPromoteMinScore
+    [Parameter(Mandatory=$false)] [double] $AutoPromoteMinScore = 9.0  # minimum weighted_score to trigger auto-promotion
 )
 
 # ---------------------------------------------------------------------------
@@ -248,6 +250,27 @@ $summary = [ordered]@{
 if ($RunCompare) {
     Write-Host "  [5/5] compare_one.py" -ForegroundColor Yellow
     & python (Join-Path $harnessRoot "compare_one.py") --schema $Schema --object $ObjectName
+}
+
+# ---------- 8. Optional auto-promote ----------
+if ($EnableAutoPromote) {
+    if ($bestAttempt -gt 0 -and $bestScore -ge $AutoPromoteMinScore) {
+        Write-Host ("  [6/6] auto_promote.ps1 (score {0} >= {1})" -f $bestScore, $AutoPromoteMinScore) -ForegroundColor Yellow
+        & (Join-Path $harnessRoot "auto_promote.ps1") `
+            -Schema $Schema `
+            -ObjectName $ObjectName `
+            -MinScore $AutoPromoteMinScore
+        $promoteExit = $LASTEXITCODE
+        if ($promoteExit -eq 0) {
+            Write-Host "         AUTO-PROMOTED to live wiki tree." -ForegroundColor Green
+        } elseif ($promoteExit -eq 2) {
+            Write-Host "         AUTO-PROMOTE: no live wiki found (use promote_regen.ps1 -Apply for new objects)." -ForegroundColor DarkGray
+        } else {
+            Write-Host ("         AUTO-PROMOTE: exit {0} (see auto_promote_log.json or skip reason above)." -f $promoteExit) -ForegroundColor DarkYellow
+        }
+    } else {
+        Write-Host ("  [6/6] auto_promote.ps1 SKIPPED (best score {0} < threshold {1})" -f $bestScore, $AutoPromoteMinScore) -ForegroundColor DarkGray
+    }
 }
 
 Write-Host ""
