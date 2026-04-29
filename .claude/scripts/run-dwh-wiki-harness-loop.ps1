@@ -473,28 +473,47 @@ while ($true) {
             $writerModel = if ($cols -gt 0 -and $cols -le $SimpleColThreshold) { $WriterModelSimple } else { $WriterModelComplex }
 
             $idx++
-            $job = Start-Job -ScriptBlock {
-                param($regenOne, $schema, $obj, $writerModel, $judgeModel, $writerTimeout, $judgeTimeout, $enableAutoVerify, $autoVerifyMaxCols, $noLiveWrite)
-                $regenArgs = @(
-                    "-Schema", $schema, "-ObjectName", $obj,
-                    "-MaxAttempts", 2,
-                    "-WriterTimeoutSeconds", $writerTimeout,
-                    "-JudgeTimeoutSeconds", $judgeTimeout,
-                    "-WriterModel", $writerModel,
-                    "-JudgeModel",  $judgeModel
-                )
-                if ($enableAutoVerify) {
-                    $regenArgs += @("-EnableAutoVerify", "-AutoVerifyMaxCols", $autoVerifyMaxCols)
+
+            # Build named-arg splat once, used by both inline and Start-Job paths.
+            $regenSplat = @{
+                Schema               = $SchemaName
+                ObjectName           = $obj
+                MaxAttempts          = 2
+                WriterTimeoutSeconds = $WriterTimeout
+                JudgeTimeoutSeconds  = $JudgeTimeout
+                WriterModel          = $writerModel
+                JudgeModel           = $JudgeModel
+            }
+            if ($EnableAutoVerify) {
+                $regenSplat['EnableAutoVerify'] = $true
+                $regenSplat['AutoVerifyMaxCols'] = $AutoVerifyMaxCols
+            }
+            if ($NoLiveWrite) {
+                $regenSplat['NoLiveWrite'] = $true
+            }
+
+            if ($Parallelism -le 1) {
+                # Serial path: call regen_one.ps1 inline. Avoids Start-Job's
+                # ArgumentList marshalling (which silently dropped values when
+                # any positional arg was empty). Wrap in a fake "job" object
+                # so the rest of the loop's job-tracking logic still works.
+                & $regenOne @regenSplat
+                $regenExit = $LASTEXITCODE
+                $job = [pscustomobject]@{
+                    Id          = $idx
+                    State       = 'Completed'
+                    InlineOutput = "REGEN_EXIT_CODE=$regenExit"
+                    Inline      = $true
                 }
-                if ($noLiveWrite) {
-                    $regenArgs += @("-NoLiveWrite")
-                }
-                & $regenOne @regenArgs
-                # Emit the regen_one exit code as the LAST line so the parent
-                # can pull it back via Receive-Job. Job output is purely text
-                # from regen_one's Write-Host stream, none of which we parse.
-                "REGEN_EXIT_CODE=$LASTEXITCODE"
-            } -ArgumentList $regenOne, $SchemaName, $obj, $writerModel, $JudgeModel, $WriterTimeout, $JudgeTimeout, $EnableAutoVerify.IsPresent, $AutoVerifyMaxCols, $NoLiveWrite.IsPresent
+            } else {
+                # Parallel path: Start-Job. Pass the splat hashtable as ONE
+                # argument (no per-value flattening) and reconstruct inside.
+                $job = Start-Job -ScriptBlock {
+                    param($regenOne, $splatHash)
+                    & $regenOne @splatHash
+                    "REGEN_EXIT_CODE=$LASTEXITCODE"
+                } -ArgumentList $regenOne, $regenSplat
+            }
 
             $jobMeta[$job.Id] = @{
                 Object      = $obj
@@ -511,19 +530,21 @@ while ($true) {
 
         if ($jobMeta.Count -eq 0) { break }   # nothing in flight, queue drained
 
-        # ── Wait for ANY job to finish ──────────────────────────────────────
-        $jobObjects = $jobMeta.Values | ForEach-Object { $_.Job }
-        $finishedSet = Wait-Job -Job $jobObjects -Any
+        # ── Collect finished jobs ───────────────────────────────────────────
+        # Inline jobs (Parallelism=1 path) are already complete the moment
+        # they're enqueued. Real Start-Job jobs need Wait-Job.
+        $allJobs = $jobMeta.Values | ForEach-Object { $_.Job }
+        $inlineJobs = @($allJobs) | Where-Object { $_.Inline }
+        $realJobs   = @($allJobs) | Where-Object { -not $_.Inline }
 
-        # Wait-Job -Any can return MULTIPLE jobs if several finished in the
-        # same poll tick. Process each one fully.
-        $finishedJobs = @($finishedSet) | Where-Object { $_.State -ne 'Running' -and $_.State -ne 'NotStarted' }
-        # Also pick up any other jobs that completed while we were processing
-        # the first one (Wait-Job -Any wakes on the first; siblings may have
-        # finished too).
-        foreach ($j in $jobObjects) {
-            if ($j.State -ne 'Running' -and $j.State -ne 'NotStarted' -and ($finishedJobs -notcontains $j)) {
-                $finishedJobs += $j
+        $finishedJobs = @($inlineJobs)   # always done
+        if ($realJobs.Count -gt 0) {
+            $finishedSet = Wait-Job -Job $realJobs -Any
+            $finishedJobs += @($finishedSet) | Where-Object { $_.State -ne 'Running' -and $_.State -ne 'NotStarted' }
+            foreach ($j in $realJobs) {
+                if ($j.State -ne 'Running' -and $j.State -ne 'NotStarted' -and ($finishedJobs -notcontains $j)) {
+                    $finishedJobs += $j
+                }
             }
         }
 
@@ -535,19 +556,27 @@ while ($true) {
             $objStart = $meta.ObjStart
             $cols     = $meta.Cols
 
-            # Drain the job's buffered Write-Host output. Replay it under a
-            # per-object banner so the user can attribute log lines correctly.
-            $jobOutput = Receive-Job -Job $f -Keep
             $regenExit = -1
-            foreach ($line in $jobOutput) {
-                $s = [string]$line
-                if ($s -match '^REGEN_EXIT_CODE=(-?\d+)') {
+            if ($f.Inline) {
+                # Inline path: regen_one.ps1 already streamed Write-Host to the
+                # parent terminal. Just parse the captured exit-code line.
+                if ($f.InlineOutput -match '^REGEN_EXIT_CODE=(-?\d+)') {
                     $regenExit = [int]$matches[1]
-                } else {
-                    Write-Host "    [$($meta.Idx) $obj]  $s"
                 }
+            } else {
+                # Job path: drain the buffered Write-Host output and replay it
+                # under a per-object banner so log lines are attributable.
+                $jobOutput = Receive-Job -Job $f -Keep
+                foreach ($line in $jobOutput) {
+                    $s = [string]$line
+                    if ($s -match '^REGEN_EXIT_CODE=(-?\d+)') {
+                        $regenExit = [int]$matches[1]
+                    } else {
+                        Write-Host "    [$($meta.Idx) $obj]  $s"
+                    }
+                }
+                Remove-Job -Job $f -Force | Out-Null
             }
-            Remove-Job -Job $f -Force | Out-Null
             $jobMeta.Remove($f.Id) | Out-Null
             $objElapsed = [math]::Round(((Get-Date) - $objStart).TotalSeconds, 1)
             $objectsProcessed++
