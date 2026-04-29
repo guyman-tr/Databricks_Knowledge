@@ -150,6 +150,11 @@
             "pattern": "Ofir*_tmp*",
             "reason": "Developer-prefixed scratch tables (legacy convention, alt casing).",
             "action": "skip"
+          },
+          {
+            "pattern": "BI_DB_EY_*",
+            "reason": "EY audit tables — out of documentation scope per user request 2026-04-29. Existing BI_DB_EY_* wikis (BO_Deposits_With_PIPs, CashoutFees, CashoutReason, Cashouts, ChangeLog, Automation_IFRSControl_Results, Automation_UnrealizedCommissions_PerRegulation, Automation_UnrealizedCommissions_Results) are already in the live wiki tree and not affected — pattern only stops FUTURE backlog picks.",
+            "action": "skip"
           }
         ],
         "explicit_blacklist": [
