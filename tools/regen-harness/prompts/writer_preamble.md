@@ -126,6 +126,82 @@ For every column in the object:
 
 ---
 
+## ⛔ TIER ASSIGNMENT — drift modes the judge will catch
+
+The judge has caught five recurring drift modes in past harness runs. Each
+mode below has a concrete pre-write check. Run the check for EVERY column
+before tagging its Tier — the "I'll tag everything Tier 1 then fix it later"
+shortcut is the #1 source of FAIL verdicts.
+
+### Pre-write verification (per column, in order)
+
+1. **Element-row check** — Does an upstream wiki in the bundle contain a row
+   for THIS exact column name in its Element table?
+   - YES → eligible for Tier 1, continue to step 2.
+   - NO → NOT Tier 1 regardless of JOIN graph. Drop to step 3.
+2. **Computation check** — Does the SP body apply ANY of these to this
+   column? `CASE WHEN` · `COALESCE`/`ISNULL` with branching · arithmetic
+   (`+ - * /`, `GREATEST`, `LEAST`, `ROUND`, `ABS`) · aggregate
+   (`SUM`/`COUNT`/`MAX`/`AVG` over `GROUP BY`) · string transform
+   (`CONCAT`, `SUBSTRING`, `REPLACE`) · `CAST`/`CONVERT` changing precision ·
+   JOIN-derived flag (`CASE WHEN j.x IS NOT NULL THEN 1 ELSE 0`).
+   - YES → **Tier 2** with the transform named. Wiki presence of the input
+     column is IRRELEVANT — the column itself is ETL-computed.
+   - NO → Tier 1 (true passthrough). Continue to step 3.
+3. **Relay-vs-root check** — Walk the citation chain. If `Dim_Foo` passes
+   `Dictionary.Foo.Value` through unchanged AND both have wikis, cite
+   `Dictionary.Foo` (root), NOT `Dim_Foo` (relay). If you cite `Wiki_X`
+   for column `C` and `Wiki_X.Element_table` does NOT contain a row for `C`,
+   that citation is fabricated — downgrade to Tier 2 with note `inferred
+   from JOIN context, not present in upstream wiki`.
+4. **Verbatim copy** — for every Tier 1 row, open the upstream wiki, locate
+   the column row, COPY-PASTE its Description. Preserve abbreviation
+   expansions (`FTD = First Time Deposit`), dictionary value=ID mappings
+   (`5 = Stocks, 6 = ETF`), clarifying phrases (`via FX conversion`,
+   `computed from NOP and FX rate`). The Section 4 brevity cap (`one
+   sentence`) lets you condense ETL-computed descriptions; it does NOT let
+   you summarise verbatim Tier 1 quotes.
+
+### The five drift modes — explicit prohibitions
+
+- **Mode A · Fabricated Tier 1.** When the bundle contains
+  `_no_upstream_found.txt`, OR the bundle's "Upstream Wikis Found" header
+  reads `**NO UPSTREAM WIKI**`, you may NOT mark ANY column Tier 1. Tag
+  every passthrough as Tier 2 with the writer SP as source. The judge greps
+  the bundle for these markers before scoring you.
+- **Mode B · Migration mirror.** If `_upstream_resolution.json` lists any
+  entry under `migration_mirrors_discovered` (e.g. `Dealing_dbo.Dealing_X`
+  for `BI_DB_dbo.BI_DB_X`), treat the mirror's wiki as the CANONICAL Tier 1
+  source for every column. The mirror's internal tier does NOT cascade — a
+  column the mirror marks Tier 2 is Tier 1 in YOUR wiki because YOUR
+  immediate upstream IS the mirror itself.
+- **Mode C · Hybrid tier label.** Exactly one tier per Element row. Format
+  `(Tier N — source)`. NEVER `(Tier 1 — Dim_X, Tier 2 in source: SP_Y)`,
+  NEVER `(Tier 1/2 — X)`, NEVER `(Tier 1 — X via Y)`. When you're torn
+  between two tiers, default to the WEAKER (higher number). If you must
+  capture nuance, put it in `{Object}.review-needed.md` under
+  `## Tier rationale`, NOT in the Element row.
+- **Mode D · Computed mistagged as passthrough.** "Passthrough" means the SP
+  writes `INSERT … SELECT col FROM src` with NO function on the SELECT side.
+  `SELECT GREATEST(d1, d2) AS FirstNewFundedDate` → Tier 2.
+  `SELECT CASE WHEN x THEN 1 ELSE 0 END AS IsFlag` → Tier 2.
+  `SELECT CAST(x AS BIGINT) AS BigX` where upstream is `INT` → Tier 2.
+- **Mode E · Paraphrase loss.** Verbatim means VERBATIM. If the upstream
+  description has 9 value=ID mappings, your Tier 1 description has 9
+  value=ID mappings. If the upstream says `Net Open Position in USD …
+  via FX conversion`, your description includes `via FX conversion` — not
+  `Net Open Position in USD`. The brevity cap is for prose, not for
+  semantic content of inherited descriptions.
+
+### Footer arithmetic check
+
+`Tier1: N · Tier2: N · Tier3: N · Tier4: N` MUST sum to the DDL column count
+AND match the Element-table tier suffix counts. The judge will fail you for
+stats inconsistency even if every individual description is correct. Recount
+before printing the footer.
+
+---
+
 ## Output paths — write here, NOT into the main wiki tree
 
 Write all THREE output files into:
