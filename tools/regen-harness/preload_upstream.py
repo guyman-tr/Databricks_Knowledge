@@ -56,6 +56,21 @@ LOCAL_SYNAPSE_SCHEMAS = {
     "Schemas",
 }
 
+# Per-schema table-name prefixes used by the migration-mirror discovery step.
+# Most eToro Synapse schemas namespace their tables with a fixed prefix
+# (BI_DB_dbo.BI_DB_X, Dealing_dbo.Dealing_X, eMoney_dbo.eMoney_X, etc.). We use
+# this to strip a "base name" from the target object and re-construct candidate
+# mirror names in OTHER schemas. Schemas with no consistent prefix (DWH_dbo,
+# Schemas) are NOT in this map; they're handled separately if needed.
+SCHEMA_TABLE_PREFIXES: Dict[str, List[str]] = {
+    "BI_DB_dbo":    ["BI_DB_"],
+    "Dealing_dbo":  ["Dealing_"],
+    "eMoney_dbo":   ["eMoney_"],
+    "EXW_dbo":      ["EXW_"],
+    "CryptoDB_dbo": ["CryptoDB_"],
+    "DE_dbo":       ["DE_"],
+}
+
 # Tokens that indicate "no source" rather than a real table name.
 NULL_SOURCE_TOKENS = {
     "unknown",
@@ -554,6 +569,120 @@ def build_bundle(
     return "\n".join(out)
 
 
+_DDL_COLUMNS_BLOCK_RE = re.compile(
+    r"CREATE\s+TABLE[^\(]+\((.*?)\)\s*(?:WITH\b|\Z)",
+    re.IGNORECASE | re.DOTALL,
+)
+_DDL_NON_COLUMN_PREFIXES = (
+    "CONSTRAINT", "PRIMARY KEY", "FOREIGN KEY", "INDEX", "UNIQUE",
+    "CHECK", "WITH", "DISTRIBUTION", "CLUSTERED",
+)
+
+
+def _extract_ddl_columns(ddl_path: Optional[Path]) -> Set[str]:
+    """Best-effort: pull the column-name set out of a CREATE TABLE statement.
+
+    Used by `find_migration_mirrors` to verify that two same-base-named tables
+    in different schemas really are mirrors (not just lexical coincidences).
+    """
+    if not ddl_path or not ddl_path.exists():
+        return set()
+    text = ddl_path.read_text(encoding="utf-8", errors="replace")
+    text = re.sub(r"--[^\n]*", "", text)
+    text = re.sub(r"/\*[\s\S]*?\*/", "", text)
+    m = _DDL_COLUMNS_BLOCK_RE.search(text)
+    if not m:
+        return set()
+    body = m.group(1)
+    cols: Set[str] = set()
+    for line in body.split("\n"):
+        s = line.strip().rstrip(",")
+        if not s:
+            continue
+        if s.upper().startswith(_DDL_NON_COLUMN_PREFIXES):
+            continue
+        first = s.split()[0].strip("[]`\"")
+        if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", first):
+            cols.add(first.lower())
+    return cols
+
+
+def find_migration_mirrors(schema: str, obj: str) -> List[str]:
+    """Discover sibling wikis in OTHER Synapse schemas that look like migration
+    mirrors of `{schema}.{obj}`.
+
+    Pattern: many eToro tables exist as 1:1 column-identical copies across
+    schemas (BI_DB_X mirrors Dealing_X, eMoney_X mirrors EXW_X, etc.). The
+    SP-based upstream discovery often misses this relationship because the
+    writer SP lives in a different schema or uses dynamic SQL. When that
+    happens the mirror's wiki — which has the canonical column descriptions —
+    never reaches the writer and tier accuracy collapses.
+
+    Algorithm:
+      1. Strip the object's known schema-prefix to get a base name.
+         BI_DB_dbo.BI_DB_DailyZeroPnL_Stocks -> base = "DailyZeroPnL_Stocks".
+      2. For every other schema in SCHEMA_TABLE_PREFIXES, build the candidate
+         mirror name "{other_prefix}{base}" and look up its wiki.
+      3. Verify with column-name overlap >= 70% of the smaller column set.
+         If the DDL can't be read (e.g. mirror is a view with no SSDT entry),
+         accept on name match alone.
+
+    Returns the verified mirrors as fully-qualified identifiers, e.g.
+    ["Dealing_dbo.Dealing_DailyZeroPnL_Stocks"]. The caller appends these to
+    the candidates list so they flow through `resolve_one` like any other
+    upstream and land in the bundle.
+    """
+    self_prefixes = SCHEMA_TABLE_PREFIXES.get(schema, [])
+    base = obj
+    for p in self_prefixes:
+        if obj.lower().startswith(p.lower()):
+            base = obj[len(p):]
+            break
+    if not base or len(base) < 3:
+        return []
+
+    self_ddl: Optional[Path] = None
+    for sub in ("Tables", "Views"):
+        cand = SSDT_ROOT / schema / sub / f"{schema}.{obj}.sql"
+        if cand.exists():
+            self_ddl = cand
+            break
+    self_cols = _extract_ddl_columns(self_ddl)
+    # Need at least 3 columns for the overlap check to be meaningful. If we
+    # can't read the self-DDL we still proceed but rely on name match alone.
+    have_self_cols = len(self_cols) >= 3
+
+    out: List[str] = []
+    for other_schema, other_prefixes in SCHEMA_TABLE_PREFIXES.items():
+        if other_schema == schema:
+            continue
+        for op in other_prefixes:
+            cand_obj = f"{op}{base}"
+            cand_wiki = find_synapse_wiki(other_schema, cand_obj)
+            if not cand_wiki:
+                continue
+            # Verify column overlap when both DDLs are readable. This guards
+            # against lexical coincidences (different tables that happen to
+            # share a base name).
+            verified = True
+            if have_self_cols:
+                other_ddl: Optional[Path] = None
+                for sub in ("Tables", "Views"):
+                    cand_ddl = SSDT_ROOT / other_schema / sub / f"{other_schema}.{cand_obj}.sql"
+                    if cand_ddl.exists():
+                        other_ddl = cand_ddl
+                        break
+                other_cols = _extract_ddl_columns(other_ddl)
+                if other_cols:
+                    overlap = len(self_cols & other_cols)
+                    smaller = min(len(self_cols), len(other_cols))
+                    if smaller == 0 or overlap / smaller < 0.7:
+                        verified = False
+            if verified:
+                out.append(f"{other_schema}.{cand_obj}")
+    return out
+
+
 def process_one(schema: str, obj: str, routing: Dict, verbose: bool = False) -> Dict:
     target_dir = TARGET_ROOT / schema / obj
     if not target_dir.exists():
@@ -597,6 +726,16 @@ def process_one(schema: str, obj: str, routing: Dict, verbose: bool = False) -> 
         sp_join_candidates.extend(parse_sp_join_sources(sp))
     candidates.extend(sp_join_candidates)
 
+    # Migration-mirror discovery: BI_DB_X often mirrors Dealing_X / eMoney_X
+    # column-for-column. The mirror's wiki carries the canonical descriptions
+    # the writer needs to assign Tier 1, but cross-schema SP routing or
+    # dynamic SQL can hide the relationship from `discover_writer_sps`. We
+    # always include verified mirrors as candidates so they flow through
+    # `resolve_one` and land in the upstream bundle alongside any SP-derived
+    # candidates. Verification is name + DDL column-overlap (>= 70%).
+    mirror_candidates = find_migration_mirrors(schema, obj)
+    candidates.extend(mirror_candidates)
+
     # Drop self-references, obvious noise, and anything that doesn't look
     # like a 2- or 3-part SQL identifier.
     cleaned: List[str] = []
@@ -633,6 +772,7 @@ def process_one(schema: str, obj: str, routing: Dict, verbose: bool = False) -> 
         "ddl_path": str(ddl_path) if ddl_path else None,
         "lineage_path": str(lineage) if lineage.exists() else None,
         "writer_sps_discovered": [str(p) for p in writer_sps],
+        "migration_mirrors_discovered": mirror_candidates,
         "candidates_found": len(cleaned),
         "resolved_synapse": sum(1 for r in resolved if r.kind == "synapse"),
         "resolved_production": sum(1 for r in resolved if r.kind == "production"),
