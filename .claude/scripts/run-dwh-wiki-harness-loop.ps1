@@ -45,6 +45,13 @@ param(
     [Parameter(Mandatory=$false)] [string]   $WriterModelSimple  = "sonnet",
     [Parameter(Mandatory=$false)] [string]   $WriterModelComplex = "opus",
     [Parameter(Mandatory=$false)] [string]   $JudgeModel         = "sonnet",
+
+    # ── Cost lever: skip the LLM judge for trivially-simple objects (cols<=N,
+    #    single-mirror upstream, all rows passthrough). Wraps a deterministic
+    #    pre-check + synthetic verdict so the loop stops calling claude-cli for
+    #    cases where the judge always returns PASS anyway.
+    [Parameter(Mandatory=$false)] [switch]   $EnableAutoVerify,
+    [Parameter(Mandatory=$false)] [int]      $AutoVerifyMaxCols  = 5,
     [Parameter(Mandatory=$false)] [int]      $SimpleColThreshold = 30,
 
     # ── Throughput lever (T3: parallel regen_one) ───────────────────────────
@@ -119,6 +126,7 @@ Write-Host ("  Writer:   simple<={0}cols -> {1}   complex>{0}cols -> {2}" -f `
     $(if ($WriterModelSimple)  { $WriterModelSimple }  else { '<default>' }), `
     $(if ($WriterModelComplex) { $WriterModelComplex } else { '<default>' })) -ForegroundColor Cyan
 Write-Host ("  Judge:    {0}" -f $(if ($JudgeModel) { $JudgeModel } else { '<default>' })) -ForegroundColor Cyan
+Write-Host ("  AutoVerify: {0}" -f $(if ($EnableAutoVerify) { "ON (max-trivial-cols={0})" -f $AutoVerifyMaxCols } else { "OFF (every object goes through LLM judge)" })) -ForegroundColor Cyan
 Write-Host "  Repo:     $repoRoot" -ForegroundColor Cyan
 Write-Host "  Started:  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Cyan
 if ($DryRun) {
@@ -458,18 +466,24 @@ while ($true) {
 
             $idx++
             $job = Start-Job -ScriptBlock {
-                param($regenOne, $schema, $obj, $writerModel, $judgeModel, $writerTimeout, $judgeTimeout)
-                & $regenOne -Schema $schema -ObjectName $obj `
-                    -MaxAttempts 2 `
-                    -WriterTimeoutSeconds $writerTimeout `
-                    -JudgeTimeoutSeconds $judgeTimeout `
-                    -WriterModel $writerModel `
-                    -JudgeModel  $judgeModel
+                param($regenOne, $schema, $obj, $writerModel, $judgeModel, $writerTimeout, $judgeTimeout, $enableAutoVerify, $autoVerifyMaxCols)
+                $regenArgs = @(
+                    "-Schema", $schema, "-ObjectName", $obj,
+                    "-MaxAttempts", 2,
+                    "-WriterTimeoutSeconds", $writerTimeout,
+                    "-JudgeTimeoutSeconds", $judgeTimeout,
+                    "-WriterModel", $writerModel,
+                    "-JudgeModel",  $judgeModel
+                )
+                if ($enableAutoVerify) {
+                    $regenArgs += @("-EnableAutoVerify", "-AutoVerifyMaxCols", $autoVerifyMaxCols)
+                }
+                & $regenOne @regenArgs
                 # Emit the regen_one exit code as the LAST line so the parent
                 # can pull it back via Receive-Job. Job output is purely text
                 # from regen_one's Write-Host stream, none of which we parse.
                 "REGEN_EXIT_CODE=$LASTEXITCODE"
-            } -ArgumentList $regenOne, $SchemaName, $obj, $writerModel, $JudgeModel, $WriterTimeout, $JudgeTimeout
+            } -ArgumentList $regenOne, $SchemaName, $obj, $writerModel, $JudgeModel, $WriterTimeout, $JudgeTimeout, $EnableAutoVerify.IsPresent, $AutoVerifyMaxCols
 
             $jobMeta[$job.Id] = @{
                 Object      = $obj
