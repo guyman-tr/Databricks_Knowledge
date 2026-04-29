@@ -1,0 +1,108 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CIDFunnelFlow",
+    "elapsed_seconds":  225,
+    "exit_code":  null,
+    "cost_usd":  1.0733,
+    "input_tokens":  2,
+    "output_tokens":  12558,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CIDFunnelFlow",
+                    "weighted_score":  6.80,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  2,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 - Dictionary.Country upstream wiki)",
+                                                  "wiki_quote":  "Customer\u0027s registered country name (e.g., \u0027Germany\u0027, \u0027United States\u0027, \u0027Brazil\u0027). Resolved from Dim_Country.Name via CountryID. (Tier 2 — Dim_Country)",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely paraphrased. Dropped uniqueness note, UI/compliance usage context. Added fabricated examples. Wrong tier: should be Tier 1 — Dictionary.Country, not Tier 2 — Dim_Country."
+                                              },
+                                              {
+                                                  "column":  "Funnel",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. (Tier 1 — Dictionary.Funnel)",
+                                                  "wiki_quote":  "Customer acquisition funnel name from Dim_Funnel (e.g., \u0027eToro Web\u0027, \u0027eToro App\u0027). Resolved in the main INSERT SELECT via LEFT JOIN on FunnelFromID. Identical to FunnelFrom — see Business Logic §2.6. (Tier 2 — Dim_Funnel)",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped marketing/BackOffice usage context. Added fabricated examples and ETL mechanics. Wrong tier origin."
+                                              },
+                                              {
+                                                  "column":  "FunnelFrom",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. (Tier 1 — Dictionary.Funnel)",
+                                                  "wiki_quote":  "Funnel name pre-resolved in the #POP staging table (e.Name from Dim_Funnel). Identical to Funnel in value — see Business Logic §2.6. Represents the acquisition funnel pathway the customer entered through. (Tier 2 — Dim_Funnel via #POP)",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely rewritten with ETL-level explanation. Wrong tier origin."
+                                              },
+                                              {
+                                                  "column":  "DesignatedRegulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+                                                  "wiki_quote":  "The regulation jurisdiction first assigned to the customer after registration, sourced from Fact_SnapshotCustomer RANK=1 (earliest snapshot with non-null DesignatedRegulationID on or after registration date). Resolved to Dim_Regulation.Name. Unlike Regulation, this reflects the original designated jurisdiction and does not change if the customer later migrates. (Tier 2 — Fact_SnapshotCustomer/Dim_Regulation)",
+                                                  "match":  "NO",
+                                                  "loss":  "Upstream description entirely replaced with ETL resolution logic. Wrong tier: should be Tier 1 — Dictionary.Regulation."
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+                                                  "wiki_quote":  "The customer\u0027s current regulation jurisdiction name at ETL run time. Resolved from Dim_Regulation DR2 on DC.RegulationID = DR2.ID. Note: join uses DR2.ID (not DR2.DWHRegulationID). Distribution: BVI 84.0%, eToroUS 6.2%, CySEC 5.5%, FCA 1.7%. (Tier 2 — Dim_Regulation via RegulationID)",
+                                                  "match":  "NO",
+                                                  "loss":  "Upstream description replaced with ETL join mechanics and distribution stats. Wrong tier origin."
+                                              },
+                                              {
+                                                  "column":  "Platform",
+                                                  "upstream_quote":  "Platform name label: \u0027Undefined\u0027, \u0027Web\u0027, \u0027IOS\u0027, \u0027Android\u0027. Used in reporting dashboards and per-platform analytics. Passthrough from production -- same column name. (Tier 1 - upstream wiki, Dictionary.Platform)",
+                                                  "wiki_quote":  "Device or platform type through which the customer registered (e.g., \u0027Web\u0027, \u0027iOS\u0027, \u0027Android\u0027). Resolved from Dim_Platform via Dim_Funnel.PlatformID in the #POP staging table. (Tier 2 — Dim_Platform via #POP)",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Undefined\u0027 value, changed \u0027IOS\u0027 to \u0027iOS\u0027, dropped reporting dashboard usage note. Wrong tier origin."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country, Funnel, FunnelFrom, DesignatedRegulation, Regulation, Platform",
+                                       "problem":  "All 6 dim-lookup passthrough columns are tagged Tier 2 instead of Tier 1. The SP performs SELECT dim.Name with no transform from Dim_Country, Dim_Funnel, Dim_Regulation, and Dim_Platform — all of which document their Name/Platform columns as Tier 1 from production dictionaries. Per tier rules, these should be Tier 1 with the dim\u0027s root origin (e.g., Dictionary.Country), not Tier 2 via the SP or dim table."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 4 (all 6 should-be-T1 columns)",
+                                       "problem":  "Zero verbatim upstream quotes in the entire wiki. Despite 13 upstream wikis in the bundle with explicit Tier 1 descriptions, every dim-lookup column has a completely rewritten description mixing ETL mechanics with paraphrased meaning. Not a single character-level match."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PEP",
+                                       "problem":  "Tagged Tier 2 (Dim_ScreeningStatus) but the upstream Dim_ScreeningStatus wiki documents its Name column as Tier 3 (live data inference, no production wiki exists). Tier confidence is inflated."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "DesignatedRegulation, Regulation (Element descriptions)",
+                                       "problem":  "Element descriptions contain ETL resolution logic (RANK=1, DR2.ID join) that belongs in Section 2 Business Logic or Section 5 Lineage. Element descriptions should describe what the value means to an analyst, not how the SP computes it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00270 T1, 37 T2\u0027 — should be at least 6 T1 after corrections. The self-reported quality score of 9.68/10 is inflated given the systematic tier misclassification."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag Country as (Tier 1 — Dictionary.Country) using verbatim: \u0027Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 (2) Re-tag Funnel and FunnelFrom as (Tier 1 — Dictionary.Funnel) using verbatim: \u0027Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics.\u0027 (3) Re-tag DesignatedRegulation and Regulation as (Tier 1 — Dictionary.Regulation) using verbatim: \u0027Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.\u0027 (4) Re-tag Platform as (Tier 1 — Dictionary.Platform) using verbatim: \u0027Platform name label: Undefined, Web, IOS, Android. Used in reporting dashboards and per-platform analytics.\u0027 (5) Move ETL resolution details from Element descriptions to Section 2/5. (6) Re-tag PEP as (Tier 3 — Dim_ScreeningStatus, no production wiki). (7) Update footer tier counts.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 3,970,310 in Section 1 header",
+                                                                                  "Regulation distribution (BVI 84.0%, eToroUS 6.2%, CySEC 5.5%, FCA 1.7%) in Element 10",
+                                                                                  "Channel distribution (Direct 57.0%, SEM 16.2%, etc.) in Element 6",
+                                                                                  "Milestone percentages across 15+ elements (EmailVerification 59.5%, V1 52.3%, FTD 8.6%, etc.)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

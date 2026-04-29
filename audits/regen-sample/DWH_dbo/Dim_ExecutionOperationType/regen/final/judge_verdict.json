@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ExecutionOperationType",
+    "elapsed_seconds":  112,
+    "exit_code":  null,
+    "cost_usd":  0.3507,
+    "input_tokens":  2,
+    "output_tokens":  4699,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ExecutionOperationType",
+                    "weighted_score":  8.15,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 7.3",
+                                       "problem":  "Sample query uses fabricated table name `DWH_dbo.SomeHistoryCostsFact` instead of a real downstream consumer. Analysts copying this query will get an error."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range mentioned. Even for a static dictionary, should explicitly note \u0027no temporal dimension\u0027 rather than silently omitting."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "Operation type ID-range categorizations (0-11 orders, 12-19 positions, etc.) are inferred from names, not sourced from documentation. Should carry an inference caveat."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 7/14\u0027 without specifying which phases were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Tier 1 definition includes parenthetical \u0027(no upstream wiki available for this object)\u0027 — either omit the unused tier or keep the legend clean."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only (wiki passes): (1) Replace `DWH_dbo.SomeHistoryCostsFact` in Section 7.3 with a real downstream table or remove the query with a note that downstream consumers were not identified. (2) Add explicit note in Section 1 that the table has no temporal dimension. (3) Add \u0027(inferred from operation type names)\u0027 caveat to ID-range categorizations in Sections 1 and 2.1. (4) Add an explicit Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 status unclear — footer says 7/14 phases but no checklist provided"
+                                                           ]
+                                    }
+                }
+}

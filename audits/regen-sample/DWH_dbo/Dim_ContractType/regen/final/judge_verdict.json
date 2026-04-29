@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ContractType",
+    "elapsed_seconds":  82,
+    "exit_code":  null,
+    "cost_usd":  0.176,
+    "input_tokens":  2,
+    "output_tokens":  3195,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ContractType",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "CPR mapping described as → 8 which conflicts with Dim_ContractType ID 1 = CPR. Correctly flagged in review-needed sidecar but could be more prominent in Section 3.4 Gotchas."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "Phase Gate Checklist not rendered as an explicit section in the wiki body; only referenced as \u0027Phases: 13/14\u0027 in footer."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "SP_Dim_Affiliate CASE logic documented but SP source was not in the upstream bundle — claims are unverifiable from bundle alone."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ContractTypeID",
+                                       "problem":  "Column is nullable per DDL despite serving as logical PK. Not called out as a gotcha in Section 3.4."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Production Source marked \u0027Unknown (dormant)\u0027 — honest but leaves a gap. Review-needed sidecar correctly escalates."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

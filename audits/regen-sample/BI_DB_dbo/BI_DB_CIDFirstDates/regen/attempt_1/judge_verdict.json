@@ -1,0 +1,192 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CIDFirstDates",
+    "elapsed_seconds":  315,
+    "exit_code":  null,
+    "cost_usd":  2.5267,
+    "input_tokens":  3,
+    "output_tokens":  16134,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CIDFirstDates",
+                    "weighted_score":  7.0,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  4,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID -- platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Mapped from Dim_Customer.RealCID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added lineage sentence not in upstream"
+                                              },
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Group Customer ID -- cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "OriginalCID",
+                                                  "upstream_quote":  "Original customer ID from the source provider. Together with OriginalProviderID, enables tracing of migrated accounts. Default=0.",
+                                                  "wiki_quote":  "Original customer ID from the source provider. Together with OriginalProviderID, enables tracing of migrated accounts. Default=0.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "eToro Club loyalty tier name. Values: Bronze (45.97M), Silver (287K), Gold (259K), Platinum (129K), Platinum Plus (92K), Diamond (11K). Dim-lookup from Dim_PlayerLevel.Name via PlayerLevelID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely rewritten; dropped Internal/N/A values, dropped BackOffice reporting usage, added distribution counts not from upstream"
+                                              },
+                                              {
+                                                  "column":  "Email",
+                                                  "upstream_quote":  "Customer email address. Unique (case-insensitive via LowerEmail computed column). Email changes trigger Customer.LastChanges update via trigger.",
+                                                  "wiki_quote":  "Customer email address. Dynamically masked with default().",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped uniqueness constraint, LowerEmail computed column, trigger behavior; replaced with DDL masking info"
+                                              },
+                                              {
+                                                  "column":  "BirthDate",
+                                                  "upstream_quote":  "Customer date of birth. Used in LinkedAccountHash1 for duplicate detection and in KYC age verification.",
+                                                  "wiki_quote":  "Customer date of birth. Used in KYC age verification.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped LinkedAccountHash1 duplicate detection reference"
+                                              },
+                                              {
+                                                  "column":  "Gender",
+                                                  "upstream_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only.",
+                                                  "wiki_quote":  "Gender: M, F, or U (Unknown). CHECK constraint enforces these three values only.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped constraint name CCST_GENDER"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0.",
+                                                  "wiki_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Channel",
+                                                  "upstream_quote":  "Top-level marketing channel category. Derived from AffWizz MarketingExpense.MarketingExpenseName with overrides: \u0027Introducing Agents\u0027 -\u003e \u0027Affiliate\u0027, AffiliateID IN (56662,56663) -\u003e \u0027Direct\u0027. (Tier 2 in Dim_Channel)",
+                                                  "wiki_quote":  "Top-level marketing channel category. Dim-lookup via Dim_Affiliate.SubChannelID -\u003e Dim_Channel.Channel. ISNULL default \u0027Direct\u0027 for customers without affiliate mapping. Common values: Direct, SEM, SEO, Affiliate, Friend Referral.",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely rewritten; wrong tier (claimed T1 but Dim_Channel marks as T2); dropped AffWizz derivation and CASE expression origin"
+                                              },
+                                              {
+                                                  "column":  "SubChannel",
+                                                  "upstream_quote":  "Granular sub-channel name within the parent Channel. Human-readable label for SubChannelID. Derived via parallel CASE expression alongside SubChannelID. (Tier 2 in Dim_Channel)",
+                                                  "wiki_quote":  "Granular sub-channel name within the parent Channel. Dim-lookup via Dim_Affiliate.SubChannelID -\u003e Dim_Channel.SubChannel. ISNULL default \u0027Direct\u0027.",
+                                                  "match":  "NO",
+                                                  "loss":  "Rewritten; wrong tier (claimed T1 but source is T2); dropped CASE-expression derivation"
+                                              },
+                                              {
+                                                  "column":  "LabelName",
+                                                  "upstream_quote":  "Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = \u0027eToro\u0027).",
+                                                  "wiki_quote":  "White-label broker brand name. Dim-lookup from Dim_Label.Name via LabelID. Most customers show \u0027eToro\u0027 (LabelID 0/1).",
+                                                  "match":  "NO",
+                                                  "loss":  "Rewritten; dropped BackOffice usage context; dropped multi-LabelID sharing note (0, 1, 9 all = \u0027eToro\u0027)"
+                                              },
+                                              {
+                                                  "column":  "PrivacyPolicyID",
+                                                  "upstream_quote":  "Version of the privacy policy the customer has accepted. FK to Dictionary.PrivacyPolicy.",
+                                                  "wiki_quote":  "Version of the privacy policy the customer has accepted. FK to Dictionary.PrivacyPolicy.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DesignatedRegulationID",
+                                                  "upstream_quote":  "Secondary/override regulation for accounts subject to multiple jurisdictions. FK to Dictionary.Regulation.",
+                                                  "wiki_quote":  "Secondary/override regulation for accounts subject to multiple jurisdictions. FK to Dictionary.Regulation.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EvMatchStatus",
+                                                  "upstream_quote":  "Electronic verification match result. Score or decision from automated identity verification vendors (Onfido, Au10tix). NULL if not yet processed.",
+                                                  "wiki_quote":  "Electronic verification match result. Score or decision from automated identity verification vendors (Onfido, Au10tix). NULL if not yet processed.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegulationID",
+                                                  "upstream_quote":  "Regulatory entity governing this account. FK to Dictionary.Regulation. Top values: CySEC=7.39M, BVI=7.30M, FCA=1.17M. Changes trigger RegulationChangeDate update.",
+                                                  "wiki_quote":  "Regulatory entity governing this account. FK to Dictionary.Regulation. Top values: CySEC, BVI, FCA.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped specific value counts and trigger behavior"
+                                              },
+                                              {
+                                                  "column":  "SerialID",
+                                                  "upstream_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations.",
+                                                  "wiki_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from AffiliateID in Dim_Customer). FK to BackOffice.Affiliate. NULL for direct/organic registrations.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Swapped rename direction wording"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Channel (#7), SubChannel (#8)",
+                                       "problem":  "Tagged Tier 1 (fiktivo_dbo.tblaff_Affiliates via Dim_Channel) but Dim_Channel marks both columns as Tier 2 — they are SP-computed via a massive CASE expression, not dictionary passthroughs. Should be Tier 2 — SP_CIDFirstDates via Dim_Channel."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Region (#12)",
+                                       "problem":  "Tagged Tier 2 (SP_CIDFirstDates via Dim_Country.Region) but Region is a dim-lookup passthrough from Dim_Country.Region which traces to Dictionary.MarketingRegion.Name. Per dim-lookup rules, should be Tier 1 — Dictionary.MarketingRegion."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Email (#14)",
+                                       "problem":  "Upstream says \u0027Unique (case-insensitive via LowerEmail computed column). Email changes trigger Customer.LastChanges update via trigger.\u0027 Wiki says only \u0027Customer email address. Dynamically masked with default().\u0027 Dropped uniqueness, computed column, and trigger semantics."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Club (#5)",
+                                       "problem":  "Upstream Dim_PlayerLevel.Name says \u0027Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.\u0027 Wiki completely rewrites with distribution counts and lineage, dropping Internal/N/A and BackOffice context."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "State (#32)",
+                                       "problem":  "Tagged Tier 2 but is a dim-lookup passthrough from Dim_State_and_Province.Name, which traces to Dictionary.RegionName.Name. Should be Tier 1 — Dictionary.RegionName."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BirthDate (#25)",
+                                       "problem":  "Upstream includes \u0027Used in LinkedAccountHash1 for duplicate detection and in KYC age verification.\u0027 Wiki drops the LinkedAccountHash1 reference — a specific technical use case lost."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "LabelName (#9)",
+                                       "problem":  "Upstream says \u0027Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = eToro).\u0027 Wiki completely rewrites, dropping the multi-ID sharing note."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag Channel and SubChannel as Tier 2 — Dim_Channel marks them T2 (SP-computed via CASE). (2) Re-tag Region as Tier 1 — Dictionary.MarketingRegion (dim-lookup passthrough through Dim_Country). (3) Re-tag State as Tier 1 — Dictionary.RegionName. (4) Restore Email upstream text: \u0027Unique (case-insensitive, enforced via LowerEmail computed column index). Email changes trigger Customer.LastChanges update via trigger.\u0027 (5) Restore Club upstream text from Dim_PlayerLevel.Name verbatim, including Internal/N/A. (6) Restore BirthDate upstream text including LinkedAccountHash1. (7) Restore LabelName upstream text including multi-LabelID sharing note.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Club distribution counts (45.97M Bronze, 287K Silver, etc.) appear in element description — likely from live query"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian) explicitly skipped per Section 8"
+                                                           ]
+                                    }
+                }
+}

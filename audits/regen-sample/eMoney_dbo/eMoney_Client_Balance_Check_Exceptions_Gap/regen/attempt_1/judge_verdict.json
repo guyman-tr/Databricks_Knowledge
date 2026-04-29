@@ -1,0 +1,54 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Client_Balance_Check_Exceptions_Gap",
+    "elapsed_seconds":  112,
+    "exit_code":  null,
+    "cost_usd":  0.3915,
+    "input_tokens":  2,
+    "output_tokens":  4084,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Client_Balance_Check_Exceptions_Gap",
+                    "weighted_score":  9.1,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "ETL step ordering shows TRUNCATE as Step 1, SELECT as Step 2. In the actual SP code, SELECT into #final executes before TRUNCATE. Functionally equivalent due to temp table isolation, but misleading as an execution sequence."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7.2",
+                                       "problem":  "Drill-down query uses unnecessarily complex date-to-int conversion (CAST(CONVERT(VARCHAR(8), Date, 112) AS INT)) when simpler alternatives exist."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4",
+                                       "problem":  "Could more prominently warn that the TRUNCATE pattern means external monitoring must poll between SP runs or the exception signal is lost at next execution."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

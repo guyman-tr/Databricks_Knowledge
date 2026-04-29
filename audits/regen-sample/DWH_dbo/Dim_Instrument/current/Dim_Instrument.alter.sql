@@ -1,0 +1,128 @@
+-- =============================================================================
+-- Databricks ALTER Script: DWH_dbo.Dim_Instrument
+-- Generated: 2026-03-22 | 15-phase pipeline
+-- Target: Unity Catalog table comment + column comments (1024 char limit)
+-- UC Target: main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
+-- Resolved via: information_schema bulk query
+-- Classification: Standard
+-- =============================================================================
+
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument SET TBLPROPERTIES (
+    'comment' = '`DWH_dbo.Dim_Instrument` is the DWH''s master reference for all tradeable instruments on the eToro platform. It extends the foundational trade pair definition from `Trade.Instrument` (which specifies the buy/sell currency pairing for each instrument) with rich analytics metadata: display names and company info from `Trade.InstrumentMetaData`, trading configuration from `Trade.ProviderToInstrument`, financial market data (market cap, ADV, shares outstanding) from the Rankings/StockInfo system, Bloomberg-style asset classification, and futures-specific parameters. The result is a 47-column analytics hub that serves as the primary instrument lookup for fact table enrichment across DWH analytics. The production source is `etoro.Trade.GetInstrument` (a view on the production etoroDB-REAL server), which combines `Trade.Instrument` with multiple related tables. The Generic Pipeline exports this view daily to `Bronze/etoro/Trade/GetInstrument/` (UC: `trading.bronze_etoro_trade_getinstrument`). The DWH ETL SP (`SP_D...'
+);
+
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument SET TAGS (
+    'domain' = 'trading',
+    'object_type' = 'dimension',
+    'source_schema' = 'DWH_dbo',
+    'refresh_frequency' = 'daily',
+    'source_system' = 'Synapse',
+    'synapse_distribution' = 'REPLICATE',
+    'synapse_index' = 'CLUSTERED INDEX (InstrumentID ASC)',
+    'pipeline' = 'dwh-semantic-doc',
+    'pipeline_version' = '15-phase'
+);
+
+-- ---- Column Comments ----
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentID COMMENT 'Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables. (Tier 1 -- upstream wiki, Trade.Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentTypeID COMMENT 'Instrument type category: 1=Currencies (forex), 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies. Note TypeIDs 3, 7, 8, 9 are unused gaps. Distribution: Stocks 82%, ETF 8%, Crypto 4%, Commodities 3%, Indices 2%, Currencies 1%. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentType COMMENT 'Text label for InstrumentTypeID -- DWH-computed via CASE: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else=Other. Use InstrumentTypeID for filtering; InstrumentType for display. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Name COMMENT 'Instrument name as defined in Trade.Instrument. For forex: pair notation (e.g., EUR/USD). For stocks: company name (e.g., Apple, Alphabet). For crypto: token name. This is the internal instrument name, not necessarily the display name shown to users (see InstrumentDisplayName). (Tier 3 -- live data, etoro.Trade.GetInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN DWHInstrumentID COMMENT 'Always equal to InstrumentID -- redundant copy following the DWH DWH{X}ID pattern. Use InstrumentID for all JOINs. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN StatusID COMMENT 'Hardcoded to 1 for all real rows by SP_Dim_Instrument. NULL only for ID=0 placeholder. Conveys no business information. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN BuyCurrencyID COMMENT 'The buy-side asset of the instrument pair. FK to DWH_dbo.Dim_Currency(CurrencyID). For forex: the base currency. For stocks/ETFs/crypto: the asset''s own CurrencyID in Dim_Currency (BuyCurrencyID = InstrumentID for stocks). (Tier 1 -- upstream wiki, Trade.Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SellCurrencyID COMMENT 'The sell-side (denomination) currency. FK to DWH_dbo.Dim_Currency(CurrencyID). For forex: the quote currency (e.g., USD in EUR/USD). For stocks: the trading denomination currency (USD, EUR, GBX). Only 67 distinct values since many assets share the same denomination. (Tier 1 -- upstream wiki, Trade.Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN BuyCurrency COMMENT 'Text abbreviation of BuyCurrencyID -- denormalized from Dictionary.Currency.Abbreviation via SP JOIN. Example: EUR, AAPL, BTC. DWH-added for query convenience. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SellCurrency COMMENT 'Text abbreviation of SellCurrencyID -- denormalized from Dictionary.Currency.Abbreviation. Example: USD, EUR, GBX (GBP pence). DWH-added for query convenience. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN TradeRange COMMENT 'Allowed trade range in pips for pending orders. Determines how far from market price a limit/stop order can be placed. Set during instrument creation. (Tier 1 -- upstream wiki, Trade.Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN DollarRatio COMMENT 'Price scaling factor for USD normalization. Most instruments = 1. JPY pairs = 100 (because JPY is quoted at 100x the numeric value of other currencies). Used in P&L and conversion rate calculations across the platform. (Tier 1 -- upstream wiki, Trade.Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN PipDifferenceThreshold COMMENT 'Maximum allowed pip difference threshold for price validation. If a new price deviates more than this threshold from the previous price, it may be flagged as suspicious. NULL for some instruments. (Tier 1 -- upstream wiki, Trade.Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IsMajorID COMMENT 'Integer representation of the production IsMajor flag (0 or 1). 1=major instrument (6,963 instruments -- all major forex pairs and many popular stocks). 0=non-major (8,743 instruments). Renamed from production IsMajor to distinguish from the text version. Use for filtering. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IsMajor COMMENT 'Text version of IsMajorID -- DWH CASE computed: IsMajorID=1->''Yes'', 0->''No''. Use for display. Affects spread calculations and regulatory leverage caps (ESMA allows higher leverage for major forex). (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp -- set to GETDATE() by SP_Dim_Instrument on each daily reload. Does NOT reflect production modification date. NULL only for ID=0 placeholder. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InsertDate COMMENT 'ETL load timestamp -- set to GETDATE() by SP_Dim_Instrument, same as UpdateDate. Both reflect the daily load time. Does NOT reflect production insertion date. NULL only for ID=0 placeholder. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentDisplayName COMMENT 'User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., ''Apple Inc.'' vs ''Apple''). NULL for instruments without metadata entries. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Industry COMMENT 'Industry classification string from Trade.InstrumentMetaData. Text description (e.g., ''Internet'', ''Software''). Similar to but may differ from IndustryGroup (Bloomberg). NULL for non-stock instruments or instruments without metadata. (Tier 3 -- live data, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN CompanyInfo COMMENT 'Free-text company description from Trade.InstrumentMetaData. May contain multi-sentence business descriptions of the company. NULL for non-company instruments (forex, commodities, indices). (Tier 3 -- live data, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Exchange COMMENT 'Stock exchange name from Trade.InstrumentMetaData (e.g., Nasdaq, NYSE, LSE). NULL for non-stock instruments. (Tier 3 -- live data, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ISINCode COMMENT 'International Securities Identification Number -- 12-character alphanumeric code standardized by ISO 6166 (e.g., US0378331005 for Apple). NULL for forex, commodities, and instruments without ISIN. Country prefix + national code + check digit. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ISINCountryCode COMMENT 'Country code prefix from the ISIN (first 2 characters). Indicates the country of registration (e.g., US, DE, GB). NULL when ISINCode is NULL. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Tradable COMMENT 'Flag indicating if the instrument is currently tradable: 1=tradable, 0=not tradable. CAST from production bit. NULL for ID=0 placeholder. An instrument may exist but be non-tradable due to regulatory, market, or operational reasons. (Tier 2 -- SP_Dim_Instrument, etoro.Trade.GetInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Symbol COMMENT 'Ticker symbol for the instrument (e.g., AAPL, EURUSD, BTCUSD). Used for display, search, and price feed identification. NULL for ID=0 placeholder and some instruments without formal ticker. (Tier 3 -- live data, etoro.Trade.GetInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ReceivedOnPriceServer COMMENT 'First timestamp when the instrument was observed on the price server (from Ext_Dim_Instrument_ReceivedOnPriceServerStatic). Set once and never updated (static history). NULL for instruments not yet priced or newly added instruments that have not yet appeared in price feeds. (Tier 2 -- SP_Dim_Instrument, post-load UPDATE)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN BonusCreditUsePercent COMMENT 'Percentage of bonus credit that can be applied to trading this instrument, from Trade.ProviderToInstrument. Lower values restrict bonus usage for high-risk/volatile instruments. NULL for instruments without ProviderToInstrument mapping. (Tier 3 -- live data, etoro_Trade_ProviderToInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SymbolFull COMMENT 'Full ticker symbol (may be longer than Symbol), from Trade.InstrumentMetaData. Used for data provider integrations that require fully qualified symbols. NULL for instruments without metadata. (Tier 3 -- live data, etoro_Trade_InstrumentMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN CUSIP COMMENT 'Committee on Uniform Securities Identification Procedures number -- 9-character code for US/Canadian securities. Used for clearing, settlement, and regulatory reporting. NULL for non-US instruments and instruments without CUSIP. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentCusip)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Precision COMMENT 'Decimal precision for price display and trading (number of decimal places), from Trade.ProviderToInstrument. Determines how many decimals are shown in the UI and used in calculations. NULL for instruments without ProviderToInstrument mapping. (Tier 3 -- live data, etoro_Trade_ProviderToInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN AllowBuy COMMENT 'Flag indicating if long (buy) positions can currently be opened: 1=allowed, 0=disabled. Cast from bit. NULL for ID=0 placeholder. Instruments may be buy-disabled due to regulatory restrictions, risk management, or market conditions. (Tier 2 -- SP_Dim_Instrument, etoro.Trade.GetInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN AllowSell COMMENT 'Flag indicating if short (sell) positions can currently be opened: 1=allowed, 0=disabled. Cast from bit. NULL for ID=0 placeholder. Many regulated markets prohibit short selling for retail clients. (Tier 2 -- SP_Dim_Instrument, etoro.Trade.GetInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN AssetClass COMMENT 'Bloomberg-style asset class classification from Ext_Dim_Instrument_Classification_Static (e.g., Technology, Consumer Services, Finance). More granular than InstrumentType. NULL for non-stock instruments or instruments not in the classification static table. (Tier 2 -- SP_Dim_Instrument, post-load UPDATE)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IndustryGroup COMMENT 'Bloomberg-style industry group within AssetClass (e.g., Computers, Internet, Banks). Sub-classification of AssetClass. NULL for non-stock instruments or instruments not in the classification table. (Tier 2 -- SP_Dim_Instrument, post-load UPDATE)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ADV_Last3Months COMMENT 'Average Daily Trading Volume over the trailing 3 months (TTM), from Rankings StockInfo MetadataID=8557. In shares/units. NULL for non-stock instruments or instruments without Rankings coverage. Example: Apple ~48M shares/day. (Tier 2 -- SP_Dim_Instrument, Rankings_StockInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN MKTcap COMMENT 'Market capitalization in USD from Rankings StockInfo (MetadataID=8735 for equities; fallback MetadataID=9315 CryptoMarketCap for crypto). NULL for forex, commodities, and indices. Example: Apple ~3.8T USD. (Tier 2 -- SP_Dim_Instrument, Rankings_StockInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SharesOutStanding COMMENT 'Total shares outstanding in units from Rankings StockInfo MetadataID=8444. Annual figure. NULL for non-equity instruments. Example: Apple ~14.7B shares. (Tier 2 -- SP_Dim_Instrument, Rankings_StockInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN VisibleInternallyOnly COMMENT 'Flag (0/1) indicating if the instrument is visible only to internal eToro users (not shown to retail customers). Cast from bit. Used for instruments under development, testing, or institutional-only. NULL for ID=0 placeholder. (Tier 3 -- live data, etoro.Trade.GetInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN PlatformSector COMMENT 'eToro platform sector classification from Rankings StockInfo MetadataID=8436. May differ from Bloomberg AssetClass. NULL for non-equity instruments or instruments without Rankings coverage. (Tier 2 -- SP_Dim_Instrument, Rankings_StockInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN PlatformIndustry COMMENT 'eToro platform industry classification from Rankings StockInfo MetadataID=8280. More granular than PlatformSector. NULL for non-equity instruments or instruments without Rankings coverage. (Tier 2 -- SP_Dim_Instrument, Rankings_StockInfo)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IsFuture COMMENT 'Derived flag indicating if the instrument is a futures contract: 1=futures, 0=not futures. Computed in SP as CASE WHEN InstrumentID IN (SELECT InstrumentID FROM InstrumentGroups WHERE GroupID=25) THEN 1 ELSE 0. NULL for ID=0 placeholder. (Tier 2 -- SP_Dim_Instrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Multiplier COMMENT 'Futures contract size multiplier from Trade.FuturesMetaData. Determines how many units of the underlying asset one contract represents. NULL for non-futures instruments. (Tier 2 -- SP_Dim_Instrument, etoro_Trade_FuturesMetaData)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ProviderID COMMENT 'Liquidity provider identifier from Trade.ProviderToInstrument. Identifies which external market maker or broker provides pricing/liquidity for this instrument. NULL for instruments without a provider mapping. (Tier 3 -- live data, etoro_Trade_ProviderToInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ProviderMarginPerLot COMMENT 'Initial margin requirement per lot in the provider''s terms, from Trade.FuturesInstrumentsInitialMarginByProviderMapping. Primarily relevant for futures instruments. NULL for non-futures or instruments without provider margin data. (Tier 3 -- live data, FuturesInstrumentsInitialMarginByProviderMapping)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN eToroMarginPerLot COMMENT 'eToro''s own margin requirement per lot in asset currency (InitialMarginInAssetCurrency from Trade.ProviderToInstrument). eToro''s internal margin may differ from the provider''s margin. NULL for instruments without ProviderToInstrument mapping. (Tier 3 -- live data, etoro_Trade_ProviderToInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SettlementTime COMMENT 'Daily or periodic settlement time for the instrument, from Trade.ProviderToInstrument, formatted as TIME via SP DATEPART conversion. Primarily relevant for futures and CFD instruments with defined settlement windows. NULL for instruments without settlement time defined. (Tier 3 -- live data, etoro_Trade_ProviderToInstrument)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN OperationMode COMMENT 'Trading operation mode: 0=Standard mode (default, ~15,600 instruments), 1=Alternate mode (~83 instruments, primarily European stock CFDs traded in non-USD denomination currencies). Controls how the trading engine processes orders. (Tier 1 -- upstream wiki, Trade.Instrument)';
+
+-- ---- Column PII Tags ----
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentTypeID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentType SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Name SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN DWHInstrumentID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN StatusID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN BuyCurrencyID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SellCurrencyID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN BuyCurrency SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SellCurrency SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN TradeRange SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN DollarRatio SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN PipDifferenceThreshold SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IsMajorID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IsMajor SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN InstrumentDisplayName SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Industry SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN CompanyInfo SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Exchange SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ISINCode SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ISINCountryCode SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Tradable SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Symbol SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ReceivedOnPriceServer SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN BonusCreditUsePercent SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SymbolFull SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN CUSIP SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Precision SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN AllowBuy SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN AllowSell SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN AssetClass SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IndustryGroup SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ADV_Last3Months SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN MKTcap SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SharesOutStanding SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN VisibleInternallyOnly SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN PlatformSector SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN PlatformIndustry SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN IsFuture SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Multiplier SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ProviderID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN ProviderMarginPerLot SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN eToroMarginPerLot SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN SettlementTime SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN OperationMode SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-03-30 11:23:30 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 1
+-- Statements: 96/96 succeeded
+-- ====================

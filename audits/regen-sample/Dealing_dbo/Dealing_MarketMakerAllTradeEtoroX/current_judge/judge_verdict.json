@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_MarketMakerAllTradeEtoroX",
+    "elapsed_seconds":  72,
+    "exit_code":  null,
+    "cost_usd":  0.1708,
+    "input_tokens":  2,
+    "output_tokens":  3656,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_MarketMakerAllTradeEtoroX",
+                    "weighted_score":  4.50,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  4,
+                                             "business_meaning":  7,
+                                             "data_evidence":  2,
+                                             "shape_fidelity":  3
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All 21 columns (Section 2)",
+                                       "problem":  "Zero tier tags on any column description. Every description must end with (Tier N — source). None do. Funds and ApiFunds are clearly Tier 2 (computed), others are Tier 3 or Tier 4."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Sections 3–8",
+                                       "problem":  "Sections 3 through 8 are entirely missing. Even for a deprecated table, the structural skeleton should be present as stubs noting deprecation status."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No row count or date range. A deprecated table with historical data should report its final row count and the date range it covers."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Side",
+                                       "problem":  "Described as \u0027Buy/Sell\u0027 in prose but not enumerated as inline key=value pairs per the wiki standard."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing tier breakdown counts (Tier 1: N | Tier 2: N | etc.)."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Add (Tier N — source) tags to all 21 columns — Funds/ApiFunds are Tier 2 (computed), SP-traceable columns are Tier 3, name-inferred columns are Tier 4. (2) Add stub Sections 3–8 with deprecation notes. (3) Query table for final row count and date range and add to Section 1. (4) Enumerate Side values inline. (5) Add tier breakdown counts to footer. (6) Add UC Target (N/A — deprecated) to property table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

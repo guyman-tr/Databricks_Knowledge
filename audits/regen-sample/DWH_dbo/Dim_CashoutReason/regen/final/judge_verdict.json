@@ -1,0 +1,78 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_CashoutReason",
+    "elapsed_seconds":  101,
+    "exit_code":  null,
+    "cost_usd":  0.4211,
+    "input_tokens":  2,
+    "output_tokens":  4370,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_CashoutReason",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CashoutReasonID",
+                                                  "upstream_quote":  "Primary key identifying the withdrawal reason. Range 1-19. Stored in Billing.Withdraw, History.WithdrawAction. Default 16 (user request) in WithdrawRequestAdd. Special processing for IN (12, 14, 15) in WithdrawToFundingProcess. Joined by 15+ BackOffice/Billing/Trade procedures.",
+                                                  "wiki_quote":  "Primary key identifying the withdrawal reason. Range 1-19. Stored in Billing.Withdraw, History.WithdrawAction. Default 16 (user request) in WithdrawRequestAdd. Special processing for IN (12, 14, 15) in WithdrawToFundingProcess. Joined by 15+ BackOffice/Billing/Trade procedures. Values: 1=Adjustment, 2=Partners withdraw, 3=Risk Refund, 4=Negative Balance adjustment, 5=Withdraw fees adjustment, 6=Block account -- Not communicative, 7=3rd party payment, 8=Bonus abuse adjustment, 9=Returned withdraw, 10=Technical issue -- Customer side, 11=Underage, 12=Foreclose account, 13=Test, 14=PI Payment, 15=Affiliate Payment, 16=Requested by User, 17=Failed Verification, 18=Transfered by CryptoWallet, 19=ForClose(GAP).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Appended inline values enumeration after verbatim upstream text; no information lost from upstream"
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Human-readable reason label. No unique constraint. Displayed in BackOffice withdrawal screens via LEFT JOIN. Used in reports, audit trails, and customer-facing credit history.",
+                                                  "wiki_quote":  "Human-readable reason label. No unique constraint. Displayed in BackOffice withdrawal screens via LEFT JOIN. Used in reports, audit trails, and customer-facing credit history.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range mentioned. Static 19-row enum has no temporal dimension, but writer should explicitly state this rather than omit."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist (P2/P3 markers). Writer self-scored quality but did not indicate which validation phases were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Referenced By lists production-side objects (Billing.Withdraw, History.WithdrawAction) without confirming DWH-side equivalents. Review-needed sidecar correctly flags Fact_BillingWithdraw as unverified."
+                                   },
+                                   {
+                                       "severity":  "trivial",
+                                       "column_or_section":  "CashoutReasonID",
+                                       "problem":  "Inline values list uses bare names only. Upstream Data Overview (Section 3) had richer per-value business descriptions that were not carried into the DWH wiki element description."
+                                   },
+                                   {
+                                       "severity":  "trivial",
+                                       "column_or_section":  "Section 2",
+                                       "problem":  "Business logic references production-side procedures (Billing.WithdrawToFundingProcess) without noting whether DWH-side equivalents exist."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed (PASS). Polish suggestions: (1) Add note in Section 1 that table has no temporal dimension. (2) Add Phase Gate Checklist or footer annotation for completed phases. (3) Distinguish production-side vs DWH-side consumers in Section 6.2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

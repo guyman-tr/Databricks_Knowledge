@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL",
+    "elapsed_seconds":  145,
+    "exit_code":  null,
+    "cost_usd":  0.5261,
+    "input_tokens":  2,
+    "output_tokens":  6267,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL",
+                    "weighted_score":  7.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  6,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Property table / Production Source",
+                                       "problem":  "Production Source says LP_APEX_EXT872_3EU_217314 covers \u0027(trades/dividends)\u0027 but SP code shows Dividends and AdditionalFees come from LP_APEX_EXT869_3EU (#Dividends_ApexFiles temp table). The 872 table provides only trade activity."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 5 / Lineage",
+                                       "problem":  "LP_APEX_EXT869_3EU is entirely missing from both the wiki and the lineage file column mapping. This staging table feeds Dividends, AdditionalFees, and Transfers. The lineage file incorrectly maps Dividends to LP_APEX_EXT872_3EU_217314."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5 / Lineage",
+                                       "problem":  "LP_APEX_EXT981_3EU (source of TotalEquity for EE tables) is omitted from the wiki\u0027s ETL chain summary, even though it is part of the same SP_Apex_PnL execution."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Section 3",
+                                       "problem":  "Row count (~3.0M rows) and full date range (2021-02-10 to 2024-06-07) appear in Section 3 (Query Advisory) instead of Section 1 (Business Meaning) as required by the shape spec."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No inline ETL pipeline ASCII diagram in Section 5 — wiki delegates to lineage.md with \u0027do not duplicate here\u0027 instead of including the pipeline visualization."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix Production Source to split LP_APEX_EXT872_3EU_217314 (trades/volume) from LP_APEX_EXT869_3EU (dividends, additional fees, transfers). (2) Add LP_APEX_EXT869_3EU to Section 5 lineage and Section 6 relationships. (3) Correct lineage file column mapping: Dividends and AdditionalFees source is LP_APEX_EXT869_3EU, not 872. (4) Move row count and date range into Section 1. (5) Add inline ETL pipeline ASCII diagram to Section 5.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "No formal Phase Gate Checklist present; P2 mentioned informally in Section 1 text"
+                                                           ]
+                                    }
+                }
+}

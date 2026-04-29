@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_CPToRule",
+    "elapsed_seconds":  135,
+    "exit_code":  null,
+    "cost_usd":  0.4878,
+    "input_tokens":  2,
+    "output_tokens":  6319,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_CPToRule",
+                    "weighted_score":  8.0,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but SP INSERT for CPToRule clearly shows GETDATE() as the 11th positional value. Writer\u0027s own description says \u0027GETDATE() at SP execution time\u0027. Should be Tier 2 — SP_CEPDailyAudit."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Tier breakdown states \u00270 T1, 10 T2, 0 T3, 1 T4\u0027 but with UpdateDate corrected to Tier 2, should be \u00270 T1, 11 T2, 0 T3, 0 T4\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No Phase Gate Checklist section. Data claims (32,274 rows, date range) appear genuine but P2/P3 completion is unauditable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeServerID",
+                                       "problem":  "Element description omits that the source column is HedgeRuleActionTypeID (renamed in #RulesLog). Upstream Rules wiki documents this rename; CPToRule wiki should mirror it for traceability."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Dealing_CEPWeeklyAudit_CPToRule listed as referencing this table. Plausible by naming convention but not confirmed in SP code or upstream bundle."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit) and remove [UNVERIFIED] — GETDATE() is the 11th INSERT value in the SP. (2) Update footer tier counts to \u00270 T1, 11 T2, 0 T3, 0 T4\u0027. (3) Add Phase Gate Checklist or explicit phase-completion markers. (4) In HedgeServerID description, note source column is HedgeRuleActionTypeID (matching Rules wiki pattern).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 32,274 rows, Dec 2023–2026-03-09"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 markers absent — no Phase Gate Checklist section"
+                                                           ]
+                                    }
+                }
+}

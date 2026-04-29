@@ -1,0 +1,68 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AdvancedDeposit_Ext",
+    "elapsed_seconds":  117,
+    "exit_code":  null,
+    "cost_usd":  0.249,
+    "input_tokens":  2,
+    "output_tokens":  5353,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AdvancedDeposit_Ext",
+                    "weighted_score":  7.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  7,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 6.1 ג€” InstrumentID",
+                                       "problem":  "Phantom column: InstrumentID is listed in the Relationships table with note \u0027Not present (deposit table, not trading)\u0027 but this column does not exist in the DDL. A non-existent column should not appear in the relationships section."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PaymentStatus_Name, Channel, CardCategory",
+                                       "problem":  "Speculative enum values presented as factual examples (e.g., \u0027Completed, Pending, Failed\u0027 for PaymentStatus_Name; \u0027Organic, Affiliate, Paid\u0027 for Channel). Table is empty ג€” these values are unverified guesses."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "ETL pipeline diagram names sources (Billing.Deposit, Dim_Customer, Dim_Country, Dim_Channel, BIN Lookup) that are plausible inferences but not confirmed by any SP code. Diagram should be explicitly marked as speculative."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 14/14\u0027 but no Phase Gate Checklist section exists in the wiki body. P2/P3 data gathering was impossible for this empty table, making the claim ungrounded."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-awarded quality score of 7.0/10 is optimistic for a wiki where 100% of columns are Tier 4 (inferred from name). A more honest score for an all-Tier-4 dormant table would be 5.0ג€“6.0."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Remove phantom InstrumentID row from Section 6.1. (2) Prefix speculative enum values with \u0027Likely:\u0027 or \u0027(unverified)\u0027 for PaymentStatus_Name, Channel, CardCategory, FundingType, CardSubType. (3) Either add a Phase Gate Checklist section (with items marked N/A) or remove the \u0027Phases: 14/14\u0027 footer claim. (4) Label Section 5.2 diagram as \u0027(speculative ג€” no SP found)\u0027. (5) Lower footer quality score to 5.0ג€“6.0 to reflect all-Tier-4 reality.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "PaymentStatus_Name ג€” lists \u0027Completed, Pending, Failed\u0027 without data evidence",
+                                                                                  "Channel ג€” lists \u0027Organic, Affiliate, Paid\u0027 without data evidence",
+                                                                                  "CardCategory ג€” lists \u0027Standard, Gold, Platinum, Business\u0027 without data evidence",
+                                                                                  "FundingType ג€” lists \u0027Credit Card, Wire Transfer, PayPal\u0027 without data evidence",
+                                                                                  "CardSubType ג€” lists \u0027Debit, Credit, Prepaid\u0027 without data evidence"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "No Phase Gate Checklist section exists ג€” P2 and P3 status unknown"
+                                                           ]
+                                    }
+                }
+}

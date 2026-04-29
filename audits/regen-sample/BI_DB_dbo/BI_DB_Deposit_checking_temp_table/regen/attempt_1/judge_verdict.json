@@ -1,0 +1,65 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Deposit_checking_temp_table",
+    "elapsed_seconds":  137,
+    "exit_code":  null,
+    "cost_usd":  0.2979,
+    "input_tokens":  2,
+    "output_tokens":  8134,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Deposit_checking_temp_table",
+                    "weighted_score":  7.15,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  4,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Error_Message (Section 2.1 and Section 3.4 Gotchas)",
+                                       "problem":  "Wiki states \u0027Error_Message is an empty string (not NULL) when the check passes.\u0027 SP source shows @v_error_message_deposit is declared VARCHAR(MAX) with no initialization and is never SET in the passing branch. CAST(NULL AS VARCHAR(MAX)) inserts NULL, not empty string. This is a factual error contradicted by the SP code."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate (Section 1, 3.4)",
+                                       "problem":  "Wiki claims the table \u0027always holds exactly 1 row (the latest check result).\u0027 SP code shows RAISERROR(severity 18) fires when the opening balance check fails, which can abort the batch before the DELETE/INSERT executes, leaving stale data in the table. This critical staleness scenario is not documented."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property Table",
+                                       "problem":  "UC Target row is missing from the property table. Other wikis in the same schema include this row. Should be added (even if value is \u0027not yet provisioned\u0027 or expected)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4",
+                                       "problem":  "No Tier Confidence Legend present at the top of the Elements section. The golden reference shape requires a stars/tier legend (e.g., 4 stars = Tier 1 verbatim, 3 stars = Tier 2 SP-derived, etc.)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Section 5",
+                                       "problem":  "Footer is a bare duplicate property table — missing tier breakdown counts, quality score, and phases-completed list. Additionally, the ETL ASCII diagram is placed in Section 5.1 instead of 5.2 per the golden reference structure."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix Error_Message NULL claim in Section 3.4 Gotchas — @v_error_message_deposit is NULL (not empty string) when Balance_diff_deposit=0, per SP source. (2) Add staleness gotcha for UpdateDate: RAISERROR(severity 18) for opening balance mismatch may abort before DELETE/INSERT runs, leaving stale data. (3) Add UC Target row to property table. (4) Add Tier Confidence Legend to Section 4 (4-star to 1-star table). (5) Add footer with tier breakdown counts (Tier 1: 0, Tier 2: 5, Tier 3: 0), quality score placeholder, and phases-completed list. (6) Restructure Section 5: move ASCII diagram to 5.2, renumber References To as 5.3, Referenced By as 5.4.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Balance_diff_deposit sampled value 0.000000 (2026-04-27)",
+                                                                                  "UpdateDate sampled 2026-04-27 03:33:55"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist absent from document — P2 and P3 completion unverifiable"
+                                                           ]
+                                    }
+                }
+}

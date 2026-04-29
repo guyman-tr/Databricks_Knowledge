@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ActionType",
+    "elapsed_seconds":  122,
+    "exit_code":  null,
+    "cost_usd":  0.4036,
+    "input_tokens":  3,
+    "output_tokens":  5076,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ActionType",
+                    "weighted_score":  8.10,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Lineage file — Summary table",
+                                       "problem":  "CategoryID listed as \u0027passthrough\u0027 in column lineage table but counted under \u0027Cast/Convert\u0027 in the summary (claims 4 cast/convert, 2 passthrough). Since DDL shows int in both source and target, CategoryID is passthrough. Summary should be 3 passthrough, 3 cast/convert."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Name (Element #2)",
+                                       "problem":  "ActionTypeID=33 is missing from the Name enumeration (jumps 32→34). If this ID exists in the data, it\u0027s an omission. If it\u0027s a gap, it should be explicitly noted as retired/skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section structure",
+                                       "problem":  "No explicit Phase Gate Checklist section declaring which data-gathering phases (P1/P2/P3) were completed. Footer claims 11/14 phases but no in-body verification."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Missing explicit InsertDate range (min/max). Temporal context is mentioned narratively but concrete boundary dates would strengthen data evidence."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "UC Format, UC Partitioned By, and UC Table Type are all placeholder values (\u0027_Pending - resolved during write-objects_\u0027). Reduces standalone utility."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only (wiki PASSes): (1) Fix lineage summary — CategoryID is passthrough not cast/convert; correct counts to 3 passthrough, 3 cast/convert. (2) Clarify ActionTypeID=33 — document it or note as skipped/retired. (3) Add explicit InsertDate min/max to Section 1. (4) Add Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

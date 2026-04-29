@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_CP",
+    "elapsed_seconds":  130,
+    "exit_code":  null,
+    "cost_usd":  0.4827,
+    "input_tokens":  2,
+    "output_tokens":  6526,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_CP",
+                    "weighted_score":  8.05,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged `[UNVERIFIED] (Tier 4 — inferred)` but SP clearly shows `GETDATE()` in the INSERT. Sibling wiki Dealing_CEPWeeklyAudit_Rules marks the identical pattern as confirmed `(Tier 4 — SP_W_CEPWeeklyAudit)` without [UNVERIFIED]."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No Phase Gate Checklist anywhere in the wiki. Cannot confirm whether P2 (live stats) and P3 (distribution profiling) were actually executed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer missing phases-completed annotation (e.g., `Phases: P1 ✓, P2 ✓, P3 ✗`). Only sub-scores are present."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TypeOfChange",
+                                       "problem":  "No NULL-rate or placeholder-row proportion documented despite no-change rows being a central gotcha. Approximate ratio would help analysts gauge filtering impact."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeServerID",
+                                       "problem":  "Description says \u0027Hedge server of the parent rule context\u0027 but does not trace the alias: column originates as `HedgeRuleActionTypeID` from Rules staging via `#Dim_CPtoRule`."
+                                   }
+                               ],
+                    "regeneration_feedback":  "1. Remove [UNVERIFIED] from UpdateDate; re-tag as `(Tier 4 — SP_W_CEPWeeklyAudit)` to match sibling wikis. 2. Add Phase Gate Checklist confirming P1/P2/P3 completion status. 3. Add phases-completed annotation to footer. 4. Document approximate placeholder-row ratio for TypeOfChange NULL. 5. Clarify HedgeServerID lineage (sourced as HedgeRuleActionTypeID from Rules staging).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: ~641 rows, 2021-09-26 through 2026-03-01"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 and P3 not explicitly marked — no Phase Gate Checklist present"
+                                                           ]
+                                    }
+                }
+}

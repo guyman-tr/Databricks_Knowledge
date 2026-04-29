@@ -1,0 +1,224 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Islamic_Daily_Administrative_Fee",
+    "elapsed_seconds":  265,
+    "exit_code":  null,
+    "cost_usd":  0.8285,
+    "input_tokens":  2,
+    "output_tokens":  16091,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Islamic_Daily_Administrative_Fee",
+                    "weighted_score":  9.3,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "PositionID",
+                                                  "upstream_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position.",
+                                                  "wiki_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note (additive, no loss)"
+                                              },
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "wiki_quote":  "Group Customer ID - cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "OpenDateID",
+                                                  "upstream_quote":  "ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default.",
+                                                  "wiki_quote":  "ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "CloseDateID",
+                                                  "upstream_quote":  "ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. **Partition column.** Always include in WHERE clause.",
+                                                  "wiki_quote":  "ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. **Partition column.** Always include in WHERE clause. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "OpenOccurred",
+                                                  "upstream_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate().",
+                                                  "wiki_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate(). Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "CloseOccurred",
+                                                  "upstream_quote":  "When close was persisted.",
+                                                  "wiki_quote":  "When close was persisted. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "InstrumentType_ID_InstrumentGroup",
+                                                  "upstream_quote":  "Asset class: 1=Currencies, 2=Commodities, 4=Indices.",
+                                                  "wiki_quote":  "Asset class: 1=Currencies, 2=Commodities, 4=Indices. NULL for Stocks/ETF/Crypto (not mapped in Dealing_Islamic_Instruments_Groups). Passthrough from Dealing_Islamic_Instruments_Groups.instrument_type_id.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added NULL semantics (additive)"
+                                              },
+                                              {
+                                                  "column":  "InstrumentName_InstrumentGroup",
+                                                  "upstream_quote":  "Instrument name (e.g., \"EUR/USD\", \"GBP/USD\"). From manual configuration.",
+                                                  "wiki_quote":  "Instrument name (e.g., \"EUR/USD\", \"GBP/USD\"). From manual configuration. NULL for Stocks/ETF/Crypto. Passthrough from Dealing_Islamic_Instruments_Groups.name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added NULL note"
+                                              },
+                                              {
+                                                  "column":  "InstrumentGroup",
+                                                  "upstream_quote":  "Fee tier group (1-4). Maps to Dealing_Islamic_Admin_Fee_Per_Group.instrument_group for fee rate lookup.",
+                                                  "wiki_quote":  "Fee tier group (1-4). Maps to Dealing_Islamic_Admin_Fee_Per_Group.instrument_group for fee rate lookup. NULL for Stocks/ETF/Crypto. Passthrough from Dealing_Islamic_Instruments_Groups.instrument_group.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added NULL note"
+                                              },
+                                              {
+                                                  "column":  "Units_per_Contract",
+                                                  "upstream_quote":  "Number of instrument units in one standard contract. Used as divisor in commodity fee calculation. E.g., XTI=1000 barrels, XAG=5000 ounces.",
+                                                  "wiki_quote":  "Number of instrument units in one standard contract. Used as divisor in commodity fee calculation. E.g., XTI=1000 barrels, XAG=5000 ounces. NULL for non-commodity instruments. Passthrough from Dealing_Islamic_Units_Per_Contract.units_per_contract.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added NULL note"
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "wiki_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "Bid",
+                                                  "upstream_quote":  "Raw bid price before spread adjustment. Mid-price reference. Compare to BidSpreaded to derive the spread.",
+                                                  "wiki_quote":  "Raw bid price before spread adjustment. Mid-price reference. Compare to BidSpreaded to derive the spread. Passthrough from Fact_CurrencyPriceWithSplit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "Ask",
+                                                  "upstream_quote":  "Raw ask (offer) price before spread adjustment. Mid-price reference. Compare to AskSpreaded to derive the spread.",
+                                                  "wiki_quote":  "Raw ask (offer) price before spread adjustment. Mid-price reference. Compare to AskSpreaded to derive the spread. Passthrough from Fact_CurrencyPriceWithSplit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "ConvertRateIsBuy_1",
+                                                  "upstream_quote":  "Pre-computed USD conversion rate for buy-side positions (IsBuy=1). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Bid; otherwise cross-rate. NULL where no cross-rate could be determined. Added 2023-02-26.",
+                                                  "wiki_quote":  "Pre-computed USD conversion rate for buy-side positions (IsBuy=1). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Bid; otherwise cross-rate. NULL where no cross-rate could be determined. Passthrough from Fact_CurrencyPriceWithSplit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Added 2023-02-26\u0027 metadata"
+                                              },
+                                              {
+                                                  "column":  "ConvertRateIsBuy_0",
+                                                  "upstream_quote":  "Pre-computed USD conversion rate for sell-side positions (IsBuy=0). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Ask; otherwise cross-rate. NULL where no cross-rate could be determined. Added 2023-02-26.",
+                                                  "wiki_quote":  "Pre-computed USD conversion rate for sell-side positions (IsBuy=0). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Ask; otherwise cross-rate. NULL where no cross-rate could be determined. Passthrough from Fact_CurrencyPriceWithSplit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Added 2023-02-26\u0027 metadata"
+                                              },
+                                              {
+                                                  "column":  "AmountInUnitsDecimal",
+                                                  "upstream_quote":  "Position size in units/shares. Fractional lots.",
+                                                  "wiki_quote":  "Position size in units/shares. Fractional lots. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "Admin_Fee_USD",
+                                                  "upstream_quote":  "Administrative fee amount in USD. Applied per unit/contract/10K-USD-value depending on asset class. Ranges: $0.10 (Index group 3) to $80.00 (Currency group 4).",
+                                                  "wiki_quote":  "Administrative fee amount in USD. Applied per unit/contract/10K-USD-value depending on asset class. Ranges: $0.10 (Index group 3) to $80.00 (Currency group 4). NULL for Stocks/ETF/Crypto without group mapping. Passthrough from Dealing_Islamic_Admin_Fee_Per_Group.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added NULL note"
+                                              },
+                                              {
+                                                  "column":  "GracePeriod",
+                                                  "upstream_quote":  "Number of trading days before fee starts. Currently 7 for all groups.",
+                                                  "wiki_quote":  "Number of trading days before fee starts. Currently 7 for all groups. Passthrough from Dealing_Islamic_Admin_Fee_Per_Group.grace_period.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0.",
+                                                  "wiki_quote":  "Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough note"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "NewCloseOccurred (#12)",
+                                       "problem":  "Tagged Tier 2 (SP_Islamic_Administrative_Fee) but SP code shows `dp.CloseOccurred AS NewCloseOccurred` — a literal alias passthrough from Dim_Position. With Dim_Position wiki available, this should be Tier 1 — Trade.PositionTbl. The description itself acknowledges \u0027Currently identical to CloseOccurred (no transformation applied).\u0027"
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "IsSettled (#26)",
+                                       "problem":  "Tagged Tier 2 (SP_Islamic_Administrative_Fee) but SP code shows `dp.IsSettled` — direct passthrough from Dim_Position. Upstream wiki exists and documents this column (as Tier 5 — Expert Review). Per tier rules, passthrough with upstream wiki present should be Tier 1, not Tier 2."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "OpenDateID (#7), CloseDateID (#8)",
+                                       "problem":  "Tagged \u0027Tier 1 — Dim_Position\u0027 but the dim-lookup passthrough rule says NOT to use \u0027Tier 1 via Dim_X\u0027. These are ETL-computed in Dim_Position (Tier 2 in the upstream wiki). The origin attribution is inconsistent with other columns that correctly trace to production origins (e.g., Trade.PositionTbl)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist with P2/P3 checkboxes. Footer shows \u0027Phases: 11/14\u0027 but there is no way to verify which phases were completed or skipped. Data claims appear genuine but lack formal verification."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentTypeID (#14) — Group C",
+                                       "problem":  "Placed in \u0027Group C: Fee Timing\u0027 but InstrumentTypeID is an instrument attribute (asset class identifier), not a fee timing column. Should logically be in \u0027Group D: Instrument Details\u0027 alongside InstrumentType, InstrumentName, etc."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Re-tag NewCloseOccurred as Tier 1 — Trade.PositionTbl (it is a literal alias passthrough). (2) Re-tag IsSettled as Tier 1 with appropriate upstream origin or note the Tier 5 uncertainty from Dim_Position. (3) Resolve OpenDateID/CloseDateID origin attribution — either use the dim\u0027s computation source or accept as Tier 2. (4) Add explicit Phase Gate Checklist section. (5) Move InstrumentTypeID from Group C to Group D.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present — cannot verify P2/P3 status"
+                                                           ]
+                                    }
+                }
+}

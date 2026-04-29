@@ -1,0 +1,18 @@
+# Patch 1.5 must-fix list - populated by the wiki batch loop's
+# per-iteration Patch15Compliance check. Format: one entry per
+# line as {Schema}/{ObjectName}. Consume with:
+#   python tools/wiki-auditor/audit.py --schema BI_DB_dbo \\
+#     --must-fix-list audits/patch15-must-fix.txt
+BI_DB_dbo/BI_DB_USA_FinanceReport_forTax
+BI_DB_dbo/BI_DB_US_Customer_Acount_Reconcilation
+BI_DB_dbo/BI_DB_US_Mailing_Address_Non_US_Regulation
+BI_DB_dbo/BI_DB_US_Mailing_Address_Non_US_Regulation_Email
+BI_DB_dbo/BI_DB_US_Popular_Investor
+BI_DB_dbo/BI_DB_W8_Users_Status
+BI_DB_dbo/BI_DB_WatchListsByFunnel
+BI_DB_dbo/BI_DB_Watchlist_Tracking_High_Level
+BI_DB_dbo/BI_DB_Watchlist_Tracking_Item_Level
+BI_DB_dbo/BI_DB_Wire_PIP_Report
+BI_DB_dbo/BI_DB_W_AML_PEP_Customers
+BI_DB_dbo/BI_DB_W_AML_PEP_Customers_Trun
+BI_DB_dbo/BI_DB_W_Mon_Compliance_CDIM_Report

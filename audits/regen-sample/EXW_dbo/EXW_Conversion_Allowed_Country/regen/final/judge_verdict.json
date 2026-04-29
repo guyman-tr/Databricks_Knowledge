@@ -1,0 +1,83 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_Conversion_Allowed_Country",
+    "elapsed_seconds":  162,
+    "exit_code":  null,
+    "cost_usd":  0.5409,
+    "input_tokens":  4,
+    "output_tokens":  7831,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_Conversion_Allowed_Country",
+                    "weighted_score":  9.50,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country (c.Name AS Country). CountryID=0 excluded by SP WHERE clause.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No loss — additional local context appended (passthrough note, exclusion note)"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer.",
+                                                  "wiki_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer. CountryID=0 excluded by SP WHERE clause. Distribution key for this table.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No loss — additional local context appended (exclusion note, distribution key note)"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Bundle resolver declared \u0027NO UPSTREAM WIKI was resolvable\u0027 despite Dim_Country.md and Dim_State_and_Province.md existing in the repo. Writer manually corrected this — tooling bug, not a wiki quality issue."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u0027Phases: 13/14\u0027 but does not enumerate which phase was skipped. Reader cannot determine whether a data-critical phase (P2/P3) was incomplete."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Section 3.4",
+                                       "problem":  "All-conversions-blocked state is documented in multiple sections but lacks a top-level admonition/banner for quick scanning by analysts."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Elements 5-18 (EXW_Settings/CryptoTypes columns)",
+                                       "problem":  "19 of 21 columns are Tier 2 because upstream sources (EXW_Settings.Resources, EXW_Settings.Tags, EXW_Settings.SystemRestrictions, EXW_Wallet.CryptoTypes) have no wiki documentation. Correctly flagged in review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "No Atlassian sources identified. The SP change history note (Inessa K, 2026-04-14) is included inline — acceptable given no formal Jira ticket was linked."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Wiki passes at 9.50. Optional polish: (1) Enumerate skipped phase in footer. (2) Add top-level admonition for dormant/blocked conversion state. (3) Upgrade Tier 2 columns when EXW_Settings/CryptoTypes wikis become available.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 51,642 in Section 1",
+                                                                                  "AllowedUserTagType distribution (Default=51,642) in element #8",
+                                                                                  "FromTagType distribution (Default=51,477, Country=165) in element #12",
+                                                                                  "ToTagType distribution (Default=51,574, Country=68) in element #16",
+                                                                                  "FromSelectedValue distribution (33% true, 67% false) in element #14",
+                                                                                  "Crypto count (171 active) in element #5",
+                                                                                  "FromResourceName (73 distinct values) in element #11"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 14 of 14 (inferred — exact phase unknown from footer)"
+                                                           ]
+                                    }
+                }
+}

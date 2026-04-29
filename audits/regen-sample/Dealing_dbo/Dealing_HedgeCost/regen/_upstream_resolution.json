@@ -1,0 +1,138 @@
+{
+  "schema": "Dealing_dbo",
+  "object": "Dealing_HedgeCost",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Tables\\Dealing_dbo.Dealing_HedgeCost.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_HedgeCost\\current\\Dealing_HedgeCost.lineage.md",
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_HedgeCost.sql"
+  ],
+  "candidates_found": 10,
+  "resolved_synapse": 7,
+  "resolved_production": 1,
+  "resolved_sp": 1,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_HedgeCost\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 176901,
+  "resolutions": [
+    {
+      "raw_name": "etoro.Hedge.ExecutionLog",
+      "db": "etoro",
+      "schema": "Hedge",
+      "object": "ExecutionLog",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\DB_Schema\\etoro\\Wiki\\Hedge\\Tables\\Hedge.ExecutionLog.md",
+      "sp_path": null,
+      "bytes_read": 20709,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_dbo.SP_HedgeCost",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "SP_HedgeCost",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_HedgeCost.sql",
+      "bytes_read": 7561,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Instrument",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Instrument",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Instrument.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Position",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Position",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Position.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "CopyFromLake.etoro_Hedge_ExecutionLog",
+      "db": null,
+      "schema": "CopyFromLake",
+      "object": "etoro_Hedge_ExecutionLog",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_DailyZeroPnL_Stocks",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_DailyZeroPnL_Stocks",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_DailyZeroPnL_Stocks.md",
+      "sp_path": null,
+      "bytes_read": 9584,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "BI_DB_dbo.BI_DB_VarCommission",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "BI_DB_VarCommission",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_VarCommission.md",
+      "sp_path": null,
+      "bytes_read": 6639,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Customer",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Customer",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Customer.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_PositionChangeLog",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_PositionChangeLog",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PositionChangeLog.md",
+      "sp_path": null,
+      "bytes_read": 14087,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Fact_CurrencyPriceWithSplit",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Fact_CurrencyPriceWithSplit",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CurrencyPriceWithSplit.md",
+      "sp_path": null,
+      "bytes_read": 17853,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

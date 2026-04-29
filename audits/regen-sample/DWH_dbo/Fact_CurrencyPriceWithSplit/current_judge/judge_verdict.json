@@ -1,0 +1,68 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Fact_CurrencyPriceWithSplit",
+    "elapsed_seconds":  90,
+    "exit_code":  null,
+    "cost_usd":  0.275,
+    "input_tokens":  2,
+    "output_tokens":  3808,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Fact_CurrencyPriceWithSplit",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "ProviderID",
+                                       "problem":  "Dictionary column with 3 distinct values but key=value pairs not enumerated inline. Wiki says \u00273 distinct values in production\u0027 without listing them."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist table (P1-P14 with checkboxes). Footer says \u0027Phases: 9/14\u0027 but does not itemize which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ConvertRateIsBuy_1",
+                                       "problem":  "Description says \u0027Multiply by instrument price to convert to USD\u0027 but the SP logic computes rates differently per case (1.00, 1/Bid, or cross-rate). The usage guidance oversimplifies."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Fact_CustomerUnrealized_PnL entry is speculative — marked \u0027(probable)\u0027. Unverified downstream lineage should be confirmed or removed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "isvalid",
+                                       "problem":  "Same statistic expressed from opposite directions in Element #6 (~54% valid) and Section 3.4 (~46% invalid). Consistent but potentially confusing — pick one canonical phrasing."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Enumerate the 3 distinct ProviderID values with their meanings. (2) Add an explicit Phase Gate Checklist table. (3) Refine ConvertRateIsBuy usage guidance to reflect the actual CASE logic rather than oversimplified \u0027multiply by price\u0027. (4) Confirm or remove speculative Fact_CustomerUnrealized_PnL reference in Section 6.2.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "ProviderID: \u00273 distinct values\u0027",
+                                                                                  "InstrumentID: \u002715,416 distinct instruments\u0027",
+                                                                                  "isvalid: \u0027~54% of rows are valid\u0027",
+                                                                                  "ConvertRateIsBuy_1: \u0027NULL for ~1.3M rows (7.5%)\u0027",
+                                                                                  "Section 1: \u0027~17.2M rows, 2009-06-15 to present\u0027"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section — footer indicates 9/14 phases completed"
+                                                           ]
+                                    }
+                }
+}

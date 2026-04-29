@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_MarketMakerAllTradeEtoroX",
+    "elapsed_seconds":  104,
+    "exit_code":  null,
+    "cost_usd":  0.2338,
+    "input_tokens":  2,
+    "output_tokens":  4477,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_MarketMakerAllTradeEtoroX",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 (all columns)",
+                                       "problem":  "No DDL available in SSDT to verify the wiki\u0027s 21 element count against the actual table definition. Column inventory is unverifiable."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Structure",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] markers. Footer says \u0027Phases: 11/14\u0027 but does not identify which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ApiFunds (column 12)",
+                                       "problem":  "Description notes ApiPrice × ApiQuantity = 1.0 when both are -1 but does not flag this as a data quality artifact that should be filtered in analysis."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Value (column 20)",
+                                       "problem":  "The ApiPrice fallback when Price = -1 is buried in a parenthetical in the element description. This critical branching condition deserves more prominent treatment."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Instrument_Name, Name, Side, FeeCurrency, PartyName, OrderId, TradeId",
+                                       "problem":  "char(50)/char(70) fixed-width padding not mentioned in individual element descriptions. Only the Gotchas section warns about RTRIM(). Analysts reading Elements in isolation would not know to trim."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. Optional polish: (1) Add explicit Phase Gate Checklist section with [x]/[ ] markers for each phase. (2) Add RTRIM() note to char-type column descriptions. (3) Flag ApiFunds=1.0 as a sentinel artifact in the element description. (4) If possible, verify 21-column count against HOLD table metadata.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section missing — cannot determine which of the 3 skipped phases were P2/P3"
+                                                           ]
+                                    }
+                }
+}

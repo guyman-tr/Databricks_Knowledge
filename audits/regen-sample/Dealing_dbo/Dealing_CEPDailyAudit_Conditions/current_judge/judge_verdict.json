@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_Conditions",
+    "elapsed_seconds":  128,
+    "exit_code":  null,
+    "cost_usd":  0.4832,
+    "input_tokens":  2,
+    "output_tokens":  6164,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_Conditions",
+                    "weighted_score":  7.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but SP_CEPDailyAudit\u0027s INSERT INTO Dealing_CEPDailyAudit_Conditions explicitly uses GETDATE() as the 13th SELECT column. This is directly visible Tier 2 SP code, not inference."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No Phase Gate Checklist present anywhere in the wiki. Data claims (3,189 rows, date range 2023-12-12 to 2026-03-09) cannot be verified as live-sourced vs fabricated without P2/P3 completion markers."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing phases-completed list in footer (e.g., \u0027Phases: P1 ✓, P2 ✓, P3 ✓\u0027). Golden shape expects this annotation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "Section 5 lacks 5.1/5.2 subsection numbering per the golden reference shape. Content is present but flat."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TypeOfChange / Condition Deleted",
+                                       "problem":  "SP uses WHERE RN=1 AND RN_Desc=1 AND SysStartDate=@Date for \u0027Condition Deleted\u0027 — only single-temporal-record conditions qualify. This edge-case constraint is not documented in Section 2."
+                                   }
+                               ],
+                    "regeneration_feedback":  "1. Re-tag UpdateDate as (Tier 2 — SP_CEPDailyAudit) and remove [UNVERIFIED] — GETDATE() is explicit in the SP INSERT block. 2. Add Phase Gate Checklist or footer annotation confirming P2/P3 execution status. 3. Add phases-completed list to footer. 4. Update footer tier counts to 0 T1, 13 T2, 0 T3, 0 T4 after UpdateDate fix.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

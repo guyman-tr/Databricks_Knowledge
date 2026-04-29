@@ -1,0 +1,51 @@
+{
+  "schema": "EXW_dbo",
+  "object": "EXW_FactConversions",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\EXW_dbo\\Tables\\EXW_dbo.EXW_FactConversions.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\EXW_dbo\\EXW_FactConversions\\current\\EXW_FactConversions.lineage.md",
+  "candidates_found": 3,
+  "resolved_synapse": 0,
+  "resolved_production": 2,
+  "resolved_sp": 0,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\EXW_dbo\\EXW_FactConversions\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 19758,
+  "resolutions": [
+    {
+      "raw_name": "Wallet.Conversions",
+      "db": "WalletDB",
+      "schema": "Wallet",
+      "object": "Conversions",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.Conversions.md",
+      "sp_path": null,
+      "bytes_read": 8950,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "Wallet.ConversionTransactions",
+      "db": "WalletDB",
+      "schema": "Wallet",
+      "object": "ConversionTransactions",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\CryptoDBs\\WalletDB\\Wiki\\Wallet\\Tables\\Wallet.ConversionTransactions.md",
+      "sp_path": null,
+      "bytes_read": 6778,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "EXW_Wallet.CryptoTypes",
+      "db": null,
+      "schema": "EXW_Wallet",
+      "object": "CryptoTypes",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    }
+  ]
+}

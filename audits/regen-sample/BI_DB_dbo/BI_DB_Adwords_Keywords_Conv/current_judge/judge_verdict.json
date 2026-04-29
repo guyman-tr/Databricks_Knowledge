@@ -1,0 +1,65 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Keywords_Conv",
+    "elapsed_seconds":  107,
+    "exit_code":  null,
+    "cost_usd":  0.6417,
+    "input_tokens":  2,
+    "output_tokens":  4640,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Keywords_Conv",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (tier legend)",
+                                       "problem":  "Tier legend omits Tier 1 and Tier 3 without explaining why. Should note that no Tier 1 columns exist because the source is a Fivetran external table with no documented upstream wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "OpenTrade_iOS2 (#37)",
+                                       "problem":  "Description says \u0027alternate iOS app listing\u0027 which is vague. Should explicitly name the app: \u0027eToro: Investing made social (iOS) Open Trade\u0027 to match the SP\u0027s conversion_action_name filter."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape (footer)",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] marks. Phases are only summarized as \u002712/14\u0027 in the footer without identifying which 2 were skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "Does not note that 2nd-gen app and OpenTrade CASE WHEN expressions lack ELSE 0 (unlike funnel columns), meaning NULLs propagate differently for those columns."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.1",
+                                       "problem":  "Lineage table groups columns loosely (\u0027Dimension columns\u0027, \u0027Funnel columns\u0027) rather than individual per-column mappings. Less precise but acceptable for readability."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. Optional polish: (1) Add a note to tier legend explaining 0 Tier 1 columns due to Fivetran external source having no wiki. (2) Name the specific app listing for OpenTrade_iOS2: \u0027eToro: Investing made social (iOS)\u0027. (3) Add explicit Phase Gate Checklist section identifying the 2 skipped phases.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 13 (likely UC-related)",
+                                                               "Phase 14 (likely UC-related)"
+                                                           ]
+                                    }
+                }
+}

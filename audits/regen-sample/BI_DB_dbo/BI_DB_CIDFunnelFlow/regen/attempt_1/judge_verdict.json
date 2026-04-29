@@ -1,0 +1,136 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CIDFunnelFlow",
+    "elapsed_seconds":  281,
+    "exit_code":  null,
+    "cost_usd":  1.1271,
+    "input_tokens":  2,
+    "output_tokens":  15394,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CIDFunnelFlow",
+                    "weighted_score":  7.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Marketing region label for this country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values (e.g., \"South \u0026 Central America\"=40, \"Africa\"=38, \"ROW\"=38, \"French\"=23, etc.). Used for marketing campaign grouping.",
+                                                  "wiki_quote":  "Marketing region label for the customer\u0027s country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values. Used for marketing campaign grouping. Passthrough from Dim_Country.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped example distribution values"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Funnel",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.",
+                                                  "wiki_quote":  "Unique human-readable label for the registration funnel. Describes the campaign/channel/product that drove registration. Passthrough from Dim_Funnel.Name via FunnelFromID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in marketing reports, BackOffice customer views, and attribution analytics\u0027"
+                                              },
+                                              {
+                                                  "column":  "DesignatedRegulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the customer\u0027s first designated regulatory jurisdiction, resolved from the earliest Fact_SnapshotCustomer record after registration where DesignatedRegulationID is not null. Passthrough from Dim_Regulation.Name. NULL if never assigned.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027; added resolution context"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the customer\u0027s current regulatory jurisdiction. Values match production Dictionary.Regulation.Name. Passthrough from Dim_Regulation.Name via Dim_Customer.RegulationID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027"
+                                              },
+                                              {
+                                                  "column":  "AffiliateID",
+                                                  "upstream_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations.",
+                                                  "wiki_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FunnelFrom",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.",
+                                                  "wiki_quote":  "Unique human-readable label for the source funnel variant. Describes the funnel the customer came from. Passthrough from Dim_Funnel.Name via Dim_Customer.FunnelFromID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027campaign/channel/product that drove registration\u0027 — replaced with generic \u0027the funnel the customer came from\u0027. Lost specificity about what a funnel name describes. Also dropped \u0027Used in marketing reports, BackOffice customer views, and attribution analytics\u0027."
+                                              },
+                                              {
+                                                  "column":  "Platform",
+                                                  "upstream_quote":  "Platform name label: \"Undefined\", \"Web\", \"IOS\", \"Android\". Used in reporting dashboards and per-platform analytics. Passthrough from production -- same column name.",
+                                                  "wiki_quote":  "Platform name label: \"Undefined\", \"Web\", \"IOS\", \"Android\". Resolved via Dim_Customer.FunnelFromID → Dim_Funnel.PlatformID → Dim_Platform.Platform.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in reporting dashboards and per-platform analytics\u0027"
+                                              },
+                                              {
+                                                  "column":  "PEP",
+                                                  "upstream_quote":  "Internal code name for the screening outcome. Passthrough from ScreeningService.Dictionary.ScreeningStatus. Used in compliance reporting and case management. (Tier 3 in Dim_ScreeningStatus)",
+                                                  "wiki_quote":  "AML/compliance screening outcome name. Values: \u0027NoMatch\u0027 (clean), \u0027PendingInvestigation\u0027, \u0027PEP\u0027 (Politically Exposed Person), \u0027RiskMatch\u0027, \u0027SanctionsMatch\u0027, \u0027Unknown\u0027, \u0027Technical\u0027, \u0027MultipleMatch\u0027. Empty string when ScreeningStatusID has no match. Passthrough from Dim_ScreeningStatus.Name.",
+                                                  "match":  "NO",
+                                                  "loss":  "Rewrote \u0027Internal code name for the screening outcome\u0027 as \u0027AML/compliance screening outcome name\u0027. Added value enumeration not in upstream. Upstream is only Tier 3 — no root source wiki exists to quote verbatim."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "FunnelFrom (#12)",
+                                       "problem":  "Tier 1 paraphrase: upstream Dim_Funnel.Name says \u0027Describes the campaign/channel/product that drove registration\u0027 but wiki says \u0027Describes the funnel the customer came from\u0027. Lost specificity about what a funnel name actually describes."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Funnel (#8) and FunnelFrom (#12)",
+                                       "problem":  "Both columns resolve to Dim_Funnel.Name via FunnelFromID — they are identical in the SP. The wiki gives them different descriptions as if they serve different purposes, and does not flag this duplication in Gotchas."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PEP (#21)",
+                                       "problem":  "Tagged Tier 1 — ScreeningService.Dictionary.ScreeningStatus, but Dim_ScreeningStatus\u0027s own wiki tags Name as Tier 3 (no upstream wiki exists for the root source). The Tier 1 tag implies verbatim inheritance from a documented source that does not exist."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Regulation (#10), DesignatedRegulation (#9)",
+                                       "problem":  "Dictionary columns with ≤15 values (15 regulations per Dim_Regulation) but no inline key=value enumeration. Should list: 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, 6=eToroUS, 7=FinCEN, etc."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist with [x]/[ ] marks for P2 (row count) and P3 (distribution analysis). Footer says \u0027Phases: 12/14\u0027 but does not enumerate which phases were completed vs skipped."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace FunnelFrom description with verbatim upstream: \u0027Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.\u0027 (2) Add Gotcha: Funnel and FunnelFrom are identical — both resolve to Dim_Funnel.Name via FunnelFromID. (3) Downgrade PEP to Tier 2 or add explicit note that root source (ScreeningService.Dictionary.ScreeningStatus) has no documented wiki. (4) Add inline value enumeration for Regulation and DesignatedRegulation. (5) Add Phase Gate Checklist section with explicit P2/P3 completion markers.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 4.24M rows, date range 2025-04-26 to 2026-04-26",
+                                                                                  "Region: 22 distinct values",
+                                                                                  "PEP: 8 named values"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P10 Atlassian skipped",
+                                                               "P16 deferred"
+                                                           ]
+                                    }
+                }
+}

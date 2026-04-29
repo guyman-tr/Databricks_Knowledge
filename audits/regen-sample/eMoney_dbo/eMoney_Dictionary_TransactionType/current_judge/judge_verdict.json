@@ -1,0 +1,67 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Dictionary_TransactionType",
+    "elapsed_seconds":  98,
+    "exit_code":  null,
+    "cost_usd":  0.2296,
+    "input_tokens":  2,
+    "output_tokens":  4710,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Dictionary_TransactionType",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "TransactionTypeID",
+                                                  "upstream_quote":  "Lookup identifier. Primary key.",
+                                                  "wiki_quote":  "Lookup identifier. Primary key. 0=Unknown, 1=CardPayment, 2=Contactless, 3=OnlinePayment, 4=CashWithdrawal, 5=TransferReceived, 6=Transfer, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBA, 12=DebitBA, 13=DirectDebit, 14=CryptoToFiat.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No loss. Upstream core text preserved verbatim; live enumeration values appended."
+                                              },
+                                              {
+                                                  "column":  "TransactionType",
+                                                  "upstream_quote":  "Human-readable name for this value.",
+                                                  "wiki_quote":  "Human-readable name for this value. 0=Unknown, 1=CardPayment, 2=Contactless, 3=OnlinePayment, 4=CashWithdrawal, 5=TransferReceived, 6=Transfer, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBA, 12=DebitBA, 13=DirectDebit, 14=CryptoToFiat.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No loss. Upstream core text preserved verbatim; live enumeration values appended."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range stated. Static dictionary has no temporal grain, but format spec expects a date range. Should add \u0027Static since 2023-06-12; no temporal grain.\u0027"
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 / TransactionTypeID, TransactionType",
+                                       "problem":  "Upstream columns are NOT NULL (Id tinyint NOT NULL, Name nvarchar NOT NULL) but DWH columns are nullable (int NULL, varchar(50) NULL). The type widening is documented but the nullability change is not flagged as a gotcha — NULLs in these columns would indicate a pipeline failure."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Phase Gate",
+                                       "problem":  "P3 (deep profiling) skipped. Justified for a 15-row static dictionary but means NULL-rate and distribution claims are assumed, not measured."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

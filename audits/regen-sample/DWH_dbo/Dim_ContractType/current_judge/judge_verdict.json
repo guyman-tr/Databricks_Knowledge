@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ContractType",
+    "elapsed_seconds":  82,
+    "exit_code":  null,
+    "cost_usd":  0.1896,
+    "input_tokens":  2,
+    "output_tokens":  3373,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ContractType",
+                    "weighted_score":  8.20,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Missing explicit date-range statement. Even for a frozen table with all-NULL dates, the rubric expects this stated (e.g., \u0027No temporal range — InsertDate/UpdateDate NULL for all 9 rows\u0027)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims 13/14 phases but no Phase Gate Checklist is visible in the wiki body. Cannot verify P2/P3 completion."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-score 6.8 is conservative. Actual quality is closer to 7.5-8.0 given comprehensive business context and correct tier assignments."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 Gotchas",
+                                       "problem":  "SP_Dim_Affiliate CASE branches may only produce a subset of IDs 0-8. The wiki notes the CASE independence but does not flag that some ContractTypeID values may be unused in Dim_Affiliate."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Name",
+                                       "problem":  "Tagged Tier 3 (live data sampling) but DDL structure also contributes (varchar(20)). Compound tag like InsertDate/UpdateDate would be more precise."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add explicit date-range statement to Section 1: \u0027No temporal range — all InsertDate/UpdateDate NULL.\u0027 (2) Add SP_Dim_Affiliate CASE-coverage gap note to Section 3.4. (3) Adjust footer self-score to ~7.5-8.0.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

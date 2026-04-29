@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Currency_Instrument_Mapping_Static",
+    "elapsed_seconds":  80,
+    "exit_code":  null,
+    "cost_usd":  0.2057,
+    "input_tokens":  2,
+    "output_tokens":  3521,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Currency_Instrument_Mapping_Static",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BuyCurrencyID, SellCurrencyID",
+                                       "problem":  "Sentinel value 1 = USD is documented only in Section 2 business logic, not inline in the Element descriptions. An analyst scanning Element rows 6/7 would miss this critical filter value."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Currency",
+                                       "problem":  "21 distinct currency codes are listed in Section 1 but not in the Element description. At 21 values this exceeds the 15-value inline threshold, but is close enough that inline listing would aid usability."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CurrencyISO",
+                                       "problem":  "Element 2 references join targets (eMoney_Account_Mappings.CurrencyBalanceISON) without citing which SP performs the join. Traceability is in the lineage file but not in the element row."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "The UpdateDate evidence supporting \u0027no writer SP\u0027 (all 145 rows share 2022-11-21 14:12:06.137) is in the fourth paragraph rather than the summary blockquote."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-assigned quality score of 7.5/10 is conservative for the actual content quality of this wiki."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed (PASS). Minor polish: (1) Add \u00271 = USD\u0027 sentinel inline in BuyCurrencyID and SellCurrencyID element descriptions. (2) Move shared-UpdateDate evidence into the Section 1 summary blockquote.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,84 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_CardType",
+    "elapsed_seconds":  153,
+    "exit_code":  null,
+    "cost_usd":  0.4224,
+    "input_tokens":  3,
+    "output_tokens":  6716,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_CardType",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CardTypeID",
+                                                  "upstream_quote":  "Card network identifier. Active brands: 1=Visa, 2=MasterCard, 3=Diners, 8=Maestro. Inactive: 0=None, 4=Amex, 5=FirePay, 6=JCB, 7=American Express, 9=Laser, 10=Switch, 11=UK Local, 12=Discover, 13=Local Card, 14=China UnionPay, 15=Solo, 16=Cirrus, 17=GE Capital, 18=Unknown, 19-31=various regional/legacy brands.",
+                                                  "wiki_quote":  "Card network identifier. Active brands: 1=Visa, 2=MasterCard, 3=Diners, 8=Maestro. Inactive: 0=None, 4=Amex, 5=FirePay, 6=JCB, 7=American Express, 9=Laser, 10=Switch, 11=UK Local, 12=Discover, 13=Local Card, 14=China UnionPay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Truncated \u002718=Unknown, 19-31=various regional/legacy brands\u0027 — contextually appropriate for DWH 18-row scope but not verbatim"
+                                              },
+                                              {
+                                                  "column":  "CarTypeName",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates. Used in payment UI, transaction records, and fraud reporting.",
+                                                  "wiki_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from `Name` in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027in production\u0027 qualifier, rename note, and full value list — core upstream text preserved with additions"
+                                              },
+                                              {
+                                                  "column":  "IsActive",
+                                                  "upstream_quote":  "Whether this card brand is currently accepted for deposits: 1=accepted, 0=rejected. DEFAULT 1 (new card types are active by default). Only 4 of 32 are currently active.",
+                                                  "wiki_quote":  "Whether this card brand is currently accepted for deposits: 1=accepted, 0=rejected. Type widened from bit to int in DWH. Only 4 of 32 are currently active in production. DWH note: DWH snapshot values may differ from current production state.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027DEFAULT 1 (new card types are active by default)\u0027 — semantic loss of default value behavior. Replaced with DWH-specific notes not present in upstream."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsActive",
+                                       "problem":  "Tier 1 upstream description dropped \u0027DEFAULT 1 (new card types are active by default)\u0027 and replaced with DWH-specific notes. This is a semantic loss — the default behavior for new card types is meaningful business context that was removed."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "CardTypeID",
+                                       "problem":  "Truncated upstream description by removing \u002718=Unknown, 19-31=various regional/legacy brands\u0027. While the DWH only has 18 rows, the Tier 1 instruction is to quote verbatim from upstream."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer lacks a phases-completed list, making it impossible to verify which data-gathering phases were run."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "All nullable columns",
+                                       "problem":  "No NULL-rate or distribution analysis mentioned for any of the 4 columns, all of which are nullable in the DDL."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CarTypeName",
+                                       "problem":  "Added \u0027in production\u0027 qualifier and full value enumeration to upstream description. While these are additions rather than losses, they deviate from verbatim upstream quoting."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Restore IsActive description to verbatim upstream text: \u0027Whether this card brand is currently accepted for deposits: 1=accepted, 0=rejected. DEFAULT 1 (new card types are active by default). Only 4 of 32 are currently active.\u0027 — append DWH-specific notes (type widening, snapshot divergence) AFTER the verbatim text, clearly separated. (2) Restore CardTypeID tail: include \u002718=Unknown, 19-31=various regional/legacy brands\u0027 from upstream, with a DWH-scoping note appended. (3) Add Phase Gate Checklist section or integrate P2/P3 completion status into footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 checklist not present — cannot verify"
+                                                           ]
+                                    }
+                }
+}

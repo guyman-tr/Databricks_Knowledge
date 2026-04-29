@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_CP",
+    "elapsed_seconds":  131,
+    "exit_code":  null,
+    "cost_usd":  0.4804,
+    "input_tokens":  2,
+    "output_tokens":  5318,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_CP",
+                    "weighted_score":  8.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No phases-completed list in footer (e.g., \u0027Phases: P1 ✓, P2 ✓, P3 ✓\u0027). Footer has quality score and tier counts but omits phase attestation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Missing section",
+                                       "problem":  "No formal Phase Gate Checklist section with explicit [x] P2 / [x] P3 markers. Data evidence is convincing but lacks the structural attestation the rubric expects."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Tier 2 assignment is defensible (GETDATE() visible in SP INSERT) but inconsistent with sibling CEPDailyAudit tables that mark UpdateDate as Tier 4. May confuse analysts comparing across the family."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "V_Dealing_CEPDailyAudit_CP_Last180Days listed as referencing view but its wiki is not in the bundle and could not be verified. Plausible from naming convention."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4",
+                                       "problem":  "LoginName trailing-null-bytes gotcha is a valuable operational detail — noting as a strength, not an issue."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Minor polish: (1) Add a Phase Gate Checklist section with P2/P3 checkboxes. (2) Add \u0027Phases: P1 ✓, P2 ✓, P3 ✓\u0027 to the footer. (3) Consider aligning UpdateDate tier with sibling tables or adding a note in the wiki explaining the Tier 2 choice.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

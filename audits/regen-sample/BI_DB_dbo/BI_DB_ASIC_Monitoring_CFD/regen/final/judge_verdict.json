@@ -1,0 +1,96 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_ASIC_Monitoring_CFD",
+    "elapsed_seconds":  258,
+    "exit_code":  null,
+    "cost_usd":  0.7978,
+    "input_tokens":  2,
+    "output_tokens":  18032,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_ASIC_Monitoring_CFD",
+                    "weighted_score":  8.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  8,
+                                             "business_meaning":  7,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values.",
+                                                  "wiki_quote":  "Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegisteredReal",
+                                                  "upstream_quote":  "Account registration date (renamed from Registered). Default=getdate().",
+                                                  "wiki_quote":  "Account registration date (renamed from Registered). Default=getdate().",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 2.1 / Section 3.4 (Population)",
+                                       "problem":  "Wiki claims \u0027Customers explicitly blocked from CFD trading are excluded\u0027 and the gotcha repeats \u0027Population excludes CFD_Blocked customers.\u0027 This is factually wrong. The SP uses LEFT JOIN BI_DB_Scored_Appropriateness_Negative_Market with the CFD_Allowed condition in the ON clause, not a WHERE clause. When CFD_Status=\u0027CFD_Blocked\u0027, the ON condition fails and bdsanm columns are NULL, but the FSC row remains in #pop because LEFT JOIN preserves all left-table rows. All RegulationID IN (4,10) customers are in the population regardless of CFD_Status."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2.5 / Element 13 (A5_NegativeBalance_Ind)",
+                                       "problem":  "Section 2.5 and Element 13 both claim the A5 alert queries \u0027Fact_CustomerAction where ActionTypeID=36 (Compensation)\u0027. The SP has no ActionTypeID filter in the #Compensation CTE — it joins ALL Fact_CustomerAction rows for ASIC customers over the 6-month period and applies CompensationReasonID=11 only inside the CASE expression. The result is identical in practice but the description is inaccurate and overstates the filter selectivity."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 header / tagline (alert count)",
+                                       "problem":  "The property-block tagline and Section 1 both state \u0027six alert indicators\u0027 but the body enumerates only five implemented alerts (A1, A2, A4, A5, A6). Alert A3 is not computed in the current SP. Section 3.4 correctly flags this but the intro creates a contradiction that will confuse new analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "A1_ConcentrationRisk_Ind / A2_LossInvestmentRatio_Ind / A4_Last_BSL_Date_Ind / A5_NegativeBalance_Ind / A6_HighLeverageTrading_Ind",
+                                       "problem":  "All five bit indicator columns describe only the \u00271 = flagged\u0027 condition. Per the completeness rubric, enum/dictionary columns with ≤15 values must list inline key=value pairs (0=not flagged, 1=flagged)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer is missing the quality score field (e.g., \u0027Quality: 8.65/10 (★★★★☆)\u0027) present in all reference wiki footers in the bundle."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix population description in Sections 2.1 and 3.4 — LEFT JOIN does NOT exclude CFD_Blocked customers; all RegulationID IN (4,10) customers are in #pop regardless of CFD_Status. Replace exclusion claim with: \u0027The LEFT JOIN NULLs bdsanm columns for CFD_Blocked customers but does not remove them from the population.\u0027 (2) Fix A5 filter description in Section 2.5 and Element 13 — remove ActionTypeID=36 claim; the SP joins all FCA rows for ASIC customers over 6 months; CompensationReasonID=11 is checked only in the CASE expression. (3) Change \u0027six alert indicators\u0027 to \u0027five implemented alert indicators (A1, A2, A4, A5, A6); A3 referenced in SP comments but not implemented.\u0027 (4) Add 0=not flagged / 1=flagged inline enumeration to all five _Ind bit columns in Section 4. (5) Add quality score to footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "A1_ConcentrationRisk_Ind: \u00276.6% of customers flagged\u0027",
+                                                                                  "A2_LossInvestmentRatio_Ind: \u00273.9% of customers flagged\u0027",
+                                                                                  "A4_Last_BSL_Date_Ind: \u0027\u003c0.01% of customers flagged\u0027",
+                                                                                  "A5_NegativeBalance_Ind: \u0027\u003c0.01% of customers flagged\u0027",
+                                                                                  "A6_HighLeverageTrading_Ind: \u00271.9% of customers flagged\u0027",
+                                                                                  "TotalNetProfit: \u0027Range: -$16.7M to +$11.5M observed\u0027"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

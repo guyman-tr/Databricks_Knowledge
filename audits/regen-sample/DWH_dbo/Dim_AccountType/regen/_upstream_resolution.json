@@ -1,0 +1,39 @@
+{
+  "schema": "DWH_dbo",
+  "object": "Dim_AccountType",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Tables\\DWH_dbo.Dim_AccountType.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_AccountType\\current\\Dim_AccountType.lineage.md",
+  "candidates_found": 2,
+  "resolved_synapse": 0,
+  "resolved_production": 1,
+  "resolved_sp": 1,
+  "unresolved": 0,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_AccountType\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 55114,
+  "resolutions": [
+    {
+      "raw_name": "Dictionary.AccountType",
+      "db": "USABroker",
+      "schema": "Dictionary",
+      "object": "AccountType",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\ComplianceDBs\\USABroker\\Wiki\\Dictionary\\Tables\\Dictionary.AccountType.md",
+      "sp_path": null,
+      "bytes_read": 4688,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.SP_Dictionaries_DL_To_Synapse",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "SP_Dictionaries_DL_To_Synapse",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Dictionaries_DL_To_Synapse.sql",
+      "bytes_read": 46303,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

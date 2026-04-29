@@ -1,0 +1,51 @@
+{
+  "schema": "Dealing_dbo",
+  "object": "Dealing_CME_Reporting",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Tables\\Dealing_dbo.Dealing_CME_Reporting.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_CME_Reporting\\current\\Dealing_CME_Reporting.lineage.md",
+  "candidates_found": 3,
+  "resolved_synapse": 2,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 0,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_CME_Reporting\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 68753,
+  "resolutions": [
+    {
+      "raw_name": "Dealing_dbo.SP_M_CME_Reporting",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "SP_M_CME_Reporting",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_M_CME_Reporting.sql",
+      "bytes_read": 3801,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Position",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Position",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Position.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Instrument",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Instrument",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Instrument.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    }
+  ]
+}

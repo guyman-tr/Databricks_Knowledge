@@ -1,0 +1,54 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_ListCIDMapping",
+    "elapsed_seconds":  79,
+    "exit_code":  null,
+    "cost_usd":  0.4145,
+    "input_tokens":  2,
+    "output_tokens":  3034,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_ListCIDMapping",
+                    "weighted_score":  9.0,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "No formal Phase Gate Checklist section with [x] P2/P3 markers. Data evidence appears authentic but the standardized checklist is absent."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer missing \u0027Phases completed: P1, P2, P3\u0027 line for harness compliance tracking."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "537 rows",
+                                                                                  "89 distinct dates",
+                                                                                  "20 distinct lists",
+                                                                                  "451 distinct CIDs",
+                                                                                  "~85% NULL LoginName",
+                                                                                  "NameListID 36 ~37%"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

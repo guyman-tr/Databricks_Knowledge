@@ -1,0 +1,78 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_CashoutReason",
+    "elapsed_seconds":  98,
+    "exit_code":  null,
+    "cost_usd":  0.448,
+    "input_tokens":  2,
+    "output_tokens":  5241,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_CashoutReason",
+                    "weighted_score":  7.05,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CashoutReasonID",
+                                                  "upstream_quote":  "Primary key identifying the withdrawal reason. Range 1-19. Stored in Billing.Withdraw, History.WithdrawAction. Default 16 (user request) in WithdrawRequestAdd. Special processing for IN (12, 14, 15) in WithdrawToFundingProcess. Joined by 15+ BackOffice/Billing/Trade procedures.",
+                                                  "wiki_quote":  "Primary key identifying the withdrawal reason. Values 1-19 in DWH. Stored in Billing.Withdraw and History.WithdrawAction on production. Special routing for IN (12, 14, 15) in Billing.WithdrawToFundingProcess. Default 16 (Requested by User) set in Billing.WithdrawRequestAdd. See Section 2.1 for full value map.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Joined by 15+ BackOffice/Billing/Trade procedures\u0027; reworded \u0027Range 1-19\u0027 to \u0027Values 1-19 in DWH\u0027; reordered sentences; added non-upstream text \u0027See Section 2.1 for full value map\u0027"
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Human-readable reason label. No unique constraint. Displayed in BackOffice withdrawal screens via LEFT JOIN. Used in reports, audit trails, and customer-facing credit history.",
+                                                  "wiki_quote":  "Human-readable withdrawal reason label. E.g., \"Requested by User\" (most common), \"PI Payment\", \"Foreclose account\". Displayed in BackOffice withdrawal screens and used in audit trails.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027No unique constraint\u0027, \u0027via LEFT JOIN\u0027, \u0027customer-facing credit history\u0027, \u0027reports\u0027; added example values not in upstream"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CashoutReasonID (Element #1)",
+                                       "problem":  "Tier 1 description paraphrased. Dropped \u0027Joined by 15+ BackOffice/Billing/Trade procedures\u0027, reworded \u0027Range 1-19\u0027 to \u0027Values 1-19 in DWH\u0027, reordered sentences, added \u0027See Section 2.1 for full value map\u0027 which is not in the upstream wiki."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Name (Element #2)",
+                                       "problem":  "Tier 1 description paraphrased. Dropped \u0027No unique constraint\u0027, \u0027via LEFT JOIN\u0027, \u0027customer-facing credit history\u0027, \u0027reports\u0027. Added example values (\u0027Requested by User\u0027, \u0027PI Payment\u0027, \u0027Foreclose account\u0027) not present in upstream description."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 (Elements)",
+                                       "problem":  "Both Tier 1 columns are enriched/reorganized instead of being verbatim copies of the upstream wiki. Writer added context (examples, cross-references) that belongs in Section 2, not in Element descriptions."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer says \u0027Phases: 7/14 (Simple-Dict Fast-Path)\u0027 but the formal checklist is absent."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Upstream bundle",
+                                       "problem":  "Bundle included DWH_dbo.Dim_Manager which has no relationship to Dim_CashoutReason. Harness issue, not writer fault — writer correctly ignored it."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace CashoutReasonID Element description with VERBATIM upstream text: \u0027Primary key identifying the withdrawal reason. Range 1-19. Stored in Billing.Withdraw, History.WithdrawAction. Default 16 (user request) in WithdrawRequestAdd. Special processing for IN (12, 14, 15) in WithdrawToFundingProcess. Joined by 15+ BackOffice/Billing/Trade procedures.\u0027 (2) Replace Name Element description with VERBATIM upstream text: \u0027Human-readable reason label. No unique constraint. Displayed in BackOffice withdrawal screens via LEFT JOIN. Used in reports, audit trails, and customer-facing credit history.\u0027 (3) Do NOT add examples, section cross-references, or enrichments to Tier 1 descriptions — those belong in Section 2 (Business Logic).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

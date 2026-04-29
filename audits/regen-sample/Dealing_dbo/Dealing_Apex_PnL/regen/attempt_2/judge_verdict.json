@@ -1,0 +1,73 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL",
+    "elapsed_seconds":  170,
+    "exit_code":  null,
+    "cost_usd":  0.681,
+    "input_tokens":  4,
+    "output_tokens":  7365,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL",
+                    "weighted_score":  9.0,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "wiki_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries.",
+                                                  "wiki_quote":  "User-facing instrument display name from Trade.InstrumentMetaData. More descriptive than Name (e.g., \u0027Apple Inc.\u0027 vs \u0027Apple\u0027). NULL for instruments without metadata entries.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Description text is verbatim. However, tier tag says \u0027(Tier 1 -- Trade.Instrument)\u0027 but Dim_Instrument\u0027s own wiki and lineage attribute this column to Trade.InstrumentMetaData (Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData). Wrong source attribution in the tier origin tag."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "InstrumentDisplayName",
+                                       "problem":  "Tagged \u0027(Tier 1 -- Trade.Instrument)\u0027 but Dim_Instrument wiki tags this column as \u0027(Tier 2 -- SP_Dim_Instrument, etoro_Trade_InstrumentMetaData)\u0027. The dim\u0027s origin is Trade.InstrumentMetaData, not Trade.Instrument. Correct tag should be \u0027(Tier 1 -- Trade.InstrumentMetaData)\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Header blurb (line 1)",
+                                       "problem":  "Header says \u0027weekly and daily P\u0026L reconciliation table\u0027 but this table is weekly-window only. The daily sibling is Dealing_Apex_PnL_Daily. Misleading to describe this table as covering both."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Volume / Trades precision",
+                                       "problem":  "Trades is decimal(16,8) but Volume is decimal(16,6) despite using the same source formula (Qty*Price+Fees vs ABS(Qty*Price+Fees)). The wiki correctly documents both types but does not explain the precision difference."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Referenced By only lists sibling tables from the same SP. No downstream consumers (views, reports) are documented. May be accurate (no downstream references) but not explicitly confirmed."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Re-tag InstrumentDisplayName as \u0027(Tier 1 -- Trade.InstrumentMetaData)\u0027 to match the dim\u0027s actual origin. (2) Change header blurb from \u0027weekly and daily P\u0026L reconciliation table\u0027 to \u0027weekly P\u0026L reconciliation table\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P7 (no views)",
+                                                               "P10 (regen harness)"
+                                                           ]
+                                    }
+                }
+}

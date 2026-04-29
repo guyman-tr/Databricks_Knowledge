@@ -2,11 +2,11 @@
 schema: BI_DB_dbo
 database: Synapse DWH
 total_objects: 1204
-documented: 399
+documented: 523
 failed: 0
-last_batch: 96
-last_updated: "2026-04-26"
-quality_avg: 8.50
+last_batch: 112
+last_updated: "2026-04-27"
+quality_avg: 8.22
 ---
 
 ## Schema Documentation Progress
@@ -15,10 +15,278 @@ quality_avg: 8.50
 |--------|-------|
 | **Schema** | BI_DB_dbo |
 | **Total Objects** | ~1204 (1160 tables, 44 views -- full inventory not yet enumerated) |
-| **Documented** | 399 |
+| **Documented** | 523 |
 | **Failed** | 0 |
-| **Last Updated** | 2026-04-26 |
-| **Quality Avg** | 8.50 |
+| **Last Updated** | 2026-04-27 |
+| **Quality Avg** | 8.22 |
+
+---
+
+## Batch 112 (COMPLETE) -- Google Ads search performance (final Adwords table) + dormant affiliate cluster (AffData, AffID_Dictionary, Affiliate_Class, Affiliate_Report, Affiliate_Report_90898, AffiliateLifeCycle, AggMobileAcquisitionDaily): 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: BI_DB_Adwords_Search_Perf (16 cols, 1.0x), BI_DB_AffData (11 cols, 0.5x), BI_DB_AffID_Dictionary (4 cols, 0.5x), BI_DB_Affiliate_Class (7 cols, 0.5x), BI_DB_Affiliate_Report (27 cols, 1.0x), BI_DB_Affiliate_Report_90898 (11 cols, 0.5x), BI_DB_AffiliateLifeCycle (32 cols, 1.0x), BI_DB_AggMobileAcquisitionDaily (29 cols, 1.0x). Batch theme: Final Adwords table (14M-row search query performance from Fivetran, STALE since Sept 2023, aggregated monthly — completing the SP_Adwords_Pref_Conv cluster from batches 110-111) + affiliate domain dormant cluster (6 tables, ALL 0 rows, ALL no writer SP — legacy on-prem BI_DB migration artifacts that were never re-implemented in Synapse; includes sophisticated lifecycle segmentation table with 33 cols and mobile acquisition funnel with 29 cols, both never populated).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 523 | [BI_DB_dbo.BI_DB_AggMobileAcquisitionDaily](Tables/BI_DB_AggMobileAcquisitionDaily.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 522 | [BI_DB_dbo.BI_DB_AffiliateLifeCycle](Tables/BI_DB_AffiliateLifeCycle.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 521 | [BI_DB_dbo.BI_DB_Affiliate_Report_90898](Tables/BI_DB_Affiliate_Report_90898.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 520 | [BI_DB_dbo.BI_DB_Affiliate_Report](Tables/BI_DB_Affiliate_Report.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 519 | [BI_DB_dbo.BI_DB_Affiliate_Class](Tables/BI_DB_Affiliate_Class.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 518 | [BI_DB_dbo.BI_DB_AffID_Dictionary](Tables/BI_DB_AffID_Dictionary.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 517 | [BI_DB_dbo.BI_DB_AffData](Tables/BI_DB_AffData.md) | Table | 99 | 7.0 | Done (Batch 112) |
+| 516 | [BI_DB_dbo.BI_DB_Adwords_Search_Perf](Tables/BI_DB_Adwords_Search_Perf.md) | Table | 99 | 8.0 | Done (Batch 112) |
+
+---
+
+## Batch 111 (COMPLETE) -- Google Ads Fivetran cluster continued: campaign conversion report + dictionary tables (AdGroup, Campaign) + geo conversion/performance pair + keyword conversion/performance pair + search query conversions: 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: BI_DB_Adwords_Conversion_Performance_Report (28 cols, 1.0x), BI_DB_Adwords_Dictionary_AdGroup (6 cols, 0.5x), BI_DB_Adwords_Dictionary_Campaign (6 cols, 0.5x), BI_DB_Adwords_Geo_Conv (23 cols, 1.0x), BI_DB_Adwords_Geo_Pref (21 cols, 1.0x), BI_DB_Adwords_Keywords_Conv (38 cols, 2.0x), BI_DB_Adwords_Keywords_Pref (24 cols, 1.0x), BI_DB_Adwords_Search_Conv (26 cols, 1.0x). Batch theme: Google Ads Fivetran cluster continuation — campaign-level conversion report (4.7K rows, funnel + full app lifecycle incl. FirstOpen/Redeposit), two dictionary/lookup tables (31K ad groups with ENABLED/PAUSED/REMOVED status, 1.7K campaigns with Target CPA/Maximize Conversions bidding strategies), geographic conversion/performance pair (11K geo conversions with country_criteria_id attribution + 240K geo performance with denormalized campaign/ad group names), keyword conversion/performance pair (3.5K keyword conversions — widest table with LTV + OpenTrade unique columns — + 224K keyword performance with quality score and impression share metrics), and monthly search query conversions (13K rows, only HASH-distributed table in cluster, captures actual user search terms with 5 match types). All stale since Sept 2023. All from SP_Adwords_Pref_Conv.
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 515 | [BI_DB_dbo.BI_DB_Adwords_Search_Conv](Tables/BI_DB_Adwords_Search_Conv.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 514 | [BI_DB_dbo.BI_DB_Adwords_Keywords_Pref](Tables/BI_DB_Adwords_Keywords_Pref.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 513 | [BI_DB_dbo.BI_DB_Adwords_Keywords_Conv](Tables/BI_DB_Adwords_Keywords_Conv.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 512 | [BI_DB_dbo.BI_DB_Adwords_Geo_Pref](Tables/BI_DB_Adwords_Geo_Pref.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 511 | [BI_DB_dbo.BI_DB_Adwords_Geo_Conv](Tables/BI_DB_Adwords_Geo_Conv.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 510 | [BI_DB_dbo.BI_DB_Adwords_Dictionary_Campaign](Tables/BI_DB_Adwords_Dictionary_Campaign.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 509 | [BI_DB_dbo.BI_DB_Adwords_Dictionary_AdGroup](Tables/BI_DB_Adwords_Dictionary_AdGroup.md) | Table | 99 | 8.0 | Done (Batch 111) |
+| 508 | [BI_DB_dbo.BI_DB_Adwords_Conversion_Performance_Report](Tables/BI_DB_Adwords_Conversion_Performance_Report.md) | Table | 99 | 8.0 | Done (Batch 111) |
+
+---
+
+## Batch 110 (COMPLETE) -- Price history close snapshot + LTV BigQuery export + dormant abuse API + affiliate plan config + dormant deposit analysis + Google Ads Fivetran cluster (ad conversion, ad performance, campaign performance): 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: External_Price_History_LastPriceBeforeClose_Range (20 cols, 1.0x), LTV_FromDB_ToBigQuery (4 cols, 0.5x), BI_DB_AbuseAPI (18 cols, 1.0x), BI_DB_ActiveAffiliatesPlanned (7 cols, 0.5x), BI_DB_AdvancedDeposit_Ext (47 cols, 2.0x), BI_DB_Adwords_Ad_Conv (28 cols, 1.0x), BI_DB_Adwords_Ad_Pref (36 cols, 2.0x), BI_DB_Adwords_Campaign_Performance_Report (17 cols, 1.0x). Batch theme: Price infrastructure (54K-row rolling 7-day close price snapshot from Bronze/Price/History/LastPriceBeforeClose/ via COPY INTO for ~11.7K instruments), LTV export (88K-row BigQuery feed of 90-day FTD customers with positive Revenue8Y_LTV_New), dormant tables (BI_DB_AbuseAPI 0-row legacy — active in Dealing_dbo, BI_DB_AdvancedDeposit_Ext 0-row decommissioned ~Nov 2024, BI_DB_ActiveAffiliatesPlanned 0-row manual config), Google Ads Fivetran cluster (3 stale tables: 10K ad conversions with funnel pivot Registration/V2/FTD/MultipleDeposit, 1.6M ad performance with RSA JSON, 31K campaign performance — all last refreshed Sept 2023).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 507 | [BI_DB_dbo.BI_DB_Adwords_Campaign_Performance_Report](Tables/BI_DB_Adwords_Campaign_Performance_Report.md) | Table | 99 | 8.0 | Done (Batch 110) |
+| 506 | [BI_DB_dbo.BI_DB_Adwords_Ad_Pref](Tables/BI_DB_Adwords_Ad_Pref.md) | Table | 99 | 8.0 | Done (Batch 110) |
+| 505 | [BI_DB_dbo.BI_DB_Adwords_Ad_Conv](Tables/BI_DB_Adwords_Ad_Conv.md) | Table | 99 | 8.0 | Done (Batch 110) |
+| 504 | [BI_DB_dbo.BI_DB_AdvancedDeposit_Ext](Tables/BI_DB_AdvancedDeposit_Ext.md) | Table | 99 | 7.0 | Done (Batch 110) |
+| 503 | [BI_DB_dbo.BI_DB_ActiveAffiliatesPlanned](Tables/BI_DB_ActiveAffiliatesPlanned.md) | Table | 99 | 7.5 | Done (Batch 110) |
+| 502 | [BI_DB_dbo.BI_DB_AbuseAPI](Tables/BI_DB_AbuseAPI.md) | Table | 99 | 7.5 | Done (Batch 110) |
+| 501 | [BI_DB_dbo.LTV_FromDB_ToBigQuery](Tables/LTV_FromDB_ToBigQuery.md) | Table | 0 | 8.0 | Done (Batch 110) |
+| 500 | [BI_DB_dbo.External_Price_History_LastPriceBeforeClose_Range](Tables/External_Price_History_LastPriceBeforeClose_Range.md) | Table | 0 | 7.5 | Done (Batch 110) |
+
+---
+
+## Batch 109 (COMPLETE) -- Personalized watchlist generation + copy-trading block report + wire transfer PIP compensation + yearly portfolio gain + compliance leverage dashboard + portfolio risk cluster (7-day deviation, daily Markowitz risk, multi-horizon compound gain): 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: BI_DB_WatchListsByFunnel (24 cols, 1.0x), BI_DB_WeeklyCopyBlock (21 cols, 1.0x), BI_DB_Wire_PIP_Report (20 cols, 1.0x), BI_DB_YearlyGain (5 cols, 0.5x), Compliance_BI_Leverage_Dashboard (21 cols, 1.0x), DWH_CIDs7DaysDeviation (4 cols, 0.5x), DWH_CIDsDailyRisk (5 cols, 0.5x), DWH_GainDaily (13 cols, 0.5x). Batch theme: Product analytics (2.02M-row monthly personalized default watchlist generation with 7-funnel × 250-country allocation engine, compliance-aware geo-optimization, and US crypto restrictions), copy-trading operations (4.9K-row weekly block/unblock report with AUM/copier/equity/risk snapshots for BO Admin and High Risk Score blocks), payments (318K-row wire transfer PIP discount compensation for EUR/GBP transactions with Fivetran Google Sheets config), performance metrics (211M-row yearly compound gain from BI_DB_MonthlyGain, 6.25B-row daily multi-horizon compound gains from TradeGain Ranking service), compliance (534K-row daily leverage restriction dashboard with change detection from SettingsDB), and portfolio risk (4.8B-row 7-day rolling deviation from Fact_CustomerUnrealized_PnL, 4.7B-row daily Markowitz portfolio standard deviation with hourly covariance-based computation).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 499 | [BI_DB_dbo.DWH_GainDaily](Tables/DWH_GainDaily.md) | Table | 0 | 8.0 | Done (Batch 109) |
+| 498 | [BI_DB_dbo.DWH_CIDsDailyRisk](Tables/DWH_CIDsDailyRisk.md) | Table | 0 | 8.0 | Done (Batch 109) |
+| 497 | [BI_DB_dbo.DWH_CIDs7DaysDeviation](Tables/DWH_CIDs7DaysDeviation.md) | Table | 0 | 8.0 | Done (Batch 109) |
+| 496 | [BI_DB_dbo.Compliance_BI_Leverage_Dashboard](Tables/Compliance_BI_Leverage_Dashboard.md) | Table | 0 | 8.0 | Done (Batch 109) |
+| 495 | [BI_DB_dbo.BI_DB_YearlyGain](Tables/BI_DB_YearlyGain.md) | Table | 0 | 7.5 | Done (Batch 109) |
+| 494 | [BI_DB_dbo.BI_DB_Wire_PIP_Report](Tables/BI_DB_Wire_PIP_Report.md) | Table | 0 | 8.0 | Done (Batch 109) |
+| 493 | [BI_DB_dbo.BI_DB_WeeklyCopyBlock](Tables/BI_DB_WeeklyCopyBlock.md) | Table | 0 | 8.0 | Done (Batch 109) |
+| 492 | [BI_DB_dbo.BI_DB_WatchListsByFunnel](Tables/BI_DB_WatchListsByFunnel.md) | Table | 0 | 8.0 | Done (Batch 109) |
+
+---
+
+## Batch 108 (COMPLETE) -- AML PEP weekly snapshots (accumulating + truncate pair) + FCA CDIM compliance report (42-col KYC/PnL/appropriateness) + crypto KYT alerts + forced-closure vulnerability account matching + W8-BEN tax form lifecycle (5.24M rows) + watchlist tracking pair (item-level + aggregated high-level): 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: BI_DB_W_AML_PEP_Customers (20 cols, 1.0x), BI_DB_W_AML_PEP_Customers_Trun (20 cols, 1.0x), BI_DB_W_Mon_Compliance_CDIM_Report (42 cols, 2.0x), BI_DB_W_Tue_Email_for_KYT (27 cols, 1.0x), BI_DB_W_Wed_Compliance_Vulnerability_ALL (14 cols, 0.5x), BI_DB_W8_Users_Status (29 cols, 1.0x), BI_DB_Watchlist_Tracking_High_Level (27 cols, 1.0x), BI_DB_Watchlist_Tracking_Item_Level (23 cols, 1.0x). Batch theme: AML/Compliance cluster (92K-row weekly PEP snapshots with selfie/SOF freshness + 6.8K current-week TRUNCATE copy, 575K-row FCA CDIM Consumer Duty report with 15 KYC questions + 6-bucket lifetime PnL + appropriateness + demo usage, 267-row crypto KYT blockchain alerts from Fivetran with dual-path CID resolution via AML provider ID + tx_hash), vulnerability operations (4.2K forced-closure identity-matching across 5 regulatory groups with EOD equity), US tax compliance (5.24M-row W8-BEN lifecycle with GAP requirements + US stocks position detection + player status change history), and product analytics (10.26M-row per-item watchlist trading attribution + 98K-row aggregated country×funnel conversion with 30-day revenue/deposit and 8Y LTV metrics).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 491 | [BI_DB_dbo.BI_DB_Watchlist_Tracking_Item_Level](Tables/BI_DB_Watchlist_Tracking_Item_Level.md) | Table | 0 | 8.0 | Done (Batch 108) |
+| 490 | [BI_DB_dbo.BI_DB_Watchlist_Tracking_High_Level](Tables/BI_DB_Watchlist_Tracking_High_Level.md) | Table | 0 | 8.0 | Done (Batch 108) |
+| 489 | [BI_DB_dbo.BI_DB_W8_Users_Status](Tables/BI_DB_W8_Users_Status.md) | Table | 0 | 8.0 | Done (Batch 108) |
+| 488 | [BI_DB_dbo.BI_DB_W_Wed_Compliance_Vulnerability_ALL](Tables/BI_DB_W_Wed_Compliance_Vulnerability_ALL.md) | Table | 0 | 8.0 | Done (Batch 108) |
+| 487 | [BI_DB_dbo.BI_DB_W_Tue_Email_for_KYT](Tables/BI_DB_W_Tue_Email_for_KYT.md) | Table | 0 | 7.5 | Done (Batch 108) |
+| 486 | [BI_DB_dbo.BI_DB_W_Mon_Compliance_CDIM_Report](Tables/BI_DB_W_Mon_Compliance_CDIM_Report.md) | Table | 0 | 8.0 | Done (Batch 108) |
+| 485 | [BI_DB_dbo.BI_DB_W_AML_PEP_Customers_Trun](Tables/BI_DB_W_AML_PEP_Customers_Trun.md) | Table | 0 | 8.0 | Done (Batch 108) |
+| 484 | [BI_DB_dbo.BI_DB_W_AML_PEP_Customers](Tables/BI_DB_W_AML_PEP_Customers.md) | Table | 0 | 8.0 | Done (Batch 108) |
+
+---
+
+## Batch 107 (COMPLETE) -- US tax credit details + social engagement + VAT transactions + KYC verification monitoring + compliance vulnerability detection cluster (3 tables) + vulnerable customer self-identification: 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: BI_DB_USA_FinanceReport_forTax_CreditID (11 cols, 0.5x), BI_DB_UsersEngagement (20 cols, 1.0x), BI_DB_VAT_Transactions (6 cols, 0.5x), BI_DB_VerificationStatus30Days (25 cols, 1.0x), BI_DB_Vulnerability_CanceledWithdrawals (7 cols, 0.5x), BI_DB_Vulnerability_LifetimeMetrics (34 cols, 2.0x), BI_DB_Vulnerability_Positions (13 cols, 0.5x), BI_DB_Vulnerable_Customers (17 cols, 1.0x). Batch theme: US tax compliance (450K-row credit-level detail for IRS reporting from History.Credit CreditTypeID=6 with SSN), social platform analytics (490K-row rolling 2-year engagement tracking with Post/Comment/Like/Share activity and monthly trading flags), regulatory VAT (101K-row monthly position count by regulation×country×settlement), KYC operations (34K-row rolling 30-day verification monitoring with 5-tier priority scoring), compliance vulnerability detection (3-table cluster: 5.2M-row daily position activity with RAT alert detection, 19K-row canceled withdrawal monitoring, 210K-row lifetime trading/PnL/equity metrics per asset class for vulnerable customer dashboard), and vulnerable customer registry (20.6K self-identified vulnerable customers with equity/PnL/appropriateness).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 483 | [BI_DB_dbo.BI_DB_Vulnerable_Customers](Tables/BI_DB_Vulnerable_Customers.md) | Table | 0 | 8.0 | Done (Batch 107) |
+| 482 | [BI_DB_dbo.BI_DB_Vulnerability_Positions](Tables/BI_DB_Vulnerability_Positions.md) | Table | 0 | 8.0 | Done (Batch 107) |
+| 481 | [BI_DB_dbo.BI_DB_Vulnerability_LifetimeMetrics](Tables/BI_DB_Vulnerability_LifetimeMetrics.md) | Table | 0 | 8.5 | Done (Batch 107) |
+| 480 | [BI_DB_dbo.BI_DB_Vulnerability_CanceledWithdrawals](Tables/BI_DB_Vulnerability_CanceledWithdrawals.md) | Table | 0 | 8.0 | Done (Batch 107) |
+| 479 | [BI_DB_dbo.BI_DB_VerificationStatus30Days](Tables/BI_DB_VerificationStatus30Days.md) | Table | 0 | 8.5 | Done (Batch 107) |
+| 478 | [BI_DB_dbo.BI_DB_VAT_Transactions](Tables/BI_DB_VAT_Transactions.md) | Table | 0 | 8.0 | Done (Batch 107) |
+| 477 | [BI_DB_dbo.BI_DB_UsersEngagement](Tables/BI_DB_UsersEngagement.md) | Table | 0 | 8.0 | Done (Batch 107) |
+| 476 | [BI_DB_dbo.BI_DB_USA_FinanceReport_forTax_CreditID](Tables/BI_DB_USA_FinanceReport_forTax_CreditID.md) | Table | 0 | 8.0 | Done (Batch 107) |
+
+---
+
+## Batch 106 (COMPLETE) -- US compliance Apex client profiles (40-col PII + 10-col crypto/stocks balances) + Apex-vs-eToro account reconciliation + US mailing address non-US regulation watchlist pair (accumulation + email snapshot) + US Popular Investor eligibility + US stocks transaction throughput metrics + US tax finance report: 8 objects
+
+Planned: 2026-04-27 | Completed: 2026-04-27 | Objects: BI_DB_US_Compliance_Apex_Clients (40 cols, 2.0x), BI_DB_US_Compliance_Apex_Clients_Crypto_Stocks (10 cols, 0.5x), BI_DB_US_Customer_Acount_Reconcilation (11 cols, 0.5x), BI_DB_US_Mailing_Address_Non_US_Regulation (10 cols, 0.5x), BI_DB_US_Mailing_Address_Non_US_Regulation_Email (10 cols, 0.5x), BI_DB_US_Popular_Investor (13 cols, 0.5x), BI_DB_US_Stocks_Transactions_Per_Time_Unit (14 cols, 0.5x), BI_DB_USA_FinanceReport_forTax (12 cols, 0.5x). Batch theme: US compliance and regulatory operations — Apex brokerage client profile with full PII + KYC questionnaire + FINRA disclosures (403K rows), companion crypto/stocks balance snapshot (431K depositors from V_Liabilities), daily Apex-vs-eToro FULL OUTER JOIN account reconciliation (347M historical rows), non-US-regulated customers with US mailing address watchlist (1,460 accumulation + 1-row email snapshot), Popular Investor eligibility assessment (3,151 candidates passing 6 gates), US stock/ETF peak transaction throughput at 4 time granularities (1,625 daily rows), and US eToroUS/FinCEN tax finance report with SSN and compensation/PnL (813K rows).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 475 | [BI_DB_dbo.BI_DB_USA_FinanceReport_forTax](Tables/BI_DB_USA_FinanceReport_forTax.md) | Table | 0 | 8.0 | Done (Batch 106) |
+| 474 | [BI_DB_dbo.BI_DB_US_Stocks_Transactions_Per_Time_Unit](Tables/BI_DB_US_Stocks_Transactions_Per_Time_Unit.md) | Table | 0 | 8.0 | Done (Batch 106) |
+| 473 | [BI_DB_dbo.BI_DB_US_Popular_Investor](Tables/BI_DB_US_Popular_Investor.md) | Table | 0 | 8.0 | Done (Batch 106) |
+| 472 | [BI_DB_dbo.BI_DB_US_Mailing_Address_Non_US_Regulation_Email](Tables/BI_DB_US_Mailing_Address_Non_US_Regulation_Email.md) | Table | 0 | 7.5 | Done (Batch 106) |
+| 471 | [BI_DB_dbo.BI_DB_US_Mailing_Address_Non_US_Regulation](Tables/BI_DB_US_Mailing_Address_Non_US_Regulation.md) | Table | 0 | 8.0 | Done (Batch 106) |
+| 470 | [BI_DB_dbo.BI_DB_US_Customer_Acount_Reconcilation](Tables/BI_DB_US_Customer_Acount_Reconcilation.md) | Table | 0 | 8.0 | Done (Batch 106) |
+| 469 | [BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients_Crypto_Stocks](Tables/BI_DB_US_Compliance_Apex_Clients_Crypto_Stocks.md) | Table | 0 | 8.0 | Done (Batch 106) |
+| 468 | [BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients](Tables/BI_DB_US_Compliance_Apex_Clients.md) | Table | 0 | 8.5 | Done (Batch 106) |
+
+---
+
+## Batch 105 (COMPLETE) -- Twitter ads marketing + BNY Mellon unsettled trades risk + US Apex cluster (address changes, rejected accounts, stocks activity reconciliation pair, transactions trading activity) + US citizens under non-US regulation compliance watchlist: 8 objects
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_Twitter (20 cols, 1.0x), BI_DB_Unsettled_Trades_Risk (14 cols, 0.5x), BI_DB_US_Apex_Address_Change (18 cols, 1.0x), BI_DB_US_Apex_Rejected_Accounts (13 cols, 0.5x), BI_DB_US_Apex_Stocks_Activity_Apex (9 cols, 0.5x), BI_DB_US_Apex_Stocks_Activity_eToroDB (11 cols, 0.5x), BI_DB_US_Apex_Transactions_Trading_Activity (21 cols, 1.0x), BI_DB_US_Citizens_Under_Non_US_Regulation (12 cols, 0.5x). Batch theme: Marketing analytics (408K-row Twitter/X ad campaign performance with dual Fivetran+AffWiz conversion tracking), risk operations (20.6K-row BNY Mellon unsettled trades with FX conversion to USD, 30 fail reason codes), US Apex brokerage compliance (12.2K address changes via LAG detection, 99.3K rejected/restricted Apex accounts with validation errors, two-table stock activity reconciliation pair Apex-vs-eToro, 2.76M trade-level reconciliation with 95% match rate), and regulatory compliance (4.9K US citizens detected under non-US regulation via POB/TIN signals).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 467 | [BI_DB_dbo.BI_DB_US_Citizens_Under_Non_US_Regulation](Tables/BI_DB_US_Citizens_Under_Non_US_Regulation.md) | Table | 0 | 8.5 | Done (Batch 105) |
+| 466 | [BI_DB_dbo.BI_DB_US_Apex_Transactions_Trading_Activity](Tables/BI_DB_US_Apex_Transactions_Trading_Activity.md) | Table | 0 | 8.0 | Done (Batch 105) |
+| 465 | [BI_DB_dbo.BI_DB_US_Apex_Stocks_Activity_eToroDB](Tables/BI_DB_US_Apex_Stocks_Activity_eToroDB.md) | Table | 0 | 8.0 | Done (Batch 105) |
+| 464 | [BI_DB_dbo.BI_DB_US_Apex_Stocks_Activity_Apex](Tables/BI_DB_US_Apex_Stocks_Activity_Apex.md) | Table | 0 | 8.0 | Done (Batch 105) |
+| 463 | [BI_DB_dbo.BI_DB_US_Apex_Rejected_Accounts](Tables/BI_DB_US_Apex_Rejected_Accounts.md) | Table | 0 | 8.0 | Done (Batch 105) |
+| 462 | [BI_DB_dbo.BI_DB_US_Apex_Address_Change](Tables/BI_DB_US_Apex_Address_Change.md) | Table | 0 | 8.5 | Done (Batch 105) |
+| 461 | [BI_DB_dbo.BI_DB_Unsettled_Trades_Risk](Tables/BI_DB_Unsettled_Trades_Risk.md) | Table | 0 | 8.0 | Done (Batch 105) |
+| 460 | [BI_DB_dbo.BI_DB_Twitter](Tables/BI_DB_Twitter.md) | Table | 0 | 8.0 | Done (Batch 105) |
+
+---
+
+## Batch 104 (COMPLETE) -- Tax compliance cluster (TIN data + CFD US stocks flag + tax report status monitoring) + technical issues compensation + OPS tickets + TIN Gap remediation (main + temp pop) + trading failures/succeeds risk monitoring batch: Tax_Compliance_TIN (16 cols, 8.08M rows, per-customer TIN data from UserApiDB), Tax_Compliance_Trade_CFD_US_Stocks (2 cols, 164K rows, CFD-only US stock trader flag), Tax_Reports_Status (8 cols, 121K rows, daily tax report generation monitoring), Technical_Issues_Compensation_Risk (9 cols, 310K rows, platform compensation tracking), TicketsForOPS_NEW (14 cols, 105 rows, OPS wire/cashout ticket queue), TIN_Gap (30 cols, 335K rows, TIN gap remediation project), TIN_Gap_Temp_pop (31 cols, 5.6K rows, TIN gap temp population variant), Trading_Failures_Risk (16 cols, 27.7M rows, trading execution failure vs success monitoring): 8 objects
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_Tax_Compliance_TIN (16 cols, 1.0x), BI_DB_Tax_Compliance_Trade_CFD_US_Stocks (2 cols, 0.5x), BI_DB_Tax_Reports_Status (8 cols, 0.5x), BI_DB_Technical_Issues_Compensation_Risk (9 cols, 0.5x), BI_DB_TicketsForOPS_NEW (14 cols, 1.0x), BI_DB_TIN_Gap (30 cols, 2.0x), BI_DB_TIN_Gap_Temp_pop (31 cols, 2.0x), BI_DB_Trading_Failures_Risk (16 cols, 1.0x). Batch theme: Tax compliance (TIN collection monitoring with 24 tax ID types across 26+ countries, CFD-only US stock trader flagging, daily tax report generation status), operational support (technical issue compensation tracking from History.Credit, wire/cashout ticket queue from Google Sheets + CS system), TIN gap remediation (gap identification for main and temporary populations with A/B/C customer grouping), and risk monitoring (27.7M-row trading execution failure vs success tracking with 8-dimension granularity).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 459 | [BI_DB_dbo.BI_DB_Trading_Failures_Risk](Tables/BI_DB_Trading_Failures_Risk.md) | Table | 0 | 8.0 | Done (Batch 104) |
+| 458 | [BI_DB_dbo.BI_DB_TIN_Gap_Temp_pop](Tables/BI_DB_TIN_Gap_Temp_pop.md) | Table | 0 | 7.5 | Done (Batch 104) |
+| 457 | [BI_DB_dbo.BI_DB_TIN_Gap](Tables/BI_DB_TIN_Gap.md) | Table | 0 | 8.0 | Done (Batch 104) |
+| 456 | [BI_DB_dbo.BI_DB_TicketsForOPS_NEW](Tables/BI_DB_TicketsForOPS_NEW.md) | Table | 0 | 7.5 | Done (Batch 104) |
+| 455 | [BI_DB_dbo.BI_DB_Technical_Issues_Compensation_Risk](Tables/BI_DB_Technical_Issues_Compensation_Risk.md) | Table | 0 | 8.0 | Done (Batch 104) |
+| 454 | [BI_DB_dbo.BI_DB_Tax_Reports_Status](Tables/BI_DB_Tax_Reports_Status.md) | Table | 0 | 8.0 | Done (Batch 104) |
+| 453 | [BI_DB_dbo.BI_DB_Tax_Compliance_Trade_CFD_US_Stocks](Tables/BI_DB_Tax_Compliance_Trade_CFD_US_Stocks.md) | Table | 0 | 8.0 | Done (Batch 104) |
+| 452 | [BI_DB_dbo.BI_DB_Tax_Compliance_TIN](Tables/BI_DB_Tax_Compliance_TIN.md) | Table | 0 | 8.5 | Done (Batch 104) |
+
+---
+
+## Batch 103 (COMPLETE) -- Stocks hedge server aggregation (HS125) + stocks marketing opportunities + significant stock/ETF allocation + STP redeem approvals + suspicious trading detection + US 1099 tax cluster (Part A + Part B + Compensation) batch: Stocks_HS125 (13 cols, 57.4M rows, instrument-level daily stock/ETF aggregation across 10 hedge servers), Stocks_Opportunities (15 cols, 3.54M rows, 5-indicator marketing stock opportunity analysis with 30-day rolling averages), StocksETFs_SignificantAllocation (12 cols, 0 rows, significant stock/ETF allocation snapshot), STP_Redeems (17 cols, 335K rows, STP redeem approval workflow tracking), SuspiciousActivityTrading_Investing (14 cols, 264 rows, suspicious stock trading pattern detection), Tax_1099_PartA (45 cols, 1.7K rows, US IRS 1099 Part A tax summary), Tax_1099_PartB (19 cols, 0 rows, US 1099 Part B transaction details), Tax_Compensation_for_1099 (27 cols, 215K rows, US 1099 compensation adjustments): 8 objects (10.0 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_Stocks_HS125 (13 cols, 0.5x), BI_DB_Stocks_Opportunities (15 cols, 1.0x), BI_DB_StocksETFs_SignificantAllocation (12 cols, 0.5x), BI_DB_STP_Redeems (17 cols, 1.0x), BI_DB_SuspiciousActivityTrading_Investing (14 cols, 0.5x), BI_DB_Tax_1099_PartA (45 cols, 2.0x), BI_DB_Tax_1099_PartB (19 cols, 1.0x), BI_DB_Tax_Compensation_for_1099 (27 cols, 1.0x). Batch theme: Stocks/ETFs analytics (instrument-level hedge server aggregation for Finance/Regulation Tableau + marketing opportunity signals with rolling averages + high-value allocation snapshot), compliance operations (STP redeem approval workflow with 5-team manual/auto flags + suspicious stock trading detection across 3 pattern groups), and US tax compliance (IRS 1099 Part A summary with PII/TIN, Part B per-position transaction details, and compensation adjustments for 1099 reporting).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 451 | [BI_DB_dbo.BI_DB_Tax_Compensation_for_1099](Tables/BI_DB_Tax_Compensation_for_1099.md) | Table | 0 | 8.5 | Done (Batch 103) |
+| 450 | [BI_DB_dbo.BI_DB_Tax_1099_PartB](Tables/BI_DB_Tax_1099_PartB.md) | Table | 0 | 7.5 | Done (Batch 103) |
+| 449 | [BI_DB_dbo.BI_DB_Tax_1099_PartA](Tables/BI_DB_Tax_1099_PartA.md) | Table | 0 | 8.5 | Done (Batch 103) |
+| 448 | [BI_DB_dbo.BI_DB_SuspiciousActivityTrading_Investing](Tables/BI_DB_SuspiciousActivityTrading_Investing.md) | Table | 0 | 8.0 | Done (Batch 103) |
+| 447 | [BI_DB_dbo.BI_DB_STP_Redeems](Tables/BI_DB_STP_Redeems.md) | Table | 0 | 8.0 | Done (Batch 103) |
+| 446 | [BI_DB_dbo.BI_DB_StocksETFs_SignificantAllocation](Tables/BI_DB_StocksETFs_SignificantAllocation.md) | Table | 0 | 7.5 | Done (Batch 103) |
+| 445 | [BI_DB_dbo.BI_DB_Stocks_Opportunities](Tables/BI_DB_Stocks_Opportunities.md) | Table | 0 | 8.0 | Done (Batch 103) |
+| 444 | [BI_DB_dbo.BI_DB_Stocks_HS125](Tables/BI_DB_Stocks_HS125.md) | Table | 0 | 8.0 | Done (Batch 103) |
+
+---
+
+## Batch 102 (COMPLETE) -- Risk (PayPal depositors + daily risk aggregation + PI correlation/stats) + customer lifecycle snapshot + crypto staking (email + compensations) + stocks hedge server CID-level positions batch: RiskPayPalDepositors (18 cols, 1.69M rows, daily PayPal depositor risk profiling), rsk_DailyRiskAgg (26 cols, 2.9K rows, daily platform-wide risk STD/AUM/PnL), rsk_Risk_PI_Correl (22 cols, 35.4M rows, daily pairwise PI correlation matrix), rsk_Risk_PI_Stats (25 cols, 162K rows, daily per-PI stats), Snapshot_CID_LifeStageDefinition (9 cols, 1.48B rows, monthly lifecycle snapshot), Staking_Email_For_Marcin (8 cols, 3 rows, weekly FCA staking summary), Staking_Platform_Compensations (13 cols, 548K rows, staking payout ledger), Stocks_HS121_CIDs (13 cols, 32.75B rows, daily CID-level stock/ETF positions): 8 objects (8.0 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_RiskPayPalDepositors (18 cols, 1.0x), BI_DB_rsk_DailyRiskAgg (26 cols, 1.0x), BI_DB_rsk_Risk_PI_Correl (22 cols, 1.0x), BI_DB_rsk_Risk_PI_Stats (25 cols, 1.0x), BI_DB_Snapshot_CID_LifeStageDefinition (9 cols, 0.5x), BI_DB_Staking_Email_For_Marcin (8 cols, 0.5x), BI_DB_Staking_Platform_Compensations (13 cols, 0.5x), BI_DB_Stocks_HS121_CIDs (13 cols, 0.5x). Batch theme: Risk analytics (PayPal depositor compliance profiling, platform-wide covariance-weighted risk STD across 5 segments, pairwise PI correlation matrix for top 200 PIs with Pearson coefficients, per-PI daily stats with AUM/profit/MIMO/directional bias), customer lifecycle (1.48B-row monthly LSD snapshot with cluster classification), crypto staking (FCA ADA/TRX summary email + compensation payout ledger from History.Credit), and regulatory stock reporting (32.75B-row CID-level stock/ETF positions across 10 hedge servers).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 443 | [BI_DB_dbo.BI_DB_Stocks_HS121_CIDs](Tables/BI_DB_Stocks_HS121_CIDs.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 442 | [BI_DB_dbo.BI_DB_Staking_Platform_Compensations](Tables/BI_DB_Staking_Platform_Compensations.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 441 | [BI_DB_dbo.BI_DB_Staking_Email_For_Marcin](Tables/BI_DB_Staking_Email_For_Marcin.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 440 | [BI_DB_dbo.BI_DB_Snapshot_CID_LifeStageDefinition](Tables/BI_DB_Snapshot_CID_LifeStageDefinition.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 439 | [BI_DB_dbo.BI_DB_rsk_Risk_PI_Stats](Tables/BI_DB_rsk_Risk_PI_Stats.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 438 | [BI_DB_dbo.BI_DB_rsk_Risk_PI_Correl](Tables/BI_DB_rsk_Risk_PI_Correl.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 437 | [BI_DB_dbo.BI_DB_rsk_DailyRiskAgg](Tables/BI_DB_rsk_DailyRiskAgg.md) | Table | 0 | 8.0 | Done (Batch 102) |
+| 436 | [BI_DB_dbo.BI_DB_RiskPayPalDepositors](Tables/BI_DB_RiskPayPalDepositors.md) | Table | 0 | 8.0 | Done (Batch 102) |
+
+---
+
+## Batch 101 (COMPLETE) -- Revenue 14-day BigQuery export + Revenue Forum dashboard + Reverse CO retention + Risk Alert Management (105 cols) batch: Revenue14DaysToBigQuery (4 cols, 1.64M rows, daily 14-day revenue for BigQuery LTV modeling), RevenueForum (38 cols, 71.8K rows, monthly Revenue Forum dashboard aggregation by Country×Region×Club×Regulation), ReverseCoReport (16 cols, 41.7K rows, high-value cashout cancellation retention tracking), RiskAlertManagementTool (105 cols, 5.33M rows, flattened AlertServiceDB risk/compliance alerts with 81 JSON-parsed fields): 4 objects (5.5 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_Revenue14DaysToBigQuery (4 cols, 0.5x), BI_DB_RevenueForum (38 cols, 1.0x), BI_DB_ReverseCoReport (16 cols, 1.0x), BI_DB_RiskAlertManagementTool (105 cols, 3.0x). Batch theme: Revenue analytics (14-day revenue for BigQuery LTV export + Revenue Forum executive dashboard with customer/revenue/MIMO/cost metrics by 4 dimensions), retention operations (high-value cashout cancellation tracking with 30-day follow-up and AM contact detection), and compliance/risk management (5.33M AlertServiceDB alerts flattened from JSON with KYC/Risk/AML/Cashout categories, 10+ alert types including HighRiskLogin, SiftScore, DepositNameConflict, MultipleAccounts).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 435 | [BI_DB_dbo.BI_DB_RiskAlertManagementTool](Tables/BI_DB_RiskAlertManagementTool.md) | Table | 0 | 7.5 | Done (Batch 101) |
+| 434 | [BI_DB_dbo.BI_DB_ReverseCoReport](Tables/BI_DB_ReverseCoReport.md) | Table | 0 | 8.0 | Done (Batch 101) |
+| 433 | [BI_DB_dbo.BI_DB_RevenueForum](Tables/BI_DB_RevenueForum.md) | Table | 0 | 8.0 | Done (Batch 101) |
+| 432 | [BI_DB_dbo.BI_DB_Revenue14DaysToBigQuery](Tables/BI_DB_Revenue14DaysToBigQuery.md) | Table | 0 | 8.5 | Done (Batch 101) |
+
+---
+
+## Batch 100 (COMPLETE) -- FSA AML start-of-quarter + QMMF compliance + Australian TFN tax + RAF abuse detection + recurring investment positions + return calculation batch: Q_AML_FSA_Report_start (32 cols, 1.49M rows, quarterly FSA Seychelles start-of-quarter customer snapshot), QMMF_Report (12 cols, 1.19B rows, daily QMMF compliance interactions), QMMF_Report_Finance (6 cols, 399M rows, daily QMMF financial metrics), QTFN_Report (39 cols, 225K rows, Australian ASIC TFN compliance with PII), RAF_Invitees_KPIs (38 cols, 710K rows, RAF invitee abuse detection), RecurringInvestment_Positions (3 cols, 119K rows, position-to-deposit mapping), ReturnCalculation (32 cols, 5.87M rows, customer return calculation across 5 time windows), ReturnCalculation_Daily_Data (9 cols, 10.6B rows, daily financial metrics for return aggregation): 8 objects (8.0 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_Q_AML_FSA_Report_start (32 cols, 1.0x), BI_DB_QMMF_Report (12 cols, 0.5x), BI_DB_QMMF_Report_Finance (6 cols, 0.5x), BI_DB_QTFN_Report (39 cols, 1.0x), BI_DB_RAF_Invitees_KPIs (38 cols, 1.0x), BI_DB_RecurringInvestment_Positions (3 cols, 0.5x), BI_DB_ReturnCalculation (32 cols, 1.0x), BI_DB_ReturnCalculation_Daily_Data (9 cols, 0.5x). Batch theme: Compliance/regulatory reporting (FSA Seychelles quarterly AML start-of-quarter snapshot, QMMF money market fund compliance interactions with financial metrics, Australian ASIC Tax File Number report with PII/TFN/ABN), fraud detection (RAF invitee abuse via mutual IP and cashout-after-compensation signals), investment feature tracking (recurring investment position-to-deposit mapping), and financial analytics (customer return calculation with 5 time windows using 10.6B-row daily data layer aggregating net profit, realized equity, and revenue).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 431 | [BI_DB_dbo.BI_DB_ReturnCalculation_Daily_Data](Tables/BI_DB_ReturnCalculation_Daily_Data.md) | Table | 0 | 8.0 | Done (Batch 100) |
+| 430 | [BI_DB_dbo.BI_DB_ReturnCalculation](Tables/BI_DB_ReturnCalculation.md) | Table | 0 | 8.0 | Done (Batch 100) |
+| 429 | [BI_DB_dbo.BI_DB_RecurringInvestment_Positions](Tables/BI_DB_RecurringInvestment_Positions.md) | Table | 0 | 8.5 | Done (Batch 100) |
+| 428 | [BI_DB_dbo.BI_DB_RAF_Invitees_KPIs](Tables/BI_DB_RAF_Invitees_KPIs.md) | Table | 0 | 8.0 | Done (Batch 100) |
+| 427 | [BI_DB_dbo.BI_DB_QTFN_Report](Tables/BI_DB_QTFN_Report.md) | Table | 0 | 8.0 | Done (Batch 100) |
+| 426 | [BI_DB_dbo.BI_DB_QMMF_Report_Finance](Tables/BI_DB_QMMF_Report_Finance.md) | Table | 0 | 8.0 | Done (Batch 100) |
+| 425 | [BI_DB_dbo.BI_DB_QMMF_Report](Tables/BI_DB_QMMF_Report.md) | Table | 0 | 8.0 | Done (Batch 100) |
+| 424 | [BI_DB_dbo.BI_DB_Q_AML_FSA_Report_start](Tables/BI_DB_Q_AML_FSA_Report_start.md) | Table | 0 | 8.0 | Done (Batch 100) |
+
+---
+
+## Batch 99 (COMPLETE) -- Professional customers (approved + documents + pending) + PTM Levy tax report + AML EDD US report + AML FSA Report cluster (end + market value + positions) batch: ProfessionalCustomers (10 cols, 85.9K rows, monthly MiFID II professional approvals), ProfessionalCustomersDocuments (10 cols, 21.1K rows, daily professional application documents), ProfessionalCustomersPending (9 cols, 200.2K rows, monthly pending professional applications), PTM_Levy_Report (13 cols, 8.3K rows, daily UK PTM Levy-eligible LSE transactions >= GBP 10K), Q_AML_EDD_US_Report (40 cols, 1.8K rows, quarterly high-risk US AML enhanced due diligence), Q_AML_FSA_Report_end (32 cols, 1.46M rows, quarterly FSA Seychelles customer snapshot), Q_AML_FSA_Report_end_Market_Value (5 cols, 207.2K rows, quarterly open position market value by instrument type), Q_AML_FSA_Report_end_Positions (9 cols, 1.09M rows, quarterly per-CID trading volume/value by instrument type): 8 objects (8.0 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_ProfessionalCustomers (10 cols, 0.5x), BI_DB_ProfessionalCustomersDocuments (10 cols, 0.5x), BI_DB_ProfessionalCustomersPending (9 cols, 0.5x), BI_DB_PTM_Levy_Report (13 cols, 0.5x), BI_DB_Q_AML_EDD_US_Report (40 cols, 2.0x), BI_DB_Q_AML_FSA_Report_end (32 cols, 1.0x), BI_DB_Q_AML_FSA_Report_end_Market_Value (5 cols, 0.5x), BI_DB_Q_AML_FSA_Report_end_Positions (9 cols, 0.5x). Batch theme: MiFID II professional customer lifecycle (approved snapshots with AM/activity flags + application document tracking + pending application monitoring with club tier/country/days-waiting), UK tax compliance (PTM Levy on settled LSE positions with GBP threshold and currency conversion), US AML compliance (quarterly EDD for high-risk FinCEN Platinum+ VL3 customers with full KYC/document/risk/activity profile), FSA Seychelles regulatory reporting (quarterly customer demographic snapshot with investor classification, end-of-quarter market value aggregation by instrument type, and per-customer trading volume/value breakdown).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 423 | [BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_Positions](Tables/BI_DB_Q_AML_FSA_Report_end_Positions.md) | Table | 0 | 8.0 | Done (Batch 99) |
+| 422 | [BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_Market_Value](Tables/BI_DB_Q_AML_FSA_Report_end_Market_Value.md) | Table | 0 | 8.0 | Done (Batch 99) |
+| 421 | [BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end](Tables/BI_DB_Q_AML_FSA_Report_end.md) | Table | 0 | 8.0 | Done (Batch 99) |
+| 420 | [BI_DB_dbo.BI_DB_Q_AML_EDD_US_Report](Tables/BI_DB_Q_AML_EDD_US_Report.md) | Table | 0 | 8.0 | Done (Batch 99) |
+| 419 | [BI_DB_dbo.BI_DB_PTM_Levy_Report](Tables/BI_DB_PTM_Levy_Report.md) | Table | 0 | 8.5 | Done (Batch 99) |
+| 418 | [BI_DB_dbo.BI_DB_ProfessionalCustomersPending](Tables/BI_DB_ProfessionalCustomersPending.md) | Table | 0 | 8.0 | Done (Batch 99) |
+| 417 | [BI_DB_dbo.BI_DB_ProfessionalCustomersDocuments](Tables/BI_DB_ProfessionalCustomersDocuments.md) | Table | 0 | 8.0 | Done (Batch 99) |
+| 416 | [BI_DB_dbo.BI_DB_ProfessionalCustomers](Tables/BI_DB_ProfessionalCustomers.md) | Table | 0 | 8.0 | Done (Batch 99) |
+
+---
+
+## Batch 98 (COMPLETE) -- EU/UK custody reconciliation (5 tables from SP_BI_DB_PositionPnL_EU_Custody) + IBAN position linkage (2 tables) + PR monthly data batch: PositionPnL_EU_Custody (30 cols, 20.5M rows, SHA1-anonymized CySEC stock/ETF custody snapshot), PositionPnL_EU_Custody_Instrument_Agg (13 cols, 8.66M rows, instrument-level EU aggregation), PositionPnL_UK_Custody (30 cols, 20.5M rows, MD5-anonymized UK book view), PositionPnL_UK_Custody_Resolver (9 cols, 20.5M rows, de-anonymization bridge with real CID/PositionID), PositionPnL_UK_Instrument_Agg (13 cols, 8.66M rows, instrument-level UK aggregation), Positions_Closed_To_IBAN (3 cols, 3.16M rows, position-to-withdrawal IBAN linkage), Positions_Opened_From_IBAN (3 cols, 2.98M rows, position-to-deposit IBAN linkage), PR_MonthlyData (16 cols, 100.2M rows, monthly PR demographics report): 8 objects (5.5 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_PositionPnL_EU_Custody (30 cols, 1.0x), BI_DB_PositionPnL_EU_Custody_Instrument_Agg (13 cols, 0.5x), BI_DB_PositionPnL_UK_Custody (30 cols, 1.0x), BI_DB_PositionPnL_UK_Custody_Resolver (9 cols, 0.5x), BI_DB_PositionPnL_UK_Instrument_Agg (13 cols, 0.5x), BI_DB_Positions_Closed_To_IBAN (3 cols, 0.5x), BI_DB_Positions_Opened_From_IBAN (3 cols, 0.5x), BI_DB_PR_MonthlyData (16 cols, 1.0x). Batch theme: EU/UK custody book reconciliation system (5 tables from single SP: anonymized position-level + instrument-level aggregations for both books + resolver bridge, all CySEC stock/ETF settled positions from BI_DB_PositionPnL), IBAN-based position lifecycle tracking (closed-to-IBAN withdrawals + opened-from-IBAN deposits, deduplicated via CID matching to fix R&D mirror inheritance flaw), and monthly PR demographics report (100M+ rows, non-mirror positions by age/gender/region/instrument for depositing customers since 2019).
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 415 | [BI_DB_dbo.BI_DB_PR_MonthlyData](Tables/BI_DB_PR_MonthlyData.md) | Table | 0 | 8.0 | Done (Batch 98) |
+| 414 | [BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN](Tables/BI_DB_Positions_Opened_From_IBAN.md) | Table | 0 | 8.0 | Done (Batch 98) |
+| 413 | [BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN](Tables/BI_DB_Positions_Closed_To_IBAN.md) | Table | 0 | 8.0 | Done (Batch 98) |
+| 412 | [BI_DB_dbo.BI_DB_PositionPnL_UK_Instrument_Agg](Tables/BI_DB_PositionPnL_UK_Instrument_Agg.md) | Table | 0 | 8.0 | Done (Batch 98) |
+| 411 | [BI_DB_dbo.BI_DB_PositionPnL_UK_Custody_Resolver](Tables/BI_DB_PositionPnL_UK_Custody_Resolver.md) | Table | 0 | 8.5 | Done (Batch 98) |
+| 410 | [BI_DB_dbo.BI_DB_PositionPnL_UK_Custody](Tables/BI_DB_PositionPnL_UK_Custody.md) | Table | 0 | 8.5 | Done (Batch 98) |
+| 409 | [BI_DB_dbo.BI_DB_PositionPnL_EU_Custody_Instrument_Agg](Tables/BI_DB_PositionPnL_EU_Custody_Instrument_Agg.md) | Table | 0 | 8.0 | Done (Batch 98) |
+| 408 | [BI_DB_dbo.BI_DB_PositionPnL_EU_Custody](Tables/BI_DB_PositionPnL_EU_Custody.md) | Table | 0 | 8.5 | Done (Batch 98) |
+
+---
+
+## Batch 97 (COMPLETE) -- OPS multiple accounts + VL2 stuck + verification pipeline + Payoneer revenue + PI affiliate/gain/status + PLTV batch: OPS_MultipleAccounts (35 cols, 41.4K rows, PII-based duplicate account detection), OPS_VerificationLevel2Stuck (23 cols, 20.2K rows, VL2-stuck customers meeting VL3 prerequisites), OPS_VerificationPipeline_OverLevel2 (18 cols, 880K rows, 16-category verification pipeline classification), Payoneer_Revenue_Report (7 cols, 8.6K rows, monthly Payoneer vs non-Payoneer revenue by country), PI_Affiliate (43 cols, 366.5K rows, PI-affiliate FTD/MIMO/AUM tracking), PI_Gain (12 cols, 402K rows, compound M/Q/Y gain percentages), PI_StatusPanel (13 cols, 11K rows, PI tier upgrade/downgrade/removal tracking), PLTV (8 cols, 5.9K rows, predicted LTV lookup by country/age/KYC): 8 objects (8.0 weight slots)
+
+Planned: 2026-04-26 | Completed: 2026-04-26 | Objects: BI_DB_OPS_MultipleAccounts (35 cols, 1.0x), BI_DB_OPS_VerificationLevel2Stuck (23 cols, 1.0x), BI_DB_OPS_VerificationPipeline_OverLevel2 (18 cols, 1.0x), BI_DB_Payoneer_Revenue_Report (7 cols, 0.5x), BI_DB_PI_Affiliate (43 cols, 2.0x), BI_DB_PI_Gain (12 cols, 0.5x), BI_DB_PI_StatusPanel (13 cols, 0.5x), BI_DB_PLTV (8 cols, 0.5x). Batch theme: Operations compliance (duplicate accounts, VL2 stuck, verification pipeline), Payoneer revenue analysis, Popular Investor metrics (affiliate tracking, gain calculations, tier transitions), predicted LTV model.
+
+| # | Object | Type | Priority | Quality | Status |
+|---|--------|------|----------|---------|--------|
+| 407 | [BI_DB_dbo.BI_DB_PLTV](Tables/BI_DB_PLTV.md) | Table | 0 | 8.0 | Done (Batch 97) |
+| 406 | [BI_DB_dbo.BI_DB_PI_StatusPanel](Tables/BI_DB_PI_StatusPanel.md) | Table | 0 | 8.5 | Done (Batch 97) |
+| 405 | [BI_DB_dbo.BI_DB_PI_Gain](Tables/BI_DB_PI_Gain.md) | Table | 0 | 8.0 | Done (Batch 97) |
+| 404 | [BI_DB_dbo.BI_DB_PI_Affiliate](Tables/BI_DB_PI_Affiliate.md) | Table | 0 | 8.0 | Done (Batch 97) |
+| 403 | [BI_DB_dbo.BI_DB_Payoneer_Revenue_Report](Tables/BI_DB_Payoneer_Revenue_Report.md) | Table | 0 | 8.5 | Done (Batch 97) |
+| 402 | [BI_DB_dbo.BI_DB_OPS_VerificationPipeline_OverLevel2](Tables/BI_DB_OPS_VerificationPipeline_OverLevel2.md) | Table | 0 | 8.5 | Done (Batch 97) |
+| 401 | [BI_DB_dbo.BI_DB_OPS_VerificationLevel2Stuck](Tables/BI_DB_OPS_VerificationLevel2Stuck.md) | Table | 0 | 8.5 | Done (Batch 97) |
+| 400 | [BI_DB_dbo.BI_DB_OPS_MultipleAccounts](Tables/BI_DB_OPS_MultipleAccounts.md) | Table | 0 | 8.5 | Done (Batch 97) |
 
 ---
 

@@ -1,0 +1,65 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_ReportingBalances",
+    "elapsed_seconds":  93,
+    "exit_code":  null,
+    "cost_usd":  0.2356,
+    "input_tokens":  2,
+    "output_tokens":  4051,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_ReportingBalances",
+                    "weighted_score":  8.0,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  4,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "KnownIssueWallet, Has Dif with TrackerBalance, Closed Country AND Regulation, User was Compensated during Country Closure, MTD Balance Change -MTD Units Total Flag",
+                                       "problem":  "Flag columns with small domains have no formal key=value inline enumeration. Writer uses \u0027likely Y/N\u0027 in prose but doesn\u0027t formalize as dictionary entries."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2 (Unit Flow Tracking)",
+                                       "problem":  "Business logic rule \u0027MTD Units Total = MTD Units Sent + MTD Units Recieved\u0027 is presented as a rule but is pure inference from column names — no SP or data to confirm. Should be hedged."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7 (Sample Queries)",
+                                       "problem":  "All three sample queries target a 0-row table and are untestable. Syntactically correct but no way to verify semantic correctness."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] checkboxes. Phases only summarized as \u002711/14\u0027 in footer line."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6 (Relationships)",
+                                       "problem":  "Relationships to customer dimension and EXW_EOMReportingBalances are speculative — no FK constraints or SP joins to confirm. Appropriately hedged but still unverified."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (wiki passes): (1) Add formal key=value enumerations for flag columns (KnownIssueWallet, Has Dif with TrackerBalance, Closed Country AND Regulation, User was Compensated during Country Closure). (2) Hedge business logic rules in Section 2 with \u0027Inferred:\u0027 prefix since no SP exists. (3) Add explicit Phase Gate Checklist section. (4) Note in Section 7 that queries are untestable against 0-row table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 (live row count / date range)",
+                                                               "P3 (distribution analysis / NULL rates)"
+                                                           ]
+                                    }
+                }
+}

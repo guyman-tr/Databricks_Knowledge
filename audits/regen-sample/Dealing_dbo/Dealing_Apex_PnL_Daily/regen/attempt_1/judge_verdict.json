@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL_Daily",
+    "elapsed_seconds":  153,
+    "exit_code":  null,
+    "cost_usd":  0.5698,
+    "input_tokens":  2,
+    "output_tokens":  6803,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL_Daily",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AccountNumber (element #2)",
+                                       "problem":  "AccountNumber has exactly 5 distinct values (3EU05026, 3EU05025, 3EU05027, 3EU00101, 3EU05028) hardcoded in SP but element description only lists 2 examples. Per completeness rules, columns with ≤15 values should list all values inline with their HedgeServerID mapping."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section documenting which verification phases (P1/P2/P3) were completed. Footer lacks phases-completed list."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentDisplayName (element #14)",
+                                       "problem":  "Borderline tier attribution — InstrumentDisplayName is a dim-lookup passthrough from DWH_dbo.Dim_Instrument once InstrumentID is resolved. Source attribution says SP_Apex_PnL but could reference Dim_Instrument\u0027s origin (etoro_Trade_InstrumentMetaData). Final tier remains Tier 2 either way."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Dividends (Section 5.1 lineage)",
+                                       "problem":  "Lineage table does not mention that LP_APEX_EXT869_3EU joins to #Apex_Ins on Cusip (not Symbol), unlike Trades which joins on Symbol + ISIN + Cusip. This join-key distinction matters for debugging unmatched dividends."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Volume (element #20)",
+                                       "problem":  "Description says SUM(ABS(Quantity × Price + fees)) but SP computes SUM(ABS(Quantity × Price + FeeSec + CASE Fee5)) — ABS wraps entire expression including conditional Fee5 handling. Functionally correct but slightly imprecise."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) List all 5 AccountNumber values with HedgeServerID mapping inline in element #2. (2) Add Phase Gate Checklist section or phases-completed in footer. (3) Note in Section 5.1 that LP_APEX_EXT869_3EU dividends join uses Cusip (not Symbol) as matching key.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

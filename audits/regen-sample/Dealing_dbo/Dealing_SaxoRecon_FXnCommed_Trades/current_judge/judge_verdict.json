@@ -1,0 +1,80 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_SaxoRecon_FXnCommed_Trades",
+    "elapsed_seconds":  100,
+    "exit_code":  null,
+    "cost_usd":  0.2219,
+    "input_tokens":  2,
+    "output_tokens":  4654,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_SaxoRecon_FXnCommed_Trades",
+                    "weighted_score":  7.0,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  4,
+                                             "business_meaning":  8,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Missing tier tag. Description ends with \u0027ETL metadata: timestamp when this row was last updated by the ETL pipeline.\u0027 — no `(Tier N — source)` suffix. Every other column has it."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 4 (Elements)",
+                                       "problem":  "Elements table has 4 columns (Column | Type | Nullable | Description) instead of the required 5 (# | Element | Type | Nullable | Description). Missing ordinal `#` column."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "No ETL pipeline ASCII diagram. Section 5 is bullet-point data quality notes only. Even orphaned tables need a lineage diagram showing the removed SP path."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No tier breakdown footer. Should state: Tier 1: 0 | Tier 2: 0 | Tier 3: 0 | Tier 4: 22."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Missing Production Source and UC Target rows. These should be present even with N/A or Unknown values."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Side",
+                                       "problem":  "Says \u0027likely Buy or Sell\u0027 but writer had Synapse MCP access and could have confirmed with a SELECT DISTINCT. Values should be enumerated inline."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7",
+                                       "problem":  "Section 7 is \u0027Known Issues\u0027 with prose. Golden shape expects sample SQL queries showing bracket-quoted special-character columns."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 header",
+                                       "problem":  "No tier legend block explaining Tier 1–4 definitions at the top of Section 4."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Add `(Tier 4 — inferred)` to UpdateDate description. (2) Add `#` ordinal column to Elements table (1–22). (3) Add Production Source and UC Target rows to property table. (4) Add Section 5.2 with ETL pipeline ASCII diagram showing orphaned path. (5) Add tier-breakdown footer: Tier 1: 0 | Tier 2: 0 | Tier 3: 0 | Tier 4: 22. (6) Query `SELECT DISTINCT Side FROM Dealing_dbo.Dealing_SaxoRecon_FXnCommed_Trades` and list actual values inline. (7) Add sample SQL queries in Section 7 demonstrating bracket-quoted column access. (8) Add tier legend block at top of Section 4.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

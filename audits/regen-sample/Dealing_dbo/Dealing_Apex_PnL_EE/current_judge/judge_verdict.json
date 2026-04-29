@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_Apex_PnL_EE",
+    "elapsed_seconds":  120,
+    "exit_code":  null,
+    "cost_usd":  0.4996,
+    "input_tokens":  2,
+    "output_tokens":  5503,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_Apex_PnL_EE",
+                    "weighted_score":  8.15,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No inline ETL pipeline ASCII diagram in the wiki; defers entirely to lineage.md. Shape spec expects a Section 5.2 diagram with real object names."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No Phase Gate Checklist present. Data evidence claims (row count ~5,130, date range 2021-02-10 to 2024-06-07) cannot be verified as live-queried without P2/P3 markers."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Dividends",
+                                       "problem":  "SP uses -CAST(lp.Amount) to invert sign from LP_APEX_EXT869_3EU. Wiki doesn\u0027t document this inversion, which could confuse analysts comparing wiki to raw staging data."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Transfers",
+                                       "problem":  "SP computes SUM(-t.Amount) for transfers. Wiki states sign convention (positive = received) but doesn\u0027t document the negation transform from source, risking confusion during debugging."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "All columns",
+                                       "problem":  "No NULL-rate or distribution analysis for any column. All 8 columns are nullable; FULL OUTER JOIN pattern in SP can produce NULLs for Equity_Start, Transfers, or Dividends when staging feeds are incomplete for a date."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Not required (PASS). For improvement: (1) Add inline ETL ASCII diagram in Section 5.2 showing LP_APEX_EXT981_3EU + LP_APEX_EXT869_3EU → SP_Apex_PnL temp tables → FULL OUTER JOIN → Dealing_Apex_PnL_EE. (2) Add Phase Gate Checklist with P2/P3 completion status. (3) Document sign inversions for Dividends (-CAST(Amount)) and Transfers (SUM(-Amount)) in element descriptions.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

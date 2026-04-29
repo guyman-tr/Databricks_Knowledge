@@ -1,0 +1,54 @@
+{
+  "schema": "DWH_dbo",
+  "object": "Dim_Channel",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Tables\\DWH_dbo.Dim_Channel.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_Channel\\current\\Dim_Channel.lineage.md",
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Dim_Channel.sql"
+  ],
+  "candidates_found": 3,
+  "resolved_synapse": 0,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 2,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_Channel\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 5974,
+  "resolutions": [
+    {
+      "raw_name": "DWH_staging.fiktivo_dbo_tblaff_Affiliates",
+      "db": null,
+      "schema": "DWH_staging",
+      "object": "fiktivo_dbo_tblaff_Affiliates",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_dbo.Ext_Dim_SubChannel_UnifyCode",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Ext_Dim_SubChannel_UnifyCode",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_dbo.SP_Dim_Channel",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "SP_Dim_Channel",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Stored Procedures\\DWH_dbo.SP_Dim_Channel.sql",
+      "bytes_read": 3791,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

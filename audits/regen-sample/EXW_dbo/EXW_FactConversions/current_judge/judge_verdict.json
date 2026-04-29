@@ -1,0 +1,161 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_FactConversions",
+    "elapsed_seconds":  173,
+    "exit_code":  null,
+    "cost_usd":  0.4626,
+    "input_tokens":  2,
+    "output_tokens":  9922,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_FactConversions",
+                    "weighted_score":  7.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "ConversionID",
+                                                  "upstream_quote":  "Auto-incrementing primary key. FK target for Wallet.ConversionStatuses and Wallet.ConversionTransactions.",
+                                                  "wiki_quote":  "Auto-incrementing primary key. FK target for Wallet.ConversionStatuses and Wallet.ConversionTransactions. Passthrough from WalletDB.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added attribution suffix; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "CorrelationID",
+                                                  "upstream_quote":  "Links to the parent request in Wallet.Requests.CorrelationId.",
+                                                  "wiki_quote":  "Links to the parent request in Wallet.Requests.CorrelationId. Used by the orchestration saga to deduplicate retries.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added unverified orchestration saga claim; upstream text preserved"
+                                              },
+                                              {
+                                                  "column":  "RequestTime",
+                                                  "upstream_quote":  "Timestamp when the conversion was initiated.",
+                                                  "wiki_quote":  "Timestamp when the conversion was initiated. Passthrough from Wallet.Conversions.Occurred.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added source reference; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "FromWalletId",
+                                                  "upstream_quote":  "The source wallet from which crypto is sold. FK to Wallet.Wallets.WalletId.",
+                                                  "wiki_quote":  "The source wallet from which crypto is sold. FK to Wallet.Wallets.WalletId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FromAddress",
+                                                  "upstream_quote":  "Destination blockchain address for this conversion leg. NULL when the transfer is internal.",
+                                                  "wiki_quote":  "Destination blockchain address for this conversion leg. NULL when the transfer is internal. FROM-leg outgoing address.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added leg clarification; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "RequestedFromAmount",
+                                                  "upstream_quote":  "Amount of source crypto being sold. In native units of FromCryptoId.",
+                                                  "wiki_quote":  "Amount of source crypto being sold. In native units of FromCryptoId. This is the original requested amount before execution.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added execution context; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "FromCryptoID",
+                                                  "upstream_quote":  "Source cryptocurrency being sold. FK to Wallet.CryptoTypes.CryptoID.",
+                                                  "wiki_quote":  "Source cryptocurrency being sold. FK to Wallet.CryptoTypes.CryptoID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FromAmount",
+                                                  "upstream_quote":  "Amount of crypto for this conversion leg in native units.",
+                                                  "wiki_quote":  "Amount of crypto for this conversion leg in native units. FROM-leg actual executed amount (may differ from RequestedFromAmount due to slippage/fees).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added FROM-leg context; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "ToWalletId",
+                                                  "upstream_quote":  "The destination wallet into which the purchased crypto arrives. FK to Wallet.Wallets.WalletId.",
+                                                  "wiki_quote":  "The destination wallet into which the purchased crypto arrives. FK to Wallet.Wallets.WalletId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ToAddress",
+                                                  "upstream_quote":  "Destination blockchain address for this conversion leg. NULL when the transfer is internal.",
+                                                  "wiki_quote":  "Destination blockchain address for this conversion leg. NULL when the transfer is internal. TO-leg receiving address.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added leg clarification; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "RequestedToAmount",
+                                                  "upstream_quote":  "Amount of destination crypto being purchased. In native units of ToCryptoId.",
+                                                  "wiki_quote":  "Amount of destination crypto being purchased. In native units of ToCryptoId. This is the original requested amount before execution.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added execution context; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "ToCryptoID",
+                                                  "upstream_quote":  "Destination cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID.",
+                                                  "wiki_quote":  "Destination cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ToAmount",
+                                                  "upstream_quote":  "Amount of crypto for this conversion leg in native units.",
+                                                  "wiki_quote":  "Amount of crypto for this conversion leg in native units. TO-leg actual executed amount received in the destination wallet.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added TO-leg context; no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "FromEtoroEstimatedBCFee",
+                                                  "upstream_quote":  "Estimated blockchain network fee for this leg.",
+                                                  "wiki_quote":  "Estimated blockchain network fee for this leg. FROM-leg estimated blockchain fee in native crypto units. NULL when blockchain fee was not available at load time.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added FROM-leg context and NULL semantics; no semantic loss from upstream"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "ToEtoroEstimatedBCFee (#13)",
+                                       "problem":  "Tagged Tier 2 (WalletDB.Wallet.ConversionTransactions) but is a passthrough from ConversionTransactions.EstimatedBlockChainFee with upstream wiki available in bundle. Symmetric column FromEtoroEstimatedBCFee (#23) is correctly tagged Tier 1. Inconsistent tier assignment."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "ToEtoroDate (#14)",
+                                       "problem":  "Tagged Tier 2 but is a passthrough rename from ConversionTransactions.Occurred (TO leg). Upstream wiki documents Occurred as \u0027Timestamp of this transaction record creation.\u0027 Should be Tier 1."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "FromEtoroDate (#24)",
+                                       "problem":  "Tagged Tier 2 but is a passthrough rename from ConversionTransactions.Occurred (FROM leg). Same upstream source as ToEtoroDate. Should be Tier 1."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2 / ConversionTypeId",
+                                       "problem":  "Upstream Wallet.Conversions documents ConversionTypeId (1=FixedFrom, 2=FixedTo) as a key business column. This column was not loaded into the DWH table, but the wiki does not mention its absence or the loss of pricing-direction metadata."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CorrelationID (#2)",
+                                       "problem":  "Wiki adds \u0027Used by the orchestration saga to deduplicate retries\u0027 which does not appear in the upstream Wallet.Conversions wiki. Unsourced claim appended to an otherwise faithful Tier 1 description."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag ToEtoroEstimatedBCFee (#13) as Tier 1 — WalletDB.Wallet.ConversionTransactions, using verbatim upstream text \u0027Estimated blockchain network fee for this leg.\u0027 then append TO-leg qualifier and NULL observation. (2) Re-tag ToEtoroDate (#14) as Tier 1 — WalletDB.Wallet.ConversionTransactions, using upstream text \u0027Timestamp of this transaction record creation.\u0027 (3) Re-tag FromEtoroDate (#24) as Tier 1 — WalletDB.Wallet.ConversionTransactions, same upstream text. (4) Update footer tier counts from \u002714 T1, 31 T2\u0027 to \u002717 T1, 28 T2\u0027. (5) Remove or explicitly attribute the \u0027orchestration saga\u0027 claim in CorrelationID.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

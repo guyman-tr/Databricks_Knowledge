@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_ConditionToCP",
+    "elapsed_seconds":  114,
+    "exit_code":  null,
+    "cost_usd":  0.4646,
+    "input_tokens":  2,
+    "output_tokens":  4995,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_ConditionToCP",
+                    "weighted_score":  8.50,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Lists Dealing_CEPWeeklyAudit_ConditionToCP as a downstream reference with \u0027(if exists)\u0027 caveat, but the review-needed sidecar explicitly states this table was not found in the SSDT repo. Speculative relationship is misleading."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist (P1/P2/P3 checkboxes) and no \u0027Phases completed\u0027 line in the footer. Data evidence appears real but phase completion is unauditable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeServerID (element 4)",
+                                       "problem":  "Description does not mention original source column name HedgeRuleActionTypeID. Sibling wiki (Dealing_CEPDailyAudit_Rules) includes this for traceability."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer lacks \u0027Phases completed: [P1, P2, P3]\u0027 notation expected by golden reference shape."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Remove or explicitly caveat Dealing_CEPWeeklyAudit_ConditionToCP in Section 6.2 — it does not exist in SSDT. (2) Add Phase Gate Checklist or footer phases-completed notation. (3) Note source column HedgeRuleActionTypeID in element 4 description for lineage parity with sibling wikis.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~6,604 rows",
+                                                                                  "175 distinct dates",
+                                                                                  "88% removals (5,812) vs 12% additions (792)",
+                                                                                  "LoginName NULL ~63%",
+                                                                                  "RuleID NULL ~18%",
+                                                                                  "Top date 2026-04-19: 5,052 rows"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 phase gate checklist not explicitly present"
+                                                           ]
+                                    }
+                }
+}

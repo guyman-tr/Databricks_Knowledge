@@ -1,0 +1,77 @@
+{
+    "schema":  "EXW_dbo",
+    "object":  "EXW_Conversion_Allowed_Country",
+    "elapsed_seconds":  154,
+    "exit_code":  null,
+    "cost_usd":  0.5576,
+    "input_tokens":  4,
+    "output_tokens":  8245,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_dbo",
+                    "object":  "EXW_Conversion_Allowed_Country",
+                    "weighted_score":  6.55,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country (c.Name AS Country).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Unique per row.\u0027 Added non-upstream lineage context (\u0027Passthrough from Dim_Country (c.Name AS Country)\u0027)."
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer.",
+                                                  "wiki_quote":  "Primary key in Dim_Country. 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer. Distribution key for this table. CountryID=0 excluded by SP WHERE clause. Passthrough from Dim_Country.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped critical sentinel semantics: \u00270=Not available (fallback/placeholder for users whose country cannot be determined)\u0027. Changed \u0027Primary key\u0027 to \u0027Primary key in Dim_Country\u0027. Added unrelated context (distribution key, SP WHERE clause, passthrough note)."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country",
+                                       "problem":  "Tier 1 column paraphrased: dropped \u0027Unique per row.\u0027 from Dim_Country.Name upstream description. Added non-upstream lineage context inline."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CountryID",
+                                       "problem":  "Tier 1 column paraphrased: dropped \u00270=Not available (fallback/placeholder for users whose country cannot be determined)\u0027 sentinel semantics from Dim_Country.CountryID upstream description. Rewrote \u0027Primary key\u0027 to \u0027Primary key in Dim_Country\u0027. Added distribution key and SP WHERE clause context that is not part of the upstream quote."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Country, CountryID",
+                                       "problem":  "Both Tier 1 columns mix supplementary writer context into what should be a verbatim upstream quote. Lineage notes (passthrough, distribution key) should follow after the quoted text, not replace parts of it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AllowedUserTagType, FromConversionAllowed, ToConversionAllowed",
+                                       "problem":  "Dictionary-like columns with ≤15 distinct values described in prose rather than formal inline key=value pair enumeration."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "review-needed.md",
+                                       "problem":  "Upstream bundle claimed \u0027NO UPSTREAM WIKI was resolvable\u0027 but Dim_Country.md and Dim_State_and_Province.md exist in the repo. This discrepancy is not flagged in the review-needed sidecar."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace Country description with verbatim Dim_Country.Name text: \u0027Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 Append lineage context after the quote. (2) Replace CountryID description with verbatim Dim_Country.CountryID text: \u0027Primary key. 0=Not available (fallback/placeholder for users whose country cannot be determined), 1-250=countries ordered roughly alphabetically by ISO code. Referenced by Dim_Customer, Fact_BillingDeposit, Dim_CountryBin, V_Dim_Customer.\u0027 Append \u0027CountryID=0 excluded by SP WHERE clause. Distribution key for this table.\u0027 as supplementary context. (3) Add inline key=value enumeration for AllowedUserTagType, FromConversionAllowed, ToConversionAllowed. (4) Flag upstream bundle resolution gap in review-needed sidecar.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

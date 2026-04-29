@@ -4,7 +4,7 @@
 **Date:** 2026-04-23  
 **Source:** `SubAccount alternatives.pdf`  
 **Companion:** `canvases/subaccount-effort-risk.canvas.tsx`  
-**Deep dive — Option 1:** [`subaccount-option1-prd.md`](./subaccount-option1-prd.md) (full blast radius PRD with 1,174 catalogued touchpoints, IsBotAccount design, RealCID landmine, 6-phase rollout, risk register, test plan)
+**Deep dive — Option 1:** [`subaccount-option1-prd.md`](./subaccount-option1-prd.md) + [`subaccount-option1-archetypes.md`](./subaccount-option1-archetypes.md) (full blast radius PRD: **1,459 SQL files classified into 6 archetypes** by destination INSERT grain · **96 regulator-risk Archetype-C SPs** are the non-mechanical core — 9 of them priority ≥ 90 including KPMG IFR + the four `SP_DDR*` aggregators · 397 mechanical Archetype A/B/D/E fixes via a new `general.Dim_MasterGCID(CID, master_CID, master_GCID, is_synthetic)` table · 6-phase rollout with parallel 2a-mechanical / 2b-policy split · per-SP triage in `subaccount-option1-triage.csv`)
 
 For each option: the specific risk it creates, and the specific labor that risk forces.
 

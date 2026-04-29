@@ -1,0 +1,162 @@
+{
+  "schema": "BI_DB_dbo",
+  "object": "BI_DB_AML_Terror_Monitor_Dashboard",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\BI_DB_dbo\\Tables\\BI_DB_dbo.BI_DB_AML_Terror_Monitor_Dashboard.sql",
+  "lineage_path": null,
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\BI_DB_dbo\\Stored Procedures\\BI_DB_dbo.SP_AML_Terror_Monitor_Dashboard.sql"
+  ],
+  "candidates_found": 12,
+  "resolved_synapse": 10,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\BI_DB_dbo\\BI_DB_AML_Terror_Monitor_Dashboard\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 214903,
+  "resolutions": [
+    {
+      "raw_name": "BI_DB_dbo.SP_AML_Terror_Monitor_Dashboard",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "SP_AML_Terror_Monitor_Dashboard",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\BI_DB_dbo\\Stored Procedures\\BI_DB_dbo.SP_AML_Terror_Monitor_Dashboard.sql",
+      "bytes_read": 5801,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Customer",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Customer",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Customer.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Regulation",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Regulation",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Regulation.md",
+      "sp_path": null,
+      "bytes_read": 11793,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_PlayerStatus",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_PlayerStatus",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerStatus.md",
+      "sp_path": null,
+      "bytes_read": 16561,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_PlayerLevel",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_PlayerLevel",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_PlayerLevel.md",
+      "sp_path": null,
+      "bytes_read": 14989,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Country",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Country",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+      "sp_path": null,
+      "bytes_read": 21054,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_ScreeningStatus",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_ScreeningStatus",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_ScreeningStatus.md",
+      "sp_path": null,
+      "bytes_read": 9107,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "BI_DB_dbo.External_RiskClassification_dbo_V_RiskClassificationDataLake",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "External_RiskClassification_dbo_V_RiskClassificationDataLake",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "BI_DB_dbo.BI_DB_AML_SubEntity_Categorization",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "BI_DB_AML_SubEntity_Categorization",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_AML_SubEntity_Categorization.md",
+      "sp_path": null,
+      "bytes_read": 15442,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.V_Liabilities",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "V_Liabilities",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Views\\V_Liabilities.md",
+      "sp_path": null,
+      "bytes_read": 17785,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Fact_CustomerAction",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Fact_CustomerAction",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CustomerAction.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "eMoney_dbo.eMoney_Dim_Account",
+      "db": null,
+      "schema": "eMoney_dbo",
+      "object": "eMoney_Dim_Account",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\eMoney_dbo\\Tables\\eMoney_Dim_Account.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_Instrument",
+    "elapsed_seconds":  292,
+    "exit_code":  null,
+    "cost_usd":  0.9786,
+    "input_tokens":  2,
+    "output_tokens":  17769,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_Instrument",
+                    "weighted_score":  8.2,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key from Trade.Instrument. Identifies the tradeable instrument pair.",
+                                                  "wiki_quote":  "Primary key from Trade.Instrument. Identifies the tradeable instrument pair.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentTypeID",
+                                                  "upstream_quote":  "From IMD (InstrumentMetaData). Asset class: 1=Forex, 2=Commodity, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType.",
+                                                  "wiki_quote":  "From IMD (InstrumentMetaData). Asset class: 1=Forex, 2=Commodity, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Computed: TDCUR_BUY.Abbreviation + \u0027/\u0027 + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD).",
+                                                  "wiki_quote":  "Computed: TDCUR_BUY.Abbreviation + \u0027/\u0027 + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DWHInstrumentID",
+                                                  "upstream_quote":  "(alias of InstrumentID — no independent upstream description)",
+                                                  "wiki_quote":  "Alias of InstrumentID (InstrumentID AS DWHInstrumentID). Always equals InstrumentID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BuyCurrencyID",
+                                                  "upstream_quote":  "FK to Dictionary.Currency. Buy-side asset. For forex: base currency; for stocks: asset itself (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument.",
+                                                  "wiki_quote":  "FK to Dictionary.Currency. Buy-side asset. For forex: base currency; for stocks: asset itself (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SellCurrencyID",
+                                                  "upstream_quote":  "FK to Dictionary.Currency. Sell-side (denomination) currency. For forex: quote currency; for stocks: trading currency. Inherited from Trade.Instrument.",
+                                                  "wiki_quote":  "FK to Dictionary.Currency. Sell-side (denomination) currency. For forex: quote currency; for stocks: trading currency. Inherited from Trade.Instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BuyCurrency",
+                                                  "upstream_quote":  "Trading symbol / ticker. \"USD\", \"AAPL.US\", \"BTC\", \"GOLD\". UNIQUE constraint. The primary identifier used in UIs and APIs.",
+                                                  "wiki_quote":  "Trading symbol / ticker for the buy-side currency. \"USD\", \"EUR\", \"AAPL.US\". UNIQUE constraint in production. The primary identifier used in UIs and APIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027for the buy-side currency\u0027, changed example values, added \u0027in production\u0027"
+                                              },
+                                              {
+                                                  "column":  "SellCurrency",
+                                                  "upstream_quote":  "Trading symbol / ticker. \"USD\", \"AAPL.US\", \"BTC\", \"GOLD\". UNIQUE constraint. The primary identifier used in UIs and APIs.",
+                                                  "wiki_quote":  "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. The primary identifier used in UIs and APIs.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027for the sell-side currency\u0027, changed example values, added \u0027in production\u0027"
+                                              },
+                                              {
+                                                  "column":  "TradeRange",
+                                                  "upstream_quote":  "Allowed trade range (pip distance) for pending orders. From Trade.Instrument.",
+                                                  "wiki_quote":  "Allowed trade range (pip distance) for pending orders. From Trade.Instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DollarRatio",
+                                                  "upstream_quote":  "Price scaling factor. Most=1; JPY pairs=100. From Trade.Instrument.",
+                                                  "wiki_quote":  "Price scaling factor. Most=1; JPY pairs=100. From Trade.Instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PipDifferenceThreshold",
+                                                  "upstream_quote":  "Max pip difference for price validation. From Trade.Instrument.",
+                                                  "wiki_quote":  "Max pip difference for price validation. From Trade.Instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsMajorID",
+                                                  "upstream_quote":  "1=major instrument (spread/margin treatment); 0=minor. From Trade.Instrument.",
+                                                  "wiki_quote":  "1=major instrument (spread/margin treatment); 0=minor. From Trade.Instrument. Stored as int (original production type is bit).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH type-cast note"
+                                              },
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs.",
+                                                  "wiki_quote":  "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Industry",
+                                                  "upstream_quote":  "Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto.",
+                                                  "wiki_quote":  "Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added source attribution"
+                                              },
+                                              {
+                                                  "column":  "CompanyInfo",
+                                                  "upstream_quote":  "Extended company/instrument description. Nullable.",
+                                                  "wiki_quote":  "Extended company/instrument description. Nullable.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Exchange",
+                                                  "upstream_quote":  "Exchange name string (e.g., \"NASDAQ\"). Populated from Price.Exchange via ExchangeID. May be denormalized.",
+                                                  "wiki_quote":  "Exchange name string (e.g., \"NASDAQ\"). Populated from Price.Exchange via ExchangeID. May be denormalized.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ISINCode",
+                                                  "upstream_quote":  "International Securities Identification Number. Required for stocks (e.g., US0378331005 for Apple). NULL for forex/crypto. Used for compliance and dividend matching.",
+                                                  "wiki_quote":  "International Securities Identification Number. Required for stocks (e.g., \"US0378331005\" for Apple). NULL for forex, commodities, indices, most crypto. Used for compliance and dividend matching.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Expanded NULL coverage from \u0027forex/crypto\u0027 to \u0027forex, commodities, indices, most crypto\u0027"
+                                              },
+                                              {
+                                                  "column":  "ISINCountryCode",
+                                                  "upstream_quote":  "Country prefix of ISIN (e.g., \"US\"). Audit-tracked.",
+                                                  "wiki_quote":  "Country prefix of ISIN (e.g., \"US\"). Audit-tracked.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Tradable",
+                                                  "upstream_quote":  "1 = orders allowed, 0 = trading disabled. Set by EnableInstrument/DisableInstrument.",
+                                                  "wiki_quote":  "1 = orders allowed, 0 = trading disabled. Set by EnableInstrument/DisableInstrument. DWH note: CAST from bit to int, value preserved.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH cast note"
+                                              },
+                                              {
+                                                  "column":  "Symbol",
+                                                  "upstream_quote":  "Short ticker symbol (e.g., \"AAPL\", \"EURUSD\"). Used for display and lookup. Not necessarily unique.",
+                                                  "wiki_quote":  "Short ticker symbol (e.g., \"AAPL\", \"EURUSD\"). Used for display and lookup. Not necessarily unique.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BonusCreditUsePercent",
+                                                  "upstream_quote":  "Percentage of position that can use bonus credit. Trade.InstrumentNWADecreasePercentage view.",
+                                                  "wiki_quote":  "Percentage of position that can use bonus credit. From Trade.ProviderToInstrument.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped InstrumentNWADecreasePercentage view reference"
+                                              },
+                                              {
+                                                  "column":  "SymbolFull",
+                                                  "upstream_quote":  "Full/canonical symbol, UNIQUE. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "wiki_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027in production\u0027"
+                                              },
+                                              {
+                                                  "column":  "CUSIP",
+                                                  "upstream_quote":  "Alias for InstrumentMetaData.Cusip. Committee on Uniform Securities Identification Procedures code for US/Canada securities. NULL for forex, crypto, many non-US instruments.",
+                                                  "wiki_quote":  "Alias for InstrumentMetaData.Cusip. Committee on Uniform Securities Identification Procedures code for US/Canada securities. NULL for forex, crypto, many non-US instruments.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Precision",
+                                                  "upstream_quote":  "Decimal places for price display and rounding. Used by Trade.ChangeTreePropertiesPerInstrument, Trade.UpdatePositionsTakeProfitByInstrumentID.",
+                                                  "wiki_quote":  "Decimal places for price display and rounding. From Trade.ProviderToInstrument.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped specific procedure references"
+                                              },
+                                              {
+                                                  "column":  "AllowBuy",
+                                                  "upstream_quote":  "1=buy allowed, 0=buy disabled for this instrument-provider pair.",
+                                                  "wiki_quote":  "1=buy allowed, 0=buy disabled for this instrument-provider pair. DWH note: CAST from bit to int.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH cast note"
+                                              },
+                                              {
+                                                  "column":  "AllowSell",
+                                                  "upstream_quote":  "1=sell allowed, 0=sell disabled.",
+                                                  "wiki_quote":  "1=sell allowed, 0=sell disabled. DWH note: CAST from bit to int.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH cast note"
+                                              },
+                                              {
+                                                  "column":  "VisibleInternallyOnly",
+                                                  "upstream_quote":  "1=hidden from external clients (internal/ops only), 0=visible to all.",
+                                                  "wiki_quote":  "1=hidden from external clients (internal/ops only), 0=visible to all. DWH note: CAST from bit to int.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH cast note"
+                                              },
+                                              {
+                                                  "column":  "Multiplier",
+                                                  "upstream_quote":  "Contract size per point. Used for notional and fee calculation.",
+                                                  "wiki_quote":  "Contract size per point for futures instruments. Used for notional and fee calculation. NULL for non-futures (15,464 rows).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027for futures instruments\u0027 and NULL rate"
+                                              },
+                                              {
+                                                  "column":  "ProviderID",
+                                                  "upstream_quote":  "FK to Trade.Provider. Identifies the execution provider (e.g., 1=Tradonomi). Part of PK.",
+                                                  "wiki_quote":  "FK to Trade.Provider. Identifies the execution provider (e.g., 1=Tradonomi). From Trade.ProviderToInstrument.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Part of PK\u0027, added source"
+                                              },
+                                              {
+                                                  "column":  "ProviderMarginPerLot",
+                                                  "upstream_quote":  "Cash margin required to open one unit/lot of this futures instrument with this provider. Expressed in the instrument\u0027s base currency.",
+                                                  "wiki_quote":  "Cash margin required to open one unit/lot of this futures instrument with this provider. Expressed in the instrument\u0027s base currency. Renamed from InitialMargin.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added rename note"
+                                              },
+                                              {
+                                                  "column":  "eToroMarginPerLot",
+                                                  "upstream_quote":  "Initial margin in asset currency. Sample 90, 3, or NULL.",
+                                                  "wiki_quote":  "Initial margin in asset currency as set by eToro. Renamed from InitialMarginInAssetCurrency. From Trade.ProviderToInstrument.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added context, dropped sample values"
+                                              },
+                                              {
+                                                  "column":  "SettlementTime",
+                                                  "upstream_quote":  "Time of day for settlement.",
+                                                  "wiki_quote":  "Time of day for settlement. DWH note: reformatted from Trade.FuturesMetaData.SettlementTime via FORMAT(DATEPART(HOUR)*100 + DATEPART(MINUTE), \u002700:00\u0027).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added transform documentation"
+                                              },
+                                              {
+                                                  "column":  "OperationMode",
+                                                  "upstream_quote":  "Trading operation mode: 0=Standard, 1=Alternate (e.g., European stocks in non-USD). From Trade.Instrument.",
+                                                  "wiki_quote":  "Trading operation mode: 0=Standard (13,140 instruments), 1=Alternate (2,566, primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX). From Trade.Instrument.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Changed counts to DWH-level, expanded description"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u002730 T1, 13 T2, 2 T3\u0027 = 45, but actual element count is 33 T1, 12 T2, 2 T3 = 47. Both T1 and T2 counts are wrong and the sum is off by 2."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Multiple T1 columns (AllowBuy, AllowSell, Tradable, VisibleInternallyOnly, IsMajorID, etc.)",
+                                       "problem":  "15 of 33 Tier 1 columns carry additive DWH notes appended to the upstream text, breaking the verbatim contract. No semantic loss, but the pattern is pervasive."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2 Referenced By",
+                                       "problem":  "Uses vague group names (\u0027Fact tables (positions, orders, trades)\u0027, \u0027BI_DB aggregation tables\u0027) instead of specific object names. An analyst cannot determine actual dependencies."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SettlementTime (#46)",
+                                       "problem":  "Tagged Tier 1 but SP applies FORMAT(DATEPART(HOUR)*100 + DATEPART(MINUTE), \u002700:00\u0027) — an arithmetic transform that could justify Tier 2."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Row count (15,707) present but no date range. Arguable for a truncate-and-reload dimension, but standard template expects it."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix footer tier counts to 33 T1, 12 T2, 2 T3 = 47 total. (2) For T1 columns, keep upstream text verbatim and place DWH notes in a separate parenthetical after the upstream quote. (3) Replace vague entries in Section 6.2 with specific object names. (4) Consider re-tagging SettlementTime as Tier 2 given FORMAT/DATEPART transform.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "InstrumentType counts (Section 2.1)",
+                                                                                  "IsMajor counts (Section 2.2)",
+                                                                                  "IsFuture counts (Section 2.3)",
+                                                                                  "AssetClass NULL rate (#33)",
+                                                                                  "Multiplier NULL rate (#42)",
+                                                                                  "OperationMode distribution (#47)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)",
+                                                               "2 additional unidentified phases (11/14)"
+                                                           ]
+                                    }
+                }
+}

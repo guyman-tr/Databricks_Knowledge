@@ -1,0 +1,39 @@
+{
+  "schema": "eMoney_dbo",
+  "object": "eMoney_Dictionary_TransactionType",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\eMoney_dbo\\Tables\\eMoney_dbo.eMoney_Dictionary_TransactionType.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\eMoney_dbo\\eMoney_Dictionary_TransactionType\\current\\eMoney_Dictionary_TransactionType.lineage.md",
+  "candidates_found": 2,
+  "resolved_synapse": 0,
+  "resolved_production": 1,
+  "resolved_sp": 0,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\eMoney_dbo\\eMoney_Dictionary_TransactionType\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 4647,
+  "resolutions": [
+    {
+      "raw_name": "FiatDwhDB.Dictionary.TransactionTypes",
+      "db": "FiatDwhDB",
+      "schema": "Dictionary",
+      "object": "TransactionTypes",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\BankingDBs\\FiatDwhDB\\Wiki\\Dictionary\\Tables\\Dictionary.TransactionTypes.md",
+      "sp_path": null,
+      "bytes_read": 2900,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_transactiontype",
+      "db": "main",
+      "schema": "emoney",
+      "object": "gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_transactiontype",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    }
+  ]
+}

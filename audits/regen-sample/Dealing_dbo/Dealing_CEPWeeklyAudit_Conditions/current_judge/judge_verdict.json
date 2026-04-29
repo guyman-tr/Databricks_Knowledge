@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_Conditions",
+    "elapsed_seconds":  119,
+    "exit_code":  null,
+    "cost_usd":  0.4589,
+    "input_tokens":  2,
+    "output_tokens":  5603,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_Conditions",
+                    "weighted_score":  7.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UpdateDate (element #14)",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but GETDATE() is clearly visible in SP_W_CEPWeeklyAudit INSERT block. Sibling wikis (Rules, ConditionToCP, CPToRule) use (Tier 4 — SP_W_CEPWeeklyAudit) without UNVERIFIED. False uncertainty flag."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 (Business Meaning)",
+                                       "problem":  "Row count and date range appear only in the property table. Section 1 body uses vague \u0027tens of thousands\u0027 and \u0027~230 weeks\u0027 instead of the specific ~12,333 rows / 2021-09-26 to 2026-03-01."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Tier Legend)",
+                                       "problem":  "Tier legend shows only Tier 2 and Tier 4. Sibling Dealing_CEPWeeklyAudit_Rules uses a full four-tier legend. Inconsistent with family pattern."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "No Phase Gate Checklist section present. No phases-completed list in footer. Structural gap vs golden shape."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoginName (element #12)",
+                                       "problem":  "Description does not note that source is bare AppLoginName without COALESCE(AppLoginName, PreviousAppLoginName) — a behavioral difference from the daily family that the Rules wiki explicitly flags."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor polish only: (1) Remove [UNVERIFIED] from UpdateDate and re-tag as (Tier 4 — SP_W_CEPWeeklyAudit). (2) Add precise row count (~12,333) and date range (2021-09-26 to 2026-03-01) to Section 1 body. (3) Expand tier legend to full four tiers for family consistency. (4) Add Phase Gate Checklist section. (5) Note in LoginName element that source is AppLoginName only (no COALESCE fallback).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

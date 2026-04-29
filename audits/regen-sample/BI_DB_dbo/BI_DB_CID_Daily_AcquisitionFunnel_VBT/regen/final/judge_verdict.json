@@ -1,0 +1,175 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CID_Daily_AcquisitionFunnel_VBT",
+    "elapsed_seconds":  200,
+    "exit_code":  null,
+    "cost_usd":  0.7626,
+    "input_tokens":  2,
+    "output_tokens":  13677,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CID_Daily_AcquisitionFunnel_VBT",
+                    "weighted_score":  9.40,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values.",
+                                                  "wiki_quote":  "Real (funded) customer ID. The primary customer identifier in the DWH ecosystem. Passthrough from Fact_SnapshotCustomer.RealCID (renamed).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Hash distribution key\u0027, \u0027FK to Dim_Customer (if exists)\u0027, \u002746.4M distinct values\u0027 — all FSC-contextual, not semantic loss for this table"
+                                              },
+                                              {
+                                                  "column":  "Desk",
+                                                  "upstream_quote":  "Sales desk assignment. Resolved from Dim_Country.Desk via CountryID.",
+                                                  "wiki_quote":  "Sales desk assignment. Resolved from Dim_Country.Desk via CountryID. Passthrough from BI_DB_CIDFirstDates.PotentialDesk (renamed).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Geographic region name. Resolved from Dim_Country.Region via CountryID. Values: North Europe, French, Eastern Europe, Other EU, LATAM, etc.",
+                                                  "wiki_quote":  "Geographic region name. Resolved from Dim_Country.Region via CountryID. Values: North Europe, French, Eastern Europe, Other EU, LATAM, etc. Passthrough from BI_DB_CIDFirstDates.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Country of residence name. Resolved from Dim_Country.Name via CountryID.",
+                                                  "wiki_quote":  "Country of residence name. Resolved from Dim_Country.Name via CountryID. Passthrough from BI_DB_CIDFirstDates.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Channel",
+                                                  "upstream_quote":  "Marketing acquisition channel. Resolved from Dim_Channel.Channel via Dim_Affiliate.SubChannelID. ISNULL(,\u0027Direct\u0027). Values: Direct, Affiliate, SEM, etc.",
+                                                  "wiki_quote":  "Marketing acquisition channel. Resolved from Dim_Channel.Channel via Dim_Affiliate.SubChannelID. ISNULL(,\u0027Direct\u0027). Values: Direct, Affiliate, SEM, etc. Passthrough from BI_DB_CIDFirstDates.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SubChannel",
+                                                  "upstream_quote":  "Marketing sub-channel. Resolved from Dim_Channel.SubChannel via Dim_Affiliate.SubChannelID. ISNULL(,\u0027Direct\u0027). Values: Direct, Google Brand, Affiliate, etc.",
+                                                  "wiki_quote":  "Marketing sub-channel. Resolved from Dim_Channel.SubChannel via Dim_Affiliate.SubChannelID. ISNULL(,\u0027Direct\u0027). Values: Direct, Google Brand, Affiliate, etc. Passthrough from BI_DB_CIDFirstDates.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in analytics dashboards. Values match production Dictionary.Regulation.Name. Dim-lookup from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer\u0027 — contextual to Dim_Regulation, not this table"
+                                              },
+                                              {
+                                                  "column":  "DesignatedRegulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the designated (secondary) regulation. Dim-lookup from Dim_Regulation.Name via Fact_SnapshotCustomer.DesignatedRegulationID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name\u0027 — abbreviated, though context-adapted for secondary regulation role"
+                                              },
+                                              {
+                                                  "column":  "Reg_Date",
+                                                  "upstream_quote":  "Customer registration date. MIN(RegisteredDemo, RegisteredReal) — whichever happened first.",
+                                                  "wiki_quote":  "Customer registration date. MIN(RegisteredDemo, RegisteredReal) — whichever happened first. CAST to DATE from BI_DB_CIDFirstDates.registered.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "V2_Date",
+                                                  "upstream_quote":  "First date customer reached verification level 2. MIN(FromDateID) WHERE VerificationLevelID=2. Backfilled from level 3 if level 2 not found.",
+                                                  "wiki_quote":  "First date customer reached verification level 2. MIN(FromDateID) WHERE VerificationLevelID=2. Backfilled from level 3 if level 2 not found. CAST to DATE from BI_DB_CIDFirstDates.VerificationLevel2Date.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "V3_Date",
+                                                  "upstream_quote":  "First date customer reached verification level 3 (fully verified). MIN(FromDateID) WHERE VerificationLevelID=3. Backfills levels 1 and 2 if not already set.",
+                                                  "wiki_quote":  "First date customer reached verification level 3 (fully verified). MIN(FromDateID) WHERE VerificationLevelID=3. Backfills levels 1 and 2 if not already set. CAST to DATE from BI_DB_CIDFirstDates.VerificationLevel3Date.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FTD_Date",
+                                                  "upstream_quote":  "First successful deposit date. Read directly from Dim_Customer.FirstDepositDate (alias `dc`), which is sourced from CustomerFinanceDB.Customer.FirstTimeDeposits (GlobalFTD service) with FTDRecoveryDate override logic in SP_Dim_Customer. 1900-01-01 means no deposit (sentinel). Filter with `YEAR(FirstDepositDate) != 1900`.",
+                                                  "wiki_quote":  "First successful deposit date. Read directly from Dim_Customer.FirstDepositDate, which is sourced from CustomerFinanceDB.Customer.FirstTimeDeposits (GlobalFTD service) with FTDRecoveryDate override logic in SP_Dim_Customer. 1900-01-01 means no deposit (sentinel). Filter with `YEAR(FTD_Date) != 1900`. CAST to DATE from BI_DB_CIDFirstDates.FirstDepositDate.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027(alias `dc`)\u0027 and adapted column name in filter — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "FTDA",
+                                                  "upstream_quote":  "Amount of first successful deposit in USD. Read directly from Dim_Customer.FirstDepositAmount (alias `dc`), which is sourced from CustomerFinanceDB.Customer.FirstTimeDeposits (FTDAmountInUsd). Default 0.",
+                                                  "wiki_quote":  "Amount of first successful deposit in USD. Read directly from Dim_Customer.FirstDepositAmount, which is sourced from CustomerFinanceDB.Customer.FirstTimeDeposits (FTDAmountInUsd). Default 0. Passthrough from BI_DB_CIDFirstDates.FirstDepositAmount (renamed).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FirstPosOpen_Date",
+                                                  "upstream_quote":  "First position open date (manual or copy). MIN(Occurred) from Fact_CustomerAction WHERE ActionTypeID IN (1,2) AND rn=1.",
+                                                  "wiki_quote":  "First position open date (manual or copy). MIN(Occurred) from Fact_CustomerAction WHERE ActionTypeID IN (1,2) AND rn=1. CAST to DATE from BI_DB_CIDFirstDates.FirstPosOpenDate.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatusID",
+                                                  "upstream_quote":  "Customer lifecycle status (e.g., Active, Blocked, Pending). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusID (CC). FK to Dim_PlayerStatus.",
+                                                  "wiki_quote":  "Customer lifecycle status. Source: Ext_FSC_Real_Customer_Customer.PlayerStatusID (CC). FK to Dim_PlayerStatus. Passthrough from Fact_SnapshotCustomer. Note: statuses 2 (Blocked), 4 (Blocked Upon Request), 13 (Pending Verification) are excluded by the SP WHERE clause.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027(e.g., Active, Blocked, Pending)\u0027 and \u0027DEFAULT 0\u0027 — compensated by adding SP exclusion context"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data — apply RTRIM() for string comparisons. Dim-lookup from Dim_PlayerStatus.Name.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "DesignatedRegulation",
+                                       "problem":  "Description abbreviated vs upstream Dim_Regulation.Name — drops \u0027Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name\u0027. Less informative than Regulation column\u0027s description for the same upstream source."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Drops \u0027FK to Dim_Customer (if exists)\u0027 from upstream FSC.RealCID description. The FK reference would help analysts understand join paths."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 but data evidence audit trail is not verifiable from the wiki alone."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "PlayerStatusID",
+                                       "problem":  "Drops upstream example values \u0027(e.g., Active, Blocked, Pending)\u0027 which help analysts unfamiliar with the numeric IDs."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 5.1",
+                                       "problem":  "Regulation join documented as \u0027sc.RegulationID = dr1.DWHRegulationID\u0027 — correct per SP code, but Dim_Regulation wiki notes DWHRegulationID is always equal to ID and recommends using ID. No functional impact."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed — PASS at 9.40. Optional polish: (1) Add \u0027Values match production Dictionary.Regulation.Name\u0027 to DesignatedRegulation description. (2) Consider adding a Phase Gate Checklist section for audit transparency.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section not present as standalone section"
+                                                           ]
+                                    }
+                }
+}

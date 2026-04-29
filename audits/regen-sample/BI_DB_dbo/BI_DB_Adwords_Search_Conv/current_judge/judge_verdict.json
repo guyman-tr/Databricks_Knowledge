@@ -1,0 +1,66 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Adwords_Search_Conv",
+    "elapsed_seconds":  120,
+    "exit_code":  null,
+    "cost_usd":  0.6452,
+    "input_tokens":  2,
+    "output_tokens":  4852,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Adwords_Search_Conv",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "Wiki says \u002710 conversion_action_name values filtered\u0027 but does not list all 10 explicitly. Only 4 funnel stages named; app actions described generically."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "query_targeting_status / query_match_type_with_variant",
+                                       "problem":  "Wiki correctly identifies both as redundant in Search_Conv, but does not note the cross-table asymmetry: Search_Perf populates only query_match_type_with_variant while Search_Conv populates both."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Phases: 12/14 without identifying which 2 phases were skipped. No explicit Phase Gate Checklist with checkboxes."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 / Gotchas",
+                                       "problem":  "Does not mention that Search_Conv has campaign_id while Search_Perf does NOT, which affects JOIN patterns between the paired tables."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Claims \u0027No known consumers\u0027 without verification methodology. Likely correct for a stale terminal table but unsubstantiated."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "row_count: 12992",
+                                                                                  "date_range: 2023-05-01 to 2023-08-01",
+                                                                                  "match_types: EXACT, NEAR_EXACT, NEAR_PHRASE, BROAD, PHRASE"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "2 of 14 phases skipped (unspecified which)"
+                                                           ]
+                                    }
+                }
+}

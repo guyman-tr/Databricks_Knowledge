@@ -1,0 +1,87 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CorpDevDashboard",
+    "elapsed_seconds":  172,
+    "exit_code":  null,
+    "cost_usd":  0.5043,
+    "input_tokens":  2,
+    "output_tokens":  11692,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CorpDevDashboard",
+                    "weighted_score":  7.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "EOM_Club",
+                                                  "upstream_quote":  "eToro Club loyalty tier at end of month: LowBronze (equity \u003c $1,000), HighBronze (equity $1,000–Bronze threshold), Silver, Gold, Platinum, Platinum Plus, Diamond. Bronze is split at $1,000; Silver+ use Dim_PlayerLevel.Name directly. (Tier 1 — DWH_dbo.Dim_PlayerLevel wiki)",
+                                                  "wiki_quote":  "eToro Club loyalty tier at end of month: LowBronze (equity \u003c $1,000), HighBronze (equity $1,000-Bronze threshold), Silver, Gold, Platinum, Platinum Plus, Diamond. Bronze is split at $1,000; Silver+ use Dim_PlayerLevel.Name directly. Passthrough from BI_DB_CID_MonthlyPanel_FullData. NULL for FA, Regs, AUA, Soc indicator rows. (Tier 1 — DWH_dbo.Dim_PlayerLevel wiki)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Hyphen vs em-dash; extra context appended; semantic meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "FirstAction",
+                                                  "upstream_quote":  "First position asset class using the new 3-way taxonomy. CASE on ActionTypeNew: \u0027Crypto\u0027, \u0027FX/Commodities\u0027 (typeID 1/2), \u0027Stocks/ETFs/Indices\u0027 (typeID 4/5/6), \u0027Copy Fund\u0027, \u0027Copy\u0027. Merges Indices into Stocks bucket vs. legacy. (Tier 2 — SP_First5Actions) [BI_DB_First5Actions wiki, col FirstActionTypeNew]",
+                                                  "wiki_quote":  "First position asset class using the new 3-way taxonomy. CASE on ActionTypeNew: \u0027Crypto\u0027, \u0027FX/Commodities\u0027 (typeID 1/2), \u0027Stocks/ETFs/Indices\u0027 (typeID 4/5/6), \u0027Copy\u0027, \u0027Copy Fund\u0027. Only populated for Indicator=\u0027FA\u0027. Renamed from BI_DB_First5Actions.FirstActionTypeNew. (Tier 2 — SP_First5Actions via BI_DB_First5Actions)",
+                                                  "match":  "NO",
+                                                  "loss":  "Tier wrong: marked Tier 2, must be Tier 1. BI_DB_First5Actions wiki is present in bundle and documents FirstActionTypeNew. Passthrough rename requires Tier 1 with upstream wiki origin."
+                                              },
+                                              {
+                                                  "column":  "FirstCross",
+                                                  "upstream_quote":  "Asset class of 1st position using new ActionTypeNew taxonomy (BI_DB_CustomerCross_New, rn=1). Values: Crypto, FX/Commodities, Stocks/ETFs/Indices, Copy, Copy Fund. Preferred over FirstCross for new analyses. (Tier 2 — SP_First5Actions) [BI_DB_First5Actions wiki, col FirstCrossNew]",
+                                                  "wiki_quote":  "Asset class of 1st position using new ActionTypeNew taxonomy (BI_DB_CustomerCross_New, rn=1). Values: Crypto, FX/Commodities, Stocks/ETFs/Indices, Copy, Copy Fund. Only populated for Indicator=\u0027FA\u0027. Renamed from BI_DB_First5Actions.FirstCrossNew. (Tier 2 — SP_First5Actions via BI_DB_First5Actions)",
+                                                  "match":  "NO",
+                                                  "loss":  "Tier wrong: marked Tier 2, must be Tier 1. BI_DB_First5Actions wiki is present in bundle. \u0027Preferred over FirstCross for new analyses\u0027 note dropped."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "FirstAction",
+                                       "problem":  "Tagged (Tier 2 — SP_First5Actions via BI_DB_First5Actions) but BI_DB_First5Actions wiki is available in the bundle and documents FirstActionTypeNew. A passthrough rename with an available upstream wiki must be Tier 1. Should be (Tier 1 — BI_DB_dbo.BI_DB_First5Actions wiki) with the FirstActionTypeNew description copied verbatim."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "FirstCross",
+                                       "problem":  "Same problem as FirstAction. Tagged Tier 2 but is a passthrough rename of FirstCrossNew from BI_DB_First5Actions, which is documented in the bundle. Must be Tier 1. \u0027Preferred over FirstCross for new analyses\u0027 note also dropped from the description."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2.6 / review-needed",
+                                       "problem":  "The Age UNION in SP_CorpDevDashboard lacks an Active_Month = @SdateINT filter (present in all other 5 UNION branches). Every SP run scans all 353.8M MonthlyPanel rows where IsFunded_New=1 and inserts Age rows for ALL historical months into #tmp. Since only the current month is deleted before INSERT, re-runs accumulate duplicate Age rows for historical months. Neither Section 2.6 nor the review-needed sidecar flags this potential SP bug."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer states \u0027Phases: 11/14\u0027 but no Phase Gate Checklist is shown in the wiki and the 3 skipped phases are unnamed. If P2 (live row-count) or P3 (distribution analysis) were among the skipped phases, the row count and date range claims in Section 1 are unverified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Atlassian",
+                                       "problem":  "SP_CorpDevDashboard was authored by a named individual (Amir Gurewitz, 2021) for a CorpDev-facing dashboard — a strong candidate for Confluence documentation. Phase 10 (Atlassian search) was skipped without investigation. The review-needed sidecar does not flag this gap."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag FirstAction as (Tier 1 — BI_DB_dbo.BI_DB_First5Actions wiki) and replace description with verbatim text from that wiki for FirstActionTypeNew. (2) Re-tag FirstCross as (Tier 1 — BI_DB_dbo.BI_DB_First5Actions wiki) using verbatim text for FirstCrossNew, including the \u0027Preferred over FirstCross for new analyses\u0027 note. (3) Add a review-needed item flagging the missing Active_Month filter in the Age UNION of SP_CorpDevDashboard. (4) Add a Phase Gate Checklist to the wiki or explicitly name the 3 skipped phases. (5) Update footer tier breakdown from \u00271 T1, 33 T2\u0027 to \u00273 T1, 31 T2\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "7,461 rows (Section 1)",
+                                                                                  "Date range 2012-10 to 2023-10 (Section 1)",
+                                                                                  "Last refresh 2023-10-08 (Section 1 and property table)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian, documented in Section 8)",
+                                                               "2 additional unnamed phases (footer: 11/14 completed)"
+                                                           ]
+                                    }
+                }
+}

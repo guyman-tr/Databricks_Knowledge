@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_IGReconEODHolding",
+    "elapsed_seconds":  154,
+    "exit_code":  null,
+    "cost_usd":  0.5496,
+    "input_tokens":  2,
+    "output_tokens":  7414,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_IGReconEODHolding",
+                    "weighted_score":  7.6,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  6,
+                                             "business_meaning":  8,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Missing row count and date range despite P2 being claimed in footer. Analyst cannot gauge table size or temporal coverage."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Missing tier breakdown counts (e.g., Tier 2: 27). Footer has quality score and phases but no per-tier column counts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IG_LocalAmount (#15)",
+                                       "problem":  "Description says \u0027From LP_IG_PS_EODPositions.[Current Value] × units\u0027 but SP code shows IG_LocalAmount is derived from [Current Value] directly with Oil×100 and GBX÷100 — no multiplication by units."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Exchange (#9)",
+                                       "problem":  "SP uses ISNULL(tse.Exchange, 0) storing string \u00270\u0027 for IG-only rows. Accurately described in element but not called out in Section 3.4 Gotchas as a sentinel value."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phases",
+                                       "problem":  "P2 is listed but no live data evidence (row count, date range, distributions) appears in the wiki text. P3 is absent. Quality score of 7.8 may be inflated."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Add row count and date range to Section 1 via SELECT COUNT(*), MIN(Date), MAX(Date) from prod. (2) Add tier breakdown counts to footer. (3) Fix IG_LocalAmount description — remove \u0027× units\u0027; it is [Current Value] directly with Oil×100 and GBX÷100. (4) Add Exchange default \u00270\u0027 sentinel to Section 3.4 Gotchas. (5) Run P3 distribution analysis or correct phases list.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,134 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "V_Liabilities",
+    "elapsed_seconds":  336,
+    "exit_code":  null,
+    "cost_usd":  1.0244,
+    "input_tokens":  4,
+    "output_tokens":  16099,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "V_Liabilities",
+                    "weighted_score":  5.3,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  4,
+                                             "business_meaning":  8,
+                                             "data_evidence":  2,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 — SP_Fact_SnapshotEquity)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire description absent. FK target (Dim_Customer), distribution key role, grouping key context all lost."
+                                              },
+                                              {
+                                                  "column":  "TotalCash",
+                                                  "upstream_quote":  "Customer\u0027s total cash balance for the day. Computed as: previous day\u0027s TotalCash (from last row in current year) + sum of TotalCashChange from History.ActiveCredit for @dt. This running-balance approach was introduced 2020-06-07 replacing the direct History.Credit.TotalCash read. (Tier 2 — SP_Fact_SnapshotEquity)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "Running-balance computation method, History.ActiveCredit source, 2020 methodology change all lost."
+                                              },
+                                              {
+                                                  "column":  "Credit",
+                                                  "upstream_quote":  "Outstanding credit/bonus balance from History.ActiveCredit. Last credit event per CID per day (selected via ROW_NUMBER partition by CID, ordered by Occurred DESC, CreditID DESC). Negative values represent outstanding obligations. (Tier 2 — SP_Fact_SnapshotEquity)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "Negative value semantics (outstanding obligations), ROW_NUMBER selection logic, History.ActiveCredit source all lost."
+                                              },
+                                              {
+                                                  "column":  "BonusCredit",
+                                                  "upstream_quote":  "Bonus credit balance from History.ActiveCredit.BonusCredit. Confluence: \u0027History.Credit.CreditTypeID = 5, 7 → BackOffice.BonusType.BonusTypeID → History.Credit.BonusTypeID\u0027. ISNULL to 0 in ETL. (Tier 2 — SP_Fact_SnapshotEquity)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "CreditTypeID mapping (5,7), BonusType chain, ISNULL-to-0 ETL behavior all lost."
+                                              },
+                                              {
+                                                  "column":  "TotalRealStocks",
+                                                  "upstream_quote":  "Sum of position amounts where IsSettled = 1 AND InstrumentTypeID IN (5,6) AND instrument is NOT a future. \u0027Real\u0027 means the customer owns the underlying asset (settled/delivered). Updated via IsSettled change tracking from History.PositionChangeLog. (Tier 2 — SP_Fact_SnapshotEquity_TotalPositionAmount)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "IsSettled=1 filter, InstrumentTypeID IN (5,6), \u0027Real\u0027 = settled/delivered definition, PositionChangeLog tracking all lost."
+                                              },
+                                              {
+                                                  "column":  "PositionPnL",
+                                                  "upstream_quote":  "Total unrealized PnL in USD across all open positions for this CID on this date. Uses V1 formula (PnLInDollars from staging). This is the primary PnL metric. (Tier 2 — SP_Fact_CustomerUnrealized_PnL)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "V1 formula reference, \u0027primary PnL metric\u0027 designation, USD denomination all lost. (FCUPNL wiki exists in repo but was not in bundle)"
+                                              },
+                                              {
+                                                  "column":  "StandardDeviation",
+                                                  "upstream_quote":  "Portfolio risk measure: standard deviation of the customer\u0027s weighted portfolio computed from instrument covariance matrix. Only calculated for dates \u003e= 2012-12-31. Formula: sqrt(sum(weight_a * weight_b * covariance)). NULL for pre-2013 data. (Tier 2 — SP_Fact_CustomerUnrealized_PnL)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "Covariance matrix methodology, date cutoff (pre-2013 NULL), formula all lost. (FCUPNL wiki exists in repo but was not in bundle)"
+                                              },
+                                              {
+                                                  "column":  "NOP",
+                                                  "upstream_quote":  "Net Open Position — total signed directional USD exposure across all instruments. Positive = net long, negative = net short. \u0027eToro holding of each instrument\u0027 (Confluence). (Tier 2 — SP_Fact_CustomerUnrealized_PnL)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "Sign convention (positive=long, negative=short), directional exposure meaning, Confluence definition all lost. (FCUPNL wiki exists in repo but was not in bundle)"
+                                              },
+                                              {
+                                                  "column":  "DateID",
+                                                  "upstream_quote":  "Individual calendar date key in YYYYMMDD integer format. Falls within the range defined by Dim_Range.FromDateID and Dim_Range.ToDateID (inclusive). Primary key of Dim_Date. (Tier 2 — DDL + view logic)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct (alias DateKey → DateID)\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "YYYYMMDD format specification, Dim_Range relationship context lost. (V_M2M wiki exists in repo but was not in bundle)"
+                                              },
+                                              {
+                                                  "column":  "FullDate",
+                                                  "upstream_quote":  "Calendar date corresponding to DateKey in native DATE format. Provides the human-readable date for the YYYYMMDD integer key. (Tier 2 — DDL + view logic)",
+                                                  "wiki_quote":  "(no description — Transformation column says \u0027Direct\u0027)",
+                                                  "match":  "NO",
+                                                  "loss":  "DATE type specification, relationship to DateKey integer lost. (V_M2M wiki exists in repo but was not in bundle)"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 4 (all 75 columns)",
+                                       "problem":  "Section 4 uses non-standard format (# | Column | Source | Transformation | Tier) instead of required (# | Element | Type | Nullable | Description). This eliminates all per-column descriptions, making Tier 1 verbatim inheritance structurally impossible."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All 63 Tier 1 columns",
+                                       "problem":  "Zero upstream descriptions quoted. FSE wiki was in the bundle with rich descriptions for 25 passthrough columns (CID, TotalCash, Credit, BonusCredit, TotalRealStocks, TotalRealCrypto, etc.). FCUPNL wiki exists in repo with descriptions for 36 passthrough columns (PositionPnL, NOP, StandardDeviation, etc.). V_M2M wiki exists for DateID and FullDate. None are quoted or referenced."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No row count or date range provided. An analyst cannot gauge table size or data freshness without querying."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No ETL pipeline ASCII diagram (Section 5.2). Section 5 is \u0027Query Advisory\u0027 only. The view\u0027s 4-table join structure with date expansion logic warrants a visual pipeline."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CopyFundAUM (#34)",
+                                       "problem":  "Listed as from Fact_SnapshotEquity but CopyFundAUM is not in FSE wiki\u0027s 32-column element list. DDL uses it without table alias. Source attribution is uncertain — review-needed sidecar flags this but wiki does not acknowledge uncertainty."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Restructure Section 4 to standard format: | # | Element | Type | Nullable | Description | with descriptions ending in (Tier N — source). (2) For all 25 FSE passthrough columns, quote Fact_SnapshotEquity wiki descriptions VERBATIM — especially Credit (negative = obligations), TotalRealStocks (IsSettled=1 definition), BonusCredit (CreditTypeID 5,7 mapping). (3) Ensure FCUPNL wiki is included in bundle; for all 36 FCUPNL passthrough columns, quote descriptions verbatim — especially PositionPnL (V1 formula), NOP (signed directional exposure), StandardDeviation (covariance matrix, pre-2013 NULL). (4) Add row count and date range to Section 1 via P2 live query. (5) Add Section 5.2 ETL pipeline ASCII diagram. (6) Verify CopyFundAUM source table via INFORMATION_SCHEMA.COLUMNS. (7) Run P2 and P3 phases for data evidence.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

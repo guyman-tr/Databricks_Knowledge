@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPDailyAudit_Conditions",
+    "elapsed_seconds":  118,
+    "exit_code":  null,
+    "cost_usd":  0.4628,
+    "input_tokens":  2,
+    "output_tokens":  4828,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPDailyAudit_Conditions",
+                    "weighted_score":  8.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "UpdateDate (element #13)",
+                                       "problem":  "Tagged Tier 2 but all 6 sibling CEPDailyAudit tables tag UpdateDate as Tier 4 — inferred. Cross-family inconsistency. Review-needed sidecar item #3 acknowledges this."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Overall structure",
+                                       "problem":  "No Phase Gate Checklist section with P2/P3 checkboxes. Data claims (row count, enum values, distinct counts) appear grounded but completion of data profiling phases is unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1 / Section 3.4",
+                                       "problem":  "Condition Deleted edge case (multi-version conditions whose SysEndTime closes on @Date but SysStartDate != @Date are not captured) documented only in review-needed sidecar at medium severity. Should be surfaced in Section 3.4 Gotchas for analyst visibility."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "ChangeTime (element #12)",
+                                       "problem":  "For Condition Deleted events, the SP uses SysEndTime as ChangeTime but SysStartDate as ChangeDate/Date filter. Wiki doesn\u0027t call out that Date and ChangeTime reference different temporal anchors for deletion rows."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Value (element #8)",
+                                       "problem":  "varchar(100) holds heterogeneous data (instrument IDs, country codes, numeric thresholds). No note about casting requirements for numeric comparisons."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Align UpdateDate to Tier 4 for cross-family consistency with sibling CEPDailyAudit tables, or add a note justifying the Tier 2 choice. (2) Add Phase Gate Checklist section confirming P2/P3 completion. (3) Surface the Condition Deleted multi-version edge case in Section 3.4 Gotchas.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

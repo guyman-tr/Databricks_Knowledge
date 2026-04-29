@@ -1,0 +1,64 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ActionType",
+    "elapsed_seconds":  89,
+    "exit_code":  null,
+    "cost_usd":  0.1939,
+    "input_tokens":  2,
+    "output_tokens":  3627,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ActionType",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist subsection. Footer says \u0027Phases: 12/14\u0027 but does not enumerate which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "JOIN table lists only 3 of 8 downstream consumers from Section 6.2. Missing BI_DB and EXW SP joins."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CategoryID",
+                                       "problem":  "Element description references SP_Validation_Cycle_Gap_DL_To_Synapse behavior (CategoryID=17 triggers NetProfit logic) which is SP-derived knowledge tagged as Tier 3. Not a tier error but slightly inconsistent — this knowledge came from reading downstream SP code, not from DDL+data alone."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian sources skipped in regen harness mode. Expected behavior."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 5.1",
+                                       "problem":  "All 6 columns have unknown production source. Correctly flagged in review-needed sidecar for follow-up."
+                                   }
+                               ],
+                    "regeneration_feedback":  "PASS — no regeneration required. For polish: (1) Add Phase Gate Checklist subsection. (2) Expand Section 3.3 JOINs to cover all 8 downstream consumers.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase gate checklist subsection not present — footer says 12/14 phases"
+                                                           ]
+                                    }
+                }
+}

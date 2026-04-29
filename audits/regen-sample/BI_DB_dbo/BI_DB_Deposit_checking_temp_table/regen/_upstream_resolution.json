@@ -1,0 +1,54 @@
+{
+  "schema": "BI_DB_dbo",
+  "object": "BI_DB_Deposit_checking_temp_table",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\BI_DB_dbo\\Tables\\BI_DB_dbo.BI_DB_Deposit_checking_temp_table.sql",
+  "lineage_path": null,
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\BI_DB_dbo\\Stored Procedures\\BI_DB_dbo.SP_Client_Balance_Check_Opening_Balance.sql"
+  ],
+  "candidates_found": 3,
+  "resolved_synapse": 2,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 0,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\BI_DB_dbo\\BI_DB_Deposit_checking_temp_table\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 69878,
+  "resolutions": [
+    {
+      "raw_name": "BI_DB_dbo.SP_Client_Balance_Check_Opening_Balance",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "SP_Client_Balance_Check_Opening_Balance",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\BI_DB_dbo\\Stored Procedures\\BI_DB_dbo.SP_Client_Balance_Check_Opening_Balance.sql",
+      "bytes_read": 4676,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "BI_DB_Client_Balance_Aggregate_Level_New",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_Client_Balance_Aggregate_Level_New.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Fact_CustomerAction",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Fact_CustomerAction",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CustomerAction.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    }
+  ]
+}

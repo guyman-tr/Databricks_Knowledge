@@ -1,0 +1,143 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CashRiskMatrix",
+    "elapsed_seconds":  200,
+    "exit_code":  null,
+    "cost_usd":  0.652,
+    "input_tokens":  2,
+    "output_tokens":  15343,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CashRiskMatrix",
+                    "weighted_score":  6.95,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  6,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. References Customer.Customer.",
+                                                  "wiki_quote":  "Customer ID. References Customer.Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "HedgeServerID",
+                                                  "upstream_quote":  "FK to Trade.HedgeServer. Hedge server managing this position.",
+                                                  "wiki_quote":  "FK to Trade.HedgeServer. Hedge server managing this position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentName",
+                                                  "upstream_quote":  "Computed: TDCUR_BUY.Abbreviation + \u0027/\u0027 + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD).",
+                                                  "wiki_quote":  "Computed: TDCUR_BUY.Abbreviation + \u0027/\u0027 + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentType",
+                                                  "upstream_quote":  "ETL-computed asset class label. CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else Other.",
+                                                  "wiki_quote":  "ETL-computed asset class label. CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else Other.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "wiki_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Marketing region label for this country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values (e.g., \"ROW\", \"Africa\", \"French\", \"Arabic Other\"). Used for marketing campaign grouping.",
+                                                  "wiki_quote":  "Marketing region label for this country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values (e.g., \"ROW\", \"Africa\", \"French\", \"Arabic Other\"). Used for marketing campaign grouping.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Bid",
+                                                  "upstream_quote":  "Raw bid price before spread adjustment. Mid-price reference. Compare to BidSpreaded to derive the spread.",
+                                                  "wiki_quote":  "Raw bid price before spread adjustment. Mid-price reference. Compare to AskSpreaded to derive the spread.",
+                                                  "match":  "NO",
+                                                  "loss":  "Wrong comparison column: upstream says \u0027BidSpreaded\u0027, wiki says \u0027AskSpreaded\u0027 — copy-paste error from the Ask description, constitutes semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Ask",
+                                                  "upstream_quote":  "Raw ask (offer) price before spread adjustment. Mid-price reference. Compare to AskSpreaded to derive the spread.",
+                                                  "wiki_quote":  "Raw ask (offer) price before spread adjustment. Mid-price reference. Compare to AskSpreaded to derive the spread.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Bid (column 12)",
+                                       "problem":  "Description reads \u0027Compare to AskSpreaded to derive the spread.\u0027 Upstream Fact_CurrencyPriceWithSplit.Bid explicitly states \u0027Compare to BidSpreaded to derive the spread.\u0027 The wiki has the wrong column reference — it copied the Ask row description by mistake. Analysts using this to compute the bid-side spread will reference the wrong column."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 5.2 (ETL Pipeline)",
+                                       "problem":  "The ETL pipeline is presented as a step table, not the required ASCII flow diagram with object names and arrows. The lineage file contains the correct ASCII diagram but it was not carried into the wiki. The golden reference shape requires an ASCII diagram here."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 (Business Meaning)",
+                                       "problem":  "Claims \u002749 price-shock scenarios\u0027. Counting DDL columns directly: 25 upside (UnitsNOP+1% through UnitsNOP+900%) + 22 downside (UnitsNOP-1% through UnitsNOP-100%) = 47 scenario columns. The stated count is wrong by 2."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 sub-headers",
+                                       "problem":  "\u0027Price-Shock Upside Scenarios — 24 columns\u0027 has 25 rows (DDL confirms 25 upside columns). \u0027Price-Shock Downside Scenarios — 24 columns\u0027 has 22 rows (DDL confirms 22 downside columns). Both sub-header counts are incorrect."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer is missing the required quality score (e.g., \u0027Quality: 6.95/10\u0027) and phases-completed list (e.g., \u0027Phases: N/14\u0027). All peer wikis in the bundle include both fields. The footer currently only has generated date, tier counts, and element count."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix Bid description: change \u0027Compare to AskSpreaded to derive the spread\u0027 → \u0027Compare to BidSpreaded to derive the spread\u0027 to match upstream Fact_CurrencyPriceWithSplit.Bid verbatim. (2) Replace the §5.2 step-table with an ASCII pipeline diagram using object names and arrows (the lineage file already has the correct format — copy it). (3) Correct Section 1 scenario count from \u002749\u0027 to \u002747\u0027 (25 upside + 22 downside per DDL). (4) Fix section sub-headers: upside is 25 columns, downside is 22 columns. (5) Add \u0027Quality: X.X/10 | Phases: N/14\u0027 to the footer in standard format.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~2.4M rows per day (Section 1)",
+                                                                                  "208 NULL Bid/Ask/ConversionRate rows per day (Section 3.4 and column 12)",
+                                                                                  "74% at 1x leverage, 15% at 2x leverage (Section 1)",
+                                                                                  "TotalCash range -$327K to $6.5M avg ~$4,370 (Section 1 and column 3)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

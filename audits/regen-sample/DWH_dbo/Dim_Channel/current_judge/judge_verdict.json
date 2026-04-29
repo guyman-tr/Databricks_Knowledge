@@ -1,0 +1,65 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_Channel",
+    "elapsed_seconds":  92,
+    "exit_code":  null,
+    "cost_usd":  0.2366,
+    "input_tokens":  2,
+    "output_tokens":  4175,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_Channel",
+                    "weighted_score":  7.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  2,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Row count (~50) appears in Section 3.1 instead of Section 1. No date range provided. Section 1 should lead with concrete data dimensions."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Phase Gate (P2/P3)",
+                                       "problem":  "P2 and P3 skipped — Synapse MCP unavailable. All data claims (row count estimate, enum values, NULL behavior) are unverified against live data."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "SubChannelID, Channel, SubChannel",
+                                       "problem":  "SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse source code is NOT in the upstream bundle. The detailed CASE mapping descriptions for these 3 columns are plausible but unverifiable from provided materials. Only SP_Dim_Channel (second ETL step) was included."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.1",
+                                       "problem":  "Row count \u0027estimated ~50 rows\u0027 is unsupported by live data. Could be inaccurate if sub-channels have been added or removed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2 / Section 3.4",
+                                       "problem":  "Email notification for new unmapped channels is commented out in SP_Dim_Channel. Noted in review-needed sidecar but not surfaced in the main wiki\u0027s gotchas."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Execute P2+P3 live data phases to obtain actual row count, date range, and SubChannelID value distribution. (2) Move row count into Section 1 opening paragraph. (3) Include SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse source in the upstream bundle to verify the 30+ CASE mapping descriptions. (4) Verify SubChannelID=0 exclusion against live data.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 3.1: \u0027estimated ~50 rows\u0027 — not backed by P2 data"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,138 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Crypto_Top_1000_List",
+    "elapsed_seconds":  273,
+    "exit_code":  null,
+    "cost_usd":  0.7086,
+    "input_tokens":  2,
+    "output_tokens":  19656,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Crypto_Top_1000_List",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  10
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID -- platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Mapped from Dim_Customer.RealCID. (Tier 1 -- Customer.CustomerStatic) [BI_DB_CIDFirstDates #1, root: Customer.CustomerStatic]",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Identifies the depositor. HASH distribution key. Equivalent to DWH_dbo.Dim_Customer.RealCID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Tagged Customer.CustomerStatic but description sourced from MonthlyPanel relay; drops \u0027Assigned at registration\u0027, \u0027Unique within etoro DB\u0027, \u0027Used as the universal customer identifier across all tables\u0027"
+                                              },
+                                              {
+                                                  "column":  "GCID",
+                                                  "upstream_quote":  "Group Customer ID -- cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. (Tier 1 -- Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Group Customer ID — cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Marketing region label (newer vintage than Region). Values: ROW, UK, CEE, Nordics, Latam, SEA, Australia, etc. (Tier 2 — Fact_SnapshotCustomer / Dim_Customer) [MonthlyPanel.NewMarketingRegion #168]",
+                                                  "wiki_quote":  "Marketing region label (newer vintage than Region). Values observed: UK=293, German=182, Arabic=127, French=64, CEE=62, SEA=56, Spain=44, Italian=41, Nordics=36, Australia=33, USA=24, Latam=23, ROW=15. Renamed from NewMarketingRegion in BI_DB_CID_MonthlyPanel_FullData.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added count distribution and rename note; core meaning fully preserved"
+                                              },
+                                              {
+                                                  "column":  "AccountManager",
+                                                  "upstream_quote":  "Name of the assigned account manager at ETL run time. (Tier 1 — DWH_dbo.Dim_Customer wiki) [MonthlyPanel #110]",
+                                                  "wiki_quote":  "Name of the assigned account manager at ETL run time.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Dim-lookup from Dim_PlayerLevel.Name via PlayerLevelID. (Tier 1 -- Dictionary.PlayerLevel) [CIDFirstDates #5]",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Dim-lookup from Dim_PlayerLevel.Name via PlayerLevelID. Observed: Diamond=401, Platinum Plus=313, Platinum=95, Bronze=88, Gold=73, Silver=30.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "LastLoggedIn",
+                                                  "upstream_quote":  "Date of the customer\u0027s last login before end of this month. (Tier 1 — DWH_dbo.Dim_Customer wiki) [MonthlyPanel #22]",
+                                                  "wiki_quote":  "Date of the customer\u0027s last login before end of this month.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "LastDepositDate",
+                                                  "upstream_quote":  "Most recent deposit date. From Fact_BillingDeposit.ModificationDate for today\u0027s deposits. (Tier 2 -- SP_CIDFirstDates) [CIDFirstDates #49]",
+                                                  "wiki_quote":  "Most recent deposit date. From Fact_BillingDeposit.ModificationDate for today\u0027s deposits. CAST from datetime to DATE.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "LastPosOpenDate",
+                                                  "upstream_quote":  "Most recent position open timestamp. MAX(Occurred) from Fact_CustomerAction WHERE ActionTypeID IN (1,2). (Tier 2 -- SP_CIDFirstDates) [CIDFirstDates #54]",
+                                                  "wiki_quote":  "Most recent position open timestamp. MAX(Occurred) from Fact_CustomerAction WHERE ActionTypeID IN (1,2). CAST from datetime to DATE.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Equity",
+                                                  "upstream_quote":  "Total account equity (USD) at end of month from V_Liabilities. Includes all open position unrealised PnL + cash balance. (Tier 2 — DWH_dbo.V_Liabilities) [MonthlyPanel.EOM_Equity #27]",
+                                                  "wiki_quote":  "Total account equity (USD) at end of month from V_Liabilities. Includes all open position unrealised PnL + cash balance. Renamed from EOM_Equity. Range observed: -$1,954 to $6,472,324 (mean ~$141K).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ACC_Revenue",
+                                                  "upstream_quote":  "[UNAVAILABLE — MonthlyPanel wiki truncated before ACC_Revenue_Total element row in bundle]",
+                                                  "wiki_quote":  "Running lifetime accumulated revenue total (legacy formula: FullCommissions across all asset classes, excluding function fees). Renamed from ACC_Revenue_Total in BI_DB_CID_MonthlyPanel_FullData. Retained for historical comparability; use ACC_Revenue_Total_New in MonthlyPanel for current analysis.",
+                                                  "match":  "NO",
+                                                  "loss":  "Upstream element unavailable due to bundle truncation; description reconstructed from Business Logic section 2.4. Cannot confirm verbatim accuracy. Documented in review-needed item #3."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Tier tag says (Tier 1 — Customer.CustomerStatic) but description was sourced from BI_DB_CID_MonthlyPanel_FullData.CID (the relay). The root-source context — \u0027Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.\u0027 — was dropped and replaced with MonthlyPanel-local additions. Tag and description are inconsistent."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "ACC_Revenue",
+                                       "problem":  "MonthlyPanel upstream wiki truncated before ACC_Revenue_Total element. Description reconstructed from Business Logic section 2.4. Cannot be verified as verbatim. Reviewer must open BI_DB_CID_MonthlyPanel_FullData.md directly to check the actual element definition and resolve review-needed item #3."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 / Section 8",
+                                       "problem":  "SP author comment says \u0027less than 100$ revenue since 20230801\u0027 but HAVING clause uses \u003c 1000 (i.e., $1,000). Wiki uses $1,000 throughout (matching code), which is correct. However review-needed item #5 still treats this as unresolved ambiguity while Section 1 presents it as fact. These need to be reconciled: either confirm $1,000 and close review-needed, or hedge Section 1 language."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Equity",
+                                       "problem":  "Tagged (Tier 1 — BI_DB_CID_MonthlyPanel_FullData.EOM_Equity) which is a relay column. MonthlyPanel.EOM_Equity is itself (Tier 2 — DWH_dbo.V_Liabilities). Root origin is V_Liabilities. Acceptable given V_Liabilities wiki is absent from bundle, but reader cannot determine whether equity is real-time, snapshot, or end-of-month from this citation alone."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LastContacted",
+                                       "problem":  "SP aggregates MAX(CAST(bduts.CreatedDate AS DATE)) where CreatedDate is the group-dedup MIN timestamp, not CreatedDate_SF (Salesforce-native event timestamp). The wiki correctly states CreatedDate, but the Gotchas section does not warn analysts that this value may differ from what they would expect from a direct Salesforce export."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki PASSes at 8.55. For the next iteration: (1) CID — either retag as (Tier 1 — BI_DB_CID_MonthlyPanel_FullData) or replace description with the full Customer.CustomerStatic root text: \u0027Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.\u0027 (2) ACC_Revenue — open BI_DB_CID_MonthlyPanel_FullData.md directly, find the ACC_Revenue_Total element row, quote verbatim, then close review-needed item #3. (3) Resolve the \u0027$100 vs $1,000\u0027 discrepancy: if confirmed as $1,000 (code is clear), update Section 8 to note the SP comment typo and close review-needed item #5; do not leave Section 1 and review-needed contradicting each other. (4) Add a Gotcha: \u0027LastContacted uses BI_DB_UsageTracking_SF.CreatedDate (dedup-MIN timestamp), not CreatedDate_SF; the two may differ for deduped event groups.\u0027",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Region value counts: UK=293, German=182, Arabic=127, French=64, CEE=62, SEA=56, Spain=44, Italian=41, Nordics=36, Australia=33, USA=24, Latam=23, ROW=15",
+                                                                                  "Club distribution: Diamond=401, Platinum Plus=313, Platinum=95, Bronze=88, Gold=73, Silver=30",
+                                                                                  "Equity range: -$1,954 to $6,472,324 (mean ~$141K)",
+                                                                                  "ACC_Revenue_Crypto range: $27,128–$1,787,784",
+                                                                                  "LastContacted NULL: 19 of 1,000 CIDs"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P7 (Views N/A)",
+                                                               "P10 (Jira skipped — regen harness)"
+                                                           ]
+                                    }
+                }
+}

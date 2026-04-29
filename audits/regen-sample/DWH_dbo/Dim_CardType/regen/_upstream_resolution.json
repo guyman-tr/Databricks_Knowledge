@@ -1,0 +1,40 @@
+{
+  "schema": "DWH_dbo",
+  "object": "Dim_CardType",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\DWH_dbo\\Tables\\DWH_dbo.Dim_CardType.sql",
+  "lineage_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_CardType\\current\\Dim_CardType.lineage.md",
+  "writer_sps_discovered": [],
+  "candidates_found": 2,
+  "resolved_synapse": 0,
+  "resolved_production": 1,
+  "resolved_sp": 0,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\DWH_dbo\\Dim_CardType\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 8877,
+  "resolutions": [
+    {
+      "raw_name": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cardtype",
+      "db": null,
+      "schema": "dwh",
+      "object": "gold_sql_dp_prod_we_dwh_dbo_dim_cardtype",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "etoro.Dictionary.CardType",
+      "db": "etoro",
+      "schema": "Dictionary",
+      "object": "CardType",
+      "kind": "production",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\DB_Schema\\etoro\\Wiki\\Dictionary\\Tables\\Dictionary.CardType.md",
+      "sp_path": null,
+      "bytes_read": 7220,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

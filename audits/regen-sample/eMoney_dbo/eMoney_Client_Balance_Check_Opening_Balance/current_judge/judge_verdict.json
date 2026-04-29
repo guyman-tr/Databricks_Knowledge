@@ -1,0 +1,50 @@
+{
+    "schema":  "eMoney_dbo",
+    "object":  "eMoney_Client_Balance_Check_Opening_Balance",
+    "elapsed_seconds":  90,
+    "exit_code":  null,
+    "cost_usd":  0.3859,
+    "input_tokens":  2,
+    "output_tokens":  3688,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_dbo",
+                    "object":  "eMoney_Client_Balance_Check_Opening_Balance",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1",
+                                       "problem":  "The OpeningBalanceGAP CASE formula is attributed ambiguously. The formula (CASE WHEN oc.AccountId IS NULL THEN 0 ELSE OpeningBalanceByCB - OpeningBalance END) lives in SP_eMoney_ClientBalance, not in the check SP. Section 2.1 could clarify this is the upstream computation that produces the column the check SP aggregates."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Phase notation \u0027P1-P10A/14\u0027 is slightly nonstandard but functionally clear."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3 (empty table — justified)",
+                                                               "P10"
+                                                           ]
+                                    }
+                }
+}

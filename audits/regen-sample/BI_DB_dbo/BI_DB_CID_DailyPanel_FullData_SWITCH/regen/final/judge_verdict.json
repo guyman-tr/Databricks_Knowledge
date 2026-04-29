@@ -1,0 +1,133 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CID_DailyPanel_FullData_SWITCH",
+    "elapsed_seconds":  200,
+    "exit_code":  null,
+    "cost_usd":  0.5183,
+    "input_tokens":  2,
+    "output_tokens":  13656,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CID_DailyPanel_FullData_SWITCH",
+                    "weighted_score":  8.10,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "eToro customer ID (Real CID). Only depositors (IsDepositor=1) present. FK to DWH_dbo.Dim_Customer.RealCID",
+                                                  "wiki_quote":  "eToro customer ID (Real CID). Only depositors (IsDepositor=1) present. FK to DWH_dbo.Dim_Customer.RealCID",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DateID",
+                                                  "upstream_quote":  "Partition key: date in YYYYMMDD format. One row per CID per day",
+                                                  "wiki_quote":  "Partition key: date in YYYYMMDD format. One row per CID per day",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Geographic region label (e.g., \u0027French\u0027, \u0027Arabic GCC\u0027, \u0027Australia\u0027, \u0027North Europe\u0027)",
+                                                  "wiki_quote":  "Geographic region label (e.g., \u0027French\u0027, \u0027Arabic GCC\u0027, \u0027Australia\u0027, \u0027North Europe\u0027)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Customer\u0027s country name at snapshot date",
+                                                  "wiki_quote":  "Customer\u0027s country name at snapshot date",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Active",
+                                                  "upstream_quote":  "1 if customer had any position open or closed on this date (any instrument, including partial close children excluded)",
+                                                  "wiki_quote":  "1 if customer had any position open or closed on this date (any instrument, including partial close children excluded)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Revenue_Copy",
+                                                  "upstream_quote":  "Daily revenue from copy positions (FullCommissions + RollOverFee) + TicketFeeByPercent_Copy",
+                                                  "wiki_quote":  "Daily revenue from copy positions (FullCommissions + RollOverFee) + TicketFeeByPercent_Copy",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EOD_Club",
+                                                  "upstream_quote":  "Loyalty tier at EOD: \u0027LowBronze\u0027, \u0027HighBronze\u0027, \u0027Silver\u0027, \u0027Gold\u0027, \u0027Platinum\u0027, \u0027Platinum Plus\u0027, \u0027Diamond\u0027",
+                                                  "wiki_quote":  "Loyalty tier at EOD: \u0027LowBronze\u0027, \u0027HighBronze\u0027, \u0027Silver\u0027, \u0027Gold\u0027, \u0027Platinum\u0027, \u0027Platinum Plus\u0027, \u0027Diamond\u0027",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Equity",
+                                                  "upstream_quote":  "Total EOD equity (USD): NWA (net worth of assets) + Liabilities from DWH_dbo.V_Liabilities. Includes all open positions at market value",
+                                                  "wiki_quote":  "Total EOD equity (USD): NWA (net worth of assets) + Liabilities from DWH_dbo.V_Liabilities. Includes all open positions at market value",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Daily_Classification",
+                                                  "upstream_quote":  "Customer segment label (e.g., \u0027Traders\u0027, \u0027Crypto\u0027). Set by separate SP_CID_DailyPanel_UpdateCluster SP. As of 2026 all rows are empty string — appears non-operational post-Synapse migration",
+                                                  "wiki_quote":  "Customer segment label (e.g., \u0027Traders\u0027, \u0027Crypto\u0027). Set by separate SP_CID_DailyPanel_UpdateCluster SP. As of 2026 all rows are empty string — appears non-operational post-Synapse migration",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Revenue_Total",
+                                                  "upstream_quote":  "Total daily revenue across all instruments + all fee types (commissions + rollover + ticket + conversion + Islamic). See §2.6",
+                                                  "wiki_quote":  "Total daily revenue across all instruments + all fee types (commissions + rollover + ticket + conversion + Islamic). See parent wiki §2.6",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027parent wiki\u0027 qualifier to section cross-reference; meaning preserved"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Quality score left as \u0027pending/10\u0027 — was never computed and filled in. The wiki is structurally incomplete at the footer level."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CID, Region, Country (and all 169 columns)",
+                                       "problem":  "Tier citations relay through BI_DB_CID_DailyPanel_FullData rather than citing the root origin. CID\u0027s root is DWH_dbo.Dim_Customer, Region\u0027s root is DWH_dbo.Dim_Country.Region, Country\u0027s root is DWH_dbo.Dim_Country.Name. For a partition-switch shadow this is defensible but violates the rubric\u0027s relay rule."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Legend only lists Tier 1 and Tier 3 (\u0027not applicable\u0027). Tier 2 and Tier 4 are absent. Golden reference shape requires all four tiers in the legend, with N/A annotation if unused."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Phases: 11/14 — three phases are unaccounted for without specifying which. If P2 or P3 are among the skipped, the rationale (table is always empty at rest) must be documented explicitly."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Elements",
+                                       "problem":  "14 runtime-only columns (V3_CompleteDate, EOD_LSD, ActiveOpen_Manual, ActiveOpen_Mirror, ActiveOpen_AirDrop, ActiveOpen_IncludeCopy, Revenue_IslamicFees, Revenue_TicketFees, Revenue_ConversionFees, Revenue_TicketFeeByPercent, Transactional_Revenue_Total, ACC_Transactional_Revenue_Total, CashoutsAdjusted, EOD_LSD) exist in the live runtime table (created via SELECT TOP 0 * FROM parent) but are not documented in the Elements table. Analysts querying the live table will find 14 undocumented columns."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace \u0027pending/10\u0027 in footer with the computed weighted quality score. (2) For CID, Region, Country — either cite the ultimate root origin (DWH_dbo.Dim_Customer, DWH_dbo.Dim_Country.Region, DWH_dbo.Dim_Country.Name) or add a legend note that SWITCH table citations relay through BI_DB_CID_DailyPanel_FullData by design. (3) Expand Section 4 Tier Legend to include all four tiers (T2 and T4 as \u0027N/A — not used\u0027). (4) Document which 3 phases were skipped in footer or review-needed sidecar, with rationale (table always empty at rest, P2/P3 data collection not feasible). (5) Add a subsection in Section 3.4 or a note in Section 4 header listing the 14 runtime-only columns absent from the SSDT DDL, with pointer to parent wiki for their descriptions.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "3 of 14 phases unspecified — likely P2/P3 data collection phases skipped due to table being always empty at rest"
+                                                           ]
+                                    }
+                }
+}

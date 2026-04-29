@@ -1,0 +1,66 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_ContactType",
+    "elapsed_seconds":  111,
+    "exit_code":  null,
+    "cost_usd":  0.1952,
+    "input_tokens":  2,
+    "output_tokens":  4017,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_ContactType",
+                    "weighted_score":  8.1,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "StatusID",
+                                       "problem":  "Describes 1=active convention in prose but does not format as inline key=value pairs (0=Inactive, 1=Active, NULL=never loaded) per completeness checklist."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "Footer says \u0027Phases: 11/14\u0027 but the wiki body does not include an explicit Phase Gate Checklist showing which phases were completed vs. skipped and why."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Name",
+                                       "problem":  "Speculates \u0027Email, Phone, Chat\u0027 as example values with zero evidence. Properly flagged [UNVERIFIED] but the examples are pure invention."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 4",
+                                       "problem":  "Tier legend only shows Tier 3b and Tier 4 — should include the full standard legend for consistency even when only two tiers are used."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 7",
+                                       "problem":  "All three sample queries return 0 rows by definition. Functionally correct but not analytically useful."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add explicit Phase Gate Checklist section showing P2/P3 as skipped with rationale (0 rows). (2) Format StatusID as inline enum: 0=Inactive, 1=Active, NULL=never loaded. (3) Remove speculative examples from Name column — state \u0027unknown values\u0027 without guessing. (4) Include full tier legend in Section 4.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 — row profiling (0 rows)",
+                                                               "P3 — distribution analysis (0 rows)",
+                                                               "Phase 10 — Atlassian (skipped per wiki)"
+                                                           ]
+                                    }
+                }
+}

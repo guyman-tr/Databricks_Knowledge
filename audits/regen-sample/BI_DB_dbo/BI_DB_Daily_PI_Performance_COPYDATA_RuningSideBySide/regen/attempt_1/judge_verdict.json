@@ -1,0 +1,99 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide",
+    "elapsed_seconds":  222,
+    "exit_code":  null,
+    "cost_usd":  0.6003,
+    "input_tokens":  2,
+    "output_tokens":  16581,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide",
+                    "weighted_score":  5.90,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  6,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  5
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "SymbolFull",
+                                                  "upstream_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "wiki_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CopyEquity",
+                                                  "upstream_quote":  "Total AUM managed by this PI through copy relationships: ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0). Source: etoroGeneral_History_GuruCopiers.",
+                                                  "wiki_quote":  "Total AUM managed by this PI through copy relationships: ISNULL(CopyAUM, 0); renamed CopyAUM → CopyEquity; wiki: knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_CopyDailyData.md.",
+                                                  "match":  "NO",
+                                                  "loss":  "Verbatim formula ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0) replaced with intermediate column reference ISNULL(CopyAUM, 0); constituent field breakdown (Cash, Investment, PnL, DetachedPosInvestment, Dit_PnL) is lost"
+                                              },
+                                              {
+                                                  "column":  "NumOfCopiers",
+                                                  "upstream_quote":  "Number of valid depositor customers currently copying this PI as of @date. Source: COUNT(*) from etoroGeneral_History_GuruCopiers.",
+                                                  "wiki_quote":  "Number of valid depositor customers currently copying this PI as of @date. Source: COUNT(*) from etoroGeneral_History_GuruCopiers.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Manager",
+                                                  "upstream_quote":  "Account manager display name: FirstName + \u0027 \u0027 + LastName from Dim_Manager.",
+                                                  "wiki_quote":  "Account manager display name: FirstName + \u0027 \u0027 + LastName from Dim_Manager.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Description text is verbatim but tier origin tag is wrong: wiki says (Tier 1 — BI_DB_CopyDailyData.Country via DWH_dbo.Dim_Country) but per rubric dim-passthrough rule the root origin should be Dictionary.Country — as cited in BI_DB_CopyDailyData.Country\u0027s own Tier 1 tag"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CopyEquity",
+                                       "problem":  "Tier 1 description substitutes the verbatim upstream formula from BI_DB_CopyDailyData.CopyAUM — ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0) — with the intermediate column reference ISNULL(CopyAUM, 0). An analyst cannot derive the AUM composition (Cash, Investment, PnL, DetachedPosInvestment, Dit_PnL) from the wiki."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Country",
+                                       "problem":  "Tier 1 origin is wrong. BI_DB_CopyDailyData.Country is itself Tier 1 — DWH_dbo.Dim_Country via Dictionary.Country. Per rubric, dim-lookup passthroughs must use the root origin: (Tier 1 — Dictionary.Country), not the intermediate table BI_DB_CopyDailyData."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "SymbolFull",
+                                       "problem":  "Tier 1 origin citation includes the intermediate dimension: (Tier 1 — DWH_dbo.Dim_Instrument via Trade.InstrumentMetaData). Rubric requires citing the dim\u0027s root origin directly: (Tier 1 — Trade.InstrumentMetaData). The \u0027via Dim_X\u0027 notation is explicitly prohibited."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Missing required fields: Refresh cadence (should be: Daily DELETE+INSERT on DateINT) and UC Target (should be: _Not_Migrated). These are required property table entries per the golden reference shape."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 / Footer",
+                                       "problem":  "No Tier Legend table in the Elements section (Section 4). Footer is missing tier breakdown counts (e.g., Tiers: 5 T1, 10 T2, 6 T3), quality score, and phases-completed list. All three are required by the golden reference shape."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix CopyEquity description to verbatim from BI_DB_CopyDailyData.CopyAUM: \u0027Total AUM managed by this PI through copy relationships: ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0). Source: etoroGeneral_History_GuruCopiers.\u0027 — do NOT substitute ISNULL(CopyAUM, 0). (2) Fix Country tier tag to (Tier 1 — Dictionary.Country) — root origin from BI_DB_CopyDailyData.Country entry. (3) Fix SymbolFull tier tag to (Tier 1 — Trade.InstrumentMetaData) — drop \u0027DWH_dbo.Dim_Instrument via\u0027 prefix. (4) Add Refresh and UC Target rows to the property table. (5) Add Tier Legend above Elements table in Section 4 and add tier breakdown counts + quality score + phases-completed list to footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3 status unknown — no Phase Gate Checklist present in wiki footer"
+                                                           ]
+                                    }
+                }
+}

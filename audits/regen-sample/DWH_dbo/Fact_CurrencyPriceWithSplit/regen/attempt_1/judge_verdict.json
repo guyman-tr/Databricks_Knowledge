@@ -1,0 +1,70 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Fact_CurrencyPriceWithSplit",
+    "elapsed_seconds":  121,
+    "exit_code":  null,
+    "cost_usd":  0.3161,
+    "input_tokens":  2,
+    "output_tokens":  5466,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Fact_CurrencyPriceWithSplit",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2.2 (Split-Adjusted Re-Insertion)",
+                                       "problem":  "Wiki describes ConvertRateIsBuy carry-forward as \u0027ROW_NUMBER to pick the latest non-null value per date\u0027 but the SP partitions by OccurredDateID only (not InstrumentID+OccurredDateID) and orders by ConvertRateIsBuy_1 DESC. It picks the highest value across all split instruments per date, not \u0027latest\u0027. The subsequent LEFT JOIN on InstrumentID+OccurredDateID means most rows won\u0027t match."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Overall shape",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims \u0027Phases: 13/14\u0027 but the skipped phase is not identified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ConvertRateIsBuy_1, ConvertRateIsBuy_0",
+                                       "problem":  "SP casts CASE result AS MONEY before storing to numeric(18,4). MONEY type has specific rounding behavior not mentioned in column descriptions."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer vs Property Table",
+                                       "problem":  "Footer says \u0027Production Source: Unknown (dormant)\u0027 but property table lists a specific staging view + SP. Inconsistent messaging about whether the source is known."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Only 2 downstream consumers listed for a core pricing fact table. Likely incomplete but not verifiable from provided inputs."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Fix Section 2.2 split carry-forward description — ROW_NUMBER partitions by OccurredDateID only, orders by ConvertRateIsBuy_1 DESC, picks highest value not \u0027latest\u0027. (2) Add explicit Phase Gate Checklist section. (3) Note CAST AS MONEY precision behavior for ConvertRateIsBuy columns. (4) Reconcile footer vs property table production source language.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count ~1.77M 2026 YTD",
+                                                                                  "15,415 distinct InstrumentIDs",
+                                                                                  "594 ConvertRateIsBuy NULLs in April 2026",
+                                                                                  "~14% Ask vs AskSpreaded divergence",
+                                                                                  "isvalid 50/50 distribution",
+                                                                                  "ProviderID always 1 in recent data",
+                                                                                  "Date range 20090615-20260426"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 14 (unidentified — not shown in checklist)"
+                                                           ]
+                                    }
+                }
+}

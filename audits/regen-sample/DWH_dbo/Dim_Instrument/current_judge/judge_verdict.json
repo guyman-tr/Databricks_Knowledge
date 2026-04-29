@@ -1,0 +1,114 @@
+{
+    "schema":  "DWH_dbo",
+    "object":  "Dim_Instrument",
+    "elapsed_seconds":  391,
+    "exit_code":  null,
+    "cost_usd":  1.1044,
+    "input_tokens":  2,
+    "output_tokens":  21866,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "DWH_dbo",
+                    "object":  "Dim_Instrument",
+                    "weighted_score":  4.15,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  1,
+                                             "upstream_fidelity":  1,
+                                             "completeness":  6,
+                                             "business_meaning":  8,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key identifying the tradeable instrument pair. Allocated by `Internal.GetInstrumentID` during creation via `Trade.InstrumentAdd`. Values range from 0 (system placeholder) to 21,100,110. Referenced by virtually every trading table.",
+                                                  "wiki_quote":  "Primary key identifying the tradeable instrument pair. Allocated by Trade.InstrumentAdd during instrument creation. Ranges from 0 (system placeholder) to ~21 million IDs allocated. Referenced by virtually every trading fact table and the Dim_Currency / Dim_HistorySplitRatio dimension tables.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped Internal.GetInstrumentID procedure name; exact count 21,100,110 changed to ~21 million; added DWH-specific references not in upstream; \u0027trading table\u0027 changed to \u0027trading fact table\u0027"
+                                              },
+                                              {
+                                                  "column":  "BuyCurrencyID",
+                                                  "upstream_quote":  "The buy-side asset of the instrument pair. FK to Dictionary.Currency(CurrencyID). For forex: the base currency (e.g., EUR in EUR/USD). For stocks/ETFs/crypto: the asset itself (BuyCurrencyID = the asset\u0027s CurrencyID in Dictionary.Currency). 10,252 distinct values.",
+                                                  "wiki_quote":  "The buy-side asset of the instrument pair. FK to DWH_dbo.Dim_Currency(CurrencyID). For forex: the base currency. For stocks/ETFs/crypto: the asset\u0027s own CurrencyID in Dim_Currency (BuyCurrencyID = InstrumentID for stocks).",
+                                                  "match":  "NO",
+                                                  "loss":  "FK target changed from Dictionary.Currency to DWH_dbo.Dim_Currency; dropped example \u0027(e.g., EUR in EUR/USD)\u0027; dropped \u002710,252 distinct values\u0027"
+                                              },
+                                              {
+                                                  "column":  "SellCurrencyID",
+                                                  "upstream_quote":  "The sell-side (denomination) currency of the instrument pair. FK to Dictionary.Currency(CurrencyID). For forex: the quote currency (e.g., USD in EUR/USD). For stocks: the trading currency (USD, EUR, GBX). 67 distinct values - far fewer than BuyCurrencyID since many assets share the same denomination.",
+                                                  "wiki_quote":  "The sell-side (denomination) currency. FK to DWH_dbo.Dim_Currency(CurrencyID). For forex: the quote currency (e.g., USD in EUR/USD). For stocks: the trading denomination currency (USD, EUR, GBX). Only 67 distinct values since many assets share the same denomination.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027of the instrument pair\u0027; FK target changed to DWH context; \u0027far fewer than BuyCurrencyID\u0027 dropped"
+                                              },
+                                              {
+                                                  "column":  "TradeRange",
+                                                  "upstream_quote":  "The allowed trade range (pip distance) for the instrument. Determines how far from market price a pending order can be placed. Set during instrument creation via `Trade.InstrumentAdd`.",
+                                                  "wiki_quote":  "Allowed trade range in pips for pending orders. Determines how far from market price a limit/stop order can be placed. Set during instrument creation.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Slight rewording; dropped Trade.InstrumentAdd reference; added \u0027limit/stop order\u0027 not in upstream"
+                                              },
+                                              {
+                                                  "column":  "DollarRatio",
+                                                  "upstream_quote":  "Price scaling factor for USD normalization. Most instruments = 1. Japanese Yen pairs = 100 (because JPY prices are 100x larger numerically). Used in P\u0026L and conversion rate calculations across the platform.",
+                                                  "wiki_quote":  "Price scaling factor for USD normalization. Most instruments = 1. JPY pairs = 100 (because JPY is quoted at 100x the numeric value of other currencies). Used in P\u0026L and conversion rate calculations across the platform.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "\u0027Japanese Yen\u0027 abbreviated to \u0027JPY\u0027; parenthetical slightly reworded but meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "PipDifferenceThreshold",
+                                                  "upstream_quote":  "Maximum allowed pip difference threshold for the instrument. Used for price validation - if a new price deviates more than this threshold from the previous price, it may be flagged as suspicious. Values range from 1 to 10,000. Audited on INSERT/UPDATE/DELETE.",
+                                                  "wiki_quote":  "Maximum allowed pip difference threshold for price validation. If a new price deviates more than this threshold from the previous price, it may be flagged as suspicious. NULL for some instruments.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped specific numeric domain \u0027Values range from 1 to 10,000\u0027; dropped \u0027Audited on INSERT/UPDATE/DELETE\u0027; added \u0027NULL for some instruments\u0027 not in upstream"
+                                              },
+                                              {
+                                                  "column":  "OperationMode",
+                                                  "upstream_quote":  "Trading operation mode for the instrument. 0 = Standard mode (10,402 instruments - default for all asset types), 1 = Alternate mode (83 instruments - primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX).",
+                                                  "wiki_quote":  "Trading operation mode: 0=Standard mode (default, ~15,600 instruments), 1=Alternate mode (~83 instruments, primarily European stock CFDs traded in non-USD denomination currencies). Controls how the trading engine processes orders.",
+                                                  "match":  "NO",
+                                                  "loss":  "Changed instrument counts (10,402 to ~15,600); dropped \u0027like EUR, GBX\u0027 currency examples; added \u0027Controls how the trading engine processes orders\u0027 not in upstream"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "BuyCurrency, SellCurrency, InstrumentDisplayName, Industry, Exchange, ISINCode, ISINCountryCode, SymbolFull, CUSIP, Multiplier, BonusCreditUsePercent, Precision, ProviderID",
+                                       "problem":  "Systematic missed Tier 1 inheritance: 13+ columns are join-enriched passthroughs from upstream tables (Dictionary.Currency, Trade.InstrumentMetaData, Trade.InstrumentCusip, Trade.FuturesMetaData, Trade.ProviderToInstrument) whose wikis were available in the bundle. All should be Tier 1 with verbatim upstream descriptions but are tagged Tier 2 or Tier 3."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentID, BuyCurrencyID, PipDifferenceThreshold, OperationMode",
+                                       "problem":  "All 7 Tier 1 descriptions are paraphrased. Zero verbatim matches. InstrumentID drops Internal.GetInstrumentID; PipDifferenceThreshold drops \u0027Values range from 1 to 10,000\u0027; OperationMode drops \u0027like EUR, GBX\u0027; BuyCurrencyID drops \u002710,252 distinct values\u0027 and example."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer tier counts are wrong: claims \u00275 T1, 27 T2, 15 T3\u0027 but actual Element tags show 7 T1, 27 T2, 13 T3. Two columns (PipDifferenceThreshold, OperationMode) are not counted in the T1 total."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "IsMajorID",
+                                       "problem":  "Tagged Tier 2 (SP_Dim_Instrument) but is a rename+cast of Trade.Instrument.IsMajor, which is documented as a VERIFIED element in the upstream wiki. Rename+cast is still a rename per tier rules and should be Tier 1."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Section 1 provides row count (15,707) and instrument-type distribution but no explicit date range or temporal coverage statement."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag all join-enriched passthrough columns as Tier 1 when the upstream wiki is in the bundle: BuyCurrency, SellCurrency from Dictionary.Currency; InstrumentDisplayName, Industry, CompanyInfo, Exchange, ISINCode, ISINCountryCode, SymbolFull from Trade.InstrumentMetaData; CUSIP from Trade.InstrumentCusip; Multiplier from Trade.FuturesMetaData; BonusCreditUsePercent, Precision, ProviderID from Trade.ProviderToInstrument. (2) Re-tag IsMajorID as Tier 1 (rename+cast of documented upstream IsMajor). (3) For ALL Tier 1 columns, copy the upstream wiki description VERBATIM — do not change FK targets, drop examples, alter counts, or add text. Append DWH-specific notes in a separate sentence if needed. (4) Fix footer tier counts to 7 T1, 27 T2, 13 T3. (5) Add date range or temporal coverage to Section 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "InstrumentID: \u0027~21 million IDs allocated\u0027 (DWH-specific count, not from upstream)",
+                                                                                  "IsMajorID: \u00276,963 instruments\u0027 / \u00278,743 instruments\u0027 (DWH live data counts)",
+                                                                                  "OperationMode: \u0027~15,600 instruments\u0027 / \u0027~83 instruments\u0027 (DWH counts differ from upstream 10,402/83)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as a section; footer says 10/14 phases completed"
+                                                           ]
+                                    }
+                }
+}

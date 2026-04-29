@@ -1,0 +1,65 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CEPWeeklyAudit_ListCIDMapping",
+    "elapsed_seconds":  111,
+    "exit_code":  null,
+    "cost_usd":  0.4487,
+    "input_tokens":  2,
+    "output_tokens":  5205,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CEPWeeklyAudit_ListCIDMapping",
+                    "weighted_score":  6.95,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  5,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Element #4 (Name vs ListName)",
+                                       "problem":  "DDL defines column as [ListName] varchar(max) NULL but wiki Element #4 documents it as \u0027Name\u0027. The SP inserts positionally — the 4th value (Name from #ListCIDMapping_Log) maps to DDL position 4 = [ListName]. All sample queries in Section 7 and references in Sections 2/3 use the wrong column name."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Element #9 (UpdateDate)",
+                                       "problem":  "Tagged [UNVERIFIED] (Tier 4 — inferred) but GETDATE() is explicitly visible as the 9th positional value in the SP INSERT. Sibling wiki Dealing_CEPWeeklyAudit_Rules correctly uses (Tier 4 — SP_W_CEPWeeklyAudit) without UNVERIFIED."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Missing section",
+                                       "problem":  "No Phase Gate Checklist present. Row count and date range stats appear in Section 1 but no P2/P3 evidence trail exists to confirm data validation was performed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Element #6 (TypeOfChange)",
+                                       "problem":  "TypeOfChange has only 2 real values (CID Added, CID Deleted) plus NULL — ideal for inline key=value enumeration in the Elements table cell, but values are only mentioned in Section 2 prose."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "Lineage section lacks formal 5.1/5.2 subsection numbering per golden reference shape."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Rename Element #4 from \u0027Name\u0027 to \u0027ListName\u0027 to match DDL [ListName] varchar(max) NULL — update all references in Sections 2, 3, 6, and 7 sample queries. (2) Remove [UNVERIFIED] from UpdateDate and tag as (Tier 4 — SP_W_CEPWeeklyAudit) consistent with sibling wikis. (3) Add Phase Gate Checklist section. (4) Add inline enum values to TypeOfChange Element description: \u0027CID Added\u0027, \u0027CID Deleted\u0027; NULL = no-change placeholder. (5) Fix all sample queries in Section 7 to use ListName instead of Name.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

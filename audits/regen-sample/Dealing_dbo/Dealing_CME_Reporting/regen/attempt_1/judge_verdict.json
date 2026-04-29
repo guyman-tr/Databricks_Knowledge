@@ -1,0 +1,64 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_CME_Reporting",
+    "elapsed_seconds":  98,
+    "exit_code":  null,
+    "cost_usd":  0.3644,
+    "input_tokens":  2,
+    "output_tokens":  3833,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_CME_Reporting",
+                    "weighted_score":  8.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 — Tier Legend",
+                                       "problem":  "Tier legend omits star ratings and only lists Tier 2. Golden shape expects multi-tier legend with stars even when only one tier is represented."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No formal Phase Gate Checklist with P1/P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 without specifying which phases were skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentDisplayName",
+                                       "problem":  "46 distinct values claimed but no representative sample listed. Small enough cardinality to warrant top-10 inline examples."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.1 — References To",
+                                       "problem":  "DWH_dbo.Dim_Customer is omitted from the References To table despite being a JOIN dependency for the IsValidCustomer filter in SP_M_CME_Reporting."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3 — Common JOINs",
+                                       "problem":  "Only Dim_Instrument listed. Missing note about joining to date/calendar dimension for monthly trend analysis."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. For polish: (1) Add formal Phase Gate Checklist section with P1/P2/P3 checkboxes. (2) Add star ratings to tier legend per golden shape. (3) Add Dim_Customer to Section 6.1 References To as a filter dependency. (4) List top 10 instrument display names inline in the InstrumentDisplayName element description.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phases 12-14 not documented"
+                                                           ]
+                                    }
+                }
+}

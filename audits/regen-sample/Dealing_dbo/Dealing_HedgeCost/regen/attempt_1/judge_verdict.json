@@ -1,0 +1,77 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_HedgeCost",
+    "elapsed_seconds":  171,
+    "exit_code":  null,
+    "cost_usd":  0.7626,
+    "input_tokens":  2,
+    "output_tokens":  8357,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_HedgeCost",
+                    "weighted_score":  7.3,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "The instrument being hedged (e.g., EUR/USD, Apple stock). Implicitly references Trade.Instrument.",
+                                                  "wiki_quote":  "The instrument being hedged (e.g., EUR/USD, Apple stock). Implicitly references Trade.Instrument. Filtered to SellCurrencyID=1 (USD) and InstrumentTypeID IN (5,6) (stocks/ETFs).",
+                                                  "match":  "YES",
+                                                  "loss":  "Verbatim core preserved. But tier should be 2 (grouping key) and source attribution is wrong (says Hedge.ExecutionLog via Dim_Instrument, should cite Dim_Position as primary)."
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Instrument name as defined in Trade.Instrument. For forex: pair notation (e.g., EUR/USD). For stocks: company name (e.g., Apple, Alphabet). For crypto: token name. This is the internal instrument name, not necessarily the display name shown to users (see InstrumentDisplayName).",
+                                                  "wiki_quote":  "Instrument name as defined in Trade.Instrument. For forex: pair notation (e.g., EUR/USD). For stocks: company name (e.g., Apple, Alphabet). For crypto: token name. This is the internal instrument name, not necessarily the display name shown to users (see InstrumentDisplayName). Passthrough from Dim_Instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  "None. Verbatim with appended passthrough note."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "VariableSpread (#15)",
+                                       "problem":  "Tagged Tier 2 (SP_HedgeCost, BI_DB_VarCommission.VarCommission) but SP code is a direct passthrough: v.VarCommission AS VariableSpread. BI_DB_VarCommission wiki is in the bundle. Should be Tier 1 with verbatim upstream description."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentID (#2)",
+                                       "problem":  "Tagged Tier 1 (Hedge.ExecutionLog via Dim_Instrument) but it is a GROUP BY key across multiple SP temp tables. Lineage file correctly says Tier 2. Source attribution wrong: primary source is Dim_Position, not ExecutionLog."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property Table",
+                                       "problem":  "Missing UC Target, UC Format, UC Partitioned By, and UC Table Type rows. Other wikis in this repo include these."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 3.4 Gotchas",
+                                       "problem":  "Missing gotcha about Fact_CurrencyPriceWithSplit JOIN lacking isvalid=1 filter. The FCPWS wiki notes ~46% of rows are isvalid=0. HC calculation may use arbitrary price row. Documented in review-needed sidecar but not in the wiki itself."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FullCommission (#14)",
+                                       "problem":  "Description says \u0027Aggregate realized commission from positions closed on the report date\u0027 but does not clarify the aggregation crosses all Leverage, Regulation, MifID, and IsManual values from DailyZeroPnL_Stocks. Analysts expecting instrument-level match may be surprised."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag VariableSpread as Tier 1 from BI_DB_VarCommission.VarCommission with verbatim upstream description. (2) Re-tag InstrumentID as Tier 2 from SP_HedgeCost (grouping key from Dim_Position + ExecutionLog). (3) Add UC Target rows to property table. (4) Add Gotcha about missing isvalid=1 filter on Fact_CurrencyPriceWithSplit JOIN. (5) Update footer tier counts to reflect corrected tiers.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}
