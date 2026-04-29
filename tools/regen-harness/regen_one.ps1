@@ -11,8 +11,7 @@ param(
     [Parameter(Mandatory=$false)] [string] $JudgeModel  = "",   # "" = default. Recommended: "sonnet" (judge is structural, doesn't need Opus reasoning).
     [Parameter(Mandatory=$false)] [switch] $EnableAutoVerify,    # enable mechanical pre-judge check that issues synthetic PASS for trivially-simple objects (skips LLM judge entirely)
     [Parameter(Mandatory=$false)] [int]    $AutoVerifyMaxCols = 5,  # column-count threshold for the triviality gate
-    [Parameter(Mandatory=$false)] [switch] $EnableAutoPromote,    # auto-promote regen/final/ over live wiki tree when judge score >= AutoPromoteMinScore
-    [Parameter(Mandatory=$false)] [double] $AutoPromoteMinScore = 9.0  # minimum weighted_score to trigger auto-promotion
+    [Parameter(Mandatory=$false)] [switch] $NoLiveWrite          # suppress writing the best attempt into knowledge/synapse/Wiki/ (default = always write directly)
 )
 
 # ---------------------------------------------------------------------------
@@ -216,9 +215,17 @@ for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
     }
 }
 
-# ---------- 6. Copy best attempt into final/ ----------
+# ---------- 6. Copy best attempt into final/ AND directly into the live wiki tree ----------
+# Two writes happen here:
+#   6a. Audit copy: attempt_N/* -> regen/final/  (forensic snapshot for compare/judge tooling)
+#   6b. Live write: best attempt's 3 user-facing files -> knowledge/synapse/Wiki/{Schema}/{sub}/
+#       The live write happens unconditionally (default behaviour). Pass -NoLiveWrite to suppress.
+#       If a file already exists in the live tree, it is backed up to <name>.bak before overwrite
+#       (single generation kept).
 if ($bestAttempt -gt 0) {
     $bestDir = Join-Path $regenDir ("attempt_{0}" -f $bestAttempt)
+
+    # --- 6a. Forensic copy into regen/final/ ---
     Remove-Item $finalDir -Recurse -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path $finalDir -Force | Out-Null
     foreach ($pat in @("*.md", "*.json", "*.jsonl")) {
@@ -227,8 +234,36 @@ if ($bestAttempt -gt 0) {
         }
     }
     Write-Host ("  Final attempt copied: attempt_{0} -> final/  (score {1})" -f $bestAttempt, $bestScore) -ForegroundColor Green
+
+    # --- 6b. Direct write into the live knowledge tree ---
+    if (-not $NoLiveWrite) {
+        $liveWikiRoot = Join-Path $repoRoot "knowledge\synapse\Wiki"
+        $liveDir = $null
+        foreach ($sub in @("Tables", "Views", "Functions")) {
+            $candFile = Join-Path $liveWikiRoot ("{0}\{1}\{2}.md" -f $Schema, $sub, $ObjectName)
+            if (Test-Path $candFile) { $liveDir = Split-Path -Parent $candFile; break }
+        }
+        if (-not $liveDir) {
+            # No existing live wiki -- default to Tables/. Caller can move to Views/Functions later.
+            $liveDir = Join-Path $liveWikiRoot ("{0}\Tables" -f $Schema)
+            New-Item -ItemType Directory -Path $liveDir -Force | Out-Null
+        }
+        Write-Host ("  Writing live wiki -> {0}" -f $liveDir) -ForegroundColor Green
+        foreach ($suffix in @(".md", ".lineage.md", ".review-needed.md")) {
+            $src = Join-Path $bestDir ("{0}{1}" -f $ObjectName, $suffix)
+            if (-not (Test-Path $src)) { continue }
+            $dst = Join-Path $liveDir ("{0}{1}" -f $ObjectName, $suffix)
+            $existed = Test-Path $dst
+            if ($existed) { Copy-Item -Path $dst -Destination "$dst.bak" -Force }
+            Copy-Item -Path $src -Destination $dst -Force
+            $tag = if ($existed) { "(replaced; .bak written)" } else { "(new)" }
+            Write-Host ("    {0,-50} {1}" -f (Split-Path -Leaf $dst), $tag) -ForegroundColor Green
+        }
+    } else {
+        Write-Host "  -NoLiveWrite set: live wiki tree NOT touched (best attempt sits in regen/final/)." -ForegroundColor DarkGray
+    }
 } else {
-    Write-Host "  No usable attempt produced -- nothing copied to final/." -ForegroundColor Red
+    Write-Host "  No usable attempt produced -- nothing copied to final/ or live tree." -ForegroundColor Red
 }
 
 # ---------- Save per-object orchestrator summary ----------
@@ -250,27 +285,6 @@ $summary = [ordered]@{
 if ($RunCompare) {
     Write-Host "  [5/5] compare_one.py" -ForegroundColor Yellow
     & python (Join-Path $harnessRoot "compare_one.py") --schema $Schema --object $ObjectName
-}
-
-# ---------- 8. Optional auto-promote ----------
-if ($EnableAutoPromote) {
-    if ($bestAttempt -gt 0 -and $bestScore -ge $AutoPromoteMinScore) {
-        Write-Host ("  [6/6] auto_promote.ps1 (score {0} >= {1})" -f $bestScore, $AutoPromoteMinScore) -ForegroundColor Yellow
-        & (Join-Path $harnessRoot "auto_promote.ps1") `
-            -Schema $Schema `
-            -ObjectName $ObjectName `
-            -MinScore $AutoPromoteMinScore
-        $promoteExit = $LASTEXITCODE
-        if ($promoteExit -eq 0) {
-            Write-Host "         AUTO-PROMOTED to live wiki tree." -ForegroundColor Green
-        } elseif ($promoteExit -eq 2) {
-            Write-Host "         AUTO-PROMOTE: no live wiki found (use promote_regen.ps1 -Apply for new objects)." -ForegroundColor DarkGray
-        } else {
-            Write-Host ("         AUTO-PROMOTE: exit {0} (see auto_promote_log.json or skip reason above)." -f $promoteExit) -ForegroundColor DarkYellow
-        }
-    } else {
-        Write-Host ("  [6/6] auto_promote.ps1 SKIPPED (best score {0} < threshold {1})" -f $bestScore, $AutoPromoteMinScore) -ForegroundColor DarkGray
-    }
 }
 
 Write-Host ""

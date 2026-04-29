@@ -26,7 +26,6 @@ Compaction strategy (per object, applied only when there's a PASS verdict):
     - regen/final/judge_verdict.json
     - regen/final/judge_log.md
     - regen/final/writer_log.md
-    - regen/auto_promote_log.json (when present)
     - regen/auto_verify_log.md    (when present)
     - compare.md
     - current/      (baseline -- needed to regenerate compare)

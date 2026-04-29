@@ -53,13 +53,12 @@ param(
     [Parameter(Mandatory=$false)] [switch]   $EnableAutoVerify,
     [Parameter(Mandatory=$false)] [int]      $AutoVerifyMaxCols  = 5,
 
-    # ── Workflow lever: auto-promote regen output to live wiki tree when judge
-    #    score >= AutoPromoteMinScore. Backs up any existing live file to a
-    #    timestamped .bak.<UTC>.md sidecar BEFORE overwrite. Off by default
-    #    because new-object cases (no live wiki yet) intentionally require
-    #    human triage via promote_regen.ps1 -Apply.
-    [Parameter(Mandatory=$false)] [switch]   $EnableAutoPromote,
-    [Parameter(Mandatory=$false)] [double]   $AutoPromoteMinScore = 9.0,
+    # ── Live-write behaviour ────────────────────────────────────────────────
+    # regen_one.ps1 ALWAYS writes the best attempt directly into
+    # knowledge/synapse/Wiki/{Schema}/{Tables|Views|Functions}/. Pass
+    # -NoLiveWrite to keep the regen output in audits/regen-sample/ only.
+    # Existing live files are backed up to <name>.bak before overwrite.
+    [Parameter(Mandatory=$false)] [switch]   $NoLiveWrite,
     [Parameter(Mandatory=$false)] [int]      $SimpleColThreshold = 30,
 
     # ── Throughput lever (T3: parallel regen_one) ───────────────────────────
@@ -135,7 +134,7 @@ Write-Host ("  Writer:   simple<={0}cols -> {1}   complex>{0}cols -> {2}" -f `
     $(if ($WriterModelComplex) { $WriterModelComplex } else { '<default>' })) -ForegroundColor Cyan
 Write-Host ("  Judge:    {0}" -f $(if ($JudgeModel) { $JudgeModel } else { '<default>' })) -ForegroundColor Cyan
 Write-Host ("  AutoVerify: {0}" -f $(if ($EnableAutoVerify) { "ON (max-trivial-cols={0})" -f $AutoVerifyMaxCols } else { "OFF (every object goes through LLM judge)" })) -ForegroundColor Cyan
-Write-Host ("  AutoPromote: {0}" -f $(if ($EnableAutoPromote) { "ON (min-score={0}; live wiki updated in-place w/ .bak sidecar)" -f $AutoPromoteMinScore } else { "OFF (regen stays in audits/ tree -- run promote_regen.ps1 manually)" })) -ForegroundColor Cyan
+Write-Host ("  LiveWrite: {0}" -f $(if ($NoLiveWrite) { "OFF (-NoLiveWrite set; output stays in audits/regen-sample/)" } else { "ON (best attempt written directly into knowledge/synapse/Wiki/, .bak written if file existed)" })) -ForegroundColor Cyan
 Write-Host "  Repo:     $repoRoot" -ForegroundColor Cyan
 Write-Host "  Started:  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Cyan
 if ($DryRun) {
@@ -475,7 +474,7 @@ while ($true) {
 
             $idx++
             $job = Start-Job -ScriptBlock {
-                param($regenOne, $schema, $obj, $writerModel, $judgeModel, $writerTimeout, $judgeTimeout, $enableAutoVerify, $autoVerifyMaxCols, $enableAutoPromote, $autoPromoteMinScore)
+                param($regenOne, $schema, $obj, $writerModel, $judgeModel, $writerTimeout, $judgeTimeout, $enableAutoVerify, $autoVerifyMaxCols, $noLiveWrite)
                 $regenArgs = @(
                     "-Schema", $schema, "-ObjectName", $obj,
                     "-MaxAttempts", 2,
@@ -487,15 +486,15 @@ while ($true) {
                 if ($enableAutoVerify) {
                     $regenArgs += @("-EnableAutoVerify", "-AutoVerifyMaxCols", $autoVerifyMaxCols)
                 }
-                if ($enableAutoPromote) {
-                    $regenArgs += @("-EnableAutoPromote", "-AutoPromoteMinScore", $autoPromoteMinScore)
+                if ($noLiveWrite) {
+                    $regenArgs += @("-NoLiveWrite")
                 }
                 & $regenOne @regenArgs
                 # Emit the regen_one exit code as the LAST line so the parent
                 # can pull it back via Receive-Job. Job output is purely text
                 # from regen_one's Write-Host stream, none of which we parse.
                 "REGEN_EXIT_CODE=$LASTEXITCODE"
-            } -ArgumentList $regenOne, $SchemaName, $obj, $writerModel, $JudgeModel, $WriterTimeout, $JudgeTimeout, $EnableAutoVerify.IsPresent, $AutoVerifyMaxCols, $EnableAutoPromote.IsPresent, $AutoPromoteMinScore
+            } -ArgumentList $regenOne, $SchemaName, $obj, $writerModel, $JudgeModel, $WriterTimeout, $JudgeTimeout, $EnableAutoVerify.IsPresent, $AutoVerifyMaxCols, $NoLiveWrite.IsPresent
 
             $jobMeta[$job.Id] = @{
                 Object      = $obj
