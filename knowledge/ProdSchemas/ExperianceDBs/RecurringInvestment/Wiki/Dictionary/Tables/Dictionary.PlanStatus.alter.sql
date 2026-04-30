@@ -28,7 +28,4 @@ ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_planstatus SET TAGS
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_planstatus ALTER COLUMN ID COMMENT 'Unique numeric identifier for the plan status. 0=Initializing (failed creation), 1=Active (only operational status), 2=Cancelled (terminal), 3=Stopped (unused), 4=Invalid (unused). See Plan Status. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PlanStatus)';
 ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_planstatus ALTER COLUMN StatusName COMMENT 'Human-readable label for the plan lifecycle state. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PlanStatus)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

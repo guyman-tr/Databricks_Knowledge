@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_calendardb_market_mergeddailyschedules (business_group=general) ----
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules SET TBLPROPERTIES (
-    'comment' = 'The authoritative, final market hours schedule table. Contains the merged result of defaults, provider data, and overrides for each exchange/instrument per date - the single source of truth for when instruments are open or closed for trading. Source: CalendarDB.Market.MergedDailySchedules on the CalendarDB production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.MergedDailySchedules.md).'
+    'comment' = 'The authoritative, final market hours schedule table. Contains the merged result of defaults, provider data, and overrides for each exchange/instrument per date - the single source of truth for when instruments are open or closed for trading. Source: CalendarDB.Market.MergedDailySchedules on the CalendarDB production database, ingested via the Generic Pipeline (Override strategy, 30-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.MergedDailySchedules.md).'
 );
 
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules SET TAGS (
@@ -22,7 +22,7 @@ ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules SET TAGS 
     'doc_source' = 'tier1_wiki',
     'doc_generated' = '2026-04-30',
     'copy_strategy' = 'Override',
-    'refresh_minutes' = '1440'
+    'refresh_minutes' = '30'
 );
 
 -- Column Comments
@@ -45,7 +45,4 @@ ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COL
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COLUMN DeltaCloseSecs COMMENT 'Seconds-precision close time offset. (Tier 1 - upstream wiki, CalendarDB.Market.MergedDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COLUMN ValidFrom COMMENT 'Temporal ROW START (named ValidFrom instead of SysStartTime). Auto-set on insert/update. (Tier 1 - upstream wiki, CalendarDB.Market.MergedDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COLUMN ValidTo COMMENT 'Temporal ROW END. History retained for 6 months in History.MergedDailySchedules (HISTORY_RETENTION_PERIOD = 6 MONTH). (Tier 1 - upstream wiki, CalendarDB.Market.MergedDailySchedules)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:35:27 UTC
--- Bronze deploy: CalendarDB batch 1
--- ====================
+

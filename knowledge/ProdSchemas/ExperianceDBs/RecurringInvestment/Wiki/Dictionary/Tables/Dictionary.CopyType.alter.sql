@@ -28,7 +28,4 @@ ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_copytype SET T
 -- Column Comments
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_copytype ALTER COLUMN ID COMMENT 'Unique numeric identifier for the copy type. 0=None (direct instrument), 1=PI (Popular Investor copy), 4=SmartPortfolio (managed portfolio copy). See Copy Type. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.CopyType)';
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_copytype ALTER COLUMN Name COMMENT 'Human-readable label for the copy trading relationship type. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.CopyType)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

@@ -59,7 +59,4 @@ ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinst
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN CopyPositionStatusID COMMENT 'Copy position creation step: 1=RegisterSuccess, 2=AddFundsSuccess, 3=RegisterFailed, 4=AddFundFailed. NULL for instrument-type plans. See Copy Position Status. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN CopyFailErrorCode COMMENT 'Error code for copy position failures. NULL for instrument-type plans. See Copy Fail Error Code. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositFailReason COMMENT 'Reason for deposit failure when applicable. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

@@ -28,7 +28,4 @@ ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_plantype SET T
 -- Column Comments
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_plantype ALTER COLUMN ID COMMENT 'Unique numeric identifier for the plan type. 1=Instrument (direct investment), 2=Copy (copy trading). See Plan Type. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PlanType)';
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_plantype ALTER COLUMN Name COMMENT 'Human-readable label for the plan investment strategy type. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PlanType)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

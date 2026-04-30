@@ -3,8 +3,8 @@
 ## bronze: WalletDB
 
 db_key: CryptoDBs/WalletDB
-total_deployable: 65
-generated: 65
+total_deployable: 72
+generated: 72
 failed: 0
 deployed: 0
 last_generated: "2026-04-30"
@@ -41,12 +41,16 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Eligibility.TravelRuleWhitelistedAddresses](Wiki/Eligibility/Tables/Eligibility.TravelRuleWhitelistedAddresses.md) | `main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses` | Generated |
 | [Staking.Staking](Wiki/Staking/Tables/Staking.Staking.md) | `main.wallet.bronze_walletdb_staking_staking` | Generated |
 | [Staking.StakingExternalAddress](Wiki/Staking/Tables/Staking.StakingExternalAddress.md) | `main.wallet.bronze_walletdb_staking_stakingexternaladdress` | Generated |
+| [Staking.StakingRewards](Wiki/Staking/Tables/Staking.StakingRewards.md) | `main.wallet.bronze_walletdb_staking_stakingrewards` | Generated |
 | [Staking.StakingStatuses](Wiki/Staking/Tables/Staking.StakingStatuses.md) | `main.wallet.bronze_walletdb_staking_stakingstatuses` | Generated |
 | [Staking.StakingTransactions](Wiki/Staking/Tables/Staking.StakingTransactions.md) | `main.wallet.bronze_walletdb_staking_stakingtransactions` | Generated |
 | [Wallet.AmlProviderUsers](Wiki/Wallet/Tables/Wallet.AmlProviderUsers.md) | `main.wallet.bronze_walletdb_wallet_amlproviderusers` | Generated |
 | [Wallet.AmlValidations](Wiki/Wallet/Tables/Wallet.AmlValidations.md) | `main.wallet.bronze_walletdb_wallet_amlvalidations` | Generated |
 | [Wallet.BlockchainCryptoProviders](Wiki/Wallet/Tables/Wallet.BlockchainCryptoProviders.md) | `main.wallet.bronze_walletdb_wallet_blockchaincryptoproviders` | Generated |
 | [Wallet.BlockchainCryptos](Wiki/Wallet/Tables/Wallet.BlockchainCryptos.md) | `main.wallet.bronze_walletdb_wallet_blockchaincryptos` | Generated |
+| [Wallet.ConversionStatuses](Wiki/Wallet/Tables/Wallet.ConversionStatuses.md) | `main.wallet.bronze_walletdb_wallet_conversionstatuses` | Generated |
+| [Wallet.ConversionTransactions](Wiki/Wallet/Tables/Wallet.ConversionTransactions.md) | `main.wallet.bronze_walletdb_wallet_conversiontransactions` | Generated |
+| [Wallet.Conversions](Wiki/Wallet/Tables/Wallet.Conversions.md) | `main.wallet.bronze_walletdb_wallet_conversions` | Generated |
 | [Wallet.CorrelatedRequests](Wiki/Wallet/Tables/Wallet.CorrelatedRequests.md) | `main.bi_db.bronze_walletdb_wallet_correlatedrequests` | Generated |
 | [Wallet.CryptoMarketRatesMappings](Wiki/Wallet/Tables/Wallet.CryptoMarketRatesMappings.md) | `main.wallet.bronze_walletdb_wallet_cryptomarketratesmappings` | Generated |
 | [Wallet.CryptoTypes](Wiki/Wallet/Tables/Wallet.CryptoTypes.md) | `main.wallet.bronze_walletdb_wallet_cryptotypes` | Generated |
@@ -55,6 +59,9 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Wallet.FiatMarketRatesMappings](Wiki/Wallet/Tables/Wallet.FiatMarketRatesMappings.md) | `main.wallet.bronze_walletdb_wallet_fiatmarketratesmappings` | Generated |
 | [Wallet.FiatTypes](Wiki/Wallet/Tables/Wallet.FiatTypes.md) | `main.wallet.bronze_walletdb_wallet_fiattypes` | Generated |
 | [Wallet.LimitationsDefinitions](Wiki/Wallet/Tables/Wallet.LimitationsDefinitions.md) | `main.wallet.bronze_walletdb_wallet_limitationsdefinitions` | Generated |
+| [Wallet.PaymentStatuses](Wiki/Wallet/Tables/Wallet.PaymentStatuses.md) | `main.wallet.bronze_walletdb_wallet_paymentstatuses` | Generated |
+| [Wallet.PaymentTransactions](Wiki/Wallet/Tables/Wallet.PaymentTransactions.md) | `main.wallet.bronze_walletdb_wallet_paymenttransactions` | Generated |
+| [Wallet.Payments](Wiki/Wallet/Tables/Wallet.Payments.md) | `main.wallet.bronze_walletdb_wallet_payments` | Generated |
 | [Wallet.ReceivedTransactionStatuses](Wiki/Wallet/Tables/Wallet.ReceivedTransactionStatuses.md) | `main.wallet.bronze_walletdb_wallet_receivedtransactionstatuses` | Generated |
 | [Wallet.ReceivedTransactions](Wiki/Wallet/Tables/Wallet.ReceivedTransactions.md) | `main.wallet.bronze_walletdb_wallet_receivedtransactions` | Generated |
 | [Wallet.Redemptions](Wiki/Wallet/Tables/Wallet.Redemptions.md) | `main.wallet.bronze_walletdb_wallet_redemptions` | Generated |

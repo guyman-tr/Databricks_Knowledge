@@ -1,18 +1,18 @@
 {
   "_summary": {
-    "generated_at": "2026-04-30T07:25:58.052619+00:00",
+    "generated_at": "2026-04-30T09:39:17.115175+00:00",
     "tool": "tools/uc_bronze/build_bronze_scope.py",
     "mapping_source": "knowledge/synapse/Wiki/_generic_pipeline_mapping.json",
     "routing_source": "knowledge/synapse/Wiki/_upstream_wiki_routing.json",
     "filter_db": null,
-    "total_rows": 1711,
+    "total_rows": 1906,
     "status_counts": {
-      "no_wiki_db": 710,
-      "ready": 615,
-      "third_party": 260,
-      "missing_fields": 52,
-      "ready_case_match": 43,
-      "no_wiki_file": 31
+      "no_wiki_db": 819,
+      "ready": 669,
+      "third_party": 262,
+      "missing_fields": 74,
+      "ready_case_match": 45,
+      "no_wiki_file": 37
     },
     "by_database": {
       "AlertServiceDB": {
@@ -22,36 +22,44 @@
         "no_wiki_db": 9
       },
       "CalendarDB": {
-        "ready": 2
+        "ready": 3
       },
       "Candles": {
         "no_wiki_db": 14
       },
-      "ClubService": {
-        "no_wiki_db": 3
+      "Candles4": {
+        "no_wiki_db": 1
       },
-      "Cmrdb": {
-        "no_wiki_db": 3,
-        "missing_fields": 1
+      "Candles_History": {
+        "no_wiki_db": 6
+      },
+      "ClubService": {
+        "no_wiki_db": 5
       },
       "ComplianceStateDB": {
-        "no_wiki_db": 49,
+        "no_wiki_db": 52,
         "missing_fields": 3
       },
+      "CrmDB": {
+        "missing_fields": 1
+      },
       "CustomerFinanceDB": {
-        "no_wiki_db": 4
+        "no_wiki_db": 5
       },
       "DBA": {
         "no_wiki_db": 8
       },
       "DB_Logs": {
-        "no_wiki_db": 19
+        "no_wiki_db": 22
+      },
+      "DB_Logs_31_5": {
+        "no_wiki_db": 3
       },
       "DailyTrades_Copy4Eyal": {
         "no_wiki_db": 1
       },
       "DealingLogs": {
-        "no_wiki_db": 2
+        "no_wiki_db": 3
       },
       "DeltaApp": {
         "no_wiki_db": 1
@@ -66,14 +74,15 @@
         "no_wiki_db": 12
       },
       "FiatDwhDB": {
-        "ready": 43
+        "ready": 64,
+        "ready_case_match": 1
       },
       "FinanceReports": {
         "no_wiki_db": 3
       },
       "Fivetran": {
-        "third_party": 245,
-        "missing_fields": 7
+        "third_party": 247,
+        "missing_fields": 8
       },
       "Funnel": {
         "no_wiki_db": 1
@@ -92,11 +101,14 @@
         "no_wiki_db": 4
       },
       "KycAnalyzer": {
-        "no_wiki_db": 16,
-        "missing_fields": 3
+        "no_wiki_db": 17,
+        "missing_fields": 4
       },
       "MarketMaker": {
-        "no_wiki_db": 17
+        "no_wiki_db": 21
+      },
+      "MarketNotifications": {
+        "no_wiki_db": 28
       },
       "MarketPerformance": {
         "no_wiki_db": 10
@@ -105,8 +117,8 @@
         "no_wiki_db": 6
       },
       "MoneyBusDB": {
-        "ready": 2,
-        "missing_fields": 1
+        "ready": 8,
+        "missing_fields": 3
       },
       "MoneyTransfer": {
         "ready": 2
@@ -119,7 +131,7 @@
         "missing_fields": 2
       },
       "NotificationDB": {
-        "no_wiki_db": 39,
+        "no_wiki_db": 40,
         "missing_fields": 2
       },
       "OntologyDB": {
@@ -127,7 +139,7 @@
         "missing_fields": 1
       },
       "OpsDB": {
-        "no_wiki_db": 5
+        "no_wiki_db": 8
       },
       "PeriodicRankings": {
         "no_wiki_db": 1
@@ -140,9 +152,10 @@
         "no_wiki_db": 3
       },
       "PriceLog": {
-        "no_wiki_db": 6
+        "no_wiki_db": 7
       },
       "PriceLog_History_2009_2014": {
+        "missing_fields": 1,
         "no_wiki_db": 1
       },
       "PriceLog_History_2015": {
@@ -227,7 +240,13 @@
         "no_wiki_db": 2
       },
       "Rankings": {
-        "no_wiki_db": 26
+        "no_wiki_db": 29
+      },
+      "RankingsDaily": {
+        "missing_fields": 1
+      },
+      "RankingsDaily_For_Archive_20251106": {
+        "no_wiki_db": 1
       },
       "RecurringInvestment": {
         "ready": 14,
@@ -238,10 +257,12 @@
         "missing_fields": 1
       },
       "RegReportDB_Prod": {
-        "no_wiki_db": 25
+        "no_wiki_db": 29,
+        "missing_fields": 1
       },
       "RelationService": {
-        "missing_fields": 1
+        "missing_fields": 1,
+        "no_wiki_db": 1
       },
       "RiskClassification": {
         "ready": 3,
@@ -249,16 +270,20 @@
       },
       "Rivery": {
         "third_party": 15,
-        "missing_fields": 1
+        "missing_fields": 2
       },
       "STS_Audit": {
         "no_wiki_db": 2
+      },
+      "STS_Audit_Backup_20240204": {
+        "no_wiki_db": 1
       },
       "ScreeningService": {
         "no_wiki_db": 12
       },
       "SettingsDB": {
-        "no_wiki_db": 12
+        "no_wiki_db": 14,
+        "missing_fields": 1
       },
       "Sodreconciliation": {
         "ready": 11
@@ -267,7 +292,8 @@
         "missing_fields": 1
       },
       "Spaceship": {
-        "no_wiki_db": 47
+        "no_wiki_db": 48,
+        "missing_fields": 1
       },
       "StreamPolls": {
         "no_wiki_db": 3
@@ -276,13 +302,19 @@
         "no_wiki_db": 1
       },
       "TradeGain": {
-        "no_wiki_db": 4
+        "no_wiki_db": 5
+      },
+      "Trading": {
+        "no_wiki_db": 3
       },
       "TravelRuleDB": {
         "missing_fields": 1
       },
+      "TribeReportDB": {
+        "no_wiki_db": 1
+      },
       "USABroker": {
-        "ready": 29
+        "ready": 30
       },
       "Untrustedwe-BLOB": {
         "no_wiki_db": 1
@@ -304,7 +336,7 @@
         "ready": 7
       },
       "WalletDB": {
-        "ready": 61,
+        "ready": 68,
         "ready_case_match": 4,
         "missing_fields": 2
       },
@@ -314,40 +346,57 @@
       "Wealth_France": {
         "no_wiki_db": 1
       },
+      "cmrdb": {
+        "no_wiki_db": 8,
+        "missing_fields": 1
+      },
       "contactverification": {
         "no_wiki_db": 2
       },
       "cwadb": {
         "no_wiki_db": 1
       },
+      "databricks_postgres": {
+        "no_wiki_db": 2
+      },
+      "eDocsDB": {
+        "no_wiki_db": 2,
+        "missing_fields": 1
+      },
       "eToroLogs_Real": {
         "no_wiki_db": 8
       },
       "etoro": {
-        "ready": 368,
-        "no_wiki_file": 31,
-        "ready_case_match": 22,
-        "missing_fields": 2
+        "ready": 383,
+        "no_wiki_file": 37,
+        "ready_case_match": 23,
+        "missing_fields": 10
       },
       "etoroGeneral": {
         "no_wiki_db": 4
       },
+      "etoro_Archive": {
+        "no_wiki_db": 1
+      },
       "fiktivo": {
-        "ready": 34,
+        "ready": 37,
         "ready_case_match": 12
       },
       "marketplace-applications": {
         "missing_fields": 1
+      },
+      "navigation": {
+        "missing_fields": 2
       },
       "prod-psp-data-sql-we": {
         "no_wiki_db": 3,
         "missing_fields": 1
       },
       "rafcompensations": {
-        "no_wiki_db": 3
+        "no_wiki_db": 4
       },
       "sql_dp_prod_we": {
-        "no_wiki_db": 245,
+        "no_wiki_db": 267,
         "missing_fields": 8
       },
       "streams": {
@@ -665,13 +714,27 @@
     },
     {
       "status": "ready",
+      "uc_table": "dealing.bronze_calendardb_market_defaultweeklycalendars",
+      "business_group": "dealing",
+      "database_name": "CalendarDB",
+      "schema_name": "Market",
+      "table_name": "DefaultWeeklyCalendars",
+      "copy_strategy": "Override",
+      "frequency_minutes": "30",
+      "datalake_path": "Bronze/CalendarDB/Market/DefaultWeeklyCalendars/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.DefaultWeeklyCalendars.md",
+      "generic_id": "1977"
+    },
+    {
+      "status": "ready",
       "uc_table": "general.bronze_calendardb_market_mergeddailyschedules",
       "business_group": "general",
       "database_name": "CalendarDB",
       "schema_name": "Market",
       "table_name": "MergedDailySchedules",
       "copy_strategy": "Override",
-      "frequency_minutes": "1440",
+      "frequency_minutes": "30",
       "datalake_path": "Bronze/CalendarDB/Market/MergedDailySchedules/",
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.MergedDailySchedules.md",
@@ -685,7 +748,7 @@
       "schema_name": "Market",
       "table_name": "ProvidersExchangeDailySchedules",
       "copy_strategy": "Override",
-      "frequency_minutes": "1440",
+      "frequency_minutes": "30",
       "datalake_path": "Bronze/CalendarDB/Market/ProvidersExchangeDailySchedules/",
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.ProvidersExchangeDailySchedules.md",
@@ -889,6 +952,104 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "general.bronze_candles4_dbo_eyalistheking",
+      "business_group": "general",
+      "database_name": "Candles4",
+      "schema_name": "dbo",
+      "table_name": "EyalIsTheKing",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles4/dbo/EyalIsTheKing/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1256"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle10min",
+      "business_group": "BI_DB",
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle10Min",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles_History/Candles/V_History_T_PriceCandle10Min/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "915"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle15min",
+      "business_group": "BI_DB",
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle15Min",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles_History/Candles/V_History_T_PriceCandle15Min/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "916"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle1min",
+      "business_group": "BI_DB",
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle1Min",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles_History/Candles/V_History_T_PriceCandle1Min/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "897"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle30min",
+      "business_group": "BI_DB",
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle30Min",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles_History/Candles/V_History_T_PriceCandle30Min/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "917"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle5min",
+      "business_group": "BI_DB",
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle5Min",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles_History/Candles/V_History_T_PriceCandle5Min/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "910"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle60min",
+      "business_group": "BI_DB",
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle60Min",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Candles_History/Candles/V_History_T_PriceCandle60Min/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "958"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.bronze_clubservice_clubs_downgraderisk",
       "business_group": "BI_DB",
       "database_name": "ClubService",
@@ -917,6 +1078,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "experience.bronze_clubservice_clubs_userproducts",
+      "business_group": "experience",
+      "database_name": "ClubService",
+      "schema_name": "Clubs",
+      "table_name": "UserProducts",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/ClubService/Clubs/UserProducts/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1973"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.bronze_clubservice_dictionary_balancesourcetypes",
       "business_group": "BI_DB",
       "database_name": "ClubService",
@@ -931,59 +1106,17 @@
     },
     {
       "status": "no_wiki_db",
-      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliation",
-      "business_group": "finance",
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "ExternalReconciliation",
+      "uc_table": "experience.bronze_clubservice_dictionary_playerlevel",
+      "business_group": "experience",
+      "database_name": "ClubService",
+      "schema_name": "Dictionary",
+      "table_name": "PlayerLevel",
       "copy_strategy": "Override",
       "frequency_minutes": "1440",
-      "datalake_path": "Bronze/Cmrdb/dbo/ExternalReconciliation/",
+      "datalake_path": "Bronze/ClubService/Dictionary/PlayerLevel/",
       "wiki_root": "",
       "wiki_path": "",
-      "generic_id": "1875"
-    },
-    {
-      "status": "no_wiki_db",
-      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliationtotalpriority",
-      "business_group": "finance",
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "ExternalReconciliationTotalPriority",
-      "copy_strategy": "Override",
-      "frequency_minutes": "1440",
-      "datalake_path": "Bronze/Cmrdb/dbo/ExternalReconciliationTotalPriority/",
-      "wiki_root": "",
-      "wiki_path": "",
-      "generic_id": "1876"
-    },
-    {
-      "status": "missing_fields",
-      "uc_table": "",
-      "business_group": "finance",
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "FxRate",
-      "copy_strategy": "Override",
-      "frequency_minutes": "1440",
-      "datalake_path": "Bronze/Cmrdb/dbo/FxRate/",
-      "wiki_root": "",
-      "wiki_path": "",
-      "generic_id": "1852"
-    },
-    {
-      "status": "no_wiki_db",
-      "uc_table": "finance.bronze_cmrdb_dbo_nopberegulation",
-      "business_group": "finance",
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "NOPBeRegulation",
-      "copy_strategy": "Override",
-      "frequency_minutes": "1440",
-      "datalake_path": "Bronze/Cmrdb/dbo/NOPBeRegulation/",
-      "wiki_root": "",
-      "wiki_path": "",
-      "generic_id": "1874"
+      "generic_id": "1972"
     },
     {
       "status": "no_wiki_db",
@@ -1026,6 +1159,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1567"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "compliance.bronze_compliancestatedb_compliance_customerinstruments",
+      "business_group": "compliance",
+      "database_name": "ComplianceStateDB",
+      "schema_name": "Compliance",
+      "table_name": "CustomerInstruments",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/ComplianceStateDB/Compliance/CustomerInstruments/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "804"
     },
     {
       "status": "no_wiki_db",
@@ -1166,6 +1313,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "746"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "compliance.bronze_compliancestatedb_compliance_customersubsidiary",
+      "business_group": "compliance",
+      "database_name": "ComplianceStateDB",
+      "schema_name": "Compliance",
+      "table_name": "CustomerSubsidiary",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/ComplianceStateDB/Compliance/CustomerSubsidiary/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "805"
     },
     {
       "status": "no_wiki_db",
@@ -1362,6 +1523,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "754"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_compliancestatedb_compliance_userpositions",
+      "business_group": "bi_db",
+      "database_name": "ComplianceStateDB",
+      "schema_name": "Compliance",
+      "table_name": "UserPositions",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/ComplianceStateDB/Compliance/UserPositions/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1948"
     },
     {
       "status": "no_wiki_db",
@@ -1714,6 +1889,20 @@
       "generic_id": "760"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "",
+      "database_name": "CrmDB",
+      "schema_name": "Force",
+      "table_name": "Account",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1457"
+    },
+    {
       "status": "no_wiki_db",
       "uc_table": "bi_db.bronze_customerfinancedb_customer_accountftds",
       "business_group": "bi_db",
@@ -1740,6 +1929,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1690"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "billing.bronze_customerfinancedb_customer_defaultaccount",
+      "business_group": "billing",
+      "database_name": "CustomerFinanceDB",
+      "schema_name": "Customer",
+      "table_name": "DefaultAccount",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/CustomerFinanceDB/Customer/DefaultAccount/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1943"
     },
     {
       "status": "no_wiki_db",
@@ -1908,6 +2111,34 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1406"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_db_logs_hedge_autodiffauditlogger",
+      "business_group": "dealing",
+      "database_name": "DB_Logs",
+      "schema_name": "Hedge",
+      "table_name": "AutoDiffAuditLogger",
+      "copy_strategy": "Append",
+      "frequency_minutes": "60",
+      "datalake_path": "Bronze/DB_Logs/Hedge/AutoDiffAuditLogger/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1944"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_db_logs_hedge_executionchangelog",
+      "business_group": "dealing",
+      "database_name": "DB_Logs",
+      "schema_name": "Hedge",
+      "table_name": "ExecutionChangeLog",
+      "copy_strategy": "Append",
+      "frequency_minutes": "60",
+      "datalake_path": "Bronze/DB_Logs/Hedge/ExecutionChangeLog/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1945"
     },
     {
       "status": "no_wiki_db",
@@ -2135,6 +2366,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_db_logs_history_ordersmarketfail",
+      "business_group": "BI_DB",
+      "database_name": "DB_Logs",
+      "schema_name": "History",
+      "table_name": "OrdersMarketFail",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/DB_Logs/History/OrdersMarketFail/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1165"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "trading.bronze_db_logs_trade_orderforopen",
       "business_group": "trading",
       "database_name": "DB_Logs",
@@ -2146,6 +2391,48 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1318"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_db_logs_31_5_history_closeexecutionplan",
+      "business_group": "general",
+      "database_name": "DB_Logs_31_5",
+      "schema_name": "History",
+      "table_name": "CloseExecutionPlan",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/DB_Logs_31_5/History/CloseExecutionPlan/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1313"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_db_logs_31_5_history_executedcloseorders",
+      "business_group": "general",
+      "database_name": "DB_Logs_31_5",
+      "schema_name": "History",
+      "table_name": "ExecutedCloseOrders",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/DB_Logs_31_5/History/ExecutedCloseOrders/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1314"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_db_logs_31_5_history_orderforclose",
+      "business_group": "general",
+      "database_name": "DB_Logs_31_5",
+      "schema_name": "History",
+      "table_name": "OrderForClose",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/DB_Logs_31_5/History/OrderForClose/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1315"
     },
     {
       "status": "no_wiki_db",
@@ -2188,6 +2475,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "92"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_dealinglogs_price_skewcost",
+      "business_group": "dealing",
+      "database_name": "DealingLogs",
+      "schema_name": "Price",
+      "table_name": "SkewCost",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/DealingLogs/Price/SkewCost/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "93"
     },
     {
       "status": "no_wiki_db",
@@ -2664,6 +2965,314 @@
       "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
       "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Dictionary/Tables/Dictionary.TribeScriptStatus.md",
       "generic_id": "525"
+    },
+    {
+      "status": "ready_case_match",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_862157",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsActivities_862157/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Views/Tribe.AccountsActivities_862157.md",
+      "generic_id": "545"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_accountactivity-833937",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_AccountActivity-833937",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsActivities_AccountActivity-833937/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsActivities_AccountActivity-833937.md",
+      "generic_id": "546"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_riskactions-322546",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_RiskActions-322546",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsActivities_RiskActions-322546/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsActivities_RiskActions-322546.md",
+      "generic_id": "547"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_securitychecks-471048",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_SecurityChecks-471048",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsActivities_SecurityChecks-471048/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsActivities_SecurityChecks-471048.md",
+      "generic_id": "548"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots-509416",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots-509416",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsSnapshots-509416/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsSnapshots-509416.md",
+      "generic_id": "549"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots_accountsnapshot-956050",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots_AccountSnapshot-956050",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsSnapshots_AccountSnapshot-956050/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsSnapshots_AccountSnapshot-956050.md",
+      "generic_id": "550"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots_bankaccount-393561",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots_BankAccount-393561",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsSnapshots_BankAccount-393561/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsSnapshots_BankAccount-393561.md",
+      "generic_id": "552"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots_bankaccounts-795870",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots_BankAccounts-795870",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/AccountsSnapshots_BankAccounts-795870/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsSnapshots_BankAccounts-795870.md",
+      "generic_id": "551"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes-837045",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes-837045",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/Authorizes-837045/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.Authorizes-837045.md",
+      "generic_id": "541"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes_authorize-312243",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes_Authorize-312243",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/Authorizes_Authorize-312243/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.Authorizes_Authorize-312243.md",
+      "generic_id": "542"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes_riskactions-796100",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes_RiskActions-796100",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/Authorizes_RiskActions-796100/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.Authorizes_RiskActions-796100.md",
+      "generic_id": "543"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes_securitychecks-30662",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes_SecurityChecks-30662",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/Authorizes_SecurityChecks-30662/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.Authorizes_SecurityChecks-30662.md",
+      "generic_id": "544"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots-890718",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/CardsSnapshots-890718/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots-890718.md",
+      "generic_id": "532"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_account-513255",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_Account-513255",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/CardsSnapshots_Account-513255/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots_Account-513255.md",
+      "generic_id": "534"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_accounts-350640",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_Accounts-350640",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/CardsSnapshots_Accounts-350640/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots_Accounts-350640.md",
+      "generic_id": "533"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_BankAccount-341626",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/CardsSnapshots_BankAccount-341626/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots_BankAccount-341626.md",
+      "generic_id": "536"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccounts-83854",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_BankAccounts-83854",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/CardsSnapshots_BankAccounts-83854/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots_BankAccounts-83854.md",
+      "generic_id": "535"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_cardsnapshot-140457",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_CardSnapshot-140457",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/CardsSnapshots_CardSnapshot-140457/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots_CardSnapshot-140457.md",
+      "generic_id": "531"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions-333243",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions-333243",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/SettlementsTransactions-333243/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.SettlementsTransactions-333243.md",
+      "generic_id": "537"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions_riskactions-236807",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions_RiskActions-236807",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/SettlementsTransactions_RiskActions-236807/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.SettlementsTransactions_RiskActions-236807.md",
+      "generic_id": "539"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions_securitychecks-426253",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions_SecurityChecks-426253",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/SettlementsTransactions_SecurityChecks-426253/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.SettlementsTransactions_SecurityChecks-426253.md",
+      "generic_id": "540"
+    },
+    {
+      "status": "ready",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239",
+      "business_group": "emoney",
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions_SettlementTransaction-637239",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/FiatDwhDB/Tribe/SettlementsTransactions_SettlementTransaction-637239/",
+      "wiki_root": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.SettlementsTransactions_SettlementTransaction-637239.md",
+      "generic_id": "538"
     },
     {
       "status": "ready",
@@ -3707,7 +4316,7 @@
       "business_group": "BI_DB",
       "database_name": "Fivetran",
       "schema_name": "dealing",
-      "table_name": "overnight_fees",
+      "table_name": "overnightfees",
       "copy_strategy": "Snapshot",
       "frequency_minutes": "1440",
       "datalake_path": "Bronze/Fivetran/dealing/overnight_fees/",
@@ -3798,6 +4407,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "59"
+    },
+    {
+      "status": "third_party",
+      "uc_table": "bi_db.bronze_fivetran_double_click_campaign_manager_v_media_campaign",
+      "business_group": "BI_DB",
+      "database_name": "Fivetran",
+      "schema_name": "double_click_campaign_manager",
+      "table_name": "V_media_campaign",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Fivetran/double_click_campaign_manager/V_media_campaign/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1270"
     },
     {
       "status": "third_party",
@@ -3996,20 +4619,6 @@
       "generic_id": "1500"
     },
     {
-      "status": "third_party",
-      "uc_table": "bi_db.bronze_fivetran_google_new_agg_v_google_kw_conv",
-      "business_group": "bi_db",
-      "database_name": "Fivetran",
-      "schema_name": "google_new_agg",
-      "table_name": "V_google_kw_conv",
-      "copy_strategy": "Override",
-      "frequency_minutes": "1440",
-      "datalake_path": "Bronze/Fivetran/google_new_agg/V_google_kw_conv/",
-      "wiki_root": "",
-      "wiki_path": "",
-      "generic_id": "1496"
-    },
-    {
       "status": "missing_fields",
       "uc_table": "",
       "business_group": "bi_db",
@@ -4019,6 +4628,20 @@
       "copy_strategy": "Override",
       "frequency_minutes": "1440",
       "datalake_path": "Bronze/Fivetran/google_new_agg/V_google_kw_con/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1496"
+    },
+    {
+      "status": "third_party",
+      "uc_table": "bi_db.bronze_fivetran_google_new_agg_v_google_kw_conv",
+      "business_group": "bi_db",
+      "database_name": "Fivetran",
+      "schema_name": "google_new_agg",
+      "table_name": "V_google_kw_conv",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Fivetran/google_new_agg/V_google_kw_conv/",
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1496"
@@ -4990,6 +5613,20 @@
       "generic_id": "1672"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "regtech",
+      "database_name": "Fivetran",
+      "schema_name": "google_sheets",
+      "table_name": "exposurebusiness_octomber_2025",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Fivetran/google_sheets/exposurebusiness_octomber_2025/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1668"
+    },
+    {
       "status": "third_party",
       "uc_table": "regtech.bronze_fivetran_google_sheets_exposurebusiness_sep_2026",
       "business_group": "regtech",
@@ -5394,6 +6031,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1420"
+    },
+    {
+      "status": "third_party",
+      "uc_table": "bi_db.bronze_fivetran_google_sheets_marex_mapping_table",
+      "business_group": "BI_DB",
+      "database_name": "Fivetran",
+      "schema_name": "google_sheets",
+      "table_name": "marex_mapping_table",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Fivetran/google_sheets/marex_mapping_table/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1154"
     },
     {
       "status": "third_party",
@@ -6797,6 +7448,20 @@
     },
     {
       "status": "missing_fields",
+      "uc_table": "compliance.bronze_kycanalyzer_clientriskprofile",
+      "business_group": "compliance",
+      "database_name": "KycAnalyzer",
+      "schema_name": "",
+      "table_name": "ClientRiskProfile",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/KycAnalyzer/ClientRiskProfile/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "448"
+    },
+    {
+      "status": "missing_fields",
       "uc_table": "compliance.bronze_kycanalyzer_clientriskprofilelog",
       "business_group": "compliance",
       "database_name": "KycAnalyzer",
@@ -6878,6 +7543,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "447"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_kycanalyzer_analyzer_suitability",
+      "business_group": "bi_db",
+      "database_name": "KycAnalyzer",
+      "schema_name": "Analyzer",
+      "table_name": "Suitability",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/KycAnalyzer/Analyzer/Suitability/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1601"
     },
     {
       "status": "no_wiki_db",
@@ -7119,6 +7798,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_marketmaker_exchangesdata_trades_archive_before_20231001",
+      "business_group": "dealing",
+      "database_name": "MarketMaker",
+      "schema_name": "ExchangesData",
+      "table_name": "Trades_Archive_Before_20231001",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketMaker/ExchangesData/Trades_Archive_Before_20231001/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1394"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "dealing.bronze_marketmaker_dbo_configurations",
       "business_group": "dealing",
       "database_name": "MarketMaker",
@@ -7175,6 +7868,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_marketmaker_dbo_hedgeorders_archive_before_20231001",
+      "business_group": "dealing",
+      "database_name": "MarketMaker",
+      "schema_name": "dbo",
+      "table_name": "HedgeOrders_Archive_Before_20231001",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketMaker/dbo/HedgeOrders_Archive_Before_20231001/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1396"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "dealing.bronze_marketmaker_dbo_hedgetrades",
       "business_group": "dealing",
       "database_name": "MarketMaker",
@@ -7186,6 +7893,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "398"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_marketmaker_dbo_hedgetrades_archive_before_20231001",
+      "business_group": "dealing",
+      "database_name": "MarketMaker",
+      "schema_name": "dbo",
+      "table_name": "HedgeTrades_Archive_Before_20231001",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketMaker/dbo/HedgeTrades_Archive_Before_20231001/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1395"
     },
     {
       "status": "no_wiki_db",
@@ -7245,6 +7966,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_marketmaker_dbo_targettrades",
+      "business_group": "dealing",
+      "database_name": "MarketMaker",
+      "schema_name": "dbo",
+      "table_name": "TargetTrades",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketMaker/dbo/TargetTrades/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "400"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "dealing.bronze_marketmaker_dbo_totallosses",
       "business_group": "dealing",
       "database_name": "MarketMaker",
@@ -7298,6 +8033,398 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1021"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_articlemovementtype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ArticleMovementType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/ArticleMovementType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1987"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_articletype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ArticleType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/ArticleType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1986"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_countries",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "Countries",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/Countries/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1993"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_dividendfrequencytype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "DividendFrequencyType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/DividendFrequencyType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1991"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_exchangeinfo",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ExchangeInfo",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/ExchangeInfo/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1995"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_experimentstatus",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ExperimentStatus",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/ExperimentStatus/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1996"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_instrumentreferencetype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "InstrumentReferenceType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/InstrumentReferenceType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1997"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_marketeventstatustype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "MarketEventStatusType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/MarketEventStatusType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1984"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_marketeventtype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "MarketEventType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/MarketEventType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1983"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_notificationstatus",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "NotificationStatus",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/NotificationStatus/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1985"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_ratechangeinterval",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "RateChangeInterval",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/RateChangeInterval/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1990"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_ratechangesize",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "RateChangeSize",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/RateChangeSize/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1989"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_ratechangetype",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "RateChangeType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/RateChangeType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1988"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_regulations",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "Regulations",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/Regulations/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1994"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_streakinterval",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "StreakInterval",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/Dictionary/StreakInterval/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1992"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_articleevents",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "ArticleEvents",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/ArticleEvents/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2010"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_currencies",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "Currencies",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/Currencies/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1998"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_dividendevents",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "DividendEvents",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/DividendEvents/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2009"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_earningreportevents",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "EarningReportEvents",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/EarningReportEvents/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2008"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_earningreporttemplates",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "EarningReportTemplates",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/EarningReportTemplates/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2004"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_instruments",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "Instruments",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/Instruments/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1999"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_ratechangetemplates",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "RateChangeTemplates",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/RateChangeTemplates/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2005"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_ratechangetriggerconfigurations",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "RateChangeTriggerConfigurations",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/RateChangeTriggerConfigurations/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2002"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_sendallconfigurations",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "SendAllConfigurations",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/SendAllConfigurations/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2000"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_streakevents",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "StreakEvents",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/StreakEvents/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2007"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_streaktemplates",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "StreakTemplates",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/StreakTemplates/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2003"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_streaktriggerconfigurations",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "StreakTriggerConfigurations",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/StreakTriggerConfigurations/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2001"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_templates",
+      "business_group": "bi_db",
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "Templates",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MarketNotifications/MarketNotifications/Templates/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2006"
     },
     {
       "status": "no_wiki_db",
@@ -7540,6 +8667,104 @@
     {
       "status": "missing_fields",
       "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "Flows",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/Flows/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1936"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_transactionstatusreasons",
+      "business_group": "billing",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "TransactionStatusReasons",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/TransactionStatusReasons/",
+      "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.TransactionStatusReasons.md",
+      "generic_id": "1938"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_transactionstatuses",
+      "business_group": "billing",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "TransactionStatuses",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/TransactionStatuses/",
+      "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.TransactionStatuses.md",
+      "generic_id": "1937"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "TransactionTypes",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/TransactionTypes/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1939"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_withdrawcancellationsources",
+      "business_group": "billing",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "WithdrawCancellationSources",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/WithdrawCancellationSources/",
+      "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.WithdrawCancellationSources.md",
+      "generic_id": "1940"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_withdrawstatusreasons",
+      "business_group": "billing",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "WithdrawStatusReasons",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/WithdrawStatusReasons/",
+      "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.WithdrawStatusReasons.md",
+      "generic_id": "1942"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_withdrawstatuses",
+      "business_group": "billing",
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "WithdrawStatuses",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/Dictionary/WithdrawStatuses/",
+      "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/Dictionary/Tables/Dictionary.WithdrawStatuses.md",
+      "generic_id": "1941"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
       "business_group": "BI_DB",
       "database_name": "MoneyBusDB",
       "schema_name": "MoneyBus",
@@ -7564,6 +8789,20 @@
       "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
       "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/MoneyBus/Tables/MoneyBus.Transactions.md",
       "generic_id": "1312"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_moneybusdb_moneybus_transferlimits",
+      "business_group": "billing",
+      "database_name": "MoneyBusDB",
+      "schema_name": "MoneyBus",
+      "table_name": "TransferLimits",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/MoneyBusDB/MoneyBus/TransferLimits/",
+      "wiki_root": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/PaymentsDBs/MoneyBusDB/Wiki/MoneyBus/Tables/MoneyBus.TransferLimits.md",
+      "generic_id": "1966"
     },
     {
       "status": "ready",
@@ -7987,6 +9226,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "experience.bronze_notificationdb_notifications_clienttime",
+      "business_group": "experience",
+      "database_name": "NotificationDB",
+      "schema_name": "Notifications",
+      "table_name": "ClientTime",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/NotificationDB/Notifications/ClientTime/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "567"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "experience.bronze_notificationdb_notifications_configlabellanguagenamescampaignids",
       "business_group": "experience",
       "database_name": "NotificationDB",
@@ -8295,6 +9548,48 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_opsdb_dbo_datalaketablestatus",
+      "business_group": "bi_db",
+      "database_name": "OpsDB",
+      "schema_name": "dbo",
+      "table_name": "DataLakeTableStatus",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/OpsDB/dbo/DataLakeTableStatus/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1969"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_opsdb_dbo_objectsstatus",
+      "business_group": "bi_db",
+      "database_name": "OpsDB",
+      "schema_name": "dbo",
+      "table_name": "ObjectsStatus",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/OpsDB/dbo/ObjectsStatus/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1970"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_opsdb_dbo_proceduredependencies",
+      "business_group": "bi_db",
+      "database_name": "OpsDB",
+      "schema_name": "dbo",
+      "table_name": "ProcedureDependencies",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/OpsDB/dbo/ProcedureDependencies/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1971"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "general.bronze_opsdb_dbo_sqlsources_config",
       "business_group": "general",
       "database_name": "OpsDB",
@@ -8533,6 +9828,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "dealing.bronze_pricelog_history_currencyprice_active",
+      "business_group": "dealing",
+      "database_name": "PriceLog",
+      "schema_name": "History",
+      "table_name": "CurrencyPrice_Active",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/PriceLog/History/CurrencyPrice_Active/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1424"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "dealing.bronze_pricelog_history_splitratio",
       "business_group": "dealing",
       "database_name": "PriceLog",
@@ -8544,6 +9853,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "478"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "general",
+      "database_name": "PriceLog_History_2009_2014",
+      "schema_name": "History",
+      "table_name": "CurrencyPrice",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/PriceLog_History_2009_2014/History/CurrencyPrice/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1290"
     },
     {
       "status": "no_wiki_db",
@@ -9177,6 +10500,34 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_rankings_marketevents_dwh_eventcustomers_part",
+      "business_group": "BI_DB",
+      "database_name": "Rankings",
+      "schema_name": "MarketEvents",
+      "table_name": "DWH_EventCustomers_Part",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Rankings/MarketEvents/DWH_EventCustomers_Part/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "592"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "experience.bronze_rankings_marketevents_eventcustomers",
+      "business_group": "experience",
+      "database_name": "Rankings",
+      "schema_name": "MarketEvents",
+      "table_name": "DWH_EventCustomers_Part",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Rankings/MarketEvents/EventCustomers/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "592"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "experience.bronze_rankings_marketevents_events",
       "business_group": "experience",
       "database_name": "Rankings",
@@ -9216,6 +10567,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "976"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "experience.bronze_rankings_marketevents_openedtrades",
+      "business_group": "experience",
+      "database_name": "Rankings",
+      "schema_name": "MarketEvents",
+      "table_name": "OpenedTrades",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Rankings/MarketEvents/OpenedTrades/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "599"
     },
     {
       "status": "no_wiki_db",
@@ -9314,6 +10679,34 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1281"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "RankingsDaily",
+      "schema_name": "History",
+      "table_name": "DailyGainAnon",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RankingsDaily/History/DailyGainAnon/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1400"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_rankingsdaily_for_archive_20251106_history_dailygainanon",
+      "business_group": "general",
+      "database_name": "RankingsDaily_For_Archive_20251106",
+      "schema_name": "History",
+      "table_name": "DailyGainAnon",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RankingsDaily_For_Archive_20251106/History/DailyGainAnon/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1790"
     },
     {
       "status": "missing_fields",
@@ -9834,6 +11227,62 @@
       "generic_id": "1376"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "BI_DB",
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "EMIR2_Report",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RegReportDB_Prod/dbo/EMIR2_Report/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1234"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "pii_data.bronze_regreportdb_prod_dbo_mifid2_clientdata__dsr_8521_22",
+      "business_group": "pii_data",
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "MIFID2_ClientData__DSR_8521_22",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RegReportDB_Prod/dbo/MIFID2_ClientData__DSR_8521_22/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1572"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "regtech.bronze_regreportdb_prod_dbo_mifid2_etoro_report_bkrep2025_onlybackreportingdata_dsr_8521",
+      "business_group": "regtech",
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "MIFID2_ETORO_Report_BKREP2025_OnlyBackreportingData_DSR_8521",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RegReportDB_Prod/dbo/MIFID2_ETORO_Report_BKREP2025_OnlyBackreportingData_DSR_8521/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1575"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "regtech.bronze_regreportdb_prod_dbo_mifid2_report_bkrep2025_onlybackreportingdata_dsr_8521",
+      "business_group": "regtech",
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "MIFID2_Report_BKREP2025_OnlyBackreportingData_DSR_8521",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RegReportDB_Prod/dbo/MIFID2_Report_BKREP2025_OnlyBackreportingData_DSR_8521/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1574"
+    },
+    {
       "status": "no_wiki_db",
       "uc_table": "pii_data.bronze_regreportdb_prod_dbo_npd_update_names_with_special_characters_fix_v4__dsr_8521",
       "business_group": "pii_data",
@@ -10002,6 +11451,20 @@
       "generic_id": "1468"
     },
     {
+      "status": "no_wiki_db",
+      "uc_table": "pii_data.bronze_regreportdb_prod_dbo_updatedconcatvaluesv2_dsr_8521",
+      "business_group": "pii_data",
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "UpdatedCONCATvaluesv2_DSR_8521",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RegReportDB_Prod/dbo/UpdatedCONCATvaluesv2_DSR_8521/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1589"
+    },
+    {
       "status": "missing_fields",
       "uc_table": "general.bronze_relationservice_audit",
       "business_group": "general",
@@ -10014,6 +11477,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1311"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_relationservice_aa_audit",
+      "business_group": "general",
+      "database_name": "RelationService",
+      "schema_name": "aa",
+      "table_name": "audit",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/RelationService/aa/audit/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1317"
     },
     {
       "status": "ready",
@@ -10296,6 +11773,20 @@
       "generic_id": "1704"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "Rivery",
+      "schema_name": "google_ad_perf_copy",
+      "table_name": "google_ad_perf_new",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Rivery/google_ad_perf/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1673"
+    },
+    {
       "status": "no_wiki_db",
       "uc_table": "general.bronze_sts_audit_stsaudit_adminoperations",
       "business_group": "general",
@@ -10322,6 +11813,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1224"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_sts_audit_backup_20240204_stsaudit_useroperations",
+      "business_group": "general",
+      "database_name": "STS_Audit_Backup_20240204",
+      "schema_name": "StsAudit",
+      "table_name": "UserOperations",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/STS_Audit_Backup_20240204/StsAudit/UserOperations/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1225"
     },
     {
       "status": "no_wiki_db",
@@ -10658,6 +12163,48 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "730"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_settingsdb_settingsdata_customerdata",
+      "business_group": "general",
+      "database_name": "SettingsDB",
+      "schema_name": "SettingsData",
+      "table_name": "CustomerData",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/SettingsDB/SettingsData/CustomerData/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1951"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_settingsdb_settingsdata_keytype",
+      "business_group": "general",
+      "database_name": "SettingsDB",
+      "schema_name": "SettingsData",
+      "table_name": "KeyType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/SettingsDB/SettingsData/KeyType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1950"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "general",
+      "database_name": "SettingsDB",
+      "schema_name": "SettingsData",
+      "table_name": "KeyType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/SettingsDB/SettingsData/KeyType//",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1950"
     },
     {
       "status": "ready",
@@ -11220,6 +12767,34 @@
       "generic_id": "1650"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "spaceship",
+      "database_name": "Spaceship",
+      "schema_name": "metabase",
+      "table_name": "super_unit_prices",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Spaceship/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1612"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "spaceship.bronze_spaceship_metabase_super_unit_prices",
+      "business_group": "spaceship",
+      "database_name": "Spaceship",
+      "schema_name": "metabase",
+      "table_name": "super_unit_prices",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Spaceship/metabase/super_unit_prices/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1612"
+    },
+    {
       "status": "no_wiki_db",
       "uc_table": "spaceship.bronze_spaceship_metabase_super_user_balances",
       "business_group": "spaceship",
@@ -11598,6 +13173,62 @@
       "generic_id": "873"
     },
     {
+      "status": "no_wiki_db",
+      "uc_table": "general.bronze_tradegain_ranking_gain",
+      "business_group": "general",
+      "database_name": "TradeGain",
+      "schema_name": "Ranking",
+      "table_name": "Gain",
+      "copy_strategy": "Append",
+      "frequency_minutes": "720",
+      "datalake_path": "Bronze/TradeGain/Ranking/Gain/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "612"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "trading.bronze_trading_trade_interestconsent",
+      "business_group": "trading",
+      "database_name": "Trading",
+      "schema_name": "Trade",
+      "table_name": "InterestConsent",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Trading/Trade/InterestConsent/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "44"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "trading.bronze_trading_trade_interestdaily",
+      "business_group": "trading",
+      "database_name": "Trading",
+      "schema_name": "Trade",
+      "table_name": "InterestDaily",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Trading/Trade/InterestDaily/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "43"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "trading.bronze_trading_trade_interestmonthly",
+      "business_group": "trading",
+      "database_name": "Trading",
+      "schema_name": "Trade",
+      "table_name": "InterestMonthly",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Trading/Trade/InterestMonthly/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "45"
+    },
+    {
       "status": "missing_fields",
       "uc_table": "bi_db.bronze_travelruledb_travelruletransactions",
       "business_group": "bi_db",
@@ -11610,6 +13241,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1906"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_tribereportdb_tribe_accountsactivities_862157",
+      "business_group": "bi_db",
+      "database_name": "TribeReportDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities-862157",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/TribeReportDB/Tribe/AccountsActivities-862157/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1455"
     },
     {
       "status": "ready",
@@ -11946,6 +13591,20 @@
       "wiki_root": "knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki",
       "wiki_path": "knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/apex/Tables/apex.OptionsReasoningFormQuestionsAnswers.md",
       "generic_id": "1774"
+    },
+    {
+      "status": "ready",
+      "uc_table": "bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreason",
+      "business_group": "bi_db",
+      "database_name": "USABroker",
+      "schema_name": "apex",
+      "table_name": "SketchInvestigationDoNotAppealReason",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/USABroker/apex/SketchInvestigationDoNotAppealReason/",
+      "wiki_root": "knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/apex/Tables/apex.SketchInvestigationDoNotAppealReason.md",
+      "generic_id": "1957"
     },
     {
       "status": "ready",
@@ -13097,6 +14756,20 @@
     },
     {
       "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_staking_stakingrewards",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Staking",
+      "table_name": "StakingRewards",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Staking/StakingRewards/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Staking/Tables/Staking.StakingRewards.md",
+      "generic_id": "682"
+    },
+    {
+      "status": "ready",
       "uc_table": "wallet.bronze_walletdb_staking_stakingstatuses",
       "business_group": "Wallet",
       "database_name": "WalletDB",
@@ -13178,6 +14851,48 @@
       "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
       "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.BlockchainCryptos.md",
       "generic_id": "662"
+    },
+    {
+      "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_wallet_conversionstatuses",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "ConversionStatuses",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Wallet/ConversionStatuses/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.ConversionStatuses.md",
+      "generic_id": "655"
+    },
+    {
+      "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_wallet_conversiontransactions",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "ConversionTransactions",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Wallet/ConversionTransactions/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.ConversionTransactions.md",
+      "generic_id": "656"
+    },
+    {
+      "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_wallet_conversions",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "Conversions",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Wallet/Conversions/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.Conversions.md",
+      "generic_id": "654"
     },
     {
       "status": "ready",
@@ -13290,6 +15005,48 @@
       "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
       "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.LimitationsDefinitions.md",
       "generic_id": "657"
+    },
+    {
+      "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_wallet_paymentstatuses",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "PaymentStatuses",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Wallet/PaymentStatuses/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.PaymentStatuses.md",
+      "generic_id": "712"
+    },
+    {
+      "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_wallet_paymenttransactions",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "PaymentTransactions",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Wallet/PaymentTransactions/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.PaymentTransactions.md",
+      "generic_id": "713"
+    },
+    {
+      "status": "ready",
+      "uc_table": "wallet.bronze_walletdb_wallet_payments",
+      "business_group": "Wallet",
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "Payments",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/WalletDB/Wallet/Payments/",
+      "wiki_root": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.Payments.md",
+      "generic_id": "711"
     },
     {
       "status": "ready",
@@ -13699,6 +15456,132 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_dailytask",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "DailyTask",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/cmrdb/dbo/DailyTask/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1956"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliation",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "ExternalReconciliation",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Cmrdb/dbo/ExternalReconciliation/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1875"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliationtotalpriority",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "ExternalReconciliationTotalPriority",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Cmrdb/dbo/ExternalReconciliationTotalPriority/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1876"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "FxRate",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Cmrdb/dbo/FxRate/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1852"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_irrowschema",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "IRRowSchema",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/cmrdb/dbo/IRRowSchema/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1961"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_irschema",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "IRSchema",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/cmrdb/dbo/IRSchema/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1959"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_irvalue",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "IRValue",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/cmrdb/dbo/IRValue/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1960"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_internalreconciliation",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "InternalReconciliation",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/cmrdb/dbo/InternalReconciliation/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1958"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.bronze_cmrdb_dbo_nopberegulation",
+      "business_group": "finance",
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "NOPBeRegulation",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/Cmrdb/dbo/NOPBeRegulation/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1874"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "pii_data.bronze_contactverification_phone_customer",
       "business_group": "pii_data",
       "database_name": "contactverification",
@@ -13738,6 +15621,76 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1848"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_databricks_postgres_public_chat_history",
+      "business_group": "bi_db",
+      "database_name": "databricks_postgres",
+      "schema_name": "public",
+      "table_name": "chat_history",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "240",
+      "datalake_path": "Bronze/databricks_postgres/public/chat_history/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2012"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_databricks_postgres_public_eilon_test",
+      "business_group": "bi_db",
+      "database_name": "databricks_postgres",
+      "schema_name": "public",
+      "table_name": "eilon_test",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/databricks_postgres/public/eilon_test/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2011"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_edocsdb_translation_translationrequests",
+      "business_group": "bi_db",
+      "database_name": "eDocsDB",
+      "schema_name": "Translation",
+      "table_name": "TranslationRequests",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/eDocsDB/Translation/TranslationRequests/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1926"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.bronze_edocsdb_translation_translations",
+      "business_group": "bi_db",
+      "database_name": "eDocsDB",
+      "schema_name": "Translation",
+      "table_name": "Translations",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/eDocsDB/Translation/Translations/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1925"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "eDocsDB",
+      "schema_name": "Verification",
+      "table_name": "Checks",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/eDocsDB/Verification/Checks/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1962"
     },
     {
       "status": "no_wiki_db",
@@ -14048,6 +16001,20 @@
       "generic_id": "1381"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "BI_DB",
+      "database_name": "etoro",
+      "schema_name": "BackOffice",
+      "table_name": "Withdraw",
+      "copy_strategy": "Override",
+      "frequency_minutes": "60",
+      "datalake_path": "Bronze/etoro/BackOffice/Withdraw/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1080"
+    },
+    {
       "status": "ready",
       "uc_table": "billing.bronze_etoro_backoffice_withdrawapproval",
       "business_group": "billing",
@@ -14063,6 +16030,48 @@
     },
     {
       "status": "ready",
+      "uc_table": "billing.bronze_etoro_billing_aftrouting",
+      "business_group": "billing",
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "AftRouting",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Billing/AftRouting/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.AftRouting.md",
+      "generic_id": "1964"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "BI_Cashout_State_Report",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Billing/BI_Cashout_State_Report/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1475"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_etoro_billing_badbin",
+      "business_group": "billing",
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "BadBin",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Billing/BadBin/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.BadBin.md",
+      "generic_id": "1954"
+    },
+    {
+      "status": "ready",
       "uc_table": "billing.bronze_etoro_billing_cashoutrollbacktracking",
       "business_group": "billing",
       "database_name": "etoro",
@@ -14074,6 +16083,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.CashoutRollbackTracking.md",
       "generic_id": "748"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_etoro_billing_conversionfee",
+      "business_group": "billing",
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "ConversionFee",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Billing/ConversionFee/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.ConversionFee.md",
+      "generic_id": "1975"
     },
     {
       "status": "ready",
@@ -14217,6 +16240,20 @@
     },
     {
       "status": "ready",
+      "uc_table": "billing.bronze_etoro_billing_limitedbins",
+      "business_group": "billing",
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "LimitedBins",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Billing/LimitedBins/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.LimitedBins.md",
+      "generic_id": "1953"
+    },
+    {
+      "status": "ready",
       "uc_table": "bi_db.bronze_etoro_billing_mapmerchantcodetomid",
       "business_group": "BI_DB",
       "database_name": "etoro",
@@ -14270,6 +16307,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.Redeem.md",
       "generic_id": "766"
+    },
+    {
+      "status": "ready",
+      "uc_table": "billing.bronze_etoro_billing_scheduledtaskstate",
+      "business_group": "billing",
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "ScheduledTaskState",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Billing/ScheduledTaskState/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.ScheduledTaskState.md",
+      "generic_id": "1974"
     },
     {
       "status": "ready",
@@ -14622,6 +16673,20 @@
       "generic_id": "1391"
     },
     {
+      "status": "no_wiki_file",
+      "uc_table": "general.bronze_etoro_customer_rafeligiblecustomers",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "Customer",
+      "table_name": "RafEligibleCustomers",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Customer/RafEligibleCustomers/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "",
+      "generic_id": "1401"
+    },
+    {
       "status": "ready",
       "uc_table": "general.bronze_etoro_customer_trackingid",
       "business_group": "general",
@@ -14720,6 +16785,20 @@
       "generic_id": "1098"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "BI_DB",
+      "database_name": "etoro",
+      "schema_name": "DWH",
+      "table_name": "BuildDWH_RiskMatrix_Hourly",
+      "copy_strategy": "Append",
+      "frequency_minutes": "60",
+      "datalake_path": "Bronze/etoro/DWH/BuildDWH_RiskMatrix_Hourly/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1159"
+    },
+    {
       "status": "no_wiki_file",
       "uc_table": "bi_db.bronze_etoro_dwh_builddwh_riskmatrix_v8",
       "business_group": "BI_DB",
@@ -14749,6 +16828,34 @@
     },
     {
       "status": "no_wiki_file",
+      "uc_table": "bi_db.bronze_etoro_dwh_historybackofficecustomer",
+      "business_group": "bi_db",
+      "database_name": "etoro",
+      "schema_name": "DWH",
+      "table_name": "HistoryBackOfficeCustomer",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/DWH/HistoryBackOfficeCustomer/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "",
+      "generic_id": "1946"
+    },
+    {
+      "status": "no_wiki_file",
+      "uc_table": "bi_db.bronze_etoro_dwh_historymirrorhourly",
+      "business_group": "BI_DB",
+      "database_name": "etoro",
+      "schema_name": "DWH",
+      "table_name": "HistoryMirrorHourly",
+      "copy_strategy": "Append",
+      "frequency_minutes": "60",
+      "datalake_path": "Bronze/etoro/DWH/HistoryMirrorHourly/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "",
+      "generic_id": "1237"
+    },
+    {
+      "status": "no_wiki_file",
       "uc_table": "general.bronze_etoro_dwh_historyorderforclose",
       "business_group": "general",
       "database_name": "etoro",
@@ -14774,6 +16881,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "",
       "generic_id": "1284"
+    },
+    {
+      "status": "no_wiki_file",
+      "uc_table": "experience.bronze_etoro_dwh_rafcustomers",
+      "business_group": "experience",
+      "database_name": "etoro",
+      "schema_name": "DWH",
+      "table_name": "RafCustomers",
+      "copy_strategy": "Override",
+      "frequency_minutes": "120",
+      "datalake_path": "Bronze/etoro/DWH/RafCustomers/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "",
+      "generic_id": "858"
     },
     {
       "status": "no_wiki_file",
@@ -16793,6 +18914,48 @@
     },
     {
       "status": "ready",
+      "uc_table": "general.bronze_etoro_dictionary_ordersentryactiontype",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "Dictionary",
+      "table_name": "OrdersEntryActionType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Dictionary/OrdersEntryActionType/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.OrdersEntryActionType.md",
+      "generic_id": "317"
+    },
+    {
+      "status": "ready",
+      "uc_table": "general.bronze_etoro_dictionary_ordersexitactiontype",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "Dictionary",
+      "table_name": "OrdersExitActionType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Dictionary/OrdersExitActionType/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.OrdersExitActionType.md",
+      "generic_id": "318"
+    },
+    {
+      "status": "ready",
+      "uc_table": "general.bronze_etoro_dictionary_ordersexitcloseactiontype",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "Dictionary",
+      "table_name": "OrdersExitCloseActionType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Dictionary/OrdersExitCloseActionType/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.OrdersExitCloseActionType.md",
+      "generic_id": "319"
+    },
+    {
+      "status": "ready",
       "uc_table": "general.bronze_etoro_dictionary_pcl_changetype",
       "business_group": "general",
       "database_name": "etoro",
@@ -18207,6 +20370,34 @@
     },
     {
       "status": "ready",
+      "uc_table": "dealing.bronze_etoro_hedge_supportedinstrumentsaccount",
+      "business_group": "dealing",
+      "database_name": "etoro",
+      "schema_name": "Hedge",
+      "table_name": "SupportedInstrumentsAccount",
+      "copy_strategy": "Override",
+      "frequency_minutes": "60",
+      "datalake_path": "Bronze/etoro/Hedge/SupportedInstrumentsAccount/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Tables/Hedge.SupportedInstrumentsAccount.md",
+      "generic_id": "1963"
+    },
+    {
+      "status": "ready_case_match",
+      "uc_table": "general.bronze_etoro_hedge_viewexecutionlog_isnull",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "Hedge",
+      "table_name": "ViewExecutionLog_isnull",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Hedge/ViewExecutionLog_isnull/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Hedge/Views/Hedge.ViewExecutionLog_isnull.md",
+      "generic_id": "1453"
+    },
+    {
+      "status": "ready",
       "uc_table": "general.bronze_etoro_history_audithistory",
       "business_group": "general",
       "database_name": "etoro",
@@ -18274,6 +20465,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.BlockedCustomerOperations.md",
       "generic_id": "896"
+    },
+    {
+      "status": "ready",
+      "uc_table": "general.bronze_etoro_history_ceplistcidmappings",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "CEPListCIDMappings",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/History/CEPListCIDMappings/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.CEPListCIDMappings.md",
+      "generic_id": "1052"
     },
     {
       "status": "ready",
@@ -18358,6 +20563,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.CES_ReloadExposures.md",
       "generic_id": "1252"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "BI_DB",
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "ClosePositionEndOfDay",
+      "copy_strategy": "Snapshot",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/History/ClosePositionEndOfDay/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1139"
     },
     {
       "status": "ready",
@@ -18837,6 +21056,34 @@
     },
     {
       "status": "ready",
+      "uc_table": "general.bronze_etoro_history_ordersentrytbl",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "OrdersEntryTbl",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/History/OrdersEntryTbl/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.OrdersEntryTbl.md",
+      "generic_id": "782"
+    },
+    {
+      "status": "ready",
+      "uc_table": "general.bronze_etoro_history_ordersexittbl",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "OrdersExitTbl",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/History/OrdersExitTbl/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.OrdersExitTbl.md",
+      "generic_id": "783"
+    },
+    {
+      "status": "ready",
       "uc_table": "dealing.bronze_etoro_history_portfolioconversionconfigurations",
       "business_group": "dealing",
       "database_name": "etoro",
@@ -18862,6 +21109,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Views/History.PositionChangeLog.md",
       "generic_id": "131"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "regtech",
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "PositionForExternalUse",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/History/PositionForExternalUse/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1965"
     },
     {
       "status": "ready",
@@ -19256,6 +21517,20 @@
       "generic_id": "895"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "trading",
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "Dim_Product",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Trade/Dim_Product/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1369"
+    },
+    {
       "status": "ready",
       "uc_table": "trading.bronze_etoro_trade_exchangeinstrumentfeedefinition",
       "business_group": "trading",
@@ -19282,6 +21557,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.FeatureThresholdValues.md",
       "generic_id": "774"
+    },
+    {
+      "status": "ready",
+      "uc_table": "bi_db.bronze_etoro_trade_fund",
+      "business_group": "bi_db",
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "Fund",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Trade/Fund/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.Fund.md",
+      "generic_id": "1952"
     },
     {
       "status": "ready",
@@ -19564,6 +21853,20 @@
       "generic_id": "504"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "BI_DB",
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "OpenPositionEndOfDay",
+      "copy_strategy": "Snapshot",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Trade/OpenPositionEndOfDay/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1140"
+    },
+    {
       "status": "ready",
       "uc_table": "dealing.bronze_etoro_trade_orders",
       "business_group": "dealing",
@@ -19576,6 +21879,34 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.Orders.md",
       "generic_id": "1426"
+    },
+    {
+      "status": "ready",
+      "uc_table": "trading.bronze_etoro_trade_ordersentrytbl",
+      "business_group": "trading",
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "OrdersEntryTbl",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Trade/OrdersEntryTbl/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.OrdersEntryTbl.md",
+      "generic_id": "779"
+    },
+    {
+      "status": "ready",
+      "uc_table": "trading.bronze_etoro_trade_ordersexittbl",
+      "business_group": "trading",
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "OrdersExitTbl",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Trade/OrdersExitTbl/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.OrdersExitTbl.md",
+      "generic_id": "778"
     },
     {
       "status": "ready_case_match",
@@ -19632,6 +21963,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.PositionsHedgeServerChangeLog.md",
       "generic_id": "444"
+    },
+    {
+      "status": "no_wiki_file",
+      "uc_table": "trading.bronze_etoro_trade_positionshedgeserverchangelog_int_2021",
+      "business_group": "trading",
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "PositionsHedgeServerChangeLog_INT_2021",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/Trade/PositionsHedgeServerChangeLog_INT_2021/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "",
+      "generic_id": "1532"
     },
     {
       "status": "ready",
@@ -19761,6 +22106,20 @@
     },
     {
       "status": "no_wiki_file",
+      "uc_table": "general.bronze_etoro_dbo_syn_etorogeneralcustomersettings",
+      "business_group": "general",
+      "database_name": "etoro",
+      "schema_name": "dbo",
+      "table_name": "SYN_etoroGeneralCustomerSettings",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/dbo/SYN_etoroGeneralCustomerSettings/",
+      "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
+      "wiki_path": "",
+      "generic_id": "443"
+    },
+    {
+      "status": "no_wiki_file",
       "uc_table": "bi_db.bronze_etoro_dbo_syn_etorogeneral_dwh_customersettings",
       "business_group": "BI_DB",
       "database_name": "etoro",
@@ -19772,6 +22131,20 @@
       "wiki_root": "knowledge/ProdSchemas/DB_Schema/etoro/Wiki",
       "wiki_path": "",
       "generic_id": "1138"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "BI_DB",
+      "database_name": "etoro",
+      "schema_name": "dbo",
+      "table_name": "ScoresDaily",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro/dbo/ScoresDaily/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1200"
     },
     {
       "status": "no_wiki_db",
@@ -19828,6 +22201,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1158"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "billing.bronze_etoro_archive_billing_scheduledtaskstate",
+      "business_group": "billing",
+      "database_name": "etoro_Archive",
+      "schema_name": "Billing",
+      "table_name": "ScheduledTaskState",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/etoro_Archive/Billing/ScheduledTaskState/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1978"
     },
     {
       "status": "ready",
@@ -19898,6 +22285,20 @@
       "wiki_root": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki",
       "wiki_path": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki/AffiliateCommission/Views/AffiliateCommission.ClosedPositionVW.md",
       "generic_id": "936"
+    },
+    {
+      "status": "ready",
+      "uc_table": "experience.bronze_fiktivo_affiliatecommission_creditaccountmapping",
+      "business_group": "experience",
+      "database_name": "fiktivo",
+      "schema_name": "AffiliateCommission",
+      "table_name": "CreditAccountMapping",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/fiktivo/AffiliateCommission/CreditAccountMapping/",
+      "wiki_root": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki/AffiliateCommission/Tables/AffiliateCommission.CreditAccountMapping.md",
+      "generic_id": "1979"
     },
     {
       "status": "ready_case_match",
@@ -19998,6 +22399,20 @@
       "generic_id": "932"
     },
     {
+      "status": "ready",
+      "uc_table": "experience.bronze_fiktivo_affiliatecommission_registrationmetadata",
+      "business_group": "experience",
+      "database_name": "fiktivo",
+      "schema_name": "AffiliateCommission",
+      "table_name": "RegistrationMetaData",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/fiktivo/AffiliateCommission/RegistrationMetaData/",
+      "wiki_root": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki/AffiliateCommission/Tables/AffiliateCommission.RegistrationMetaData.md",
+      "generic_id": "1980"
+    },
+    {
       "status": "ready_case_match",
       "uc_table": "bi_db.bronze_fiktivo_affiliatecommission_registration",
       "business_group": "BI_DB",
@@ -20066,6 +22481,20 @@
       "wiki_root": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki",
       "wiki_path": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki/Dictionary/Tables/Dictionary.ChangedSections.md",
       "generic_id": "1342"
+    },
+    {
+      "status": "ready",
+      "uc_table": "experience.bronze_fiktivo_dictionary_marketingregion",
+      "business_group": "experience",
+      "database_name": "fiktivo",
+      "schema_name": "Dictionary",
+      "table_name": "MarketingRegion",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/fiktivo/Dictionary/MarketingRegion/",
+      "wiki_root": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki",
+      "wiki_path": "knowledge/ProdSchemas/ExperianceDBs/fiktivo/Wiki/Dictionary/Tables/Dictionary.MarketingRegion.md",
+      "generic_id": "1967"
     },
     {
       "status": "ready",
@@ -20488,6 +22917,34 @@
       "generic_id": "1863"
     },
     {
+      "status": "missing_fields",
+      "uc_table": "bi_db.bronze_navigation__navigation",
+      "business_group": "BI_DB",
+      "database_name": "navigation",
+      "schema_name": "",
+      "table_name": "navigation",
+      "copy_strategy": "Override",
+      "frequency_minutes": "90",
+      "datalake_path": "Bronze/navigation//navigation/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "836"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "bi_db.bronze_navigation_navigation",
+      "business_group": "bi_db",
+      "database_name": "navigation",
+      "schema_name": "",
+      "table_name": "navigation",
+      "copy_strategy": "Override",
+      "frequency_minutes": "90",
+      "datalake_path": "Bronze/navigation/navigation/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "836"
+    },
+    {
       "status": "no_wiki_db",
       "uc_table": "finance.bronze_prod_psp_data_sql_we_dbo_accountsilver",
       "business_group": "finance",
@@ -20570,6 +23027,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1511"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "experience.bronze_rafcompensations_dictionary_rafmodeltype",
+      "business_group": "experience",
+      "database_name": "rafcompensations",
+      "schema_name": "Dictionary",
+      "table_name": "RafModelType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Bronze/rafcompensations/Dictionary/RafModelType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1968"
     },
     {
       "status": "no_wiki_db",
@@ -21049,6 +23520,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dcm_dashboard",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_DCM_Dashboard",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_DCM_Dashboard/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1949"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level",
       "business_group": "BI_DB",
       "database_name": "sql_dp_prod_we",
@@ -21130,6 +23615,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1486"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_DDR_Fact_PnL",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_DDR_Fact_PnL/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1982"
     },
     {
       "status": "no_wiki_db",
@@ -21385,6 +23884,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025",
+      "business_group": "finance",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_Finance_Non_US_Settlement_New_2025",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_Finance_Non_US_Settlement_New_2025/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1927"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_etoro_vs_positions",
       "business_group": "bi_db",
       "database_name": "sql_dp_prod_we",
@@ -21410,6 +23923,34 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1282"
+    },
+    {
+      "status": "missing_fields",
+      "uc_table": "",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_ICF_Report",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_ICF_Report/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1517"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ifrs15_daily_balance",
+      "business_group": "finance",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_IFRS15_Daily_Balance",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_IFRS15_Daily_Balance/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1928"
     },
     {
       "status": "no_wiki_db",
@@ -21494,6 +24035,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1347"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_MarketingCloudDaily",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_MarketingCloudDaily/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1955"
     },
     {
       "status": "no_wiki_db",
@@ -21748,6 +24303,20 @@
       "generic_id": "1725"
     },
     {
+      "status": "no_wiki_db",
+      "uc_table": "finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_qmmf_report",
+      "business_group": "finance",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "BI_DB_QMMF_Report",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/BI_DB_QMMF_Report/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1921"
+    },
+    {
       "status": "missing_fields",
       "uc_table": "",
       "business_group": "bi_db",
@@ -21945,6 +24514,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_from_synapse_emoneyclientbalance_to_generic_20260216",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
+      "table_name": "From_Synapse_EmoneyClientBalance_To_Generic_20260216",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/BI_DB_dbo/From_Synapse_EmoneyClientBalance_To_Generic_20260216/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "2013"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits",
       "business_group": "BI_DB",
       "database_name": "sql_dp_prod_we",
@@ -22068,6 +24651,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "997"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "general.gold_sql_dp_prod_we_de_dbo_sp_tangani",
+      "business_group": "general",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DE_dbo",
+      "table_name": "SP_Tangani",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/DE_dbo/SP_Tangani/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1024"
     },
     {
       "status": "no_wiki_db",
@@ -22320,6 +24917,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "148"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contacttype",
+      "business_group": "DWH",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DWH_dbo",
+      "table_name": "Dim_ContactType",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/DWH_dbo/Dim_ContactType/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "149"
     },
     {
       "status": "no_wiki_db",
@@ -22644,8 +25255,8 @@
       "generic_id": "633"
     },
     {
-      "status": "no_wiki_db",
-      "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_snapshot",
+      "status": "missing_fields",
+      "uc_table": "",
       "business_group": "bi_db",
       "database_name": "sql_dp_prod_we",
       "schema_name": "DWH_dbo",
@@ -23218,8 +25829,8 @@
       "generic_id": "415"
     },
     {
-      "status": "missing_fields",
-      "uc_table": "",
+      "status": "no_wiki_db",
+      "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost",
       "business_group": "dwh",
       "database_name": "sql_dp_prod_we",
       "schema_name": "DWH_dbo",
@@ -23258,6 +25869,48 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "459"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_dwh_dbo_v_fact_customeraction_for_generic",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DWH_dbo",
+      "table_name": "V_Fact_CustomerAction_for_generic",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/DWH_dbo/V_Fact_CustomerAction_for_generic/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1981"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer",
+      "business_group": "pii_data",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DWH_dbo",
+      "table_name": "V_Fact_SnapshotCustomer",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/DWH_dbo/V_Fact_SnapshotCustomer/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "417"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_masked",
+      "business_group": "dwh",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DWH_dbo",
+      "table_name": "V_Fact_SnapshotCustomer",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/DWH_dbo/V_Fact_SnapshotCustomer_masked/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "417"
     },
     {
       "status": "no_wiki_db",
@@ -23401,6 +26054,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost",
+      "business_group": "dealing",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "Dealing_dbo",
+      "table_name": "Dealing_Boundary_Cost",
+      "copy_strategy": "Append",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Boundary_Cost/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "628"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
       "business_group": "dealing",
       "database_name": "sql_dp_prod_we",
@@ -23468,6 +26135,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1913"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon",
+      "business_group": "BI_DB",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "Dealing_dbo",
+      "table_name": "Dealing_Duco_EODRecon",
+      "copy_strategy": "Merge",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Duco_EODRecon/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1277"
     },
     {
       "status": "no_wiki_db",
@@ -23653,6 +26334,48 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_dailypool",
+      "business_group": "finance",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "Dealing_dbo",
+      "table_name": "Dealing_Staking_DailyPool",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Staking_DailyPool/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1929"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_optedout",
+      "business_group": "finance",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "Dealing_dbo",
+      "table_name": "Dealing_Staking_OptedOut",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Staking_OptedOut/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1930"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters",
+      "business_group": "finance",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "Dealing_dbo",
+      "table_name": "Dealing_Staking_Parameters",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/Dealing_dbo/Dealing_Staking_Parameters/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1931"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results",
       "business_group": "bi_db",
       "database_name": "sql_dp_prod_we",
@@ -23765,6 +26488,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "EXW_dbo",
+      "table_name": "EXW_C2P_E2E",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/EXW_dbo/EXW_C2P_E2E/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1932"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_compensationclosingcountries",
       "business_group": "BI_DB",
       "database_name": "sql_dp_prod_we",
@@ -23779,6 +26516,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "EXW_dbo",
+      "table_name": "EXW_DimUser",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/EXW_dbo/EXW_DimUser/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1923"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_ethfeesent_blockchain",
       "business_group": "bi_db",
       "database_name": "sql_dp_prod_we",
@@ -23790,6 +26541,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1912"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "EXW_dbo",
+      "table_name": "EXW_FactTransactions",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/EXW_dbo/EXW_FactTransactions/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1922"
     },
     {
       "status": "no_wiki_db",
@@ -23820,20 +26585,6 @@
       "generic_id": "1911"
     },
     {
-      "status": "missing_fields",
-      "uc_table": "",
-      "business_group": "wallet",
-      "database_name": "sql_dp_prod_we",
-      "schema_name": "EXW_dbo",
-      "table_name": "EXW_RedeemReconciliation",
-      "copy_strategy": "Override",
-      "frequency_minutes": "1440",
-      "datalake_path": "Gold/sql_dp_prod_we/EXW_dbo/EXW_RedeemReconciliation/",
-      "wiki_root": "",
-      "wiki_path": "",
-      "generic_id": "1799"
-    },
-    {
       "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_usersettingswalletallowance",
       "business_group": "BI_DB",
@@ -23849,6 +26600,20 @@
     },
     {
       "status": "no_wiki_db",
+      "uc_table": "wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation",
+      "business_group": "wallet",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "EXW_dbo",
+      "table_name": "EXW_V_RedeemReconciliation",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/EXW_dbo/EXW_V_RedeemReconciliation/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1799"
+    },
+    {
+      "status": "no_wiki_db",
       "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity",
       "business_group": "bi_db",
       "database_name": "sql_dp_prod_we",
@@ -23860,6 +26625,20 @@
       "wiki_root": "",
       "wiki_path": "",
       "generic_id": "1570"
+    },
+    {
+      "status": "no_wiki_db",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory",
+      "business_group": "bi_db",
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "EXW_dbo",
+      "table_name": "EXW_WalletInventory",
+      "copy_strategy": "Override",
+      "frequency_minutes": "1440",
+      "datalake_path": "Gold/sql_dp_prod_we/EXW_dbo/EXW_WalletInventory/",
+      "wiki_root": "",
+      "wiki_path": "",
+      "generic_id": "1933"
     },
     {
       "status": "no_wiki_db",

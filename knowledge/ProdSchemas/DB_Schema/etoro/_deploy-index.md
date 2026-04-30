@@ -3,9 +3,9 @@
 ## bronze: etoro
 
 db_key: DB_Schema/etoro
-total_deployable: 390
-generated: 355
-failed: 35
+total_deployable: 406
+generated: 369
+failed: 37
 deployed: 0
 last_generated: "2026-04-30"
 source_tool: tools/uc_bronze/generate_bronze_alters.py
@@ -14,41 +14,6 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 
 | Object | UC Target | Status |
 |--------|-----------|--------|
-| [Billing.CustomerToFunding](Wiki/Billing/Tables/Billing.CustomerToFunding.md) | `main.billing.bronze_etoro_billing_customertofunding` | Failed |
-| [Billing.MerchantAccountRouting](Wiki/Billing/Tables/Billing.MerchantAccountRouting.md) | `main.bi_db.bronze_etoro_billing_merchantaccountrouting` | Failed |
-| [Billing.ProtocolMIDSettings](Wiki/Billing/Tables/Billing.ProtocolMIDSettings.md) | `main.billing.bronze_etoro_billing_protocolmidsettings` | Failed |
-| [Dictionary.DowntimeCloseStatus](Wiki/Dictionary/Tables/Dictionary.DowntimeCloseStatus.md) | `main.general.bronze_etoro_dictionary_downtimeclosestatus` | Failed |
-| [Dictionary.DowntimeSeverity](Wiki/Dictionary/Tables/Dictionary.DowntimeSeverity.md) | `main.general.bronze_etoro_dictionary_downtimeseverity` | Failed |
-| [Dictionary.DowntimeStatus](Wiki/Dictionary/Tables/Dictionary.DowntimeStatus.md) | `main.general.bronze_etoro_dictionary_downtimestatus` | Failed |
-| [Dictionary.DowntimeSystem](Wiki/Dictionary/Tables/Dictionary.DowntimeSystem.md) | `main.general.bronze_etoro_dictionary_downtimesystem` | Failed |
-| [Dictionary.DowntimeSystemToDowntype](Wiki/Dictionary/Tables/Dictionary.DowntimeSystemToDowntype.md) | `main.general.bronze_etoro_dictionary_downtimesystemtodowntype` | Failed |
-| [Dictionary.Downtype](Wiki/Dictionary/Tables/Dictionary.Downtype.md) | `main.general.bronze_etoro_dictionary_downtype` | Failed |
-| [Dictionary.Duration](Wiki/Dictionary/Tables/Dictionary.Duration.md) | `main.general.bronze_etoro_dictionary_duration` | Failed |
-| [Dictionary.EIDStatus](Wiki/Dictionary/Tables/Dictionary.EIDStatus.md) | `main.general.bronze_etoro_dictionary_eidstatus` | Failed |
-| [Dictionary.ElectronicIdentityCheck](Wiki/Dictionary/Tables/Dictionary.ElectronicIdentityCheck.md) | `main.general.bronze_etoro_dictionary_electronicidentitycheck` | Failed |
-| [Dictionary.ElectronicIdentityProvider](Wiki/Dictionary/Tables/Dictionary.ElectronicIdentityProvider.md) | `main.general.bronze_etoro_dictionary_electronicidentityprovider` | Failed |
-| [Dictionary.ErrorMessage](Wiki/Dictionary/Tables/Dictionary.ErrorMessage.md) | `main.general.bronze_etoro_dictionary_errormessage` | Failed |
-| [Dictionary.EventType](Wiki/Dictionary/Tables/Dictionary.EventType.md) | `main.general.bronze_etoro_dictionary_eventtype` | Failed |
-| [Dictionary.ExchangeInfo](Wiki/Dictionary/Tables/Dictionary.ExchangeInfo.md) | `main.general.bronze_etoro_dictionary_exchangeinfo` | Failed |
-| [Dictionary.ExecuteEntryMethod](Wiki/Dictionary/Tables/Dictionary.ExecuteEntryMethod.md) | `main.general.bronze_etoro_dictionary_executeentrymethod` | Failed |
-| [Dictionary.FailType](Wiki/Dictionary/Tables/Dictionary.FailType.md) | `main.general.bronze_etoro_dictionary_failtype` | Failed |
-| [Dictionary.Roles](Wiki/Dictionary/Tables/Dictionary.Roles.md) | `main.general.bronze_etoro_dictionary_roles` | Failed |
-| [Dictionary.SalesStatus](Wiki/Dictionary/Tables/Dictionary.SalesStatus.md) | `main.general.bronze_etoro_dictionary_salesstatus` | Failed |
-| [Dictionary.ScheduledJobStatus](Wiki/Dictionary/Tables/Dictionary.ScheduledJobStatus.md) | `main.general.bronze_etoro_dictionary_scheduledjobstatus` | Failed |
-| [Dictionary.ScheduledJobType](Wiki/Dictionary/Tables/Dictionary.ScheduledJobType.md) | `main.general.bronze_etoro_dictionary_scheduledjobtype` | Failed |
-| [Dictionary.ScheduledTaskName](Wiki/Dictionary/Tables/Dictionary.ScheduledTaskName.md) | `main.general.bronze_etoro_dictionary_scheduledtaskname` | Failed |
-| [Dictionary.ScheduledTaskState](Wiki/Dictionary/Tables/Dictionary.ScheduledTaskState.md) | `main.general.bronze_etoro_dictionary_scheduledtaskstate` | Failed |
-| [Dictionary.ServerType](Wiki/Dictionary/Tables/Dictionary.ServerType.md) | `main.general.bronze_etoro_dictionary_servertype` | Failed |
-| [Dictionary.SeverityType](Wiki/Dictionary/Tables/Dictionary.SeverityType.md) | `main.general.bronze_etoro_dictionary_severitytype` | Failed |
-| [Dictionary.SpreadType](Wiki/Dictionary/Tables/Dictionary.SpreadType.md) | `main.general.bronze_etoro_dictionary_spreadtype` | Failed |
-| [Dictionary.State](Wiki/Dictionary/Tables/Dictionary.State.md) | `main.general.bronze_etoro_dictionary_state` | Failed |
-| [Dictionary.StockError](Wiki/Dictionary/Tables/Dictionary.StockError.md) | `main.general.bronze_etoro_dictionary_stockerror` | Failed |
-| [Dictionary.StockHedgeSource](Wiki/Dictionary/Tables/Dictionary.StockHedgeSource.md) | `main.general.bronze_etoro_dictionary_stockhedgesource` | Failed |
-| [Hedge.GetHedgeServerAccountMapping](Wiki/Hedge/Views/Hedge.GetHedgeServerAccountMapping.md) | `main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping` | Failed |
-| [History.PositionChangeLog](Wiki/History/Views/History.PositionChangeLog.md) | `main.trading.bronze_etoro_history_positionchangelog` | Failed |
-| [History.Position_DataFactory](Wiki/History/Views/History.Position_DataFactory.md) | `main.trading.bronze_etoro_history_position_datafactory` | Failed |
-| [Trade.InstrumentMetaData_Daily](Wiki/Trade/Views/Trade.InstrumentMetaData_Daily.md) | `main.trading.bronze_etoro_trade_instrumentmetadata_daily` | Failed |
-| [Trade.ManageBSL](Wiki/Trade/Tables/Trade.ManageBSL.md) | `main.general.bronze_etoro_trade_managebsl` | Failed |
 | [BackOffice.BonusType](Wiki/BackOffice/Tables/BackOffice.BonusType.md) | `main.bi_db.bronze_etoro_backoffice_bonustype` | Generated |
 | [BackOffice.CompensationReason](Wiki/BackOffice/Tables/BackOffice.CompensationReason.md) | `main.billing.bronze_etoro_backoffice_compensationreason` | Generated |
 | [BackOffice.Customer](Wiki/BackOffice/Tables/BackOffice.Customer.md) | `main.general.bronze_etoro_backoffice_customer` | Generated |
@@ -64,7 +29,10 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [BackOffice.RegulationChangeLog](Wiki/BackOffice/Tables/BackOffice.RegulationChangeLog.md) | `main.finance.bronze_etoro_backoffice_regulationchangelog` | Generated |
 | [BackOffice.TncDocument](Wiki/BackOffice/Tables/BackOffice.TncDocument.md) | `main.bi_db.bronze_etoro_backoffice_tncdocument` | Generated |
 | [BackOffice.WithdrawApproval](Wiki/BackOffice/Tables/BackOffice.WithdrawApproval.md) | `main.billing.bronze_etoro_backoffice_withdrawapproval` | Generated |
+| [Billing.AftRouting](Wiki/Billing/Tables/Billing.AftRouting.md) | `main.billing.bronze_etoro_billing_aftrouting` | Generated |
+| [Billing.BadBin](Wiki/Billing/Tables/Billing.BadBin.md) | `main.billing.bronze_etoro_billing_badbin` | Generated |
 | [Billing.CashoutRollbackTracking](Wiki/Billing/Tables/Billing.CashoutRollbackTracking.md) | `main.billing.bronze_etoro_billing_cashoutrollbacktracking` | Generated |
+| [Billing.ConversionFee](Wiki/Billing/Tables/Billing.ConversionFee.md) | `main.billing.bronze_etoro_billing_conversionfee` | Generated |
 | [Billing.ConversionFeeOverride](Wiki/Billing/Tables/Billing.ConversionFeeOverride.md) | `main.billing.bronze_etoro_billing_conversionfeeoverride` | Generated |
 | [Billing.CurrencySettings](Wiki/Billing/Tables/Billing.CurrencySettings.md) | `main.bi_db.bronze_etoro_billing_currencysettings` | Generated |
 | [Billing.Deposit](Wiki/Billing/Tables/Billing.Deposit.md) | `main.billing.bronze_etoro_billing_deposit` | Generated |
@@ -74,6 +42,7 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Billing.FinancialDiscrepancy](Wiki/Billing/Tables/Billing.FinancialDiscrepancy.md) | `main.finance.bronze_etoro_billing_financialdiscrepancy` | Generated |
 | [Billing.FundingPaymentDetailsForWithdraw](Wiki/Billing/Views/Billing.FundingPaymentDetailsForWithdraw.md) | `main.billing.bronze_etoro_billing_fundingpaymentdetailsforwithdraw` | Generated |
 | [Billing.Funding_DataFactory](Wiki/Billing/Views/Billing.Funding_DataFactory.md) | `main.billing.bronze_etoro_billing_funding_datafactory` | Generated |
+| [Billing.LimitedBins](Wiki/Billing/Tables/Billing.LimitedBins.md) | `main.billing.bronze_etoro_billing_limitedbins` | Generated |
 | [Billing.MapMerchantCodeToMid](Wiki/Billing/Tables/Billing.MapMerchantCodeToMid.md) | `main.bi_db.bronze_etoro_billing_mapmerchantcodetomid` | Generated |
 | [Billing.Redeem](Wiki/Billing/Tables/Billing.Redeem.md) | `main.billing.bronze_etoro_billing_redeem` | Generated |
 | [Billing.Withdraw](Wiki/Billing/Tables/Billing.Withdraw.md) | `main.billing.bronze_etoro_billing_withdraw` | Generated |
@@ -216,6 +185,9 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Dictionary.OptOutReason](Wiki/Dictionary/Tables/Dictionary.OptOutReason.md) | `main.general.bronze_etoro_dictionary_optoutreason` | Generated |
 | [Dictionary.OrderType](Wiki/Dictionary/Tables/Dictionary.OrderType.md) | `main.general.bronze_etoro_dictionary_ordertype` | Generated |
 | [Dictionary.OrdersActionType](Wiki/Dictionary/Tables/Dictionary.OrdersActionType.md) | `main.general.bronze_etoro_dictionary_ordersactiontype` | Generated |
+| [Dictionary.OrdersEntryActionType](Wiki/Dictionary/Tables/Dictionary.OrdersEntryActionType.md) | `main.general.bronze_etoro_dictionary_ordersentryactiontype` | Generated |
+| [Dictionary.OrdersExitActionType](Wiki/Dictionary/Tables/Dictionary.OrdersExitActionType.md) | `main.general.bronze_etoro_dictionary_ordersexitactiontype` | Generated |
+| [Dictionary.OrdersExitCloseActionType](Wiki/Dictionary/Tables/Dictionary.OrdersExitCloseActionType.md) | `main.general.bronze_etoro_dictionary_ordersexitcloseactiontype` | Generated |
 | [Dictionary.PCL_ChangeType](Wiki/Dictionary/Tables/Dictionary.PCL_ChangeType.md) | `main.general.bronze_etoro_dictionary_pcl_changetype` | Generated |
 | [Dictionary.PaymentActionStatus](Wiki/Dictionary/Tables/Dictionary.PaymentActionStatus.md) | `main.general.bronze_etoro_dictionary_paymentactionstatus` | Generated |
 | [Dictionary.PaymentActionType](Wiki/Dictionary/Tables/Dictionary.PaymentActionType.md) | `main.general.bronze_etoro_dictionary_paymentactiontype` | Generated |
@@ -303,11 +275,13 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Hedge.PortfolioConversionConfigurations](Wiki/Hedge/Tables/Hedge.PortfolioConversionConfigurations.md) | `main.dealing.bronze_etoro_hedge_portfolioconversionconfigurations` | Generated |
 | [Hedge.ProviderInstrumentConfiguration](Wiki/Hedge/Tables/Hedge.ProviderInstrumentConfiguration.md) | `main.trading.bronze_etoro_hedge_providerinstrumentconfiguration` | Generated |
 | [Hedge.ProviderUnitConversionRatio](Wiki/Hedge/Tables/Hedge.ProviderUnitConversionRatio.md) | `main.bi_db.bronze_etoro_hedge_providerunitconversionratio` | Generated |
+| [Hedge.SupportedInstrumentsAccount](Wiki/Hedge/Tables/Hedge.SupportedInstrumentsAccount.md) | `main.dealing.bronze_etoro_hedge_supportedinstrumentsaccount` | Generated |
 | [History.AuditHistory](Wiki/History/Tables/History.AuditHistory.md) | `main.general.bronze_etoro_history_audithistory` | Generated |
 | [History.BSLCurrencyPriceSnapShots](Wiki/History/Tables/History.BSLCurrencyPriceSnapShots.md) | `main.general.bronze_etoro_history_bslcurrencypricesnapshots` | Generated |
 | [History.BSLPositionsInfo](Wiki/History/Tables/History.BSLPositionsInfo.md) | `main.general.bronze_etoro_history_bslpositionsinfo` | Generated |
 | [History.BackOfficeCustomer](Wiki/History/Tables/History.BackOfficeCustomer.md) | `main.general.bronze_etoro_history_backofficecustomer` | Generated |
 | [History.BlockedCustomerOperations](Wiki/History/Tables/History.BlockedCustomerOperations.md) | `main.general.bronze_etoro_history_blockedcustomeroperations` | Generated |
+| [History.CEPListCIDMappings](Wiki/History/Tables/History.CEPListCIDMappings.md) | `main.general.bronze_etoro_history_ceplistcidmappings` | Generated |
 | [History.CEP_LOG_CompoundProperties](Wiki/History/Tables/History.CEP_LOG_CompoundProperties.md) | `main.general.bronze_etoro_history_cep_log_compoundproperties` | Generated |
 | [History.CEP_LOG_CompoundPropertyToRule](Wiki/History/Tables/History.CEP_LOG_CompoundPropertyToRule.md) | `main.general.bronze_etoro_history_cep_log_compoundpropertytorule` | Generated |
 | [History.CEP_LOG_ConditionToCompoundProperty](Wiki/History/Tables/History.CEP_LOG_ConditionToCompoundProperty.md) | `main.general.bronze_etoro_history_cep_log_conditiontocompoundproperty` | Generated |
@@ -348,6 +322,8 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [History.NamedLists](Wiki/History/Tables/History.NamedLists.md) | `main.general.bronze_etoro_history_namedlists` | Generated |
 | [History.Netting_History](Wiki/History/Tables/History.Netting_History.md) | `main.dealing.bronze_etoro_history_netting_history` | Generated |
 | [History.Orders](Wiki/History/Tables/History.Orders.md) | `main.dealing.bronze_etoro_history_orders` | Generated |
+| [History.OrdersEntryTbl](Wiki/History/Tables/History.OrdersEntryTbl.md) | `main.general.bronze_etoro_history_ordersentrytbl` | Generated |
+| [History.OrdersExitTbl](Wiki/History/Tables/History.OrdersExitTbl.md) | `main.general.bronze_etoro_history_ordersexittbl` | Generated |
 | [History.PortfolioConversionConfigurations](Wiki/History/Tables/History.PortfolioConversionConfigurations.md) | `main.dealing.bronze_etoro_history_portfolioconversionconfigurations` | Generated |
 | [History.PositionSplit](Wiki/History/Tables/History.PositionSplit.md) | `main.trading.bronze_etoro_history_positionsplit` | Generated |
 | [History.PriceDetectionDifferenceLog](Wiki/History/Tables/History.PriceDetectionDifferenceLog.md) | `main.general.bronze_etoro_history_pricedetectiondifferencelog` | Generated |
@@ -374,6 +350,7 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Trade.CurrencyPrice](Wiki/Trade/Tables/Trade.CurrencyPrice.md) | `main.trading.bronze_etoro_trade_currencyprice` | Generated |
 | [Trade.ExchangeInstrumentFeeDefinition](Wiki/Trade/Tables/Trade.ExchangeInstrumentFeeDefinition.md) | `main.trading.bronze_etoro_trade_exchangeinstrumentfeedefinition` | Generated |
 | [Trade.FeatureThresholdValues](Wiki/Trade/Tables/Trade.FeatureThresholdValues.md) | `main.trading.bronze_etoro_trade_featurethresholdvalues` | Generated |
+| [Trade.Fund](Wiki/Trade/Tables/Trade.Fund.md) | `main.bi_db.bronze_etoro_trade_fund` | Generated |
 | [Trade.FuturesMetaData](Wiki/Trade/Tables/Trade.FuturesMetaData.md) | `main.trading.bronze_etoro_trade_futuresmetadata` | Generated |
 | [Trade.GetInstrument](Wiki/Trade/Views/Trade.GetInstrument.md) | `main.trading.bronze_etoro_trade_getinstrument` | Generated |
 | [Trade.GetLiquidityProviders](Wiki/Trade/Views/Trade.GetLiquidityProviders.md) | `main.bi_db.bronze_etoro_trade_getliquidityproviders` | Generated |
@@ -393,6 +370,8 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Trade.LiquidityProviders](Wiki/Trade/Tables/Trade.LiquidityProviders.md) | `main.trading.bronze_etoro_trade_liquidityproviders` | Generated |
 | [Trade.Mirror](Wiki/Trade/Tables/Trade.Mirror.md) | `main.trading.bronze_etoro_trade_mirror` | Generated |
 | [Trade.Orders](Wiki/Trade/Tables/Trade.Orders.md) | `main.dealing.bronze_etoro_trade_orders` | Generated |
+| [Trade.OrdersEntryTbl](Wiki/Trade/Tables/Trade.OrdersEntryTbl.md) | `main.trading.bronze_etoro_trade_ordersentrytbl` | Generated |
+| [Trade.OrdersExitTbl](Wiki/Trade/Tables/Trade.OrdersExitTbl.md) | `main.trading.bronze_etoro_trade_ordersexittbl` | Generated |
 | [Trade.PositionAirdropLog](Wiki/Trade/Views/Trade.PositionAirdropLog.md) | `main.trading.bronze_etoro_trade_positionairdroplog` | Generated |
 | [Trade.Position_DataFactory](Wiki/Trade/Views/Trade.Position_DataFactory.md) | `main.trading.bronze_etoro_trade_position_datafactory` | Generated |
 | [Trade.PositionsHedgeServerChangeLog](Wiki/Trade/Tables/Trade.PositionsHedgeServerChangeLog.md) | `main.trading.bronze_etoro_trade_positionshedgeserverchangelog` | Generated |
@@ -404,3 +383,40 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [Trade.Spread](Wiki/Trade/Tables/Trade.Spread.md) | `main.trading.bronze_etoro_trade_spread` | Generated |
 | [Trade.SpreadToGroup](Wiki/Trade/Tables/Trade.SpreadToGroup.md) | `main.trading.bronze_etoro_trade_spreadtogroup` | Generated |
 | [Trade.TerminalIDToCorporateAction](Wiki/Trade/Tables/Trade.TerminalIDToCorporateAction.md) | `main.trading.bronze_etoro_trade_terminalidtocorporateaction` | Generated |
+| [Billing.CustomerToFunding](Wiki/Billing/Tables/Billing.CustomerToFunding.md) | `main.billing.bronze_etoro_billing_customertofunding` | Failed |
+| [Billing.MerchantAccountRouting](Wiki/Billing/Tables/Billing.MerchantAccountRouting.md) | `main.bi_db.bronze_etoro_billing_merchantaccountrouting` | Failed |
+| [Billing.ProtocolMIDSettings](Wiki/Billing/Tables/Billing.ProtocolMIDSettings.md) | `main.billing.bronze_etoro_billing_protocolmidsettings` | Failed |
+| [Billing.ScheduledTaskState](Wiki/Billing/Tables/Billing.ScheduledTaskState.md) | `main.billing.bronze_etoro_billing_scheduledtaskstate` | Failed |
+| [Dictionary.DowntimeCloseStatus](Wiki/Dictionary/Tables/Dictionary.DowntimeCloseStatus.md) | `main.general.bronze_etoro_dictionary_downtimeclosestatus` | Failed |
+| [Dictionary.DowntimeSeverity](Wiki/Dictionary/Tables/Dictionary.DowntimeSeverity.md) | `main.general.bronze_etoro_dictionary_downtimeseverity` | Failed |
+| [Dictionary.DowntimeStatus](Wiki/Dictionary/Tables/Dictionary.DowntimeStatus.md) | `main.general.bronze_etoro_dictionary_downtimestatus` | Failed |
+| [Dictionary.DowntimeSystem](Wiki/Dictionary/Tables/Dictionary.DowntimeSystem.md) | `main.general.bronze_etoro_dictionary_downtimesystem` | Failed |
+| [Dictionary.DowntimeSystemToDowntype](Wiki/Dictionary/Tables/Dictionary.DowntimeSystemToDowntype.md) | `main.general.bronze_etoro_dictionary_downtimesystemtodowntype` | Failed |
+| [Dictionary.Downtype](Wiki/Dictionary/Tables/Dictionary.Downtype.md) | `main.general.bronze_etoro_dictionary_downtype` | Failed |
+| [Dictionary.Duration](Wiki/Dictionary/Tables/Dictionary.Duration.md) | `main.general.bronze_etoro_dictionary_duration` | Failed |
+| [Dictionary.EIDStatus](Wiki/Dictionary/Tables/Dictionary.EIDStatus.md) | `main.general.bronze_etoro_dictionary_eidstatus` | Failed |
+| [Dictionary.ElectronicIdentityCheck](Wiki/Dictionary/Tables/Dictionary.ElectronicIdentityCheck.md) | `main.general.bronze_etoro_dictionary_electronicidentitycheck` | Failed |
+| [Dictionary.ElectronicIdentityProvider](Wiki/Dictionary/Tables/Dictionary.ElectronicIdentityProvider.md) | `main.general.bronze_etoro_dictionary_electronicidentityprovider` | Failed |
+| [Dictionary.ErrorMessage](Wiki/Dictionary/Tables/Dictionary.ErrorMessage.md) | `main.general.bronze_etoro_dictionary_errormessage` | Failed |
+| [Dictionary.EventType](Wiki/Dictionary/Tables/Dictionary.EventType.md) | `main.general.bronze_etoro_dictionary_eventtype` | Failed |
+| [Dictionary.ExchangeInfo](Wiki/Dictionary/Tables/Dictionary.ExchangeInfo.md) | `main.general.bronze_etoro_dictionary_exchangeinfo` | Failed |
+| [Dictionary.ExecuteEntryMethod](Wiki/Dictionary/Tables/Dictionary.ExecuteEntryMethod.md) | `main.general.bronze_etoro_dictionary_executeentrymethod` | Failed |
+| [Dictionary.FailType](Wiki/Dictionary/Tables/Dictionary.FailType.md) | `main.general.bronze_etoro_dictionary_failtype` | Failed |
+| [Dictionary.Roles](Wiki/Dictionary/Tables/Dictionary.Roles.md) | `main.general.bronze_etoro_dictionary_roles` | Failed |
+| [Dictionary.SalesStatus](Wiki/Dictionary/Tables/Dictionary.SalesStatus.md) | `main.general.bronze_etoro_dictionary_salesstatus` | Failed |
+| [Dictionary.ScheduledJobStatus](Wiki/Dictionary/Tables/Dictionary.ScheduledJobStatus.md) | `main.general.bronze_etoro_dictionary_scheduledjobstatus` | Failed |
+| [Dictionary.ScheduledJobType](Wiki/Dictionary/Tables/Dictionary.ScheduledJobType.md) | `main.general.bronze_etoro_dictionary_scheduledjobtype` | Failed |
+| [Dictionary.ScheduledTaskName](Wiki/Dictionary/Tables/Dictionary.ScheduledTaskName.md) | `main.general.bronze_etoro_dictionary_scheduledtaskname` | Failed |
+| [Dictionary.ScheduledTaskState](Wiki/Dictionary/Tables/Dictionary.ScheduledTaskState.md) | `main.general.bronze_etoro_dictionary_scheduledtaskstate` | Failed |
+| [Dictionary.ServerType](Wiki/Dictionary/Tables/Dictionary.ServerType.md) | `main.general.bronze_etoro_dictionary_servertype` | Failed |
+| [Dictionary.SeverityType](Wiki/Dictionary/Tables/Dictionary.SeverityType.md) | `main.general.bronze_etoro_dictionary_severitytype` | Failed |
+| [Dictionary.SpreadType](Wiki/Dictionary/Tables/Dictionary.SpreadType.md) | `main.general.bronze_etoro_dictionary_spreadtype` | Failed |
+| [Dictionary.State](Wiki/Dictionary/Tables/Dictionary.State.md) | `main.general.bronze_etoro_dictionary_state` | Failed |
+| [Dictionary.StockError](Wiki/Dictionary/Tables/Dictionary.StockError.md) | `main.general.bronze_etoro_dictionary_stockerror` | Failed |
+| [Dictionary.StockHedgeSource](Wiki/Dictionary/Tables/Dictionary.StockHedgeSource.md) | `main.general.bronze_etoro_dictionary_stockhedgesource` | Failed |
+| [Hedge.GetHedgeServerAccountMapping](Wiki/Hedge/Views/Hedge.GetHedgeServerAccountMapping.md) | `main.bi_db.bronze_etoro_hedge_gethedgeserveraccountmapping` | Failed |
+| [Hedge.ViewExecutionLog_isnull](Wiki/Hedge/Views/Hedge.ViewExecutionLog_isnull.md) | `main.general.bronze_etoro_hedge_viewexecutionlog_isnull` | Failed |
+| [History.PositionChangeLog](Wiki/History/Views/History.PositionChangeLog.md) | `main.trading.bronze_etoro_history_positionchangelog` | Failed |
+| [History.Position_DataFactory](Wiki/History/Views/History.Position_DataFactory.md) | `main.trading.bronze_etoro_history_position_datafactory` | Failed |
+| [Trade.InstrumentMetaData_Daily](Wiki/Trade/Views/Trade.InstrumentMetaData_Daily.md) | `main.trading.bronze_etoro_trade_instrumentmetadata_daily` | Failed |
+| [Trade.ManageBSL](Wiki/Trade/Tables/Trade.ManageBSL.md) | `main.general.bronze_etoro_trade_managebsl` | Failed |

@@ -52,7 +52,4 @@ ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_plans AL
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_plans ALTER COLUMN HasBackupPayment COMMENT 'Whether the plan has a fallback payment method configured. Used for deposit resilience. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.Plans)';
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_plans ALTER COLUMN MopType COMMENT 'Method of Payment type for the plan''s deposits. Defaults to 1. See MOP Type. (Dictionary.MopType) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.Plans)';
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_plans ALTER COLUMN AmountUsd COMMENT 'Investment amount per cycle converted to USD. Equals Amount when CurrencyID is USD. Used for USD-normalized reporting and calculations. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.Plans)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

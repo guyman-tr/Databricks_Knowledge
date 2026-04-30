@@ -31,7 +31,4 @@ ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_userdepo
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_userdeposits ALTER COLUMN DepositAmountUsd COMMENT 'The deposit amount in USD. May differ from DepositAmountCurrency when the user''s plan currency is not USD due to currency conversion. Zero indicates a failed/declined deposit attempt. Data comes from Money ServiceBus. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.UserDeposits)';
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_userdeposits ALTER COLUMN DepositAmountCurrency COMMENT 'The deposit amount in the plan''s currency. The plan''s currency can be found in RecurringInvestment.Plans.CurrencyID. Equal to DepositAmountUsd for USD-denominated plans. Data comes from Money ServiceBus. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.UserDeposits)';
 ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_userdeposits ALTER COLUMN DepositDate COMMENT 'The date and time the deposit or deposit attempt was made. Data comes from Money ServiceBus. Used for temporal queries and deposit tracking. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.UserDeposits)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

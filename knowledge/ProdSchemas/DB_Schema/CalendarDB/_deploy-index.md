@@ -3,8 +3,8 @@
 ## bronze: CalendarDB
 
 db_key: DB_Schema/CalendarDB
-total_deployable: 2
-generated: 0
+total_deployable: 3
+generated: 1
 failed: 0
 deployed: 2
 last_generated: "2026-04-30"
@@ -18,3 +18,4 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 |--------|-----------|--------|
 | [Market.MergedDailySchedules](Wiki/Market/Tables/Market.MergedDailySchedules.md) | `main.general.bronze_calendardb_market_mergeddailyschedules` | Deployed (Batch 1) - 2026-04-30 |
 | [Market.ProvidersExchangeDailySchedules](Wiki/Market/Tables/Market.ProvidersExchangeDailySchedules.md) | `main.general.bronze_calendardb_market_providersexchangedailyschedules` | Deployed (Batch 1) - 2026-04-30 |
+| [Market.DefaultWeeklyCalendars](Wiki/Market/Tables/Market.DefaultWeeklyCalendars.md) | `main.dealing.bronze_calendardb_market_defaultweeklycalendars` | Generated |

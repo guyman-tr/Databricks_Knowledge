@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -216,8 +217,47 @@ def _db_key_for(row: dict) -> str:
     return row["database_name"]
 
 
+_DEPLOYED_STATUS_RE = re.compile(r"^\s*Deployed\b", re.IGNORECASE)
+_FRONT_BATCH_RE   = re.compile(r"^last_deploy_batch:\s*(\d+)\s*$", re.IGNORECASE | re.MULTILINE)
+_FRONT_LASTDEP_RE = re.compile(r"^last_deployed:\s*\"?([^\"\n]+)\"?\s*$", re.IGNORECASE | re.MULTILINE)
+_TABLE_ROW_RE = re.compile(
+    r"^\|\s*(?:\[[^\]]+\]\([^)]*\)|[^|]+?)\s*\|\s*`([^`]+)`\s*\|\s*(.+?)\s*\|\s*$",
+    re.MULTILINE,
+)
+
+
+def _read_existing_index(out: Path) -> tuple[dict[str, str], int, str]:
+    """Return (uc_target -> previous status, last_deploy_batch, last_deployed_date).
+
+    Carries forward any "Deployed (Batch N) - YYYY-MM-DD" rows so a regen does
+    NOT wipe the audit trail. Returns ({}, 0, "") if no existing index.
+    """
+    if not out.is_file():
+        return {}, 0, ""
+    text = out.read_text(encoding="utf-8")
+    prev: dict[str, str] = {}
+    for m in _TABLE_ROW_RE.finditer(text):
+        uc_target = m.group(1).strip()
+        status    = m.group(2).strip()
+        if _DEPLOYED_STATUS_RE.match(status):
+            prev[uc_target.lower()] = status
+    batch_match = _FRONT_BATCH_RE.search(text)
+    lastdep_match = _FRONT_LASTDEP_RE.search(text)
+    return (
+        prev,
+        int(batch_match.group(1)) if batch_match else 0,
+        lastdep_match.group(1).strip() if lastdep_match else "",
+    )
+
+
 def write_deploy_index(db_key: str, ready_rows: list[dict], failed_rows: list[dict]) -> Path:
-    """Write a per-db _deploy-index.md tracking which tables have alter files generated."""
+    """Write a per-db _deploy-index.md tracking which tables have alter files generated.
+
+    Preserves "Deployed" status from any existing index so a regen never wipes
+    the deployment audit trail. New rows that did not exist before show as
+    "Generated"; rows that were previously "Deployed" keep their full
+    "Deployed (Batch N) - YYYY-MM-DD" label.
+    """
     if not ready_rows and not failed_rows:
         raise ValueError(f"no rows for db {db_key}")
     sample = ready_rows[0] if ready_rows else failed_rows[0]
@@ -225,11 +265,44 @@ def write_deploy_index(db_key: str, ready_rows: list[dict], failed_rows: list[di
     db_name = sample["database_name"]
     out = db_root / "_deploy-index.md"
 
-    by_status: dict[str, list[dict]] = defaultdict(list)
+    prev_deployed, prev_batch, prev_lastdep = _read_existing_index(out)
+
+    deployed_count = 0
+    rendered: list[tuple[str, str, str]] = []   # (sort_key, line, status_for_count)
     for r in ready_rows:
-        by_status["Generated"].append(r)
+        uc_full = uc_full_target(r["uc_table"])
+        carried = prev_deployed.get(uc_full.lower())
+        status = carried if carried else "Generated"
+        if carried:
+            deployed_count += 1
+        obj = f"{r['schema_name']}.{r['table_name']}"
+        if r.get("wiki_path") and r.get("wiki_root"):
+            link_target = Path(r["wiki_path"]).relative_to(Path(r["wiki_root"]).parent).as_posix()
+            wiki_link = f"[{obj}]({link_target})"
+        else:
+            wiki_link = obj
+        rendered.append((
+            (status.startswith("Deployed") and "0" or "1") + f"|{r['schema_name']}|{r['table_name']}",
+            f"| {wiki_link} | `{uc_full}` | {status} |",
+            status,
+        ))
     for r in failed_rows:
-        by_status["Failed"].append(r)
+        uc_full = uc_full_target(r["uc_table"])
+        obj = f"{r['schema_name']}.{r['table_name']}"
+        if r.get("wiki_path") and r.get("wiki_root"):
+            link_target = Path(r["wiki_path"]).relative_to(Path(r["wiki_root"]).parent).as_posix()
+            wiki_link = f"[{obj}]({link_target})"
+        else:
+            wiki_link = obj
+        rendered.append((
+            "2" + f"|{r['schema_name']}|{r['table_name']}",
+            f"| {wiki_link} | `{uc_full}` | Failed |",
+            "Failed",
+        ))
+    rendered.sort(key=lambda x: x[0])
+
+    generated_count = sum(1 for _, _, s in rendered if s == "Generated")
+    failed_count    = sum(1 for _, _, s in rendered if s == "Failed")
 
     lines: list[str] = []
     lines.append("---")
@@ -238,28 +311,22 @@ def write_deploy_index(db_key: str, ready_rows: list[dict], failed_rows: list[di
     lines.append("")
     lines.append(f"db_key: {db_key}")
     lines.append(f"total_deployable: {len(ready_rows) + len(failed_rows)}")
-    lines.append(f"generated: {len(ready_rows)}")
-    lines.append(f"failed: {len(failed_rows)}")
-    lines.append("deployed: 0")
+    lines.append(f"generated: {generated_count}")
+    lines.append(f"failed: {failed_count}")
+    lines.append(f"deployed: {deployed_count}")
     lines.append(f"last_generated: \"{NOW}\"")
+    if prev_batch > 0:
+        lines.append(f"last_deploy_batch: {prev_batch}")
+    if prev_lastdep:
+        lines.append(f"last_deployed: \"{prev_lastdep}\"")
     lines.append("source_tool: tools/uc_bronze/generate_bronze_alters.py")
     lines.append("")
     lines.append("## Bronze ALTER Generation Status")
     lines.append("")
     lines.append("| Object | UC Target | Status |")
     lines.append("|--------|-----------|--------|")
-    for status, rows in sorted(by_status.items()):
-        for r in sorted(rows, key=lambda x: (x["schema_name"], x["table_name"])):
-            obj = f"{r['schema_name']}.{r['table_name']}"
-            wiki_link = ""
-            if r.get("wiki_path"):
-                wiki_link_target = Path(r["wiki_path"]).relative_to(
-                    Path(r["wiki_root"]).parent
-                ).as_posix() if r.get("wiki_root") else r["wiki_path"]
-                wiki_link = f"[{obj}]({wiki_link_target})"
-            else:
-                wiki_link = obj
-            lines.append(f"| {wiki_link} | `{uc_full_target(r['uc_table'])}` | {status} |")
+    for _, line, _ in rendered:
+        lines.append(line)
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return out

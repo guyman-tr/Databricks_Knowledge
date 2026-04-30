@@ -28,7 +28,4 @@ ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_orderstatus SE
 -- Column Comments
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_orderstatus ALTER COLUMN ID COMMENT 'Unique numeric identifier for the order status. 1=Received, 2=Placed, 3=Filled, 4=Rejected, 5=PartiallyFilled, 6=PendingCancel, 7=Canceled, 8=Expired, 9=CanceledPartiallyFilled, 10=RejectedPartiallyFilled, 11=WaitingForMarket. See Order Status. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.OrderStatus)';
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_orderstatus ALTER COLUMN OrderStatus COMMENT 'Human-readable label for the order lifecycle state. Aligns with Trading API enum values (per Confluence). (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.OrderStatus)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:48:09 UTC
--- Bronze deploy: RecurringInvestment batch 1
--- ====================
+

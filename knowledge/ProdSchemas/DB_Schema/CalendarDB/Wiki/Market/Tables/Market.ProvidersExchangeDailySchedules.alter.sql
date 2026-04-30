@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_calendardb_market_providersexchangedailyschedules (business_group=general) ----
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules SET TBLPROPERTIES (
-    'comment' = 'Stores daily exchange-level trading schedules from both external providers (Xignite, ProviderID=1) and eToro manual overrides (ProviderID=0), used as input to the merged schedule calculation. Source: CalendarDB.Market.ProvidersExchangeDailySchedules on the CalendarDB production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.ProvidersExchangeDailySchedules.md).'
+    'comment' = 'Stores daily exchange-level trading schedules from both external providers (Xignite, ProviderID=1) and eToro manual overrides (ProviderID=0), used as input to the merged schedule calculation. Source: CalendarDB.Market.ProvidersExchangeDailySchedules on the CalendarDB production database, ingested via the Generic Pipeline (Override strategy, 30-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/CalendarDB/Wiki/Market/Tables/Market.ProvidersExchangeDailySchedules.md).'
 );
 
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules SET TAGS (
@@ -22,7 +22,7 @@ ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedule
     'doc_source' = 'tier1_wiki',
     'doc_generated' = '2026-04-30',
     'copy_strategy' = 'Override',
-    'refresh_minutes' = '1440'
+    'refresh_minutes' = '30'
 );
 
 -- Column Comments
@@ -44,7 +44,4 @@ ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedule
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules ALTER COLUMN AppLoginName COMMENT 'Computed audit: application session identity. (Tier 1 - upstream wiki, CalendarDB.Market.ProvidersExchangeDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules ALTER COLUMN SysStartTime COMMENT 'Temporal ROW START. (Tier 1 - upstream wiki, CalendarDB.Market.ProvidersExchangeDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules ALTER COLUMN SysEndTime COMMENT 'Temporal ROW END. History in History.ProvidersExchangeDailySchedules. (Tier 1 - upstream wiki, CalendarDB.Market.ProvidersExchangeDailySchedules)';
--- == LAST EXECUTION ==
--- Timestamp: 2026-04-30 08:35:27 UTC
--- Bronze deploy: CalendarDB batch 1
--- ====================
+

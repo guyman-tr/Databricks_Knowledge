@@ -3,8 +3,8 @@
 ## bronze: fiktivo
 
 db_key: ExperianceDBs/fiktivo
-total_deployable: 46
-generated: 46
+total_deployable: 49
+generated: 49
 failed: 0
 deployed: 0
 last_generated: "2026-04-30"
@@ -19,6 +19,7 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [AffiliateCommission.ClosedPositionCommissionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.ClosedPositionCommissionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_closedpositioncommission` | Generated |
 | [AffiliateCommission.ClosedPositionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.ClosedPositionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_closedposition` | Generated |
 | [AffiliateCommission.ClosedPositionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.ClosedPositionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw` | Generated |
+| [AffiliateCommission.CreditAccountMapping](Wiki/AffiliateCommission/Tables/AffiliateCommission.CreditAccountMapping.md) | `main.experience.bronze_fiktivo_affiliatecommission_creditaccountmapping` | Generated |
 | [AffiliateCommission.CreditCommissionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.CreditCommissionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_creditcommission` | Generated |
 | [AffiliateCommission.CreditCommissionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.CreditCommissionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_creditcommissionvw` | Generated |
 | [AffiliateCommission.CreditVW](Wiki/AffiliateCommission/Views/AffiliateCommission.CreditVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_credit` | Generated |
@@ -26,11 +27,13 @@ source_tool: tools/uc_bronze/generate_bronze_alters.py
 | [AffiliateCommission.CustomerAggregatedData](Wiki/AffiliateCommission/Tables/AffiliateCommission.CustomerAggregatedData.md) | `main.general.bronze_fiktivo_affiliatecommission_customeraggregateddata` | Generated |
 | [AffiliateCommission.RegistrationCommissionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.RegistrationCommissionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_registrationcommission` | Generated |
 | [AffiliateCommission.RegistrationCommissionVW](Wiki/AffiliateCommission/Views/AffiliateCommission.RegistrationCommissionVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_registrationcommissionvw` | Generated |
+| [AffiliateCommission.RegistrationMetaData](Wiki/AffiliateCommission/Tables/AffiliateCommission.RegistrationMetaData.md) | `main.experience.bronze_fiktivo_affiliatecommission_registrationmetadata` | Generated |
 | [AffiliateCommission.RegistrationVW](Wiki/AffiliateCommission/Views/AffiliateCommission.RegistrationVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_registration` | Generated |
 | [AffiliateCommission.RegistrationVW](Wiki/AffiliateCommission/Views/AffiliateCommission.RegistrationVW.md) | `main.bi_db.bronze_fiktivo_affiliatecommission_registrationvw` | Generated |
 | [AffiliateConfiguration.TraderFirstAssetPosition](Wiki/AffiliateConfiguration/Tables/AffiliateConfiguration.TraderFirstAssetPosition.md) | `main.bi_db.bronze_fiktivo_affiliateconfiguration_traderfirstassetposition` | Generated |
 | [Dictionary.Action](Wiki/Dictionary/Tables/Dictionary.Action.md) | `main.general.bronze_fiktivo_dictionary_action` | Generated |
 | [Dictionary.ChangedSections](Wiki/Dictionary/Tables/Dictionary.ChangedSections.md) | `main.general.bronze_fiktivo_dictionary_changedsections` | Generated |
+| [Dictionary.MarketingRegion](Wiki/Dictionary/Tables/Dictionary.MarketingRegion.md) | `main.experience.bronze_fiktivo_dictionary_marketingregion` | Generated |
 | [Dictionary.PaymentMethods](Wiki/Dictionary/Tables/Dictionary.PaymentMethods.md) | `main.bi_db.bronze_fiktivo_dictionary_paymentmethods` | Generated |
 | [Dictionary.PaymentMethods](Wiki/Dictionary/Tables/Dictionary.PaymentMethods.md) | `bi_db.bronze_fiktivo_fiktivo_dictionary.paymentmethods` | Generated |
 | [Dictionary.PositionAssetType](Wiki/Dictionary/Tables/Dictionary.PositionAssetType.md) | `main.bi_db.bronze_fiktivo_dictionary_positionassettype` | Generated |
