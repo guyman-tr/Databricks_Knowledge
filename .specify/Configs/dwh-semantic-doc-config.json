@@ -85,6 +85,14 @@
           {
             "schema": "DWH_staging",
             "reason": "Per user request 2026-04-30: DWH_staging is permanently out of documentation scope. Staging tier is transient ETL state, not a documentation target. Get-NextBatch.ps1 returns empty immediately for any blacklisted schema, no per-table inspection required."
+          },
+          {
+            "schema": "Dealing_staging",
+            "reason": "Per user request 2026-04-30: Dealing_staging is permanently out of documentation scope. Staging tier — transient ETL state, not a documentation target."
+          },
+          {
+            "schema": "CopyFromLake",
+            "reason": "Per user request 2026-04-30: CopyFromLake is permanently out of documentation scope. Schema holds raw lake-mirror tables that are passed through to other layers — bronze-leg pipeline (tools/uc_bronze/) handles UC documentation for these via Tier 1 source-DB wikis."
           }
         ],
         "name_patterns": [
