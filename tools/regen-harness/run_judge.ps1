@@ -122,39 +122,65 @@ $gotResult = $false
 $resultElapsed = 0
 $postResultGrace = 30
 
-while (-not $proc.HasExited) {
-    Start-Sleep -Milliseconds 500
-    if ($gotResult -and ($sw.Elapsed.TotalSeconds - $resultElapsed) -gt $postResultGrace) {
-        Write-Host "  [judge] Post-result grace expired - killing PID $($proc.Id)." -ForegroundColor DarkYellow
-        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+# Kill the entire process tree (claude.cmd -> node.exe) — Stop-Process alone
+# only kills the cmd.exe wrapper and leaves node.exe holding the stdout handle,
+# which causes the parent to hang forever waiting for HasExited.
+function Kill-ProcessTree([int]$pidToKill, [string]$prefix) {
+    try {
+        $tk = & cmd.exe /c "taskkill /T /F /PID $pidToKill" 2>&1
+        Write-Host "  $prefix taskkill /T /F /PID $pidToKill -> $tk" -ForegroundColor DarkYellow
+    } catch {
+        Write-Host "  $prefix taskkill failed: $_" -ForegroundColor Red
+    }
+    try { Stop-Process -Id $pidToKill -Force -ErrorAction SilentlyContinue } catch {}
+}
+
+while ($true) {
+    # Refresh cached state first; HasExited can lag without an explicit refresh.
+    try { $proc.Refresh() } catch {}
+    if ($proc.HasExited) { break }
+
+    # Hard timeout check FIRST, before any potentially-blocking I/O.
+    if ($sw.Elapsed.TotalSeconds -gt $TimeoutSeconds) {
+        Write-Host ("  [judge] TIMEOUT ({0}s) - killing process tree." -f $TimeoutSeconds) -ForegroundColor Red
+        Kill-ProcessTree $proc.Id "[judge]"
         break
     }
-    if ($sw.Elapsed.TotalSeconds -gt $TimeoutSeconds) {
-        Write-Host ("  [judge] TIMEOUT ({0}s) - killing." -f $TimeoutSeconds) -ForegroundColor Red
-        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+    if ($gotResult -and ($sw.Elapsed.TotalSeconds - $resultElapsed) -gt $postResultGrace) {
+        Write-Host "  [judge] Post-result grace expired - killing process tree." -ForegroundColor DarkYellow
+        Kill-ProcessTree $proc.Id "[judge]"
         break
     }
 
+    Start-Sleep -Milliseconds 500
+
+    # Non-blocking peek for "result" event marker. Read raw bytes since last
+    # position, scan as substring. Avoid StreamReader.ReadLine() — it blocks
+    # forever if the source process flushed a partial line and kept the handle
+    # open, which is exactly what claude.cmd's node child does.
+    if ($gotResult) { continue }
     if (-not (Test-Path $tempOut)) { continue }
     $fi = Get-Item $tempOut -ErrorAction SilentlyContinue
     if ($null -eq $fi -or $fi.Length -le $lastSize) { continue }
 
     try {
-        $stream = [System.IO.File]::Open($tempOut, 'Open', 'Read', 'ReadWrite')
-        $stream.Seek($lastSize, 'Begin') | Out-Null
-        $reader = New-Object System.IO.StreamReader($stream, [System.Text.UTF8Encoding]::new($false))
-        while ($null -ne ($line = $reader.ReadLine())) {
+        $newBytes = [int]($fi.Length - $lastSize)
+        if ($newBytes -gt 0) {
+            $stream = [System.IO.File]::Open($tempOut, 'Open', 'Read', 'ReadWrite')
             try {
-                $obj = $line | ConvertFrom-Json -ErrorAction SilentlyContinue
-                if ($null -eq $obj) { continue }
-                if ($obj.type -eq "result") {
-                    $gotResult = $true
-                    $resultElapsed = $sw.Elapsed.TotalSeconds
+                $stream.Seek($lastSize, 'Begin') | Out-Null
+                $buf = New-Object byte[] $newBytes
+                $read = $stream.Read($buf, 0, $newBytes)
+                if ($read -gt 0) {
+                    $chunk = [System.Text.Encoding]::UTF8.GetString($buf, 0, $read)
+                    if ($chunk -match '"type"\s*:\s*"result"') {
+                        $gotResult = $true
+                        $resultElapsed = $sw.Elapsed.TotalSeconds
+                    }
                 }
-            } catch {}
+            } finally { $stream.Close() }
+            $lastSize = $fi.Length
         }
-        $reader.Close(); $stream.Close()
-        $lastSize = $fi.Length
     } catch {}
 }
 

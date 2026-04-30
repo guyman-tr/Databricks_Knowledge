@@ -193,6 +193,12 @@
             "table": "BI_DB_DDR_TimeRange_Aggregated_Country_Level",
             "reason": "DDR aggregation pyramid — too wide (141 cols), deferred",
             "action": "skip"
+          },
+          {
+            "schema": "BI_DB_dbo",
+            "table": "BI_DB_MarketingCloudUserBehaviorPI",
+            "reason": "Pure downstream sink — Marketing Cloud SFTP export. Not mapped to UC and no downstream object reads from it. Out of new lake-bound scope (build_alter_scope.py refactor 2026-04-30). Wiki was generated under the old downstream-inclusive scope and removed. Skip permanently.",
+            "action": "skip_permanent"
           }
         ]
       },

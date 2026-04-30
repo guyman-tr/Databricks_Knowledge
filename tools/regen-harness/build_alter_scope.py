@@ -3,13 +3,22 @@ build_alter_scope.py
 
 Read-only computation of the ALTER scope set:
 
-    SCOPE = mapped (External_* in dep graph + sql_dp_prod_we mapping)
-            ∪ downstream(mapped, hops=N) via reverse-BFS on _dependency_order.json
+    SCOPE = mapped (objects with a non-null uc_table in the pipeline mapping)
+            ∪ upstream(mapped) via FORWARD-BFS on _dependency_order.json
 
-This is the gate that decides which Synapse wikis are worth regenerating /
-building. Anything outside this set will never produce an ALTER description
-file (it's not in the lake and nothing downstream of it is either), so we
-should not waste tokens on it.
+An object is in scope iff (a) it is itself mapped to a Unity Catalog table,
+OR (b) some downstream object that depends on it is mapped. In either case
+the wiki contributes to documenting data that ends up in the lake.
+
+Pure SINK consumers (regulatory reports, marketing dashboards, AML monitors,
+etc.) that read from mapped Facts/Dims but produce no further mapped output
+are explicitly EXCLUDED — wiki'ing them costs tokens but doesn't trace any
+column into the lake.
+
+Direction note (read carefully):
+  forward[A] = A.depends_on  (things A reads from = A's upstream producers)
+  reverse[A] = A.dependents  (things that read from A = A's downstream consumers)
+We walk FORWARD from mapped sinks to collect their upstream lineage.
 
 Inputs (all read-only):
   knowledge/synapse/Wiki/_dependency_order.json
@@ -77,9 +86,9 @@ class ScopeRow:
     object: str                # full lower-cased "schema.name"
     schema: str                # schema part, original case from dep graph
     name: str                  # object name, original case
-    kind: str                  # "seed_external" | "seed_dwh_internal" | "downstream"
-    hops_from_seed: int        # 0 for seeds, 1+ for downstream
-    mapped_uc: Optional[str]   # uc_table from mapping (only for seeds)
+    kind: str                  # "seed_external" | "seed_dwh_internal" | "lineage_upstream"
+    hops_from_seed: int        # 0 for mapped seeds, 1+ for upstreams of mapped seeds
+    mapped_uc: Optional[str]   # uc_table from mapping (set for ANY mapped node, regardless of hop)
     currently_documented: bool
     wiki_path: Optional[str]   # repo-relative if documented, else None
     slop_t4_hits: int          # T4InfHits from latest health scan, 0 if no row
@@ -218,22 +227,22 @@ def build_seeds(
 
     # Index every External_* node in the graph by its underscore-suffix tail so
     # we can match mapping rows to nodes regardless of host schema.
+    # NOTE (2026-04-30): unmapped External_* are NO LONGER auto-seeded. Under
+    # forward-BFS from mapped seeds, an unmapped External_* still gets pulled
+    # into scope iff some mapped object depends on it. If nothing mapped reads
+    # from it, it has no business being a wiki target.
     ext_index: Dict[str, str] = {}  # tail_lower -> full_node_lower
     for n in nodes:
         if ".external_" not in n:
             continue
-        # n looks like "bi_db_dbo.external_alertservicedb_alert_alert"
         try:
             schema_part, name_part = n.split(".", 1)
         except ValueError:
             continue
-        # name_part = "external_alertservicedb_alert_alert"
         if not name_part.startswith("external_"):
             continue
         tail = name_part[len("external_"):]
         ext_index.setdefault(tail, n)
-        # Always record the External_* node as a seed even if it never matches a mapping row
-        external_seeds.setdefault(n, "")
 
     for r in mapping:
         if not r.get("uc_table"):
@@ -264,19 +273,23 @@ def build_seeds(
 
 def bfs_with_hops(
     seeds: Set[str],
-    reverse: Dict[str, Set[str]],
+    graph: Dict[str, Set[str]],
     max_hops: int,
 ) -> Dict[str, int]:
-    """Return node_lower -> hops_from_seed (0 for seed, 1+ for downstream).
+    """Return node_lower -> hops_from_seed (0 for seed, 1+ for transitive).
 
-    Only the SHORTEST path hop count is recorded.
+    Direction is determined by the graph passed in:
+      - pass `forward` (depends_on)  => walk UPSTREAM producers
+      - pass `reverse` (dependents)  => walk DOWNSTREAM consumers
+    Only the SHORTEST path hop count is recorded. BFS terminates naturally
+    when the frontier is empty even before max_hops is reached.
     """
     visited: Dict[str, int] = {s: 0 for s in seeds}
     frontier = set(seeds)
     for hop in range(1, max_hops + 1):
         new_frontier: Set[str] = set()
         for n in frontier:
-            for x in reverse.get(n, ()):
+            for x in graph.get(n, ()):
                 if x not in visited:
                     visited[x] = hop
                     new_frontier.add(x)
@@ -351,8 +364,8 @@ def _render_summary(
 ) -> str:
     in_scope_doc = sum(1 for r in rows if r.currently_documented)
     in_scope_todo = len(rows) - in_scope_doc
-    seeds = sum(1 for r in rows if r.kind != "downstream")
-    downstream = sum(1 for r in rows if r.kind == "downstream")
+    seeds = sum(1 for r in rows if r.kind != "lineage_upstream")
+    upstream = sum(1 for r in rows if r.kind == "lineage_upstream")
     in_scope_slop = sum(1 for r in rows if r.slop_t4_hits >= metadata["slop_threshold_t4"])
 
     per_sch_doc: Counter = Counter()
@@ -380,7 +393,7 @@ def _render_summary(
     lines.append("")
     lines.append("## Headline")
     lines.append("")
-    lines.append(f"- **Total in-scope objects**: {len(rows)}  ({seeds} seeds + {downstream} downstream)")
+    lines.append(f"- **Total in-scope objects**: {len(rows)}  ({seeds} mapped seeds + {upstream} lineage upstreams)")
     lines.append(f"- **In-scope already documented**: {in_scope_doc}")
     lines.append(f"- **In-scope NOT yet documented**: {in_scope_todo}")
     lines.append(f"- **In-scope slop (T4InfHits >= {metadata['slop_threshold_t4']})**: {in_scope_slop}")
@@ -408,7 +421,8 @@ def _render_summary(
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--hops", type=int, default=2, help="downstream BFS hop limit (default: 2)")
+    p.add_argument("--hops", type=int, default=20,
+                   help="upstream BFS hop limit (default: 20 — generous; BFS terminates earlier when frontier empties)")
     p.add_argument("--threshold-t4", type=int, default=1,
                    help="minimum T4InfHits for a wiki to count as 'slop' in the summary (default: 1)")
     p.add_argument("--quiet", action="store_true")
@@ -435,14 +449,29 @@ def main() -> int:
         print(f"Documented wikis on disk: {len(documented)}")
 
     external_seeds, dwh_seeds, no_mirror = build_seeds(nodes, mapping)
-    seed_keys = set(external_seeds) | set(dwh_seeds)
+    # Only MAPPED objects are seeds (have a non-empty uc_table). Drop unmapped
+    # External_* — they only stay in scope if forward-BFS finds them as an
+    # upstream of something mapped.
+    external_seeds_mapped = {k: v for k, v in external_seeds.items() if v}
+    seed_keys = set(external_seeds_mapped) | set(dwh_seeds)
     if not args.quiet:
-        print(f"Seeds: {len(external_seeds)} external + {len(dwh_seeds)} dwh-internal = {len(seed_keys)} total")
-        print(f"Mapped rows with no Synapse mirror: {len(no_mirror)}")
+        dropped_ext = len(external_seeds) - len(external_seeds_mapped)
+        print(f"Mapped seeds: {len(external_seeds_mapped)} external + {len(dwh_seeds)} dwh-internal = {len(seed_keys)} total")
+        print(f"Dropped {dropped_ext} unmapped External_* (will only be in scope if upstream of a mapped seed)")
+        print(f"Mapping rows with no Synapse mirror (direct-bronze pathway): {len(no_mirror)}")
 
-    hops_map = bfs_with_hops(seed_keys, reverse, args.hops)
+    # FORWARD-BFS: walk depends_on chain to collect upstream lineage of mapped seeds.
+    hops_map = bfs_with_hops(seed_keys, forward, args.hops)
     if not args.quiet:
-        print(f"BFS @ hops={args.hops}: {len(hops_map)} in-scope nodes")
+        print(f"Forward BFS @ max_hops={args.hops}: {len(hops_map)} in-scope nodes")
+
+    # Build a lookup of mapped_uc keyed by node so upstreams that ARE themselves
+    # mapped (e.g. DWH_dbo.Fact_X feeding BI_DB_dbo.Fact_Y) get tagged correctly.
+    mapped_uc_lookup: Dict[str, str] = {}
+    for k, v in external_seeds_mapped.items():
+        mapped_uc_lookup[k] = v
+    for k, v in dwh_seeds.items():
+        mapped_uc_lookup[k] = v
 
     rows: List[ScopeRow] = []
     for node_lower, hop in hops_map.items():
@@ -452,12 +481,14 @@ def main() -> int:
             schema_orig, name_orig = orig.split(".", 1)
         else:
             schema_orig, name_orig = "", orig
+        uc = mapped_uc_lookup.get(node_lower)
         if hop == 0:
-            kind = "seed_external" if node_lower in external_seeds else "seed_dwh_internal"
-            uc = external_seeds.get(node_lower) or dwh_seeds.get(node_lower) or None
+            kind = "seed_external" if node_lower in external_seeds_mapped else "seed_dwh_internal"
+        elif uc:
+            # Upstream of a mapped seed AND itself mapped — tag by its own seed type
+            kind = "seed_external" if node_lower in external_seeds_mapped else "seed_dwh_internal"
         else:
-            kind = "downstream"
-            uc = None
+            kind = "lineage_upstream"
         wiki = documented.get(node_lower)
         rows.append(ScopeRow(
             object=node_lower,

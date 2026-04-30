@@ -68,64 +68,90 @@ $resultElapsed = 0
 $postResultGrace = 30
 $wroteFiles = New-Object System.Collections.Generic.HashSet[string]
 
-while (-not $proc.HasExited) {
+# Kill the entire process tree (claude.cmd -> node.exe). Stop-Process alone
+# only kills the cmd.exe wrapper; node.exe keeps the stdout handle open and
+# the parent loop hangs forever waiting on HasExited.
+function Kill-ProcessTree([int]$pidToKill, [string]$prefix) {
+    try {
+        $tk = & cmd.exe /c "taskkill /T /F /PID $pidToKill" 2>&1
+        Write-Host "  $prefix taskkill /T /F /PID $pidToKill -> $tk" -ForegroundColor DarkYellow
+    } catch {
+        Write-Host "  $prefix taskkill failed: $_" -ForegroundColor Red
+    }
+    try { Stop-Process -Id $pidToKill -Force -ErrorAction SilentlyContinue } catch {}
+}
+
+while ($true) {
+    # Refresh cached state first; HasExited can lag without an explicit refresh.
+    try { $proc.Refresh() } catch {}
+    if ($proc.HasExited) { break }
+
+    # Hard timeout check FIRST, before any potentially-blocking I/O.
+    if ($sw.Elapsed.TotalSeconds -gt $TimeoutSeconds) {
+        Write-Host ("  [writer] TIMEOUT ({0}s) - killing process tree." -f $TimeoutSeconds) -ForegroundColor Red
+        Kill-ProcessTree $proc.Id "[writer]"
+        break
+    }
+    if ($gotResult -and ($sw.Elapsed.TotalSeconds - $resultElapsed) -gt $postResultGrace) {
+        Write-Host ("  [writer] Post-result grace expired ({0}s) - killing process tree." -f $postResultGrace) -ForegroundColor DarkYellow
+        Kill-ProcessTree $proc.Id "[writer]"
+        break
+    }
+
     Start-Sleep -Milliseconds 500
 
-    if ($gotResult -and ($sw.Elapsed.TotalSeconds - $resultElapsed) -gt $postResultGrace) {
-        Write-Host ("  [writer] Post-result grace expired ({0}s) - killing PID {1}." -f $postResultGrace, $proc.Id) -ForegroundColor DarkYellow
-        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
-        break
-    }
-    if ($sw.Elapsed.TotalSeconds -gt $TimeoutSeconds) {
-        Write-Host ("  [writer] TIMEOUT ({0}s) - killing." -f $TimeoutSeconds) -ForegroundColor Red
-        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
-        break
-    }
-
+    # Non-blocking incremental scan. We deliberately AVOID StreamReader.ReadLine()
+    # because it blocks forever when the source flushes a partial line and keeps
+    # the handle open (claude.cmd's node child does this). Read whatever bytes
+    # exist, scan with simple regex, and move on.
     if (-not (Test-Path $tempOut)) { continue }
     $fi = Get-Item $tempOut -ErrorAction SilentlyContinue
     if ($null -eq $fi -or $fi.Length -le $lastSize) { continue }
 
     try {
+        $newBytes = [int]($fi.Length - $lastSize)
+        if ($newBytes -le 0) { continue }
         $stream = [System.IO.File]::Open($tempOut, 'Open', 'Read', 'ReadWrite')
-        $stream.Seek($lastSize, 'Begin') | Out-Null
-        $reader = New-Object System.IO.StreamReader($stream, [System.Text.UTF8Encoding]::new($false))
-        while ($null -ne ($line = $reader.ReadLine())) {
-            try {
-                $obj = $line | ConvertFrom-Json -ErrorAction SilentlyContinue
-                if ($null -eq $obj) { continue }
-                if ($obj.type -eq "assistant" -and $obj.message.content) {
-                    foreach ($block in $obj.message.content) {
-                        if ($block.type -eq "text" -and $block.text) {
-                            $txt = $block.text
-                            $elapsed = [math]::Round($sw.Elapsed.TotalSeconds)
-                            if ($txt -match "PHASE GATE|OUTPUT CHECK|MCP PRE-FLIGHT|REGEN ABORT|CHECKPOINT") {
-                                Write-Host ("  [{0}s] {1}" -f $elapsed, ($txt.Substring(0, [Math]::Min(160, $txt.Length)))) -ForegroundColor Cyan
-                            }
-                        } elseif ($block.type -eq "tool_use") {
-                            $elapsed = [math]::Round($sw.Elapsed.TotalSeconds)
-                            $toolName = $block.name
-                            if ($block.input -and $block.input.file_path -and $toolName -eq "Write") {
-                                $fp = $block.input.file_path
-                                [void]$wroteFiles.Add($fp)
-                                $fpDisp = $fp -replace '.*regen-sample\\', ''
-                                Write-Host ("  [{0}s] Write: {1}" -f $elapsed, $fpDisp) -ForegroundColor Green
-                            } elseif ($toolName -match "^mcp__synapse_sql") {
-                                Write-Host ("  [{0}s] mcp:synapse" -f $elapsed) -ForegroundColor DarkCyan
-                            } elseif ($toolName -match "^mcp__databricks_sql") {
-                                Write-Host ("  [{0}s] mcp:databricks" -f $elapsed) -ForegroundColor DarkCyan
-                            }
-                        }
-                    }
-                }
-                if ($obj.type -eq "result") {
-                    $gotResult = $true
-                    $resultElapsed = $sw.Elapsed.TotalSeconds
-                }
-            } catch {}
-        }
-        $reader.Close(); $stream.Close()
+        try {
+            $stream.Seek($lastSize, 'Begin') | Out-Null
+            $buf = New-Object byte[] $newBytes
+            $read = $stream.Read($buf, 0, $newBytes)
+        } finally { $stream.Close() }
+        if ($read -le 0) { continue }
+        $chunk = [System.Text.Encoding]::UTF8.GetString($buf, 0, $read)
         $lastSize = $fi.Length
+        $elapsed = [math]::Round($sw.Elapsed.TotalSeconds)
+
+        if (-not $gotResult -and $chunk -match '"type"\s*:\s*"result"') {
+            $gotResult = $true
+            $resultElapsed = $sw.Elapsed.TotalSeconds
+        }
+
+        # Surface phase markers — best-effort substring match against escaped JSON text.
+        $phaseMatches = [regex]::Matches($chunk, '(PHASE GATE|OUTPUT CHECK|MCP PRE-FLIGHT|REGEN ABORT|CHECKPOINT)[^"]{0,160}')
+        foreach ($m in $phaseMatches) {
+            $snippet = ($m.Value -replace '\\n',' ' -replace '\\"','"').Trim()
+            Write-Host ("  [{0}s] {1}" -f $elapsed, $snippet.Substring(0, [Math]::Min(160, $snippet.Length))) -ForegroundColor Cyan
+        }
+
+        # Surface Write tool_use events — the file_path appears in the JSON as
+        # "name":"Write" ... "file_path":"...". Scan for fresh Write events.
+        $writeMatches = [regex]::Matches($chunk, '"name"\s*:\s*"Write"[^}]*?"file_path"\s*:\s*"([^"]+)"')
+        foreach ($m in $writeMatches) {
+            $fp = ($m.Groups[1].Value -replace '\\\\','\').Trim()
+            if (-not $wroteFiles.Contains($fp)) {
+                [void]$wroteFiles.Add($fp)
+                $fpDisp = $fp -replace '.*regen-sample\\', '' -replace '.*regen-sample/', ''
+                Write-Host ("  [{0}s] Write: {1}" -f $elapsed, $fpDisp) -ForegroundColor Green
+            }
+        }
+
+        if ($chunk -match '"name"\s*:\s*"mcp__synapse_sql') {
+            Write-Host ("  [{0}s] mcp:synapse" -f $elapsed) -ForegroundColor DarkCyan
+        }
+        if ($chunk -match '"name"\s*:\s*"mcp__databricks_sql') {
+            Write-Host ("  [{0}s] mcp:databricks" -f $elapsed) -ForegroundColor DarkCyan
+        }
     } catch {}
 }
 
