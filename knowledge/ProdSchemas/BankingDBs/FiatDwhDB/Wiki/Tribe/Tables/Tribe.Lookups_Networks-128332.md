@@ -1,0 +1,33 @@
+# Tribe.Lookups_Networks-128332
+
+> Collection for networks. Parent: Lookups-75520. Child: Network-592401.
+
+| Property | Value |
+|----------|-------|
+| **Schema** | Tribe |
+| **Object Type** | Table |
+| **Key Identifier** | @Id (UNIQUEIDENTIFIER, CLUSTERED PK) |
+| **Partition** | No |
+| **Indexes** | 1 active (+ PK) |
+
+## 1. Business Meaning
+
+Networks collection. Parent: Lookups. Child: Network-592401.
+
+## 2-4. Standard Tribe collection pattern.
+
+## 4. Elements
+
+| # | Element | Type | Nullable | Default | Confidence | Description |
+|---|---------|------|----------|---------|------------|-------------|
+| 1 | @Created | datetime2(7) | NO | getutcdate() | CODE-BACKED | DWH timestamp. |
+| 2 | @Id | uniqueidentifier | NO | - | CODE-BACKED | PK. |
+| 3 | @Lookups@Id-75520 | uniqueidentifier | NO | - | CODE-BACKED | FK. |
+| 4 | Created | datetime | NO | getutcdate() | CODE-BACKED | Source timestamp. |
+
+## 5-9. Standard relationships, dependencies, indexes, queries, no Atlassian sources.
+
+---
+
+*Generated: 2026-04-14 | Quality: 9.0/10*
+*Object: Tribe.Lookups_Networks-128332 | Type: Table*
