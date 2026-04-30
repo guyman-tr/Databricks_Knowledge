@@ -1,0 +1,62 @@
+-- =============================================================================
+-- Databricks ALTER Script: bronze RecurringInvestment.RecurringInvestment.PlanInstances
+-- Generated: 2026-04-30 | tools/uc_bronze/generate_bronze_alters.py
+-- Source wiki: knowledge/ProdSchemas/ExperianceDBs/RecurringInvestment/Wiki/RecurringInvestment/Tables/RecurringInvestment.PlanInstances.md
+-- Layer: bronze
+-- UC Target: main.general.bronze_recurringinvestment_recurringinvestment_planinstances
+-- =============================================================================
+
+-- ---- UC Target: main.general.bronze_recurringinvestment_recurringinvestment_planinstances (business_group=general) ----
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances SET TBLPROPERTIES (
+    'comment' = 'Core table tracking each execution cycle of a recurring investment plan - deposit, order, and position data for every monthly instance. Source: RecurringInvestment.RecurringInvestment.PlanInstances on the RecurringInvestment production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/ExperianceDBs/RecurringInvestment/Wiki/RecurringInvestment/Tables/RecurringInvestment.PlanInstances.md).'
+);
+
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances SET TAGS (
+    'layer' = 'bronze',
+    'source_system' = 'SQL Server',
+    'source_database' = 'RecurringInvestment',
+    'source_schema' = 'RecurringInvestment',
+    'source_table' = 'PlanInstances',
+    'business_group' = 'general',
+    'pipeline' = 'generic_pipeline',
+    'doc_source' = 'tier1_wiki',
+    'doc_generated' = '2026-04-30',
+    'copy_strategy' = 'Override',
+    'refresh_minutes' = '1440'
+);
+
+-- Column Comments
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN InstanceID COMMENT 'Unique auto-incrementing surrogate key for the instance. Used for application lookups. Not part of PK (PK is PlanID+NextOrderDate). (Source: Confluence: "Unique identifier for the recurring investment plan that triggered the open position") (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN PlanID COMMENT 'FK to Plans.ID. Identifies which plan this instance belongs to. Part of composite PK. (Source: Confluence: "Same ID as [RecurringInvestment].[Plans].ID") (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN NextOrderDate COMMENT 'Scheduled execution date for this instance. Part of composite PK. Calculated by Plan Instances Job based on FrequencyID and RepeatsOn. (Source: Confluence: "The upcoming date of the next execution") (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN CreationDate COMMENT 'When this instance record was created by the Plan Instances Job. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositID COMMENT 'Deposit identifier from Money ServiceBus. References Billing DB [Recurring].[Payment]. Also appears in UserDeposits table. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositAmountUsd COMMENT 'DEPRECATED - marked for deletion per Confluence. Deposit amount in USD. Data sourced from Billing DB via Money ServiceBus. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositAmountCurrency COMMENT 'DEPRECATED - marked for deletion per Confluence. Deposit amount in plan currency. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositCycleNumber COMMENT 'Deposit cycle number from Billing system. Identifies which recurring deposit cycle this instance corresponds to. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositDate COMMENT 'When the deposit was made or attempted. Source: Billing DB via Money ServiceBus. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN HighLevelDepositStatusId COMMENT 'High-level deposit outcome: 1=Success, 2=SoftDecline, 3=HardDecline. Source: [Dictionary].[ExecutionResultStatus] in Billing DB per Confluence. See High Level Deposit Status. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositStatusID COMMENT 'Detailed deposit status from Billing DB PaymentStatusId enum. More granular than HighLevelDepositStatusId. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN OrderStatusId COMMENT 'Order lifecycle state from Trading API enum: 1=Received, 2=Placed, 3=Filled, 4=Rejected...11=WaitingForMarket. See Order Status. (Dictionary.OrderStatus) (Source: Confluence confirms Trading enum) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN OrderID COMMENT 'Order identifier from Trading API (TAPI). The ID of the request to open a position before it was opened. (Source: Confluence: "this value is from TAPI") (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN OrderTradeDate COMMENT 'The time that the order needs to be requested from Trading API. Indexed for efficient order processing. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN PositionStatus COMMENT 'Position creation outcome: 1=Success, 2=Failed, 3=InProgress, 4=Unknown, 6=CanceledByUser, 7=ExpiredOrCanceledByEtoro. See Position Status. (Dictionary.PositionStatus) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN PositionAmountUsd COMMENT 'Actual position amount in USD. May differ from plan Amount due to partial fills or market conditions. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN PositionAmountCurrency COMMENT 'Actual position amount in the plan''s currency. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN PositionExecutionDate COMMENT 'When the position was actually opened. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN PositionFailErrorCode COMMENT 'Error code from Trading API''s TradingOpenPositionErrorCodes enum when position open fails. (Source: Confluence) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN NotificationSent COMMENT 'DEPRECATED - marked for deletion per Confluence. Flag indicating if a notification was sent to the client. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN NotificationReason COMMENT 'DEPRECATED - marked for deletion per Confluence. Reason for notification, based on PlanEventCode. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN InstanceStatus COMMENT 'DEPRECATED - marked for deletion per Confluence. Legacy done flag: 1=Done, NULL=not done. Replaced by InstanceStatusID. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN UpdateDate COMMENT 'Last modification timestamp for this instance record. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN Trace COMMENT 'Computed audit column: JSON with connection details. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN ValidFrom COMMENT 'System-versioned period start. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN ValidTo COMMENT 'System-versioned period end. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN InstanceStatusReasonID COMMENT 'Specific reason for the instance''s final status. Maps to Dictionary.PlanEventCode ("same as PlanEventCode" per Confluence). See Plan Event Code. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN InstanceStatusID COMMENT 'Instance lifecycle state: 1=Success, 2=Cancelled, 3=Skipped, 4=UserSkipped, 5=InProgress, 6=Technical Issue, 7=Completed without position. See Instance Status. (Dictionary.InstanceStatusID) (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN MirrorOrderCreated COMMENT 'Copy trading flag: 1=TRUE when mirror order was initiated. NULL for instrument-type plans. See Mirror Order Created. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN MirrorID COMMENT 'ID of the mirror/copy relationship for copy trading instances. NULL for instrument-type plans. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN CopyPositionStatusID COMMENT 'Copy position creation step: 1=RegisterSuccess, 2=AddFundsSuccess, 3=RegisterFailed, 4=AddFundFailed. NULL for instrument-type plans. See Copy Position Status. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN CopyFailErrorCode COMMENT 'Error code for copy position failures. NULL for instrument-type plans. See Copy Fail Error Code. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+ALTER TABLE main.general.bronze_recurringinvestment_recurringinvestment_planinstances ALTER COLUMN DepositFailReason COMMENT 'Reason for deposit failure when applicable. (Tier 1 - upstream wiki, RecurringInvestment.RecurringInvestment.PlanInstances)';
+

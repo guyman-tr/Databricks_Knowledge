@@ -1,0 +1,31 @@
+-- =============================================================================
+-- Databricks ALTER Script: bronze FiatDwhDB.Dictionary.StatusChangeReasons
+-- Generated: 2026-04-30 | tools/uc_bronze/generate_bronze_alters.py
+-- Source wiki: knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Dictionary/Tables/Dictionary.StatusChangeReasons.md
+-- Layer: bronze
+-- UC Target: main.general.bronze_fiatdwhdb_dictionary_statuschangereasons
+-- =============================================================================
+
+-- ---- UC Target: main.general.bronze_fiatdwhdb_dictionary_statuschangereasons (business_group=general) ----
+ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons SET TBLPROPERTIES (
+    'comment' = 'Lookup table defining Balance status change reason values for the fiat platform. Source: FiatDwhDB.Dictionary.StatusChangeReasons on the FiatDwhDB production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Dictionary/Tables/Dictionary.StatusChangeReasons.md).'
+);
+
+ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons SET TAGS (
+    'layer' = 'bronze',
+    'source_system' = 'SQL Server',
+    'source_database' = 'FiatDwhDB',
+    'source_schema' = 'Dictionary',
+    'source_table' = 'StatusChangeReasons',
+    'business_group' = 'general',
+    'pipeline' = 'generic_pipeline',
+    'doc_source' = 'tier1_wiki',
+    'doc_generated' = '2026-04-30',
+    'copy_strategy' = 'Override',
+    'refresh_minutes' = '1440'
+);
+
+-- Column Comments
+ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons ALTER COLUMN Id COMMENT 'Lookup identifier. Primary key. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.StatusChangeReasons)';
+ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons ALTER COLUMN Name COMMENT 'Human-readable name for this value. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.StatusChangeReasons)';
+

@@ -1,0 +1,36 @@
+-- =============================================================================
+-- Databricks ALTER Script: bronze WalletDB.Eligibility.TravelRuleWhitelistedAddresses
+-- Generated: 2026-04-30 | tools/uc_bronze/generate_bronze_alters.py
+-- Source wiki: knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Eligibility/Tables/Eligibility.TravelRuleWhitelistedAddresses.md
+-- Layer: bronze
+-- UC Target: main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses
+-- =============================================================================
+
+-- ---- UC Target: main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses (business_group=bi_db) ----
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses SET TBLPROPERTIES (
+    'comment' = 'Registry of external cryptocurrency addresses that customers have verified ownership of, enabling those addresses to bypass travel rule manual approval for incoming transactions. Source: WalletDB.Eligibility.TravelRuleWhitelistedAddresses on the WalletDB production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Eligibility/Tables/Eligibility.TravelRuleWhitelistedAddresses.md).'
+);
+
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses SET TAGS (
+    'layer' = 'bronze',
+    'source_system' = 'SQL Server',
+    'source_database' = 'WalletDB',
+    'source_schema' = 'Eligibility',
+    'source_table' = 'TravelRuleWhitelistedAddresses',
+    'business_group' = 'bi_db',
+    'pipeline' = 'generic_pipeline',
+    'doc_source' = 'tier1_wiki',
+    'doc_generated' = '2026-04-30',
+    'copy_strategy' = 'Override',
+    'refresh_minutes' = '1440'
+);
+
+-- Column Comments
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN Id COMMENT 'Auto-incrementing surrogate key. Each row represents one verified address-customer-blockchain combination. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN Gcid COMMENT 'Global Customer ID identifying the customer who proved ownership of this address. Used in the uniqueness check: an address whitelisted for one Gcid cannot be claimed by another. Also used by AddWhitelistedAddressAndUpdateTravelRuleStatus to match pending travel rule transactions. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN BlockchainCryptoId COMMENT 'Identifies the blockchain network of the whitelisted address. Values observed: 1=Bitcoin (59%), 2=Ethereum (37%), 18=Cardano (3%), 6 and 19=other chains. Part of the uniqueness constraint alongside Gcid and Address. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN Created COMMENT 'UTC timestamp of when the whitelist entry was created. Set to GETUTCDATE() by all three writer procedures on INSERT. Indexed as part of a composite covering index with Gcid, BlockchainCryptoId, and Address. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN Address COMMENT 'The full blockchain address string that has been verified. Format varies by blockchain: "0x..." for Ethereum, "addr1q..." for Cardano, various formats for Bitcoin. Has a dedicated nonclustered index for fast lookup by GetTravelRuleWhitelistedAddress. The uniqueness enforcement logic checks this column across all customers. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN ProofOfOwnership COMMENT 'The actual proof data - either the cryptographic signature bytes or the signed declaration text. Stored as a large text/blob since cryptographic signatures can be lengthy. Used for compliance audit purposes. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN ProofOfOwnershipTypeId COMMENT 'Method used to verify address ownership. FK to Dictionary.AddressOwnershipProofType: 1=Declaration (legal self-attestation), 2=Signature (cryptographic private key signing). In practice, 100% of current entries use Signature (2). See Address Ownership Proof Type. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
+
