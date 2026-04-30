@@ -36,6 +36,19 @@ function Get-NextBatch {
     if (-not (Test-Path $configPath)) { throw "Config not found: $configPath" }
     if (-not (Test-Path $ssdtTables)) { throw "SSDT path not found: $ssdtTables" }
 
+    # ---- Schema-level blacklist (early exit) -----------------------------
+    # If the requested schema is in object_blacklist.schema_blacklist, return
+    # an empty batch immediately. Used for permanently-out-of-scope schemas
+    # like DWH_staging where per-table inspection is wasted work.
+    $earlyConfig = Get-Content $configPath -Raw | ConvertFrom-Json
+    $schemaBlacklist = @($earlyConfig.databases.synapse_dwh.object_blacklist.schema_blacklist)
+    foreach ($sb in $schemaBlacklist) {
+        if ($sb.schema -eq $SchemaName) {
+            Write-Warning "Schema '$SchemaName' is in object_blacklist.schema_blacklist (reason: $($sb.reason)). Returning empty batch."
+            return @{ Empty = $true; Count = 0; Picked = @(); HeavyCap = $false; Block = "" }
+        }
+    }
+
     # ---- Load ALTER scope (optional gate) --------------------------------
     # When -AlterScopeOnly is set, only objects that are in the lake-bound
     # ALTER scope (mapped to UC OR downstream of mapped) are eligible. This
@@ -196,7 +209,11 @@ function Get-NextBatch {
     }
 
     # ---- Sort: priority asc, then alphabetical ---------------------------
-    $sorted = $candidates | Sort-Object Priority, Name
+    # @(...) wrap is REQUIRED: when $candidates has exactly 1 item, Sort-Object
+    # returns a bare PSCustomObject (not a list). PSCustomObject.Count is $null,
+    # which silently makes the for-loops below never iterate, so a single-item
+    # backlog returns 0 picked. @(...) forces a real array with .Count == 1.
+    $sorted = @($candidates | Sort-Object Priority, Name)
 
     # ---- Compute column count for top (BatchSize+5) candidates ----------
     $colCounts = @{}

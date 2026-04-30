@@ -81,6 +81,12 @@
       },
       "object_blacklist": {
         "description": "Objects matching these patterns are SKIPPED during documentation — frozen/archived tables not worth documenting. Applied across ALL target schemas. Get-NextBatch.ps1 ALSO unions this with each schema's per-schema curated lists at knowledge/synapse/Wiki/{schema}/_blacklist.json and the 'Blacklisted' sections of {schema}/_index.md.",
+        "schema_blacklist": [
+          {
+            "schema": "DWH_staging",
+            "reason": "Per user request 2026-04-30: DWH_staging is permanently out of documentation scope. Staging tier is transient ETL state, not a documentation target. Get-NextBatch.ps1 returns empty immediately for any blacklisted schema, no per-table inspection required."
+          }
+        ],
         "name_patterns": [
           {
             "pattern": "*_HOLD",
@@ -137,11 +143,6 @@
             "action": "skip"
           },
           {
-            "pattern": "*_copy",
-            "reason": "Copy of another table — backup or fork. Not a documentation target.",
-            "action": "skip"
-          },
-          {
             "pattern": "ofir_*",
             "reason": "Developer-prefixed scratch tables (legacy convention).",
             "action": "skip"
@@ -149,6 +150,11 @@
           {
             "pattern": "Ofir*_tmp*",
             "reason": "Developer-prefixed scratch tables (legacy convention, alt casing).",
+            "action": "skip"
+          },
+          {
+            "pattern": "External_*",
+            "reason": "External_* tables are thin pass-through SQL views over the data lake — their data lives upstream in production source DBs. As of 2026-04-30 the bronze-leg pipeline (tools/uc_bronze/) generates UC ALTER COMMENT scripts for these tables directly from the Tier 1 source-DB wikis under knowledge/ProdSchemas/. Synapse-side wikis for External_* duplicate that source documentation and are not a documentation target. Existing External_* wikis (4 historical) are not affected — pattern only stops FUTURE backlog picks.",
             "action": "skip"
           },
           {
