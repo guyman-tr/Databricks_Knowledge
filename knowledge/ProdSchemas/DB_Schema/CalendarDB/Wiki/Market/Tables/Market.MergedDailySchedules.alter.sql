@@ -45,4 +45,7 @@ ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COL
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COLUMN DeltaCloseSecs COMMENT 'Seconds-precision close time offset. (Tier 1 - upstream wiki, CalendarDB.Market.MergedDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COLUMN ValidFrom COMMENT 'Temporal ROW START (named ValidFrom instead of SysStartTime). Auto-set on insert/update. (Tier 1 - upstream wiki, CalendarDB.Market.MergedDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_mergeddailyschedules ALTER COLUMN ValidTo COMMENT 'Temporal ROW END. History retained for 6 months in History.MergedDailySchedules (HISTORY_RETENTION_PERIOD = 6 MONTH). (Tier 1 - upstream wiki, CalendarDB.Market.MergedDailySchedules)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:35:27 UTC
+-- Bronze deploy: CalendarDB batch 1
+-- ====================

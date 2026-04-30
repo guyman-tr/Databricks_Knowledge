@@ -44,4 +44,7 @@ ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedule
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules ALTER COLUMN AppLoginName COMMENT 'Computed audit: application session identity. (Tier 1 - upstream wiki, CalendarDB.Market.ProvidersExchangeDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules ALTER COLUMN SysStartTime COMMENT 'Temporal ROW START. (Tier 1 - upstream wiki, CalendarDB.Market.ProvidersExchangeDailySchedules)';
 ALTER TABLE main.general.bronze_calendardb_market_providersexchangedailyschedules ALTER COLUMN SysEndTime COMMENT 'Temporal ROW END. History in History.ProvidersExchangeDailySchedules. (Tier 1 - upstream wiki, CalendarDB.Market.ProvidersExchangeDailySchedules)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:35:27 UTC
+-- Bronze deploy: CalendarDB batch 1
+-- ====================
