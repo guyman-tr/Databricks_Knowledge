@@ -52,4 +52,7 @@ ALTER TABLE main.bi_db.bronze_recurringinvestment_history_recurringinvestmentpla
 ALTER TABLE main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans ALTER COLUMN HasBackupPayment COMMENT 'Same as parent table RecurringInvestment.Plans.HasBackupPayment. Whether the plan has a fallback payment method. (Tier 1 - upstream wiki, RecurringInvestment.History.RecurringInvestmentPlans)';
 ALTER TABLE main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans ALTER COLUMN MopType COMMENT 'Same as parent table RecurringInvestment.Plans.MopType. Method of Payment type for deposits. (Tier 1 - upstream wiki, RecurringInvestment.History.RecurringInvestmentPlans)';
 ALTER TABLE main.bi_db.bronze_recurringinvestment_history_recurringinvestmentplans ALTER COLUMN AmountUsd COMMENT 'Same as parent table RecurringInvestment.Plans.AmountUsd. Investment amount per cycle in USD. (Tier 1 - upstream wiki, RecurringInvestment.History.RecurringInvestmentPlans)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:48:09 UTC
+-- Bronze deploy: RecurringInvestment batch 1
+-- ====================

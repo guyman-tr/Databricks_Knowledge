@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_planeventcode SET T
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_planeventcode ALTER COLUMN ID COMMENT 'Unique numeric event code. Range-based: 100s=success, 200s=deposit fail, 300s=cancel, 400s=creation fail, 500s=order issues, 600s=position issues, 700s=user actions, 800s=eligibility, 900s=instrument, 1000s=validation, 1100s=compliance, 1200+=position errors. See Plan Event Code. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PlanEventCode)';
 ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_planeventcode ALTER COLUMN EventName COMMENT 'Human-readable event name describing the specific lifecycle event. Phase suffixes (_Phase02, _Phase05) indicate detection phase. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PlanEventCode)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:48:09 UTC
+-- Bronze deploy: RecurringInvestment batch 1
+-- ====================

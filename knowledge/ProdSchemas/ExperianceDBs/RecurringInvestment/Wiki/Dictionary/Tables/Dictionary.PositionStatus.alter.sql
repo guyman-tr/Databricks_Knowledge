@@ -28,4 +28,7 @@ ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_positionstatus
 -- Column Comments
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_positionstatus ALTER COLUMN ID COMMENT 'Unique numeric identifier for the position status. 1=Success, 2=Failed, 3=InProgress, 4=Unknown, 6=NoPositionOrderCanceledByUser, 7=NoPositionOrderExpiredOrCanceledByEtoro. Gap at ID=5 suggests a deprecated status. See Position Status. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PositionStatus)';
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_positionstatus ALTER COLUMN PositionStatus COMMENT 'Human-readable label describing the position creation outcome. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.PositionStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:48:09 UTC
+-- Bronze deploy: RecurringInvestment batch 1
+-- ====================

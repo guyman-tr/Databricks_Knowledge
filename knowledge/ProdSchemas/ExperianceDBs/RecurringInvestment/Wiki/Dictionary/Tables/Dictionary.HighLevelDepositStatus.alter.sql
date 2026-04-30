@@ -28,4 +28,7 @@ ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_highleveldepos
 -- Column Comments
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_highleveldepositstatus ALTER COLUMN ID COMMENT 'Unique numeric identifier for the high-level deposit status. 1=Success, 2=SoftDecline, 3=HardDecline. See High Level Deposit Status. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.HighLevelDepositStatus)';
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_highleveldepositstatus ALTER COLUMN HighLevelDepositStatus COMMENT 'Human-readable label describing the deposit outcome category. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.HighLevelDepositStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:48:09 UTC
+-- Bronze deploy: RecurringInvestment batch 1
+-- ====================

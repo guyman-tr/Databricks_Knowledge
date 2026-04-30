@@ -28,4 +28,7 @@ ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_copypositionst
 -- Column Comments
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_copypositionstatusid ALTER COLUMN ID COMMENT 'Unique numeric identifier for the copy position status. 1=RegisterSuccess, 2=AddFundsSuccess, 3=RegisterFailed, 4=AddFundFailed. See Copy Position Status. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.CopyPositionStatusID)';
 ALTER TABLE main.experience.bronze_recurringinvestment_dictionary_copypositionstatusid ALTER COLUMN Name COMMENT 'Human-readable label for the copy position status step and outcome. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.CopyPositionStatusID)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:48:09 UTC
+-- Bronze deploy: RecurringInvestment batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_instancestatusid SE
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_instancestatusid ALTER COLUMN ID COMMENT 'Unique numeric identifier for the instance status. 1=Success, 2=Cancelled, 3=Skipped, 4=UserSkipped, 5=InProgress, 6=Technical Issue, 7=Completed without position. See Instance Status. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.InstanceStatusID)';
 ALTER TABLE main.bi_db.bronze_recurringinvestment_dictionary_instancestatusid ALTER COLUMN InstanceStatusID COMMENT 'Human-readable label for the instance lifecycle state. Note: column name matches table name, which is a naming convention anomaly - this is the descriptive label, not a foreign key. (Tier 1 - upstream wiki, RecurringInvestment.Dictionary.InstanceStatusID)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-04-30 08:48:09 UTC
+-- Bronze deploy: RecurringInvestment batch 1
+-- ====================
