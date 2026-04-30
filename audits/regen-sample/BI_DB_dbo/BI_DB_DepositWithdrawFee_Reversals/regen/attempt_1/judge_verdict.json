@@ -1,0 +1,147 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_DepositWithdrawFee_Reversals",
+    "elapsed_seconds":  248,
+    "exit_code":  null,
+    "cost_usd":  1.3365,
+    "input_tokens":  2,
+    "output_tokens":  12419,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_DepositWithdrawFee_Reversals",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Customer",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. CAST to VARCHAR(50) from Dim_Customer.ExternalID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added transform context (CAST to VARCHAR), core description preserved verbatim"
+                                              },
+                                              {
+                                                  "column":  "PaymentMethod",
+                                                  "upstream_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay).",
+                                                  "wiki_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). Passthrough from Dim_FundingType.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \u0027USD\u0027, \u0027EUR\u0027 for forex; \u0027AAPL.US\u0027, \u0027TSLA.US\u0027 for US stocks (format: TICKER.EXCHANGE); \u0027BTC\u0027 for crypto. Unique across all instruments. Use this for human-readable instrument identification.",
+                                                  "wiki_quote":  "Ticker symbol (e.g., USD, EUR, GBP). Use this for human-readable currency identification. Passthrough from Dim_Currency.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Changed \u0027instrument identification\u0027 to \u0027currency identification\u0027; dropped stock/crypto ticker examples and \u0027Unique across all instruments\u0027"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Passthrough from Dim_Regulation.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.\u0027"
+                                              },
+                                              {
+                                                  "column":  "Label",
+                                                  "upstream_quote":  "Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = \u0027eToro\u0027).",
+                                                  "wiki_quote":  "Brand name displayed in BackOffice interfaces, reports, and internal systems. Passthrough from Dim_Label.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = eToro)\u0027"
+                                              },
+                                              {
+                                                  "column":  "Depot",
+                                                  "upstream_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports.",
+                                                  "wiki_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Used in admin dashboards, routing logs, and discrepancy reports. Passthrough from Dim_BillingDepot.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Unique across all depots\u0027"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Passthrough from Dim_PlayerLevel.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in BackOffice reporting JOINs and customer-facing UI\u0027"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label (e.g., Normal, Blocked, Trade \u0026 MIMO Blocked). Passthrough from Dim_PlayerStatus.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped uniqueness note, usage context, and trailing spaces warning; added inline examples"
+                                              },
+                                              {
+                                                  "column":  "RegCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English for the customer\u0027s registration country. Passthrough from Dim_Country via snapshot CountryID (withdraw) or Dim_Customer.CountryID (deposit).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Unique per row\u0027 and usage context; added path-specific provenance"
+                                              },
+                                              {
+                                                  "column":  "RegCountryByIP",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English for the customer\u0027s IP-detected country. Passthrough from Dim_Country via Dim_Customer.CountryIDByIP.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped uniqueness and usage notes; added IP-specific context"
+                                              },
+                                              {
+                                                  "column":  "BinCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English for the country associated with the card BIN code. Passthrough from Dim_Country via BinCountryIDAsInteger from Fact_BillingDeposit (deposit) or Fact_BillingWithdraw (withdraw).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped uniqueness and usage notes; added BIN-specific context"
+                                              },
+                                              {
+                                                  "column":  "GuruStatus",
+                                                  "upstream_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration.",
+                                                  "wiki_quote":  "Human-readable PI tier name: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Passthrough from Dim_GuruStatus.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in BackOffice customer views, Trade procedures, and SalesForce integration\u0027"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u002711 T1\u0027 but Elements table contains 12 Tier 1 columns. Off-by-one count error."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Currency",
+                                       "problem":  "Description changes upstream \u0027human-readable instrument identification\u0027 to \u0027human-readable currency identification\u0027 and drops stock/crypto ticker examples. Minor semantic shift from upstream verbatim text."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Regulation, Label, Club, PlayerStatus, GuruStatus, Depot",
+                                       "problem":  "All T1 dim-lookup columns systematically truncate \u0027Used in...\u0027 and \u0027Unique per...\u0027 clauses from upstream descriptions. Pattern indicates bulk edit rather than selective curation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "DepositID, WithdrawPaymentID, CreditID",
+                                       "problem":  "Fact-passthrough columns tagged Tier 2 when upstream wikis (Fact_BillingWithdraw, Fact_Deposit_State) exist in the bundle. Strict tier rules would classify these as Tier 1, though the conditional population logic makes Tier 2 a defensible choice."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Overall",
+                                       "problem":  "No formal Phase Gate Checklist section. Footer says \u0027Phases: 11/14\u0027 but does not enumerate which phases were completed or confirm P2/P3 data validation."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

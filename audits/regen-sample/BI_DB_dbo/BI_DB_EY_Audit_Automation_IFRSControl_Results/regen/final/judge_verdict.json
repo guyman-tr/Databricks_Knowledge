@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_Automation_IFRSControl_Results",
+    "elapsed_seconds":  159,
+    "exit_code":  null,
+    "cost_usd":  0.4426,
+    "input_tokens":  2,
+    "output_tokens":  7648,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_Automation_IFRSControl_Results",
+                    "weighted_score":  8.05,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  7,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 1 + Section 2.2 (Changelog claim)",
+                                       "problem":  "Wiki claims changelog entries (CFD↔Real conversions, ChangeTypeID=13) are included in both Buy and Sell aggregation directions. In the SP, changelog rows enter #auditpos with IsBuy=NULL and PositionTiming=\u0027CFD_To_Real\u0027/\u0027Real_To_CFD\u0027. The #IFRSCompare INSERT filters require IsBuy=0 or IsBuy=1 (NULL doesn\u0027t match) and specific PositionTiming values that exclude changelog types. Changelog rows are dead weight — they never reach the final aggregation. This is a fabricated business rule."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2.3 (Partial close exclusion)",
+                                       "problem":  "Wiki says \u0027Partial close children (IsPartialCloseChild=1) are excluded from Buy/SellShort initial unit counts.\u0027 The SP applies the exclusion to RegulatBuy (IsBuy=1, InitialUnits) and BuyShort (IsBuy=0, InitialUnits) — not SellShort. The exclusion targets the two InitialUnits branches, not \u0027Buy/SellShort\u0027 as stated."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.4 (Diff_Percentage formula)",
+                                       "problem":  "Wiki describes Diff_Percentage as computed from the Diff column, but the SP computes it inline from the raw SUMs: ROUND(ABS(SUM(a)-SUM(b))/SUM(b)*100,4). No intermediate Diff value is used. Minor semantic simplification."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 11/14\u0027 but doesn\u0027t enumerate which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 (Buy discrepancy explanation)",
+                                       "problem":  "The explanation that Buy Diff_Percentage is 80-89% \u0027due to scope differences (position-level calc excludes staking and some CFD categories)\u0027 may need revision given that the changelog claim is incorrect — the actual scope gap may differ from what\u0027s described."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Remove all changelog inclusion claims from Sections 1, 2.2, and 2.3 — changelog rows have IsBuy=NULL and non-matching PositionTiming, so they never enter #IFRSCompare. (2) Fix Section 2.3: partial close exclusion applies to RegulatBuy and BuyShort (InitialUnits branches), not \u0027Buy/SellShort\u0027. (3) Add Phase Gate Checklist section. (4) Revisit Buy discrepancy scope-gap explanation in light of changelog correction.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section"
+                                                           ]
+                                    }
+                }
+}

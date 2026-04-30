@@ -1,0 +1,77 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_Automation_UnrealizedCommissions_PerRegulation",
+    "elapsed_seconds":  134,
+    "exit_code":  null,
+    "cost_usd":  0.732,
+    "input_tokens":  2,
+    "output_tokens":  6422,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_Automation_UnrealizedCommissions_PerRegulation",
+                    "weighted_score":  9.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. 12 distinct values: CySEC, FCA, FSA Seychelles, ASIC \u0026 GAML, FSRA, FinCEN+FINRA, BVI, ASIC, FinCEN, eToroUS, None, NFA. Resolved via `JOIN Dim_Regulation dr1 ON fsc.RegulationID = dr1.DWHRegulationID; SELECT dr1.Name`.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded. Passthrough from position-level audit data (BI_DB_EY_Audit_Opened_Positions), ultimately from Dim_Position.InstrumentID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Tier 1 attribution to Trade.PositionTbl relies on inference through BI_DB_EY_Audit_Opened_Positions (populated by SP_EY_Audit_Opened_Positions, not in bundle). Same uncertainty as InstrumentType but not flagged in review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist table showing which phases were completed/skipped. Footer says Phases: 11/14 but does not itemize."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "Join to BI_DB_EY_Audit_Automation_UnrealizedCommissions_Results says ON Date but should clarify exact column name and type to avoid ambiguity with DateID (int) vs Date (date)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian section empty due to MCP unavailability during regen run. Acknowledged in review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentType",
+                                       "problem":  "Tier 2 assignment is conservative but correct given missing SP_EY_Audit_Opened_Positions code. Review-needed sidecar correctly flags this for future upgrade."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian MCP)"
+                                                           ]
+                                    }
+                }
+}

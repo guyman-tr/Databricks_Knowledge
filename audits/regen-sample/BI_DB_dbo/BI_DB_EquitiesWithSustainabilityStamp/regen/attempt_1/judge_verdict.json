@@ -1,0 +1,62 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EquitiesWithSustainabilityStamp",
+    "elapsed_seconds":  77,
+    "exit_code":  null,
+    "cost_usd":  0.2509,
+    "input_tokens":  2,
+    "output_tokens":  3409,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EquitiesWithSustainabilityStamp",
+                    "weighted_score":  9.3,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key from Trade.Instrument. Identifies the tradeable instrument pair.",
+                                                  "wiki_quote":  "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. Passthrough from Dim_Instrument via JOIN on ISINCode = ISIN.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No semantic loss — upstream text preserved verbatim, lineage context appended after the upstream description"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 but does not enumerate which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Tier 1 description appends \u0027Passthrough from Dim_Instrument via JOIN on ISINCode = ISIN\u0027 after the verbatim upstream quote. Strictly, Tier 1 should be verbatim-only with lineage context in Section 5."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian sources skipped (regen harness mode). Expected behavior, no deduction."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "218 rows (Section 1)",
+                                                                                  "178 distinct tickers (Section 1, Element 1, Element 2)",
+                                                                                  "UpdateDate = 2024-01-30 (Section 1, Section 3.4)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

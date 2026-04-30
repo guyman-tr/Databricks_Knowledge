@@ -1,0 +1,189 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Deposits",
+    "elapsed_seconds":  279,
+    "exit_code":  null,
+    "cost_usd":  0.7428,
+    "input_tokens":  2,
+    "output_tokens":  21346,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Deposits",
+                    "weighted_score":  8.50,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "DepositID",
+                                                  "upstream_quote":  "Primary distribution key (HASH). Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY). Clustered index key in DWH.",
+                                                  "wiki_quote":  "Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Primary distribution key (HASH)\u0027 and \u0027Clustered index key in DWH.\u0027"
+                                              },
+                                              {
+                                                  "column":  "PaymentStatusID",
+                                                  "upstream_quote":  "Current deposit status. Key values: 1=New, 2=Approved (73%), 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE (10.2%). Full 39-value enum in upstream wiki.",
+                                                  "wiki_quote":  "Current deposit status. Key values: 1=New, 2=Approved, 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped distribution percentages (73%, 10.2%) and \u0027Full 39-value enum in upstream wiki\u0027 reference"
+                                              },
+                                              {
+                                                  "column":  "IsFTD",
+                                                  "upstream_quote":  "First Time Deposit flag. 1=this was the customer\u0027s very first approved deposit (drives marketing attribution). 0=repeat deposit or ineligible type. ~60.6% of deposits are FTD=1 in Billing.Deposit. Stored as int in DWH (vs. bit in production).",
+                                                  "wiki_quote":  "First Time Deposit flag. 1=this was the customer\u0027s very first approved deposit (drives marketing attribution). 0=repeat deposit or ineligible type.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027~60.6% of deposits are FTD=1 in Billing.Deposit\u0027 and int/bit type divergence note"
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Deposit amount in the deposit currency (CurrencyID). As of 2025-04-17, capped via CASE expression in ETL to prevent extreme outlier values from distorting aggregations.",
+                                                  "wiki_quote":  "Deposit amount in the deposit currency (CurrencyID). Capped via CASE expression in upstream ETL to prevent extreme outlier values.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027As of 2025-04-17\u0027 date anchor and \u0027from distorting aggregations\u0027 consequence clause"
+                                              },
+                                              {
+                                                  "column":  "RiskManagementStatusID",
+                                                  "upstream_quote":  "Result of the pre-processing risk management check. 69 distinct risk reason codes. NULL=no risk check recorded. Key codes: 1=Success, 35=DeclineByRRE, 47=ML, 49=CustomerToFundingViolation.",
+                                                  "wiki_quote":  "Result of the pre-processing risk management check. 69 distinct risk reason codes. NULL=no risk check recorded. Key codes: 1=Success, 35=DeclineByRRE, 47=ML, 49=CustomerToFundingViolation.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PaymentStatus_PaymentStatusID",
+                                                  "upstream_quote":  "Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally. (Tier 1 — Dictionary.PaymentStatus)",
+                                                  "wiki_quote":  "Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally.",
+                                                  "match":  "YES",
+                                                  "loss":  "Verbatim copy is faithful but the inherited enum values contradict Dim_PaymentStatus Section 1 (2=Approved, 3=Decline in actual data). Issue originated in upstream wiki element table conflicting with upstream Section 1."
+                                              },
+                                              {
+                                                  "column":  "PaymentStatus_Name",
+                                                  "upstream_quote":  "Human-readable status label. UNIQUE constraint. Used in back-office payment management UI and reconciliation reports.",
+                                                  "wiki_quote":  "Human-readable status label. UNIQUE constraint. Used in back-office payment management UI and reconciliation reports.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Passthrough from Dim_Country via Dim_Customer.CountryID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027"
+                                              },
+                                              {
+                                                  "column":  "BINCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Passthrough from Dim_Country via fbd.BinCountryIDAsInteger.",
+                                                  "match":  "NO",
+                                                  "loss":  "Same truncation as Country: dropped \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027"
+                                              },
+                                              {
+                                                  "column":  "Registered",
+                                                  "upstream_quote":  "Account registration date (renamed from Registered). Default=getdate().",
+                                                  "wiki_quote":  "Account registration date. Passthrough from Dim_Customer.RegisteredReal.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027(renamed from Registered)\u0027 rename provenance and \u0027Default=getdate()\u0027 default value note"
+                                              },
+                                              {
+                                                  "column":  "SerialID",
+                                                  "upstream_quote":  "Affiliate (partner) ID under which the customer was acquired (renamed from SerialID). FK to BackOffice.Affiliate. NULL for direct/organic registrations.",
+                                                  "wiki_quote":  "Affiliate (partner) ID under which the customer was acquired. Passthrough from Dim_Customer.AffiliateID (renamed from SerialID in Customer.CustomerStatic). NULL for direct/organic registrations.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027FK to BackOffice.Affiliate\u0027; rename clause reworded"
+                                              },
+                                              {
+                                                  "column":  "Funnel",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.",
+                                                  "wiki_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Resolved from Dim_Funnel on fbd.FunnelID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FunnelFrom",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.",
+                                                  "wiki_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Resolved from Dim_Funnel on Dim_Customer.FunnelFromID.",
+                                                  "match":  "YES",
+                                                  "loss":  "Shares identical base description with Funnel and AcquisitionFunnel; business distinction only in trailing JOIN clause — could confuse analysts"
+                                              },
+                                              {
+                                                  "column":  "AcquisitionFunnel",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.",
+                                                  "wiki_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Resolved from Dim_Funnel on Dim_Customer.FunnelID.",
+                                                  "match":  "YES",
+                                                  "loss":  "Same as FunnelFrom — three funnel columns indistinguishable from lead sentence alone"
+                                              },
+                                              {
+                                                  "column":  "CreditCardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from `Name` in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "wiki_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from `Name` in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DepoName",
+                                                  "upstream_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports.",
+                                                  "wiki_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FundingType",
+                                                  "upstream_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay).",
+                                                  "wiki_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MatchStatusID",
+                                                  "upstream_quote":  "PSP reconciliation match status. Default 0=Unmatched; 3=Matched. Used for provider reconciliation workflows.",
+                                                  "wiki_quote":  "PSP reconciliation match status. Default 0=Unmatched; 3=Matched. Used for provider reconciliation workflows.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Country / BINCountry",
+                                       "problem":  "Both descriptions truncate Dim_Country.Name verbatim: dropped \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 Analyst cannot tell the values are unique (join safety implication) or how the field surfaces in product."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PaymentStatus_PaymentStatusID",
+                                       "problem":  "Inherited enum values from Dim_PaymentStatus element table (\u00271=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally\u0027) contradict Dim_PaymentStatus Section 1 (2=Approved, 3=Decline, 35=DeclineByRRE). An analyst reading the description will have the wrong value map. Writer should have cross-checked the dim\u0027s Section 1 against the element table and written the correct values."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IsFTD",
+                                       "problem":  "Dropped \u0027~60.6% of deposits are FTD=1 in Billing.Deposit\u0027 (distribution context) and \u0027Stored as int in DWH (vs. bit in production)\u0027 (type divergence). The type note matters for CAST compatibility in downstream joins."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Registered",
+                                       "problem":  "Dropped \u0027(renamed from Registered). Default=getdate()\u0027 from Dim_Customer.RegisteredReal upstream description. The rename provenance and default are useful lineage context."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Funnel / FunnelFrom / AcquisitionFunnel",
+                                       "problem":  "All three columns have identical lead descriptions. The distinction (deposit-time funnel vs. customer FunnelFromID vs. customer FunnelID) is buried in a trailing \u0027Resolved from...\u0027 clause. An analyst skimming the table cannot distinguish these three columns from the description alone."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Country + BINCountry: restore full Dim_Country.Name verbatim — add \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 (2) PaymentStatus_PaymentStatusID: do NOT copy the Dim_PaymentStatus element entry blindly; cross-check against Section 1 of that wiki and rewrite enum as: 1=New, 2=Approved, 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE — consistent with BI_DB_Deposits.PaymentStatusID usage. (3) IsFTD: add \u0027~60.6% of deposits are FTD=1 in Billing.Deposit. Note: stored as bit in BI_DB_Deposits (vs. int in Fact_BillingDeposit).\u0027 (4) Registered: add \u0027(renamed from Dim_Customer.RegisteredReal, which is Registered in Customer.CustomerStatic). Default=getdate() at registration time.\u0027 (5) Funnel/FunnelFrom/AcquisitionFunnel: lead each with a distinct sentence — e.g., Funnel=\u0027Funnel context at deposit time (from Fact_BillingDeposit.FunnelID)\u0027, FunnelFrom=\u0027Customer\u0027s from-funnel variant at registration (Dim_Customer.FunnelFromID)\u0027, AcquisitionFunnel=\u0027Customer\u0027s primary acquisition funnel (Dim_Customer.FunnelID)\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

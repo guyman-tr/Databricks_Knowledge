@@ -1,0 +1,87 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_GST_Report",
+    "elapsed_seconds":  148,
+    "exit_code":  null,
+    "cost_usd":  0.9966,
+    "input_tokens":  2,
+    "output_tokens":  7419,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_GST_Report",
+                    "weighted_score":  7.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values.",
+                                                  "wiki_quote":  "Real (funded) customer ID. The primary customer identifier in the DWH ecosystem.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Hash distribution key\u0027, \u0027FK to Dim_Customer (if exists)\u0027, \u002746.4M distinct values\u0027 — FSC-specific context, core meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Values match production Dictionary.Regulation.Name. 8 values observed: FCA, ASIC \u0026 GAML, FSA Seychelles, ASIC, CySEC, MAS, FSRA, BVI.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027; added observed values (enrichment not loss)"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name from eToro Club loyalty program. 6 values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. IDs are NOT in rank order — use Dim_PlayerLevel.Sort for ordering.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Internal, N/A\u0027 from value enumeration, dropped \u0027Used in BackOffice reporting JOINs and customer-facing UI\u0027, rewrote opening phrase"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Club",
+                                       "problem":  "Tier 1 description is paraphrased. Upstream Dim_PlayerLevel.Name says \u0027Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.\u0027 but wiki rewrites entirely and drops Internal/N/A values."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RealCID",
+                                       "problem":  "Tier 1 description drops upstream metadata: \u0027Hash distribution key\u0027, \u0027FK to Dim_Customer (if exists)\u0027, \u002746.4M distinct values\u0027 from Fact_SnapshotCustomer wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Elements",
+                                       "problem":  "Regulation and Club columns list values but not in key=value format (e.g., RegulationID 1=CySEC, 2=FCA). The SP source contains these mappings."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Tier legend only includes T1 and T2 rows. Standard shape requires all 5 tiers listed even if unused."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TicketingFee",
+                                       "problem":  "Element description says \u0027Negated SUM\u0027 without explaining why positive = company revenue. The Gotcha in 3.4 clarifies but element description should be self-contained."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace Club description with verbatim from Dim_PlayerLevel wiki: \u0027Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.\u0027 (2) Replace RealCID description with verbatim from Fact_SnapshotCustomer wiki including \u0027Hash distribution key\u0027 and \u0027FK to Dim_Customer\u0027. (3) Add key=value pairs for Regulation and Club dictionary columns. (4) Expand tier legend to show all 5 tiers.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~3.3M rows",
+                                                                                  "29,902 distinct customers",
+                                                                                  "2023-01-01 to 2026-04-26",
+                                                                                  "Entity distribution: eToro UK=2,091,484, eToro Capital Australia=902,696, NULL=334,762"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

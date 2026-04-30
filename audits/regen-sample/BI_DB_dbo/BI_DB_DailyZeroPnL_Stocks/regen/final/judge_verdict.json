@@ -1,97 +1,121 @@
 {
     "schema":  "BI_DB_dbo",
     "object":  "BI_DB_DailyZeroPnL_Stocks",
-    "elapsed_seconds":  288,
+    "elapsed_seconds":  264,
     "exit_code":  null,
-    "cost_usd":  0.4676,
-    "input_tokens":  3,
-    "output_tokens":  18848,
+    "cost_usd":  0.5702,
+    "input_tokens":  6,
+    "output_tokens":  15475,
     "verdict_json_present":  true,
     "parse_error":  null,
     "verdict":  {
                     "schema":  "BI_DB_dbo",
                     "object":  "BI_DB_DailyZeroPnL_Stocks",
-                    "weighted_score":  7.20,
-                    "verdict":  "FAIL",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
                     "dimension_scores":  {
-                                             "tier_accuracy":  3,
-                                             "upstream_fidelity":  7,
-                                             "completeness":  10,
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
                                              "business_meaning":  9,
                                              "data_evidence":  8,
                                              "shape_fidelity":  9
                                          },
                     "t1_fidelity_table":  [
                                               {
-                                                  "column":  "InstrumentType",
-                                                  "upstream_quote":  "Instrument type string (Stock / ETF). (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.InstrumentType)",
-                                                  "wiki_quote":  "Instrument type string (Stocks / ETF); only values 5=Stocks and 6=ETF are present. (Tier 2 — SP_DailyZeroPnL_Stocks)",
-                                                  "match":  "NO",
-                                                  "loss":  "Should be Tier 1 citing Dealing wiki; dropped source-column reference; \u0027Stock\u0027 rendered as \u0027Stocks\u0027"
-                                              },
-                                              {
-                                                  "column":  "IsCFD",
-                                                  "upstream_quote":  "1 = CFD position, 0 = Real stocks position. Derived from HedgeServerID or IsSettled flag. (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Position.IsSettled / HedgeServerID)",
-                                                  "wiki_quote":  "1 = CFD position, 0 = Real stocks position. Derived from HedgeServerID or IsSettled flag. (Tier 2 — SP_DailyZeroPnL_Stocks)",
-                                                  "match":  "MINOR",
-                                                  "loss":  "Should be Tier 1; dropped source-column detail in parenthetical"
-                                              },
-                                              {
-                                                  "column":  "RealizedZero",
-                                                  "upstream_quote":  "Realized eToro revenue for positions closed on @RepDate: SUM(NetProfit + CommissionOnClose − PrevDayPnL). (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.DailyPnL / NetProfit / CommissionOnClose)",
-                                                  "wiki_quote":  "Realized eToro revenue for positions closed on @RepDate: SUM(NetProfit + CommissionOnClose − PrevDayPnL). (Tier 2 — SP_DailyZeroPnL_Stocks)",
-                                                  "match":  "MINOR",
-                                                  "loss":  "Should be Tier 1; dropped source-column detail"
-                                              },
-                                              {
-                                                  "column":  "UpdateDate",
-                                                  "upstream_quote":  "Batch execution timestamp (GETDATE()). (Tier 3 -- SP_DailyZeroPnL_Stocks, GETDATE())",
-                                                  "wiki_quote":  "Batch execution timestamp (GETDATE()). (Tier 2 — SP_DailyZeroPnL_Stocks)",
-                                                  "match":  "NO",
-                                                  "loss":  "Tier 3 downgraded to Tier 2; GETDATE() is canonical batch metadata and the Dealing wiki explicitly marks it Tier 3"
+                                                  "column":  "HedgeServerID",
+                                                  "upstream_quote":  "FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl)",
+                                                  "match":  "YES",
+                                                  "loss":  null
                                               },
                                               {
                                                   "column":  "Industry",
-                                                  "upstream_quote":  "Industry classification of the instrument (from Dim_Instrument). (Tier 2 -- SP_DailyZeroPnL_Stocks, DWH_dbo.Dim_Instrument.Industry)",
-                                                  "wiki_quote":  "Industry classification of the instrument (from Dim_Instrument). (Tier 2 — SP_DailyZeroPnL_Stocks)",
-                                                  "match":  "NO",
-                                                  "loss":  "Should be Tier 1 (mirror passthrough from Dealing); dropped source-column reference"
+                                                  "upstream_quote":  "Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData. (Tier 1 — Trade.InstrumentMetaData)",
+                                                  "wiki_quote":  "Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData. (Tier 1 — Trade.InstrumentMetaData)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData)",
+                                                  "wiki_quote":  "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. DWH note: ISNULL wraps NULL to \u0027Unknown\u0027. (Tier 1 — Dictionary.Regulation)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Tier tag format changed from \u0027(Tier 1 - upstream wiki, Dictionary.Regulation)\u0027 to \u0027(Tier 1 — Dictionary.Regulation)\u0027; additive ISNULL note is non-lossy. No semantic loss."
+                                              },
+                                              {
+                                                  "column":  "InstrumentName",
+                                                  "upstream_quote":  "Computed: TDCUR_BUY.Abbreviation + \u0027/\u0027 + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument)",
+                                                  "wiki_quote":  "Computed: TDCUR_BUY.Abbreviation + \u0027/\u0027 + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument)",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Currency)",
+                                                  "wiki_quote":  "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Currency)",
+                                                  "match":  "YES",
+                                                  "loss":  null
                                               }
                                           ],
                     "issues":  [
                                    {
-                                       "severity":  "high",
-                                       "column_or_section":  "UpdateDate",
-                                       "problem":  "Tagged Tier 2 but should be Tier 3. The Dealing_DailyZeroPnL_Stocks wiki (which exists at knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_DailyZeroPnL_Stocks.md) explicitly marks UpdateDate as \u0027(Tier 3 -- SP_DailyZeroPnL_Stocks, GETDATE())\u0027. GETDATE() is canonical batch metadata and the wiki\u0027s own tier legend defines Tier 3 as \u0027Batch-system metadata; no upstream traceability\u0027. Footer incorrectly shows 0 T3."
+                                       "severity":  "low",
+                                       "column_or_section":  "MifID",
+                                       "problem":  "Known values 1, 4, 5 are in the review-needed sidecar (live-data confirmed) but the element description provides no inline key=value decoding. Analyst cannot resolve MifID values without consulting Dim_MifidCategorization."
                                    },
                                    {
-                                       "severity":  "high",
-                                       "column_or_section":  "All 26 elements",
-                                       "problem":  "BI_DB_DailyZeroPnL_Stocks is a schema-identical migration of Dealing_dbo.Dealing_DailyZeroPnL_Stocks. The Dealing wiki IS present in the knowledge base. Per tier rules, passthroughs WITH upstream wiki present must be Tier 1. The writer\u0027s review-needed R5 reasoning (\u0027upstream already documented them as Tier 2 so BI_DB is also Tier 2\u0027) is incorrect: the Dealing table\u0027s own internal tier does not cascade; the BI_DB columns are Tier 1 relative to their immediate upstream (Dealing_DailyZeroPnL_Stocks)."
+                                       "severity":  "low",
+                                       "column_or_section":  "Regulation",
+                                       "problem":  "Tier tag format changed from upstream\u0027s \u0027(Tier 1 - upstream wiki, Dictionary.Regulation)\u0027 to \u0027(Tier 1 — Dictionary.Regulation)\u0027. Semantically equivalent but not character-for-character verbatim."
                                    },
                                    {
-                                       "severity":  "high",
-                                       "column_or_section":  "Upstream bundle",
-                                       "problem":  "The harness bundle incorrectly reported \u0027NO UPSTREAM WIKI resolvable\u0027 for this object. The Dealing_DailyZeroPnL_Stocks wiki (knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_DailyZeroPnL_Stocks.md) exists, was referenced by the writer in the lineage and review-needed sidecar, and was clearly consulted for descriptions (near-verbatim matches). The harness resolution step must be fixed to search for migration source table wikis."
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "\u0027Phases: 11/14\u0027 does not enumerate which 11 phases completed. Makes it impossible to verify whether P2 (row counts) and P3 (distributions) gates were passed. Data claims (197.6M rows, regulation percentages) appear credible but are unattested."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "StockIndex",
+                                       "problem":  "Correctly tagged Tier 3 with no upstream wiki. Review-needed item to create BI_DB_IndexesMapping_Static wiki is appropriate. Not a wiki error."
                                    },
                                    {
                                        "severity":  "medium",
-                                       "column_or_section":  "NOP",
-                                       "problem":  "Description drops FX conversion detail. Dealing wiki: \u0027Net Open Position in USD for open positions in the group. (Tier 2 -- SP_DailyZeroPnL_Stocks, BI_DB_dbo.BI_DB_PositionPnL.NOP via FX conversion)\u0027. BI_DB wiki omits \u0027via FX conversion\u0027 — semantically important for analysts interpreting USD values."
-                                   },
-                                   {
-                                       "severity":  "medium",
-                                       "column_or_section":  "OpenPositionValue",
-                                       "problem":  "Description semantic drift from upstream. Dealing wiki: \u0027computed from NOP and FX rate\u0027. BI_DB wiki: \u0027units × price\u0027. These are not equivalent — the actual computation uses NOP and FX-rate conversion, not raw units × price multiplication."
+                                       "column_or_section":  "_upstream_bundle.md",
+                                       "problem":  "The upstream bundle incorrectly declared \u0027NO UPSTREAM WIKI was resolvable for any source.\u0027 Dim_Position.md, Dim_Instrument.md, and Dim_Regulation.md all exist in knowledge/synapse/Wiki/ and were correctly used by the writer. This is a harness defect that could cause a false FAIL on re-runs if the bundle is trusted without verification."
                                    }
                                ],
-                    "regeneration_feedback":  "Re-run with: (1) Fix harness — add knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_DailyZeroPnL_Stocks.md to the upstream bundle before regeneration. (2) Fix UpdateDate to Tier 3: \u0027(Tier 3 — Dealing_dbo.Dealing_DailyZeroPnL_Stocks)\u0027 verbatim. (3) Promote all 25 remaining passthrough columns to Tier 1, citing Dealing_dbo.Dealing_DailyZeroPnL_Stocks as origin, using verbatim descriptions from that wiki. (4) Fix NOP description to include \u0027via FX conversion\u0027. (5) Fix OpenPositionValue to \u0027computed from NOP and FX rate\u0027. (6) Update footer tier counts to 25 T1, 0 T2, 1 T3, 0 T4.",
+                    "regeneration_feedback":  "Wiki PASSes at 8.95. No regeneration required. If iterating for polish: (1) Add inline key=value pairs to MifID description once Dim_MifidCategorization wiki is available (known values: 1, 4, 5). (2) Enumerate completed phases in footer to make P2/P3 status unambiguous. (3) Fix upstream bundle assembly — Dim_Position.md, Dim_Instrument.md, Dim_Regulation.md must resolve correctly on future regen passes.",
                     "stats_check":  {
                                         "table_level_stats_in_descriptions":  [
-
+                                                                                  "197.6M rows (Section 1)",
+                                                                                  "2019-01-01 to 2024-02-09 date range (Section 1)",
+                                                                                  "Stocks 177M rows (89.7%), ETF 20M rows (10.3%) (Section 3.4)",
+                                                                                  "CySEC 77.6M, FCA 53.4M, ASIC \u0026 GAML 33.7M (Section 1)"
                                                                               ],
                                         "skipped_phases":  [
-                                                               "phases 12, 13, 14 (footer reports 11/14 completed; specific skipped phases not enumerated in footer)"
+                                                               "3 phases unnamed — footer says 11/14 without listing which"
                                                            ]
                                     }
                 }

@@ -1,0 +1,161 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Deposit_Reversals_PIPs",
+    "elapsed_seconds":  368,
+    "exit_code":  null,
+    "cost_usd":  1.0274,
+    "input_tokens":  2,
+    "output_tokens":  25302,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Deposit_Reversals_PIPs",
+                    "weighted_score":  6.40,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID (RealCID). Hash distribution key. References Dim_Customer.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops \u0027platform-internal primary key\u0027, \u0027Assigned at registration\u0027, \u0027Unique within etoro DB\u0027, \u0027universal customer identifier\u0027 context; adds DWH-specific distribution note not from upstream"
+                                              },
+                                              {
+                                                  "column":  "Customer",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \u0027USD\u0027, \u0027EUR\u0027 for forex; \u0027AAPL.US\u0027, \u0027TSLA.US\u0027 for US stocks (format: TICKER.EXCHANGE); \u0027BTC\u0027 for crypto. Unique across all instruments. Use this for human-readable instrument identification.",
+                                                  "wiki_quote":  "Ticker symbol / ISO currency abbreviation. Resolved via Dim_Currency.Abbreviation on CurrencyID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Introduces factually wrong term \u0027ISO currency abbreviation\u0027 — eToro tickers for stocks (e.g. AAPL.US) are NOT ISO currency codes; drops specific examples, exchange-format notation, and uniqueness claim"
+                                              },
+                                              {
+                                                  "column":  "ExchangeRate",
+                                                  "upstream_quote":  "Exchange rate from deposit currency to USD at processing time. Cannot be 0 in production.",
+                                                  "wiki_quote":  "Exchange rate from rollback tracking or Fact_BillingDeposit. Cannot be 0 in production.",
+                                                  "match":  "NO",
+                                                  "loss":  "Incorrectly claims source includes rollback tracking; SP source code shows ONLY BDEP.ExchangeRate (Fact_BillingDeposit). Also drops \u0027from deposit currency to USD at processing time.\u0027"
+                                              },
+                                              {
+                                                  "column":  "RegulationID",
+                                                  "upstream_quote":  "Customer\u0027s assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation.",
+                                                  "wiki_quote":  "Customer\u0027s regulatory jurisdiction from Fact_SnapshotCustomer at event date. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, etc. FK to Dim_Regulation.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops end-of-day change semantics from RegulationChangeLog; truncates enum (9 of 15 IDs missing: eToroUS, FinCEN, FinCEN+FINRA, FSA Seychelles, ASIC\u0026GAML, FSRA, FINRAONLY, MAS, NYDFS+FINRA)"
+                                              },
+                                              {
+                                                  "column":  "PlayerLevelID",
+                                                  "upstream_quote":  "Primary key identifying the loyalty tier. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal (excluded), 5=Silver, 6=Platinum Plus, 7=Diamond. 0=N/A (DWH ETL placeholder). IDs are NOT in rank order -- use Sort for ordering. FK from Dim_Customer. Excludes Internal in customer-facing queries: WHERE PlayerLevelID \u003c\u003e 4.",
+                                                  "wiki_quote":  "eToro Club loyalty tier from Fact_SnapshotCustomer. 1=Bronze, 2=Platinum, 3=Gold, 5=Silver, 6=Platinum Plus, 7=Diamond, 4=Internal (excluded). FK to Dim_PlayerLevel.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027IDs are NOT in rank order -- use Sort for ordering\u0027 (important sort gotcha); drops 0=N/A placeholder; drops \u0027WHERE PlayerLevelID \u003c\u003e 4\u0027 filter guidance"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Regulation short code resolved via Dim_Regulation.Name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops usage context (\u0027Used in V_Dim_Customer\u0027) and production-match guarantee"
+                                              },
+                                              {
+                                                  "column":  "BaseExchangeRate",
+                                                  "upstream_quote":  "Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate. Added by Adi (19/09/2019).",
+                                                  "wiki_quote":  "Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops attribution metadata only; semantic meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "eToro Club tier name. Resolved via Dim_PlayerLevel.Name on PlayerLevelID. 1=Bronze, 2=Platinum, 3=Gold, 5=Silver, 6=Platinum Plus, 7=Diamond.",
+                                                  "match":  "NO",
+                                                  "loss":  "Mixes in ID-to-name mapping from PlayerLevelID element (not from Name element); drops \u0027Internal, N/A\u0027 values; drops usage context; upstream Name element does not contain ID mappings"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Account restriction state name. Resolved via Dim_PlayerStatus.Name on PlayerStatusID from Fact_SnapshotCustomer.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops critical operational gotcha about trailing spaces (RTRIM required for string comparisons); drops \u0027Unique per status\u0027; drops BackOffice usage context"
+                                              },
+                                              {
+                                                  "column":  "RegCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Registration country name resolved via Dim_Country.Name on Fact_SnapshotCustomer.CountryID.",
+                                                  "match":  "NO",
+                                                  "loss":  "\u0027Full country name in English\u0027 dropped; \u0027Unique per row\u0027 dropped; usage context dropped"
+                                              },
+                                              {
+                                                  "column":  "RegCountryByIP",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Country detected from customer IP at registration. Resolved via Dim_Country.Name on Dim_Customer.CountryIDByIP.",
+                                                  "match":  "NO",
+                                                  "loss":  "Same Dim_Country.Name pattern as RegCountry; \u0027Full country name in English\u0027 and \u0027Unique per row\u0027 dropped"
+                                              },
+                                              {
+                                                  "column":  "CardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from `Name` in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "wiki_quote":  "Card network brand name. Resolved via Dim_CardType.CarTypeName on Fact_BillingDeposit.CardTypeIDAsInteger. Active: 1=Visa, 2=Master Card, 3=Diners, 8=Maestro.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops full 18-value enum (only 4 shown); drops unique-constraint warning; drops \u0027Renamed from Name in production\u0027; \u0027Card brand name\u0027 → \u0027Card network brand name\u0027"
+                                              },
+                                              {
+                                                  "column":  "BinCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Country of the card BIN resolved via Dim_Country.Name on Fact_BillingDeposit.BinCountryIDAsInteger.",
+                                                  "match":  "NO",
+                                                  "loss":  "Same Dim_Country.Name pattern; \u0027Full country name in English\u0027 and \u0027Unique per row\u0027 dropped"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Currency",
+                                       "problem":  "Wiki description says \u0027Ticker symbol / ISO currency abbreviation\u0027 but Dim_Currency.Abbreviation contains stock tickers like \u0027AAPL.US\u0027 and \u0027TSLA.US\u0027 — these are NOT ISO currency abbreviations. An analyst would incorrectly assume ISO codes and fail joins against currency lookup tables. Upstream wiki is explicit: \u0027Ticker symbol. AAPL.US, TSLA.US for US stocks (format: TICKER.EXCHANGE)\u0027. The term \u0027ISO currency abbreviation\u0027 is factually wrong."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PlayerStatus",
+                                       "problem":  "Drops the operational gotcha from Dim_PlayerStatus.Name: \u0027Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.\u0027 An analyst filtering or joining on PlayerStatus string values without RTRIM would silently get wrong results."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "ExchangeRate",
+                                       "problem":  "Wiki says \u0027Exchange rate from rollback tracking or Fact_BillingDeposit.\u0027 SP source code shows ONLY BDEP.ExchangeRate (Fact_BillingDeposit) is used for ExchangeRate — rollback tracking table is used for ExchangeFee and rollback amounts but NOT for ExchangeRate. The lineage file has the same error. Misleads analysts about the source."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Label",
+                                       "problem":  "Tagged (Tier 2 — SP_Deposit_Reversals_PIPs) but SP does `dpl.Name AS [Label]` with explicit JOIN to Dim_PlayerLevel on PlayerLevelID. This is a dim-lookup passthrough — per tier rules must be (Tier 1 — Dictionary.PlayerLevel). The SP quirk (Label column contains PlayerLevel names, not Label names) should be documented in the description, not used to demote the tier."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Section 4",
+                                       "problem":  "Footer states \u002712 T1, 25 T2\u0027 (12+25=37) but actual Element table count is 14 Tier 1 and 23 Tier 2 (also 37). Review-needed sidecar lists 14 column names under \u0027Tier 1 (12 columns)\u0027 — an internal inconsistency in both files."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Fix Currency (row 12) — replace \u0027ISO currency abbreviation\u0027 with verbatim Dim_Currency.Abbreviation upstream: \u0027Ticker symbol. AAPL.US, TSLA.US for US stocks (format: TICKER.EXCHANGE); BTC for crypto. Unique across all instruments.\u0027 (2) Fix PlayerStatus (row 28) — append verbatim from Dim_PlayerStatus.Name: \u0027Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.\u0027 (3) Fix ExchangeRate (row 13) — remove \u0027rollback tracking\u0027 as a source; per SP code ExchangeRate is ONLY from Fact_BillingDeposit.ExchangeRate (BDEP.ExchangeRate). Also fix lineage file. (4) Re-tag Label (row 19) as (Tier 1 — Dictionary.PlayerLevel); keep the SP-quirk note in the description. (5) Fix footer to 14 T1, 23 T2. (6) Re-quote RegCountry, RegCountryByIP, BinCountry from Dim_Country.Name verbatim: \u0027Full country name in English. Unique per row.\u0027 prefix each. (7) Add PlayerLevelID sort gotcha: \u0027IDs are NOT in rank order -- use Sort for ordering.\u0027 (8) Re-quote Club from Dim_PlayerLevel.Name (not from PlayerLevelID element): \u0027Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A.\u0027",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

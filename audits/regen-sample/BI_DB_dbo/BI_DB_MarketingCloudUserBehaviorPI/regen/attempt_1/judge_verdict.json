@@ -1,0 +1,92 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_MarketingCloudUserBehaviorPI",
+    "elapsed_seconds":  155,
+    "exit_code":  null,
+    "cost_usd":  0.6601,
+    "input_tokens":  2,
+    "output_tokens":  8245,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_MarketingCloudUserBehaviorPI",
+                    "weighted_score":  7.40,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Fact_UserPageViews.RealCID (renamed).",
+                                                  "match":  "YES",
+                                                  "loss":  "None — core text verbatim, lineage context appended"
+                                              },
+                                              {
+                                                  "column":  "AccountId",
+                                                  "upstream_quote":  "Salesforce CRM Account record ID (18-char Salesforce ID). Links the trading account to the SF Account. NULL if not yet synced.",
+                                                  "wiki_quote":  "Salesforce CRM Account record ID (18-char Salesforce ID). Links the trading account to the SF Account. NULL if not yet synced. Post-load UPDATE from Dim_Customer.SalesForceAccountID via JOIN on CID=RealCID.",
+                                                  "match":  "YES",
+                                                  "loss":  "None — core text verbatim, lineage context appended"
+                                              },
+                                              {
+                                                  "column":  "CIDViewed",
+                                                  "upstream_quote":  "No upstream wiki exists (Fact_UserPageViews is unresolved)",
+                                                  "wiki_quote":  "Customer ID of the Popular Investor whose profile was viewed. FK to Dim_Customer.RealCID. Passthrough from Fact_UserPageViews.CIDViewed.",
+                                                  "match":  "NO",
+                                                  "loss":  "Wrongly tagged Tier 1 — Fact_UserPageViews has no wiki. Description is writer-authored, not inherited from any upstream wiki."
+                                              },
+                                              {
+                                                  "column":  "UserPI",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive). Passthrough from Dim_Customer.UserName via JOIN on CIDViewed=RealCID. Represents the Popular Investor\u0027s display name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027enforced via UserName_LOWER computed column index\u0027 detail; added PI display name context not in upstream."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CIDViewed",
+                                       "problem":  "Tagged Tier 1 — Fact_UserPageViews but Fact_UserPageViews has no wiki in the bundle. Tier 1 requires verbatim copy from a documented upstream wiki. Should be Tier 3 (source identified, no upstream wiki available)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "UserPI",
+                                       "problem":  "Paraphrases Dim_Customer.UserName description — drops \u0027enforced via UserName_LOWER computed column index\u0027 and adds \u0027Represents the Popular Investor\u0027s display name\u0027 which is not in the upstream wiki. Tier 1 columns must be verbatim."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "DateID",
+                                       "problem":  "Lineage file says \u0027Passthrough (filtered to @DateID)\u0027 from Fact_UserPageViews but Elements table tags it Tier 2 — SP_MarketingCloudUserBehavior. Inconsistent: if passthrough from undocumented source, should be Tier 3; if SP-derived from @date parameter, lineage should say so."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property Table",
+                                       "problem":  "Missing UC Target row. Completeness checklist requires Production Source, Refresh, Distribution, and UC Target in the property table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00274 T1\u0027 but CIDViewed\u0027s Tier 1 attribution is invalid (no upstream wiki). Corrected count would be 3 T1, 9 T2, 1 T3."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag CIDViewed as Tier 3 (Fact_UserPageViews has no wiki — cannot be Tier 1). (2) Fix UserPI to quote Dim_Customer.UserName verbatim: include \u0027enforced via UserName_LOWER computed column index\u0027. (3) Resolve DateID tier inconsistency between lineage (passthrough) and elements (Tier 2). (4) Add UC Target to property table. (5) Update footer tier breakdown to reflect corrected assignments.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2",
+                                                               "P3"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,105 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_QSR_Balance_New",
+    "elapsed_seconds":  178,
+    "exit_code":  null,
+    "cost_usd":  1.2081,
+    "input_tokens":  2,
+    "output_tokens":  9388,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_QSR_Balance_New",
+                    "weighted_score":  6.65,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulatory authority governing this customer at quarter-end. Dim-lookup passthrough from Dim_Regulation.Name via Fact_SnapshotCustomer.RegulationID. 12 values: CySEC, FCA, BVI, ASIC \u0026 GAML, FinCEN+FINRA, FinCEN, ASIC, FSA Seychelles, eToroUS, FSRA, NFA, None.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027, rewrote opening clause from \u0027Short code for the regulation\u0027 to \u0027Short code for the regulatory authority governing this customer at quarter-end\u0027"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Account restriction state label at quarter-end. Dim-lookup passthrough from Dim_PlayerStatus.Name via Fact_SnapshotCustomer.PlayerStatusID. 9 values observed: Normal, Blocked, Block Deposit \u0026 Trading, Pending Verification, Blocked Upon Request, Trade \u0026 MIMO Blocked, Deposit Blocked, Warning, Copy Block. Note: some values have trailing spaces.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Human-readable\u0027, \u0027Unique per status\u0027, \u0027Used in BackOffice UI, compliance reports, and monitoring dashboards\u0027"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English at quarter-end. Dim-lookup passthrough from Dim_Country.Name via Fact_SnapshotCustomer.CountryID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027"
+                                              },
+                                              {
+                                                  "column":  "ClientBalanceEnd",
+                                                  "upstream_quote":  "ISNULL(InProcessCashouts,0) + CASE WHEN NetEquity - BonusCredit \u003e 0 THEN NetEquity - BonusCredit WHEN NetEquity \u003c 0 THEN NetEquity ELSE 0 END",
+                                                  "wiki_quote":  "Total client liabilities at quarter-end — what eToro owes the customer (real money, excluding promotional credit). ISNULL(V_Liabilities.Liabilities, 0). EUR rows divided by ECB Rate.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream is formula-style, not prose. Wiki provides business interpretation from V_Liabilities Section 1 but not verbatim."
+                                              },
+                                              {
+                                                  "column":  "ClientBalanceEndRealCrypto",
+                                                  "upstream_quote":  "ISNULL(PositionPnLCryptoReal, 0) + ISNULL(TotalRealCrypto, 0)",
+                                                  "wiki_quote":  "Liabilities from real (settled) crypto positions at quarter-end. ISNULL(V_Liabilities.LiabilitiesCryptoReal, 0). EUR rows divided by ECB Rate.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream is formula-style. Wiki adds semantic description not present in upstream column entry."
+                                              },
+                                              {
+                                                  "column":  "MifidCategory",
+                                                  "upstream_quote":  "Human-readable classification label. Used in compliance dashboards and regulatory reports.",
+                                                  "wiki_quote":  "MiFID II client classification tier name at quarter-end. Dim-lookup passthrough from Dim_MifidCategorization.Name via Fact_SnapshotCustomer.MifidCategorizationID. Values: None, Retail, Professional, Elective professional, Retail Pending, Pending.",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely rewritten. Dropped \u0027Human-readable classification label. Used in compliance dashboards and regulatory reports.\u0027"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Regulation, PlayerStatus, Country, MifidCategory",
+                                       "problem":  "All 4 dim-lookup Tier 1 columns have upstream prose descriptions in their respective dimension wikis (Dim_Regulation.Name, Dim_PlayerStatus.Name, Dim_Country.Name, Dim_MifidCategorization.Name) but the writer rewrote every description instead of quoting verbatim. Key content lost includes usage contexts (\u0027Used in BackOffice UI\u0027), uniqueness constraints (\u0027Unique per status\u0027), and application contexts (\u0027Used in UI dropdowns, compliance documents\u0027)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00274 T1, 31 T2\u0027 but Elements table contains 6 Tier 1 columns (Regulation, PlayerStatus, Country, ClientBalanceEnd, ClientBalanceEndRealCrypto, MifidCategory) and 29 Tier 2. Writer miscounted."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ClientBalanceEnd, ClientBalanceEndRealCrypto",
+                                       "problem":  "Tagged Tier 1 from V_Liabilities but V_Liabilities marks both Liabilities and LiabilitiesCryptoReal as T2 (computed columns). SP applies ISNULL + EUR currency division. Tier 2 from SP_Q_QSR_New may be more appropriate, or if Tier 1, the description should quote V_Liabilities Section 1 business meaning verbatim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Tier legend only shows T1 and T2 rows. For shape conformance, T3-T5 rows should be listed even if count is 0."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "MifidCategory",
+                                       "problem":  "Upstream Dim_MifidCategorization wiki provides rich business context about MiFID II leverage caps, investor protection, and margin requirements. Wiki captured value list but dropped all business context about what each tier means for the customer."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Quote Tier 1 dim-lookup descriptions VERBATIM from upstream wikis — Dim_Regulation.Name, Dim_PlayerStatus.Name, Dim_Country.Name, Dim_MifidCategorization.Name — then append QSR-specific context (value counts, trailing spaces) AFTER the verbatim quote. (2) Fix footer tier counts to 6 T1, 29 T2. (3) Reconsider ClientBalanceEnd/ClientBalanceEndRealCrypto tier: if kept as T1, quote V_Liabilities §1 business meaning verbatim; if re-tagged T2, update footer accordingly. (4) Add full tier legend (T1–T5) in Section 4 even for unused tiers.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "IsZeroBalance (Q4 2023: 61% NonZero, 39% Zero)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

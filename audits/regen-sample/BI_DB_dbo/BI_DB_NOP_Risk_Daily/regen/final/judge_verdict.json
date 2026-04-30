@@ -1,0 +1,92 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_NOP_Risk_Daily",
+    "elapsed_seconds":  92,
+    "exit_code":  null,
+    "cost_usd":  0.6202,
+    "input_tokens":  2,
+    "output_tokens":  4702,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_NOP_Risk_Daily",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "DateID",
+                                                  "upstream_quote":  "Snapshot date as YYYYMMDD; partition key.",
+                                                  "wiki_quote":  "Snapshot date as YYYYMMDD; partition key.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Traded instrument.",
+                                                  "wiki_quote":  "Traded instrument.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsSettled",
+                                                  "upstream_quote":  "1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog (ChangeTypeID = 13) when applicable.",
+                                                  "wiki_quote":  "1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog (ChangeTypeID = 13) when applicable.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentDisplayName",
+                                                  "upstream_quote":  "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs.",
+                                                  "wiki_quote":  "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. Passthrough from Dim_Instrument.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Passthrough from Dim_Instrument\u0027 — no semantic loss, additive context only"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (InstrumentType, SellBuy, IsSettled)",
+                                       "problem":  "Dictionary columns with ≤15 distinct values lack inline key=value pairs in Elements table. Values documented in Section 2 but not inline per completeness checklist."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "DateID",
+                                       "problem":  "Element description says \u0027partition key\u0027 inherited from BI_DB_PositionPnL upstream, but this table has no PARTITION clause — DateID is the clustered index column only. Misleading for analysts querying this specific table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No formal Phase Gate Checklist with explicit P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 without specifying which were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Data staleness (max DateID = 20240116, over 2 years old) noted in review-needed sidecar but not called out prominently in Section 1 summary for analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentDisplayName",
+                                       "problem":  "Minor addition of \u0027Passthrough from Dim_Instrument\u0027 beyond the verbatim upstream text. Not semantic loss but deviates from strict verbatim requirement."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)",
+                                                               "3 other unidentified phases"
+                                                           ]
+                                    }
+                }
+}

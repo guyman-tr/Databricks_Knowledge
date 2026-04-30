@@ -1,0 +1,161 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_Cashouts",
+    "elapsed_seconds":  186,
+    "exit_code":  null,
+    "cost_usd":  1.0752,
+    "input_tokens":  2,
+    "output_tokens":  11550,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_Cashouts",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExternalID",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added resolution note; upstream core preserved"
+                                              },
+                                              {
+                                                  "column":  "WithdrawID",
+                                                  "upstream_quote":  "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+                                                  "wiki_quote":  "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "WithdrawPaymentID",
+                                                  "upstream_quote":  "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events. Used to deduplicate WithdrawProcessingID rows in the ETL.",
+                                                  "wiki_quote":  "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events. Used to deduplicate WithdrawProcessingID rows in the ETL.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded.",
+                                                  "wiki_quote":  "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Position size in currency. Must be \u003e= 0. Stored in dollars (PositionOpen divides by 100 from cents).",
+                                                  "wiki_quote":  "Position size in currency. Must be \u003e= 0. Stored in dollars (PositionOpen divides by 100 from cents). DWH note: in this cashout-specific table, Amount represents the cashout/refund/chargeback amount for ActionTypeIDs 8, 11, 12, 13, 37 sourced from History.Credit via Fact_CustomerAction.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added DWH context note; upstream core preserved verbatim"
+                                              },
+                                              {
+                                                  "column":  "PaymentMethod",
+                                                  "upstream_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay).",
+                                                  "wiki_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). Resolved via Dim_BillingDepot.FundingTypeID → Dim_FundingType.Name. NULL when no matching billing withdraw row exists.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added resolution path and NULL semantics"
+                                              },
+                                              {
+                                                  "column":  "Depot",
+                                                  "upstream_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports.",
+                                                  "wiki_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports. Resolved from Fact_BillingWithdraw.DepotID. NULL when no matching billing withdraw row exists.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added resolution path and NULL note"
+                                              },
+                                              {
+                                                  "column":  "CardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from Name in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "wiki_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from Name in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital. Resolved from Fact_BillingWithdraw.CardTypeIDAsInteger via Dim_CardType.CarTypeName. NULL for non-card payment methods.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added resolution path and NULL note"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the customer\u0027s regulatory jurisdiction at the time of the event. Values: CySEC, FCA, FSA Seychelles, FinCEN+FINRA, ASIC \u0026 GAML, FSRA, BVI, ASIC, MAS, eToroUS, FinCEN. Resolved from Fact_SnapshotCustomer.RegulationID via Dim_Regulation.Name.",
+                                                  "match":  "NO",
+                                                  "loss":  "Rewrote description entirely. Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027 and \u0027Values match production Dictionary.Regulation.Name\u0027"
+                                              },
+                                              {
+                                                  "column":  "IsCreditReportValidCB",
+                                                  "upstream_quote":  "1 if customer is eligible for CreditBureau credit report validation. ETL-computed. See §2.3.",
+                                                  "wiki_quote":  "1 if customer is eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer from PlayerLevelID, AccountTypeID, LabelID, CountryID. Passthrough from point-in-time snapshot.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Expanded computation details, dropped section reference"
+                                              },
+                                              {
+                                                  "column":  "BaseExchangeRate",
+                                                  "upstream_quote":  "Base FX rate from state.",
+                                                  "wiki_quote":  "Base FX rate from state. Passthrough from BI_DB_DepositWithdrawFee, originally sourced from Fact_Cashout_State.BaseExchangeRate. Stored as varchar despite numeric origin. NULL when no matching DepositWithdrawFee row exists.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added provenance and NULL note"
+                                              },
+                                              {
+                                                  "column":  "ExchangeFee",
+                                                  "upstream_quote":  "Exchange fee from state.",
+                                                  "wiki_quote":  "Exchange fee from state. Passthrough from BI_DB_DepositWithdrawFee, originally sourced from Fact_Cashout_State.ExchangeFee. Stored as varchar despite numeric origin. NULL when no matching DepositWithdrawFee row exists.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added provenance and NULL note"
+                                              },
+                                              {
+                                                  "column":  "VerificationCode",
+                                                  "upstream_quote":  "Verification code supplied or received during withdrawal processing.",
+                                                  "wiki_quote":  "Verification code supplied or received during withdrawal processing. Passthrough from Fact_BillingWithdraw.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added source note"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Regulation (Element #14)",
+                                       "problem":  "Description paraphrased. Upstream Dim_Regulation.Name says \u0027Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.\u0027 Wiki rewrote to \u0027Short code for the customer\u0027s regulatory jurisdiction at the time of the event\u0027 and substituted inline enum values, dropping the V_Dim_Customer reference and production provenance note."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Multiple Tier 1 columns",
+                                       "problem":  "Seven Tier 1 columns (ExternalID, PaymentMethod, Depot, CardType, BaseExchangeRate, ExchangeFee, VerificationCode) append resolution paths and NULL semantics after the upstream verbatim text. Upstream core is preserved but additions go beyond strict verbatim quoting."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Amount (Element #9)",
+                                       "problem":  "Tier 1 source tagged as Trade.PositionTbl (inherited from Fact_CustomerAction wiki) but in this cashout context Amount represents cashout/refund amounts from History.Credit. Writer flagged this in review-needed sidecar. The DWH note is appropriate but the origin tag is semantically misleading for cashout analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.5 / Section 3.4",
+                                       "problem":  "Auto-backfill gap detection checks BI_DB_EY_Audit_Deposits (not Cashouts) — correctly documented as a quirk. No action needed but confirms the SP has a potential gap-detection blind spot."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "BaseExchangeRate / ExchangeFee (Elements #16, #17)",
+                                       "problem":  "Type mismatch: varchar(50) in this table vs numeric(38,8) in BI_DB_DepositWithdrawFee. Well-documented in Section 3.4 gotchas. No fix needed in wiki — this is a design issue in the SP."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Replace the Regulation (Element #14) description with the verbatim upstream quote from Dim_Regulation.Name: \u0027Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.\u0027 Append the inline enum values and resolution path as additional context after the verbatim core.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,84 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PastYearsGain",
+    "elapsed_seconds":  165,
+    "exit_code":  null,
+    "cost_usd":  1.0457,
+    "input_tokens":  2,
+    "output_tokens":  7799,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PastYearsGain",
+                    "weighted_score":  7.20,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Part of logical PK (Date, CID).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Part of logical PK (Date, CID)\u0027 context — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Date (SHOULD BE T1)",
+                                                  "upstream_quote":  "Snapshot date for which gains were calculated. PK component (NOT ENFORCED). Used as DELETE+INSERT key.",
+                                                  "wiki_quote":  "Jan 1 snapshot date from which the trailing yearly gain was captured. Sourced from DWH_GainDaily.Date, filtered to Jan 1 dates via V_Dim_Date WHERE DayNumberOfYear=1. Historical rows (2007-2020) use Dec 1 instead. Part of logical PK (Date, CID).",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely rewritten description. Upstream wording not preserved. Mistagged as Tier 2 instead of Tier 1."
+                                              },
+                                              {
+                                                  "column":  "Gain_y (SHOULD BE T1)",
+                                                  "upstream_quote":  "Trailing 365-day (yearly) compound portfolio return as a decimal. 0.05 = 5% gain. NULL if insufficient trading history. IntervalTypeID=110 from TradeGain service.",
+                                                  "wiki_quote":  "Trailing 365-day (yearly) compound portfolio return as a decimal. 0.05 = 5% gain. NULL if insufficient trading history. IntervalTypeID=110 from TradeGain service. Passthrough from DWH_GainDaily.",
+                                                  "match":  "YES",
+                                                  "loss":  "Verbatim with appended context. But mistagged as Tier 2 instead of Tier 1."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Gain_y",
+                                       "problem":  "Tagged Tier 2 (DWH_GainDaily) but is a direct passthrough from DWH_GainDaily.Gain_y with no transform. DWH_GainDaily wiki is available in the bundle. Should be Tier 1 — DWH_GainDaily."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Date",
+                                       "problem":  "Tagged Tier 2 (DWH_GainDaily) but is a passthrough from DWH_GainDaily.Date (only filtered by WHERE clause, value unchanged). Should be Tier 1 — DWH_GainDaily with upstream description verbatim."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Date",
+                                       "problem":  "Description completely rewritten from upstream. Upstream says \u0027Snapshot date for which gains were calculated\u0027 but wiki says \u0027Jan 1 snapshot date from which the trailing yearly gain was captured\u0027. Verbatim upstream quote must lead, with BI_DB-specific context appended."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Tier Legend)",
+                                       "problem":  "Tier legend and footer counts state 1 T1 / 4 T2, but with corrections should be 3 T1 / 2 T2."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No Phase Gate Checklist with explicit P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 without enumerating completed vs skipped phases."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag Date as (Tier 1 — DWH_GainDaily) and lead description with verbatim upstream quote: \u0027Snapshot date for which gains were calculated. PK component (NOT ENFORCED). Used as DELETE+INSERT key.\u0027 Then append Jan 1 filter and Dec 1 historical pattern as additional context. (2) Re-tag Gain_y as (Tier 1 — DWH_GainDaily) — description is already verbatim, just fix the tier tag. (3) Update tier legend and footer counts to 3 T1 (CID, Date, Gain_y), 2 T2 (Year1, UpdateDate). (4) Add explicit Phase Gate Checklist marking P2/P3 completion status.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present in wiki body"
+                                                           ]
+                                    }
+                }
+}

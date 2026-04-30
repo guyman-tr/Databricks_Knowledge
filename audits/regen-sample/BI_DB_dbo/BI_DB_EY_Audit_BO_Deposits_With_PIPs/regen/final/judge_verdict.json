@@ -1,0 +1,240 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_BO_Deposits_With_PIPs",
+    "elapsed_seconds":  398,
+    "exit_code":  null,
+    "cost_usd":  1.343,
+    "input_tokens":  2,
+    "output_tokens":  22284,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_BO_Deposits_With_PIPs",
+                    "weighted_score":  7.7,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "ExternalID",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. Identifies the eToro customer who made this deposit. References DWH_dbo.Dim_Customer.",
+                                                  "wiki_quote":  "Customer ID. Identifies the eToro customer who made this deposit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped FK reference to Dim_Customer"
+                                              },
+                                              {
+                                                  "column":  "DepositID",
+                                                  "upstream_quote":  "Primary distribution key (HASH). Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY). Clustered index key in DWH.",
+                                                  "wiki_quote":  "Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped DWH storage details (HASH distribution key, clustered index)"
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Deposit amount in the deposit currency (CurrencyID). As of 2025-04-17, capped via CASE expression in ETL to prevent extreme outlier values from distorting aggregations.",
+                                                  "wiki_quote":  "Deposit amount in the deposit currency (CurrencyID). CAST to DECIMAL(16,2) in SP.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Different supplementary context (SP CAST vs upstream amount cap)"
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \u0027USD\u0027, \u0027EUR\u0027 for forex; \u0027AAPL.US\u0027, \u0027TSLA.US\u0027 for US stocks (format: TICKER.EXCHANGE); \u0027BTC\u0027 for crypto. Unique across all instruments.",
+                                                  "wiki_quote":  "Ticker symbol for the deposit currency. \u0027USD\u0027, \u0027EUR\u0027, \u0027GBP\u0027, etc. Resolved from Dim_Currency.Abbreviation via CurrencyID JOIN.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Simplified examples for deposit-currency context; dropped stock/crypto ticker formats"
+                                              },
+                                              {
+                                                  "column":  "Status",
+                                                  "upstream_quote":  "Human-readable status label. UNIQUE constraint prevents duplicates in production. Used in back-office payment management UI and reconciliation reports.",
+                                                  "wiki_quote":  "Human-readable deposit status label. Resolved from Dim_PaymentStatus.Name via PaymentStatusID JOIN. 99.998% = \u0027Approved\u0027.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped UNIQUE constraint and UI usage context"
+                                              },
+                                              {
+                                                  "column":  "PaymentDate",
+                                                  "upstream_quote":  "UTC timestamp when the deposit was submitted (set at INSERT in production). Not the approval time.",
+                                                  "wiki_quote":  "UTC timestamp when the deposit was submitted (set at INSERT in production). Not the approval time.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ModificationDate",
+                                                  "upstream_quote":  "UTC timestamp of the most recent modification to this deposit record. Used by ETL for incremental detection.",
+                                                  "wiki_quote":  "UTC timestamp of the most recent modification to this deposit record. Used by ETL for incremental detection.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ProcessorValueDate",
+                                                  "upstream_quote":  "Value date from the payment processor. Mandatory for offline/wire deposits. NULL for instant payment methods.",
+                                                  "wiki_quote":  "Value date from the payment processor. Mandatory for offline/wire deposits. NULL for instant payment methods.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PaymentStatusID",
+                                                  "upstream_quote":  "Current deposit status. Key values: 1=New, 2=Approved (73%), 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE (10.2%). Full 39-value enum in upstream wiki. NC index key.",
+                                                  "wiki_quote":  "Current deposit status ID. 1=New, 2=Approved, 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE. FK to Dim_PaymentStatus.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped percentage distributions and NC index key note"
+                                              },
+                                              {
+                                                  "column":  "CurrencyID",
+                                                  "upstream_quote":  "Currency of the deposit amount. References DWH_dbo.Dim_Currency. 1=USD, 2=EUR, 3=GBP, etc.",
+                                                  "wiki_quote":  "Currency of the deposit amount. 1=USD, 2=EUR, 5=AUD, 6=CHF, etc. FK to Dim_Currency.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Different example IDs (3=GBP vs 5=AUD)"
+                                              },
+                                              {
+                                                  "column":  "Funnel",
+                                                  "upstream_quote":  "Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.",
+                                                  "wiki_quote":  "Acquisition funnel name for the deposit. Resolved from Dim_Funnel.Name via FunnelID JOIN.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Unique\u0027, all usage context (marketing reports, BackOffice views, attribution analytics), and purpose description"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulatory entity governing the customer. Resolved from Dim_Regulation.Name via Dim_Customer.RegulationID. Top values: CySEC (53.5%), FCA (28.5%), ASIC \u0026 GAML (6.9%).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped V_Dim_Customer reference; added data distribution"
+                                              },
+                                              {
+                                                  "column":  "WhiteLabel",
+                                                  "upstream_quote":  "Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = \u0027eToro\u0027).",
+                                                  "wiki_quote":  "Brand name of the white-label broker the customer was acquired under. Resolved from Dim_Label.Name via Dim_Customer.LabelID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped deduplication warning (multiple LabelIDs share same Name), BackOffice UI context"
+                                              },
+                                              {
+                                                  "column":  "CountyByRegIP",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name based on the customer\u0027s registration IP address. Resolved from Dim_Country.Name via Dim_Customer.CountryIDByIP. Note: column name has typo (\u0027County\u0027 instead of \u0027Country\u0027).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Unique per row\u0027 and usage list; added IP-based context and typo note"
+                                              },
+                                              {
+                                                  "column":  "MIDName",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Regulation name associated with the ProtocolMIDSettings record used for routing this deposit. Resolved from Dim_Regulation.Name via ProtocolMIDSettings.RegulationID. NULL when no MID settings exist.",
+                                                  "match":  "NO",
+                                                  "loss":  "Rewrote \u0027Short code for the regulation\u0027 as \u0027Regulation name associated with the ProtocolMIDSettings record\u0027; dropped V_Dim_Customer reference"
+                                              },
+                                              {
+                                                  "column":  "TransactionID",
+                                                  "upstream_quote":  "(upstream wiki truncated — cannot verify)",
+                                                  "wiki_quote":  "Internal transaction identifier from Billing.Deposit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Cannot verify — Fact_BillingDeposit wiki truncated at 30KB"
+                                              },
+                                              {
+                                                  "column":  "ExTransactionID",
+                                                  "upstream_quote":  "External (payment provider) transaction ID. Used for provider-side reconciliation and dispute resolution.",
+                                                  "wiki_quote":  "External (payment provider) transaction ID. Used for provider-side reconciliation and dispute resolution.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExchangeRate",
+                                                  "upstream_quote":  "Exchange rate from deposit currency to USD at processing time. Cannot be 0 in production.",
+                                                  "wiki_quote":  "Exchange rate from deposit currency to USD at processing time. 1.0 for USD deposits.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Cannot be 0\u0027 constraint; added USD note"
+                                              },
+                                              {
+                                                  "column":  "BaseExchangeRate",
+                                                  "upstream_quote":  "Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate.",
+                                                  "wiki_quote":  "Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExchangeFee",
+                                                  "upstream_quote":  "Exchange fee in provider-specific integer encoding (basis points).",
+                                                  "wiki_quote":  "Exchange fee in provider-specific integer encoding (basis points). 0 for USD deposits.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsCreditReportValidCB",
+                                                  "upstream_quote":  "1 if customer is eligible for CreditBureau credit report validation. ETL-computed.",
+                                                  "wiki_quote":  "DWH-computed flag indicating credit-report-valid customer. Always 1 in this table (SP filters to CB-valid only). Point-in-time value from Fact_SnapshotCustomer via Dim_Range.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Rephrased; added \u0027always 1\u0027 context"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Customer\u0027s registered country. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CountryID (CC). FK to Dim_Country. Key filter for valid customer segmentation (CountryID=250 excluded).",
+                                                  "wiki_quote":  "Customer\u0027s registered country at the time of the deposit. Point-in-time value from Fact_SnapshotCustomer via Dim_Range. FK to Dim_Country.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped DEFAULT and CountryID=250 exclusion detail; added point-in-time context"
+                                              },
+                                              {
+                                                  "column":  "FundingType",
+                                                  "upstream_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay).",
+                                                  "wiki_quote":  "Payment method name (e.g., CreditCard, PayPal, eToroMoney, WireTransfer). Resolved from Dim_FundingType.Name via Fact_BillingDeposit.FundingTypeID. Top values: CreditCard (53.9%), eToroMoney (29.7%), PayPal (12.1%).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Different example values; added distribution"
+                                              },
+                                              {
+                                                  "column":  "CardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Renamed from Name in production.",
+                                                  "wiki_quote":  "Card network brand name. Resolved from Dim_CardType.CarTypeName via Fact_BillingDeposit.CardTypeIDAsInteger. Values: Visa, Master Card, Diners, Maestro, etc. NULL for non-card payment methods.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Minor rewording (\u0027brand\u0027 to \u0027network brand\u0027); dropped UNIQUE constraint and rename note; added NULL semantics"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Funnel",
+                                       "problem":  "Tier 1 description paraphrased. Upstream Dim_Funnel.Name says \u0027Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration.\u0027 Wiki replaces with generic \u0027Acquisition funnel name for the deposit.\u0027 All specificity lost."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "WhiteLabel",
+                                       "problem":  "Tier 1 description paraphrased. Upstream Dim_Label.Name warns \u0027Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = eToro).\u0027 Wiki drops this deduplication warning entirely, risking incorrect GROUP BY queries by analysts."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "MIDName",
+                                       "problem":  "Tier 1 description paraphrased. Upstream Dim_Regulation.Name says \u0027Short code for the regulation.\u0027 Wiki rewrote to \u0027Regulation name associated with the ProtocolMIDSettings record.\u0027 While the added context is useful, the upstream description must be quoted verbatim first."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "ExternalID",
+                                       "problem":  "Wiki says \u0027Decimal(38,0)\u0027 matching Dim_Customer upstream, but this table\u0027s DDL column is varchar(100). The type difference should be noted — a consumer expecting decimal behavior will be surprised by string storage."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "HCAmountUSD",
+                                       "problem":  "Tagged Tier 2 — External_etoro_History_Credit_Yesterday but is a direct passthrough (hc.TotalCashChange), not ETL-computed. Should be Tier 3 (source traceable but no upstream wiki). Same issue applies to DepositType and Depot."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace Funnel description with verbatim Dim_Funnel.Name text, then append deposit-specific context. (2) Replace WhiteLabel description with verbatim Dim_Label.Name text including the deduplication warning about multiple LabelIDs sharing the same Name. (3) Replace MIDName description with verbatim Dim_Regulation.Name text, then append the ProtocolMIDSettings routing context. (4) Add type-difference note for ExternalID (upstream decimal(38,0), this table varchar(100)). (5) Re-tag HCAmountUSD, DepositType, and Depot as Tier 3 (passthrough from undocumented external tables, not ETL-computed).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 15.1M rows, 99.998% Approved, date range 2023-01-01 to 2025-10-27, regulation distribution",
+                                                                                  "Regulation: CySEC 53.5%, FCA 28.5%, ASIC \u0026 GAML 6.9%",
+                                                                                  "FundingType: CreditCard 53.9%, eToroMoney 29.7%, PayPal 12.1%"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

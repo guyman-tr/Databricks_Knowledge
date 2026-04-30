@@ -1,0 +1,74 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PI_WeeklyTrades",
+    "elapsed_seconds":  212,
+    "exit_code":  null,
+    "cost_usd":  2.4081,
+    "input_tokens":  6,
+    "output_tokens":  9590,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PI_WeeklyTrades",
+                    "weighted_score":  6.0,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Filtered to PI population (GuruStatusID IN 2-6, IsValidCustomer=1) and CopyFund accounts (AccountTypeID=9). HASH distribution key. (Tier 1 — Customer.CustomerStatic)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additions (PI filter context, HASH distribution key) but core description is verbatim from Dim_Customer wiki."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Week1, Year1, NewTrades, FirstDayOfWeek",
+                                       "problem":  "All four passthrough columns from BI_DB_CID_WeeklyPanel_FullData are tagged Tier 2 but should be Tier 1. The WeeklyPanel wiki was available in the bundle and documents SSWeekNumberOfYear (#3), CalendarYear (#4), NewTrades_Total (#64), and FirstDayOfWeek (#28) with specific descriptions."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Week1, Year1, NewTrades, FirstDayOfWeek",
+                                       "problem":  "Upstream WeeklyPanel descriptions were not quoted verbatim. Writer paraphrased all four columns instead of inheriting the documented descriptions. E.g., WeeklyPanel says \u0027Total positions opened across all instrument types during the week. SUM.\u0027 for NewTrades_Total but wiki says \u0027Total number of new trades (positions opened) by this PI during the calendar week.\u0027"
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "NewTrades",
+                                       "problem":  "Wiki claims \u0027Includes manual and copy positions, excludes AirDrop\u0027 and \u0027Range: 0 to 8,400 observed\u0027 — neither claim is present in the WeeklyPanel upstream wiki for NewTrades_Total. The \u0027excludes AirDrop\u0027 semantic applies to ActiveOpen flags, not the NewTrades_Total count column. These may be fabricated data claims."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Section 1 states \u0027~4,419 distinct CIDs across 225 distinct weeks\u0027 confidently, but review-needed sidecar confirms DMV row count query failed (permission denied). Numbers should be flagged as estimates, not presented as observed facts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer tier breakdown \u00271 T1, 5 T2\u0027 is consistent with the wiki\u0027s (incorrect) tier assignments but should be \u00275 T1, 1 T2\u0027 after correcting the tier misclassifications."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag Week1 as Tier 1 — BI_DB_CID_WeeklyPanel_FullData, quoting verbatim: \u0027SQL Server week-of-year number (1–53) for the target week. From DWH_dbo.Dim_Date.SSWeekNumberOfYear.\u0027 (2) Re-tag Year1 as Tier 1 — BI_DB_CID_WeeklyPanel_FullData, quoting: \u0027Calendar year of the week (e.g., 2026). From DWH_dbo.Dim_Date.CalendarYear.\u0027 (3) Re-tag NewTrades as Tier 1 — BI_DB_CID_WeeklyPanel_FullData, quoting: \u0027Total positions opened across all instrument types during the week. SUM.\u0027 Add rename note (NewTrades_Total → NewTrades). Remove unverified claims about AirDrop exclusion and 0-8400 range unless confirmed by live data query. (4) Re-tag FirstDayOfWeek as Tier 1 — BI_DB_CID_WeeklyPanel_FullData, quoting: \u0027Sunday date marking the start of the calendar week.\u0027 (5) Flag row counts and distinct CID/week numbers as estimates in Section 1 since DMV access failed.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "NewTrades: \u0027Range: 0 to 8,400 observed\u0027 — unverifiable, DMV access failed",
+                                                                                  "Section 1: \u0027~4,419 distinct CIDs across 225 distinct weeks\u0027 — DMV failed per review-needed",
+                                                                                  "Section 1: \u0027~3,220 rows per weekly slice\u0027 — derived estimate, not queried"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian) — skipped by regen harness",
+                                                               "Phase 12-14 — implied skipped (11/14 completed)",
+                                                               "DMV row count query failed (permission denied per review-needed)"
+                                                           ]
+                                    }
+                }
+}

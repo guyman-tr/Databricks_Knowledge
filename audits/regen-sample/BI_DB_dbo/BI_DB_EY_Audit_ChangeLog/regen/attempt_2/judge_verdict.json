@@ -1,0 +1,154 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_ChangeLog",
+    "elapsed_seconds":  176,
+    "exit_code":  null,
+    "cost_usd":  0.6658,
+    "input_tokens":  2,
+    "output_tokens":  10206,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_ChangeLog",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "PositionID",
+                                                  "upstream_quote":  "FK to Dim_Position.PositionID. Distribution key -- co-located with Dim_Position for efficient JOINs.",
+                                                  "wiki_quote":  "FK to Dim_Position.PositionID. Distribution key -- co-located with Dim_Position for efficient JOINs.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID who owns the position. Nullable (some system positions may not have CID).",
+                                                  "wiki_quote":  "Customer ID who owns the position. Nullable (some system positions may not have CID).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "Exact timestamp when the position change occurred. Passthrough from etoro_History_PositionChangeLog.",
+                                                  "wiki_quote":  "Exact timestamp when the position change occurred. Passthrough from etoro_History_PositionChangeLog.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "OccurredDateID",
+                                                  "upstream_quote":  "ETL-computed YYYYMMDD int from Occurred. Clustered index key. Always filter on this for performance.",
+                                                  "wiki_quote":  "ETL-computed YYYYMMDD int from Occurred. Clustered index key. Always filter on this for performance.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PreviousAmount",
+                                                  "upstream_quote":  "Position amount (USD) before this change. NOT NULL -- always captured.",
+                                                  "wiki_quote":  "Position amount (USD) before this change. NOT NULL -- always captured.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "AmountChanged",
+                                                  "upstream_quote":  "Change in amount (can be positive or negative). AmountChanged = NewAmount - PreviousAmount. NOT NULL.",
+                                                  "wiki_quote":  "Change in amount (can be positive or negative). AmountChanged = NewAmount - PreviousAmount. NOT NULL.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "NewAmount",
+                                                  "upstream_quote":  "Position amount after this change. Nullable -- may be absent for non-amount change types.",
+                                                  "wiki_quote":  "Position amount after this change. Nullable -- may be absent for non-amount change types.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PreviousStopRate",
+                                                  "upstream_quote":  "Stop-loss rate before this change. NOT NULL.",
+                                                  "wiki_quote":  "Stop-loss rate before this change. NOT NULL.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "StopRate",
+                                                  "upstream_quote":  "Stop-loss rate after this change. NOT NULL.",
+                                                  "wiki_quote":  "Stop-loss rate after this change. NOT NULL.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PreviousAmountInUnits",
+                                                  "upstream_quote":  "Unit count (shares/coins) before this change. Added for futures/unit-based positions.",
+                                                  "wiki_quote":  "Unit count (shares/coins) before this change. Added for futures/unit-based positions. DWH note: for ChangeTypeID=13, backfilled from UnitsOpenStartOfDay when NULL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive DWH note about backfill logic; upstream text preserved verbatim"
+                                              },
+                                              {
+                                                  "column":  "AmountInUnits",
+                                                  "upstream_quote":  "Unit count after this change.",
+                                                  "wiki_quote":  "Unit count after this change. DWH note: for ChangeTypeID=13, backfilled from UnitsOpenStartOfDay when NULL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Additive DWH note; upstream text preserved verbatim"
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "wiki_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "ChangeTypeID",
+                                       "problem":  "Tagged (Tier 4 — inferred) but is a direct passthrough from Dim_PositionChangeLog which has an upstream wiki. Per tier rules, passthrough with upstream wiki present must be Tier 1. The upstream\u0027s own Tier 4 classification should be noted in the description text, but the inheritance tier should be Tier 1."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PositionID",
+                                       "problem":  "Verbatim Tier 1 quote includes \u0027Distribution key -- co-located with Dim_Position for efficient JOINs\u0027 which is true for Dim_PositionChangeLog (HASH on PositionID) but false for this ROUND_ROBIN table. Creates a factual error in context despite correct Tier 1 inheritance."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "OccurredDateID",
+                                       "problem":  "Verbatim Tier 1 quote includes \u0027Clustered index key\u0027 which is true for Dim_PositionChangeLog but false for this HEAP table. Needs a DWH note to clarify the inherited statement does not apply here."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "PreviousIsSettled / IsSettled",
+                                       "problem":  "Tagged (Tier 5 — Expert Review) but these are passthroughs from Dim_PositionChangeLog. Strictly should be Tier 1 citing the upstream. However, Tier 5 is higher confidence so this does not degrade quality."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Empty row \u0027| | |\u0027 between Synapse Index and UC Target is a minor formatting irregularity."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed (PASS). For polish: (1) Re-tag ChangeTypeID as (Tier 1 — Dim_PositionChangeLog) with a note that upstream meanings are unverified. (2) Add DWH notes to PositionID and OccurredDateID clarifying that \u0027Distribution key\u0027 and \u0027Clustered index key\u0027 refer to the upstream table, not this ROUND_ROBIN HEAP table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 checkbox not explicitly visible; footer says 11/14 phases"
+                                                           ]
+                                    }
+                }
+}

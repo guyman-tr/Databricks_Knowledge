@@ -1,0 +1,3528 @@
+# Pre-Resolved Upstream Bundle for `BI_DB_dbo.BI_DB_PositionPnL_SWITCH`
+
+This bundle was assembled deterministically by the regen harness BEFORE the writer claude process started. Use this as your AUTHORITATIVE Tier 1 inheritance source. Quote descriptions VERBATIM from the upstream wikis below for any column that is a passthrough or rename of an upstream column. Do NOT paraphrase. Do NOT generalize vendor names. Do NOT drop NULL semantics.
+
+---
+
+## Source DDL — `BI_DB_dbo.BI_DB_PositionPnL_SWITCH.sql`
+
+```sql
+CREATE TABLE [BI_DB_dbo].[BI_DB_PositionPnL_SWITCH]
+(
+	[CID] [int] NULL,
+	[PositionID] [bigint] NOT NULL,
+	[InstrumentID] [int] NOT NULL,
+	[MirrorID] [int] NULL,
+	[Commission] [money] NOT NULL,
+	[InitForexRate] [numeric](16, 8) NOT NULL,
+	[SpreadedPipBid] [numeric](16, 8) NULL,
+	[SpreadedPipAsk] [numeric](16, 8) NULL,
+	[PositionPnL] [decimal](16, 4) NULL,
+	[Price] [numeric](38, 6) NULL,
+	[HedgeServerID] [int] NULL,
+	[Amount] [money] NOT NULL,
+	[AmountInUnitsDecimal] [numeric](16, 6) NULL,
+	[LimitRate] [numeric](16, 8) NOT NULL,
+	[StopRate] [numeric](16, 8) NOT NULL,
+	[IsBuy] [bit] NOT NULL,
+	[Occurred] [datetime] NOT NULL,
+	[Date] [date] NULL,
+	[DateID] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[IsSettled] [int] NULL,
+	[NOP] [money] NULL,
+	[DailyPnL] [decimal](16, 4) NULL,
+	[Leverage] [int] NULL,
+	[RateBid] [numeric](36, 12) NULL,
+	[RateAsk] [numeric](36, 12) NULL,
+	[USD_CR] [money] NULL,
+	[SettlementTypeID] [int] NULL,
+	[EstimateCloseFeeForCFD] [numeric](19, 8) NULL,
+	[EstimateCloseFeeOnOpenByUnits] [numeric](19, 8) NULL,
+	[EstimateCloseFeeOnOpen] [numeric](19, 8) NULL,
+	[Close_PnLInDollars] [decimal](19, 4) NULL,
+	[Close_CalculationRate] [decimal](18, 8) NULL,
+	[Close_ConversionRate] [decimal](18, 8) NULL,
+	[Close_PriceType] [int] NULL,
+	[CurrentCalculationRate] [numeric](18, 8) NULL,
+	[CurrentConversionRate] [numeric](18, 8) NULL,
+	[Close_NOP] [numeric](18, 8) NULL,
+	[Current_NOP] [numeric](18, 8) NULL
+)
+WITH
+(
+	DISTRIBUTION = HASH ( [PositionID] ),
+	CLUSTERED INDEX
+	(
+		[DateID] ASC,
+		[Date] ASC,
+		[CID] ASC,
+		[PositionID] ASC
+	),
+	PARTITION
+	(
+		[DateID] RANGE LEFT FOR VALUES (20150101, 20160101, 20170101, 20180101, 20190101, 20200101, 20210101, 20220101, 20220201, 20220301, 20220401, 20220501, 20220601, 20220701, 20220801, 20220901, 20221001, 20221101, 20221201, 20230101, 20230201, 20230301, 20230401, 20230501, 20230601, 20230701, 20230801, 20230901, 20230902, 20230903, 20230904, 20230905, 20230906, 20230907, 20230908, 20230909, 20230910, 20230911, 20230912, 20230913, 20230914, 20230915, 20230916, 20230917, 20230918, 20230919, 20230920, 20230921, 20230922, 20230923, 20230924, 20230925, 20230926, 20230927, 20230928, 20230929, 20230930, 20231001, 20231002, 20231003, 20231004, 20231005, 20231006, 20231007, 20231008, 20231009, 20231010, 20231011, 20231012, 20231013, 20231014, 20231015, 20231016, 20231017, 20231018, 20231019, 20231020, 20231021, 20231022, 20231023, 20231024, 20231025, 20231026, 20231027, 20231028, 20231029, 20231030, 20231031, 20231101, 20231102, 20231103, 20231104, 20231105, 20231106, 20231107, 20231108, 20231109, 20231110, 20231111, 20231112, 20231113, 20231114, 20231115, 20231116, 20231117, 20231118, 20231119, 20231120, 20231121, 20231122, 20231123, 20231124, 20231125, 20231126, 20231127, 20231128, 20231129, 20231130, 20231201, 20231202, 20231203, 20231204, 20231205, 20231206, 20231207, 20231208, 20231209, 20231210, 20231211, 20231212, 20231213, 20231214, 20231215, 20231216, 20231217, 20231218, 20231219, 20231220, 20231221, 20231222, 20231223, 20231224, 20231225, 20231226, 20231227, 20231228, 20231229, 20231230, 20231231, 20240101, 20240102, 20240103, 20240104, 20240105, 20240106, 20240107, 20240108, 20240109, 20240110, 20240111, 20240112, 20240113, 20240114, 20240115, 20240116, 20240117, 20240118, 20240119, 20240120, 20240121, 20240122, 20240123, 20240124, 20240125, 20240126, 20240127, 20240128, 20240129, 20240130, 20240131, 20240201, 20240202, 20240203, 20240204, 20240205, 20240206, 20240207, 20240208, 20240209, 20240210, 20240211, 20240212, 20240213, 20240214, 20240215, 20240216, 20240217, 20240218, 20240219, 20240220, 20240221, 20240222, 20240223, 20240224, 20240225, 20240226, 20240227, 20240228, 20240229, 20240301, 20240302, 20240303, 20240304, 20240305, 20240306, 20240307, 20240308, 20240309, 20240310, 20240311, 20240312, 20240313, 20240314, 20240315, 20240316, 20240317, 20240318, 20240319, 20240320, 20240321, 20240322, 20240323, 20240324, 20240325, 20240326, 20240327, 20240328, 20240329, 20240330, 20240331, 20240401, 20240402, 20240403, 20240404, 20240405, 20240406, 20240407, 20240408, 20240409, 20240410, 20240411, 20240412, 20240413, 20240414, 20240415, 20240416, 20240417, 20240418, 20240419, 20240420, 20240421, 20240422, 20240423, 20240424, 20240425, 20240426, 20240427, 20240428, 20240429, 20240430, 20240501, 20240502, 20240503, 20240504, 20240505, 20240506, 20240507, 20240508, 20240509, 20240510, 20240511, 20240512, 20240513, 20240514, 20240515, 20240516, 20240517, 20240518, 20240519, 20240520, 20240521, 20240522, 20240523, 20240524, 20240525, 20240526, 20240527, 20240528, 20240529, 20240530, 20240531, 20240601, 20240602, 20240603, 20240604, 20240605, 20240606, 20240607, 20240608, 20240609, 20240610, 20240611, 20240612, 20240613, 20240614, 20240615, 20240616, 20240617, 20240618, 20240619, 20240620, 20240621, 20240622, 20240623, 20240624, 20240625, 20240626, 20240627, 20240628, 20240629, 20240630, 20240701, 20240702, 20240703, 20240704, 20240705, 20240706, 20240707, 20240708, 20240709, 20240710, 20240711, 20240712, 20240713, 20240714, 20240715, 20240716, 20240717, 20240718, 20240719, 20240720, 20240721, 20240722, 20240723, 20240724, 20240725, 20240726, 20240727, 20240728, 20240729, 20240730, 20240731, 20240801, 20240802, 20240803, 20240804, 20240805, 20240806, 20240807, 20240808, 20240809, 20240810, 20240811, 20240812, 20240813, 20240814, 20240815, 20240816, 20240817, 20240818, 20240819, 20240820, 20240821, 20240822, 20240823, 20240824, 20240825, 20240826, 20240827, 20240828, 20240829, 20240830, 20240831, 20240901, 20240902, 20240903, 20240904, 20240905, 20240906, 20240907, 20240908, 20240909, 20240910, 20240911, 20240912, 20240913, 20240914, 20240915, 20240916, 20240917, 20240918, 20240919, 20240920, 20240921, 20240922, 20240923, 20240924, 20240925, 20240926, 20240927, 20240928, 20240929, 20240930, 20241001, 20241002, 20241003, 20241004, 20241005, 20241006, 20241007, 20241008, 20241009, 20241010, 20241011, 20241012, 20241013, 20241014, 20241015, 20241016, 20241017, 20241018, 20241019, 20241020, 20241021, 20241022, 20241023, 20241024, 20241025, 20241026, 20241027, 20241028, 20241029, 20241030, 20241031, 20241101, 20241102, 20241103, 20241104, 20241105, 20241106, 20241107, 20241108, 20241109, 20241110, 20241111, 20241112, 20241113, 20241114, 20241115, 20241116, 20241117, 20241118, 20241119, 20241120, 20241121, 20241122, 20241123, 20241124, 20241125, 20241126, 20241127, 20241128, 20241129, 20241130, 20241201, 20241202, 20241203, 20241204, 20241205, 20241206, 20241207, 20241208, 20241209, 20241210, 20241211, 20241212, 20241213, 20241214, 20241215, 20241216, 20241217, 20241218, 20241219, 20241220, 20241221, 20241222, 20241223, 20241224, 20241225, 20241226, 20241227, 20241228, 20241229, 20241230, 20241231, 20250101, 20250102, 20250103, 20250104, 20250105, 20250106, 20250107, 20250108, 20250109, 20250110, 20250111, 20250112, 20250113, 20250114, 20250115, 20250116, 20250117, 20250118, 20250119, 20250120, 20250121, 20250122, 20250123, 20250124, 20250125, 20250126, 20250127, 20250128, 20250129, 20250130, 20250131, 20250201, 20250202, 20250203, 20250204, 20250205, 20250206, 20250207, 20250208, 20250209, 20250210, 20250211, 20250212, 20250213, 20250214, 20250215, 20250216, 20250217, 20250218, 20250219, 20250220, 20250221, 20250222, 20250223, 20250224, 20250225, 20250226, 20250227, 20250228, 20250301, 20250302, 20250303, 20250304, 20250305, 20250306, 20250307, 20250308, 20250309, 20250310, 20250311, 20250312, 20250313, 20250314, 20250315, 20250316, 20250317, 20250318, 20250319, 20250320, 20250321, 20250322, 20250323, 20250324, 20250325, 20250326, 20250327, 20250328, 20250329, 20250330, 20250331, 20250401, 20250402, 20250403, 20250404, 20250405, 20250406, 20250407, 20250408, 20250409, 20250410, 20250411, 20250412, 20250413, 20250414, 20250415, 20250416, 20250417, 20250418, 20250419, 20250420, 20250421, 20250422, 20250423, 20250424, 20250425, 20250426, 20250427, 20250428, 20250429, 20250430, 20250501, 20250502, 20250503, 20250504, 20250505, 20250506, 20250507, 20250508, 20250509, 20250510, 20250511, 20250512, 20250513, 20250514, 20250515, 20250516, 20250517, 20250518, 20250519, 20250520, 20250521, 20250522, 20250523, 20250524, 20250525, 20250526, 20250527, 20250528, 20250529, 20250530, 20250531, 20250601, 20250602, 20250603, 20250604, 20250605, 20250606, 20250607, 20250608, 20250609, 20250610, 20250611, 20250612, 20250613, 20250614, 20250615, 20250616, 20250617, 20250618, 20250619, 20250620, 20250621, 20250622, 20250623, 20250624, 20250625, 20250626, 20250627, 20250628, 20250629, 20250630, 20250701, 20250702, 20250703, 20250704, 20250705, 20250706, 20250707, 20250708, 20250709, 20250710, 20250711, 20250712, 20250713, 20250714, 20250715, 20250716, 20250717, 20250718, 20250719, 20250720, 20250721, 20250722, 20250723, 20250724, 20250725, 20250726, 20250727, 20250728, 20250729, 20250730, 20250731, 20250801, 20250802, 20250803, 20250804, 20250805, 20250806, 20250807, 20250808, 20250809, 20250810, 20250811, 20250812, 20250813, 20250814, 20250815, 20250816, 20250817, 20250818, 20250819, 20250820, 20250821, 20250822, 20250823, 20250824, 20250825, 20250826, 20250827, 20250828, 20250829, 20250830, 20250831, 20250901, 20250902, 20250903, 20250904, 20250905, 20250906, 20250907, 20250908, 20250909, 20250910, 20250911, 20250912, 20250913, 20250914, 20250915, 20250916, 20250917, 20250918, 20250919, 20250920, 20250921, 20250922, 20250923, 20250924, 20250925, 20250926, 20250927, 20250928, 20250929, 20250930, 20251001, 20251002, 20251003, 20251004, 20251005, 20251006, 20251007, 20251008, 20251009, 20251010, 20251011, 20251012, 20251013, 20251014, 20251015, 20251016, 20251017, 20251018, 20251019, 20251020, 20251021, 20251022, 20251023, 20251024, 20251025, 20251026, 20251027, 20251028, 20251029, 20251030, 20251031, 20251101, 20251102, 20251103, 20251104, 20251105, 20251106, 20251107, 20251108, 20251109, 20251110, 20251111, 20251112, 20251113, 20251114, 20251115, 20251116, 20251117, 20251118, 20251119, 20251120, 20251121, 20251122, 20251123, 20251124, 20251125, 20251126, 20251127, 20251128, 20251129, 20251130, 20251201, 20251202, 20251203, 20251204, 20251205, 20251206, 20251207, 20251208, 20251209, 20251210, 20251211, 20251212, 20251213, 20251214, 20251215, 20251216, 20251217, 20251218, 20251219, 20251220, 20251221, 20251222, 20251223, 20251224, 20251225, 20251226, 20251227, 20251228, 20251229, 20251230, 20251231, 20260101, 20260102, 20260103, 20260104, 20260105, 20260106, 20260107, 20260108, 20260109, 20260110, 20260111, 20260112, 20260113, 20260114, 20260115, 20260116, 20260117, 20260118, 20260119, 20260120, 20260121, 20260122, 20260123, 20260124, 20260125, 20260126, 20260127, 20260128, 20260129, 20260130, 20260131, 20260201, 20260202, 20260203, 20260204, 20260205, 20260206, 20260207, 20260208, 20260209, 20260210, 20260211, 20260212, 20260213, 20260214, 20260215, 20260216, 20260217, 20260218, 20260219, 20260220, 20260221, 20260222, 20260223, 20260224, 20260225, 20260226, 20260227, 20260228, 20260301, 20260302, 20260303, 20260304, 20260305, 20260306, 20260307, 20260308, 20260309, 20260310, 20260311, 20260312, 20260313, 20260314, 20260315, 20260316, 20260317, 20260318, 20260319, 20260320, 20260321, 20260322, 20260323, 20260324, 20260325, 20260326, 20260327, 20260328, 20260329, 20260330, 20260331, 20260401, 20260402, 20260403, 20260404, 20260405, 20260406, 20260407, 20260408, 20260409, 20260410, 20260411, 20260412, 20260413, 20260414, 20260415, 20260416, 20260417, 20260418, 20260419, 20260420, 20260421, 20260422, 20260423, 20260424, 20260425, 20260426, 20260427, 20260428, 20260429, 20260430, 20260501, 20260502, 20260503, 20260504, 20260505, 20260506, 20260507, 20260508, 20260509, 20260510, 20260511, 20260512, 20260513, 20260514, 20260515, 20260516, 20260517, 20260518, 20260519, 20260520, 20260521, 20260522, 20260523, 20260524, 20260525, 20260526, 20260527, 20260528, 20260529, 20260530, 20260531)
+	)
+)
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IX_BI_DB_PositionPnL_SWITCH_CID] ON [BI_DB_dbo].[BI_DB_PositionPnL_SWITCH]
+(
+	[DateID] ASC,
+	[CID] ASC
+)WITH (DROP_EXISTING = OFF)
+GO
+
+GO
+
+```
+
+---
+
+## Upstream Wikis Found
+
+Found 6 upstream wiki(s). Read EACH one in full.
+
+
+### Upstream `DWH_dbo.Fact_CurrencyPriceWithSplit` — synapse
+- **Resolved as**: `DWH_dbo.Fact_CurrencyPriceWithSplit`
+- **Wiki path**: `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_CurrencyPriceWithSplit.md`
+
+# DWH_dbo.Fact_CurrencyPriceWithSplit
+
+> Daily price snapshot fact table capturing bid/ask prices per financial instrument per day, with spread-adjusted values, split-adjusted history for corporate-action dates, and pre-computed USD conversion rates.
+
+| Property | Value |
+|----------|-------|
+| **Schema** | DWH_dbo |
+| **Object Type** | Table |
+| **Production Source** | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView (Data Lake export) |
+| **Refresh** | Daily (per-date incremental via @dt parameter) |
+| | |
+| **Synapse Distribution** | HASH(InstrumentID) |
+| **Synapse Index** | CLUSTERED COLUMNSTORE + NONCLUSTERED(OccurredDateID) |
+| | |
+| **UC Target** | dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit |
+| **UC Format** | Delta (Merge strategy, daily) |
+| **UC Partitioned By** | _Pending - resolved during write-objects_ |
+| **UC Table Type** | _Pending - resolved during write-objects_ |
+
+---
+
+## 1. Business Meaning
+
+Fact_CurrencyPriceWithSplit is the DWH's authoritative daily price reference table. It stores one or more price rows per instrument per calendar day, including the raw bid/ask prices, spread-adjusted prices (AskSpreaded/BidSpreaded), and the last execution rate (RateLastEx). The `isvalid` flag marks whether a given price row was the active price at end-of-day. This table is the primary source for historical price look-ups used in P&L calculations across the warehouse.
+
+Data originates from the PriceLog Candles pipeline in the Data Lake. The staging view `DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView` delivers daily candlestick prices for all instruments. On dates when a stock split occurs (identified via `DWH_staging.etoro_History_SplitRatio`), the ETL switches to `PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory`, which provides historically-adjusted prices for the affected instruments.
+
+Loaded daily by `SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse(@dt)`. The SP deletes all rows for the given date, reloads from staging, then applies a split-branch if split events exist. A final UPDATE pass computes `ConvertRateIsBuy_1` and `ConvertRateIsBuy_0` using cross-currency logic to normalize instrument prices to USD. Data covers 2009-06-15 to the present with approximately 17.2M rows across 15,400+ distinct instruments.
+
+---
+
+## 2. Business Logic
+
+### 2.1 Stock Split Price Adjustment
+
+**What**: When a corporate action (stock split) occurs on a given date, prices for the affected instrument must be reloaded using split-adjusted history rather than the standard daily candle.
+
+**Columns Involved**: `InstrumentID`, `OccurredDateID`, `AskSpreaded`, `BidSpreaded`, `Ask`, `Bid`, `RateLastEx`
+
+**Rules**:
+- On each daily run, the SP checks `DWH_staging.etoro_History_SplitRatio` for splits on `@dt`
+- If split records exist (`@CountRowsSplit > 0`), all rows for the affected `InstrumentID` values are deleted from Fact_CurrencyPriceWithSplit
+- Replacement rows are loaded from `PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory`, which contains the retroactively adjusted price series
+- `ConvertRateIsBuy_1/0` from the pre-split date are preserved via a `#ConvertRateIsBuy` temp table join
+
+**Diagram**:
+```
+Daily run:
+  DELETE WHERE OccurredDateID = @DateID
+  INSERT FROM PriceLog_Candles_CurrencyPriceMaxDateWithSplitView
+
+Split check:
+  IF etoro_History_SplitRatio has rows for @dt:
+    DELETE affected instruments
+    INSERT FROM PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory
+    PRESERVE ConvertRates from pre-split data via #ConvertRateIsBuy temp table
+```
+
+### 2.2 USD Conversion Rate Computation
+
+**What**: After loading prices, the SP computes two pre-calculated USD conversion rates per instrument per day, one for buy-side positions and one for sell-side. These rates allow downstream consumers to convert instrument P&L to USD without re-deriving the currency cross-rate.
+
+**Columns Involved**: `ConvertRateIsBuy_1`, `ConvertRateIsBuy_0`, `Ask`, `Bid`, `InstrumentID`
+
+**Rules**:
+- Instrument currency pairs are loaded from `DWH_staging.etoro_Trade_GetInstrument` into `Ext_FCPWS_Instrument`
+- If `SellCurrencyID = 1` (USD is the sell/quote currency): rate = 1.00 (already in USD)
+- If `BuyCurrencyID = 1` (USD is the base currency): IsBuy_1 = 1/Bid, IsBuy_0 = 1/Ask
+- If neither currency is USD: find a bridging instrument with USD as base/quote and apply cross-rate
+- `ConvertRateIsBuy_1` is for buy-side positions (IsBuy=1); `ConvertRateIsBuy_0` for sell-side
+
+**Diagram**:
+```
+For each instrument on @DateID:
+  If SellCurrencyID = 1 (USD quote):   ConvertRate = 1.00
+  If BuyCurrencyID = 1 (USD base):     ConvertRate = 1/Bid (buy) or 1/Ask (sell)
+  If no direct USD pair:               ConvertRate via cross-rate through a USD-paired instrument
+  Null if no cross-rate found:         COALESCE(..., 1.00) fallback
+```
+
+---
+
+## 3. Query Advisory
+
+### 3.1 Synapse Distribution & Index
+
+**In Synapse**, this table is HASH-distributed on `InstrumentID` with a CLUSTERED COLUMNSTORE index. Always include `InstrumentID` in JOIN conditions for co-location with Dim_Instrument. A secondary NONCLUSTERED index on `OccurredDateID` supports date-range lookups. For date-range queries, filter on `OccurredDateID` (integer YYYYMMDD) rather than `OccurredDate` to leverage the NCI.
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+**In Databricks**, the table is registered as `dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit`, stored as Delta with a Merge copy strategy (daily refresh). Partition and Z-ORDER columns are resolved during the write-objects deployment phase.
+
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Get USD conversion rate for an instrument on a specific date | `WHERE InstrumentID = @id AND OccurredDateID = @dateID AND isvalid = 1` |
+| Full price history for an instrument | `WHERE InstrumentID = @id ORDER BY OccurredDate` |
+| End-of-day price for all instruments on a date | `WHERE OccurredDateID = @dateID AND isvalid = 1` |
+| Instruments with split events on a date | JOIN to `Ext_FCPWS_History_SplitRatio` on InstrumentID and date range |
+
+### 3.3 Common JOINs
+
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| DWH_dbo.Dim_Instrument | ON f.InstrumentID = di.InstrumentID | Resolve instrument name, symbol, type |
+| DWH_dbo.Dim_Date | ON f.OccurredDateID = dd.DateID | Resolve date to year/month/quarter |
+| DWH_dbo.Ext_FCPWS_Instrument | ON f.InstrumentID = ei.InstrumentID | Get buy/sell currency pair for the instrument |
+
+### 3.4 Gotchas
+
+- `isvalid = 0` rows (~46% of all rows) represent non-active price records for the day. Most P&L queries should filter `isvalid = 1` to get the effective end-of-day price.
+- `ConvertRateIsBuy_1` and `ConvertRateIsBuy_0` are NULL for ~1.3M rows (7.5% of the table) where no cross-rate could be computed. Use `ISNULL(..., 1.0)` in downstream calculations or investigate via `Ext_FCPWS_Instrument`.
+- The table has 3 distinct `ProviderID` values. Typical analytical queries do not filter on ProviderID, but be aware that multiple providers may contribute prices for the same instrument on the same date.
+- `OccurredDateID` is in YYYYMMDD integer format (e.g., 20240113), not a DATE. The NCI is on this column - prefer it for range filters over `OccurredDate`.
+- The ETL is date-parameterized (`@dt`). It does NOT do a full reload - it deletes and reloads one date at a time. Gaps can appear if the SP was not run for a date.
+
+---
+
+## 4. Elements
+
+### Confidence Tier Legend
+
+| Stars | Tier | Tag | Notes |
+|-------|------|-----|-------|
+| ★★★★★ | Tier 5 | `(Tier 5 - domain expert)` | Expert-confirmed |
+| ★★★★☆ | Tier 1 | `(Tier 1 - upstream wiki, source)` | Upstream wiki verbatim |
+| ★★★☆☆ | Tier 2 | `(Tier 2 - SP code / DDL)` | From SSDT SP or DDL analysis |
+| ★★☆☆☆ | Tier 3 | `(Tier 3 - live data / DDL structure)` | From sampling or DDL |
+| ★☆☆☆☆ | Tier 4 | `[UNVERIFIED] (Tier 4 - inferred)` | Inferred, needs expert review |
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | ProviderID | int | YES | Price provider identifier. 3 distinct values in production. Indicates which data provider sourced the price candle. Passed through from DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 2 | InstrumentID | int | YES | Financial instrument identifier. Foreign key to DWH_dbo.Dim_Instrument. HASH distribution column - include in all JOINs for optimal Synapse performance. 15,416 distinct instruments in production. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 3 | Occurred | datetime | YES | Exact timestamp when the price was recorded. Sub-day precision. Use OccurredDate or OccurredDateID for date-level aggregations. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 4 | OccurredDate | date | YES | Calendar date of the price record. Date portion of Occurred. Use for date joins or display. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 5 | OccurredDateID | int | YES | Date as YYYYMMDD integer (e.g., 20240113). Secondary NCI index key. Use this column for date-range filters to leverage the NONCLUSTERED index. Corresponds to DWH_dbo.Dim_Date.DateID. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 6 | isvalid | int | YES | Row validity flag. 1 = active/valid end-of-day price for this instrument on this date. 0 = non-active record (e.g., intraday snapshot or superseded row). Filter isvalid = 1 for end-of-day analytical queries. ~54% of rows are valid. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 7 | AskSpreaded | numeric(36,12) | YES | Spread-adjusted ask (offer) price for the instrument. The ask price with the broker spread applied. Used in P&L calculations for buy-side opening cost. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 8 | BidSpreaded | numeric(36,12) | YES | Spread-adjusted bid price for the instrument. The bid price with the broker spread applied. Used in P&L calculations for sell-side closing proceeds. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 9 | RateLastEx | numeric(36,12) | YES | Last execution rate for the instrument on this date. The price at which the most recent trade was executed. Reference rate for settlement. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 10 | Ask | numeric(36,12) | YES | Raw ask (offer) price before spread adjustment. Mid-price reference. Compare to AskSpreaded to derive the spread. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 11 | Bid | numeric(36,12) | YES | Raw bid price before spread adjustment. Mid-price reference. Compare to BidSpreaded to derive the spread. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 12 | UpdateDate | datetime | NO | DWH load timestamp. Set to GETDATE() at ETL execution time. Not the price timestamp - use Occurred for price time. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 13 | ConvertRateIsBuy_1 | numeric(18,4) | YES | Pre-computed USD conversion rate for buy-side positions (IsBuy=1). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Bid; otherwise cross-rate. NULL where no cross-rate could be determined. Added 2023-02-26. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+| 14 | ConvertRateIsBuy_0 | numeric(18,4) | YES | Pre-computed USD conversion rate for sell-side positions (IsBuy=0). Multiply by instrument price to convert to USD. Logic: if SellCurrencyID=1 then 1.00; if BuyCurrencyID=1 then 1/Ask; otherwise cross-rate. NULL where no cross-rate could be determined. Added 2023-02-26. (Tier 2 - SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse) |
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources
+
+| Synapse Column | Production Source | Source Column | Transform |
+|---------------|-------------------|---------------|-----------|
+| ProviderID | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | ProviderID | Passthrough |
+| InstrumentID | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | InstrumentID | Passthrough; on split dates from SplitInstHistory variant |
+| Occurred | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | Occurred | Passthrough |
+| OccurredDate | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | OccurredDate | Passthrough |
+| OccurredDateID | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | OccurredDateID | Passthrough |
+| isvalid | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | isvalid | Passthrough |
+| AskSpreaded | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | AskSpreaded | Passthrough |
+| BidSpreaded | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | BidSpreaded | Passthrough |
+| RateLastEx | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | RateLastEx | Passthrough |
+| Ask | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | Ask | Passthrough |
+| Bid | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | Bid | Passthrough |
+| UpdateDate | ETL-computed | N/A | GETDATE() at load time |
+| ConvertRateIsBuy_1 | ETL-computed (UPDATE pass) | Bid/Ask cross-rate | CASE on BuyCurrencyID/SellCurrencyID via Ext_FCPWS_Instrument |
+| ConvertRateIsBuy_0 | ETL-computed (UPDATE pass) | Bid/Ask cross-rate | CASE on BuyCurrencyID/SellCurrencyID via Ext_FCPWS_Instrument |
+
+No upstream wiki available for DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView (Data Lake intermediate staging layer, not documented in DB_Schema wiki).
+
+### 5.2 ETL Pipeline
+
+```
+Data Lake (PriceLog/Candles) -> DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView
+  -> SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse(@dt)
+    -> DWH_dbo.Fact_CurrencyPriceWithSplit [DELETE for @DateID + INSERT]
+
+Split branch (when etoro_History_SplitRatio has rows for @dt):
+  DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory
+    -> re-INSERT split-affected instruments
+  DWH_staging.etoro_Trade_GetInstrument -> Ext_FCPWS_Instrument
+    -> UPDATE ConvertRateIsBuy_1/0 via cross-currency logic
+```
+
+| Step | Object | Description |
+|------|--------|-------------|
+| Source | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView | Daily price candles from Data Lake |
+| Split source | DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView_SplitInstHistory | Split-adjusted historical prices |
+| Split calendar | DWH_staging.etoro_History_SplitRatio | Identifies which instruments had splits on @dt |
+| Instrument pairs | DWH_staging.etoro_Trade_GetInstrument | BuyCurrencyID/SellCurrencyID for ConvertRate |
+| ETL | SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse | Per-date delete+insert + split branch + ConvertRate UPDATE |
+| Target | DWH_dbo.Fact_CurrencyPriceWithSplit | Final DWH daily price table |
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)
+
+| Element | Related Object | Description |
+|---------|---------------|-------------|
+| InstrumentID | DWH_dbo.Dim_Instrument | Instrument name, symbol, type, asset class |
+| OccurredDateID | DWH_dbo.Dim_Date (via Dim_Date.DateID) | Date dimension (year, month, quarter) |
+| InstrumentID | DWH_dbo.Ext_FCPWS_Instrument | Currency pair lookup used during ConvertRate computation |
+
+### 6.2 Referenced By (other objects point to this)
+
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse | self-JOIN | ConvertRate computation reads same table for cross-rate |
+| DWH_dbo.Fact_CustomerUnrealized_PnL (probable) | InstrumentID + OccurredDateID | Currency conversion for unrealized P&L (verify via SP_Fact_CustomerUnrealized_PnL_* analysis) |
+
+---
+
+## 7. Sample Queries
+
+### 7.1 End-of-day prices for a set of instruments on a date
+
+```sql
+SELECT
+    f.InstrumentID,
+    di.InstrumentDisplayName,
+    f.OccurredDate,
+    f.Ask,
+    f.Bid,
+    f.AskSpreaded,
+    f.BidSpreaded,
+    f.RateLastEx,
+    f.ConvertRateIsBuy_1,
+    f.ConvertRateIsBuy_0
+FROM [DWH_dbo].[Fact_CurrencyPriceWithSplit] f
+JOIN [DWH_dbo].[Dim_Instrument] di ON f.InstrumentID = di.InstrumentID
+WHERE f.OccurredDateID = 20240113
+  AND f.isvalid = 1
+ORDER BY di.InstrumentDisplayName;
+```
+
+### 7.2 Price history for a single instrument over a date range
+
+```sql
+SELECT
+    f.OccurredDate,
+    f.Ask,
+    f.Bid,
+    (f.Ask + f.Bid) / 2.0 AS MidPrice,
+    f.ConvertRateIsBuy_1,
+    f.isvalid
+FROM [DWH_dbo].[Fact_CurrencyPriceWithSplit] f
+WHERE f.InstrumentID = 1     -- replace with target InstrumentID
+  AND f.OccurredDateID BETWEEN 20240101 AND 20240131
+  AND f.isvalid = 1
+ORDER BY f.OccurredDate;
+```
+
+### 7.3 Instruments with NULL ConvertRate (USD-conversion gap check)
+
+```sql
+SELECT
+    f.InstrumentID,
+    di.InstrumentDisplayName,
+    COUNT(*) AS rows_with_null_rate
+FROM [DWH_dbo].[Fact_CurrencyPriceWithSplit] f
+JOIN [DWH_dbo].[Dim_Instrument] di ON f.InstrumentID = di.InstrumentID
+WHERE f.ConvertRateIsBuy_1 IS NULL
+  AND f.isvalid = 1
+GROUP BY f.InstrumentID, di.InstrumentDisplayName
+ORDER BY rows_with_null_rate DESC;
+```
+
+---
+
+## 8. Atlassian Knowledge Sources
+
+No Atlassian sources found for this object. (Phase 10 skipped - Atlassian MCP not available in this session.)
+
+---
+
+*Generated: 2026-03-19 | Quality: 7.7/10 (★★★★☆) | Phases: 9/14*
+*Tiers: 0 T1, 14 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 7/10, Relationships: 5/10, Sources: 6/10*
+*Object: DWH_dbo.Fact_CurrencyPriceWithSplit | Type: Table | Production Source: DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView*
+
+
+### Upstream `DWH_dbo.Dim_HistorySplitRatio` — synapse
+- **Resolved as**: `DWH_dbo.Dim_HistorySplitRatio`
+- **Wiki path**: `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_HistorySplitRatio.md`
+
+# DWH_dbo.Dim_HistorySplitRatio
+
+> 16,014-row stock split ratio dimension table tracking price and amount adjustment ratios for every eToro stock instrument from 2000 to present. Sourced from `etoro.History.SplitRatio` via daily truncate/reload through `SP_Dim_HistorySplitRatio_DL_To_Synapse`. Carries the core ratio columns without operational completion flags.
+
+| Property | Value |
+|----------|-------|
+| **Schema** | DWH_dbo |
+| **Object Type** | Table |
+| **Production Source** | `etoro.History.SplitRatio` via `SP_Dim_HistorySplitRatio_DL_To_Synapse` |
+| **Refresh** | Daily (1440 min, Override/truncate-reload) |
+| | |
+| **Synapse Distribution** | REPLICATE |
+| **Synapse Index** | CLUSTERED INDEX (InstrumentID ASC, MinDate ASC, MaxDate ASC) |
+| | |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio` |
+| **UC Format** | delta |
+| **UC Partitioned By** | None |
+| **UC Table Type** | Gold export (Override, parquet) |
+
+---
+
+## 1. Business Meaning
+
+`Dim_HistorySplitRatio` is the DWH copy of eToro's stock split ratio registry (`History.SplitRatio`). Each row represents one split-ratio period for one stock instrument, bounded by `MinDate`/`MaxDate`. The table stores two complementary adjustment ratios — `PriceRatio` (applied to prices) and `AmountRatio` (applied to position unit counts) — that the platform uses to adjust historical prices, open positions, and orders when a company undergoes a stock split or reverse split.
+
+Of the 16,014 rows covering 15,037 distinct instruments, approximately 965 rows have a non-unity `PriceRatio` (representing actual split events). The remaining rows have `PriceRatio=1, AmountRatio=1` — these are initialization baselines for instruments that have never experienced a split, spanning the full default date range (`2000-01-01` to `2100-01-01`).
+
+The production table has 28 columns including multi-phase completion flags (`IsCompletedOpenPositions`, `IsCompletedClosePositions`, etc.), raw unit counts (`UnitsBefore`/`UnitsAfter`), and ultra-high-precision ratio variants. The DWH dimension carries only the 8 core ratio/identity columns plus an ETL timestamp — the operational flags and audit columns are not needed for analytics use cases like historical price adjustment and position reconciliation.
+
+Data flows from `etoro.History.SplitRatio` through the Generic Pipeline bronze export to `DWH_staging.etoro_History_SplitRatio`, then `SP_Dim_HistorySplitRatio_DL_To_Synapse` performs a daily truncate + full INSERT into this table, setting `UpdateDate = GETDATE()`.
+
+---
+
+## 2. Business Logic
+
+### 2.1 Split Ratio Time-Series Pattern
+
+**What**: Each instrument maintains a chain of non-overlapping split ratio records from its earliest history to the far future.
+
+**Columns Involved**: `InstrumentID`, `MinDate`, `MaxDate`, `PriceRatio`, `AmountRatio`
+
+**Rules**:
+- `MinDate` = start of the period this ratio applies (inclusive)
+- `MaxDate` = end of the period (exclusive); sentinel value `2100-01-01` = currently active
+- For instruments with no split history, a single row spans `2000-01-01` to `2100-01-01` with ratios = 1
+- When a new split occurs, the prior active row's `MaxDate` is set to the new split's `MinDate`, and a new row is inserted with `MaxDate = 2100-01-01`
+- `PriceRatio` and `AmountRatio` are inversely related: for a 2-for-1 forward split, `AmountRatio=2, PriceRatio=0.5`
+
+**Diagram**:
+```
+InstrumentID=1004 split history:
+  Row 1: MinDate=2000-01-01, MaxDate=2025-01-01, Ratio=1 (no adjustment)
+  Row 2: MinDate=2025-01-01, MaxDate=2025-01-20, PriceRatio=0.5, AmountRatio=2 (2-for-1 split)
+  Row 3: MinDate=2025-01-20, MaxDate=2100-01-01, PriceRatio=1 (active, post-split baseline)
+```
+
+### 2.2 Adjusted vs. Unadjusted Ratios
+
+**What**: Both the cumulative adjusted ratios and the original unadjusted values are stored for auditability and different consumption patterns.
+
+**Columns Involved**: `PriceRatio`, `AmountRatio`, `PriceRatioUnAdjusted`, `AmountRatioUnAdjusted`
+
+**Rules**:
+- `PriceRatio` / `AmountRatio` are the cumulative ratios that reflect the product of all historical splits — these are what downstream consumers use
+- `PriceRatioUnAdjusted` / `AmountRatioUnAdjusted` store the original per-event ratio before cumulative adjustment
+- For instruments with multiple historical splits, the adjusted and unadjusted ratios will differ
+- For initialization rows (no split), both adjusted and unadjusted are typically 1
+
+### 2.3 Sentinel Date Conventions
+
+**What**: Special date values encode state rather than actual calendar dates.
+
+**Columns Involved**: `MinDate`, `MaxDate`
+
+**Rules**:
+- `MinDate = 2000-01-01`: instrument history starts from the beginning (default sentinel)
+- `MaxDate = 2100-01-01`: currently active row — no end date set
+- `MaxDate < 2100-01-01`: this split period has been superseded by a newer split event
+
+---
+
+## 3. Query Advisory
+
+### 3.1 Synapse Distribution & Index
+
+**In Synapse**, this table uses `REPLICATE` distribution (small dimension, broadcast to all compute nodes) with a `CLUSTERED INDEX` on `(InstrumentID, MinDate, MaxDate)`. This means:
+- JOINs on `InstrumentID` are co-located on every node — no data movement needed
+- Point lookups for a specific instrument + date range are optimized by the clustered index
+- The entire table (~16K rows) fits in memory on each node
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+**In Databricks**, this table is stored as Delta (Gold export). No partitioning is applied. The table is small enough that full scans are fast.
+
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Get current active split ratio for an instrument | `WHERE InstrumentID = @id AND MaxDate = '2100-01-01'` |
+| Get the applicable ratio at a specific historical date | `WHERE InstrumentID = @id AND @date >= MinDate AND @date < MaxDate` |
+| Find all actual split events (non-initialization rows) | `WHERE PriceRatio != 1 OR AmountRatio != 1` |
+| Instruments with the most split events | `GROUP BY InstrumentID HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC` |
+| Adjust a historical price for splits | Multiply price by the `PriceRatio` for the applicable date range |
+
+### 3.3 Common JOINs
+
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| DWH_dbo.Dim_Instrument | `ON d.InstrumentID = i.InstrumentID` | Resolve instrument name/symbol for split events |
+| DWH_dbo.Fact_CurrencyPriceWithSplit | `ON d.InstrumentID = f.InstrumentID AND f.PriceDate >= d.MinDate AND f.PriceDate < d.MaxDate` | Apply split ratios to historical price data |
+
+### 3.4 Gotchas
+
+- **Most rows are initialization baselines**: ~15K of 16K rows have `PriceRatio=1, AmountRatio=1` — they represent instruments with no split history, not actual split events
+- **MaxDate = 2100-01-01 is the "active" sentinel**: Do not treat it as a real future date. Filter with `MaxDate = '2100-01-01'` to find currently-active ratios
+- **MinDate/MaxDate are nullable in DWH**: Unlike the production source where they are NOT NULL with defaults, the DWH DDL allows NULLs — though in practice no NULL values exist
+- **Unadjusted ratios may differ from adjusted**: For instruments with multiple historical splits, `PriceRatioUnAdjusted` shows the per-event ratio while `PriceRatio` shows the cumulative result
+- **Extreme ratio values exist**: PriceRatio ranges from 0.00004167 to 11,178,000 — these represent extreme split/reverse-split events
+
+---
+
+## 4. Elements
+
+### Confidence Tier Legend
+
+| Stars | Tier | Meaning |
+|-------|------|---------|
+| ★★★★ | Tier 1 | Upstream wiki verbatim — from `History.SplitRatio` wiki |
+| ★★★ | Tier 2 | Synapse SP code — ETL-computed columns |
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | ID | int | NO | Surrogate primary key, auto-incremented. NOT FOR REPLICATION indicates replication topology. Uniquely identifies each split event. (Tier 1 — History.SplitRatio) |
+| 2 | InstrumentID | int | NO | The stock instrument this split applies to. FK to Trade.Instrument. CHECK constraint enforces InstrumentID > 1000 — only stock instruments (not forex or crypto). (Tier 1 — History.SplitRatio) |
+| 3 | MinDate | datetime | YES | Start of the period this split ratio is effective. Default '2000-01-01' means "from the beginning of the instrument's history." The split adjustment applies to transactions from this date forward until MaxDate. (Tier 1 — History.SplitRatio) |
+| 4 | MaxDate | datetime | YES | End of the period this split ratio is effective (exclusive). Sentinel value '2100-01-01' means "currently active — no end date set." When a new split occurs, the current active row's MaxDate is set to the new split's MinDate. (Tier 1 — History.SplitRatio) |
+| 5 | PriceRatio | decimal(16,8) | NO | Multiplier applied to historical prices after this split. Equal to UnitsBefore/UnitsAfter. For a 2-for-1 split: PriceRatio=0.5 (price halved). For a 1-for-2 reverse split: PriceRatio=2. CHECK constraint enforces > 0. Default 1 = no adjustment. (Tier 1 — History.SplitRatio) |
+| 6 | AmountRatio | decimal(16,8) | NO | Multiplier applied to position unit counts after this split. Equal to UnitsAfter/UnitsBefore. For a 2-for-1 split: AmountRatio=2 (units doubled). For a 1-for-2 reverse split: AmountRatio=0.5. CHECK constraint enforces > 0. Default 1 = no adjustment. (Tier 1 — History.SplitRatio) |
+| 7 | PriceRatioUnAdjusted | decimal(19,4) | NO | Original unadjusted price ratio stored as money type. Before cumulative split adjustments are applied. Used for audit and comparison. DWH note: stored as decimal(19,4) in Synapse (money in production). (Tier 1 — History.SplitRatio) |
+| 8 | AmountRatioUnAdjusted | decimal(19,4) | NO | Original unadjusted amount ratio stored as money type. Before cumulative adjustments. DWH note: stored as decimal(19,4) in Synapse (money in production). (Tier 1 — History.SplitRatio) |
+| 9 | UpdateDate | datetime | NO | ETL load timestamp — set to GETDATE() on each truncate/reload by SP_Dim_HistorySplitRatio_DL_To_Synapse. All rows share the same value after each daily refresh. (Tier 2 — SP_Dim_HistorySplitRatio_DL_To_Synapse) |
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources
+
+| Synapse Column | Production Source | Source Column | Transform |
+|---------------|-------------------|---------------|-----------|
+| ID | History.SplitRatio | ID | None (passthrough) |
+| InstrumentID | History.SplitRatio | InstrumentID | None (passthrough) |
+| MinDate | History.SplitRatio | MinDate | None (passthrough) |
+| MaxDate | History.SplitRatio | MaxDate | None (passthrough) |
+| PriceRatio | History.SplitRatio | PriceRatio | None (passthrough) |
+| AmountRatio | History.SplitRatio | AmountRatio | None (passthrough) |
+| PriceRatioUnAdjusted | History.SplitRatio | PriceRatioUnAdjusted | Type cast: money → decimal(19,4) |
+| AmountRatioUnAdjusted | History.SplitRatio | AmountRatioUnAdjusted | Type cast: money → decimal(19,4) |
+| UpdateDate | — | — | ETL-computed: GETDATE() |
+
+Full production documentation: see upstream wiki `DB_Schema/etoro/Wiki/History/Tables/History.SplitRatio.md`
+
+### 5.2 ETL Pipeline
+
+```
+etoro.History.SplitRatio (production, etoroDB-REAL)
+  |-- Generic Pipeline (Bronze export, daily Override) ---|
+  v
+DWH_staging.etoro_History_SplitRatio
+  |-- SP_Dim_HistorySplitRatio_DL_To_Synapse (TRUNCATE + INSERT, daily) ---|
+  v
+DWH_dbo.Dim_HistorySplitRatio (16,014 rows, REPLICATE)
+  |-- Generic Pipeline (Override, parquet → delta) ---|
+  v
+dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio (UC Gold)
+```
+
+```text
+UPSTREAM SEARCH LOG — Dim_HistorySplitRatio:
+  Lineage source objects (from .lineage.md):
+    1. History.SplitRatio (role: primary source — production)
+    2. DWH_staging.etoro_History_SplitRatio (role: staging relay)
+  For each source:
+    History.SplitRatio
+      (a) Local wiki search: knowledge/synapse/Wiki/ → NOT_FOUND (production table, not Synapse-resident)
+          Read tool issued: N/A
+      (b) Production wiki search: DB_Schema/etoro/Wiki/History/Tables/History.SplitRatio.md → FOUND (in pre-resolved bundle)
+          Read tool issued: YES (via bundle)
+      Effective upstream: DB_Schema/etoro/Wiki/History/Tables/History.SplitRatio.md
+    DWH_staging.etoro_History_SplitRatio
+      (a) Local wiki search: knowledge/synapse/Wiki/DWH_staging/ → NOT_FOUND (staging tables have no wikis)
+          Read tool issued: N/A
+      (b) Production wiki search: N/A (staging table)
+      Effective upstream: none — staging relay, inherits from History.SplitRatio
+  Columns expected to inherit Tier 1 from each source:
+    History.SplitRatio: ID, InstrumentID, MinDate, MaxDate, PriceRatio, AmountRatio, PriceRatioUnAdjusted, AmountRatioUnAdjusted → 8 columns
+  Tier-1-eligible columns identified: 8
+```
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)
+
+| Element | Related Object | Description |
+|---------|---------------|-------------|
+| InstrumentID | Trade.Instrument (production) / DWH_dbo.Dim_Instrument (DWH) | The stock instrument this split applies to. Only stock instruments (InstrumentID > 1000) have split records. |
+
+### 6.2 Referenced By (other objects point to this)
+
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| DWH_dbo.Fact_CurrencyPriceWithSplit | InstrumentID + date range | Uses split ratios to adjust historical currency/instrument prices |
+
+---
+
+## 7. Sample Queries
+
+### 7.1 Get current active split ratio for a specific instrument
+```sql
+SELECT ID, InstrumentID, PriceRatio, AmountRatio,
+       PriceRatioUnAdjusted, AmountRatioUnAdjusted, MinDate
+FROM [DWH_dbo].[Dim_HistorySplitRatio]
+WHERE InstrumentID = 1004
+  AND MaxDate = '2100-01-01'
+```
+
+### 7.2 Find all actual stock split events (non-initialization rows)
+```sql
+SELECT ID, InstrumentID, MinDate, MaxDate,
+       PriceRatio, AmountRatio
+FROM [DWH_dbo].[Dim_HistorySplitRatio]
+WHERE PriceRatio != 1 OR AmountRatio != 1
+ORDER BY MinDate DESC
+```
+
+### 7.3 Get the applicable split ratio for a transaction at a specific date with instrument name
+```sql
+SELECT s.InstrumentID, i.Symbol, s.PriceRatio, s.AmountRatio,
+       s.MinDate, s.MaxDate
+FROM [DWH_dbo].[Dim_HistorySplitRatio] s
+JOIN [DWH_dbo].[Dim_Instrument] i ON s.InstrumentID = i.InstrumentID
+WHERE s.InstrumentID = 1004
+  AND '2025-01-15' >= s.MinDate
+  AND '2025-01-15' < s.MaxDate
+```
+
+---
+
+## 8. Atlassian Knowledge Sources
+
+No Atlassian sources found for this object.
+
+---
+
+*Generated: 2026-04-28 | Quality: 9.2/10 (★★★★★) | Phases: 11/11*
+*Tiers: 8 T1, 1 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10.0/10, Logic: 10.0/10, Relationships: 8.0/10, Sources: 9.0/10*
+*Object: DWH_dbo.Dim_HistorySplitRatio | Type: Table | Production Source: etoro.History.SplitRatio*
+
+
+### Upstream `DWH_dbo.Dim_Position` — synapse
+- **Resolved as**: `DWH_dbo.Dim_Position`
+- **Wiki path**: `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Position.md`
+
+# DWH_dbo.Dim_Position
+
+> Core trading position table containing every opened and closed position on the eToro platform since 2007, with financial metrics (P&L, commissions, forex rates), lifecycle timestamps, social trading relationships (mirrors/copies/copy funds), regulatory context, and 20+ market price and spread columns added incrementally since 2022.
+
+| Property | Value |
+|----------|-------|
+| **Schema** | DWH_dbo |
+| **Object Type** | Table |
+| **Production Source** | etoro.Trade.Position (open) + etoro.History.ClosePosition (closed) |
+| **Refresh** | Daily (incremental via SP_Dim_Position_DL_To_Synapse @dt) |
+| | |
+| **Synapse Distribution** | HASH (PositionID) |
+| **Synapse Index** | CLUSTERED INDEX (CloseDateID ASC, PositionID ASC) |
+| **Synapse Partitions** | Monthly by CloseDateID, 2007-01-01 through 2026-02-28 (230+ partitions) |
+| **Synapse Indexes** | IX_Dim_Position_CID, IX_Dim_Position_CloseDateID, IX_Dim_Position_CloseDateIDOpenDateID, IX_Dim_Position_CloseOccurred_OpenOccurred, IX_Dim_Position_Instrument |
+| | |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position` |
+| **UC Format** | Delta |
+| **UC Partitioned By** | CloseDateID (monthly) |
+| **UC Table Type** | Managed |
+
+---
+
+## 1. Business Meaning
+
+Dim_Position is the central trading record table in DWH, containing every position (trade) ever opened on the eToro platform. Each row represents a single trading position lifecycle: opened by a customer (CID) on an instrument (InstrumentID), held for some duration, and either still open (CloseDateID=0) or closed with a final NetProfit. The data spans positions from 2007-08-27 to the most recent load date (2026-03-10 as of last ETL run 2026-03-11).
+
+**Position types represented**:
+- **Retail positions**: Opened by customers directly in the eToro web/mobile app
+- **Mirror/CopyTrading positions**: Opened when a customer copies another trader (MirrorID links to Dim_Mirror); ParentPositionID links to the "master" position
+- **Copy Fund positions**: IsCopyFundPosition=1 when the position's root (TreeID) belongs to a fund account (AccountTypeID=9)
+- **AirDrop positions**: IsAirDrop=1 for positions created via airdrop events (crypto)
+- **ReOpen positions**: IsReOpen=1 for positions reopened after a ReOpen event; ReopenForPositionID points to the original
+
+**Open vs Closed state**:
+- Open position: CloseDateID=0, CloseOccurred='1900-01-01 00:00:00'
+- Closed position: CloseDateID=YYYYMMDD (e.g., 20260310), CloseOccurred = actual close timestamp
+
+**Data Sources (merged in ETL)**:
+- Open positions: `etoro_Trade_OpenPositionEndOfDay` (today's snapshot of all open positions)
+- Closed positions: `etoro_History_ClosePositionEndOfDay` (positions that closed on @dt)
+
+**134 columns** covering financial amounts, forex rates at open/close, market prices (spread data), execution IDs, order IDs, hedge types, and fee calculations added through 2025.
+
+---
+
+## 2. Business Logic
+
+### 2.1 Open vs Closed Position States
+
+**What**: The same position row transitions from "open" to "closed" as its lifecycle progresses.
+
+**Columns Involved**: `CloseDateID`, `CloseOccurred`, `NetProfit`, `EndForexRate`, `ClosePositionReasonID`
+
+**Rules**:
+- **Open state**: CloseDateID=0, CloseOccurred='1900-01-01 00:00:00.000'. NetProfit holds unrealized P&L (updated daily). EndForexRate=NULL (position not yet closed).
+- **Closed state**: CloseDateID=YYYYMMDD int (e.g., 20260310), CloseOccurred=actual datetime. NetProfit holds realized P&L. ClosePositionReasonID explains why it closed.
+- **ETL daily cycle**: Each day, rows for positions that opened or closed that day are deleted/updated and re-inserted fresh from staging.
+- **CloseDateID=19000101** is a transient internal state used during ETL processing (positions being "reset" before re-insertion); analysts should filter `WHERE CloseDateID NOT IN (0, 19000101)` for confirmed closed positions.
+- **OpenDateID and CloseDateID**: Both are YYYYMMDD integers, NOT dates. Use `CAST(CAST(OpenDateID AS VARCHAR(8)) AS DATE)` to convert.
+
+**Diagram**:
+```
+Position lifecycle in Dim_Position:
+  Day 1 (open):  CloseDateID=0,        CloseOccurred='1900-01-01'  <-- still open
+  Day N (close): CloseDateID=YYYYMMDD, CloseOccurred=actual time   <-- closed
+  During ETL:    CloseDateID=19000101  <-- transient, skip in queries
+```
+
+### 2.2 Social Trading Relationships
+
+**What**: How copy-trading and mirror relationships are encoded.
+
+**Columns Involved**: `MirrorID`, `ParentPositionID`, `OrigParentPositionID`, `TreeID`, `IsCopyFundPosition`
+
+**Rules**:
+- **MirrorID**: FK to Dim_Mirror. When a customer copies another trader, all positions generated share the same MirrorID.
+- **ParentPositionID**: The position ID of the "master" position being copied. NULL for original/manual positions.
+- **OrigParentPositionID**: The original parent (before any reopen/rebalance operations).
+- **TreeID**: FK back to Dim_Position.PositionID -- points to the root position of the copy tree. Used to identify CopyFund positions.
+- **IsCopyFundPosition=1**: The position belongs to a copy-fund tree (TreeID's CID has AccountTypeID=9).
+
+### 2.3 Financial Metrics and Commissions
+
+**What**: How P&L and commission amounts flow through a position lifecycle.
+
+**Columns Involved**: `Amount`, `NetProfit`, `Commission`, `CommissionOnClose`, `FullCommission`, `FullCommissionOnClose`, `EndOfWeekFee`, `PnLInDollars`
+
+**Rules**:
+- **Amount**: Position notional value in USD at open.
+- **NetProfit**: Realized P&L for closed positions; unrealized daily P&L for open positions (updated daily from EndOfDayPnLInDollars).
+- **Commission**: Opening commission charged.
+- **CommissionOnClose**: Closing commission. Set to 0 for open positions; filled when position closes.
+- **FullCommission / FullCommissionOnClose**: Total commissions including all components.
+- **EndOfWeekFee**: Overnight fee charged on weekends for leveraged positions. CloseOnEndOfWeek=1 means position auto-closes at weekend.
+- **PnLInDollars**: Unrealized daily P&L for open positions (from EndOfDayPnLInDollars staging column); realized at close.
+
+### 2.4 Position Segmentation and Regulation
+
+**What**: Regulatory context and platform categorization at time of open.
+
+**Columns Involved**: `RegulationIDOnOpen`, `PlatformTypeID`, `PositionSegment`
+
+**Rules**:
+- **RegulationIDOnOpen**: The regulatory jurisdiction (entity) the customer belonged to at the time of opening. Derived from a JOIN with etoro_History_BackOfficeCustomer at ETL time. 1=UK/FCA, 2=Cyprus/CySEC, etc.
+- **PlatformTypeID**: FK to Dim_PlatformType. 1=Web, 2=iOS, 3=Android, 0=Undefined.
+- **PositionSegment**: Internal segment classification (smallint).
+
+### 2.5 Volume and Unit Calculations
+
+**What**: ETL-computed unit and volume metrics.
+
+**Columns Involved**: `AmountInUnitsDecimal`, `LotCountDecimal`, `Volume`, `VolumeOnClose`, `UnitMargin`, `InitialUnits`
+
+**Rules**:
+- **AmountInUnitsDecimal**: Position size in instrument units (e.g., shares, crypto coins).
+- **LotCountDecimal**: Position size in lots.
+- **Volume**: ETL-computed = ROUND(AmountInUnitsDecimal * InitForexRate * USD conversion factor, 0) -- approximates USD equivalent at open.
+- **VolumeOnClose**: Similar calculation using EndForexRate at close.
+- **UnitMargin**: Margin per unit for leveraged positions.
+- **InitialUnits**: Original units before any partial-close or partial-reopen adjustments.
+
+### 2.6 Open/Close Rates and Market Prices
+
+**What**: The forex rates, market prices, and spread data captured at open and close.
+
+**Columns Involved**: `InitForexRate`, `EndForexRate`, `SpreadedPipBid`, `SpreadedPipAsk`, `InitForex_Ask/Bid/AskSpreaded/BidSpreaded/USDConversionRate`, `EndForex_*`, `OpenMarket_*`, `CloseMarket_*`
+
+**Rules**:
+- **InitForexRate / EndForexRate**: The execution rate at open and close respectively (in instrument's base currency per USD or USD per instrument).
+- **InitForex_* columns**: Ask, Bid, spreaded variants, and USD conversion rate at the INIT price rate ID (raw price book). Populated from PriceLog_History_CurrencyPrice_Active.
+- **EndForex_***: Same price book data at the END (close) rate.
+- **OpenMarket_* / CloseMarket_***: Market prices at the time of market open/close events. Added 2023-03-07 (12 columns).
+- **SpreadedPipBid / SpreadedPipAsk**: Bid/ask spread in pips at execution.
+
+### 2.7 Fees and Taxes (Post-2025)
+
+**What**: Tax and fee components added in 2025.
+
+**Columns Involved**: `OpenTotalTaxes`, `CloseTotalTaxes`, `OpenTotalFees`, `CloseTotalFees`, `EstimateCloseFeeForCFD`, `EstimateCloseFeeOnOpenByUnits`, `EstimateCloseFeeOnOpen`, `Close_PnLInDollars`, `Close_CalculationRate`, `Close_ConversionRate`, `Close_PriceType`, `CurrentCalculationRate`, `CurrentConversionRate`
+
+**Rules**:
+- Added 2025-06-25 (Adi Ferber) and 2025-09-08 (Daniel Kaplan).
+- These columns will be NULL for positions opened/closed before the ETL addition date.
+- `EstimateCloseFeeForCFD/OnOpenByUnits/OnOpen`: Fee estimates for CFD instruments at open.
+- `Close_PnLInDollars / Close_CalculationRate / Close_ConversionRate / Close_PriceType`: Close-side P&L metrics with explicit calculation chain.
+
+---
+
+## 3. Query Advisory
+
+### 3.1 Synapse Distribution & Partitioning
+
+**HASH (PositionID)**: Rows distributed by PositionID across nodes. Single-position lookups are efficient. JOINs between two HASH(PositionID) tables (e.g., Dim_Position JOIN Dim_PositionChangeLog by PositionID) are co-located and fast.
+
+**Clustered Index (CloseDateID, PositionID)**: Clustered on close date -- date-range queries on closed positions are efficient. Open-position queries (CloseDateID=0) hit a single partition.
+
+**Monthly partitioning**: Partitioned from 2007-01-01 to 2026-02-28 by CloseDateID. Always include a CloseDateID range filter in queries to enable partition elimination. Without it, all 230+ partitions are scanned.
+
+**NOT ENFORCED PK**: The primary key on (PositionID, CloseDateID) is NOT ENFORCED. Synapse does not validate uniqueness. PositionID is logically unique per position, but be aware: duplicate PositionIDs can exist if ETL has a bug.
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+**In Databricks**, this table lands as `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position`. Partitioned monthly by CloseDateID. Use `WHERE CloseDateID >= 20260101` style filters for partition pruning. Z-ORDER on PositionID within each partition is beneficial for position-lookup workloads.
+
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Get closed positions for a date range | WHERE CloseDateID BETWEEN 20260101 AND 20260310 |
+| Get all open positions | WHERE CloseDateID = 0 |
+| Get a customer's positions | WHERE CID = X AND CloseDateID BETWEEN ... (always include date range!) |
+| P&L for closed positions | SUM(NetProfit) WHERE CloseDateID > 0 AND CloseDateID != 19000101 |
+| CopyTrading positions only | WHERE MirrorID IS NOT NULL |
+| Direct (non-copy) positions | WHERE MirrorID IS NULL AND ParentPositionID IS NULL |
+| CopyFund positions only | WHERE IsCopyFundPosition = 1 |
+| Long positions only | WHERE IsBuy = 1 |
+| Short positions | WHERE IsBuy = 0 |
+| By instrument | WHERE InstrumentID = X AND CloseDateID BETWEEN ... |
+
+### 3.3 Common JOINs
+
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| DWH_dbo.Dim_Instrument | ON InstrumentID | Resolve instrument name, asset class |
+| DWH_dbo.Dim_Customer | ON CID | Customer info, tier, country |
+| DWH_dbo.Dim_Currency | ON CurrencyID | Position base currency |
+| DWH_dbo.Dim_Mirror | ON MirrorID | Copy-trading relationship details |
+| DWH_dbo.Dim_ClosePositionReason | ON ClosePositionReasonID | Why position was closed |
+| DWH_dbo.Dim_Platform | ON PlatformTypeID | Platform used to open |
+| DWH_dbo.Dim_Date | ON OpenDateID / CloseDateID | Calendar dimensions |
+| DWH_dbo.Dim_PositionChangeLog | ON PositionID | Position lifecycle changes (IsSettled, Amount changes) |
+
+### 3.4 Gotchas
+
+- **NEVER query without CloseDateID filter**: Without a date range filter, Synapse scans all 230+ monthly partitions. Always include `WHERE CloseDateID BETWEEN X AND Y` or `WHERE CloseDateID = 0`.
+- **CloseDateID=0 for open, CloseDateID=19000101 during ETL**: Exclude 19000101 in most queries: `WHERE CloseDateID NOT IN (0, 19000101)` for confirmed-closed positions.
+- **OpenDateID and CloseDateID are int, not date**: They are in YYYYMMDD format. Use `CAST(CAST(OpenDateID AS VARCHAR(8)) AS DATE)` to convert.
+- **HASH distribution on PositionID**: Very efficient for single-position or position-list queries. Less efficient for large customer-level scans (CID is not the distribution key).
+- **NOT ENFORCED PK**: PositionID uniqueness is not enforced by the database. Check for duplicates if needed.
+- **134 columns -- many nullable**: Most columns beyond the core set are NULL for older positions predating their addition (2022-2025). Don't assume non-null.
+- **Volume = ETL-computed approximation**: Volume (int) is rounded to nearest integer. VolumeOnClose uses EndForexRate which may differ. Not always perfectly accurate.
+- **UpdateDate = GETDATE() or GETUTCDATE()**: Mixed -- open positions use GETDATE(), UPDATE path for closing positions uses GETUTCDATE(). Not a reliable "modified since" field.
+- **IsPartialCloseParent / IsPartialCloseChild**: 1 if this position was split via partial close. Use OriginalPositionID to trace the original. Generally filter ISNULL(IsPartialCloseChild,0)=0 on OPEN metrics only — NEVER on CLOSE. Some open metrics (e.g., volume) are already pro-rated, so excluding children would be wrong. Apply the filter case-by-case.
+- **RegulationIDOnOpen is 0 for unmatched**: If the ETL JOIN with BackOfficeCustomer history finds no regulation at that date, ISNULL defaults to 0.
+- **AmountInUnitsDecimal may change**: Position amount can be adjusted (e.g., partial close). Dim_PositionChangeLog tracks historical amount values.
+
+---
+
+## 4. Elements
+
+### Confidence Tier Legend
+
+| Stars | Tier | Tag |
+|-------|------|-----|
+| *** | Tier 2 - Synapse SP code | (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| ** | Tier 3 - MCP live data | (Tier 3 - MCP live data) |
+| * | Tier 4 - Inferred from name | (Tier 4 - [UNVERIFIED]) |
+
+Note: Upstream production wikis available for Trade.PositionTbl and Trade.OpenPositionEndOfDay. Columns with direct passthrough or view-computed staging get Tier 1. ETL-computed and PriceLog-enriched columns get Tier 2.
+
+**Column Groups** (134 total):
+
+#### Group A: Core Identity (5 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | PositionID | bigint | NO | Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — Trade.PositionTbl) |
+| 2 | CID | int | YES | Customer ID. References Customer.Customer. (Tier 1 — Trade.PositionTbl) |
+| 3 | InstrumentID | int | NO | FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl) |
+| 4 | CurrencyID | int | NO | FK to Dictionary.Currency. Denomination currency for Amount, NetProfit. Must be > 0. (Tier 1 — Trade.PositionTbl) |
+| 5 | ProviderID | int | NO | References Trade.Provider. Execution provider (default 1 = TRADONOMI in PositionOpen). (Tier 1 — Trade.PositionTbl) |
+
+#### Group B: Lifecycle Timestamps and Date IDs (6 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 6 | OpenOccurred | datetime | NO | When position was persisted (mapped from Occurred in production). Default getutcdate(). (Tier 1 — Trade.PositionTbl) |
+| 7 | CloseOccurred | datetime | NO | When close was persisted. (Tier 1 — Trade.PositionTbl) |
+| 8 | OpenDateID | int | NO | ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 9 | CloseDateID | int | NO | ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. **Partition column.** Always include in WHERE clause. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 10 | RequestOpenOccurred | datetime2(7) | YES | When the open request arrived at Trading API. Distinct from OpenOccurred (DB insert time). (Tier 1 — Trade.PositionTbl) |
+| 11 | RequestCloseOccurred | datetime2(7) | YES | When close request arrived at API. (Tier 1 — Trade.PositionTbl) |
+
+#### Group C: Financial Metrics (13 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 12 | Amount | money | NO | Position size in currency. Must be >= 0. Stored in dollars (PositionOpen divides by 100 from cents). (Tier 1 — Trade.PositionTbl) |
+| 13 | AmountInUnitsDecimal | decimal(16,6) | YES | Position size in units/shares. Fractional lots. (Tier 1 — Trade.PositionTbl) |
+| 14 | InitialAmountCents | money | YES | Initial amount in cents. Used for ratio calculations. (Tier 1 — Trade.PositionTbl) |
+| 15 | InitialUnits | decimal(16,6) | YES | Original unit count at open. Used for partial close ratio. (Tier 1 — Trade.PositionTbl) |
+| 16 | NetProfit | money | NO | Realized PnL. 0 when open; set on close. In position currency. (Tier 1 — Trade.PositionTbl) |
+| 17 | PnLInDollars | decimal(38,6) | YES | Max-rate PnL in dollars. From Trade.FnCalculatePnLWrapper using the max-date market rate. Represents unrealized profit/loss at the highest available price timestamp. (Tier 1 — Trade.OpenPositionEndOfDay) |
+| 18 | Commission | money | NO | Open commission in dollars. PositionOpen stores @Commission/100 (cents to dollars). (Tier 1 — Trade.PositionTbl) |
+| 19 | CommissionOnClose | money | NO | Commission charged on close. DWH note: adjusted by SP_Dim_Position when position is reopened; CommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl) |
+| 20 | FullCommission | money | YES | Full commission including spread. PositionOpen stores @FullCommission/100. (Tier 1 — Trade.PositionTbl) |
+| 21 | FullCommissionOnClose | money | YES | Full commission on close. DWH note: adjusted by SP_Dim_Position when position is reopened; FullCommissionOnCloseOrig stores the pre-adjustment value. (Tier 1 — Trade.PositionTbl) |
+| 22 | CommissionByUnits | decimal(38,6) | YES | Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position) |
+| 23 | FullCommissionByUnits | decimal(38,6) | YES | Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission. (Tier 1 — Trade.Position) |
+| 24 | EndOfWeekFee | money | NO | Overnight/weekend carry fee. (Tier 1 — Trade.PositionTbl) |
+
+#### Group D: ETL-Computed Volumes and Units (4 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 25 | LotCountDecimal | decimal(16,6) | YES | Lot count from provider. Used for hedge aggregation and unit-based sizing. (Tier 1 — Trade.PositionTbl) |
+| 26 | UnitMargin | decimal(15,8) | YES | Margin per unit. From Trade.ProviderToInstrument. (Tier 1 — Trade.PositionTbl) |
+| 27 | Volume | int | YES | ETL-computed approximation of USD value: ROUND(AmountInUnitsDecimal * InitForexRate * USD conversion, 0). (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 28 | VolumeOnClose | int | YES | ETL-computed USD volume at close: ROUND(AmountInUnitsDecimal * EndForexRate * USD conversion, 0). 0 for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+
+#### Group E: Direction, Leverage, and Trade Settings (5 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 29 | IsBuy | bit | NO | 1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl) |
+| 30 | Leverage | int | NO | Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl) |
+| 31 | CloseOnEndOfWeek | bit | NO | Weekend-close flag. 1 = position auto-closes at end of trading week. (Tier 1 — Trade.PositionTbl) |
+| 32 | LimitRate | decimal(16,8) | YES | Take-profit rate set at open (or most recent update). (Tier 1 — Trade.PositionTbl) |
+| 33 | StopRate | decimal(16,8) | YES | Stop-loss rate set at open (or most recent update). Can be updated via PositionChangeLog. (Tier 1 — Trade.PositionTbl) |
+
+#### Group F: Forex Rates (6 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 34 | InitForexRate | decimal(16,8) | NO | Opening price rate at position open. Used for PnL calculation. (Tier 1 — Trade.PositionTbl) |
+| 35 | EndForexRate | decimal(16,8) | YES | Closing rate at position close. NULL for open positions. (Tier 1 — Trade.PositionTbl) |
+| 36 | LastOpConversionRate | decimal(16,8) | YES | Conversion rate for last operation. (Tier 1 — Trade.PositionTbl) |
+| 37 | InitConversionRate | decimal(16,8) | YES | Currency conversion rate at open. (Tier 1 — Trade.PositionTbl) |
+| 38 | SpreadedPipBid | decimal(16,8) | YES | Bid rate with spread at open. From Trade.CurrencyPrice/spread config. (Tier 1 — Trade.PositionTbl) |
+| 39 | SpreadedPipAsk | decimal(16,8) | YES | Ask rate with spread at open. (Tier 1 — Trade.PositionTbl) |
+
+#### Group G: Price Rate IDs and Execution IDs (7 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 40 | InitForexPriceRateID | bigint | YES | FK to price log table -- the specific price rate record at open. (Tier 1 — Trade.PositionTbl) |
+| 41 | EndForexPriceRateID | bigint | YES | Price rate ID at close. (Tier 1 — Trade.PositionTbl) |
+| 42 | LastOpPriceRateID | bigint | YES | Last operation price rate ID. (Tier 1 — Trade.PositionTbl) |
+| 43 | LastOpPriceRate | decimal(16,8) | YES | Last operation price. Updated on partial close, dividend, etc. (Tier 1 — Trade.PositionTbl) |
+| 44 | OpenMarketPriceRateID | bigint | YES | Market price rate ID at open. (Tier 1 — Trade.PositionTbl) |
+| 45 | CloseMarketPriceRateID | bigint | YES | Market price rate ID at close. (Tier 1 — Trade.PositionTbl) |
+| 46 | InitConversionRateID | bigint | YES | Conversion rate record ID at open. (Tier 1 — Trade.PositionTbl) |
+
+#### Group H: Execution IDs (2 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 47 | InitExecutionID | bigint | YES | Execution record ID at open. (Tier 1 — Trade.PositionTbl) |
+| 48 | EndExecutionID | bigint | YES | Execution record ID at close. NULL for open positions. (Tier 1 — Trade.PositionTbl) |
+
+#### Group I: Market Price Data at Open (10 columns -- added 2023-03-07)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 49 | InitForex_Ask | numeric(16,8) | YES | Raw ask price at open from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 50 | InitForex_Bid | numeric(16,8) | YES | Raw bid price at open from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 51 | InitForex_AskSpreaded | numeric(16,8) | YES | Ask price including spread at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 52 | InitForex_BidSpreaded | numeric(16,8) | YES | Bid price including spread at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 53 | InitForex_USDConversionRate | numeric(16,8) | YES | USD conversion rate at open from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 54 | EndForex_Ask | numeric(16,8) | YES | Raw ask at close. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 55 | EndForex_Bid | numeric(16,8) | YES | Raw bid at close. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 56 | EndForex_AskSpreaded | numeric(16,8) | YES | Spreaded ask at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 57 | EndForex_BidSpreaded | numeric(16,8) | YES | Spreaded bid at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 58 | EndForex_USDConversionRate | numeric(16,8) | YES | USD conversion rate at close from price book. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+
+#### Group J: Market Spread Data (8 columns -- added 2023-03-07)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 59 | OpenMarket_Ask | numeric(16,8) | YES | Market ask at time of open-side market event. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 60 | OpenMarket_Bid | numeric(16,8) | YES | Market bid at time of open-side market event. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 61 | OpenMarket_AskSpreaded | numeric(16,8) | YES | Spreaded market ask at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 62 | OpenMarket_BidSpreaded | numeric(16,8) | YES | Spreaded market bid at open. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 63 | OpenMarketCoversionRateBidSpreaded | numeric(16,8) | YES | USD conversion rate (bid-spreaded) at market open. Note: "Coversion" typo in original DDL. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 64 | OpenMarketCoversionRateAskSpreaded | numeric(16,8) | YES | USD conversion rate (ask-spreaded) at market open. Note: "Coversion" typo in original DDL. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 65 | CloseMarket_Ask | numeric(16,8) | YES | Market ask at close event. NULL for open positions. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 66 | CloseMarket_Bid | numeric(16,8) | YES | Market bid at close event. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+
+#### Group K: Close Market Spread (4 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 67 | CloseMarket_AskSpreaded | numeric(16,8) | YES | Spreaded market ask at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 68 | CloseMarket_BidSpreaded | numeric(16,8) | YES | Spreaded market bid at close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 69 | CloseMarketCoversionRateBidSpreaded | numeric(16,8) | YES | USD conversion rate (bid-spreaded) at market close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 70 | CloseMarketCoversionRateAskSpreaded | numeric(16,8) | YES | USD conversion rate (ask-spreaded) at market close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+
+#### Group L: Markup and Spread Metrics (7 columns -- added 2024-01-15)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 71 | OpenMarketSpread | decimal(38,18) | YES | Spread at open. (Tier 1 — Trade.PositionTbl) |
+| 72 | CloseMarketSpread | decimal(38,18) | YES | Spread at close. (Tier 1 — Trade.PositionTbl) |
+| 73 | CloseMarkupOnOpen | decimal(38,18) | YES | Close markup projected at open. (Tier 1 — Trade.PositionTbl) |
+| 74 | OpenMarkup | decimal(38,18) | YES | Markup at open. (Tier 1 — Trade.PositionTbl) |
+| 75 | CloseMarkup | decimal(38,18) | YES | Markup at close. (Tier 1 — Trade.PositionTbl) |
+| 76 | OpenMarkupByUnits | money | YES | Prorated open markup for partial close. Formula: OpenMarkup * AmountInUnitsDecimal / InitialUnits. (Tier 1 — Trade.Position) |
+| 77 | SpreadedCommission | int | YES | Spread-related commission component. (Tier 1 — Trade.PositionTbl) |
+
+#### Group M: Social Trading and Hierarchy (8 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 78 | MirrorID | int | YES | FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. (Tier 1 — Trade.PositionTbl) |
+| 79 | HedgeID | int | YES | FK to Trade.Hedge. Broker executed hedge. NULL until hedge is opened. (Tier 1 — Trade.PositionTbl) |
+| 80 | HedgeServerID | int | YES | FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl) |
+| 81 | ParentPositionID | bigint | YES | Copy-trade parent. 0/1 = root. Positive = child of referenced position. (Tier 1 — Trade.PositionTbl) |
+| 82 | OrigParentPositionID | bigint | YES | Original parent before any detachment. (Tier 1 — Trade.PositionTbl) |
+| 83 | TreeID | bigint | YES | Links to Trade.PositionTreeInfo. Root: TreeID=PositionID. Children: root PositionID. Demo: negative. (Tier 1 — Trade.PositionTbl) |
+| 84 | IsCopyFundPosition | int | YES | 1=position belongs to a copy fund tree (TreeID's CID has AccountTypeID=9). ETL-computed via JOIN chain. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 85 | IsOpenOpen | bit | YES | Open-on-open copy behavior. From Mirror. (Tier 1 — Trade.PositionTbl) |
+
+#### Group N: Partial Close and ReOpen (7 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 86 | ReopenForPositionID | bigint | YES | When position was reopened: references the erroneously closed PositionID. (Tier 1 — Trade.PositionTbl) |
+| 87 | IsReOpen | int | YES | 1=this position was reopened from ReopenForPositionID. ETL-computed: CASE WHEN ReopenForPositionID IS NOT NULL THEN 1. Default 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 88 | OriginalPositionID | bigint | YES | Original position ID for positions split by partial close. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 89 | IsPartialCloseParent | int | YES | 1=this position was partially closed (is the parent in a partial close event). (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 90 | IsPartialCloseChild | int | YES | 1=this position is the child (remainder) of a partial close event. Generally filter out child positions from most metrics on OPEN when aggregating, but not all (e.g., volume is already pro-rated so excluding these is wrong). NEVER filter these out on CLOSE. (Tier 5 — domain expert, SP_Dim_Position_DL_To_Synapse) |
+| 91 | IsPartialCloseChildFromReOpen | int | YES | 1=partial close child that was created via a ReOpen flow. (Tier 4 - [UNVERIFIED]) |
+| 92 | CommissionOnCloseOrig | money | YES | Original CommissionOnClose before reopen adjustments. ETL: CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+
+#### Group O: Settlement and Redemption (5 columns)
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 93 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
+| 94 | IsSettledOnOpen | int | YES | 1 = real asset, 0 = CFD asset. Value at position open (snapshot); same 0/1 encoding as IsSettled. (Tier 5 — Expert Review) |
+| 95 | RedeemStatus | tinyint | YES | Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl) |
+| 96 | RedeemID | int | YES | Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl) |
+| 97 | FullCommissionOnCloseOrig | money | YES | Original FullCommissionOnClose before reo
+
+*[Upstream wiki truncated to 30 KB. Open the file directly if you need more context.]*
+
+### Upstream `DWH_dbo.Dim_PositionChangeLog` — synapse
+- **Resolved as**: `DWH_dbo.Dim_PositionChangeLog`
+- **Wiki path**: `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PositionChangeLog.md`
+
+# DWH_dbo.Dim_PositionChangeLog
+
+> Position lifecycle change audit log recording every event that modifies a position's amount, stop-loss rate, settlement status, or lot count -- enabling reconstruction of position state at any point in time.
+
+| Property | Value |
+|----------|-------|
+| **Schema** | DWH_dbo |
+| **Object Type** | Table |
+| **Production Source** | etoro.History.PositionChangeLog |
+| **Refresh** | Daily (incremental via SP_Dim_PositionChangeLog_DL_To_Synapse @dt) |
+| | |
+| **Synapse Distribution** | HASH (PositionID) |
+| **Synapse Index** | CLUSTERED INDEX (OccurredDateID ASC) |
+| | |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog` |
+| **UC Format** | Delta |
+| **UC Partitioned By** | OccurredDateID (daily or monthly range) |
+| **UC Table Type** | Managed |
+
+---
+
+## 1. Business Meaning
+
+Dim_PositionChangeLog is the audit trail for position state changes. Every time a position's amount, stop-loss rate, settlement flag, or lot count is modified after the initial open, a change log entry is created. This allows analysts to reconstruct the exact state of a position at any historical point in time.
+
+Key use cases:
+- **IsSettled tracking**: When a stock position transitions to "settled" status, the log records PreviousIsSettled vs IsSettled. The SP_Dim_Position_DL_To_Synapse ETL reads this table to backfill the correct IsSettled value on Dim_Position.
+- **Amount corrections**: When a position's Amount or StopRate changes (e.g., partial close, margin call adjustment), the log records PreviousAmount and AmountChanged. The Dim_Position ETL uses ChangeTypeID=12 entries to apply cumulative amount corrections.
+- **Initial open event**: ChangeTypeID=0 records the initial position open event -- used to detect the first appearance of a position in the changelog (primarily for hedge server tracking in SP_Dim_Position_DL_To_Synapse).
+
+Data source is `etoro_History_PositionChangeLog` loaded daily via DELETE (yesterday+) then INSERT (from yesterday). As of 2025-01-05, ALL ChangeTypeIDs are loaded (previously restricted to IDs 1, 5, 11, 12, 13 only).
+
+---
+
+## 2. Business Logic
+
+### 2.1 Change Types
+
+**What**: Classification of what kind of position modification occurred.
+
+**Columns Involved**: `ChangeTypeID`
+
+**Rules**:
+- ChangeTypeID=0: Initial open event (position first appears in changelog). Used to find OpenDateID for new positions entering the hedge server snapshot.
+- ChangeTypeID=1: Rate/SL-TP change (StopRate or LimitRate modification).
+- ChangeTypeID=2: Unspecified change -- seen in live data (requires domain expert clarification).
+- ChangeTypeID=5: Added 2024-04-30 -- purpose requires clarification.
+- ChangeTypeID=11: Partial close related event.
+- ChangeTypeID=12: Amount adjustment -- summed cumulatively to correct Dim_Position.Amount for same-day modifications.
+- ChangeTypeID=13: Purpose requires clarification.
+- Before 2025-01-05: Only IDs 1, 5, 11, 12, 13 were loaded. ChangeTypeID=0, 2, and others were excluded. Historical rows for these types before 2025-01-05 may be absent.
+
+**Note**: No upstream wiki exists enumerating the official ChangeTypeID names. Values above are inferred from SP code. All should be treated as Tier 4 [UNVERIFIED] until confirmed by domain expert.
+
+### 2.2 State Tracking (Before/After Columns)
+
+**What**: Each row captures the before and after state for the changed metric.
+
+**Columns Involved**: `PreviousAmount`, `AmountChanged`, `NewAmount`, `PreviousStopRate`, `StopRate`, `PreviousIsSettled`, `IsSettled`, `PreviousAmountInUnits`, `AmountInUnits`, `PreviousLotCountDecimal`, `LotCountDecimal`
+
+**Rules**:
+- Each change captures the previous value, the delta (AmountChanged), and the new value.
+- `AmountChanged` = NewAmount - PreviousAmount (can be negative for reductions).
+- Multiple rows can exist per PositionID on the same day (same OccurredDateID) -- particularly for ChangeTypeID=12 (amount adjustments), which are summed via SUM(AmountChanged) GROUP BY PositionID in the Dim_Position ETL.
+- `PreviousIsSettled` / `IsSettled` are cast to int (0/1) from bit in staging. NULL is possible if the event didn't involve a settlement change.
+- The **most recent** changelog event for a PositionID at ChangeTypeID=0 (ROW_NUMBER by Occurred ASC, rn=1) is used in the Dim_Position ETL to correct IsSettled for open positions.
+
+---
+
+## 3. Query Advisory
+
+### 3.1 Synapse Distribution & Index
+
+**HASH (PositionID)**: Co-located with Dim_Position for efficient JOINs on PositionID. Date-range queries should also include OccurredDateID.
+
+**CLUSTERED INDEX (OccurredDateID)**: Efficient for date-range scans on when changes occurred. Always include an OccurredDateID range filter.
+
+### 3.1b UC (Databricks) Storage & Partitioning
+
+**In Databricks**, this table lands as `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog`. Always filter on OccurredDateID for partition pruning.
+
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| All changes for a specific position | WHERE PositionID = X ORDER BY Occurred |
+| Settlement changes on a date | WHERE OccurredDateID = YYYYMMDD AND PreviousIsSettled IS NOT NULL |
+| Amount-adjusted positions | WHERE ChangeTypeID = 12 AND OccurredDateID = YYYYMMDD |
+| Initial open events | WHERE ChangeTypeID = 0 AND OccurredDateID = YYYYMMDD |
+
+### 3.3 Common JOINs
+
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| DWH_dbo.Dim_Position | ON PositionID | Enrich position with change history |
+| DWH_dbo.Dim_Customer | ON CID | Customer-level change analysis |
+
+### 3.4 Gotchas
+
+- **Multiple rows per position per day**: A position can have many changelog entries on the same day. Do NOT assume one row per (PositionID, OccurredDateID).
+- **Historical completeness gap**: Before 2025-01-05, only ChangeTypeIDs 1, 5, 11, 12, 13 were loaded. Earlier history for ChangeTypeIDs 0, 2, etc. is missing.
+- **ChangeTypeID values are undocumented**: No official lookup table for ChangeTypeID exists in DWH. The meanings above are inferred from SP code patterns.
+- **AmountChanged may be 0**: Seen in live data -- a row with AmountChanged=0 may represent a rate-only change (StopRate update) with no amount modification.
+- **PreviousIsSettled can be NULL**: If the change event didn't involve settlement status, both IsSettled and PreviousIsSettled may be NULL.
+
+---
+
+## 4. Elements
+
+### Confidence Tier Legend
+
+| Stars | Tier | Tag |
+|-------|------|-----|
+| *** | Tier 2 - Synapse SP code | (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| * | Tier 4 - Inferred from name/code | (Tier 4 - [UNVERIFIED]) |
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | PositionID | bigint | NO | FK to Dim_Position.PositionID. Distribution key -- co-located with Dim_Position for efficient JOINs. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 2 | CID | int | YES | Customer ID who owns the position. Nullable (some system positions may not have CID). (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 3 | Occurred | datetime | NO | Exact timestamp when the position change occurred. Passthrough from etoro_History_PositionChangeLog. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 4 | OccurredDateID | int | YES | ETL-computed YYYYMMDD int from Occurred. Clustered index key. Always filter on this for performance. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 5 | ChangeTypeID | tinyint | YES | Type of change event. Known codes: 0=Initial open, 1=Rate change, 2=Unknown, 5=Unknown (added 2024), 11=Partial close event, 12=Amount adjustment, 13=Unknown. No official lookup table in DWH. (Tier 4 - [UNVERIFIED]) |
+| 6 | PreviousAmount | money | NO | Position amount (USD) before this change. NOT NULL -- always captured. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 7 | AmountChanged | money | NO | Change in amount (can be positive or negative). AmountChanged = NewAmount - PreviousAmount. NOT NULL. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 8 | NewAmount | numeric(16,8) | YES | Position amount after this change. Nullable -- may be absent for non-amount change types. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 9 | PreviousIsSettled | int | YES | Before the change: 1 = real asset, 0 = CFD asset. Cast from bit in staging. NULL if this event did not involve a settlement change. (Tier 5 — Expert Review) |
+| 10 | IsSettled | int | YES | After the change: 1 = real asset, 0 = CFD asset. (Tier 5 — Expert Review) |
+| 11 | PreviousStopRate | numeric(16,8) | NO | Stop-loss rate before this change. NOT NULL. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 12 | StopRate | numeric(16,8) | NO | Stop-loss rate after this change. NOT NULL. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 13 | PreviousAmountInUnits | numeric(16,6) | YES | Unit count (shares/coins) before this change. Added for futures/unit-based positions. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 14 | AmountInUnits | numeric(16,6) | YES | Unit count after this change. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 15 | LotCountDecimal | decimal(38,18) | YES | New lot count after change. Added 2024-11-07 (Inbal BML) for futures project. NULL for older records. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 16 | PreviousLotCountDecimal | decimal(38,18) | YES | Lot count before this change. Added 2024-11-07. NULL for older records. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+| 17 | UpdateDate | datetime | NO | ETL load timestamp (GETDATE()). Not from production source. (Tier 2 - SP_Dim_PositionChangeLog_DL_To_Synapse) |
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources
+
+| Synapse Column | Source Table | Source Column | Transform |
+|---------------|--------------|---------------|-----------|
+| PositionID | etoro_History_PositionChangeLog | PositionID | passthrough |
+| CID | etoro_History_PositionChangeLog | CID | passthrough |
+| Occurred | etoro_History_PositionChangeLog | Occurred | passthrough |
+| OccurredDateID | -- | Occurred | ETL-computed: CAST(CONVERT(VARCHAR(8), Occurred, 112) AS INT) |
+| ChangeTypeID | etoro_History_PositionChangeLog | ChangeTypeID | passthrough |
+| PreviousAmount | etoro_History_PositionChangeLog | PreviousAmount | passthrough |
+| AmountChanged | etoro_History_PositionChangeLog | AmountChanged | passthrough |
+| NewAmount | etoro_History_PositionChangeLog | NewAmount | passthrough |
+| PreviousIsSettled | etoro_History_PositionChangeLog | PreviousIsSettled | ETL: CAST(PreviousIsSettled AS INT) |
+| IsSettled | etoro_History_PositionChangeLog | IsSettled | ETL: CAST(IsSettled AS INT) |
+| PreviousStopRate | etoro_History_PositionChangeLog | PreviousStopRate | passthrough |
+| StopRate | etoro_History_PositionChangeLog | StopRate | passthrough |
+| PreviousAmountInUnits | etoro_History_PositionChangeLog | PreviousAmountInUnits | passthrough |
+| AmountInUnits | etoro_History_PositionChangeLog | AmountInUnits | passthrough |
+| LotCountDecimal | etoro_History_PositionChangeLog | LotCountDecimal | passthrough |
+| PreviousLotCountDecimal | etoro_History_PositionChangeLog | PreviousLotCountDecimal | passthrough |
+| UpdateDate | -- | -- | ETL-computed: GETDATE() |
+
+### 5.2 ETL Pipeline
+
+```
+etoro.History.PositionChangeLog
+  -> Generic Pipeline (daily, Override/full-load)
+  -> Bronze/etoro/History/PositionChangeLog/
+  -> DWH_staging.etoro_History_PositionChangeLog
+  -> SP_Dim_PositionChangeLog_DL_To_Synapse (DELETE yesterday+ then INSERT)
+  -> DWH_dbo.Dim_PositionChangeLog
+```
+
+| Step | Object | Description |
+|------|--------|-------------|
+| Source | etoro.History.PositionChangeLog | Production position change audit (etoroDB-REAL) |
+| Lake | Bronze/etoro/History/PositionChangeLog/ | Daily full-load via Generic Pipeline |
+| Staging | DWH_staging.etoro_History_PositionChangeLog | Raw staging import |
+| ETL Step 1 | SP_Dim_PositionChangeLog_DL_To_Synapse | DELETE FROM Dim_PositionChangeLog WHERE OccurredDateID >= @YesterdayID |
+| ETL Step 2 | SP_Dim_PositionChangeLog_DL_To_Synapse | INSERT from staging WHERE Occurred >= @Yesterday (all ChangeTypeIDs as of 2025-01-05) |
+| Target | DWH_dbo.Dim_PositionChangeLog | 17 cols, HASH(PositionID) + CCI on OccurredDateID |
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)
+
+| Target Object | Join Column | Description |
+|--------------|-------------|-------------|
+| DWH_dbo.Dim_Position | PositionID | The position this log entry belongs to |
+
+### 6.2 Referenced By (other objects point to this)
+
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| DWH_dbo.SP_Dim_Position_DL_To_Synapse | PositionID | Reads IsSettled corrections and Amount adjustments to apply to Dim_Position |
+| DWH_dbo.SP_Dim_Position_PositionHedgeServerChangeLog | PositionID | Reads initial open events (ChangeTypeID=0) for hedge server snapshot initialization |
+
+---
+
+## 7. Sample Queries
+
+### 7.1 All changes for a specific position
+
+```sql
+SELECT  PositionID, Occurred, ChangeTypeID,
+        PreviousAmount, AmountChanged, NewAmount,
+        PreviousIsSettled, IsSettled,
+        PreviousStopRate, StopRate
+FROM    [DWH_dbo].[Dim_PositionChangeLog]
+WHERE   PositionID = 3358743021
+  AND   OccurredDateID BETWEEN 20260101 AND 20260310
+ORDER BY Occurred;
+```
+
+### 7.2 Settlement status changes on a specific date
+
+```sql
+SELECT  PositionID, CID, Occurred, PreviousIsSettled, IsSettled
+FROM    [DWH_dbo].[Dim_PositionChangeLog]
+WHERE   OccurredDateID = 20260310
+  AND   PreviousIsSettled IS NOT NULL
+  AND   PreviousIsSettled <> IsSettled
+ORDER BY Occurred;
+```
+
+---
+
+## 8. Atlassian Knowledge Sources
+
+No Atlassian sources found for this object.
+
+---
+
+*Generated: 2026-03-19 | Quality: 7.5/10 (***) | Phases: 14/14 (full pipeline)*
+*Tiers: 0 T1, 16 T2, 0 T3, 1 T4 [UNVERIFIED] (ChangeTypeID mapping), 0 T5 | Elements: 9/10, Logic: 8/10, Relationships: 7/10, Sources: 7/10*
+*Object: DWH_dbo.Dim_PositionChangeLog | Type: Table | Production Source: etoro.History.PositionChangeLog*
+
+
+### Upstream `DWH_dbo.Dim_Instrument` — synapse
+- **Resolved as**: `DWH_dbo.Dim_Instrument`
+- **Wiki path**: `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md`
+
+# DWH_dbo.Dim_Instrument
+
+> 15,707-row replicated dimension table containing every tradeable instrument on the eToro platform — forex pairs, stocks, ETFs, commodities, indices, and crypto — sourced from Trade.GetInstrument, Trade.InstrumentMetaData, Trade.ProviderToInstrument, Trade.FuturesMetaData, and Rankings.StockInfo via SP_Dim_Instrument (truncate-and-reload).
+
+| Property | Value |
+|----------|-------|
+| **Schema** | DWH_dbo |
+| **Object Type** | Table |
+| **Production Source** | etoro.Trade.GetInstrument + Trade.InstrumentMetaData + Trade.ProviderToInstrument + Trade.FuturesMetaData via SP_Dim_Instrument |
+| **Refresh** | Daily truncate-and-reload via SP_Dim_Instrument @dt |
+| **Synapse Distribution** | REPLICATE |
+| **Synapse Index** | CLUSTERED INDEX (InstrumentID ASC) |
+| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument` |
+| **UC Format** | delta |
+| **UC Partitioned By** | None |
+| **UC Table Type** | Gold export (Generic Pipeline) |
+
+---
+
+## 1. Business Meaning
+
+Dim_Instrument is the master instrument dimension for the DWH, containing 15,707 rows representing every tradeable instrument on the eToro platform. It covers Stocks (12,849), ETFs (1,287), Crypto Currencies (667), Commodities (503), Indices (247), and Currencies/Forex (153), plus one sentinel row (InstrumentID=0, 'NA').
+
+The table is populated by `DWH_dbo.SP_Dim_Instrument`, which performs a full truncate-and-reload on each run. The SP joins the staging replica of the production `Trade.GetInstrument` view with `Dictionary.Currency` (for buy/sell abbreviations), `Trade.InstrumentMetaData` (display names, symbols, exchange, ISIN, industry), `Trade.ProviderToInstrument` (precision, allow flags, bonus credit, provider margin), `Trade.InstrumentCusip` (CUSIP identifiers), `Trade.FuturesMetaData` (multiplier, settlement time), `Trade.FuturesInstrumentsInitialMarginByProviderMapping` (provider margin per lot), and `Trade.Instrument` (OperationMode).
+
+After the initial INSERT, the SP performs post-insert UPDATEs to enrich rows with: ReceivedOnPriceServer (from PriceLog history), AssetClass/IndustryGroup (from a static classification table), ADV_Last3Months/MKTcap/SharesOutStanding (from Rankings.StockInfo.InstrumentData), and PlatformSector/PlatformIndustry (from Rankings platform metadata). Finally, a sentinel row (InstrumentID=0) is inserted with 'NA' placeholder values, and `SP_Dim_Instrument_Snapshot` is called for date-partitioned snapshots.
+
+---
+
+## 2. Business Logic
+
+### 2.1 InstrumentType CASE Mapping
+
+**What**: Translates numeric InstrumentTypeID into human-readable asset class labels.
+
+**Columns Involved**: `InstrumentTypeID`, `InstrumentType`
+
+**Rules**:
+- 1 = Currencies (153 instruments)
+- 2 = Commodities (503)
+- 4 = Indices (247)
+- 5 = Stocks (12,849)
+- 6 = ETF (1,287)
+- 10 = Crypto Currencies (667)
+- All others = Other
+
+### 2.2 IsMajor Flag Mapping
+
+**What**: Converts the production bit flag IsMajor (0/1) into a Yes/No string.
+
+**Columns Involved**: `IsMajorID`, `IsMajor`
+
+**Rules**:
+- IsMajorID stores the raw bit value from Trade.GetInstrument.IsMajor
+- IsMajor = 'Yes' when IsMajorID = 1, 'No' otherwise
+- Yes: 6,963 instruments; No: 8,743; NA: 1 (sentinel)
+
+### 2.3 IsFuture Derivation from InstrumentGroups
+
+**What**: Determines whether an instrument is a futures contract based on membership in GroupID=25 in Trade.InstrumentGroups.
+
+**Columns Involved**: `IsFuture`
+
+**Rules**:
+- 1 if InstrumentID exists in Trade.InstrumentGroups WHERE GroupID=25
+- 0 otherwise
+- 243 instruments flagged as futures; 15,463 non-futures
+
+### 2.4 Post-Insert Market Data Enrichment
+
+**What**: After the main INSERT, the SP updates financial metrics from Rankings.StockInfo data.
+
+**Columns Involved**: `ADV_Last3Months`, `MKTcap`, `SharesOutStanding`, `PlatformSector`, `PlatformIndustry`
+
+**Rules**:
+- ADV_Last3Months from MetadataID=8557 (KeyName='AverageDailyVolumeLast3Months-TTM')
+- MKTcap = ISNULL(MarketCapitalization-TTM, CryptoMarketCap) — falls back to crypto market cap
+- SharesOutStanding from MetadataID=8444 (KeyName='SharesOutstandingCurrent-Annual')
+- PlatformSector from MetadataID=8436 (StrVal, pivoted)
+- PlatformIndustry from MetadataID=8280 (StrVal, pivoted)
+
+### 2.5 Sentinel Row
+
+**What**: A placeholder row with InstrumentID=0 is inserted at the end of the SP for FK safety.
+
+**Columns Involved**: All
+
+**Rules**:
+- InstrumentID=0, InstrumentTypeID=0, InstrumentType='NA', Name='NA'
+- Most nullable columns set to NULL
+- StatusID=NULL (vs 1 for data rows)
+
+---
+
+## 3. Query Advisory
+
+### 3.1 Synapse Distribution & Index
+
+REPLICATE distribution means the full table is copied to every compute node — ideal for a 15K-row dimension used in JOINs with large fact tables. CLUSTERED INDEX on InstrumentID supports point lookups and range scans. No distribution key to worry about for colocation.
+
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|-----------------|---------------------|
+| Look up an instrument by ID | `WHERE InstrumentID = @id` — clustered index seek |
+| Filter by asset class | `WHERE InstrumentType = 'Stocks'` or `WHERE InstrumentTypeID = 5` |
+| Find tradeable instruments | `WHERE Tradable = 1` |
+| Futures only | `WHERE IsFuture = 1` |
+| Search by symbol | `WHERE Symbol = 'AAPL'` or `WHERE SymbolFull = 'AAPL'` |
+
+### 3.3 Common JOINs
+
+| Join To | Join Condition | Purpose |
+|---------|---------------|---------|
+| Fact tables (positions, orders) | `ON f.InstrumentID = di.InstrumentID` | Resolve instrument name, type, exchange |
+| Dim_Customer | Via fact table bridge | Instrument exposure per customer |
+| Fact_CurrencyPriceWithSplit | `ON f.InstrumentID = di.InstrumentID` | Price data with instrument metadata |
+
+### 3.4 Gotchas
+
+- **InstrumentID=0 is a sentinel** — exclude it with `WHERE InstrumentID > 0` in aggregations
+- **IsMajor is a varchar 'Yes'/'No'**, not a bit — use IsMajorID (int) for numeric filters
+- **InstrumentType 'NA'** only appears on the sentinel row
+- **Multiplier is NULL** for 15,464 of 15,707 rows — only populated for futures instruments
+- **AssetClass is NULL** for 13,557 rows — only populated from the static classification table
+- **OperationMode is NULL** for sentinel row only; 0=Standard (13,140), 1=Alternate (2,566, primarily European stock CFDs)
+
+---
+
+## 4. Elements
+
+### Confidence Tier Legend
+
+| Tier | Meaning |
+|------|---------|
+| Tier 1 | Verbatim from upstream production wiki — description copied as-is |
+| Tier 2 | ETL-computed in SP_Dim_Instrument — transform documented from SP code |
+| Tier 3 | Source identified but no upstream wiki available |
+
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | InstrumentID | int | NO | Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument) |
+| 2 | InstrumentTypeID | int | NO | From IMD (InstrumentMetaData). Asset class: 1=Forex, 2=Commodity, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.GetInstrument) |
+| 3 | InstrumentType | varchar(50) | NO | ETL-computed asset class label. CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else Other. (Tier 2 — SP_Dim_Instrument) |
+| 4 | Name | varchar(50) | NO | Computed: TDCUR_BUY.Abbreviation + '/' + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument) |
+| 5 | DWHInstrumentID | int | NO | Alias of InstrumentID (InstrumentID AS DWHInstrumentID). Always equals InstrumentID. (Tier 1 — Trade.GetInstrument) |
+| 6 | StatusID | int | YES | Hardcoded to 1 for all data rows; NULL for sentinel row (InstrumentID=0). (Tier 2 — SP_Dim_Instrument) |
+| 7 | BuyCurrencyID | int | NO | FK to Dictionary.Currency. Buy-side asset. For forex: base currency; for stocks: asset itself (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument. (Tier 1 — Trade.GetInstrument) |
+| 8 | SellCurrencyID | int | NO | FK to Dictionary.Currency. Sell-side (denomination) currency. For forex: quote currency; for stocks: trading currency. Inherited from Trade.Instrument. (Tier 1 — Trade.GetInstrument) |
+| 9 | BuyCurrency | varchar(50) | NO | Trading symbol / ticker for the buy-side currency. "USD", "EUR", "AAPL.US". UNIQUE constraint in production. The primary identifier used in UIs and APIs. Passthrough from Dictionary.Currency.Abbreviation via buy-side join. (Tier 1 — Dictionary.Currency) |
+| 10 | SellCurrency | varchar(50) | NO | Trading symbol / ticker for the sell-side currency. "USD", "EUR", "GBX". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Currency) |
+| 11 | TradeRange | int | NO | Allowed trade range (pip distance) for pending orders. From Trade.Instrument. (Tier 1 — Trade.GetInstrument) |
+| 12 | DollarRatio | numeric(18,0) | NO | Price scaling factor. Most=1; JPY pairs=100. From Trade.Instrument. (Tier 1 — Trade.GetInstrument) |
+| 13 | PipDifferenceThreshold | bigint | YES | Max pip difference for price validation. From Trade.Instrument. (Tier 1 — Trade.GetInstrument) |
+| 14 | IsMajorID | int | NO | 1=major instrument (spread/margin treatment); 0=minor. From Trade.Instrument. Stored as int (original production type is bit). (Tier 1 — Trade.GetInstrument) |
+| 15 | IsMajor | varchar(3) | NO | ETL-computed label from IsMajorID: 'Yes' when IsMajor=1, 'No' otherwise. (Tier 2 — SP_Dim_Instrument) |
+| 16 | UpdateDate | datetime | YES | ETL housekeeping timestamp. Set to GETDATE() at each SP_Dim_Instrument run. (Tier 2 — SP_Dim_Instrument) |
+| 17 | InsertDate | datetime | YES | ETL housekeeping timestamp. Set to GETDATE() at each SP_Dim_Instrument run. (Tier 2 — SP_Dim_Instrument) |
+| 18 | InstrumentDisplayName | varchar(100) | YES | Human-readable name shown in UI (e.g., "Apple", "EUR/USD"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData) |
+| 19 | Industry | varchar(max) | YES | Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData. (Tier 1 — Trade.InstrumentMetaData) |
+| 20 | CompanyInfo | varchar(max) | YES | Extended company/instrument description. Nullable. (Tier 1 — Trade.InstrumentMetaData) |
+| 21 | Exchange | varchar(max) | YES | Exchange name string (e.g., "NASDAQ"). Populated from Price.Exchange via ExchangeID. May be denormalized. (Tier 1 — Trade.InstrumentMetaData) |
+| 22 | ISINCode | varchar(30) | YES | International Securities Identification Number. Required for stocks (e.g., "US0378331005" for Apple). NULL for forex, commodities, indices, most crypto. Used for compliance and dividend matching. (Tier 1 — Trade.InstrumentMetaData) |
+| 23 | ISINCountryCode | varchar(15) | YES | Country prefix of ISIN (e.g., "US"). Audit-tracked. (Tier 1 — Trade.InstrumentMetaData) |
+| 24 | Tradable | int | YES | 1 = orders allowed, 0 = trading disabled. Set by EnableInstrument/DisableInstrument. DWH note: CAST from bit to int, value preserved. (Tier 1 — Trade.InstrumentMetaData) |
+| 25 | Symbol | varchar(100) | YES | Short ticker symbol (e.g., "AAPL", "EURUSD"). Used for display and lookup. Not necessarily unique. (Tier 1 — Trade.InstrumentMetaData) |
+| 26 | ReceivedOnPriceServer | datetime | YES | Earliest price-server timestamp from PriceLog_History_CurrencyPrice_Active for the prior day, persisted via Ext_Dim_Instrument_ReceivedOnPriceServerStatic. (Tier 2 — SP_Dim_Instrument) |
+| 27 | BonusCreditUsePercent | int | YES | Percentage of position that can use bonus credit. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument) |
+| 28 | SymbolFull | varchar(100) | YES | Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API. (Tier 1 — Trade.InstrumentMetaData) |
+| 29 | CUSIP | varchar(500) | YES | Alias for InstrumentMetaData.Cusip. Committee on Uniform Securities Identification Procedures code for US/Canada securities. NULL for forex, crypto, many non-US instruments. (Tier 1 — Trade.InstrumentCusip) |
+| 30 | Precision | int | YES | Decimal places for price display and rounding. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument) |
+| 31 | AllowBuy | int | YES | 1=buy allowed, 0=buy disabled for this instrument-provider pair. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument) |
+| 32 | AllowSell | int | YES | 1=sell allowed, 0=sell disabled. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument) |
+| 33 | AssetClass | nvarchar(400) | YES | Asset class classification from Ext_Dim_Instrument_Classification_Static. Populated via post-insert UPDATE. NULL for 13,557 of 15,707 rows. (Tier 3 — Ext_Dim_Instrument_Classification_Static, no upstream wiki) |
+| 34 | IndustryGroup | nvarchar(400) | YES | Industry group classification from Ext_Dim_Instrument_Classification_Static. Populated via post-insert UPDATE. (Tier 3 — Ext_Dim_Instrument_Classification_Static, no upstream wiki) |
+| 35 | ADV_Last3Months | numeric(20,4) | YES | Average daily trading volume over the last 3 months (TTM). From Rankings.StockInfo.InstrumentData MetadataID=8557. (Tier 2 — SP_Dim_Instrument, Rankings.StockInfo) |
+| 36 | MKTcap | numeric(20,4) | YES | Market capitalization. ISNULL(MarketCapitalization-TTM, CryptoMarketCap) — uses stock market cap when available, falls back to crypto market cap. From Rankings.StockInfo MetadataID=8735/9315. (Tier 2 — SP_Dim_Instrument, Rankings.StockInfo) |
+| 37 | SharesOutStanding | numeric(20,4) | YES | Current shares outstanding (annual). From Rankings.StockInfo.InstrumentData MetadataID=8444. (Tier 2 — SP_Dim_Instrument, Rankings.StockInfo) |
+| 38 | VisibleInternallyOnly | int | YES | 1=hidden from external clients (internal/ops only), 0=visible to all. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument) |
+| 39 | PlatformSector | varchar(max) | YES | Platform-level sector classification from Rankings.StockInfo MetadataID=8436 (StrVal pivot). E.g., "Electronic Technology", "Technology Services". (Tier 2 — SP_Dim_Instrument, Rankings.StockInfo) |
+| 40 | PlatformIndustry | varchar(max) | YES | Platform-level industry classification from Rankings.StockInfo MetadataID=8280 (StrVal pivot). E.g., "Telecommunications Equipment", "Internet Software Or Services". (Tier 2 — SP_Dim_Instrument, Rankings.StockInfo) |
+| 41 | IsFuture | int | YES | 1=futures contract (instrument in Trade.InstrumentGroups WHERE GroupID=25), 0=not futures. 243 flagged as futures. (Tier 2 — SP_Dim_Instrument) |
+| 42 | Multiplier | decimal(38,18) | YES | Contract size per point for futures instruments. Used for notional and fee calculation. NULL for non-futures (15,464 rows). (Tier 1 — Trade.FuturesMetaData) |
+| 43 | ProviderID | int | YES | FK to Trade.Provider. Identifies the execution provider (e.g., 1=Tradonomi). From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument) |
+| 44 | ProviderMarginPerLot | decimal(38,18) | YES | Cash margin required to open one unit/lot of this futures instrument with this provider. Expressed in the instrument's base currency. Renamed from InitialMargin. (Tier 1 — Trade.FuturesInstrumentsInitialMarginByProviderMapping) |
+| 45 | eToroMarginPerLot | decimal(38,18) | YES | Initial margin in asset currency as set by eToro. Renamed from InitialMarginInAssetCurrency. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument) |
+| 46 | SettlementTime | time(7) | YES | Time of day for settlement. DWH note: reformatted from Trade.FuturesMetaData.SettlementTime via FORMAT(DATEPART(HOUR)*100 + DATEPART(MINUTE), '00:00'). (Tier 1 — Trade.FuturesMetaData) |
+| 47 | OperationMode | int | YES | Trading operation mode: 0=Standard (13,140 instruments), 1=Alternate (2,566, primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX). From Trade.Instrument. (Tier 1 — Trade.Instrument) |
+
+---
+
+## 5. Lineage
+
+### 5.1 Production Sources
+
+| Synapse Column | Production Source | Source Column | Transform |
+|---------------|-----------------|---------------|-----------|
+| InstrumentID | Trade.GetInstrument | InstrumentID | Passthrough |
+| InstrumentTypeID | Trade.GetInstrument | InstrumentTypeID | Passthrough |
+| InstrumentType | SP_Dim_Instrument | InstrumentTypeID | CASE mapping |
+| Name | Trade.GetInstrument | Name | Passthrough |
+| DWHInstrumentID | Trade.GetInstrument | InstrumentID | Alias |
+| StatusID | SP_Dim_Instrument | — | Hardcoded 1 |
+| BuyCurrencyID | Trade.GetInstrument | BuyCurrencyID | Passthrough |
+| SellCurrencyID | Trade.GetInstrument | SellCurrencyID | Passthrough |
+| BuyCurrency | Dictionary.Currency | Abbreviation | Buy-side join |
+| SellCurrency | Dictionary.Currency | Abbreviation | Sell-side join |
+| TradeRange | Trade.GetInstrument | TradeRange | Passthrough |
+| DollarRatio | Trade.GetInstrument | DollarRatio | Passthrough |
+| PipDifferenceThreshold | Trade.GetInstrument | PipDifferenceThreshold | Passthrough |
+| IsMajorID | Trade.GetInstrument | IsMajor | Rename |
+| IsMajor | SP_Dim_Instrument | IsMajor | CASE Yes/No |
+| UpdateDate | SP_Dim_Instrument | — | GETDATE() |
+| InsertDate | SP_Dim_Instrument | — | GETDATE() |
+| InstrumentDisplayName | Trade.InstrumentMetaData | InstrumentDisplayName | Passthrough |
+| Industry | Trade.InstrumentMetaData | Industry | Passthrough |
+| CompanyInfo | Trade.InstrumentMetaData | CompanyInfo | Passthrough |
+| Exchange | Trade.InstrumentMetaData | Exchange | Passthrough |
+| ISINCode | Trade.InstrumentMetaData | ISINCode | Passthrough |
+| ISINCountryCode | Trade.InstrumentMetaData | ISINCountryCode | Passthrough |
+| Tradable | Trade.InstrumentMetaData | Tradable | CAST to int |
+| Symbol | Trade.InstrumentMetaData | Symbol | Passthrough |
+| ReceivedOnPriceServer | PriceLog_History_CurrencyPrice_Active | ReceivedOnPriceServer | MIN aggregation + static persistence |
+| BonusCreditUsePercent | Trade.ProviderToInstrument | BonusCreditUsePercent | Passthrough |
+| SymbolFull | Trade.InstrumentMetaData | SymbolFull | Passthrough |
+| CUSIP | Trade.InstrumentCusip | CUSIP | Passthrough |
+| Precision | Trade.ProviderToInstrument | Precision | Passthrough |
+| AllowBuy | Trade.ProviderToInstrument | AllowBuy | CAST to int |
+| AllowSell | Trade.ProviderToInstrument | AllowSell | CAST to int |
+| AssetClass | Ext_Dim_Instrument_Classification_Static | AssetClass | Post-insert UPDATE |
+| IndustryGroup | Ext_Dim_Instrument_Classification_Static | IndustryGroup | Post-insert UPDATE |
+| ADV_Last3Months | Rankings.StockInfo.InstrumentData | NumVal | Post-insert UPDATE, KeyName filter |
+| MKTcap | Rankings.StockInfo.InstrumentData | NumVal | ISNULL(MarketCap, CryptoMarketCap) |
+| SharesOutStanding | Rankings.StockInfo.InstrumentData | NumVal | Post-insert UPDATE, KeyName filter |
+| VisibleInternallyOnly | Trade.ProviderToInstrument | VisibleInternallyOnly | CAST to int |
+| PlatformSector | Rankings.StockInfo.InstrumentData | StrVal | Pivoted MetadataID=8436 |
+| PlatformIndustry | Rankings.StockInfo.InstrumentData | StrVal | Pivoted MetadataID=8280 |
+| IsFuture | Trade.InstrumentGroups | GroupID=25 | CASE membership check |
+| Multiplier | Trade.FuturesMetaData | Multiplier | Passthrough |
+| ProviderID | Trade.ProviderToInstrument | ProviderID | Passthrough |
+| ProviderMarginPerLot | Trade.FuturesInstrumentsInitialMarginByProviderMapping | InitialMargin | Rename |
+| eToroMarginPerLot | Trade.ProviderToInstrument | InitialMarginInAssetCurrency | Rename |
+| SettlementTime | Trade.FuturesMetaData | SettlementTime | Time reformatting |
+| OperationMode | Trade.Instrument | OperationMode | Passthrough |
+
+### 5.2 ETL Pipeline
+
+```
+etoro.Trade.GetInstrument (view, joins Instrument + Currency + InstrumentMetaData)
+etoro.Dictionary.Currency (table, buy + sell abbreviations)
+etoro.Trade.InstrumentMetaData (table, display/symbol/exchange/ISIN)
+etoro.Trade.ProviderToInstrument (table, precision/allow/margin)
+etoro.Trade.InstrumentCusip (view, CUSIP/ISIN)
+etoro.Trade.FuturesMetaData (table, multiplier/settlement)
+etoro.Trade.FuturesInstrumentsInitialMarginByProviderMapping (table, provider margin)
+etoro.Trade.Instrument (table, OperationMode)
+etoro.Trade.InstrumentGroups (table, GroupID=25 for futures flag)
+Rankings.StockInfo.InstrumentData (table, market data metrics)
+  |-- Generic Pipeline (Bronze export) ---|
+  v
+DWH_staging.etoro_Trade_GetInstrument + etoro_Dictionary_Currency + ...
+  |-- SP_Dim_Instrument @dt (truncate-and-reload + post-insert UPDATEs) ---|
+  v
+DWH_dbo.Dim_Instrument (15,707 rows)
+  |-- SP_Dim_Instrument_Snapshot @dt (date-partitioned snapshot) ---|
+  |-- Generic Pipeline (Override, delta) ---|
+  v
+dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
+```
+
+---
+
+## 6. Relationships
+
+### 6.1 References To (this object points to)
+
+| Element | Related Object | Description |
+|---------|---------------|-------------|
+| InstrumentTypeID | Dictionary.CurrencyType | Asset class (1=Forex, 5=Stocks, 10=Crypto, etc.) |
+| BuyCurrencyID | Dictionary.Currency | Buy-side asset / base currency |
+| SellCurrencyID | Dictionary.Currency | Sell-side denomination currency |
+| ProviderID | Trade.Provider | Execution provider |
+
+### 6.2 Referenced By (other objects point to this)
+
+| Source Object | Source Element | Description |
+|--------------|---------------|-------------|
+| Fact tables (positions, orders, trades) | InstrumentID | Instrument dimension lookup |
+| Fact_CurrencyPriceWithSplit | InstrumentID | Price data with instrument metadata |
+| BI_DB aggregation tables | InstrumentID | Instrument attributes for reporting |
+
+---
+
+## 7. Sample Queries
+
+### 7.1 Instrument breakdown by asset class
+```sql
+SELECT InstrumentType, COUNT(*) AS InstrumentCount
+FROM DWH_dbo.Dim_Instrument
+WHERE InstrumentID > 0
+GROUP BY InstrumentType
+ORDER BY InstrumentCount DESC
+```
+
+### 7.2 Find a stock by symbol with market data
+```sql
+SELECT InstrumentID, InstrumentDisplayName, Symbol, SymbolFull,
+       Exchange, ISINCode, AssetClass, IndustryGroup,
+       ADV_Last3Months, MKTcap, SharesOutStanding
+FROM DWH_dbo.Dim_Instrument
+WHERE Symbol = 'AAPL'
+```
+
+### 7.3 List futures instruments with margin data
+```sql
+SELECT InstrumentID, Name, InstrumentDisplayName, Multiplier,
+       ProviderMarginPerLot, eToroMarginPerLot, SettlementTime
+FROM DWH_dbo.Dim_Instrument
+WHERE IsFuture = 1
+ORDER BY InstrumentID
+```
+
+---
+
+## 8. Atlassian Knowledge Sources
+
+No Atlassian sources searched (regen harness mode — skipped Phase 10).
+
+---
+
+*Generated: 2026-04-28 | Quality: 8.5/10 | Phases: 11/14*
+*Tiers: 30 T1, 13 T2, 2 T3, 0 T4, 0 T5 | Elements: 47/47, Logic: 9/10, Relationships: 7/10, Sources: 8/10*
+*Object: DWH_dbo.Dim_Instrument | Type: Table | Production Source: Trade.GetInstrument + Trade.InstrumentMetaData via SP_Dim_Instrument*
+
+
+### Upstream `BI_DB_dbo.BI_DB_PositionPnL` — synapse
+- **Resolved as**: `BI_DB_dbo.BI_DB_PositionPnL`
+- **Wiki path**: `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_PositionPnL.md`
+
+# BI_DB_dbo.BI_DB_PositionPnL
+
+## 1. Overview
+
+Daily end-of-day snapshot of **open trading positions** with unrealized P&L, rates, commissions, NOP, and close-price metrics. Grain is **one row per position per calendar day** (`DateID` + `PositionID`); only positions open as of end of `@dt` appear for that `DateID`.
+
+## 2. Business Context
+
+- **Rules**: Positions are sourced from `DWH_dbo.Dim_Position` with `OpenDateID < @ReportDateID` and still open on `@dt` (`CloseDateID >= @ReportDateID` or `CloseDateID = 0`). `Dim_PositionChangeLog` rewinds `Amount`, `StopRate`, `AmountInUnitsDecimal`, and `IsSettled` when changes occur after `@dt`; rows with partial-close child (`ChangeTypeID = 11`) after `@dt` are removed. Stock splits adjust `InitForexRate`, units, and EOD rates via `Dim_HistorySplitRatio` and `#Prices`. **PositionPnL** is `PnLInDollars` from Dim_Position (authoritative PnL engine) since 2024-03-24; **Price** and **NOP** still use SP formulas from EOD rates and `Dim_Instrument` FX chains. **DailyPnL** is updated after load as today `PositionPnL` minus prior day `PositionPnL` per `PositionID`.
+- **Consumers**: Finance and CMR reporting; downstream BI_DB procedures and views (e.g. crypto zero / loan / NOP stacks, IFRS, compliance, dashboards) read this table as the canonical daily position P&L snapshot.
+
+## 3. Structure
+
+| Property | Value |
+|----------|-------|
+| **Schema** | BI_DB_dbo |
+| **Object type** | Table |
+| **Column count** | 39 |
+| **Distribution** | `HASH (PositionID)` |
+| **Clustered index** | `(DateID ASC, Date ASC, CID ASC, PositionID ASC)` |
+| **Partitioning** | `PARTITION (DateID RANGE LEFT FOR VALUES (...))` -- daily boundaries aligned with main table (typically 2015 through current horizon) |
+| **Nonclustered index** | `IX_BI_DB_PositionPnL_CID` on `(DateID, CID)` on main table (per deployment; switch staging builds CID NCIs on switch tables) |
+
+## 4. Elements
+
+| # | Column | Type | Nullable | Description |
+|---|--------|------|----------|-------------|
+| 1 | CID | int | YES | Customer identifier for the position. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.CID) |
+| 2 | PositionID | bigint | NO | Unique position key; Synapse distribution key. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.PositionID) |
+| 3 | InstrumentID | int | NO | Traded instrument. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.InstrumentID) |
+| 4 | MirrorID | int | YES | Copy-trading mirror link when applicable. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.MirrorID) |
+| 5 | Commission | money | NO | Opening commission in dollars. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Commission) |
+| 6 | InitForexRate | numeric(16,8) | NO | Open rate; split-adjusted in SP when position spans a split. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.InitForexRate / split logic) |
+| 7 | SpreadedPipBid | numeric(16,8) | YES | Bid with spread at open. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.SpreadedPipBid) |
+| 8 | SpreadedPipAsk | numeric(16,8) | YES | Ask with spread at open. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.SpreadedPipAsk) |
+| 9 | PositionPnL | decimal(16,4) | YES | Unrealized P&L in USD; from `PnLInDollars` (replaces legacy formula). (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.PnLInDollars) |
+| 10 | Price | numeric(38,6) | YES | Per-unit price-move expression × USD conversion factor from `#Pre_UnrealizedPnL` (bid/ask vs InitForexRate and instrument FX chain). (Tier 2 -- SP_PositionPnL, computed from #OpenPositions + Dim_Instrument + #Prices) |
+| 11 | HedgeServerID | int | YES | Hedge server for the position. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.HedgeServerID) |
+| 12 | Amount | money | NO | Position amount in USD; rewound via `Dim_PositionChangeLog` when SL/partial-close edits after `@dt`. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Amount / PositionChangeLog.PreviousAmount) |
+| 13 | AmountInUnitsDecimal | numeric(16,6) | YES | Size in instrument units; split-adjusted and rewound from partial-close log when applicable. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.AmountInUnitsDecimal / split + PositionChangeLog) |
+| 14 | LimitRate | numeric(16,8) | NO | Take-profit rate. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.LimitRate) |
+| 15 | StopRate | numeric(16,8) | NO | Stop-loss rate; rewound to `PreviousStopRate` when edited after `@dt`. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.StopRate / PositionChangeLog) |
+| 16 | IsBuy | bit | NO | Long (1) vs short (0). (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.IsBuy) |
+| 17 | Occurred | datetime | NO | Position open timestamp (`OpenOccurred`). (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.OpenOccurred) |
+| 18 | Date | date | YES | Snapshot calendar date `@dt`. (Tier 3 -- SP_PositionPnL, parameter @dt) |
+| 19 | DateID | int | NO | Snapshot date as YYYYMMDD; partition key. (Tier 3 -- SP_PositionPnL, CAST(CONVERT(CHAR(8),@dt,112) AS INT)) |
+| 20 | UpdateDate | datetime | YES | Row load timestamp at insert (`GETDATE()`). (Tier 3 -- SP_PositionPnL, GETDATE()) |
+| 21 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog (`ChangeTypeID = 13`) when applicable. (Tier 5 — Expert Review) |
+| 22 | NOP | money | YES | Net open position in USD from units × pair rate × direction × conversion (see `#Pre_UnrealizedPnL`). (Tier 2 -- SP_PositionPnL, computed) |
+| 23 | DailyPnL | decimal(16,4) | YES | Day-over-day change: `PositionPnL - prior day PositionPnL` (NULL until post-switch UPDATE). (Tier 3 -- SP_PositionPnL, UPDATE vs prior DateID) |
+| 24 | Leverage | int | YES | Position leverage. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Leverage) |
+| 25 | RateBid | numeric(36,12) | YES | EOD bid from latest `Fact_CurrencyPriceWithSplit` row before `@ReportDate`, split-adjusted; uses `BidLastWithoutSpread` when discounted. (Tier 2 -- SP_PositionPnL, DWH_dbo.Fact_CurrencyPriceWithSplit + split) |
+| 26 | RateAsk | numeric(36,12) | YES | EOD ask from same price row, split-adjusted. (Tier 2 -- SP_PositionPnL, DWH_dbo.Fact_CurrencyPriceWithSplit + split) |
+| 27 | USD_CR | money | YES | End-of-day conversion rate used with PnL context; from Dim_Position `CurrentConversionRate`. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.CurrentConversionRate) |
+| 28 | SettlementTypeID | int | YES | Modern settlement type from Dim_Position. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.SettlementTypeID) |
+| 29 | EstimateCloseFeeForCFD | numeric(19,8) | YES | Estimated close fee for CFD from production PnL inputs. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.EstimateCloseFeeForCFD) |
+| 30 | EstimateCloseFeeOnOpenByUnits | numeric(19,8) | YES | Estimated close fee per units-at-open path. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.EstimateCloseFeeOnOpenByUnits) |
+| 31 | EstimateCloseFeeOnOpen | numeric(19,8) | YES | Estimated close fee from open parameters. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.EstimateCloseFeeOnOpen) |
+| 32 | Close_PnLInDollars | decimal(19,4) | YES | Official close-price P&L in dollars from Dim_Position. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Close_PnLInDollars) |
+| 33 | Close_CalculationRate | decimal(18,8) | YES | Rate used for close P&L. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Close_CalculationRate) |
+| 34 | Close_ConversionRate | decimal(18,8) | YES | FX conversion at close for regulated P&L. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Close_ConversionRate) |
+| 35 | Close_PriceType | int | YES | Close price type indicator from upstream PnL. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.Close_PriceType) |
+| 36 | CurrentCalculationRate | numeric(18,8) | YES | Max-date calculation rate for last-bid style P&L. (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.CurrentCalculationRate) |
+| 37 | CurrentConversionRate | numeric(18,8) | YES | Conversion rate paired with current calculation rate (same source family as USD_CR). (Tier 2 -- SP_PositionPnL, DWH_dbo.Dim_Position.CurrentConversionRate) |
+| 38 | Close_NOP | numeric(18,8) | YES | NOP using close rates: `AmountInUnitsDecimal * Close_CalculationRate * Close_ConversionRate`. (Tier 2 -- SP_PositionPnL, computed in #Pre_UnrealizedPnL) |
+| 39 | Current_NOP | numeric(18,8) | YES | NOP using current rates: `AmountInUnitsDecimal * CurrentCalculationRate * CurrentConversionRate`. (Tier 2 -- SP_PositionPnL, computed in #Pre_UnrealizedPnL) |
+
+## 5. Relationships
+
+**Source tables (ETL read path)**
+
+| Source | Role |
+|--------|------|
+| DWH_dbo.Dim_Position | Open positions, PnL dollars, fees, close/current rates, core attributes |
+| DWH_dbo.Fact_CurrencyPriceWithSplit | Latest bid/ask before `@ReportDate` per instrument |
+| DWH_dbo.Dim_HistorySplitRatio | Split boundaries and ratios for rate/unit adjustment |
+| DWH_dbo.Dim_PositionChangeLog | Rewind deletes/updates for post-`@dt` changes |
+| DWH_dbo.Dim_Instrument (+ self-joins / #Prices) | Instrument currency pair and USD cross for Price and NOP |
+
+**Consumers (representative)**
+
+Includes finance and CMR pipelines and many BI_DB dependents such as **`BI_DB_Crypto_Zero`**, **`BI_DB_Real_Crypto_Loan`**, **`BI_DB_DailyZero_TreeSize_NEW`** (and related daily zero / NOP procedures), plus roll-over and dividend logic (**`SP_RollOverFee_Dividends`** reads prior-day `AmountInUnitsDecimal`), IFRS, compliance, and diagnostics. Confirm additional references with a repo search on `BI_DB_PositionPnL`.
+
+## 6. ETL & Lifecycle
+
+| Aspect | Detail |
+|--------|--------|
+| **Writer** | `BI_DB_dbo.SP_PositionPnL` @dt |
+| **OpsDB** | Priority **99**, ProcessType **4** (FinanceReportSPS), frequency **Daily** |
+| **Pattern** | Build `#UnrealizedPnL` -- create `BI_DB_PositionPnL_SWITCH_SINGLE` with same distribution/index/partition scheme as main table -- `INSERT ... SELECT` from `#UnrealizedPnL` -- `SP_BI_DB_PositionPnL_SWITCH` partition swap -- `UPDATE` **DailyPnL** vs previous `DateID` |
+| **Grain** | One row per open `PositionID` per `DateID` |
+| **Delete scope** | Daily partition replaced via switch for the target `DateID` (not a full-table DELETE) |
+
+## 7. Query Advisory
+
+- **Partition elimination**: Always filter **`WHERE DateID = ...` or a tight `DateID` range**; scanning all daily partitions is prohibitively expensive.
+- **Distribution**: **`PositionID`** is the hash key -- joins and GROUP BY on `PositionID` minimize movement; filtering large sets by `CID` alone may benefit from **`IX_BI_DB_PositionPnL_CID (DateID, CID)`** when present.
+- **Semantics**: Table holds **open** positions only for each snapshot date; closed-position economics live in `Dim_Position` / fact tables.
+- **DailyPnL**: Populated in a second step; for intraday copies of switch tables, expect NULL until the main-table UPDATE runs.
+
+## 8. Classification & Status
+
+| Field | Value |
+|-------|--------|
+| **Domain** | Finance / trading P&L and exposure |
+| **Sensitivity** | Customer and position-level financial data -- internal use only |
+| **Quality score** | 9.0 |
+
+---
+
+*Generated by DWH Semantic Documentation Pipeline -- Batch 5*
+
+
+---
+
+## Writer / Source SP Code
+
+These are stored procedures referenced in the lineage. Their source is included verbatim so the writer can ground column transformations and computed values directly without re-reading the SSDT.
+
+
+### SP `BI_DB_dbo.SP_BI_DB_PositionPnL_SWITCH`
+- **Path**: `c:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we\BI_DB_dbo\Stored Procedures\BI_DB_dbo.SP_BI_DB_PositionPnL_SWITCH.sql`
+
+```sql
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [BI_DB_dbo].[SP_BI_DB_PositionPnL_SWITCH] AS
+BEGIN
+
+
+--   set deadlock_priority high
+--- we have to have same indexes and constraints as partitioned table
+Declare @CurrentDay int
+Declare @PartToSwitch int 
+Declare @SqlStr varchar(max)
+Declare @TS BIT = 1
+Declare @MaxValue int
+Declare @MinValue int
+Declare @LastPar int
+Declare @IsRight bit 
+
+
+
+
+
+-----------------------
+
+set  @CurrentDay = (Select top 1  DateID from BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE)
+
+-----create constraint for table
+--set @SqlStr = 'ALTER TABLE BI_DB_PositionPnL_SWITCH_SINGLE ADD CONSTRAINT FCASS_value_for_switch CHECK (DateID = ' + CAST(@CurrentDay as varchar) + ' );'
+
+----print @SqlStr
+--exec (@SqlStr)
+
+-------------------------------------------
+-- get the partition number for the dateid 
+
+--select @PartToSwitch = $partition.PF_CUSTOMERACTION_MONTH_DAYS(@CurrentDay)
+
+
+
+SELECT 
+@MaxValue=max(cast(rng.value as int )),@MinValue=min(cast(rng.value as int )),
+@IsRight=max(cast(pf.boundary_value_on_right as int)),@LastPar=max(partition_number)
+FROM        sys.schemas    sch
+INNER JOIN  sys.tables     tbl ON  sch.schema_id   = tbl.schema_id
+INNER JOIN  sys.partitions prt ON  prt.[object_id] = tbl.[object_id]
+INNER JOIN  sys.indexes    idx ON  prt.[object_id] = idx.[object_id]               AND                                prt.[index_id]  = idx.[index_id]
+INNER JOIN  sys.data_spaces ds ON  idx.[data_space_id] = ds.[data_space_id]
+INNER JOIN  sys.partition_schemes    ps  ON  ds.[data_space_id]  = ps.[data_space_id]
+INNER JOIN sys.partition_functions   pf  ON  ps.[function_id]    = pf.[function_id]
+LEFT JOIN sys.partition_range_values rng ON  pf.[function_id]    = rng.[function_id]
+AND  rng.[boundary_id] = prt.[partition_number]
+WHERE tbl.object_id =object_id('BI_DB_dbo.BI_DB_PositionPnL')
+
+
+
+
+ IF @CurrentDay <= @MinValue 
+		BEGIN
+			SET @PartToSwitch = 1 
+		END 
+
+		IF @CurrentDay > @MaxValue 
+		BEGIN
+		     SET @PartToSwitch=@LastPar
+		END 
+
+		IF @PartToSwitch IS NULL 
+		 BEGIN  
+			SELECT TOP 1 @PartToSwitch = prt.[partition_number]
+			FROM        sys.schemas    sch
+			INNER JOIN  sys.tables     tbl ON  sch.schema_id   = tbl.schema_id
+			INNER JOIN  sys.partitions prt ON  prt.[object_id] = tbl.[object_id]
+			INNER JOIN  sys.indexes    idx ON  prt.[object_id] = idx.[object_id] AND prt.[index_id]  = idx.[index_id]
+			INNER JOIN  sys.data_spaces ds ON  idx.[data_space_id] = ds.[data_space_id]
+			INNER JOIN  sys.partition_schemes  ps  ON  ds.[data_space_id]  = ps.[data_space_id]
+			INNER JOIN  sys.partition_functions pf  ON  ps.[function_id]    = pf.[function_id]
+			LEFT  JOIN  sys.partition_range_values rng ON  pf.[function_id]    = rng.[function_id]
+			AND  rng.[boundary_id] = prt.[partition_number]
+			WHERE tbl.object_id =object_id('BI_DB_dbo.BI_DB_PositionPnL')
+			AND rng.value  >= @CurrentDay
+			ORDER BY CAST(rng.value as int)
+		END 
+
+
+
+---------------------------------------------------------------------------
+-- build switch statement
+
+--- 1 .switch existing data in partition to shadow table 
+Set @SqlStr = 'ALTER TABLE BI_DB_dbo.BI_DB_PositionPnL SWITCH PARTITION ' + CAST(@PartToSwitch as varchar) +
+' TO BI_DB_dbo.BI_DB_PositionPnL_SWITCH PARTITION ' + CAST(@PartToSwitch as varchar) + ';'
+--print @SqlStr   
+exec (@SqlStr)
+
+--- 2 .switch new data to partitioned table
+Set @SqlStr = 'ALTER TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE SWITCH PARTITION ' + CAST(@PartToSwitch as varchar) + '  TO BI_DB_dbo.BI_DB_PositionPnL PARTITION ' + CAST(@PartToSwitch as varchar) +' WITH (TRUNCATE_TARGET = ON);'
+--print @SqlStr
+exec (@SqlStr)
+--- 3. remove check constraint
+---Set @SqlStr = 'ALTER TABLE dbo.BI_DB_PositionPnL_SWITCH_SINGLE DROP CONSTRAINT FCASS_value_for_switch'
+
+-- print @SqlStr
+---exec (@SqlStr)
+
+--- 4 . truncate shadow table
+TRUNCATE TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH
+
+END
+
+GO
+
+```
+
+### SP `BI_DB_dbo.SP_PositionPnL`
+- **Path**: `c:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we\BI_DB_dbo\Stored Procedures\BI_DB_dbo.SP_PositionPnL.sql`
+
+```sql
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [BI_DB_dbo].[SP_PositionPnL] @dt [DATE] AS  
+  
+/************************************************************************************************************
+Author:      Max  
+Date:        2017-01-24  
+Description: PnL per position  
+   
+**************************  
+** Change History  
+**************************  
+Date         Author            Description     
+----------    ----------        ------------------------------------  
+2017-06-01     Katy F          Adjust Prices to SplitRatio Table     
+2018-02-14     Danny R         Use Partitions instead of Insert   
+2018-12-10     Boris Slutski   Change from [ETL_ Source].[Price_rep].[Candles].[GetSpreadedPriceCandle60MinSplitted] to Dim from DWH.dbo.Dim_GetSpreadedPriceCandle60MinSplitted  
+2019-04-15     Maor and Boris  Add IsSettled  
+2019-05-16     Boris Slutski   Add PositionChangeLog for update Amount   
+2019-05-30     amir            Add NOP & DailyPnL  
+2019-12-08     Boris           Update calculate PositionChangeLog_Active for Amount  
+2019-12-15     Boris           Change linked server from  ETL_ Source.[etoro_  rep] to [AZR-W-REAL-DB-2-BIDBUser].[etoro]     
+2020-02-17     Zvika           #Positions >> CloseOccurred >= @ReportDate instead of CloseOccurred > @ReportDate  
+                               Replace [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[PositionChangeLog_Active] to [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[PositionChangeLog]  
+2020-03-08     Zvika           Update AmountInUnitsDecimal >> #PositionChangeLog_ActiveUpdateUnits    
+2020-07-26     Zvika           [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[PositionChangeLog] replaced by DWH..Dim_PositionChangeLog 
+                               PositionPnL >> Changed from 4 digits after dot to 2 digits (DECIMAL(16, 2))   
+                               Create new variable - @ReportDateID, and changed OpenOccurred / CloseOccured to OpenDateID / CloseDateID  
+2021-03-11     Boris           Add  Alert for check Exist partition  
+2021-07-14     Zvika           [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[SplitRatio] replace with DWH..Dim_HistorySplitRatio
+2021-10-05	   Zvika		   #OpenPositions >> AmountInUnitsDecimal was updated
+2022-11-13     Eitan           add index IX_BI_DB_PositionPnL_SWITCH_SINGLE_CID .
+2023-07-27     Ofir A          Support hash distribution by PositionID
+2024-01-24     Zvika		   New PnL calculation for PnL varsion 0
+                               Add InitConversionRate & PnLVersion to temp tables
+                               Add #Pre_UnrealizedPnL temp table to calculate USD CR before PnL calculation
+2024-03-24		Guy M			replace the PnL calculation with data from DimPosition as the final phase of the PnL project
+2025-08-20		Guy M			bunch of new metrics and calculation changes to adjust to closing price in addition to last bid pnl, nop etc. for 24x5 and ticketfee% projects. 							   
+
+************************************************************************************************************/
+/**** Variables ****/  
+BEGIN  
+
+/*******Log Start********/
+exec BI_DB_dbo.[SP_ProcessStatusLog] 'SP_PositionPnL', 'Start', @dt
+/************************/
+
+SET NOCOUNT ON  
+SET NUMERIC_ROUNDABORT OFF  
+ 
+ -- DECLARE @dt DATE = '20250908' 
+DECLARE @dateid INT = CAST(CONVERT(CHAR(8), @dt, 112) AS INT)   
+DECLARE @ReportDate DATE = DATEADD(d, 1, @dt)  
+DECLARE @ReportDateID INT = CAST(CONVERT(CHAR(8), @ReportDate, 112) AS INT)   
+DECLARE @PreviousDate DATE = DATEADD(d, -1, @dt)  
+DECLARE @PreviousDateINT INT = CAST(CONVERT(CHAR(8), @PreviousDate, 112) AS INT)   
+
+ 
+/************************************************************************************************************/
+/**** Prices & Split ****/ 
+IF OBJECT_ID('tempdb..#Prices') IS NOT NULL 
+DROP TABLE #Prices
+
+CREATE TABLE #Prices  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+SELECT PC60.InstrumentID  
+      ,CAST(BidSpreaded AS DECIMAL (16, 8)) AS 'RateBid'  
+      ,CAST(AskSpreaded AS DECIMAL (16, 8)) AS 'RateAsk'  
+      ,CAST(Bid AS DECIMAL (16, 8)) AS 'BidLastWithoutSpread'  
+      ,CAST(Ask AS DECIMAL (16, 8)) AS 'AskLastWithoutSpread'  
+      ,Occurred  
+      ,Split.MinDate AS 'SplitMinDate'  
+      ,Split.MaxDate AS 'SplitMaxDate'  
+      ,Split.PriceRatio  
+      ,Split.AmountRatio  
+      ,Split.PriceRatioUnAdjusted  
+      ,Split.AmountRatioUnAdjusted  
+FROM  
+       (SELECT ROW_NUMBER() OVER (PARTITION BY InstrumentID ORDER BY Occurred DESC) rn  
+              ,InstrumentID  
+              ,AskSpreaded  
+              ,BidSpreaded  
+              ,Occurred  
+              ,Bid  
+              ,Ask  
+        FROM [DWH_dbo].[Fact_CurrencyPriceWithSplit] WITH (NOLOCK)  
+              --ETL_Source.[Price_rep].[Candles].[GetSpreadedPriceCandle60MinSplitted] WITH (NOLOCK)  
+        WHERE Occurred < @ReportDate  
+       )PC60  
+  
+       LEFT JOIN DWH_dbo.Dim_HistorySplitRatio Split WITH (NOLOCK) ON PC60.InstrumentID = Split.InstrumentID  
+                                                               AND PC60.Occurred < Split.MaxDate  
+                                                               AND PC60.Occurred > Split.MinDate   
+                         
+WHERE rn = 1  
+  
+--ORDER BY InstrumentID;  
+  
+CREATE CLUSTERED COLUMNSTORE INDEX #InstInd ON #Prices --(InstrumentID)  
+  
+
+ 
+/************************************************************************************************************/
+/**** Dim Position for open positions ****/ 
+
+
+
+
+
+IF OBJECT_ID('tempdb..#Positions') IS NOT NULL DROP TABLE #Positions  
+
+CREATE TABLE #Positions  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+
+SELECT PositionID  
+      ,CID  
+      ,MirrorID  
+      ,InstrumentID  
+      ,OpenOccurred  
+      ,CASE WHEN CloseDateID = 0 THEN NULL ELSE CloseOccurred END AS 'CloseOccurred'  
+      ,NULLIF(AmountInUnitsDecimal,0) AS 'AmountInUnitsDecimal'  
+      ,InitForexRate  
+      ,SpreadedPipBid  
+      ,SpreadedPipAsk  
+      ,Commission  
+      ,HedgeServerID  
+      ,Amount  
+      ,LimitRate  
+      ,StopRate  
+      ,LastOpConversionRate  
+      ,IsBuy  
+      ,IsSettled  
+      ,Leverage  
+      ,IsDiscounted  
+	  ,SettlementTypeID
+	  ,InitConversionRate	  
+	  ,PnLVersion
+	  ,PnLInDollars
+	, EstimateCloseFeeForCFD
+	, EstimateCloseFeeOnOpenByUnits
+	, EstimateCloseFeeOnOpen
+	, Close_PnLInDollars
+	, Close_CalculationRate
+	, Close_ConversionRate
+	, Close_PriceType
+	, CurrentCalculationRate
+	, CurrentConversionRate
+FROM [DWH_dbo].Dim_Position WITH (NOLOCK)  
+WHERE OpenDateID < @ReportDateID  
+      AND (CloseDateID >= @ReportDateID OR CloseDateID = 0)  
+  
+CREATE CLUSTERED COLUMNSTORE INDEX #Positions ON #Positions --(InstrumentID)  
+ 
+
+ 
+/************************************************************************************************************/
+/**** 
+Use PositionChangeLog for rerun: 
+1. All relevants changes   
+2. Delete Partial close (ChangeTypeID 11)   
+3. Update Amount and Stop Rate (First Change after @dt - ChangeTypeID 1 or 12)  
+4. Update Units (First Change after @dt - ChangeTypeID 12)  
+5. Update IsSttled (First Change after @dt - ChangeTypeID 13)  
+****/   
+
+  
+/**** Step 1 - All changes - First Change after @dt ****/  
+
+
+
+IF OBJECT_ID('tempdb..#PositionChangeLog_ActiveAmount') IS NOT NULL Drop Table #PositionChangeLog_ActiveAmount
+
+CREATE TABLE #PositionChangeLog_ActiveAmount  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+SELECT PositionID  
+      ,CID  
+      ,Occurred  
+      ,PreviousAmount  
+      ,AmountChanged  
+      ,NewAmount  
+      ,PreviousIsSettled  
+      ,IsSettled  
+      ,PreviousStopRate  
+      ,StopRate    
+      ,PreviousAmountInUnits  
+      ,AmountInUnits  
+      ,ChangeTypeID  
+FROM DWH_dbo.Dim_PositionChangeLog 
+WHERE Occurred > DATEADD(DAY, 1, @dt)    
+      AND ChangeTypeID in (1, 12, 11, 13)  
+
+
+/**** Step 2 - First row from changes for Edit S.L (1) or Partial Close (12) ****/    
+
+
+IF OBJECT_ID('tempdb..#PositionChangeLog_ActiveUpdate') IS NOT NULL 
+Drop Table #PositionChangeLog_ActiveUpdate
+
+CREATE TABLE #PositionChangeLog_ActiveUpdate  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.Occurred  
+      ,a.PreviousAmount  
+      ,a.AmountChanged  
+      ,a.NewAmount  
+      ,a.PreviousStopRate  
+      ,a.StopRate   
+      ,a.PreviousAmountInUnits  
+      ,a.AmountInUnits  
+      ,a.ChangeTypeID    
+FROM   
+     (SELECT PositionID  
+            ,CID  
+            ,Occurred  
+            ,PreviousAmount  
+            ,AmountChanged  
+            ,NewAmount  
+            ,PreviousStopRate  
+            ,StopRate    
+            ,PreviousAmountInUnits  
+            ,AmountInUnits  
+            ,ChangeTypeID   
+            ,ROW_NUMBER() OVER (PARTITION BY PositionID ORDER BY Occurred) RN  
+      FROM #PositionChangeLog_ActiveAmount  
+      WHERE ChangeTypeID IN (1, 12)  
+     )a  
+  
+WHERE a.RN = 1  
+  
+  
+CREATE CLUSTERED INDEX #PositionChangeLog_ActiveUpdate ON #PositionChangeLog_ActiveUpdate(PositionID)  
+  
+ 
+/**** Step 3 - First row from changes for Partial Close (12) ****/  
+
+
+
+
+IF OBJECT_ID('tempdb..#PositionChangeLog_ActiveUpdateUnits') IS NOT NULL Drop Table #PositionChangeLog_ActiveUpdateUnits
+
+CREATE TABLE #PositionChangeLog_ActiveUpdateUnits  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.Occurred  
+      ,a.PreviousAmount  
+      ,a.AmountChanged  
+      ,a.NewAmount  
+      ,a.PreviousStopRate  
+      ,a.StopRate    
+      ,a.PreviousAmountInUnits  
+      ,a.AmountInUnits  
+      ,a.ChangeTypeID   
+      ,a.RN  
+FROM   
+      (SELECT PositionID  
+             ,CID  
+             ,Occurred  
+             ,PreviousAmount  
+             ,AmountChanged  
+             ,NewAmount  
+             ,PreviousStopRate  
+             ,StopRate    
+             ,PreviousAmountInUnits  
+             ,AmountInUnits  
+             ,ChangeTypeID   
+             ,ROW_NUMBER() OVER (PARTITION BY PositionID ORDER BY Occurred) RN  
+       FROM #PositionChangeLog_ActiveAmount   
+       WHERE ChangeTypeID IN (12)  
+      )a  
+  
+WHERE a.RN = 1  
+  
+
+/**** Step 4 - Delete partial close positions ****/     
+
+DELETE a  FROM #Positions a  
+     JOIN #PositionChangeLog_ActiveAmount b ON a.PositionID = b.PositionID  
+                                           AND a.CID = b.CID  
+                                           AND b.ChangeTypeID = 11  
+  
+
+ 
+
+/**** Step 5 - Update Amount and StopRate ****/    
+UPDATE #Positions  
+SET Amount = b.PreviousAmount       
+   ,StopRate = b.PreviousStopRate   
+
+FROM #Positions a  
+     JOIN #PositionChangeLog_ActiveUpdate b ON a.PositionID = b.PositionID  
+  
+
+/**** Step 6 - Update Units ****/     
+UPDATE #Positions  
+SET AmountInUnitsDecimal = b.PreviousAmountInUnits  
+  
+FROM #Positions a  
+     JOIN #PositionChangeLog_ActiveUpdateUnits b ON a.PositionID = b.PositionID  
+
+ 
+/**** Step 7 - First row from changes for IsSettled (13) ****/   
+
+IF OBJECT_ID('tempdb..#IsSettled') IS NOT NULL Drop Table #IsSettled
+
+CREATE TABLE #IsSettled  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.Occurred  
+      ,a.IsSettled  
+      ,a.PreviousIsSettled  
+  
+FROM  
+     (SELECT pl.PositionID  
+            ,pl.CID  
+            ,Occurred  
+            ,pl.IsSettled  
+            ,pl.PreviousIsSettled  
+            ,ROW_NUMBER() OVER(PARTITION BY pl.PositionID ORDER BY pl.Occurred) rn  
+      FROM #PositionChangeLog_ActiveAmount pl with (NOLOCK)  
+      WHERE ChangeTypeID = 13  
+            AND ISNULL(CAST(pl.IsSettled AS INT), -1) <> ISNULL(CAST(pl.PreviousIsSettled AS INT), -1)  
+     )a  
+  
+WHERE a.rn = 1  
+  
+CREATE CLUSTERED INDEX #IsSettled ON #IsSettled(PositionID)  
+  
+
+/**** Step 8 - Update IsSettled ****/   
+
+
+UPDATE #Positions  
+SET IsSettled = d.PreviousIsSettled  
+  
+FROM #Positions a  
+     JOIN #IsSettled d ON a.PositionID = d.PositionID  
+  
+WHERE a.IsSettled <> d.PreviousIsSettled  
+ 
+
+
+/************************************************************************************************************/
+/**** Open Position - Calc Units, Init Rate, Bid Rate & Ask Rate **/    
+
+
+
+IF OBJECT_ID('tempdb..#OpenPositions') IS NOT NULL DROP TABLE #OpenPositions
+
+
+CREATE TABLE #OpenPositions  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.MirrorID  
+      ,a.InstrumentID  
+      ,a.OpenOccurred  
+      ,a.CloseOccurred  
+	  ,CASE WHEN c.Occurred < b.SplitMaxDate 
+	             THEN nullif(a.AmountInUnitsDecimal,0) 
+	        WHEN a.OpenOccurred < b.SplitMaxDate AND ISNULL(a.CloseOccurred, '21000101') >= b.SplitMaxDate 
+			     THEN CAST(a.AmountInUnitsDecimal / b.AmountRatio AS DECIMAL (16,6))
+	        ELSE nullif(a.AmountInUnitsDecimal,0) 
+	   END AS 'AmountInUnitsDecimal'
+      ,CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                 THEN CAST(a.InitForexRate / b.PriceRatio AS DECIMAL (16,8))   
+            ELSE a.InitForexRate   
+       END AS 'InitForexRate'  
+      ,a.SpreadedPipBid  
+      ,a.SpreadedPipAsk  
+      ,a.Commission  
+      ,a.HedgeServerID  
+      ,a.Amount  
+      ,a.LimitRate  
+      ,a.StopRate  
+      ,a.LastOpConversionRate  
+      ,a.IsBuy  
+      ,a.IsSettled  
+      ,b.Occurred AS 'PriceDateFrom'  
+      ,CASE WHEN ISNULL(IsDiscounted,0) = 1  
+                 THEN (CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                                 THEN CAST(b.BidLastWithoutSpread / b.PriceRatio AS DECIMAL (16,8))  
+                            WHEN OpenOccurred < b.SplitMaxDate and  CloseOccurred < b.SplitMaxDate  
+                                 THEN CAST(b.BidLastWithoutSpread / b.PriceRatio AS DECIMAL (16,8))  
+                            ELSE b.BidLastWithoutSpread  
+                       END)  
+            ELSE (CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                            THEN CAST(b.RateBid / b.PriceRatio AS DECIMAL (16,8))  
+                       WHEN OpenOccurred < b.SplitMaxDate and  CloseOccurred < b.SplitMaxDate  
+                            THEN CAST(b.RateBid / b.PriceRatio AS DECIMAL (16,8))  
+                       ELSE b.RateBid  
+                  END)  
+       END AS 'RateBid'  
+      ,CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                 THEN CAST(b.RateAsk / b.PriceRatio as decimal (16,8))  
+            WHEN OpenOccurred < b.SplitMaxDate and  CloseOccurred < b.SplitMaxDate  
+                 THEN CAST(b.RateAsk / b.PriceRatio as decimal (16,8))  
+            ELSE b.RateAsk  
+       END AS 'RateAsk'  
+      ,b.SplitMinDate  
+      ,b.SplitMaxDate  
+      ,b.PriceRatio  
+      ,b.AmountRatio  
+      ,b.PriceRatioUnAdjusted  
+      ,b.AmountRatioUnAdjusted  
+      ,Leverage 
+	  ,a.SettlementTypeID
+	  ,a.InitConversionRate
+	  ,a.PnLVersion
+	  ,a.PnLInDollars
+	, a.EstimateCloseFeeForCFD
+	, a.EstimateCloseFeeOnOpenByUnits
+	, a.EstimateCloseFeeOnOpen
+	, a.Close_PnLInDollars
+	, a.Close_CalculationRate
+	, a.Close_ConversionRate
+	, a.Close_PriceType
+	, a.CurrentCalculationRate
+	, a.CurrentConversionRate
+FROM #Positions a  
+     LEFT JOIN #Prices b ON a.InstrumentID = b.InstrumentID 
+	 LEFT JOIN #PositionChangeLog_ActiveUpdateUnits c ON a.PositionID = c.PositionID
+  
+CREATE CLUSTERED COLUMNSTORE INDEX #PosInd on #OpenPositions --(InstrumentID, CID) 
+
+
+
+/************************************************************************************************************/ 
+/**** Pre Calc Position PnL **/   
+
+
+
+IF OBJECT_ID('tempdb..#Pre_UnrealizedPnL') IS NOT NULL DROP TABLE #Pre_UnrealizedPnL 
+
+CREATE TABLE #Pre_UnrealizedPnL  
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+SELECT HPOS.CID  
+      ,HPOS.PositionID  
+      ,HPOS.InstrumentID  
+      ,HPOS.MirrorID  
+      ,HPOS.Commission  
+      ,HPOS.InitForexRate  
+      ,HPOS.SpreadedPipBid  
+      ,HPOS.SpreadedPipAsk  
+      ,CAST((CASE HPOS.IsBuy WHEN 1     
+                                  THEN isnull(HPOS.RateBid , 0) - HPOS.InitForexRate  
+                             ELSE HPOS.InitForexRate - isnull(HPOS.RateAsk, 0)  
+             END * CAST(CASE WHEN Pair.SellCurrencyID = 1  
+                                  THEN 1.00  
+                             WHEN Pair.BuyCurrencyID = 1  
+                                  THEN (1.00 / CASE HPOS.IsBuy WHEN 1 THEN HPOS.RateBid ELSE HPOS.RateAsk END)  
+                             WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)  
+                                   THEN coalesce(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END, CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)  
+                             ELSE 1.00  
+                    END AS MONEY) * HPOS.AmountInUnitsDecimal) AS DECIMAL(16, 2)) AS 'PositionPnL'  
+      ,(CASE HPOS.IsBuy WHEN 1  
+                             THEN ISNULL(HPOS.RateBid , 0) - HPOS.InitForexRate  
+                        ELSE HPOS.InitForexRate - ISNULL(HPOS.RateAsk, 0)  
+        END * CAST(CASE WHEN Pair.SellCurrencyID = 1  
+                             THEN 1.00  
+                        WHEN Pair.BuyCurrencyID = 1  
+                             THEN (1.00 / CASE HPOS.IsBuy WHEN 1 THEN HPOS.RateBid ELSE HPOS.RateAsk END)  
+                        WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)  
+                             THEN COALESCE(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END, CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)  
+                        ELSE 1.00  
+                    END AS MONEY)) 'Price'  
+      ,CAST(CASE WHEN Pair.SellCurrencyID = 1 
+	                  THEN 1  
+                 WHEN Pair.BuyCurrencyID = 1 THEN 1.00 / (CASE WHEN HPOS.IsBuy = 1 THEN HPOS.RateBid ELSE  HPOS.RateAsk END)  
+                 WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)   
+                       THEN COALESCE(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END , CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)  
+            ELSE 1.00 END AS MONEY)  * (HPOS.AmountInUnitsDecimal)  
+                                     *  CASE WHEN HPOS.IsBuy =1 THEN PairPrice.RateBid ELSE PairPrice.RateAsk END  
+                                     * (2 * HPOS.IsBuy - 1) AS 'NOP'  
+      ,HedgeServerID  
+      ,HPOS.Amount  
+      ,AmountInUnitsDecimal  
+      ,LimitRate  
+      ,StopRate  
+      ,IsBuy  
+      ,IsSettled  
+      ,[OpenOccurred] AS 'Occurred'  
+      ,@dt AS 'Date'  
+      ,CAST(CONVERT(CHAR(8), @dt,112) AS INT) AS 'DateID'  
+      ,Leverage  
+	   ,HPOS.RateBid    
+	   ,HPOS.RateAsk   
+	   --,CAST(CASE WHEN Pair.SellCurrencyID = 1    
+				--		  THEN 1.00    
+				--	 WHEN Pair.BuyCurrencyID = 1    						  
+				--		  THEN (1.00 / CASE HPOS.IsBuy WHEN 1 THEN HPOS.RateBid ELSE HPOS.RateAsk END)    
+				--	 WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)    
+				--		  THEN coalesce(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END, CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)    
+				--	 ELSE 1.00    
+				--END AS MONEY) 'USD_CR'
+		,HPOS.CurrentConversionRate AS USD_CR
+		,HPOS.SettlementTypeID	
+		,HPOS.InitConversionRate
+	    ,HPOS.PnLVersion
+		,HPOS.PnLInDollars
+		,HPOS.EstimateCloseFeeForCFD
+		,HPOS.EstimateCloseFeeOnOpenByUnits
+		,HPOS.EstimateCloseFeeOnOpen
+		,HPOS.Close_PnLInDollars
+		,HPOS.Close_CalculationRate
+		,HPOS.Close_ConversionRate
+		,HPOS.Close_PriceType
+		,HPOS.CurrentCalculationRate
+		,HPOS.CurrentConversionRate
+	  , HPOS.AmountInUnitsDecimal * Close_CalculationRate * Close_ConversionRate AS Close_NOP
+	  , HPOS.AmountInUnitsDecimal * HPOS.CurrentCalculationRate * HPOS.CurrentConversionRate AS Current_NOP
+FROM #OpenPositions HPOS WITH (NOLOCK)  
+     LEFT JOIN DWH_dbo.Dim_Instrument Pair WITH (NOLOCK) ON Pair.InstrumentID = HPOS.InstrumentID   
+     LEFT JOIN #Prices PairPrice WITH (NOLOCK) ON Pair.InstrumentID = PairPrice.InstrumentID  
+     LEFT JOIN DWH_dbo.Dim_Instrument I2 WITH (NOLOCK) ON I2.InstrumentID <> Pair.InstrumentID   
+                                                      AND I2.SellCurrencyID = Pair.SellCurrencyID AND I2.BuyCurrencyID = 1 /** USD **/    
+     LEFT JOIN #Prices I2Price WITH (NOLOCK) ON I2Price.InstrumentID = I2.InstrumentID  
+	 LEFT JOIN DWH_dbo.Dim_Instrument I3 WITH (NOLOCK) ON I3.InstrumentID <> Pair.InstrumentID   
+                                                      AND I3.BuyCurrencyID = Pair.SellCurrencyID AND I3.SellCurrencyID = 1 /** USD **/        
+	 LEFT JOIN #Prices I3Price WITH (NOLOCK) ON I3Price.InstrumentID = I3.InstrumentID  
+    
+	
+CREATE CLUSTERED COLUMNSTORE INDEX #Pre_UnrealizedPnL on #Pre_UnrealizedPnL 
+ 
+
+/************************************************************************************************************/
+/**** Calc Position PnL **/   
+
+
+IF OBJECT_ID('tempdb..#UnrealizedPnL') IS NOT NULL DROP TABLE #UnrealizedPnL  
+
+CREATE TABLE #UnrealizedPnL 
+	WITH (HEAP,DISTRIBUTION=hash(PositionID))
+AS
+
+SELECT HPOS.CID
+	  ,HPOS.PositionID
+	  ,HPOS.InstrumentID
+	  ,HPOS.MirrorID
+	  ,HPOS.Commission
+	  ,HPOS.InitForexRate
+	  ,HPOS.SpreadedPipBid
+	  ,HPOS.SpreadedPipAsk
+	  --,CAST((CASE WHEN ISNULL(PnLVersion,0) = 0 THEN -- OldVersion   -- Guy M 2024-03-24
+			--		   CASE HPOS.IsBuy
+			--				WHEN 1
+			--					THEN isnull(HPOS.RateBid , 0) - HPOS.InitForexRate
+			--					ELSE HPOS.InitForexRate - isnull(HPOS.RateAsk, 0)
+			--			END
+			--				* HPOS.USD_CR  -- V0
+			--ELSE
+			--	CASE HPOS.IsBuy
+			--		WHEN 1
+			--			THEN (isnull(HPOS.RateBid , 0) * HPOS.USD_CR
+			--				- HPOS.InitForexRate * HPOS.InitConversionRate)
+			--			ELSE (HPOS.InitForexRate * HPOS.InitConversionRate
+			--				- isnull(HPOS.RateAsk, 0) * HPOS.USD_CR)
+			--	END  -- V1
+			--END
+			--	* HPOS.AmountInUnitsDecimal) 
+		--AS DECIMAL(16, 2)) 'PositionPnL'
+	  ,HPOS.PnLInDollars AS [PositionPnL] -- Guy M 2024-03-24 replace computation with PnLInDollars
+	  ,HPOS.Price
+	  ,HPOS.NOP
+	  ,HPOS.HedgeServerID
+	  ,HPOS.Amount
+	  ,HPOS.AmountInUnitsDecimal
+	  ,HPOS.LimitRate
+	  ,HPOS.StopRate
+	  ,HPOS.IsBuy
+	  ,HPOS.IsSettled
+	  ,HPOS.Occurred
+	  ,HPOS.Date
+	  ,HPOS.DateID
+	  ,HPOS.Leverage
+	  ,HPOS.RateBid
+	  ,HPOS.RateAsk
+	  ,HPOS.USD_CR
+	  ,HPOS.SettlementTypeID
+	  ,HPOS.InitConversionRate
+	  ,HPOS.PnLVersion
+	  ,HPOS.EstimateCloseFeeForCFD
+	  ,HPOS.EstimateCloseFeeOnOpenByUnits
+	  ,HPOS.EstimateCloseFeeOnOpen
+	  ,HPOS.Close_PnLInDollars
+	  ,HPOS.Close_CalculationRate
+	  ,HPOS.Close_ConversionRate
+	  ,HPOS.Close_PriceType
+	  ,HPOS.CurrentCalculationRate
+	  ,HPOS.CurrentConversionRate
+	  ,HPOS.Close_NOP
+	  ,HPOS.Current_NOP
+FROM #Pre_UnrealizedPnL HPOS
+
+
+
+CREATE CLUSTERED COLUMNSTORE INDEX #UnrealizedPnL on #UnrealizedPnL 
+
+
+ 
+/************************************************************************************************************/
+/**** PositionPnL SWITCH SINGLE ***/   
+
+
+
+IF OBJECT_ID('BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE') IS NOT NULL  
+DROP TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE  
+
+
+IF OBJECT_ID('BI_DB_dbo.BI_DB_PositionPnL_SWITCH') IS NOT NULL  
+DROP TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH  
+
+DECLARE @sql NVARCHAR(MAX) 
+DECLARE @sql2 NVARCHAR(MAX) 
+DECLARE @par_range NVARCHAR(MAX) 
+	
+	
+	        SELECT @par_range = STRING_AGG(cast(rng.value as varchar(max)),',') WITHIN GROUP (ORDER BY CAST(rng.value as int))
+			FROM        sys.schemas    sch
+			INNER JOIN  sys.tables     tbl ON  sch.schema_id   = tbl.schema_id
+			INNER JOIN  sys.partitions prt ON  prt.[object_id] = tbl.[object_id]
+			INNER JOIN  sys.indexes    idx ON  prt.[object_id] = idx.[object_id] AND prt.[index_id]  = idx.[index_id]
+			INNER JOIN  sys.data_spaces ds ON  idx.[data_space_id] = ds.[data_space_id]
+			INNER JOIN  sys.partition_schemes  ps  ON  ds.[data_space_id]  = ps.[data_space_id]
+			INNER JOIN  sys.partition_functions pf  ON  ps.[function_id]    = pf.[function_id]
+			LEFT  JOIN  sys.partition_range_values rng ON  pf.[function_id]    = rng.[function_id]
+			AND  rng.[boundary_id] = prt.[partition_number]
+			WHERE tbl.object_id =object_id('BI_DB_dbo.BI_DB_PositionPnL')
+			and idx.index_id = 1
+			and rng.value  is not null 
+   
+
+
+	SET @sql = 'CREATE TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE
+                WITH
+	  
+			  (  
+				DISTRIBUTION = hash(PositionID),
+				CLUSTERED INDEX
+				(
+					[DateID] ASC,
+					[Date] ASC,
+					[CID] ASC,
+					[PositionID] ASC) 
+					,PARTITION (DateID RANGE 
+					LEFT FOR VALUES 
+					('+@par_range+')
+				)
+			) AS SELECT TOP 0 * FROM [BI_DB_dbo].[BI_DB_PositionPnL]'
+   exec (@sql)
+
+
+ --  ALTER TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE
+ --  ADD   CONSTRAINT [PK_PostionID_DateID_NEW_PositionPnL_SWITCH_SINGLE] PRIMARY KEY NONCLUSTERED 
+	--(
+	--	[DateID] ASC,
+	--	[PositionID] ASC
+	--) NOT ENFORCED 
+
+
+
+	
+	SET @sql2 = 'CREATE TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH
+                WITH
+	  
+			  (  
+				DISTRIBUTION = hash(PositionID),
+				CLUSTERED INDEX
+				(
+					[DateID] ASC,
+					[Date] ASC,
+					[CID] ASC,
+					[PositionID] ASC) 
+					,PARTITION (DateID RANGE 
+					LEFT FOR VALUES 
+					('+@par_range+')
+				)
+			) AS SELECT TOP 0 * FROM [BI_DB_dbo].[BI_DB_PositionPnL]'
+   exec (@sql2)
+
+
+
+
+
+  
+/************************************************************************************************************/
+/**** Insert PositionPnL SWITCH SINGLE ***/   
+
+INSERT BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE -- select top 1 * from BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE
+SELECT CID  
+      ,PositionID  
+      ,InstrumentID  
+      ,MirrorID  
+      ,Commission  
+      ,InitForexRate  
+      ,SpreadedPipBid  
+      ,SpreadedPipAsk  
+      ,PositionPnL  
+      ,Price  
+      ,HedgeServerID  
+      ,Amount  
+      ,AmountInUnitsDecimal  
+      ,LimitRate  
+      ,StopRate  
+      ,IsBuy  
+      ,[Occurred]  
+      ,[Date]  
+      ,DateID  
+      ,GETDATE()  
+      ,IsSettled  
+      ,NOP  
+      ,NULL AS DailyPnL  
+      ,Leverage  
+	  ,RateBid    
+      ,RateAsk   
+      ,USD_CR
+	  ,SettlementTypeID
+		, EstimateCloseFeeForCFD
+		, EstimateCloseFeeOnOpenByUnits
+		, EstimateCloseFeeOnOpen
+		, Close_PnLInDollars
+		, Close_CalculationRate
+		, Close_ConversionRate
+		, Close_PriceType
+		, CurrentCalculationRate
+		, CurrentConversionRate
+		, Close_NOP
+		, Current_NOP
+
+FROM #UnrealizedPnL   
+
+CREATE NONCLUSTERED INDEX IX_BI_DB_PositionPnL_SWITCH_CID        ON BI_DB_dbo.BI_DB_PositionPnL_SWITCH (CID)
+CREATE NONCLUSTERED INDEX IX_BI_DB_PositionPnL_SWITCH_SINGLE_CID ON BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE (CID)
+
+-- select top 1 * from BI_DB_dbo.BI_DB_PositionPnL where DateID = 20250
+
+ exec [BI_DB_dbo].[SP_BI_DB_PositionPnL_SWITCH]
+
+
+
+/************************************************************************************************************/
+/**** Calculate Daily PnL ***/    
+UPDATE A  
+  SET DailyPnL = A.PositionPnL - ISNULL(B.PositionPnL,0)  
+  FROM BI_DB_dbo.BI_DB_PositionPnL A  
+     LEFT JOIN BI_DB_dbo.BI_DB_PositionPnL B ON A.PositionID = B.PositionID 
+	                                  AND B.DateID = @PreviousDateINT  WHERE A.DateID = @dateid  
+  
+
+/*******Log Finish********/
+exec BI_DB_dbo.[SP_ProcessStatusLog] 'SP_PositionPnL', 'Completed', @dt
+/************************/
+
+
+END
+
+
+GO
+
+```
+
+### SP `BI_DB_dbo.SP_PositionPnL_bkp_2023_09_26`
+- **Path**: `c:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we\BI_DB_dbo\Stored Procedures\BI_DB_dbo.SP_PositionPnL_bkp_2023_09_26.sql`
+
+```sql
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [BI_DB_dbo].[SP_PositionPnL_bkp_2023_09_26] @dt [DATE] AS  
+  
+/************************************************************************************************************
+Author:      Max  
+Date:        2017-01-24  
+Description: PnL per position  
+   
+**************************  
+** Change History  
+**************************  
+Date         Author            Description     
+----------    ----------        ------------------------------------  
+2017-06-01     Katy F          Adjust Prices to SplitRatio Table     
+2018-02-14     Danny R         Use Partitions instead of Insert   
+2018-12-10     Boris Slutski   Change from [ETL_ Source].[Price_rep].[Candles].[GetSpreadedPriceCandle60MinSplitted] to Dim from DWH.dbo.Dim_GetSpreadedPriceCandle60MinSplitted  
+2019-04-15     Maor and Boris  Add IsSettled  
+2019-05-16     Boris Slutski   Add PositionChangeLog for update Amount   
+2019-05-30     amir            Add NOP & DailyPnL  
+2019-12-08     Boris           Update calculate PositionChangeLog_Active for Amount  
+2019-12-15     Boris           Change linked server from  ETL_ Source.[etoro_  rep] to [AZR-W-REAL-DB-2-BIDBUser].[etoro]     
+2020-02-17     Zvika           #Positions >> CloseOccurred >= @ReportDate instead of CloseOccurred > @ReportDate  
+                               Replace [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[PositionChangeLog_Active] to [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[PositionChangeLog]  
+2020-03-08     Zvika           Update AmountInUnitsDecimal >> #PositionChangeLog_ActiveUpdateUnits    
+2020-07-26     Zvika           [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[PositionChangeLog] replaced by DWH..Dim_PositionChangeLog 
+                               PositionPnL >> Changed from 4 digits after dot to 2 digits (DECIMAL(16, 2))   
+                               Create new variable - @ReportDateID, and changed OpenOccurred / CloseOccured to OpenDateID / CloseDateID  
+2021-03-11     Boris           Add  Alert for check Exist partition  
+2021-07-14     Zvika           [AZR-W-REAL-DB-2-BIDBUser].[etoro].[History].[SplitRatio] replace with DWH..Dim_HistorySplitRatio
+2021-10-05	   Zvika		   #OpenPositions >> AmountInUnitsDecimal was updated
+2022-11-13     Eitan           add index IX_BI_DB_PositionPnL_SWITCH_SINGLE_CID .
+
+************************************************************************************************************/
+/**** Variables ****/  
+BEGIN  
+
+/*******Log Start********/
+EXEC BI_DB_dbo.[SP_ProcessStatusLog] 'SP_PositionPnL', 'Start', @dt
+/************************/
+
+SET NOCOUNT ON  
+SET NUMERIC_ROUNDABORT OFF  
+ 
+/*DECLARE @dt DATE = '20211003' --CAST(GETDATE()-1 AS DATE)*/
+DECLARE @dateid INT = CAST(CONVERT(CHAR(8), @dt, 112) AS INT)   
+DECLARE @ReportDate DATE = DATEADD(d, 1, @dt)  
+DECLARE @ReportDateID INT = CAST(CONVERT(CHAR(8), @ReportDate, 112) AS INT)   
+DECLARE @PreviousDate DATE = DATEADD(d, -1, @dt)  
+DECLARE @PreviousDateINT INT = CAST(CONVERT(CHAR(8), @PreviousDate, 112) AS INT)   
+  
+  
+/************************************************************************************************************/
+/**** Check Partitions & Email alert ****/   
+DECLARE @CountINT bit,@Range varchar(20)
+SET @Range = convert(int,convert(varchar, @dateid,112))
+
+declare @IsPartitionExist bit 
+exec [DWH_dbo].[CheckIfPartitionExists]  'BI_DB_dbo','BI_DB_PositionPnL' ,@Range, @CountINT  OUT 
+
+
+--SET @CountINT = (  
+--select  Count(*) as IndExistPartition  
+--from sys.partitions p  
+--inner join sys.indexes i   
+--on p.object_id = i.object_id   
+--and p.index_id = i.index_id  
+--inner JOIN sys.data_spaces ds   
+--on i.data_space_id = ds.data_space_id  
+--inner JOIN sys.partition_schemes ps   
+--on ds.data_space_id = ps.data_space_id  
+--left outer JOIN sys.partition_range_values prv   
+--on prv.function_id = ps.function_id   
+--and p.partition_number = prv.boundary_id  
+--where p.index_id = 1   
+--and OBJECT_NAME(p.[object_id])  = 'BI_DB_PositionPnL'  
+--and prv.value = convert(int,convert(varchar, @dateid,112))  
+--)  
+  
+IF @CountINT = 0  
+BEGIN    
+  
+DECLARE @subject_mail  nvarchar(MAX)   
+SET @subject_mail = 'BI_DB - Error ! Table BI_DB_PositionPnL doesn''t have partition! - '+ CAST(@dateid AS VARCHAR(8))  
+--EXEC msdb.dbo.sp_send_dbmail  
+SELECT @subject_mail
+  
+----@profile_name = 'AZR-WE-DWH-01',  
+----@from_address = 'AZR-WE-DWH-01@etoro.com',  
+----@recipients ='BI-DataSolutions@etoro.com',  
+----@subject = @subject_mail  
+  
+END  
+  
+
+/************************************************************************************************************/
+/**** Prices & Split ****/ 
+IF OBJECT_ID('tempdb..#Prices') IS NOT NULL 
+DROP TABLE #Prices
+
+CREATE TABLE #Prices  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+SELECT PC60.InstrumentID  
+      ,CAST(BidSpreaded AS DECIMAL (16, 8)) AS 'RateBid'  
+      ,CAST(AskSpreaded AS DECIMAL (16, 8)) AS 'RateAsk'  
+      ,CAST(Bid AS DECIMAL (16, 8)) AS 'BidLastWithoutSpread'  
+      ,CAST(Ask AS DECIMAL (16, 8)) AS 'AskLastWithoutSpread'  
+      ,Occurred  
+      ,Split.MinDate AS 'SplitMinDate'  
+      ,Split.MaxDate AS 'SplitMaxDate'  
+      ,Split.PriceRatio  
+      ,Split.AmountRatio  
+      ,Split.PriceRatioUnAdjusted  
+      ,Split.AmountRatioUnAdjusted  
+FROM  
+       (SELECT ROW_NUMBER() OVER (PARTITION BY InstrumentID ORDER BY Occurred DESC) rn  
+              ,InstrumentID  
+              ,AskSpreaded  
+              ,BidSpreaded  
+              ,Occurred  
+              ,Bid  
+              ,Ask  
+        FROM [DWH_dbo].[Fact_CurrencyPriceWithSplit] WITH (NOLOCK)  
+              --ETL_Source.[Price_rep].[Candles].[GetSpreadedPriceCandle60MinSplitted] WITH (NOLOCK)  
+        WHERE Occurred < @ReportDate  
+       )PC60  
+  
+       LEFT JOIN DWH_dbo.Dim_HistorySplitRatio Split WITH (NOLOCK) ON PC60.InstrumentID = Split.InstrumentID  
+                                                               AND PC60.Occurred < Split.MaxDate  
+                                                               AND PC60.Occurred > Split.MinDate   
+                         
+WHERE rn = 1  
+  
+--ORDER BY InstrumentID;  
+  
+CREATE CLUSTERED COLUMNSTORE INDEX #InstInd ON #Prices --(InstrumentID)  
+  
+ 
+/************************************************************************************************************/
+/**** Dim Position for open positions ****/ 
+IF OBJECT_ID('tempdb..#Positions') IS NOT NULL DROP TABLE #Positions  
+
+CREATE TABLE #Positions  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+
+
+SELECT PositionID  
+      ,CID  
+      ,MirrorID  
+      ,InstrumentID  
+      ,OpenOccurred  
+      ,CASE WHEN CloseDateID = 0 THEN NULL ELSE CloseOccurred END AS 'CloseOccurred'  
+      ,NULLIF(AmountInUnitsDecimal,0) AS 'AmountInUnitsDecimal'  
+      ,InitForexRate  
+      ,SpreadedPipBid  
+      ,SpreadedPipAsk  
+      ,Commission  
+      ,HedgeServerID  
+      ,Amount  
+      ,LimitRate  
+      ,StopRate  
+      ,LastOpConversionRate  
+      ,IsBuy  
+      ,IsSettled  
+      ,Leverage  
+      ,IsDiscounted  
+	  ,SettlementTypeID
+FROM [DWH_dbo].Dim_Position WITH (NOLOCK)  
+WHERE OpenDateID < @ReportDateID  
+      AND (CloseDateID >= @ReportDateID OR CloseDateID = 0)  
+  
+CREATE CLUSTERED COLUMNSTORE INDEX #Positions ON #Positions --(InstrumentID)  
+ 
+ 
+/************************************************************************************************************/
+/**** 
+Use PositionChangeLog for rerun: 
+1. All relevants changes   
+2. Delete Partial close (ChangeTypeID 11)   
+3. Update Amount and Stop Rate (First Change after @dt - ChangeTypeID 1 or 12)  
+4. Update Units (First Change after @dt - ChangeTypeID 12)  
+5. Update IsSttled (First Change after @dt - ChangeTypeID 13)  
+****/   
+
+  
+/**** Step 1 - All changes - First Change after @dt ****/  
+ 
+IF OBJECT_ID('tempdb..#PositionChangeLog_ActiveAmount') IS NOT NULL Drop Table #PositionChangeLog_ActiveAmount
+
+CREATE TABLE #PositionChangeLog_ActiveAmount  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+
+SELECT PositionID  
+      ,CID  
+      ,Occurred  
+      ,PreviousAmount  
+      ,AmountChanged  
+      ,NewAmount  
+      ,PreviousIsSettled  
+      ,IsSettled  
+      ,PreviousStopRate  
+      ,StopRate    
+      ,PreviousAmountInUnits  
+      ,AmountInUnits  
+      ,ChangeTypeID  
+FROM DWH_dbo.Dim_PositionChangeLog 
+WHERE Occurred > DATEADD(DAY, 1, @dt)    
+      AND ChangeTypeID in (1, 12, 11, 13)  
+  
+ 
+/**** Step 2 - First row from changes for Edit S.L (1) or Partial Close (12) ****/    
+
+IF OBJECT_ID('tempdb..#PositionChangeLog_ActiveUpdate') IS NOT NULL 
+Drop Table #PositionChangeLog_ActiveUpdate
+
+CREATE TABLE #PositionChangeLog_ActiveUpdate  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.Occurred  
+      ,a.PreviousAmount  
+      ,a.AmountChanged  
+      ,a.NewAmount  
+      ,a.PreviousStopRate  
+      ,a.StopRate   
+      ,a.PreviousAmountInUnits  
+      ,a.AmountInUnits  
+      ,a.ChangeTypeID    
+FROM   
+     (SELECT PositionID  
+            ,CID  
+            ,Occurred  
+            ,PreviousAmount  
+            ,AmountChanged  
+            ,NewAmount  
+            ,PreviousStopRate  
+            ,StopRate    
+            ,PreviousAmountInUnits  
+            ,AmountInUnits  
+            ,ChangeTypeID   
+            ,ROW_NUMBER() OVER (PARTITION BY PositionID ORDER BY Occurred) RN  
+      FROM #PositionChangeLog_ActiveAmount  
+      WHERE ChangeTypeID IN (1, 12)  
+     )a  
+  
+WHERE a.RN = 1  
+  
+  
+CREATE CLUSTERED INDEX #PositionChangeLog_ActiveUpdate ON #PositionChangeLog_ActiveUpdate(PositionID)  
+  
+ 
+/**** Step 3 - First row from changes for Partial Close (12) ****/  
+
+
+IF OBJECT_ID('tempdb..#PositionChangeLog_ActiveUpdateUnits') IS NOT NULL Drop Table #PositionChangeLog_ActiveUpdateUnits
+
+CREATE TABLE #PositionChangeLog_ActiveUpdateUnits  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.Occurred  
+      ,a.PreviousAmount  
+      ,a.AmountChanged  
+      ,a.NewAmount  
+      ,a.PreviousStopRate  
+      ,a.StopRate    
+      ,a.PreviousAmountInUnits  
+      ,a.AmountInUnits  
+      ,a.ChangeTypeID   
+      ,a.RN  
+FROM   
+      (SELECT PositionID  
+             ,CID  
+             ,Occurred  
+             ,PreviousAmount  
+             ,AmountChanged  
+             ,NewAmount  
+             ,PreviousStopRate  
+             ,StopRate    
+             ,PreviousAmountInUnits  
+             ,AmountInUnits  
+             ,ChangeTypeID   
+             ,ROW_NUMBER() OVER (PARTITION BY PositionID ORDER BY Occurred) RN  
+       FROM #PositionChangeLog_ActiveAmount   
+       WHERE ChangeTypeID IN (12)  
+      )a  
+  
+WHERE a.RN = 1  
+  
+
+/**** Step 4 - Delete partial close positions ****/     
+DELETE a  FROM #Positions a  
+     JOIN #PositionChangeLog_ActiveAmount b ON a.PositionID = b.PositionID  
+                                           AND a.CID = b.CID  
+                                           AND b.ChangeTypeID = 11  
+  
+
+/**** Step 5 - Update Amount and StopRate ****/    
+UPDATE #Positions  
+SET Amount = b.PreviousAmount       
+   ,StopRate = b.PreviousStopRate   
+
+FROM #Positions a  
+     JOIN #PositionChangeLog_ActiveUpdate b ON a.PositionID = b.PositionID  
+  
+
+/**** Step 6 - Update Units ****/     
+UPDATE #Positions  
+SET AmountInUnitsDecimal = b.PreviousAmountInUnits  
+  
+FROM #Positions a  
+     JOIN #PositionChangeLog_ActiveUpdateUnits b ON a.PositionID = b.PositionID  
+
+ 
+/**** Step 7 - First row from changes for IsSettled (13) ****/   
+
+IF OBJECT_ID('tempdb..#IsSettled') IS NOT NULL Drop Table #IsSettled
+
+CREATE TABLE #IsSettled  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.Occurred  
+      ,a.IsSettled  
+      ,a.PreviousIsSettled  
+  
+FROM  
+     (SELECT pl.PositionID  
+            ,pl.CID  
+            ,Occurred  
+            ,pl.IsSettled  
+            ,pl.PreviousIsSettled  
+            ,ROW_NUMBER() OVER(PARTITION BY pl.PositionID ORDER BY pl.Occurred) rn  
+      FROM #PositionChangeLog_ActiveAmount pl with (NOLOCK)  
+      WHERE ChangeTypeID = 13  
+            AND ISNULL(CAST(pl.IsSettled AS INT), -1) <> ISNULL(CAST(pl.PreviousIsSettled AS INT), -1)  
+     )a  
+  
+WHERE a.rn = 1  
+  
+CREATE CLUSTERED INDEX #IsSettled ON #IsSettled(PositionID)  
+  
+
+/**** Step 8 - Update IsSettled ****/   
+UPDATE #Positions  
+SET IsSettled = d.PreviousIsSettled  
+  
+FROM #Positions a  
+     JOIN #IsSettled d ON a.PositionID = d.PositionID  
+  
+WHERE a.IsSettled <> d.PreviousIsSettled  
+ 
+ 
+/************************************************************************************************************/
+/**** Open Position - Calc Units, Init Rate, Bid Rate & Ask Rate **/    
+IF OBJECT_ID('tempdb..#OpenPositions') IS NOT NULL DROP TABLE #OpenPositions
+
+
+CREATE TABLE #OpenPositions  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+
+
+SELECT a.PositionID  
+      ,a.CID  
+      ,a.MirrorID  
+      ,a.InstrumentID  
+      ,a.OpenOccurred  
+      ,a.CloseOccurred  
+	  ,CASE WHEN c.Occurred < b.SplitMaxDate 
+	             THEN nullif(a.AmountInUnitsDecimal,0) 
+	        WHEN a.OpenOccurred < b.SplitMaxDate AND ISNULL(a.CloseOccurred, '21000101') >= b.SplitMaxDate 
+			     THEN CAST(a.AmountInUnitsDecimal / b.AmountRatio AS DECIMAL (16,6))
+	        ELSE nullif(a.AmountInUnitsDecimal,0) 
+	   END AS 'AmountInUnitsDecimal'
+      ,CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                 THEN CAST(a.InitForexRate / b.PriceRatio AS DECIMAL (16,8))   
+            ELSE a.InitForexRate   
+       END AS 'InitForexRate'  
+      ,a.SpreadedPipBid  
+      ,a.SpreadedPipAsk  
+      ,a.Commission  
+      ,a.HedgeServerID  
+      ,a.Amount  
+      ,a.LimitRate  
+      ,a.StopRate  
+      ,a.LastOpConversionRate  
+      ,a.IsBuy  
+      ,a.IsSettled  
+      ,b.Occurred AS 'PriceDateFrom'  
+      ,CASE WHEN ISNULL(IsDiscounted,0) = 1  
+                 THEN (CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                                 THEN CAST(b.BidLastWithoutSpread / b.PriceRatio AS DECIMAL (16,8))  
+                            WHEN OpenOccurred < b.SplitMaxDate and  CloseOccurred < b.SplitMaxDate  
+                                 THEN CAST(b.BidLastWithoutSpread / b.PriceRatio AS DECIMAL (16,8))  
+                            ELSE b.BidLastWithoutSpread  
+                       END)  
+            ELSE (CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                            THEN CAST(b.RateBid / b.PriceRatio AS DECIMAL (16,8))  
+                       WHEN OpenOccurred < b.SplitMaxDate and  CloseOccurred < b.SplitMaxDate  
+                            THEN CAST(b.RateBid / b.PriceRatio AS DECIMAL (16,8))  
+                       ELSE b.RateBid  
+                  END)  
+       END AS 'RateBid'  
+      ,CASE WHEN OpenOccurred < b.SplitMaxDate AND ISNULL(CloseOccurred, '21000101') >= b.SplitMaxDate  
+                 THEN CAST(b.RateAsk / b.PriceRatio as decimal (16,8))  
+            WHEN OpenOccurred < b.SplitMaxDate and  CloseOccurred < b.SplitMaxDate  
+                 THEN CAST(b.RateAsk / b.PriceRatio as decimal (16,8))  
+            ELSE b.RateAsk  
+       END AS 'RateAsk'  
+      ,b.SplitMinDate  
+      ,b.SplitMaxDate  
+      ,b.PriceRatio  
+      ,b.AmountRatio  
+      ,b.PriceRatioUnAdjusted  
+      ,b.AmountRatioUnAdjusted  
+      ,Leverage 
+	  ,a.SettlementTypeID
+FROM #Positions a  
+     LEFT JOIN #Prices b ON a.InstrumentID = b.InstrumentID 
+	 LEFT JOIN #PositionChangeLog_ActiveUpdateUnits c ON a.PositionID = c.PositionID
+  
+CREATE CLUSTERED COLUMNSTORE INDEX #PosInd on #OpenPositions --(InstrumentID, CID)  
+  
+
+/************************************************************************************************************/
+/**** Calc Position PnL **/   
+IF OBJECT_ID('tempdb..#UnrealizedPnL') IS NOT NULL DROP TABLE #UnrealizedPnL  
+
+CREATE TABLE #UnrealizedPnL  
+	WITH (HEAP,DISTRIBUTION=ROUND_ROBIN)
+AS
+SELECT HPOS.CID  
+      ,HPOS.PositionID  
+      ,HPOS.InstrumentID  
+      ,HPOS.MirrorID  
+      ,HPOS.Commission  
+      ,HPOS.InitForexRate  
+      ,HPOS.SpreadedPipBid  
+      ,HPOS.SpreadedPipAsk  
+      ,CAST((CASE HPOS.IsBuy WHEN 1     
+                                  THEN isnull(HPOS.RateBid , 0) - HPOS.InitForexRate  
+                             ELSE HPOS.InitForexRate - isnull(HPOS.RateAsk, 0)  
+             END * CAST(CASE WHEN Pair.SellCurrencyID = 1  
+                                  THEN 1.00  
+                             WHEN Pair.BuyCurrencyID = 1  
+                                  THEN (1.00 / CASE HPOS.IsBuy WHEN 1 THEN HPOS.RateBid ELSE HPOS.RateAsk END)  
+                             WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)  
+                                   THEN coalesce(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END, CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)  
+                             ELSE 1.00  
+                    END AS MONEY) * HPOS.AmountInUnitsDecimal) AS DECIMAL(16, 2)) AS 'PositionPnL'  
+      ,(CASE HPOS.IsBuy WHEN 1  
+                             THEN ISNULL(HPOS.RateBid , 0) - HPOS.InitForexRate  
+                        ELSE HPOS.InitForexRate - ISNULL(HPOS.RateAsk, 0)  
+        END * CAST(CASE WHEN Pair.SellCurrencyID = 1  
+                             THEN 1.00  
+                        WHEN Pair.BuyCurrencyID = 1  
+                             THEN (1.00 / CASE HPOS.IsBuy WHEN 1 THEN HPOS.RateBid ELSE HPOS.RateAsk END)  
+                        WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)  
+                             THEN COALESCE(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END, CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)  
+                        ELSE 1.00  
+                    END AS MONEY)) 'Price'  
+      ,CAST(CASE WHEN Pair.SellCurrencyID = 1 
+	                  THEN 1  
+                 WHEN Pair.BuyCurrencyID = 1 THEN 1.00 / (CASE WHEN HPOS.IsBuy = 1 THEN HPOS.RateBid ELSE  HPOS.RateAsk END)  
+                 WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)   
+                       THEN COALESCE(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END , CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)  
+            ELSE 1.00 END AS MONEY)  * (HPOS.AmountInUnitsDecimal)  
+                                     *  CASE WHEN HPOS.IsBuy =1 THEN PairPrice.RateBid ELSE PairPrice.RateAsk END  
+                                     * (2 * HPOS.IsBuy - 1) AS 'NOP'  
+      ,HedgeServerID  
+      ,HPOS.Amount  
+      ,AmountInUnitsDecimal  
+      ,LimitRate  
+      ,StopRate  
+      ,IsBuy  
+      ,IsSettled  
+      ,[OpenOccurred] AS 'Occurred'  
+      ,@dt AS 'Date'  
+      ,CAST(CONVERT(CHAR(8), @dt,112) AS INT) AS 'DateID'  
+      ,Leverage  
+	   ,HPOS.RateBid    
+	   ,HPOS.RateAsk   
+	   ,CAST(CASE WHEN Pair.SellCurrencyID = 1    
+						  THEN 1.00    
+					 WHEN Pair.BuyCurrencyID = 1    
+						  THEN (1.00 / CASE HPOS.IsBuy WHEN 1 THEN HPOS.RateBid ELSE HPOS.RateAsk END)    
+					 WHEN (Pair.BuyCurrencyID != 1 AND Pair.SellCurrencyID != 1)    
+						  THEN coalesce(1.00 / CASE HPOS.IsBuy WHEN 1 THEN I2Price.RateBid ELSE I2Price.RateAsk END, CASE HPOS.IsBuy WHEN 1 THEN I3Price.RateBid ELSE I3Price.RateAsk END, 1.00)    
+					 ELSE 1.00    
+				END AS MONEY) 'USD_CR' 
+		,HPOS.SettlementTypeID	
+FROM #OpenPositions HPOS WITH (NOLOCK)  
+ 
+     LEFT JOIN DWH_dbo.Dim_Instrument Pair WITH (NOLOCK) ON Pair.InstrumentID = HPOS.InstrumentID   
+     LEFT JOIN #Prices PairPrice WITH (NOLOCK) ON Pair.InstrumentID = PairPrice.InstrumentID  
+ 
+     LEFT JOIN DWH_dbo.Dim_Instrument I2 WITH (NOLOCK) ON I2.InstrumentID <> Pair.InstrumentID   
+                                                      AND I2.SellCurrencyID = Pair.SellCurrencyID AND I2.BuyCurrencyID = 1 /** USD **/    
+     LEFT JOIN #Prices I2Price WITH (NOLOCK) ON I2Price.InstrumentID = I2.InstrumentID  
+     
+	 LEFT JOIN DWH_dbo.Dim_Instrument I3 WITH (NOLOCK) ON I3.InstrumentID <> Pair.InstrumentID   
+                                                      AND I3.BuyCurrencyID = Pair.SellCurrencyID AND I3.SellCurrencyID = 1 /** USD **/        
+	 LEFT JOIN #Prices I3Price WITH (NOLOCK) ON I3Price.InstrumentID = I3.InstrumentID  
+    
+	
+CREATE CLUSTERED COLUMNSTORE INDEX #UnrealizedPnL on #UnrealizedPnL   
+  
+ 
+/************************************************************************************************************/
+/****
+SELECT ROW_NUMBER() OVER(Order by PositionID) as r_n  
+      ,a.*   
+INTO #PositionPnL  
+FROM (SELECT CID  
+            ,PositionID  
+            ,InstrumentID  
+            ,MirrorID  
+            ,Commission  
+            ,InitForexRate  
+            ,SpreadedPipBid  
+            ,SpreadedPipAsk  
+            ,PositionPnL  
+            ,Price  
+            ,HedgeServerID  
+            ,Amount  
+            ,AmountInUnitsDecimal  
+            ,LimitRate  
+            ,StopRate  
+            ,IsBuy  
+            ,[Occurred]  
+            ,[Date]  
+            ,DateID  
+     FROM #UnrealizedPnL) a
+***/
+
+/****
+Change by danny ravid to partition [BI_DB_PositionPnL]   
+at ths point we assume table BI_DB_PositionPnL is partitioned, last 2 months partitioned by day  
+process flow  
+  
+   1. to support rerun we first switch out existing same day partition and delete  
+   2. take existing tmp table and switch in to correct day  
+***/   
+ 
+
+/************************************************************************************************************/
+/**** PositionPnL SWITCH SINGLE ***/   
+IF OBJECT_ID('BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE') IS NOT NULL  
+DROP TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE  
+
+
+IF OBJECT_ID('BI_DB_dbo.BI_DB_PositionPnL_SWITCH') IS NOT NULL  
+DROP TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH  
+
+DECLARE @sql NVARCHAR(MAX) 
+DECLARE @sql2 NVARCHAR(MAX) 
+DECLARE @par_range NVARCHAR(MAX) 
+	
+	
+	        SELECT @par_range = STRING_AGG(cast(rng.value as varchar(max)),',') WITHIN GROUP (ORDER BY CAST(rng.value as int))
+			FROM        sys.schemas    sch
+			INNER JOIN  sys.tables     tbl ON  sch.schema_id   = tbl.schema_id
+			INNER JOIN  sys.partitions prt ON  prt.[object_id] = tbl.[object_id]
+			INNER JOIN  sys.indexes    idx ON  prt.[object_id] = idx.[object_id] AND prt.[index_id]  = idx.[index_id]
+			INNER JOIN  sys.data_spaces ds ON  idx.[data_space_id] = ds.[data_space_id]
+			INNER JOIN  sys.partition_schemes  ps  ON  ds.[data_space_id]  = ps.[data_space_id]
+			INNER JOIN  sys.partition_functions pf  ON  ps.[function_id]    = pf.[function_id]
+			LEFT  JOIN  sys.partition_range_values rng ON  pf.[function_id]    = rng.[function_id]
+			AND  rng.[boundary_id] = prt.[partition_number]
+			WHERE tbl.object_id =object_id('BI_DB_dbo.BI_DB_PositionPnL')
+			and idx.index_id = 1
+			and rng.value  is not null 
+   
+
+
+	SET @sql = 'CREATE TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE
+                WITH
+	  
+			  (  
+				DISTRIBUTION = ROUND_ROBIN,
+				CLUSTERED INDEX
+				(
+					[DateID] ASC,
+					[Date] ASC,
+					[CID] ASC,
+					[PositionID] ASC) 
+					,PARTITION (DateID RANGE 
+					LEFT FOR VALUES 
+					('+@par_range+')
+				)
+			) AS SELECT TOP 0 * FROM [BI_DB_dbo].[BI_DB_PositionPnL]'
+   EXEC (@sql)
+
+
+   ALTER TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE
+   ADD   CONSTRAINT [PK_PostionID_DateID_NEW_PositionPnL_SWITCH_SINGLE] PRIMARY KEY NONCLUSTERED 
+	(
+		[DateID] ASC,
+		[PositionID] ASC
+	) NOT ENFORCED 
+
+
+
+	
+	SET @sql2 = 'CREATE TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH
+                WITH
+	  
+			  (  
+				DISTRIBUTION = ROUND_ROBIN,
+				CLUSTERED INDEX
+				(
+					[DateID] ASC,
+					[Date] ASC,
+					[CID] ASC,
+					[PositionID] ASC) 
+					,PARTITION (DateID RANGE 
+					LEFT FOR VALUES 
+					('+@par_range+')
+				)
+			) AS SELECT TOP 0 * FROM [BI_DB_dbo].[BI_DB_PositionPnL]'
+   EXEC (@sql2)
+
+
+   ALTER TABLE BI_DB_dbo.BI_DB_PositionPnL_SWITCH
+   ADD   CONSTRAINT [PK_PostionID_DateID_NEW_PositionPnL_SWITCH] PRIMARY KEY NONCLUSTERED 
+	(
+		[DateID] ASC,
+		[PositionID] ASC
+	) NOT ENFORCED 
+
+
+
+/************************************************************************************************************/
+/**** Object:  Index [IX_BI_DB_PositionPnL_fix]    Script Date: 2/14/2018 4:35:39 PM ***/ 												  
+
+--CREATE CLUSTERED INDEX [IX_BI_DB_PositionPnL_fix_switch_single] ON [dbo].BI_DB_PositionPnL_SWITCH_SINGLE  
+--                      (  
+--                       [DateID] ASC,  
+--                       [Date] ASC,  
+--                       [CID] ASC,  
+--                       [PositionID] ASC  
+--                      ) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF,   
+
+--ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON,DATA_COMPRESSION =PAGE)  
+--  ON [PRIMARY];
+
+--/*
+--CREATE NONCLUSTERED INDEX [IX_BI_DB_PositionPnL_SWITCH_SINGLE_PositionID] ON [dbo].[BI_DB_PositionPnL_SWITCH_SINGLE]  
+--(  
+-- [PositionID] ASC  
+--)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON,DATA_COMPRESSION =PAGE) ON [PRIMARY]  
+--*/ 
+
+ 
+/************************************************************************************************************/
+/**** Insert PositionPnL SWITCH SINGLE ***/   
+INSERT BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE  
+SELECT CID  
+      ,PositionID  
+      ,InstrumentID  
+      ,MirrorID  
+      ,Commission  
+      ,InitForexRate  
+      ,SpreadedPipBid  
+      ,SpreadedPipAsk  
+      ,PositionPnL  
+      ,Price  
+      ,HedgeServerID  
+      ,Amount  
+      ,AmountInUnitsDecimal  
+      ,LimitRate  
+      ,StopRate  
+      ,IsBuy  
+      ,[Occurred]  
+      ,[Date]  
+      ,DateID  
+      ,GETDATE()  
+      ,IsSettled  
+      ,NOP  
+      ,NULL AS DailyPnL  
+      ,Leverage  
+	  ,RateBid    
+      ,RateAsk   
+      ,USD_CR
+	  ,SettlementTypeID
+--Into BI_DB_PositionPnL_SWITCH_SINGLE  
+FROM #UnrealizedPnL   
+
+CREATE NONCLUSTERED INDEX IX_BI_DB_PositionPnL_SWITCH_CID        ON BI_DB_dbo.BI_DB_PositionPnL_SWITCH (CID)
+CREATE NONCLUSTERED INDEX IX_BI_DB_PositionPnL_SWITCH_SINGLE_CID ON BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE (CID)
+
+
+ exec [BI_DB_dbo].[SP_BI_DB_PositionPnL_SWITCH]
+ /*
+/**** We have to have same indexes and constraints as partitioned table ***/    
+Declare @CurrentDay int  
+Declare @PartToSwitch int   
+Declare @SqlStr varchar(max)  
+  
+  
+  
+--Declare @CurrentDay int  
+--Declare @PartToSwitch int   
+--Declare @SqlStr varchar(max)  
+  
+--Now get on which day are we are working on   
+SET @CurrentDay = (SELECT TOP 1 DateID from BI_DB_PositionPnL_SWITCH_SINGLE)  
+  
+---Create constraint for table  
+SET @SqlStr = 'ALTER TABLE BI_DB_PositionPnL_SWITCH_SINGLE ADD CONSTRAINT chk_value_for_switch CHECK (DateID = ' + CAST(@CurrentDay AS VARCHAR) + ' );'  
+  
+--Print @SqlStr  
+EXEC (@SqlStr)  
+  
+--Get the partition number for the dateid   
+  
+SELECT @PartToSwitch = $partition.PF_POSITION_MONTH_DAYS(@CurrentDay)  
+    
+
+--Build switch statement  
+  
+  
+/**** 1. switch existing data in partition to shadow table ***/       
+Set @SqlStr = 'ALTER TABLE [dbo].[BI_DB_PositionPnL] SWITCH PARTITION ' + CAST(@PartToSwitch as varchar) +  
+' TO [dbo].[BI_DB_PositionPnL_SWITCH] PARTITION ' + CAST(@PartToSwitch as varchar) + ';'  
+--print @SqlStr     
+exec (@SqlStr)  
+
+/**** 2. switch new data to partitioned table  ***/    
+Set @SqlStr = 'ALTER TABLE [dbo].[BI_DB_PositionPnL_SWITCH_SINGLE] SWITCH   
+TO [dbo].[BI_DB_PositionPnL] PARTITION ' + CAST(@PartToSwitch as varchar) +';'  
+--print @SqlStr  
+exec (@SqlStr)  
+
+/**** 3. remove check constraint  ***/  
+--Set @SqlStr = 'ALTER TABLE [dbo].[BI_DB_PositionPnL_SWITCH_SINGLE] DROP CONSTRAINT [chk_value_for_switch]'   
+-- print @SqlStr  
+-- exec (@SqlStr)  
+
+/**** 4. truncate shadow table ***/   
+    
+TRUNCATE TABLE [dbo].[BI_DB_PositionPnL_SWITCH]  
+*/
+    
+/**** finally drop the table  ***/   
+   
+  
+/**** 
+DECLARE @RowC INT = 1  
+ WHILE @RowC > 0  
+  BEGIN  
+   DELETE TOP (4000)  
+   FROM[dbo].[BI_DB_PositionPnL]  
+   where DateID = @dateid  
+   SELECT @RowC = @@rowcount  
+  END
+***/   
+  
+  
+  
+--DECLARE @rn INT = 0  
+--DECLARE @total INT = (SELECT COUNT(*) FROM #PositionPnL)  
+  
+--WHILE @rn <= @total  
+    
+--BEGIN  
+ 
+/****  
+INSERT INTO [dbo].[BI_DB_PositionPnL]  
+           ([CID]  
+           ,[PositionID]  
+           ,[InstrumentID]  
+           ,[MirrorID]  
+           ,[Commission]  
+           ,[InitForexRate]  
+           ,[SpreadedPipBid]  
+           ,[SpreadedPipAsk]  
+           ,[PositionPnL]  
+           ,[Price]  
+           ,[HedgeServerID]  
+           ,[Amount]  
+           ,[AmountInUnitsDecimal]  
+           ,[LimitRate]  
+           ,[StopRate]  
+           ,[IsBuy]  
+           ,[Occurred]  
+           ,[Date]  
+           ,[DateID])    
+
+SELECT TOP (4000)  
+       CID  
+      ,PositionID  
+      ,InstrumentID  
+      ,MirrorID  
+      ,Commission  
+      ,InitForexRate  
+      ,SpreadedPipBid  
+      ,SpreadedPipAsk  
+      ,PositionPnL  
+      ,Price  
+      ,HedgeServerID  
+      ,Amount  
+      ,AmountInUnitsDecimal  
+      ,LimitRate  
+      ,StopRate  
+      ,IsBuy  
+      ,[Occurred]  
+      ,[Date]  
+      ,DateID  
+FROM #PositionPnL   
+WHERE r_n >= @rn and r_n < @rn + 4000  
+  
+--SET @rn = @rn + 4000 
+***/ 
+
+   
+/************************************************************************************************************/
+/**** Calculate Daily PnL ***/    
+UPDATE A  
+  SET DailyPnL = A.PositionPnL - ISNULL(B.PositionPnL,0)  
+  FROM BI_DB_dbo.BI_DB_PositionPnL A  
+     LEFT JOIN BI_DB_dbo.BI_DB_PositionPnL B ON A.PositionID = B.PositionID 
+	                                  AND B.DateID = @PreviousDateINT  WHERE A.DateID = @dateid  
+  
+
+/*******Log Finish********/
+EXEC BI_DB_dbo.[SP_ProcessStatusLog] 'SP_PositionPnL', 'Completed', @dt
+/************************/
+
+END
+
+GO
+
+```
+
+---
+
+## Resolution Summary
+
+| Raw source | Kind | Schema | Object | Resolved path |
+|---|---|---|---|---|
+| `BI_DB_dbo.SP_BI_DB_PositionPnL_SWITCH` | synapse_sp | BI_DB_dbo | SP_BI_DB_PositionPnL_SWITCH | `c:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we\BI_DB_dbo\Stored Procedures\BI_DB_dbo.SP_BI_DB_PositionPnL_SWITCH.sql` |
+| `BI_DB_dbo.SP_PositionPnL` | synapse_sp | BI_DB_dbo | SP_PositionPnL | `c:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we\BI_DB_dbo\Stored Procedures\BI_DB_dbo.SP_PositionPnL.sql` |
+| `BI_DB_dbo.SP_PositionPnL_bkp_2023_09_26` | synapse_sp | BI_DB_dbo | SP_PositionPnL_bkp_2023_09_26 | `c:\Users\guyman\Documents\github\DataPlatform\SynapseSQLPool1\sql_dp_prod_we\BI_DB_dbo\Stored Procedures\BI_DB_dbo.SP_PositionPnL_bkp_2023_09_26.sql` |
+| `BI_DB_dbo.BI_DB_PositionPnL_SWITCH_SINGLE` | unresolved | BI_DB_dbo | BI_DB_PositionPnL_SWITCH_SINGLE | `—` |
+| `sys.schemas` | unresolved | sys | schemas | `—` |
+| `sys.tables` | unresolved | sys | tables | `—` |
+| `sys.partitions` | unresolved | sys | partitions | `—` |
+| `sys.indexes` | unresolved | sys | indexes | `—` |
+| `sys.data_spaces` | unresolved | sys | data_spaces | `—` |
+| `sys.partition_schemes` | unresolved | sys | partition_schemes | `—` |
+| `sys.partition_functions` | unresolved | sys | partition_functions | `—` |
+| `sys.partition_range_values` | unresolved | sys | partition_range_values | `—` |
+| `DWH_dbo.Fact_CurrencyPriceWithSplit` | synapse | DWH_dbo | Fact_CurrencyPriceWithSplit | `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Fact_CurrencyPriceWithSplit.md` |
+| `DWH_dbo.Dim_HistorySplitRatio` | synapse | DWH_dbo | Dim_HistorySplitRatio | `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_HistorySplitRatio.md` |
+| `DWH_dbo.Dim_Position` | synapse | DWH_dbo | Dim_Position | `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Position.md` |
+| `DWH_dbo.Dim_PositionChangeLog` | synapse | DWH_dbo | Dim_PositionChangeLog | `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_PositionChangeLog.md` |
+| `DWH_dbo.Dim_Instrument` | synapse | DWH_dbo | Dim_Instrument | `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Instrument.md` |
+| `BI_DB_dbo.BI_DB_PositionPnL` | synapse | BI_DB_dbo | BI_DB_PositionPnL | `C:\Users\guyman\Documents\github\Databricks_Knowledge\knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_PositionPnL.md` |

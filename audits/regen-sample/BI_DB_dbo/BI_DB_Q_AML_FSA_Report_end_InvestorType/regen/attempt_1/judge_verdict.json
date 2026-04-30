@@ -1,0 +1,54 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Q_AML_FSA_Report_end_InvestorType",
+    "elapsed_seconds":  88,
+    "exit_code":  null,
+    "cost_usd":  1.0696,
+    "input_tokens":  2,
+    "output_tokens":  3125,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Q_AML_FSA_Report_end_InvestorType",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Referenced By lists 4 sibling tables as consumers, but these are peer tables produced by the same SP, not actual downstream consumers that query this table. Relationship direction is misleading."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3",
+                                       "problem":  "Join condition for BI_DB_Q_AML_FSA_Report_end_Market_Value uses EndDateID = End_DateID — column name in target table may differ (underscore placement)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Tier legend shows only Tier 2 entry. While accurate, an explicit note about absence of Tier 1 inheritance would improve clarity for readers expecting upstream passthrough columns."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

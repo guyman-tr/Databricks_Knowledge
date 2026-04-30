@@ -1,0 +1,98 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_MarketingCloudUserBehaviorInstrument",
+    "elapsed_seconds":  144,
+    "exit_code":  null,
+    "cost_usd":  0.6301,
+    "input_tokens":  2,
+    "output_tokens":  8535,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_MarketingCloudUserBehaviorInstrument",
+                    "weighted_score":  7.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Fact_MarketPageViews.RealCID (renamed).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added ETL context; core description verbatim"
+                                              },
+                                              {
+                                                  "column":  "AccountId",
+                                                  "upstream_quote":  "Salesforce CRM Account record ID (18-char Salesforce ID). Links the trading account to the SF Account. NULL if not yet synced.",
+                                                  "wiki_quote":  "Salesforce CRM Account record ID (18-char Salesforce ID). Links the trading account to the SF Account. NULL if not yet synced. Post-load UPDATE from Dim_Customer.SalesForceAccountID via JOIN on CID=RealCID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added ETL context; core description verbatim"
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "Primary key from Trade.Instrument. Identifies the tradeable instrument pair.",
+                                                  "wiki_quote":  "FK to Dim_Instrument. Financial instrument being traded. Passthrough from Fact_MarketPageViews.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Primary key from Trade.Instrument\u0027; replaced \u0027Identifies the tradeable instrument pair\u0027 with \u0027Financial instrument being traded\u0027 (likely copied from Dim_Position wiki instead of Dim_Instrument wiki)"
+                                              },
+                                              {
+                                                  "column":  "InstrumentTypeID",
+                                                  "upstream_quote":  "From IMD (InstrumentMetaData). Asset class: 1=Forex, 2=Commodity, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType.",
+                                                  "wiki_quote":  "Asset class identifier from Dim_Instrument. 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto. FK to Dictionary.CurrencyType. Passthrough from Dim_Instrument via JOIN on InstrumentID.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027From IMD (InstrumentMetaData)\u0027 source; dropped 4 enum values (3=CFD, 7=Bonds, 8=TrustFunds, 9=Options); changed labels (Forex→Currencies, Commodity→Commodities)"
+                                              },
+                                              {
+                                                  "column":  "InstrumentName",
+                                                  "upstream_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API.",
+                                                  "wiki_quote":  "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API. Passthrough from Dim_Instrument.SymbolFull (renamed to InstrumentName).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added ETL context; core description verbatim"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentTypeID",
+                                       "problem":  "Paraphrased Tier 1 description: dropped 4 enum values (3=CFD, 7=Bonds, 8=TrustFunds, 9=Options), changed labels (Forex→Currencies, Commodity→Commodities), dropped \u0027From IMD (InstrumentMetaData)\u0027 source attribution. Must use Dim_Instrument wiki verbatim."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Paraphrased Tier 1 description: \u0027Primary key from Trade.Instrument. Identifies the tradeable instrument pair.\u0027 replaced with \u0027FK to Dim_Instrument. Financial instrument being traded.\u0027 Writer appears to have sourced from Dim_Position wiki instead of Dim_Instrument wiki."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property Table",
+                                       "problem":  "Missing UC Target row in property table — standard completeness item."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section (P1–P5). Footer says 11/14 phases but doesn\u0027t itemize which were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LastMonthAmountInvest",
+                                       "problem":  "The \u0027current month not previous month\u0027 caveat is documented in business logic and gotchas but could be more prominent in the element description with a warning prefix."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Replace InstrumentID description with verbatim from Dim_Instrument wiki: \u0027Primary key from Trade.Instrument. Identifies the tradeable instrument pair.\u0027 then append passthrough context. (2) Replace InstrumentTypeID description with verbatim from Dim_Instrument wiki: \u0027From IMD (InstrumentMetaData). Asset class: 1=Forex, 2=Commodity, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType.\u0027 then append passthrough context. (3) Add UC Target to property table. (4) Add explicit Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section"
+                                                           ]
+                                    }
+                }
+}

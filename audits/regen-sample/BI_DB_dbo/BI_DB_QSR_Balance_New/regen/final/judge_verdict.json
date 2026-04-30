@@ -1,0 +1,91 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_QSR_Balance_New",
+    "elapsed_seconds":  118,
+    "exit_code":  null,
+    "cost_usd":  1.1091,
+    "input_tokens":  2,
+    "output_tokens":  5693,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_QSR_Balance_New",
+                    "weighted_score":  9.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. 12 distinct values in QSR data: CySEC, FCA, BVI, ASIC \u0026 GAML, FinCEN+FINRA, FinCEN, ASIC, FSA Seychelles, eToroUS, FSRA, NFA, None.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added QSR-specific value list — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. 9 values observed: Normal, Blocked, Block Deposit \u0026 Trading, Pending Verification, Blocked Upon Request, Trade \u0026 MIMO Blocked, Deposit Blocked, Warning, Copy Block.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added observed values — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Dim-lookup passthrough from Dim_Country.Name via Fact_SnapshotCustomer.CountryID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added lineage context — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "MifidCategory",
+                                                  "upstream_quote":  "Human-readable classification label. Used in compliance dashboards and regulatory reports.",
+                                                  "wiki_quote":  "Human-readable classification label. Used in compliance dashboards and regulatory reports. Dim-lookup passthrough from Dim_MifidCategorization.Name via Fact_SnapshotCustomer.MifidCategorizationID. Values: None, Retail, Professional, Elective professional, Retail Pending, Pending.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added lineage and inline values — no semantic loss"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Data freshness claim (\u0027Q1-2020 through Q4-2023, ~127M rows\u0027) stated as fact but review-needed sidecar flags uncertainty about whether more recent quarters have been loaded."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "StockMargin",
+                                       "problem":  "Description does not clarify that StockMargin may be NULL for customers with no closed positions in the quarter due to LEFT JOIN from #RealizedPnLCIDLevel. Review-needed sidecar also flags uncertainty about whether the column is actually populated in the balance table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Tagged \u0027Tier 2 — Fact_SnapshotEquity\u0027 but SP code shows CID flows from V_Liabilities (which wraps Fact_SnapshotEquity). Source attribution should be V_Liabilities for accuracy."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "No Atlassian sources searched — acknowledged harness limitation but potential Confluence context missing."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LiabilitiesStocksSustainable",
+                                       "problem":  "SP INSERT maps temp table column \u0027LiabilitiesTotalStockSustainable\u0027 to target column \u0027LiabilitiesStocksSustainable\u0027 — naming asymmetry not explicitly called out in wiki."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Minor improvements if iterating: (1) Clarify CID source as V_Liabilities rather than Fact_SnapshotEquity. (2) Note StockMargin NULL behavior for customers with no closed positions. (3) Qualify data freshness claim in Section 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

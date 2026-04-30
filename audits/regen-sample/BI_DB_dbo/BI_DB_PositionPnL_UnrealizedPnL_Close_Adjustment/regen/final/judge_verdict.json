@@ -1,0 +1,128 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PositionPnL_UnrealizedPnL_Close_Adjustment",
+    "elapsed_seconds":  226,
+    "exit_code":  null,
+    "cost_usd":  0.815,
+    "input_tokens":  4,
+    "output_tokens":  10892,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PositionPnL_UnrealizedPnL_Close_Adjustment",
+                    "weighted_score":  9.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. References Customer.Customer.",
+                                                  "wiki_quote":  "Customer ID. References Customer.Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PositionID",
+                                                  "upstream_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position.",
+                                                  "wiki_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. Synapse distribution key.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Synapse distribution key\u0027 — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "NetProfit",
+                                                  "upstream_quote":  "Realized PnL. 0 when open; set on close. In position currency.",
+                                                  "wiki_quote":  "Realized PnL. 0 when open; set on close. In position currency. Passthrough from Dim_Position for positions closing on @date.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added passthrough context — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MirrorID",
+                                                  "upstream_quote":  "FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position.",
+                                                  "wiki_quote":  "FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "wiki_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell. Stored as int (not bit) in this table.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added type-widening note — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "HedgeServerID",
+                                                  "upstream_quote":  "FK to Trade.HedgeServer. Hedge server managing this position.",
+                                                  "wiki_quote":  "FK to Trade.HedgeServer. Hedge server managing this position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SettlementTypeID",
+                                                  "upstream_quote":  "Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled.",
+                                                  "wiki_quote":  "Modern settlement classification. Dictionary.SettlementTypes: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Replaces IsSettled.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 7, Query 7.1",
+                                       "problem":  "FULL OUTER JOIN query uses WHERE o.DateID = 20240701 on the left alias, silently dropping rows that exist only in the close-adjustment table (right side). Should be WHERE COALESCE(o.DateID, c.DateID) = 20240701."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims \u0027Phases: 13/14\u0027 but does not document which phases were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4, Tier Legend",
+                                       "problem":  "Tier 5 row in legend shows one star (*) but the tag example says \u0027(Tier 5 — Expert Review)\u0027 — minor cosmetic inconsistency with the star-count convention."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Claims \u0027188+ distinct dates\u0027 across a ~550 calendar day span (20230101–20240706) without explaining why only ~34% of days have data. Trading-day gaps are expected but not called out."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4",
+                                       "problem":  "Correctly flags data stops at 20240706. Review-needed sidecar also flags this appropriately. No action needed."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~278M rows",
+                                                                                  "188+ distinct dates",
+                                                                                  "~3.5% NULL SettlementTypeID (716K of 20.5M)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

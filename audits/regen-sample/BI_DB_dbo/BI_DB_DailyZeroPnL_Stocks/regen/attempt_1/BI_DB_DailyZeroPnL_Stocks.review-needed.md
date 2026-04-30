@@ -1,25 +1,31 @@
-# Review Needed: BI_DB_dbo.BI_DB_DailyZeroPnL_Stocks
+# BI_DB_DailyZeroPnL_Stocks — Review Needed
 
-**Generated**: 2026-04-28 | **Regen attempt**: 1
+> Regen attempt_1 | 2026-04-29
 
-## Items for Human Review
+## Items Requiring Human Review
 
-### R1 — Dormant status confirmation
+### 1. StockIndex source (Tier 3)
+- `StockIndex` comes from `BI_DB_dbo.BI_DB_IndexesMapping_Static` which has no upstream wiki.
+- Sample values observed: 'US', 'GER30', '' (empty string for some rows), NULL.
+- **Question**: What is the authoritative source for stock index classification? Is BI_DB_IndexesMapping_Static maintained manually or via an external feed?
 
-The table's last data row is 2024-02-09. The `_no_upstream_found.txt` marker confirms dormant status. A human should confirm whether this table is formally deprecated or whether it will resume being loaded from `Dealing_dbo.Dealing_DailyZeroPnL_Stocks`.
+### 2. InstrumentDisplayName table origin ambiguity
+- The SP selects `InstrumentDisplayName` without a table prefix in `#Positions` while joining both `Dim_Position a` and `Dim_Instrument i`.
+- Attributed to `Dim_Instrument` (Trade.InstrumentMetaData) based on Dim_Instrument wiki entry row 18. Confirm this is correct and that Dim_Position does NOT also contain InstrumentDisplayName.
 
-### R2 — Migration provenance
+### 3. Deprecation status
+- Table is frozen at 2024-02-09. The wiki notes the successor is `Dealing_dbo.Dealing_DailyZeroPnL_Stocks`.
+- **Question**: Should this table be dropped or retained for historical analysis? If retained, should the UC Target remain `_Not_Migrated` or be explicitly marked as `_Deprecated`?
 
-BI_DB_DailyZeroPnL_Stocks was migrated from Dealing_dbo via script `2024_09_16_17_30_56_BI_DB_Migration.BI_DB_DailyZeroPnL_Stocks.sql`. The JUNK migration script (`2024_09_22_17_11_39_BI_DB_Migration.JUNK_BI_DB_DailyZeroPnL_Stocks.sql`) suggests the migration may have been aborted. Confirm whether BI_DB schema is the intended long-term home for this data.
+### 4. MifID values
+- `MifID` maps to `MifidCategorizationID`. Sample shows values 1, 4, 5.
+- No inline dictionary provided because Dim_MifidCategorization wiki was not found in this repo.
+- **Review**: Add MifID value mapping (e.g., 1=Retail, 2=Professional, 3=Eligible Counterparty) if known.
 
-### R3 — UC target still active?
+### 5. HedgeServerID meaning
+- Sample shows HedgeServerIDs: 2, 112, 128. No Dim_HedgeServer wiki was found.
+- **Review**: Confirm HedgeServerID lookup table exists and document key values (e.g., 2=?, 112=?, 128=?).
 
-The Generic Pipeline mapping shows `copy_strategy = Append` with `frequency_minutes = 1440` but data has not advanced past 2024-02-09. Confirm whether the Generic Pipeline export to `bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks` is still running and if so why rows are not advancing.
-
-### R4 — OpenPositions column type
-
-`OpenPositions` is typed as `money` in DDL but semantically represents a count of positions. This is inherited from the Dealing schema design. Reviewers should confirm whether this is intentional or a type mismatch.
-
-### R5 — Tier 2 for all columns
-
-All 26 columns are Tier 2 because the upstream `Dealing_DailyZeroPnL_Stocks` wiki already documented them as Tier 2 from `SP_DailyZeroPnL_Stocks`. No higher-tier production source was located. If a production DB_Schema upstream (e.g., etoro.Trade or etoro.Dealing) can be linked, some columns could be promoted to Tier 1.
+### 6. BI_DB_IndexesMapping_Static
+- No wiki exists for this static mapping table. It affects StockIndex values.
+- **Action**: Create a wiki for BI_DB_IndexesMapping_Static to elevate StockIndex from Tier 3 to Tier 1.

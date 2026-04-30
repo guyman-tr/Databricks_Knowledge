@@ -1,0 +1,77 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PaymentSent_Results",
+    "elapsed_seconds":  130,
+    "exit_code":  null,
+    "cost_usd":  0.4807,
+    "input_tokens":  2,
+    "output_tokens":  6009,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PaymentSent_Results",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Values match production Dictionary.Regulation.Name. Used in V_Dim_Customer and analytics dashboards. Dim-lookup passthrough from Dim_Regulation.Name via Dim_Customer.RegulationID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Sentence reordering only; no semantic loss. Passthrough context appended."
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification.",
+                                                  "wiki_quote":  "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification. Dim-lookup passthrough from Dim_Currency.Abbreviation via ProcessCurrencyID. In this table, effectively only USD, EUR, GBP, AUD appear (ProcessCurrencyID: 1=USD, 2=EUR, 3=GBP, 5=AUD; 7=CAD is filtered at intermediate stage but excluded from final output).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream text verbatim. Instrument-registry language (AAPL.US, BTC) contextually misleading for a cashout table that only holds process currencies, but not a fidelity error."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer/Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims \u0027Phases: 10/14\u0027 but does not enumerate which phases (especially P2 data sampling, P3 distribution analysis) were completed or skipped. Without P2/P3 confirmation, the \u00270 rows\u0027 claim lacks provenance."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Currency",
+                                       "problem":  "Tier 1 upstream text describes Abbreviation as a universal instrument identifier (AAPL.US, TSLA.US, BTC) which is misleading in a cashout monitoring table that only contains 4 process currency codes (USD, EUR, GBP, AUD). Verbatim text is correct but needs contextual disambiguation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Regulation",
+                                       "problem":  "No inline key=value enumeration for Regulation values despite the column having a small finite domain in this table\u0027s output. Aging threshold rules reference CySEC by name but Elements description doesn\u0027t list which regulation values actually appear."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Tier Legend)",
+                                       "problem":  "Tier legend lists only Tier 1 and Tier 2, omitting Tier 3 and Tier 4 even as \u0027not used\u0027 entries. Minor shape deviation from the golden reference format."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range stated in Section 1. Justified by empty table (0 rows), but the 4-week lookback window could serve as effective date range context."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (PASS): (1) Add explicit Phase Gate Checklist section documenting P2/P3 completion or skip rationale. (2) Add contextual note to Currency element that upstream Abbreviation domain (15.7K instruments) is narrowed to 4 process currencies in this table. (3) Add inline key=value enumeration for Regulation values appearing in this table. (4) Include Tier 3/Tier 4 in tier legend even if unused.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "0 rows (Section 1)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section absent — P2/P3 completion status unknown"
+                                                           ]
+                                    }
+                }
+}

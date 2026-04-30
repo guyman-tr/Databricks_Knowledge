@@ -1,0 +1,63 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PI_GainDaily",
+    "elapsed_seconds":  121,
+    "exit_code":  null,
+    "cost_usd":  1.0815,
+    "input_tokens":  2,
+    "output_tokens":  4916,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PI_GainDaily",
+                    "weighted_score":  9.4,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Filtered to PI population (GuruStatusID IN 2-6, IsValidCustomer=1) and CopyFund accounts (AccountTypeID=9).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Hyphen to em-dash formatting change; additional PI population filter context appended (no upstream semantic loss)"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Appends PI population filter context to Tier 1 verbatim text. Upstream meaning is preserved but additive context should ideally be separated from the verbatim quote."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Row count (~6.9M) and CID distribution (~3,400-4,400 per year) stated without explicit Phase Gate Checklist proving live data validation (P2/P3)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Gain_w through Gain_QTD",
+                                       "problem":  "Gain column descriptions include IntervalTypeID detail from DWH_GainDaily wiki. Acceptable for Tier 2 but worth noting the source attribution chain."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~6.9M rows",
+                                                                                  "~3,400-4,400 distinct CIDs per year",
+                                                                                  "Jan 2013 to Apr 2024",
+                                                                                  "data stopped 2024-04-14"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

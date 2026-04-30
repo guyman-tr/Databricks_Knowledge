@@ -1,0 +1,168 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Deposit_Reversals_PIPs",
+    "elapsed_seconds":  328,
+    "exit_code":  null,
+    "cost_usd":  0.974,
+    "input_tokens":  2,
+    "output_tokens":  21502,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Deposit_Reversals_PIPs",
+                    "weighted_score":  7.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Hash distribution key. Passthrough from Fact_BillingDeposit / Fact_SnapshotCustomer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Customer",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. Passthrough from Dim_Customer.ExternalID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification.",
+                                                  "wiki_quote":  "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification. Passthrough from Dim_Currency.Abbreviation via CurrencyID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExchangeRate",
+                                                  "upstream_quote":  "Exchange rate from deposit currency to USD at processing time. Cannot be 0 in production.",
+                                                  "wiki_quote":  "Exchange rate from deposit currency to USD at processing time. Cannot be 0 in production. Passthrough from Fact_BillingDeposit.ExchangeRate.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegulationID",
+                                                  "upstream_quote":  "Primary key identifying the regulatory authority. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC\u0026GAML, 11=FSRA, 12=FINRAONLY, 13=MAS, 14=NYDFS+FINRA. Stored in CustomerStatic.RegulationID.",
+                                                  "wiki_quote":  "Customer\u0027s regulatory jurisdiction from Fact_SnapshotCustomer at event date. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, etc. FK to Dim_Regulation.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops 8 named regulatory authorities via \u0027etc.\u0027 (eToroUS, FinCEN, FinCEN+FINRA, FSA Seychelles, ASIC\u0026GAML, FSRA, FINRAONLY, MAS, NYDFS+FINRA); loses \u0027Stored in CustomerStatic.RegulationID\u0027"
+                                              },
+                                              {
+                                                  "column":  "PlayerLevelID",
+                                                  "upstream_quote":  "Primary key identifying the loyalty tier. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal (excluded), 5=Silver, 6=Platinum Plus, 7=Diamond. 0=N/A (DWH ETL placeholder). IDs are NOT in rank order -- use Sort for ordering. FK from Dim_Customer. Excludes Internal in customer-facing queries: WHERE PlayerLevelID \u003c\u003e 4.",
+                                                  "wiki_quote":  "Primary key identifying the loyalty tier. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal (excluded), 5=Silver, 6=Platinum Plus, 7=Diamond. 0=N/A (DWH ETL placeholder). IDs are NOT in rank order -- use Sort column in Dim_PlayerLevel for ordering. FK from Dim_Customer. Excludes Internal in customer-facing queries: WHERE PlayerLevelID \u003c\u003e 4. Passthrough from Fact_SnapshotCustomer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Regulation short code resolved via Dim_Regulation.Name.",
+                                                  "match":  "NO",
+                                                  "loss":  "Drops \u0027Used in V_Dim_Customer and analytics dashboards\u0027 and \u0027Values match production Dictionary.Regulation.Name\u0027"
+                                              },
+                                              {
+                                                  "column":  "Label",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "**NOTE: maps to Dim_PlayerLevel.Name, NOT Dim_Label.Name** — SP quirk. Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BaseExchangeRate",
+                                                  "upstream_quote":  "Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate. Added by Adi (19/09/2019).",
+                                                  "wiki_quote":  "Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate. Passthrough from Fact_BillingDeposit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Drops \u0027Added by Adi (19/09/2019)\u0027 — historical metadata"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Passthrough from Dim_PlayerLevel.Name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. Passthrough from Dim_PlayerStatus.Name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.Name via Fact_SnapshotCustomer.CountryID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegCountryByIP",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.Name via Dim_Customer.CountryIDByIP.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from `Name` in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "wiki_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from `Name` in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital. Passthrough from Dim_CardType.CarTypeName.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BinCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.Name via Fact_BillingDeposit.BinCountryIDAsInteger.",
+                                                  "match":  "MINOR",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "RegulationID",
+                                       "problem":  "Description truncates the upstream enum after ID=5 (BVI) using \u0027etc.\u0027, silently dropping 8 specific authority names: 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC\u0026GAML, 11=FSRA, 12=FINRAONLY, 13=MAS, 14=NYDFS+FINRA. These are exactly the authorities cited in Section 1 data (FinCEN+FINRA 41%, FSA Seychelles 21%, ASIC\u0026GAML 17%), creating a contradiction between the column description and the business summary."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Regulation",
+                                       "problem":  "Description paraphrased to \u0027Regulation short code resolved via Dim_Regulation.Name.\u0027 Drops verbatim upstream content: \u0027Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.\u0027 An analyst cannot determine the column\u0027s systemic role or confirm production provenance."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "DepositWithdrawID",
+                                       "problem":  "Tagged (Tier 2 — SP_Deposit_Reversals_PIPs) but lineage confirms this is a rename passthrough of Fact_BillingDeposit.DepositID, which has a documented upstream wiki (Billing.Deposit). Per tier rules, a passthrough rename with upstream wiki present must be Tier 1. Should be (Tier 1 — Billing.Deposit) with verbatim: \u0027Primary distribution key (HASH). Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY). Renamed to DepositWithdrawID for schema compatibility.\u0027"
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BaseExchangeRate",
+                                       "problem":  "Drops \u0027Added by Adi (19/09/2019)\u0027 from the upstream Fact_BillingDeposit wiki entry. While historical metadata, verbatim inheritance requires this to be preserved."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IsValidCustomer",
+                                       "problem":  "Source citation is \u0027(Tier 2 — SP_Fact_SnapshotCustomer)\u0027 — referencing an upstream SP rather than this table\u0027s own ETL SP. All other passthrough columns from Fact_SnapshotCustomer cite SP_Deposit_Reversals_PIPs. Inconsistent citation style may mislead a maintainer about which SP controls this value in this table."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) RegulationID — replace \u0027etc.\u0027 with full enum verbatim from Dim_Regulation wiki: \u00276=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC\u0026GAML, 11=FSRA, 12=FINRAONLY, 13=MAS, 14=NYDFS+FINRA. Stored in CustomerStatic.RegulationID.\u0027 (2) Regulation — replace paraphrase with verbatim from Dim_Regulation.Name: \u0027Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.\u0027 (3) DepositWithdrawID — re-tag as Tier 1 — Billing.Deposit using verbatim Fact_BillingDeposit.DepositID description. (4) BaseExchangeRate — append \u0027Added by Adi (19/09/2019).\u0027 from upstream. (5) IsValidCustomer — standardize source citation to SP_Deposit_Reversals_PIPs.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "3 phases of 14 skipped (11/14 completed per footer)"
+                                                           ]
+                                    }
+                }
+}

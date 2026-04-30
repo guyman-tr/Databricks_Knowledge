@@ -1,0 +1,91 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_H_OPS_HighCompensationsVsDeposits",
+    "elapsed_seconds":  198,
+    "exit_code":  null,
+    "cost_usd":  0.5694,
+    "input_tokens":  2,
+    "output_tokens":  10100,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_H_OPS_HighCompensationsVsDeposits",
+                    "weighted_score":  8.70,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. Passthrough from Dim_PlayerStatus via Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatusReason",
+                                                  "upstream_quote":  "Human-readable reason label (nullable). Key values: None (0), Failed Verification (1), Chargeback (5), AML-Account Closed (6), HRC (7), AML (10), AML review (11), WCH match (18), Right to be forgotten (20), Self-Service (21), eToro Money Restriction (33), Abusive Trading (34), Hacked Account (35), Tax (41). Used in BackOffice reporting and customer history views.",
+                                                  "wiki_quote":  "Human-readable reason label (nullable). Key values: None (0), Failed Verification (1), Chargeback (5), AML-Account Closed (6), HRC (7), AML (10), AML review (11), WCH match (18), Right to be forgotten (20), Self-Service (21), eToro Money Restriction (33), Abusive Trading (34), Hacked Account (35), Tax (41). Used in BackOffice reporting and customer history views. Passthrough from Dim_PlayerStatusReasons via Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatusSubReason",
+                                                  "upstream_quote":  "Human-readable sub-reason label (renamed from production `Name`). Nullable. Key abbreviations: CHBK=Chargeback, POI=Proof of Identity, POA=Proof of Address, FTD=First Time Deposit, MOP=Method of Payment, PWMB=eToro Money, SAR=Suspicious Activity Report, WCH=World Check. Key values: Fraud (1), Fake docs (2), ACH CHBK (35), Credit Card CHBK (36), PayPal CHBK (37), SAR filed (73), FATCA (66), W-8BEN (76), Vulnerable Client (75).",
+                                                  "wiki_quote":  "Human-readable sub-reason label (renamed from production `Name`). Nullable. Key abbreviations: CHBK=Chargeback, POI=Proof of Identity, POA=Proof of Address, FTD=First Time Deposit, MOP=Method of Payment, PWMB=eToro Money, SAR=Suspicious Activity Report, WCH=World Check. Key values: Fraud (1), Fake docs (2), ACH CHBK (35), Credit Card CHBK (36), PayPal CHBK (37), SAR filed (73), FATCA (66), W-8BEN (76), Vulnerable Client (75). Passthrough from Dim_PlayerStatusSubReasons via Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RealCID",
+                                       "problem":  "Tagged Tier 1 — Customer.CustomerStatic but SP sources CID from External_etoro_Billing_Deposit (no upstream wiki). Should be Tier 2 — External_etoro_Billing_Deposit per tier rules requiring upstream wiki presence for Tier 1."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RealCID (Section 4 vs 5.1)",
+                                       "problem":  "Section 5.1 lineage correctly shows source as External_etoro_Billing_Deposit.CID with rename transform, but Element description claims Tier 1 — Customer.CustomerStatic. Internal inconsistency."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (Tier Legend)",
+                                       "problem":  "Tier legend only shows Tier 1 and Tier 2. Golden reference shape includes all 5 tiers even when not all are used."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist with P2/P3 checkboxes. Footer says Phases: 11/14 without detailing which phases were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Compensation$/Deposits$ (Section 5.1)",
+                                       "problem":  "Transform shown as -CompensationAmount/DepositAmount$ but CompensationAmount in the SELECT is already negated (-c.CompensationAmount). The ratio column uses the pre-negated value. Sign chain could be clearer."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-tag RealCID as Tier 2 — External_etoro_Billing_Deposit (SP sources CID from the external table, not Dim_Customer). Add full 5-tier legend to Section 4. Add explicit Phase Gate Checklist showing P1-P3 completion status.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not explicitly shown; footer says 11/14 phases"
+                                                           ]
+                                    }
+                }
+}

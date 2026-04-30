@@ -1,0 +1,140 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_Cashouts",
+    "elapsed_seconds":  184,
+    "exit_code":  null,
+    "cost_usd":  1.0644,
+    "input_tokens":  2,
+    "output_tokens":  11188,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_Cashouts",
+                    "weighted_score":  7.2,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExternalID",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Passthrough from Dim_Customer\u0027 — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "WithdrawID",
+                                                  "upstream_quote":  "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+                                                  "wiki_quote":  "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "WithdrawPaymentID",
+                                                  "upstream_quote":  "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events. Used to deduplicate WithdrawProcessingID rows in the ETL.",
+                                                  "wiki_quote":  "Payment processing ID for cashout/withdrawal events. 0 for non-cashout events. Used to deduplicate WithdrawProcessingID rows in the ETL.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded.",
+                                                  "wiki_quote":  "UTC timestamp when the action occurred. For credits: when the credit was recorded.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Removed position/login context irrelevant to cashout table"
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Position size in currency. Must be \u003e= 0. Stored in dollars (PositionOpen divides by 100 from cents). (Tier 1 — Trade.PositionTbl)",
+                                                  "wiki_quote":  "Cashout/refund/chargeback amount in USD. Passthrough from Fact_CustomerAction.Amount for cashout-related ActionTypeIDs. (Tier 1 — History.Credit)",
+                                                  "match":  "NO",
+                                                  "loss":  "Complete rewrite: \u0027Position size in currency\u0027 → \u0027Cashout/refund/chargeback amount in USD\u0027. Source changed from Trade.PositionTbl to History.Credit. Contextually more accurate for cashouts but not verbatim."
+                                              },
+                                              {
+                                                  "column":  "PaymentMethod",
+                                                  "upstream_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay).",
+                                                  "wiki_quote":  "Payment method name (e.g., CreditCard, Wire, PayPal, Skrill, Neteller, ApplePay, GooglePay). Resolved via Dim_BillingDepot.FundingTypeID → Dim_FundingType.Name. NULL when no matching billing withdraw row exists.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core verbatim, added join path and NULL semantics"
+                                              },
+                                              {
+                                                  "column":  "Depot",
+                                                  "upstream_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports.",
+                                                  "wiki_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports. Resolved from Fact_BillingWithdraw.DepotID. NULL when no matching billing withdraw row exists.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core verbatim, added join context and NULL semantics"
+                                              },
+                                              {
+                                                  "column":  "CardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Renamed from Name in production. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro, 9=Laser, 10=Switch, 11=UK Local Credit Card, 12=Discover, 13=Local Card, 14=China Union Pay, 15=Solo, 16=Cirrus, 17=GE Capital.",
+                                                  "wiki_quote":  "Card brand name. 0=None, 1=Visa, 2=Master Card, 3=Diners, 4=Amex, 5=Fire Pay, 6=JCB, 7=American Express, 8=Maestro. Resolved from Fact_BillingWithdraw.CardTypeIDAsInteger via Dim_CardType.CarTypeName. NULL for non-card payment methods.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped: uniqueness constraint, payment UI usage note, rename note. Truncated card type list from 18 values (0-17) to 9 values (0-8), losing Laser, Switch, UK Local Credit Card, Discover, Local Card, China Union Pay, Solo, Cirrus, GE Capital."
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the customer\u0027s regulatory jurisdiction at the time of the event. Values: CySEC, FCA, FSA Seychelles, FinCEN+FINRA, ASIC \u0026 GAML, FSRA, BVI, ASIC, MAS, eToroUS, FinCEN. Resolved from Fact_SnapshotCustomer.RegulationID via Dim_Regulation.Name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Minor rewording adds point-in-time context and lists specific values — improvement, meaning preserved"
+                                              },
+                                              {
+                                                  "column":  "VerificationCode",
+                                                  "upstream_quote":  "Verification code supplied or received during withdrawal processing.",
+                                                  "wiki_quote":  "Verification code supplied or received during withdrawal processing. Passthrough from Fact_BillingWithdraw.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Core verbatim, added provenance note"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CardType",
+                                       "problem":  "Upstream Dim_CardType.CarTypeName description lists 18 card types (0-17) with production context (unique constraint, payment UI usage, rename from Name). Wiki truncates to 9 values (0-8), dropping Laser, Switch, UK Local Credit Card, Discover, Local Card, China Union Pay, Solo, Cirrus, GE Capital and all production context."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "IsCreditReportValidCB, BaseExchangeRate, ExchangeFee",
+                                       "problem":  "All three are passthroughs from upstream tables that have wikis (Fact_SnapshotCustomer, BI_DB_DepositWithdrawFee) but are tagged Tier 2 instead of Tier 1. IsCreditReportValidCB should be (Tier 1 — Fact_SnapshotCustomer). BaseExchangeRate and ExchangeFee should be (Tier 1 — BI_DB_DepositWithdrawFee)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Amount",
+                                       "problem":  "Upstream Fact_CustomerAction tags Amount as \u0027(Tier 1 — Trade.PositionTbl)\u0027 with description \u0027Position size in currency.\u0027 Wiki rewrites to \u0027Cashout/refund/chargeback amount in USD (Tier 1 — History.Credit)\u0027. Contextually more accurate for cashout ActionTypeIDs but not verbatim. Source attribution changed."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property table",
+                                       "problem":  "Missing UC Target row. Completeness checklist requires Production Source, Refresh, Distribution, and UC Target in the property table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Occurred",
+                                       "problem":  "Upstream description includes \u0027For position opens: when position was opened. For logins: login time.\u0027 which was trimmed. While irrelevant to cashouts, verbatim inheritance requires preserving the full text."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Restore CardType description verbatim from Dim_CardType wiki including all 18 card types (0-17), uniqueness constraint note, and rename note. (2) Re-tag IsCreditReportValidCB as (Tier 1 — Fact_SnapshotCustomer) using upstream description. (3) Re-tag BaseExchangeRate and ExchangeFee as (Tier 1 — BI_DB_DepositWithdrawFee) using upstream descriptions. (4) For Amount, either preserve upstream verbatim with a contextual note, or document the adaptation rationale in review-needed. (5) Add UC Target row to the property table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

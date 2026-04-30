@@ -1,0 +1,67 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_Automation_UnrealizedCommissions_Results",
+    "elapsed_seconds":  93,
+    "exit_code":  null,
+    "cost_usd":  0.7039,
+    "input_tokens":  2,
+    "output_tokens":  3796,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_Automation_UnrealizedCommissions_Results",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Diff_Percentage range claim (\u0027ranges from \u003c1% to ~33%, most days under 5%\u0027) lacks precise distribution data — how many dates exceed 5%?"
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IsPriceFound",
+                                       "problem":  "Hardcoded NULL placeholder tagged Tier 2. Defensible since SP code confirms it, but Tier 3 (live data pattern) would also be valid."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims \u0027Phases: 11/14\u0027 but reader cannot verify which phases were completed."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "PnL calculation description is high-level summary of 12 CASE branches. Acceptable for wiki, but analyst debugging divergence needs SP code directly."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian sources skipped — expected for regen harness context."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 1,347 rows, 2023-07-01 to 2025-04-14",
+                                                                                  "Section 1: Diff_Percentage \u003c1% to ~33%, most under 5%",
+                                                                                  "Section 1: Stored_Proc always single value",
+                                                                                  "Section 1: IsPriceFound always NULL"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

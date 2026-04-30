@@ -1,0 +1,84 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Investors_STG",
+    "elapsed_seconds":  144,
+    "exit_code":  null,
+    "cost_usd":  0.8716,
+    "input_tokens":  2,
+    "output_tokens":  6980,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Investors_STG",
+                    "weighted_score":  9.40,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "AccountManagerID",
+                                                  "upstream_quote":  "Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager.",
+                                                  "wiki_quote":  "Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "Customer\u0027s registered country. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CountryID (CC). FK to Dim_Country. Key filter for valid customer segmentation (CountryID=250 excluded).",
+                                                  "wiki_quote":  "Customer\u0027s registered country. DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CountryID (CC). FK to Dim_Country. Key filter for valid customer segmentation (CountryID=250 excluded).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegulationID",
+                                                  "upstream_quote":  "Customer\u0027s assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation.",
+                                                  "wiki_quote":  "Customer\u0027s assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. FK to Dim_Regulation.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped internal cross-reference \u0027See §2.4.\u0027 — no semantic loss, reference was to FSC wiki\u0027s own section"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RegulationID",
+                                       "problem":  "Dropped \u0027See §2.4.\u0027 from upstream Fact_SnapshotCustomer description. Trivial formatting-only loss; the cross-reference was to FSC wiki\u0027s own section and is not meaningful in STG context."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist with P2/P3 checkboxes. Footer says \u0027Phases: 12/14\u0027 but phases completed are not enumerated. Data claims appear genuine based on specificity."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Element description says \u0027Manual stream: Fact_CustomerAction.RealCID\u0027 but SP code shows CID can also come from BI_DB_PositionPnL.CID via FULL OUTER JOIN COALESCE. Minor simplification."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian sources skipped (regen harness mode). Expected but worth noting for completeness."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.1",
+                                       "problem":  "Downstream BI_DB_Investors_Unclustered wiki references \u0027Dim_AccountManager\u0027 as FK target for AccountManagerID, while this STG wiki correctly uses Dim_Manager. Cross-wiki inconsistency in the pipeline."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. If polishing: (1) Retain \u0027See §2.4\u0027 cross-reference in RegulationID for full verbatim compliance. (2) Add explicit Phase Gate Checklist section. (3) Refine CID description to mention BI_DB_PositionPnL.CID as alternative source in Manual stream via FULL OUTER JOIN.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

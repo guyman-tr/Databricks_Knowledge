@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Investors_STG",
+    "elapsed_seconds":  229,
+    "exit_code":  null,
+    "cost_usd":  0.9199,
+    "input_tokens":  2,
+    "output_tokens":  8953,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Investors_STG",
+                    "weighted_score":  7.20,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "AccountManagerID, CountryID, RegulationID",
+                                       "problem":  "All three columns are direct passthroughs from Fact_SnapshotCustomer (fsc.AccountManagerID, fsc.CountryID, fsc.RegulationID) with no transformation. FSC wiki is in the bundle. These must be Tier 1 — Fact_SnapshotCustomer with verbatim descriptions, not Tier 2 — SP_InvestorReport."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Confidence Tier Legend only lists Tier 2. With three columns that should be Tier 1, the legend is incomplete and misleading, signaling the writer did not consider upstream inheritance."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "AccountManagerID",
+                                       "problem":  "Description drops \u0027DEFAULT 0\u0027 and \u0027Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO)\u0027 from FSC wiki. Replaced with generic \u0027Sourced from Fact_SnapshotCustomer.AccountManagerID in all streams.\u0027"
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RegulationID",
+                                       "problem":  "Description drops the end-of-day rule from FSC wiki (Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change). Genericized to \u0027Regulatory entity ID\u0027 — analyst would not know about the end-of-day regulation change semantics."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CountryID",
+                                       "problem":  "Description drops \u0027Key filter for valid customer segmentation (CountryID=250 excluded)\u0027 from FSC wiki — a business-critical detail for understanding validity filtering."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag AccountManagerID, CountryID, RegulationID as (Tier 1 — Fact_SnapshotCustomer) using verbatim descriptions from the FSC wiki, including DEFAULT 0, source chains (BO/CC), end-of-day regulation rule, and CountryID=250 exclusion. (2) Update Section 4 Confidence Tier Legend to include Tier 1 (passthrough from upstream wiki) alongside Tier 2. (3) Update footer tier breakdown from \u00270 T1, 13 T2\u0027 to \u00273 T1, 10 T2\u0027. (4) In lineage file, ensure passthrough columns are consistent with Tier 1 designation.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

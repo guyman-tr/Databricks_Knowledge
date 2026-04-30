@@ -1,0 +1,84 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PastYearsGain",
+    "elapsed_seconds":  149,
+    "exit_code":  null,
+    "cost_usd":  1.0527,
+    "input_tokens":  2,
+    "output_tokens":  8017,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PastYearsGain",
+                    "weighted_score":  6.80,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Date",
+                                                  "upstream_quote":  "Snapshot date for which gains were calculated. PK component (NOT ENFORCED). Used as DELETE+INSERT key.",
+                                                  "wiki_quote":  "Snapshot date for which gains were calculated. PK component (NOT ENFORCED). Used as DELETE+INSERT key. In BI_DB_PastYearsGain, filtered to Jan 1 dates via V_Dim_Date WHERE DayNumberOfYear=1; historical rows (2007–2020) use Dec 1 instead. Part of logical PK (Date, CID).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Upstream core text preserved verbatim; additional local context appended after it"
+                                              },
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. FK to Dim_Customer.RealCID. One row per customer per day. PK component (NOT ENFORCED). HASH distribution key.",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Part of logical PK (Date, CID).",
+                                                  "match":  "NO",
+                                                  "loss":  "Completely wrong source quoted. Writer used Dim_Customer.RealCID description instead of DWH_GainDaily.CID description. Lost: FK reference to Dim_Customer.RealCID, one-row-per-day semantics, PK component, HASH distribution key."
+                                              },
+                                              {
+                                                  "column":  "Gain_y",
+                                                  "upstream_quote":  "Trailing 365-day (yearly) compound portfolio return as a decimal. 0.05 = 5% gain. NULL if insufficient trading history. IntervalTypeID=110 from TradeGain service.",
+                                                  "wiki_quote":  "Trailing 365-day (yearly) compound portfolio return as a decimal. 0.05 = 5% gain. NULL if insufficient trading history. IntervalTypeID=110 from TradeGain service. Passthrough from DWH_GainDaily.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Tagged Tier 1 — Customer.CustomerStatic but immediate upstream is DWH_GainDaily. SP section 3.4 does SELECT CID FROM DWH_GainDaily. Writer skipped the direct source and traced to a distant root origin, quoting Dim_Customer wiki text instead of DWH_GainDaily wiki text."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CID",
+                                       "problem":  "CID description (\u0027platform-internal primary key. Assigned at registration. Unique within etoro DB.\u0027) is verbatim from Dim_Customer.RealCID wiki, not from DWH_GainDaily.CID wiki (\u0027Customer ID. FK to Dim_Customer.RealCID. One row per customer per day. PK component (NOT ENFORCED). HASH distribution key.\u0027). Complete fidelity failure."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "CID (lineage vs elements)",
+                                       "problem":  "Internal inconsistency: lineage file correctly lists CID source as BI_DB_dbo.DWH_GainDaily with Tier 1, but Elements table says (Tier 1 — Customer.CustomerStatic). These must agree."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 (Gotchas)",
+                                       "problem":  "Claim \u0027No Date=2021-01-01 row exists\u0027 about the Year1=2020 transition gap is stated as fact without P2 sample evidence. Should be in review-needed if unverified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Date",
+                                       "problem":  "Date description appends BI_DB_PastYearsGain-specific filtering context beyond the DWH_GainDaily upstream quote. While upstream core is preserved, the extension blurs the Tier 1 verbatim boundary."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag CID as (Tier 1 — DWH_GainDaily) using verbatim text from DWH_GainDaily wiki: \u0027Customer ID. FK to Dim_Customer.RealCID. One row per customer per day. PK component (NOT ENFORCED). HASH distribution key.\u0027 (2) Resolve lineage-vs-elements inconsistency — both must cite DWH_GainDaily as CID source. (3) For Date, lead with upstream quote verbatim then add local context after a separator. (4) Move Year1=2020 gap claim to review-needed unless backed by P2 data.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P3 Dist (no categorical columns match regex)"
+                                                           ]
+                                    }
+                }
+}

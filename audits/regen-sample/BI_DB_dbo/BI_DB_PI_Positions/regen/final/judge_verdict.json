@@ -1,0 +1,173 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PI_Positions",
+    "elapsed_seconds":  148,
+    "exit_code":  null,
+    "cost_usd":  1.2255,
+    "input_tokens":  2,
+    "output_tokens":  8733,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PI_Positions",
+                    "weighted_score":  9.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "PositionID",
+                                                  "upstream_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position.",
+                                                  "wiki_quote":  "Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID. References Customer.Customer.",
+                                                  "wiki_quote":  "Customer ID. References Customer.Customer. Filtered to PI population (GuruStatusID IN 2-6, IsValidCustomer=1) and CopyFund accounts (AccountTypeID=9). Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Leverage",
+                                                  "upstream_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.",
+                                                  "wiki_quote":  "Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Position size in currency. Must be \u003e= 0. Stored in dollars (PositionOpen divides by 100 from cents).",
+                                                  "wiki_quote":  "Position size in currency. Must be \u003e= 0. Stored in dollars (PositionOpen divides by 100 from cents). Synced via UPDATE when value changes in Dim_Position. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "IsBuy",
+                                                  "upstream_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell.",
+                                                  "wiki_quote":  "1 = Long/Buy (profit when price rises), 0 = Short/Sell. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "OpenOccurred",
+                                                  "upstream_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate().",
+                                                  "wiki_quote":  "When position was persisted (mapped from Occurred in production). Default getutcdate(). Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CloseOccurred",
+                                                  "upstream_quote":  "When close was persisted.",
+                                                  "wiki_quote":  "When close was persisted. \u00271900-01-01 00:00:00\u0027 sentinel = still open. Synced via UPDATE from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added sentinel info from Dim_Position Section 2.1 — enrichment, not semantic loss"
+                                              },
+                                              {
+                                                  "column":  "ParentPositionID",
+                                                  "upstream_quote":  "Copy-trade parent. 0/1 = root. Positive = child of referenced position.",
+                                                  "wiki_quote":  "Copy-trade parent. 0/1 = root. Positive = child of referenced position. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "OrigParentPositionID",
+                                                  "upstream_quote":  "Original parent before any detachment.",
+                                                  "wiki_quote":  "Original parent before any detachment. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MirrorID",
+                                                  "upstream_quote":  "FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position.",
+                                                  "wiki_quote":  "FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. Used to filter manual positions (MirrorID=0) for PI classification and instrument analysis. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "OpenDateID",
+                                                  "upstream_quote":  "ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default.",
+                                                  "wiki_quote":  "ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. Used as DELETE+INSERT key for daily incremental refresh. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CloseDateID",
+                                                  "upstream_quote":  "ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. Partition column. Always include in WHERE clause.",
+                                                  "wiki_quote":  "ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. Synced via UPDATE from Dim_Position. Passthrough from Dim_Position.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Partition column. Always include in WHERE clause\u0027 — Dim_Position-specific advice irrelevant to this non-partitioned table"
+                                              },
+                                              {
+                                                  "column":  "Volume",
+                                                  "upstream_quote":  "ETL-computed approximation of USD value: ROUND(AmountInUnitsDecimal * InitForexRate * USD conversion, 0).",
+                                                  "wiki_quote":  "ETL-computed approximation of USD value: ROUND(AmountInUnitsDecimal * InitForexRate * USD conversion, 0). Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FullCommissionOnCloseOrig",
+                                                  "upstream_quote":  "Original FullCommissionOnClose before reopen adjustments. ETL: CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0.",
+                                                  "wiki_quote":  "Original FullCommissionOnClose before reopen adjustments. ETL: CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0. Synced via UPDATE from Dim_Position. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "FullCommissionByUnits",
+                                                  "upstream_quote":  "Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission.",
+                                                  "wiki_quote":  "Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission. Synced via UPDATE from Dim_Position. Passthrough from Dim_Position.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CloseOccurred",
+                                       "problem":  "Added sentinel value context (\u00271900-01-01 00:00:00\u0027 = still open) not in the upstream element-level description. This is enrichment from Dim_Position Section 2.1, not semantic loss. Acceptable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CloseDateID",
+                                       "problem":  "Dropped Dim_Position-specific advice about partition pruning (\u0027Partition column. Always include in WHERE clause\u0027). Correct omission since BI_DB_PI_Positions is not partitioned."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "The ~3,400 active PI/CopyFund population size is mentioned only in the ETL pipeline diagram. Could be more prominent in the opening summary."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist with [x] marks. Footer shows \u0027Phases: 11/14\u0027 but individual phase completion status is not itemized."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~24.1M rows",
+                                                                                  "~7,534 distinct CIDs",
+                                                                                  "2009-01-02 through 2024-04-14",
+                                                                                  "IsSettled: 14.8M CFD / 9.3M real (in review-needed)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not explicitly shown"
+                                                           ]
+                                    }
+                }
+}

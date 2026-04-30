@@ -1,0 +1,85 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PaymentSent_Results",
+    "elapsed_seconds":  190,
+    "exit_code":  null,
+    "cost_usd":  0.5437,
+    "input_tokens":  2,
+    "output_tokens":  8687,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PaymentSent_Results",
+                    "weighted_score":  7.15,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic)",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from External_etoro_Billing_Withdraw. (Tier 1 — Customer.CustomerStatic)",
+                                                  "match":  "NO",
+                                                  "loss":  "Wrong tier assignment. CID is read from External_etoro_Billing_Withdraw (fbd.[CID]), not looked up from Dim_Customer. The Dim_Customer join is only for RegulationID. Writer borrowed the Dim_Customer.RealCID description to upgrade a Tier 2 column to Tier 1."
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Dim-lookup passthrough from Dim_Regulation.Name via Dim_Customer.RegulationID. (Tier 1 — Dictionary.Regulation)",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Values match production Dictionary.Regulation.Name\u0027, replaced with dim-lookup context. Core meaning preserved."
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification. (Tier 1 - Dictionary.Currency upstream wiki)",
+                                                  "wiki_quote":  "Ticker symbol. \"USD\", \"EUR\" for forex; \"AAPL.US\", \"TSLA.US\" for US stocks (format: TICKER.EXCHANGE); \"BTC\" for crypto. Unique across all instruments. Use this for human-readable instrument identification. Dim-lookup passthrough from Dim_Currency.Abbreviation via ProcessCurrencyID. In this table, only USD, EUR, GBP, AUD, CAD appear (wire transfer currencies). (Tier 1 — Dictionary.Currency)",
+                                                  "wiki_quote_note":  "Core upstream text is verbatim; table-specific context appended after.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Tagged Tier 1 — Customer.CustomerStatic but CID is selected from fbd (External_etoro_Billing_Withdraw), not from Dim_Customer. The SP joins Dim_Customer only for RegulationID. Writer borrowed the Dim_Customer.RealCID description to dress up a Tier 2 column. Should be Tier 2 — External_etoro_Billing_Withdraw."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 2.2 / Section 3.4 (CAD threshold)",
+                                       "problem":  "Wiki claims CAD has no explicit aging threshold and \u0027may appear regardless of age\u0027. In reality, the #final WHERE clause requires matching one of four OR-branches (USD/EUR, AUD+CySEC, AUD+non-CySEC, GBP). CAD matches NONE of them, so CAD rows are always excluded from the final output. The wiki gives analysts a false expectation that CAD rows can appear."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Section 1 (summary)",
+                                       "problem":  "Summary says \u0027Filtered to wire transfers in USD, EUR, GBP, AUD, CAD only\u0027 but CAD is effectively excluded by the #final WHERE clause. The effective output covers only 4 currencies."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Regulation",
+                                       "problem":  "Upstream Dim_Regulation.Name says \u0027Values match production Dictionary.Regulation.Name\u0027 — wiki drops this line and substitutes dim-lookup context. Minor semantic loss."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Currency (element #3)",
+                                       "problem":  "Currency has exactly 5 values in #cashouts (4 effective in output) but the element description does not include inline key=value pairs mapping ProcessCurrencyID to abbreviation (1=USD, 2=EUR, 3=GBP, 5=AUD, 7=CAD)."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag CID as Tier 2 — External_etoro_Billing_Withdraw. It is NOT a dim-lookup; the SP reads CID directly from the billing external table. (2) Fix CAD business logic: the #final WHERE clause has no OR-branch matching CAD, so CAD rows are always excluded despite being in the #cashouts currency filter. Document this as effective exclusion or flag as a potential SP bug. (3) Update Section 1 to say 4 effective currencies (USD, EUR, GBP, AUD), noting CAD is filtered at the intermediate stage but excluded from the final output. (4) Restore verbatim text for Regulation from Dim_Regulation wiki: include \u0027Values match production Dictionary.Regulation.Name\u0027. (5) Add inline ProcessCurrencyID key=value mapping to Currency element description.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2 and P3 not explicitly marked in wiki body"
+                                                           ]
+                                    }
+                }
+}

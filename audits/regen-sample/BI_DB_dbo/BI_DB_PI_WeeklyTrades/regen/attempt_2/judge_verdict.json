@@ -1,0 +1,98 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PI_WeeklyTrades",
+    "elapsed_seconds":  156,
+    "exit_code":  null,
+    "cost_usd":  1.1828,
+    "input_tokens":  2,
+    "output_tokens":  7663,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PI_WeeklyTrades",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Filtered to PI population (GuruStatusID IN 2-6, IsValidCustomer=1) and CopyFund accounts (AccountTypeID=9). HASH distribution key.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added PI filter and distribution key context; core description verbatim preserved"
+                                              },
+                                              {
+                                                  "column":  "Week1",
+                                                  "upstream_quote":  "SQL Server week-of-year number (1–53) for the target week. From DWH_dbo.Dim_Date.SSWeekNumberOfYear.",
+                                                  "wiki_quote":  "SQL Server week-of-year number (1–53) for the target week. From DWH_dbo.Dim_Date.SSWeekNumberOfYear. Renamed from SSWeekNumberOfYear.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Year1",
+                                                  "upstream_quote":  "Calendar year of the week (e.g., 2026). From DWH_dbo.Dim_Date.CalendarYear.",
+                                                  "wiki_quote":  "Calendar year of the week (e.g., 2026). From DWH_dbo.Dim_Date.CalendarYear. Renamed from CalendarYear.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "NewTrades",
+                                                  "upstream_quote":  "Total positions opened across all instrument types during the week. SUM.",
+                                                  "wiki_quote":  "Total positions opened across all instrument types during the week. SUM. Renamed from NewTrades_Total. Used to compute Avg_weekly_trades in the PI Dashboard via AVG(NewTrades) over the last 52 weeks.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added rename note and consumer context; upstream quote preserved verbatim"
+                                              },
+                                              {
+                                                  "column":  "FirstDayOfWeek",
+                                                  "upstream_quote":  "Sunday date marking the start of the calendar week. Primary grain column and leading CLUSTERED INDEX key. Always filter on this column for week slices.",
+                                                  "wiki_quote":  "Sunday date marking the start of the calendar week. Used as DELETE+INSERT key for daily incremental refresh. Primary grain column alongside CID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027leading CLUSTERED INDEX key\u0027 (appropriate — this table has different index); replaced with this-table-specific ETL context"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FirstDayOfWeek",
+                                       "problem":  "Description adapts upstream rather than quoting verbatim — \u0027leading CLUSTERED INDEX key. Always filter on this column for week slices\u0027 replaced with DELETE+INSERT context. Acceptable adaptation but not strict verbatim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Total row count is estimated (~724K from 3,220 × 225) due to DMV access denial. Properly flagged in review-needed sidecar but not a precise verified figure."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Data evidence exists but is not formally structured."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CID",
+                                       "problem":  "Description adds 45 words beyond the upstream quote (PI population filter, HASH distribution key). Not a loss but adds bulk beyond verbatim requirement."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4",
+                                       "problem":  "Good documentation of Week1 SQL Server week numbering vs ISO — valuable analyst context correctly surfaced."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

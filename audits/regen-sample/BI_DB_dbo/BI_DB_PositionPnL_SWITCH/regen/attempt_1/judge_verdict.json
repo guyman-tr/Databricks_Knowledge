@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PositionPnL_SWITCH",
+    "elapsed_seconds":  123,
+    "exit_code":  null,
+    "cost_usd":  0.8038,
+    "input_tokens":  2,
+    "output_tokens":  5051,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PositionPnL_SWITCH",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Description says \u0027Traded instrument identifier\u0027 but upstream BI_DB_PositionPnL wiki says \u0027Traded instrument.\u0027 — minor paraphrase adding \u0027identifier\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "All columns (Tier classification)",
+                                       "problem":  "All 39 columns tagged Tier 2 — BI_DB_PositionPnL. Strictly, passthrough with upstream wiki present could mandate Tier 1, but writer\u0027s DDL-clone reasoning is defensible for an infrastructure table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.1 / NCI",
+                                       "problem":  "SSDT DDL defines IX_BI_DB_PositionPnL_SWITCH_CID on (DateID, CID) but SP_PositionPnL creates it on just (CID). Wiki matches DDL but doesn\u0027t flag the discrepancy."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims Phases: 11/11 but no explicit Phase Gate Checklist section is present. Cosmetic for an always-empty infrastructure table."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Companion table BI_DB_PositionPnL_SWITCH_SINGLE is mentioned in review-needed but could be cross-referenced more explicitly in the wiki\u0027s Relationships or Gotchas sections."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,67 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_GuruRatios",
+    "elapsed_seconds":  136,
+    "exit_code":  null,
+    "cost_usd":  0.423,
+    "input_tokens":  2,
+    "output_tokens":  5837,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_GuruRatios",
+                    "weighted_score":  9.15,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. In this table, identifies the Popular Investor whose copier-tree ratio is computed.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added context sentence about PI identification; no upstream text removed"
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added provenance note \u0027Passthrough from Dim_Customer\u0027; no upstream text removed"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RealCID",
+                                       "problem":  "Tier source attributed to Customer.CustomerStatic but ETL pulls ParentCID from etoroGeneral_History_GuruCopiers. Semantically correct (value IS a CID) but source tag is one hop removed from actual ETL source."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Section 4",
+                                       "problem":  "No explicit Phase Gate Checklist subsection with [x]/[ ] checkboxes for P2 (row count verification) and P3 (distribution analysis). Footer lists phases but lacks formal checklist."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RealCID, UserName",
+                                       "problem":  "Both T1 descriptions append context sentences beyond the upstream verbatim text. Additions, not paraphrasing — no semantic loss — but strict verbatim compliance would omit these."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

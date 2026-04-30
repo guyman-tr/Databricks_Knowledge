@@ -1,0 +1,102 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_PI_Dashboard_COPYDATA_RuningSideBySide",
+    "elapsed_seconds":  182,
+    "exit_code":  null,
+    "cost_usd":  1.1947,
+    "input_tokens":  2,
+    "output_tokens":  10061,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_PI_Dashboard_COPYDATA_RuningSideBySide",
+                    "weighted_score":  7.70,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  7,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PI_level",
+                                                  "upstream_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration.",
+                                                  "wiki_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. Passthrough from Dim_GuruStatus.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Passthrough from Dim_GuruStatus\u0027 — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027Passthrough from Dim_Country\u0027 — no semantic loss"
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Marketing region label for this country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values (e.g., \u0027ROW\u0027, \u0027Africa\u0027, \u0027French\u0027, \u0027Arabic Other\u0027). Used for marketing campaign grouping. (Tier 2 - SP_Dictionaries_Country_DL_To_Synapse)",
+                                                  "wiki_quote":  "Marketing region label for this country. Loaded from etoro.Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. 22 distinct values. Passthrough from Dim_Country. (Tier 1 — Dictionary.Country)",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped example values (\u0027ROW\u0027, \u0027Africa\u0027, \u0027French\u0027, \u0027Arabic Other\u0027); dropped \u0027Used for marketing campaign grouping\u0027; wrong tier origin (claimed T1 Dictionary.Country, actually T2 in Dim_Country wiki)"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Region",
+                                       "problem":  "Tagged Tier 1 from Dictionary.Country but Dim_Country wiki marks Region as Tier 2 (SP-computed from MarketingRegion JOIN). Description drops example values and \u0027Used for marketing campaign grouping\u0027."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Desk",
+                                       "problem":  "Lineage file says Tier 1, wiki says Tier 2, Dim_Country wiki says Tier 3 (Ext_Dim_Country_Region_Desk). Wiki\u0027s Tier 2 is defensible but Tier 3 matches the dim\u0027s origin. Also drops NULL semantics and example values from upstream."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Lineage file vs wiki",
+                                       "problem":  "Lineage file marks both Region and Desk as Tier 1 but the wiki Elements table has Region=T1 and Desk=T2. Internal inconsistency between lineage and wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Past_Year_Commission",
+                                       "problem":  "The SP uses hardcoded date WHERE ptc1.Date = \u00272021-03-14\u0027. This critical bug is mentioned in review-needed and Gotchas but should be explicit in the Elements description."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Data staleness (last refresh 2024-04-14, over 2 years ago) is only mentioned in Section 3.4 Gotchas, not in Section 1 where analysts first look."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag Region as Tier 2 from SP_Dictionaries_Country_DL_To_Synapse via Dim_Country, restoring dropped example values and \u0027Used for marketing campaign grouping\u0027. (2) Re-tag Desk as Tier 3 from Ext_Dim_Country_Region_Desk via Dim_Country, matching upstream wiki. (3) Fix lineage file to align tier values with wiki Elements table. (4) Add \u00272021-03-14\u0027 hardcoded date to Past_Year_Commission element description. (5) Add staleness warning to Section 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~3,400 rows per day",
+                                                                                  "1,501 daily snapshots",
+                                                                                  "3,215 PIs + 176 CopyFunds on 2024-04-14",
+                                                                                  "Classification distribution percentages",
+                                                                                  "TraderType distribution percentages"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

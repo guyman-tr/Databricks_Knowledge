@@ -1,0 +1,122 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_EY_Audit_CashoutFees",
+    "elapsed_seconds":  137,
+    "exit_code":  null,
+    "cost_usd":  0.6779,
+    "input_tokens":  2,
+    "output_tokens":  7453,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_EY_Audit_CashoutFees",
+                    "weighted_score":  9.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID.",
+                                                  "wiki_quote":  "Real-account Customer ID. HASH distribution key in source. References `Dim_Customer.RealCID`. Each customer has one real CID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added \u0027in source\u0027 qualifier — contextually accurate since BI_DB table is ROUND_ROBIN not HASH"
+                                              },
+                                              {
+                                                  "column":  "WithdrawID",
+                                                  "upstream_quote":  "Withdrawal request ID for cashout events. 0 for non-cashout events.",
+                                                  "wiki_quote":  "Withdrawal request ID for cashout events. 0 for non-cashout events. Part of the clustered index.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added local index context not present in upstream"
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded.",
+                                                  "wiki_quote":  "UTC timestamp when the action occurred. For credits: when the credit was recorded.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Trimmed position-open and login context (inapplicable to cashout-only table)"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. Passthrough from Dim_Regulation. 11 distinct values in 2025: CySEC, FCA, FSA Seychelles, FinCEN+FINRA, ASIC \u0026 GAML, FSRA, BVI, ASIC, eToroUS, MAS, FinCEN.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Passthrough from Dim_PlayerLevel.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row in Dim_Country. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country. 147 distinct values in 2025 data.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Changed \u0027Unique per row\u0027 to \u0027Unique per row in Dim_Country\u0027"
+                                              },
+                                              {
+                                                  "column":  "AccountType",
+                                                  "upstream_quote":  "Human-readable account type label. Maps to Dictionary.AccountType.AccountTypeName in production (renamed in DWH). Used in reporting to display account classification.",
+                                                  "wiki_quote":  "Human-readable account type label. Maps to Dictionary.AccountType.AccountTypeName in production (renamed in DWH). Used in reporting to display account classification. Passthrough from Dim_AccountType.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PopularInvestors",
+                                                  "upstream_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration.",
+                                                  "wiki_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. Passthrough from Dim_GuruStatus.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Occurred",
+                                       "problem":  "Upstream Fact_CustomerAction description trimmed: dropped \u0027For position opens: when position was opened. For logins: login time.\u0027 — defensible for a cashout-only table but deviates from strict verbatim Tier 1 inheritance."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist in wiki body. Footer says \u0027Phases: 11/14\u0027 but does not detail which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "WithdrawID",
+                                       "problem":  "Upstream Fact_CustomerAction declares WithdrawID as int (NO NULL), but DDL and wiki show bigint (NULL). Type widening is correctly reflected but not called out."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Commission",
+                                       "problem":  "Gotcha says \u0027predominantly 0.0\u0027 but provides no percentage or count of non-zero rows — an auditor would benefit from specifics."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Referenced By only lists SP_EY_Audit_CashoutFees. Any downstream consumers (reports, views) are not mentioned."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "6.1M rows",
+                                                                                  "1,028 distinct dates",
+                                                                                  "147 distinct countries",
+                                                                                  "11 distinct regulations"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}
