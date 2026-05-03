@@ -40,4 +40,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrumentspread ALTER COLUMN AppLog
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentspread ALTER COLUMN SysStartTime COMMENT 'Temporal start. Set when row becomes current. System versioning. (Tier 1 - upstream wiki, etoro.Trade.InstrumentSpread)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentspread ALTER COLUMN SysEndTime COMMENT 'Temporal end. 9999-12-31 for current rows. System versioning. (Tier 1 - upstream wiki, etoro.Trade.InstrumentSpread)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentspread ALTER COLUMN HostName COMMENT 'Computed: host_name(). Server host that last modified the row. (Tier 1 - upstream wiki, etoro.Trade.InstrumentSpread)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

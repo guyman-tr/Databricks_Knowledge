@@ -63,4 +63,7 @@ ALTER TABLE main.general.bronze_etoro_customer_customerlatinname_masked ALTER CO
 ALTER TABLE main.general.bronze_etoro_customer_customerlatinname_masked ALTER COLUMN Address COMMENT 'Latin-script street address. Used for KYC and tax form submissions (W8BEN mailing address). NULL when address was not provided. (Tier 1 - upstream wiki, etoro.Customer.CustomerLatinName)';
 ALTER TABLE main.general.bronze_etoro_customer_customerlatinname_masked ALTER COLUMN City COMMENT 'Latin-script city name. Complements Address for full mailing address on regulatory forms. NULL when address was not provided. (Tier 1 - upstream wiki, etoro.Customer.CustomerLatinName)';
 ALTER TABLE main.general.bronze_etoro_customer_customerlatinname_masked ALTER COLUMN MiddleName COMMENT 'Latin-script middle name. Nullable - many naming conventions do not include middle names. Empty string ('''') stored for some accounts where MiddleName was set but empty in the source TVP. (Tier 1 - upstream wiki, etoro.Customer.CustomerLatinName)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

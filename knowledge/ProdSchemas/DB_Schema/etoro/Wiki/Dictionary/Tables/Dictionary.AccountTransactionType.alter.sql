@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_accounttransactiontype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_accounttransactiontype SET TBLPROPERTIES (
-    'comment' = 'Lookup table classifying financial transaction types for hedge account operations — deposits, withdrawals, fees, adjustments, and other money movements in hedge liquidity accounts. Source: etoro.Dictionary.AccountTransactionType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AccountTransactionType.md).'
+    'comment' = 'Lookup table classifying financial transaction types for hedge account operations - deposits, withdrawals, fees, adjustments, and other money movements in hedge liquidity accounts. Source: etoro.Dictionary.AccountTransactionType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AccountTransactionType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_accounttransactiontype SET TAGS (
@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_accounttransactiontype SET TAGS
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_accounttransactiontype ALTER COLUMN TransactionTypeID COMMENT 'Primary key identifying the transaction category. 1–13 map to Deposit, Withdrawal, Refund, Compensation, Commission, Adjustment, Interest, Transaction Fees, Overnight Fees, Conversion, Rebate, Manual Cost, System Cost. Referenced by Hedge.AccountTransactions via FK. (Tier 1 - upstream wiki, etoro.Dictionary.AccountTransactionType)';
+ALTER TABLE main.general.bronze_etoro_dictionary_accounttransactiontype ALTER COLUMN TransactionTypeID COMMENT 'Primary key identifying the transaction category. 1 - 13 map to Deposit, Withdrawal, Refund, Compensation, Commission, Adjustment, Interest, Transaction Fees, Overnight Fees, Conversion, Rebate, Manual Cost, System Cost. Referenced by Hedge.AccountTransactions via FK. (Tier 1 - upstream wiki, etoro.Dictionary.AccountTransactionType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_accounttransactiontype ALTER COLUMN TransactionTypeName COMMENT 'Human-readable transaction type name. Used in reports, statements, and UI. Values match live data (MCP verified). (Tier 1 - upstream wiki, etoro.Dictionary.AccountTransactionType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

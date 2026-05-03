@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_moneybusdb_dictionary_accounttypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_moneybusdb_dictionary_accounttypes ALTER COLUMN ID COMMENT 'Primary key and unique identifier for each account type. Referenced as CreditorTypeID, DebitorTypeID (MoneyBus.Transactions), AccountTypeID (MoneyBus.Withdrawals), DebitAccountTypeID/CreditAccountTypeID (MoneyBus.TransferLimits), and InitiatorAccountTypeId (MoneyBus.TransactionsGroup). Values: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See Account Type for full business definitions. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.AccountTypes)';
 ALTER TABLE main.bi_db.bronze_moneybusdb_dictionary_accounttypes ALTER COLUMN Name COMMENT 'Human-readable label for the account type. Used in alert reporting (ALERT_ConsecutiveTransactionFailuresAlert JOINs this column to display creditor/debitor type names). Unique business names that map to platform product verticals. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.AccountTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:41:14 UTC
+-- Bronze deploy: MoneyBusDB batch 1
+-- ====================

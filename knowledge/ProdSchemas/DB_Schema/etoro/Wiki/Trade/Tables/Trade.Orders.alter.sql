@@ -65,4 +65,7 @@ ALTER TABLE main.dealing.bronze_etoro_trade_orders ALTER COLUMN IsSettled COMMEN
 ALTER TABLE main.dealing.bronze_etoro_trade_orders ALTER COLUMN IsNoStopLoss COMMENT 'Whether the order has no stop-loss protection. 1 = order was explicitly placed without stop-loss, NULL = standard stop-loss rules apply. (Tier 1 - upstream wiki, etoro.Trade.Orders)';
 ALTER TABLE main.dealing.bronze_etoro_trade_orders ALTER COLUMN IsNoTakeProfit COMMENT 'Whether the order has no take-profit target. 1 = order was explicitly placed without take-profit, NULL = standard take-profit rules apply. (Tier 1 - upstream wiki, etoro.Trade.Orders)';
 ALTER TABLE main.dealing.bronze_etoro_trade_orders ALTER COLUMN SettlementTypeID COMMENT 'Settlement model classification. References Dictionary.SettlementTypes: 0=CFD, 1=REAL (stock ownership), 2=TRS (total return swap), 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Modern replacement for legacy IsSettled flag. See Section 2.3. (Tier 1 - upstream wiki, etoro.Trade.Orders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

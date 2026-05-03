@@ -55,4 +55,7 @@ ALTER TABLE main.general.bronze_etoro_trade_hedgeserver ALTER COLUMN SystemName 
 ALTER TABLE main.general.bronze_etoro_trade_hedgeserver ALTER COLUMN RequestedAlertIntervalSeconds COMMENT 'Interval in seconds for requested/alert reporting. (Tier 1 - upstream wiki, etoro.Trade.HedgeServer)';
 ALTER TABLE main.general.bronze_etoro_trade_hedgeserver ALTER COLUMN ManagedExposurePeriodSec COMMENT 'Period in seconds for managed exposure calculations. (Tier 1 - upstream wiki, etoro.Trade.HedgeServer)';
 ALTER TABLE main.general.bronze_etoro_trade_hedgeserver ALTER COLUMN AllowOMSPricingPartialFill COMMENT 'Whether OMS allows pricing on partial fills. 0 = no, 1 = yes. (Tier 1 - upstream wiki, etoro.Trade.HedgeServer)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

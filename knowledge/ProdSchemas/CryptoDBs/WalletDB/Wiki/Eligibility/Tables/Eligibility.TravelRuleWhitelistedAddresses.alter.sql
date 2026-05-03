@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresse
 ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN Address COMMENT 'The full blockchain address string that has been verified. Format varies by blockchain: "0x..." for Ethereum, "addr1q..." for Cardano, various formats for Bitcoin. Has a dedicated nonclustered index for fast lookup by GetTravelRuleWhitelistedAddress. The uniqueness enforcement logic checks this column across all customers. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
 ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN ProofOfOwnership COMMENT 'The actual proof data - either the cryptographic signature bytes or the signed declaration text. Stored as a large text/blob since cryptographic signatures can be lengthy. Used for compliance audit purposes. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
 ALTER TABLE main.bi_db.bronze_walletdb_eligibility_travelrulewhitelistedaddresses ALTER COLUMN ProofOfOwnershipTypeId COMMENT 'Method used to verify address ownership. FK to Dictionary.AddressOwnershipProofType: 1=Declaration (legal self-attestation), 2=Signature (cryptographic private key signing). In practice, 100% of current entries use Signature (2). See Address Ownership Proof Type. (Tier 1 - upstream wiki, WalletDB.Eligibility.TravelRuleWhitelistedAddresses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

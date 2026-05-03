@@ -40,4 +40,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_hedgeinstrumentconfiguration ALTER C
 ALTER TABLE main.bi_db.bronze_etoro_history_hedgeinstrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this version was superseded. CLUSTERED index leading column. (Tier 1 - upstream wiki, etoro.History.HedgeInstrumentConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_history_hedgeinstrumentconfiguration ALTER COLUMN RestrictManualActions COMMENT 'Flag controlling whether manual hedging operations are permitted for this instrument. Source DEFAULT=0 (unrestricted). Non-zero values block manual open/close actions via management tools. (Tier 1 - upstream wiki, etoro.History.HedgeInstrumentConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_history_hedgeinstrumentconfiguration ALTER COLUMN LotSizeForView COMMENT 'Display denominator for converting eToro internal units to conventional lot sizes for reporting and UI display. Source DEFAULT=1. Example: setting to 100,000 displays FX positions in standard lots. Does not affect execution. (Tier 1 - upstream wiki, etoro.History.HedgeInstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

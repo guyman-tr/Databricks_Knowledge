@@ -34,4 +34,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactions ALTER COLUMN Cor
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactions ALTER COLUMN TransactionTypeId COMMENT 'Business purpose: 0=Redeem, 1=CustomerMoneyOut, 2=AmlMoneyBack, 4=Funding, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 9=Staking, 10=BlockChainActivation, 11=OmnibusMoneyOut, 12=ConversionToFiat, 13=ManualUserMoneyOut, 14=StakeAndRewardsRefund, 15=CustomerMoneyBack. See Transaction Type. FK to Dictionary.TransactionTypes. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactions ALTER COLUMN BlockchainFee COMMENT 'Network fee paid in the crypto''s native units. Recorded after on-chain confirmation. Used for cost analysis, customer billing, and financial reconciliation. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactions ALTER COLUMN CryptoId COMMENT 'The cryptocurrency sent. FK to Wallet.CryptoTypes.CryptoID. Combined with WalletId for per-wallet per-crypto transaction history queries. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

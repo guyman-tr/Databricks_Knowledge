@@ -42,4 +42,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrument ALTER COLUMN AppLoginName
 ALTER TABLE main.trading.bronze_etoro_trade_instrument ALTER COLUMN SysStartTime COMMENT 'System versioning row start time. Automatically set when a row is inserted or updated. Part of the temporal table mechanism tracking all changes to History.Instrument. (Tier 1 - upstream wiki, etoro.Trade.Instrument)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrument ALTER COLUMN SysEndTime COMMENT 'System versioning row end time. Set to max datetime for current rows. When a row is updated or deleted, the previous version''s SysEndTime is set to the modification time in History.Instrument. (Tier 1 - upstream wiki, etoro.Trade.Instrument)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrument ALTER COLUMN OperationMode COMMENT 'Trading operation mode for the instrument. 0 = Standard mode (10,402 instruments - default for all asset types), 1 = Alternate mode (83 instruments - primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX). (Tier 1 - upstream wiki, etoro.Trade.Instrument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

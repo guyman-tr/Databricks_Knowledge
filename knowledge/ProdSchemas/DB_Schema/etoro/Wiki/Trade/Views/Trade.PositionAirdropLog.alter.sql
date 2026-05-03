@@ -43,4 +43,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_positionairdroplog ALTER COLUMN Apex
 ALTER TABLE main.trading.bronze_etoro_trade_positionairdroplog ALTER COLUMN Rate COMMENT 'Execution or reference rate used. (Tier 1 - upstream wiki, etoro.Trade.PositionAirdropLog)';
 ALTER TABLE main.trading.bronze_etoro_trade_positionairdroplog ALTER COLUMN TerminalID COMMENT 'Terminal identifier. Empty string for AdminPositionLog records, populated for old records. (Tier 1 - upstream wiki, etoro.Trade.PositionAirdropLog)';
 ALTER TABLE main.trading.bronze_etoro_trade_positionairdroplog ALTER COLUMN CompensationReasonID COMMENT 'FK to compensation reason lookup. NULL for old records. (Tier 1 - upstream wiki, etoro.Trade.PositionAirdropLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

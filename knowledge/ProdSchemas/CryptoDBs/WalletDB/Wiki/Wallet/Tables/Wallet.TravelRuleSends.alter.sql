@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_travelrulesends ALTER COLUMN Wall
 ALTER TABLE main.wallet.bronze_walletdb_wallet_travelrulesends ALTER COLUMN CorrelationId COMMENT 'Links to the parent send request. (Tier 1 - upstream wiki, WalletDB.Wallet.TravelRuleSends)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_travelrulesends ALTER COLUMN TravelRuleAddressId COMMENT 'The whitelisted address used for this send. FK to Wallet.TravelRuleAddresses.Id. (Tier 1 - upstream wiki, WalletDB.Wallet.TravelRuleSends)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_travelrulesends ALTER COLUMN Created COMMENT 'Timestamp of this send-address linkage. (Tier 1 - upstream wiki, WalletDB.Wallet.TravelRuleSends)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

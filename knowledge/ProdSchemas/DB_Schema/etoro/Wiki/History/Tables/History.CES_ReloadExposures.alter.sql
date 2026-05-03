@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_etoro_history_ces_reloadexposures ALTER COLUMN O
 ALTER TABLE main.general.bronze_etoro_history_ces_reloadexposures ALTER COLUMN DBUserName COMMENT 'SQL Server login name of the session that triggered the reload. Populated via SUSER_NAME() in History.CES_LogReloadExposures. (Tier 1 - upstream wiki, etoro.History.CES_ReloadExposures)';
 ALTER TABLE main.general.bronze_etoro_history_ces_reloadexposures ALTER COLUMN AppUserName COMMENT 'Application-level user name passed as a parameter to History.CES_LogReloadExposures. Identifies the system or user that initiated the reload. (Tier 1 - upstream wiki, etoro.History.CES_ReloadExposures)';
 ALTER TABLE main.general.bronze_etoro_history_ces_reloadexposures ALTER COLUMN InstrumentID COMMENT 'The financial instrument whose CES exposure data was reloaded. Implicit FK to History.Instrument. NULL if the reload was schema-wide rather than instrument-specific. (Tier 1 - upstream wiki, etoro.History.CES_ReloadExposures)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

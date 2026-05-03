@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_managerpermit SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_managerpermit ALTER COLUMN ManagerPermitID COMMENT 'Unique identifier for the permission tier: 1=None (view only), 2=Trade and Fund (full access), 3=Trade only, 4=Fund only. Referenced by BackOffice.Customer and NFA reporting procedures. (Tier 1 - upstream wiki, etoro.Dictionary.ManagerPermit)';
 ALTER TABLE main.general.bronze_etoro_dictionary_managerpermit ALTER COLUMN Name COMMENT 'Human-readable permission label. Enforced unique by UK_DMP_Name constraint. Displayed in BackOffice manager assignment screens. (Tier 1 - upstream wiki, etoro.Dictionary.ManagerPermit)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

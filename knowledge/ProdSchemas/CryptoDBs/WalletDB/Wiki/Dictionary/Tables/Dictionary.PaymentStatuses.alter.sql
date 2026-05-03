@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_paymentstatuses SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_paymentstatuses ALTER COLUMN Id COMMENT 'Unique identifier for the payment status. Values: 1=PendingProvider, 2=InitiateStarted, 3=DocumentCompleted, 4=InitiateCompleted, 5=InitiateFailed, 6=TransferCompleted, 7=PendingTransaction, 8=Failed, 9=Completed, 10=InternalError, 11=ProviderSubmitted. FK target for Wallet.PaymentStatuses. (Tier 1 - upstream wiki, WalletDB.Dictionary.PaymentStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_paymentstatuses ALTER COLUMN Name COMMENT 'Status label used in payment tracking UIs, reconciliation reports, and provider integration logs. (Tier 1 - upstream wiki, WalletDB.Dictionary.PaymentStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

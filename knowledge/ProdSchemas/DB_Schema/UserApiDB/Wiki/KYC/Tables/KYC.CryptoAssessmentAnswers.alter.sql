@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_kyc_cryptoassessmentanswers ALTER COLUMN
 ALTER TABLE main.bi_db.bronze_userapidb_kyc_cryptoassessmentanswers ALTER COLUMN IsCorrect COMMENT 'Whether this answer demonstrates correct understanding of the crypto risk. 1=correct, 0=incorrect. (Tier 1 - upstream wiki, UserApiDB.KYC.CryptoAssessmentAnswers)';
 ALTER TABLE main.bi_db.bronze_userapidb_kyc_cryptoassessmentanswers ALTER COLUMN AnswerCategoryId COMMENT 'FK to Dictionary.CryptoAssessmentAnswerCategory. Risk category (1-7): Complete Loss, Cyber-Risks, Diversification, Regulatory, Liquidity, Technical, Volatility. See Crypto Assessment Answer Category. (Tier 1 - upstream wiki, UserApiDB.KYC.CryptoAssessmentAnswers)';
 ALTER TABLE main.bi_db.bronze_userapidb_kyc_cryptoassessmentanswers ALTER COLUMN IsEnabled COMMENT 'Whether this answer is currently active in the assessment. Default: 1 (enabled). (Tier 1 - upstream wiki, UserApiDB.KYC.CryptoAssessmentAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

@@ -37,4 +37,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecifications ALTER COLUMN 
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecifications ALTER COLUMN Created COMMENT 'When this record was created in the DWH. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecifications)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecifications ALTER COLUMN CreationStatus COMMENT 'Result of the initial specification setup (e.g., "Success", "Failed"). (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecifications)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecifications ALTER COLUMN ErrorReason COMMENT 'Error description if specification setup failed. NULL on success. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecifications)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

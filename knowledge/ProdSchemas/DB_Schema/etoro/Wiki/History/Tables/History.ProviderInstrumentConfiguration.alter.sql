@@ -35,4 +35,7 @@ ALTER TABLE main.trading.bronze_etoro_history_providerinstrumentconfiguration AL
 ALTER TABLE main.trading.bronze_etoro_history_providerinstrumentconfiguration ALTER COLUMN AppLoginName COMMENT 'Application identity from context_info() at write time. May contain null-byte padding from varchar(500) context_info() storage. (Tier 1 - upstream wiki, etoro.History.ProviderInstrumentConfiguration)';
 ALTER TABLE main.trading.bronze_etoro_history_providerinstrumentconfiguration ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this order configuration became active. Set by SQL Server temporal engine. Starting boundary of validity period (inclusive). (Tier 1 - upstream wiki, etoro.History.ProviderInstrumentConfiguration)';
 ALTER TABLE main.trading.bronze_etoro_history_providerinstrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this configuration was superseded. Set by SQL Server temporal engine. Ending boundary (exclusive). Clustered index leading column. (Tier 1 - upstream wiki, etoro.History.ProviderInstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

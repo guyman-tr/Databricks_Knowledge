@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_usabroker_apex_userprogramenrolment ALTER COLUMN
 ALTER TABLE main.general.bronze_usabroker_apex_userprogramenrolment ALTER COLUMN UserProgramID COMMENT 'The program being enrolled in. FK to Dictionary.UserProgram: 0=None, 1=FPSL, 2=CryptoStaking, 3=EthStaking, 4=ProxyVotingManualPositions, 5=ProxyVotingCopiedPositions. See User Program. (Dictionary.UserProgram) (Tier 1 - upstream wiki, USABroker.apex.UserProgramEnrolment)';
 ALTER TABLE main.general.bronze_usabroker_apex_userprogramenrolment ALTER COLUMN BeginTime COMMENT 'System versioning row start time. Part of SYSTEM_TIME period for History.UserProgramEnrolment. (Tier 1 - upstream wiki, USABroker.apex.UserProgramEnrolment)';
 ALTER TABLE main.general.bronze_usabroker_apex_userprogramenrolment ALTER COLUMN EndTime COMMENT 'System versioning row end time. Part of SYSTEM_TIME period. (Tier 1 - upstream wiki, USABroker.apex.UserProgramEnrolment)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

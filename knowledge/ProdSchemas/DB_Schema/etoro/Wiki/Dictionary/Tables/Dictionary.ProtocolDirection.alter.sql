@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_protocoldirection (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_protocoldirection SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 2 payment protocol communication directions — Direct (server-to-server) and Redirect (browser redirect) — for eToro''s billing payment processing. Source: etoro.Dictionary.ProtocolDirection on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ProtocolDirection.md).'
+    'comment' = 'Lookup table defining 2 payment protocol communication directions - Direct (server-to-server) and Redirect (browser redirect) - for eToro''s billing payment processing. Source: etoro.Dictionary.ProtocolDirection on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ProtocolDirection.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_protocoldirection SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_protocoldirection SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_protocoldirection ALTER COLUMN ProtocolDirectionID COMMENT 'Primary key. 1=Direct, 2=Redirect. Referenced by Dictionary.Protocol via FK. (Tier 1 - upstream wiki, etoro.Dictionary.ProtocolDirection)';
 ALTER TABLE main.general.bronze_etoro_dictionary_protocoldirection ALTER COLUMN Name COMMENT 'Communication direction label. Unique index enforces no duplicates. Cached by Billing.LoadProtocolDirections. (Tier 1 - upstream wiki, etoro.Dictionary.ProtocolDirection)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

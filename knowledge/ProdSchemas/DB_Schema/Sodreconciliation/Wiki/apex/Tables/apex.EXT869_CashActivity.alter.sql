@@ -68,4 +68,7 @@ ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext869_cashactivity ALTER
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext869_cashactivity ALTER COLUMN WithholdTaxTypeCode COMMENT 'Type of tax withholding applied (federal, state, foreign). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT869_CashActivity)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext869_cashactivity ALTER COLUMN CorrespondentOfficeID COMMENT 'Correspondent firm office identifier. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT869_CashActivity)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext869_cashactivity ALTER COLUMN CorrespondentID COMMENT 'Correspondent firm identifier. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT869_CashActivity)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

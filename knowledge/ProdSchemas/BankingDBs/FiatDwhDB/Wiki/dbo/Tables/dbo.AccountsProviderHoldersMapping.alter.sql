@@ -30,4 +30,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_accountsproviderholdersmapping ALTE
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_accountsproviderholdersmapping ALTER COLUMN AccountId COMMENT 'FK to dbo.FiatAccount.Id. The internal platform account this mapping belongs to. (Tier 1 - upstream wiki, FiatDwhDB.dbo.AccountsProviderHoldersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_accountsproviderholdersmapping ALTER COLUMN ProviderHolderId COMMENT 'The external provider''s (Tribe) identifier for this account holder. Used in all provider API interactions and support queries. Stored as string to accommodate different provider ID formats. (Tier 1 - upstream wiki, FiatDwhDB.dbo.AccountsProviderHoldersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_accountsproviderholdersmapping ALTER COLUMN Created COMMENT 'UTC timestamp when this mapping was recorded in the data warehouse. (Tier 1 - upstream wiki, FiatDwhDB.dbo.AccountsProviderHoldersMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

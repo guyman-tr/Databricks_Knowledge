@@ -33,4 +33,7 @@ ALTER TABLE main.general.bronze_fiktivo_affiliatecommission_customeraggregatedda
 ALTER TABLE main.general.bronze_fiktivo_affiliatecommission_customeraggregateddata ALTER COLUMN LastOpenedPosition COMMENT 'Timestamp of the customer''s most recent position open. NULL if the customer has never opened a position. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CustomerAggregatedData)';
 ALTER TABLE main.general.bronze_fiktivo_affiliatecommission_customeraggregateddata ALTER COLUMN OpenedPositionsCommissionOnOpen COMMENT 'Current total commission on positions that are still open. Decreases as positions close (commission moves to TotalCommissionOnClose). NOT NULL - defaults to 0. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CustomerAggregatedData)';
 ALTER TABLE main.general.bronze_fiktivo_affiliatecommission_customeraggregateddata ALTER COLUMN DateModified COMMENT 'Last time this aggregate was updated. NULL in most records observed, suggesting incremental update logic may not always set this field. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CustomerAggregatedData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

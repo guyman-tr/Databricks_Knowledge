@@ -39,4 +39,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_customerwalletsview ALTER COLUMN 
 ALTER TABLE main.wallet.bronze_walletdb_wallet_customerwalletsview ALTER COLUMN BlockchainCryptoId COMMENT 'The blockchain network this wallet operates on. FK to Wallet.BlockchainCryptos.Id. Determines which blockchain the Address belongs to. May differ from CryptoId for multi-token blockchains (e.g., ERC-20 tokens share the ETH blockchain). From Wallet.Wallets.BlockchainCryptoId. (Tier 1 - upstream wiki, WalletDB.Wallet.CustomerWalletsView)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_customerwalletsview ALTER COLUMN WalletProviderId COMMENT 'Custody provider: 1=BitGo (97.5% of wallets, multi-sig), 2=CUG (2.5%, MPC-based, newer blockchains like SOL). See Wallet Provider. FK to Dictionary.WalletProvider. From Wallet.WalletPool.WalletProviderId. (Tier 1 - upstream wiki, WalletDB.Wallet.CustomerWalletsView)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_customerwalletsview ALTER COLUMN IsActivated COMMENT 'Whether the wallet has completed initial blockchain activation. 1=activated (fully operational), 0=pending activation. The Status column is derived from this value. From Wallet.Wallets.IsActivated. (Tier 1 - upstream wiki, WalletDB.Wallet.CustomerWalletsView)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

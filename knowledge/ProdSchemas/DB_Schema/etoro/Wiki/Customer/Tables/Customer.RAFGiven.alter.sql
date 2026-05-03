@@ -32,4 +32,7 @@ ALTER TABLE main.experience.bronze_etoro_customer_rafgiven ALTER COLUMN RowInser
 ALTER TABLE main.experience.bronze_etoro_customer_rafgiven ALTER COLUMN ID COMMENT 'Surrogate PK. IDENTITY NOT FOR REPLICATION. Provides a unique row identifier and the clustered index key. Not meaningful for business logic (use ReferredCID or (ReferringCID, ReferredCID) for lookups). (Tier 1 - upstream wiki, etoro.Customer.RAFGiven)';
 ALTER TABLE main.experience.bronze_etoro_customer_rafgiven ALTER COLUMN ReferringCompensationAmount COMMENT 'Dollar amount paid to the referring customer as RAF bonus. Stored as whole dollars (converted from cents by dividing @ReferringCompensationInCents/100 in SetRafCompensation). Max observed: $500. NULL if referring party received no compensation (ReferringCompensationInCents=0 path skips SetBalanceCompensation but still inserts). (Tier 1 - upstream wiki, etoro.Customer.RAFGiven)';
 ALTER TABLE main.experience.bronze_etoro_customer_rafgiven ALTER COLUMN ReferredCompensationAmount COMMENT 'Dollar amount paid to the referred customer as RAF bonus. Stored as whole dollars. Max observed: $20. NULL if referred party received no compensation. Both compensation amounts are set via Customer.SetBalanceCompensation (BonusTypeID=53=Referring, BonusTypeID=54=Referred). (Tier 1 - upstream wiki, etoro.Customer.RAFGiven)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

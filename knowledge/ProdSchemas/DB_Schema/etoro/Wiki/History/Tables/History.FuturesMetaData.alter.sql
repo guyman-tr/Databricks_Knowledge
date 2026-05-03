@@ -39,4 +39,7 @@ ALTER TABLE main.trading.bronze_etoro_history_futuresmetadata ALTER COLUMN SysSt
 ALTER TABLE main.trading.bronze_etoro_history_futuresmetadata ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this version was superseded. CLUSTERED index leading column. (Tier 1 - upstream wiki, etoro.History.FuturesMetaData)';
 ALTER TABLE main.trading.bronze_etoro_history_futuresmetadata ALTER COLUMN SettlementMethod COMMENT 'How the futures contract settles at expiration. FK to Dictionary.SettlementMethodValues (ID column). 0=Cash settlement (no delivery, cash P&L), 1=Physical settlement (actual asset delivered). NULL for pre-2025 records (column added later). (Tier 1 - upstream wiki, etoro.History.FuturesMetaData)';
 ALTER TABLE main.trading.bronze_etoro_history_futuresmetadata ALTER COLUMN UnitOfMeasure COMMENT 'The physical unit of the underlying commodity or asset. FK to Dictionary.UnitOfMeasure (ID column). 0=Points (index), 1=Barrel, 2=Troy Ounce, 3=MMBtu, 4=Pounds, 5=Short Tons, 6=Euros, 7=Australian Dollars, 8=British Pounds, 9=Ether, 10=Bitcoin, 11=SOL, 12=XRP. NULL for pre-2025 records. (Tier 1 - upstream wiki, etoro.History.FuturesMetaData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

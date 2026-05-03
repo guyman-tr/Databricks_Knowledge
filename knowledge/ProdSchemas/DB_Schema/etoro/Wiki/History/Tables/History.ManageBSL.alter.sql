@@ -38,4 +38,7 @@ ALTER TABLE main.general.bronze_etoro_history_managebsl ALTER COLUMN TimeMessage
 ALTER TABLE main.general.bronze_etoro_history_managebsl ALTER COLUMN TimeMessageWasRecieved COMMENT 'UTC timestamp when the BSL consumer service dequeued and received this message for processing. NULL if the message was never dequeued (unlikely for archived messages). The gap between InsertedToQueue and Recieved measures BSL processing latency. Note: column name has a typo ("Recieved" not "Received"). (Tier 1 - upstream wiki, etoro.History.ManageBSL)';
 ALTER TABLE main.general.bronze_etoro_history_managebsl ALTER COLUMN TimeMessageWasAck COMMENT 'UTC timestamp when the BSL consumer service acknowledged the message (confirmed action taken). NOT NULL for all rows in this archive table (archival eligibility requires non-null ack). Gap between Recieved and Ack measures action execution time. (Tier 1 - upstream wiki, etoro.History.ManageBSL)';
 ALTER TABLE main.general.bronze_etoro_history_managebsl ALTER COLUMN ExecutionID COMMENT 'Links this BSL event to a specific BSL engine execution run (Trade.CheckBSL @ExecutionID). Multiple BSL messages may share the same ExecutionID if they were generated in the same BSL engine pass. NULL for messages created outside an explicit execution context. (Tier 1 - upstream wiki, etoro.History.ManageBSL)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_deposittype ALTER COLUMN Deposi
 ALTER TABLE main.general.bronze_etoro_dictionary_deposittype ALTER COLUMN DepositType COMMENT 'Short code name for the deposit category. Used in code branching and API classification. (Tier 1 - upstream wiki, etoro.Dictionary.DepositType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_deposittype ALTER COLUMN Description COMMENT 'Human-readable description. Displayed in back-office deposit management and reporting. (Tier 1 - upstream wiki, etoro.Dictionary.DepositType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_deposittype ALTER COLUMN ApplyFtd COMMENT 'Whether this deposit type counts toward First Time Deposit. 1=real external deposit, 0=internal/promotional credit. Drives marketing attribution, partner commission calculations, and onboarding milestone tracking. (Tier 1 - upstream wiki, etoro.Dictionary.DepositType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

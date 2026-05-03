@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_notificationtrigger SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationtrigger ALTER COLUMN NotificationTriggerID COMMENT 'Unique identifier for the trigger event: 1=ProcessedCashout, 2=RejectedCashout, 3=CanceledCashout, 4=NegativeEquityInformant, 5=NegativeEquityMarginCall. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationTrigger)';
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationtrigger ALTER COLUMN Name COMMENT 'Human-readable trigger event name. Used to configure notification-to-template mappings and in notification audit logs. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationTrigger)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

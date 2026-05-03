@@ -36,4 +36,7 @@ ALTER TABLE main.pii_data.bronze_userapidb_customer_extendeduserfield_history AL
 ALTER TABLE main.pii_data.bronze_userapidb_customer_extendeduserfield_history ALTER COLUMN TypeId COMMENT 'Value subtype at the time of the change. Maps to Dictionary.ExtendedUserValueType. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField_History)';
 ALTER TABLE main.pii_data.bronze_userapidb_customer_extendeduserfield_history ALTER COLUMN CountryId COMMENT 'Country context at the time of the change. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField_History)';
 ALTER TABLE main.pii_data.bronze_userapidb_customer_extendeduserfield_history ALTER COLUMN AdditionalDetails COMMENT 'Additional data at the time of the change. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField_History)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

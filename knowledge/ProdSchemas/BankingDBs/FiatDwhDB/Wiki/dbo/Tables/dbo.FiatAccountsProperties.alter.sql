@@ -31,4 +31,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountsproperties ALTER COLUMN
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountsproperties ALTER COLUMN AccountProgramId COMMENT 'Account program type at this point: 0=Unknown, 1=card, 2=iban. See Account Program. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccountsProperties)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountsproperties ALTER COLUMN SubProgramId COMMENT 'Specific sub-program at this point: 1-16. See Sub-Program. FK to dbo.SubPrograms. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccountsProperties)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountsproperties ALTER COLUMN Created COMMENT 'UTC timestamp when this program assignment was recorded. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccountsProperties)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

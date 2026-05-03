@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_paymentstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentstatus ALTER COLUMN PaymentStatusID COMMENT 'Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally. See Payment Status. (Dictionary.PaymentStatus) (Tier 1 - upstream wiki, etoro.Dictionary.PaymentStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentstatus ALTER COLUMN Name COMMENT 'Human-readable status label. UNIQUE constraint. Used in back-office payment management UI and reconciliation reports. (Tier 1 - upstream wiki, etoro.Dictionary.PaymentStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -29,4 +29,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_questionsanswers SET TAGS (
 ALTER TABLE main.compliance.bronze_userapidb_kyc_questionsanswers ALTER COLUMN QuestionId COMMENT 'Part of composite PK. References KYC.Questions. (Tier 1 - upstream wiki, UserApiDB.KYC.QuestionsAnswers)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_questionsanswers ALTER COLUMN AnswerId COMMENT 'Part of composite PK. References KYC.Answers. (Tier 1 - upstream wiki, UserApiDB.KYC.QuestionsAnswers)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_questionsanswers ALTER COLUMN Order COMMENT 'Display order of this answer within the question. NULL for unordered answers. (Tier 1 - upstream wiki, UserApiDB.KYC.QuestionsAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

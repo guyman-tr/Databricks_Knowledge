@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_etoro_price_liquidityaccounttoinstrument ALTER COL
 ALTER TABLE main.bi_db.bronze_etoro_price_liquidityaccounttoinstrument ALTER COLUMN SysStartTime COMMENT 'Temporal row validity start. Auto-managed by SQL Server system versioning. Enables point-in-time configuration queries. (Tier 1 - upstream wiki, etoro.Price.LiquidityAccountToInstrument)';
 ALTER TABLE main.bi_db.bronze_etoro_price_liquidityaccounttoinstrument ALTER COLUMN SysEndTime COMMENT 'Temporal row validity end. Historical versions in History.LiquidityAccountToInstrument. (Tier 1 - upstream wiki, etoro.Price.LiquidityAccountToInstrument)';
 ALTER TABLE main.bi_db.bronze_etoro_price_liquidityaccounttoinstrument ALTER COLUMN HostName COMMENT 'Computed: DB server hostname that processed the last DML on this row. Unusual column - captures the server host rather than user. Relevant in distributed/replicated environments to trace which server wrote a given mapping. (Tier 1 - upstream wiki, etoro.Price.LiquidityAccountToInstrument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

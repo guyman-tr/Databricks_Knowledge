@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_cryptotransactions ALTER CO
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_cryptotransactions ALTER COLUMN Amount COMMENT 'Quantity of cryptocurrency transferred on-chain. Matches or closely tracks C2F.Conversions.CryptoAmount for the same conversion. (Tier 1 - upstream wiki, WalletConversionDB.C2F.CryptoTransactions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_cryptotransactions ALTER COLUMN BlockchainFee COMMENT 'Network/gas fee charged by the blockchain for processing the transaction. Very small values observed (0.000045 XRP, 6e-8 for ERC-20). Deducted from the transfer, not from the conversion amount. (Tier 1 - upstream wiki, WalletConversionDB.C2F.CryptoTransactions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_cryptotransactions ALTER COLUMN Occurred COMMENT 'UTC timestamp when the crypto transaction was recorded. Default constraint auto-sets. (Tier 1 - upstream wiki, WalletConversionDB.C2F.CryptoTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

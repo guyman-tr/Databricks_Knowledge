@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_notificationtype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationtype ALTER COLUMN NotificationTypeID COMMENT 'Unique identifier for the delivery channel: 1=SilverPopEmail, 2=SmtpEmail, 3=PushNotification. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationtype ALTER COLUMN Name COMMENT 'Human-readable channel name. Used in notification configuration to select the delivery method. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

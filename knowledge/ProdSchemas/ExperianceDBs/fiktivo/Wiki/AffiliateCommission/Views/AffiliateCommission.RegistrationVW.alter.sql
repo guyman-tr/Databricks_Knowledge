@@ -91,4 +91,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationvw ALTER C
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationvw ALTER COLUMN IsProcessed COMMENT 'From Registration. Processing flag. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationvw ALTER COLUMN ValidFrom COMMENT 'From RegistrationMetaData. Attribution effective. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationvw ALTER COLUMN UpdateDate COMMENT 'Computed: GREATEST(RegistrationDate, ValidFrom). (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationVW)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

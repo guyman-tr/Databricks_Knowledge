@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_verificationlevel (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_verificationlevel SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the four tiers of customer identity verification (Level 0-3) that progressively unlock platform capabilities — from basic registration through full KYC-verified status with complete trading and withdrawal access. Source: etoro.Dictionary.VerificationLevel on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.VerificationLevel.md).'
+    'comment' = 'Lookup table defining the four tiers of customer identity verification (Level 0-3) that progressively unlock platform capabilities - from basic registration through full KYC-verified status with complete trading and withdrawal access. Source: etoro.Dictionary.VerificationLevel on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.VerificationLevel.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_verificationlevel SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_verificationlevel SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_verificationlevel ALTER COLUMN ID COMMENT 'Verification tier identifier: 0=Unverified, 1=Basic, 2=Intermediate, 3=Full KYC. Stored on BackOffice.Customer.VerificationLevelID and checked by 60+ procedures to gate trading, withdrawals, and compliance operations. (Tier 1 - upstream wiki, etoro.Dictionary.VerificationLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_verificationlevel ALTER COLUMN Name COMMENT 'Display label for the verification tier: "Level 0" through "Level 3". Used in BackOffice UI, compliance reports, and customer headers. Nullable by DDL but all current values are populated. (Tier 1 - upstream wiki, etoro.Dictionary.VerificationLevel)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

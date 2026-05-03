@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_customer_additionalcitizenship ALTER COL
 ALTER TABLE main.bi_db.bronze_userapidb_customer_additionalcitizenship ALTER COLUMN CountryID COMMENT 'The additional citizenship country. Implicit FK to Dictionary.Country. See Country. (Tier 1 - upstream wiki, UserApiDB.Customer.AdditionalCitizenship)';
 ALTER TABLE main.bi_db.bronze_userapidb_customer_additionalcitizenship ALTER COLUMN StartTime COMMENT 'System versioning row start time (GENERATED ALWAYS AS ROW START). (Tier 1 - upstream wiki, UserApiDB.Customer.AdditionalCitizenship)';
 ALTER TABLE main.bi_db.bronze_userapidb_customer_additionalcitizenship ALTER COLUMN EndTime COMMENT 'System versioning row end time (GENERATED ALWAYS AS ROW END). (Tier 1 - upstream wiki, UserApiDB.Customer.AdditionalCitizenship)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

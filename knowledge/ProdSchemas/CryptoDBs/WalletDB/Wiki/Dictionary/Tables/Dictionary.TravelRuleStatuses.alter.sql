@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelrulestatuses SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelrulestatuses ALTER COLUMN Id COMMENT 'Unique identifier. Values: 0=PendingManualApproval, 1=Approved, 2=Canceled, 3=PendingMissingInformation, 4=MissingInformationAdded, 5=MustCancel. FK target for Wallet.TransactionTravelRuleStatuses. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleStatuses)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelrulestatuses ALTER COLUMN Name COMMENT 'Status label. Unique constraint ensures no duplicates. Used in compliance dashboards and travel rule workflow UIs. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

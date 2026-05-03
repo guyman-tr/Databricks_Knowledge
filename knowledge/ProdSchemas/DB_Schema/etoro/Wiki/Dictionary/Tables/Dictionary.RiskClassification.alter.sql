@@ -28,5 +28,8 @@ ALTER TABLE main.general.bronze_etoro_dictionary_riskclassification SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_riskclassification ALTER COLUMN RiskClassificationID COMMENT 'Primary key identifying the risk classification level. 0=High, 1=Medium, 2=Low, 3=Unacceptable, 4=Medium High, 5=Medium Low. Referenced by BackOffice.Customer (RiskClassificationID, OnboardingRiskClassificationID), History.BackOfficeCustomer. Used by RiskCalculation.SetRiskClassificationForCySec, BackOffice.CustomerSetRiskClassification. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassification)';
 ALTER TABLE main.general.bronze_etoro_dictionary_riskclassification ALTER COLUMN Name COMMENT 'Human-readable label for the classification. Used for reporting, UI display, and audit logs. Values: High, Medium, Low, Unacceptable, Medium High, Medium Low. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassification)';
-ALTER TABLE main.general.bronze_etoro_dictionary_riskclassification ALTER COLUMN RiskScore COMMENT 'Numeric score enabling quantitative risk comparison. Higher = higher risk. Range 0–200 in live data. Used for sorting, thresholds, and regulatory reporting. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassification)';
-
+ALTER TABLE main.general.bronze_etoro_dictionary_riskclassification ALTER COLUMN RiskScore COMMENT 'Numeric score enabling quantitative risk comparison. Higher = higher risk. Range 0 - 200 in live data. Used for sorting, thresholds, and regulatory reporting. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassification)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

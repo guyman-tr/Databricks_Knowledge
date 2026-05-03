@@ -39,4 +39,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_limitationsdefinitions ALTER COLU
 ALTER TABLE main.wallet.bronze_walletdb_wallet_limitationsdefinitions ALTER COLUMN CryptoCategoryName COMMENT 'Named category of cryptocurrencies this rule applies to (e.g., "Stablecoins"). Used when the rule covers a group rather than a single asset. Mutually exclusive with CryptoId per convention. (Tier 1 - upstream wiki, WalletDB.Wallet.LimitationsDefinitions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_limitationsdefinitions ALTER COLUMN LimitScopeId COMMENT 'Aggregation scope: 1=Single (applies to individual transaction), 2=Periodic (applies to rolling sum over a time window). FK to Dict.LimitScopes. (Tier 1 - upstream wiki, WalletDB.Wallet.LimitationsDefinitions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_limitationsdefinitions ALTER COLUMN LimitActionId COMMENT 'Action taken on breach: 1=Enforce (apply the limit), 2=Alert (notify only). FK to Dict.LimitActions. (Tier 1 - upstream wiki, WalletDB.Wallet.LimitationsDefinitions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

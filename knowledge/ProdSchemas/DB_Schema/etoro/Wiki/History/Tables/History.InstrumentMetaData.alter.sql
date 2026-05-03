@@ -63,4 +63,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_instrumentmetadata ALTER COLUMN SysE
 ALTER TABLE main.bi_db.bronze_etoro_history_instrumentmetadata ALTER COLUMN SEDOL COMMENT 'Stock Exchange Daily Official List identifier. UK-centric securities identifier (7-character alphanumeric). NULL for non-SEDOL instruments. (Tier 1 - upstream wiki, etoro.History.InstrumentMetaData)';
 ALTER TABLE main.bi_db.bronze_etoro_history_instrumentmetadata ALTER COLUMN SubCategory COMMENT 'Freeform sub-category label providing additional classification context beyond InstrumentTypeSubCategoryID. (Tier 1 - upstream wiki, etoro.History.InstrumentMetaData)';
 ALTER TABLE main.bi_db.bronze_etoro_history_instrumentmetadata ALTER COLUMN CFICode COMMENT 'Classification of Financial Instruments code (ISO 10962). 6-character standardized code describing the instrument type at the international regulatory level (e.g., "ESVUFR" for common equity). (Tier 1 - upstream wiki, etoro.History.InstrumentMetaData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

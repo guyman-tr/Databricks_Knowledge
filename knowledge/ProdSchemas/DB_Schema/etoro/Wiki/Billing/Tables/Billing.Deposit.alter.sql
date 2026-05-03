@@ -73,4 +73,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_deposit ALTER COLUMN FlowID COMMEN
 ALTER TABLE main.billing.bronze_etoro_billing_deposit ALTER COLUMN ExchangeFeeInUSD COMMENT 'Exchange fee expressed in USD absolute amount. Complements ExchangeFee (which may be in provider-specific units) with a USD-normalized value for standardized reporting. Added for PAYIL-8913/8926 (Elrom B., 25/09/2024). (Tier 1 - upstream wiki, etoro.Billing.Deposit)';
 ALTER TABLE main.billing.bronze_etoro_billing_deposit ALTER COLUMN ExchangeFeePercentage COMMENT 'Exchange fee as a percentage of the deposit amount (0.00-100.00). Enables direct comparison of fee rates across currencies and deposit types. Added for PAYIL-8913/8926 (Elrom B., 25/09/2024). (Tier 1 - upstream wiki, etoro.Billing.Deposit)';
 ALTER TABLE main.billing.bronze_etoro_billing_deposit ALTER COLUMN FeeConfigurationID COMMENT 'References a fee configuration profile that determined the exchange fee for this deposit. Enables retrospective lookup of which fee rules applied at deposit time. Added by Zipi L. (2026-02-08, PAYIL). NULL for deposits processed before fee configuration framework was introduced. (Tier 1 - upstream wiki, etoro.Billing.Deposit)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

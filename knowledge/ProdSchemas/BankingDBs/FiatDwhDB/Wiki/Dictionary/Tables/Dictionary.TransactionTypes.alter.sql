@@ -28,4 +28,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_transactiontypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_transactiontypes ALTER COLUMN Id COMMENT 'Lookup identifier. Primary key. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.TransactionTypes)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_transactiontypes ALTER COLUMN Name COMMENT 'Human-readable name for this value. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.TransactionTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

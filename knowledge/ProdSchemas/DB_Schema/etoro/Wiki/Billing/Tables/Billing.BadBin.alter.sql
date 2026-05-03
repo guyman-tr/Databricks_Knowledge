@@ -29,4 +29,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_badbin SET TAGS (
 ALTER TABLE main.billing.bronze_etoro_billing_badbin ALTER COLUMN BinFrom COMMENT 'Start of the blocked BIN range (inclusive). Part of the composite PK. For single-BIN blocks, equals BinTo. Represents the first 6 or 8 digits of the card number. (Tier 1 - upstream wiki, etoro.Billing.BadBin)';
 ALTER TABLE main.billing.bronze_etoro_billing_badbin ALTER COLUMN BinTo COMMENT 'End of the blocked BIN range (inclusive). Part of the composite PK. For single-BIN blocks, equals BinFrom. Any card whose BIN prefix falls in [BinFrom, BinTo] is considered blocked. (Tier 1 - upstream wiki, etoro.Billing.BadBin)';
 ALTER TABLE main.billing.bronze_etoro_billing_badbin ALTER COLUMN BlockReasonID COMMENT 'Optional block reason code. NULL = blocked without a specific coded reason (the overwhelming majority of rows). Non-NULL values reference a reason catalog (only BlockReasonID=1 observed in live data, applied to 2 rows at BIN 40380600-40380601). No FK constraint defined. (Tier 1 - upstream wiki, etoro.Billing.BadBin)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

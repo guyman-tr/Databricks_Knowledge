@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_customer_extendeduserfieldvalidation ALT
 ALTER TABLE main.bi_db.bronze_userapidb_customer_extendeduserfieldvalidation ALTER COLUMN CountryID COMMENT 'Part of composite PK. Country context for validation. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserFieldValidation)';
 ALTER TABLE main.bi_db.bronze_userapidb_customer_extendeduserfieldvalidation ALTER COLUMN FieldID COMMENT 'Part of composite PK. Extended field identifier. Maps to Dictionary.ExtendedUserField. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserFieldValidation)';
 ALTER TABLE main.bi_db.bronze_userapidb_customer_extendeduserfieldvalidation ALTER COLUMN IsValid COMMENT 'Whether the field value passed validation. NULL=not yet validated, 1=valid, 0=invalid. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserFieldValidation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

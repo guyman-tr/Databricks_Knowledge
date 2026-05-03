@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_dwh_questions_answers_v ALTER COLUMN Que
 ALTER TABLE main.bi_db.bronze_userapidb_dwh_questions_answers_v ALTER COLUMN MultipleSelection COMMENT 'Whether the user may select more than one answer for this question. 1=multiple allowed, 0=single answer only. From KYC.Questions. (Tier 1 - upstream wiki, UserApiDB.DWH.Questions_Answers_V)';
 ALTER TABLE main.bi_db.bronze_userapidb_dwh_questions_answers_v ALTER COLUMN AnswerId COMMENT 'KYC answer option identifier. From KYC.Answers via KYC.QuestionsAnswers junction. (Tier 1 - upstream wiki, UserApiDB.DWH.Questions_Answers_V)';
 ALTER TABLE main.bi_db.bronze_userapidb_dwh_questions_answers_v ALTER COLUMN AnswerText COMMENT 'The full text of the answer option as shown to the user. From KYC.Answers. (Tier 1 - upstream wiki, UserApiDB.DWH.Questions_Answers_V)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

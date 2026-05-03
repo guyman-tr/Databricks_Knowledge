@@ -195,4 +195,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliates_masked ALTER COLUMN 
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliates_masked ALTER COLUMN StreetNumber COMMENT 'Street/building number component of the affiliate''s address. Added to support structured address formats. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Affiliates)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliates_masked ALTER COLUMN LoginName_LOWER COMMENT 'Computed column: lower(LoginName). Provides case-insensitive login name lookups via NC index without collation overhead. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Affiliates)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliates_masked ALTER COLUMN CalculateCommission COMMENT 'Commission calculation method flag: 0=standard calculation (99.8%), 1=custom/override calculation (96 accounts). Controls which commission engine processes this affiliate''s earnings. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Affiliates)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

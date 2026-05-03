@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_etoro_billing_mapmerchantcodetomid ALTER COLUMN Re
 ALTER TABLE main.bi_db.bronze_etoro_billing_mapmerchantcodetomid ALTER COLUMN CurrencyID COMMENT 'Account denomination currency of the transaction. Explicit FK to Dictionary.Currency. Combined with RegulationID to narrow the merchant code lookup. The same MerchantCode often has different underlying MID values per currency (different numeric merchant accounts per currency). (Tier 1 - upstream wiki, etoro.Billing.MapMerchantCodeToMid)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_mapmerchantcodetomid ALTER COLUMN MerchantCode COMMENT 'The raw merchant identifier as provided by the payment provider or used in eToro''s own systems. Three formats: (1) Numeric string = Skrill merchant account code (e.g., "5075493"); (2) Alphanumeric string = Neteller merchant account code (e.g., "AAABbn2n6r56x4Qe"); (3) eToro internal code = eToro''s own merchant account identifier (e.g., "ETOROEUOCTPT", "ETOROEUSALES"). Joined against Billing.ProtocolMIDSettings.Value in Billing.GetMIDDescription. (Tier 1 - upstream wiki, etoro.Billing.MapMerchantCodeToMid)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_mapmerchantcodetomid ALTER COLUMN MID COMMENT 'Human-readable Merchant ID label or numeric merchant account number. Two forms: (1) Label = friendly name used in BackOffice UI (SkrillEU, SkrillUK, SkrillAU, NetellerEU, NetellerFCA); (2) Numeric = eToro''s actual merchant account number at the payment gateway (e.g., 18986763). Returned by Billing.GetMIDDescription and displayed in payment investigation views. (Tier 1 - upstream wiki, etoro.Billing.MapMerchantCodeToMid)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

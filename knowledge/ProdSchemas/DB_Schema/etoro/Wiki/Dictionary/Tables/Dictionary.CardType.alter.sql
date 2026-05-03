@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_cardtype ALTER COLUMN CardTypeI
 ALTER TABLE main.general.bronze_etoro_dictionary_cardtype ALTER COLUMN Name COMMENT 'Card brand name. Unique constraint prevents duplicates. Used in payment UI, transaction records, and fraud reporting. (Tier 1 - upstream wiki, etoro.Dictionary.CardType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cardtype ALTER COLUMN IsActive COMMENT 'Whether this card brand is currently accepted for deposits: 1=accepted, 0=rejected. DEFAULT 1 (new card types are active by default). Only 4 of 32 are currently active. (Tier 1 - upstream wiki, etoro.Dictionary.CardType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cardtype ALTER COLUMN Is3dsOn COMMENT 'Whether 3D Secure authentication is mandatory for this card type: 1=3DS required (redirects to issuer authentication), 0=no 3DS. DEFAULT 0. Only Visa and MasterCard have 3DS enabled, for PSD2/SCA compliance. (Tier 1 - upstream wiki, etoro.Dictionary.CardType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

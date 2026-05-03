@@ -33,4 +33,7 @@ ALTER TABLE main.dealing.bronze_etoro_price_getinstrumentratesources ALTER COLUM
 ALTER TABLE main.dealing.bronze_etoro_price_getinstrumentratesources ALTER COLUMN Priority COMMENT 'Feed priority tier from Price.InstrumentRateSources: 10=primary, 20=secondary, 30=tertiary, 40=quaternary. Lower value = higher precedence. An instrument may skip tiers (e.g., P10 and P30 but no P20). (Tier 1 - upstream wiki, etoro.Price.GetInstrumentRateSources)';
 ALTER TABLE main.dealing.bronze_etoro_price_getinstrumentratesources ALTER COLUMN IsBenchmark COMMENT 'Whether this source is the designated benchmark for the instrument''s type: 1=benchmark, 0=not benchmark. Computed: IIF(BenchmarkAccountRateSourceID IS NULL, 0, 1). Currently always 0 (BenchmarkFeedConfiguration is empty). (Tier 1 - upstream wiki, etoro.Price.GetInstrumentRateSources)';
 ALTER TABLE main.dealing.bronze_etoro_price_getinstrumentratesources ALTER COLUMN Quality COMMENT 'Benchmark quality score from Price.BenchmarkFeedConfiguration. -1 when no benchmark is configured (ISNULL default). A positive value indicates the quality weight of this benchmark source for the instrument''s type. Currently always -1. (Tier 1 - upstream wiki, etoro.Price.GetInstrumentRateSources)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

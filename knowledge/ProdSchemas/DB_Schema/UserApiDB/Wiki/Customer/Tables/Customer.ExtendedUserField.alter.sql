@@ -65,4 +65,7 @@ ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked A
 ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked ALTER COLUMN ID COMMENT 'Surrogate PK (NONCLUSTERED). Auto-incrementing. Used for row identification. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked ALTER COLUMN CountryId COMMENT 'Part of unique clustered key. Country context for this field value. Allows per-country field values. (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_extendeduserfield_masked ALTER COLUMN AdditionalDetails COMMENT 'JSON or freeform additional data (e.g., document details, validation metadata). (Tier 1 - upstream wiki, UserApiDB.Customer.ExtendedUserField)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

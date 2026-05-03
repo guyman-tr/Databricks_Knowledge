@@ -30,4 +30,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountstatuses ALTER COLUMN Id
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountstatuses ALTER COLUMN AccountId COMMENT 'FK to dbo.FiatAccount.Id. The account whose status changed. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccountStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountstatuses ALTER COLUMN StatusType COMMENT 'Account status: 0=Active, 1=Suspended, 2=Deleted. See Account Status. (Dictionary.AccountStatuses) (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccountStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccountstatuses ALTER COLUMN Created COMMENT 'UTC timestamp when this status change was recorded. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccountStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

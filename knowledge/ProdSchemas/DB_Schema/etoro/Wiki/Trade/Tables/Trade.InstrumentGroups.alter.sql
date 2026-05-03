@@ -33,4 +33,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrumentgroups ALTER COLUMN SysSta
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentgroups ALTER COLUMN SysEndTime COMMENT 'System-versioned temporal column (GENERATED ALWAYS AS ROW END). Records when this group assignment was removed or changed. Value of 9999-12-31 indicates the assignment is current. Part of PERIOD FOR SYSTEM_TIME. (Tier 1 - upstream wiki, etoro.Trade.InstrumentGroups)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentgroups ALTER COLUMN DbLoginName COMMENT 'Computed audit column: suser_name(). Captures the SQL Server login name of the session that last modified this row. Used for auditing which database account performed the change. (Tier 1 - upstream wiki, etoro.Trade.InstrumentGroups)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentgroups ALTER COLUMN AppLoginName COMMENT 'Computed audit column: CONVERT(varchar(500), context_info()). Captures the application-level user identity from CONTEXT_INFO, which is set by Trade.InsertInstrumentGroup and Trade.DeleteInstrumentGroup from the @AppLoginName parameter. Identifies the back-office operator who made the group assignment change. (Tier 1 - upstream wiki, etoro.Trade.InstrumentGroups)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

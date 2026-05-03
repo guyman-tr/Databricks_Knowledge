@@ -37,4 +37,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_conversiontransactions ALTER COLU
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversiontransactions ALTER COLUMN EstimatedBlockChainFee COMMENT 'Estimated blockchain network fee for this leg. (Tier 1 - upstream wiki, WalletDB.Wallet.ConversionTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversiontransactions ALTER COLUMN Occurred COMMENT 'Timestamp of this transaction record creation. (Tier 1 - upstream wiki, WalletDB.Wallet.ConversionTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversiontransactions ALTER COLUMN CryptoId COMMENT 'The cryptocurrency for this leg. FK to Wallet.CryptoTypes.CryptoID. Part of unique constraint. (Tier 1 - upstream wiki, WalletDB.Wallet.ConversionTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

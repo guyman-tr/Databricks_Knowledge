@@ -31,4 +31,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_cardsprovidersmapping ALTER COLUMN 
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_cardsprovidersmapping ALTER COLUMN ProviderId COMMENT 'FK to Dictionary.Providers. Currently 1=Tribe. See Provider. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CardsProvidersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_cardsprovidersmapping ALTER COLUMN CardProviderId COMMENT 'The provider''s identifier for this card in their system. Used for provider API calls. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CardsProvidersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_cardsprovidersmapping ALTER COLUMN Created COMMENT 'UTC timestamp when this mapping was recorded. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CardsProvidersMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

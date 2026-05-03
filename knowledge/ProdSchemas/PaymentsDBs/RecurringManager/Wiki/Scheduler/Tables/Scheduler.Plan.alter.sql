@@ -35,4 +35,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_scheduler_plan ALTER COLUMN End
 ALTER TABLE main.billing.bronze_recurringmanager_scheduler_plan ALTER COLUMN SysStartTime COMMENT 'System-versioning row start time. Automatically managed by SQL Server temporal tables. Tracks when this version of the row became current. (Tier 1 - upstream wiki, RecurringManager.Scheduler.Plan)';
 ALTER TABLE main.billing.bronze_recurringmanager_scheduler_plan ALTER COLUMN SysEndTime COMMENT 'System-versioning row end time. Value of 9999-12-31 indicates the current version. When a row is modified, the previous version is moved to History.Plan with SysEndTime set to the modification timestamp. (Tier 1 - upstream wiki, RecurringManager.Scheduler.Plan)';
 ALTER TABLE main.billing.bronze_recurringmanager_scheduler_plan ALTER COLUMN ChargingDay COMMENT 'Day of the month (1-28) when the charge should occur for Monthly plans. NULL for 66% of plans (legacy plans created before this column was added, or Weekly/BiWeekly plans where the charge day is derived from StartDate). Can be updated via UpdatePlan if the user changes their preferred billing day. (Tier 1 - upstream wiki, RecurringManager.Scheduler.Plan)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

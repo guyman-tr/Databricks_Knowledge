@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_checksumtypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_checksumtypes ALTER COLUMN Id COMMENT 'Unique identifier for the checksum type. Values: 1=WalletPool, 2=Wallet, 3=StakingAddress, 4=EtoroExternalAddress. FK target for Wallet.Checksums.ChecksumTypeId. (Tier 1 - upstream wiki, WalletDB.Dictionary.ChecksumTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_checksumtypes ALTER COLUMN Name COMMENT 'Unique human-readable label identifying the scope of checksum monitoring. Used in integrity verification procedures and security monitoring alerts. (Tier 1 - upstream wiki, WalletDB.Dictionary.ChecksumTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

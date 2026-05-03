@@ -33,4 +33,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_positionsprocessedforindexdividnds A
 ALTER TABLE main.trading.bronze_etoro_trade_positionsprocessedforindexdividnds ALTER COLUMN CreditID COMMENT 'Links to credit transaction record. (Tier 1 - upstream wiki, etoro.Trade.PositionsProcessedForIndexDividnds)';
 ALTER TABLE main.trading.bronze_etoro_trade_positionsprocessedforindexdividnds ALTER COLUMN BuyTax COMMENT 'Tax rate applied for buy-side positions. (Tier 1 - upstream wiki, etoro.Trade.PositionsProcessedForIndexDividnds)';
 ALTER TABLE main.trading.bronze_etoro_trade_positionsprocessedforindexdividnds ALTER COLUMN SellTax COMMENT 'Tax rate applied for sell-side positions. (Tier 1 - upstream wiki, etoro.Trade.PositionsProcessedForIndexDividnds)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

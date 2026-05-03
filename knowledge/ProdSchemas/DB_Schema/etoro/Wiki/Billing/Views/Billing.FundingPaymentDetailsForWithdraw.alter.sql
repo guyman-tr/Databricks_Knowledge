@@ -37,4 +37,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_fundingpaymentdetailsforwithdraw A
 ALTER TABLE main.billing.bronze_etoro_billing_fundingpaymentdetailsforwithdraw ALTER COLUMN DocumentRequired COMMENT '1=KYC documentation required. From Billing.Funding. (Tier 1 - upstream wiki, etoro.Billing.FundingPaymentDetailsForWithdraw)';
 ALTER TABLE main.billing.bronze_etoro_billing_fundingpaymentdetailsforwithdraw ALTER COLUMN DateCreated COMMENT 'UTC timestamp of instrument registration. From Billing.Funding. (Tier 1 - upstream wiki, etoro.Billing.FundingPaymentDetailsForWithdraw)';
 ALTER TABLE main.billing.bronze_etoro_billing_fundingpaymentdetailsforwithdraw ALTER COLUMN PaymentDetails COMMENT 'Computed human-readable payment account identifier from FundingData XML with country name from Dictionary.Country. WireTransfer (type 2) includes country name (unlike FundingPaymentDetailsForDeposit). eToroMoney (type 33) is commented out. Covers more types than the deposit variant: adds 20, 21, 22, 28, 34, 35. (Tier 1 - upstream wiki, etoro.Billing.FundingPaymentDetailsForWithdraw)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

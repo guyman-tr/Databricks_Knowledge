@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_depositrollbacktypereason (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktypereason SET TBLPROPERTIES (
-    'comment' = 'Lookup table enumerating the 38 specific reasons why a deposit was rolled back — from fraud and fake documents to wrong amounts, failed deposits, and technical mishandling. Source: etoro.Dictionary.DepositRollbackTypeReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositRollbackTypeReason.md).'
+    'comment' = 'Lookup table enumerating the 38 specific reasons why a deposit was rolled back - from fraud and fake documents to wrong amounts, failed deposits, and technical mishandling. Source: etoro.Dictionary.DepositRollbackTypeReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositRollbackTypeReason.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktypereason SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktypereason SET T
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktypereason ALTER COLUMN DepositRollbackTypeReasonID COMMENT 'Primary key identifying the rollback reason. 38 values from 0 (Fraud) to 37 (Wrong Deposit ID). Linked to rollback types via BackOffice.DepositRollbackTypeToReason mapping table. (Tier 1 - upstream wiki, etoro.Dictionary.DepositRollbackTypeReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktypereason ALTER COLUMN Name COMMENT 'Human-readable reason description displayed in BackOffice UI when an operator creates a deposit rollback. Used in SSRS risk and billing reports. (Tier 1 - upstream wiki, etoro.Dictionary.DepositRollbackTypeReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

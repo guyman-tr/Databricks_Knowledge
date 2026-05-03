@@ -101,4 +101,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditvw ALTER COLUMN 
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditvw ALTER COLUMN UpdateDate COMMENT 'Computed: GREATEST(CreditDate, ValidFrom). (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditvw ALTER COLUMN CommissionSource COMMENT 'From Credit. Commission calculation source. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditvw ALTER COLUMN ProductID COMMENT 'From Credit. Product identifier (ISA MoneyFarm). (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditVW)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

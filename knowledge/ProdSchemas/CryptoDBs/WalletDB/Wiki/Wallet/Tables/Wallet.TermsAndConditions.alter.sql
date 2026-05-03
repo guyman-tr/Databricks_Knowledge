@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_termsandconditions ALTER COLUMN Ty
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_termsandconditions ALTER COLUMN LinksJson COMMENT 'JSON object containing associated legal links: feesAndLimitsUrl, termsOfUseUrl, sendTransactionWarningLink, customerSupport. These links are displayed in the wallet UI alongside the T&C acceptance prompt. Schema is consistent across versions. (Tier 1 - upstream wiki, WalletDB.Wallet.TermsAndConditions)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_termsandconditions ALTER COLUMN ValidFrom COMMENT 'System-versioned temporal column (HIDDEN). Automatically set by SQL Server when a row is inserted or updated. Marks the start of this row version''s validity period. (Tier 1 - upstream wiki, WalletDB.Wallet.TermsAndConditions)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_termsandconditions ALTER COLUMN ValidTo COMMENT 'System-versioned temporal column (HIDDEN). Automatically set by SQL Server when a row is superseded by an update. Default value indicates the row is currently active. (Tier 1 - upstream wiki, WalletDB.Wallet.TermsAndConditions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -33,4 +33,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrumentimages ALTER COLUMN Height
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentimages ALTER COLUMN Uri COMMENT 'Full URL or path to the image. CDN: etoro-cdn.etorostatic.com/market-avatars/{symbol}/{W}x{H}.png. S3: s3.etoro.com/images/markets/avatars/{symbol}/{W}x{H}.png. Legacy: /medium/{SYMBOL}.png. (Tier 1 - upstream wiki, etoro.Trade.InstrumentImages)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentimages ALTER COLUMN BackgroundColor COMMENT 'Optional background color for image display (e.g., hex or CSS color). NULL in sampled data - may be unused or for future theming. (Tier 1 - upstream wiki, etoro.Trade.InstrumentImages)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentimages ALTER COLUMN TextColor COMMENT 'Optional text/overlay color. NULL in sampled data - may be unused or for future theming. (Tier 1 - upstream wiki, etoro.Trade.InstrumentImages)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

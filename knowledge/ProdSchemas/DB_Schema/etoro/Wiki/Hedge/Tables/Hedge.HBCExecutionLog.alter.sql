@@ -44,4 +44,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_hbcexecutionlog ALTER COLUMN ShouldW
 ALTER TABLE main.dealing.bronze_etoro_hedge_hbcexecutionlog ALTER COLUMN InitialRate COMMENT 'The eToro market rate at hedge initiation time (customer''s reference rate). Nullable - may be absent for cancel executions. Enables comparison of rate at order creation vs rate at fill (InitialRate vs LPExecutionRate). (Tier 1 - upstream wiki, etoro.Hedge.HBCExecutionLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_hbcexecutionlog ALTER COLUMN IsCancelExecution COMMENT '1 if this row represents a cancellation of a previous execution. DEFAULT 0. 78 cancel rows in data. Cancellation requests arrive via RabbitMQ from HedgeAPI. (Tier 1 - upstream wiki, etoro.Hedge.HBCExecutionLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_hbcexecutionlog ALTER COLUMN CancelledExecutionID COMMENT 'For IsCancelExecution=1 rows: the ExecutionID of the original execution being cancelled. DEFAULT 0 for normal (non-cancel) executions. (Tier 1 - upstream wiki, etoro.Hedge.HBCExecutionLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_conversionstatuses SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_conversionstatuses ALTER COLUMN Id COMMENT 'Unique identifier for the conversion status. Values: 1=Pending, 2=Failed, 3=Completed. FK target for Wallet.ConversionStatuses and referenced in conversion transaction queries. (Tier 1 - upstream wiki, WalletDB.Dictionary.ConversionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_conversionstatuses ALTER COLUMN Name COMMENT 'Human-readable status label. Displayed in customer transaction history and used in operational monitoring dashboards. (Tier 1 - upstream wiki, WalletDB.Dictionary.ConversionStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -26,7 +26,10 @@ ALTER TABLE main.general.bronze_etoro_dictionary_lotcountgroup SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_lotcountgroup ALTER COLUMN LotCountGroupID COMMENT 'Unique identifier for the lot count group tier. Values 0–4 map to Bronze/Silver/Gold/Platinum/Test. Referenced by BackOffice.SetLotCountGroupID and customer tier assignment logic. (Tier 1 - upstream wiki, etoro.Dictionary.LotCountGroup)';
+ALTER TABLE main.general.bronze_etoro_dictionary_lotcountgroup ALTER COLUMN LotCountGroupID COMMENT 'Unique identifier for the lot count group tier. Values 0 - 4 map to Bronze/Silver/Gold/Platinum/Test. Referenced by BackOffice.SetLotCountGroupID and customer tier assignment logic. (Tier 1 - upstream wiki, etoro.Dictionary.LotCountGroup)';
 ALTER TABLE main.general.bronze_etoro_dictionary_lotcountgroup ALTER COLUMN LotCountGroupName COMMENT 'Human-readable tier name: "Group Bronze", "Group Silver", "Group Gold", "Group Platinum", "Group Test". Used in BackOffice displays and reporting. (Tier 1 - upstream wiki, etoro.Dictionary.LotCountGroup)';
 ALTER TABLE main.general.bronze_etoro_dictionary_lotcountgroup ALTER COLUMN PlayerLevelID COMMENT 'FK to Dictionary.PlayerLevel. Maps this lot count group to an eToro Club membership tier. Values: 1=Bronze, 5=Silver, 3=Gold, 2=Platinum, 4=Test. See Player Level. (Tier 1 - upstream wiki, etoro.Dictionary.LotCountGroup)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

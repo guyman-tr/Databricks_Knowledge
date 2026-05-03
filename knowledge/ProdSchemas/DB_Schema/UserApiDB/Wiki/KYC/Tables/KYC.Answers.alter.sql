@@ -33,4 +33,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_answers ALTER COLUMN StatusID C
 ALTER TABLE main.compliance.bronze_userapidb_kyc_answers ALTER COLUMN FreeTextValidationExpression COMMENT 'Regex pattern for validating free-text input when this answer is selected. NULL if no free-text input. (Tier 1 - upstream wiki, UserApiDB.KYC.Answers)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_answers ALTER COLUMN TranslationKey COMMENT 'i18n translation key for multi-language support. Used by frontend to look up localized text. (Tier 1 - upstream wiki, UserApiDB.KYC.Answers)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_answers ALTER COLUMN AnswerShortDescription COMMENT 'Short description for internal use and reporting. (Tier 1 - upstream wiki, UserApiDB.KYC.Answers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_notificationmessagestatus SET T
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationmessagestatus ALTER COLUMN StatusID COMMENT 'Unique identifier for the message processing state: 1=Received, 2=Queued, 3=Processed, 4=SentToProcess, 5=Failed. Referenced by notification message tracking tables. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationMessageStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationmessagestatus ALTER COLUMN Name COMMENT 'Human-readable state label. Nullable (unusual for a lookup Name column). Displayed in notification monitoring dashboards. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationMessageStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

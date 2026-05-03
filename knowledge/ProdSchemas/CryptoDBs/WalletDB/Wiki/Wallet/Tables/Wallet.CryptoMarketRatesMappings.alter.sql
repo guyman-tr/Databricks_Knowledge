@@ -30,4 +30,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptomarketratesmappings ALTER C
 ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptomarketratesmappings ALTER COLUMN CryptoId COMMENT 'The cryptocurrency this mapping applies to. FK to Wallet.CryptoTypes.CryptoID. Unique constraint ensures one rate mapping per crypto. (Tier 1 - upstream wiki, WalletDB.Wallet.CryptoMarketRatesMappings)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptomarketratesmappings ALTER COLUMN MarketRatesCurrencySymbol COMMENT 'Symbol used to query the market rate feed for this crypto''s USD price. Usually matches the crypto ticker (BTC, ETH, USDT) but may differ for versioned tokens (KNC2, AXSV2, GALAV2). Unique constraint prevents duplicate symbols. (Tier 1 - upstream wiki, WalletDB.Wallet.CryptoMarketRatesMappings)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptomarketratesmappings ALTER COLUMN Occurred COMMENT 'Timestamp when this mapping was created. Original mappings share 2019-11-26. Newer cryptos have later dates tracking their rate feed integration. (Tier 1 - upstream wiki, WalletDB.Wallet.CryptoMarketRatesMappings)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

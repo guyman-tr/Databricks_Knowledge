@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_customervalueeligibilitychangi
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_customervalueeligibilitychangingsource ALTER COLUMN Id COMMENT 'Unique identifier for the change source. Values: 0=Unknown, 1=BackOffice, 2=Banking, 3=Crypto. (Tier 1 - upstream wiki, WalletDB.Dictionary.CustomerValueEligibilityChangingSource)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_customervalueeligibilitychangingsource ALTER COLUMN ChangingSource COMMENT 'Name of the system or team that triggered the eligibility change. Used in audit logs and customer support investigations. (Tier 1 - upstream wiki, WalletDB.Dictionary.CustomerValueEligibilityChangingSource)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

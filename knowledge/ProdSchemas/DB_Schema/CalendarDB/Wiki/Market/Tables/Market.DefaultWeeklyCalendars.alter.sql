@@ -43,4 +43,7 @@ ALTER TABLE main.dealing.bronze_calendardb_market_defaultweeklycalendars ALTER C
 ALTER TABLE main.dealing.bronze_calendardb_market_defaultweeklycalendars ALTER COLUMN AppLoginName COMMENT 'Computed audit column: application session identity. (Tier 1 - upstream wiki, CalendarDB.Market.DefaultWeeklyCalendars)';
 ALTER TABLE main.dealing.bronze_calendardb_market_defaultweeklycalendars ALTER COLUMN SysStartTime COMMENT 'Temporal ROW START. (Tier 1 - upstream wiki, CalendarDB.Market.DefaultWeeklyCalendars)';
 ALTER TABLE main.dealing.bronze_calendardb_market_defaultweeklycalendars ALTER COLUMN SysEndTime COMMENT 'Temporal ROW END. History in History.DefaultWeeklyCalendars. (Tier 1 - upstream wiki, CalendarDB.Market.DefaultWeeklyCalendars)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:38:44 UTC
+-- Bronze deploy: CalendarDB batch 1
+-- ====================

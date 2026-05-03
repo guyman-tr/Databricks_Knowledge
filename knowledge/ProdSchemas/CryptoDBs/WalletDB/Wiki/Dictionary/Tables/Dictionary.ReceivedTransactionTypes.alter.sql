@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_receivedtransactiontypes SET 
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_receivedtransactiontypes ALTER COLUMN Id COMMENT 'Unique identifier for the received transaction type. Values: 1=MoneyIn, 2=Redeem, 3=Funding, 4=ConversionFromUser, 5=ConversionFromEtoro, 6=Payment, 7=RedeemAsic, 8=StakeAndRewardsRefund. FK target for Wallet.ReceivedTransactions.ReceivedTransactionTypeId. (Tier 1 - upstream wiki, WalletDB.Dictionary.ReceivedTransactionTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_receivedtransactiontypes ALTER COLUMN Name COMMENT 'Label for the transaction type. Used in transaction reporting, compliance dashboards, and financial reconciliation. (Tier 1 - upstream wiki, WalletDB.Dictionary.ReceivedTransactionTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

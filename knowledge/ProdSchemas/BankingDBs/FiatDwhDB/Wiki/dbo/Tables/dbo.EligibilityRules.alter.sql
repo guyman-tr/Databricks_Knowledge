@@ -37,4 +37,7 @@ ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_eligibilityrules ALTER COLUMN Regula
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_eligibilityrules ALTER COLUMN UpdateTime COMMENT 'Timestamp when this rule was last configured/deployed. (Tier 1 - upstream wiki, FiatDwhDB.dbo.EligibilityRules)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_eligibilityrules ALTER COLUMN LastTimeOverride COMMENT 'Timestamp of the most recent bulk refresh/override of this rule. Updated when AddEligibilityRules runs. (Tier 1 - upstream wiki, FiatDwhDB.dbo.EligibilityRules)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_eligibilityrules ALTER COLUMN Priority COMMENT 'Priority rank for rule evaluation. When multiple rules match, lowest number wins. Default 0 (highest priority). (Tier 1 - upstream wiki, FiatDwhDB.dbo.EligibilityRules)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

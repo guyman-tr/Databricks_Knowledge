@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons SET TAG
 -- Column Comments
 ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons ALTER COLUMN Id COMMENT 'Lookup identifier. Primary key. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.StatusChangeReasons)';
 ALTER TABLE main.general.bronze_fiatdwhdb_dictionary_statuschangereasons ALTER COLUMN Name COMMENT 'Human-readable name for this value. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.StatusChangeReasons)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

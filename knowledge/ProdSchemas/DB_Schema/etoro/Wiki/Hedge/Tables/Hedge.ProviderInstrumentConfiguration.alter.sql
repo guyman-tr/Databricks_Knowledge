@@ -35,4 +35,7 @@ ALTER TABLE main.trading.bronze_etoro_hedge_providerinstrumentconfiguration ALTE
 ALTER TABLE main.trading.bronze_etoro_hedge_providerinstrumentconfiguration ALTER COLUMN AppLoginName COMMENT 'Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set. (Tier 1 - upstream wiki, etoro.Hedge.ProviderInstrumentConfiguration)';
 ALTER TABLE main.trading.bronze_etoro_hedge_providerinstrumentconfiguration ALTER COLUMN SysStartTime COMMENT 'Temporal period start. UTC timestamp when this row version became active. (Tier 1 - upstream wiki, etoro.Hedge.ProviderInstrumentConfiguration)';
 ALTER TABLE main.trading.bronze_etoro_hedge_providerinstrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for current rows. History in History.ProviderInstrumentConfiguration. (Tier 1 - upstream wiki, etoro.Hedge.ProviderInstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

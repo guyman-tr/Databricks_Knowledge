@@ -39,4 +39,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_interestrateoverride ALTER COLUMN Be
 ALTER TABLE main.bi_db.bronze_etoro_history_interestrateoverride ALTER COLUMN EndTime COMMENT 'UTC timestamp when this override was superseded (non-standard name for SysEndTime). (Tier 1 - upstream wiki, etoro.History.InterestRateOverride)';
 ALTER TABLE main.bi_db.bronze_etoro_history_interestrateoverride ALTER COLUMN OverNightFeePatternID COMMENT 'Fee pattern for this override: 0=Regular, 1=WithNonLeverageFee, 2=Manual. Nullable - when NULL, inherits pattern from the base InterestRate table. (Tier 1 - upstream wiki, etoro.History.InterestRateOverride)';
 ALTER TABLE main.bi_db.bronze_etoro_history_interestrateoverride ALTER COLUMN SettlementTypeID COMMENT 'Settlement type this override applies to: 0=CFD, 1=REAL, 2=TRS, etc. DEFAULT 0 = CFD. (Dictionary.SettlementTypes). (Tier 1 - upstream wiki, etoro.History.InterestRateOverride)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

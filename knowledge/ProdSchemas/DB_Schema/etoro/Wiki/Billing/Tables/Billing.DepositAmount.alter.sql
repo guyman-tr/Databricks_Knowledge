@@ -38,4 +38,7 @@ ALTER TABLE main.bi_db.bronze_etoro_billing_depositamount ALTER COLUMN Trace COM
 ALTER TABLE main.bi_db.bronze_etoro_billing_depositamount ALTER COLUMN ValidFrom COMMENT 'System-time start: row became current at this timestamp. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, etoro.Billing.DepositAmount)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_depositamount ALTER COLUMN ValidTo COMMENT 'System-time end: row was superseded at this timestamp (9999-12-31 for current rows). GENERATED ALWAYS AS ROW END. (Tier 1 - upstream wiki, etoro.Billing.DepositAmount)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_depositamount ALTER COLUMN MaxAmount COMMENT 'Maximum deposit amount in USD. NULL means no upper limit. When set (e.g., MaxAmount=50 for CountryID=1), enforces a cap on deposit size for that country/depositor type. (Tier 1 - upstream wiki, etoro.Billing.DepositAmount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

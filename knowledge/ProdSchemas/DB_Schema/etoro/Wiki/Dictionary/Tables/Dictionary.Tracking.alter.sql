@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_tracking SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_tracking ALTER COLUMN AppsFlyerDeviceID COMMENT 'Primary key identifying the tracking identifier type. 1=AppsFlyer, 2=Cookie, 3=Firebase. Named for historical reasons (originally AppsFlyer-only). (Tier 1 - upstream wiki, etoro.Dictionary.Tracking)';
 ALTER TABLE main.general.bronze_etoro_dictionary_tracking ALTER COLUMN UserUniqueIdentifierCookie COMMENT 'Name/label of the tracking identifier type. Describes the source system for the device identifier. (Tier 1 - upstream wiki, etoro.Dictionary.Tracking)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

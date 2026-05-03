@@ -84,4 +84,7 @@ ALTER TABLE main.general.bronze_sodreconciliation_apex_ext981_buypowersummary AL
 ALTER TABLE main.general.bronze_sodreconciliation_apex_ext981_buypowersummary ALTER COLUMN NetBalance COMMENT 'Net cash balance across all sub-accounts. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT981_BuyPowerSummary)';
 ALTER TABLE main.general.bronze_sodreconciliation_apex_ext981_buypowersummary ALTER COLUMN SMACommitted COMMENT 'Portion of SMA committed to pending orders. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT981_BuyPowerSummary)';
 ALTER TABLE main.general.bronze_sodreconciliation_apex_ext981_buypowersummary ALTER COLUMN HighWaterMark COMMENT 'Highest equity value reached (used for day trade buying power calculation). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT981_BuyPowerSummary)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

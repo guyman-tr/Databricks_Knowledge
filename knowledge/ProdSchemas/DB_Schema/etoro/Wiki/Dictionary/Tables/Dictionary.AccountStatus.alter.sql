@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_accountstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_accountstatus ALTER COLUMN AccountStatusID COMMENT 'Primary key identifying the account state. 1=Open (active account, full platform access), 2=Closed (deactivated, no activity permitted). Referenced by Customer.CustomerStatic.AccountStatusID and Hedge.AccountStatus tables. See Account Status. (Dictionary.AccountStatus) (Tier 1 - upstream wiki, etoro.Dictionary.AccountStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_accountstatus ALTER COLUMN AccountStatusName COMMENT 'Human-readable label for the account state. Used in BackOffice reporting procedures (e.g., BackOffice.GetBlockedCustomers, BackOffice.GetClosedAccountsByLastChangeDate) to display account state in administrative UI. (Tier 1 - upstream wiki, etoro.Dictionary.AccountStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

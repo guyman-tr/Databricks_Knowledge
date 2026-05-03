@@ -38,4 +38,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_hbcorderlog ALTER COLUMN ExecutionRa
 ALTER TABLE main.dealing.bronze_etoro_hedge_hbcorderlog ALTER COLUMN StartTime COMMENT 'When the FIX order was submitted. Part of the NC index (StartTime, ExecutionID). Same as or very close to parent HBCExecutionLog.StartTime. (Tier 1 - upstream wiki, etoro.Hedge.HBCOrderLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_hbcorderlog ALTER COLUMN EndTime COMMENT 'When the order reached its terminal state. EndTime - StartTime = order-level execution latency. (Tier 1 - upstream wiki, etoro.Hedge.HBCOrderLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_hbcorderlog ALTER COLUMN FailReason COMMENT 'Failure description for non-Filled orders. NULL for successful fills. Similar to HBCExecutionLog.FailReason but at order granularity. (Tier 1 - upstream wiki, etoro.Hedge.HBCOrderLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

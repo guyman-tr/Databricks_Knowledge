@@ -116,4 +116,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument ALTER COLUMN Am
 ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument ALTER COLUMN Slippage COMMENT 'Allowed slippage. Sample 0, 3, 8. Trade.GetInstrumentSlippage, Trade.SetInstrumentSlippage. (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument)';
 ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument ALTER COLUMN ExtendedMarginAllowed COMMENT '1=extended margin allowed, 0=standard only. (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument)';
 ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument ALTER COLUMN AllowedRateDiffPercentageUpside COMMENT 'Max rate diff on upside. Default 999 (effectively unlimited). (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

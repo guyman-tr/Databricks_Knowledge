@@ -31,4 +31,7 @@ ALTER TABLE main.dealing.bronze_etoro_history_pricedetectionnotificationlog ALTE
 ALTER TABLE main.dealing.bronze_etoro_history_pricedetectionnotificationlog ALTER COLUMN Subject COMMENT 'Alert subject line. Format: "{InstrumentID} : {Low (Tier 1 - upstream wiki, etoro.History.PriceDetectionNotificationLog)';
 ALTER TABLE main.dealing.bronze_etoro_history_pricedetectionnotificationlog ALTER COLUMN Body COMMENT 'Full alert body with structured feed comparison data. Contains: instrument ID, check timestamp, active feed provider name and price, secondary feed provider(s) and price(s). Used as email body content for operations notification. May be large (varchar max). Stored on TEXTIMAGE_ON [HISTORY]. (Tier 1 - upstream wiki, etoro.History.PriceDetectionNotificationLog)';
 ALTER TABLE main.dealing.bronze_etoro_history_pricedetectionnotificationlog ALTER COLUMN Occurred COMMENT 'Local server timestamp when the notification was logged. DEFAULT getdate() (not UTC). Matches the "Time of check" field reported in the body. (Tier 1 - upstream wiki, etoro.History.PriceDetectionNotificationLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

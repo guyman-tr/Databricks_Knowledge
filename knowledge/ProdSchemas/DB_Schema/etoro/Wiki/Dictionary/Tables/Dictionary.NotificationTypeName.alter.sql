@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_notificationtypename SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationtypename ALTER COLUMN NotificationTypeID COMMENT 'Unique identifier for the KYC notification scenario. Values 1-40. Referenced by BackOffice.DocumentRejectReasonToNotificationType to map rejection reasons to email templates. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationTypeName)';
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationtypename ALTER COLUMN NotificationType COMMENT 'Template identifier code used to select the correct email template for the compliance scenario. Format: {Category}{SpecificReason}Email (e.g., POIDocExpired, POAOlderThanSixMonths, SelfieMotionRejectedEmail). (Tier 1 - upstream wiki, etoro.Dictionary.NotificationTypeName)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

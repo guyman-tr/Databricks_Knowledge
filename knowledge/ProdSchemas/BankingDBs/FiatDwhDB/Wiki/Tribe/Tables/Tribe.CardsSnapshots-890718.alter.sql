@@ -7,11 +7,11 @@
 -- =============================================================================
 
 -- ---- UC Target: main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 (business_group=emoney) ----
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 SET TBLPROPERTIES (
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots-890718` SET TBLPROPERTIES (
     'comment' = 'Parent container table for Tribe CardsSnapshots data files containing point-in-time card state snapshots from the provider. Source: FiatDwhDB.Tribe.CardsSnapshots-890718 on the FiatDwhDB production database, ingested via the Generic Pipeline (Append strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots-890718.md).'
 );
 
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 SET TAGS (
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots-890718` SET TAGS (
     'layer' = 'bronze',
     'source_system' = 'SQL Server',
     'source_database' = 'FiatDwhDB',
@@ -26,8 +26,11 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 ALTER COLUMN @Created COMMENT 'DWH insertion timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 ALTER COLUMN @Id COMMENT 'Unique file identifier. PK. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 ALTER COLUMN @FileName COMMENT 'Source file name. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718 ALTER COLUMN Created COMMENT 'Source system timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
-
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots-890718` ALTER COLUMN `@Created` COMMENT 'DWH insertion timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots-890718` ALTER COLUMN `@Id` COMMENT 'Unique file identifier. PK. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots-890718` ALTER COLUMN `@FileName` COMMENT 'Source file name. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots-890718` ALTER COLUMN Created COMMENT 'Source system timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots-890718)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:09:36 UTC
+-- Bronze deploy: FiatDwhDB batch 2
+-- ====================

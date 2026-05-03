@@ -30,4 +30,7 @@ ALTER TABLE main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog
 ALTER TABLE main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog ALTER COLUMN StartTime COMMENT 'UTC timestamp when the reroute operation began. Set at INSERT via getutcdate() in PositionsHedgeServerChangeSummaryLogInsert. Marks the start of the batch. (Tier 1 - upstream wiki, etoro.Trade.PositionsHedgeServerChangeSummaryLog)';
 ALTER TABLE main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog ALTER COLUMN EndTime COMMENT 'UTC timestamp when the reroute operation completed. Initially NULL; updated by MovePositionsHedgeServers and MovePositionsHedgeServersByRerouteService on successful COMMIT. Difference from StartTime indicates operation duration. (Tier 1 - upstream wiki, etoro.Trade.PositionsHedgeServerChangeSummaryLog)';
 ALTER TABLE main.dealing.bronze_etoro_trade_positionshedgeserverchangesummarylog ALTER COLUMN Comments COMMENT 'Free-text description of the operation (e.g., operator name, reason). Supplied by caller to PositionsHedgeServerChangeSummaryLogInsert. Used by Monitor.AlertForDealingExecutionConfigurationManager when alerting on large batches (>1000 positions). (Tier 1 - upstream wiki, etoro.Trade.PositionsHedgeServerChangeSummaryLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

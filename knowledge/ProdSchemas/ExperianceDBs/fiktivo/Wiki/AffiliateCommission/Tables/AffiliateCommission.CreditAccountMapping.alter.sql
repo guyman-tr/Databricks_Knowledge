@@ -31,4 +31,7 @@ ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_creditaccountmapp
 ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_creditaccountmapping ALTER COLUMN AccountID COMMENT 'Account identifier from the payment system. Typically matches the CID (customer ID) but stored as varchar to accommodate different account numbering systems. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditAccountMapping)';
 ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_creditaccountmapping ALTER COLUMN DateCreated COMMENT 'Timestamp of the credit event. Part of composite PK - allows the same TransactionID to appear on different dates (though unlikely). Uses datetime2 for sub-millisecond precision from source systems. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditAccountMapping)';
 ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_creditaccountmapping ALTER COLUMN CreditInternalID COMMENT 'Auto-incrementing internal ID that becomes Credit.CreditID. Generated on successful insert. Retrieved via SCOPE_IDENTITY() by InsertCredit. NC index supports direct lookup by CreditInternalID. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditAccountMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

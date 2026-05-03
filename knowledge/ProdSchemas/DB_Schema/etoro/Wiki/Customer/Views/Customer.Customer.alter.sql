@@ -221,4 +221,7 @@ ALTER TABLE main.general.bronze_etoro_customer_customer_masked ALTER COLUMN POBC
 ALTER TABLE main.general.bronze_etoro_customer_customer_masked ALTER COLUMN SubRegionID COMMENT 'Sub-region (province/state for non-US countries). From CustomerStatic. FK to Dictionary.SubRegion. Added 2019 (changelog: 09/07/2019). (Tier 1 - upstream wiki, etoro.Customer.Customer)';
 ALTER TABLE main.general.bronze_etoro_customer_customer_masked ALTER COLUMN EmailVerificationProviderID COMMENT 'External email verification provider used for this customer''s email. From CustomerStatic. FK to Dictionary.EmailVerificationProvider. Added 2020. (Tier 1 - upstream wiki, etoro.Customer.Customer)';
 ALTER TABLE main.general.bronze_etoro_customer_customer_masked ALTER COLUMN DltID COMMENT 'Distributed Ledger Technology integration ID. From CustomerStatic. Added per HLD: COAKVU-2880 DLT Integration. Links customer to DLT/blockchain system. (Tier 1 - upstream wiki, etoro.Customer.Customer)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

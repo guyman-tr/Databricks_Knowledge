@@ -65,4 +65,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditcommissionvw ALT
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditcommissionvw ALTER COLUMN PaymentID COMMENT 'From CreditCommission. Payment batch. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditCommissionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditcommissionvw ALTER COLUMN AffiliateTypeID COMMENT 'From CreditCommission. Affiliate type classification (PART-2448). (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditCommissionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_creditcommissionvw ALTER COLUMN UpdateDate COMMENT 'Computed: GREATEST(PaymentDate, CreditDate) when paid. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.CreditCommissionVW)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

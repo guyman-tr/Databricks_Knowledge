@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_playerstatusreasons (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_playerstatusreasons SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 44 reasons why a customer''s account status may be changed — from compliance actions (AML, KYC, chargebacks) to user-initiated closures and administrative decisions. Source: etoro.Dictionary.PlayerStatusReasons on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerStatusReasons.md).'
+    'comment' = 'Lookup table defining the 44 reasons why a customer''s account status may be changed - from compliance actions (AML, KYC, chargebacks) to user-initiated closures and administrative decisions. Source: etoro.Dictionary.PlayerStatusReasons on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerStatusReasons.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_playerstatusreasons SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_playerstatusreasons SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_playerstatusreasons ALTER COLUMN PlayerStatusReasonID COMMENT 'Primary key identifying the status change reason. Range 0-43. Referenced by BackOffice.PlayerStatusToReason (FK), BackOffice.PlayerStatusReasonToSubReason (FK), and Customer.CustomerStatic (implicit). Used as parameter in BackOffice.UpdateRiskUserInfo and Billing.UpdateCustomerStatusReason. 0=None (default). (Tier 1 - upstream wiki, etoro.Dictionary.PlayerStatusReasons)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerstatusreasons ALTER COLUMN Name COMMENT 'Human-readable reason label. Nullable (unlike most Dictionary tables). Used in BackOffice reporting JOINs, customer history views, and monitoring procedures. Displayed in BackOffice UI when viewing customer status change history. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerStatusReasons)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

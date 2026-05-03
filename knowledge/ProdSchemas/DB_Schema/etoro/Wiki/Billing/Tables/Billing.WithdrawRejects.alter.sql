@@ -36,4 +36,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_withdrawrejects ALTER COLUMN CaseN
 ALTER TABLE main.billing.bronze_etoro_billing_withdrawrejects ALTER COLUMN CaseDate COMMENT 'Date the external support case was created. NULL on initial insert, set alongside CaseNumber by Billing.FollowupEdit. (Tier 1 - upstream wiki, etoro.Billing.WithdrawRejects)';
 ALTER TABLE main.billing.bronze_etoro_billing_withdrawrejects ALTER COLUMN IsActive COMMENT 'Whether this rejection record is the current active rejection for the withdrawal. 1=active (this is the current rejection), 0=superseded (a newer rejection has been recorded). Set to 1 on insert by Billing.WithdrawReject. Set to 0 by Billing.SetRejectsAsInactiveForWithdraw when a re-rejection occurs. Only one IsActive=1 record should exist per WithdrawID at any time. (Tier 1 - upstream wiki, etoro.Billing.WithdrawRejects)';
 ALTER TABLE main.billing.bronze_etoro_billing_withdrawrejects ALTER COLUMN Comment COMMENT 'Free-text notes from the rejecting manager. May contain case reference numbers, customer instructions, or context for the rejection (e.g., "Missing IBAN for wire transfer", "25402491 follow up"). NULL is allowed but rarely used in practice. (Tier 1 - upstream wiki, etoro.Billing.WithdrawRejects)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

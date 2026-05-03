@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_suitabilityteststatus SET TAGS 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_suitabilityteststatus ALTER COLUMN SuitabilityTestStatusID COMMENT 'Primary key identifying the suitability outcome. 1=Suitable, 2=NotSuitableXp, 3=NotSuitableObjectives. Referenced by BackOffice.Customer and BackOffice.Suitability. (Tier 1 - upstream wiki, etoro.Dictionary.SuitabilityTestStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_suitabilityteststatus ALTER COLUMN Name COMMENT 'Assessment outcome label. Used in BackOffice UI and regulatory reporting. (Tier 1 - upstream wiki, etoro.Dictionary.SuitabilityTestStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

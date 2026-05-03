@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_correlatedrequests ALTER COLUMN Co
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_correlatedrequests ALTER COLUMN ParentRequestCorrelationId COMMENT 'CorrelationId of the original (parent) request that triggered the child. For bouncebacks, this is the received transaction''s CorrelationId from Wallet.Requests. (Tier 1 - upstream wiki, WalletDB.Wallet.CorrelatedRequests)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_correlatedrequests ALTER COLUMN ChildRequestCorrelationId COMMENT 'CorrelationId of the triggered (child) request. For bouncebacks, this is the send-back transaction''s CorrelationId from Wallet.Requests. (Tier 1 - upstream wiki, WalletDB.Wallet.CorrelatedRequests)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_correlatedrequests ALTER COLUMN Created COMMENT 'Timestamp when this correlation was established. (Tier 1 - upstream wiki, WalletDB.Wallet.CorrelatedRequests)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

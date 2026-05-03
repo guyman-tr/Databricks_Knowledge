@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_depositstatusreason (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositstatusreason SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the sub-reason states within the deposit approval process — distinguishing between pre-approval, final approval, final decline, and no-reason states. Source: etoro.Dictionary.DepositStatusReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositStatusReason.md).'
+    'comment' = 'Lookup table defining the sub-reason states within the deposit approval process - distinguishing between pre-approval, final approval, final decline, and no-reason states. Source: etoro.Dictionary.DepositStatusReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositStatusReason.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositstatusreason SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositstatusreason SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositstatusreason ALTER COLUMN ID COMMENT 'Primary key (auto-increment). 0=None, 1=PreApproved, 2=FinalApproved, 3=FinalDecline. Referenced by Billing.Deposit.StatusReasonID. Note: despite being IDENTITY, values 0-3 were explicitly seeded. (Tier 1 - upstream wiki, etoro.Dictionary.DepositStatusReason)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositstatusreason ALTER COLUMN StatusReason COMMENT 'Human-readable approval stage label. Used by Billing.UpdateDepositStatusReasonID procedure and BackOffice reporting. (Tier 1 - upstream wiki, etoro.Dictionary.DepositStatusReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

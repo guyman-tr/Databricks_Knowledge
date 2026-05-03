@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_documentstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_documentstatus ALTER COLUMN DocumentStatusID COMMENT 'Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. See Document Status. (Dictionary.DocumentStatus) (Tier 1 - upstream wiki, etoro.Dictionary.DocumentStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_documentstatus ALTER COLUMN DocumentStatusName COMMENT 'Human-readable status label. Used in compliance review UI, customer communications, and regulatory reporting. (Tier 1 - upstream wiki, etoro.Dictionary.DocumentStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -32,4 +32,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_vw_walletbalanaces ALTER COLUMN D
 ALTER TABLE main.wallet.bronze_walletdb_wallet_vw_walletbalanaces ALTER COLUMN DateTo COMMENT 'End of balance snapshot validity window. 3000-01-01 = current balance. From Wallet.WalletBalances.DateTo. (Tier 1 - upstream wiki, WalletDB.Wallet.vw_WalletBalanaces)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_vw_walletbalanaces ALTER COLUMN Balance COMMENT 'Confirmed crypto balance in native units. From Wallet.WalletBalances.Balance. (Tier 1 - upstream wiki, WalletDB.Wallet.vw_WalletBalanaces)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_vw_walletbalanaces ALTER COLUMN CryptoId COMMENT 'The cryptocurrency. From Wallet.WalletBalances.CryptoId. FK to Wallet.CryptoTypes.CryptoID. (Tier 1 - upstream wiki, WalletDB.Wallet.vw_WalletBalanaces)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

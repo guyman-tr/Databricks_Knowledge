@@ -31,4 +31,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_subprograms ALTER COLUMN Name COMME
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_subprograms ALTER COLUMN AccountProgramId COMMENT 'Parent account program: 1=card, 2=iban. See Account Program. (Dictionary.AccountPrograms). Determines the fundamental product type. (Tier 1 - upstream wiki, FiatDwhDB.dbo.SubPrograms)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_subprograms ALTER COLUMN CugProgramName COMMENT 'Provider-side Closed User Group program identifier. Format: "{Type}_{Tier}_{Region}" (e.g., "Card_Premium_UK"). Used in Tribe API calls and provider configuration. (Tier 1 - upstream wiki, FiatDwhDB.dbo.SubPrograms)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_subprograms ALTER COLUMN Region COMMENT 'Geographic region for this sub-program: UK, EU, UAE, AUS, DK. Determines which banking rails, regulations, and currency options apply. NULL would indicate a region-agnostic program (none currently). (Tier 1 - upstream wiki, FiatDwhDB.dbo.SubPrograms)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

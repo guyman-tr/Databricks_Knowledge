@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_channels ALTER COLUMN AffiliatesGroups
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_channels ALTER COLUMN MarketingExpenseID COMMENT 'Marketing expense channel ID. Denormalized from tblaff_Affiliates.MarketingExpenseID. (Tier 1 - upstream wiki, fiktivo.dbo.Channels)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_channels ALTER COLUMN MarketingExpenseName COMMENT 'Display name of the marketing expense channel. Denormalized from tblaff_MarketingExpense.MarketingExpenseName. (Tier 1 - upstream wiki, fiktivo.dbo.Channels)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_channels ALTER COLUMN AffiliatesGroupsName COMMENT 'Display name of the affiliate group. Denormalized from tblaff_AffiliatesGroups.AffiliatesGroupsName. (Tier 1 - upstream wiki, fiktivo.dbo.Channels)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

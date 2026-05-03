@@ -29,4 +29,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelruleaddresstype SET TAGS
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelruleaddresstype ALTER COLUMN Id COMMENT 'Unique identifier. Values: 1=Private, 2=Hosted. FK target for Wallet.TravelRuleAddresses. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleAddressType)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelruleaddresstype ALTER COLUMN Name COMMENT 'Address hosting type label. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleAddressType)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelruleaddresstype ALTER COLUMN Created COMMENT 'Registration timestamp. Both types created 2022-07-24 when travel rule support was implemented. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleAddressType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

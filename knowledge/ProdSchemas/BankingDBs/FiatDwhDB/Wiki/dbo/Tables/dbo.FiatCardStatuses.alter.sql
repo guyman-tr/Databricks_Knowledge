@@ -33,4 +33,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcardstatuses ALTER COLUMN Expir
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcardstatuses ALTER COLUMN EventTimestamp COMMENT 'When the status change occurred in the source system. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCardStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcardstatuses ALTER COLUMN Created COMMENT 'When this record was written to the DWH. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCardStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcardstatuses ALTER COLUMN CardInstanceId COMMENT 'Implicit ref to dbo.FiatCardInstances.Id. Which physical/virtual card instance this status applies to. Default 0 for legacy records pre-migration. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCardStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

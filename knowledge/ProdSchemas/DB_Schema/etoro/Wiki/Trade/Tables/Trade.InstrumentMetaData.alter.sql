@@ -63,4 +63,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrumentmetadata ALTER COLUMN SysE
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentmetadata ALTER COLUMN SEDOL COMMENT 'SEDOL identifier (UK securities). Alternative to ISIN/CUSIP for some instruments. (Tier 1 - upstream wiki, etoro.Trade.InstrumentMetaData)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentmetadata ALTER COLUMN SubCategory COMMENT 'Human-readable subcategory label. May duplicate InstrumentTypeSubCategoryID. (Tier 1 - upstream wiki, etoro.Trade.InstrumentMetaData)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumentmetadata ALTER COLUMN CFICode COMMENT 'Classification of Financial Instruments code (ISO 10962). 6-character code for instrument classification. Trade.InsertInstrumentMetaData accepts @CFICode. (Tier 1 - upstream wiki, etoro.Trade.InstrumentMetaData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

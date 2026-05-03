@@ -30,4 +30,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcards ALTER COLUMN Id COMMENT '
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcards ALTER COLUMN CardGuid COMMENT 'External-facing unique identifier for this card. Used in application APIs and provider integrations. Part of unique constraint with AccountId. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCards)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcards ALTER COLUMN AccountId COMMENT 'FK to dbo.FiatAccount.Id. The fiat account this card belongs to. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCards)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcards ALTER COLUMN Created COMMENT 'UTC timestamp when this card record was created in the data warehouse. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCards)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

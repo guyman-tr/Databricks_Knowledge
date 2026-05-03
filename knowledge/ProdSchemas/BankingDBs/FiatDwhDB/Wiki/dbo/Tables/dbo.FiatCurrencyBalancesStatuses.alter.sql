@@ -33,4 +33,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalancesstatuses ALTER 
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalancesstatuses ALTER COLUMN Created COMMENT 'When this record was written to the DWH. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCurrencyBalancesStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalancesstatuses ALTER COLUMN StatusChangeSourceId COMMENT 'Who initiated the change: 0-4. See Status Change Source. (Dictionary.StatusChangeSources). Nullable for legacy records. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCurrencyBalancesStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalancesstatuses ALTER COLUMN StatusChangeReasonId COMMENT 'Why the change was made: 0-19. See Status Change Reason. (Dictionary.StatusChangeReasons). Nullable for legacy records. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCurrencyBalancesStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

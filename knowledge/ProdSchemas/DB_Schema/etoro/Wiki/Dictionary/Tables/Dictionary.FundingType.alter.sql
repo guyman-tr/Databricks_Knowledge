@@ -32,13 +32,16 @@ ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsNewS
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsSingleFunding COMMENT 'Whether this is a one-time payment method (cannot be saved for repeat use). 1=single-use, 0=can be saved. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsCashoutActive COMMENT 'Whether withdrawals (cashouts) are supported via this method. 1=supports cashout, 0=deposit-only. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsFundingTypeActive COMMENT 'Whether this payment method is globally active. 1=active (shown in UI), 0=disabled. NULL treated as inactive. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
-ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN DefaultCurrency COMMENT 'FK to Dictionary.Currency — if set, forces transactions through this method to use this currency. NULL=use user''s account currency. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
+ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN DefaultCurrency COMMENT 'FK to Dictionary.Currency - if set, forces transactions through this method to use this currency. NULL=use user''s account currency. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN MaxDepositAmount COMMENT 'Maximum allowed single deposit amount. NULL=no limit. Used for risk management and fraud prevention. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsRefundable COMMENT 'Whether deposits via this method can be refunded to the same payment source. Important for chargeback prevention. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsCountryConflictActive COMMENT 'Whether country-based availability restrictions apply. 1=some countries are blocked for this method. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN PaymentGeneration COMMENT 'Integration generation version. 0=legacy, 1+=newer integrations with different API contracts and flow patterns. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN IsRedeemable COMMENT 'Whether funds deposited via this method can be redeemed in copy-trading (mirror) context. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
-ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN Trace COMMENT 'Auto-computed audit column capturing hostname, app name, SPID, and database context for every DML operation. Not stored — calculated on read. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
+ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN Trace COMMENT 'Auto-computed audit column capturing hostname, app name, SPID, and database context for every DML operation. Not stored - calculated on read. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN ValidFrom COMMENT 'System-versioning row start time. Automatically maintained. Records when this row version became current. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundingtype ALTER COLUMN ValidTo COMMENT 'System-versioning row end time. Automatically maintained. 9999-12-31 for current rows. (Tier 1 - upstream wiki, etoro.Dictionary.FundingType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

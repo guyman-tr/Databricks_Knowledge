@@ -28,4 +28,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_dictionary_planstatus SET TAGS 
 -- Column Comments
 ALTER TABLE main.billing.bronze_recurringmanager_dictionary_planstatus ALTER COLUMN PlanStatusID COMMENT 'Primary key identifying the plan lifecycle state. 1=Active (generates executions), 2=Cancelled (permanent, user/BO), 3=Stopped (permanent, system), 4=Invalid (config error), 5=Paused (temporary, reversible). See Plan Status for full definitions. (Dictionary.PlanStatus) (Tier 1 - upstream wiki, RecurringManager.Dictionary.PlanStatus)';
 ALTER TABLE main.billing.bronze_recurringmanager_dictionary_planstatus ALTER COLUMN Name COMMENT 'Human-readable label for the plan status. Values: "Active", "Cancelled", "Stopped", "Invalid", "Paused". (Tier 1 - upstream wiki, RecurringManager.Dictionary.PlanStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

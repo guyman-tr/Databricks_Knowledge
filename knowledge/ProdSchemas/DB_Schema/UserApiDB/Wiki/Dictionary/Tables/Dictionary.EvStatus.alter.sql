@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_dictionary_evstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_userapidb_dictionary_evstatus ALTER COLUMN EvStatusId COMMENT 'Primary key. Overall EV outcome: 0=None, 1=One Source, 2=Two Sources, 3=No Match, 4=ApprovedWithConflict, 5=Approved, 6=Rejected, 7=Alert, 8=One Source Verified. See EV Status. (Tier 1 - upstream wiki, UserApiDB.Dictionary.EvStatus)';
 ALTER TABLE main.bi_db.bronze_userapidb_dictionary_evstatus ALTER COLUMN Name COMMENT 'Status label used in compliance dashboards and user management tools. (Tier 1 - upstream wiki, UserApiDB.Dictionary.EvStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

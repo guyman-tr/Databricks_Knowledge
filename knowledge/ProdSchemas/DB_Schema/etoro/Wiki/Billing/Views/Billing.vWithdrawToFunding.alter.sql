@@ -56,4 +56,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_vwithdrawtofunding ALTER COLUMN Re
 ALTER TABLE main.billing.bronze_etoro_billing_vwithdrawtofunding ALTER COLUMN RequestExecuteEntryMethodId COMMENT 'Entry method used when this withdrawal request was executed. (Tier 1 - upstream wiki, etoro.Billing.vWithdrawToFunding)';
 ALTER TABLE main.billing.bronze_etoro_billing_vwithdrawtofunding ALTER COLUMN ExchangeFeeInUSD COMMENT 'FX fee expressed in USD. Added 17/09/2024 by Ran Ovadia. Part of the 2024 FX fee transparency initiative. NULL for pre-2024 records. (Tier 1 - upstream wiki, etoro.Billing.vWithdrawToFunding)';
 ALTER TABLE main.billing.bronze_etoro_billing_vwithdrawtofunding ALTER COLUMN ExchangeFeeInPercentage COMMENT 'FX fee expressed as a percentage of the withdrawal amount. Added 17/09/2024. NULL for pre-2024 records. (Tier 1 - upstream wiki, etoro.Billing.vWithdrawToFunding)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

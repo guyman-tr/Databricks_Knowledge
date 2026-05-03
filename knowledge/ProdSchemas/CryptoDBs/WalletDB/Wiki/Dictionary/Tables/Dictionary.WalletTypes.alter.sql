@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_wallettypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_wallettypes ALTER COLUMN Id COMMENT 'Unique identifier. Values: 1=Redeem, 2=Conversion, 3=Funding, 4=Payment, 5=Customer, 6=C2F, 7=StakingRefund. FK target for Wallet.Wallets.WalletTypeId. (Tier 1 - upstream wiki, WalletDB.Dictionary.WalletTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_wallettypes ALTER COLUMN Name COMMENT 'Unique wallet type label. Used in wallet management logic to route operations to the correct wallet type. (Tier 1 - upstream wiki, WalletDB.Dictionary.WalletTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_countrytocountrygroup SET TAGS 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_countrytocountrygroup ALTER COLUMN CountryGroupID COMMENT 'The country group this mapping belongs to. FK to Dictionary.CountryGroup. Key groups: 1=ESMA_Countries (34 countries), 4=US_Territories (7 countries), 10=European Union (28), 17=ROW (101), 22=CfdRestrictedCountries (28), 25=SilverClubCountriesNotEligibleForInterest (244), 27=ERC20AllowedCountries (79). See Country Group. (Tier 1 - upstream wiki, etoro.Dictionary.CountryToCountryGroup)';
 ALTER TABLE main.general.bronze_etoro_dictionary_countrytocountrygroup ALTER COLUMN CountryID COMMENT 'The country assigned to this group. FK to Dictionary.Country. A country can appear in multiple groups simultaneously. See Country. (Tier 1 - upstream wiki, etoro.Dictionary.CountryToCountryGroup)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

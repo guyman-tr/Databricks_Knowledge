@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads_commissions ALTER COLUMN 
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads_commissions ALTER COLUMN PaymentID COMMENT 'References tblaff_PaymentHistory.PaymentID when paid. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Leads_Commissions)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads_commissions ALTER COLUMN SubAffiliateID COMMENT 'Sub-affiliate tracking tag. Updatable by UpdateSubAffiliateID. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Leads_Commissions)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads_commissions ALTER COLUMN eCost COMMENT 'Effective cost to the platform for this lead event. Enables ROI calculation: Commission/eCost. NULL when eCost tracking is not configured. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Leads_Commissions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

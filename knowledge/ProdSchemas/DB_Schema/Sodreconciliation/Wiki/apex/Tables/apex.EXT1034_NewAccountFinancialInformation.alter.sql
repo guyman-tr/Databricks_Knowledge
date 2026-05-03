@@ -62,4 +62,7 @@ ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancial
 ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation ALTER COLUMN ControlPersonCompany COMMENT 'Company name for which the account holder is a control person. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation)';
 ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation ALTER COLUMN Employer COMMENT 'Account holder''s employer name. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation)';
 ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation ALTER COLUMN EmploymentStatus COMMENT 'Employment status (employed, self-employed, retired, student, etc.). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT1034_NewAccountFinancialInformation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

@@ -94,4 +94,7 @@ ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity ALTE
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity ALTER COLUMN ExpirationDeliveryDate COMMENT 'Expiration or delivery date for option/futures trades. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT872_TradeActivity)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity ALTER COLUMN OptionContractDate COMMENT 'Option contract origination date. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT872_TradeActivity)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity ALTER COLUMN OrderId COMMENT 'Order ID linking back to the originating order in eToro''s system. Key field for reconciliation matching. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT872_TradeActivity)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

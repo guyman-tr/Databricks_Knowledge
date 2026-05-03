@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_etoro_history_ceplistcidmappings ALTER COLUMN Va
 ALTER TABLE main.general.bronze_etoro_history_ceplistcidmappings ALTER COLUMN ValidTo COMMENT 'UTC timestamp when the customer was removed from the named list. Set to GETUTCDATE() by the trigger at the moment of deletion. Represents the end of the membership window. (Tier 1 - upstream wiki, etoro.History.CEPListCIDMappings)';
 ALTER TABLE main.general.bronze_etoro_history_ceplistcidmappings ALTER COLUMN NamedListID COMMENT 'ID of the CEP named list from which the customer was removed. FK to CEP.NamedLists. Known values: 1="Large AUM", 13="Dinamic Guru List". (Tier 1 - upstream wiki, etoro.History.CEPListCIDMappings)';
 ALTER TABLE main.general.bronze_etoro_history_ceplistcidmappings ALTER COLUMN CID COMMENT 'Customer ID removed from the named list. Implicit FK to Customer.CustomerStatic. (Tier 1 - upstream wiki, etoro.History.CEPListCIDMappings)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

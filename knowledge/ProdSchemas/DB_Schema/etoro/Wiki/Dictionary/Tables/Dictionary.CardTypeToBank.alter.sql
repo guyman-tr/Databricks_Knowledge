@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_cardtypetobank SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_cardtypetobank ALTER COLUMN CardTypeID COMMENT 'FK to Dictionary.CardType; which card type (Visa, MasterCard, Amex, etc.). Part of composite PK. (Tier 1 - upstream wiki, etoro.Dictionary.CardTypeToBank)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cardtypetobank ALTER COLUMN BankID COMMENT 'FK to Dictionary.Bank; which bank/gateway supports this card type. Part of composite PK. NC index DC2B_BANK on this column. (Tier 1 - upstream wiki, etoro.Dictionary.CardTypeToBank)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cardtypetobank ALTER COLUMN IsActive COMMENT 'Whether this card-type-to-bank route is currently active for routing. DEFAULT 0. Trigger fires when changed to 1. (Tier 1 - upstream wiki, etoro.Dictionary.CardTypeToBank)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

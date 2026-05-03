@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_riskclassificationparameter (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationparameter SET TBLPROPERTIES (
-    'comment' = 'Reference table defining 46 risk classification parameters — customer attributes scored for AML/KYC risk assessment — including country of residence, occupation, income, deposits, and enhanced due diligence indicators. Source: etoro.Dictionary.RiskClassificationParameter on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskClassificationParameter.md).'
+    'comment' = 'Reference table defining 46 risk classification parameters - customer attributes scored for AML/KYC risk assessment - including country of residence, occupation, income, deposits, and enhanced due diligence indicators. Source: etoro.Dictionary.RiskClassificationParameter on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskClassificationParameter.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationparameter SET TAGS (
@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationparameter ALTER
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationparameter ALTER COLUMN Name COMMENT 'Short parameter label (e.g., "Country of Residence, Onboarding", "SectorHighRisk"). Used in reporting and configuration UI. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassificationParameter)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationparameter ALTER COLUMN Description COMMENT 'Extended description of what the parameter measures and how it maps to questionnaire answers. Empty for EDD parameters. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassificationParameter)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationparameter ALTER COLUMN Source COMMENT 'Data source table/view for the parameter value (e.g., "Customer.CustomerStatic", "V_CustomerAnswersNrml"). Empty for EDD and external parameters. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassificationParameter)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

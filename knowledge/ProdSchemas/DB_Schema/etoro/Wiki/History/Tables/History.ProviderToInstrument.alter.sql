@@ -53,4 +53,7 @@ ALTER TABLE main.general.bronze_etoro_history_providertoinstrument ALTER COLUMN 
 ALTER TABLE main.general.bronze_etoro_history_providertoinstrument ALTER COLUMN SellOverNightFee COMMENT 'Overnight fee for short positions. Together with BuyOverNightFee forms the complete overnight cost structure. (Tier 1 - upstream wiki, etoro.History.ProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_providertoinstrument ALTER COLUMN MaxStopLossPercentage COMMENT 'Maximum allowed stop loss percentage for this instrument. Upper bound on how far a stop loss can be placed from the entry price. (Tier 1 - upstream wiki, etoro.History.ProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_providertoinstrument ALTER COLUMN Enabled COMMENT 'Whether this provider-instrument pair is currently active for trading. 1 = enabled (active), 0 or NULL = disabled. (Tier 1 - upstream wiki, etoro.History.ProviderToInstrument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

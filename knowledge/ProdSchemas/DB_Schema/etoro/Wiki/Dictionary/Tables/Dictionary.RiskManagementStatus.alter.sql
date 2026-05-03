@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_riskmanagementstatus SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_riskmanagementstatus ALTER COLUMN RiskManagementStatusID COMMENT 'Primary key identifying the risk check outcome. 1=Success, 2–69=block/decline reason. Referenced by Billing.Deposit, Billing.CreditCardAuthentication, Billing.RiskManagementCheck, Billing.RiskManagementConfiguration, Billing.WithdrawToRiskManagementStatus. Set via Billing.DepositSetRiskManagementStatus, Billing.RiskManagementCheckAdd. (Tier 1 - upstream wiki, etoro.Dictionary.RiskManagementStatus)';
+ALTER TABLE main.general.bronze_etoro_dictionary_riskmanagementstatus ALTER COLUMN RiskManagementStatusID COMMENT 'Primary key identifying the risk check outcome. 1=Success, 2 - 69=block/decline reason. Referenced by Billing.Deposit, Billing.CreditCardAuthentication, Billing.RiskManagementCheck, Billing.RiskManagementConfiguration, Billing.WithdrawToRiskManagementStatus. Set via Billing.DepositSetRiskManagementStatus, Billing.RiskManagementCheckAdd. (Tier 1 - upstream wiki, etoro.Dictionary.RiskManagementStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_riskmanagementstatus ALTER COLUMN Name COMMENT 'Human-readable status label. UNIQUE (DRMS_NAME). Used for reporting, UI, and audit. 68 distinct values in live data (e.g., Success, CardIsBlocked, BinInBlackList, KYCLevel0, ML, BusinessRuleRisk). (Tier 1 - upstream wiki, etoro.Dictionary.RiskManagementStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

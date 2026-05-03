@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_payoutprocessreason (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_payoutprocessreason SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 10 reasons why a payout (withdrawal) processing operation reached its current state — from success (None) through technical, validation, provider, and communication errors. Source: etoro.Dictionary.PayoutProcessReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PayoutProcessReason.md).'
+    'comment' = 'Lookup table defining the 10 reasons why a payout (withdrawal) processing operation reached its current state - from success (None) through technical, validation, provider, and communication errors. Source: etoro.Dictionary.PayoutProcessReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PayoutProcessReason.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_payoutprocessreason SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_payoutprocessreason SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_payoutprocessreason ALTER COLUMN PayoutProcessReasonID COMMENT 'Primary key identifying the payout process reason. 0=None (success), 1=Technical, 2=Validation, 3=UnsupportedProvider, 4=Communication, 5=NoRecordsFound, 6=ProviderError, 7=FundingError, 8=DepositNotFound, 9=IncorrectStatus. Stored in Billing.PayoutProcess. (Tier 1 - upstream wiki, etoro.Dictionary.PayoutProcessReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_payoutprocessreason ALTER COLUMN Name COMMENT 'Human-readable label for the reason. Used in payout status reports and billing operations dashboards. (Tier 1 - upstream wiki, etoro.Dictionary.PayoutProcessReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

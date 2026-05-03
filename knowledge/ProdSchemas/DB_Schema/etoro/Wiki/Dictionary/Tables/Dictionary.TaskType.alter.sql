@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_tasktype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_tasktype ALTER COLUMN TaskTypeID COMMENT 'Primary key identifying the task category. 1=Sales, 2=Support, 3=Risk, 4=Withdraw. Referenced by BackOffice.Task and History.Task. (Tier 1 - upstream wiki, etoro.Dictionary.TaskType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_tasktype ALTER COLUMN Name COMMENT 'Unique functional area label. Enforced unique by DTTP_NAME index. (Tier 1 - upstream wiki, etoro.Dictionary.TaskType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

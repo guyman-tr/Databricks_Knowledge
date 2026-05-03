@@ -53,4 +53,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_customeralltimeaggregateddata A
 ALTER TABLE main.billing.bronze_etoro_backoffice_customeralltimeaggregateddata ALTER COLUMN LastClientIp COMMENT 'IP address from most recent login. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerAllTimeAggregatedData)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customeralltimeaggregateddata ALTER COLUMN RealizedEquityLastChange COMMENT 'Timestamp of last change to LastRealizedEquity. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerAllTimeAggregatedData)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customeralltimeaggregateddata ALTER COLUMN LastRealizedEquity COMMENT 'Most recent snapshot of customer''s realized equity balance. 0 for MIMO-only customers. From CustomerAllTimeAggregatedData_1. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerAllTimeAggregatedData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

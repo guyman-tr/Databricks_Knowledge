@@ -32,4 +32,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccount ALTER COLUMN AccountGui
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccount ALTER COLUMN Created COMMENT 'UTC timestamp when this account record was created in the data warehouse. Indexed for time-range queries. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccount)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccount ALTER COLUMN AccountProgramId COMMENT 'Account program type: 0=Unknown, 1=card (default), 2=iban. See Account Program. (Dictionary.AccountPrograms). Determines the fundamental product type (card-based vs IBAN-based banking). (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccount)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiataccount ALTER COLUMN SubProgramId COMMENT 'Specific sub-program variant: 1-16 (e.g., Card Premium UK, IBAN EU Green). See Sub-Program. FK to dbo.SubPrograms. NULL if not yet assigned to a specific variant. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatAccount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

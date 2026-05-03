@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_bannertypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_bannertypes ALTER COLUMN BannerTypeID COMMENT 'Primary key. Auto-incrementing identifier. Referenced by tblaff_Banners.Type to classify each banner by its media format. Values: 1=GIF Banners, 2=Flash Banners, 3=Text Banners, 4=Rotating Banners, 5=Links & Landing Pages, 6=Widgets, 7=Videos & Tutorials, 8=Articles & Reviews, 9=White Labels, 10=Mailers, 11=Education Tools, 12=Logos. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_BannerTypes)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_bannertypes ALTER COLUMN BannerTypeName COMMENT 'Display name for the banner type. Shown in admin UI and affiliate banner selection filters. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_BannerTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

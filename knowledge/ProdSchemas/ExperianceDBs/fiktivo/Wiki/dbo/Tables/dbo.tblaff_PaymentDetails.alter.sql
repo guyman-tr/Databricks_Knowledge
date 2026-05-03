@@ -121,4 +121,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_paymentdetails ALTER COLUMN Chi
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_paymentdetails ALTER COLUMN WireSortCode COMMENT 'UK sort code for domestic wire transfers. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_PaymentDetails)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_paymentdetails ALTER COLUMN WireBankCountryID COMMENT 'Country of the wire transfer bank. References tblaff_Country for bank location. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_PaymentDetails)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_paymentdetails ALTER COLUMN WireRoutingNumber COMMENT 'US ABA routing number for domestic wire transfers. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_PaymentDetails)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_hedgeservertoliquidityaccount ALTER CO
 ALTER TABLE main.bi_db.bronze_etoro_hedge_hedgeservertoliquidityaccount ALTER COLUMN AppLoginName COMMENT 'Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set. (Tier 1 - upstream wiki, etoro.Hedge.HedgeServerToLiquidityAccount)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_hedgeservertoliquidityaccount ALTER COLUMN SysStartTime COMMENT 'Temporal period start. UTC timestamp when this row version became active. (Tier 1 - upstream wiki, etoro.Hedge.HedgeServerToLiquidityAccount)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_hedgeservertoliquidityaccount ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for current rows. History in History.HedgeServerToLiquidityAccount. (Tier 1 - upstream wiki, etoro.Hedge.HedgeServerToLiquidityAccount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

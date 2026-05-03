@@ -35,4 +35,7 @@ ALTER TABLE main.general.bronze_etoro_hedge_kpiinstrumentlog ALTER COLUMN HedgeS
 ALTER TABLE main.general.bronze_etoro_hedge_kpiinstrumentlog ALTER COLUMN InstrumentID COMMENT 'The instrument this KPI row covers. 0 = unmatched/null instrument (ISNULL default). Implicit reference to Trade.Instrument. (Tier 1 - upstream wiki, etoro.Hedge.KPIInstrumentLog)';
 ALTER TABLE main.general.bronze_etoro_hedge_kpiinstrumentlog ALTER COLUMN TotalUnitsCustomers COMMENT 'Total position units transacted by real customers (excluding PlayerLevelID=4 test users) in the period, for this instrument+server. Sum of AmountInUnitsDecimal from PositionTbl + History.Position. (Tier 1 - upstream wiki, etoro.Hedge.KPIInstrumentLog)';
 ALTER TABLE main.general.bronze_etoro_hedge_kpiinstrumentlog ALTER COLUMN TotalUnitsAccount COMMENT 'Total units executed through the hedge account in the period. Sum from ExecutionRequestBreakdownLog + ExecutionLog (OrderState=4 fills). Comparing to TotalUnitsCustomers reveals over/under-hedging. (Tier 1 - upstream wiki, etoro.Hedge.KPIInstrumentLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

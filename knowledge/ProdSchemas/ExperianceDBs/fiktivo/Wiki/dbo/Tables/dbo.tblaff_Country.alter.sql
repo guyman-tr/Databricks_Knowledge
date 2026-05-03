@@ -32,4 +32,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_country ALTER COLUMN Name COMME
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_country ALTER COLUMN AffiliatesGroupsID COMMENT 'Default affiliate group for this country. References dbo.tblaff_AffiliatesGroups. NULL = no country-level group default. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Country)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_country ALTER COLUMN MarketingRegionID COMMENT 'FK to Dictionary.MarketingRegion. Groups country into marketing territory. See Marketing Region: 0=Unknown, 1=Arabic, ..., 15=USA. Default 0 (Unknown). (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Country)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_country ALTER COLUMN AffiliateTypeID COMMENT 'Default commission plan for affiliates from this country. References dbo.tblaff_AffiliateTypes. NULL = use group-level default plan. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Country)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

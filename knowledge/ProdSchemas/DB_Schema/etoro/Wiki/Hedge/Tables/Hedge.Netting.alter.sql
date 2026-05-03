@@ -37,4 +37,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_netting ALTER COLUMN UpdateTime COMM
 ALTER TABLE main.dealing.bronze_etoro_hedge_netting ALTER COLUMN HedgeServerID COMMENT 'FK to Trade.HedgeServer (implicit). Identifies which hedge server instance manages this position. HedgeServerID=1 dominates (713/738 rows = the primary production hedge server). Additional server IDs (5, 8, 9, 12, 222, 1100, 5454) represent test environments or secondary hedge server instances. RemoveBadNetting uses this column to clean up positions that appear under the wrong LiquidityAccountID for a given HedgeServer. (Tier 1 - upstream wiki, etoro.Hedge.Netting)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_netting ALTER COLUMN SysStartTime COMMENT 'System-generated temporal column. Records when this version of the row became current (UTC). Set automatically by SQL Server when the row is inserted or updated. Combined with SysEndTime enables FOR SYSTEM_TIME AS OF point-in-time queries across Hedge.Netting and History.Netting_History. (Tier 1 - upstream wiki, etoro.Hedge.Netting)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_netting ALTER COLUMN SysEndTime COMMENT 'System-generated temporal column. Records when this version of the row stopped being current. For all current (live) rows: value = 9999-12-31 23:59:59.9999999 (the "forever" sentinel meaning "currently valid"). When a row is updated or deleted, the old version is moved to History.Netting_History with SysEndTime = the update/delete timestamp. (Tier 1 - upstream wiki, etoro.Hedge.Netting)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

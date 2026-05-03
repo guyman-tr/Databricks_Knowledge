@@ -28,4 +28,7 @@ ALTER TABLE main.dealing.bronze_etoro_dictionary_instrumentoperationmode SET TAG
 -- Column Comments
 ALTER TABLE main.dealing.bronze_etoro_dictionary_instrumentoperationmode ALTER COLUMN ID COMMENT 'Operation mode: 0=ManagedInstrument (full automated operations), 1=UnmanagedInstrument (no automated operations). Referenced by instrument configuration tables to control trading engine behavior. (Tier 1 - upstream wiki, etoro.Dictionary.InstrumentOperationMode)';
 ALTER TABLE main.dealing.bronze_etoro_dictionary_instrumentoperationmode ALTER COLUMN Description COMMENT 'Mode label: "ManagedInstrument" or "UnmanagedInstrument". Despite varchar(500) allocation, values are short descriptive labels. (Tier 1 - upstream wiki, etoro.Dictionary.InstrumentOperationMode)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

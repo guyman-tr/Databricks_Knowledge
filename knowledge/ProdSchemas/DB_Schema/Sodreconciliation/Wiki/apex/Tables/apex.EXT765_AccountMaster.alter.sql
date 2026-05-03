@@ -98,4 +98,7 @@ ALTER TABLE main.general.bronze_sodreconciliation_apex_ext765_accountmaster ALTE
 ALTER TABLE main.general.bronze_sodreconciliation_apex_ext765_accountmaster ALTER COLUMN FDID COMMENT 'Firm Designated ID for CAT reporting (SEC Rule 613). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT765_AccountMaster)';
 ALTER TABLE main.general.bronze_sodreconciliation_apex_ext765_accountmaster ALTER COLUMN MPID COMMENT 'Market Participant Identifier for regulatory reporting. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT765_AccountMaster)';
 ALTER TABLE main.general.bronze_sodreconciliation_apex_ext765_accountmaster ALTER COLUMN OATSAccountType COMMENT 'OATS (Order Audit Trail System) account type code (legacy, replaced by CAT). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT765_AccountMaster)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

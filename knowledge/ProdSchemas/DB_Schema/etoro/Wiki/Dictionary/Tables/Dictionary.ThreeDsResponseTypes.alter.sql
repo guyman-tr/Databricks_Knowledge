@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_threedsresponsetypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_threedsresponsetypes ALTER COLUMN ThreeDsResponseTypeID COMMENT 'Primary key identifying the 3DS response outcome. Sequential 0-14. Referenced by Billing.CreditCardAuthentication and History.BillingCreditCardAuthenticationHistory. (Tier 1 - upstream wiki, etoro.Dictionary.ThreeDsResponseTypes)';
 ALTER TABLE main.general.bronze_etoro_dictionary_threedsresponsetypes ALTER COLUMN Name COMMENT 'Human-readable response description. Nullable in DDL but populated for all rows. (Tier 1 - upstream wiki, etoro.Dictionary.ThreeDsResponseTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

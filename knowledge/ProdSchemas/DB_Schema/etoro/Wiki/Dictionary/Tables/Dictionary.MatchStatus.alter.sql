@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_matchstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_matchstatus ALTER COLUMN MatchStatusID COMMENT 'Unique identifier for the reconciliation state: 0=UnMatched (Open), 1=UnMatched (Closed), 2=UnMatched (Old), 3=Matched (Automatically), 4=Matched (Manually), 5=Matched (With Difference), 6=Matched (Offline Approval). Referenced by Billing.Deposit, Billing.WithdrawToFunding, and 30+ billing procedures. (Tier 1 - upstream wiki, etoro.Dictionary.MatchStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_matchstatus ALTER COLUMN Name COMMENT 'Human-readable reconciliation state label. Enforced unique by UK_DMS_Name. Displayed in billing reconciliation reports and BackOffice screens. (Tier 1 - upstream wiki, etoro.Dictionary.MatchStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

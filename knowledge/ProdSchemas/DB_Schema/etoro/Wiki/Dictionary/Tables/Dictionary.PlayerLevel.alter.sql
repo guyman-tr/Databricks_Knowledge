@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_playerlevel (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 7 customer loyalty tiers — Bronze through Diamond plus Internal — with tier-specific cashout wait times, equity thresholds, and downgrade protection rules. Source: etoro.Dictionary.PlayerLevel on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerLevel.md).'
+    'comment' = 'Lookup table defining the 7 customer loyalty tiers - Bronze through Diamond plus Internal - with tier-specific cashout wait times, equity thresholds, and downgrade protection rules. Source: etoro.Dictionary.PlayerLevel on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PlayerLevel.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel SET TAGS (
@@ -26,9 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN PlayerLevelID COMMENT 'Primary key identifying the loyalty tier. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum Plus, 7=Diamond. Note: IDs are not in Sort order — use Sort column for display ordering. ID 4 is special (internal/employee) and is excluded from customer-facing queries. FK from Customer.RegistrationRequest and Customer.CustomerStatic. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
+ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN PlayerLevelID COMMENT 'Primary key identifying the loyalty tier. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum Plus, 7=Diamond. Note: IDs are not in Sort order - use Sort column for display ordering. ID 4 is special (internal/employee) and is excluded from customer-facing queries. FK from Customer.RegistrationRequest and Customer.CustomerStatic. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN Name COMMENT 'Tier display name. Unique constraint prevents duplicates. Values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal. Used in BackOffice reporting JOINs and customer-facing UI. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
-ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN CashoutPendingHours COMMENT 'Maximum hours a cashout request waits before processing. 120=5 days (Bronze/Silver/Internal), 72=3 days (Gold), 24=1 day (Platinum+). Key loyalty benefit — higher tiers get faster withdrawals. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
+ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN CashoutPendingHours COMMENT 'Maximum hours a cashout request waits before processing. 120=5 days (Bronze/Silver/Internal), 72=3 days (Gold), 24=1 day (Platinum+). Key loyalty benefit - higher tiers get faster withdrawals. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN FromSumLotCount COMMENT 'Legacy: minimum cumulative lot count for tier qualification. Set to -1 for upper tiers (disabled). Superseded by RealizedEquity thresholds. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN ToSumLotCount COMMENT 'Legacy: maximum cumulative lot count for tier qualification. Set to -1 for upper tiers (disabled). Superseded by RealizedEquity thresholds. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN FromSumDeposit COMMENT 'Legacy: minimum cumulative deposit amount (USD) for tier qualification. Set to -1 for upper tiers (disabled). Superseded by RealizedEquity thresholds. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
@@ -39,4 +39,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN Realiz
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN RealizedEquityTo COMMENT 'Maximum realized equity (USD) for this tier. NULL for Internal tier. Range: 5,000 (Bronze) to 100,000,000 (Diamond). (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN ThresholdPercentToCurrentLevel COMMENT 'Percentage threshold before downgrade risk begins. Currently 20 for all customer tiers (customer must fall to 80% of tier minimum). NULL for Internal. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_playerlevel ALTER COLUMN DaysInRiskBeforeDowngrade COMMENT 'Grace period in days before tier downgrade when equity drops below threshold. 0=immediate (Bronze/Internal), 180=6 months (Silver/Gold), 365=1 year (Platinum+/Diamond). Default 0. (Tier 1 - upstream wiki, etoro.Dictionary.PlayerLevel)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

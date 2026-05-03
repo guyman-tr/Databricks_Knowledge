@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_leverage SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_leverage ALTER COLUMN LeverageID COMMENT 'Primary key — internal identifier for the leverage tier. Note: LeverageID does NOT equal the leverage Value (e.g., LeverageID=9 has Value=2, LeverageID=10 has Value=30). Always use Value for business logic. See Leverage. (Dictionary.Leverage) (Tier 1 - upstream wiki, etoro.Dictionary.Leverage)';
+ALTER TABLE main.general.bronze_etoro_dictionary_leverage ALTER COLUMN LeverageID COMMENT 'Primary key - internal identifier for the leverage tier. Note: LeverageID does NOT equal the leverage Value (e.g., LeverageID=9 has Value=2, LeverageID=10 has Value=30). Always use Value for business logic. See Leverage. (Dictionary.Leverage) (Tier 1 - upstream wiki, etoro.Dictionary.Leverage)';
 ALTER TABLE main.general.bronze_etoro_dictionary_leverage ALTER COLUMN Value COMMENT 'The actual leverage multiplier. UNIQUE constraint. Values: 1, 2, 5, 10, 20, 30, 50, 100, 200, 400. Stored in Trade.PositionTbl.Leverage. Used in margin calculations: RequiredMargin = PositionAmount / LeverageValue. Determines PnL multiplier and overnight fee scaling. (Tier 1 - upstream wiki, etoro.Dictionary.Leverage)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

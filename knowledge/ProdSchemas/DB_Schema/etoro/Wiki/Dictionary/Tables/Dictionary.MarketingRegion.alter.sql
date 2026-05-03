@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_marketingregion SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_marketingregion ALTER COLUMN MarketingRegionID COMMENT 'Marketing region identifier (0-99). Referenced by Dictionary.Country.MarketingRegionID. Values: 0=Unknown, 1=Africa, 2=Arabic, 3=Australia, 4=Canada, 5=China, 6=French, 7=German, 8=Israel, 9=Italian, 10=North Europe, 11=Other Asia, 12=ROE, 13=ROW, 14=Russian, 15=South & Central America, 16=Spain, 17=UK, 18=USA, 20=Eastern Europe, 99=eToro. (Tier 1 - upstream wiki, etoro.Dictionary.MarketingRegion)';
 ALTER TABLE main.general.bronze_etoro_dictionary_marketingregion ALTER COLUMN Name COMMENT 'Marketing region name. Unique constraint prevents duplicates. Used in BI dashboards, marketing reports, and sales territory assignments. (Tier 1 - upstream wiki, etoro.Dictionary.MarketingRegion)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

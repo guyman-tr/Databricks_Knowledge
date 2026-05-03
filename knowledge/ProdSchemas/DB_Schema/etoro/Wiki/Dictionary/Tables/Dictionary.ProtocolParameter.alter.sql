@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_protocolparameter (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter SET TBLPROPERTIES (
-    'comment' = 'Configuration table storing 49 named parameters for payment protocols — API keys, URLs, merchant IDs, secrets — used by the billing engine to configure PSP connections. Source: etoro.Dictionary.ProtocolParameter on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ProtocolParameter.md).'
+    'comment' = 'Configuration table storing 49 named parameters for payment protocols - API keys, URLs, merchant IDs, secrets - used by the billing engine to configure PSP connections. Source: etoro.Dictionary.ProtocolParameter on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ProtocolParameter.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter SET TAGS (
@@ -27,6 +27,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter SET TAGS (
 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter ALTER COLUMN ParamID COMMENT 'Primary key. Sequential ID for each parameter definition across all protocols (1-49). (Tier 1 - upstream wiki, etoro.Dictionary.ProtocolParameter)';
-ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter ALTER COLUMN ProtocolID COMMENT 'FK → Dictionary.Protocol. Groups parameters by payment protocol. Indexed for efficient lookup. (Tier 1 - upstream wiki, etoro.Dictionary.ProtocolParameter)';
+ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter ALTER COLUMN ProtocolID COMMENT 'FK -> Dictionary.Protocol. Groups parameters by payment protocol. Indexed for efficient lookup. (Tier 1 - upstream wiki, etoro.Dictionary.ProtocolParameter)';
 ALTER TABLE main.general.bronze_etoro_dictionary_protocolparameter ALTER COLUMN ParamName COMMENT 'Configuration parameter key name (e.g., "apiUsername", "merchantID", "secret"). Used by the billing engine to build PSP-specific connection configurations. (Tier 1 - upstream wiki, etoro.Dictionary.ProtocolParameter)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_withdrawtype (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_withdrawtype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the three classifications of withdrawal requests — Default (standard cashout), Transfer (internal account transfer), or ApprovedForClosure (final withdrawal during account closure) — controlling how the withdrawal is processed and routed. Source: etoro.Dictionary.WithdrawType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.WithdrawType.md).'
+    'comment' = 'Lookup table defining the three classifications of withdrawal requests - Default (standard cashout), Transfer (internal account transfer), or ApprovedForClosure (final withdrawal during account closure) - controlling how the withdrawal is processed and routed. Source: etoro.Dictionary.WithdrawType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.WithdrawType.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_withdrawtype SET TAGS (
@@ -29,4 +29,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_withdrawtype SET TAGS (
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_withdrawtype ALTER COLUMN WithdrawTypeID COMMENT 'Unique identifier for the withdrawal classification: 0=Default (standard cashout), 1=Transfer (internal), 2=ApprovedForClosure (closure disbursement). Stored on Billing.Withdraw and checked by 15+ procedures to determine processing path, approval requirements, and reporting categorization. (Tier 1 - upstream wiki, etoro.Dictionary.WithdrawType)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_withdrawtype ALTER COLUMN WithdrawType COMMENT 'Short code name for the type: "Default", "Transfer", "ApprovedForClosure". Used as a programmatic identifier in application code and API responses. (Tier 1 - upstream wiki, etoro.Dictionary.WithdrawType)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_withdrawtype ALTER COLUMN Description COMMENT 'Human-readable description of the type. Empty for Default (0), "Internal Transfer" for Transfer (1), "Approved for closure" for ApprovedForClosure (2). Used in BackOffice UI and reports. (Tier 1 - upstream wiki, etoro.Dictionary.WithdrawType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

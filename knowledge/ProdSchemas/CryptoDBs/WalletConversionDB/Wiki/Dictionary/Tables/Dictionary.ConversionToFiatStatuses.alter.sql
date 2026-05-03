@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_dictionary_conversiontofiatstat
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletconversiondb_dictionary_conversiontofiatstatuses ALTER COLUMN Id COMMENT 'Primary key identifying the conversion status type. Referenced by C2F.ConversionStatuses.StatusId via explicit FK. Values: 1=Pending, 2=Failed, 3=Completed, 4=Rejected. See Conversion To Fiat Status. (Tier 1 - upstream wiki, WalletConversionDB.Dictionary.ConversionToFiatStatuses)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_dictionary_conversiontofiatstatuses ALTER COLUMN Name COMMENT 'Human-readable label for the status. Maps 1:1 with Id values. Used in application code for display and logging. (Tier 1 - upstream wiki, WalletConversionDB.Dictionary.ConversionToFiatStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

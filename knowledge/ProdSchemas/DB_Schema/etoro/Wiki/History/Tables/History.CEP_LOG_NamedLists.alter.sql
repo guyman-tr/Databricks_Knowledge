@@ -34,4 +34,7 @@ ALTER TABLE main.general.bronze_etoro_history_cep_log_namedlists ALTER COLUMN Na
 ALTER TABLE main.general.bronze_etoro_history_cep_log_namedlists ALTER COLUMN LastUpdated COMMENT 'Timestamp of the most recent list membership refresh at time of this change. May be NULL for lists that have never been refreshed. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_NamedLists)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_namedlists ALTER COLUMN ValidFrom COMMENT 'Timestamp when this named list version became active. Copied from parent row. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_NamedLists)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_namedlists ALTER COLUMN ValidTo COMMENT 'Timestamp when this named list was superseded. Defaults to getutcdate() at INSERT. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_NamedLists)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

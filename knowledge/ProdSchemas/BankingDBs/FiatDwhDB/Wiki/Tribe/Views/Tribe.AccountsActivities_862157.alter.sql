@@ -26,8 +26,11 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 SET TAG
 );
 
 -- Column Comments
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN @Created COMMENT 'DWH insertion timestamp. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN @Id COMMENT 'File GUID. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN @FileName COMMENT 'Source file name. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
+ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN `@Created` COMMENT 'DWH insertion timestamp. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
+ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN `@Id` COMMENT 'File GUID. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
+ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN `@FileName` COMMENT 'Source file name. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157 ALTER COLUMN Created COMMENT 'Source timestamp. From base table. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.AccountsActivities_862157)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

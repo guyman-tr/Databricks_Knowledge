@@ -50,4 +50,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_redeem ALTER COLUMN IPAddress COMM
 ALTER TABLE main.billing.bronze_etoro_billing_redeem ALTER COLUMN NetProfit COMMENT 'Net profit on the redemption after fees. Default=0. Populated by the settlement process. (Tier 1 - upstream wiki, etoro.Billing.Redeem)';
 ALTER TABLE main.billing.bronze_etoro_billing_redeem ALTER COLUMN RedeemTypeID COMMENT 'Redemption type: 0=Standard crypto-to-fiat (DEFAULT, 99.9% of records), 1=Special type (21 rows, appears to be NFT or internal transfer per procedures GetNFTRedeemDetailsByOperationID). Added in PTL-76 (June 2022). (Tier 1 - upstream wiki, etoro.Billing.Redeem)';
 ALTER TABLE main.billing.bronze_etoro_billing_redeem ALTER COLUMN OperationID COMMENT 'External operation reference GUID. Added in PTL-76 alongside RedeemTypeID. Used for NFT redemptions and cross-system operation tracking. (Tier 1 - upstream wiki, etoro.Billing.Redeem)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

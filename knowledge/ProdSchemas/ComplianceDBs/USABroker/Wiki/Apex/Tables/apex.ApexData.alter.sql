@@ -32,4 +32,7 @@ ALTER TABLE main.finance.bronze_usabroker_apex_apexdata ALTER COLUMN StatusID CO
 ALTER TABLE main.finance.bronze_usabroker_apex_apexdata ALTER COLUMN BeginTime COMMENT 'System versioning row start time. Records when this version of the row became active. Default is 1 second before current UTC time (offset to avoid temporal table edge cases). Used by GetApexData to return creation/modification timestamps to callers. Part of SYSTEM_TIME period for temporal table History.ApexData. (Tier 1 - upstream wiki, USABroker.apex.ApexData)';
 ALTER TABLE main.finance.bronze_usabroker_apex_apexdata ALTER COLUMN EndTime COMMENT 'System versioning row end time. Value of ''9999-12-31'' indicates the current active row. When a row is updated, the old version''s EndTime is set to the update time and moved to History.ApexData. Part of SYSTEM_TIME period. (Tier 1 - upstream wiki, USABroker.apex.ApexData)';
 ALTER TABLE main.finance.bronze_usabroker_apex_apexdata ALTER COLUMN UpdatedSync COMMENT 'Synchronization flag for the trading platform. Set to 0 (false) by SaveApexData whenever StatusID changes, signaling the trading platform that this account''s status needs to be re-synced. The trading platform reads records with UpdatedSync=0, processes them, and sets it to 1 (true). Default is 0 (needs sync) for new records. Distribution: ~722K false (synced), ~42K true. (Tier 1 - upstream wiki, USABroker.apex.ApexData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

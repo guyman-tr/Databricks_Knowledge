@@ -39,4 +39,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_accountinstrumentconfiguration ALTER C
 ALTER TABLE main.bi_db.bronze_etoro_hedge_accountinstrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for current rows. History in History.AccountInstrumentConfiguration. (Tier 1 - upstream wiki, etoro.Hedge.AccountInstrumentConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_accountinstrumentconfiguration ALTER COLUMN DbLoginName COMMENT 'Computed audit column. SQL Server login executing the DML. (Tier 1 - upstream wiki, etoro.Hedge.AccountInstrumentConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_accountinstrumentconfiguration ALTER COLUMN AppLoginName COMMENT 'Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set. (Tier 1 - upstream wiki, etoro.Hedge.AccountInstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

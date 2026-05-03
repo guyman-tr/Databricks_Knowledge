@@ -34,4 +34,7 @@ ALTER TABLE main.trading.bronze_etoro_history_liquidityproviders ALTER COLUMN Db
 ALTER TABLE main.trading.bronze_etoro_history_liquidityproviders ALTER COLUMN AppLoginName COMMENT 'Application-level identity from context_info(). Computed column on live table; stored as snapshot in history. NULL in all observed history rows - LP configuration changes appear to be made directly via SQL or Configuration Manager without setting application context. varchar(500) accommodates the "username;ConfigurationManager" pattern seen in other tables. (Tier 1 - upstream wiki, etoro.History.LiquidityProviders)';
 ALTER TABLE main.trading.bronze_etoro_history_liquidityproviders ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this LP configuration became current in Trade.LiquidityProviders. Set automatically by SQL Server SYSTEM_VERSIONING. The clustered index (SysEndTime, SysStartTime) supports efficient temporal range queries. (Tier 1 - upstream wiki, etoro.History.LiquidityProviders)';
 ALTER TABLE main.trading.bronze_etoro_history_liquidityproviders ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this LP configuration was superseded. For all history rows, always a past timestamp. When SysEndTime = SysStartTime (ValidForSec=0), the LP was reconfigured immediately after the prior update - often seen during complex configuration workflows where settings are applied in rapid succession. (Tier 1 - upstream wiki, etoro.History.LiquidityProviders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

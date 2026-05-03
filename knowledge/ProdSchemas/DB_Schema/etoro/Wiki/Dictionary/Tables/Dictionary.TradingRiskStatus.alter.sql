@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_tradingriskstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_tradingriskstatus ALTER COLUMN TradingRiskStatusID COMMENT 'Primary key identifying the trading risk level. 1=None, 2=Pending, 3=Low, 4=High. Referenced by BackOffice.Customer.TradingRiskStatusID (COMPUTED column). Used by Trade.GetTradingRiskStatus, Trade.GetUserInfo, Trade.GetUserData, Trade.GetOrderForOpenContextData, Trade.GetOrderForCloseContextData, Trade.GetCustomersDataWithRestirctions, Trade.PositionsGuaranteedSLWasNotAligned, UserApiDB Customer procs. (Tier 1 - upstream wiki, etoro.Dictionary.TradingRiskStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_tradingriskstatus ALTER COLUMN TradingRiskStatus COMMENT 'Human-readable label. Values: None, Pending, Low, High. Used for UI and reporting when resolving TradingRiskStatusID. (Tier 1 - upstream wiki, etoro.Dictionary.TradingRiskStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

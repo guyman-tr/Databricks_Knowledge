@@ -33,4 +33,7 @@ ALTER TABLE main.general.bronze_etoro_history_listcidmappings ALTER COLUMN DbLog
 ALTER TABLE main.general.bronze_etoro_history_listcidmappings ALTER COLUMN AppLoginName COMMENT 'CEP application user who triggered the change. Computed column on live table (= CONVERT(varchar(500), context_info())). Set by CEP.ArchiveListCIDMapping via SET CONTEXT_INFO before DELETE. Stored null-padded to 128 bytes (context_info buffer size) then stored as varchar(500). NULL when automated scheduler runs without application context. (Tier 1 - upstream wiki, etoro.History.ListCIDMappings)';
 ALTER TABLE main.general.bronze_etoro_history_listcidmappings ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this membership row version became current in CEP.ListCIDMappings. For newly inserted CIDs: reflects the INSERT trigger''s no-op UPDATE timestamp (milliseconds after actual INSERT). Populated automatically by SQL Server SYSTEM_VERSIONING. (Tier 1 - upstream wiki, etoro.History.ListCIDMappings)';
 ALTER TABLE main.general.bronze_etoro_history_listcidmappings ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this customer''s membership in the named list ended (was removed). All 52 NamedListID=1 history rows share SysEndTime="2024-11-06 11:24:39" - confirming they were removed in a single batch refresh operation. SysEndTime=SysStartTime indicates an immediately-superseded row (INSERT trigger pattern). (Tier 1 - upstream wiki, etoro.History.ListCIDMappings)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

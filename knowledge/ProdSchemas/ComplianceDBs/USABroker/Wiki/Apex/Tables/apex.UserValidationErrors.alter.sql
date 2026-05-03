@@ -28,4 +28,7 @@ ALTER TABLE main.finance.bronze_usabroker_apex_uservalidationerrors SET TAGS (
 -- Column Comments
 ALTER TABLE main.finance.bronze_usabroker_apex_uservalidationerrors ALTER COLUMN GCID COMMENT 'Global Customer ID. Part of composite PK. FK to Apex.State(GCID). Multiple error rows per customer are common. (Tier 1 - upstream wiki, USABroker.apex.UserValidationErrors)';
 ALTER TABLE main.finance.bronze_usabroker_apex_uservalidationerrors ALTER COLUMN ApexValidationErrorID COMMENT 'The specific validation error. FK to Dictionary.ApexValidationError. 50 possible values covering field errors (4-7), form errors (8-11), compliance blocks (38-39), and CIP failures (43-50). See Apex Validation Error. (Dictionary.ApexValidationError) (Tier 1 - upstream wiki, USABroker.apex.UserValidationErrors)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

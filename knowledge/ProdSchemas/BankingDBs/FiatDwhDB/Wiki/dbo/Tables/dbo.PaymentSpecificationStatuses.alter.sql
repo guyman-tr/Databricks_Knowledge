@@ -31,4 +31,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationstatuses ALTER 
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationstatuses ALTER COLUMN PaymentSpecificationStatusId COMMENT 'Status: 0=New, 1=Active, 2=Cancelled, 3=CancelledPending, 4=Error. See Payment Specification Status Type. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationstatuses ALTER COLUMN EventTimestamp COMMENT 'When the status change occurred in the source system. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationstatuses ALTER COLUMN Created COMMENT 'When this record was written to the DWH. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

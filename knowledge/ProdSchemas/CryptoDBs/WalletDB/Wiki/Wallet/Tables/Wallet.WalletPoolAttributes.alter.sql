@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_walletpoolattributes ALTER COLUMN 
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_walletpoolattributes ALTER COLUMN ReservedAmount COMMENT 'Amount of crypto that must remain in the wallet as a blockchain-mandated minimum reserve. Cannot be withdrawn by the user. Common for XRP (1.2) and XLM (1.0). (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPoolAttributes)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_walletpoolattributes ALTER COLUMN Occurred COMMENT 'Timestamp when this attributes record was created. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPoolAttributes)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_walletpoolattributes ALTER COLUMN CreationFee COMMENT 'Fee paid to create this wallet on the blockchain. NULL for blockchains without on-chain wallet creation fees. Relevant for account-based blockchains like EOS. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPoolAttributes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

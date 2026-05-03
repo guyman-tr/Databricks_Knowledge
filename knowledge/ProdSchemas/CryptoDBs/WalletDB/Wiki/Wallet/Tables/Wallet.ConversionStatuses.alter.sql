@@ -30,4 +30,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_conversionstatuses ALTER COLUMN I
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversionstatuses ALTER COLUMN ConversionId COMMENT 'Parent conversion. FK to Wallet.Conversions.Id. (Tier 1 - upstream wiki, WalletDB.Wallet.ConversionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversionstatuses ALTER COLUMN ConversionStatusId COMMENT 'Status: 1=Pending, 2=Failed, 3=Completed. See Conversion Status. FK to Dictionary.ConversionStatuses. (Tier 1 - upstream wiki, WalletDB.Wallet.ConversionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversionstatuses ALTER COLUMN Occurred COMMENT 'Timestamp of this status transition. (Tier 1 - upstream wiki, WalletDB.Wallet.ConversionStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

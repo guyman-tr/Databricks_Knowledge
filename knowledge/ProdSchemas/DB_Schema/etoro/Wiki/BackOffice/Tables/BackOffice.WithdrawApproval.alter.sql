@@ -34,4 +34,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_withdrawapproval ALTER COLUMN W
 ALTER TABLE main.billing.bronze_etoro_backoffice_withdrawapproval ALTER COLUMN Approved COMMENT '1=This group approved the withdrawal. 0=This group rejected/held. A withdrawal proceeds only when all required groups (per Maintenance.Feature thresholds) have Approved=1. (Tier 1 - upstream wiki, etoro.BackOffice.WithdrawApproval)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_withdrawapproval ALTER COLUMN Occurred COMMENT 'Timestamp when this approval decision was recorded. Defaults to GETDATE() for direct inserts; set to GetDate() in WithdrawApprovalAdd SP. (Tier 1 - upstream wiki, etoro.BackOffice.WithdrawApproval)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_withdrawapproval ALTER COLUMN Comment COMMENT 'Free-text comment from the approving/rejecting manager. Required field (NOT NULL). Contains compliance notes, rejection rationale, or auto-generated notes for system approvals. (Tier 1 - upstream wiki, etoro.BackOffice.WithdrawApproval)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

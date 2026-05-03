@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_eligibilitystatuses SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_eligibilitystatuses ALTER COLUMN Id COMMENT 'Unique identifier for the eligibility tier. Values: 0=BlockedFromAccess, 1=ReadOnly, 2=AllOperations, 3=AllOperationsForExistingUsersOnly. Used by application logic to gate crypto operations per customer. (Tier 1 - upstream wiki, WalletDB.Dictionary.EligibilityStatuses)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_eligibilitystatuses ALTER COLUMN Name COMMENT 'Descriptive label for the eligibility tier. Used in back-office tools, compliance dashboards, and customer support interfaces. (Tier 1 - upstream wiki, WalletDB.Dictionary.EligibilityStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

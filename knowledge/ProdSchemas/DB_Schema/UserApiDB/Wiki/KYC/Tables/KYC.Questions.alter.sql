@@ -33,4 +33,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_questions ALTER COLUMN Multiple
 ALTER TABLE main.compliance.bronze_userapidb_kyc_questions ALTER COLUMN IsActive COMMENT 'Whether this question is currently active in the questionnaire. Default: 1 (active). (Tier 1 - upstream wiki, UserApiDB.KYC.Questions)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_questions ALTER COLUMN TranslationKey COMMENT 'i18n key for frontend localization. (Tier 1 - upstream wiki, UserApiDB.KYC.Questions)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_questions ALTER COLUMN QuestionShortDescription COMMENT 'Short internal description for reporting and admin tools. (Tier 1 - upstream wiki, UserApiDB.KYC.Questions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

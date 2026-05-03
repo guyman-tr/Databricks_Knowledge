@@ -34,4 +34,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_liquidityproviders ALTER COLUMN DbLo
 ALTER TABLE main.trading.bronze_etoro_trade_liquidityproviders ALTER COLUMN AppLoginName COMMENT 'Computed: CONVERT(varchar(500), context_info()). Application context from context_info. Often NULL when not set by caller. (Tier 1 - upstream wiki, etoro.Trade.LiquidityProviders)';
 ALTER TABLE main.trading.bronze_etoro_trade_liquidityproviders ALTER COLUMN SysStartTime COMMENT 'System-versioning start. When this row became effective. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, etoro.Trade.LiquidityProviders)';
 ALTER TABLE main.trading.bronze_etoro_trade_liquidityproviders ALTER COLUMN SysEndTime COMMENT 'System-versioning end. When this row was superseded. GENERATED ALWAYS AS ROW END. 9999-12-31 means current. (Tier 1 - upstream wiki, etoro.Trade.LiquidityProviders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

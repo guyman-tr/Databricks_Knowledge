@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_paymentstatuses ALTER COLUMN Paym
 ALTER TABLE main.wallet.bronze_walletdb_wallet_paymentstatuses ALTER COLUMN PaymentStatusId COMMENT 'Status: 1=PendingProvider through 11=ProviderSubmitted. See Payment Status. FK to Dictionary.PaymentStatuses. (Tier 1 - upstream wiki, WalletDB.Wallet.PaymentStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_paymentstatuses ALTER COLUMN DetailsJson COMMENT 'JSON with status-specific details (provider responses, error info). (Tier 1 - upstream wiki, WalletDB.Wallet.PaymentStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_paymentstatuses ALTER COLUMN Occurred COMMENT 'Timestamp of this status transition. (Tier 1 - upstream wiki, WalletDB.Wallet.PaymentStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

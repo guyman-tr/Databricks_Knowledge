@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_privacyrecipients SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_privacyrecipients ALTER COLUMN PrivacyRecipientID COMMENT 'Auto-incrementing primary key. IDENTITY NOT FOR REPLICATION. Values 1-7 represent the 7 supported sharing recipients. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyRecipients)';
 ALTER TABLE main.general.bronze_etoro_dictionary_privacyrecipients ALTER COLUMN PrivacyRecipientName COMMENT 'Human-readable name of the data recipient. Used in UI configuration and privacy settings screens. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyRecipients)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

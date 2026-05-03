@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_notificationstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationstatus ALTER COLUMN NotificationStatusID COMMENT 'Unique identifier for the notification state: 1=Pending, 2=Processing, 3=Sent, 4=Failed. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_notificationstatus ALTER COLUMN Name COMMENT 'Human-readable state label. Nullable (unusual for lookup). Displayed in notification monitoring dashboards. (Tier 1 - upstream wiki, etoro.Dictionary.NotificationStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

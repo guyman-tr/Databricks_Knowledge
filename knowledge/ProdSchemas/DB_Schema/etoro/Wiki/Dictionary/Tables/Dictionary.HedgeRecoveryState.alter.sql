@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_hedgerecoverystate (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgerecoverystate SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining five hedge recovery states — tracking the lifecycle of hedge position entries during the disaster recovery and reconciliation process between eToro''s systems and liquidity providers. Source: etoro.Dictionary.HedgeRecoveryState on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.HedgeRecoveryState.md).'
+    'comment' = 'Lookup table defining five hedge recovery states - tracking the lifecycle of hedge position entries during the disaster recovery and reconciliation process between eToro''s systems and liquidity providers. Source: etoro.Dictionary.HedgeRecoveryState on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.HedgeRecoveryState.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgerecoverystate SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_hedgerecoverystate SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgerecoverystate ALTER COLUMN ID COMMENT 'Primary key identifying the recovery state. 0=None (unclassified/matched), 1=Added (new LP position), 2=Updated (details changed), 3=Removed (not at LP), 4=Detected (initial scan state). Stored in Hedge.RecoveryLog. (Tier 1 - upstream wiki, etoro.Dictionary.HedgeRecoveryState)';
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgerecoverystate ALTER COLUMN Name COMMENT 'Human-readable label for the recovery state. Displayed in recovery logs, reconciliation reports, and monitoring dashboards. (Tier 1 - upstream wiki, etoro.Dictionary.HedgeRecoveryState)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

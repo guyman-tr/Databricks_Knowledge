@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_leveragetypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_leveragetypes ALTER COLUMN LeverageTypeID COMMENT 'Primary key (auto-increment). 1=Proportional, 2=Fixed. NOT FOR REPLICATION prevents identity conflicts in replicated environments. See Leverage Types. (Dictionary.LeverageTypes) (Tier 1 - upstream wiki, etoro.Dictionary.LeverageTypes)';
 ALTER TABLE main.general.bronze_etoro_dictionary_leveragetypes ALTER COLUMN LeverageTypeName COMMENT 'Leverage application method name. NULL allowed. (Tier 1 - upstream wiki, etoro.Dictionary.LeverageTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

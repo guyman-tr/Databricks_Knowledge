@@ -32,4 +32,7 @@ ALTER TABLE main.bi_db.bronze_etoro_trade_getliquidityproviders ALTER COLUMN Liq
 ALTER TABLE main.bi_db.bronze_etoro_trade_getliquidityproviders ALTER COLUMN LiquidityProviderTypeID COMMENT 'FK to Trade.LiquidityProviderType. Provider type: 0=eToro, 1=BMFN, 2=FXCM, 3=FD. From TLP. (Tier 1 - upstream wiki, etoro.Trade.GetLiquidityProviders)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_getliquidityproviders ALTER COLUMN Name COMMENT 'Provider type name (e.g., FXCM, BMFN) from Trade.LiquidityProviderType. From TLPT. (Tier 1 - upstream wiki, etoro.Trade.GetLiquidityProviders)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_getliquidityproviders ALTER COLUMN TypeSettingsXML COMMENT 'Type-level pluggable configuration: assembly/class for price, PCS, execution, hedging. From TLPT. (Tier 1 - upstream wiki, etoro.Trade.GetLiquidityProviders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

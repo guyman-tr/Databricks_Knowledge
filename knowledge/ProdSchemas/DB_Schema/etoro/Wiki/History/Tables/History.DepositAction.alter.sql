@@ -49,4 +49,7 @@ ALTER TABLE main.general.bronze_etoro_history_depositaction ALTER COLUMN BaseExc
 ALTER TABLE main.general.bronze_etoro_history_depositaction ALTER COLUMN PaymentGeneration COMMENT 'Identifies the generation or version of the payment processing flow used for this deposit. Distinguishes between different payment processing implementations deployed over time (e.g., legacy vs. modern payment stack). (Tier 1 - upstream wiki, etoro.History.DepositAction)';
 ALTER TABLE main.general.bronze_etoro_history_depositaction ALTER COLUMN ProcessRegulationID COMMENT 'The regulatory processing framework applied to this deposit. References a regulatory classification that determines which processing rules and compliance checks apply. May correspond to jurisdiction or entity (e.g., Cyprus vs. US regulatory environment). (Tier 1 - upstream wiki, etoro.History.DepositAction)';
 ALTER TABLE main.general.bronze_etoro_history_depositaction ALTER COLUMN MerchantAccountID COMMENT 'The merchant account within the payment gateway used for this transaction. Works in conjunction with DepotID: DepotID identifies the gateway, MerchantAccountID identifies the specific merchant account on that gateway. Example: MerchantAccountID=7 with DepotID=87 in recent data. (Tier 1 - upstream wiki, etoro.History.DepositAction)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

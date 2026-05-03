@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_stakingstatuses SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_stakingstatuses ALTER COLUMN Id COMMENT 'Unique identifier for the staking status. Values: 1=Pending, 2=Failed, 3=Completed. Referenced by Staking.StakingStatuses.StakingStatusId via explicit FK. See Staking Status for full business definitions. (Tier 1 - upstream wiki, WalletDB.Dictionary.StakingStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_stakingstatuses ALTER COLUMN Name COMMENT 'Human-readable label for the staking status. Resolved via JOIN in Staking.StakingData view and Wallet.GetStakingTransactionList/V2 functions to display status names in reporting. (Tier 1 - upstream wiki, WalletDB.Dictionary.StakingStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

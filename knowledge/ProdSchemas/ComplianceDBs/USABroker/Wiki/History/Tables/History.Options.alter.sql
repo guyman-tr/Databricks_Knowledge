@@ -43,4 +43,7 @@ ALTER TABLE main.general.bronze_usabroker_history_options ALTER COLUMN Reasoning
 ALTER TABLE main.general.bronze_usabroker_history_options ALTER COLUMN AppropriatenessTestDate COMMENT 'Timestamp of when the appropriateness test was last taken or recalculated as of this version. (Tier 1 - upstream wiki, USABroker.History.Options)';
 ALTER TABLE main.general.bronze_usabroker_history_options ALTER COLUMN StocksElegibilityStatusID COMMENT 'Eligibility status for stock trading at the time this version was active. 0=Disallowed, 1=Allowed. Note: column name has typo "Elegibility". (Tier 1 - upstream wiki, USABroker.History.Options)';
 ALTER TABLE main.general.bronze_usabroker_history_options ALTER COLUMN CryptoElegibilityStatusID COMMENT 'Eligibility status for cryptocurrency trading at the time this version was active. 0=Disallowed, 1=Allowed. Note: column name has typo "Elegibility". (Tier 1 - upstream wiki, USABroker.History.Options)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

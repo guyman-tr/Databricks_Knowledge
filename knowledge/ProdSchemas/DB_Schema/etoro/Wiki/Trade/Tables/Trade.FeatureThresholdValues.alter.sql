@@ -35,4 +35,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_featurethresholdvalues ALTER COLUMN 
 ALTER TABLE main.trading.bronze_etoro_trade_featurethresholdvalues ALTER COLUMN SysStartTime COMMENT 'System-versioning row start. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, etoro.Trade.FeatureThresholdValues)';
 ALTER TABLE main.trading.bronze_etoro_trade_featurethresholdvalues ALTER COLUMN SysEndTime COMMENT 'System-versioning row end. GENERATED ALWAYS AS ROW END. (Tier 1 - upstream wiki, etoro.Trade.FeatureThresholdValues)';
 ALTER TABLE main.trading.bronze_etoro_trade_featurethresholdvalues ALTER COLUMN HostName COMMENT 'Computed: host_name(). Server name for audit context. (Tier 1 - upstream wiki, etoro.Trade.FeatureThresholdValues)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

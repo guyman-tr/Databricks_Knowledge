@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_tncdoctype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_tncdoctype ALTER COLUMN ID COMMENT 'Primary key identifying the document type. Sequential 1-18. Referenced by BackOffice.TncDocument. (Tier 1 - upstream wiki, etoro.Dictionary.TncDocType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_tncdoctype ALTER COLUMN Name COMMENT 'Document type label. Nullable in DDL but populated for all rows. (Tier 1 - upstream wiki, etoro.Dictionary.TncDocType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

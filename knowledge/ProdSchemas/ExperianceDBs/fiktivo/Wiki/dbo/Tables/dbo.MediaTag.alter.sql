@@ -32,4 +32,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatag ALTER COLUMN TranslationKey C
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatag ALTER COLUMN Trace COMMENT 'Computed audit column. JSON with session metadata (HostName, AppName, SUserName, SPID). (Tier 1 - upstream wiki, fiktivo.dbo.MediaTag)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatag ALTER COLUMN ValidFrom COMMENT 'System-versioning period start. Tracks when this tag definition became active. (Tier 1 - upstream wiki, fiktivo.dbo.MediaTag)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatag ALTER COLUMN ValidTo COMMENT 'System-versioning period end. ''9999-12-31'' for current rows. (Tier 1 - upstream wiki, fiktivo.dbo.MediaTag)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

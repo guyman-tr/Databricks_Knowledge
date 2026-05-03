@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundpropertytorule ALT
 ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundpropertytorule ALTER COLUMN Value COMMENT 'Expected evaluation outcome of the compound property. True = the compound property must evaluate to true for rule activation; False = must evaluate to false (logical negation). Nullable. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_CompoundPropertyToRule)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundpropertytorule ALTER COLUMN ValidFrom COMMENT 'Timestamp when this assignment version became active. Copied from parent row. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_CompoundPropertyToRule)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundpropertytorule ALTER COLUMN ValidTo COMMENT 'Timestamp when this assignment was superseded. Defaults to getutcdate() at INSERT. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_CompoundPropertyToRule)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

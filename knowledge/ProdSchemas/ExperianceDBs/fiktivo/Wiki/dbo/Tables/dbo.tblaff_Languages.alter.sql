@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_languages ALTER COLUMN TLDURL C
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_languages ALTER COLUMN DefaultLandingPage COMMENT 'Custom landing page URL for affiliate traffic in this language. When set, overrides the TLDURL for campaign-specific routing. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Languages)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_languages ALTER COLUMN TierTwoLandingPage COMMENT 'Alternate landing page URL for tier-2 (sub-affiliate) traffic. Allows different conversion funnels for direct vs sub-affiliate traffic. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Languages)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_languages ALTER COLUMN Code COMMENT 'BCP 47/IETF language tag (e.g., "en-gb", "es-es", "zh-cn"). Used for locale matching in tracking URLs and API integrations. Unique constraint ensures no duplicate locale codes. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Languages)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

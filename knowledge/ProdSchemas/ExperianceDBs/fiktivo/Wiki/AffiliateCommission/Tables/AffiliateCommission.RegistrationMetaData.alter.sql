@@ -42,4 +42,7 @@ ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_registrationmetad
 ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_registrationmetadata ALTER COLUMN ValidTo COMMENT 'System versioning end time. When this version was superseded. 9999-12-31 for the current row. History rows have the actual end time. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationMetaData)';
 ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_registrationmetadata ALTER COLUMN AdditionalData COMMENT 'Extensible metadata field. Defaults to empty string. Allows additional attribution data without schema changes. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationMetaData)';
 ALTER TABLE main.experience.bronze_fiktivo_affiliatecommission_registrationmetadata ALTER COLUMN EtoroUserName COMMENT 'eToro username of the registered customer. Allows quick human-readable identification alongside the numeric CID. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationMetaData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

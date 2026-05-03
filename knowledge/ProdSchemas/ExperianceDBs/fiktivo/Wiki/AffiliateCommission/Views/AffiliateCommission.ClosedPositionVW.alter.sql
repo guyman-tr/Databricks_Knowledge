@@ -99,4 +99,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw ALTER
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw ALTER COLUMN IsProcessed COMMENT 'From ClosedPosition. Processing completion flag. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.ClosedPositionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw ALTER COLUMN ValidFrom COMMENT 'From RegistrationMetaData. When current attribution became effective. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.ClosedPositionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw ALTER COLUMN UpdateDate COMMENT 'Computed: GREATEST(CommissionDate, ValidFrom). Latest change timestamp for CDC consumers. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.ClosedPositionVW)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_cepnamedlisttypeid (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_cepnamedlisttypeid SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 2 types of CEP (Complex Event Processing) named lists — Normal (manually configured) and DB Generated (auto-populated from database queries). Source: etoro.Dictionary.CEPNamedListTypeID on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CEPNamedListTypeID.md).'
+    'comment' = 'Lookup table defining the 2 types of CEP (Complex Event Processing) named lists - Normal (manually configured) and DB Generated (auto-populated from database queries). Source: etoro.Dictionary.CEPNamedListTypeID on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CEPNamedListTypeID.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_cepnamedlisttypeid SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_cepnamedlisttypeid SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_cepnamedlisttypeid ALTER COLUMN NamedListTypeID COMMENT 'Primary key identifying the named list type. Values: 1=Normal (manual), 2=DB Generated (automatic). Referenced by CEP.NamedLists.NamedListTypeID (FK) to classify each named list''s population strategy. (Tier 1 - upstream wiki, etoro.Dictionary.CEPNamedListTypeID)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cepnamedlisttypeid ALTER COLUMN Description COMMENT 'Human-readable label for the list type (e.g., ''Normal'', ''DB Generated Named List''). Used in the CEP management UI to indicate how a list''s contents are maintained. (Tier 1 - upstream wiki, etoro.Dictionary.CEPNamedListTypeID)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

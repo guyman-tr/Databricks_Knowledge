@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_mifidcategorization SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_mifidcategorization ALTER COLUMN MifidCategorizationID COMMENT 'MiFID II client classification tier: 0=None (non-EU), 1=Retail (full protection, default), 2=Professional (reduced protection), 3=Elective Professional (opted-in retail), 4=Retail Pending (under review), 5=Pending (assessment incomplete). Referenced by BackOffice.Customer.MifidCategorizationID (FK, DEFAULT 1) and History.BackOfficeCustomer. Feeds into computed column TradingRiskStatusID. (Tier 1 - upstream wiki, etoro.Dictionary.MifidCategorization)';
 ALTER TABLE main.general.bronze_etoro_dictionary_mifidcategorization ALTER COLUMN Name COMMENT 'Human-readable classification label. Used in compliance dashboards and regulatory reports. (Tier 1 - upstream wiki, etoro.Dictionary.MifidCategorization)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -75,5 +75,8 @@ ALTER TABLE main.general.bronze_etoro_backoffice_customer ALTER COLUMN Seychelle
 ALTER TABLE main.general.bronze_etoro_backoffice_customer ALTER COLUMN TradingRiskStatusID COMMENT 'Computed (NEVER store directly). Derives effective trading risk tier from regulation + categorization. Values: 1=Eligible Counterparty/Elite (highest leverage, least protection), 2=Professional (reduced protection), 3=Standard Retail (88.3%), 4=Default/QA. Formula depends on DB name, SeychellesCategorizationID, DesignatedRegulationID, RegulationID, MifidCategorizationID, AsicClassificationID. Added 2022-08-11 (COINF-1394). (Tier 1 - upstream wiki, etoro.BackOffice.Customer)';
 ALTER TABLE main.general.bronze_etoro_backoffice_customer ALTER COLUMN EIDStatusID COMMENT 'FK (WITH CHECK) to Dictionary.EIDStatus. Electronic ID verification status from identity document scanning vendors. NULL if not yet processed. (Tier 1 - upstream wiki, etoro.BackOffice.Customer)';
 ALTER TABLE main.general.bronze_etoro_backoffice_customer ALTER COLUMN OnboardingRiskClassificationID COMMENT 'Risk classification assigned at the time of customer onboarding (initial risk assessment). May differ from RiskClassificationID (ongoing risk). (Tier 1 - upstream wiki, etoro.BackOffice.Customer)';
-ALTER TABLE main.general.bronze_etoro_backoffice_customer ALTER COLUMN AcceptanceStatusID (tinyint) COMMENT '(see #21 above) (Tier 1 - upstream wiki, etoro.BackOffice.Customer)';
-
+ALTER TABLE main.general.bronze_etoro_backoffice_customer ALTER COLUMN `AcceptanceStatusID (tinyint)` COMMENT '(see #21 above) (Tier 1 - upstream wiki, etoro.BackOffice.Customer)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

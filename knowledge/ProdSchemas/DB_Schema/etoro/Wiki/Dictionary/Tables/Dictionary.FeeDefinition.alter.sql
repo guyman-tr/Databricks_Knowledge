@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_feedefinition (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_feedefinition SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the fee billing frequency categories — No Fee, Daily Fee, or Weekly Fee — applied to trading positions. Source: etoro.Dictionary.FeeDefinition on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.FeeDefinition.md).'
+    'comment' = 'Lookup table defining the fee billing frequency categories - No Fee, Daily Fee, or Weekly Fee - applied to trading positions. Source: etoro.Dictionary.FeeDefinition on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.FeeDefinition.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_feedefinition SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_feedefinition SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_feedefinition ALTER COLUMN FeeID COMMENT 'Fee billing frequency: 0=No Fee (exempt from overnight charges), 1=Daily Fee (charged each trading day), 2=Weekly Fee (charged once per week). Referenced by Trade.InstrumentMetaData.FeeID and Trade.ExchangeInstrumentFeeDefinition. (Tier 1 - upstream wiki, etoro.Dictionary.FeeDefinition)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_feedefinition ALTER COLUMN FeeDescription COMMENT 'Human-readable fee frequency label: "No Fee", "Daily Fee", "Weekly Fee". Used in instrument configuration UIs and reporting. (Tier 1 - upstream wiki, etoro.Dictionary.FeeDefinition)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

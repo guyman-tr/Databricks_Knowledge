@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_privacypolicy (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_privacypolicy SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 2 customer privacy policies — "Share All" (default, public profile) and "Don''t Share" (private profile) — controlling data visibility across the eToro social trading platform. Source: etoro.Dictionary.PrivacyPolicy on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PrivacyPolicy.md).'
+    'comment' = 'Lookup table defining 2 customer privacy policies - "Share All" (default, public profile) and "Don''t Share" (private profile) - controlling data visibility across the eToro social trading platform. Source: etoro.Dictionary.PrivacyPolicy on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PrivacyPolicy.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_privacypolicy SET TAGS (
@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_privacypolicy SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_privacypolicy ALTER COLUMN PrivacyPolicyID COMMENT 'Auto-incrementing primary key. IDENTITY NOT FOR REPLICATION. 1=Share All, 2=Don''t Share. Stored in Customer.CustomerStatic and referenced by 20+ procedures across Customer, BackOffice, SalesForce, STS, and GDPR schemas. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyPolicy)';
 ALTER TABLE main.general.bronze_etoro_dictionary_privacypolicy ALTER COLUMN PrivacyName COMMENT 'Human-readable policy label. "Share All" or "Don''t Share". Displayed in user settings, BackOffice customer cards, and privacy configuration screens. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyPolicy)';
 ALTER TABLE main.general.bronze_etoro_dictionary_privacypolicy ALTER COLUMN IsDefault COMMENT 'Indicates which policy is assigned to new accounts by default. 1=default (Share All), 0=not default (Don''t Share). Used by registration procedures to set the initial privacy policy. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyPolicy)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

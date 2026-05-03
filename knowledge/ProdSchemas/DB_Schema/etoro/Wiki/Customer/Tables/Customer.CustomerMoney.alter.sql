@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_etoro_customer_customermoney ALTER COLUMN BonusCre
 ALTER TABLE main.bi_db.bronze_etoro_customer_customermoney ALTER COLUMN RealizedEquity COMMENT 'Running total of realized value: increases on deposits and position close proceeds, decreases on withdrawals. Answers "how much has the customer realized?" Confirmed as account-level (single USD number) in multi-currency design - Mor: "Realized equity is per account." (Tier 1 - upstream wiki, etoro.Customer.CustomerMoney)';
 ALTER TABLE main.bi_db.bronze_etoro_customer_customermoney ALTER COLUMN TotalCash COMMENT 'Reconciled cash total maintained by Trade.UpdateTotalCash reconciliation job. Uses dtPrice UDT (higher decimal precision than money). Per-currency vs account-level classification is open in multi-currency design. (Tier 1 - upstream wiki, etoro.Customer.CustomerMoney)';
 ALTER TABLE main.bi_db.bronze_etoro_customer_customermoney ALTER COLUMN BSLRealFunds COMMENT 'Real funds threshold for Balance Stop Loss (BSL) system. Updated by PostMIMOOperations. When customer equity drops to this level, BSL liquidation triggers. BSL is account-wide (USD aggregate), confirmed as account-level field. Default = 0. (Tier 1 - upstream wiki, etoro.Customer.CustomerMoney)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

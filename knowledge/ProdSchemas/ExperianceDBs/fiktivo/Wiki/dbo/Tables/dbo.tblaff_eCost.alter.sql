@@ -51,4 +51,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_ecost ALTER COLUMN Comment COMM
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_ecost ALTER COLUMN eCostHistoryID COMMENT 'Parent eCost agreement. References dbo.tblaff_eCostHistory.eCostHistoryID. 0=no agreement linkage (ad-hoc). (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_eCost)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_ecost ALTER COLUMN FunnelID COMMENT 'Marketing funnel identifier. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_eCost)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_ecost ALTER COLUMN LabelID COMMENT 'Marketing label/campaign identifier. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_eCost)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

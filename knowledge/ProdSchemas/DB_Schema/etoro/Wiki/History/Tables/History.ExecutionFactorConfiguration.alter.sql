@@ -34,4 +34,7 @@ ALTER TABLE main.dealing.bronze_etoro_history_executionfactorconfiguration ALTER
 ALTER TABLE main.dealing.bronze_etoro_history_executionfactorconfiguration ALTER COLUMN AppLoginName COMMENT 'Application user identity captured via context_info() computed column (AS CONVERT(varchar(500), context_info())). Contains email padded with null bytes when set. Must be trimmed with REPLACE/RTRIM to use. NULL when not set (most direct DB changes). (Tier 1 - upstream wiki, etoro.History.ExecutionFactorConfiguration)';
 ALTER TABLE main.dealing.bronze_etoro_history_executionfactorconfiguration ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this configuration version became active. Managed by SQL Server temporal system-versioning. Equal to SysEndTime for INSERT-triggered zero-duration rows. (Tier 1 - upstream wiki, etoro.History.ExecutionFactorConfiguration)';
 ALTER TABLE main.dealing.bronze_etoro_history_executionfactorconfiguration ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this version was superseded. Clustered index leading column. Equal to SysStartTime for INSERT-triggered zero-duration rows. (Tier 1 - upstream wiki, etoro.History.ExecutionFactorConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

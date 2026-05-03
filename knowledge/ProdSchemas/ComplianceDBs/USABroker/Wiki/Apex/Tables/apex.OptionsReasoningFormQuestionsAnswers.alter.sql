@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningformquestionsanswer
 ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningformquestionsanswers ALTER COLUMN KycQuestionID COMMENT 'Identifier of the KYC (Know Your Customer) suitability question that was changed. References the suitability questionnaire system (external). Part of the UNIQUE constraint with ReasoningFormID. (Tier 1 - upstream wiki, USABroker.apex.OptionsReasoningFormQuestionsAnswers)';
 ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningformquestionsanswers ALTER COLUMN ReasoningFormAnswerID COMMENT 'The customer''s selected reasoning for changing this question. Implicit FK to Dictionary.OptionsReasoningFormAnswers: 1=Other, 2=Incorrect Selection, 3=Changed Mind, 4=Lifestyle Change. See Options Reasoning Form Answers. NULL until the customer provides their reasoning. (Tier 1 - upstream wiki, USABroker.apex.OptionsReasoningFormQuestionsAnswers)';
 ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningformquestionsanswers ALTER COLUMN OldKycAnswerID COMMENT 'The answer ID the customer previously had for this KYC question before the change. Provides the "before" state for the audit trail. A value of 0 indicates the question was not previously answered. (Tier 1 - upstream wiki, USABroker.apex.OptionsReasoningFormQuestionsAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

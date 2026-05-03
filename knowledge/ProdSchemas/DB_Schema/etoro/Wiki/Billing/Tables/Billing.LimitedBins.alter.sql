@@ -27,4 +27,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_limitedbins SET TAGS (
 
 -- Column Comments
 ALTER TABLE main.billing.bronze_etoro_billing_limitedbins ALTER COLUMN Bin COMMENT 'Credit/debit card BIN (Bank Identification Number) - the first 6 digits of the card number identifying the issuing bank and card program. Serves as both the primary key and the sole data element. Cards whose BIN matches an entry here are treated as "limited" in the deposit flow and may face deposit restrictions. (Tier 1 - upstream wiki, etoro.Billing.LimitedBins)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

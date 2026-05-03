@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_gamesubtype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_gamesubtype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 11 trading game/activity sub-type categories — from legacy social games (Race, Slot, Poker) to the current eToro Trading mode — used to group related game types. Source: etoro.Dictionary.GameSubType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.GameSubType.md).'
+    'comment' = 'Lookup table defining the 11 trading game/activity sub-type categories - from legacy social games (Race, Slot, Poker) to the current eToro Trading mode - used to group related game types. Source: etoro.Dictionary.GameSubType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.GameSubType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_gamesubtype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_gamesubtype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_gamesubtype ALTER COLUMN GameSubTypeID COMMENT 'Primary key identifying the game sub-type category. 0=None, 1=Race, 2=Slot, 3=Poker, 4=Globe Trader, 5=Trade Box, 6=Rope Game, 7=VS USD, 8=IB Trade, 9=Forex Charts, 10=eToro Trading. Referenced by Dictionary.GameType via FK to group game variants into categories. (Tier 1 - upstream wiki, etoro.Dictionary.GameSubType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_gamesubtype ALTER COLUMN Name COMMENT 'Unique human-readable label for the sub-type category. Fixed-width char(50). Used in reporting, history views, and BackOffice for classifying trading activities. Enforced unique via DGST_NAME index. (Tier 1 - upstream wiki, etoro.Dictionary.GameSubType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

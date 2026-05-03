@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_exposurecircuitbreakerthresholds ALTER
 ALTER TABLE main.bi_db.bronze_etoro_hedge_exposurecircuitbreakerthresholds ALTER COLUMN AppLoginName COMMENT 'Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set. (Tier 1 - upstream wiki, etoro.Hedge.ExposureCircuitBreakerThresholds)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_exposurecircuitbreakerthresholds ALTER COLUMN SysStartTime COMMENT 'Temporal period start. UTC timestamp when this row version became active. (Tier 1 - upstream wiki, etoro.Hedge.ExposureCircuitBreakerThresholds)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_exposurecircuitbreakerthresholds ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for current rows. History in History.ExposureCircuitBreakerThresholds. (Tier 1 - upstream wiki, etoro.Hedge.ExposureCircuitBreakerThresholds)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

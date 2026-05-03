@@ -37,4 +37,7 @@ ALTER TABLE main.dealing.bronze_etoro_history_netting_history ALTER COLUMN Updat
 ALTER TABLE main.dealing.bronze_etoro_history_netting_history ALTER COLUMN HedgeServerID COMMENT 'The identifier of the hedge server instance that manages this position. References the hedging infrastructure component responsible for executing and managing the hedge orders at this liquidity provider. (Tier 1 - upstream wiki, etoro.History.Netting_History)';
 ALTER TABLE main.dealing.bronze_etoro_history_netting_history ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this row version became current in Hedge.Netting. Populated automatically by SQL Server SYSTEM_VERSIONING (GENERATED ALWAYS AS ROW START). (Tier 1 - upstream wiki, etoro.History.Netting_History)';
 ALTER TABLE main.dealing.bronze_etoro_history_netting_history ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this hedge state was superseded. The interval [SysStartTime, SysEndTime) represents how long this particular net position existed before being updated. Short intervals indicate high-frequency position changes. (Tier 1 - upstream wiki, etoro.History.Netting_History)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

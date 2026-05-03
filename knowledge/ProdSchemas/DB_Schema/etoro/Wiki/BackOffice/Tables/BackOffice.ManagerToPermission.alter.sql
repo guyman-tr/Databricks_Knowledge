@@ -29,4 +29,7 @@ ALTER TABLE main.bi_db.bronze_etoro_backoffice_managertopermission SET TAGS (
 ALTER TABLE main.bi_db.bronze_etoro_backoffice_managertopermission ALTER COLUMN ManagerID COMMENT 'BackOffice agent receiving the permission. Part of composite PK. FK (WITH CHECK) to BackOffice.Manager. See BackOffice.Manager for agent details. (Tier 1 - upstream wiki, etoro.BackOffice.ManagerToPermission)';
 ALTER TABLE main.bi_db.bronze_etoro_backoffice_managertopermission ALTER COLUMN PermissionID COMMENT 'The specific permission being granted. Part of composite PK. FK (WITH CHECK) to Dictionary.Permission. 148 distinct permission types covering all BackOffice operations. (Tier 1 - upstream wiki, etoro.BackOffice.ManagerToPermission)';
 ALTER TABLE main.bi_db.bronze_etoro_backoffice_managertopermission ALTER COLUMN ProviderID COMMENT 'The regulated entity/provider for which this permission applies. Part of composite PK. No FK constraint. Values: 0=global/entity-agnostic, 1=primary trading entity, 2=secondary entity. Matches the @ProviderID parameter in BackOffice.LogIn. (Tier 1 - upstream wiki, etoro.BackOffice.ManagerToPermission)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

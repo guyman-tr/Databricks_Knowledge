@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_accounttype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_accounttype ALTER COLUMN AccountTypeID COMMENT 'Primary key identifying the account classification. 1=Private, 2=Corporate, 3=IB Account, 4=Joint, 5=White Label, 6=Affiliate Private, 7=Employee, 8=Custodian, 9=Fund, 10=eToro Group, 11=News, 12=White List, 13=Analyst, 14=SMSF, 15=Affiliate Corporate, 16=Administrated, 17=Funded Employee. Controls feature access, regulatory treatment, fee structures, and compliance monitoring level. See Account Type. (Dictionary.AccountType) (Tier 1 - upstream wiki, etoro.Dictionary.AccountType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_accounttype ALTER COLUMN AccountTypeName COMMENT 'Human-readable label for the account type. Used in BackOffice UI, compliance reporting, and DWH exports. UNIQUE constraint ensures no duplicate names. (Tier 1 - upstream wiki, etoro.Dictionary.AccountType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

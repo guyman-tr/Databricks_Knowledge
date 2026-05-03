@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_bankbin SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_bankbin ALTER COLUMN BankID COMMENT 'FK to Dictionary.Bank.BankID. Identifies the issuing bank for this BIN code. Part of composite PK. (Tier 1 - upstream wiki, etoro.Dictionary.BankBin)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bankbin ALTER COLUMN BinCode COMMENT 'The 6-digit BIN (Bank Identification Number) prefix from the card number. Part of composite PK. Also has a dedicated NC index (DBNB_BINCODE) for efficient lookups by BIN during deposit processing. (Tier 1 - upstream wiki, etoro.Dictionary.BankBin)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bankbin ALTER COLUMN Comment COMMENT 'Optional annotation explaining the BIN-to-bank mapping. Currently NULL for the single production row. May contain notes about card product types or special routing instructions. (Tier 1 - upstream wiki, etoro.Dictionary.BankBin)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

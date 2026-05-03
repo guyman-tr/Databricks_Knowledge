@@ -28,5 +28,8 @@ ALTER TABLE main.general.bronze_etoro_dictionary_merchant SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_merchant ALTER COLUMN ID COMMENT 'Payment gateway identifier. Key merchants: 1=Checkout, 2=WorldPay, 3=Neteller-PaySafe, 4=PayPal, 5=POLi, 6=iDEAL-IXOPAY-Worldpay, 7=Trustly-IXOPAY-powercash, 8=Skrill-PaySafe, 9=RapidTransfer, 10=Giropay-Sofort. (Tier 1 - upstream wiki, etoro.Dictionary.Merchant)';
 ALTER TABLE main.general.bronze_etoro_dictionary_merchant ALTER COLUMN Name COMMENT 'Payment gateway company/product name. Includes integration provider suffix for aggregated gateways (e.g., "Trustly - IXOPAY-powercash"). (Tier 1 - upstream wiki, etoro.Dictionary.Merchant)';
-ALTER TABLE main.general.bronze_etoro_dictionary_merchant ALTER COLUMN Description COMMENT 'Optional description. Currently NULL for all rows — name is self-descriptive. (Tier 1 - upstream wiki, etoro.Dictionary.Merchant)';
-
+ALTER TABLE main.general.bronze_etoro_dictionary_merchant ALTER COLUMN Description COMMENT 'Optional description. Currently NULL for all rows - name is self-descriptive. (Tier 1 - upstream wiki, etoro.Dictionary.Merchant)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

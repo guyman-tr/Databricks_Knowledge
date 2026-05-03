@@ -32,4 +32,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdetails ALTER C
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdetails ALTER COLUMN OriginatorId COMMENT 'External identifier of the originator. NULL if not provided. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationDetails)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdetails ALTER COLUMN EventTimestamp COMMENT 'When the detail event occurred in the source system. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationDetails)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdetails ALTER COLUMN Created COMMENT 'When this record was written to the DWH. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationDetails)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

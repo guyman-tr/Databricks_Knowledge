@@ -33,4 +33,7 @@ ALTER TABLE main.compliance.bronze_userapidb_ev_customerresult ALTER COLUMN EvPr
 ALTER TABLE main.compliance.bronze_userapidb_ev_customerresult ALTER COLUMN TransactionID COMMENT 'Provider''s transaction/reference ID for this verification attempt. (Tier 1 - upstream wiki, UserApiDB.Ev.CustomerResult)';
 ALTER TABLE main.compliance.bronze_userapidb_ev_customerresult ALTER COLUMN TransactionDate COMMENT 'When the verification transaction occurred. (Tier 1 - upstream wiki, UserApiDB.Ev.CustomerResult)';
 ALTER TABLE main.compliance.bronze_userapidb_ev_customerresult ALTER COLUMN VerificationType COMMENT 'Type of verification performed. (Tier 1 - upstream wiki, UserApiDB.Ev.CustomerResult)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

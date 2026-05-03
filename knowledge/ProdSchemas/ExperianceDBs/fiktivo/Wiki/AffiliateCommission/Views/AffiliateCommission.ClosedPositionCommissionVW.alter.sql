@@ -63,4 +63,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositioncommissi
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositioncommission ALTER COLUMN Paid COMMENT 'From ClosedPositionCommission. Payment status. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.ClosedPositionCommissionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositioncommission ALTER COLUMN PaymentID COMMENT 'From ClosedPositionCommission. Payment batch. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.ClosedPositionCommissionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_closedpositioncommission ALTER COLUMN UpdateDate COMMENT 'Computed: GREATEST(PaymentDate, CommissionDate) when paid; CommissionDate when unpaid. For CDC watermarks. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.ClosedPositionCommissionVW)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

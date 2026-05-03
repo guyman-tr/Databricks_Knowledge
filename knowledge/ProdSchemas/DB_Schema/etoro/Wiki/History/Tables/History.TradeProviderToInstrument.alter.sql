@@ -29,7 +29,7 @@ ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument SET TAGS
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN ProviderID COMMENT 'Liquidity provider identifier. Part of composite PK in source table (ProviderID, InstrumentID). (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN InstrumentID COMMENT 'Instrument identifier. Combined with ProviderID identifies which instrument config row changed. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN Precision COMMENT 'Price decimal precision for this instrument (e.g., 2 for EUR/USD = 1.23, 5 for crypto). (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
-ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN PaymentBid / PaymentAsk COMMENT 'Bid/Ask spread payment in pips. Used in overnight fee calculations. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
+ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN `PaymentBid / PaymentAsk` COMMENT 'Bid/Ask spread payment in pips. Used in overnight fee calculations. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN StopLossPercentage COMMENT 'Default stop-loss as percentage of position value. Deprecated in favor of Min/Max/DefaultStopLossPercentage fields. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN EndOfWeekFee COMMENT 'Weekly rollover fee charged on positions held over the weekend. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN Enabled COMMENT 'Whether this instrument is enabled for trading on this provider: 0=disabled, 1=enabled. A change here in history marks when an instrument was suspended or re-enabled. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
@@ -45,5 +45,8 @@ ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER CO
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN AppLoginName COMMENT 'Application login from context_info() at DML time. Identifies calling service. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this instrument configuration became active. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
 ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this configuration was superseded. Clustered index leading column. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
-ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN (Additional columns) COMMENT 'All remaining 73 trading parameter columns from Trade.ProviderToInstrument are preserved verbatim. See Trade.ProviderToInstrument documentation for full column list. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
-
+ALTER TABLE main.general.bronze_etoro_history_tradeprovidertoinstrument ALTER COLUMN `(Additional columns)` COMMENT 'All remaining 73 trading parameter columns from Trade.ProviderToInstrument are preserved verbatim. See Trade.ProviderToInstrument documentation for full column list. (Tier 1 - upstream wiki, etoro.History.TradeProviderToInstrument)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

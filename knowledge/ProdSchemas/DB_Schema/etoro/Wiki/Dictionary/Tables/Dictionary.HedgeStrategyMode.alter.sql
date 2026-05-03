@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_hedgestrategymode SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgestrategymode ALTER COLUMN HedgeStrategyModeID COMMENT 'Primary key. 1=Auto (automated hedging), 2=Manual (risk team managed), 3=Disabled (no hedging). See Hedge Strategy Mode. (Dictionary.HedgeStrategyMode) (Tier 1 - upstream wiki, etoro.Dictionary.HedgeStrategyMode)';
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgestrategymode ALTER COLUMN Description COMMENT 'Human-readable strategy description. (Tier 1 - upstream wiki, etoro.Dictionary.HedgeStrategyMode)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -39,4 +39,7 @@ ALTER TABLE main.general.bronze_etoro_history_rules ALTER COLUMN DbLoginName COM
 ALTER TABLE main.general.bronze_etoro_history_rules ALTER COLUMN AppLoginName COMMENT 'Computed in source as CONVERT(varchar(500), context_info()) - the application-set session context at the time of the change. NULL when context_info() was not set (e.g., direct SQL changes). (Tier 1 - upstream wiki, etoro.History.Rules)';
 ALTER TABLE main.general.bronze_etoro_history_rules ALTER COLUMN SysStartTime COMMENT 'UTC instant when this rule state became current in CEP.Rules. Automatically managed by SQL Server temporal system versioning. Nanosecond precision. (Tier 1 - upstream wiki, etoro.History.Rules)';
 ALTER TABLE main.general.bronze_etoro_history_rules ALTER COLUMN SysEndTime COMMENT 'UTC instant when this rule state was superseded. Automatically set by SQL Server. Leading key of the clustered index. Default ''9999-12-31'' in source represents the currently active state. (Tier 1 - upstream wiki, etoro.History.Rules)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

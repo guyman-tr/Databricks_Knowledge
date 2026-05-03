@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptoproviders ALTER C
 ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptoproviders ALTER COLUMN WalletProviderId COMMENT 'Top-level wallet custody provider: 1=BitGo (institutional multi-sig custody), 2=CUG (Crypto Unified Gateway, eToro internal), 3=None (internal/virtual operations). See Wallet Provider. FK to Dictionary.WalletProvider. (Tier 1 - upstream wiki, WalletDB.Wallet.BlockchainCryptoProviders)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptoproviders ALTER COLUMN CryptoCoinProviderid COMMENT 'Specific coin provider implementation class for this blockchain/provider combination. Maps to the technical API adapter: 1=BitGoBlockchainProviderV2, 2=BitGoEthereumProviderV2, 3=BitgoRippleProviderV2, 4=BitGoStellarProviderV2, 5=BitGoEOSProviderV2, 6=CUGBlockchainProvider, 7=BitGoTronProviderV2, 8=BitGoEthereumClassicProviderV2, 9=CUGAccountBasedBlockchainProvider. See Crypto Coin Provider. FK to Dictionary.CryptoCoinProviders. (Tier 1 - upstream wiki, WalletDB.Wallet.BlockchainCryptoProviders)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptoproviders ALTER COLUMN Occurred COMMENT 'Timestamp when this provider mapping was created. Enables tracking when blockchains were onboarded to specific providers. (Tier 1 - upstream wiki, WalletDB.Wallet.BlockchainCryptoProviders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

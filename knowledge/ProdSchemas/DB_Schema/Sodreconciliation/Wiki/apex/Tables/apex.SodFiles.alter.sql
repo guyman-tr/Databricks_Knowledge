@@ -34,4 +34,7 @@ ALTER TABLE main.finance.bronze_sodreconciliation_apex_sodfiles ALTER COLUMN Pro
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_sodfiles ALTER COLUMN ApexFormat COMMENT 'Apex extract format number identifying the file type. Maps to the EXT table: 1=EXT001, 235=EXT235, 747=EXT747, 871=EXT871, etc. 0=Unknown/unrecognized format. Determines which parser and target table the Azure Function uses. (Tier 1 - upstream wiki, Sodreconciliation.apex.SodFiles)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_sodfiles ALTER COLUMN Status COMMENT 'File processing status. FK to dict.SodFileProcessingStatuses: 0=Unknown, 1=InProgress, 2=Success, 3=Fail, 4=Invalid. Default 0 (Unknown) on creation. (Tier 1 - upstream wiki, Sodreconciliation.apex.SodFiles)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_sodfiles ALTER COLUMN ErrorMessage COMMENT 'Error details when Status=3 (Fail) or Status=4 (Invalid). Contains exception stack traces for failures, or "Unknown file format" messages for invalid files. NULL on success. (Tier 1 - upstream wiki, Sodreconciliation.apex.SodFiles)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

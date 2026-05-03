@@ -35,4 +35,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecution ALTE
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecution ALTER COLUMN ModificationDate COMMENT 'UTC timestamp of the last status change. Set to GETUTCDATE() by UpdatePaymentExecutionStatus and CreatePaymentExecution. NULL if never modified after creation. Used by alert SPs for time-window filtering of stuck executions. (Tier 1 - upstream wiki, RecurringManager.Recurring.PaymentExecution)';
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecution ALTER COLUMN SysStartTime COMMENT 'System-versioning row start time (HIDDEN). (Tier 1 - upstream wiki, RecurringManager.Recurring.PaymentExecution)';
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecution ALTER COLUMN SysEndTime COMMENT 'System-versioning row end time (HIDDEN). History stored in History.PaymentExecution. (Tier 1 - upstream wiki, RecurringManager.Recurring.PaymentExecution)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_acceptancestatus (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_acceptancestatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 4 customer acceptance states — Pending, Accepted, Rejected, and Follow Up — used during the customer onboarding and compliance review process. Source: etoro.Dictionary.AcceptanceStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AcceptanceStatus.md).'
+    'comment' = 'Lookup table defining the 4 customer acceptance states - Pending, Accepted, Rejected, and Follow Up - used during the customer onboarding and compliance review process. Source: etoro.Dictionary.AcceptanceStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AcceptanceStatus.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_acceptancestatus SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_acceptancestatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_acceptancestatus ALTER COLUMN AcceptanceStatusID COMMENT 'Primary key identifying the acceptance state. 0=Pending, 1=Accepted, 2=Rejected, 3=Follow Up. Stored in BackOffice.Customer.AcceptanceStatusID and History.BackOfficeCustomer. Set by BackOffice.CustomerAcceptance, read by BackOffice.GetCustomerByCID. (Tier 1 - upstream wiki, etoro.Dictionary.AcceptanceStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_acceptancestatus ALTER COLUMN Name COMMENT 'Human-readable acceptance state name. Unique constraint enforced (UK_DAS_Name). Used in JOIN queries to resolve IDs to display names in compliance reports and BackOffice views (BackOffice.CustomerSafty). (Tier 1 - upstream wiki, etoro.Dictionary.AcceptanceStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

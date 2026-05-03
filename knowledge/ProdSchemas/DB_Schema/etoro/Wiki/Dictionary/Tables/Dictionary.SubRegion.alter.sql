@@ -28,7 +28,10 @@ ALTER TABLE main.general.bronze_etoro_dictionary_subregion SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_subregion ALTER COLUMN SubRegionID COMMENT 'Auto-incrementing primary key identifying the sub-region/province. Referenced by Customer.Address, Customer.CustomerStatic, History.Customer. (Tier 1 - upstream wiki, etoro.Dictionary.SubRegion)';
 ALTER TABLE main.general.bronze_etoro_dictionary_subregion ALTER COLUMN CountryID COMMENT 'FK to Dictionary.Country.CountryID. Currently all rows = 102 (Italy). Determines which country this sub-region belongs to. (Tier 1 - upstream wiki, etoro.Dictionary.SubRegion)';
-ALTER TABLE main.general.bronze_etoro_dictionary_subregion ALTER COLUMN RegionID COMMENT 'FK to Dictionary.RegionByIP.RegionByIP_ID. Maps province to its parent IP-based region. Multiple provinces share the same region (e.g., all Sicilian provinces → RegionID 1421). (Tier 1 - upstream wiki, etoro.Dictionary.SubRegion)';
+ALTER TABLE main.general.bronze_etoro_dictionary_subregion ALTER COLUMN RegionID COMMENT 'FK to Dictionary.RegionByIP.RegionByIP_ID. Maps province to its parent IP-based region. Multiple provinces share the same region (e.g., all Sicilian provinces -> RegionID 1421). (Tier 1 - upstream wiki, etoro.Dictionary.SubRegion)';
 ALTER TABLE main.general.bronze_etoro_dictionary_subregion ALTER COLUMN ShortName COMMENT 'Province abbreviation code (e.g., "MI" for Milan, "RM" for Rome). Part of unique index with CountryID and RegionID. Standard Italian province codes. (Tier 1 - upstream wiki, etoro.Dictionary.SubRegion)';
 ALTER TABLE main.general.bronze_etoro_dictionary_subregion ALTER COLUMN Name COMMENT 'Full province name (e.g., "Milan", "Rome", "Florence"). Nullable but populated for all current rows. Unicode-enabled for international names. (Tier 1 - upstream wiki, etoro.Dictionary.SubRegion)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

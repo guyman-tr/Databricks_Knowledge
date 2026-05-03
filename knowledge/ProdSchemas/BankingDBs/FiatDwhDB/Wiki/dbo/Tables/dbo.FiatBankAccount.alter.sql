@@ -40,4 +40,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatbankaccount ALTER COLUMN EventT
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatbankaccount ALTER COLUMN CurrencyBalanceId COMMENT 'FK to dbo.FiatCurrencyBalances.Id. Links internal bank accounts to their associated currency balance. NULL for external payee accounts. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatBankAccount)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatbankaccount ALTER COLUMN BsbCode COMMENT 'Australian Bank-State-Branch code (6 digits). Used together with BankAccountNumber for Australian NPP and direct entry payments. NULL for non-Australian accounts. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatBankAccount)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatbankaccount ALTER COLUMN Ncc COMMENT 'National Clearing Code. Used for bank identification in regions that don''t use IBAN or sort code systems. NULL when other identifiers are sufficient. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatBankAccount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

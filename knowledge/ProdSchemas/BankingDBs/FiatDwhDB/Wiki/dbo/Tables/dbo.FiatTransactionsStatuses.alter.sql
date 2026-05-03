@@ -43,4 +43,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactionsstatuses ALTER COLU
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactionsstatuses ALTER COLUMN ChangeAccountStatusToSuspendedRiskAction COMMENT 'Risk action: 1=account suspended due to this transaction''s risk assessment. Default 0. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatTransactionsStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactionsstatuses ALTER COLUMN RejectTransactionRiskAction COMMENT 'Risk action: 1=transaction rejected by the risk engine. Default 0. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatTransactionsStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactionsstatuses ALTER COLUMN CorrelationId COMMENT 'Links this status event to the business operation for distributed tracing. Nullable for legacy records. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatTransactionsStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

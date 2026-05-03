@@ -34,4 +34,7 @@ ALTER TABLE main.general.bronze_etoro_history_compoundproperties ALTER COLUMN Ap
 ALTER TABLE main.general.bronze_etoro_history_compoundproperties ALTER COLUMN SysStartTime COMMENT 'Temporal row start: when this version became current in CEP.CompoundProperties. (Tier 1 - upstream wiki, etoro.History.CompoundProperties)';
 ALTER TABLE main.general.bronze_etoro_history_compoundproperties ALTER COLUMN SysEndTime COMMENT 'Temporal row end: when this version was superseded. Clustered index lead column. (Tier 1 - upstream wiki, etoro.History.CompoundProperties)';
 ALTER TABLE main.general.bronze_etoro_history_compoundproperties ALTER COLUMN HostName COMMENT 'Server hostname at change time. (Tier 1 - upstream wiki, etoro.History.CompoundProperties)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

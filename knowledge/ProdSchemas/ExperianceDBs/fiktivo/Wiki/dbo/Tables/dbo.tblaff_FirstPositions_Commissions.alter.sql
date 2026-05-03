@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions_commissions ALTE
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions_commissions ALTER COLUMN Paid COMMENT 'Payment status: 0 = unpaid, 1 = paid. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_FirstPositions_Commissions)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions_commissions ALTER COLUMN PaymentID COMMENT 'References tblaff_PaymentHistory.PaymentID when paid. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_FirstPositions_Commissions)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions_commissions ALTER COLUMN SubAffiliateID COMMENT 'Sub-affiliate tracking tag. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_FirstPositions_Commissions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

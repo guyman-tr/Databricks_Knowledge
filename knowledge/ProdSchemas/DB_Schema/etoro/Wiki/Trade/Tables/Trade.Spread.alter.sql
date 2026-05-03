@@ -31,4 +31,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_spread ALTER COLUMN ProviderID COMME
 ALTER TABLE main.trading.bronze_etoro_trade_spread ALTER COLUMN InstrumentID COMMENT 'FK part -> Trade.ProviderToInstrument. Tradeable instrument. (Tier 1 - upstream wiki, etoro.Trade.Spread)';
 ALTER TABLE main.trading.bronze_etoro_trade_spread ALTER COLUMN Bid COMMENT 'Pip offset for bid. Applied when quoting buy price. Audited by ASM triggers. (Tier 1 - upstream wiki, etoro.Trade.Spread)';
 ALTER TABLE main.trading.bronze_etoro_trade_spread ALTER COLUMN Ask COMMENT 'Pip offset for ask. Applied when quoting sell price. Audited by ASM triggers. (Tier 1 - upstream wiki, etoro.Trade.Spread)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

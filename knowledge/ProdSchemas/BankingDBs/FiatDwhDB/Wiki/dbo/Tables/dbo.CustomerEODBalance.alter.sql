@@ -36,4 +36,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_customereodbalance ALTER COLUMN Mar
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_customereodbalance ALTER COLUMN RateConverstionToUSD COMMENT 'Exchange rate to USD at end of day. Stored as string for display purposes. Note: column name contains a misspelling ("Converstion" instead of "Conversion") preserved from original DDL. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CustomerEODBalance)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_customereodbalance ALTER COLUMN Created COMMENT 'UTC timestamp when this EOD balance record was calculated and inserted by DailyBalanceCalculation. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CustomerEODBalance)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_customereodbalance ALTER COLUMN LastDailyMovementCreated COMMENT 'Timestamp of the most recent daily movement record that contributed to this EOD balance calculation. Used to determine data freshness and identify if movements were missed. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CustomerEODBalance)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

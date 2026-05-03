@@ -42,4 +42,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocumenttodocumenttype 
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocumenttodocumenttype ALTER COLUMN Occurred COMMENT 'UTC timestamp when this classification record was created. Default GETUTCDATE(). NULL for rows created before this column was added (pre-2020). Latest value extends to 2034 in some rows - these appear to be sentinel values (not actual classification dates). (Tier 1 - upstream wiki, etoro.BackOffice.CustomerDocumentToDocumentType)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocumenttodocumenttype ALTER COLUMN SideID COMMENT 'Which side(s) of the physical document were submitted. FK (WITH CHECK) to Dictionary.DocumentSide. Values: 0=NotRecognizable, 1=Front, 2=Back, 3=Front & Back. NULL for 40.3% of rows (pre-dates this field or not applicable for single-sided documents). Part of UNIQUE constraint. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerDocumentToDocumentType)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocumenttodocumenttype ALTER COLUMN VisaTypeID COMMENT 'US work/student visa type for visa documents (DocumentClassificationID=65 "US Visa"). FK (WITH CHECK) to Dictionary.VisaType. Values: 1=E1, 2=E2, 3=E3, 4=F1, 5=G4, 6=H1B, 7=L1, 8=O1, 9=TN1, 10=TN2. NULL for 99.9% of rows. Added 2022-05-10 per COMOP-4557 to support US eToro customers with non-citizen work visas as POI. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerDocumentToDocumentType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

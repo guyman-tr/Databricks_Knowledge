@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelrulestatuses ALTE
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelrulestatuses ALTER COLUMN TravelRuleStatusId COMMENT 'Status: 0=PendingManualApproval, 1=Approved, 2=Canceled, 3=PendingMissingInformation, 4=MissingInformationAdded, 5=MustCancel. See Travel Rule Status. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionTravelRuleStatuses)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelrulestatuses ALTER COLUMN Occurred COMMENT 'Timestamp of status transition. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionTravelRuleStatuses)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelrulestatuses ALTER COLUMN DetailsJson COMMENT 'JSON with status-specific details (approval notes, missing info details). (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionTravelRuleStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

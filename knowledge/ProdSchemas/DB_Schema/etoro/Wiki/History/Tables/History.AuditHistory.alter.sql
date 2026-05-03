@@ -39,4 +39,7 @@ ALTER TABLE main.general.bronze_etoro_history_audithistory ALTER COLUMN ColumnNa
 ALTER TABLE main.general.bronze_etoro_history_audithistory ALTER COLUMN OldValue COMMENT 'Previous value of the column, cast to VARCHAR(MAX). NULL for INSERT operations. For UPDATE: the value before the change. For DELETE: the value before deletion. (Tier 1 - upstream wiki, etoro.History.AuditHistory)';
 ALTER TABLE main.general.bronze_etoro_history_audithistory ALTER COLUMN NewValue COMMENT 'New value of the column, cast to VARCHAR(MAX). NULL for DELETE operations. For INSERT: the value after insertion. For UPDATE: the value after the change. (Tier 1 - upstream wiki, etoro.History.AuditHistory)';
 ALTER TABLE main.general.bronze_etoro_history_audithistory ALTER COLUMN ExistingFeedID COMMENT 'Price feed identifier, populated ONLY for Trade.InstrumentSpread rows (107K records with values 1 or 2). Identifies which price feed source the spread configuration applies to. NULL for all other audited tables. (Tier 1 - upstream wiki, etoro.History.AuditHistory)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

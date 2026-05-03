@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_bsloperationthreshold (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_bsloperationthreshold SET TBLPROPERTIES (
-    'comment' = 'Configuration table defining the 4 equity percentage thresholds that trigger BSL (Balance Stop-Loss) actions — two warning levels, a liquidation trigger, and an unblock recovery threshold. Source: etoro.Dictionary.BSLOperationThreshold on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.BSLOperationThreshold.md).'
+    'comment' = 'Configuration table defining the 4 equity percentage thresholds that trigger BSL (Balance Stop-Loss) actions - two warning levels, a liquidation trigger, and an unblock recovery threshold. Source: etoro.Dictionary.BSLOperationThreshold on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.BSLOperationThreshold.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_bsloperationthreshold SET TAGS (
@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_bsloperationthreshold ALTER COL
 ALTER TABLE main.general.bronze_etoro_dictionary_bsloperationthreshold ALTER COLUMN MessageTypeID COMMENT 'FK (implicit) to Dictionary.BSLMessageTypes.ID. Determines which type of BSL message is generated when this threshold is crossed: 1=Warning, 2=Liquidation, 3=Unblock. Multiple thresholds can map to the same message type (both alerts map to MessageTypeID=1). (Tier 1 - upstream wiki, etoro.Dictionary.BSLOperationThreshold)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bsloperationthreshold ALTER COLUMN Name COMMENT 'Human-readable label for the threshold (e.g., ''Liquidation'', ''First alert'', ''Second Alert'', ''Unblock''). Used in dashboards and configuration UIs. (Tier 1 - upstream wiki, etoro.Dictionary.BSLOperationThreshold)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bsloperationthreshold ALTER COLUMN ValueInPercent COMMENT 'The equity percentage that triggers this action. Read directly by trading procedures: Trade.InsertBSLMessagesIntoQueue reads all 4 values using SUM(IIF(ID = N, ValueInPercent, 0)), while Trade.GetMaxAmountToWithdraw reads the liquidation threshold and divides by 100 for ratio calculations. (Tier 1 - upstream wiki, etoro.Dictionary.BSLOperationThreshold)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

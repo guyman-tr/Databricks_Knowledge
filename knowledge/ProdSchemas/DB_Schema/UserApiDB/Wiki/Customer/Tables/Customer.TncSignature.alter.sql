@@ -32,4 +32,7 @@ ALTER TABLE main.compliance.bronze_userapidb_customer_tncsignature ALTER COLUMN 
 ALTER TABLE main.compliance.bronze_userapidb_customer_tncsignature ALTER COLUMN DocumentID COMMENT 'TnC document version identifier. Tracks which version of the terms was accepted. (Tier 1 - upstream wiki, UserApiDB.Customer.TncSignature)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_tncsignature ALTER COLUMN ReasonID COMMENT 'FK to Dictionary.SignTncReason. Consent method: 0=By User (explicit), 1=DeepLink, 2=Negative Consent. Default: 0. See Sign TnC Reason. (Tier 1 - upstream wiki, UserApiDB.Customer.TncSignature)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_tncsignature ALTER COLUMN IsImplicit COMMENT 'Whether this was an implicit acceptance (e.g., continuing to use the platform after notification) vs explicit action. (Tier 1 - upstream wiki, UserApiDB.Customer.TncSignature)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

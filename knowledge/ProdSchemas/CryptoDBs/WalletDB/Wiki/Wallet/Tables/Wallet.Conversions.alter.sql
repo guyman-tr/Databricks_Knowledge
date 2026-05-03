@@ -36,4 +36,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_conversions ALTER COLUMN Correlat
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversions ALTER COLUMN Occurred COMMENT 'Timestamp when the conversion was initiated. (Tier 1 - upstream wiki, WalletDB.Wallet.Conversions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversions ALTER COLUMN FromCryptoId COMMENT 'Source cryptocurrency being sold. FK to Wallet.CryptoTypes.CryptoID. (Tier 1 - upstream wiki, WalletDB.Wallet.Conversions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_conversions ALTER COLUMN ToCryptoId COMMENT 'Destination cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID. (Tier 1 - upstream wiki, WalletDB.Wallet.Conversions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

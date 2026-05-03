@@ -34,4 +34,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_compensationreason ALTER COLUMN
 ALTER TABLE main.billing.bronze_etoro_backoffice_compensationreason ALTER COLUMN IsCashflowForGain COMMENT 'Whether this compensation represents actual cash flowing in/out of the account, relevant for gain/loss calculations and regulatory capital reporting. 0=non-cash event (instrument adjustments, position reopens, airdrops). Default 1. Critical for financial reporting - non-cash corporate actions (splits, mergers) must be 0. (Tier 1 - upstream wiki, etoro.BackOffice.CompensationReason)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_compensationreason ALTER COLUMN IsTaxable COMMENT 'Whether this compensation is a taxable event that must be reported on tax statements (1099 forms, etc.). 0=non-taxable (instrument adjustments like stock splits, mergers, spinoffs that don''t trigger tax obligations). Default 1. Drives tax reporting system - every IsTaxable=1 transaction may appear on the customer''s annual tax document. (Tier 1 - upstream wiki, etoro.BackOffice.CompensationReason)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_compensationreason ALTER COLUMN IsActive COMMENT 'Whether this type is still in active use. 0=deprecated (ID 3=Technical Problems under R&D, ID 26=Satisfaction Bonus under Accounting/Ops). Default 1. Inactive types should not be assigned to new compensations. (Tier 1 - upstream wiki, etoro.BackOffice.CompensationReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

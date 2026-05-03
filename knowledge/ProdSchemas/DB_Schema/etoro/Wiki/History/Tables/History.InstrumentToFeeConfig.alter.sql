@@ -40,4 +40,7 @@ ALTER TABLE main.general.bronze_etoro_history_instrumenttofeeconfig ALTER COLUMN
 ALTER TABLE main.general.bronze_etoro_history_instrumenttofeeconfig ALTER COLUMN BeginTime COMMENT 'UTC timestamp when this fee configuration became active in Trade.InstrumentToFeeConfig. Functions as SysStartTime in the temporal pattern (non-standard column name). (Tier 1 - upstream wiki, etoro.History.InstrumentToFeeConfig)';
 ALTER TABLE main.general.bronze_etoro_history_instrumenttofeeconfig ALTER COLUMN EndTime COMMENT 'UTC timestamp when this fee configuration was superseded. Functions as SysEndTime. Rows with EndTime = ''9999-12-31'' are active in the live table, not here. (Tier 1 - upstream wiki, etoro.History.InstrumentToFeeConfig)';
 ALTER TABLE main.general.bronze_etoro_history_instrumenttofeeconfig ALTER COLUMN NonLeveragedBuyCFDOverNightFee COMMENT 'Overnight fee for non-leveraged CFD buy positions (contract for difference, no real stock ownership). Added post-initial-design (DEFAULT 0). Distinguishes CFD buy cost from real stock buy cost before V2 added SettlementTypeID to handle this differentiation. (Tier 1 - upstream wiki, etoro.History.InstrumentToFeeConfig)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

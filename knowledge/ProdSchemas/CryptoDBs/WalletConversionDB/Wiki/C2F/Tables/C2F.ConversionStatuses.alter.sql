@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversionstatuses ALTER CO
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversionstatuses ALTER COLUMN StatusId COMMENT 'FK to Dictionary.ConversionToFiatStatuses. Current status in this transition. Values: 1=Pending, 2=Failed, 3=Completed, 4=Rejected. See Conversion To Fiat Status. Included in NC index on ConversionId for covering queries. (Tier 1 - upstream wiki, WalletConversionDB.C2F.ConversionStatuses)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversionstatuses ALTER COLUMN DetailsJson COMMENT 'JSON payload with additional context for this transition. Populated for Failed statuses with error details (e.g., {"ErrorMessage":"Crypto Transaction Failed"}). NULL for Pending and Completed transitions. Set by InsertConversionStatus; empty strings converted to NULL. (Tier 1 - upstream wiki, WalletConversionDB.C2F.ConversionStatuses)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversionstatuses ALTER COLUMN Occurred COMMENT 'UTC timestamp of the status transition. Default constraint auto-sets on insert. Indexed DESC for recency queries. Used by InsertConversionStatus to find the last status (ORDER BY Occurred DESC). (Tier 1 - upstream wiki, WalletConversionDB.C2F.ConversionStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

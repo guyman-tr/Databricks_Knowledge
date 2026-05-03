@@ -30,4 +30,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_fiatmarketratesmappings ALTER COL
 ALTER TABLE main.wallet.bronze_walletdb_wallet_fiatmarketratesmappings ALTER COLUMN FiatId COMMENT 'References the fiat currency being mapped. FK to Wallet.FiatTypes.FiatId. Unique constraint ensures each fiat has exactly one rate mapping. Values: 1=USD, 2=EUR, 3=GBP, 5=AUD. (Tier 1 - upstream wiki, WalletDB.Wallet.FiatMarketRatesMappings)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_fiatmarketratesmappings ALTER COLUMN MarketRatesCurrencySymbol COMMENT 'The symbol used to query the market rate feed for this fiat currency. Typically matches the ISO 4217 code (USD, EUR, GBP, AUD). Unique constraint ensures no duplicate symbols. (Tier 1 - upstream wiki, WalletDB.Wallet.FiatMarketRatesMappings)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_fiatmarketratesmappings ALTER COLUMN Occurred COMMENT 'Timestamp when this mapping was created. Original 3 currencies share 2019-11-26; AUD added 2025-11-09. (Tier 1 - upstream wiki, WalletDB.Wallet.FiatMarketRatesMappings)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -33,4 +33,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_customerrisk ALTER COLUMN Modif
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerrisk ALTER COLUMN Remark COMMENT 'Free-text note by the Risk agent explaining the risk situation, investigation findings, or resolution rationale. Optional - may be NULL for automatically-generated flags before agent review. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerRisk)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerrisk ALTER COLUMN RiskEventStatusID COMMENT 'Current lifecycle status of the risk flag. FK to Dictionary.RiskEventStatus. Values: 1=On (active, requires attention), 2=InProcess (under investigation), 3=Off (resolved/cleared, dictionary IsActive=false). 1.37M rows are On, 97K are InProcess or Off. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerRisk)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerrisk ALTER COLUMN ManagerID COMMENT 'BackOffice Risk agent who last modified this flag. NULL for system-generated flags not yet reviewed. FK to BackOffice.Manager (no constraint). (Tier 1 - upstream wiki, etoro.BackOffice.CustomerRisk)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

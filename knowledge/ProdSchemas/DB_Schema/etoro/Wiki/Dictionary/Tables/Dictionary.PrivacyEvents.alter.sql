@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_privacyevents (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_privacyevents SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining privacy-sensitive platform events — currently contains only "Championship" (1) as an event type requiring privacy policy enforcement. Source: etoro.Dictionary.PrivacyEvents on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PrivacyEvents.md).'
+    'comment' = 'Lookup table defining privacy-sensitive platform events - currently contains only "Championship" (1) as an event type requiring privacy policy enforcement. Source: etoro.Dictionary.PrivacyEvents on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PrivacyEvents.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_privacyevents SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_privacyevents SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_privacyevents ALTER COLUMN PrivacyEventID COMMENT 'Auto-incrementing primary key. IDENTITY NOT FOR REPLICATION. Currently only 1=Championship. Referenced by Dictionary.PrivacyPolicyDetails for per-event privacy settings. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyEvents)';
 ALTER TABLE main.general.bronze_etoro_dictionary_privacyevents ALTER COLUMN PrivacyEventName COMMENT 'Human-readable event name. "Championship" is the only current value. Used in privacy policy configuration and user privacy checks. (Tier 1 - upstream wiki, etoro.Dictionary.PrivacyEvents)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_depositrollbacktype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the types of deposit reversal operations — chargebacks, refunds, reversals, and adjustment corrections that reduce or reverse a customer''s deposited funds. Source: etoro.Dictionary.DepositRollbackType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositRollbackType.md).'
+    'comment' = 'Lookup table defining the types of deposit reversal operations - chargebacks, refunds, reversals, and adjustment corrections that reduce or reverse a customer''s deposited funds. Source: etoro.Dictionary.DepositRollbackType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositRollbackType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktype ALTER COLUMN DepositRollbackTypeID COMMENT 'Primary key identifying the rollback type. 0=Chargeback, 1=Refund, 2=Refund as Chargeback, 3=Chargeback Reversal, 4=Refund Reversal, 5=Cancel Rollback, 6=Reverse Deposit, 7=Pooled deposit adjustment, 8=Failed deposit deduction, 9=Returned or Reversed Deposit, 10=Adjust Discrepancy. Referenced by BackOffice.DepositRollbackTypeToReason mapping table. (Tier 1 - upstream wiki, etoro.Dictionary.DepositRollbackType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_depositrollbacktype ALTER COLUMN Name COMMENT 'Human-readable rollback type label used in BackOffice UI, SSRS risk reports, and financial reconciliation. (Tier 1 - upstream wiki, etoro.Dictionary.DepositRollbackType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -34,4 +34,7 @@ ALTER TABLE main.compliance.bronze_userapidb_customer_avatars ALTER COLUMN Versi
 ALTER TABLE main.compliance.bronze_userapidb_customer_avatars ALTER COLUMN ImageURL COMMENT 'Full CDN URL for this avatar image variant. Used directly in UI rendering. (Tier 1 - upstream wiki, UserApiDB.Customer.Avatars)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_avatars ALTER COLUMN AvatarTypeId COMMENT 'Type of avatar image (e.g., profile photo, cover image). (Tier 1 - upstream wiki, UserApiDB.Customer.Avatars)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_avatars ALTER COLUMN Ocurred COMMENT 'Timestamp when this avatar record was created. Default: current UTC time. (Tier 1 - upstream wiki, UserApiDB.Customer.Avatars)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

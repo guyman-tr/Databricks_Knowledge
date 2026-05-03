@@ -41,4 +41,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_recurring_payment ALTER COLUMN 
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_payment ALTER COLUMN Generation COMMENT 'Modification counter tracking how many update rounds the plan has undergone. 0=original/unmodified (98%), 1=modified once (2%). Reset to 0 by UpdatePayment on non-status updates; preserved on status changes. Used with VersionStamp for concurrency control. (Tier 1 - upstream wiki, RecurringManager.Recurring.Payment)';
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_payment ALTER COLUMN SysStartTime COMMENT 'System-versioning row start time (HIDDEN). Marks when this version of the row became current. Auto-managed by SQL Server temporal tables. (Tier 1 - upstream wiki, RecurringManager.Recurring.Payment)';
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_payment ALTER COLUMN SysEndTime COMMENT 'System-versioning row end time (HIDDEN). Set to max datetime for current rows; updated to actual end time when the row is modified. History rows are stored in History.Payment. (Tier 1 - upstream wiki, RecurringManager.Recurring.Payment)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

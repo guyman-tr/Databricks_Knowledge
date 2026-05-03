@@ -28,4 +28,7 @@ ALTER TABLE main.compliance.bronze_userapidb_dictionary_mandatorytype SET TAGS (
 -- Column Comments
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_mandatorytype ALTER COLUMN MandatoryTypeID COMMENT 'Primary key. Requirement level: 0=Exempt (hidden), 1=Optional (shown, not required), 2=Mandatory (required for completion). See Mandatory Type. (Tier 1 - upstream wiki, UserApiDB.Dictionary.MandatoryType)';
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_mandatorytype ALTER COLUMN Name COMMENT 'Requirement level label used in admin configuration tools. (Tier 1 - upstream wiki, UserApiDB.Dictionary.MandatoryType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

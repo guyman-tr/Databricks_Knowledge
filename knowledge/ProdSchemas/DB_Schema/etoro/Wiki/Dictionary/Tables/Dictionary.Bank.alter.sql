@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_bank SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_bank ALTER COLUMN BankID COMMENT 'Primary key identifying the banking/payment partner. Referenced by Dictionary.Regulation.BankID to link regulatory entities to their custodian banks. Referenced by Dictionary.CardTypeToBank and Dictionary.BankBin for payment card routing. (Tier 1 - upstream wiki, etoro.Dictionary.Bank)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bank ALTER COLUMN Name COMMENT 'Human-readable name of the banking partner. UNIQUE constraint ensures no duplicates. Used in payment routing reports and back-office displays. (Tier 1 - upstream wiki, etoro.Dictionary.Bank)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bank ALTER COLUMN IsActive COMMENT 'Whether this banking partner is currently processing transactions. 1=active (new transactions can be routed), 0=inactive (retained for historical audit only). Payment routing procedures filter on IsActive=1. (Tier 1 - upstream wiki, etoro.Dictionary.Bank)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -65,4 +65,7 @@ ALTER TABLE main.general.bronze_etoro_history_backofficecustomer ALTER COLUMN Sa
 ALTER TABLE main.general.bronze_etoro_history_backofficecustomer ALTER COLUMN SalesForceContactID COMMENT 'Salesforce CRM Contact object ID (18-character). The Contact record linked to this customer in Salesforce. NULL for unsynced customers. Written/read by Maintenance.JOB_SendCustomerXMLToCRM and SalesForce.GetBackOfficeCustomer. (Tier 1 - upstream wiki, etoro.History.BackOfficeCustomer)';
 ALTER TABLE main.general.bronze_etoro_history_backofficecustomer ALTER COLUMN AsicClassificationID COMMENT 'Australian ASIC client classification. NULL=not applicable (non-AU), 4=retail, other values=wholesale/sophisticated investor. Determines leverage limits under ASIC RG168. (Tier 1 - upstream wiki, etoro.History.BackOfficeCustomer)';
 ALTER TABLE main.general.bronze_etoro_history_backofficecustomer ALTER COLUMN SeychellesCategorizationID COMMENT 'Seychelles FSA (Financial Services Authority) client categorization. 0=retail, 1/2=other categories per the BackOffice.Customer computed TradingRiskStatusID formula. (Tier 1 - upstream wiki, etoro.History.BackOfficeCustomer)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

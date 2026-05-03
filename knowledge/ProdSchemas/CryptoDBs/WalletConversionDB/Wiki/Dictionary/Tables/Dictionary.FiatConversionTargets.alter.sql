@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_dictionary_fiatconversiontarget
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletconversiondb_dictionary_fiatconversiontargets ALTER COLUMN Id COMMENT 'Primary key identifying the fiat destination type. Referenced by C2F.Conversions.TargetPlatformId via explicit FK. Values: 1=IbanAccount, 2=EtoroPlatform, 3=EtoroPosition. See Fiat Conversion Target. (Tier 1 - upstream wiki, WalletConversionDB.Dictionary.FiatConversionTargets)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_dictionary_fiatconversiontargets ALTER COLUMN Name COMMENT 'Human-readable label for the target platform. Maps 1:1 with Id values. (Tier 1 - upstream wiki, WalletConversionDB.Dictionary.FiatConversionTargets)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

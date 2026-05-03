@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_walletpoolstatuses SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_walletpoolstatuses ALTER COLUMN Id COMMENT 'Unique identifier. Values: 1=Pending, 2=Verified, 3=Failed, 4=FundingInitiated, 5=FundingSent, 6=FundingVerified, 7=FundingFailed, 10=Timeout, 11=VerifiedForAssign. Gap at 8-9. FK target for Wallet.WalletPoolStatuses. (Tier 1 - upstream wiki, WalletDB.Dictionary.WalletPoolStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_walletpoolstatuses ALTER COLUMN Name COMMENT 'Status label. Unique constraint ensures no duplicates. Used in pool management dashboards and monitoring alerts. (Tier 1 - upstream wiki, WalletDB.Dictionary.WalletPoolStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

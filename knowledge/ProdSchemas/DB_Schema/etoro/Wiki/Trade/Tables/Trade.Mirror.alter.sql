@@ -49,4 +49,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_mirror ALTER COLUMN UseCopyDividend 
 ALTER TABLE main.trading.bronze_etoro_trade_mirror ALTER COLUMN ReopenForMirrorID COMMENT 'When mirror reopened, points to closed MirrorID. Trade.MirrorReopen sets. Prevents duplicate reopens. (Tier 1 - upstream wiki, etoro.Trade.Mirror)';
 ALTER TABLE main.trading.bronze_etoro_trade_mirror ALTER COLUMN MirrorCalculationType COMMENT '0=RealizedEquity, 1=UnrealizedEquity (Dictionary.MirrorCalculationType). Which equity drives MSL. (Tier 1 - upstream wiki, etoro.Trade.Mirror)';
 ALTER TABLE main.trading.bronze_etoro_trade_mirror ALTER COLUMN MirrorStatusID COMMENT '0=Active, 1=Pause, 2=PendingClose, 3=InAlignment (Dictionary.MirrorStatus). IX_MirrorStatusID supports lookups. (Tier 1 - upstream wiki, etoro.Trade.Mirror)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

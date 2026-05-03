@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_listenertype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_listenertype ALTER COLUMN ListenerTypeID COMMENT 'Unique identifier for each listener category. Currently only 1 (BackOffice) exists. Referenced by Broker.Listener and Broker.ListenerTypeToMessage as the FK target. (Tier 1 - upstream wiki, etoro.Dictionary.ListenerType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_listenertype ALTER COLUMN Name COMMENT 'Human-readable label for the listener type. Enforced unique by index DLST_NAME. Used in Broker.Broadcast view to identify subscriber tiers. (Tier 1 - upstream wiki, etoro.Dictionary.ListenerType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

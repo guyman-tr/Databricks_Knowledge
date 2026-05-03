@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_providerpercentagerouting (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_providerpercentagerouting SET TBLPROPERTIES (
-    'comment' = 'Configuration table defining percentage-based payment routing rules by depot and country — controlling how deposit transactions are distributed across payment providers. Source: etoro.Dictionary.ProviderPercentageRouting on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ProviderPercentageRouting.md).'
+    'comment' = 'Configuration table defining percentage-based payment routing rules by depot and country - controlling how deposit transactions are distributed across payment providers. Source: etoro.Dictionary.ProviderPercentageRouting on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ProviderPercentageRouting.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_providerpercentagerouting SET TAGS (
@@ -32,4 +32,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_providerpercentagerouting ALTER
 ALTER TABLE main.general.bronze_etoro_dictionary_providerpercentagerouting ALTER COLUMN FromAmount COMMENT 'Lower bound of the transaction amount range (inclusive). Typically 0 for "any amount". (Tier 1 - upstream wiki, etoro.Dictionary.ProviderPercentageRouting)';
 ALTER TABLE main.general.bronze_etoro_dictionary_providerpercentagerouting ALTER COLUMN ToAmount COMMENT 'Upper bound of the transaction amount range (inclusive). NULL means no upper limit. (Tier 1 - upstream wiki, etoro.Dictionary.ProviderPercentageRouting)';
 ALTER TABLE main.general.bronze_etoro_dictionary_providerpercentagerouting ALTER COLUMN Percentage COMMENT 'Percentage of matching transactions routed to this depot (0-100). Complementary rules for the same country should sum to 100. (Tier 1 - upstream wiki, etoro.Dictionary.ProviderPercentageRouting)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

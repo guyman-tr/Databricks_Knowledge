@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_tradelevel SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_tradelevel ALTER COLUMN TradeLevelID COMMENT 'Primary key identifying the trade level. 0=Normal (default), 1=eToro Pro, 2=eToro Visual, 3=Pro Only, 4=Visual Only. Referenced by Customer.CustomerStatic and History.Customer. (Tier 1 - upstream wiki, etoro.Dictionary.TradeLevel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_tradelevel ALTER COLUMN Name COMMENT 'Platform level label. Fixed-width with trailing spaces. Unique via DTDL_NAME index. (Tier 1 - upstream wiki, etoro.Dictionary.TradeLevel)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

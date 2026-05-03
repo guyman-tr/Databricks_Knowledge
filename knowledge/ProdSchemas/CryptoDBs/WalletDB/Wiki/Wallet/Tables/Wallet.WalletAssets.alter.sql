@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_walletassets ALTER COLUMN WalletI
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletassets ALTER COLUMN CryptoId COMMENT 'The cryptocurrency asset. FK to Wallet.CryptoTypes.CryptoID. A wallet can hold multiple cryptos - each is a separate WalletAssets row. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletAssets)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletassets ALTER COLUMN Occurred COMMENT 'When this asset was first added to the wallet. Represents the moment the user first acquired this crypto. Used for "portfolio age" analytics. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletAssets)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletassets ALTER COLUMN IsShown COMMENT 'Whether this asset is visible in the wallet UI. 1=shown (default), 0=hidden. Allows users or the system to hide zero-balance or deprecated assets without deleting the record. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletAssets)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

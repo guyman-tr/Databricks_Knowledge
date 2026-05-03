@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_stocksindustry SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_stocksindustry ALTER COLUMN IndustryID COMMENT 'Primary key identifying the industry sector. Sequential 1-9. Referenced by Trade.InstrumentMetaData.IndustryID and History.InstrumentMetaData.IndustryID. (Tier 1 - upstream wiki, etoro.Dictionary.StocksIndustry)';
 ALTER TABLE main.general.bronze_etoro_dictionary_stocksindustry ALTER COLUMN IndustryName COMMENT 'Human-readable industry sector label. Variable-length, no trailing spaces. Used in API responses and platform UI for stock categorization. (Tier 1 - upstream wiki, etoro.Dictionary.StocksIndustry)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_estimatedfiattransactions A
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_estimatedfiattransactions ALTER COLUMN FiatToUsdRate COMMENT 'Exchange rate from the target fiat currency to USD. When target is USD, this is 1.0. Used to derive the cross-rate: CryptoToFiatRate = CryptoToUsdRate / FiatToUsdRate. (Tier 1 - upstream wiki, WalletConversionDB.C2F.EstimatedFiatTransactions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_estimatedfiattransactions ALTER COLUMN CryptoToFiatRate COMMENT 'Direct exchange rate from source crypto to target fiat. This is the rate shown to the customer. Derived from CryptoToUsdRate / FiatToUsdRate. (Tier 1 - upstream wiki, WalletConversionDB.C2F.EstimatedFiatTransactions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_estimatedfiattransactions ALTER COLUMN Occurred COMMENT 'UTC timestamp when the estimate was recorded. Matches Conversions.Occurred since both are created in the same transaction. (Tier 1 - upstream wiki, WalletConversionDB.C2F.EstimatedFiatTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

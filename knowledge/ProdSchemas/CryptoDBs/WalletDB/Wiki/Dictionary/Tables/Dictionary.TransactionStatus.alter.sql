@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_transactionstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_transactionstatus ALTER COLUMN Id COMMENT 'Unique identifier. Values: 0=Pending, 1=Confirmed, 2=Verified, 3=Error, 4=Timeout, 5=PermanentError, 6=WavedError. FK target for Dictionary.ErrorMonitoringPolicies.TransactionStatusId and Wallet.LimitExceeds. (Tier 1 - upstream wiki, WalletDB.Dictionary.TransactionStatus)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_transactionstatus ALTER COLUMN Name COMMENT 'Status label used in transaction monitoring dashboards and blockchain tracking UIs. (Tier 1 - upstream wiki, WalletDB.Dictionary.TransactionStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

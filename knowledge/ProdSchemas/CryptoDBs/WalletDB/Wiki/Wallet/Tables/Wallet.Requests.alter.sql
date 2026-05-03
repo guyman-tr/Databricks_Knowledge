@@ -34,4 +34,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_requests ALTER COLUMN RequestType
 ALTER TABLE main.wallet.bronze_walletdb_wallet_requests ALTER COLUMN Timestamp COMMENT 'When the request was created. No default - explicitly set by the calling code. Used for chronological ordering, SLA monitoring, and date-range queries. Indexed descending for recent-request lookups. (Tier 1 - upstream wiki, WalletDB.Wallet.Requests)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_requests ALTER COLUMN DetailsJson COMMENT 'JSON payload containing type-specific request parameters. For SendTransaction: destination address, amount, original address. For ReceiveTransaction: batch correlation ID, receiver list. For CreateWallet: typically NULL (no extra params needed). Schema varies by RequestTypeId. (Tier 1 - upstream wiki, WalletDB.Wallet.Requests)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_requests ALTER COLUMN DeviceId COMMENT 'Identifier of the device or client that initiated the request. Used for fraud detection and audit purposes. NULL for system-initiated requests (Funding, ReceiveTransaction). (Tier 1 - upstream wiki, WalletDB.Wallet.Requests)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

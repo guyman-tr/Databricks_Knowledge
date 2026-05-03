@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_messagetype SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_messagetype ALTER COLUMN MessageTypeID COMMENT 'Unique identifier for the message delivery channel: 1=Dialog, 2=Bar, 3=Web, 4=Promotion (Cashier), 5=Promotion (Trade), 6=WEB (On Exit), 7=KICK (On Login), 8=KICK (On Chat), 9=WEB (Def Browser), 10=Trade Block. (Tier 1 - upstream wiki, etoro.Dictionary.MessageType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_messagetype ALTER COLUMN Name COMMENT 'Short label describing the delivery mechanism. Enforced unique by index DMGT_NAME. Displayed in BackOffice message configuration. (Tier 1 - upstream wiki, etoro.Dictionary.MessageType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_messagetype ALTER COLUMN IsHidden COMMENT 'Controls visibility in BackOffice message type selection: 0=visible (available for message configuration), 1=hidden (deprecated or system-only). Currently all types are visible (0). Filtered by Dictionary.GetMessageType view. (Tier 1 - upstream wiki, etoro.Dictionary.MessageType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

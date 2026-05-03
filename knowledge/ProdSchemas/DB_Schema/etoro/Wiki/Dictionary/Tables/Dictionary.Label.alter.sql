@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_label (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_label SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 25 platform labels (white-label brands) — eToro, RetailFX, eToroUSA, and partner brands — with associated website URLs and cashier logo assets for multi-brand customer experience. Source: etoro.Dictionary.Label on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Label.md).'
+    'comment' = 'Lookup table defining 25 platform labels (white-label brands) - eToro, RetailFX, eToroUSA, and partner brands - with associated website URLs and cashier logo assets for multi-brand customer experience. Source: etoro.Dictionary.Label on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Label.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_label SET TAGS (
@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_label ALTER COLUMN LabelID COMM
 ALTER TABLE main.general.bronze_etoro_dictionary_label ALTER COLUMN Name COMMENT 'Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = "eToro"). (Tier 1 - upstream wiki, etoro.Dictionary.Label)';
 ALTER TABLE main.general.bronze_etoro_dictionary_label ALTER COLUMN URL COMMENT 'Brand''s primary website URL. Used in customer-facing emails, notifications, and redirect links. NULL for internal/system labels (Partners, Dealing) that have no website. (Tier 1 - upstream wiki, etoro.Dictionary.Label)';
 ALTER TABLE main.general.bronze_etoro_dictionary_label ALTER COLUMN CashierLogoURL COMMENT 'CDN URL for the brand''s logo displayed in the cashier/payment interface. Points to eToro''s CDN (etoro-cdn.etorostatic.com). NULL for internal labels. Determines the visual branding during deposit and withdrawal flows. (Tier 1 - upstream wiki, etoro.Dictionary.Label)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

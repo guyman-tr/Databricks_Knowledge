@@ -37,4 +37,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_funding_datafactory ALTER COLUMN I
 ALTER TABLE main.billing.bronze_etoro_billing_funding_datafactory ALTER COLUMN DocumentRequired COMMENT '1=KYC documentation required. From Billing.Funding. (Tier 1 - upstream wiki, etoro.Billing.Funding_DataFactory)';
 ALTER TABLE main.billing.bronze_etoro_billing_funding_datafactory ALTER COLUMN DateCreated COMMENT 'UTC timestamp of instrument registration. From Billing.Funding. (Tier 1 - upstream wiki, etoro.Billing.Funding_DataFactory)';
 ALTER TABLE main.billing.bronze_etoro_billing_funding_datafactory ALTER COLUMN PaymentDetails COMMENT 'Pre-computed human-readable payment account identifier. Trigger-maintained column from Billing.Funding (populated by TR_FundingPaymentDetails via Billing.FormatFundingPaymentDetailsForWithdraw on each FundingData change). Unlike other views where PaymentDetails is computed in the view''s CASE expression, this is a stored column from the base table. (Tier 1 - upstream wiki, etoro.Billing.Funding_DataFactory)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

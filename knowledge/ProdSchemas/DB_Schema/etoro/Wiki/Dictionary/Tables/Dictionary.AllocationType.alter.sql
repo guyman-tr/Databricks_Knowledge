@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_allocationtype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_allocationtype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining how a fund interval allocation is classified — Copy (investing via CopyTrading) or Asset (direct investment in an instrument). Used in Smart Portfolios / CopyFunds. Source: etoro.Dictionary.AllocationType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AllocationType.md).'
+    'comment' = 'Lookup table defining how a fund interval allocation is classified - Copy (investing via CopyTrading) or Asset (direct investment in an instrument). Used in Smart Portfolios / CopyFunds. Source: etoro.Dictionary.AllocationType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AllocationType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_allocationtype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_allocationtype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_allocationtype ALTER COLUMN AllocationType COMMENT 'Primary key identifying the allocation strategy. 1=Copy (CopyTrading), 2=Asset (direct instrument). Referenced by Trade.FundIntervalAllocation via FK. Default value 1 in Trade.CreateNewFundAllocation. (Tier 1 - upstream wiki, etoro.Dictionary.AllocationType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_allocationtype ALTER COLUMN AllocationTypeDesc COMMENT 'Human-readable description. Values: ''Copy'', ''Asset''. Nullable per DDL. Used in reports and UI. (Tier 1 - upstream wiki, etoro.Dictionary.AllocationType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

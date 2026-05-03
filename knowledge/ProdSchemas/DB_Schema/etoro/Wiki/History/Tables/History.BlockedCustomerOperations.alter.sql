@@ -34,4 +34,7 @@ ALTER TABLE main.general.bronze_etoro_history_blockedcustomeroperations ALTER CO
 ALTER TABLE main.general.bronze_etoro_history_blockedcustomeroperations ALTER COLUMN UnBlockReasonID COMMENT 'Intended to capture why the block was lifted, but always equals BlockReasonID due to a known data quality issue in Customer.OperationUnBlockForCID: "because no have data in Customer.BlockedCustomerOperations at field UnBlockReasonID then I put BlockReasonID!" Do not rely on this field to understand unblock reason - it mirrors BlockReasonID. FK to Dictionary.BlockUnBlockReason(ID). (Tier 1 - upstream wiki, etoro.History.BlockedCustomerOperations)';
 ALTER TABLE main.general.bronze_etoro_history_blockedcustomeroperations ALTER COLUMN BlockRequestGUID COMMENT 'GUID correlating this block event to an external system request (e.g., a risk service call or back-office action that triggered the block). Nullable - not all blocks originate from external GUID-tracked requests. (Tier 1 - upstream wiki, etoro.History.BlockedCustomerOperations)';
 ALTER TABLE main.general.bronze_etoro_history_blockedcustomeroperations ALTER COLUMN UnBlockRequestGUID COMMENT 'GUID correlating the unblock event to the external system request that triggered it. Nullable - populated only when the unblock was initiated by an external system that provided a request GUID. (Tier 1 - upstream wiki, etoro.History.BlockedCustomerOperations)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

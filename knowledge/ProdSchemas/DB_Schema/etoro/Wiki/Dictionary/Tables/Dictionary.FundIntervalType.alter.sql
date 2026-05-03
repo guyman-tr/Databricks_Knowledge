@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_fundintervaltype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_fundintervaltype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the two fund interval modes — BackTesting and Real — used to distinguish simulated vs live fund allocation intervals in the CopyFunds/SmartPortfolio system. Source: etoro.Dictionary.FundIntervalType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.FundIntervalType.md).'
+    'comment' = 'Lookup table defining the two fund interval modes - BackTesting and Real - used to distinguish simulated vs live fund allocation intervals in the CopyFunds/SmartPortfolio system. Source: etoro.Dictionary.FundIntervalType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.FundIntervalType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_fundintervaltype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_fundintervaltype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_fundintervaltype ALTER COLUMN FundIntervalType COMMENT 'Primary key identifying the interval mode. 1=BackTesting (simulated), 2=Real (live execution). Referenced by Trade.FundInterval to classify each rebalancing interval as simulated or live. (Tier 1 - upstream wiki, etoro.Dictionary.FundIntervalType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_fundintervaltype ALTER COLUMN FundIntervalTypeDesc COMMENT 'Human-readable label for the interval type (BackTesting/Real). Used in reporting and fund management UI to distinguish simulated from live intervals. (Tier 1 - upstream wiki, etoro.Dictionary.FundIntervalType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

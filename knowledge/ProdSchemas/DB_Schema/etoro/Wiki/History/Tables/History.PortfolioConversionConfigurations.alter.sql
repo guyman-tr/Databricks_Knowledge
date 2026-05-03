@@ -34,4 +34,7 @@ ALTER TABLE main.dealing.bronze_etoro_history_portfolioconversionconfigurations 
 ALTER TABLE main.dealing.bronze_etoro_history_portfolioconversionconfigurations ALTER COLUMN DbLoginName COMMENT 'SQL Server login that made the change, computed from SUSER_NAME() in source table. Captured at write time. Typically "TRAD\{username}" format (e.g., "TRAD\ranlev"). (Tier 1 - upstream wiki, etoro.History.PortfolioConversionConfigurations)';
 ALTER TABLE main.dealing.bronze_etoro_history_portfolioconversionconfigurations ALTER COLUMN AppLoginName COMMENT 'Application context from CONTEXT_INFO() in source. Set by ConfigurationManager before the write. Format: "{username};ConfigurationManager" padded with null bytes to 500 chars. (Tier 1 - upstream wiki, etoro.History.PortfolioConversionConfigurations)';
 ALTER TABLE main.dealing.bronze_etoro_history_portfolioconversionconfigurations ALTER COLUMN HostName COMMENT 'Server hostname from host_name() at write time. Identifies which hedge engine server (e.g., "STG-TRD-R-HEDGE") made the configuration change. Added in this version; absent in the older History.PortfolioConversionConfiguration (singular). (Tier 1 - upstream wiki, etoro.History.PortfolioConversionConfigurations)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

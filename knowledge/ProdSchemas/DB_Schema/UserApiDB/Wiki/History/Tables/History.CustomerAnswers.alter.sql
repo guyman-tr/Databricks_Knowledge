@@ -33,4 +33,7 @@ ALTER TABLE main.compliance.bronze_userapidb_history_customeranswers ALTER COLUM
 ALTER TABLE main.compliance.bronze_userapidb_history_customeranswers ALTER COLUMN OccurredAt_InSource COMMENT 'When the answer was originally submitted in KYC.CustomerAnswers. (Tier 1 - upstream wiki, UserApiDB.History.CustomerAnswers)';
 ALTER TABLE main.compliance.bronze_userapidb_history_customeranswers ALTER COLUMN OccurredAt COMMENT 'When the answer was archived (cleared from the source table). (Tier 1 - upstream wiki, UserApiDB.History.CustomerAnswers)';
 ALTER TABLE main.compliance.bronze_userapidb_history_customeranswers ALTER COLUMN FreeText COMMENT 'Free-text response that was provided. (Tier 1 - upstream wiki, UserApiDB.History.CustomerAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

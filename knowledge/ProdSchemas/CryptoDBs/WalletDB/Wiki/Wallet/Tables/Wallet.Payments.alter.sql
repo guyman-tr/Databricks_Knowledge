@@ -34,4 +34,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_payments ALTER COLUMN FiatId COMM
 ALTER TABLE main.wallet.bronze_walletdb_wallet_payments ALTER COLUMN CorrelationId COMMENT 'Links to the parent request in Wallet.Requests.CorrelationId. (Tier 1 - upstream wiki, WalletDB.Wallet.Payments)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_payments ALTER COLUMN Occurred COMMENT 'Timestamp when the payment was initiated. (Tier 1 - upstream wiki, WalletDB.Wallet.Payments)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_payments ALTER COLUMN CryptoId COMMENT 'The cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID. (Tier 1 - upstream wiki, WalletDB.Wallet.Payments)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

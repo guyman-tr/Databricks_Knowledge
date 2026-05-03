@@ -32,4 +32,7 @@ ALTER TABLE main.dealing.bronze_etoro_price_pcstoliquidityaccount ALTER COLUMN D
 ALTER TABLE main.dealing.bronze_etoro_price_pcstoliquidityaccount ALTER COLUMN AppLoginName COMMENT 'Computed: application identity from context_info(). Populated when calling service sets CONTEXT_INFO before DML. (Tier 1 - upstream wiki, etoro.Price.PCSToLiquidityAccount)';
 ALTER TABLE main.dealing.bronze_etoro_price_pcstoliquidityaccount ALTER COLUMN SysStartTime COMMENT 'Temporal period start. Auto-managed by SQL Server system versioning. (Tier 1 - upstream wiki, etoro.Price.PCSToLiquidityAccount)';
 ALTER TABLE main.dealing.bronze_etoro_price_pcstoliquidityaccount ALTER COLUMN SysEndTime COMMENT 'Temporal period end. Historical row versions in History.PCSToLiquidityAccount. (Tier 1 - upstream wiki, etoro.Price.PCSToLiquidityAccount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

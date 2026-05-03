@@ -41,4 +41,7 @@ ALTER TABLE main.bi_db.bronze_etoro_trade_copytradesettlementrestrictions ALTER 
 ALTER TABLE main.bi_db.bronze_etoro_trade_copytradesettlementrestrictions ALTER COLUMN GroupID COMMENT 'Instrument group scope. References Dictionary.TradingInstrumentGroups. Part of CK. (Tier 1 - upstream wiki, etoro.Trade.CopyTradeSettlementRestrictions)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_copytradesettlementrestrictions ALTER COLUMN RegistrationDate COMMENT 'Optional registration date for time-bounded rules. Part of UQ. (Tier 1 - upstream wiki, etoro.Trade.CopyTradeSettlementRestrictions)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_copytradesettlementrestrictions ALTER COLUMN AccountTypeID COMMENT 'Account type scope. Part of UQ. (Tier 1 - upstream wiki, etoro.Trade.CopyTradeSettlementRestrictions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

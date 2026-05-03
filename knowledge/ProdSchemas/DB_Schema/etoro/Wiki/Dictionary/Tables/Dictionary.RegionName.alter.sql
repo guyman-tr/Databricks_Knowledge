@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_regionname (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_regionname SET TBLPROPERTIES (
-    'comment' = 'Reference table mapping country subdivisions (states/provinces/territories) to their full names — covering Australia, Canada, and other countries with regulatory region requirements. Page-compressed. Source: etoro.Dictionary.RegionName on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RegionName.md).'
+    'comment' = 'Reference table mapping country subdivisions (states/provinces/territories) to their full names - covering Australia, Canada, and other countries with regulatory region requirements. Page-compressed. Source: etoro.Dictionary.RegionName on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RegionName.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_regionname SET TAGS (
@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_regionname SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_regionname ALTER COLUMN CountryID COMMENT 'Part of composite PK. References Dictionary.Country (implicit). Identifies which country this region belongs to. (Tier 1 - upstream wiki, etoro.Dictionary.RegionName)';
 ALTER TABLE main.general.bronze_etoro_dictionary_regionname ALTER COLUMN ShortName COMMENT 'Part of composite PK. ISO or country-specific short code for the region (e.g., "NSW", "AB", "CA"). (Tier 1 - upstream wiki, etoro.Dictionary.RegionName)';
 ALTER TABLE main.general.bronze_etoro_dictionary_regionname ALTER COLUMN Name COMMENT 'Full human-readable name of the region (e.g., "New South Wales", "Alberta"). Displayed in registration forms and reports. (Tier 1 - upstream wiki, etoro.Dictionary.RegionName)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

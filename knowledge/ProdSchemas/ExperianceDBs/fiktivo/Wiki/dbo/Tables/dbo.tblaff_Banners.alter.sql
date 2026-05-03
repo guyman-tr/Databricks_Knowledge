@@ -49,4 +49,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_banners ALTER COLUMN IsArchived
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_banners ALTER COLUMN Trace COMMENT 'Computed audit column. JSON with session metadata. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Banners)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_banners ALTER COLUMN ValidFrom COMMENT 'System-versioning period start. Hidden. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Banners)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_banners ALTER COLUMN ValidTo COMMENT 'System-versioning period end. Hidden. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Banners)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_addressownershipproofoption SE
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_addressownershipproofoption ALTER COLUMN Id COMMENT 'Unique identifier for the proof option. Values: 0=None, 1=Blocked, 2=Declaration, 3=ProofOfOwnership. Used as FK target by address-related tables in the Wallet schema. (Tier 1 - upstream wiki, WalletDB.Dictionary.AddressOwnershipProofOption)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_addressownershipproofoption ALTER COLUMN Name COMMENT 'Human-readable label for the proof option. Serves as the display name in application UIs and audit logs. (Tier 1 - upstream wiki, WalletDB.Dictionary.AddressOwnershipProofOption)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

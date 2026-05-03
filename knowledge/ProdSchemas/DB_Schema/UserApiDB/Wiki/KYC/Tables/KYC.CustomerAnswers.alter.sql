@@ -31,4 +31,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_customeranswers ALTER COLUMN Qu
 ALTER TABLE main.compliance.bronze_userapidb_kyc_customeranswers ALTER COLUMN AnswerId COMMENT 'Part of composite PK. References KYC.Answers. Which answer was selected. Dynamic data masking applied. (Tier 1 - upstream wiki, UserApiDB.KYC.CustomerAnswers)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_customeranswers ALTER COLUMN OccurredAt COMMENT 'When this answer was submitted. Used for audit trails and FirstUpdated calculation. (Tier 1 - upstream wiki, UserApiDB.KYC.CustomerAnswers)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_customeranswers ALTER COLUMN FreeText COMMENT 'Optional free-text input for answers that support elaboration. (Tier 1 - upstream wiki, UserApiDB.KYC.CustomerAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

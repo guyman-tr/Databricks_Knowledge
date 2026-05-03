@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_etoro_customer_blockedcustomeroperations ALTER C
 ALTER TABLE main.general.bronze_etoro_customer_blockedcustomeroperations ALTER COLUMN Occurred COMMENT 'UTC timestamp when the block was applied. Default = GETUTCDATE(). Used in History.BlockedCustomerOperations as BlockStart for audit trails. (Tier 1 - upstream wiki, etoro.Customer.BlockedCustomerOperations)';
 ALTER TABLE main.general.bronze_etoro_customer_blockedcustomeroperations ALTER COLUMN BlockReasonID COMMENT 'Why this block was applied: 1=RequestedByBOAdmin, 2=HighRiskScore, 3=EmployeeAccount, 4=OPT_OUT, 5=OPT_IN, 6=NotVerified, 7=Verified, 8=RequestedByKYC, 9=Liquidation, 10=LiquidationRemove, 11=ManualExecutionBlock, 12=ManualExecutionBlockRemove, 13=AumLimit, 14=Regulation, 15=NonResponsive, 16=AbusiveTrading, 17=LowEquity, 18=BreachComunityGuidelines, 19=NonLaunchedCopyFund, 20=NotAcceptUsersCopyFund, 21=AumLimitPopular, 22=MaxCopiers, 23=MaxAumPerTier. FK to Dictionary.BlockUnBlockReason. (Source: Trading Restriction Service TDD + Dictionary.BlockUnBlockReason.md) (Tier 1 - upstream wiki, etoro.Customer.BlockedCustomerOperations)';
 ALTER TABLE main.general.bronze_etoro_customer_blockedcustomeroperations ALTER COLUMN RequestGUID COMMENT 'Unique identifier from the originating restriction request. Set by the Trading Restriction Service application and passed through Trade.CustomerRestrictionsSet. Used for idempotency, distributed tracing, and audit correlation. NULL for older blocks predating GUID tracking. (Tier 1 - upstream wiki, etoro.Customer.BlockedCustomerOperations)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

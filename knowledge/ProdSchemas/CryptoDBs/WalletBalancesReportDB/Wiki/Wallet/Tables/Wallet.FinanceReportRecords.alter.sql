@@ -46,4 +46,7 @@ ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportrecord
 ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportrecords ALTER COLUMN Created COMMENT 'UTC timestamp when this record was inserted by CreateNewReportRun. Default constraint DF_FinanceReportRecords_Created. Indexed in ix_FinanceReportRecords__WalletId_CryptoId_Created (DESC) for efficient "latest record per wallet" lookups used by CreateNewReportRun''s incremental processing. (Tier 1 - upstream wiki, WalletBalancesReportDB.Wallet.FinanceReportRecords)';
 ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportrecords ALTER COLUMN LastChecked COMMENT 'UTC timestamp of the most recent verification check for this record. NULL until the record is processed by UpdateReportRecords, which sets it to GETUTCDATE(). Used by CreateNewReportRun''s incremental logic: DATEDIFF(DAY, ISNULL(LastChecked, ''2000-01-01''), GETUTCDATE()) >= @RetryDays to determine if the record should be rechecked. (Tier 1 - upstream wiki, WalletBalancesReportDB.Wallet.FinanceReportRecords)';
 ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportrecords ALTER COLUMN Retries COMMENT 'Number of times this wallet-crypto pair has been re-verified. Set by UpdateReportRecords via the BalanceType TVP. NULL on initial creation; 0+ after verification. Used to track persistent discrepancies that don''t resolve after multiple attempts. (Tier 1 - upstream wiki, WalletBalancesReportDB.Wallet.FinanceReportRecords)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:39:29 UTC
+-- Bronze deploy: WalletBalancesReportDB batch 1
+-- ====================

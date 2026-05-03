@@ -36,5 +36,8 @@ ALTER TABLE main.trading.bronze_etoro_trade_position_datafactory ALTER COLUMN In
 ALTER TABLE main.trading.bronze_etoro_trade_position_datafactory ALTER COLUMN UnitsBaseValueCents COMMENT 'Computed: ISNULL(UnitsBaseValueCents, CONVERT(INT, InitialAmountCents)). (Tier 1 - upstream wiki, etoro.Trade.Position_DataFactory)';
 ALTER TABLE main.trading.bronze_etoro_trade_position_datafactory ALTER COLUMN CommissionByUnits COMMENT 'Computed: Prorated commission for partial close. (Tier 1 - upstream wiki, etoro.Trade.Position_DataFactory)';
 ALTER TABLE main.trading.bronze_etoro_trade_position_datafactory ALTER COLUMN FullCommissionByUnits COMMENT 'Computed: Prorated full commission for partial close. (Tier 1 - upstream wiki, etoro.Trade.Position_DataFactory)';
-ALTER TABLE main.trading.bronze_etoro_trade_position_datafactory ALTER COLUMN (Remaining columns) COMMENT 'All other columns from Trade.Position except excluded markup/pricing columns. Includes ForexResultID, CurrencyID, ProviderID, GameServerID, HedgeID, HedgeServerID, OrderID, Leverage, UnitMargin, LotCountDecimal, NetProfit, InitForexRate, InitDateTime, LimitRate, StopRate, SpreadedPipBid, SpreadedPipAsk, IsBuy, CloseOnEndOfWeek, EndOfWeekFee, Commission, SpreadedCommission, FullCommission, SettlementTypeID, and tree/hierarchy/version columns. (Tier 1 - upstream wiki, etoro.Trade.Position_DataFactory)';
-
+ALTER TABLE main.trading.bronze_etoro_trade_position_datafactory ALTER COLUMN `(Remaining columns)` COMMENT 'All other columns from Trade.Position except excluded markup/pricing columns. Includes ForexResultID, CurrencyID, ProviderID, GameServerID, HedgeID, HedgeServerID, OrderID, Leverage, UnitMargin, LotCountDecimal, NetProfit, InitForexRate, InitDateTime, LimitRate, StopRate, SpreadedPipBid, SpreadedPipAsk, IsBuy, CloseOnEndOfWeek, EndOfWeekFee, Commission, SpreadedCommission, FullCommission, SettlementTypeID, and tree/hierarchy/version columns. (Tier 1 - upstream wiki, etoro.Trade.Position_DataFactory)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -32,4 +32,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationsprovidersmappi
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationsprovidersmapping ALTER COLUMN PaymentSpecificationProviderId COMMENT 'The provider''s identifier for this payment specification in their system. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationsProvidersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationsprovidersmapping ALTER COLUMN AddressId COMMENT 'Provider-side payment address/endpoint ID. Identifies the payment destination within Tribe''s system. NULL if not applicable. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationsProvidersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationsprovidersmapping ALTER COLUMN Created COMMENT 'UTC timestamp when this mapping was recorded. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationsProvidersMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

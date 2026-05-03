@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_cashouttype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_cashouttype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 3 cashout (withdrawal) classifications — NewMoneyCashout, CashoutRefund, and RiskRefund — determining whether a withdrawal is a standard payout, a deposit refund, or a risk-driven return. Source: etoro.Dictionary.CashoutType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutType.md).'
+    'comment' = 'Lookup table defining the 3 cashout (withdrawal) classifications - NewMoneyCashout, CashoutRefund, and RiskRefund - determining whether a withdrawal is a standard payout, a deposit refund, or a risk-driven return. Source: etoro.Dictionary.CashoutType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_cashouttype SET TAGS (
@@ -27,5 +27,8 @@ ALTER TABLE main.general.bronze_etoro_dictionary_cashouttype SET TAGS (
 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_cashouttype ALTER COLUMN CashoutTypeID COMMENT 'Primary key identifying the withdrawal classification. 1=NewMoneyCashout (standard), 2=CashoutRefund (deposit reversal), 3=RiskRefund (compliance return). Stored in Billing.WithdrawToFunding and History.WithdrawToFundingAction. Drives CASE branching in 15+ BackOffice/Billing procedures. Types 2 and 3 are often grouped as refund types. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutType)';
-ALTER TABLE main.general.bronze_etoro_dictionary_cashouttype ALTER COLUMN CashoutTypeName COMMENT 'Human-readable type label. Nullable. Note: column named CashoutTypeName (not Name) — matches table naming convention. Joined in BackOffice reports and payout processing for display. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutType)';
-
+ALTER TABLE main.general.bronze_etoro_dictionary_cashouttype ALTER COLUMN CashoutTypeName COMMENT 'Human-readable type label. Nullable. Note: column named CashoutTypeName (not Name) - matches table naming convention. Joined in BackOffice reports and payout processing for display. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutType)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

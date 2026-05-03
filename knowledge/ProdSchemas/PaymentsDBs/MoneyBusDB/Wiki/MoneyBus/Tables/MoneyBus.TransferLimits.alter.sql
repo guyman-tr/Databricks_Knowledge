@@ -34,4 +34,7 @@ ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transferlimits ALTER COLUMN 
 ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transferlimits ALTER COLUMN CurrencyID COMMENT 'Currency the limit applies to. Each currency requires its own limit row because acceptable ranges differ by currency denomination. Maps to an external currency reference. (Tier 1 - upstream wiki, MoneyBusDB.MoneyBus.TransferLimits)';
 ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transferlimits ALTER COLUMN PlayerLevelID COMMENT 'Player/user tier level filter. NULL means the rule applies to all levels. When set, allows different transfer limits for VIP vs. standard users. Currently all rows have NULL (uniform limits). (Tier 1 - upstream wiki, MoneyBusDB.MoneyBus.TransferLimits)';
 ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transferlimits ALTER COLUMN FlowID COMMENT 'Business flow identifier. NULL means "default for all flows." When specified (e.g., FlowID=2), applies a more specific limit that overrides the default. One row uses FlowID=2 with a lower MaxAmount, indicating a restricted flow type. (Tier 1 - upstream wiki, MoneyBusDB.MoneyBus.TransferLimits)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:41:14 UTC
+-- Bronze deploy: MoneyBusDB batch 1
+-- ====================

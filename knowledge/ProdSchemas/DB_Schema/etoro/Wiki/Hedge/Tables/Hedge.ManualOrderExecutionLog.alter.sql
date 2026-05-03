@@ -45,4 +45,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_manualorderexecutionlog ALTER COLUMN
 ALTER TABLE main.dealing.bronze_etoro_hedge_manualorderexecutionlog ALTER COLUMN TimeInForce COMMENT 'FIX protocol TimeInForce value specifying order duration. "Day" for manual dealing desk orders (order expires at end of trading day if unfilled). NULL for ExposureBalancer orders. Part of the FIX order specification group with OrderType. (Tier 1 - upstream wiki, etoro.Hedge.ManualOrderExecutionLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_manualorderexecutionlog ALTER COLUMN ExpirationInSeconds COMMENT 'Custom order expiration time in seconds. 0 for manual market orders that use Day TimeInForce (expiry governed by day boundary, not custom timeout). NULL for ExposureBalancer orders. A non-zero value would set a specific execution deadline. (Tier 1 - upstream wiki, etoro.Hedge.ManualOrderExecutionLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_manualorderexecutionlog ALTER COLUMN SlippagePercentage COMMENT 'Maximum allowable price slippage percentage. 0 for manual dealing desk orders (exact execution required - no price deviation tolerated). NULL for ExposureBalancer orders. A non-zero value would permit partial fills at slightly different rates. (Tier 1 - upstream wiki, etoro.Hedge.ManualOrderExecutionLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

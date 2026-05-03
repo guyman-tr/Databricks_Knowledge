@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_funnel (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_funnel SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 120+ customer acquisition and registration funnels — the specific marketing channel, campaign, or product entry point through which a customer registered on eToro. Source: etoro.Dictionary.Funnel on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Funnel.md).'
+    'comment' = 'Lookup table defining 120+ customer acquisition and registration funnels - the specific marketing channel, campaign, or product entry point through which a customer registered on eToro. Source: etoro.Dictionary.Funnel on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.Funnel.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_funnel SET TAGS (
@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_funnel SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_funnel ALTER COLUMN FunnelID COMMENT 'Primary key identifying the acquisition funnel. Ranges from -9 (AutomationTest) through 130+. Stored on Customer.CustomerStatic via FK and on Customer.RegistrationRequest at registration time. Also stored on Billing.Deposit for first-deposit attribution. (Tier 1 - upstream wiki, etoro.Dictionary.Funnel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_funnel ALTER COLUMN Name COMMENT 'Unique human-readable label for the funnel. Used in marketing reports, BackOffice customer views, and attribution analytics. Describes the campaign/channel/product that drove registration. Enforced unique via DFNL_NAME index. (Tier 1 - upstream wiki, etoro.Dictionary.Funnel)';
 ALTER TABLE main.general.bronze_etoro_dictionary_funnel ALTER COLUMN PlatformID COMMENT 'Platform category for this funnel. 0=Unknown/Cross-platform, 1=Web, 2=iOS, 3=Android. Defaults to 0 for server-side or platform-agnostic funnels. Links to Dictionary.Platform for platform name resolution. (Tier 1 - upstream wiki, etoro.Dictionary.Funnel)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

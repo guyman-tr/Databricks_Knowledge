@@ -50,4 +50,7 @@ ALTER TABLE main.trading.bronze_sodreconciliation_apex_ext235_mandatorycorporate
 ALTER TABLE main.trading.bronze_sodreconciliation_apex_ext235_mandatorycorporateactions ALTER COLUMN CorporateAction COMMENT 'Type of corporate action (split, merger, spinoff, etc.). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT235_MandatoryCorporateActions)';
 ALTER TABLE main.trading.bronze_sodreconciliation_apex_ext235_mandatorycorporateactions ALTER COLUMN CorporateActionMessage COMMENT 'Detailed message describing the corporate action terms. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT235_MandatoryCorporateActions)';
 ALTER TABLE main.trading.bronze_sodreconciliation_apex_ext235_mandatorycorporateactions ALTER COLUMN RecordDate COMMENT 'Record date for determining entitled shareholders. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT235_MandatoryCorporateActions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

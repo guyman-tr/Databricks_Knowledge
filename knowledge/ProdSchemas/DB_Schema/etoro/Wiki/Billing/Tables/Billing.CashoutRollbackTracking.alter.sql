@@ -49,4 +49,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_cashoutrollbacktracking ALTER COLU
 ALTER TABLE main.billing.bronze_etoro_billing_cashoutrollbacktracking ALTER COLUMN WithdrawID COMMENT 'The parent withdrawal request ID (Billing.Withdraw.WithdrawID). Never NULL in practice (all 7,349 rows populated). Implicit FK to Billing.Withdraw. Enables grouping rollback events by withdrawal in GetCashoutRollbackAmounts. (Tier 1 - upstream wiki, etoro.Billing.CashoutRollbackTracking)';
 ALTER TABLE main.billing.bronze_etoro_billing_cashoutrollbacktracking ALTER COLUMN WithdrawToFundingActionID COMMENT 'The most recent History.WithdrawToFundingAction.WithdrawToFundingActionID for the payment leg at the time of rollback. Fetched automatically inside AddCashoutRollbackTrackingRecord; not passed by caller. Links this rollback to its corresponding action history entry. Implicit FK to History.WithdrawToFundingAction. (Tier 1 - upstream wiki, etoro.Billing.CashoutRollbackTracking)';
 ALTER TABLE main.billing.bronze_etoro_billing_cashoutrollbacktracking ALTER COLUMN CreditID COMMENT 'Always NULL in current data. Likely reserved for linking to a credit note or credit account entry issued as part of the rollback. Feature not yet implemented or not used in current flows. (Tier 1 - upstream wiki, etoro.Billing.CashoutRollbackTracking)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

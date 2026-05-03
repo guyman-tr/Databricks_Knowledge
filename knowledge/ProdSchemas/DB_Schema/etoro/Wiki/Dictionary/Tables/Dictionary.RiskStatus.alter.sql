@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_riskstatus ALTER COLUMN RiskSta
 ALTER TABLE main.general.bronze_etoro_dictionary_riskstatus ALTER COLUMN Name COMMENT 'Human-readable risk reason label. Used for reporting, UI, and audit. Values like OverTheLimit, TooManyCreditCards, BinToRegCountryConflict, Affiliate Multiple Accounts. (Tier 1 - upstream wiki, etoro.Dictionary.RiskStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_riskstatus ALTER COLUMN IsActive COMMENT 'Indicates whether the status is active. Inactive (0) = legacy, typically not applied to new customers. Used for filtering in risk reports and assignment logic. (Tier 1 - upstream wiki, etoro.Dictionary.RiskStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_riskstatus ALTER COLUMN RiskCategoryID COMMENT 'Foreign key to Dictionary.RiskCategories. Groups risk statuses (velocity, country, fraud, multiple accounts). NULL for baseline statuses (None, Normal). (Tier 1 - upstream wiki, etoro.Dictionary.RiskStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

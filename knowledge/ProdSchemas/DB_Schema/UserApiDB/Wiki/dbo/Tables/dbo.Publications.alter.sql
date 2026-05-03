@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_dbo_publications ALTER COLUMN Trace COMM
 ALTER TABLE main.bi_db.bronze_userapidb_dbo_publications ALTER COLUMN ValidFrom COMMENT 'System versioning row start (GENERATED ALWAYS AS ROW START). (Tier 1 - upstream wiki, UserApiDB.dbo.Publications)';
 ALTER TABLE main.bi_db.bronze_userapidb_dbo_publications ALTER COLUMN ValidTo COMMENT 'System versioning row end (GENERATED ALWAYS AS ROW END). (Tier 1 - upstream wiki, UserApiDB.dbo.Publications)';
 ALTER TABLE main.bi_db.bronze_userapidb_dbo_publications ALTER COLUMN AboutMeShort COMMENT 'Shortened version of AboutMe for preview/thumbnail display. (Tier 1 - upstream wiki, UserApiDB.dbo.Publications)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

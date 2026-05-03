@@ -38,4 +38,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_liquidityprovidercontracts ALTER COL
 ALTER TABLE main.bi_db.bronze_etoro_history_liquidityprovidercontracts ALTER COLUMN AppLoginName COMMENT 'Materialized application identity (context_info()) at version close time. Stored here as a snapshot. NULL if not set by the writing application. (Tier 1 - upstream wiki, etoro.History.LiquidityProviderContracts)';
 ALTER TABLE main.bi_db.bronze_etoro_history_liquidityprovidercontracts ALTER COLUMN SysStartTime COMMENT 'Start of the validity window for this history row. Set by SQL Server temporal engine. For INSERT artifacts: SysStartTime = SysEndTime. For genuine updates: the timestamp when the previous contract state became current. (Tier 1 - upstream wiki, etoro.History.LiquidityProviderContracts)';
 ALTER TABLE main.bi_db.bronze_etoro_history_liquidityprovidercontracts ALTER COLUMN SysEndTime COMMENT 'End of the validity window for this history row. Set to the UTC time of the UPDATE/DELETE that closed this version. CLUSTERED INDEX leads with SysEndTime for optimal temporal query performance. (Tier 1 - upstream wiki, etoro.History.LiquidityProviderContracts)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

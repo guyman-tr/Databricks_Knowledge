@@ -38,4 +38,7 @@ ALTER TABLE main.general.bronze_etoro_trade_liquidityprovidercontracts ALTER COL
 ALTER TABLE main.general.bronze_etoro_trade_liquidityprovidercontracts ALTER COLUMN AppLoginName COMMENT 'Computed: application context. Audit/debug only. (Tier 1 - upstream wiki, etoro.Trade.LiquidityProviderContracts)';
 ALTER TABLE main.general.bronze_etoro_trade_liquidityprovidercontracts ALTER COLUMN SysStartTime COMMENT 'System-versioning valid-from. GENERATED ALWAYS AS ROW START. History.LiquidityProviderContracts stores prior versions. (Tier 1 - upstream wiki, etoro.Trade.LiquidityProviderContracts)';
 ALTER TABLE main.general.bronze_etoro_trade_liquidityprovidercontracts ALTER COLUMN SysEndTime COMMENT 'System-versioning valid-to. GENERATED ALWAYS AS ROW END. Current rows have max value. (Tier 1 - upstream wiki, etoro.Trade.LiquidityProviderContracts)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

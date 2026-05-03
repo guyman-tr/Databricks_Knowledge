@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_authenticationreason (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreason SET TBLPROPERTIES (
-    'comment' = 'Comprehensive lookup table of 108 document authentication reasons — covering ID verification outcomes from "Ok" through fraud detection, quality issues, data mismatches, and forgery indicators — used by the KYC document verification pipeline. Source: etoro.Dictionary.AuthenticationReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AuthenticationReason.md).'
+    'comment' = 'Comprehensive lookup table of 108 document authentication reasons - covering ID verification outcomes from "Ok" through fraud detection, quality issues, data mismatches, and forgery indicators - used by the KYC document verification pipeline. Source: etoro.Dictionary.AuthenticationReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AuthenticationReason.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreason SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreason SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreason ALTER COLUMN ReasonID COMMENT 'Primary key identifying the authentication outcome. 0=Ok (success), 1-107=specific failure/information codes. Stored in BackOffice.DocumentAuthenticationReasons per document. Written by BackOffice.SetDocumentAuthenticationReasons. Read by BackOffice.GetDocument and BackOffice.GetAllUserDocuments for compliance display. (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreason ALTER COLUMN Reason COMMENT 'Human-readable description of the authentication outcome. Nullable but all current rows have values. Resolved in queries by BackOffice.GetDocumentReason functions. Displayed to compliance officers in the BackOffice document review interface. (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

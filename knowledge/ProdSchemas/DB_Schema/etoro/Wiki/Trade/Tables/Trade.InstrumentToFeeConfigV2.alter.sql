@@ -41,4 +41,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfigv2 ALTER COLUMN
 ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfigv2 ALTER COLUMN UpdatedByUser COMMENT 'User/system that updated. (Tier 1 - upstream wiki, etoro.Trade.InstrumentToFeeConfigV2)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfigv2 ALTER COLUMN BeginTime COMMENT 'Temporal row start. (Tier 1 - upstream wiki, etoro.Trade.InstrumentToFeeConfigV2)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfigv2 ALTER COLUMN EndTime COMMENT 'Temporal row end. (Tier 1 - upstream wiki, etoro.Trade.InstrumentToFeeConfigV2)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

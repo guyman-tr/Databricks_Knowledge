@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_paymentactionstatus (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentactionstatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 3-state lifecycle of payment actions — New, InProcess, and Closed — tracking each payment operation from initiation through completion. Source: etoro.Dictionary.PaymentActionStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PaymentActionStatus.md).'
+    'comment' = 'Lookup table defining the 3-state lifecycle of payment actions - New, InProcess, and Closed - tracking each payment operation from initiation through completion. Source: etoro.Dictionary.PaymentActionStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PaymentActionStatus.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentactionstatus SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_paymentactionstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentactionstatus ALTER COLUMN PaymentActionStatusID COMMENT 'Primary key identifying the action lifecycle state. 1=New (created), 2=InProcess (being processed), 3=Closed (finalized). Referenced by History.PaymentAction (explicit FK) and History.DepositAction. Written by all deposit/payment action procedures in the Billing schema. (Tier 1 - upstream wiki, etoro.Dictionary.PaymentActionStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentactionstatus ALTER COLUMN Name COMMENT 'Human-readable status name. Unique constraint prevents duplicates. Values: ''New'', ''InProcess'', ''Closed''. Used in payment dashboards, audit reports, and debugging. (Tier 1 - upstream wiki, etoro.Dictionary.PaymentActionStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

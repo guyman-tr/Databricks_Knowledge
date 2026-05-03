@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_fiatdwhdb_dictionary_programtransitioneligibilitys
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dictionary_programtransitioneligibilitystatuses ALTER COLUMN Id COMMENT 'Lookup identifier. Primary key. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.ProgramTransitionEligibilityStatuses)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dictionary_programtransitioneligibilitystatuses ALTER COLUMN Name COMMENT 'Human-readable name for this value. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.ProgramTransitionEligibilityStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

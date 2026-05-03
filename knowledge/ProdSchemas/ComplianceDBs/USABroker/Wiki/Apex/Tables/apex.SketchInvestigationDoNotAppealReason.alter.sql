@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreaso
 ALTER TABLE main.bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreason ALTER COLUMN ReasonConstant COMMENT 'Machine-readable constant identifying the specific reason. Maps to constants in the Sketch/Equifax API. Examples: SSN_FRAUD_VICTIM, DOB_NO_SSN_RELATION_FOUND, ADDRESS_NOT_VERIFIED, ADDRESS_NONRESIDENTIAL. Used for programmatic handling and matching against Apex.SketchInvestigationReason configuration. (Tier 1 - upstream wiki, USABroker.apex.SketchInvestigationDoNotAppealReason)';
 ALTER TABLE main.bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreason ALTER COLUMN SketchDataSource COMMENT 'The data bureau that provided this verification result. Observed value: "Equifax". Identifies which third-party data source flagged the issue. (Tier 1 - upstream wiki, USABroker.apex.SketchInvestigationDoNotAppealReason)';
 ALTER TABLE main.bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreason ALTER COLUMN ReasonDescription COMMENT 'Human-readable description of the verification failure. Examples: "Applicant profile contains a fraud victim warning", "SSN could not be verified to the date of birth provided". NULL is allowed but typically populated from the Sketch API response. (Tier 1 - upstream wiki, USABroker.apex.SketchInvestigationDoNotAppealReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

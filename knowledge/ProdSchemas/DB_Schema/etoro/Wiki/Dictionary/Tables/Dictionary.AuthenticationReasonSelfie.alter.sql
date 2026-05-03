@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_authenticationreasonselfie (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonselfie SET TBLPROPERTIES (
-    'comment' = 'Lookup table for selfie-specific document authentication reasons during biometric verification. Exists in SSDT but not deployed to the live database — likely replaced by the unified Dictionary.AuthenticationReason table. Source: etoro.Dictionary.AuthenticationReasonSelfie on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AuthenticationReasonSelfie.md).'
+    'comment' = 'Lookup table for selfie-specific document authentication reasons during biometric verification. Exists in SSDT but not deployed to the live database - likely replaced by the unified Dictionary.AuthenticationReason table. Source: etoro.Dictionary.AuthenticationReasonSelfie on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AuthenticationReasonSelfie.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonselfie SET TAGS (
@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonselfie SET 
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonselfie ALTER COLUMN ReasonID COMMENT 'Primary key for selfie-specific authentication reason. Same structure as Dictionary.AuthenticationReason.ReasonID. Table not deployed — selfie reasons consolidated into the main AuthenticationReason table (IDs 47-52, 103-106). (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReasonSelfie)';
+ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonselfie ALTER COLUMN ReasonID COMMENT 'Primary key for selfie-specific authentication reason. Same structure as Dictionary.AuthenticationReason.ReasonID. Table not deployed - selfie reasons consolidated into the main AuthenticationReason table (IDs 47-52, 103-106). (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReasonSelfie)';
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonselfie ALTER COLUMN Reason COMMENT 'Human-readable selfie authentication reason. Same structure as Dictionary.AuthenticationReason.Reason. (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReasonSelfie)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

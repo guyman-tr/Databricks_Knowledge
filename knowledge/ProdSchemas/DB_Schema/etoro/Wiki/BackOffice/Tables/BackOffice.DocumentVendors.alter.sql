@@ -28,4 +28,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_documentvendors SET TAGS (
 -- Column Comments
 ALTER TABLE main.billing.bronze_etoro_backoffice_documentvendors ALTER COLUMN DocumentID COMMENT 'The KYC document that was processed. FK (WITH CHECK) to BackOffice.CustomerDocument(DocumentID). Leading key of NC PK. 893,779 distinct values. Deletions cascade from DeleteUserDocument. (Tier 1 - upstream wiki, etoro.BackOffice.DocumentVendors)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_documentvendors ALTER COLUMN Vendor COMMENT 'The verification vendor name or code. Part of NC PK. Free-text, no FK constraint. Known values: "100" (legacy), "Onfido", "Sumsub", "Au10tix", "IDnow". Max 1024 chars - generous allocation for potentially long vendor identifiers or JSON-encoded metadata. (Tier 1 - upstream wiki, etoro.BackOffice.DocumentVendors)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.finance.bronze_usabroker_dictionary_apexstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.finance.bronze_usabroker_dictionary_apexstatus ALTER COLUMN StatusID COMMENT 'Primary key. 16 values (1-16) covering the complete account lifecycle. Referenced by Apex.ApexData.StatusID (explicit FK) and Apex.RequestLog.StatusID (implicit). (Tier 1 - upstream wiki, USABroker.Dictionary.ApexStatus)';
 ALTER TABLE main.finance.bronze_usabroker_dictionary_apexstatus ALTER COLUMN Name COMMENT 'UPPERCASE display name for the status. Used in API responses and UI display. (Tier 1 - upstream wiki, USABroker.Dictionary.ApexStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

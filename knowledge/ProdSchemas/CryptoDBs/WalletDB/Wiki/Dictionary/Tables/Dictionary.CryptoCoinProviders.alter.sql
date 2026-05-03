@@ -29,4 +29,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_cryptocoinproviders SET TAGS 
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_cryptocoinproviders ALTER COLUMN Id COMMENT 'Unique identifier. Values: 1-9 mapping to specific blockchain/provider combinations. FK target for Wallet.BlockchainCryptoProviders and Wallet.BlockchainCryptos. (Tier 1 - upstream wiki, WalletDB.Dictionary.CryptoCoinProviders)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_cryptocoinproviders ALTER COLUMN Name COMMENT 'Unique provider implementation name. Maps to application-layer class names that implement blockchain interaction logic. (Tier 1 - upstream wiki, WalletDB.Dictionary.CryptoCoinProviders)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_cryptocoinproviders ALTER COLUMN WalletProviderId COMMENT 'FK to Dictionary.WalletProvider. Links this blockchain-specific implementation to its parent custody provider. Default is 1 (BitGo), indicating most coin providers are BitGo-managed. (Tier 1 - upstream wiki, WalletDB.Dictionary.CryptoCoinProviders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

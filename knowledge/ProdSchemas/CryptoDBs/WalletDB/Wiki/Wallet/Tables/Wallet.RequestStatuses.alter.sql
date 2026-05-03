@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_requeststatuses ALTER COLUMN Requ
 ALTER TABLE main.wallet.bronze_walletdb_wallet_requeststatuses ALTER COLUMN RequestStatusId COMMENT 'The status the request transitioned to: 0=Start, 1=Done, 2=Error, 3=ExecuterEnqueued, 4=ReadByExecuter, 5=TransactionSentToBlockChain, 6=TransactionConfirmed, 7=TransactionVerified, 8=AmlEnqueued, 9=ReadByAml, 16=TemporaryError, 25-27=ManualApproval flow, 28-42=extended statuses. See Request Status. FK to Dictionary.RequestStatuses. (Tier 1 - upstream wiki, WalletDB.Wallet.RequestStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_requeststatuses ALTER COLUMN Timestamp COMMENT 'When this status transition occurred. Used for SLA monitoring, processing time calculations, and chronological ordering. Indexed descending for recent-event queries. (Tier 1 - upstream wiki, WalletDB.Wallet.RequestStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_requeststatuses ALTER COLUMN DetailsJson COMMENT 'JSON payload with status-specific context. For ExecuterEnqueued: saga key, full request payload including amounts, addresses, AML/TravelRule data. For TransactionSentToBlockChain: blockchain transaction hash. For Done: correlation ID. NULL for simple transitions. (Tier 1 - upstream wiki, WalletDB.Wallet.RequestStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -53,4 +53,7 @@ ALTER TABLE main.bi_db.bronze_etoro_trade_adminpositionlog ALTER COLUMN Compensa
 ALTER TABLE main.bi_db.bronze_etoro_trade_adminpositionlog ALTER COLUMN ValidatePositionWorth COMMENT 'Whether to validate minimum position value before opening. 0=Skip validation, 1=Enforce minimum worth check. (Tier 1 - upstream wiki, etoro.Trade.AdminPositionLog)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_adminpositionlog ALTER COLUMN CompensationCreditID COMMENT 'Credit entry ID linking this admin position to a compensation credit record. Added after AdminPositionLogOLD was archived (not present in OLD table). (Tier 1 - upstream wiki, etoro.Trade.AdminPositionLog)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_adminpositionlog ALTER COLUMN OrderID COMMENT 'Associated order ID in Trade.Orders for this admin position. Added after AdminPositionLogOLD was archived. Indexed for order-based lookups. (Tier 1 - upstream wiki, etoro.Trade.AdminPositionLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

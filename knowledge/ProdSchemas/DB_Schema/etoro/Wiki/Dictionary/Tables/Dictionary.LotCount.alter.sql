@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_lotcount SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_lotcount ALTER COLUMN LotCountID COMMENT 'Primary key and simultaneously the lot count value itself (LotCountID = Value in all rows). Referenced by Trade.PositionTbl, Trade.ProviderInstrumentToLotCount, and 100+ trading procedures as the position unit quantity. Range: 0–10,000. (Tier 1 - upstream wiki, etoro.Dictionary.LotCount)';
-ALTER TABLE main.general.bronze_etoro_dictionary_lotcount ALTER COLUMN Value COMMENT 'The numeric lot count value. Always equals LotCountID — a denormalized design where the PK carries the business meaning directly. Represents the number of units (shares/contracts/coins) in a position. (Tier 1 - upstream wiki, etoro.Dictionary.LotCount)';
-
+ALTER TABLE main.general.bronze_etoro_dictionary_lotcount ALTER COLUMN LotCountID COMMENT 'Primary key and simultaneously the lot count value itself (LotCountID = Value in all rows). Referenced by Trade.PositionTbl, Trade.ProviderInstrumentToLotCount, and 100+ trading procedures as the position unit quantity. Range: 0 - 10,000. (Tier 1 - upstream wiki, etoro.Dictionary.LotCount)';
+ALTER TABLE main.general.bronze_etoro_dictionary_lotcount ALTER COLUMN Value COMMENT 'The numeric lot count value. Always equals LotCountID - a denormalized design where the PK carries the business meaning directly. Represents the number of units (shares/contracts/coins) in a position. (Tier 1 - upstream wiki, etoro.Dictionary.LotCount)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

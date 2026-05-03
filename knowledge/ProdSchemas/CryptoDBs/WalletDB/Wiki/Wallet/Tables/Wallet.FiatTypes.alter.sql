@@ -34,4 +34,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_fiattypes ALTER COLUMN AvatarUrl 
 ALTER TABLE main.wallet.bronze_walletdb_wallet_fiattypes ALTER COLUMN Precision COMMENT 'Number of decimal places used when displaying and calculating amounts in this currency. All current currencies use 5 decimal places for precision in conversion calculations. (Tier 1 - upstream wiki, WalletDB.Wallet.FiatTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_fiattypes ALTER COLUMN InstrumentId COMMENT 'Links to the eToro trading platform instrument representing the exchange rate for this fiat vs USD. NULL for USD (base currency). EUR=1, GBP=2, AUD=7. Used to fetch real-time exchange rates for crypto-to-fiat conversions. Implicit reference to Wallet.Instruments. (Tier 1 - upstream wiki, WalletDB.Wallet.FiatTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_fiattypes ALTER COLUMN NumericCode COMMENT 'ISO 4217 numeric currency code (e.g., 840=USD, 978=EUR, 826=GBP, 36=AUD). Used for standardized integrations with payment providers and regulatory reporting. (Tier 1 - upstream wiki, WalletDB.Wallet.FiatTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

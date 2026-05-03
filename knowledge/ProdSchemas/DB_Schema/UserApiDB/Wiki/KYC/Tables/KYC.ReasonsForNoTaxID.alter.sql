@@ -29,4 +29,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_reasonsfornotaxid SET TAGS (
 ALTER TABLE main.compliance.bronze_userapidb_kyc_reasonsfornotaxid ALTER COLUMN ReasonID COMMENT 'Primary key. CRS-aligned reason code (1-5). (Tier 1 - upstream wiki, UserApiDB.KYC.ReasonsForNoTaxID)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_reasonsfornotaxid ALTER COLUMN Description COMMENT 'User-facing description of the reason, displayed in the KYC form. (Tier 1 - upstream wiki, UserApiDB.KYC.ReasonsForNoTaxID)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_reasonsfornotaxid ALTER COLUMN ValidationExpression COMMENT 'Regex for validating free-text explanation. Only ReasonID=1 has a validation rule (requires explanation). (Tier 1 - upstream wiki, UserApiDB.KYC.ReasonsForNoTaxID)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_timezone SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_timezone ALTER COLUMN TimeZoneID COMMENT 'Primary key identifying the time zone. 0=Unknown, 1-26=GMT-12 through GMT+13. Referenced by Customer.CustomerStatic, Customer.RegistrationRequest, History.Customer. (Tier 1 - upstream wiki, etoro.Dictionary.TimeZone)';
 ALTER TABLE main.general.bronze_etoro_dictionary_timezone ALTER COLUMN Name COMMENT 'Time zone label (e.g., "GMT +02"). Fixed-width with trailing spaces. Unique via DTMZ_NAME index. (Tier 1 - upstream wiki, etoro.Dictionary.TimeZone)';
 ALTER TABLE main.general.bronze_etoro_dictionary_timezone ALTER COLUMN Offset COMMENT 'UTC offset in hours. Range -12.00 to +13.00. Allows decimal for half-hour zones (though currently only whole-hour values used). (Tier 1 - upstream wiki, etoro.Dictionary.TimeZone)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -43,4 +43,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_redemptions ALTER COLUMN Estimate
 ALTER TABLE main.wallet.bronze_walletdb_wallet_redemptions ALTER COLUMN InitialFeeAmount COMMENT 'Fixed base fee charged regardless of amount. Defaults to 0 for most cryptos. (Tier 1 - upstream wiki, WalletDB.Wallet.Redemptions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_redemptions ALTER COLUMN SourceWalletId COMMENT 'The omnibus/system wallet from which the crypto is sent to the customer. FK to Wallet.Wallets.WalletId. NULL for legacy records. (Tier 1 - upstream wiki, WalletDB.Wallet.Redemptions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_redemptions ALTER COLUMN TransactionTypeId COMMENT 'Type of sent transaction created: typically 0 (Redeem) or 8 (RedeemAsic). FK to Dictionary.TransactionTypes. See Transaction Type. (Tier 1 - upstream wiki, WalletDB.Wallet.Redemptions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

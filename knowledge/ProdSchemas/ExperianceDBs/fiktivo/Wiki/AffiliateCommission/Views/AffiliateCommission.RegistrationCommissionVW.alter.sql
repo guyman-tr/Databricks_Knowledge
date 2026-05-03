@@ -63,4 +63,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationcommission
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationcommissionvw ALTER COLUMN Paid COMMENT 'From RegistrationCommission. Payment status. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationCommissionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationcommissionvw ALTER COLUMN PaymentID COMMENT 'From RegistrationCommission. Payment batch. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationCommissionVW)';
 ALTER TABLE main.bi_db.bronze_fiktivo_affiliatecommission_registrationcommissionvw ALTER COLUMN UpdateDate COMMENT 'Computed: GREATEST(PaymentDate, RegistrationDate) when paid. (Tier 1 - upstream wiki, fiktivo.AffiliateCommission.RegistrationCommissionVW)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

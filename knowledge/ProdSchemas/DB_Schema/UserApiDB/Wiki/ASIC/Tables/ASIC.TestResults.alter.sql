@@ -32,4 +32,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_asic_testresults ALTER COLUMN Success CO
 ALTER TABLE main.bi_db.bronze_userapidb_asic_testresults ALTER COLUMN Score COMMENT 'Numeric score achieved on the test. May be NULL if scoring is not applicable. (Tier 1 - upstream wiki, UserApiDB.ASIC.TestResults)';
 ALTER TABLE main.bi_db.bronze_userapidb_asic_testresults ALTER COLUMN OccurredAt COMMENT 'When the test was taken. Used for audit trails and ordering results. (Tier 1 - upstream wiki, UserApiDB.ASIC.TestResults)';
 ALTER TABLE main.bi_db.bronze_userapidb_asic_testresults ALTER COLUMN Deleted COMMENT 'Soft-delete flag. 0 = active, 1 = deleted. All active queries filter WHERE Deleted = 0. (Tier 1 - upstream wiki, UserApiDB.ASIC.TestResults)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

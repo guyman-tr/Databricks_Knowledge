@@ -32,4 +32,7 @@ ALTER TABLE main.bi_db.bronze_etoro_billing_currencysettings ALTER COLUMN Instru
 ALTER TABLE main.bi_db.bronze_etoro_billing_currencysettings ALTER COLUMN IsReciprocal COMMENT 'Rate direction flag: 0=direct quote (currency is base, e.g., EUR/USD), 1=reciprocal quote (USD is base, e.g., USD/JPY, must invert rate). Used by PIP formula to determine whether to apply rate directly or as 1/rate. 0 for 9 currencies (EUR, GBP, AUD, CAD, and some crypto), 1 for 22 currencies (most others including JPY, CHF, CNY). (Tier 1 - upstream wiki, etoro.Billing.CurrencySettings)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_currencysettings ALTER COLUMN Precision COMMENT 'Decimal places used for this currency in PIP calculations. Determines rounding precision in the PIP formula. Values: 0=JPY-class (no decimal), 2=most standard currencies, 4=major FX pairs (EUR, GBP, AUD, CAD), 5=crypto/exotic instruments. (Tier 1 - upstream wiki, etoro.Billing.CurrencySettings)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_currencysettings ALTER COLUMN ModificationDate COMMENT 'Timestamp of last configuration update. All 31 rows show 2024-05-06 - a bulk update/refresh event. Used for change tracking by the admin tool. (Tier 1 - upstream wiki, etoro.Billing.CurrencySettings)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -44,4 +44,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions ALTER COLUMN Rea
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions ALTER COLUMN FunnelID COMMENT 'Marketing funnel identifier. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_FirstPositions)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions ALTER COLUMN LabelID COMMENT 'Marketing label/campaign identifier. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_FirstPositions)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_firstpositions ALTER COLUMN PlayerLevelID COMMENT 'Customer tier at event time. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_FirstPositions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

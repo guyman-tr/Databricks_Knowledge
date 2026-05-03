@@ -31,4 +31,7 @@ ALTER TABLE main.finance.bronze_usabroker_apex_state ALTER COLUMN ApexStateID CO
 ALTER TABLE main.finance.bronze_usabroker_apex_state ALTER COLUMN Comment COMMENT 'Context text for the current state. Typically contains error messages, investigation details, or processing notes. Truncated to 4000 chars by SaveState before storage. NULL for normal progression states. Contains structured data like "Error = {type}; Code = {code}; Description = {msg}" or investigation reasons. (Tier 1 - upstream wiki, USABroker.apex.State)';
 ALTER TABLE main.finance.bronze_usabroker_apex_state ALTER COLUMN BeginTime COMMENT 'System versioning row start time. Records when this state was entered. Essential for tracking state transition timing and detecting stuck states. Part of SYSTEM_TIME period for temporal table History.State. (Tier 1 - upstream wiki, USABroker.apex.State)';
 ALTER TABLE main.finance.bronze_usabroker_apex_state ALTER COLUMN EndTime COMMENT 'System versioning row end time. ''9999-12-31'' indicates the current active state. Part of SYSTEM_TIME period. (Tier 1 - upstream wiki, USABroker.apex.State)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

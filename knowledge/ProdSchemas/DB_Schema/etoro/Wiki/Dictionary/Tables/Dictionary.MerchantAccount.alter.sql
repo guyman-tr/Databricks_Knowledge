@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_merchantaccount ALTER COLUMN Me
 ALTER TABLE main.general.bronze_etoro_dictionary_merchantaccount ALTER COLUMN MerchantID COMMENT 'Parent merchant/gateway: references Dictionary.Merchant.ID. Multiple accounts per merchant. 1=Checkout, 2=WorldPay, etc. (Tier 1 - upstream wiki, etoro.Dictionary.MerchantAccount)';
 ALTER TABLE main.general.bronze_etoro_dictionary_merchantaccount ALTER COLUMN Name COMMENT 'Account name encoding merchant + region: "CheckoutEU", "WorldpayAU", "CheckoutEMUK". Used as technical identifier in payment processing. (Tier 1 - upstream wiki, etoro.Dictionary.MerchantAccount)';
 ALTER TABLE main.general.bronze_etoro_dictionary_merchantaccount ALTER COLUMN BODescription COMMENT 'Back-office entity label: "eToroEU", "eToroUK", "eToroAU", "EMUK". Identifies which eToro legal entity receives the funds. Used in reconciliation and regulatory reporting. (Tier 1 - upstream wiki, etoro.Dictionary.MerchantAccount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

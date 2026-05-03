@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactionstatuses ALTER
 ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactionstatuses ALTER COLUMN StatusId COMMENT 'Processing status. Uses the same Dictionary.TransactionStatus values as sent transactions but in the context of receive processing (0=Pending processing, 1=Confirmed/credited, etc.). (Tier 1 - upstream wiki, WalletDB.Wallet.ReceivedTransactionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactionstatuses ALTER COLUMN Occurred COMMENT 'Timestamp of this processing step. (Tier 1 - upstream wiki, WalletDB.Wallet.ReceivedTransactionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactionstatuses ALTER COLUMN DetailsJson COMMENT 'JSON payload with step-specific context (AML results, error details, processing metadata). (Tier 1 - upstream wiki, WalletDB.Wallet.ReceivedTransactionStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

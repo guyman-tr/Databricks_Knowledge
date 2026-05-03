@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelrulecomplianceoptions SE
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelrulecomplianceoptions ALTER COLUMN Id COMMENT 'Unique identifier. Values: 0=None, 1=Blocked, 2=Declaration, 3=ProofOfOwnership. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleComplianceOptions)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_travelrulecomplianceoptions ALTER COLUMN Name COMMENT 'Compliance action label. (Tier 1 - upstream wiki, WalletDB.Dictionary.TravelRuleComplianceOptions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

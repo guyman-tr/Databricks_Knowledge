@@ -55,4 +55,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_indexdividends ALTER COLUMN HostName
 ALTER TABLE main.trading.bronze_etoro_trade_indexdividends ALTER COLUMN NegativeDividendAllowed COMMENT '1 = negative (special) dividend allowed. Passed from InsertIndexDividend. NULL = default no. (Tier 1 - upstream wiki, etoro.Trade.IndexDividends)';
 ALTER TABLE main.trading.bronze_etoro_trade_indexdividends ALTER COLUMN CorrectionDividendID COMMENT 'FK to self. DividendID of the dividend being corrected. When set, Status defaults to 4. Trade.ValidateCorrectionDividendId validates. (Tier 1 - upstream wiki, etoro.Trade.IndexDividends)';
 ALTER TABLE main.trading.bronze_etoro_trade_indexdividends ALTER COLUMN RetakeDividendID COMMENT 'FK to self. Parent dividend when this row is part of a retake batch. Multiple rows can share same RetakeDividendID. (Tier 1 - upstream wiki, etoro.Trade.IndexDividends)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

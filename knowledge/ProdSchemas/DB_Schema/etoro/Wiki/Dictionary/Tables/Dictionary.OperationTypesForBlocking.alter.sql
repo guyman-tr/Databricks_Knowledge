@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_operationtypesforblocking SET T
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_operationtypesforblocking ALTER COLUMN OperationTypeID COMMENT 'Primary key. 1–24. MCP-verified. FK target from Customer.BlockedCustomerOperations and Trade.OperationTypeForBlockingToAtomic. (Tier 1 - upstream wiki, etoro.Dictionary.OperationTypesForBlocking)';
+ALTER TABLE main.general.bronze_etoro_dictionary_operationtypesforblocking ALTER COLUMN OperationTypeID COMMENT 'Primary key. 1 - 24. MCP-verified. FK target from Customer.BlockedCustomerOperations and Trade.OperationTypeForBlockingToAtomic. (Tier 1 - upstream wiki, etoro.Dictionary.OperationTypesForBlocking)';
 ALTER TABLE main.general.bronze_etoro_dictionary_operationtypesforblocking ALTER COLUMN OperationDescription COMMENT 'Human-readable description. Values: ''Copy User'', ''Copied'', ''Trading'', ''Position Open'', ''Manual Edit SL'', etc. MCP-verified. (Tier 1 - upstream wiki, etoro.Dictionary.OperationTypesForBlocking)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

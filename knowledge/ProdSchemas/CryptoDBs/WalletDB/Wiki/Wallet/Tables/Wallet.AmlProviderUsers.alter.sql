@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_amlproviderusers ALTER COLUMN Aml
 ALTER TABLE main.wallet.bronze_walletdb_wallet_amlproviderusers ALTER COLUMN Gcid COMMENT 'Global Customer ID. The eToro customer this AML provider registration belongs to. Part of unique constraint with AmlProviderId. (Tier 1 - upstream wiki, WalletDB.Wallet.AmlProviderUsers)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_amlproviderusers ALTER COLUMN ProviderUserId COMMENT 'The customer''s user identifier on the AML provider''s system. Base64-encoded representation of the Gcid (e.g., Gcid 46870594 -> "NDY4NzA1OTQ="). Used in all API calls to the provider. (Tier 1 - upstream wiki, WalletDB.Wallet.AmlProviderUsers)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_amlproviderusers ALTER COLUMN Occurred COMMENT 'Timestamp when this customer was first registered with the AML provider. (Tier 1 - upstream wiki, WalletDB.Wallet.AmlProviderUsers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

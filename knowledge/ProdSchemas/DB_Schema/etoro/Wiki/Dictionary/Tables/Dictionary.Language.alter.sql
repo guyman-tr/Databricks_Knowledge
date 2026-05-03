@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_language ALTER COLUMN LanguageI
 ALTER TABLE main.general.bronze_etoro_dictionary_language ALTER COLUMN Name COMMENT 'Language display name. UNIQUE constraint. Used in back-office language selectors and reporting. (Tier 1 - upstream wiki, etoro.Dictionary.Language)';
 ALTER TABLE main.general.bronze_etoro_dictionary_language ALTER COLUMN IsoCode COMMENT 'ISO 639-1 two-letter language code (e.g., "en", "de", "ar"). Used for URL routing, API locale headers, and content management. May be shared between regional variants (e.g., both en-GB and en-US share "en"). (Tier 1 - upstream wiki, etoro.Dictionary.Language)';
 ALTER TABLE main.general.bronze_etoro_dictionary_language ALTER COLUMN CultureCode COMMENT '.NET culture code for full locale specification (e.g., "en-GB", "de-DE", "zh-CN"). Used for number formatting (decimal separators), date formatting, and currency display. Provides the regional distinction that IsoCode alone cannot. (Tier 1 - upstream wiki, etoro.Dictionary.Language)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

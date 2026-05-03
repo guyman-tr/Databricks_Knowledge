@@ -30,4 +30,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionstatuses ALTER COL
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionstatuses ALTER COLUMN SentTransactionId COMMENT 'The sent transaction this status event belongs to. FK to Wallet.SentTransactions.Id. Multiple rows per transaction. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionstatuses ALTER COLUMN StatusId COMMENT 'Blockchain confirmation status: 0=Pending, 1=Confirmed, 2=Verified, 3=Error, 4=Timeout, 5=PermanentError, 6=WavedError. See Transaction Status. FK to Dictionary.TransactionStatus. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionstatuses ALTER COLUMN Occurred COMMENT 'Timestamp of this status transition. Used for confirmation time calculations. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

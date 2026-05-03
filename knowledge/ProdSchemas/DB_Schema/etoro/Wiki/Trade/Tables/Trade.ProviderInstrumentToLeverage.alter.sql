@@ -36,4 +36,7 @@ ALTER TABLE main.bi_db.bronze_etoro_trade_providerinstrumenttoleverage ALTER COL
 ALTER TABLE main.bi_db.bronze_etoro_trade_providerinstrumenttoleverage ALTER COLUMN AppLoginName COMMENT 'Computed: CONVERT(varchar(500), context_info()). Application context. (Tier 1 - upstream wiki, etoro.Trade.ProviderInstrumentToLeverage)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_providerinstrumenttoleverage ALTER COLUMN SysStartTime COMMENT 'System-versioning row start. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, etoro.Trade.ProviderInstrumentToLeverage)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_providerinstrumenttoleverage ALTER COLUMN SysEndTime COMMENT 'System-versioning row end. GENERATED ALWAYS AS ROW END. History in History.TradeProviderInstrumentToLeverage. (Tier 1 - upstream wiki, etoro.Trade.ProviderInstrumentToLeverage)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

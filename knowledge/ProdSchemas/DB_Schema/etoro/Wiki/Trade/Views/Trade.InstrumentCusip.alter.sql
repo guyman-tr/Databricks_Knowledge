@@ -29,4 +29,7 @@ ALTER TABLE main.bi_db.bronze_etoro_trade_instrumentcusip SET TAGS (
 ALTER TABLE main.bi_db.bronze_etoro_trade_instrumentcusip ALTER COLUMN InstrumentID COMMENT 'PK of Trade.Instrument. Same as InstrumentMetaData.InstrumentID. Identifies the tradeable instrument. (Tier 1 - upstream wiki, etoro.Trade.InstrumentCusip)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_instrumentcusip ALTER COLUMN CUSIP COMMENT 'Alias for InstrumentMetaData.Cusip. Committee on Uniform Securities Identification Procedures code for US/Canada securities. NULL for forex, crypto, many non-US instruments. (Tier 1 - upstream wiki, etoro.Trade.InstrumentCusip)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_instrumentcusip ALTER COLUMN ISINCode COMMENT 'International Securities Identification Number. From InstrumentMetaData.ISINCode. Required for stocks in many jurisdictions. NULL for forex, crypto. (Tier 1 - upstream wiki, etoro.Trade.InstrumentCusip)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

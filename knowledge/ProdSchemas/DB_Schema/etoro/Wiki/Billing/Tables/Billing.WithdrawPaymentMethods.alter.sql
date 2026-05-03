@@ -29,4 +29,7 @@ ALTER TABLE main.bi_db.bronze_etoro_billing_withdrawpaymentmethods SET TAGS (
 ALTER TABLE main.bi_db.bronze_etoro_billing_withdrawpaymentmethods ALTER COLUMN CountryID COMMENT 'Country of the customer''s registration. Implicit FK to Dictionary.Country (CountryID). The clustered index on this column enables fast lookups by country when the application checks withdrawal eligibility for a specific customer. Known values: 55=Czech Republic, 57=Denmark, 94=Hungary, 154=Norway, 164=Poland, 168=Romania, 196=Sweden, 197=Switzerland. (Tier 1 - upstream wiki, etoro.Billing.WithdrawPaymentMethods)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_withdrawpaymentmethods ALTER COLUMN FundingTypeID COMMENT 'Payment method identifier for the withdrawal channel. Implicit FK to Dictionary.FundingType (FundingTypeID). Only two values present: 3=PayPal, 8=MoneyBookers (Skrill). Not all countries have both methods - Romania has MoneyBookers only. (Tier 1 - upstream wiki, etoro.Billing.WithdrawPaymentMethods)';
 ALTER TABLE main.bi_db.bronze_etoro_billing_withdrawpaymentmethods ALTER COLUMN Currencies COMMENT 'Comma-separated list of CurrencyIDs representing the currencies accepted for this country/payment-method combination. Pattern: local currency first, then USD(1), EUR(2), GBP(3), AUD(5). Parsed by application code to build the currency selection list during withdrawal. Example: "82,1,2,3,5" = CZK, USD, EUR, GBP, AUD for Czech Republic. (Tier 1 - upstream wiki, etoro.Billing.WithdrawPaymentMethods)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

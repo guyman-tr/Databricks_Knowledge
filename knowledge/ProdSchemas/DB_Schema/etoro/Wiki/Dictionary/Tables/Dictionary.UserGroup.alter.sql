@@ -28,5 +28,8 @@ ALTER TABLE main.general.bronze_etoro_dictionary_usergroup SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_usergroup ALTER COLUMN UserGroupID COMMENT 'Unique identifier for the user group. Manually assigned, not auto-incrementing. Referenced by 30+ procedures for permission checks, approval routing, and manager assignment. Values range from 1-53 with gaps. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroup)';
 ALTER TABLE main.general.bronze_etoro_dictionary_usergroup ALTER COLUMN Name COMMENT 'Display name of the group (e.g., "Administrators", "Risk", "Sales/Support"). Unique constraint (DGRP_NAME index) prevents duplicate group names. Used in BackOffice UI for group selection dropdowns and approval displays. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroup)';
-ALTER TABLE main.general.bronze_etoro_dictionary_usergroup ALTER COLUMN ParentID COMMENT 'Self-referencing FK to UserGroupID — points to this group''s parent in the organizational hierarchy. NULL for root-level departments (Administrators, Operations, Marketing, Trading, AML). FK_DUSG_DUSG enforces referential integrity. Indexed (DGRP_PARENT) for efficient hierarchy traversal. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroup)';
-
+ALTER TABLE main.general.bronze_etoro_dictionary_usergroup ALTER COLUMN ParentID COMMENT 'Self-referencing FK to UserGroupID - points to this group''s parent in the organizational hierarchy. NULL for root-level departments (Administrators, Operations, Marketing, Trading, AML). FK_DUSG_DUSG enforces referential integrity. Indexed (DGRP_PARENT) for efficient hierarchy traversal. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroup)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -32,4 +32,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdues ALTER COLU
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdues ALTER COLUMN DueTime COMMENT 'When this payment is scheduled to be collected. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationDues)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdues ALTER COLUMN EventTimestamp COMMENT 'When the due event occurred in the source system. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationDues)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_paymentspecificationdues ALTER COLUMN Created COMMENT 'When this record was written to the DWH. (Tier 1 - upstream wiki, FiatDwhDB.dbo.PaymentSpecificationDues)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

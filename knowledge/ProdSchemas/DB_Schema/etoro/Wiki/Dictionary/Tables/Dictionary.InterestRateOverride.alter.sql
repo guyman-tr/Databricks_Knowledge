@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_interestrateoverride (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_interestrateoverride SET TBLPROPERTIES (
-    'comment' = 'System-versioned configuration table defining manual overrides to overnight interest (swap) rates — allowing operations to customize buy/sell rates and markup percentages at the instrument, exchange, or instrument-type level with full temporal audit history. Source: etoro.Dictionary.InterestRateOverride on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.InterestRateOverride.md).'
+    'comment' = 'System-versioned configuration table defining manual overrides to overnight interest (swap) rates - allowing operations to customize buy/sell rates and markup percentages at the instrument, exchange, or instrument-type level with full temporal audit history. Source: etoro.Dictionary.InterestRateOverride on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.InterestRateOverride.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_interestrateoverride SET TAGS (
@@ -39,4 +39,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_interestrateoverride ALTER COLUMN
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_interestrateoverride ALTER COLUMN EndTime COMMENT 'System-versioned row end time. Generated automatically. Current rows have 9999-12-31 23:59:59.999. Historical rows have the timestamp of the next modification. (Tier 1 - upstream wiki, etoro.Dictionary.InterestRateOverride)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_interestrateoverride ALTER COLUMN OverNightFeePatternID COMMENT 'Fee charging pattern for this override. FK to Dictionary.OverNightFeePattern. Determines on which days/how fees are charged (e.g., daily, triple Wednesday, weekday-only). NULL = use default pattern. (Tier 1 - upstream wiki, etoro.Dictionary.InterestRateOverride)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_interestrateoverride ALTER COLUMN SettlementTypeID COMMENT 'Settlement model for this override. FK to Dictionary.SettlementTypes. 0=default/any, 1=CFD, 2=Real, 3=DMA, 4=Indices, 5=TRS. Allows different rates per settlement type. Default: 0. (Tier 1 - upstream wiki, etoro.Dictionary.InterestRateOverride)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

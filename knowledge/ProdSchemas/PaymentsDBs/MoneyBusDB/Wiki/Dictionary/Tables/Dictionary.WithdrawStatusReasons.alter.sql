@@ -29,4 +29,7 @@ ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatusreasons SET 
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatusreasons ALTER COLUMN ID COMMENT 'Primary key identifying each withdrawal status reason. Explicitly assigned (not IDENTITY). Referenced as StatusReasonID in MoneyBus.Withdrawals. Values: 1=Created, 2=Success, 3=HoldInitiated, 4=HoldApproved, 5=HoldDeclined, 6=AuthorizeInitiated, 7=AuthorizeApproved, 8=AuthorizeDeclined, 9=PayoutInitiated, 10=PayoutApproved, 11=PayoutDeclined, 12=AbortInitiated, 13=AbortCompleted, 14=AbortFailed, 15=RiskManualReview. See Withdraw Status Reason for full business definitions. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawStatusReasons)';
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatusreasons ALTER COLUMN Name COMMENT 'Human-readable label for the status reason. Names follow {Step}{Outcome} pattern (e.g., HoldApproved, PayoutDeclined, AbortCompleted). Read by Dictionary.WithdrawStatusReasonGet for application caching. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawStatusReasons)';
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatusreasons ALTER COLUMN WithdrawStatusID COMMENT 'Parent status that this reason belongs to. Implicit FK to Dictionary.WithdrawStatuses.ID. Maps each granular reason to its top-level outcome: 1=InProcess, 2=Success, 3=Decline, 4=Technical, 5=Cancelled. Encodes recoverability: reasons mapping to InProcess can still progress, others are terminal. See Withdraw Status. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawStatusReasons)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:41:14 UTC
+-- Bronze deploy: MoneyBusDB batch 1
+-- ====================

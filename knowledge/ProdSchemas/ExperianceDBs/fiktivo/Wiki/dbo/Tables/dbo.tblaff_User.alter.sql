@@ -329,4 +329,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_user_masked ALTER COLUMN Instru
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_user_masked ALTER COLUMN InstrumentTypes_Edit COMMENT 'Permission: can edit instrument type settings. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_User)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_user_masked ALTER COLUMN InstrumentTypes_AddNew COMMENT 'Permission: can create new instrument types. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_User)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_user_masked ALTER COLUMN InstrumentTypes_Delete COMMENT 'Permission: can delete instrument types. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_User)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

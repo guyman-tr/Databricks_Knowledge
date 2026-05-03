@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_marketingexpense SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_marketingexpense ALTER COLUMN MarketingExpenseID COMMENT 'Primary key. Referenced by tblaff_Affiliates.MarketingExpenseID and dbo.Channels.MarketingExpenseID. Non-sequential IDs (gap at 10021-10022) suggest later additions. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_MarketingExpense)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_marketingexpense ALTER COLUMN MarketingExpenseName COMMENT 'Display name of the marketing channel. Values include: Affiliate, Media Performance, Direct, SEO, SEM, SMM, Offline Partners, Local Offices, RAF, Local Partners, Introducing Agents, Networks, Mobile media, PR, Sponsorships, Events, Productions, OOH, Club, systems, Content Partnerships, Media Programmatic, TV, Social Organic, Media CPA, Affiliate Branding. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_MarketingExpense)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_hedgeorderstate (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgeorderstate SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the eight lifecycle states of a hedge order — from initial creation through execution, partial fill, rejection, failure, or cancellation at the liquidity provider. Source: etoro.Dictionary.HedgeOrderState on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.HedgeOrderState.md).'
+    'comment' = 'Lookup table defining the eight lifecycle states of a hedge order - from initial creation through execution, partial fill, rejection, failure, or cancellation at the liquidity provider. Source: etoro.Dictionary.HedgeOrderState on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.HedgeOrderState.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgeorderstate SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_hedgeorderstate SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgeorderstate ALTER COLUMN ID COMMENT 'Primary key identifying the hedge order state. 0=None (unset), 1=Sent (transmitted to LP), 2=New (LP acknowledged), 3=Partial (partially filled), 4=Fill (fully executed), 5=Reject (LP rejected), 6=Fail (technical failure), 7=Cancelled (cancelled before execution). Stored in Hedge.ExecutionLog. (Tier 1 - upstream wiki, etoro.Dictionary.HedgeOrderState)';
 ALTER TABLE main.general.bronze_etoro_dictionary_hedgeorderstate ALTER COLUMN Name COMMENT 'Human-readable label for the order state. Displayed in hedge monitoring dashboards and execution log reports. (Tier 1 - upstream wiki, etoro.Dictionary.HedgeOrderState)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

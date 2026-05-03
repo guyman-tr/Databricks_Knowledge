@@ -38,4 +38,7 @@ ALTER TABLE main.general.bronze_etoro_history_vwithdrawtofundingaction ALTER COL
 ALTER TABLE main.general.bronze_etoro_history_vwithdrawtofundingaction ALTER COLUMN Remark COMMENT 'Human-readable note (e.g., "Payout processed by provider"). (Tier 1 - upstream wiki, etoro.History.vWithdrawToFundingAction)';
 ALTER TABLE main.general.bronze_etoro_history_vwithdrawtofundingaction ALTER COLUMN BW2F_ID COMMENT 'FK to Billing.WithdrawToFunding.ID - the payment order being tracked. (Tier 1 - upstream wiki, etoro.History.vWithdrawToFundingAction)';
 ALTER TABLE main.general.bronze_etoro_history_vwithdrawtofundingaction ALTER COLUMN MatchStatusID COMMENT 'Reconciliation match state. 0=unmatched. (Tier 1 - upstream wiki, etoro.History.vWithdrawToFundingAction)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

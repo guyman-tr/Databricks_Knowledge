@@ -28,4 +28,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_currencybalancestatuses SET 
 -- Column Comments
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_currencybalancestatuses ALTER COLUMN Id COMMENT 'Lookup identifier. Primary key. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.CurrencyBalanceStatuses)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_currencybalancestatuses ALTER COLUMN Name COMMENT 'Human-readable name for this value. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.CurrencyBalanceStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

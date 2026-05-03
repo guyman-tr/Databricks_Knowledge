@@ -122,7 +122,33 @@ def parse_statements(content: str) -> list[str]:
 
 def statement_target(stmt: str) -> str | None:
     m = ALTER_TABLE_RE.match(stmt)
-    return m.group(1).strip() if m else None
+    if not m:
+        return None
+    # Normalize backticks: index rows store unquoted (e.g. `main.emoney.bronze-foo-1`)
+    # while the alter file may have quoted segments (e.g. `main.emoney.\`bronze-foo-1\``).
+    # Strip backticks for comparison.
+    return m.group(1).strip().replace("`", "")
+
+
+SAFE_IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
+def quote_target_for_sql(target: str) -> str:
+    """Wrap unsafe segments of a dotted UC target in backticks for SQL execution.
+
+    Index rows are stored unquoted (e.g. ``main.emoney.bronze_x-509416``) for
+    readability, but Databricks SQL needs hyphens, leading digits, and other
+    non-ANSI tokens quoted. This produces ``main.emoney.\u0060bronze_x-509416\u0060``.
+    """
+    out_parts: list[str] = []
+    for p in target.split("."):
+        if p.startswith("`") and p.endswith("`"):
+            out_parts.append(p)
+        elif SAFE_IDENT.match(p):
+            out_parts.append(p)
+        else:
+            out_parts.append(f"`{p}`")
+    return ".".join(out_parts)
 
 
 # ---- Index update ----------------------------------------------------------
@@ -254,7 +280,7 @@ def main() -> int:
             continue
 
         try:
-            cur.execute(f"DESCRIBE TABLE {row.uc_target}")
+            cur.execute(f"DESCRIBE TABLE {quote_target_for_sql(row.uc_target)}")
             cur.fetchall()
         except Exception as exc:
             results.append((row, False, f"DESCRIBE: {sanitize_one_line(str(exc), 300)}", 0, 0))

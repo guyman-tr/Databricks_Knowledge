@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_usabroker_history_userprogramenrolment ALTER COL
 ALTER TABLE main.general.bronze_usabroker_history_userprogramenrolment ALTER COLUMN UserProgramID COMMENT 'The program this enrollment decision applies to at the time this version was active. 0=None, 1=FPSL, 2=CryptoStaking, 3=EthStaking, 4=ProxyVotingManualPositions, 5=ProxyVotingCopiedPositions. See User Program. (Tier 1 - upstream wiki, USABroker.History.UserProgramEnrolment)';
 ALTER TABLE main.general.bronze_usabroker_history_userprogramenrolment ALTER COLUMN BeginTime COMMENT 'When this enrollment version became active (was originally written to Apex.UserProgramEnrolment). Part of the temporal period. (Tier 1 - upstream wiki, USABroker.History.UserProgramEnrolment)';
 ALTER TABLE main.general.bronze_usabroker_history_userprogramenrolment ALTER COLUMN EndTime COMMENT 'When this enrollment version was superseded by a newer decision. The update timestamp. Part of the temporal period. Clustered index key (EndTime, BeginTime). (Tier 1 - upstream wiki, USABroker.History.UserProgramEnrolment)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

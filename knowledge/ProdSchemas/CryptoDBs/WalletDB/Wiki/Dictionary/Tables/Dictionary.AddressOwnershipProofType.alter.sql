@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_dictionary_addressownershipprooftype SET 
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_addressownershipprooftype ALTER COLUMN Id COMMENT 'Unique identifier for the proof type. Values: 1=Declaration, 2=Signature. Referenced by address verification records to indicate which proof method was used. (Tier 1 - upstream wiki, WalletDB.Dictionary.AddressOwnershipProofType)';
 ALTER TABLE main.bi_db.bronze_walletdb_dictionary_addressownershipprooftype ALTER COLUMN Name COMMENT 'Human-readable label for the proof type. Used in UI displays and compliance audit reports. (Tier 1 - upstream wiki, WalletDB.Dictionary.AddressOwnershipProofType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

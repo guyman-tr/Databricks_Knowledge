@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_platform SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_platform ALTER COLUMN Id COMMENT 'Platform identifier: 0=Undefined, 1=Web, 2=IOS, 3=Android. Referenced by session tracking, trade records, and analytics tables. (Tier 1 - upstream wiki, etoro.Dictionary.Platform)';
 ALTER TABLE main.general.bronze_etoro_dictionary_platform ALTER COLUMN Platform COMMENT 'Platform name: "Undefined", "Web", "IOS", "Android". Used in reporting dashboards and API responses. (Tier 1 - upstream wiki, etoro.Dictionary.Platform)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

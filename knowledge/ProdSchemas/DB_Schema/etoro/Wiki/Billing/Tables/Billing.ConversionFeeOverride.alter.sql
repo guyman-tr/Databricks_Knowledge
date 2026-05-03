@@ -36,4 +36,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_conversionfeeoverride ALTER COLUMN
 ALTER TABLE main.billing.bronze_etoro_billing_conversionfeeoverride ALTER COLUMN DepositFeePercentage COMMENT 'Percentage-based deposit conversion fee rate (e.g., 0.75 = 0.75%). Used for newer payment methods (eToroMoney=0.75% globally, Trustly). NULL for flat-fee methods (CreditCard, WireTransfer, GCCInstantBankTransfer). Added in PAYIL-8694 (Aug 2024) to support percentage-based fee model. (Tier 1 - upstream wiki, etoro.Billing.ConversionFeeOverride)';
 ALTER TABLE main.billing.bronze_etoro_billing_conversionfeeoverride ALTER COLUMN CashoutFeePercentage COMMENT 'Percentage-based cashout conversion fee rate. Mirrors DepositFeePercentage for withdrawal direction. Same values as DepositFeePercentage for symmetric pricing; NULL for flat-fee payment methods. (Tier 1 - upstream wiki, etoro.Billing.ConversionFeeOverride)';
 ALTER TABLE main.billing.bronze_etoro_billing_conversionfeeoverride ALTER COLUMN ConversionFeeID COMMENT 'Auto-incrementing surrogate identity column. NOT declared as PRIMARY KEY in DDL - uniqueness is enforced via IX_Conv_1 unique index on (PlayerLevelID, FundingTypeID, CurrencyID, CountryID). Used as a stable row reference. (Tier 1 - upstream wiki, etoro.Billing.ConversionFeeOverride)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

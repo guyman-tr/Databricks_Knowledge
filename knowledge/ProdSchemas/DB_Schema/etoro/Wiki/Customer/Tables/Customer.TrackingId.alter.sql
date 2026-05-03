@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_etoro_customer_trackingid ALTER COLUMN GCID COMM
 ALTER TABLE main.general.bronze_etoro_customer_trackingid ALTER COLUMN TrackingID COMMENT 'Type of tracking identifier. Implicit FK to Dictionary.Tracking. Values: 1=AppsFlyerDeviceID, 2=UserUniqueIdentifierCookie, 3=FirebaseAppInstanceId. Part of composite PK and the secondary NC index. (Tier 1 - upstream wiki, etoro.Customer.TrackingId)';
 ALTER TABLE main.general.bronze_etoro_customer_trackingid ALTER COLUMN TrackingValue COMMENT 'The actual identifier value from the external platform. For TrackingID=1: the AppsFlyer device ID string. For TrackingID=2: the browser cookie unique ID. For TrackingID=3: the Firebase app instance ID. Included in the NC index (Idx_Customer_TrackingId_TrackingID_CID) for covering-index lookups by tracking type. (Tier 1 - upstream wiki, etoro.Customer.TrackingId)';
 ALTER TABLE main.general.bronze_etoro_customer_trackingid ALTER COLUMN Occurred COMMENT 'UTC timestamp when this tracking identifier was recorded. Defaults to getutcdate() at INSERT. (Tier 1 - upstream wiki, etoro.Customer.TrackingId)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -38,4 +38,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_fiattransactions ALTER COLU
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_fiattransactions ALTER COLUMN RateTimestamp COMMENT 'UTC timestamp when the exchange rate was locked for this transaction. May precede the Occurred timestamp if rate was locked before the fiat credit was recorded. (Tier 1 - upstream wiki, WalletConversionDB.C2F.FiatTransactions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_fiattransactions ALTER COLUMN Occurred COMMENT 'UTC timestamp when the fiat transaction was recorded. (Tier 1 - upstream wiki, WalletConversionDB.C2F.FiatTransactions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_fiattransactions ALTER COLUMN ConversionFeeAmount COMMENT 'Actual fee amount deducted from the conversion. Derived from Conversions.ConversionFeePercentage. NULL for zero-fee conversions. (Tier 1 - upstream wiki, WalletConversionDB.C2F.FiatTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

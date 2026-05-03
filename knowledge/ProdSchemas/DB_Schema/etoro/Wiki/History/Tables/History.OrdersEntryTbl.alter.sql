@@ -45,4 +45,7 @@ ALTER TABLE main.general.bronze_etoro_history_ordersentrytbl ALTER COLUMN Amount
 ALTER TABLE main.general.bronze_etoro_history_ordersentrytbl ALTER COLUMN OrderTypeID COMMENT 'Type of the entry order. DEFAULT=13 (used for all 3,762 rows). OrderTypeID=13 represents the copy-trading "open-open" entry order type. (Tier 1 - upstream wiki, etoro.History.OrdersEntryTbl)';
 ALTER TABLE main.general.bronze_etoro_history_ordersentrytbl ALTER COLUMN OpenOpenOperationTypeID COMMENT 'Type of the open-open operation that created this entry. All current rows have OpenOpenOperationTypeID=1. Classifies the trigger for the copy position opening. (Tier 1 - upstream wiki, etoro.History.OrdersEntryTbl)';
 ALTER TABLE main.general.bronze_etoro_history_ordersentrytbl ALTER COLUMN IsDiscounted COMMENT 'Whether a discounted spread was applied. false=no discount for all observed rows. Added in FB 53719 (Free Stocks). (Tier 1 - upstream wiki, etoro.History.OrdersEntryTbl)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

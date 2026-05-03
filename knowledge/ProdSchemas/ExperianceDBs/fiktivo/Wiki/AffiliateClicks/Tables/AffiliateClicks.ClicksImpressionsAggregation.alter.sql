@@ -35,4 +35,7 @@ ALTER TABLE main.general.bronze_fiktivo_affiliateclicks_clicksimpressionsaggrega
 ALTER TABLE main.general.bronze_fiktivo_affiliateclicks_clicksimpressionsaggregation ALTER COLUMN ClicksCount COMMENT 'Total number of clicks on the affiliate tracking link for this aggregation key on this date. A click represents a user actively following the tracking link. Per Confluence: counted by the aff-clicksimp service. (Tier 1 - upstream wiki, fiktivo.AffiliateClicks.ClicksImpressionsAggregation)';
 ALTER TABLE main.general.bronze_fiktivo_affiliateclicks_clicksimpressionsaggregation ALTER COLUMN ImpressionsCount COMMENT 'Total number of impressions (views) of the affiliate banner/link for this aggregation key on this date. An impression represents the ad being displayed, whether or not the user clicked. Per Confluence: counted by the aff-clicksimp service. (Tier 1 - upstream wiki, fiktivo.AffiliateClicks.ClicksImpressionsAggregation)';
 ALTER TABLE main.general.bronze_fiktivo_affiliateclicks_clicksimpressionsaggregation ALTER COLUMN AdditionalData COMMENT 'Additional tracking metadata associated with the click/impression event. Free-text field for extensible tracking parameters. Part of the deduplication key. Added in PART-3693 (Nov 2024). Default is empty string. (Tier 1 - upstream wiki, fiktivo.AffiliateClicks.ClicksImpressionsAggregation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

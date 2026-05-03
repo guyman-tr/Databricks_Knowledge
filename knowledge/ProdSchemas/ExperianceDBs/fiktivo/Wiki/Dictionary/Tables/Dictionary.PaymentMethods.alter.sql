@@ -53,4 +53,7 @@ ALTER TABLE bi_db.bronze_fiktivo_fiktivo_dictionary.paymentmethods SET TAGS (
 -- Column Comments
 ALTER TABLE bi_db.bronze_fiktivo_fiktivo_dictionary.paymentmethods ALTER COLUMN PaymentMethodID COMMENT 'Primary key (IDENTITY) identifying the payment method. Values: 1=None, 2=PayPal, 3=Wire Transfer, 4=eToro Trading Account, 5=Neteller, 6=Skrill, 7=Webmoney, 8=Credit Card, 9=China Union Pay. See Payment Methods for full definitions. IDENTITY column - NOT FOR REPLICATION. (Tier 1 - upstream wiki, fiktivo.Dictionary.PaymentMethods)';
 ALTER TABLE bi_db.bronze_fiktivo_fiktivo_dictionary.paymentmethods ALTER COLUMN Name COMMENT 'Human-readable label for the payment method. Used in admin UIs, payment processing screens, and affiliate self-service portals. (Tier 1 - upstream wiki, fiktivo.Dictionary.PaymentMethods)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

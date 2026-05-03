@@ -7,11 +7,11 @@
 -- =============================================================================
 
 -- ---- UC Target: main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626 (business_group=emoney) ----
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626 SET TBLPROPERTIES (
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626` SET TBLPROPERTIES (
     'comment' = 'Grandchild table storing individual bank account details from Tribe card snapshot files. References CardsSnapshots_BankAccounts collection. Source: FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626 on the FiatDwhDB production database, ingested via the Generic Pipeline (Append strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.CardsSnapshots_BankAccount-341626.md).'
 );
 
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626 SET TAGS (
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626` SET TAGS (
     'layer' = 'bronze',
     'source_system' = 'SQL Server',
     'source_database' = 'FiatDwhDB',
@@ -26,7 +26,10 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626
 );
 
 -- Column Comments
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626 ALTER COLUMN @Id COMMENT 'Record identifier. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626 ALTER COLUMN @CardsSnapshots_BankAccounts@Id-83854 COMMENT 'FK to collection parent. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626 ALTER COLUMN Created COMMENT 'Source timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626)';
-
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626` ALTER COLUMN `@Id` COMMENT 'Record identifier. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626` ALTER COLUMN `@CardsSnapshots_BankAccounts@Id-83854` COMMENT 'FK to collection parent. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626` ALTER COLUMN Created COMMENT 'Source timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.CardsSnapshots_BankAccount-341626)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:09:36 UTC
+-- Bronze deploy: FiatDwhDB batch 2
+-- ====================

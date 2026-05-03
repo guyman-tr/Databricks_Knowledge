@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_fiatcardinstances ALTER COLUMN Corre
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_fiatcardinstances ALTER COLUMN Name COMMENT 'Cardholder name printed on the card. Masked for PII protection. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCardInstances)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_fiatcardinstances ALTER COLUMN CardExpirationDate COMMENT 'Expiration date of this card instance. NULL for instances where expiration is not yet set. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCardInstances)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_fiatcardinstances ALTER COLUMN CardInstanceGuid COMMENT 'External-facing GUID for this card instance. Used in API interactions. Nullable for legacy instances created before this field was added. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCardInstances)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

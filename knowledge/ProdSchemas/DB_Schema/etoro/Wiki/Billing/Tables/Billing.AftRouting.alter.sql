@@ -36,4 +36,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_aftrouting ALTER COLUMN ValidFrom 
 ALTER TABLE main.billing.bronze_etoro_billing_aftrouting ALTER COLUMN ValidTo COMMENT 'Timestamp when this routing rule was superseded. Auto-managed by SQL Server temporal system. Active rows: 9999-12-31 (open-ended). On UPDATE/DELETE, SQL Server sets this to the change timestamp and moves the row to History.BillingAftRouting. Read-only. (Tier 1 - upstream wiki, etoro.Billing.AftRouting)';
 ALTER TABLE main.billing.bronze_etoro_billing_aftrouting ALTER COLUMN IsWhitelistedProvider COMMENT 'Whether this depot is explicitly preferred (forced) for this routing combination: true=whitelisted/forced, NULL=standard eligible. Only 3 rows have true - used for priority routing overrides. No false values currently exist. (Tier 1 - upstream wiki, etoro.Billing.AftRouting)';
 ALTER TABLE main.billing.bronze_etoro_billing_aftrouting ALTER COLUMN IsBlacklistedProvider COMMENT 'Whether this depot is explicitly excluded from this routing combination despite being listed: false=explicitly excluded, NULL=standard eligible. Only 2 rows have false - used for suppression overrides. No true values currently exist (bit semantics: true would mean "is blacklisted"). (Tier 1 - upstream wiki, etoro.Billing.AftRouting)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

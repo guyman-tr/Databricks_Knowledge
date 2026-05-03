@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_walletprovider SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_walletprovider ALTER COLUMN Id COMMENT 'Unique identifier. Values: 1=Bitgo, 2=CUG, 3=None. FK target for WalletPool, BlockchainCryptoProviders, TransactionsSyncRuns, WebhookTransactions, and 40+ SPs. The most referenced column in WalletDB after RequestStatuses.Id. (Tier 1 - upstream wiki, WalletDB.Dictionary.WalletProvider)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_walletprovider ALTER COLUMN Name COMMENT 'Provider name. Used throughout the application for routing blockchain operations to the correct custody infrastructure. (Tier 1 - upstream wiki, WalletDB.Dictionary.WalletProvider)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

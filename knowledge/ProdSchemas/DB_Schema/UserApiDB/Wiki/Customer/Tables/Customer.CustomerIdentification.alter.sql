@@ -34,4 +34,7 @@ ALTER TABLE main.compliance.bronze_userapidb_customer_customeridentification ALT
 ALTER TABLE main.compliance.bronze_userapidb_customer_customeridentification ALTER COLUMN TanganyStatusID COMMENT 'FK to Dictionary.TanganyStatus. Wallet lifecycle state: 1=Pending, 2=Internal, 3=Customer, 4=Inactive, 5=MicaCustomer, 6=ConsentCustomer. See Tangany Status. (Tier 1 - upstream wiki, UserApiDB.Customer.CustomerIdentification)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_customeridentification ALTER COLUMN DltID COMMENT 'DLT (Distributed Ledger Technology) identifier for blockchain operations. NULL if user has no DLT setup. (Tier 1 - upstream wiki, UserApiDB.Customer.CustomerIdentification)';
 ALTER TABLE main.compliance.bronze_userapidb_customer_customeridentification ALTER COLUMN DltStatusID COMMENT 'FK to Dictionary.DltStatus. DLT verification state: 1=Pending, 2=Ongoing, 3=Failed, 4=Passed, 5=Inactive. See DLT Status. (Tier 1 - upstream wiki, UserApiDB.Customer.CustomerIdentification)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_etoro_history_bslpositionsinfo ALTER COLUMN Exec
 ALTER TABLE main.general.bronze_etoro_history_bslpositionsinfo ALTER COLUMN PositionID COMMENT 'The specific open position included in the equity calculation. bigint to match trade position table key type. Implicit FK to Trade.PositionTbl/History.Position_Active. (Tier 1 - upstream wiki, etoro.History.BSLPositionsInfo)';
 ALTER TABLE main.general.bronze_etoro_history_bslpositionsinfo ALTER COLUMN PriceRateID COMMENT 'The price rate used for this position''s equity calculation. Resolves to a row in History.BSLCurrencyPriceSnapShots (same ExecutionID). Enables per-position equity reconstruction by joining with the price snapshot. (Tier 1 - upstream wiki, etoro.History.BSLPositionsInfo)';
 ALTER TABLE main.general.bronze_etoro_history_bslpositionsinfo ALTER COLUMN Occurred COMMENT 'Server timestamp when this BSL position record was created. Default = getdate() (local server time). PK component and EndMonth partition key. (Tier 1 - upstream wiki, etoro.History.BSLPositionsInfo)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

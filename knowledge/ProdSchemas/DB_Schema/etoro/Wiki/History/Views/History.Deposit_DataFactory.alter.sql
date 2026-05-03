@@ -69,4 +69,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_deposit_datafactory ALTER COLUMN Pro
 ALTER TABLE main.bi_db.bronze_etoro_history_deposit_datafactory ALTER COLUMN IsSetBalanceCompleted COMMENT 'Whether the Customer.SetBalance call that accompanies deposit approval completed successfully. 1=balance updated; NULL/0=pending or failed. (Tier 1 - upstream wiki, etoro.History.Deposit_DataFactory)';
 ALTER TABLE main.bi_db.bronze_etoro_history_deposit_datafactory ALTER COLUMN RoutingReasonID COMMENT 'Reason the deposit was routed to a specific payment processor. Used in multi-processor setups. (Tier 1 - upstream wiki, etoro.History.Deposit_DataFactory)';
 ALTER TABLE main.bi_db.bronze_etoro_history_deposit_datafactory ALTER COLUMN MerchantAccountID COMMENT 'Specific merchant account within a payment provider that processed this deposit. More granular than ProtocolMIDSettingsID. (Tier 1 - upstream wiki, etoro.History.Deposit_DataFactory)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

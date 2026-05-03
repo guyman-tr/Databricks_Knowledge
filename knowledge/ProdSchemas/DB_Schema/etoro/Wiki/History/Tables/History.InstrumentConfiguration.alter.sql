@@ -35,4 +35,7 @@ ALTER TABLE main.general.bronze_etoro_history_instrumentconfiguration ALTER COLU
 ALTER TABLE main.general.bronze_etoro_history_instrumentconfiguration ALTER COLUMN AppLoginName COMMENT 'Materialized snapshot of context_info() at version close time. Typically NULL - configuration changes are typically made via direct SQL or an admin tool that does not set context_info. (Tier 1 - upstream wiki, etoro.History.InstrumentConfiguration)';
 ALTER TABLE main.general.bronze_etoro_history_instrumentconfiguration ALTER COLUMN SysStartTime COMMENT 'Start of validity for this configuration version. Set by SQL Server temporal engine. Rows where SysStartTime = SysEndTime are insert artifacts from TRG_T_InstrumentConfiguration (see Section 2.1). (Tier 1 - upstream wiki, etoro.History.InstrumentConfiguration)';
 ALTER TABLE main.general.bronze_etoro_history_instrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'End of validity for this configuration version. Set by SQL Server temporal engine to the timestamp when the live configuration row was updated or deleted. CLUSTERED INDEX ordered (SysEndTime, SysStartTime) for temporal scan performance. (Tier 1 - upstream wiki, etoro.History.InstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

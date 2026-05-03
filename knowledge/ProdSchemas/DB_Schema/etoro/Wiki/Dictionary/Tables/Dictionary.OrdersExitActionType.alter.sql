@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_ordersexitactiontype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_ordersexitactiontype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining exit order action types — currently empty in production, reserved for future classification of exit order resolution outcomes. Source: etoro.Dictionary.OrdersExitActionType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.OrdersExitActionType.md).'
+    'comment' = 'Lookup table defining exit order action types - currently empty in production, reserved for future classification of exit order resolution outcomes. Source: etoro.Dictionary.OrdersExitActionType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.OrdersExitActionType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_ordersexitactiontype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_ordersexitactiontype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_ordersexitactiontype ALTER COLUMN ActionTypeID COMMENT 'Primary key identifying the exit order action type. Currently no values populated. When used, would classify exit order outcomes (execution, failure, cancellation). (Tier 1 - upstream wiki, etoro.Dictionary.OrdersExitActionType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_ordersexitactiontype ALTER COLUMN ActionName COMMENT 'Human-readable label for the exit order action type. NOT NULL constraint ensures all action types have a descriptive name. (Tier 1 - upstream wiki, etoro.Dictionary.OrdersExitActionType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

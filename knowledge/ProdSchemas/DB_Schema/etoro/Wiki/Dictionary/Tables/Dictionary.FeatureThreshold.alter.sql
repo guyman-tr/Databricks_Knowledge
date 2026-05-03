@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_featurethreshold SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_featurethreshold ALTER COLUMN ThresholdID COMMENT 'Primary key identifying the threshold severity tier. Values are spaced at intervals of 5 (0=Minimum, 5=Low, 10=Medium, 15=High, 20=Maximum) to allow future intermediate tiers. Referenced by Trade.FeatureThresholdValues and Trade.ActiveFeatureThreshold to classify execution feature sensitivity levels per instrument. (Tier 1 - upstream wiki, etoro.Dictionary.FeatureThreshold)';
 ALTER TABLE main.general.bronze_etoro_dictionary_featurethreshold ALTER COLUMN Name COMMENT 'Human-readable label for the threshold tier (Minimum/Low/Medium/High/Maximum). Used in the Configuration Manager UI for display and in audit logs when threshold levels are changed by the dealing team. (Tier 1 - upstream wiki, etoro.Dictionary.FeatureThreshold)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

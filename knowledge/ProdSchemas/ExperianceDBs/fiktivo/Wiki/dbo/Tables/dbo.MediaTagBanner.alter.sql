@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatagbanner ALTER COLUMN TagID COMM
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatagbanner ALTER COLUMN Trace COMMENT 'Computed column (not persisted). Captures database session context as JSON: HostName, AppName, SUserName, SPID, DBName, ObjectName. Provides audit attribution for who created or modified each tag assignment. Formula: concat(...) building a JSON string from system functions. (Tier 1 - upstream wiki, fiktivo.dbo.MediaTagBanner)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatagbanner ALTER COLUMN ValidFrom COMMENT 'System-versioned temporal column. Timestamp when this tag assignment became effective. Automatically set by SQL Server on INSERT/UPDATE. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, fiktivo.dbo.MediaTagBanner)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_mediatagbanner ALTER COLUMN ValidTo COMMENT 'System-versioned temporal column. Timestamp when this tag assignment was superseded or removed. ''9999-12-31'' for current assignments. GENERATED ALWAYS AS ROW END. (Tier 1 - upstream wiki, fiktivo.dbo.MediaTagBanner)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

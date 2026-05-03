@@ -48,4 +48,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_transactionsview ALTER COLUMN Tra
 ALTER TABLE main.wallet.bronze_walletdb_wallet_transactionsview ALTER COLUMN TransactionType COMMENT 'Human-readable type name from Dictionary.TransactionTypes. NULL for received transactions. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionsView)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_transactionsview ALTER COLUMN Occurred COMMENT 'When the transaction record was created in the database. From SentTransactions.Occurred or ReceivedTransactions.Occurred. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionsView)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_transactionsview ALTER COLUMN LastStatusUpdateOccurred COMMENT 'Timestamp of the most recent status change. Resolved via correlated subquery like TransStatusId. Enables "time since last update" monitoring and SLA tracking. New in this version (not in TransactionViewOld). (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionsView)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

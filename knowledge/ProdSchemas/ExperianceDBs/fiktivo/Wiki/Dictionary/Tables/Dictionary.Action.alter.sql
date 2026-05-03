@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_fiktivo_dictionary_action SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_fiktivo_dictionary_action ALTER COLUMN ActionID COMMENT 'Primary key identifying the audit action type. Values: 1=Insert, 2=Update, 3=Delete. See Action for full business definitions. Referenced by dbo.AuditLog.ActionID. (Tier 1 - upstream wiki, fiktivo.Dictionary.Action)';
 ALTER TABLE main.general.bronze_fiktivo_dictionary_action ALTER COLUMN Name COMMENT 'Human-readable label for the action type. Used in audit log displays and admin reports. Standard DML operation names: "Insert", "Update", "Delete". (Tier 1 - upstream wiki, fiktivo.Dictionary.Action)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

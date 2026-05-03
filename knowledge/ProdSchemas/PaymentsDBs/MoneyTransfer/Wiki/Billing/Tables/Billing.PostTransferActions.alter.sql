@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_moneytransfer_billing_posttransferactions ALTER CO
 ALTER TABLE main.bi_db.bronze_moneytransfer_billing_posttransferactions ALTER COLUMN PostTransferStatusID COMMENT 'Lifecycle status of this post-transfer action. Implicit reference to Dictionary.PostTransferStatus (currently empty). Observed values: 1 (initial/in-progress), 2 (completed). Set by CreatePostTransfer, updated by UpdatePostTransferStatus. See Post Transfer Status. (Tier 1 - upstream wiki, MoneyTransfer.Billing.PostTransferActions)';
 ALTER TABLE main.bi_db.bronze_moneytransfer_billing_posttransferactions ALTER COLUMN CreateDate COMMENT 'UTC timestamp of action creation. Set automatically via DEFAULT constraint. No modification timestamp exists - status changes are tracked only by value, not by when they occurred. (Tier 1 - upstream wiki, MoneyTransfer.Billing.PostTransferActions)';
 ALTER TABLE main.bi_db.bronze_moneytransfer_billing_posttransferactions ALTER COLUMN PostTransferActionTypeID COMMENT 'Type classification for the post-transfer action. Defaults to 1 via constraint DF_PostTransferActions_PostTransferActionTypeID. All observed data shows value 1, suggesting only one action type is currently in use. No lookup table exists in this database. Set by CreatePostTransfer. (Tier 1 - upstream wiki, MoneyTransfer.Billing.PostTransferActions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:38:27 UTC
+-- Bronze deploy: MoneyTransfer batch 1
+-- ====================

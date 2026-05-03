@@ -29,4 +29,7 @@ ALTER TABLE main.dealing.bronze_etoro_price_getaccountratesourcemapping SET TAGS
 ALTER TABLE main.dealing.bronze_etoro_price_getaccountratesourcemapping ALTER COLUMN AccountRateSourceID COMMENT 'Rate source identifier assigned to this liquidity account. Sourced from Trade.GetLiquidityAccounts.AccountRateSourceID (which reads Trade.LiquidityAccounts.AccountRateSourceID). FK to Price.AccountRateSource. Values: -1=US special, 0=Do not use!, 1-6=Simulation feeds, 9001-9006=FIX protocol, 20-24=broker feeds (Goldman, ZBFX...), 196-197=Bloomberg. See Price.AccountRateSource for full registry. (Tier 1 - upstream wiki, etoro.Price.GetAccountRateSourceMapping)';
 ALTER TABLE main.dealing.bronze_etoro_price_getaccountratesourcemapping ALTER COLUMN InstrumentID COMMENT 'eToro instrument identifier from Price.LiquidityAccountToInstrument. Identifies the tradeable instrument (forex pair, stock, crypto, etc.) this account-source pair can price. FK to Trade.Instrument. (Tier 1 - upstream wiki, etoro.Price.GetAccountRateSourceMapping)';
 ALTER TABLE main.dealing.bronze_etoro_price_getaccountratesourcemapping ALTER COLUMN LiquidityAccountID COMMENT 'Active liquidity account identifier from Price.LiquidityAccountToInstrument (aliased as LATI). Must exist in Trade.GetLiquidityAccounts (IsActive=1). Links AccountRateSourceID to InstrumentID. FK to Trade.LiquidityAccounts. (Tier 1 - upstream wiki, etoro.Price.GetAccountRateSourceMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

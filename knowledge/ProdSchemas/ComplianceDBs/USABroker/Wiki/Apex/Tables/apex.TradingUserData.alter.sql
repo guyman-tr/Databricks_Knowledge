@@ -41,4 +41,7 @@ ALTER TABLE main.finance.bronze_usabroker_apex_tradinguserdata ALTER COLUMN Stre
 ALTER TABLE main.finance.bronze_usabroker_apex_tradinguserdata ALTER COLUMN ApexID COMMENT 'Apex Clearing account identifier. Same value as in ApexData and TradingApexData. (Tier 1 - upstream wiki, USABroker.apex.TradingUserData)';
 ALTER TABLE main.finance.bronze_usabroker_apex_tradinguserdata ALTER COLUMN FDID COMMENT 'Financial Data Identifier - the unique customer identifier used for CAT (Consolidated Audit Trail) and OATS regulatory trade reporting. Base32-encoded format. Required by FINRA for trade surveillance. (Tier 1 - upstream wiki, USABroker.apex.TradingUserData)';
 ALTER TABLE main.finance.bronze_usabroker_apex_tradinguserdata ALTER COLUMN InsertDate COMMENT 'Timestamp when this record was created. Default is current UTC time. Indexed for chronological queries. (Tier 1 - upstream wiki, USABroker.apex.TradingUserData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

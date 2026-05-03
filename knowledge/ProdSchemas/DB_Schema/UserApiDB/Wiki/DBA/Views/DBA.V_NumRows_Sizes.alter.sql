@@ -33,4 +33,7 @@ ALTER TABLE main.config.bronze_userapidb_dba_v_numrows_sizes ALTER COLUMN Schema
 ALTER TABLE main.config.bronze_userapidb_dba_v_numrows_sizes ALTER COLUMN TableName COMMENT 'Table name from sys.tables.name. (Tier 1 - upstream wiki, UserApiDB.DBA.V_NumRows_Sizes)';
 ALTER TABLE main.config.bronze_userapidb_dba_v_numrows_sizes ALTER COLUMN NumRecords COMMENT 'Approximate row count from sys.partitions. Reflects the last statistics update; may be slightly stale. (Tier 1 - upstream wiki, UserApiDB.DBA.V_NumRows_Sizes)';
 ALTER TABLE main.config.bronze_userapidb_dba_v_numrows_sizes ALTER COLUMN SizeMB COMMENT 'Allocated storage in megabytes. Calculated as used pages × 8KB / 1024. Includes data and LOB pages. (Tier 1 - upstream wiki, UserApiDB.DBA.V_NumRows_Sizes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

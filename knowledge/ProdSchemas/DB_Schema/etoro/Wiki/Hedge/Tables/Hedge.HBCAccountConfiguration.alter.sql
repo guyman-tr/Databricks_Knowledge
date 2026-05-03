@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_hbcaccountconfiguration ALTER COLUMN M
 ALTER TABLE main.bi_db.bronze_etoro_hedge_hbcaccountconfiguration ALTER COLUMN MaxOrderSizeInEToroUnits COMMENT 'Maximum single-order execution size in eToro units. Orders exceeding this must be split. Controls individual order impact on the market. (Tier 1 - upstream wiki, etoro.Hedge.HBCAccountConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_hbcaccountconfiguration ALTER COLUMN UseExecutionRateWithSpread COMMENT 'Whether the execution rate calculation includes the bid-ask spread. 1=include spread (12,723 rows), 0=exclude spread (20,982 rows). Affects pricing calculation for execution rate benchmarking. (Tier 1 - upstream wiki, etoro.Hedge.HBCAccountConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_hbcaccountconfiguration ALTER COLUMN MinOrderSizeUSDForHBC COMMENT 'Minimum order size in USD for HBC routing. DEFAULT 0 = no USD minimum. Provides a USD-denominated floor in addition to the eToro units floor. (Tier 1 - upstream wiki, etoro.Hedge.HBCAccountConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

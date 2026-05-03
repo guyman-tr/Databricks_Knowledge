@@ -29,4 +29,7 @@ ALTER TABLE main.trading.bronze_etoro_history_positionsplit SET TAGS (
 ALTER TABLE main.trading.bronze_etoro_history_positionsplit ALTER COLUMN PositionID COMMENT 'ID of the closed trading position in History.Position that was adjusted. Part of the composite clustered PK (PositionID, SplitID). Also included in the SplitID-only NCI for SplitID-first lookups. (Tier 1 - upstream wiki, etoro.History.PositionSplit)';
 ALTER TABLE main.trading.bronze_etoro_history_positionsplit ALTER COLUMN SplitID COMMENT 'ID of the stock split event. References History.SplitRatio.ID (which contains the PriceRatio, AmountRatio, InstrumentID, and MinDate for the split). Together with PositionID forms the composite PK ensuring one adjustment per (position, split). Indexed independently (ix_HistoryPositionSplit on SplitID INCLUDE PositionID) for finding all positions in a split. (Tier 1 - upstream wiki, etoro.History.PositionSplit)';
 ALTER TABLE main.trading.bronze_etoro_history_positionsplit ALTER COLUMN SplitDate COMMENT 'UTC timestamp when the adjustment was applied to this position. Set via GETUTCDATE() in the OUTPUT clause of History.SplitClosePositions. Represents the actual processing time, not the corporate split announcement or effective date. (Tier 1 - upstream wiki, etoro.History.PositionSplit)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

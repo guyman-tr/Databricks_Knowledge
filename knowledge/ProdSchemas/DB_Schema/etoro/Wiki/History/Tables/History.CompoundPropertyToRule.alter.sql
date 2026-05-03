@@ -34,4 +34,7 @@ ALTER TABLE main.general.bronze_etoro_history_compoundpropertytorule ALTER COLUM
 ALTER TABLE main.general.bronze_etoro_history_compoundpropertytorule ALTER COLUMN AppLoginName COMMENT 'Application login from context_info() at change time. (Tier 1 - upstream wiki, etoro.History.CompoundPropertyToRule)';
 ALTER TABLE main.general.bronze_etoro_history_compoundpropertytorule ALTER COLUMN SysStartTime COMMENT 'Temporal row start: when this version became current. (Tier 1 - upstream wiki, etoro.History.CompoundPropertyToRule)';
 ALTER TABLE main.general.bronze_etoro_history_compoundpropertytorule ALTER COLUMN SysEndTime COMMENT 'Temporal row end: when this version was superseded. Clustered index lead column. (Tier 1 - upstream wiki, etoro.History.CompoundPropertyToRule)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

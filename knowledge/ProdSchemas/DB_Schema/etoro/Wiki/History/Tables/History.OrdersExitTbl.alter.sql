@@ -39,4 +39,7 @@ ALTER TABLE main.general.bronze_etoro_history_ordersexittbl ALTER COLUMN RedeemI
 ALTER TABLE main.general.bronze_etoro_history_ordersexittbl ALTER COLUMN RedeemReasonID COMMENT 'The reason for the redemption if RedeemID is set. NULL when RedeemID is NULL. (Tier 1 - upstream wiki, etoro.History.OrdersExitTbl)';
 ALTER TABLE main.general.bronze_etoro_history_ordersexittbl ALTER COLUMN UnitsToDeduct COMMENT 'For partial-close-by-units operations: the number of units being closed in this exit order. NULL = full position close. NULL for all current rows. (Tier 1 - upstream wiki, etoro.History.OrdersExitTbl)';
 ALTER TABLE main.general.bronze_etoro_history_ordersexittbl ALTER COLUMN CloseByUnitsID COMMENT 'The identifier of the close-by-units operation that initiated this partial close. NULL when UnitsToDeduct is NULL. (Tier 1 - upstream wiki, etoro.History.OrdersExitTbl)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

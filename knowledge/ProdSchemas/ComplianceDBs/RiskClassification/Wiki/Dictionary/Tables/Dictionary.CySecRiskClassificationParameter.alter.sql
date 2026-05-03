@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_riskclassification_dictionary_cysecriskclassificat
 ALTER TABLE main.bi_db.bronze_riskclassification_dictionary_cysecriskclassificationparameter ALTER COLUMN Name COMMENT 'Parameter name. Identical to Dictionary.RiskClassificationParameter.Name for the same ID. (Tier 1 - upstream wiki, RiskClassification.Dictionary.CySecRiskClassificationParameter)';
 ALTER TABLE main.bi_db.bronze_riskclassification_dictionary_cysecriskclassificationparameter ALTER COLUMN Description COMMENT 'Parameter description. Same content as the main dictionary. (Tier 1 - upstream wiki, RiskClassification.Dictionary.CySecRiskClassificationParameter)';
 ALTER TABLE main.bi_db.bronze_riskclassification_dictionary_cysecriskclassificationparameter ALTER COLUMN Source COMMENT 'External data source. Same as main dictionary. (Tier 1 - upstream wiki, RiskClassification.Dictionary.CySecRiskClassificationParameter)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:38:55 UTC
+-- Bronze deploy: RiskClassification batch 1
+-- ====================

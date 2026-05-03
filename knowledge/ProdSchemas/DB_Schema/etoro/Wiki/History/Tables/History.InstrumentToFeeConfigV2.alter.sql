@@ -41,4 +41,7 @@ ALTER TABLE main.trading.bronze_etoro_history_instrumenttofeeconfigv2 ALTER COLU
 ALTER TABLE main.trading.bronze_etoro_history_instrumenttofeeconfigv2 ALTER COLUMN UpdatedByUser COMMENT 'Username of operator who set this configuration. NULL for automated fee recalculation jobs; populated for manual updates via the EtoroOps interface. (Tier 1 - upstream wiki, etoro.History.InstrumentToFeeConfigV2)';
 ALTER TABLE main.trading.bronze_etoro_history_instrumenttofeeconfigv2 ALTER COLUMN BeginTime COMMENT 'UTC timestamp when this fee configuration row became active in Trade.InstrumentToFeeConfigV2 (non-standard name for SysStartTime). (Tier 1 - upstream wiki, etoro.History.InstrumentToFeeConfigV2)';
 ALTER TABLE main.trading.bronze_etoro_history_instrumenttofeeconfigv2 ALTER COLUMN EndTime COMMENT 'UTC timestamp when this fee configuration was superseded (non-standard name for SysEndTime). Rows with EndTime = ''9999-12-31'' are active in the live table. (Tier 1 - upstream wiki, etoro.History.InstrumentToFeeConfigV2)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

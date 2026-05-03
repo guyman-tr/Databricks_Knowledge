@@ -34,4 +34,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpoolstatuses ALTER COLUMN P
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpoolstatuses ALTER COLUMN CorrelationId COMMENT 'Links this status event to the parent request that triggered the transition. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPoolStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpoolstatuses ALTER COLUMN Processed COMMENT 'Whether downstream systems have consumed this status event: 0=pending processing, 1=processed. Used by the assignment system to find wallets ready for customer assignment. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPoolStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpoolstatuses ALTER COLUMN CryptoId COMMENT 'The cryptocurrency this pool wallet is for. FK to Wallet.CryptoTypes.CryptoID. Denormalized from WalletPool for efficient status-based filtering. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPoolStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

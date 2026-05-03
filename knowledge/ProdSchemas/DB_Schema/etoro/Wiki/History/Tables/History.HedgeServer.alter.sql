@@ -55,5 +55,8 @@ ALTER TABLE main.trading.bronze_etoro_history_hedgeserver ALTER COLUMN SystemNam
 ALTER TABLE main.trading.bronze_etoro_history_hedgeserver ALTER COLUMN RequestedAlertIntervalSeconds COMMENT 'Interval in seconds for requested alert notifications from this server. DEFAULT 180 (3 minutes). Configures how frequently the server should send status/health alerts to monitoring systems. (Tier 1 - upstream wiki, etoro.History.HedgeServer)';
 ALTER TABLE main.trading.bronze_etoro_history_hedgeserver ALTER COLUMN ManagedExposurePeriodSec COMMENT 'Duration in seconds for the managed exposure monitoring window. Defines how long a period of exposure is tracked before being evaluated or reset by the exposure management algorithm. NULL if not configured. (Tier 1 - upstream wiki, etoro.History.HedgeServer)';
 ALTER TABLE main.trading.bronze_etoro_history_hedgeserver ALTER COLUMN AllowOMSPricingPartialFill COMMENT 'Whether this server allows partial fills when using OMS (Order Management System) pricing. DEFAULT 0 (partial fills not allowed). When 1, the server accepts orders where only part of the requested quantity is filled. (Tier 1 - upstream wiki, etoro.History.HedgeServer)';
-ALTER TABLE main.trading.bronze_etoro_history_hedgeserver ALTER COLUMN HostName (duplicate) COMMENT 'Note: HostName appears once in position 18 above. The DDL lists 30 distinct columns with no duplicates. (Tier 1 - upstream wiki, etoro.History.HedgeServer)';
-
+ALTER TABLE main.trading.bronze_etoro_history_hedgeserver ALTER COLUMN `HostName (duplicate)` COMMENT 'Note: HostName appears once in position 18 above. The DDL lists 30 distinct columns with no duplicates. (Tier 1 - upstream wiki, etoro.History.HedgeServer)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

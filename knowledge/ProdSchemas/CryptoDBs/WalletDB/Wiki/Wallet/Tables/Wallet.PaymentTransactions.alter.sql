@@ -37,4 +37,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_paymenttransactions ALTER COLUMN 
 ALTER TABLE main.wallet.bronze_walletdb_wallet_paymenttransactions ALTER COLUMN ProviderFeeCalculated COMMENT 'Calculated provider fee in crypto units. (Tier 1 - upstream wiki, WalletDB.Wallet.PaymentTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_paymenttransactions ALTER COLUMN EstimatedBlockChainFee COMMENT 'Estimated blockchain network fee. (Tier 1 - upstream wiki, WalletDB.Wallet.PaymentTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_paymenttransactions ALTER COLUMN Occurred COMMENT 'Timestamp of record creation. (Tier 1 - upstream wiki, WalletDB.Wallet.PaymentTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

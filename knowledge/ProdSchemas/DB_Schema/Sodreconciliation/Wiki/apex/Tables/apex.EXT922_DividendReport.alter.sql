@@ -54,4 +54,7 @@ ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext922_dividendreport ALT
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext922_dividendreport ALTER COLUMN PositionQuantityLongOrShort COMMENT 'Indicates whether the position is long or short and its quantity. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT922_DividendReport)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext922_dividendreport ALTER COLUMN DividendInterest COMMENT 'Calculated dividend or interest amount for the account. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT922_DividendReport)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext922_dividendreport ALTER COLUMN WithHoldAmount COMMENT 'Tax withholding amount deducted from the dividend/interest. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT922_DividendReport)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

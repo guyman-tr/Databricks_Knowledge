@@ -44,4 +44,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactions ALTER COLUMN Payme
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactions ALTER COLUMN MoneyCorrelationId COMMENT 'Correlation ID linking this transaction to related operations in the Money Transfer system. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatTransactions)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactions ALTER COLUMN TransactionCountryIso COMMENT 'ISO country code where the transaction originated (for card transactions). (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatTransactions)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiattransactions ALTER COLUMN SourceCugTransactionId COMMENT 'Source CUG (operational system) transaction ID. Links DWH record back to the operational record for cross-referencing. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

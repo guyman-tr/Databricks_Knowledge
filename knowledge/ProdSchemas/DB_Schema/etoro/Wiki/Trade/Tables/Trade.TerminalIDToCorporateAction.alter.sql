@@ -29,4 +29,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_terminalidtocorporateaction SET TAGS
 ALTER TABLE main.trading.bronze_etoro_trade_terminalidtocorporateaction ALTER COLUMN TerminalID COMMENT 'The terminal/code from the external clearing or settlement system (Apex, DTC, etc.). Examples: "$+DIV" (dividend), "REREV" (reverse split), "STAKING" (crypto staking). Used as lookup key when processing incoming corporate action notifications. (Tier 1 - upstream wiki, etoro.Trade.TerminalIDToCorporateAction)';
 ALTER TABLE main.trading.bronze_etoro_trade_terminalidtocorporateaction ALTER COLUMN Description COMMENT 'Human-readable label for the terminal ID. Examples: "Dividend", "Reverse split", "Staking". Purely descriptive; not used for processing logic. (Tier 1 - upstream wiki, etoro.Trade.TerminalIDToCorporateAction)';
 ALTER TABLE main.trading.bronze_etoro_trade_terminalidtocorporateaction ALTER COLUMN CorporateActionTypeID COMMENT 'FK to Dictionary.CorporateAction or Trade.CorporateInstrumentActions. Internal corporate action type code. 1=Dividend/ADR, 2=Cash in Lieu, 4=Interest, 8=Merger, 10=Reverse split, 35=Staking, 36=Promotion, 42=Promo-Crypto. Routes incoming events to correct processing. (Tier 1 - upstream wiki, etoro.Trade.TerminalIDToCorporateAction)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

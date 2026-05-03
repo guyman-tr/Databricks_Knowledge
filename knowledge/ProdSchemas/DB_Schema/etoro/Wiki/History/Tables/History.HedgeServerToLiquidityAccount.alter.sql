@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_hedgeservertoliquidityaccount ALTER 
 ALTER TABLE main.bi_db.bronze_etoro_history_hedgeservertoliquidityaccount ALTER COLUMN AppLoginName COMMENT 'Application context from context_info() at time of change. Format: "username;ConfigurationManager\0\0..." with null-byte padding (context_info written as Unicode from a .NET application). The tool name after the semicolon is "ConfigurationManager". (Tier 1 - upstream wiki, etoro.History.HedgeServerToLiquidityAccount)';
 ALTER TABLE main.bi_db.bronze_etoro_history_hedgeservertoliquidityaccount ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this server-to-account mapping version became active. Source DEFAULT=getutcdate(). For INSERT-trigger-captured rows, equals SysEndTime. Earliest observed: 2021-09-13. (Tier 1 - upstream wiki, etoro.History.HedgeServerToLiquidityAccount)';
 ALTER TABLE main.bi_db.bronze_etoro_history_hedgeservertoliquidityaccount ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this mapping version was superseded. CLUSTERED index leading column. Source DEFAULT=''9999-12-31''. Latest observed: 2026-02-25. (Tier 1 - upstream wiki, etoro.History.HedgeServerToLiquidityAccount)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

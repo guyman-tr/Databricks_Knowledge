@@ -29,4 +29,7 @@ ALTER TABLE main.compliance.bronze_userapidb_dictionary_evprovider SET TAGS (
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_evprovider ALTER COLUMN EvProviderId COMMENT 'Primary key. Provider identifier (1-15). See EV Provider. (Tier 1 - upstream wiki, UserApiDB.Dictionary.EvProvider)';
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_evprovider ALTER COLUMN Name COMMENT 'Provider display name used in admin tools and verification logs. (Tier 1 - upstream wiki, UserApiDB.Dictionary.EvProvider)';
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_evprovider ALTER COLUMN ProviderTypeID COMMENT 'FK to Dictionary.ProviderType. Classification: 0=ElectronicVerification, 1=DocumentsVerification. See Provider Type. (Tier 1 - upstream wiki, UserApiDB.Dictionary.EvProvider)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

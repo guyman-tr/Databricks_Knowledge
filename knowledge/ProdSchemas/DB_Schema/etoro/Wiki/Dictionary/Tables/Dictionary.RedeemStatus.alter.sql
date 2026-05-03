@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_redeemstatus ALTER COLUMN Redee
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemstatus ALTER COLUMN Name COMMENT 'Internal code name used in procedures and API responses. (Tier 1 - upstream wiki, etoro.Dictionary.RedeemStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemstatus ALTER COLUMN DisplayName COMMENT 'User-facing display label. More readable than the internal Name. Shown in copy-trading UI and notifications. (Tier 1 - upstream wiki, etoro.Dictionary.RedeemStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemstatus ALTER COLUMN IsCancelable COMMENT 'Whether the user can still cancel the redeem request at this stage. 1=cancellable (Pending), 0=committed (InProcess, Completed, Failed). The cancel boundary is the point when positions start closing. (Tier 1 - upstream wiki, etoro.Dictionary.RedeemStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

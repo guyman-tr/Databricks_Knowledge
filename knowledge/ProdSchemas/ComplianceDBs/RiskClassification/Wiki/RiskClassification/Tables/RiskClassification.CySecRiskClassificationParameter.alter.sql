@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_riskclassification_riskclassification_cysecriskcla
 ALTER TABLE main.bi_db.bronze_riskclassification_riskclassification_cysecriskclassificationparameter ALTER COLUMN ValidationText COMMENT 'Human-readable description of the rule. "Default" for fallback rules, NULL for specific matching rules. May also contain descriptions like "Sanction Match\Risk Match". (Tier 1 - upstream wiki, RiskClassification.RiskClassification.CySecRiskClassificationParameter)';
 ALTER TABLE main.bi_db.bronze_riskclassification_riskclassification_cysecriskclassificationparameter ALTER COLUMN BeginTime COMMENT 'Temporal row start. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, RiskClassification.RiskClassification.CySecRiskClassificationParameter)';
 ALTER TABLE main.bi_db.bronze_riskclassification_riskclassification_cysecriskclassificationparameter ALTER COLUMN EndTime COMMENT 'Temporal row end. GENERATED ALWAYS AS ROW END. (Tier 1 - upstream wiki, RiskClassification.RiskClassification.CySecRiskClassificationParameter)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:38:55 UTC
+-- Bronze deploy: RiskClassification batch 1
+-- ====================

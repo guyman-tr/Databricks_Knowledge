@@ -40,4 +40,7 @@ ALTER TABLE main.dealing.bronze_etoro_history_instrumentspread ALTER COLUMN AppL
 ALTER TABLE main.dealing.bronze_etoro_history_instrumentspread ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this spread configuration became active in Trade.InstrumentSpread. (Tier 1 - upstream wiki, etoro.History.InstrumentSpread)';
 ALTER TABLE main.dealing.bronze_etoro_history_instrumentspread ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this spread configuration was superseded. (Tier 1 - upstream wiki, etoro.History.InstrumentSpread)';
 ALTER TABLE main.dealing.bronze_etoro_history_instrumentspread ALTER COLUMN HostName COMMENT 'Host machine name at time of change. Computed from host_name() in live table; stored here statically. (Tier 1 - upstream wiki, etoro.History.InstrumentSpread)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

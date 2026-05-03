@@ -41,4 +41,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_ordersexittbl ALTER COLUMN Partition
 ALTER TABLE main.trading.bronze_etoro_trade_ordersexittbl ALTER COLUMN StatusID COMMENT '1=active, 2=closed; Dictionary.OrderForExecutionStatus (Tier 1 - upstream wiki, etoro.Trade.OrdersExitTbl)';
 ALTER TABLE main.trading.bronze_etoro_trade_ordersexittbl ALTER COLUMN CloseOccurred COMMENT 'When exit order was closed/canceled (Tier 1 - upstream wiki, etoro.Trade.OrdersExitTbl)';
 ALTER TABLE main.trading.bronze_etoro_trade_ordersexittbl ALTER COLUMN CloseActionType COMMENT 'How order was closed (e.g. executed, canceled) (Tier 1 - upstream wiki, etoro.Trade.OrdersExitTbl)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

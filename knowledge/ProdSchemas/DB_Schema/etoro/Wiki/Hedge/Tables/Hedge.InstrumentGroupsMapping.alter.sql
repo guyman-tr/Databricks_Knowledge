@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroupsmapping ALTER COLUMN A
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroupsmapping ALTER COLUMN SysStartTime COMMENT 'Temporal period start. UTC timestamp when this row version became active. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentGroupsMapping)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroupsmapping ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for current rows. History in History.InstrumentGroupsMapping. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentGroupsMapping)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroupsmapping ALTER COLUMN IsActive COMMENT 'Whether this group membership is currently enforced. 1=active (instrument is in the group, routing rules apply), 0=inactive (instrument removed from group, rules no longer apply). Indexed for efficient WHERE IsActive=1 filtering. DEFAULT 1. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentGroupsMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

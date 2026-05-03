@@ -38,4 +38,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelruleinformation A
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelruleinformation ALTER COLUMN FiatRate COMMENT 'Crypto-to-fiat conversion rate used. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionTravelRuleInformation)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelruleinformation ALTER COLUMN BeneficiaryAddressType COMMENT 'Whether the counterparty address is "Private" (self-hosted wallet) or "Hosted" (VASP-custodied). Determines compliance requirements. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionTravelRuleInformation)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_transactiontravelruleinformation ALTER COLUMN ProviderMessageId COMMENT 'Message ID from the Travel Rule provider (e.g., Notabene) for inter-VASP information sharing. (Tier 1 - upstream wiki, WalletDB.Wallet.TransactionTravelRuleInformation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

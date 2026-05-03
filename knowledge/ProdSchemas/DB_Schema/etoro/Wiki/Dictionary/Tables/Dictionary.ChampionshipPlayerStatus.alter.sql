@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_championshipplayerstatus (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_championshipplayerstatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 4 states of a player''s participation in a trading championship — NULL (unset), Registration, Removed, and In Process. Source: etoro.Dictionary.ChampionshipPlayerStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ChampionshipPlayerStatus.md).'
+    'comment' = 'Lookup table defining the 4 states of a player''s participation in a trading championship - NULL (unset), Registration, Removed, and In Process. Source: etoro.Dictionary.ChampionshipPlayerStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.ChampionshipPlayerStatus.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_championshipplayerstatus SET TAGS (
@@ -27,5 +27,8 @@ ALTER TABLE main.general.bronze_etoro_dictionary_championshipplayerstatus SET TA
 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_championshipplayerstatus ALTER COLUMN ChampionshipPlayerStatusID COMMENT 'Primary key identifying the player status. Values 0-3. Referenced by Championship.ChampionshipPlayer table and used in procedures ChampionshipPlayerSetStatus, ChampionshipPlayerAdd, ChampionshipStart, ChampionshipEnd. (Tier 1 - upstream wiki, etoro.Dictionary.ChampionshipPlayerStatus)';
-ALTER TABLE main.general.bronze_etoro_dictionary_championshipplayerstatus ALTER COLUMN Name COMMENT 'Status label (e.g., ''Registration'', ''Removed'', ''In process''). Fixed-width char(50) — values are right-padded with spaces. Enforced unique via DCPS_NAME index. Used in views for display purposes. (Tier 1 - upstream wiki, etoro.Dictionary.ChampionshipPlayerStatus)';
-
+ALTER TABLE main.general.bronze_etoro_dictionary_championshipplayerstatus ALTER COLUMN Name COMMENT 'Status label (e.g., ''Registration'', ''Removed'', ''In process''). Fixed-width char(50) - values are right-padded with spaces. Enforced unique via DCPS_NAME index. Used in views for display purposes. (Tier 1 - upstream wiki, etoro.Dictionary.ChampionshipPlayerStatus)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

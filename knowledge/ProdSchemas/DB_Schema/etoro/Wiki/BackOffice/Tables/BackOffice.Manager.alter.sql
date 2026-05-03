@@ -44,4 +44,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_manager ALTER COLUMN ManagerGro
 ALTER TABLE main.billing.bronze_etoro_backoffice_manager ALTER COLUMN CalendlyID COMMENT 'Calendly scheduling identifier for this manager. Exposed via GetManagers procedure for the customer-facing scheduler that lets customers book calls with their account manager. 958 of 960 managers have this populated (default value "etoro-club" used as placeholder for system/generic accounts). (Tier 1 - upstream wiki, etoro.BackOffice.Manager)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_manager ALTER COLUMN ManagerTitleID COMMENT 'Job title classification FK to Dictionary.ManagerTitle. Values: 1=Sales Team, 2=Sales Representative, 3=Account Management Team, 4=Account Manager (note: DDL typo "Account Manger"), 5=Customer Success Agent. Exposed via GetManagers procedure. 293 managers have NULL (non-customer-facing roles: Administrators, Risk, Operations, Trading teams). Most populated: 4=Account Manager (176), 1=Sales Team (164), 3=Account Management Team (163), 2=Sales Representative (163). (Tier 1 - upstream wiki, etoro.BackOffice.Manager)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_manager ALTER COLUMN eToroCID COMMENT 'The manager''s own eToro customer account CID (Customer ID). Links to Customer.CustomerStatic. Many staff members are also eToro customers themselves. Exposed as CID in GetManagers procedure. 659 of 960 managers have this populated. NULL for system accounts and staff who do not have personal eToro accounts. (Tier 1 - upstream wiki, etoro.BackOffice.Manager)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -47,4 +47,7 @@ ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports AL
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports ALTER COLUMN OrderID2 COMMENT 'Secondary order identifier. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT1047_RevenueReports)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports ALTER COLUMN TotalQuantity COMMENT 'Total quantity of shares traded. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT1047_RevenueReports)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports ALTER COLUMN CustomerPFOFPayback COMMENT 'Payment for order flow or rebate amount for the trade. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT1047_RevenueReports)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

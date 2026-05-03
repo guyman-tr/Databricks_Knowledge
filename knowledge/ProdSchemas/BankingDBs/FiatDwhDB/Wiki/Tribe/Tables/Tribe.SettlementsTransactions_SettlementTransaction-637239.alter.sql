@@ -7,11 +7,11 @@
 -- =============================================================================
 
 -- ---- UC Target: main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 (business_group=emoney) ----
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 SET TBLPROPERTIES (
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239` SET TBLPROPERTIES (
     'comment' = 'Primary child table storing detailed settlement transaction records from Tribe, containing amounts, currencies, merchant data, and clearing details. Source: FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239 on the FiatDwhDB production database, ingested via the Generic Pipeline (Append strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.SettlementsTransactions_SettlementTransaction-637239.md).'
 );
 
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 SET TAGS (
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239` SET TAGS (
     'layer' = 'bronze',
     'source_system' = 'SQL Server',
     'source_database' = 'FiatDwhDB',
@@ -26,8 +26,11 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlemen
 );
 
 -- Column Comments
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 ALTER COLUMN @Created COMMENT 'DWH timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 ALTER COLUMN @Id COMMENT 'PK. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 ALTER COLUMN @SettlementsTransactions@Id-333243 COMMENT 'FK to parent. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
-ALTER TABLE main.emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239 ALTER COLUMN Created COMMENT 'Source timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
-
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239` ALTER COLUMN `@Created` COMMENT 'DWH timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239` ALTER COLUMN `@Id` COMMENT 'PK. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239` ALTER COLUMN `@SettlementsTransactions@Id-333243` COMMENT 'FK to parent. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
+ALTER TABLE main.emoney.`bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239` ALTER COLUMN Created COMMENT 'Source timestamp. (Tier 1 - upstream wiki, FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:09:36 UTC
+-- Bronze deploy: FiatDwhDB batch 2
+-- ====================

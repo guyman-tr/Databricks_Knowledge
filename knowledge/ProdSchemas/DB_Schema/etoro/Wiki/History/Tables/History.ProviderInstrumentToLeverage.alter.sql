@@ -34,4 +34,7 @@ ALTER TABLE main.bi_db.bronze_etoro_history_providerinstrumenttoleverage ALTER C
 ALTER TABLE main.bi_db.bronze_etoro_history_providerinstrumenttoleverage ALTER COLUMN Percentage COMMENT 'Margin percentage associated with this leverage tier. Observed value: 0. May represent a margin override percentage (0 = use system default) or may be populated differently in older rows. (Tier 1 - upstream wiki, etoro.History.ProviderInstrumentToLeverage)';
 ALTER TABLE main.bi_db.bronze_etoro_history_providerinstrumenttoleverage ALTER COLUMN ValidFrom COMMENT 'Application-set timestamp when this leverage tier became available for this provider-instrument pair. Not UTC-guaranteed - local server datetime. Written by the application when adding a leverage tier. (Tier 1 - upstream wiki, etoro.History.ProviderInstrumentToLeverage)';
 ALTER TABLE main.bi_db.bronze_etoro_history_providerinstrumenttoleverage ALTER COLUMN ValidTo COMMENT 'Application-set timestamp when this leverage tier was deactivated. Sentinel ''3000-01-01 00:00:00.000'' = currently active. Set to current timestamp when a tier is removed. HPIL_PROVIDERINSTRUMENTLEVERAGE index supports active-tier queries. (Tier 1 - upstream wiki, etoro.History.ProviderInstrumentToLeverage)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

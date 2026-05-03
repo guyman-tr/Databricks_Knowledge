@@ -39,4 +39,7 @@ ALTER TABLE main.general.bronze_fiktivo_dbo_auditlog ALTER COLUMN ActionID COMME
 ALTER TABLE main.general.bronze_fiktivo_dbo_auditlog ALTER COLUMN OldFieldDescription COMMENT 'Human-readable description of the old value (e.g., resolved lookup name instead of just the ID). (Tier 1 - upstream wiki, fiktivo.dbo.AuditLog)';
 ALTER TABLE main.general.bronze_fiktivo_dbo_auditlog ALTER COLUMN NewFieldDescription COMMENT 'Human-readable description of the new value. (Tier 1 - upstream wiki, fiktivo.dbo.AuditLog)';
 ALTER TABLE main.general.bronze_fiktivo_dbo_auditlog ALTER COLUMN UserEmail COMMENT 'Email of the admin user who made the change. MASKED. Denormalized from tblaff_User for quick display. (Tier 1 - upstream wiki, fiktivo.dbo.AuditLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

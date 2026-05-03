@@ -33,4 +33,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_currencytype ALTER COLUMN Prior
 ALTER TABLE main.general.bronze_etoro_dictionary_currencytype ALTER COLUMN PricesBy COMMENT 'Price feed provider name. "eToro" for internally-sourced prices (Forex, Commodity, Indices, Crypto). "Xignite" for externally-sourced equity prices (Stocks, ETF). NULL for inactive asset classes. (Tier 1 - upstream wiki, etoro.Dictionary.CurrencyType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_currencytype ALTER COLUMN SLTPApproachPercent COMMENT 'Minimum distance between current price and SL/TP levels, expressed as a percentage. 0.10% for Forex (tight stops allowed), 1.00% for most others. NULL for inactive asset classes. Enforced in order validation. (Tier 1 - upstream wiki, etoro.Dictionary.CurrencyType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_currencytype ALTER COLUMN ImageUrl COMMENT 'CDN URL for the asset class avatar/icon displayed in the mobile and web UI. Points to etoro-cdn.etorostatic.com. NULL for inactive asset classes. (Tier 1 - upstream wiki, etoro.Dictionary.CurrencyType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

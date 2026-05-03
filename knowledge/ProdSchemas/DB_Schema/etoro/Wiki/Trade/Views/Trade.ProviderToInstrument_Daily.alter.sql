@@ -28,5 +28,8 @@ ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument_daily SET TAGS 
 -- Column Comments
 ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument_daily ALTER COLUMN ProviderID COMMENT 'Part of PK. Provider identifier. (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument_Daily)';
 ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument_daily ALTER COLUMN InstrumentID COMMENT 'Part of PK. FK to Trade.Instrument. (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument_Daily)';
-ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument_daily ALTER COLUMN (all other ProviderToInstrument columns) COMMENT 'Precision, UnitMargin, AllowedRateDiffPercentage, Enabled, AllowBuy, AllowSell, etc. See Trade.ProviderToInstrument. (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument_Daily)';
-
+ALTER TABLE main.trading.bronze_etoro_trade_providertoinstrument_daily ALTER COLUMN `(all other ProviderToInstrument columns)` COMMENT 'Precision, UnitMargin, AllowedRateDiffPercentage, Enabled, AllowBuy, AllowSell, etc. See Trade.ProviderToInstrument. (Tier 1 - upstream wiki, etoro.Trade.ProviderToInstrument_Daily)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

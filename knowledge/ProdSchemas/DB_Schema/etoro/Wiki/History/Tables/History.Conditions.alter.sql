@@ -36,4 +36,7 @@ ALTER TABLE main.general.bronze_etoro_history_conditions ALTER COLUMN AppLoginNa
 ALTER TABLE main.general.bronze_etoro_history_conditions ALTER COLUMN SysStartTime COMMENT 'When this version became current in CEP.Conditions. Set by SQL Server temporal engine. (Tier 1 - upstream wiki, etoro.History.Conditions)';
 ALTER TABLE main.general.bronze_etoro_history_conditions ALTER COLUMN SysEndTime COMMENT 'When this version was superseded. Set by SQL Server temporal engine. (Tier 1 - upstream wiki, etoro.History.Conditions)';
 ALTER TABLE main.general.bronze_etoro_history_conditions ALTER COLUMN HostName COMMENT 'Server hostname that performed the change. Additional audit field beyond DbLoginName/AppLoginName. (Tier 1 - upstream wiki, etoro.History.Conditions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

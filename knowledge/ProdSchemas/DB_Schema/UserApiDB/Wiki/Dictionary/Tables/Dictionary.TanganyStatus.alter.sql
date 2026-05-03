@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_dictionary_tanganystatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_userapidb_dictionary_tanganystatus ALTER COLUMN TanganyStatusID COMMENT 'Primary key. Wallet state: 1=Pending, 2=Internal, 3=Customer, 4=Inactive, 5=MicaCustomer, 6=ConsentCustomer. See Tangany Status. (Tier 1 - upstream wiki, UserApiDB.Dictionary.TanganyStatus)';
 ALTER TABLE main.bi_db.bronze_userapidb_dictionary_tanganystatus ALTER COLUMN Name COMMENT 'Status label for crypto custody monitoring and compliance reports. (Tier 1 - upstream wiki, UserApiDB.Dictionary.TanganyStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

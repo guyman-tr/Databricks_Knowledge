@@ -31,4 +31,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_instrumentboundaries ALTER COLUMN In
 ALTER TABLE main.dealing.bronze_etoro_hedge_instrumentboundaries ALTER COLUMN OpenThresholdUSD COMMENT 'The net USD exposure threshold that triggers a Boundaries hedging order. When (Tier 1 - upstream wiki, etoro.Hedge.InstrumentBoundaries)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_instrumentboundaries ALTER COLUMN CloseThresholdPercentage COMMENT 'Percentage of OpenThresholdUSD below which the existing hedge position is reduced. E.g., 50 means: reduce hedge when exposure < (OpenThresholdUSD * 50% = half the open threshold). Prevents frequent open/close cycling. Typical value: 50. 0 = not configured. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentBoundaries)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_instrumentboundaries ALTER COLUMN HedgeRiskLimitUSD COMMENT 'Maximum USD amount to hedge (the Hedge Risk Limit = HRL). Hedge server stops adding hedge when HedgedUSD >= HRL. 0 = no upper cap - fully hedge the entire exposure above OpenThresholdUSD. Range: 0 to $2.5M. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentBoundaries)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

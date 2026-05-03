@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_phoneverificationtransactionrecommendation (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationtransactionrecommendation SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 6 transaction recommendations from phone verification — Block, Flag, Allow, NotApplicable, None, and Other — guiding automated transaction decisions based on phone risk. Source: etoro.Dictionary.PhoneVerificationTransactionRecommendation on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PhoneVerificationTransactionRecommendation.md).'
+    'comment' = 'Lookup table defining 6 transaction recommendations from phone verification - Block, Flag, Allow, NotApplicable, None, and Other - guiding automated transaction decisions based on phone risk. Source: etoro.Dictionary.PhoneVerificationTransactionRecommendation on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PhoneVerificationTransactionRecommendation.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationtransactionrecommendation SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationtransactionrec
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationtransactionrecommendation ALTER COLUMN RecommendationID COMMENT 'Primary key identifying the transaction recommendation. 0=None, 1=Block, 2=Flag, 3=Allow, 4=NotApplicable, 2147483647=Other. Stored in Customer.PhoneVerificationDetails. (Tier 1 - upstream wiki, etoro.Dictionary.PhoneVerificationTransactionRecommendation)';
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationtransactionrecommendation ALTER COLUMN Recommmendation COMMENT 'Human-readable recommendation label. Note: column name has a typo (triple ''m'') preserved from the original DDL. Used in verification reports and transaction routing dashboards. (Tier 1 - upstream wiki, etoro.Dictionary.PhoneVerificationTransactionRecommendation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroups ALTER COLUMN DbLoginN
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroups ALTER COLUMN AppLoginName COMMENT 'Computed audit column. Application identity from CONTEXT_INFO(). NULL when not set. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentGroups)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroups ALTER COLUMN SysStartTime COMMENT 'Temporal period start. UTC timestamp when this row version became active. Original Futures group created 2024-11-06; Virtu/OMS groups added 2025-09-21. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentGroups)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentgroups ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for all currently active rows. History in History.InstrumentGroups. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentGroups)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

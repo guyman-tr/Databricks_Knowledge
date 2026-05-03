@@ -57,4 +57,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptotypes ALTER COLUMN CryptoCa
 ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptotypes ALTER COLUMN StakingDisplayName COMMENT 'Display name specifically for staking context (e.g., "Cardano Staking"). NULL for non-stakeable assets. (Tier 1 - upstream wiki, WalletDB.Wallet.CryptoTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptotypes ALTER COLUMN StakingAvatarUrl COMMENT 'Logo URL for the staking variant. May differ from the regular avatar. (Tier 1 - upstream wiki, WalletDB.Wallet.CryptoTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_cryptotypes ALTER COLUMN StakingSymbolFull COMMENT 'Ticker symbol for staking context. NULL for non-stakeable assets. (Tier 1 - upstream wiki, WalletDB.Wallet.CryptoTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

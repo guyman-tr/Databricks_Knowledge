@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_regionbyip (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip SET TBLPROPERTIES (
-    'comment' = 'Mapping table with 4,206 IP-based geographic region codes per country — used for sub-country geolocation of customers during registration and regulatory compliance. Source: etoro.Dictionary.RegionByIP on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RegionByIP.md).'
+    'comment' = 'Mapping table with 4,206 IP-based geographic region codes per country - used for sub-country geolocation of customers during registration and regulatory compliance. Source: etoro.Dictionary.RegionByIP on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RegionByIP.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip SET TAGS (
@@ -27,6 +27,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip SET TAGS (
 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip ALTER COLUMN RegionByIP_ID COMMENT 'Auto-incrementing surrogate primary key. IDENTITY NOT FOR REPLICATION. Stored in Customer.CustomerStatic and Customer.Address. Referenced by 10+ consumers. (Tier 1 - upstream wiki, etoro.Dictionary.RegionByIP)';
-ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip ALTER COLUMN CountryID COMMENT 'FK → Dictionary.Country (implicit). The country this region belongs to. (Tier 1 - upstream wiki, etoro.Dictionary.RegionByIP)';
+ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip ALTER COLUMN CountryID COMMENT 'FK -> Dictionary.Country (implicit). The country this region belongs to. (Tier 1 - upstream wiki, etoro.Dictionary.RegionByIP)';
 ALTER TABLE main.general.bronze_etoro_dictionary_regionbyip ALTER COLUMN Name COMMENT 'IP geolocation provider region code. Short numeric or alpha codes representing sub-country divisions. May be blank/whitespace for countries without region data. (Tier 1 - upstream wiki, etoro.Dictionary.RegionByIP)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

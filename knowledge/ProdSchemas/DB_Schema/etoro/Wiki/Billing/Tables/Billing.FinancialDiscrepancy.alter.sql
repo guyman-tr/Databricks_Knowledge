@@ -35,4 +35,7 @@ ALTER TABLE main.finance.bronze_etoro_billing_financialdiscrepancy ALTER COLUMN 
 ALTER TABLE main.finance.bronze_etoro_billing_financialdiscrepancy ALTER COLUMN FinancialDiscrepancyDirectionID COMMENT 'Direction of the financial gap. FK to Dictionary.FinancialDiscrepancyDirection(ID). Currently only 1 value: "Missing funds on eToro Account Balance". NULL when HasFinancialImpact=0. (Tier 1 - upstream wiki, etoro.Billing.FinancialDiscrepancy)';
 ALTER TABLE main.finance.bronze_etoro_billing_financialdiscrepancy ALTER COLUMN Description COMMENT 'Free-text description of the discrepancy. Written by the detection system or manual investigator. Contains diagnostic details about what was expected vs. what was found. Stored in TEXTIMAGE_ON [MAIN] due to max length. (Tier 1 - upstream wiki, etoro.Billing.FinancialDiscrepancy)';
 ALTER TABLE main.finance.bronze_etoro_billing_financialdiscrepancy ALTER COLUMN CreatedDate COMMENT 'When this discrepancy record was created (detection timestamp). Set by the inserting process. (Tier 1 - upstream wiki, etoro.Billing.FinancialDiscrepancy)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

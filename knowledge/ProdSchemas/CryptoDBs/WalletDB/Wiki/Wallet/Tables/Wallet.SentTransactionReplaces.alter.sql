@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionreplaces ALTER COL
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionreplaces ALTER COLUMN OldBlockchainTransactionId COMMENT 'The blockchain hash of the transaction being replaced (the stuck one). (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionReplaces)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionreplaces ALTER COLUMN NewBlockchainTransactionId COMMENT 'The blockchain hash of the replacement transaction (with higher fee). This becomes the new active hash. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionReplaces)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionreplaces ALTER COLUMN Occurred COMMENT 'Timestamp of the replacement event. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionReplaces)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

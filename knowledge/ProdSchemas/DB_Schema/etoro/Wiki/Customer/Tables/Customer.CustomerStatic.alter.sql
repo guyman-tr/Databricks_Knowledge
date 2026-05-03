@@ -217,4 +217,7 @@ ALTER TABLE main.general.bronze_etoro_customer_customerstatic_masked ALTER COLUM
 ALTER TABLE main.general.bronze_etoro_customer_customerstatic_masked ALTER COLUMN ApexID COMMENT 'APEX US stocks broker account ID. Indexed via Apexid (NC) index. Only populated for US-regulated customers at Level >= 2 who have APEX accounts (see APEX Confluence page). (Tier 1 - upstream wiki, etoro.Customer.CustomerStatic)';
 ALTER TABLE main.general.bronze_etoro_customer_customerstatic_masked ALTER COLUMN DltID COMMENT 'Distributed Ledger Technology integration ID. Added per HLD: COAKVU-2880 DLT Integration (Confluence CR). Links customer to DLT/blockchain system. (Tier 1 - upstream wiki, etoro.Customer.CustomerStatic)';
 ALTER TABLE main.general.bronze_etoro_customer_customerstatic_masked ALTER COLUMN TradeLevelID COMMENT 'Trading knowledge level for MiFID suitability. FK to Dictionary.TradeLevel. Default=0. Used in regulatory suitability assessment for leverage and product access. (Tier 1 - upstream wiki, etoro.Customer.CustomerStatic)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

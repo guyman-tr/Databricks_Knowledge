@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_dictionary_nationalpinvaluetypetoreportt
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_userapidb_dictionary_nationalpinvaluetypetoreporttype ALTER COLUMN ValueTypeID COMMENT 'Part of composite PK. FK to Dictionary.ExtendedUserValueType. The national identifier subtype. (Tier 1 - upstream wiki, UserApiDB.Dictionary.NationalPinValueTypeToReportType)';
 ALTER TABLE main.bi_db.bronze_userapidb_dictionary_nationalpinvaluetypetoreporttype ALTER COLUMN NationalPinReportTypeID COMMENT 'Part of composite PK. FK to Dictionary.NationalPinReportType. The regulatory reporting format (1=NIND, 2=CCCP, 3=CONCAT, 4=LEI). (Tier 1 - upstream wiki, UserApiDB.Dictionary.NationalPinValueTypeToReportType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

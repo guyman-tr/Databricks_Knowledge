@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_riskclassificationregulation (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationregulation SET TBLPROPERTIES (
-    'comment' = 'Configuration table mapping regulation entities to risk score thresholds with classification labels — currently empty in production, with structure for per-regulation risk bucketing. Source: etoro.Dictionary.RiskClassificationRegulation on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskClassificationRegulation.md).'
+    'comment' = 'Configuration table mapping regulation entities to risk score thresholds with classification labels - currently empty in production, with structure for per-regulation risk bucketing. Source: etoro.Dictionary.RiskClassificationRegulation on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RiskClassificationRegulation.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationregulation SET TAGS (
@@ -29,4 +29,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationregulation SET 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationregulation ALTER COLUMN RegulationID COMMENT 'Part of composite PK. References Dictionary.Regulation (implicit). Identifies the regulatory authority. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassificationRegulation)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationregulation ALTER COLUMN RiskScore COMMENT 'Part of composite PK. The numeric risk score threshold. Combined with RegulationID to form unique classification boundaries. (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassificationRegulation)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_riskclassificationregulation ALTER COLUMN Name COMMENT 'Risk classification label for this regulation+score combination (e.g., "Low", "Medium", "High"). (Tier 1 - upstream wiki, etoro.Dictionary.RiskClassificationRegulation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

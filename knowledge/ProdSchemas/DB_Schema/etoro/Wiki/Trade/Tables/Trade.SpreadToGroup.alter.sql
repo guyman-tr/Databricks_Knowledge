@@ -28,4 +28,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_spreadtogroup SET TAGS (
 -- Column Comments
 ALTER TABLE main.trading.bronze_etoro_trade_spreadtogroup ALTER COLUMN SpreadGroupID COMMENT 'FK to Trade.SpreadGroup. Part of composite PK. Identifies the spread tier (0=Default, 1=Expert, etc.) that includes this spread. (Tier 1 - upstream wiki, etoro.Trade.SpreadToGroup)';
 ALTER TABLE main.trading.bronze_etoro_trade_spreadtogroup ALTER COLUMN SpreadID COMMENT 'FK to Trade.Spread. Part of composite PK. Identifies the spread definition (ProviderID, InstrumentID, Bid, Ask) included in this group. (Tier 1 - upstream wiki, etoro.Trade.SpreadToGroup)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

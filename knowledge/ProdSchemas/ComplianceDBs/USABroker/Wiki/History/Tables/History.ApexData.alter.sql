@@ -32,4 +32,7 @@ ALTER TABLE main.finance.bronze_usabroker_history_apexdata ALTER COLUMN StatusID
 ALTER TABLE main.finance.bronze_usabroker_history_apexdata ALTER COLUMN BeginTime COMMENT 'When this version became active (was originally written to Apex.ApexData). Part of the temporal period. (Tier 1 - upstream wiki, USABroker.History.ApexData)';
 ALTER TABLE main.finance.bronze_usabroker_history_apexdata ALTER COLUMN EndTime COMMENT 'When this version was superseded by a newer version. The update timestamp. Part of the temporal period. Clustered index key (EndTime, BeginTime) for efficient temporal range queries. (Tier 1 - upstream wiki, USABroker.History.ApexData)';
 ALTER TABLE main.finance.bronze_usabroker_history_apexdata ALTER COLUMN UpdatedSync COMMENT 'Sync flag value at the time this version was active. Tracks whether the trading platform had synced this version. (Tier 1 - upstream wiki, USABroker.History.ApexData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

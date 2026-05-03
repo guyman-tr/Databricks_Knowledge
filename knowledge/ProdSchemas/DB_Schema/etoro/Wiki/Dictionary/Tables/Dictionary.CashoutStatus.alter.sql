@@ -28,6 +28,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_cashoutstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutstatus ALTER COLUMN CashoutStatusID COMMENT 'Primary key identifying the withdrawal lifecycle state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Partially Processed, 6=Payment Sent, 7=Rejected, 8=RejectedByProvider, 9=PendingByProvider, 10=SentToProvider, 11=SentToBilling, 12=ReceivedByBilling, 13=Failed, 14=Pending Review, 15=Under Review, 16=Reversed, 17=Partially Reversed. See Cashout Status. (Dictionary.CashoutStatus) (Tier 1 - upstream wiki, etoro.Dictionary.CashoutStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutstatus ALTER COLUMN Name COMMENT 'Human-readable status label. UNIQUE constraint. Used in back-office withdrawal management UI and user-facing withdrawal history. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutStatus)';
-ALTER TABLE main.general.bronze_etoro_dictionary_cashoutstatus ALTER COLUMN IsFinishedWithoutMoneyTransfer COMMENT 'Whether this status represents a termination where NO funds left the system. 1 for Canceled (4) and Rejected (7) — important for reconciliation because the withdrawal entry exists but no actual payment was made. 0 for all other statuses. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutStatus)';
+ALTER TABLE main.general.bronze_etoro_dictionary_cashoutstatus ALTER COLUMN IsFinishedWithoutMoneyTransfer COMMENT 'Whether this status represents a termination where NO funds left the system. 1 for Canceled (4) and Rejected (7) - important for reconciliation because the withdrawal entry exists but no actual payment was made. 0 for all other statuses. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutstatus ALTER COLUMN IsFinalStatus COMMENT 'Whether this is a terminal state (no further transitions expected). 1 for Processed, Canceled, Partially Processed, Rejected, RejectedByProvider, Failed. NULL for intermediate states. Used by monitoring to identify stuck withdrawals (intermediate status for too long = alert). (Tier 1 - upstream wiki, etoro.Dictionary.CashoutStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

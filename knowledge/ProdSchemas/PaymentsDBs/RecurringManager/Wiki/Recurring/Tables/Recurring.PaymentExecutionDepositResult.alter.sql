@@ -40,4 +40,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecutiondepos
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecutiondepositresult ALTER COLUMN ModificationDate COMMENT 'UTC timestamp of the last update. Set to GETUTCDATE() by UpsertPaymentExecutionDepositResult on both insert and update. (Tier 1 - upstream wiki, RecurringManager.Recurring.PaymentExecutionDepositResult)';
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecutiondepositresult ALTER COLUMN SysStartTime COMMENT 'System-versioning row start time (HIDDEN). (Tier 1 - upstream wiki, RecurringManager.Recurring.PaymentExecutionDepositResult)';
 ALTER TABLE main.billing.bronze_recurringmanager_recurring_paymentexecutiondepositresult ALTER COLUMN SysEndTime COMMENT 'System-versioning row end time (HIDDEN). History in History.PaymentExecutionDepositResult. (Tier 1 - upstream wiki, RecurringManager.Recurring.PaymentExecutionDepositResult)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

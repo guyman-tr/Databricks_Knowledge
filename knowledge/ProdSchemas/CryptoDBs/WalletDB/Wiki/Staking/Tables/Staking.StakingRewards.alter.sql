@@ -36,4 +36,7 @@ ALTER TABLE main.wallet.bronze_walletdb_staking_stakingrewards ALTER COLUMN Mont
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingrewards ALTER COLUMN UserYieldPercentage COMMENT 'The user''s share of the pool yield, based on their eToro club tier. Recent records show 0, suggesting calculation moved upstream. Per Confluence, yield varies by club level. (Tier 1 - upstream wiki, WalletDB.Staking.StakingRewards)';
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingrewards ALTER COLUMN IncomeDate COMMENT 'The date/time when the reward was calculated or distributed. Multiple rewards in the same batch share the same IncomeDate (e.g., all June 2023 rewards have 2023-06-18T07:58:54). (Tier 1 - upstream wiki, WalletDB.Staking.StakingRewards)';
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingrewards ALTER COLUMN Occurred COMMENT 'Timestamp when this reward record was inserted into the database. Slightly after IncomeDate due to processing time. (Tier 1 - upstream wiki, WalletDB.Staking.StakingRewards)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

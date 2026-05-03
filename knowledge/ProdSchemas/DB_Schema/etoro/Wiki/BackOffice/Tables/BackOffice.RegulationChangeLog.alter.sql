@@ -34,4 +34,7 @@ ALTER TABLE main.finance.bronze_etoro_backoffice_regulationchangelog ALTER COLUM
 ALTER TABLE main.finance.bronze_etoro_backoffice_regulationchangelog ALTER COLUMN UnrealizedPnl COMMENT 'Total unrealized profit/loss across open positions at the moment of regulation change. NULL if customer had no open positions or if this data was not captured for this event type. (Tier 1 - upstream wiki, etoro.BackOffice.RegulationChangeLog)';
 ALTER TABLE main.finance.bronze_etoro_backoffice_regulationchangelog ALTER COLUMN CurrentCreditID COMMENT 'Reference to the customer''s credit/account balance record at the time of the regulation change. Links to the History or Credit schema. NULL if not applicable. (Tier 1 - upstream wiki, etoro.BackOffice.RegulationChangeLog)';
 ALTER TABLE main.finance.bronze_etoro_backoffice_regulationchangelog ALTER COLUMN DateID COMMENT 'Integer date key for data warehouse joins, likely in YYYYMMDD format. Corresponds to the date portion of Occurred. NULL if not populated. (Tier 1 - upstream wiki, etoro.BackOffice.RegulationChangeLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

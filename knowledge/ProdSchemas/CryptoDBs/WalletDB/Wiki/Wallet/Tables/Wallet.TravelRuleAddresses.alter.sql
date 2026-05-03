@@ -39,4 +39,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_travelruleaddresses ALTER COLUMN 
 ALTER TABLE main.wallet.bronze_walletdb_wallet_travelruleaddresses ALTER COLUMN Address COMMENT 'Beneficiary''s street address. MASKED. (Tier 1 - upstream wiki, WalletDB.Wallet.TravelRuleAddresses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_travelruleaddresses ALTER COLUMN Zipcode COMMENT 'Beneficiary''s postal code. MASKED. (Tier 1 - upstream wiki, WalletDB.Wallet.TravelRuleAddresses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_travelruleaddresses ALTER COLUMN Created COMMENT 'Timestamp when this address was whitelisted. (Tier 1 - upstream wiki, WalletDB.Wallet.TravelRuleAddresses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

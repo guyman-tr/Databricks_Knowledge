@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_objects ALTER COLUMN ObjectID C
 ALTER TABLE main.general.bronze_etoro_dictionary_objects ALTER COLUMN AppName COMMENT 'Parent application name: "Configuration Manager", "ConfigurationManager" (alternate casing), "DealingReportGenerator", "CEP UI". Used with ObjectName as a composite key for permission lookups. (Tier 1 - upstream wiki, etoro.Dictionary.Objects)';
 ALTER TABLE main.general.bronze_etoro_dictionary_objects ALTER COLUMN ObjectName COMMENT 'Specific object/operation within the application (e.g., "Spreads", "HedgeCostReport", "CEPOperations"). Combined with AppName to uniquely identify a permission target. (Tier 1 - upstream wiki, etoro.Dictionary.Objects)';
 ALTER TABLE main.general.bronze_etoro_dictionary_objects ALTER COLUMN Description COMMENT 'Human-readable description of what the object controls. Some entries use the ObjectName as the description; others provide more detailed context like "Bulk open operation for all whitelisted cids". (Tier 1 - upstream wiki, etoro.Dictionary.Objects)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

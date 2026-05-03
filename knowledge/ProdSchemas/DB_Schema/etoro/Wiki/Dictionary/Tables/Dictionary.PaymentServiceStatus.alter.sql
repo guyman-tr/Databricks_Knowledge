@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_paymentservicestatus (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentservicestatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining payment service operational statuses — currently contains test/placeholder data indicating the table is in development or staging use. Source: etoro.Dictionary.PaymentServiceStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PaymentServiceStatus.md).'
+    'comment' = 'Lookup table defining payment service operational statuses - currently contains test/placeholder data indicating the table is in development or staging use. Source: etoro.Dictionary.PaymentServiceStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PaymentServiceStatus.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentservicestatus SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_paymentservicestatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentservicestatus ALTER COLUMN PaymentServiceStatusID COMMENT 'Primary key identifying the payment service status. Currently contains test values (1-3). Referenced by Billing.PaymentService to control payment service availability. (Tier 1 - upstream wiki, etoro.Dictionary.PaymentServiceStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_paymentservicestatus ALTER COLUMN Name COMMENT 'Unique human-readable label for the status. Enforced unique by DPSS_NAME index. Used in billing configuration screens and service management. (Tier 1 - upstream wiki, etoro.Dictionary.PaymentServiceStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

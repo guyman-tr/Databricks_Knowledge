@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_phoneverificationlisttype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationlisttype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 2 phone verification list categories — White (trusted) and Black (blocked) — for phone number allowlist/blocklist management. Source: etoro.Dictionary.PhoneVerificationListType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PhoneVerificationListType.md).'
+    'comment' = 'Lookup table defining 2 phone verification list categories - White (trusted) and Black (blocked) - for phone number allowlist/blocklist management. Source: etoro.Dictionary.PhoneVerificationListType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PhoneVerificationListType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationlisttype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationlisttype SET T
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationlisttype ALTER COLUMN VerificationListTypeID COMMENT 'Primary key identifying the list type. 1=White (trusted), 2=Black (blocked). Used in phone verification list management. (Tier 1 - upstream wiki, etoro.Dictionary.PhoneVerificationListType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverificationlisttype ALTER COLUMN VerificationListType COMMENT 'Human-readable label for the list type. "White" or "Black". (Tier 1 - upstream wiki, etoro.Dictionary.PhoneVerificationListType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

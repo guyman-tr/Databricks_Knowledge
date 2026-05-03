@@ -57,5 +57,8 @@ ALTER TABLE main.trading.bronze_etoro_history_mirror ALTER COLUMN ReopenForMirro
 ALTER TABLE main.trading.bronze_etoro_history_mirror ALTER COLUMN MirrorCalculationType COMMENT 'How the copy proportions are calculated. Updated by UpdateMirrorCalculationType (ID=11) operations. Values: 0=proportional (default), other values = alternative calculation modes. (Tier 1 - upstream wiki, etoro.History.Mirror)';
 ALTER TABLE main.trading.bronze_etoro_history_mirror ALTER COLUMN ReferenceID COMMENT 'External reference identifier for the operation. Used for correlation with external systems (e.g., MOE event IDs). (Tier 1 - upstream wiki, etoro.History.Mirror)';
 ALTER TABLE main.trading.bronze_etoro_history_mirror ALTER COLUMN ExternalOperationType COMMENT 'Classifies the external system or trigger that initiated this operation (from ExternalCopyRequestPreProcessor). NULL for internally-initiated operations. (Tier 1 - upstream wiki, etoro.History.Mirror)';
-ALTER TABLE main.trading.bronze_etoro_history_mirror ALTER COLUMN (ParentUserName - see #5) COMMENT '(see above - column counted above) (Tier 1 - upstream wiki, etoro.History.Mirror)';
-
+ALTER TABLE main.trading.bronze_etoro_history_mirror ALTER COLUMN `(ParentUserName - see #5)` COMMENT '(see above - column counted above) (Tier 1 - upstream wiki, etoro.History.Mirror)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

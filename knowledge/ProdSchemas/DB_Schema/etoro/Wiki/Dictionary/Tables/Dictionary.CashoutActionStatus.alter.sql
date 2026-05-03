@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_cashoutactionstatus (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutactionstatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 3 states of cashout (withdrawal) actions — New, Processed, and Failed — tracking each step in the withdrawal processing pipeline. Source: etoro.Dictionary.CashoutActionStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutActionStatus.md).'
+    'comment' = 'Lookup table defining the 3 states of cashout (withdrawal) actions - New, Processed, and Failed - tracking each step in the withdrawal processing pipeline. Source: etoro.Dictionary.CashoutActionStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CashoutActionStatus.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutactionstatus SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_cashoutactionstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutactionstatus ALTER COLUMN CashoutActionStatusID COMMENT 'Primary key identifying the action lifecycle state. 1=New (created, pending), 2=Processed (success), 3=Failed (error). Referenced by History.CashoutAction (explicit FK) and History.WithdrawToFundingAction (implicit). Written by all cashout processing procedures in legacy (CashoutProcess) and modern (WithdrawToFunding) flows. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutActionStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_cashoutactionstatus ALTER COLUMN Name COMMENT 'Human-readable status name. Unique constraint prevents duplicates. Values: ''New'', ''Processed'', ''Failed''. Used in withdrawal monitoring, BackOffice reports, and debugging. (Tier 1 - upstream wiki, etoro.Dictionary.CashoutActionStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

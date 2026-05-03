@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_mirrortype SET TAGS (
 ALTER TABLE main.general.bronze_etoro_dictionary_mirrortype ALTER COLUMN MirrorTypeID COMMENT 'Primary key identifying the copy relationship type. 1=Regular (standard copy), 2=CopyMe (legacy), 3=Social Index (algorithmic), 4=Fund (managed). See Mirror Type. (Dictionary.MirrorType) (Tier 1 - upstream wiki, etoro.Dictionary.MirrorType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_mirrortype ALTER COLUMN MirrorTypeName COMMENT 'Short code name used in code branching and API responses. (Tier 1 - upstream wiki, etoro.Dictionary.MirrorType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_mirrortype ALTER COLUMN Description COMMENT 'Human-readable description for display. More descriptive than MirrorTypeName. (Tier 1 - upstream wiki, etoro.Dictionary.MirrorType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

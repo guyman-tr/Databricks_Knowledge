@@ -51,4 +51,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_currencyprice ALTER COLUMN UnitMargi
 ALTER TABLE main.trading.bronze_etoro_trade_currencyprice ALTER COLUMN USDConversionRateBidSpreaded COMMENT 'USD conversion rate (bid, spreaded) for non-USD instruments. (Tier 1 - upstream wiki, etoro.Trade.CurrencyPrice)';
 ALTER TABLE main.trading.bronze_etoro_trade_currencyprice ALTER COLUMN USDConversionRateAskSpreaded COMMENT 'USD conversion rate (ask, spreaded). (Tier 1 - upstream wiki, etoro.Trade.CurrencyPrice)';
 ALTER TABLE main.trading.bronze_etoro_trade_currencyprice ALTER COLUMN USDConversionPriceRateID COMMENT 'Rate ID for USD conversion instrument. (Tier 1 - upstream wiki, etoro.Trade.CurrencyPrice)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

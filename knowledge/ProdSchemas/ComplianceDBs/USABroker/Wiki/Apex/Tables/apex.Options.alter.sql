@@ -43,4 +43,7 @@ ALTER TABLE main.general.bronze_usabroker_apex_options ALTER COLUMN ReasoningFor
 ALTER TABLE main.general.bronze_usabroker_apex_options ALTER COLUMN AppropriatenessTestDate COMMENT 'Timestamp of when the appropriateness/suitability test was last taken or recalculated. NULL if no test has been performed. Set by SaveOptionsAppropriateness. Used for regulatory record-keeping and determining when a retest may be required. (Tier 1 - upstream wiki, USABroker.apex.Options)';
 ALTER TABLE main.general.bronze_usabroker_apex_options ALTER COLUMN StocksElegibilityStatusID COMMENT 'Eligibility status specifically for stock trading. Implicit FK to Dictionary.EligibilityStatus: 0=Disallowed, 1=Allowed. NULL for legacy records created before this column was added. Set by SaveOptionsEligibility. Note: column name has typo "Elegibility" instead of "Eligibility". (Tier 1 - upstream wiki, USABroker.apex.Options)';
 ALTER TABLE main.general.bronze_usabroker_apex_options ALTER COLUMN CryptoElegibilityStatusID COMMENT 'Eligibility status specifically for cryptocurrency trading. Implicit FK to Dictionary.EligibilityStatus: 0=Disallowed, 1=Allowed. NULL for legacy records created before this column was added. Set by SaveOptionsEligibility. Note: column name has typo "Elegibility" instead of "Eligibility". (Tier 1 - upstream wiki, USABroker.apex.Options)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

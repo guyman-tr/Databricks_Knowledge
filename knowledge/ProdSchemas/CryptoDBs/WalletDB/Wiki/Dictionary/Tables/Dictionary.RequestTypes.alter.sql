@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_requesttypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_requesttypes ALTER COLUMN Id COMMENT 'Unique identifier for the request type. Values: 0=CreateWallet, 1=SendTransaction, 2=InitiatePayment, 3=Redeem, 4=Conversion, 5=Funding, 6=Staking, 7=ConversionToFiat, 8=ReceiveTransaction, 9=ConversionToPosition. FK target for Wallet.Requests.RequestTypeId. (Tier 1 - upstream wiki, WalletDB.Dictionary.RequestTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_requesttypes ALTER COLUMN Name COMMENT 'PascalCase label mapping to application-layer enum. Determines which processing pipeline handles the request. (Tier 1 - upstream wiki, WalletDB.Dictionary.RequestTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

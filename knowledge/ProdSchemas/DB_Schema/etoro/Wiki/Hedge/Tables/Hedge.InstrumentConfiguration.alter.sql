@@ -40,4 +40,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentconfiguration ALTER COLUMN S
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'Temporal period end. 9999-12-31 for all current rows. Historical versions in History.HedgeInstrumentConfiguration. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentconfiguration ALTER COLUMN RestrictManualActions COMMENT 'Flag to restrict manual hedge actions for this instrument. DEFAULT 0; all 10,468 rows have value 0 - this column is currently uniform and appears reserved for future per-instrument manual action restriction. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentConfiguration)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_instrumentconfiguration ALTER COLUMN LotSizeForView COMMENT 'Lot size normalization factor for display/reporting purposes. DEFAULT 1; all 10,468 rows have value 1.0000 - currently uniform across all instruments. (Tier 1 - upstream wiki, etoro.Hedge.InstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

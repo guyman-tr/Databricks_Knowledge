@@ -32,4 +32,7 @@ ALTER TABLE main.general.bronze_etoro_history_bslcurrencypricesnapshots ALTER CO
 ALTER TABLE main.general.bronze_etoro_history_bslcurrencypricesnapshots ALTER COLUMN Bid COMMENT 'Bid (sell) price for the instrument at BSL execution time. Used for unrealized PnL of long (buy) positions: AmountUnits * (Bid - OpenRate). 8 decimal places for pip-level precision. (Tier 1 - upstream wiki, etoro.History.BSLCurrencyPriceSnapShots)';
 ALTER TABLE main.general.bronze_etoro_history_bslcurrencypricesnapshots ALTER COLUMN Ask COMMENT 'Ask (buy) price for the instrument at BSL execution time. Used for unrealized PnL of short (sell) positions. (Tier 1 - upstream wiki, etoro.History.BSLCurrencyPriceSnapShots)';
 ALTER TABLE main.general.bronze_etoro_history_bslcurrencypricesnapshots ALTER COLUMN Occurred COMMENT 'Server timestamp when the price snapshot was recorded. Default = getdate() (local server time). PK component and EndMonth partition key. (Tier 1 - upstream wiki, etoro.History.BSLCurrencyPriceSnapShots)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

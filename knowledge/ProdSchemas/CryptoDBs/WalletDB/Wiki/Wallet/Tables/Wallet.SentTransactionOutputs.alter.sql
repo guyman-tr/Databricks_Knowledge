@@ -37,4 +37,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionoutputs ALTER COLU
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionoutputs ALTER COLUMN Occurred COMMENT 'Timestamp of this output record creation. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionOutputs)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionoutputs ALTER COLUMN IsEtoroFee COMMENT 'Whether this output represents an eToro fee payment rather than a value transfer. 1=fee output, 0/NULL=value output. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionOutputs)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_senttransactionoutputs ALTER COLUMN NormalizedToAddress COMMENT 'Computed PERSISTED column stripping protocol prefix and query parameters from ToAddress. (Tier 1 - upstream wiki, WalletDB.Wallet.SentTransactionOutputs)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

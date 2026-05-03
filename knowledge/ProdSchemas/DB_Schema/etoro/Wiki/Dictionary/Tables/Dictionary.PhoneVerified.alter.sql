@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_phoneverified (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverified SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining 6 phone verification states — from NotVerified through AutomaticallyVerified, ManuallyVerified, Initiated, Rejected, and AbuseFlag — tracking customer phone number verification lifecycle. Source: etoro.Dictionary.PhoneVerified on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PhoneVerified.md).'
+    'comment' = 'Lookup table defining 6 phone verification states - from NotVerified through AutomaticallyVerified, ManuallyVerified, Initiated, Rejected, and AbuseFlag - tracking customer phone number verification lifecycle. Source: etoro.Dictionary.PhoneVerified on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PhoneVerified.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverified SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_phoneverified SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverified ALTER COLUMN PhoneVerifiedID COMMENT 'Primary key identifying the phone verification state. 0=NotVerified, 1=AutomaticallyVerified, 2=ManuallyVerified, 3=Initiated, 4=Rejected, 5=AbuseFlag. Stored in BackOffice.Customer and History.BackOfficeCustomer. Referenced by 20+ procedures across BackOffice, Customer, SalesForce, and dbo schemas. (Tier 1 - upstream wiki, etoro.Dictionary.PhoneVerified)';
 ALTER TABLE main.general.bronze_etoro_dictionary_phoneverified ALTER COLUMN PhoneVerifiedName COMMENT 'Human-readable verification state label. Note: "ManualyVerified" contains a typo (single ''l'') preserved from the original data. Displayed in customer cards, verification reports, and compliance dashboards. (Tier 1 - upstream wiki, etoro.Dictionary.PhoneVerified)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

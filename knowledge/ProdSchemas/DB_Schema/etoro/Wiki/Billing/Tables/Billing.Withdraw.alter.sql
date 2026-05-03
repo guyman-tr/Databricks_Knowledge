@@ -54,4 +54,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ClientWithdr
 ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ExTransactionID COMMENT 'External transaction identifier from the payment provider. Links this withdrawal record to the provider''s transaction reference. (Tier 1 - upstream wiki, etoro.Billing.Withdraw)';
 ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN WithdrawTypeID COMMENT 'Withdrawal type classification added in a later release. NULL=legacy record (55%). 0=standard withdrawal (41%). 1=special/alternate type (3.7%). 2=second alternate type (0.5%). Used by WithdrawToFundingProcess to determine MoveMoneyReasonID override: WithdrawTypeID=1 + FlowID=2 -> MoveMoneyReasonID=5; WithdrawTypeID=1 + FlowID=3 -> MoveMoneyReasonID=6. (Tier 1 - upstream wiki, etoro.Billing.Withdraw)';
 ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN FlowID COMMENT 'Processing flow identifier added in a later release. NULL=legacy (59%). 0=standard flow (38%). 2=eToroMoney local currency withdrawal (2.6%, 42,952 records). 3=specific alternate flow (708 records). 9=rare special case (9 records). 1=one record. FlowID=2 with FundingTypeID=33 triggers eToroMoney-specific balance accounting. (Tier 1 - upstream wiki, etoro.Billing.Withdraw)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

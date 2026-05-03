@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_asic_customeranswers ALTER COLUMN TestId
 ALTER TABLE main.bi_db.bronze_userapidb_asic_customeranswers ALTER COLUMN Question COMMENT 'Full text of the question asked during the test. Stored as text (not ID) for audit self-sufficiency. (Tier 1 - upstream wiki, UserApiDB.ASIC.CustomerAnswers)';
 ALTER TABLE main.bi_db.bronze_userapidb_asic_customeranswers ALTER COLUMN Answer COMMENT 'Full text of the user''s answer. Stored as text for audit self-sufficiency. (Tier 1 - upstream wiki, UserApiDB.ASIC.CustomerAnswers)';
 ALTER TABLE main.bi_db.bronze_userapidb_asic_customeranswers ALTER COLUMN OccurredAt COMMENT 'When this Q&A pair was recorded. Typically matches the parent test''s OccurredAt. (Tier 1 - upstream wiki, UserApiDB.ASIC.CustomerAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

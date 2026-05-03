@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_staking_stakingstatuses ALTER COLUMN Sta
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingstatuses ALTER COLUMN StakingStatusId COMMENT 'The status being applied. FK to Dictionary.StakingStatuses.Id: 1=Pending, 2=Failed, 3=Completed. See Staking Status. Filtered by GetStakingTotals (WHERE StakingStatusId=3) for completed-only aggregation. (Tier 1 - upstream wiki, WalletDB.Staking.StakingStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingstatuses ALTER COLUMN DetailsJson COMMENT 'Optional JSON payload for status-specific details (e.g., error messages for Failed status). Currently unused - all 4,419 rows have NULL. Column exists for extensibility. (Tier 1 - upstream wiki, WalletDB.Staking.StakingStatuses)';
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingstatuses ALTER COLUMN Occurred COMMENT 'Timestamp of this status transition. Defaults to UTC now. Used by StakingData view to determine the latest status per staking (ORDER BY Occurred DESC in ROW_NUMBER window). The time difference between Pending and Completed Occurred values indicates blockchain processing duration. (Tier 1 - upstream wiki, WalletDB.Staking.StakingStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

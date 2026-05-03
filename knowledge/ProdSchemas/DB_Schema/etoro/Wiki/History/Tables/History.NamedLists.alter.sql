@@ -38,4 +38,7 @@ ALTER TABLE main.general.bronze_etoro_history_namedlists ALTER COLUMN AppLoginNa
 ALTER TABLE main.general.bronze_etoro_history_namedlists ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this row version became current in CEP.NamedLists. Populated automatically by SQL Server SYSTEM_VERSIONING (GENERATED ALWAYS AS ROW START). (Tier 1 - upstream wiki, etoro.History.NamedLists)';
 ALTER TABLE main.general.bronze_etoro_history_namedlists ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this row version was superseded and moved to history. The interval [SysStartTime, SysEndTime) is the period during which this named list configuration was active. (Tier 1 - upstream wiki, etoro.History.NamedLists)';
 ALTER TABLE main.general.bronze_etoro_history_namedlists ALTER COLUMN HostName COMMENT 'The machine name of the client that changed this row. Computed column on live table (= host_name()). Captured at change time and stored in history. (Tier 1 - upstream wiki, etoro.History.NamedLists)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

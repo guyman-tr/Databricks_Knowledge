@@ -51,4 +51,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads ALTER COLUMN FunnelID COM
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads ALTER COLUMN LabelID COMMENT 'Marketing label/campaign identifier. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Leads)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads ALTER COLUMN PlayerLevelID COMMENT 'Customer tier at event time. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Leads)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_leads ALTER COLUMN ClubID COMMENT 'Customer club membership. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_Leads)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

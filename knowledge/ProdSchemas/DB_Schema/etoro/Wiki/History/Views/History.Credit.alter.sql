@@ -27,7 +27,7 @@ ALTER TABLE main.general.bronze_etoro_history_credit SET TAGS (
 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN CreditID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN CID through StocksOrderID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `CID through StocksOrderID` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN MirrorEquity COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN MirrorDividendID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN MoveMoneyReasonID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
@@ -38,11 +38,14 @@ ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN PartitionCol C
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN DepositRollbackID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN InterestMonthlyID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN CreditID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN CID through ManagerID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN Credit, Payment COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN Description, Occurred, WithdrawProcessingID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN MirrorID through StocksOrderID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN MirrorEquity, MirrorDividendID, MoveMoneyReasonID, BSLRealFunds COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `CID through ManagerID` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `Credit, Payment` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `Description, Occurred, WithdrawProcessingID` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `MirrorID through StocksOrderID` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `MirrorEquity, MirrorDividendID, MoveMoneyReasonID, BSLRealFunds` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
 ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN OriginalPositionID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN SubCreditTypeID, PartitionCol, DepositRollbackID, InterestMonthlyID COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
-
+ALTER TABLE main.general.bronze_etoro_history_credit ALTER COLUMN `SubCreditTypeID, PartitionCol, DepositRollbackID, InterestMonthlyID` COMMENT '(no description in upstream wiki) (Tier 1 - upstream wiki, etoro.History.Credit)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

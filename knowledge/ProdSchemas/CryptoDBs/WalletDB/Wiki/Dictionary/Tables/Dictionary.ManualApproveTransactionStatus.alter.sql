@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_manualapprovetransactionstatu
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_manualapprovetransactionstatus ALTER COLUMN Id COMMENT 'Unique identifier for the approval status. Values: 1=Pending, 2=Approved, 3=Rejected, 4=Sent. FK target for Wallet.ManualApproveTransactionStatuses. (Tier 1 - upstream wiki, WalletDB.Dictionary.ManualApproveTransactionStatus)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_manualapprovetransactionstatus ALTER COLUMN Name COMMENT 'Short label for the status. Notably uses varchar(24) - smaller than typical Dictionary tables (varchar(64)) - suggesting this was designed for compact status display. (Tier 1 - upstream wiki, WalletDB.Dictionary.ManualApproveTransactionStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

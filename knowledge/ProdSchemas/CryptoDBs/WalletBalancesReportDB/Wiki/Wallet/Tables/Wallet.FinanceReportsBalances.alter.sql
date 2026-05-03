@@ -45,4 +45,7 @@ ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportsbalan
 ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportsbalances ALTER COLUMN LevelId COMMENT 'Classification of the reconciliation outcome. Implicit reference to Dictionary.FinanceReportLevel (no explicit FK due to partitioning). See Finance Report Level. (Tier 1 - upstream wiki, WalletBalancesReportDB.Wallet.FinanceReportsBalances)';
 ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportsbalances ALTER COLUMN Occurred COMMENT 'UTC timestamp when this record was created. Partition column for DatesToFilegroup. Default constraint DF_FinanceReportsBalances_Occurred. Equivalent to FinanceReportRecords.Created. (Tier 1 - upstream wiki, WalletBalancesReportDB.Wallet.FinanceReportsBalances)';
 ALTER TABLE main.wallet.bronze_walletbalancesreportdb_wallet_financereportsbalances ALTER COLUMN Retries COMMENT 'Number of verification re-attempts. Set via the BalanceType TVP. NULL on initial creation. (Tier 1 - upstream wiki, WalletBalancesReportDB.Wallet.FinanceReportsBalances)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:39:29 UTC
+-- Bronze deploy: WalletBalancesReportDB batch 1
+-- ====================

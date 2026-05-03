@@ -35,4 +35,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_walletaddresses ALTER COLUMN Cust
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletaddresses ALTER COLUMN Occurred COMMENT 'Timestamp when this address record was created. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletAddresses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletaddresses ALTER COLUMN BalanceAccountID COMMENT 'External balance account identifier used by the provider for balance tracking. NULL for wallets without provider-side balance accounts. Unique constraint (filtered, non-NULL only). (Tier 1 - upstream wiki, WalletDB.Wallet.WalletAddresses)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletaddresses ALTER COLUMN NormalizedAddress COMMENT 'Computed PERSISTED column that strips protocol prefixes (before '':'') and query parameters (after ''?'') from the Address. Enables consistent address matching regardless of formatting. Indexed for lookup performance. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletAddresses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -69,4 +69,7 @@ ALTER TABLE main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked ALTER COLUM
 ALTER TABLE main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked ALTER COLUMN MinThreshold COMMENT 'Min range value. From V_KYC -> KYC.AnswerThresholds. (Tier 1 - upstream wiki, UserApiDB.dbo.V_CustomerAnswers)';
 ALTER TABLE main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked ALTER COLUMN MaxThreshold COMMENT 'Max range value. From V_KYC -> KYC.AnswerThresholds. (Tier 1 - upstream wiki, UserApiDB.dbo.V_CustomerAnswers)';
 ALTER TABLE main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked ALTER COLUMN MultipleSelection COMMENT 'Whether question allows multiple answers. From V_KYC -> KYC.Questions. (Tier 1 - upstream wiki, UserApiDB.dbo.V_CustomerAnswers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

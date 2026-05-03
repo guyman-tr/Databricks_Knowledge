@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_customertermsandconditions ALTER C
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_customertermsandconditions ALTER COLUMN Gcid COMMENT 'Global Customer ID of the user who accepted. Indexed with TermsAndConditionId for per-user acceptance queries. (Tier 1 - upstream wiki, WalletDB.Wallet.CustomerTermsAndConditions)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_customertermsandconditions ALTER COLUMN TermsAndConditionId COMMENT 'The T&C version accepted. FK to Wallet.TermsAndConditions.Id. Multiple rows per Gcid reflect acceptance of different versions over time. (Tier 1 - upstream wiki, WalletDB.Wallet.CustomerTermsAndConditions)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_customertermsandconditions ALTER COLUMN Occured COMMENT 'Timestamp when the user accepted. Note: column name typo "Occured" preserved from original schema. (Tier 1 - upstream wiki, WalletDB.Wallet.CustomerTermsAndConditions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -29,4 +29,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_usergrouptopermission SET TAGS 
 ALTER TABLE main.general.bronze_etoro_dictionary_usergrouptopermission ALTER COLUMN UserGroupID COMMENT 'The user group receiving the permission. FK to Dictionary.UserGroup(UserGroupID) via FK_DGRP_DG2P. Values map to organizational teams: 1=Administrators, 2=Operations, 3=Risk, etc. See Dictionary.UserGroup for full hierarchy. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroupToPermission)';
 ALTER TABLE main.general.bronze_etoro_dictionary_usergrouptopermission ALTER COLUMN PermissionID COMMENT 'The permission being granted. FK to Dictionary.Permission(PermissionID) via FK_DPRM_DG2P. The 148 permissions cover actions like withdrawal approval, customer editing, trade operations, and reporting access. See Dictionary.Permission for full list. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroupToPermission)';
 ALTER TABLE main.general.bronze_etoro_dictionary_usergrouptopermission ALTER COLUMN ProviderID COMMENT 'The provider/trading entity scope for this permission. 0=global (applies to all providers), 1+=specific provider entity. Enables multi-entity isolation where some teams can operate on certain providers but not others. (Tier 1 - upstream wiki, etoro.Dictionary.UserGroupToPermission)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

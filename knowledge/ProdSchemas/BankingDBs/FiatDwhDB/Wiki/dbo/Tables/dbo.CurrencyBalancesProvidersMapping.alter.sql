@@ -31,4 +31,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_currencybalancesprovidersmapping AL
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_currencybalancesprovidersmapping ALTER COLUMN ProviderId COMMENT 'FK to Dictionary.Providers. Currently 1=Tribe. See Provider. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CurrencyBalancesProvidersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_currencybalancesprovidersmapping ALTER COLUMN CurrencyBalanceProviderId COMMENT 'The provider''s identifier for this currency balance. Used for provider API calls and reconciliation. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CurrencyBalancesProvidersMapping)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_currencybalancesprovidersmapping ALTER COLUMN Created COMMENT 'UTC timestamp when this mapping was recorded. (Tier 1 - upstream wiki, FiatDwhDB.dbo.CurrencyBalancesProvidersMapping)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

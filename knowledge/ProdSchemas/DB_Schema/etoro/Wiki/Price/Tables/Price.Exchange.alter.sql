@@ -36,4 +36,7 @@ ALTER TABLE main.bi_db.bronze_etoro_price_exchange ALTER COLUMN AppLoginName COM
 ALTER TABLE main.bi_db.bronze_etoro_price_exchange ALTER COLUMN SysStartTime COMMENT 'Temporal row validity start. Auto-managed by SQL Server system versioning. (Tier 1 - upstream wiki, etoro.Price.Exchange)';
 ALTER TABLE main.bi_db.bronze_etoro_price_exchange ALTER COLUMN SysEndTime COMMENT 'Temporal row validity end. Historical versions in History.Exchange. (Tier 1 - upstream wiki, etoro.Price.Exchange)';
 ALTER TABLE main.bi_db.bronze_etoro_price_exchange ALTER COLUMN Ric COMMENT 'Reuters/Refinitiv exchange suffix appended to RIC tickers (e.g., AAPL.N where N = NYSE). NULL for exchanges not available on Reuters/Refinitiv or where RIC routing is not used. Used by GetTickerInfo to build complete Reuters ticker strings for liquidity provider feeds. (Tier 1 - upstream wiki, etoro.Price.Exchange)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

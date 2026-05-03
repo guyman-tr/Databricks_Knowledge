@@ -35,4 +35,7 @@ ALTER TABLE main.dealing.bronze_etoro_price_instrumentconfiguration ALTER COLUMN
 ALTER TABLE main.dealing.bronze_etoro_price_instrumentconfiguration ALTER COLUMN AppLoginName COMMENT 'Computed: application identity from context_info(). Populated when calling service sets context_info before DML. (Tier 1 - upstream wiki, etoro.Price.InstrumentConfiguration)';
 ALTER TABLE main.dealing.bronze_etoro_price_instrumentconfiguration ALTER COLUMN SysStartTime COMMENT 'Temporal row validity start. Auto-managed by system versioning. (Tier 1 - upstream wiki, etoro.Price.InstrumentConfiguration)';
 ALTER TABLE main.dealing.bronze_etoro_price_instrumentconfiguration ALTER COLUMN SysEndTime COMMENT 'Temporal row validity end. Historical versions in History.InstrumentConfiguration. (Tier 1 - upstream wiki, etoro.Price.InstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

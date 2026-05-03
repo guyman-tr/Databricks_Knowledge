@@ -31,6 +31,9 @@ ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER C
 ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN Description COMMENT 'Optional description providing business context. Some groups have descriptions (e.g., "Instruments Not allowed in US"), others are NULL. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
 ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN DbLoginName COMMENT 'Computed: suser_name(). SQL Server login that last modified the row. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
 ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN AppLoginName COMMENT 'Computed: CONVERT(varchar(500), context_info()). Application-level identity from CONTEXT_INFO. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
-ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN SysStartTime COMMENT 'Temporal row start — GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
-ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN SysEndTime COMMENT 'Temporal row end — GENERATED ALWAYS AS ROW END. Active rows: 9999-12-31. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
-
+ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN SysStartTime COMMENT 'Temporal row start - GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
+ALTER TABLE main.trading.bronze_etoro_dictionary_tradinginstrumentgroups ALTER COLUMN SysEndTime COMMENT 'Temporal row end - GENERATED ALWAYS AS ROW END. Active rows: 9999-12-31. (Tier 1 - upstream wiki, etoro.Dictionary.TradingInstrumentGroups)';
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

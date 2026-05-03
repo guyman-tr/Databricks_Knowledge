@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_optoutreason SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_optoutreason ALTER COLUMN OptOutReasonID COMMENT 'Unique identifier for the opt-out state: 0=Opt-In, 1=User Opt-Out, 2=Last Login Opt-Out, 3=Country of Origin Opt-Out. Referenced by Customer.CustomerStatic and 10+ customer procedures. (Tier 1 - upstream wiki, etoro.Dictionary.OptOutReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_optoutreason ALTER COLUMN OptOutReason COMMENT 'Human-readable reason label. Note: column name matches table name. Displayed in BackOffice customer details and used in marketing campaign segmentation queries. (Tier 1 - upstream wiki, etoro.Dictionary.OptOutReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

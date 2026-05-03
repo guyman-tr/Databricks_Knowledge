@@ -36,4 +36,7 @@ ALTER TABLE main.trading.bronze_etoro_history_hedgeserverinstrumentconfiguration
 ALTER TABLE main.trading.bronze_etoro_history_hedgeserverinstrumentconfiguration ALTER COLUMN PriceSource COMMENT 'Price feed source for this instrument on this hedge server. Source DEFAULT=1 (primary price source). The integer maps to an internal price source enum determining which market data feed is used for pricing decisions. (Tier 1 - upstream wiki, etoro.History.HedgeServerInstrumentConfiguration)';
 ALTER TABLE main.trading.bronze_etoro_history_hedgeserverinstrumentconfiguration ALTER COLUMN AllowClosePositionMaxDealSizeCheck COMMENT 'Whether the HBC max deal size check also applies when closing positions (not just opening). Source DEFAULT=1 (check enabled on close). 0=bypass the check on close, allowing large positions to be unwound even if they exceed the current deal size limit. (Tier 1 - upstream wiki, etoro.History.HedgeServerInstrumentConfiguration)';
 ALTER TABLE main.trading.bronze_etoro_history_hedgeserverinstrumentconfiguration ALTER COLUMN MinAmountForIM COMMENT 'Minimum position size (in the instrument''s base unit) that requires an Initial Margin (IM) calculation. Source DEFAULT=0 (all positions require IM). Positive values exempt small fractional positions from margin overhead. (Tier 1 - upstream wiki, etoro.History.HedgeServerInstrumentConfiguration)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

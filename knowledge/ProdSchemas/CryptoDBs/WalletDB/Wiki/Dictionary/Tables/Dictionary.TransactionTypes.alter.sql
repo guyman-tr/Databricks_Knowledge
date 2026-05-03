@@ -28,4 +28,7 @@ ALTER TABLE main.wallet.bronze_walletdb_dictionary_transactiontypes SET TAGS (
 -- Column Comments
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_transactiontypes ALTER COLUMN Id COMMENT 'Unique identifier. Values: 0=Redeem, 1=CustomerMoneyOut, 2=AmlMoneyBack, 4=Funding, 5=ConversionMoneyIn, 6=ConversionMoneyOut, 7=Payment, 8=RedeemAsic, 9=Staking, 10=BlockChainActivation, 11=OmnibusMoneyOut, 12=ConversionToFiat, 13=ManualUserMoneyOut, 14=StakeAndRewardsRefund, 15=CustomerMoneyBack. Gap at Id=3. FK target for SentTransactions, ReceivedTransactions, Redemptions, LimitationsDefinitions, LimitExceeds. (Tier 1 - upstream wiki, WalletDB.Dictionary.TransactionTypes)';
 ALTER TABLE main.wallet.bronze_walletdb_dictionary_transactiontypes ALTER COLUMN Name COMMENT 'PascalCase type label. Used across views, stored procedures, and functions for transaction categorization and reporting. (Tier 1 - upstream wiki, WalletDB.Dictionary.TransactionTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

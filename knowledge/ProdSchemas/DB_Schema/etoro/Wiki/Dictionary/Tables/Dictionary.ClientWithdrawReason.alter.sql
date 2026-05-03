@@ -26,8 +26,11 @@ ALTER TABLE main.general.bronze_etoro_dictionary_clientwithdrawreason SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_clientwithdrawreason ALTER COLUMN ClientWithdrawReasonID COMMENT 'Primary key. Values 1–7. Referenced by Billing.Withdraw via FK. Passed as @ClientWithdrawReasonID to WithdrawalService_WithdrawRequestAdd, WithdrawRequestAdd, UpsertWithdraw. (Tier 1 - upstream wiki, etoro.Dictionary.ClientWithdrawReason)';
+ALTER TABLE main.general.bronze_etoro_dictionary_clientwithdrawreason ALTER COLUMN ClientWithdrawReasonID COMMENT 'Primary key. Values 1 - 7. Referenced by Billing.Withdraw via FK. Passed as @ClientWithdrawReasonID to WithdrawalService_WithdrawRequestAdd, WithdrawRequestAdd, UpsertWithdraw. (Tier 1 - upstream wiki, etoro.Dictionary.ClientWithdrawReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_clientwithdrawreason ALTER COLUMN Name COMMENT 'Human-readable reason label displayed in the withdrawal form. E.g., "Withdrawing profits", "Moving to a competitor". NULL allowed. (Tier 1 - upstream wiki, etoro.Dictionary.ClientWithdrawReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_clientwithdrawreason ALTER COLUMN IsActive COMMENT 'Controls visibility in UI. 1 = shown in WithdrawalService_GetClientWitdrawReasons; 0 = hidden for new requests. (Tier 1 - upstream wiki, etoro.Dictionary.ClientWithdrawReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_clientwithdrawreason ALTER COLUMN DisplayOrder COMMENT 'Sort order for UI display. Lower values first. Used in ORDER BY when fetching active reasons. (Tier 1 - upstream wiki, etoro.Dictionary.ClientWithdrawReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

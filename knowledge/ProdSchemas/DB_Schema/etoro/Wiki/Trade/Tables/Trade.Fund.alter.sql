@@ -37,4 +37,7 @@ ALTER TABLE main.bi_db.bronze_etoro_trade_fund ALTER COLUMN CreateDate COMMENT '
 ALTER TABLE main.bi_db.bronze_etoro_trade_fund ALTER COLUMN LastUpdateDate COMMENT 'Last modification timestamp. Updated by application or procedures when fund config changes. (Tier 1 - upstream wiki, etoro.Trade.Fund)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_fund ALTER COLUMN FundType COMMENT 'FK to Dictionary.FundType.FundTypeID. 1=TopTraders (copy-based), 2=Partners (external strategist), 3=Market (thematic index). NULL for older funds. See Dictionary.FundType. (Tier 1 - upstream wiki, etoro.Trade.Fund)';
 ALTER TABLE main.bi_db.bronze_etoro_trade_fund ALTER COLUMN HasCrypto COMMENT '1 = fund may hold crypto instruments; 0 = fund excludes crypto. Default 1. Returned by GetFundMetaData. Used for instrument filtering and risk rules. (Tier 1 - upstream wiki, etoro.Trade.Fund)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

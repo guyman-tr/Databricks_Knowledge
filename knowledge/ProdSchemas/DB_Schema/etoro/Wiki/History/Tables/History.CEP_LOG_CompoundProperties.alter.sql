@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundproperties ALTER C
 ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundproperties ALTER COLUMN Name COMMENT 'The name of the compound property as it existed before this change. A compound property groups conditions into a reusable logical expression (e.g., "HighRiskInstrument", "LargeBuyPosition"). (Tier 1 - upstream wiki, etoro.History.CEP_LOG_CompoundProperties)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundproperties ALTER COLUMN ValidFrom COMMENT 'Timestamp when this version of the compound property became active. Copied from the parent row''s ValidFrom column. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_CompoundProperties)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_compoundproperties ALTER COLUMN ValidTo COMMENT 'Timestamp when this version was superseded (when the UPDATE or DELETE triggered). Defaults to getutcdate() at INSERT time. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_CompoundProperties)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

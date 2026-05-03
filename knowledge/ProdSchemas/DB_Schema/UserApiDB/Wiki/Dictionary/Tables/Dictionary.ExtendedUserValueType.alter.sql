@@ -30,4 +30,7 @@ ALTER TABLE main.compliance.bronze_userapidb_dictionary_extendeduservaluetype AL
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_extendeduservaluetype ALTER COLUMN Name COMMENT 'Value subtype name. camelCase for tax IDs (taxCPR), PascalCase for national PINs (NationalNumber). (Tier 1 - upstream wiki, UserApiDB.Dictionary.ExtendedUserValueType)';
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_extendeduservaluetype ALTER COLUMN FieldTypeID COMMENT 'FK to Dictionary.ExtendedUserFieldType. Parent field type: 3=Tax ID, 4=NationalPin, 9=DedicatedEv. (Tier 1 - upstream wiki, UserApiDB.Dictionary.ExtendedUserValueType)';
 ALTER TABLE main.compliance.bronze_userapidb_dictionary_extendeduservaluetype ALTER COLUMN ExtendedUserValueTypeShortName COMMENT 'Shortened name for API responses. Typically matches Name. (Tier 1 - upstream wiki, UserApiDB.Dictionary.ExtendedUserValueType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

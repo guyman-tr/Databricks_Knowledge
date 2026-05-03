@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_accountupdatetype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_accountupdatetype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 14 types of account balance updates — deposits, cashouts, bonuses, trade operations, fees, and cancellations — that modify a customer''s financial account. Source: etoro.Dictionary.AccountUpdateType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AccountUpdateType.md).'
+    'comment' = 'Lookup table defining the 14 types of account balance updates - deposits, cashouts, bonuses, trade operations, fees, and cancellations - that modify a customer''s financial account. Source: etoro.Dictionary.AccountUpdateType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AccountUpdateType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_accountupdatetype SET TAGS (
@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_accountupdatetype SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_accountupdatetype ALTER COLUMN AccountUpdateTypeID COMMENT 'Primary key identifying the update type. Used as NONCLUSTERED PK (unusual — suggests the table was originally heap-organized). Values 1-14 covering deposits, cashouts, bonuses, trades, fees, and cancellations. Stored in History.Account and referenced by Billing.AmountAdd, Billing.AmountSubstract, Billing.CashoutRequestAdd, Customer.SetBalance. (Tier 1 - upstream wiki, etoro.Dictionary.AccountUpdateType)';
+ALTER TABLE main.general.bronze_etoro_dictionary_accountupdatetype ALTER COLUMN AccountUpdateTypeID COMMENT 'Primary key identifying the update type. Used as NONCLUSTERED PK (unusual - suggests the table was originally heap-organized). Values 1-14 covering deposits, cashouts, bonuses, trades, fees, and cancellations. Stored in History.Account and referenced by Billing.AmountAdd, Billing.AmountSubstract, Billing.CashoutRequestAdd, Customer.SetBalance. (Tier 1 - upstream wiki, etoro.Dictionary.AccountUpdateType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_accountupdatetype ALTER COLUMN Name COMMENT 'Human-readable name of the balance update type. Unique index enforced (DPMS_NAME). Used in reports and audit trails to describe what financial operation occurred. Loaded into billing service memory by Billing.LoadAccountUpdateTypes. (Tier 1 - upstream wiki, etoro.Dictionary.AccountUpdateType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

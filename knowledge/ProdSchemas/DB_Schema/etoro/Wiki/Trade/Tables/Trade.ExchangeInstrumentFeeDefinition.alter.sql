@@ -38,4 +38,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_exchangeinstrumentfeedefinition ALTE
 ALTER TABLE main.trading.bronze_etoro_trade_exchangeinstrumentfeedefinition ALTER COLUMN DbLoginName COMMENT 'Current SQL login; audit trail. (Tier 1 - upstream wiki, etoro.Trade.ExchangeInstrumentFeeDefinition)';
 ALTER TABLE main.trading.bronze_etoro_trade_exchangeinstrumentfeedefinition ALTER COLUMN SysStartTime COMMENT 'System versioning row start. History.ExchangeInstrumentFeeDefinition. (Tier 1 - upstream wiki, etoro.Trade.ExchangeInstrumentFeeDefinition)';
 ALTER TABLE main.trading.bronze_etoro_trade_exchangeinstrumentfeedefinition ALTER COLUMN SysEndTime COMMENT 'System versioning row end. Current rows have max datetime. (Tier 1 - upstream wiki, etoro.Trade.ExchangeInstrumentFeeDefinition)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

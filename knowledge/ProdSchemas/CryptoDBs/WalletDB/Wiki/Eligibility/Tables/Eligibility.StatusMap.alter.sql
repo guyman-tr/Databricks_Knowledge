@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_eligibility_statusmap ALTER COLUMN Id COM
 ALTER TABLE main.bi_db.bronze_walletdb_eligibility_statusmap ALTER COLUMN GroupValue COMMENT 'Group-level eligibility status derived from the customer''s country, account tier, or other group attributes. FK to Dictionary.EligibilityStatuses: 0=BlockedFromAccess, 1=ReadOnly, 2=AllOperations, 3=AllOperationsForExistingUsersOnly. This is the "AllowedUsingWalletStatus" from InfraSetting, per HLD. See Eligibility Statuses. (Tier 1 - upstream wiki, WalletDB.Eligibility.StatusMap)';
 ALTER TABLE main.bi_db.bronze_walletdb_eligibility_statusmap ALTER COLUMN CustomerValue COMMENT 'Customer-level eligibility override, set individually via BackOffice or API. FK to Dictionary.EligibilityStatuses: 0=BlockedFromAccess, 1=ReadOnly, 2=AllOperations, 3=AllOperationsForExistingUsersOnly. NULL means no customer-level override exists - the group status applies directly. Per HLD: "AllowedUsingWalletStatusCustomerLevel." (Tier 1 - upstream wiki, WalletDB.Eligibility.StatusMap)';
 ALTER TABLE main.bi_db.bronze_walletdb_eligibility_statusmap ALTER COLUMN Status COMMENT 'Resolved effective eligibility status after applying conflict resolution between GroupValue and CustomerValue. FK to Dictionary.EligibilityStatuses: 0=BlockedFromAccess, 1=ReadOnly, 2=AllOperations, 3=AllOperationsForExistingUsersOnly. This is the final status returned by Eligibility.GetResolvedAllowedUsingWalletStatus and consumed by all services that validate crypto access. (Tier 1 - upstream wiki, WalletDB.Eligibility.StatusMap)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

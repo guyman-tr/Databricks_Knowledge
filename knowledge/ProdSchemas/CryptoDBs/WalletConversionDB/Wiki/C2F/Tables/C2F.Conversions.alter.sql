@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversions ALTER COLUMN Cr
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversions ALTER COLUMN ConversionFeePercentage COMMENT 'Fee rate applied to the conversion as a decimal fraction (0.1 = 10%). Used to calculate ConversionFeeAmount in FiatTransactions. Zero fee observed for some EtoroPosition conversions. (Tier 1 - upstream wiki, WalletConversionDB.C2F.Conversions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversions ALTER COLUMN CorrelationId COMMENT 'Distributed tracing correlation ID linking this conversion to its Saga.SagaRuns orchestration entry and all cross-service operations. Used as the deduplication key by InsertConversion. Indexed with Id for lookups. All SPs identify conversions by CorrelationId rather than Id. (Tier 1 - upstream wiki, WalletConversionDB.C2F.Conversions)';
 ALTER TABLE main.bi_db.bronze_walletconversiondb_c2f_conversions ALTER COLUMN Occurred COMMENT 'UTC timestamp when the conversion was created. Default constraint provides automatic timestamping. Indexed DESC for recency queries. Used by time-windowed queries (GetConversionAmounts, GetConversionsUsdSum) via @FromDateTime filter. (Tier 1 - upstream wiki, WalletConversionDB.C2F.Conversions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:44 UTC
+-- Bronze deploy: WalletConversionDB batch 1
+-- ====================

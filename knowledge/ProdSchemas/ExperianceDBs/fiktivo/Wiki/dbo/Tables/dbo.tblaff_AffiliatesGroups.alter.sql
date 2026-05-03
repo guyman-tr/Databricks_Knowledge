@@ -61,4 +61,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatesgroups ALTER COLUMN A
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatesgroups ALTER COLUMN AccountManagerEmail COMMENT 'Email of the assigned account manager. MASKED. Used in Dynamics CRM sync trigger for group manager change notifications. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_AffiliatesGroups)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatesgroups ALTER COLUMN AccountManagerImagePath COMMENT 'URL/path to the account manager''s profile photo. Displayed in the affiliate portal alongside the group contact information. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_AffiliatesGroups)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatesgroups ALTER COLUMN ManagerUserID COMMENT 'FK to dbo.tblaff_User.UserID. The admin user responsible for this group. 0 or NULL = no dedicated manager. Used in the Dynamics CRM sync trigger. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_AffiliatesGroups)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

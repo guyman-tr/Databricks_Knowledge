@@ -32,4 +32,7 @@ ALTER TABLE main.bi_db.bronze_etoro_price_accountratesource ALTER COLUMN DbLogin
 ALTER TABLE main.bi_db.bronze_etoro_price_accountratesource ALTER COLUMN AppLoginName COMMENT 'Computed column: captures the application-level identity via SQL Server context_info(). Populated when the calling application sets context_info before executing DML (e.g., the pricing management service sets its service name). NULL when context_info is not set. Used for app-level audit tracking alongside DbLoginName. (Tier 1 - upstream wiki, etoro.Price.AccountRateSource)';
 ALTER TABLE main.bi_db.bronze_etoro_price_accountratesource ALTER COLUMN SysStartTime COMMENT 'Temporal row validity start: timestamp when this version of the row became current. Auto-managed by SQL Server temporal table mechanism. Used with SysEndTime to query point-in-time states of the table via FOR SYSTEM_TIME AS OF. (Tier 1 - upstream wiki, etoro.Price.AccountRateSource)';
 ALTER TABLE main.bi_db.bronze_etoro_price_accountratesource ALTER COLUMN SysEndTime COMMENT 'Temporal row validity end: ''9999-12-31...'' = currently active row. When a row is updated, its current version''s SysEndTime is set to now, and a new version starts. Historical versions are in History.AccountRateSource. (Tier 1 - upstream wiki, etoro.Price.AccountRateSource)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

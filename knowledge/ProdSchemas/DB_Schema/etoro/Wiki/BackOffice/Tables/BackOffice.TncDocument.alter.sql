@@ -38,4 +38,7 @@ ALTER TABLE main.bi_db.bronze_etoro_backoffice_tncdocument ALTER COLUMN TncDocTy
 ALTER TABLE main.bi_db.bronze_etoro_backoffice_tncdocument ALTER COLUMN Enabled COMMENT '1=Document is active and visible to customers. 0=Document is suppressed/hidden without deletion. Can be toggled independently of IsActive. (Tier 1 - upstream wiki, etoro.BackOffice.TncDocument)';
 ALTER TABLE main.bi_db.bronze_etoro_backoffice_tncdocument ALTER COLUMN IsActive COMMENT '1=Document is the current valid version. 0=Document has been superseded by a newer version (set by TncDocumentUpdateIsActive). Used with Enabled to determine if document is served to customers. (Tier 1 - upstream wiki, etoro.BackOffice.TncDocument)';
 ALTER TABLE main.bi_db.bronze_etoro_backoffice_tncdocument ALTER COLUMN CountryID COMMENT 'FK to Dictionary.Country. If non-NULL, this document applies only to customers in the specified country within the regulation. NULL=applies to all countries in the regulation. Enables country-specific T&C overrides. (Tier 1 - upstream wiki, etoro.BackOffice.TncDocument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

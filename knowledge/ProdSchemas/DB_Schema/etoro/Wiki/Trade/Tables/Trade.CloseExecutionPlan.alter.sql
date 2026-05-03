@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.trading.bronze_etoro_trade_closeexecutionplan (business_group=trading) ----
 ALTER TABLE main.trading.bronze_etoro_trade_closeexecutionplan SET TBLPROPERTIES (
-    'comment' = 'Memory-optimized table storing the execution plan for closing positions—maps which positions and units to close for each order-for-close before actual hedge execution. Source: etoro.Trade.CloseExecutionPlan on the etoro production database, ingested via the Generic Pipeline (Override strategy, 60-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.CloseExecutionPlan.md).'
+    'comment' = 'Memory-optimized table storing the execution plan for closing positions - maps which positions and units to close for each order-for-close before actual hedge execution. Source: etoro.Trade.CloseExecutionPlan on the etoro production database, ingested via the Generic Pipeline (Override strategy, 60-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.CloseExecutionPlan.md).'
 );
 
 ALTER TABLE main.trading.bronze_etoro_trade_closeexecutionplan SET TAGS (
@@ -33,4 +33,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_closeexecutionplan ALTER COLUMN Leve
 ALTER TABLE main.trading.bronze_etoro_trade_closeexecutionplan ALTER COLUMN CID COMMENT 'Customer ID. References Customer.CustomerStatic.CID. (Tier 1 - upstream wiki, etoro.Trade.CloseExecutionPlan)';
 ALTER TABLE main.trading.bronze_etoro_trade_closeexecutionplan ALTER COLUMN CloseActionType COMMENT 'Reason/type of close. Maps to Dictionary.OrderForExecutionCloseActionType.ID. (Tier 1 - upstream wiki, etoro.Trade.CloseExecutionPlan)';
 ALTER TABLE main.trading.bronze_etoro_trade_closeexecutionplan ALTER COLUMN IsHedged COMMENT 'Whether the position has an open hedge. Affects execution path and fee logic. (Tier 1 - upstream wiki, etoro.Trade.CloseExecutionPlan)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

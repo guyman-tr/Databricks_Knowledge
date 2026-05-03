@@ -46,4 +46,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_depositrollbacktracking ALTER COLU
 ALTER TABLE main.billing.bronze_etoro_billing_depositrollbacktracking ALTER COLUMN ModificationDate COMMENT 'UTC timestamp of last modification. Initially set to GETDATE() = same as CreateDate. Updated when IsCanceled is set to 1 by a subsequent cancel-rollback action. (Tier 1 - upstream wiki, etoro.Billing.DepositRollbackTracking)';
 ALTER TABLE main.billing.bronze_etoro_billing_depositrollbacktracking ALTER COLUMN ManagerID COMMENT 'Back-office manager who performed the rollback. Explicit FK to BackOffice.Manager(ManagerID). Passed to Customer.SetBalance for audit trail. (Tier 1 - upstream wiki, etoro.Billing.DepositRollbackTracking)';
 ALTER TABLE main.billing.bronze_etoro_billing_depositrollbacktracking ALTER COLUMN IsCanceled COMMENT 'Whether this rollback was subsequently canceled. 0=active rollback (default on insert), 1=canceled by a later PaymentStatusID=2 action on the same deposit. 2,909 rows (16%) have IsCanceled=1. When canceling, all IsCanceled=0 rows for the DepositID are set to 1 before the new row is inserted. (Tier 1 - upstream wiki, etoro.Billing.DepositRollbackTracking)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

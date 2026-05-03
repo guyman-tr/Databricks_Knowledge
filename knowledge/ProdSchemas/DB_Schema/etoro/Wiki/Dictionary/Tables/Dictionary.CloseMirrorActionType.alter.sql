@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_closemirroractiontype SET TAGS 
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_closemirroractiontype ALTER COLUMN ID COMMENT 'Primary key. Values 0–6. Referenced by Trade.Mirror and History.Mirror via CloseMirrorActionTypeID. Set by Trade.ChangeMirrorState, Trade.PostDetachPositionFromMirror, and related procs. (Tier 1 - upstream wiki, etoro.Dictionary.CloseMirrorActionType)';
+ALTER TABLE main.general.bronze_etoro_dictionary_closemirroractiontype ALTER COLUMN ID COMMENT 'Primary key. Values 0 - 6. Referenced by Trade.Mirror and History.Mirror via CloseMirrorActionTypeID. Set by Trade.ChangeMirrorState, Trade.PostDetachPositionFromMirror, and related procs. (Tier 1 - upstream wiki, etoro.Dictionary.CloseMirrorActionType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_closemirroractiontype ALTER COLUMN CloseMirrorActionName COMMENT 'Human-readable label. Values: Customer, Stop Loss, BSL, Manual Liquidation, BackOffice, Customer Detach, BackOffice Detach. Used in reporting and UI. (Tier 1 - upstream wiki, etoro.Dictionary.CloseMirrorActionType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

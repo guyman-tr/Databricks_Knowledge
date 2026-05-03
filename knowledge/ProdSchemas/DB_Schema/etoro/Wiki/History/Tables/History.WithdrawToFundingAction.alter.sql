@@ -51,4 +51,7 @@ ALTER TABLE main.general.bronze_etoro_history_withdrawtofundingaction ALTER COLU
 ALTER TABLE main.general.bronze_etoro_history_withdrawtofundingaction ALTER COLUMN SchemeId COMMENT 'Payment scheme identifier (added 2021, PAYUS-3900). Identifies the payment network or scheme used by the provider. NULL for older records or flows not using scheme routing. (Tier 1 - upstream wiki, etoro.History.WithdrawToFundingAction)';
 ALTER TABLE main.general.bronze_etoro_history_withdrawtofundingaction ALTER COLUMN ResponseID COMMENT 'External payment provider response/transaction identifier (added 2021, PAYUA-2822). Links to provider''s response record for reconciliation. NULL for older records. (Tier 1 - upstream wiki, etoro.History.WithdrawToFundingAction)';
 ALTER TABLE main.general.bronze_etoro_history_withdrawtofundingaction ALTER COLUMN RequestExecuteEntryMethodId COMMENT 'Method identifier for how the payment request was executed. 1=standard. NULL for older records or alternate flows. (Tier 1 - upstream wiki, etoro.History.WithdrawToFundingAction)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

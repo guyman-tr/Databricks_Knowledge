@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_bonusstatus (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_bonusstatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the lifecycle states of deposit bonuses — from New through Approved, Declined, or Reverted. Referenced by bonus-related billing and deposit tables. Source: etoro.Dictionary.BonusStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.BonusStatus.md).'
+    'comment' = 'Lookup table defining the lifecycle states of deposit bonuses - from New through Approved, Declined, or Reverted. Referenced by bonus-related billing and deposit tables. Source: etoro.Dictionary.BonusStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.BonusStatus.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_bonusstatus SET TAGS (
@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_bonusstatus SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_bonusstatus ALTER COLUMN BonusStatusID COMMENT 'Primary key; unique identifier. Range 0–3. Referenced by Billing.Deposit, BackOffice.Bonus, and related procs. MCP-verified 4 rows. (Tier 1 - upstream wiki, etoro.Dictionary.BonusStatus)';
+ALTER TABLE main.general.bronze_etoro_dictionary_bonusstatus ALTER COLUMN BonusStatusID COMMENT 'Primary key; unique identifier. Range 0 - 3. Referenced by Billing.Deposit, BackOffice.Bonus, and related procs. MCP-verified 4 rows. (Tier 1 - upstream wiki, etoro.Dictionary.BonusStatus)';
 ALTER TABLE main.general.bronze_etoro_dictionary_bonusstatus ALTER COLUMN Name COMMENT 'Human-readable status label (New, Approved, Declined, Reverted). Used in joins for display and reporting. (Tier 1 - upstream wiki, etoro.Dictionary.BonusStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -39,4 +39,7 @@ ALTER TABLE main.general.bronze_etoro_history_interestrate ALTER COLUMN MarkupBu
 ALTER TABLE main.general.bronze_etoro_history_interestrate ALTER COLUMN MarkupSell COMMENT 'eToro''s spread/markup added to InterestRateSell. Negative = eToro passes through a discount on short positions; positive = adds charge on top of market rate. (Tier 1 - upstream wiki, etoro.History.InterestRate)';
 ALTER TABLE main.general.bronze_etoro_history_interestrate ALTER COLUMN OverNightFeePatternID COMMENT 'Determines fee calculation scope: 0=Regular (no non-leveraged buy fees), 1=WithNonLeverageFee (fees apply to non-leveraged positions too), 2=Manual (not auto-calculated). (History.OverNightFeePattern). (Tier 1 - upstream wiki, etoro.History.InterestRate)';
 ALTER TABLE main.general.bronze_etoro_history_interestrate ALTER COLUMN SettlementTypeID COMMENT 'Settlement type this rate applies to: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. Part of composite PK in live table. (Dictionary.SettlementTypes). (Tier 1 - upstream wiki, etoro.History.InterestRate)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_movemoneyreason SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_movemoneyreason ALTER COLUMN MoveMoneyReasonID COMMENT 'Unique identifier for the money movement reason: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment. Gap at ID 4. Referenced by 50+ credit/balance procedures. (Tier 1 - upstream wiki, etoro.Dictionary.MoveMoneyReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_movemoneyreason ALTER COLUMN MoveMoneyReason COMMENT 'Human-readable reason label. Note: column name matches table name (denormalized pattern). Displayed in account statements, credit history, and BackOffice audit screens. (Tier 1 - upstream wiki, etoro.Dictionary.MoveMoneyReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_jobenvironmenttype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_jobenvironmenttype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining three job execution environments — Israel, Cyprus, and Amsterdam — representing the geographic data center locations where scheduled BackOffice jobs run. Source: etoro.Dictionary.JobEnvironmentType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.JobEnvironmentType.md).'
+    'comment' = 'Lookup table defining three job execution environments - Israel, Cyprus, and Amsterdam - representing the geographic data center locations where scheduled BackOffice jobs run. Source: etoro.Dictionary.JobEnvironmentType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.JobEnvironmentType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_jobenvironmenttype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_jobenvironmenttype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_jobenvironmenttype ALTER COLUMN JobEnvironmentTypeID COMMENT 'Primary key identifying the execution environment. 1=Israel, 2=Cyprus, 3=Amsterdam. Stored in BackOffice.ScheduledJob to route jobs to the correct data center. (Tier 1 - upstream wiki, etoro.Dictionary.JobEnvironmentType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_jobenvironmenttype ALTER COLUMN JobEnvironmentType COMMENT 'Geographic name of the execution environment. Displayed in BackOffice job scheduling UI for operators to select the target environment. Note: "Amsterdam" value has trailing whitespace. (Tier 1 - upstream wiki, etoro.Dictionary.JobEnvironmentType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

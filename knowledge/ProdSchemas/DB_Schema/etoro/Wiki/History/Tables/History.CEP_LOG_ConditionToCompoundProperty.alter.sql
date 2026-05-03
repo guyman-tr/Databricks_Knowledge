@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_history_cep_log_conditiontocompoundpropert
 ALTER TABLE main.general.bronze_etoro_history_cep_log_conditiontocompoundproperty ALTER COLUMN ConditionID COMMENT 'The condition that was a member of this compound property. References CEP.Conditions. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_ConditionToCompoundProperty)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_conditiontocompoundproperty ALTER COLUMN ValidFrom COMMENT 'Timestamp when this membership version became active. Copied from parent row. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_ConditionToCompoundProperty)';
 ALTER TABLE main.general.bronze_etoro_history_cep_log_conditiontocompoundproperty ALTER COLUMN ValidTo COMMENT 'Timestamp when this membership was superseded. Defaults to getutcdate() at INSERT. Part of composite PK. (Tier 1 - upstream wiki, etoro.History.CEP_LOG_ConditionToCompoundProperty)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

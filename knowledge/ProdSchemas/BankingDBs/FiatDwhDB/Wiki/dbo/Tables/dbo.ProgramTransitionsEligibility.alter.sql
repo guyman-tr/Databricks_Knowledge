@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibility ALTER 
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibility ALTER COLUMN Created COMMENT 'UTC timestamp when this eligibility record was created. (Tier 1 - upstream wiki, FiatDwhDB.dbo.ProgramTransitionsEligibility)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibility ALTER COLUMN CorrelationId COMMENT 'Unique ID linking this eligibility assessment to the triggering business operation. Enables distributed tracing. (Tier 1 - upstream wiki, FiatDwhDB.dbo.ProgramTransitionsEligibility)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibility ALTER COLUMN PlatformId COMMENT 'Platform context identifier. Links to the platform instance where the eligibility was assessed. (Tier 1 - upstream wiki, FiatDwhDB.dbo.ProgramTransitionsEligibility)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

@@ -55,4 +55,7 @@ ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transactions ALTER COLUMN De
 ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transactions ALTER COLUMN DebitorExchangeFee COMMENT 'Fee/spread applied to the debitor-side currency conversion. (Tier 1 - upstream wiki, MoneyBusDB.MoneyBus.Transactions)';
 ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transactions ALTER COLUMN DebitorExchangeRate COMMENT 'Effective exchange rate applied to the debitor side. Debitor amount = Amount * DebitorExchangeRate (approximately). (Tier 1 - upstream wiki, MoneyBusDB.MoneyBus.Transactions)';
 ALTER TABLE main.billing.bronze_moneybusdb_moneybus_transactions ALTER COLUMN HoldReferenceID COMMENT 'Provider-side reference ID for the hold/reserve operation. Used to release or settle held funds. Populated during HoldInitiated step. (Tier 1 - upstream wiki, MoneyBusDB.MoneyBus.Transactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:41:14 UTC
+-- Bronze deploy: MoneyBusDB batch 1
+-- ====================

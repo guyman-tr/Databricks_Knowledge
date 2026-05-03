@@ -34,4 +34,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_depot ALTER COLUMN Name COMMENT 'H
 ALTER TABLE main.billing.bronze_etoro_billing_depot ALTER COLUMN IsActive COMMENT 'Whether this depot is currently accepting transactions. 1=Active (eligible for routing); 0 or NULL=Inactive (excluded from routing). 114 of 163 rows are active. Queried as IsActive = 1 in routing logic. (Tier 1 - upstream wiki, etoro.Billing.Depot)';
 ALTER TABLE main.billing.bronze_etoro_billing_depot ALTER COLUMN PayoutGeneration COMMENT 'Controls automated payout file generation capability: 1=enabled (system can generate payment batch files for this depot); 0=disabled (manual or provider-managed). Default=0. (Tier 1 - upstream wiki, etoro.Billing.Depot)';
 ALTER TABLE main.billing.bronze_etoro_billing_depot ALTER COLUMN Features COMMENT 'Depot-specific configuration features in structured text (JSON or XML format). Used for newer integrations requiring behavioral flags (e.g., 3DS2 settings, specific API options). NULL or empty for most legacy depots. (Tier 1 - upstream wiki, etoro.Billing.Depot)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

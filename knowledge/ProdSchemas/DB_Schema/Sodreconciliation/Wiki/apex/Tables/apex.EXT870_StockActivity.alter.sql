@@ -55,4 +55,7 @@ ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext870_stockactivity ALTE
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext870_stockactivity ALTER COLUMN SequenceCusipNumber COMMENT 'Sequence CUSIP number for multi-leg movements. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT870_StockActivity)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext870_stockactivity ALTER COLUMN SequenceEntryDate COMMENT 'Entry date associated with the sequence CUSIP. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT870_StockActivity)';
 ALTER TABLE main.finance.bronze_sodreconciliation_apex_ext870_stockactivity ALTER COLUMN ProcessDate COMMENT 'Business date of the Apex extract file. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT870_StockActivity)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_notetype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_notetype ALTER COLUMN NoteTypeID COMMENT 'Unique identifier for the note category: 1=General, 2=Support, 3=Telemarketing, 4=Campaign. Referenced by History.CustomerNote and Maintenance.CustomerNoteAdd. (Tier 1 - upstream wiki, etoro.Dictionary.NoteType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_notetype ALTER COLUMN Name COMMENT 'Human-readable category label. Indexed (DCNT_NAME) for fast lookups. Displayed in BackOffice customer note forms and filters. (Tier 1 - upstream wiki, etoro.Dictionary.NoteType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_authenticationreasonpoi (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonpoi SET TBLPROPERTIES (
-    'comment' = 'Lookup table for Proof of Identity (POI) specific document authentication reasons. Exists in SSDT but not deployed to the live database — likely replaced by the unified Dictionary.AuthenticationReason table. Source: etoro.Dictionary.AuthenticationReasonPOI on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AuthenticationReasonPOI.md).'
+    'comment' = 'Lookup table for Proof of Identity (POI) specific document authentication reasons. Exists in SSDT but not deployed to the live database - likely replaced by the unified Dictionary.AuthenticationReason table. Source: etoro.Dictionary.AuthenticationReasonPOI on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.AuthenticationReasonPOI.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonpoi SET TAGS (
@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonpoi SET TAG
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonpoi ALTER COLUMN ReasonID COMMENT 'Primary key for POI-specific authentication reason. Same structure as Dictionary.AuthenticationReason.ReasonID. Table not deployed — likely consolidated into the main AuthenticationReason table. (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReasonPOI)';
+ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonpoi ALTER COLUMN ReasonID COMMENT 'Primary key for POI-specific authentication reason. Same structure as Dictionary.AuthenticationReason.ReasonID. Table not deployed - likely consolidated into the main AuthenticationReason table. (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReasonPOI)';
 ALTER TABLE main.general.bronze_etoro_dictionary_authenticationreasonpoi ALTER COLUMN Reason COMMENT 'Human-readable POI authentication reason description. Same structure as Dictionary.AuthenticationReason.Reason. (Tier 1 - upstream wiki, etoro.Dictionary.AuthenticationReasonPOI)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -39,4 +39,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_getinstrument ALTER COLUMN IsMajor C
 ALTER TABLE main.trading.bronze_etoro_trade_getinstrument ALTER COLUMN Industry COMMENT 'Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData. (Tier 1 - upstream wiki, etoro.Trade.GetInstrument)';
 ALTER TABLE main.trading.bronze_etoro_trade_getinstrument ALTER COLUMN ExchangeID COMMENT 'FK to Price.Exchange. Primary exchange for price feed routing. From Trade.InstrumentMetaData. (Tier 1 - upstream wiki, etoro.Trade.GetInstrument)';
 ALTER TABLE main.trading.bronze_etoro_trade_getinstrument ALTER COLUMN OperationMode COMMENT 'Trading operation mode: 0=Standard, 1=Alternate (e.g., European stocks in non-USD). From Trade.Instrument. (Tier 1 - upstream wiki, etoro.Trade.GetInstrument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

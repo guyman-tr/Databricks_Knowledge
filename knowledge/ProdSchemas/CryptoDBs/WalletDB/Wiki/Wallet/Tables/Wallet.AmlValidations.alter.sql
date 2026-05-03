@@ -40,4 +40,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_amlvalidations ALTER COLUMN Block
 ALTER TABLE main.wallet.bronze_walletdb_wallet_amlvalidations ALTER COLUMN DetailsJson COMMENT 'Full JSON response from the AML provider. Contains detailed risk scores, alerts, cluster information, and screening metadata. Used for audit and investigation purposes. (Tier 1 - upstream wiki, WalletDB.Wallet.AmlValidations)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_amlvalidations ALTER COLUMN CryptoId COMMENT 'The cryptocurrency being transacted. FK to Wallet.CryptoTypes.CryptoID. Determines which AML provider contract is used (via Wallet.AmlProviderContracts). (Tier 1 - upstream wiki, WalletDB.Wallet.AmlValidations)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_amlvalidations ALTER COLUMN CategoryId COMMENT 'Chainalysis risk category if a risk factor was identified. NULL for clean transactions. Implicit reference to Dictionary.ChainalysisCategoryId. See Chainalysis Category. (Tier 1 - upstream wiki, WalletDB.Wallet.AmlValidations)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

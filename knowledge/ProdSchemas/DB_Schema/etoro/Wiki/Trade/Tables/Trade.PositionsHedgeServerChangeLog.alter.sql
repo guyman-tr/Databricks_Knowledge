@@ -34,4 +34,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_positionshedgeserverchangelog ALTER 
 ALTER TABLE main.trading.bronze_etoro_trade_positionshedgeserverchangelog ALTER COLUMN FromRootHedgeServerID COMMENT 'The root-level hedge server ID before the move. Nullable because older records or certain scenarios may not track root server changes. From Trade.PositionTbl.RootHedgeServerID. (Tier 1 - upstream wiki, etoro.Trade.PositionsHedgeServerChangeLog)';
 ALTER TABLE main.trading.bronze_etoro_trade_positionshedgeserverchangelog ALTER COLUMN ToRootHedgeServerID COMMENT 'The root-level hedge server ID after the move. Nullable for same reasons as FromRootHedgeServerID. Tracks hierarchical server assignment changes. (Tier 1 - upstream wiki, etoro.Trade.PositionsHedgeServerChangeLog)';
 ALTER TABLE main.trading.bronze_etoro_trade_positionshedgeserverchangelog ALTER COLUMN RuleID COMMENT 'Identifies the automated routing rule that triggered this position move. Positive values correspond to reroute service rules. -1 = manual/ad-hoc move (not triggered by a rule). NULL if not applicable. Rule 88 is the most common in recent data. (Tier 1 - upstream wiki, etoro.Trade.PositionsHedgeServerChangeLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

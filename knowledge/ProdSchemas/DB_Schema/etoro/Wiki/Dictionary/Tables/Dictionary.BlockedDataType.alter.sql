@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_blockeddatatype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_blockeddatatype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 5 types of customer data that can be blacklisted — User Name, Email, OriginalCID, Credit Card, and PayPal Email — used by the fraud prevention and risk management blacklist system. Source: etoro.Dictionary.BlockedDataType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.BlockedDataType.md).'
+    'comment' = 'Lookup table defining the 5 types of customer data that can be blacklisted - User Name, Email, OriginalCID, Credit Card, and PayPal Email - used by the fraud prevention and risk management blacklist system. Source: etoro.Dictionary.BlockedDataType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.BlockedDataType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_blockeddatatype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_blockeddatatype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_blockeddatatype ALTER COLUMN BlockedDataTypeID COMMENT 'Primary key identifying the blocked data category. Values 1-5. Referenced by BackOffice.CustomerBlackList.BlockedDataTypeID (FK) and History.RiskNotification.BlockedDataTypeID (FK) to classify what type of data is on the blacklist. (Tier 1 - upstream wiki, etoro.Dictionary.BlockedDataType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_blockeddatatype ALTER COLUMN Name COMMENT 'Human-readable name of the blocked data category (e.g., ''User Name'', ''Email'', ''Credit Card''). Enforced unique via the DBDT_NAME index. Used in BackOffice UIs for blacklist management and in risk notification reports. (Tier 1 - upstream wiki, etoro.Dictionary.BlockedDataType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

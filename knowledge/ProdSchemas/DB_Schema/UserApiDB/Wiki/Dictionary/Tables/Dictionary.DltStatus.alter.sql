@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus ALTER COLUMN DltStatusID COMMENT 'Primary key. DLT verification state: 1=Pending, 2=Ongoing, 3=Failed, 4=Passed, 5=Inactive. See DLT Status. (Tier 1 - upstream wiki, UserApiDB.Dictionary.DltStatus)';
 ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus ALTER COLUMN Name COMMENT 'Human-readable status label used in monitoring dashboards and compliance reports. (Tier 1 - upstream wiki, UserApiDB.Dictionary.DltStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

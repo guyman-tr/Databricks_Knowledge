@@ -28,4 +28,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_dictionary_frequency SET TAGS (
 -- Column Comments
 ALTER TABLE main.billing.bronze_recurringmanager_dictionary_frequency ALTER COLUMN FrequencyID COMMENT 'Primary key identifying the frequency. 1=Weekly, 2=BiWeekly, 3=Monthly. Drives the scheduler''s next-execution-date calculation. See Frequency for full definitions. (Dictionary.Frequency) (Tier 1 - upstream wiki, RecurringManager.Dictionary.Frequency)';
 ALTER TABLE main.billing.bronze_recurringmanager_dictionary_frequency ALTER COLUMN Name COMMENT 'Human-readable label for the frequency. Values: "Weekly", "BiWeekly", "Monthly". (Tier 1 - upstream wiki, RecurringManager.Dictionary.Frequency)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

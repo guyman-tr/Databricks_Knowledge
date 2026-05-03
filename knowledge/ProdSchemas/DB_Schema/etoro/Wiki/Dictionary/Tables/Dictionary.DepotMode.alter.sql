@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_depotmode (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_depotmode SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the account modes for payment processing depot configuration — General, Live, and Demo — used to route merchant/protocol settings to the correct environment. Source: etoro.Dictionary.DepotMode on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepotMode.md).'
+    'comment' = 'Lookup table defining the account modes for payment processing depot configuration - General, Live, and Demo - used to route merchant/protocol settings to the correct environment. Source: etoro.Dictionary.DepotMode on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepotMode.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_depotmode SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_depotmode SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_depotmode ALTER COLUMN DepotModeID COMMENT 'Primary key identifying the depot mode. 0=General, 1=Live, 2=Demo. Referenced by Billing.MerchantAccountRouting, Billing.DepotValue, Billing.ProtocolValue, Billing.ProtocolMIDSettings as a routing dimension. (Tier 1 - upstream wiki, etoro.Dictionary.DepotMode)';
 ALTER TABLE main.general.bronze_etoro_dictionary_depotmode ALTER COLUMN DepotModeName COMMENT 'Human-readable mode name. Nullable in DDL but all 3 rows have values. Used in BackOffice configuration UIs and billing setup procedures. (Tier 1 - upstream wiki, etoro.Dictionary.DepotMode)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

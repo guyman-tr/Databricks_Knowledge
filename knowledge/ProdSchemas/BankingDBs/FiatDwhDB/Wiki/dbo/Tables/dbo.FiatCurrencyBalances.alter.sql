@@ -32,4 +32,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalances ALTER COLUMN A
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalances ALTER COLUMN BankAccountId COMMENT 'FK to dbo.FiatBankAccount.Id. The internal bank account associated with this balance (for IBAN programs). NULL for card-only balances or newly created balances before bank account assignment. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCurrencyBalances)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalances ALTER COLUMN CurrencyISON COMMENT 'ISO 4217 numeric currency code. E.g., "826"=GBP, "978"=EUR, "036"=AUD. See ISO Currency Info. Indexed for currency-based queries. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCurrencyBalances)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dbo_fiatcurrencybalances ALTER COLUMN Created COMMENT 'UTC timestamp when this currency balance was created in the data warehouse. (Tier 1 - upstream wiki, FiatDwhDB.dbo.FiatCurrencyBalances)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

@@ -32,4 +32,7 @@ ALTER TABLE main.general.bronze_etoro_history_tradonomitoliquidityprovidercontra
 ALTER TABLE main.general.bronze_etoro_history_tradonomitoliquidityprovidercontracts ALTER COLUMN AppLoginName COMMENT 'Application login from context_info() at DML time. Identifies the calling service or admin tool. (Tier 1 - upstream wiki, etoro.History.TradonomiToLiquidityProviderContracts)';
 ALTER TABLE main.general.bronze_etoro_history_tradonomitoliquidityprovidercontracts ALTER COLUMN SysStartTime COMMENT 'UTC timestamp when this mapping became active. SQL Server system-versioning managed. (Tier 1 - upstream wiki, etoro.History.TradonomiToLiquidityProviderContracts)';
 ALTER TABLE main.general.bronze_etoro_history_tradonomitoliquidityprovidercontracts ALTER COLUMN SysEndTime COMMENT 'UTC timestamp when this mapping was superseded. Clustered index leading column. (Tier 1 - upstream wiki, etoro.History.TradonomiToLiquidityProviderContracts)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

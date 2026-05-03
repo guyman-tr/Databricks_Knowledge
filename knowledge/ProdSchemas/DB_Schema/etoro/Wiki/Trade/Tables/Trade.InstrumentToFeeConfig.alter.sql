@@ -40,4 +40,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfig ALTER COLUMN U
 ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfig ALTER COLUMN BeginTime COMMENT 'Temporal row start. (Tier 1 - upstream wiki, etoro.Trade.InstrumentToFeeConfig)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfig ALTER COLUMN EndTime COMMENT 'Temporal row end. (Tier 1 - upstream wiki, etoro.Trade.InstrumentToFeeConfig)';
 ALTER TABLE main.trading.bronze_etoro_trade_instrumenttofeeconfig ALTER COLUMN NonLeveragedBuyCFDOverNightFee COMMENT 'CFD-specific overnight rate for non-leveraged buy. (Tier 1 - upstream wiki, etoro.Trade.InstrumentToFeeConfig)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

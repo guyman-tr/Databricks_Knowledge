@@ -28,4 +28,7 @@ ALTER TABLE main.experience.bronze_fiktivo_dictionary_marketingregion SET TAGS (
 -- Column Comments
 ALTER TABLE main.experience.bronze_fiktivo_dictionary_marketingregion ALTER COLUMN MarketingRegionID COMMENT 'Primary key identifying the marketing region. Values: 0=Unknown, 1=Arabic, 2=Asia, 3=Australia, 4=Canada, 5=French, 6=German, 7=India, 8=Italian, 9=North Europe, 10=ROE, 11=ROW, 12=South Africa, 13=Spanish & Portuguese, 14=UK, 15=USA. See Marketing Region for full definitions. (Tier 1 - upstream wiki, fiktivo.Dictionary.MarketingRegion)';
 ALTER TABLE main.experience.bronze_fiktivo_dictionary_marketingregion ALTER COLUMN Name COMMENT 'Human-readable region label. Subject to UNIQUE constraint (UK_DMR_Name) ensuring no duplicate names. Used in reporting displays, admin filters, and commission plan configuration. (Tier 1 - upstream wiki, fiktivo.Dictionary.MarketingRegion)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

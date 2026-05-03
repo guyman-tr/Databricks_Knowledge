@@ -32,4 +32,7 @@ ALTER TABLE main.general.bronze_etoro_history_pricedetectiondifferencelog ALTER 
 ALTER TABLE main.general.bronze_etoro_history_pricedetectiondifferencelog ALTER COLUMN ActiveProviderID COMMENT 'ID of the active price feed provider whose price is the outlier. This is the provider currently supplying execution prices for the instrument. Implicit FK to provider lookup. The notification body identifies the provider with descriptive name (e.g., "ProviderARS#21: ZBFX Price1(69)"). (Tier 1 - upstream wiki, etoro.History.PriceDetectionDifferenceLog)';
 ALTER TABLE main.general.bronze_etoro_history_pricedetectiondifferencelog ALTER COLUMN ActiveProviderPrice COMMENT 'The price reported by the active provider at the time the anomaly was detected. This is the price that differs from secondary feeds. Stored as float (not dtPrice) - this is a raw feed price used for detection comparison, not for execution. (Tier 1 - upstream wiki, etoro.History.PriceDetectionDifferenceLog)';
 ALTER TABLE main.general.bronze_etoro_history_pricedetectiondifferencelog ALTER COLUMN Occurred COMMENT 'Local server timestamp when the anomaly was logged. DEFAULT getdate() (not UTC). Corresponds to the "Time of check" reported in the notification body. (Tier 1 - upstream wiki, etoro.History.PriceDetectionDifferenceLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

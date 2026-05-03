@@ -32,4 +32,7 @@ ALTER TABLE main.wallet.bronze_walletdb_staking_stakingtransactions ALTER COLUMN
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingtransactions ALTER COLUMN EtoroFee COMMENT 'eToro''s service fee for processing the staking delegation, in the staked crypto''s units. Currently 0 across all records - staking transfers are fee-free for users. (Tier 1 - upstream wiki, WalletDB.Staking.StakingTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingtransactions ALTER COLUMN BlockchainEstFee COMMENT 'Estimated blockchain network fee (gas fee) for the staking transaction, in the staked crypto''s units. Currently 0 across all records - blockchain fees absorbed by eToro. (Tier 1 - upstream wiki, WalletDB.Staking.StakingTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_staking_stakingtransactions ALTER COLUMN Occurred COMMENT 'Timestamp when this transaction record was created. Closely follows the Staking.Staking.Occurred timestamp (typically within 1 second). (Tier 1 - upstream wiki, WalletDB.Staking.StakingTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

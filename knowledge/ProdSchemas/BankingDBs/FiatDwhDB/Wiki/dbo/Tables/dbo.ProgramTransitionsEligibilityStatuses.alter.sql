@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibilitystatuse
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibilitystatuses ALTER COLUMN ProgramTransitionEligibilityId COMMENT 'FK to dbo.ProgramTransitionsEligibility.Id. The eligibility assessment this status belongs to. (Tier 1 - upstream wiki, FiatDwhDB.dbo.ProgramTransitionsEligibilityStatuses)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibilitystatuses ALTER COLUMN StatusId COMMENT 'Outcome status: 0=Pending, 1=Completed, 2=Rejected, 3=Disabled, 4=Expired. See Program Transition Eligibility Status. (Dictionary.ProgramTransitionEligibilityStatuses) (Tier 1 - upstream wiki, FiatDwhDB.dbo.ProgramTransitionsEligibilityStatuses)';
 ALTER TABLE main.bi_db.bronze_fiatdwhdb_dbo_programtransitionseligibilitystatuses ALTER COLUMN Created COMMENT 'UTC timestamp when this status was recorded. (Tier 1 - upstream wiki, FiatDwhDB.dbo.ProgramTransitionsEligibilityStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

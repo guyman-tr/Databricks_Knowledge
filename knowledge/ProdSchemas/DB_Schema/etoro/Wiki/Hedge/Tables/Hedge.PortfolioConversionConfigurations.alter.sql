@@ -34,4 +34,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_portfolioconversionconfigurations AL
 ALTER TABLE main.dealing.bronze_etoro_hedge_portfolioconversionconfigurations ALTER COLUMN DbLoginName COMMENT 'Computed column. SQL Server login name of the session that last modified this row. Captures DBA/deployment identity. Same audit pattern as Hedge.OrderTypeConfiguration. (Tier 1 - upstream wiki, etoro.Hedge.PortfolioConversionConfigurations)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_portfolioconversionconfigurations ALTER COLUMN AppLoginName COMMENT 'Computed column. Application-level user context from context_info(). Set by the application before DML operations to identify the calling service or user. Same audit pattern as Hedge.OrderTypeConfiguration. (Tier 1 - upstream wiki, etoro.Hedge.PortfolioConversionConfigurations)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_portfolioconversionconfigurations ALTER COLUMN HostName COMMENT 'Computed column. The hostname of the client machine that made the last change. Not present in OrderTypeConfiguration - this table additionally captures the host for change attribution. Useful for identifying which hedge server instance or admin machine modified the config. (Tier 1 - upstream wiki, etoro.Hedge.PortfolioConversionConfigurations)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -161,4 +161,7 @@ ALTER TABLE main.general.bronze_etoro_history_customer_masked ALTER COLUMN SubRe
 ALTER TABLE main.general.bronze_etoro_history_customer_masked ALTER COLUMN EmailVerificationProviderID COMMENT 'Service used to verify the customer''s email address (e.g., internal, SendGrid, third-party). NULL for accounts pre-email-verification-provider tracking. (Tier 1 - upstream wiki, etoro.History.Customer)';
 ALTER TABLE main.general.bronze_etoro_history_customer_masked ALTER COLUMN PlayerStatusSubReasonID COMMENT 'Hierarchical sub-reason code under PlayerStatusReasonID. Provides additional granularity for compliance and operations when setting or reviewing account restrictions. See Player Status. (Tier 1 - upstream wiki, etoro.History.Customer)';
 ALTER TABLE main.general.bronze_etoro_history_customer_masked ALTER COLUMN BuildingNumber COMMENT 'Building/apartment number as a separate address component. Supports structured address formats for certain regulatory jurisdictions where this must be explicitly captured. (Tier 1 - upstream wiki, etoro.History.Customer)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

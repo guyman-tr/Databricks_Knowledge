@@ -31,4 +31,7 @@ ALTER TABLE main.general.bronze_fiktivo_kyp_affiliatecountriesofoperation ALTER 
 ALTER TABLE main.general.bronze_fiktivo_kyp_affiliatecountriesofoperation ALTER COLUMN Trace COMMENT 'Computed audit column: JSON with session/connection details. Inherited pattern from KYP.Affiliate. (Tier 1 - upstream wiki, fiktivo.KYP.AffiliateCountriesOfOperation)';
 ALTER TABLE main.general.bronze_fiktivo_kyp_affiliatecountriesofoperation ALTER COLUMN ValidFrom COMMENT 'Temporal versioning row start. GENERATED ALWAYS AS ROW START. (Tier 1 - upstream wiki, fiktivo.KYP.AffiliateCountriesOfOperation)';
 ALTER TABLE main.general.bronze_fiktivo_kyp_affiliatecountriesofoperation ALTER COLUMN ValidTo COMMENT 'Temporal versioning row end. History in History.KYPAffiliateCountriesOfOperation. (Tier 1 - upstream wiki, fiktivo.KYP.AffiliateCountriesOfOperation)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

@@ -50,4 +50,7 @@ ALTER TABLE main.dealing.bronze_etoro_hedge_executionlog ALTER COLUMN OMSProvide
 ALTER TABLE main.dealing.bronze_etoro_hedge_executionlog ALTER COLUMN Units COMMENT 'The quantity of units requested in the hedge order. High precision (22,8) to support both large quantities and fractional instruments (crypto). (Tier 1 - upstream wiki, etoro.Hedge.ExecutionLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_executionlog ALTER COLUMN ProviderUnits COMMENT 'The quantity actually executed by the provider in this event. For partial fills, ProviderUnits < Units. Sum of ProviderUnits across all OrderState=3 rows for an order gives total filled. (Tier 1 - upstream wiki, etoro.Hedge.ExecutionLog)';
 ALTER TABLE main.dealing.bronze_etoro_hedge_executionlog ALTER COLUMN EMSOrderID COMMENT 'EMS (Execution Management System) order identifier. Format: "{ExternalID}_{sequence}" (e.g., "35564138_1"). The primary key for EMS/HBC flow orders (when OrderID=-1). Used as the join key in SSRS_Latency_Report and by GetExecutionLogData for partial fill aggregation. (Tier 1 - upstream wiki, etoro.Hedge.ExecutionLog)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

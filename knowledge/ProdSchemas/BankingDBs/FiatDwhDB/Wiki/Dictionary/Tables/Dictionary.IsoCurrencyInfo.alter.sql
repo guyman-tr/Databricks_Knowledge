@@ -29,4 +29,7 @@ ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_isocurrencyinfo SET TAGS (
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_isocurrencyinfo ALTER COLUMN AlphabeticalCode COMMENT 'ISO 4217 three-letter currency code (e.g., USD, EUR, GBP). Primary key. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.IsoCurrencyInfo)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_isocurrencyinfo ALTER COLUMN NumericCode COMMENT 'ISO 4217 three-digit numeric code (e.g., 840, 978, 826). Referenced by CurrencyISON columns. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.IsoCurrencyInfo)';
 ALTER TABLE main.emoney.bronze_fiatdwhdb_dictionary_isocurrencyinfo ALTER COLUMN MinorUnit COMMENT 'Number of decimal places (0-4). Determines amount precision. (Tier 1 - upstream wiki, FiatDwhDB.Dictionary.IsoCurrencyInfo)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:05:44 UTC
+-- Bronze deploy: FiatDwhDB batch 1
+-- ====================

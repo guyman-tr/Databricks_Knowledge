@@ -31,4 +31,7 @@ ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningform ALTER COLUMN G
 ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningform ALTER COLUMN DateCreated COMMENT 'UTC timestamp when the reasoning form was created. Set to GETUTCDATE() by CreateOptionsReasoningFormQuestion. Marks the start of the reasoning process. (Tier 1 - upstream wiki, USABroker.apex.OptionsReasoningForm)';
 ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningform ALTER COLUMN DateSubmitted COMMENT 'UTC timestamp when the reasoning form was submitted by the customer. NULL while the form is in progress or abandoned. A non-NULL value indicates the customer completed and submitted their reasoning. The time difference between DateCreated and DateSubmitted indicates how long the customer took to complete the form. (Tier 1 - upstream wiki, USABroker.apex.OptionsReasoningForm)';
 ALTER TABLE main.bi_db.bronze_usabroker_apex_optionsreasoningform ALTER COLUMN PreviousAppropriatenessTestDate COMMENT 'UTC timestamp of the customer''s previous appropriateness/suitability test, captured at form creation time. Provides the "before" reference point for the regulatory audit trail - when was the last test before the customer decided to change their answers. NULL for forms created before this column was added. (Tier 1 - upstream wiki, USABroker.apex.OptionsReasoningForm)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

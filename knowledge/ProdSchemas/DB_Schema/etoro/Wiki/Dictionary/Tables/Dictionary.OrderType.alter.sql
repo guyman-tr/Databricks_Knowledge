@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_ordertype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_ordertype ALTER COLUMN OrderTypeID COMMENT 'Primary key identifying the order type. 0-20. Referenced by order tables in the Trade schema to classify each trading instruction. (Tier 1 - upstream wiki, etoro.Dictionary.OrderType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_ordertype ALTER COLUMN Name COMMENT 'Order type name. PascalCase format. Right-padded with spaces (char type). Used in execution engine routing, API request classification, and trading activity logs. (Tier 1 - upstream wiki, etoro.Dictionary.OrderType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

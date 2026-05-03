@@ -36,4 +36,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_wallets ALTER COLUMN Occurred COM
 ALTER TABLE main.wallet.bronze_walletdb_wallet_wallets ALTER COLUMN BeginDate COMMENT 'System-versioned temporal column (ROW START). Tracks when this version of the row became current. (Tier 1 - upstream wiki, WalletDB.Wallet.Wallets)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_wallets ALTER COLUMN EndDate COMMENT 'System-versioned temporal column (ROW END). Default 9999-12-31 for current rows. (Tier 1 - upstream wiki, WalletDB.Wallet.Wallets)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_wallets ALTER COLUMN IsActivated COMMENT 'Whether the wallet has completed blockchain activation. 1=fully activated, 0=pending activation (awaiting on-chain confirmation). Most wallets are immediately activated. (Tier 1 - upstream wiki, WalletDB.Wallet.Wallets)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

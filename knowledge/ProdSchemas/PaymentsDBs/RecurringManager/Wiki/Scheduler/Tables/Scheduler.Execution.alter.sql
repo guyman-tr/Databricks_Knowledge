@@ -39,4 +39,7 @@ ALTER TABLE main.billing.bronze_recurringmanager_scheduler_execution ALTER COLUM
 ALTER TABLE main.billing.bronze_recurringmanager_scheduler_execution ALTER COLUMN SysEndTime COMMENT 'System-versioning row end time. 9999-12-31 = current version. Previous versions stored in History.Execution. (Tier 1 - upstream wiki, RecurringManager.Scheduler.Execution)';
 ALTER TABLE main.billing.bronze_recurringmanager_scheduler_execution ALTER COLUMN RecurringProgramTypeId COMMENT 'Program classification: 1=RecurringDeposit, 2=RecurringInvestment. NULL for 52% of rows (legacy - column added after initial launch). Routes execution results to the correct downstream handler. See Recurring Program Type. (Dictionary.RecurringProgramType) (Tier 1 - upstream wiki, RecurringManager.Scheduler.Execution)';
 ALTER TABLE main.billing.bronze_recurringmanager_scheduler_execution ALTER COLUMN VersionStamp COMMENT 'Optimistic concurrency token for planned date modifications. Set by UpdateExecutionPlannedDate, checked by RevertExecution before reverting. NULL for 99.4% of rows. Non-NULL indicates the execution''s PlannedDate was rescheduled and the VersionStamp identifies the modification version. (Tier 1 - upstream wiki, RecurringManager.Scheduler.Execution)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:40:10 UTC
+-- Bronze deploy: RecurringManager batch 1
+-- ====================

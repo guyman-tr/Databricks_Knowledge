@@ -33,4 +33,7 @@ ALTER TABLE main.bi_db.bronze_walletdb_wallet_v_bi_walletbalances ALTER COLUMN D
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_v_bi_walletbalances ALTER COLUMN DateTo COMMENT 'End of this balance snapshot''s validity window. 3000-01-01 = current/open balance. Updated to the next snapshot''s DateFrom when a new balance is recorded. Filtered by DateTo >= 20 days ago in the view. From Wallet.WalletBalances.DateTo. (Tier 1 - upstream wiki, WalletDB.Wallet.V_BI_WalletBalances)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_v_bi_walletbalances ALTER COLUMN Balance COMMENT 'The confirmed crypto balance in native units (e.g., BTC, ETH). NULL is possible but rare - indicates balance could not be determined. Uses high-precision decimal for sub-unit accuracy across all crypto types. From Wallet.WalletBalances.Balance. (Tier 1 - upstream wiki, WalletDB.Wallet.V_BI_WalletBalances)';
 ALTER TABLE main.bi_db.bronze_walletdb_wallet_v_bi_walletbalances ALTER COLUMN Occurred COMMENT 'Timestamp when this balance record was created/updated in the database. May differ from DateFrom if there was processing delay between provider confirmation and DB write. From Wallet.WalletBalances.Occurred. (Tier 1 - upstream wiki, WalletDB.Wallet.V_BI_WalletBalances)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

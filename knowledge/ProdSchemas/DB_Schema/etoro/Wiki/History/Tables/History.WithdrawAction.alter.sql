@@ -46,4 +46,7 @@ ALTER TABLE main.billing.bronze_etoro_history_withdrawaction ALTER COLUMN Accoun
 ALTER TABLE main.billing.bronze_etoro_history_withdrawaction ALTER COLUMN ExTransactionID COMMENT 'External payment provider transaction reference number. Populated for auto-processed withdrawals (e.g., crypto/stock redemptions via FundingTypeID=33). NULL for manual/bank wire flows pending external processing. (Tier 1 - upstream wiki, etoro.History.WithdrawAction)';
 ALTER TABLE main.billing.bronze_etoro_history_withdrawaction ALTER COLUMN WithdrawTypeID COMMENT 'Type classification of the withdrawal: 0=unclassified, 1=automatic/direct (e.g., stock redemption). NULL for certain flow types. Application-defined enum. (Tier 1 - upstream wiki, etoro.History.WithdrawAction)';
 ALTER TABLE main.billing.bronze_etoro_history_withdrawaction ALTER COLUMN FlowID COMMENT 'Processing flow identifier: 0=legacy/unset, 2=automatic stock/crypto redemption flow. NULL for older records or manual processes. Determines which processing pipeline handles the withdrawal. (Tier 1 - upstream wiki, etoro.History.WithdrawAction)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

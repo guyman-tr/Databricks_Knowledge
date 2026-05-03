@@ -35,4 +35,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_redeemapproval ALTER COLUMN Red
 ALTER TABLE main.billing.bronze_etoro_backoffice_redeemapproval ALTER COLUMN Approved COMMENT '1=This group approved the redeem. 0=This group rejected the redeem. A redeem requires all required groups to have Approved=1 (checked by IsApprovedByAllUserGroups). (Tier 1 - upstream wiki, etoro.BackOffice.RedeemApproval)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_redeemapproval ALTER COLUMN Occurred COMMENT 'UTC timestamp when this approval decision was recorded. Set to GETUTCDATE() by the SP on insert and on each update. Defaults to GETDATE() for direct inserts. (Tier 1 - upstream wiki, etoro.BackOffice.RedeemApproval)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_redeemapproval ALTER COLUMN Comment COMMENT 'Free-text comment provided by the approving/rejecting manager explaining the decision. Required field (NOT NULL). May contain compliance notes or rejection rationale. (Tier 1 - upstream wiki, etoro.BackOffice.RedeemApproval)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

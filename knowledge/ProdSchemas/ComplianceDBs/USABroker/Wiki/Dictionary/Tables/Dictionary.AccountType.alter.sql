@@ -28,4 +28,7 @@ ALTER TABLE main.finance.bronze_usabroker_dictionary_accounttype SET TAGS (
 -- Column Comments
 ALTER TABLE main.finance.bronze_usabroker_dictionary_accounttype ALTER COLUMN AccuntTypeID COMMENT 'Primary key. Typo in column name (missing ''o'' - should be AccountTypeID). Values: 1=CASH, 2=MARGIN, 3=OPTION. Referenced by Apex.UserData.AccountTypeID. (Tier 1 - upstream wiki, USABroker.Dictionary.AccountType)';
 ALTER TABLE main.finance.bronze_usabroker_dictionary_accounttype ALTER COLUMN Name COMMENT 'Display name for the account type. UPPERCASE format matching Apex Clearing''s API conventions. (Tier 1 - upstream wiki, USABroker.Dictionary.AccountType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

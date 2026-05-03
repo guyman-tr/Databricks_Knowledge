@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.bi_db.bronze_etoro_dictionary_depositdrstatus (business_group=BI_DB) ----
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositdrstatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the lifecycle states of deposit dispute resolution (DR) cases — from initial filing through rejection or completion. Source: etoro.Dictionary.DepositDRStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositDRStatus.md).'
+    'comment' = 'Lookup table defining the lifecycle states of deposit dispute resolution (DR) cases - from initial filing through rejection or completion. Source: etoro.Dictionary.DepositDRStatus on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DepositDRStatus.md).'
 );
 
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositdrstatus SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositdrstatus SET TAGS (
 -- Column Comments
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositdrstatus ALTER COLUMN DepositDRStatusID COMMENT 'Primary key identifying the dispute resolution status. 0=NA (no dispute), 1=Pending, 2=Rejected, 3=Completed. (Tier 1 - upstream wiki, etoro.Dictionary.DepositDRStatus)';
 ALTER TABLE main.bi_db.bronze_etoro_dictionary_depositdrstatus ALTER COLUMN Name COMMENT 'Human-readable dispute status name. Nullable in DDL but all 4 rows have values. (Tier 1 - upstream wiki, etoro.Dictionary.DepositDRStatus)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

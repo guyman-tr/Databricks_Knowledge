@@ -37,4 +37,7 @@ ALTER TABLE main.billing.bronze_etoro_billing_conversionfee ALTER COLUMN ValidTo
 ALTER TABLE main.billing.bronze_etoro_billing_conversionfee ALTER COLUMN DepositFeePercentage COMMENT 'Percentage-based deposit fee (e.g., 1.50 = 1.5%). Currently NULL for all rows - reserved for future percentage-based fee model. Already queried by GetExchangeRatesForCustomerFunding_v4. (Tier 1 - upstream wiki, etoro.Billing.ConversionFee)';
 ALTER TABLE main.billing.bronze_etoro_billing_conversionfee ALTER COLUMN CashoutFeePercentage COMMENT 'Percentage-based cashout fee. Currently NULL for all rows - future use. (Tier 1 - upstream wiki, etoro.Billing.ConversionFee)';
 ALTER TABLE main.billing.bronze_etoro_billing_conversionfee ALTER COLUMN ConversionFeeID COMMENT 'Secondary identity column (NOT the PK). Auto-generated starting at 100,000. Provides a stable row identifier separate from the CurrencyID PK, used in override and audit references. (Tier 1 - upstream wiki, etoro.Billing.ConversionFee)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

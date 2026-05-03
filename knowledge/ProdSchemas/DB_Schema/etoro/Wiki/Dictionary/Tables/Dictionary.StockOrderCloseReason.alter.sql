@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_stockorderclosereason SET TAGS 
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_stockorderclosereason ALTER COLUMN OrderCloseReasonID COMMENT 'Primary key identifying the close reason. Referenced by History.StocksOrders.OrderCloseReasonID (default 1 = Normal). Values: 1=Normal, 3=Parent Order Canceled, 4=Mirror Closed, 5=Parent Mirror Closed, 10=Cancel. (Tier 1 - upstream wiki, etoro.Dictionary.StockOrderCloseReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_stockorderclosereason ALTER COLUMN Name COMMENT 'Human-readable label for the close reason. Fixed-width char(50) with trailing spaces. (Tier 1 - upstream wiki, etoro.Dictionary.StockOrderCloseReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

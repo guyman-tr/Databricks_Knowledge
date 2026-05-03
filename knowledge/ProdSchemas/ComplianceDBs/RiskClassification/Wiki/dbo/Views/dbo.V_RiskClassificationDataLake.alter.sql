@@ -36,7 +36,10 @@ ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalak
 ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN RiskScore_Value COMMENT 'Score formula in N*Score format. (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
 ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN BeginTime COMMENT 'Temporal row start. (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
 ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN EndTime COMMENT 'Temporal row end. (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
-ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN _RiskScore / _Value (sanitized names) COMMENT 'All parameter score and value columns with sanitized aliases. E.g., CountryofResidenceOnboarding_RiskScore, AgeofCustomer_Value. Same data as T_RiskClassification. PEP Check and Place of Birth columns excluded (commented out). (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
+ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN `_RiskScore / _Value (sanitized names)` COMMENT 'All parameter score and value columns with sanitized aliases. E.g., CountryofResidenceOnboarding_RiskScore, AgeofCustomer_Value. Same data as T_RiskClassification. PEP Check and Place of Birth columns excluded (commented out). (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
 ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN PreviousRisk COMMENT 'Previous risk score from history CTE. (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
 ALTER TABLE main.bi_db.bronze_riskclassification_dbo_v_riskclassificationdatalake ALTER COLUMN PreviousRiskUpdateDate COMMENT 'When previous risk score was set. (Tier 1 - upstream wiki, RiskClassification.dbo.V_RiskClassificationDataLake)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:38:55 UTC
+-- Bronze deploy: RiskClassification batch 1
+-- ====================

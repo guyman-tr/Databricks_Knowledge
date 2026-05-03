@@ -35,4 +35,7 @@ ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext538_closedaccounts ALTER
 ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext538_closedaccounts ALTER COLUMN MarketValue COMMENT 'Remaining market value of securities in the closed account. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT538_ClosedAccounts)';
 ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext538_closedaccounts ALTER COLUMN CashBalance COMMENT 'Remaining cash balance in the closed account. (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT538_ClosedAccounts)';
 ALTER TABLE main.bi_db.bronze_sodreconciliation_apex_ext538_closedaccounts ALTER COLUMN TotalEquity COMMENT 'Total equity remaining (MarketValue + CashBalance). (Tier 1 - upstream wiki, Sodreconciliation.apex.EXT538_ClosedAccounts)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:42:23 UTC
+-- Bronze deploy: Sodreconciliation batch 1
+-- ====================

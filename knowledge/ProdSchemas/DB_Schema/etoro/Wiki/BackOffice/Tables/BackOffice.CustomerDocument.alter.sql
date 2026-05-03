@@ -42,4 +42,7 @@ ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocument ALTER COLUMN S
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocument ALTER COLUMN SessionID COMMENT 'Upload session identifier from the customer''s document submission session. Correlates multiple documents uploaded in the same session (e.g., POI + POA submitted together in one KYC flow). Returned by GetAllUserDocuments for session-level tracing. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerDocument)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocument ALTER COLUMN SuggestedDocumentSubTypeID COMMENT 'AI vendor''s suggested document sub-classification (e.g., subtype of Proof of Identity: Passport vs Driver''s License vs National ID). Added by Onfido integration (COMOP-2473, 2021). Returned by GetAllUserDocuments. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerDocument)';
 ALTER TABLE main.billing.bronze_etoro_backoffice_customerdocument ALTER COLUMN GCID COMMENT 'Group Customer ID - the person-level identifier that spans all of a customer''s accounts across regulatory jurisdictions. Links this document to ALL of the customer''s eToro accounts (eToro UK CID, eToro CySEC CID, etc.). 100% populated (8.78M/8.78M). Primary search key in GetAllUserDocuments (WHERE cc.GCID = @gcid). Has dedicated ix_CustomerDocuments_GCID index for fast person-level document retrieval. (Tier 1 - upstream wiki, etoro.BackOffice.CustomerDocument)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -49,4 +49,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_ordersentrytbl ALTER COLUMN CloseAct
 ALTER TABLE main.trading.bronze_etoro_trade_ordersentrytbl ALTER COLUMN SettlementTypeID COMMENT 'Dictionary.SettlementTypes: 0=CFD, 1=REAL, etc. (Tier 1 - upstream wiki, etoro.Trade.OrdersEntryTbl)';
 ALTER TABLE main.trading.bronze_etoro_trade_ordersentrytbl ALTER COLUMN IsNoStopLoss COMMENT 'User opted out of stop-loss (Tier 1 - upstream wiki, etoro.Trade.OrdersEntryTbl)';
 ALTER TABLE main.trading.bronze_etoro_trade_ordersentrytbl ALTER COLUMN IsNoTakeProfit COMMENT 'User opted out of take-profit (Tier 1 - upstream wiki, etoro.Trade.OrdersEntryTbl)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawcancellationsource
 -- Column Comments
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawcancellationsources ALTER COLUMN ID COMMENT 'Primary key identifying each cancellation source. Explicitly assigned (not IDENTITY). Referenced as CancellationSource in MoneyBus.WithdrawCancelRequest. Values: 0=None, 1=User, 2=BackOffice, 3=Abort. See Withdraw Cancellation Source for full business definitions. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawCancellationSources)';
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawcancellationsources ALTER COLUMN Name COMMENT 'Human-readable label for the cancellation source. Has a UNIQUE constraint ensuring no duplicates. Used for display in cancellation reports and audit logs. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawCancellationSources)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:41:14 UTC
+-- Bronze deploy: MoneyBusDB batch 1
+-- ====================

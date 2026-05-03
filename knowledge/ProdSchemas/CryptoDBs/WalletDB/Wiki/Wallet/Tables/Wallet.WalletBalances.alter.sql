@@ -33,4 +33,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_walletbalances ALTER COLUMN DateF
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletbalances ALTER COLUMN DateTo COMMENT 'End of this balance snapshot''s validity window. 3000-01-01 = current/open balance. Updated to the next snapshot''s DateFrom when a new balance is recorded. Part of composite clustered PK. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletBalances)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletbalances ALTER COLUMN Balance COMMENT 'The confirmed crypto balance in native units (e.g., BTC, ETH). NULL is possible but rare - indicates the balance could not be determined. Uses high-precision decimal for sub-unit accuracy. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletBalances)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletbalances ALTER COLUMN Occurred COMMENT 'Timestamp when this balance record was created/updated in the database. May differ from DateFrom if there was processing delay. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletBalances)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

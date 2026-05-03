@@ -67,4 +67,7 @@ ALTER TABLE main.dealing.bronze_etoro_history_orders ALTER COLUMN IsSettled COMM
 ALTER TABLE main.dealing.bronze_etoro_history_orders ALTER COLUMN SettlementTypeID COMMENT 'The settlement method used. Observed values: 0=unsettled/cash, 1=settled (regular), 5=special settlement type. NULL for legacy rows. Added in FB 53719. (Tier 1 - upstream wiki, etoro.History.Orders)';
 ALTER TABLE main.dealing.bronze_etoro_history_orders ALTER COLUMN IsNoStopLoss COMMENT 'Explicitly marks the order as having no stop-loss configured (as opposed to StopLosAmount=0 which could be ambiguous). NULL for older rows predating this column. (Tier 1 - upstream wiki, etoro.History.Orders)';
 ALTER TABLE main.dealing.bronze_etoro_history_orders ALTER COLUMN IsNoTakeProfit COMMENT 'Explicitly marks the order as having no take-profit configured (as opposed to TakeProfitAmount=0 which could be ambiguous). NULL for older rows predating this column. (Tier 1 - upstream wiki, etoro.History.Orders)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

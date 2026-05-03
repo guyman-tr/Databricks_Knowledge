@@ -33,4 +33,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpool ALTER COLUMN ProviderW
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpool ALTER COLUMN PublicAddress COMMENT 'Blockchain address associated with this wallet. Users send crypto to this address. NULL during initial creation before address generation completes. Format depends on blockchain (e.g., bc1... for BTC, 0x... for ETH). (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPool)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpool ALTER COLUMN Created COMMENT 'Timestamp when this pool wallet was created. Used for pool age monitoring and FIFO assignment ordering. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPool)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_walletpool ALTER COLUMN WalletProviderId COMMENT 'Custody provider that holds the keys: 1=BitGo, 2=CUG, 3=None. See Wallet Provider. FK to Dictionary.WalletProvider. (Tier 1 - upstream wiki, WalletDB.Wallet.WalletPool)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

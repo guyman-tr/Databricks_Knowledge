@@ -61,4 +61,7 @@ ALTER TABLE main.finance.bronze_usabroker_apex_userdata ALTER COLUMN Created COM
 ALTER TABLE main.finance.bronze_usabroker_apex_userdata ALTER COLUMN VisaType COMMENT 'US visa classification code (e.g., H1B, F1, L1). NULL for US citizens and permanent residents. (Tier 1 - upstream wiki, USABroker.apex.UserData)';
 ALTER TABLE main.finance.bronze_usabroker_apex_userdata ALTER COLUMN VisaExpirationDate COMMENT 'Expiration date of the customer''s US visa. NULL for non-visa holders. Used to determine if the visa is still valid for account operations. (Tier 1 - upstream wiki, USABroker.apex.UserData)';
 ALTER TABLE main.finance.bronze_usabroker_apex_userdata ALTER COLUMN UsVisaHolder COMMENT 'Whether the customer holds a US visa (as opposed to being a citizen or permanent resident). True triggers visa verification workflow (ApexStateID=46). (Tier 1 - upstream wiki, USABroker.apex.UserData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:47:20 UTC
+-- Bronze deploy: USABroker batch 1
+-- ====================

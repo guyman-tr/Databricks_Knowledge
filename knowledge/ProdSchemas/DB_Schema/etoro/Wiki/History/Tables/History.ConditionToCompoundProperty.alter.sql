@@ -33,4 +33,7 @@ ALTER TABLE main.general.bronze_etoro_history_conditiontocompoundproperty ALTER 
 ALTER TABLE main.general.bronze_etoro_history_conditiontocompoundproperty ALTER COLUMN AppLoginName COMMENT 'Application login from context_info(). Audit column. (Tier 1 - upstream wiki, etoro.History.ConditionToCompoundProperty)';
 ALTER TABLE main.general.bronze_etoro_history_conditiontocompoundproperty ALTER COLUMN SysStartTime COMMENT 'When this version became current in CEP.ConditionToCompoundProperty. (Tier 1 - upstream wiki, etoro.History.ConditionToCompoundProperty)';
 ALTER TABLE main.general.bronze_etoro_history_conditiontocompoundproperty ALTER COLUMN SysEndTime COMMENT 'When this version was superseded. (Tier 1 - upstream wiki, etoro.History.ConditionToCompoundProperty)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -29,4 +29,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_answerthresholds SET TAGS (
 ALTER TABLE main.compliance.bronze_userapidb_kyc_answerthresholds ALTER COLUMN AnswerID COMMENT 'Primary key. FK to KYC.Answers.AnswerId. One threshold record per answer. (Tier 1 - upstream wiki, UserApiDB.KYC.AnswerThresholds)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_answerthresholds ALTER COLUMN MinThreshold COMMENT 'Minimum numeric value for this answer''s range. NULL for open-ended lower bound. (Tier 1 - upstream wiki, UserApiDB.KYC.AnswerThresholds)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_answerthresholds ALTER COLUMN MaxThreshold COMMENT 'Maximum numeric value for this answer''s range. NULL for open-ended upper bound. (Tier 1 - upstream wiki, UserApiDB.KYC.AnswerThresholds)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

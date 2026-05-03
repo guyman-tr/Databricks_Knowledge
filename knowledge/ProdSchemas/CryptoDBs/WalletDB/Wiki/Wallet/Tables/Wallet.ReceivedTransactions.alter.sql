@@ -42,4 +42,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactions ALTER COLUMN
 ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactions ALTER COLUMN NormalizedReceiverAddress COMMENT 'Computed PERSISTED column stripping protocol prefix and query parameters from ReceiverAddress for consistent matching. (Tier 1 - upstream wiki, WalletDB.Wallet.ReceivedTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactions ALTER COLUMN ProviderTransactionId COMMENT 'Transaction identifier assigned by the custody provider (BitGo/CUG). May differ from the blockchain hash. Used for provider API reconciliation. (Tier 1 - upstream wiki, WalletDB.Wallet.ReceivedTransactions)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_receivedtransactions ALTER COLUMN ReceiveRequestCorrelationId COMMENT 'Links to a ReceiveTransaction request (RequestTypeId=8) when the incoming transaction is processed as a formal request. Distinct from CorrelationId which links to the originating request. (Tier 1 - upstream wiki, WalletDB.Wallet.ReceivedTransactions)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

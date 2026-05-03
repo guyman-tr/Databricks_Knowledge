@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_documentrejectreason (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_documentrejectreason SET TBLPROPERTIES (
-    'comment' = 'Lookup table enumerating 49 specific reasons why a KYC document was rejected — covering POI, POA, Selfie, SSN, and Visa document categories with granular rejection descriptions. Source: etoro.Dictionary.DocumentRejectReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DocumentRejectReason.md).'
+    'comment' = 'Lookup table enumerating 49 specific reasons why a KYC document was rejected - covering POI, POA, Selfie, SSN, and Visa document categories with granular rejection descriptions. Source: etoro.Dictionary.DocumentRejectReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.DocumentRejectReason.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_documentrejectreason SET TAGS (
@@ -26,6 +26,9 @@ ALTER TABLE main.general.bronze_etoro_dictionary_documentrejectreason SET TAGS (
 );
 
 -- Column Comments
-ALTER TABLE main.general.bronze_etoro_dictionary_documentrejectreason ALTER COLUMN RejectReasonID COMMENT 'Primary key identifying the rejection reason. 49 values from 0 (Other) to 54 (SSN Card - Damaged). Non-sequential — IDs 1-3, 7, 17, 20 are skipped. Referenced by BackOffice.DocumentRejectReasonToNotificationType for customer notification routing. (Tier 1 - upstream wiki, etoro.Dictionary.DocumentRejectReason)';
+ALTER TABLE main.general.bronze_etoro_dictionary_documentrejectreason ALTER COLUMN RejectReasonID COMMENT 'Primary key identifying the rejection reason. 49 values from 0 (Other) to 54 (SSN Card - Damaged). Non-sequential - IDs 1-3, 7, 17, 20 are skipped. Referenced by BackOffice.DocumentRejectReasonToNotificationType for customer notification routing. (Tier 1 - upstream wiki, etoro.Dictionary.DocumentRejectReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_documentrejectreason ALTER COLUMN RejectReasonName COMMENT 'Human-readable rejection reason displayed to the customer in their document status UI and in rejection notification emails. Prefixed by document type (POI/POA/Selfie) for clarity. (Tier 1 - upstream wiki, etoro.Dictionary.DocumentRejectReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

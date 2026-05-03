@@ -39,4 +39,7 @@ ALTER TABLE main.trading.bronze_etoro_trade_futuresmetadata ALTER COLUMN SysStar
 ALTER TABLE main.trading.bronze_etoro_trade_futuresmetadata ALTER COLUMN SysEndTime COMMENT 'Row end for system versioning. (Tier 1 - upstream wiki, etoro.Trade.FuturesMetaData)';
 ALTER TABLE main.trading.bronze_etoro_trade_futuresmetadata ALTER COLUMN SettlementMethod COMMENT 'Settlement type; 0 or NULL. (Tier 1 - upstream wiki, etoro.Trade.FuturesMetaData)';
 ALTER TABLE main.trading.bronze_etoro_trade_futuresmetadata ALTER COLUMN UnitOfMeasure COMMENT 'Unit of measure; 0, 1, or NULL. (Tier 1 - upstream wiki, etoro.Trade.FuturesMetaData)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

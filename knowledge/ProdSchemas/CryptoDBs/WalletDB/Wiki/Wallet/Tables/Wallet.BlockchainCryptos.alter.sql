@@ -31,4 +31,7 @@ ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptos ALTER COLUMN Na
 ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptos ALTER COLUMN Occurred COMMENT 'Timestamp when this blockchain was added to the system. Original blockchains (BTC, ETH, BCH, XRP, LTC, XLM) all share the same date (2019-06-11), indicating the initial platform launch batch. Newer chains have later dates tracking their go-live. (Tier 1 - upstream wiki, WalletDB.Wallet.BlockchainCryptos)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptos ALTER COLUMN CryptoCoinProviderId COMMENT 'Blockchain provider implementation used for this chain: 1=BitGoBlockchainProviderV2 (UTXO chains like BTC, LTC, BCH, also SOL, ADA, DOGE, TRX, ETC), 2=BitGoEthereumProviderV2 (ETH/ERC-20), 3=BitgoRippleProviderV2 (XRP), 4=BitGoStellarProviderV2 (XLM), 5=BitGoEOSProviderV2 (EOS). See Crypto Coin Provider. FK to Dictionary.CryptoCoinProviders. (Tier 1 - upstream wiki, WalletDB.Wallet.BlockchainCryptos)';
 ALTER TABLE main.wallet.bronze_walletdb_wallet_blockchaincryptos ALTER COLUMN AddressPattern COMMENT 'Regex pattern for validating blockchain addresses before any transaction. Each blockchain has a unique pattern matching its address format. The default (.*?) accepts all strings (used when provider handles validation). Updated when chains add new address formats (e.g., Bitcoin SegWit). (Tier 1 - upstream wiki, WalletDB.Wallet.BlockchainCryptos)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:10:21 UTC
+-- Bronze deploy: WalletDB batch 1
+-- ====================

@@ -28,4 +28,7 @@ ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatuses SET TAGS 
 -- Column Comments
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatuses ALTER COLUMN ID COMMENT 'Primary key identifying each withdrawal status. Explicitly assigned (not IDENTITY). Referenced as StatusID in MoneyBus.Withdrawals and as WithdrawStatusID in Dictionary.WithdrawStatusReasons. Values: 1=InProcess, 2=Success, 3=Decline, 4=Technical, 5=Cancelled. See Withdraw Status for full business definitions. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawStatuses)';
 ALTER TABLE main.billing.bronze_moneybusdb_dictionary_withdrawstatuses ALTER COLUMN Name COMMENT 'Human-readable status label used for display in withdrawal reports and operational dashboards. (Tier 1 - upstream wiki, MoneyBusDB.Dictionary.WithdrawStatuses)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:41:14 UTC
+-- Bronze deploy: MoneyBusDB batch 1
+-- ====================

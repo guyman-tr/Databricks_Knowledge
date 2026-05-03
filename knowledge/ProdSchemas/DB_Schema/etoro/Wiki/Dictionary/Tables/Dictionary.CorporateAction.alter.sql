@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_corporateaction (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_corporateaction SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining all types of corporate actions that affect stock and instrument positions — dividends, splits, mergers, promotions, and platform-specific events. Links to compensation accounting and order-cancel rules. Source: etoro.Dictionary.CorporateAction on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CorporateAction.md).'
+    'comment' = 'Lookup table defining all types of corporate actions that affect stock and instrument positions - dividends, splits, mergers, promotions, and platform-specific events. Links to compensation accounting and order-cancel rules. Source: etoro.Dictionary.CorporateAction on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.CorporateAction.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_corporateaction SET TAGS (
@@ -30,4 +30,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_corporateaction ALTER COLUMN Co
 ALTER TABLE main.general.bronze_etoro_dictionary_corporateaction ALTER COLUMN Description COMMENT 'Human-readable description. Values: Dividend, Cash in Lieu, Stock Split, Merger, Staking, Promotion, etc. (41 types). NULL allowed. (Tier 1 - upstream wiki, etoro.Dictionary.CorporateAction)';
 ALTER TABLE main.general.bronze_etoro_dictionary_corporateaction ALTER COLUMN CompensationReasonID COMMENT 'FK to Dictionary.CreditType. Determines how compensation is recorded. NOT NULL. (Tier 1 - upstream wiki, etoro.Dictionary.CorporateAction)';
 ALTER TABLE main.general.bronze_etoro_dictionary_corporateaction ALTER COLUMN CancelOrders COMMENT 'Whether to cancel pending orders when this action is processed. 1 = cancel; 0/NULL = typically no cancellation. (Tier 1 - upstream wiki, etoro.Dictionary.CorporateAction)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

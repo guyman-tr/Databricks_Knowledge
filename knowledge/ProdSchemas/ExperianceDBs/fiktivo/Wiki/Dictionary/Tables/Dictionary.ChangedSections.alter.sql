@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_fiktivo_dictionary_changedsections SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_fiktivo_dictionary_changedsections ALTER COLUMN SectionID COMMENT 'Primary key identifying the business area affected by an audit-logged change. Values: 1=Affiliates, 2=AffiliateTypes, 3=Affiliate Group, 4=Announcements, 5=Categories, 6=Countries, 7=Brands, 8=Languages, 9=Payment Details, 10=MediaTag, 11=RegistrationRates, 12=FirstPositionAssetPlan, 13=BlockedCountries, 14=AffiliateURLs, 15=Tier2Members, 16=AffiliateTypeCategories, 17=AffiliatePixel, 18=Banners, 19=IOBPlan, 20=ISAPlan. See Changed Sections for full definitions. (Tier 1 - upstream wiki, fiktivo.Dictionary.ChangedSections)';
 ALTER TABLE main.general.bronze_fiktivo_dictionary_changedsections ALTER COLUMN Name COMMENT 'Human-readable label for the business area. Used in audit log displays to show which part of the system was modified. Names match the business domain entities they represent. (Tier 1 - upstream wiki, fiktivo.Dictionary.ChangedSections)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

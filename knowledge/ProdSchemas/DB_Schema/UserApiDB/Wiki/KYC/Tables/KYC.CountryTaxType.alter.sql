@@ -32,4 +32,7 @@ ALTER TABLE main.compliance.bronze_userapidb_kyc_countrytaxtype ALTER COLUMN Tax
 ALTER TABLE main.compliance.bronze_userapidb_kyc_countrytaxtype ALTER COLUMN ValidationExpression COMMENT 'Regex pattern for validating the tax ID format. Country-specific (e.g., UK UTR: 10-digit numeric). (Tier 1 - upstream wiki, UserApiDB.KYC.CountryTaxType)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_countrytaxtype ALTER COLUMN MaskExpression COMMENT 'Input mask pattern for the UI tax ID field. Guides user input format. (Tier 1 - upstream wiki, UserApiDB.KYC.CountryTaxType)';
 ALTER TABLE main.compliance.bronze_userapidb_kyc_countrytaxtype ALTER COLUMN MinLength COMMENT 'Minimum character length for the tax ID value. (Tier 1 - upstream wiki, UserApiDB.KYC.CountryTaxType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:48:45 UTC
+-- Bronze deploy: UserApiDB batch 1
+-- ====================

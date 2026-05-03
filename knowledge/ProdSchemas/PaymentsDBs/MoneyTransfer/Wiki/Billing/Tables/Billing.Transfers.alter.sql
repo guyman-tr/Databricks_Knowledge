@@ -48,4 +48,7 @@ ALTER TABLE main.bi_db.bronze_moneytransfer_billing_transfers ALTER COLUMN Desti
 ALTER TABLE main.bi_db.bronze_moneytransfer_billing_transfers ALTER COLUMN DepotId COMMENT 'Depot/data center identifier determining which processing infrastructure handles this transfer. Set by SaveRoutingInfo. Common values: 104 and 166. Default fallback value is 104 (used by GetDepotIdOfLastSuccessfulTransferByCid when DepotId is NULL). Determines routing for regional processing. (Tier 1 - upstream wiki, MoneyTransfer.Billing.Transfers)';
 ALTER TABLE main.bi_db.bronze_moneytransfer_billing_transfers ALTER COLUMN CountryId COMMENT 'Country identifier for the customer or transfer jurisdiction. Set by SaveRoutingInfo alongside DepotId. Observed values: 74, 112, 143, 191, 218. References an external country lookup. Used for regional routing and compliance. (Tier 1 - upstream wiki, MoneyTransfer.Billing.Transfers)';
 ALTER TABLE main.bi_db.bronze_moneytransfer_billing_transfers ALTER COLUMN ExtTransactionId COMMENT 'External transaction identifier from the payment provider. Set by SaveExtTransactionId. Can be GUID-format (with hyphens removed) or shorter hex strings, depending on the provider. NULL until the provider assigns a transaction reference. Returned by GetTransferByReferenceID. (Tier 1 - upstream wiki, MoneyTransfer.Billing.Transfers)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:38:27 UTC
+-- Bronze deploy: MoneyTransfer batch 1
+-- ====================

@@ -30,4 +30,7 @@ ALTER TABLE main.bi_db.bronze_etoro_hedge_providerunitconversionratio ALTER COLU
 ALTER TABLE main.bi_db.bronze_etoro_hedge_providerunitconversionratio ALTER COLUMN InstrumentID COMMENT 'The instrument this ratio applies to. Part of composite PK. Implicit reference to Trade.Instrument (no FK constraint in DDL). 5,215 distinct instruments. (Tier 1 - upstream wiki, etoro.Hedge.ProviderUnitConversionRatio)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_providerunitconversionratio ALTER COLUMN UnitConversionRatio COMMENT 'Multiplier converting eToro internal units to provider-native order quantity. providerQty = eToroUnits * UnitConversionRatio. Range 0.001-10,000 in current data. ISNULL defaults to 1.0 in GetProviderUnitConversion. (Tier 1 - upstream wiki, etoro.Hedge.ProviderUnitConversionRatio)';
 ALTER TABLE main.bi_db.bronze_etoro_hedge_providerunitconversionratio ALTER COLUMN LotSize COMMENT 'Standard lot size for this provider/instrument, used for lot-boundary rounding. DEFAULT 1 = no lot rounding. Range 0.00001-3,000. ISNULL defaults to 1000 (Forex) or 1 (other) in GetProviderUnitConversion. Not tracked by ASM audit triggers. (Tier 1 - upstream wiki, etoro.Hedge.ProviderUnitConversionRatio)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

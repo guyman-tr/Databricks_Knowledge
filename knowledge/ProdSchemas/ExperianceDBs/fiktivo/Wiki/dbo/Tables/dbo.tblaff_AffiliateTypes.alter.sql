@@ -161,4 +161,7 @@ ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatetypes ALTER COLUMN Com
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatetypes ALTER COLUMN IsTradeRequired COMMENT 'Whether a customer must complete a trade before the affiliate earns commission. 1 = trade required for CPA qualification. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_AffiliateTypes)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatetypes ALTER COLUMN BlockTrackingLinks COMMENT 'Controls whether tracking links are blocked for this affiliate type. 0 = allowed, >0 = blocked. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_AffiliateTypes)';
 ALTER TABLE main.bi_db.bronze_fiktivo_dbo_tblaff_affiliatetypes ALTER COLUMN BlockCreatives COMMENT 'Controls whether creative/banner assets are blocked for this affiliate type. 0 = allowed, >0 = blocked. (Tier 1 - upstream wiki, fiktivo.dbo.tblaff_AffiliateTypes)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 09:51:26 UTC
+-- Bronze deploy: fiktivo batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_paymenttype (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_paymenttype SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining the 3 high-level payment categories — Deposit, Cashout, and Refund — classifying every payment transaction by its financial direction and purpose. Source: etoro.Dictionary.PaymentType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PaymentType.md).'
+    'comment' = 'Lookup table defining the 3 high-level payment categories - Deposit, Cashout, and Refund - classifying every payment transaction by its financial direction and purpose. Source: etoro.Dictionary.PaymentType on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.PaymentType.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_paymenttype SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_paymenttype SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_paymenttype ALTER COLUMN PaymentTypeID COMMENT 'Primary key identifying the payment category. 1=Deposit (money in), 2=Cashout (money out), 3=Refund (money returned). Referenced by 4 tables with explicit FKs: Billing.Depot, Billing.Payment, Billing.Terminal, Billing.Volume. Also used in Billing.ACHBankAccount, Billing.ACHBanks, Billing.MerchantAccountRouting. Hard-coded value 1 appears in multiple deposit procedures for PaymentTypeID=Deposit filtering. (Tier 1 - upstream wiki, etoro.Dictionary.PaymentType)';
 ALTER TABLE main.general.bronze_etoro_dictionary_paymenttype ALTER COLUMN Name COMMENT 'Human-readable payment category name. Unique constraint prevents duplicates. Values: ''Deposit'', ''Cashout'', ''Refund''. Used in payment reporting, filtering, and UI display. Referenced by Billing.DepositAdd (SELECT Name WHERE PaymentTypeID=1). (Tier 1 - upstream wiki, etoro.Dictionary.PaymentType)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================

@@ -8,7 +8,7 @@
 
 -- ---- UC Target: main.general.bronze_etoro_dictionary_redeemapprovalreason (business_group=general) ----
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemapprovalreason SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining CopyTrading redeem manual approval reasons — currently only 1 value ("Other") — used by BackOffice.RedeemApproval for manual redeem review justifications. Source: etoro.Dictionary.RedeemApprovalReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RedeemApprovalReason.md).'
+    'comment' = 'Lookup table defining CopyTrading redeem manual approval reasons - currently only 1 value ("Other") - used by BackOffice.RedeemApproval for manual redeem review justifications. Source: etoro.Dictionary.RedeemApprovalReason on the etoro production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Dictionary/Tables/Dictionary.RedeemApprovalReason.md).'
 );
 
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemapprovalreason SET TAGS (
@@ -28,4 +28,7 @@ ALTER TABLE main.general.bronze_etoro_dictionary_redeemapprovalreason SET TAGS (
 -- Column Comments
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemapprovalreason ALTER COLUMN RedeemApprovalReasonID COMMENT 'Primary key. Currently only value 1. Referenced by BackOffice.RedeemApproval. (Tier 1 - upstream wiki, etoro.Dictionary.RedeemApprovalReason)';
 ALTER TABLE main.general.bronze_etoro_dictionary_redeemapprovalreason ALTER COLUMN Name COMMENT 'Human-readable reason label. Displayed in BackOffice redeem approval screens. (Tier 1 - upstream wiki, etoro.Dictionary.RedeemApprovalReason)';
-
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 10:35:25 UTC
+-- Bronze deploy: etoro batch 1
+-- ====================
