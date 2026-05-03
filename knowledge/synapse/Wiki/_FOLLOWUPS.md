@@ -3,45 +3,83 @@
 Open issues kicked back from deploy sessions. Resolve in dedicated future
 sessions; do not block ongoing schema/bronze deploys.
 
-## v_* view comment deploy is broken (2026-05-03)
+## v_* view comment deploy theory disproved + real bugs surfaced (2026-05-03 update)
 
-**Symptom**: `gold_sql_dp_prod_we_*_v_*` views show no comments in UC even
-when the per-schema `_deploy-index.md` marks them as **Deployed**. Spot
-caught on `bi_db.gold_sql_dp_prod_we_emoney_dbo_v_emoney_card_instance_summary`.
+**Original hypothesis (DISPROVED)**: that `ALTER TABLE … ALTER COLUMN
+COMMENT` silently no-ops on UC views. Phase 5 probe (2026-05-03) ran
+both `COMMENT ON COLUMN` and `ALTER TABLE … ALTER COLUMN COMMENT`
+against all 3 affected EXW objects — **both syntaxes work and persist**.
+And `gold_sql_dp_prod_we_emoney_dbo_v_emoney_card_instance_summary` is
+now at 17/17 column comments after the original deploy, no fix-up
+needed.
 
-**Root cause** (two bugs stacked on one code path):
+**Real findings** from systematic v_* audit
+(`tools/_tmp_phase5_probe.py`):
 
-1. **Empty placeholder table comment.** Generator emits
-   `ALTER TABLE … SET TBLPROPERTIES ( 'comment' = '' );` for `v_*` files —
-   the table-level comment string is never populated from the wiki §1
-   summary. See `knowledge/synapse/Wiki/eMoney_dbo/Tables/v_eMoney_Card_Instance_Summary.alter.sql:11`.
-2. **Wrong DDL form for views.** The same generator emits
-   `ALTER TABLE … ALTER COLUMN … COMMENT '…'` against view targets. Per the
-   `uc-deploy-comments` skill, Databricks views need ANSI
-   `COMMENT ON COLUMN <view>.<col> IS '…'` — the `ALTER TABLE` form
-   typically returns success without setting anything on a view, which is
-   why the deploy index reports Deployed but UC stays empty.
+- 60 v_* gold "views" exist; **49 already have working column comments**
+  (60-100% coverage each). The bug was overstated.
+- All 60 are UC `EXTERNAL` table type, not view type — so the
+  `ALTER TABLE` form is the correct DDL.
+- 11 had **zero column comments**, splitting into:
+  - 8 with no wiki + no alter file (need wiki gen first — separate
+    work, partly listed under "Bucket A" below).
+  - 3 EXW objects (`EXW_Inventory_Snapshot_History`,
+    `EXW_WalletInventory`, `EXW_V_RedeemReconciliation`) where
+    metadata had been wiped — see two separate root causes below.
 
-**Suspected scope**: every `v_*.alter.sql` file the wiki pipeline has
-emitted under any `*/Tables/` or `*/Views/` folder. Only the 34
-`etoro_kpi_prep` views are deployed correctly today, via the dedicated
-`tools/apply_tvf_col_comments.py` (uses `COMMENT ON COLUMN`).
+### Real bug #1: gold EXW pipeline rematerializes EXTERNAL tables and wipes UC metadata
 
-**Resolution options** (pick one in the follow-up session):
+**Evidence**: alter files for the 3 EXW objects show
+`-- Statements: 104/104 succeeded` from the 2026-05-03 batch 1 run, but
+when re-checked at 13:30 UTC the same day, column comments were 0/N
+(only my probe survived). Re-running the alter immediately restored
+all 88 columns to commented state.
 
-- A. Extend `tools/apply_tvf_col_comments.py` to discover and cover every
-  `v_*` view that has a wiki + UC mapping, not just the 34 hard-coded TVFs.
-- B. Patch the wiki generator that produces `v_*.alter.sql` files to emit
-  `COMMENT ON COLUMN` and to fill the table-level comment from §1, then
-  redeploy via `deploy_alter_batch.py`.
+**Hypothesis**: a downstream Databricks job rebuilds the gold EXW
+external tables (likely DROP + CREATE EXTERNAL or a Spark write that
+clobbers the `comment` field on schema). All UC metadata applied via
+`ALTER` is lost on every rematerialize cycle.
 
-Either way, resync the corresponding `_deploy-index.md` after redeploy so
-the **Deployed** flag actually reflects what's in UC.
+**Action**: identify which job/pipeline produces
+`main.{bi_db,wallet}.gold_sql_dp_prod_we_exw_dbo_*` external tables,
+either:
+- A. patch its writer to preserve `comment` on schema columns
+  (the canonical fix), or
+- B. add a post-rematerialize re-comment step (re-run the relevant
+  alters as part of the same job), or
+- C. accept it and run `tools/_tmp_phase5_redeploy_exw.py` (or its
+  productized equivalent) on a schedule.
 
-**Affected schemas (where to look first)**:
-`eMoney_dbo`, `BI_DB_dbo`, `Dealing_dbo`, `EXW_dbo`, `DWH_dbo`,
-`eMoney_Tribe`. Greppable as `v_*.alter.sql` under
-`knowledge/synapse/Wiki/*/Tables/` and `*/Views/`.
+### Real bug #2: column-name drift in EXW_Inventory_Snapshot_History wiki
+
+**Symptom**: alter file uses backticked names with **spaces** (e.g.
+`Allocated Total`, `Funded Free`); UC has the same columns with
+**underscores** (`Allocated_Total`, `Funded_Free`). 13 of 18 columns
+suffered this drift and silently failed at deploy time (deploy_alter_
+batch reported 12 ok / 26 fail per statement, but the alter file
+footer said `104/104 succeeded` — old footer was wrong / stale).
+
+**Cause**: wiki author captured the SELECT alias names from the source
+view definition (e.g. `[Allocated Total]`) instead of the underlying
+materialization-safe column names. The Synapse SP probably renames on
+landing into the UC gold layer.
+
+**Fix applied 2026-05-03**: `tools/_tmp_phase5_fix_inventory.py`
+patched the `.alter.sql` and redeployed; now 18/18.
+
+**Action item for harness**: add a step in the wiki generator (or
+preflight) that resolves wiki §X column names against UC actual
+columns BEFORE writing the alter file. When mismatch found, prefer the
+UC column name and warn. Audit other EXW tables for similar drift.
+
+### Note: deploy_alter_batch may be over-reporting success
+
+The `deploy_alter_batch.py` log for EXW_Inventory_Snapshot_History
+said `OK 104/104 statements` but 26 of those statements are now known
+to have failed with `UNRESOLVED_COLUMN.WITH_SUGGESTION`. Either the
+deploy tool isn't surfacing per-statement errors, or it ran a
+different version of the file. Worth a small audit pass to compare
+deploy logs vs `_tmp_phase5_redeploy_exw.py` per-statement results.
 
 ## Bronze deploy source-level kickbacks (2026-05-03)
 
@@ -49,20 +87,51 @@ Eight buckets of failures were observed across the 14-DB UC bronze deploy
 that are NOT fixable by `tools/preflight_alters.py` text fixes — they
 need source/generator/UC investigation in a follow-up session.
 
-### A. Generator gap — `.alter.sql` never produced (52 rows total)
+### A. Wiki content gap — wikis missing `## Elements` section (52 rows total)
 
-The deploy-index has a row but the `.alter.sql` file isn't on disk.
-`tools/uc_bronze/generate_bronze_alters.py` skipped them silently.
+**Diagnosed 2026-05-03**: the generator is NOT broken. It correctly
+processes every row with scope status `ready` / `ready_case_match` and
+only skips wikis that lack a `## Elements` section (the §X column
+catalog needed to emit `ALTER COLUMN COMMENT` statements). Skips are
+printed clearly as `SKIP no Elements section: <wiki path>`.
 
-| DB | Count | Examples |
+| DB | Count | Root cause |
 |---|---:|---|
-| etoro | 37 | `Billing.CustomerToFunding`, `Billing.MerchantAccountRouting`, `Dictionary.Downtime*` (10), `History.*` |
-| USABroker | 15 | `Dictionary.ApexValidationError`, `Dictionary.AppropriatenessProduct`, `Dictionary.CustomerType`, `Dictionary.OptionsStatus`, `Dictionary.UserProgram*`, ... |
+| etoro | 37 | `no_elements` (wiki exists but no Elements section) |
+| USABroker | 15 | `no_elements` (Dictionary stubs from harness regen lack column tables) |
 
-**Action**: rerun `tools/uc_bronze/generate_bronze_alters.py --db etoro`
-and `--db USABroker`, inspect the wikis for these names to figure out
-why they're being skipped (likely missing §X column section or wrong
-file naming). Then redeploy via the same `--db <name>` flow.
+**The 15 USABroker stub wikis to back-fill** (all under
+`knowledge/ProdSchemas/ComplianceDBs/USABroker/Wiki/Dictionary/Tables/`):
+`Dictionary.ApexValidationError`, `Dictionary.AppropriatenessProduct`,
+`Dictionary.AppropriatenessTestResult`, `Dictionary.CustomerType`,
+`Dictionary.DocumentType`, `Dictionary.EligibilityStatus`,
+`Dictionary.ModifyType`, `Dictionary.OptionsStatus`,
+`Dictionary.OptionsStatusControl`, `Dictionary.PhoneType`,
+`Dictionary.ReasoningStatus`, `Dictionary.UserDataUpdatesMask`,
+`Dictionary.UserDocumentType`, `Dictionary.UserProgram`,
+`Dictionary.UserProgramEnrolmentStatus`.
+
+**The 37 etoro wikis to back-fill** are listed in
+`knowledge/ProdSchemas/_genbronze_etoro_dryrun.log` (search
+`SKIP no Elements section:`).
+
+**Separate companion issue — `no_wiki_file` (37 rows for etoro)**:
+Generic Pipeline mapping points to a `wiki_path` that doesn't exist on
+disk. These never enter the generator (filtered out before scope). Need
+the wiki harness to actually produce these wikis first.
+
+**Action plan** (out of scope for this session — wiki harness work):
+1. Run wiki harness loop on the 52 stub/missing wikis to populate
+   their §X Elements section + table summary.
+2. Rerun `python -m tools.uc_bronze.generate_bronze_alters --db etoro`
+   and `--db USABroker`. They will produce 52 new alter files.
+3. Preflight + deploy via the existing bronze flow.
+
+**Reference logs**:
+- `knowledge/ProdSchemas/_genbronze_etoro_dryrun.log` — full dry-run
+  with all 37 SKIP reasons.
+- `knowledge/ProdSchemas/_genbronze_usabroker_dryrun.log` — same for
+  USABroker.
 
 ### B. Hyphen-versioned Tribe shadow tables don't exist in UC (21 rows)
 
