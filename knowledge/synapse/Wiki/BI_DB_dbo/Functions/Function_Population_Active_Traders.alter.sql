@@ -6,23 +6,23 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_population_active_traders (
-  GCID COMMENT 'Global Customer ID — platform-wide unique customer identifier. References Dim_Customer.GCID.',
+  GCID COMMENT 'Global Customer ID - platform-wide unique customer identifier. References Dim_Customer.GCID.',
   RealCID COMMENT 'Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.',
-  DateID COMMENT 'Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.',
-  ActiveTraded COMMENT '1. Source: (literal). (T2 — Function_Population_Active_Traders)',
-  ActiveTradedManual COMMENT 'MAX(CASE WHEN MirrorID = 0 THEN 1 ELSE 0 END) over rows matching TP filters (ActionTypeID IN (1,39,15,17), IsAirDrop=0, valid customer, date range) union options branch (ActionTypeID = 1). Source: Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedCryptoCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedCryptoReal COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedStocksCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedStocksReal COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedETFCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedETFReal COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedCopy COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID > 0 AND ActionTypeID IN (15,17) THEN 1 ELSE 0 END) — open/close copy actions only on TP leg (options use MirrorID = 0). Source: Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedCopyFund COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID > 0 AND ActionTypeID IN (15,17) AND IsCopyFund = 1 THEN 1 ELSE 0 END) with IsCopyFund from Dim_Mirror.MirrorTypeID = 4. Source: Fact_CustomerAction, Dim_Mirror. (T2 — Function_Population_Active_Traders)',
-  ActiveTradedOptions COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN InstrumentTypeID = 9 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 — Function_Population_Active_Traders)'
+  DateID COMMENT 'Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes - key filter column.',
+  ActiveTraded COMMENT '1. Source: (literal). (T2 - Function_Population_Active_Traders)',
+  ActiveTradedManual COMMENT 'MAX(CASE WHEN MirrorID = 0 THEN 1 ELSE 0 END) over rows matching TP filters (ActionTypeID IN (1,39,15,17), IsAirDrop=0, valid customer, date range) union options branch (ActionTypeID = 1). Source: Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedCryptoCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedCryptoReal COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedStocksCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedStocksReal COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedETFCFD COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedETFReal COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Dim_Instrument, options branch. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedCopy COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID > 0 AND ActionTypeID IN (15,17) THEN 1 ELSE 0 END) - open/close copy actions only on TP leg (options use MirrorID = 0). Source: Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedCopyFund COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN MirrorID > 0 AND ActionTypeID IN (15,17) AND IsCopyFund = 1 THEN 1 ELSE 0 END) with IsCopyFund from Dim_Mirror.MirrorTypeID = 4. Source: Fact_CustomerAction, Dim_Mirror. (T2 - Function_Population_Active_Traders)',
+  ActiveTradedOptions COMMENT 'Same eligible rowset as row 5; MAX(CASE WHEN InstrumentTypeID = 9 THEN 1 ELSE 0 END). Source: Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 - Function_Population_Active_Traders)'
 )
 COMMENT 'BI_DB_dbo.Function_Population_Active_Traders > Flags DDR-style “active traders” per customer per DateID inside [@sdateInt, @edateInt]. TP leg: Fact_CustomerAction with ActionTypeID IN (1, 39, 15, 17), ISNULL(IsAirDrop,0) = 0, customer in Fact_SnapshotCustomer with IsValidCustomer = 1, DateID in range and inside snapshot Dim_Range. Options leg: Function_Revenue_OptionsPlatform(@sdateInt, @edateInt, 1) rows with ActionTypeID = 1, joined to Dim_Customer for GCID. Unioned rows drive MAX(CASE …) asset-class and copy flags.'
 TBLPROPERTIES (

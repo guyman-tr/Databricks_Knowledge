@@ -6,34 +6,34 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_optionsplatform (
-  DateID COMMENT 'CONVERT(NVARCHAR(8), TradeDate, 112). Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 — Function_Revenue_OptionsPlatform)',
-  Date COMMENT 'CONVERT(DATE, TradeDate). Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 — Function_Revenue_OptionsPlatform)',
-  RealCID COMMENT 'Direct pass-through from Dim_Customer.RealCID. (T1 — Function_Revenue_OptionsPlatform)',
-  ActionTypeID COMMENT 'CASE WHEN Side = ''B'' THEN 1 WHEN Side = ''S'' THEN 4 END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.Side. (T2 — Function_Revenue_OptionsPlatform)',
-  ActionType COMMENT 'CASE WHEN Side = ''B'' THEN ''ManualPositionOpen'' WHEN Side = ''S'' THEN ''ManualPositionClose'' END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.Side. (T2 — Function_Revenue_OptionsPlatform)',
-  InstrumentTypeID COMMENT 'CASE WHEN InstrumentType = ''Option'' THEN 9 WHEN InstrumentType = ''Equity'' THEN 5 END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.InstrumentType. (T2 — Function_Revenue_OptionsPlatform)',
-  IsSettled COMMENT '1. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsCopy COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  Metric COMMENT '''Options_PFOF''. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  Amount COMMENT 'SUM(ABS(CustomerPFOFPayback)) WHERE ClearingAccount NOT IN (excluded house accounts) AND TradeDate BETWEEN CONVERT(DATE, CONVERT(VARCHAR(8), @sdateInt), 112) AND CONVERT(DATE, CONVERT(VARCHAR(8), @edateInt), 112) (GROUP BY trade date, customer, side, instrument type, etc.). Source: Sodreconciliation_apex_EXT1047_RevenueReports.CustomerPFOFPayback. (T2 — Function_Revenue_OptionsPlatform)',
-  CountTransactions COMMENT 'COUNT(OrderID). Source: Sodreconciliation_apex_EXT1047_RevenueReports.OrderID. (T2 — Function_Revenue_OptionsPlatform)',
-  IncludedInTotalRevenue COMMENT '1. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  CountAsActiveTrade COMMENT 'CASE WHEN Side = ''B'' THEN 1 ELSE 0 END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.Side. (T2 — Function_Revenue_OptionsPlatform)',
-  UpdateDate COMMENT 'GETDATE(). Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsBuy COMMENT '1. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsLeveraged COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsFuture COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsCopyFund COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsOpenedFromIBAN COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsClosedToIBAN COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
+  DateID COMMENT 'CONVERT(NVARCHAR(8), TradeDate, 112). Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 - Function_Revenue_OptionsPlatform)',
+  Date COMMENT 'CONVERT(DATE, TradeDate). Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 - Function_Revenue_OptionsPlatform)',
+  RealCID COMMENT 'Direct pass-through from Dim_Customer.RealCID. (T1 - Function_Revenue_OptionsPlatform)',
+  ActionTypeID COMMENT 'CASE WHEN Side = ''B'' THEN 1 WHEN Side = ''S'' THEN 4 END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.Side. (T2 - Function_Revenue_OptionsPlatform)',
+  ActionType COMMENT 'CASE WHEN Side = ''B'' THEN ''ManualPositionOpen'' WHEN Side = ''S'' THEN ''ManualPositionClose'' END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.Side. (T2 - Function_Revenue_OptionsPlatform)',
+  InstrumentTypeID COMMENT 'CASE WHEN InstrumentType = ''Option'' THEN 9 WHEN InstrumentType = ''Equity'' THEN 5 END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.InstrumentType. (T2 - Function_Revenue_OptionsPlatform)',
+  IsSettled COMMENT '1. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsCopy COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  Metric COMMENT '''Options_PFOF''. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  Amount COMMENT 'SUM(ABS(CustomerPFOFPayback)) WHERE ClearingAccount NOT IN (excluded house accounts) AND TradeDate BETWEEN CONVERT(DATE, CONVERT(VARCHAR(8), @sdateInt), 112) AND CONVERT(DATE, CONVERT(VARCHAR(8), @edateInt), 112) (GROUP BY trade date, customer, side, instrument type, etc.). Source: Sodreconciliation_apex_EXT1047_RevenueReports.CustomerPFOFPayback. (T2 - Function_Revenue_OptionsPlatform)',
+  CountTransactions COMMENT 'COUNT(OrderID). Source: Sodreconciliation_apex_EXT1047_RevenueReports.OrderID. (T2 - Function_Revenue_OptionsPlatform)',
+  IncludedInTotalRevenue COMMENT '1. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  CountAsActiveTrade COMMENT 'CASE WHEN Side = ''B'' THEN 1 ELSE 0 END. Source: Sodreconciliation_apex_EXT1047_RevenueReports.Side. (T2 - Function_Revenue_OptionsPlatform)',
+  UpdateDate COMMENT 'GETDATE(). Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsBuy COMMENT '1. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsLeveraged COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsFuture COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsCopyFund COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsOpenedFromIBAN COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsClosedToIBAN COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
   IsRecurring,
-  IsAirDrop COMMENT '0. Source: —. (T2 — Function_Revenue_OptionsPlatform)',
-  IsValidCustomer COMMENT 'Direct pass-through from Dim_Customer.IsValidCustomer. (T1 — Function_Revenue_OptionsPlatform)',
-  IsCreditReportValidCB COMMENT 'Direct pass-through from Dim_Customer.IsCreditReportValidCB. (T1 — Function_Revenue_OptionsPlatform)',
-  FirstTradeDate COMMENT 'First row per ClearingAccount (ROW_NUMBER partition). Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 — Function_Revenue_OptionsPlatform)',
-  FirstTradeDateID COMMENT 'CAST(FORMAT(CAST(TradeDate AS DATE),''yyyyMMdd'') AS INT) on first trade. Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 — Function_Revenue_OptionsPlatform)'
+  IsAirDrop COMMENT '0. Source:  - . (T2 - Function_Revenue_OptionsPlatform)',
+  IsValidCustomer COMMENT 'Direct pass-through from Dim_Customer.IsValidCustomer. (T1 - Function_Revenue_OptionsPlatform)',
+  IsCreditReportValidCB COMMENT 'Direct pass-through from Dim_Customer.IsCreditReportValidCB. (T1 - Function_Revenue_OptionsPlatform)',
+  FirstTradeDate COMMENT 'First row per ClearingAccount (ROW_NUMBER partition). Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 - Function_Revenue_OptionsPlatform)',
+  FirstTradeDateID COMMENT 'CAST(FORMAT(CAST(TradeDate AS DATE),''yyyyMMdd'') AS INT) on first trade. Source: Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate. (T2 - Function_Revenue_OptionsPlatform)'
 )
 COMMENT 'BI_DB_dbo.Function_Revenue_OptionsPlatform > Aggregates US options/equity PFOF (payment for order flow) payback from Apex reconciliation revenue reports per customer and trade date, shaped like other revenue metrics (action types, instrument type, transaction counts). Maps clearing accounts to internal customers via the US broker options bridge table and excludes designated house accounts. The Amount column is SUM(ABS(CustomerPFOFPayback)) only over rows whose TradeDate falls between the parameter dates and whose ClearingAccount is not in the excluded house list.'
 TBLPROPERTIES (

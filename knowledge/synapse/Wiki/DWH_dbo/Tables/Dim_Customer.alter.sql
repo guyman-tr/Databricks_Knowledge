@@ -116,7 +116,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUM
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN AccountManagerID COMMENT 'Currently assigned BackOffice sales/service agent (renamed from ManagerID). FK to BackOffice.Manager. NULL = unassigned. (Tier 1 - BackOffice.Customer)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN UpdateDate COMMENT 'ETL load/update timestamp (GETDATE()). (Tier 2 - SP_Dim_Customer)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN SalesForceAccountID COMMENT 'Salesforce CRM Account record ID (18-char Salesforce ID). Links the trading account to the SF Account. NULL if not yet synced. (Tier 1 - BackOffice.Customer)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN 2FA COMMENT 'Two-factor authentication status. 0=disabled, 1=enabled. Derived from `STS_Audit_UserOperationsData` login type events. Preserves previous value when no new 2FA event exists. (Tier 2 - SP_Dim_Customer)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN `2FA` COMMENT 'Two-factor authentication status. 0=disabled, 1=enabled. Derived from `STS_Audit_UserOperationsData` login type events. Preserves previous value when no new 2FA event exists. (Tier 2 - SP_Dim_Customer)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN PhoneVerifiedID COMMENT 'Result code of phone number verification process. NULL if not yet attempted. (Tier 1 - BackOffice.Customer)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN PhoneNumber COMMENT 'Verified phone number from ContactVerification service. Overrides `Phone` from Customer_Customer when available. (Tier 2 - SP_Dim_Customer)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN IsPhoneVerified COMMENT 'Whether phone is verified (VerificationStatusID IN (1,2) -> 1). (Tier 2 - SP_Dim_Customer)';
@@ -224,7 +224,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUM
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN AccountManagerID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN SalesForceAccountID SET TAGS ('pii' = 'none');
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN 2FA SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN `2FA` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN PhoneVerifiedID SET TAGS ('pii' = 'direct');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN PhoneNumber SET TAGS ('pii' = 'direct');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked ALTER COLUMN IsPhoneVerified SET TAGS ('pii' = 'direct');
@@ -353,7 +353,7 @@ ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN 
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN AccountManagerID COMMENT 'Currently assigned BackOffice sales/service agent (renamed from ManagerID). FK to BackOffice.Manager. NULL = unassigned. (Tier 1 - BackOffice.Customer)';
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN UpdateDate COMMENT 'ETL load/update timestamp (GETDATE()). (Tier 2 - SP_Dim_Customer)';
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN SalesForceAccountID COMMENT 'Salesforce CRM Account record ID (18-char Salesforce ID). Links the trading account to the SF Account. NULL if not yet synced. (Tier 1 - BackOffice.Customer)';
-ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN 2FA COMMENT 'Two-factor authentication status. 0=disabled, 1=enabled. Derived from `STS_Audit_UserOperationsData` login type events. Preserves previous value when no new 2FA event exists. (Tier 2 - SP_Dim_Customer)';
+ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN `2FA` COMMENT 'Two-factor authentication status. 0=disabled, 1=enabled. Derived from `STS_Audit_UserOperationsData` login type events. Preserves previous value when no new 2FA event exists. (Tier 2 - SP_Dim_Customer)';
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN PhoneVerifiedID COMMENT 'Result code of phone number verification process. NULL if not yet attempted. (Tier 1 - BackOffice.Customer)';
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN PhoneNumber COMMENT 'Verified phone number from ContactVerification service. Overrides `Phone` from Customer_Customer when available. (Tier 2 - SP_Dim_Customer)';
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN IsPhoneVerified COMMENT 'Whether phone is verified (VerificationStatusID IN (1,2) -> 1). (Tier 2 - SP_Dim_Customer)';
@@ -461,7 +461,7 @@ ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN 
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN AccountManagerID SET TAGS ('pii' = 'none');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN SalesForceAccountID SET TAGS ('pii' = 'none');
-ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN 2FA SET TAGS ('pii' = 'none');
+ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN `2FA` SET TAGS ('pii' = 'none');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN PhoneVerifiedID SET TAGS ('pii' = 'direct');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN PhoneNumber SET TAGS ('pii' = 'direct');
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer ALTER COLUMN IsPhoneVerified SET TAGS ('pii' = 'direct');

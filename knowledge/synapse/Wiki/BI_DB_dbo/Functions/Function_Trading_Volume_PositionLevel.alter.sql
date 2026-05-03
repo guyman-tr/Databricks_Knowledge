@@ -6,44 +6,44 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_trading_volume_positionlevel (
-  CID COMMENT 'Customer ID — the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.',
+  CID COMMENT 'Customer ID - the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.',
   PositionID COMMENT 'Unique position identifier. System-generated. Also serves as the root TreeID for independent (non-copy-trade) positions. HASH distribution key for this table.',
   InstrumentID COMMENT 'Financial instrument being traded (stock, forex, crypto, ETF, commodity, index). References Dim_Instrument. Drives settlement rules, fees, hedge routing, PnL conversion.',
   Amount COMMENT 'Customer invested amount in USD. Updated proportionally on partial close. Gross notional = Amount × Leverage.',
-  Leverage COMMENT 'Leverage multiplier (e.g., 1=no leverage/real ownership, 5=5x). Leverage=1 + IsSettled=1 → REAL settlement. Gross notional = Amount × Leverage.',
+  Leverage COMMENT 'Leverage multiplier (e.g., 1=no leverage/real ownership, 5=5x). Leverage=1 + IsSettled=1 -> REAL settlement. Gross notional = Amount × Leverage.',
   DateID COMMENT 'Open date as YYYYMMDD int. DWH-computed from OpenOccurred. Indexed.',
-  VolumeOpen COMMENT 'ISNULL(CAST(Volume AS BIGINT),0) on open leg only (OpenDateID in range); 0 on close leg. Source: DWH_dbo.Dim_Position.Volume. (T2 — Function_Trading_Volume_PositionLevel)',
-  VolumeClose COMMENT 'ISNULL(CAST(VolumeOnClose AS BIGINT),0) on close leg (CloseDateID in range); 0 on open leg. Source: DWH_dbo.Dim_Position.VolumeOnClose. (T2 — Function_Trading_Volume_PositionLevel)',
-  InvestedAmountOpen COMMENT 'CASE WHEN IsPartialCloseChild=1 THEN 0 ELSE InitialAmountCents/100.0 END on opens. Source: DWH_dbo.Dim_Position.InitialAmountCents. (T2 — Function_Trading_Volume_PositionLevel)',
-  InvestedAmountClosed COMMENT 'CAST(Amount AS FLOAT) on closes. Source: DWH_dbo.Dim_Position.Amount. (T2 — Function_Trading_Volume_PositionLevel)',
-  TotalVolume COMMENT 'ISNULL(VolumeOpen,0) + ISNULL(VolumeClose,0) per union row (stored volumes, not computed QA columns). Source: DWH_dbo.Dim_Position.Volume, VolumeOnClose. (T2 — Function_Trading_Volume_PositionLevel)',
-  NetInvestedAmount COMMENT 'ISNULL(InvestedAmountOpen,0) - ISNULL(InvestedAmountClosed,0) (open uses InitialAmountCents/100.0 unless partial-close child; close uses CAST(Amount AS FLOAT)). Source: DWH_dbo.Dim_Position. (T2 — Function_Trading_Volume_PositionLevel)',
-  CountOpenTransactions COMMENT '1 or 0 on opens. Source: DWH_dbo.Dim_Position.IsPartialCloseChild. (T2 — Function_Trading_Volume_PositionLevel)',
-  CountCloseTransactions COMMENT '0 on opens; 1 on closes. Source: DWH_dbo.Dim_Position. (T2 — Function_Trading_Volume_PositionLevel)',
-  CountTotalTransactions COMMENT 'CountOpenTransactions + CountCloseTransactions. Source: DWH_dbo.Dim_Position. (T2 — Function_Trading_Volume_PositionLevel)',
+  VolumeOpen COMMENT 'ISNULL(CAST(Volume AS BIGINT),0) on open leg only (OpenDateID in range); 0 on close leg. Source: DWH_dbo.Dim_Position.Volume. (T2 - Function_Trading_Volume_PositionLevel)',
+  VolumeClose COMMENT 'ISNULL(CAST(VolumeOnClose AS BIGINT),0) on close leg (CloseDateID in range); 0 on open leg. Source: DWH_dbo.Dim_Position.VolumeOnClose. (T2 - Function_Trading_Volume_PositionLevel)',
+  InvestedAmountOpen COMMENT 'CASE WHEN IsPartialCloseChild=1 THEN 0 ELSE InitialAmountCents/100.0 END on opens. Source: DWH_dbo.Dim_Position.InitialAmountCents. (T2 - Function_Trading_Volume_PositionLevel)',
+  InvestedAmountClosed COMMENT 'CAST(Amount AS FLOAT) on closes. Source: DWH_dbo.Dim_Position.Amount. (T2 - Function_Trading_Volume_PositionLevel)',
+  TotalVolume COMMENT 'ISNULL(VolumeOpen,0) + ISNULL(VolumeClose,0) per union row (stored volumes, not computed QA columns). Source: DWH_dbo.Dim_Position.Volume, VolumeOnClose. (T2 - Function_Trading_Volume_PositionLevel)',
+  NetInvestedAmount COMMENT 'ISNULL(InvestedAmountOpen,0) - ISNULL(InvestedAmountClosed,0) (open uses InitialAmountCents/100.0 unless partial-close child; close uses CAST(Amount AS FLOAT)). Source: DWH_dbo.Dim_Position. (T2 - Function_Trading_Volume_PositionLevel)',
+  CountOpenTransactions COMMENT '1 or 0 on opens. Source: DWH_dbo.Dim_Position.IsPartialCloseChild. (T2 - Function_Trading_Volume_PositionLevel)',
+  CountCloseTransactions COMMENT '0 on opens; 1 on closes. Source: DWH_dbo.Dim_Position. (T2 - Function_Trading_Volume_PositionLevel)',
+  CountTotalTransactions COMMENT 'CountOpenTransactions + CountCloseTransactions. Source: DWH_dbo.Dim_Position. (T2 - Function_Trading_Volume_PositionLevel)',
   IsSettled COMMENT 'Legacy real-ownership flag: 1=Real (owns shares), 0=CFD. Predates SettlementTypeID. Fallback: ISNULL(SettlementTypeID, CAST(IsSettled AS tinyint)).',
-  IsAirDrop COMMENT 'Airdrop flag: 1=eToro opened position on behalf of customer (staking, promotions, compensations — not just crypto). Set from Trade.PositionAirdropLog. NULL=not airdrop.',
-  IsBuy COMMENT 'Direct pass-through from DWH_dbo.Dim_Position.IsBuy. (T1 — Function_Trading_Volume_PositionLevel)',
+  IsAirDrop COMMENT 'Airdrop flag: 1=eToro opened position on behalf of customer (staking, promotions, compensations - not just crypto). Set from Trade.PositionAirdropLog. NULL=not airdrop.',
+  IsBuy COMMENT 'Direct pass-through from DWH_dbo.Dim_Position.IsBuy. (T1 - Function_Trading_Volume_PositionLevel)',
   SettlementTypeID COMMENT 'Authoritative settlement: 0=CFD,1=REAL,2=TRS,3=CMT(Crypto settled),4=REAL_FUTURES,5=MARGIN_TRADE. NULL=legacy, use ISNULL(SettlementTypeID,CAST(IsSettled AS tinyint)).',
-  ComputedVolumeOpen COMMENT 'CASE WHEN IsPartialCloseChild = 1 THEN 0 ELSE InitialUnits InitForexRate ISNULL(COALESCE(InitForex_USDConversionRate, InitConversionRate, LastOpConversionRate), 1) END on opens; 0 on closes. Source: DWH_dbo.Dim_Position. (T2 — Function_Trading_Volume_PositionLevel)',
-  ComputedVolumeClose COMMENT 'AmountInUnitsDecimal EndForexRate ISNULL(LastOpConversionRate, 1) on closes; 0 on opens. Source: DWH_dbo.Dim_Position. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsCopy COMMENT 'CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END. Source: DWH_dbo.Dim_Position.MirrorID. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsMarginTrade COMMENT 'CASE WHEN SettlementTypeID = 5 THEN 1 ELSE 0 END. Source: DWH_dbo.Dim_Position.SettlementTypeID. (T2 — Function_Trading_Volume_PositionLevel)',
-  InstrumentTypeID COMMENT 'JOIN. Source: DWH_dbo.Dim_Instrument.InstrumentTypeID. (T1 — Function_Trading_Volume_PositionLevel)',
-  IsFuture COMMENT 'JOIN. Source: DWH_dbo.Dim_Instrument.IsFuture. (T1 — Function_Trading_Volume_PositionLevel)',
-  IsSQF COMMENT 'ISNULL from TVF subset IsSQF=1 at @edateInt. Source: BI_DB_dbo.Function_Instrument_Snapshot_Enriched. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsC2P COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.V_C2P_Positions. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsCopyFund COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_CopyFund_Positions. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsRecurring COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_RecurringInvestment_Positions. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsOpenedFromIBAN COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsClosedToIBAN COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN. (T2 — Function_Trading_Volume_PositionLevel)',
-  IsValidCustomer COMMENT 'JOIN snapshot on RealCID + Dim_Range. Source: DWH_dbo.Fact_SnapshotCustomer.IsValidCustomer. (T1 — Function_Trading_Volume_PositionLevel)'
+  ComputedVolumeOpen COMMENT 'CASE WHEN IsPartialCloseChild = 1 THEN 0 ELSE InitialUnits InitForexRate ISNULL(COALESCE(InitForex_USDConversionRate, InitConversionRate, LastOpConversionRate), 1) END on opens; 0 on closes. Source: DWH_dbo.Dim_Position. (T2 - Function_Trading_Volume_PositionLevel)',
+  ComputedVolumeClose COMMENT 'AmountInUnitsDecimal EndForexRate ISNULL(LastOpConversionRate, 1) on closes; 0 on opens. Source: DWH_dbo.Dim_Position. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsCopy COMMENT 'CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END. Source: DWH_dbo.Dim_Position.MirrorID. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsMarginTrade COMMENT 'CASE WHEN SettlementTypeID = 5 THEN 1 ELSE 0 END. Source: DWH_dbo.Dim_Position.SettlementTypeID. (T2 - Function_Trading_Volume_PositionLevel)',
+  InstrumentTypeID COMMENT 'JOIN. Source: DWH_dbo.Dim_Instrument.InstrumentTypeID. (T1 - Function_Trading_Volume_PositionLevel)',
+  IsFuture COMMENT 'JOIN. Source: DWH_dbo.Dim_Instrument.IsFuture. (T1 - Function_Trading_Volume_PositionLevel)',
+  IsSQF COMMENT 'ISNULL from TVF subset IsSQF=1 at @edateInt. Source: BI_DB_dbo.Function_Instrument_Snapshot_Enriched. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsC2P COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.V_C2P_Positions. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsCopyFund COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_CopyFund_Positions. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsRecurring COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_RecurringInvestment_Positions. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsOpenedFromIBAN COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsClosedToIBAN COMMENT 'CASE WHEN join match THEN 1 ELSE 0 END. Source: BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN. (T2 - Function_Trading_Volume_PositionLevel)',
+  IsValidCustomer COMMENT 'JOIN snapshot on RealCID + Dim_Range. Source: DWH_dbo.Fact_SnapshotCustomer.IsValidCustomer. (T1 - Function_Trading_Volume_PositionLevel)'
 )
-COMMENT 'BI_DB_dbo.Function_Trading_Volume_PositionLevel > Position-level one row per open or close event (not aggregated across positions): opens with OpenDateID between @sdateInt and @edateInt, closes with CloseDateID in that range, unioned like Function_Trading_Volume. Exposes both persisted volume (Volume / VolumeOnClose) and QA recomputed notional from units × FX (and conversion-rate fallback chain on open), plus IsValidCustomer and product/context flags—no final GROUP BY volume roll-up.'
+COMMENT 'BI_DB_dbo.Function_Trading_Volume_PositionLevel > Position-level one row per open or close event (not aggregated across positions): opens with OpenDateID between @sdateInt and @edateInt, closes with CloseDateID in that range, unioned like Function_Trading_Volume. Exposes both persisted volume (Volume / VolumeOnClose) and QA recomputed notional from units × FX (and conversion-rate fallback chain on open), plus IsValidCustomer and product/context flags - no final GROUP BY volume roll-up.'
 TBLPROPERTIES (
-  'comment' = 'BI_DB_dbo.Function_Trading_Volume_PositionLevel > Position-level one row per open or close event (not aggregated across positions): opens with OpenDateID between @sdateInt and @edateInt, closes with CloseDateID in that range, unioned like Function_Trading_Volume. Exposes both persisted volume (Volume / VolumeOnClose) and QA recomputed notional from units × FX (and conversion-rate fallback chain on open), plus IsValidCustomer and product/context flags—no final GROUP BY volume roll-up.')
+  'comment' = 'BI_DB_dbo.Function_Trading_Volume_PositionLevel > Position-level one row per open or close event (not aggregated across positions): opens with OpenDateID between @sdateInt and @edateInt, closes with CloseDateID in that range, unioned like Function_Trading_Volume. Exposes both persisted volume (Volume / VolumeOnClose) and QA recomputed notional from units × FX (and conversion-rate fallback chain on open), plus IsValidCustomer and product/context flags - no final GROUP BY volume roll-up.')
 WITH SCHEMA COMPENSATION
 AS WITH volume_open AS (
     SELECT

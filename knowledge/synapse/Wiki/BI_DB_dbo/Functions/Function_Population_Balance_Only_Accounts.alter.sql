@@ -6,11 +6,11 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_population_balance_only_accounts (
-  DateID COMMENT 'Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.',
-  RealCID COMMENT 'Customer ID — the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.',
-  MaxAnyEquity COMMENT 'ISNULL(eMoneyMaxEquity,0) + ISNULL(TPMaxEquity,0) + ISNULL(TotalEquity,0) WHERE each leg > 0 in its prep CTE; outer RealCID kept only if sum > 0 AND RealCID NOT IN (Function_Population_Active_Traders ∪ Function_Population_Portfolio_Only) for same [@sdateInt,@edateInt]. Source: BI_DB_Client_Balance_CID_Level_New, eMoneyClientBalance, External_Sodreconciliation_apex_EXT981_BuyPowerSummary. (T2 — Function_Population_Balance_Only_Accounts)'
+  DateID COMMENT 'Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes - key filter column.',
+  RealCID COMMENT 'Customer ID - the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.',
+  MaxAnyEquity COMMENT 'ISNULL(eMoneyMaxEquity,0) + ISNULL(TPMaxEquity,0) + ISNULL(TotalEquity,0) WHERE each leg > 0 in its prep CTE; outer RealCID kept only if sum > 0 AND RealCID NOT IN (Function_Population_Active_Traders ∪ Function_Population_Portfolio_Only) for same [@sdateInt,@edateInt]. Source: BI_DB_Client_Balance_CID_Level_New, eMoneyClientBalance, External_Sodreconciliation_apex_EXT981_BuyPowerSummary. (T2 - Function_Population_Balance_Only_Accounts)'
 )
 COMMENT 'BI_DB_dbo.Function_Population_Balance_Only_Accounts > Identifies customers who had positive equity somewhere in the period (trading-platform balances, eMoney IBAN USD-adjusted balance, or options Apex total equity) but did not appear as active traders or portfolio-only users in the same date range. Implements the DDR “balance only” cohort.'
 TBLPROPERTIES (

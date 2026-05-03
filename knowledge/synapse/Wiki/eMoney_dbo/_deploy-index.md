@@ -1,13 +1,13 @@
 ---
 schema: eMoney_dbo
 database: Synapse DWH
-total_deployable: 45
+total_deployable: 46
 generated: 0
-deployed: 14
+deployed: 15
 failed: 22
 stub_only: 9
 last_generate_batch: 0
-last_deploy_batch: 1
+last_deploy_batch: 9
 last_updated: "2026-05-03"
 ---
 
@@ -19,12 +19,12 @@ last_updated: "2026-05-03"
 | **Total deployable**               | 45  |
 | **Pending (no .alter.sql)**        | 0          |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 14         |
+| **Deployed (UC)**                  | 15         |
 | **Stub-only (no UC)**              | 9   |
 | **Failed**                         | 22         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 1          |
+| **Last deploy batch**              | 9          |
 | **Last updated**                   | 2026-05-03       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -78,8 +78,14 @@ last_updated: "2026-05-03"
 | [eMoney_dbo.eMoneyProcessStatusLog](Tables/eMoneyProcessStatusLog.md) | Stub only |
 | [eMoney_dbo.v_eMoney_Card_Instance_Summary](Tables/v_eMoney_Card_Instance_Summary.md) | Deployed (Batch 1) — 2026-05-03|
 
-## Views (1)
+## Views (2)
 
 | Object | Deploy status |
 |--------|---------------|
 | [eMoney_dbo.v_eMoney_Dim_Account](Views/v_eMoney_Dim_Account.md) | Stub only |
+
+## Views (1)
+
+| Object | Deploy status |
+|--------|---------------|
+| [eMoney_dbo.v_eMoney_Card_Instance_Summary](Views/v_eMoney_Card_Instance_Summary.md) | Deployed (Batch 9) — 2026-05-03|

@@ -6,30 +6,30 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_stakingfee (
-  StakingMonthID COMMENT 'left(StakingMonthID,6). Source: Dealing_Staking_Results. (T2 — Function_Revenue_StakingFee)',
-  Date COMMENT 'dateadd(MONTH,-1,UpdateDate). Source: Dealing_Staking_Results. (T2 — Function_Revenue_StakingFee)',
-  DateID COMMENT 'CAST(FORMAT(CAST(dateadd(MONTH,-1,UpdateDate) AS DATE),''yyyyMMdd'') as INT). Source: Dealing_Staking_Results. (T2 — Function_Revenue_StakingFee)',
-  StakingMonth COMMENT 'Direct pass-through from Dealing_Staking_Results.StakingMonth. (T1 — Function_Revenue_StakingFee)',
-  StakingYear COMMENT 'Direct pass-through from Dealing_Staking_Results.StakingYear. (T1 — Function_Revenue_StakingFee)',
+  StakingMonthID COMMENT 'left(StakingMonthID,6). Source: Dealing_Staking_Results. (T2 - Function_Revenue_StakingFee)',
+  Date COMMENT 'dateadd(MONTH,-1,UpdateDate). Source: Dealing_Staking_Results. (T2 - Function_Revenue_StakingFee)',
+  DateID COMMENT 'CAST(FORMAT(CAST(dateadd(MONTH,-1,UpdateDate) AS DATE),''yyyyMMdd'') as INT). Source: Dealing_Staking_Results. (T2 - Function_Revenue_StakingFee)',
+  StakingMonth COMMENT 'Direct pass-through from Dealing_Staking_Results.StakingMonth. (T1 - Function_Revenue_StakingFee)',
+  StakingYear COMMENT 'Direct pass-through from Dealing_Staking_Results.StakingYear. (T1 - Function_Revenue_StakingFee)',
   InstrumentID COMMENT 'Financial instrument being traded (stock, forex, crypto, ETF, commodity, index). References Dim_Instrument. Drives settlement rules, fees, hedge routing, PnL conversion.',
-  Instrument COMMENT 'Direct pass-through from Dim_Instrument.Name. (T1 — Function_Revenue_StakingFee)',
-  CID COMMENT 'Customer ID — the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.',
-  GCID COMMENT 'Direct pass-through from Fact_SnapshotCustomer.GCID. (T1 — Function_Revenue_StakingFee)',
-  IsEligible COMMENT 'Direct pass-through from Dealing_Staking_Results.IsEligible. (T1 — Function_Revenue_StakingFee)',
-  NonEligible_PrimaryReason COMMENT 'Direct pass-through from Dealing_Staking_Results.NonEligible_PrimaryReason. (T1 — Function_Revenue_StakingFee)',
-  IneligibleCustomerRewards COMMENT 'CASE WHEN IsEligible = 0 THEN Etoro_Amount ELSE 0 END WHERE attributed DateID (from dateadd(MONTH,-1,UpdateDate)) BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths (LEN>6 excluded). Source: Dealing_Staking_Results.Etoro_Amount. (T2 — Function_Revenue_StakingFee)',
-  RevShareCommission COMMENT 'CASE WHEN IsEligible = 1 THEN Etoro_Amount ELSE 0 END WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.Etoro_Amount. (T2 — Function_Revenue_StakingFee)',
-  ClientPercent COMMENT 'Client_Airdrop / nullif((Client_Airdrop + Etoro_Amount),0) ClientPercent. Source: Dealing_Staking_Results. (T2 — Function_Revenue_StakingFee)',
-  EtoroPercent COMMENT 'Etoro_Amount / nullif((Client_Airdrop + Etoro_Amount),0) EtoroPercent. Source: Dealing_Staking_Results. (T2 — Function_Revenue_StakingFee)',
-  ClientUSDDistributed COMMENT 'CASE WHEN IsEligible = 1 THEN USD_Compensation ELSE 0 END WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.USD_Compensation. (T2 — Function_Revenue_StakingFee)',
-  EtoroUSDDistributed COMMENT 'Etoro_Amount_USD WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.Etoro_Amount_USD. (T2 — Function_Revenue_StakingFee)',
-  TotalUSDDistributed COMMENT 'CASE WHEN IsEligible = 1 THEN USD_Compensation ELSE 0 END + Etoro_Amount_USD WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.USD_Compensation, Etoro_Amount_USD. (T2 — Function_Revenue_StakingFee)',
-  AirDropDateID COMMENT 'CAST(FORMAT(CAST(AirdropOccurred AS DATE),''yyyyMMdd'') as INT). Source: Dealing_Staking_Results. (T2 — Function_Revenue_StakingFee)',
-  ActualCompensationType COMMENT 'Direct pass-through from Dealing_Staking_Results.ActualCompensationType. (T1 — Function_Revenue_StakingFee)',
-  ClubCategory COMMENT 'Direct pass-through from Dealing_Staking_Results.ClubCategory. (T1 — Function_Revenue_StakingFee)',
-  IsValidCustomer COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsValidCustomer. (T1 — Function_Revenue_StakingFee)'
+  Instrument COMMENT 'Direct pass-through from Dim_Instrument.Name. (T1 - Function_Revenue_StakingFee)',
+  CID COMMENT 'Customer ID - the account that owns this position. References the customer entity. Nonclustered index supports CID-based queries.',
+  GCID COMMENT 'Direct pass-through from Fact_SnapshotCustomer.GCID. (T1 - Function_Revenue_StakingFee)',
+  IsEligible COMMENT 'Direct pass-through from Dealing_Staking_Results.IsEligible. (T1 - Function_Revenue_StakingFee)',
+  NonEligible_PrimaryReason COMMENT 'Direct pass-through from Dealing_Staking_Results.NonEligible_PrimaryReason. (T1 - Function_Revenue_StakingFee)',
+  IneligibleCustomerRewards COMMENT 'CASE WHEN IsEligible = 0 THEN Etoro_Amount ELSE 0 END WHERE attributed DateID (from dateadd(MONTH,-1,UpdateDate)) BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths (LEN>6 excluded). Source: Dealing_Staking_Results.Etoro_Amount. (T2 - Function_Revenue_StakingFee)',
+  RevShareCommission COMMENT 'CASE WHEN IsEligible = 1 THEN Etoro_Amount ELSE 0 END WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.Etoro_Amount. (T2 - Function_Revenue_StakingFee)',
+  ClientPercent COMMENT 'Client_Airdrop / nullif((Client_Airdrop + Etoro_Amount),0) ClientPercent. Source: Dealing_Staking_Results. (T2 - Function_Revenue_StakingFee)',
+  EtoroPercent COMMENT 'Etoro_Amount / nullif((Client_Airdrop + Etoro_Amount),0) EtoroPercent. Source: Dealing_Staking_Results. (T2 - Function_Revenue_StakingFee)',
+  ClientUSDDistributed COMMENT 'CASE WHEN IsEligible = 1 THEN USD_Compensation ELSE 0 END WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.USD_Compensation. (T2 - Function_Revenue_StakingFee)',
+  EtoroUSDDistributed COMMENT 'Etoro_Amount_USD WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.Etoro_Amount_USD. (T2 - Function_Revenue_StakingFee)',
+  TotalUSDDistributed COMMENT 'CASE WHEN IsEligible = 1 THEN USD_Compensation ELSE 0 END + Etoro_Amount_USD WHERE attributed DateID BETWEEN @sdateID AND @edateID AND StakingMonthID not in BadMonths. Source: Dealing_Staking_Results.USD_Compensation, Etoro_Amount_USD. (T2 - Function_Revenue_StakingFee)',
+  AirDropDateID COMMENT 'CAST(FORMAT(CAST(AirdropOccurred AS DATE),''yyyyMMdd'') as INT). Source: Dealing_Staking_Results. (T2 - Function_Revenue_StakingFee)',
+  ActualCompensationType COMMENT 'Direct pass-through from Dealing_Staking_Results.ActualCompensationType. (T1 - Function_Revenue_StakingFee)',
+  ClubCategory COMMENT 'Direct pass-through from Dealing_Staking_Results.ClubCategory. (T1 - Function_Revenue_StakingFee)',
+  IsValidCustomer COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsValidCustomer. (T1 - Function_Revenue_StakingFee)'
 )
 COMMENT 'BI_DB_dbo.Function_Revenue_StakingFee > Staking reward distribution economics per instrument and customer: rows from Dealing_Staking_Results filtered to attributed DateID (from dateadd(MONTH,-1, UpdateDate)) between @sdateID and @edateID, excluding bad StakingMonthID values (see BadMonths CTE). Normalizes month IDs (left(StakingMonthID,6)), splits eToro vs client USD using eligibility (IsEligible), and joins Dim_Instrument and Fact_SnapshotCustomer with EOM-aligned Dim_Range for customer attributes at month-end.'
 TBLPROPERTIES (

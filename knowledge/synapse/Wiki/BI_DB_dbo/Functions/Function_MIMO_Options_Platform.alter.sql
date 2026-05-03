@@ -6,22 +6,22 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_mimo_options_platform (
-  OfficeCode COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.OfficeCode. (T1 — Function_MIMO_Options_Platform)',
-  RegisteredRepCode COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.RegisteredRepCode. (T1 — Function_MIMO_Options_Platform)',
-  AccountNumber COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.AccountNumber. (T1 — Function_MIMO_Options_Platform)',
-  DateID COMMENT 'CONVERT(nvarchar(8), ProcessDate, 112). Source: External_Sodreconciliation_apex_EXT869_CashActivity.ProcessDate. (T2 — Function_MIMO_Options_Platform)',
-  Date COMMENT 'CONVERT(date, ProcessDate). Source: External_Sodreconciliation_apex_EXT869_CashActivity.ProcessDate. (T2 — Function_MIMO_Options_Platform)',
-  RealCID COMMENT 'Via Options GCID → Dim_Customer (MIMORecords). Source: Dim_Customer.RealCID. (T1 — Function_MIMO_Options_Platform)',
-  MIMOAction COMMENT 'CASE WHEN PayTypeCode = ''C'' THEN ''Deposit'' WHEN ''D'' THEN ''Withdraw'' END. Source: External_Sodreconciliation_apex_EXT869_CashActivity.PayTypeCode. (T2 — Function_MIMO_Options_Platform)',
-  AmountUSD COMMENT 'ABS(Amount) WHERE OfficeCode IN (''4GS'',''5GU''); AccountNumber NOT IN (''4GS43999'',''4GS00100'',''4GS00101'',''4GS00103'',''4GS00104''); EnteredBy IN (''ACH'',''WRD'') OR TerminalID = ''OMJNL''. Source: External_Sodreconciliation_apex_EXT869_CashActivity.Amount. (T2 — Function_MIMO_Options_Platform)',
-  IsFTD COMMENT 'CASE WHEN FinalFTD.TransactionID IS NOT NULL THEN 1 ELSE 0 END. Source: External_Sodreconciliation_apex_EXT869_CashActivity, CTE FinalFTD. (T2 — Function_MIMO_Options_Platform)',
-  IsInternalTransfer COMMENT 'CASE WHEN TerminalID = ''OMJNL'' THEN 1 ELSE 0 END. Source: External_Sodreconciliation_apex_EXT869_CashActivity.TerminalID, EnteredBy. (T2 — Function_MIMO_Options_Platform)',
-  TransactionID COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.ACATSControlNumber. (T1 — Function_MIMO_Options_Platform)',
-  IsGlobalFTD COMMENT 'ISNULL(IsGlobalFTD, 0) from FTD match to Dim_Customer first deposit. Source: Dim_Customer, CTE GLOBAL_FTD / FinalFTD. (T2 — Function_MIMO_Options_Platform)',
-  IsValidCustomer COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsValidCustomer. (T1 — Function_MIMO_Options_Platform)',
-  IsCreditReportValidCB COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsCreditReportValidCB. (T1 — Function_MIMO_Options_Platform)'
+  OfficeCode COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.OfficeCode. (T1 - Function_MIMO_Options_Platform)',
+  RegisteredRepCode COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.RegisteredRepCode. (T1 - Function_MIMO_Options_Platform)',
+  AccountNumber COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.AccountNumber. (T1 - Function_MIMO_Options_Platform)',
+  DateID COMMENT 'CONVERT(nvarchar(8), ProcessDate, 112). Source: External_Sodreconciliation_apex_EXT869_CashActivity.ProcessDate. (T2 - Function_MIMO_Options_Platform)',
+  Date COMMENT 'CONVERT(date, ProcessDate). Source: External_Sodreconciliation_apex_EXT869_CashActivity.ProcessDate. (T2 - Function_MIMO_Options_Platform)',
+  RealCID COMMENT 'Via Options GCID -> Dim_Customer (MIMORecords). Source: Dim_Customer.RealCID. (T1 - Function_MIMO_Options_Platform)',
+  MIMOAction COMMENT 'CASE WHEN PayTypeCode = ''C'' THEN ''Deposit'' WHEN ''D'' THEN ''Withdraw'' END. Source: External_Sodreconciliation_apex_EXT869_CashActivity.PayTypeCode. (T2 - Function_MIMO_Options_Platform)',
+  AmountUSD COMMENT 'ABS(Amount) WHERE OfficeCode IN (''4GS'',''5GU''); AccountNumber NOT IN (''4GS43999'',''4GS00100'',''4GS00101'',''4GS00103'',''4GS00104''); EnteredBy IN (''ACH'',''WRD'') OR TerminalID = ''OMJNL''. Source: External_Sodreconciliation_apex_EXT869_CashActivity.Amount. (T2 - Function_MIMO_Options_Platform)',
+  IsFTD COMMENT 'CASE WHEN FinalFTD.TransactionID IS NOT NULL THEN 1 ELSE 0 END. Source: External_Sodreconciliation_apex_EXT869_CashActivity, CTE FinalFTD. (T2 - Function_MIMO_Options_Platform)',
+  IsInternalTransfer COMMENT 'CASE WHEN TerminalID = ''OMJNL'' THEN 1 ELSE 0 END. Source: External_Sodreconciliation_apex_EXT869_CashActivity.TerminalID, EnteredBy. (T2 - Function_MIMO_Options_Platform)',
+  TransactionID COMMENT 'Direct pass-through from External_Sodreconciliation_apex_EXT869_CashActivity.ACATSControlNumber. (T1 - Function_MIMO_Options_Platform)',
+  IsGlobalFTD COMMENT 'ISNULL(IsGlobalFTD, 0) from FTD match to Dim_Customer first deposit. Source: Dim_Customer, CTE GLOBAL_FTD / FinalFTD. (T2 - Function_MIMO_Options_Platform)',
+  IsValidCustomer COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsValidCustomer. (T1 - Function_MIMO_Options_Platform)',
+  IsCreditReportValidCB COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsCreditReportValidCB. (T1 - Function_MIMO_Options_Platform)'
 )
 COMMENT 'BI_DB_dbo.Function_MIMO_Options_Platform > Surfaces MIMO-style cash activity for US options (Apex) accounts: deposits and withdrawals with amounts and metadata, and derives first-time deposit and global FTD flags by reconciling cash activity to Dim_Customer first-deposit facts for platform 2.'
 TBLPROPERTIES (

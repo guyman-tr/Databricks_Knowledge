@@ -6,14 +6,14 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_cashoutfee_excluderedeem (
   RealCID COMMENT 'Real-account Customer ID. HASH distribution key. References Dim_Customer.RealCID. Always include in WHERE/JOIN for optimal performance.',
-  GCID COMMENT 'Direct pass-through from Fact_SnapshotCustomer.GCID. (T1 — Function_Revenue_CashoutFee_ExcludeRedeem)',
-  DateID COMMENT 'Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes — key filter column.',
+  GCID COMMENT 'Direct pass-through from Fact_SnapshotCustomer.GCID. (T1 - Function_Revenue_CashoutFee_ExcludeRedeem)',
+  DateID COMMENT 'Date of action as YYYYMMDD integer. Derived from Occurred. Part of nonclustered indexes - key filter column.',
   Occurred COMMENT 'UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.',
   CashoutFeeExcludeRedeem COMMENT 'eToro markup (spread) at position open in USD. 0 for non-position events. Same meaning as Dim_Position.Commission.',
-  IsValidCustomer COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsValidCustomer. (T1 — Function_Revenue_CashoutFee_ExcludeRedeem)'
+  IsValidCustomer COMMENT 'Direct pass-through from Fact_SnapshotCustomer.IsValidCustomer. (T1 - Function_Revenue_CashoutFee_ExcludeRedeem)'
 )
 COMMENT 'BI_DB_dbo.Function_Revenue_CashoutFee_ExcludeRedeem > Returns cashout fee (Fact_CustomerAction.Commission) for ActionTypeID IN (30) with ISNULL(IsRedeem, 0) = 0 (cashout fees excluding redeem flows). Customer attributes come from Fact_SnapshotCustomer aligned to the action date via Dim_Range.'
 TBLPROPERTIES (

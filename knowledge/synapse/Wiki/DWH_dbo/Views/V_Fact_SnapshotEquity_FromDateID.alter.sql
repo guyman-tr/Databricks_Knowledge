@@ -26,7 +26,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdatei
 -- ---- Column Comments ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID COMMENT 'Start date of the equity snapshot range (YYYYMMDD integer). (Tier 2 - view DDL)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID COMMENT 'End date of the equity snapshot range (YYYYMMDD integer). Active rows have ToDateID = YYYY1231. (Tier 2 - view DDL)';
--- NOTE: Inherited Fact_SnapshotEquity columns omitted — bulk wildcard ALTER COLUMN not valid SQL.
+-- NOTE: Inherited Fact_SnapshotEquity columns omitted - bulk wildcard ALTER COLUMN not valid SQL.
 -- Base table column descriptions live in Fact_SnapshotEquity.md and are applied via that table's alter.sql.
 
 -- ---- Column PII Tags ----

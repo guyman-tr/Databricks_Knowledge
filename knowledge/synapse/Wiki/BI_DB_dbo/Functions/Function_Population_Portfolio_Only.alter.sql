@@ -6,29 +6,29 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_population_portfolio_only (
   DateID,
-  RealCID COMMENT 'COALESCE(position holder CID, options AUM RealCID). Source: Dim_Position.CID, Dim_Customer.RealCID. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only COMMENT 'Literal 1. Source: —. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 THEN 1 ELSE 0 END). Source: Dim_Position. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CryptoCFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CryptoReal_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_StocksCFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_StocksReal_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_ETFCFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_ETFReal_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END). Source: Dim_Position. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CryptoCFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CryptoReal_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_StocksCFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_StocksReal_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_ETFCFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_ETFReal_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_CopyFund COMMENT 'MAX(CASE WHEN MirrorID > 0 AND IsCopyFund = 1 THEN 1 ELSE 0 END); IsCopyFund from Dim_Mirror.MirrorTypeID = 4. Source: Dim_Position, Dim_Mirror. (T2 — Function_Population_Portfolio_Only)',
-  Portfolio_Only_Options COMMENT 'MAX(CASE WHEN PositionMarketValue > 0 THEN 1 ELSE 0 END). Source: External_Sodreconciliation_apex_EXT981_BuyPowerSummary. (T2 — Function_Population_Portfolio_Only)'
+  RealCID COMMENT 'COALESCE(position holder CID, options AUM RealCID). Source: Dim_Position.CID, Dim_Customer.RealCID. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only COMMENT 'Literal 1. Source:  - . (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 THEN 1 ELSE 0 END). Source: Dim_Position. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CryptoCFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CryptoReal_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_StocksCFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_StocksReal_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_ETFCFD_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_ETFReal_Manual COMMENT 'MAX(CASE WHEN MirrorID = 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END). Source: Dim_Position. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (1,2,4) THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CryptoCFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (10) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CryptoReal_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (10) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_StocksCFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (5) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_StocksReal_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (5) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_ETFCFD_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (6) AND IsSettled = 0 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_ETFReal_Copy COMMENT 'MAX(CASE WHEN MirrorID > 0 AND InstrumentTypeID IN (6) AND IsSettled = 1 THEN 1 ELSE 0 END). Source: Dim_Position, Dim_Instrument. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_CopyFund COMMENT 'MAX(CASE WHEN MirrorID > 0 AND IsCopyFund = 1 THEN 1 ELSE 0 END); IsCopyFund from Dim_Mirror.MirrorTypeID = 4. Source: Dim_Position, Dim_Mirror. (T2 - Function_Population_Portfolio_Only)',
+  Portfolio_Only_Options COMMENT 'MAX(CASE WHEN PositionMarketValue > 0 THEN 1 ELSE 0 END). Source: External_Sodreconciliation_apex_EXT981_BuyPowerSummary. (T2 - Function_Population_Portfolio_Only)'
 )
 COMMENT 'BI_DB_dbo.Function_Population_Portfolio_Only > Identifies customers who qualify as portfolio-only under the DDR terminology framework: they hold open positions (or positive options buying power) in the date range but are not active traders in that same window. Flags break out manual vs copy, instrument families (CFD, crypto, stocks, ETF), copy-fund mirrors, and US options exposure from Apex buy-power data.'
 TBLPROPERTIES (

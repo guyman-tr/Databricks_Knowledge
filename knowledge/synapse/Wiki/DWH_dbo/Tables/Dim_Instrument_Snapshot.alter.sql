@@ -1,6 +1,6 @@
 -- =============================================================================
 -- Databricks ALTER Script: DWH_dbo.Dim_Instrument_Snapshot
--- UC Target: _Not_Migrated — mapped Gold table not present in Unity Catalog at
+-- UC Target: _Not_Migrated - mapped Gold table not present in Unity Catalog at
 --   main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_snapshot (DESCRIBE fails).
 -- Semantic wiki only until export / UC object exists.
 -- =============================================================================

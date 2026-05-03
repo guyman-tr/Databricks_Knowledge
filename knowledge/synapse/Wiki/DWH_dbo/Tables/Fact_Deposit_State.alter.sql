@@ -1,8 +1,8 @@
 -- =============================================================================
 -- STUB: Fact_Deposit_State has no Unity Catalog entry.
 -- Custom Billing pipeline (not in _generic_pipeline_mapping.json).
--- No UC target resolved → all ALTER statements commented out for reference only.
--- Deploy status: Stub only — not in UC
+-- No UC target resolved -> all ALTER statements commented out for reference only.
+-- Deploy status: Stub only - not in UC
 -- =============================================================================
 -- ALTER Script: DWH_dbo.Fact_Deposit_State
 -- UC Target:    _Not found in generic pipeline mapping - custom Billing pipeline_
@@ -13,7 +13,7 @@
 -- =============================================================================
 
 -- ---------------------------------------------------------------------------
--- 1. TABLE COMMENT (reference only — no UC target)
+-- 1. TABLE COMMENT (reference only - no UC target)
 -- ---------------------------------------------------------------------------
 -- ALTER TABLE _Not found in generic pipeline mapping - custom Billing pipeline_
 -- SET TBLPROPERTIES (

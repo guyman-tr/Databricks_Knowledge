@@ -5,11 +5,11 @@
 database: Synapse DWH
 total_deployable: 130
 generated: 0
-deployed: 88
-failed: 0
+deployed: 90
+failed: 1
 last_generate_batch: 0
-last_deploy_batch: 5
-last_updated: "2026-04-12"
+last_deploy_batch: 9
+last_updated: "2026-05-03"
 
 ## Schema ALTER + Deployment Progress
 
@@ -19,13 +19,13 @@ last_updated: "2026-04-12"
 | **Schema**                         | DWH_dbo    |
 | **Total deployable**               | 130        |
 | **Pending (no .alter.sql)**        | 1          |
-| **Generated (awaiting UC deploy)** | 0          |
-| **Deployed (UC)**                  | 88         |
+| **Generated (awaiting UC deploy)** | 0        |
+| **Deployed (UC)**                  | 90         |
 | **Stub-only (no UC)**              | 41         |
-| **Failed**                         | 0          |
+| **Failed**                         | 1         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 4          |
+| **Last deploy batch**              | 9          |
 | **Last updated**                   | 2026-04-12 |
 
 
@@ -102,7 +102,7 @@ last_updated: "2026-04-12"
 | [DWH_dbo.Dim_PlayerStatus](Tables/Dim_PlayerStatus.md)                                                                       | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_PlayerStatusReasons](Tables/Dim_PlayerStatusReasons.md)                                                         | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_PlayerStatusSubReasons](Tables/Dim_PlayerStatusSubReasons.md)                                                   | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
-| [DWH_dbo.Dim_Position](Tables/Dim_Position.md)                                                                               | Stub (not Generic Pipeline / no UC export)                                                                                                         |
+| [DWH_dbo.Dim_Position](Tables/Dim_Position.md) | Deployed (Batch 9) — 2026-05-03|
 | [DWH_dbo.Dim_Position_Account_Statement_AmountInUnitsDecimal](Tables/Dim_Position_Account_Statement_AmountInUnitsDecimal.md) | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Dim_Position_Account_Statement_NetProfit](Tables/Dim_Position_Account_Statement_NetProfit.md)                       | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Dim_PositionChangeLog](Tables/Dim_PositionChangeLog.md)                                                             | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
@@ -135,7 +135,7 @@ last_updated: "2026-04-12"
 | [DWH_dbo.Fact_Deposit_State](Tables/Fact_Deposit_State.md)                                                                   | Stub only — not in UC (custom Billing pipeline, not in generic_pipeline_mapping.json; alter.sql converted to comment-only stub 2026-04-12)         |
 | [DWH_dbo.Fact_FirstCustomerAction](Tables/Fact_FirstCustomerAction.md)                                                       | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Fact_Guru_Copiers](Tables/Fact_Guru_Copiers.md)                                                                     | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
-| [DWH_dbo.Fact_History_Cost](Tables/Fact_History_Cost.md)                                                                     | Pending — UC object EXISTS (dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost confirmed 2026-04-12) but .alter.sql not yet generated                |
+| [DWH_dbo.Fact_History_Cost](Tables/Fact_History_Cost.md) | Deployed (Batch 9) — 2026-05-03|
 | [DWH_dbo.Fact_Position_Futures_Snapshot](Tables/Fact_Position_Futures_Snapshot.md)                                           | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Fact_RegulationTransfer](Tables/Fact_RegulationTransfer.md)                                                         | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Fact_Reverse_Deposits](Tables/Fact_Reverse_Deposits.md)                                                             | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
@@ -165,7 +165,7 @@ last_updated: "2026-04-12"
 | [DWH_dbo.V_Fact_RegulationTransfer](Views/V_Fact_RegulationTransfer.md)                                       | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.V_Fact_SnapshotCustomer](Views/V_Fact_SnapshotCustomer.md)                                           | Deployed (full) 2026-04-12 — 43 inherited cols from Fact_SnapshotCustomer added (86 statements); pii_data target. Phase 2 deep-lineage: 85 stmts → 3 downstream objects (bi_output Genie view + both FSC_FromDateID variants) |
 | [DWH_dbo.V_Fact_SnapshotCustomer_FromDateID](Views/V_Fact_SnapshotCustomer_FromDateID.md)                     | Deployed (full) 2026-04-12 — 52 inherited cols from Fact_SnapshotCustomer added per target (208 statements total; masked + pii_data targets). Phase 2 deep-lineage: 53+53 stmts → cross-propagated between masked↔pii_data variants |
-| [DWH_dbo.V_Fact_SnapshotEquity](Views/V_Fact_SnapshotEquity.md)                                               | Stub only — not in UC (confirmed 2026-04-12: V_Fact_SnapshotEquity absent from system.information_schema.tables)                                   |
+| [DWH_dbo.V_Fact_SnapshotEquity](Views/V_Fact_SnapshotEquity.md) | Failed (deploy Batch 9) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity` c|
 | [DWH_dbo.V_Fact_SnapshotEquity_ForDWHRep](Views/V_Fact_SnapshotEquity_ForDWHRep.md)                           | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.V_Fact_SnapshotEquity_FromDateID](Views/V_Fact_SnapshotEquity_FromDateID.md)                         | Deployed (full) 2026-04-12 — 26 inherited cols from Fact_SnapshotEquity added (52 statements); includes FSE upstream fill via §4b-VP fallthrough    |
 | [DWH_dbo.V_FCA_NumOfLogins_mean_1q](Views/V_FCA_NumOfLogins_mean_1q.md)                                       | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
@@ -173,5 +173,4 @@ last_updated: "2026-04-12"
 | [DWH_dbo.V_M2M_Date_DateRange](Views/V_M2M_Date_DateRange.md)                                                 | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.VU_FactBilling_ForBigQuery](Views/VU_FactBilling_ForBigQuery.md)                                     | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Vw_STS_User_Operations_Data_History](Views/Vw_STS_User_Operations_Data_History.md)                   | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
-
 

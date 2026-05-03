@@ -1,6 +1,6 @@
 -- =============================================================================
--- STUB: Fact_SnapshotEquity — no direct Unity Catalog entry.
--- View Proxy Fallback applied (§4b-VP): V_Fact_SnapshotEquity was the expected
+-- STUB: Fact_SnapshotEquity - no direct Unity Catalog entry.
+-- View Proxy Fallback applied (section 4b-VP): V_Fact_SnapshotEquity was the expected
 -- UC proxy, but main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity
 -- does NOT exist in UC (confirmed 2026-04-12 via system.information_schema.tables).
 --
@@ -11,17 +11,17 @@
 --   main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid
 -- The inherited column comments are appended in:
 --   knowledge/synapse/Wiki/DWH_dbo/Views/V_Fact_SnapshotEquity_FromDateID.alter.sql
--- Deploy status: Deployed via downstream 2026-04-12 — 26 cols to V_Fact_SnapshotEquity_FromDateID
+-- Deploy status: Deployed via downstream 2026-04-12 - 26 cols to V_Fact_SnapshotEquity_FromDateID
 -- =============================================================================
 -- Databricks ALTER Script: DWH_dbo.Fact_SnapshotEquity
 -- Synapse object: DWH_dbo.Fact_SnapshotEquity (base fact table)
 -- UC Target (intended):  main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity
---                        (exported V_Fact_SnapshotEquity - generic_id=416) — NOT FOUND IN UC
+--                        (exported V_Fact_SnapshotEquity - generic_id=416) - NOT FOUND IN UC
 -- Downstream (exists):   main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid
---   → Column comments deployed via V_Fact_SnapshotEquity_FromDateID.alter.sql (2026-04-12)
+--   -> Column comments deployed via V_Fact_SnapshotEquity_FromDateID.alter.sql (2026-04-12)
 -- =============================================================================
 
--- ---- TABLE COMMENT (reference only — no UC target available) ----
+-- ---- TABLE COMMENT (reference only - no UC target available) ----
 -- ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity SET TBLPROPERTIES (
 --     'comment' = 'Synapse table DWH_dbo.Fact_SnapshotEquity - daily customer equity snapshot (cash, positions, cashouts, realized equity, AUM, asset-class splits). UC object is the exported view V_Fact_SnapshotEquity (generic_id=416): adds DateKey via Dim_Range + Dim_Date; all fact columns pass through. Downstream: V_Liabilities and reporting. See wiki Fact_SnapshotEquity.md.'
 -- );

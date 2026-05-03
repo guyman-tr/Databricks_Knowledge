@@ -2,12 +2,12 @@
 
 ## schema: Dealing_dbo
 database: Synapse DWH
-total_deployable: 29
+total_deployable: 32
 generated: 0
-deployed: 25
+deployed: 28
 failed: 4
 last_generate_batch: 0
-last_deploy_batch: 2
+last_deploy_batch: 9
 last_updated: "2026-05-03"
 
 ## Schema ALTER + Deployment Progress
@@ -18,17 +18,17 @@ last_updated: "2026-05-03"
 | **Total deployable**               | 29        |
 | **Pending (no .alter.sql)**        | 0        |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 25         |
+| **Deployed (UC)**                  | 28         |
 | **Stub-only (no UC)**              | 0          |
 | **Failed**                         | 4         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 2          |
+| **Last deploy batch**              | 9          |
 | **Last updated**                   | 2026-03-30 |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present, UC not deployed in this index pass. `Deployed` = UC ALTERs executed.
 
-## Tables (29)
+## Tables (32)
 
 | Object                                                                                                                       | Deploy status                                                                                                                                      |
 | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -61,3 +61,11 @@ last_updated: "2026-05-03"
 | [Dealing_dbo.Dealing_Staking_Parameters](Tables/Dealing_Staking_Parameters.md)                                               | Deployed (Batch 1) — 2026-03-30|
 | [Dealing_dbo.Dealing_Staking_Results](Tables/Dealing_Staking_Results.md)                                                     | Deployed (Batch 1) — 2026-03-30|
 | [Dealing_dbo.Dealing_Staking_Summary](Tables/Dealing_Staking_Summary.md)                                                     | Deployed (Batch 1) — 2026-03-30|
+
+## Tables (3)
+
+| Object | Deploy status |
+|--------|---------------|
+| [Dealing_dbo.Dealing_IndiciesIntraHour_Clients](Tables/Dealing_IndiciesIntraHour_Clients.md) | Deployed (Batch 9) — 2026-05-03|
+| [Dealing_dbo.Dealing_IndiciesIntraHour_Etoro](Tables/Dealing_IndiciesIntraHour_Etoro.md) | Deployed (Batch 9) — 2026-05-03|
+| [Dealing_dbo.Dealing_NumberofPositionsOpened_Agg](Tables/Dealing_NumberofPositionsOpened_Agg.md) | Deployed (Batch 9) — 2026-05-03|

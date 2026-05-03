@@ -6,23 +6,23 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_fullcommission (
-  PositionID COMMENT 'Direct pass-through from Fact_CustomerAction.PositionID. (T1 — Function_Revenue_FullCommissions)',
-  RealCID COMMENT 'Direct pass-through from Fact_CustomerAction.RealCID. (T1 — Function_Revenue_FullCommissions)',
-  DateID COMMENT 'Direct pass-through from Fact_CustomerAction.DateID. (T1 — Function_Revenue_FullCommissions)',
+  PositionID COMMENT 'Direct pass-through from Fact_CustomerAction.PositionID. (T1 - Function_Revenue_FullCommissions)',
+  RealCID COMMENT 'Direct pass-through from Fact_CustomerAction.RealCID. (T1 - Function_Revenue_FullCommissions)',
+  DateID COMMENT 'Direct pass-through from Fact_CustomerAction.DateID. (T1 - Function_Revenue_FullCommissions)',
   Occurred COMMENT 'UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.',
   etr_ymd,
   FullCommission,
-  FullCommissionOnClose COMMENT 'CASE WHEN ActionTypeID IN (4,5,6,28,40) THEN FullCommissionOnClose ELSE 0 END. Source: Fact_CustomerAction. (T2 — Function_Revenue_FullCommissions)',
+  FullCommissionOnClose COMMENT 'CASE WHEN ActionTypeID IN (4,5,6,28,40) THEN FullCommissionOnClose ELSE 0 END. Source: Fact_CustomerAction. (T2 - Function_Revenue_FullCommissions)',
   FullCommissionByUnits,
-  ActionTypeID COMMENT 'Direct pass-through from Fact_CustomerAction.ActionTypeID. (T1 — Function_Revenue_FullCommissions)',
+  ActionTypeID COMMENT 'Direct pass-through from Fact_CustomerAction.ActionTypeID. (T1 - Function_Revenue_FullCommissions)',
   ActionType,
   IsActiveTrade,
-  IsSettled COMMENT 'Direct pass-through from Fact_CustomerAction.IsSettled. (T1 — Function_Revenue_FullCommissions)',
-  MirrorID COMMENT 'Direct pass-through from Fact_CustomerAction.MirrorID. (T1 — Function_Revenue_FullCommissions)',
-  SettlementTypeID COMMENT 'Direct pass-through from Fact_CustomerAction.SettlementTypeID. (T1 — Function_Revenue_FullCommissions)',
-  TotalFullCommission COMMENT 'CASE WHEN ActionTypeID IN (1,2,3,39) THEN FullCommissionOnOpen WHEN ActionTypeID IN (4,5,6,28,40) THEN FullCommissionCloseAdjustment END. Source: Fact_CustomerAction. (T2 — Function_Revenue_FullCommissions)'
+  IsSettled COMMENT 'Direct pass-through from Fact_CustomerAction.IsSettled. (T1 - Function_Revenue_FullCommissions)',
+  MirrorID COMMENT 'Direct pass-through from Fact_CustomerAction.MirrorID. (T1 - Function_Revenue_FullCommissions)',
+  SettlementTypeID COMMENT 'Direct pass-through from Fact_CustomerAction.SettlementTypeID. (T1 - Function_Revenue_FullCommissions)',
+  TotalFullCommission COMMENT 'CASE WHEN ActionTypeID IN (1,2,3,39) THEN FullCommissionOnOpen WHEN ActionTypeID IN (4,5,6,28,40) THEN FullCommissionCloseAdjustment END. Source: Fact_CustomerAction. (T2 - Function_Revenue_FullCommissions)'
 )
 COMMENT 'BI_DB_dbo.Function_Revenue_FullCommissions > Returns full trading commission components (open, close, and close adjustment) per customer action and position, enriched with snapshot customer attributes and instrument type. Used to analyze commission revenue by action type, copy trading, margin settlement, and single-quote futures (SQF) instruments.'
 TBLPROPERTIES (

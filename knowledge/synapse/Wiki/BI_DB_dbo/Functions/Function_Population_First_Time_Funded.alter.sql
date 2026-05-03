@@ -6,26 +6,26 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_population_first_time_funded (
-  RealCID COMMENT 'Direct (via DWH_FTD). Source: Dim_Customer.RealCID. (T1 — Function_Population_First_Time_Funded)',
-  FTDPlatformID COMMENT 'Direct pass-through from Dim_Customer.FTDPlatformID. (T1 — Function_Population_First_Time_Funded)',
-  FTDPlatform COMMENT 'COALESCE(FTDPlatformName, ''TP''). Source: Dim_FTDPlatform.FTDPlatformName. (T2 — Function_Population_First_Time_Funded)',
-  FTDDateID COMMENT 'CAST(CONVERT(VARCHAR(8), FirstDepositDate, 112) AS INT). Source: Dim_Customer.FirstDepositDate. (T2 — Function_Population_First_Time_Funded)',
-  FTDDate COMMENT 'CAST(FirstDepositDate AS DATE). Source: Dim_Customer.FirstDepositDate. (T2 — Function_Population_First_Time_Funded)',
-  FTDTime COMMENT 'Same timestamp as FTD column (first deposit). Source: Dim_Customer.FirstDepositDate. (T2 — Function_Population_First_Time_Funded)',
-  FirstTradeDateID COMMENT 'MIN(OpenDateID) WHERE ISNULL(IsAirDrop,0) = 0, grouped by CID AS RealCID. Source: Dim_Position.OpenDateID. (T2 — Function_Population_First_Time_Funded)',
-  FirstTradeDate COMMENT 'CONVERT(DATE, CONVERT(VARCHAR(8), MIN(OpenDateID)), 112) under same non-airdrop position filter as row 7. Source: Dim_Position.OpenDateID. (T2 — Function_Population_First_Time_Funded)',
-  FirstTradeTime COMMENT 'MIN(OpenOccurred) under same non-airdrop position filter as row 7. Source: Dim_Position.OpenOccurred. (T2 — Function_Population_First_Time_Funded)',
-  FirstIOBDateID COMMENT 'MIN(CAST(FORMAT(CAST(Occurred AS DATE), ''yyyyMMdd'') AS INT)) where ActionTypeID = 36 and CompensationReasonID = 57. Source: Fact_CustomerAction.Occurred. (T2 — Function_Population_First_Time_Funded)',
-  FirstIOBDate COMMENT 'CAST(MIN(Occurred) AS DATE). Source: Fact_CustomerAction.Occurred. (T2 — Function_Population_First_Time_Funded)',
-  FirstIOBTime COMMENT 'MIN(Occurred). Source: Fact_CustomerAction.Occurred. (T2 — Function_Population_First_Time_Funded)',
-  FirstOptionsTradeDateID COMMENT 'MIN(FirstTradeDateID) by RealCID. Source: Function_Revenue_OptionsPlatform.FirstTradeDateID. (T2 — Function_Population_First_Time_Funded)',
-  FirstOptionsTradeDate COMMENT 'MIN(FirstTradeDate). Source: Function_Revenue_OptionsPlatform.FirstTradeDate. (T2 — Function_Population_First_Time_Funded)',
-  FirstVerifiedDateID COMMENT 'MIN(FromDateID) where VerificationLevelID = 3 on snapshot. Source: Dim_Range.FromDateID. (T2 — Function_Population_First_Time_Funded)',
-  FirstVerifiedDate COMMENT 'CONVERT(DATE, CONVERT(VARCHAR(8), MIN(FromDateID)), 112). Source: Dim_Range.FromDateID. (T2 — Function_Population_First_Time_Funded)',
-  FirstFundedDateID COMMENT 'GREATEST(FTDDateID, FirstVerifiedDateID, COALESCE(LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID), COALESCE(...))). Source: Dim_Customer, Dim_Range, Dim_Position, Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 — Function_Population_First_Time_Funded)',
-  FirstFundedDate COMMENT 'CONVERT(DATE, CONVERT(VARCHAR(8), FirstFundedDateID), 112). Source: (same as row 17). (T2 — Function_Population_First_Time_Funded)'
+  RealCID COMMENT 'Direct (via DWH_FTD). Source: Dim_Customer.RealCID. (T1 - Function_Population_First_Time_Funded)',
+  FTDPlatformID COMMENT 'Direct pass-through from Dim_Customer.FTDPlatformID. (T1 - Function_Population_First_Time_Funded)',
+  FTDPlatform COMMENT 'COALESCE(FTDPlatformName, ''TP''). Source: Dim_FTDPlatform.FTDPlatformName. (T2 - Function_Population_First_Time_Funded)',
+  FTDDateID COMMENT 'CAST(CONVERT(VARCHAR(8), FirstDepositDate, 112) AS INT). Source: Dim_Customer.FirstDepositDate. (T2 - Function_Population_First_Time_Funded)',
+  FTDDate COMMENT 'CAST(FirstDepositDate AS DATE). Source: Dim_Customer.FirstDepositDate. (T2 - Function_Population_First_Time_Funded)',
+  FTDTime COMMENT 'Same timestamp as FTD column (first deposit). Source: Dim_Customer.FirstDepositDate. (T2 - Function_Population_First_Time_Funded)',
+  FirstTradeDateID COMMENT 'MIN(OpenDateID) WHERE ISNULL(IsAirDrop,0) = 0, grouped by CID AS RealCID. Source: Dim_Position.OpenDateID. (T2 - Function_Population_First_Time_Funded)',
+  FirstTradeDate COMMENT 'CONVERT(DATE, CONVERT(VARCHAR(8), MIN(OpenDateID)), 112) under same non-airdrop position filter as row 7. Source: Dim_Position.OpenDateID. (T2 - Function_Population_First_Time_Funded)',
+  FirstTradeTime COMMENT 'MIN(OpenOccurred) under same non-airdrop position filter as row 7. Source: Dim_Position.OpenOccurred. (T2 - Function_Population_First_Time_Funded)',
+  FirstIOBDateID COMMENT 'MIN(CAST(FORMAT(CAST(Occurred AS DATE), ''yyyyMMdd'') AS INT)) where ActionTypeID = 36 and CompensationReasonID = 57. Source: Fact_CustomerAction.Occurred. (T2 - Function_Population_First_Time_Funded)',
+  FirstIOBDate COMMENT 'CAST(MIN(Occurred) AS DATE). Source: Fact_CustomerAction.Occurred. (T2 - Function_Population_First_Time_Funded)',
+  FirstIOBTime COMMENT 'MIN(Occurred). Source: Fact_CustomerAction.Occurred. (T2 - Function_Population_First_Time_Funded)',
+  FirstOptionsTradeDateID COMMENT 'MIN(FirstTradeDateID) by RealCID. Source: Function_Revenue_OptionsPlatform.FirstTradeDateID. (T2 - Function_Population_First_Time_Funded)',
+  FirstOptionsTradeDate COMMENT 'MIN(FirstTradeDate). Source: Function_Revenue_OptionsPlatform.FirstTradeDate. (T2 - Function_Population_First_Time_Funded)',
+  FirstVerifiedDateID COMMENT 'MIN(FromDateID) where VerificationLevelID = 3 on snapshot. Source: Dim_Range.FromDateID. (T2 - Function_Population_First_Time_Funded)',
+  FirstVerifiedDate COMMENT 'CONVERT(DATE, CONVERT(VARCHAR(8), MIN(FromDateID)), 112). Source: Dim_Range.FromDateID. (T2 - Function_Population_First_Time_Funded)',
+  FirstFundedDateID COMMENT 'GREATEST(FTDDateID, FirstVerifiedDateID, COALESCE(LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID), COALESCE(...))). Source: Dim_Customer, Dim_Range, Dim_Position, Fact_CustomerAction, Function_Revenue_OptionsPlatform. (T2 - Function_Population_First_Time_Funded)',
+  FirstFundedDate COMMENT 'CONVERT(DATE, CONVERT(VARCHAR(8), FirstFundedDateID), 112). Source: (same as row 17). (T2 - Function_Population_First_Time_Funded)'
 )
 COMMENT 'BI_DB_dbo.Function_Population_First_Time_Funded > For depositors with a warehouse FTD (excluding a curated “bad FTD” set), joins first verified snapshot range and left-joins first trade, first IOB (interest-on-balance), and first options trade. Computes a single FirstFundedDateID/Date as the latest of FTD, verification, and the earliest qualifying trading/options/IOB activity.'
 TBLPROPERTIES (

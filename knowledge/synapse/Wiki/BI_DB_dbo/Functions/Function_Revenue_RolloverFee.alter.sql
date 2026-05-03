@@ -6,14 +6,14 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_rollover (
-  PositionID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.PositionID. (T1 — Function_Revenue_RolloverFee)',
-  RealCID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.RealCID. (T1 — Function_Revenue_RolloverFee)',
+  PositionID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.PositionID. (T1 - Function_Revenue_RolloverFee)',
+  RealCID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.RealCID. (T1 - Function_Revenue_RolloverFee)',
   Occurred COMMENT 'UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.',
-  DateID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.DateID. (T1 — Function_Revenue_RolloverFee)',
+  DateID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.DateID. (T1 - Function_Revenue_RolloverFee)',
   etr_ymd,
-  RolloverFee COMMENT '-1 * Amount WHERE ActionTypeID = 35 AND IsFeeDividend = 1. Source: BI_DB_Fact_Customer_Action_Position_Distribution.Amount. (T2 — Function_Revenue_RolloverFee)'
+  RolloverFee COMMENT '-1 * Amount WHERE ActionTypeID = 35 AND IsFeeDividend = 1. Source: BI_DB_Fact_Customer_Action_Position_Distribution.Amount. (T2 - Function_Revenue_RolloverFee)'
 )
 COMMENT 'BI_DB_dbo.Function_Revenue_RolloverFee > Returns overnight rollover fee revenue from BI_DB_Fact_Customer_Action_Position_Distribution (ActionTypeID 35, IsFeeDividend 1), negating Amount as RolloverFee, enriched with instrument type, SQF flag, copy/margin indicators, and customer attributes carried on the distribution row.'
 TBLPROPERTIES (

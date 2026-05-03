@@ -6,12 +6,12 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_ticketfee_fixed (
-  PositionID COMMENT 'Direct (UNION branches). Source: BI_DB_Fact_Customer_Action_Position_Distribution.PositionID; Fact_History_Cost.PositionID. (T1 — Function_Revenue_TicketFee)',
-  RealCID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.RealCID. (T1 — Function_Revenue_TicketFee)',
+  PositionID COMMENT 'Direct (UNION branches). Source: BI_DB_Fact_Customer_Action_Position_Distribution.PositionID; Fact_History_Cost.PositionID. (T1 - Function_Revenue_TicketFee)',
+  RealCID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.RealCID. (T1 - Function_Revenue_TicketFee)',
   Occurred COMMENT 'UTC timestamp when action occurred. For position opens: open time. For logins: login time. For credits: credit record time.',
-  DateID COMMENT 'Direct (UNION branches). Source: BI_DB_Fact_Customer_Action_Position_Distribution.DateID; Fact_History_Cost.DateID. (T1 — Function_Revenue_TicketFee)',
+  DateID COMMENT 'Direct (UNION branches). Source: BI_DB_Fact_Customer_Action_Position_Distribution.DateID; Fact_History_Cost.DateID. (T1 - Function_Revenue_TicketFee)',
   TicketFeeFixed,
   ActionType
 )

@@ -6,14 +6,14 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms (
-  RealCID COMMENT 'Routed OLD_BASE vs NEW_BASE; NEW from Dim_Customer; OLD from first-ranked eMoney/TP deposit. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 — Function_MIMO_First_Deposit_All_Platforms)',
-  DepositID COMMENT 'CASE on FTDPlatformID / joins; IBAN TransactionID, TP DepositID, or neutralized. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 — Function_MIMO_First_Deposit_All_Platforms)',
-  FirstDepositDate COMMENT 'OLD: earliest across IBAN/TP union; NEW: Dim_Customer.FirstDepositDate. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 — Function_MIMO_First_Deposit_All_Platforms)',
-  FirstDepositAmount COMMENT 'Same routing as date/amount sources. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 — Function_MIMO_First_Deposit_All_Platforms)',
-  FTDPlatform COMMENT 'Dim_FTDPlatform.FTDPlatformName (NEW) or ''eMoney'' / ''TradingPlatform'' (OLD). Source: Dim_FTDPlatform, literals. (T2 — Function_MIMO_First_Deposit_All_Platforms)',
-  FTDPlatformID COMMENT '3 eMoney / 1 TP (OLD) or Dim_Customer.FTDPlatformID (NEW). Source: Dim_Customer, literals. (T2 — Function_MIMO_First_Deposit_All_Platforms)'
+  RealCID COMMENT 'Routed OLD_BASE vs NEW_BASE; NEW from Dim_Customer; OLD from first-ranked eMoney/TP deposit. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 - Function_MIMO_First_Deposit_All_Platforms)',
+  DepositID COMMENT 'CASE on FTDPlatformID / joins; IBAN TransactionID, TP DepositID, or neutralized. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 - Function_MIMO_First_Deposit_All_Platforms)',
+  FirstDepositDate COMMENT 'OLD: earliest across IBAN/TP union; NEW: Dim_Customer.FirstDepositDate. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 - Function_MIMO_First_Deposit_All_Platforms)',
+  FirstDepositAmount COMMENT 'Same routing as date/amount sources. Source: Dim_Customer, eMoney_Fact_Transaction_Status, Fact_CustomerAction. (T2 - Function_MIMO_First_Deposit_All_Platforms)',
+  FTDPlatform COMMENT 'Dim_FTDPlatform.FTDPlatformName (NEW) or ''eMoney'' / ''TradingPlatform'' (OLD). Source: Dim_FTDPlatform, literals. (T2 - Function_MIMO_First_Deposit_All_Platforms)',
+  FTDPlatformID COMMENT '3 eMoney / 1 TP (OLD) or Dim_Customer.FTDPlatformID (NEW). Source: Dim_Customer, literals. (T2 - Function_MIMO_First_Deposit_All_Platforms)'
 )
 COMMENT 'BI_DB_dbo.Function_MIMO_First_Deposit_All_Platforms > Single entry point for first-time deposit (FTD) attributes per customer across eMoney and trading-platform sources, with date-routed logic: before 2025-09-01 uses legacy IBAN/TP union and row-numbering; on/after uses Dim_Customer as the spine with joins to refreshed IBAN/TP extracts, C2USD billing, and bad-FTD exclusion. Each row is enriched with Fact_SnapshotCustomer as-of the FTD date via Dim_Range.'
 TBLPROPERTIES (

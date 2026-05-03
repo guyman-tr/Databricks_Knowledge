@@ -6,20 +6,20 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_instrument_conversion_rates_dwh (
   DateID,
   etr_ymd,
-  InstrumentID COMMENT 'Direct pass-through from Dim_Instrument.InstrumentID. (T1 — Function_Instrument_Conversion_Rates)',
-  SellCurrency COMMENT 'Direct pass-through from Dim_Instrument.SellCurrency. (T1 — Function_Instrument_Conversion_Rates)',
-  InstrumentTypeID COMMENT 'Direct pass-through from Dim_Instrument.InstrumentTypeID. (T1 — Function_Instrument_Conversion_Rates)',
-  InstrumentType COMMENT 'Direct pass-through from Dim_Instrument.InstrumentType. (T1 — Function_Instrument_Conversion_Rates)',
-  Name COMMENT 'Direct pass-through from Dim_Instrument.Name. (T1 — Function_Instrument_Conversion_Rates)',
-  InstrumentDisplayName COMMENT 'Direct pass-through from Dim_Instrument.InstrumentDisplayName. (T1 — Function_Instrument_Conversion_Rates)',
-  ConversionRate_Buy_Spreaded COMMENT 'CAST(CASE WHEN SellCurrencyID = 1 THEN 1 WHEN BuyCurrencyID = 1 THEN 1/LatestP.RateBidSpreaded WHEN both non-USD THEN COALESCE(1/I2Price.RateBidSpreaded, I3Price.RateBidSpreaded, 1) ELSE 1 END AS MONEY); prices from latest Fact_CurrencyPriceWithSplit row per instrument WHERE CAST(CAST(@DateID AS CHAR(8)) AS DATETIME) > Occurred, rn = 1. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 — Function_Instrument_Conversion_Rates)',
-  ConversionRate_Sell_Spreaded COMMENT 'Same CASE shape as row 7 using RateAskSpreaded / I2Price / I3Price ask columns and same Occurred boundary. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 — Function_Instrument_Conversion_Rates)',
-  ConversionRate_Buy COMMENT 'Same as row 7 using raw RateBid (not spreaded) and same latest-price predicate. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 — Function_Instrument_Conversion_Rates)',
-  ConversionRate_Sell COMMENT 'Same as row 8 using raw RateAsk and same latest-price predicate. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 — Function_Instrument_Conversion_Rates)'
+  InstrumentID COMMENT 'Direct pass-through from Dim_Instrument.InstrumentID. (T1 - Function_Instrument_Conversion_Rates)',
+  SellCurrency COMMENT 'Direct pass-through from Dim_Instrument.SellCurrency. (T1 - Function_Instrument_Conversion_Rates)',
+  InstrumentTypeID COMMENT 'Direct pass-through from Dim_Instrument.InstrumentTypeID. (T1 - Function_Instrument_Conversion_Rates)',
+  InstrumentType COMMENT 'Direct pass-through from Dim_Instrument.InstrumentType. (T1 - Function_Instrument_Conversion_Rates)',
+  Name COMMENT 'Direct pass-through from Dim_Instrument.Name. (T1 - Function_Instrument_Conversion_Rates)',
+  InstrumentDisplayName COMMENT 'Direct pass-through from Dim_Instrument.InstrumentDisplayName. (T1 - Function_Instrument_Conversion_Rates)',
+  ConversionRate_Buy_Spreaded COMMENT 'CAST(CASE WHEN SellCurrencyID = 1 THEN 1 WHEN BuyCurrencyID = 1 THEN 1/LatestP.RateBidSpreaded WHEN both non-USD THEN COALESCE(1/I2Price.RateBidSpreaded, I3Price.RateBidSpreaded, 1) ELSE 1 END AS MONEY); prices from latest Fact_CurrencyPriceWithSplit row per instrument WHERE CAST(CAST(@DateID AS CHAR(8)) AS DATETIME) > Occurred, rn = 1. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 - Function_Instrument_Conversion_Rates)',
+  ConversionRate_Sell_Spreaded COMMENT 'Same CASE shape as row 7 using RateAskSpreaded / I2Price / I3Price ask columns and same Occurred boundary. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 - Function_Instrument_Conversion_Rates)',
+  ConversionRate_Buy COMMENT 'Same as row 7 using raw RateBid (not spreaded) and same latest-price predicate. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 - Function_Instrument_Conversion_Rates)',
+  ConversionRate_Sell COMMENT 'Same as row 8 using raw RateAsk and same latest-price predicate. Source: Dim_Instrument, Fact_CurrencyPriceWithSplit. (T2 - Function_Instrument_Conversion_Rates)'
 )
 COMMENT 'BI_DB_dbo.Function_Instrument_Conversion_Rates > Builds per-instrument USD conversion multipliers (bid/ask, raw and spreaded) as of the latest price row strictly before the datetime boundary implied by @DateID. Handles same-currency pairs, direct USD legs, and cross pairs triangulated via USD using sibling Dim_Instrument rows and their latest prices.'
 TBLPROPERTIES (

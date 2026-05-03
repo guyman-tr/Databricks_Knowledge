@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 WIKI_ROOT = Path(__file__).resolve().parents[1] / "knowledge" / "synapse" / "Wiki"
-SCHEMAS = ["DWH_dbo", "BI_DB_dbo", "Dealing_dbo"]
+SCHEMAS = ["DWH_dbo", "BI_DB_dbo", "Dealing_dbo", "eMoney_dbo", "EXW_Wallet"]
 MAPPING_PATH = WIKI_ROOT / "_generic_pipeline_mapping.json"
 
 _mpath = Path(__file__).resolve().parent / "merge_wiki_column_comments_into_alter.py"

@@ -1,6 +1,6 @@
 -- =============================================================================
 -- Databricks ALTER Script: DWH_dbo.Dim_PositionHedgeServerChangeLog_Snapshot
--- UC Target: _Not_Migrated — mapped Gold table not in UC at expected path
+-- UC Target: _Not_Migrated - mapped Gold table not in UC at expected path
 --   (same class of issue as Dim_Position / non-generic or not exported yet).
 -- Semantic wiki only until UC export exists.
 -- =============================================================================

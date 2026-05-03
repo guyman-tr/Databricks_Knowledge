@@ -25,7 +25,7 @@ ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer SE
 
 -- ---- Column Comments ----
 ALTER TABLE main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer ALTER COLUMN DateKey COMMENT 'Specific date within the snapshot range (YYYYMMDD integer). One row per day per customer. (Tier 2 - view DDL)';
--- NOTE: Inherited Fact_SnapshotCustomer columns omitted — bulk wildcard ALTER COLUMN not valid SQL.
+-- NOTE: Inherited Fact_SnapshotCustomer columns omitted - bulk wildcard ALTER COLUMN not valid SQL.
 -- Base table column descriptions live in Fact_SnapshotCustomer.md and are applied via that table's alter.sql.
 
 -- ---- Column PII Tags ----

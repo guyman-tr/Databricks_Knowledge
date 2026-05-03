@@ -6,13 +6,13 @@
 -- NOTE: Column comments on views require CREATE OR REPLACE VIEW (not ALTER COLUMN).
 -- =============================================================================
 
--- ---- Full CREATE OR REPLACE VIEW (idempotent — safe to re-run) ----
+-- ---- Full CREATE OR REPLACE VIEW (idempotent - safe to re-run) ----
 CREATE OR REPLACE VIEW main.etoro_kpi_prep.v_revenue_ticketfee_bypercent (
-  PositionID COMMENT 'Direct pass-through from Fact_History_Cost.PositionID. (T1 — Function_Revenue_TicketFeeByPercent)',
-  RealCID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.RealCID. (T1 — Function_Revenue_TicketFeeByPercent)',
-  Occurred COMMENT 'Direct pass-through from Fact_History_Cost.Occurred. (T1 — Function_Revenue_TicketFeeByPercent)',
-  DateID COMMENT 'Direct pass-through from Fact_History_Cost.DateID. (T1 — Function_Revenue_TicketFeeByPercent)',
-  TicketFeeByPercent COMMENT 'CASE WHEN DateID < 20250525 THEN 0 ELSE ValueInAccountCurrency END AS TicketFeeByPercent WHERE CostSubTypeID = 4, CalculationTypeID IN (4,7), ISNULL(ValueInAccountCurrency,0) > 0, DateID BETWEEN @sdateInt AND @edateInt; Open branch: OperationTypeID IN (14,24) and join fcapd.TicketFeeAction = ''Open''; Close branch: OperationTypeID IN (12,13) and TicketFeeAction = ''Close''. Source: Fact_History_Cost.ValueInAccountCurrency. (T2 — Function_Revenue_TicketFeeByPercent)',
+  PositionID COMMENT 'Direct pass-through from Fact_History_Cost.PositionID. (T1 - Function_Revenue_TicketFeeByPercent)',
+  RealCID COMMENT 'Direct pass-through from BI_DB_Fact_Customer_Action_Position_Distribution.RealCID. (T1 - Function_Revenue_TicketFeeByPercent)',
+  Occurred COMMENT 'Direct pass-through from Fact_History_Cost.Occurred. (T1 - Function_Revenue_TicketFeeByPercent)',
+  DateID COMMENT 'Direct pass-through from Fact_History_Cost.DateID. (T1 - Function_Revenue_TicketFeeByPercent)',
+  TicketFeeByPercent COMMENT 'CASE WHEN DateID < 20250525 THEN 0 ELSE ValueInAccountCurrency END AS TicketFeeByPercent WHERE CostSubTypeID = 4, CalculationTypeID IN (4,7), ISNULL(ValueInAccountCurrency,0) > 0, DateID BETWEEN @sdateInt AND @edateInt; Open branch: OperationTypeID IN (14,24) and join fcapd.TicketFeeAction = ''Open''; Close branch: OperationTypeID IN (12,13) and TicketFeeAction = ''Close''. Source: Fact_History_Cost.ValueInAccountCurrency. (T2 - Function_Revenue_TicketFeeByPercent)',
   ActionType
 )
 COMMENT 'BI_DB_dbo.Function_Revenue_TicketFeeByPercent > Percent-based ticket markup from Fact_History_Cost (cost subtype 4, calculation types 4 and 7 for DLT edge cases), joined to distribution for open vs close context; amounts before 2025-05-25 are zeroed so mistaken prod bookings stay in flat ticket fees. Output includes SQF tagging and margin settlement flags.'
