@@ -1,0 +1,78 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsActivities_SecurityChecks-471048",
+    "elapsed_seconds":  160,
+    "exit_code":  null,
+    "cost_usd":  0.5905,
+    "input_tokens":  4,
+    "output_tokens":  7166,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsActivities_SecurityChecks-471048",
+                    "weighted_score":  8.80,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "@Id",
+                                                  "upstream_quote":  "Unique record identifier. PK.",
+                                                  "wiki_quote":  "Unique record identifier. PK. Distribution key (HASH). Links to parent AccountsActivities_AccountActivity-833937 and sibling tables (RiskActions-322546) via same @Id. Indexed via ClusteredIndex_AA_471048_Id and idx_471048_Id.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No info lost; upstream text preserved as prefix but expanded with Synapse distribution, join, and index context"
+                                              },
+                                              {
+                                                  "column":  "Created",
+                                                  "upstream_quote":  "Source system timestamp.",
+                                                  "wiki_quote":  "Source system timestamp. Record creation time from the Treezor platform. Used as the incremental load boundary in SP_eMoney_Reconciliation_ETLs (`WHERE aa.[@Created] \u003e= @AccountActivities_DATE`). Range: 2023-12-20 to 2026-04-26.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No info lost; upstream text preserved as prefix but expanded with vendor attribution, SP watermark usage, and date range"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id",
+                                       "problem":  "Tier 1 description expands beyond verbatim upstream quote. Upstream: \u0027Unique record identifier. PK.\u0027 — wiki appends distribution key, sibling join references, and index names. No info lost but not strictly verbatim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Created",
+                                       "problem":  "Tier 1 description expands beyond verbatim upstream quote. Upstream: \u0027Source system timestamp.\u0027 — wiki appends Treezor platform attribution, SP watermark usage, and date range. No info lost but not strictly verbatim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 11/14\u0027 but does not itemize which phases were completed or skipped, making data evidence provenance harder to audit."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "NULL rate for etr partition columns inferred from sibling table AccountsActivities_862157 (~99.8% NULL) rather than measured directly on this table."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Bundle resolution reported \u0027NO UPSTREAM WIKI\u0027 but production wiki exists at knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/Tribe.AccountsActivities_SecurityChecks-471048.md. Writer compensated independently."
+                                   }
+                               ],
+                    "regeneration_feedback":  "1. Separate verbatim Tier 1 quotes from Synapse-specific additions for @Id and Created — quote upstream text exactly, then append local context as a distinct clause. 2. Add an explicit Phase Gate Checklist section itemizing P1-P3 completion status. 3. Measure etr_y/etr_ym/etr_ymd NULL rates directly on this table rather than inferring from sibling.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 29.7M in Section 1",
+                                                                                  "Date range 2023-12-20 to 2026-04-26 in Section 1 and Created description"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not explicitly itemized; footer says 11/14 phases"
+                                                           ]
+                                    }
+                }
+}

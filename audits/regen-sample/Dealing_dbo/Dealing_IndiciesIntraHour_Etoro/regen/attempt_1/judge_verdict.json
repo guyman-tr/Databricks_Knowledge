@@ -1,0 +1,68 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_IndiciesIntraHour_Etoro",
+    "elapsed_seconds":  146,
+    "exit_code":  null,
+    "cost_usd":  0.5752,
+    "input_tokens":  2,
+    "output_tokens":  6911,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_IndiciesIntraHour_Etoro",
+                    "weighted_score":  8.9,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 7.3 (Sample Query)",
+                                       "problem":  "Client-vs-eToro comparison query joins on c.HedgeServerID = e.HedgeServerID, but for pre-2024 data both sides are NULL and NULL=NULL is false in SQL. This silently drops all pre-2024 rows. Should use ISNULL or document the limitation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ValueEnd",
+                                       "problem":  "The SP self-join for ValueEnd does not include HedgeServerID (only LiquidityAccountID + InstrumentID + minute). Wiki accurately describes this but doesn\u0027t flag the potential data quality issue if multiple HedgeServerIDs share the same LP+instrument+minute."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section with P1/P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 but doesn\u0027t detail which phases were executed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "review-needed.md Section 2.3",
+                                       "problem":  "Review-needed mentions \u0027HedgeServerID=225 appeared only 4 times\u0027 but wiki body documents active values as 8 and 25. Inconsistency (typo 225 vs 25, or undocumented third value)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 (Gotchas)",
+                                       "problem":  "Gotchas warn about instrument ID mapping for client-vs-eToro joins but don\u0027t note that HedgeServerID values differ between tables (client: 5/8/20/1776; Etoro: 8/25), with only HedgeServerID=8 overlapping."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Fix Section 7.3 query to handle NULL HedgeServerID in pre-2024 joins. (2) Add a gotcha note about the ValueEnd self-join not including HedgeServerID. (3) Add explicit Phase Gate Checklist section or expand footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~8.7M rows",
+                                                                                  "2022-05-22 to 2026-04-26",
+                                                                                  "InstrumentIDs: 254, 255, 259",
+                                                                                  "LiquidityAccountIDs: 275, 317",
+                                                                                  "HedgeServerIDs: 8, 25"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian search)"
+                                                           ]
+                                    }
+                }
+}

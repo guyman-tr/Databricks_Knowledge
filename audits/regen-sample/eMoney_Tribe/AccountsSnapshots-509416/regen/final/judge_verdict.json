@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsSnapshots-509416",
+    "elapsed_seconds":  220,
+    "exit_code":  null,
+    "cost_usd":  0.7791,
+    "input_tokens":  7,
+    "output_tokens":  4602,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsSnapshots-509416",
+                    "weighted_score":  9.05,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2 — @Id / sub-tables",
+                                       "problem":  "Sub-tables listed as \u0027Referenced By\u0027 imply FK directionality that doesn\u0027t exist. These are JOIN-based relationships on shared @Id key, not formal FK references. Cosmetic — correctly documented in Section 3.3."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2 / Section 5 — SP_eMoney_Reconciliation_ETLs",
+                                       "problem":  "Detailed SP claims (alias names aa/aaa/aar/aas, exact WHERE clause) cannot be independently verified from repo artifacts. SP source not in SSDT repo. Batch context corroborates SP existence but not specific SQL snippets."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "partition_date",
+                                       "problem":  "Wiki states partition_date \u0027matches the date component of @Created\u0027 as observation but does not specify the derivation mechanism (Generic Pipeline vs. XML source). Derivation path is ambiguous."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id",
+                                       "problem":  "DDL defines @Id as NULLable yet it serves as HASH distribution key and clustered index. Wiki does not flag whether NULL @Id values exist or the risk implications for a 1.5B-row table."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-assessed quality 7.0/10 and Logic 6/10 is appropriately conservative for a raw landing table with no upstream wiki. Not an issue — noted for completeness."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P10 Jira (dormant raw landing table — appropriate skip)"
+                                                           ]
+                                    }
+                }
+}

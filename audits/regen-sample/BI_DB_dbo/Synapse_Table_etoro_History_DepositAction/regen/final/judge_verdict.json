@@ -1,0 +1,226 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "Synapse_Table_etoro_History_DepositAction",
+    "elapsed_seconds":  275,
+    "exit_code":  null,
+    "cost_usd":  0.6659,
+    "input_tokens":  4,
+    "output_tokens":  13738,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "Synapse_Table_etoro_History_DepositAction",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  6,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "DepositActionID",
+                                                  "upstream_quote":  "Surrogate primary key, auto-incremented by 1. NOT FOR REPLICATION prevents identity re-seeding on subscriber nodes. NONCLUSTERED PK - the table is physically ordered by DepositID (see clustered index), so range scans by deposit are efficient. Returned as OUTPUT parameter from Billing.DepositActionAdd via SCOPE_IDENTITY().",
+                                                  "wiki_quote":  "Surrogate primary key, auto-incremented by 1 in production. NOT FOR REPLICATION prevents identity re-seeding on subscriber nodes. Returned as OUTPUT parameter from Billing.DepositActionAdd via SCOPE_IDENTITY().",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped production index detail; added \u0027in production\u0027 qualifier"
+                                              },
+                                              {
+                                                  "column":  "DepositID",
+                                                  "upstream_quote":  "The deposit this action belongs to. Clustered index key (HDPA_DEPOSIT) - all rows for a single deposit are physically co-located, enabling fast retrieval of the full action history for one deposit. FK to Billing.Deposit (implicit - no formal constraint).",
+                                                  "wiki_quote":  "The deposit this action belongs to. FK to Billing.Deposit (implicit - no formal constraint).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped clustered index detail (not present on Synapse copy)"
+                                              },
+                                              {
+                                                  "column":  "PaymentActionStatusID",
+                                                  "upstream_quote":  "The processing state of this specific action event. FK to Dictionary.PaymentActionStatus: 1=New (submitted, not yet sent to provider), 2=InProcess (sent to payment gateway, awaiting response), 3=Closed (final outcome received). Distribution: New 43%, Closed 37%, InProcess 12%, 0=legacy 8%.",
+                                                  "wiki_quote":  "The processing state of this specific action event. FK to Dictionary.PaymentActionStatus: 1=New (submitted, not yet sent to provider), 2=InProcess (sent to payment gateway, awaiting response), 3=Closed (final outcome received).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped distribution percentages (New 43%, Closed 37%, InProcess 12%, 0=legacy 8%)"
+                                              },
+                                              {
+                                                  "column":  "PaymentActionTypeID",
+                                                  "upstream_quote":  "The type of payment action. FK to Dictionary.PaymentActionType: 1=PreAuthorization, 2=Purchase (82% of rows - the standard deposit action), 3=Cashout, 4=Refund, 5=Settle, 6=PostBack (10% - asynchronous provider callback confirming outcome), 7=Cancel (\u003c0.1% - cancellation action). Legacy 0 values in 8% of rows predate the dictionary.",
+                                                  "wiki_quote":  "The type of payment action. FK to Dictionary.PaymentActionType: 1=PreAuthorization, 2=Purchase (the standard deposit action), 3=Cashout, 4=Refund, 5=Settle, 6=PostBack (asynchronous provider callback confirming outcome), 7=Cancel (cancellation action).",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped all distribution percentages (82%, 10%, \u003c0.1%) and legacy 0 note"
+                                              },
+                                              {
+                                                  "column":  "PaymentStatusID",
+                                                  "upstream_quote":  "The deposit\u0027s overall payment status at the time this action was recorded. FK to Dictionary.PaymentStatus: 1=New, 2=Approved, 3=Decline, 4=Technical, 5=InProcess, 6=Canceled, 11=Chargeback, 12=Refund, 13=Pending, 26=RefundAsChargeback, 35=DeclineByRRE, 39=ReversedDeposit (39 total values). Enables reconstructing the deposit\u0027s status trajectory across all actions.",
+                                                  "wiki_quote":  "The deposit\u0027s overall payment status at the time this action was recorded. FK to Dictionary.PaymentStatus: 1=New, 2=Approved, 3=Decline, 4=Technical, 5=InProcess, 6=Canceled, 11=Chargeback, 12=Refund, 13=Pending, 26=RefundAsChargeback, 35=DeclineByRRE. Enables reconstructing the deposit\u0027s status trajectory across all actions.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped 39=ReversedDeposit and \u0027(39 total values)\u0027"
+                                              },
+                                              {
+                                                  "column":  "ResponseID",
+                                                  "upstream_quote":  "Links this action to the raw payment provider response received. NULL for actions created before the provider responds. The NONCLUSTERED index HDPA_RESPONSE on ResponseID supports fast lookup of \u0027which action corresponds to this provider response?\u0027 Used in Billing.GetLastDepositActionWithResponseCode.",
+                                                  "wiki_quote":  "Links this action to the raw payment provider response received. NULL for actions created before the provider responds. Used in Billing.GetLastDepositActionWithResponseCode.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped production index detail"
+                                              },
+                                              {
+                                                  "column":  "ManagerID",
+                                                  "upstream_quote":  "The back-office agent ID who triggered this action, or 0 for automated system processing. Non-zero values reference BackOffice.Manager and identify manual interventions (e.g., a BO agent canceling a stuck deposit via BackOffice.DepositCancel). NULL for legacy rows.",
+                                                  "wiki_quote":  "The back-office agent ID who triggered this action, or 0 for automated system processing. Non-zero values reference BackOffice.Manager and identify manual interventions (e.g., a BO agent canceling a stuck deposit via BackOffice.DepositCancel). NULL for legacy rows.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExchangeRate",
+                                                  "upstream_quote":  "Currency exchange rate applied when the deposit currency differs from USD (system base). Used to convert the deposit Amount to USD for internal accounting. NULL if no conversion was needed (USD deposits).",
+                                                  "wiki_quote":  "Currency exchange rate applied when the deposit currency differs from USD (system base). Used to convert the deposit Amount to USD for internal accounting. NULL if no conversion was needed (USD deposits).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ApprovalNumber",
+                                                  "upstream_quote":  "Payment provider\u0027s approval/authorization number for this transaction. Used as a reference identifier in disputes, chargebacks, and manual investigation. Format varies by provider.",
+                                                  "wiki_quote":  "Payment provider\u0027s approval/authorization number for this transaction. Used as a reference identifier in disputes, chargebacks, and manual investigation. Format varies by provider.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "AuthCode",
+                                                  "upstream_quote":  "Authorization code returned by the payment provider. Used alongside ApprovalNumber for payment verification and dispute resolution.",
+                                                  "wiki_quote":  "Authorization code returned by the payment provider. Used alongside ApprovalNumber for payment verification and dispute resolution.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ModificationDate",
+                                                  "upstream_quote":  "UTC datetime when this action row was inserted (set to GETDATE() by Billing.DepositActionAdd, or overridden via @Now parameter for batch/reprocessing scenarios). The composite NC index on (ModificationDate, DepositActionID) enables chronological queries across all deposits for a time window.",
+                                                  "wiki_quote":  "UTC datetime when this action row was inserted (set to GETDATE() by Billing.DepositActionAdd, or overridden via @Now parameter for batch/reprocessing scenarios).",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped composite NC index detail"
+                                              },
+                                              {
+                                                  "column":  "ClearingHouseEffectiveDate",
+                                                  "upstream_quote":  "The date the payment clears the clearing house (bank settlement date). Different from ModificationDate (when the action was recorded) - represents the value date for accounting purposes. NULL for non-cleared actions.",
+                                                  "wiki_quote":  "The date the payment clears the clearing house (bank settlement date). Different from ModificationDate (when the action was recorded) - represents the value date for accounting purposes. NULL for non-cleared actions.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "The deposit amount in the customer\u0027s original currency. Set only on the first action for a deposit (the initial submission row). NULL on all subsequent action rows since the amount is already established. Stored as `money` type (4 decimal places) rather than dbo.dtPrice since this is a transacted fiat amount, not a price.",
+                                                  "wiki_quote":  "The deposit amount in the customer\u0027s original currency. Set only on the first action for a deposit (the initial submission row). NULL on all subsequent action rows since the amount is already established.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped type rationale (money vs dbo.dtPrice)"
+                                              },
+                                              {
+                                                  "column":  "CurrencyID",
+                                                  "upstream_quote":  "The currency of the Amount. FK to Dictionary.Currency (implicit): 1=USD. NULL when Amount is NULL. Populated only on the initial submission action.",
+                                                  "wiki_quote":  "The currency of the Amount. FK to Dictionary.Currency (implicit): 1=USD. NULL when Amount is NULL. Populated only on the initial submission action.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MatchStatusID",
+                                                  "upstream_quote":  "PSP reconciliation match status - tracks whether this deposit\u0027s actions have been matched against payment provider settlement records. Carried forward from the previous row for the same DepositID by Billing.DepositActionAdd (all rows for a deposit share the same value until a matching operation changes it). Distribution: 0=Unmatched/default (99.9% of rows), NULL=legacy (0.1%). Used in Billing.DepositMatch and Billing.PSPMatchToEtoro for reconciliation workflows.",
+                                                  "wiki_quote":  "PSP reconciliation match status - tracks whether this deposit\u0027s actions have been matched against payment provider settlement records. Carried forward from the previous row for the same DepositID by Billing.DepositActionAdd. 0=Unmatched/default. Used in Billing.DepositMatch and Billing.PSPMatchToEtoro for reconciliation workflows.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped carry-forward detail parenthetical and distribution stats (99.9%/0.1%)"
+                                              },
+                                              {
+                                                  "column":  "Remark",
+                                                  "upstream_quote":  "Free-text note explaining the reason for this action (e.g., reason for cancellation, manual override justification). NULL for automated actions. Carries over from the SP caller context.",
+                                                  "wiki_quote":  "Free-text note explaining the reason for this action (e.g., reason for cancellation, manual override justification). NULL for automated actions. Carries over from the SP caller context.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "SessionID",
+                                                  "upstream_quote":  "The customer\u0027s web session ID at the time of the deposit action. Links the payment event to the customer session for fraud analysis and investigation. NULL for system-generated actions with no user session context.",
+                                                  "wiki_quote":  "The customer\u0027s web session ID at the time of the deposit action. Links the payment event to the customer session for fraud analysis and investigation. NULL for system-generated actions with no user session context.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "DepotID",
+                                                  "upstream_quote":  "Identifies the payment gateway/depot (provider routing) used for this action. Set when the deposit is assigned to a specific processor. NULL for initial actions before gateway assignment and for closure rows. Example: DepotID=87 in recent data.",
+                                                  "wiki_quote":  "Identifies the payment gateway/depot (provider routing) used for this action. Set when the deposit is assigned to a specific processor. NULL for initial actions before gateway assignment and for closure rows.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped example value (DepotID=87)"
+                                              },
+                                              {
+                                                  "column":  "ExchangeFee",
+                                                  "upstream_quote":  "Fee charged for currency exchange, in the smallest currency unit (cents). NULL for USD deposits or when no exchange fee applies.",
+                                                  "wiki_quote":  "Fee charged for currency exchange, in the smallest currency unit (cents). NULL for USD deposits or when no exchange fee applies.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "BaseExchangeRate",
+                                                  "upstream_quote":  "The base (pre-markup) exchange rate, as opposed to ExchangeRate which may include the spread. Enables fee calculation: fee = Amount * (ExchangeRate - BaseExchangeRate).",
+                                                  "wiki_quote":  "The base (pre-markup) exchange rate, as opposed to ExchangeRate which may include the spread. Enables fee calculation: fee = Amount * (ExchangeRate - BaseExchangeRate).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PaymentGeneration",
+                                                  "upstream_quote":  "Identifies the generation or version of the payment processing flow used for this deposit. Distinguishes between different payment processing implementations deployed over time (e.g., legacy vs. modern payment stack).",
+                                                  "wiki_quote":  "Identifies the generation or version of the payment processing flow used for this deposit. Distinguishes between different payment processing implementations deployed over time (e.g., legacy vs. modern payment stack).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ProcessRegulationID",
+                                                  "upstream_quote":  "The regulatory processing framework applied to this deposit. References a regulatory classification that determines which processing rules and compliance checks apply. May correspond to jurisdiction or entity (e.g., Cyprus vs. US regulatory environment).",
+                                                  "wiki_quote":  "The regulatory processing framework applied to this deposit. References a regulatory classification that determines which processing rules and compliance checks apply. May correspond to jurisdiction or entity (e.g., Cyprus vs. US regulatory environment).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "MerchantAccountID",
+                                                  "upstream_quote":  "The merchant account within the payment gateway used for this transaction. Works in conjunction with DepotID: DepotID identifies the gateway, MerchantAccountID identifies the specific merchant account on that gateway. Example: MerchantAccountID=7 with DepotID=87 in recent data.",
+                                                  "wiki_quote":  "The merchant account within the payment gateway used for this transaction. Works in conjunction with DepotID: DepotID identifies the gateway, MerchantAccountID identifies the specific merchant account on that gateway.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped example values (MerchantAccountID=7 with DepotID=87)"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PaymentActionTypeID",
+                                       "problem":  "Dropped all distribution percentages from upstream (82% Purchase, 10% PostBack, \u003c0.1% Cancel, 8% legacy 0). These orient analysts to how common each action type is."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PaymentActionStatusID",
+                                       "problem":  "Dropped distribution percentages from upstream (New 43%, Closed 37%, InProcess 12%, 0=legacy 8%)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PaymentStatusID",
+                                       "problem":  "Dropped 39=ReversedDeposit and \u0027(39 total values)\u0027 from upstream. An entire status value and the total count are missing."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "MatchStatusID",
+                                       "problem":  "Dropped carry-forward detail parenthetical and distribution stats (99.9% unmatched, 0.1% NULL legacy) from upstream."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist subsection. Footer claims \u0027Phases: 12/14\u0027 but does not specify which phases were completed or whether P2/P3 data evidence came from live queries vs. upstream inheritance."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Restore distribution percentages to PaymentActionStatusID, PaymentActionTypeID, and MatchStatusID — quote verbatim from upstream wiki at knowledge/ProdSchemas/DB_Schema/etoro/Wiki/History/Tables/History.DepositAction.md. (2) Add 39=ReversedDeposit and \u0027(39 total values)\u0027 back to PaymentStatusID. (3) Add explicit Phase Gate Checklist subsection. (4) Restore example values for DepotID (87) and MerchantAccountID (7) from upstream. (5) Consider noting \u0027see upstream History.DepositAction wiki for production index details\u0027 for columns where index references were trimmed.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "PaymentActionStatusID distribution in upstream but not wiki",
+                                                                                  "PaymentActionTypeID distribution in upstream but not wiki",
+                                                                                  "MatchStatusID distribution in upstream but not wiki"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,162 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_DailyPanel_Copy",
+    "elapsed_seconds":  243,
+    "exit_code":  null,
+    "cost_usd":  2.3284,
+    "input_tokens":  3,
+    "output_tokens":  11807,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_DailyPanel_Copy",
+                    "weighted_score":  9.5,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index). Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Gender",
+                                                  "upstream_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only.",
+                                                  "wiki_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Manual override name for the marketing region, from Ext_Dim_Country. May differ from the automated MarketingRegion label (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Used when the automated MarketingRegion label needs a business-friendly correction.",
+                                                  "wiki_quote":  "Manual override name for the marketing region, from Ext_Dim_Country. May differ from the automated MarketingRegion label (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Used when the automated MarketingRegion label needs a business-friendly correction. Passthrough from Dim_Country.MarketingRegionManualName.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Language",
+                                                  "upstream_quote":  "Language display name. UNIQUE constraint. Used in back-office language selectors and reporting.",
+                                                  "wiki_quote":  "Language display name. UNIQUE constraint. Used in back-office language selectors and reporting. Passthrough from Dim_Language.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Passthrough from Dim_PlayerLevel.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. Passthrough from Dim_Regulation.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PortfolioType",
+                                                  "upstream_quote":  "Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting. Describes the fundamental strategy approach of the fund category.",
+                                                  "wiki_quote":  "Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting. Describes the fundamental strategy approach of the fund category. 1=TopTraders, 2=Partners, 3=Market. NULL for PI and RemovedPI CopyTypes. Passthrough from Dim_FundType.FundTypeName via Dim_Fund.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added enum values and NULL note — no upstream text lost, only appended"
+                                              },
+                                              {
+                                                  "column":  "GuruStatus",
+                                                  "upstream_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration.",
+                                                  "wiki_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. Passthrough from Dim_GuruStatus.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons. Passthrough from Dim_PlayerStatus.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RealizedEquity",
+                                                  "upstream_quote":  "Fact_SnapshotEquity.RealizedEquity | Direct | T1 (V_Liabilities output table — no descriptive text available)",
+                                                  "wiki_quote":  "Realized equity (cash + credit + in-process cashouts) on the snapshot date. Direct passthrough from V_Liabilities.RealizedEquity.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description text exists to quote — writer authored description"
+                                              },
+                                              {
+                                                  "column":  "TotalPositionsAmount",
+                                                  "upstream_quote":  "Fact_SnapshotEquity.TotalPositionsAmount | Direct | T1 (V_Liabilities — no descriptive text)",
+                                                  "wiki_quote":  "Total invested amount across all open positions on the snapshot date. Direct passthrough from V_Liabilities.TotalPositionsAmount.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description text exists to quote — writer authored description"
+                                              },
+                                              {
+                                                  "column":  "PositionPnL",
+                                                  "upstream_quote":  "Fact_CustomerUnrealized_PnL.PositionPnL | Direct | T1 (V_Liabilities — no descriptive text)",
+                                                  "wiki_quote":  "Unrealized position profit/loss on the snapshot date. Direct passthrough from V_Liabilities.PositionPnL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description text exists to quote — writer authored description"
+                                              },
+                                              {
+                                                  "column":  "Credit",
+                                                  "upstream_quote":  "Fact_SnapshotEquity.Credit | Direct | T1 (V_Liabilities — no descriptive text)",
+                                                  "wiki_quote":  "Available credit balance on the snapshot date. Direct passthrough from V_Liabilities.Credit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description text exists to quote — writer authored description"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HasAvatar (#23)",
+                                       "problem":  "Tagged Tier 2 (Dim_Customer) but dc.HasAvatar is a dim-lookup passthrough with no transform. Per tier rules, should be Tier 1 with the dim\u0027s origin."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RealizedEquity, TotalPositionsAmount, PositionPnL, Credit (#29-32)",
+                                       "problem":  "Correctly tagged Tier 1 but descriptions are writer-authored — V_Liabilities wiki provides no descriptive text for these passthrough columns (only \u0027Direct\u0027 in output table). No upstream text was lost since none existed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AvgerageHoldingTime (#48)",
+                                       "problem":  "Description mentions \u0027Avgerageee\u0027 but DDL column name has only one typo: \u0027AvgerageHoldingTime\u0027. Minor error in the callout text."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian sources skipped (Phase 10 skipped in regen harness mode). Known limitation, not a writer error."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Phases 11/14 — 3 phases skipped. Phase Gate Checklist not explicitly shown in the wiki body, though data evidence appears genuine."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. Minor improvements if re-running: (1) Reclassify HasAvatar from Tier 2 to Tier 1 (dim-lookup passthrough). (2) Fix AvgerageHoldingTime description typo callout (\u0027Avgerageee\u0027 → \u0027Avgerageee\u0027 is wrong, DDL says \u0027AvgerageHoldingTime\u0027). (3) Consider sourcing Fact_SnapshotEquity descriptions for V_Liabilities passthrough columns if that wiki becomes available.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)",
+                                                               "2-3 other phases (unspecified in footer)"
+                                                           ]
+                                    }
+                }
+}

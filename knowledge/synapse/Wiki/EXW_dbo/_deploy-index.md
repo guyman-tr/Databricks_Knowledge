@@ -1,101 +1,106 @@
 ---
 schema: EXW_dbo
-total_objects: 62
-with_uc_target: 13
-knowledge_only_stubs: 48
-skipped_objects: 1
-skipped: 1
-last_updated: 2026-04-21
-status: Generated (not yet deployed)
+database: Synapse DWH
+total_deployable: 61
+generated: 0
+deployed: 12
+failed: 1
+stub_only: 48
+last_generate_batch: 0
+last_deploy_batch: 1
+last_updated: "2026-05-03"
 ---
 
-# EXW_dbo Deploy Index
+## Schema ALTER + Deployment Progress
 
-## Summary
+| Metric                             | Value      |
+| ---------------------------------- | ---------- |
+| **Schema**                         | EXW_dbo   |
+| **Total deployable**               | 61  |
+| **Pending (no .alter.sql)**        | 0          |
+| **Generated (awaiting UC deploy)** | 0        |
+| **Deployed (UC)**                  | 12         |
+| **Stub-only (no UC)**              | 48   |
+| **Failed**                         | 1         |
+| **Stale**                          | 0          |
+| **Last generate batch**            | 0          |
+| **Last deploy batch**              | 1          |
+| **Last updated**                   | 2026-05-03       |
 
-| Metric | Value |
-|--------|-------|
-| **Schema** | EXW_dbo |
-| **Total Documented** | 62 |
-| **With UC Target** | 13 |
-| **Knowledge-only Stubs** | 48 |
-| **Skipped (no DDL)** | 1 |
-| **Last Updated** | 2026-04-21 |
-| **Deploy Status** | Generated — not yet deployed to UC |
+> **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
 
----
+## Tables (56)
 
-## Objects With UC Targets (13)
+| Object | Deploy status |
+|--------|---------------|
+| [EXW_dbo.EXW_30DayBalanceExtract](Tables/EXW_30DayBalanceExtract.md) | Stub only |
+| [EXW_dbo.EXW_Aml_Limited_Accounts](Tables/EXW_Aml_Limited_Accounts.md) | Stub only |
+| [EXW_dbo.EXW_AML_Users_Report](Tables/EXW_AML_Users_Report.md) | Stub only |
+| [EXW_dbo.EXW_AMLProviderID](Tables/EXW_AMLProviderID.md) | Stub only |
+| [EXW_dbo.EXW_C2F_E2E](Tables/EXW_C2F_E2E.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_C2P_E2E](Tables/EXW_C2P_E2E.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_Coin_Transfer_Allowed_Country](Tables/EXW_Coin_Transfer_Allowed_Country.md) | Stub only |
+| [EXW_dbo.EXW_CompensationClosingCountries](Tables/EXW_CompensationClosingCountries.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_Conversion_Allowed_Country](Tables/EXW_Conversion_Allowed_Country.md) | Stub only |
+| [EXW_dbo.EXW_DimUser](Tables/EXW_DimUser.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_DimUser_Enriched](Tables/EXW_DimUser_Enriched.md) | Stub only |
+| [EXW_dbo.EXW_ECPBank](Tables/EXW_ECPBank.md) | Stub only |
+| [EXW_dbo.EXW_EOMReportingBalances](Tables/EXW_EOMReportingBalances.md) | Stub only |
+| [EXW_dbo.EXW_ETH_FeeData_Blockchain](Tables/EXW_ETH_FeeData_Blockchain.md) | Stub only |
+| [EXW_dbo.EXW_EthFeeSent_Blockchain](Tables/EXW_EthFeeSent_Blockchain.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_FactBalance](Tables/EXW_FactBalance.md) | Stub only |
+| [EXW_dbo.EXW_FactConversions](Tables/EXW_FactConversions.md) | Stub only |
+| [EXW_dbo.EXW_FactPayments](Tables/EXW_FactPayments.md) | Stub only |
+| [EXW_dbo.EXW_FactRedeemTransactions](Tables/EXW_FactRedeemTransactions.md) | Stub only |
+| [EXW_dbo.EXW_FactTransactions](Tables/EXW_FactTransactions.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_FCA_UserLogin](Tables/EXW_FCA_UserLogin.md) | Stub only |
+| [EXW_dbo.EXW_FinanceReportsBalancesNew](Tables/EXW_FinanceReportsBalancesNew.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_FirstTimeWalletsAndUsers](Tables/EXW_FirstTimeWalletsAndUsers.md) | Stub only |
+| [EXW_dbo.EXW_InternalWallet](Tables/EXW_InternalWallet.md) | Stub only |
+| [EXW_dbo.EXW_Inventory_Snapshot_History](Tables/EXW_Inventory_Snapshot_History.md) | Failed (deploy Batch 1) — [RequestId=c9a05319-6a78-4014-8c5e-6f505b0b0111 ErrorClass=RESOURCE_DOES_NOT_EXIST] Column `Created 30 days` does not ex|
+| [EXW_dbo.EXW_Payment_Allowed_Country](Tables/EXW_Payment_Allowed_Country.md) | Stub only |
+| [EXW_dbo.EXW_PaymentReconciliation](Tables/EXW_PaymentReconciliation.md) | Stub only |
+| [EXW_dbo.EXW_RedeemReconciliation](Tables/EXW_RedeemReconciliation.md) | Stub only |
+| [EXW_dbo.EXW_ReimbursementFollowUp](Tables/EXW_ReimbursementFollowUp.md) | Stub only |
+| [EXW_dbo.EXW_ReimbursementSumTable](Tables/EXW_ReimbursementSumTable.md) | Stub only |
+| [EXW_dbo.EXW_ReportingBalances](Tables/EXW_ReportingBalances.md) | Stub only |
+| [EXW_dbo.EXW_SimplexChargebacks](Tables/EXW_SimplexChargebacks.md) | Stub only |
+| [EXW_dbo.EXW_SimplexMapping](Tables/EXW_SimplexMapping.md) | Stub only |
+| [EXW_dbo.EXW_Staking_Allowed_Country](Tables/EXW_Staking_Allowed_Country.md) | Stub only |
+| [EXW_dbo.EXW_TestUsers](Tables/EXW_TestUsers.md) | Stub only |
+| [EXW_dbo.EXW_Transactions_Monthly](Tables/EXW_Transactions_Monthly.md) | Stub only |
+| [EXW_dbo.EXW_UserCalculatedBalance](Tables/EXW_UserCalculatedBalance.md) | Stub only |
+| [EXW_dbo.EXW_UserSettingsWalletAllowance](Tables/EXW_UserSettingsWalletAllowance.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_WalletClosedCountryProjects](Tables/EXW_WalletClosedCountryProjects.md) | Stub only |
+| [EXW_dbo.EXW_WalletElligibleCountries](Tables/EXW_WalletElligibleCountries.md) | Stub only |
+| [EXW_dbo.EXW_WalletEntity](Tables/EXW_WalletEntity.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_WalletInventory](Tables/EXW_WalletInventory.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_WalletLogins](Tables/EXW_WalletLogins.md) | Stub only |
+| [EXW_dbo.EXW_WalletRegulation](Tables/EXW_WalletRegulation.md) | Stub only |
+| [EXW_dbo.EXW_WalletUsers_30_Days](Tables/EXW_WalletUsers_30_Days.md) | Stub only |
+| [EXW_dbo.Hourly_CustomerBalances](Tables/Hourly_CustomerBalances.md) | Stub only |
+| [EXW_dbo.Hourly_OmnibusBalances](Tables/Hourly_OmnibusBalances.md) | Stub only |
+| [EXW_dbo.Hourly_RedeemActivity](Tables/Hourly_RedeemActivity.md) | Stub only |
+| [EXW_dbo.Hourly_Transactions](Tables/Hourly_Transactions.md) | Stub only |
+| [EXW_dbo.Hourly_WalletAllocations](Tables/Hourly_WalletAllocations.md) | Stub only |
+| [EXW_dbo.Hourly_WalletInventory](Tables/Hourly_WalletInventory.md) | Stub only |
+| [EXW_dbo.New_UsersAndWallets_Inventory](Tables/New_UsersAndWallets_Inventory.md) | Stub only |
+| [EXW_dbo.Staking_BI_Version_ETH_Transactions](Tables/Staking_BI_Version_ETH_Transactions.md) | Stub only |
+| [EXW_dbo.Staking_BI_Version_WalletUserRewards](Tables/Staking_BI_Version_WalletUserRewards.md) | Stub only |
+| [EXW_dbo.Staking_ETH_Rewards_Parameters](Tables/Staking_ETH_Rewards_Parameters.md) | Stub only |
+| [EXW_dbo.Staking_WalletUserRewards](Tables/Staking_WalletUserRewards.md) | Stub only |
 
-| # | Object | UC Target | Schema | Classification | Cols | Status |
-|---|--------|-----------|--------|----------------|------|--------|
-| 1 | EXW_C2F_E2E | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e` | bi_db | Non-standard | 103 | Generated |
-| 2 | EXW_C2P_E2E | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e` | bi_db | Non-standard | 90 | Generated |
-| 3 | EXW_CompensationClosingCountries | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_compensationclosingcountries` | bi_db | Non-standard | 22 | Generated |
-| 4 | EXW_DimUser | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser` | bi_db | Non-standard | 21 | Generated |
-| 5 | EXW_EthFeeSent_Blockchain | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_ethfeesent_blockchain` | bi_db | Non-standard | 19 | Generated |
-| 6 | EXW_FactTransactions | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions` | bi_db | Non-standard | 45 | Generated |
-| 7 | EXW_FinanceReportsBalancesNew | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew` | bi_db | Non-standard | 37 | Generated |
-| 8 | EXW_Inventory_Snapshot_History | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_inventory_snapshot_history` | bi_db | Non-standard | 18 | Generated |
-| 9 | EXW_UserSettingsWalletAllowance | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_usersettingswalletallowance` | bi_db | Non-standard | 12 | Generated |
-| 10 | EXW_V_RedeemReconciliation | `main.wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation` | wallet | Non-standard | 51 | Generated |
-| 11 | EXW_WalletEntity | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity` | bi_db | Non-standard | 14 | Generated |
-| 12 | EXW_WalletInventory | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory` | bi_db | Non-standard | 19 | Generated |
-| 13 | GetProviderUserIDNormalized | `main.bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized` | bi_db | Non-standard | 7 | Generated |
+## Views (3)
 
----
+| Object | Deploy status |
+|--------|---------------|
+| [EXW_dbo.EXW_V_RedeemReconciliation](Views/EXW_V_RedeemReconciliation.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.GetProviderUserIDNormalized](Views/GetProviderUserIDNormalized.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.V_EXW_C2F_E2E_4Export](Views/V_EXW_C2F_E2E_4Export.md) | Stub only |
 
-## Knowledge-Only Stubs (48)
+## Functions (2)
 
-Objects without UC gold export. ALTER files contain business summary only — no executable statements.
-
-| # | Object | Type |
-|---|--------|------|
-| 1 | EXW_30DayBalanceExtract | Table |
-| 2 | EXW_AMLProviderID | Table |
-| 3 | EXW_AML_Users_Report | Table |
-| 4 | EXW_Aml_Limited_Accounts | Table |
-| 5 | EXW_Coin_Transfer_Allowed_Country | Table |
-| 6 | EXW_Conversion_Allowed_Country | Table |
-| 7 | EXW_DimUser_Enriched | Table |
-| 8 | EXW_ECPBank | Table |
-| 9 | EXW_EOMReportingBalances | Table |
-| 10 | EXW_ETH_FeeData_Blockchain | Table |
-| 11 | EXW_FCA_UserLogin | Table |
-| 12 | EXW_FactBalance | Table |
-| 13 | EXW_FactConversions | Table |
-| 14 | EXW_FactPayments | Table |
-| 15 | EXW_FactRedeemTransactions | Table |
-| 16 | EXW_FirstTimeWalletsAndUsers | Table |
-| 17 | EXW_InternalWallet | Table |
-| 18 | EXW_PaymentReconciliation | Table |
-| 19 | EXW_Payment_Allowed_Country | Table |
-| 20 | EXW_RedeemReconciliation | Table |
-| 21 | EXW_ReimbursementFollowUp | Table |
-| 22 | EXW_ReimbursementSumTable | Table |
-| 23 | EXW_ReportingBalances | Table |
-| 24 | EXW_SimplexChargebacks | Table |
-| 25 | EXW_SimplexMapping | Table |
-| 26 | EXW_Staking_Allowed_Country | Table |
-| 27 | EXW_TestUsers | Table |
-| 28 | EXW_Transactions_Monthly | Table |
-| 29 | EXW_UserCalculatedBalance | Table |
-| 30 | EXW_WalletClosedCountryProjects | Table |
-| 31 | EXW_WalletElligibleCountries | Table |
-| 32 | EXW_WalletLogins | Table |
-| 33 | EXW_WalletRegulation | Table |
-| 34 | EXW_WalletUsers_30_Days | Table |
-| 35 | Hourly_CustomerBalances | Table |
-| 36 | Hourly_OmnibusBalances | Table |
-| 37 | Hourly_RedeemActivity | Table |
-| 38 | Hourly_Transactions | Table |
-| 39 | Hourly_WalletAllocations | Table |
-| 40 | Hourly_WalletInventory | Table |
-| 41 | New_UsersAndWallets_Inventory | Table |
-| 42 | Staking_BI_Version_ETH_Transactions | Table |
-| 43 | Staking_BI_Version_WalletUserRewards | Table |
-| 44 | Staking_ETH_Rewards_Parameters | Table |
-| 45 | Staking_WalletUserRewards | Table |
-| 46 | External_WalletDB_Wallet_TransactionsView | External Table |
-| 47 | RemovePrefix | Function |
-| 48 | RemoveSuffix | Function |
+| Object | Deploy status |
+|--------|---------------|
+| [EXW_dbo.RemovePrefix](Functions/RemovePrefix.md) | Stub only |
+| [EXW_dbo.RemoveSuffix](Functions/RemoveSuffix.md) | Stub only |

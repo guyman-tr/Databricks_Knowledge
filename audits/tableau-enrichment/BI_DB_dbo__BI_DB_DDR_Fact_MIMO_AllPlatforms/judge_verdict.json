@@ -1,0 +1,89 @@
+{
+  "ts": "2026-04-30T15:53:51Z",
+  "wiki": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Fact_MIMO_AllPlatforms.md",
+  "tableau": "knowledge\\tableau\\sql_dp_prod_we__BI_DB_dbo\\BI_DB_DDR_Fact_MIMO_AllPlatforms.md",
+  "mode": "apply",
+  "raw_output": "```json\n{\n  \"verdict\": \"ENRICH\",\n  \"rationale\": \"Three non-trivial business rules surface from Tableau that the wiki does not document: (1) a six-category transaction-type taxonomy derived from the combination of MIMOAction, IsInternalTransfer, and IsTradeFromIBAN; (2) an eMoney MOP reclassification that splits WireTransfer into OpenBanking vs WireTransfer via a cross-table lookup; (3) a Net Deposits KPI definition that excludes FundingTypeID 33 for Trading and internal transfers for eMoney.\",\n  \"table_findings\": [\n    {\n      \"name\": \"Transaction Description taxonomy\",\n      \"summary\": \"Downstream dashboards classify every MIMO row into one of six business categories by combining MIMOAction, IsInternalTransfer, and IsTradeFromIBAN: 'Internal Transfer: Local Account → USD Account' (Deposit+Internal+¬IBAN), 'Internal Transfer: USD Account → Local Account' (Withdraw+Internal+¬IBAN), 'Open Position from Local Account' (Deposit+Internal+IBAN), 'Close Position to Local Account' (Withdraw+Internal+IBAN), 'Deposit from External' (Deposit+¬Internal+¬IBAN), 'Withdraw to External' (Withdraw+¬Internal+¬IBAN).\",\n      \"formula\": \"IF MIMOAction='Deposit' AND IsInternalTransfer=1 AND IsTradeFromIBAN=0 THEN 'Internal Transfer: Local Account → USD Account' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=1 AND IsTradeFromIBAN=0 THEN 'Internal Transfer: USD Account → Local Account' ELSEIF MIMOAction='Deposit' AND IsInternalTransfer=1 AND IsTradeFromIBAN=1 THEN 'Open Position from Local Account' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=1 AND IsTradeFromIBAN=1 THEN 'Close Position to Local Account' ELSEIF MIMOAction='Deposit' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN 'Deposit from External' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN 'Withdraw to External' ELSE 'Other / Unclassified' END\",\n      \"source_workbooks\": [\"Account Statement Report - Beta version \"]\n    },\n    {\n      \"name\": \"eMoney MOP reclassification (OpenBanking vs WireTransfer)\",\n      \"summary\": \"For eMoney-platform external deposits (IsInternalTransfer=0 AND IsTradeFromIBAN=0), the standard Dim_FundingType name is replaced by a cross-table lookup: if the transaction's ReferenceNumber matches an approved (TransferStatusID=10) record in External_MoneyTransfer_Billing_Transfers, the MOP is 'OpenBanking'; otherwise it falls back to 'WireTransfer'. Non-eMoney or internal/IBAN transactions use the standard Dim_FundingType.Name.\",\n      \"formula\": \"CASE WHEN MIMOPlatform='eMoney' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN (CASE WHEN External_MoneyTransfer_Billing_Transfers.CID IS NOT NULL THEN 'OpenBanking' ELSE 'WireTransfer' END) ELSE Dim_FundingType.Name END\",\n      \"source_workbooks\": [\"Local Currencies MIMO Dashboard  (Beta)\", \"Local Currencies MIMO Dashboard  (Beta) TestVersion \"]\n    },\n    {\n      \"name\": \"Net Deposits KPI (AML context)\",\n      \"summary\": \"Net Deposits is defined as (Trading Deposits − Trading Withdrawals + eMoney Inbound − eMoney Outbound), where Trading flows exclude FundingTypeID 33 and eMoney flows exclude internal transfers (IsInternalTransfer=1). This KPI is used for AML-flagged customers sourced from BI_DB_AML_BI_Alerts_New and BI_DB_RiskAlertManagementTool (CategoryName='AML').\",\n      \"formula\": \"SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit' AND FundingTypeID<>33 THEN AmountUSD ELSE 0 END) - SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Withdraw' AND FundingTypeID<>33 THEN AmountUSD ELSE 0 END) + SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Deposit' AND IsInternalTransfer=0 THEN AmountUSD ELSE 0 END) - SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Withdraw' AND IsInternalTransfer=0 THEN AmountUSD ELSE 0 END)\",\n      \"source_workbooks\": [\"AML Clients – Trading & eMoney Net Deposits\"]\n    }\n  ],\n  \"column_findings\": [\n    {\n      \"column\": \"FundingTypeID\",\n      \"name\": \"FundingTypeID 33 exclusion\",\n      \"summary\": \"FundingTypeID 33 is excluded from Trading Platform deposit and withdrawal calculations in the Net Deposits KPI, indicating it represents a non-cash or non-standard funding type that should not count toward real money movement on the Trading Platform.\",\n      \"formula\": \"FundingTypeID <> 33\",\n      \"source_workbook\": \"AML Clients – Trading & eMoney Net Deposits\"\n    }\n  ]\n}\n```\n",
+  "parsed": {
+    "verdict": "ENRICH",
+    "rationale": "Three non-trivial business rules surface from Tableau that the wiki does not document: (1) a six-category transaction-type taxonomy derived from the combination of MIMOAction, IsInternalTransfer, and IsTradeFromIBAN; (2) an eMoney MOP reclassification that splits WireTransfer into OpenBanking vs WireTransfer via a cross-table lookup; (3) a Net Deposits KPI definition that excludes FundingTypeID 33 for Trading and internal transfers for eMoney.",
+    "table_findings": [
+      {
+        "name": "Transaction Description taxonomy",
+        "summary": "Downstream dashboards classify every MIMO row into one of six business categories by combining MIMOAction, IsInternalTransfer, and IsTradeFromIBAN: 'Internal Transfer: Local Account → USD Account' (Deposit+Internal+¬IBAN), 'Internal Transfer: USD Account → Local Account' (Withdraw+Internal+¬IBAN), 'Open Position from Local Account' (Deposit+Internal+IBAN), 'Close Position to Local Account' (Withdraw+Internal+IBAN), 'Deposit from External' (Deposit+¬Internal+¬IBAN), 'Withdraw to External' (Withdraw+¬Internal+¬IBAN).",
+        "formula": "IF MIMOAction='Deposit' AND IsInternalTransfer=1 AND IsTradeFromIBAN=0 THEN 'Internal Transfer: Local Account → USD Account' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=1 AND IsTradeFromIBAN=0 THEN 'Internal Transfer: USD Account → Local Account' ELSEIF MIMOAction='Deposit' AND IsInternalTransfer=1 AND IsTradeFromIBAN=1 THEN 'Open Position from Local Account' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=1 AND IsTradeFromIBAN=1 THEN 'Close Position to Local Account' ELSEIF MIMOAction='Deposit' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN 'Deposit from External' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN 'Withdraw to External' ELSE 'Other / Unclassified' END",
+        "source_workbooks": [
+          "Account Statement Report - Beta version "
+        ]
+      },
+      {
+        "name": "eMoney MOP reclassification (OpenBanking vs WireTransfer)",
+        "summary": "For eMoney-platform external deposits (IsInternalTransfer=0 AND IsTradeFromIBAN=0), the standard Dim_FundingType name is replaced by a cross-table lookup: if the transaction's ReferenceNumber matches an approved (TransferStatusID=10) record in External_MoneyTransfer_Billing_Transfers, the MOP is 'OpenBanking'; otherwise it falls back to 'WireTransfer'. Non-eMoney or internal/IBAN transactions use the standard Dim_FundingType.Name.",
+        "formula": "CASE WHEN MIMOPlatform='eMoney' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN (CASE WHEN External_MoneyTransfer_Billing_Transfers.CID IS NOT NULL THEN 'OpenBanking' ELSE 'WireTransfer' END) ELSE Dim_FundingType.Name END",
+        "source_workbooks": [
+          "Local Currencies MIMO Dashboard  (Beta)",
+          "Local Currencies MIMO Dashboard  (Beta) TestVersion "
+        ]
+      },
+      {
+        "name": "Net Deposits KPI (AML context)",
+        "summary": "Net Deposits is defined as (Trading Deposits − Trading Withdrawals + eMoney Inbound − eMoney Outbound), where Trading flows exclude FundingTypeID 33 and eMoney flows exclude internal transfers (IsInternalTransfer=1). This KPI is used for AML-flagged customers sourced from BI_DB_AML_BI_Alerts_New and BI_DB_RiskAlertManagementTool (CategoryName='AML').",
+        "formula": "SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit' AND FundingTypeID<>33 THEN AmountUSD ELSE 0 END) - SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Withdraw' AND FundingTypeID<>33 THEN AmountUSD ELSE 0 END) + SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Deposit' AND IsInternalTransfer=0 THEN AmountUSD ELSE 0 END) - SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Withdraw' AND IsInternalTransfer=0 THEN AmountUSD ELSE 0 END)",
+        "source_workbooks": [
+          "AML Clients – Trading & eMoney Net Deposits"
+        ]
+      }
+    ],
+    "column_findings": [
+      {
+        "column": "FundingTypeID",
+        "name": "FundingTypeID 33 exclusion",
+        "summary": "FundingTypeID 33 is excluded from Trading Platform deposit and withdrawal calculations in the Net Deposits KPI, indicating it represents a non-cash or non-standard funding type that should not count toward real money movement on the Trading Platform.",
+        "formula": "FundingTypeID <> 33",
+        "source_workbook": "AML Clients – Trading & eMoney Net Deposits"
+      }
+    ]
+  },
+  "verdict_normalized": {
+    "verdict": "ENRICH",
+    "rationale": "Three non-trivial business rules surface from Tableau that the wiki does not document: (1) a six-category transaction-type taxonomy derived from the combination of MIMOAction, IsInternalTransfer, and IsTradeFromIBAN; (2) an eMoney MOP reclassification that splits WireTransfer into OpenBanking vs WireTransfer via a cross-table lookup; (3) a Net Deposits KPI definition that excludes FundingTypeID 33 for Trading and internal transfers for eMoney.",
+    "table_findings": [
+      {
+        "name": "Transaction Description taxonomy",
+        "summary": "Downstream dashboards classify every MIMO row into one of six business categories by combining MIMOAction, IsInternalTransfer, and IsTradeFromIBAN: 'Internal Transfer: Local Account → USD Account' (Deposit+Internal+¬IBAN), 'Internal Transfer: USD Account → Local Account' (Withdraw+Internal+¬IBAN), 'Open Position from Local Account' (Deposit+Internal+IBAN), 'Close Position to Local Account' (Withdraw+Internal+IBAN), 'Deposit from External' (Deposit+¬Internal+¬IBAN), 'Withdraw to External' (Withdraw+¬Internal+¬IBAN).",
+        "formula": "IF MIMOAction='Deposit' AND IsInternalTransfer=1 AND IsTradeFromIBAN=0 THEN 'Internal Transfer: Local Account → USD Account' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=1 AND IsTradeFromIBAN=0 THEN 'Internal Transfer: USD Account → Local Account' ELSEIF MIMOAction='Deposit' AND IsInternalTransfer=1 AND IsTradeFromIBAN=1 THEN 'Open Position from Local Account' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=1 AND IsTradeFromIBAN=1 THEN 'Close Position to Local Account' ELSEIF MIMOAction='Deposit' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN 'Deposit from External' ELSEIF MIMOAction='Withdraw' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN 'Withdraw to External' ELSE 'Other / Unclassified' END",
+        "source_workbooks": [
+          "Account Statement Report - Beta version"
+        ]
+      },
+      {
+        "name": "eMoney MOP reclassification (OpenBanking vs WireTransfer)",
+        "summary": "For eMoney-platform external deposits (IsInternalTransfer=0 AND IsTradeFromIBAN=0), the standard Dim_FundingType name is replaced by a cross-table lookup: if the transaction's ReferenceNumber matches an approved (TransferStatusID=10) record in External_MoneyTransfer_Billing_Transfers, the MOP is 'OpenBanking'; otherwise it falls back to 'WireTransfer'. Non-eMoney or internal/IBAN transactions use the standard Dim_FundingType.Name.",
+        "formula": "CASE WHEN MIMOPlatform='eMoney' AND IsInternalTransfer=0 AND IsTradeFromIBAN=0 THEN (CASE WHEN External_MoneyTransfer_Billing_Transfers.CID IS NOT NULL THEN 'OpenBanking' ELSE 'WireTransfer' END) ELSE Dim_FundingType.Name END",
+        "source_workbooks": [
+          "Local Currencies MIMO Dashboard  (Beta)",
+          "Local Currencies MIMO Dashboard  (Beta) TestVersion"
+        ]
+      },
+      {
+        "name": "Net Deposits KPI (AML context)",
+        "summary": "Net Deposits is defined as (Trading Deposits − Trading Withdrawals + eMoney Inbound − eMoney Outbound), where Trading flows exclude FundingTypeID 33 and eMoney flows exclude internal transfers (IsInternalTransfer=1). This KPI is used for AML-flagged customers sourced from BI_DB_AML_BI_Alerts_New and BI_DB_RiskAlertManagementTool (CategoryName='AML').",
+        "formula": "SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit' AND FundingTypeID<>33 THEN AmountUSD ELSE 0 END) - SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Withdraw' AND FundingTypeID<>33 THEN AmountUSD ELSE 0 END) + SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Deposit' AND IsInternalTransfer=0 THEN AmountUSD ELSE 0 END) - SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Withdraw' AND IsInternalTransfer=0 THEN AmountUSD ELSE 0 END)",
+        "source_workbooks": [
+          "AML Clients – Trading & eMoney Net Deposits"
+        ]
+      }
+    ],
+    "column_findings": [
+      {
+        "column": "FundingTypeID",
+        "name": "FundingTypeID 33 exclusion",
+        "summary": "FundingTypeID 33 is excluded from Trading Platform deposit and withdrawal calculations in the Net Deposits KPI, indicating it represents a non-cash or non-standard funding type that should not count toward real money movement on the Trading Platform.",
+        "formula": "FundingTypeID <> 33",
+        "source_workbook": "AML Clients – Trading & eMoney Net Deposits"
+      }
+    ],
+    "dropped_unknown_columns": []
+  },
+  "error": null
+}

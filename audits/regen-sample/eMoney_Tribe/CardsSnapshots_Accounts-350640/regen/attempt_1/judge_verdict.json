@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots_Accounts-350640",
+    "elapsed_seconds":  86,
+    "exit_code":  null,
+    "cost_usd":  0.1976,
+    "input_tokens":  2,
+    "output_tokens":  3544,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots_Accounts-350640",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Tagged Tier 3 but could be Tier 2 — writer describes them as \u0027Added by the Generic Pipeline framework\u0027, implying known ETL logic rather than pure inference."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape (missing section)",
+                                       "problem":  "No explicit Phase Gate Checklist section despite footer claiming \u0027Phases: 11/14\u0027. Minor shape deviation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.1 — @Id relationship",
+                                       "problem":  "Claims @Id is a \u0027shared key\u0027 with CardsSnapshots_CardSnapshot-140457, but it functions as the bridge table\u0027s own primary key. Cardinality semantics could be clearer."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3 — JOIN conditions",
+                                       "problem":  "All three tables joining on the same @Id column is an unusual chain-join pattern. The 1:1 relationship assumption (from sampling) should be flagged as unverified at scale."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "Section 3.4 — varchar(max) advisory",
+                                       "problem":  "Could explicitly note that @CardsSnapshots_CardSnapshot@Id-140457 as varchar(max) cannot participate in efficient JOINs despite being a foreign key reference."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

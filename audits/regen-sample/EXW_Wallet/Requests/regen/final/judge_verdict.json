@@ -1,0 +1,70 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "Requests",
+    "elapsed_seconds":  88,
+    "exit_code":  null,
+    "cost_usd":  0.2076,
+    "input_tokens":  2,
+    "output_tokens":  3675,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "Requests",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CryptoId",
+                                       "problem":  "Only 4 sample CryptoId values listed (1=Bitcoin, 2=Ethereum, 6=Litecoin, 18=Cardano) with \u0027based on sample data\u0027 caveat. Should query EXW_Wallet.CryptoTypes for the full dictionary if ≤15 entries."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] markers. Footer says \u0027Phases: 11/14\u0027 but does not identify which 3 phases were skipped, making data-claim provenance harder to audit."
+                                   },
+                                   {
+                                       "severity":  "minor",
+                                       "column_or_section":  "partition_date",
+                                       "problem":  "Tagged Tier 3 but is a CAST(Timestamp AS DATE) transform. Could be argued as Tier 2 (ETL-computed). Defensible as Tier 3 since source column has no upstream wiki, but borderline."
+                                   },
+                                   {
+                                       "severity":  "minor",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Empty Atlassian section — regen harness skipped Jira/Confluence search. Wallet team documentation may exist but was not linked."
+                                   },
+                                   {
+                                       "severity":  "minor",
+                                       "column_or_section":  "DetailsJson",
+                                       "problem":  "JSON schema documented for RequestTypeId 1 and 4 only. Types 2, 3, 5, 6, 7, 8, 9 listed as \u0027schema unknown\u0027. Limits analyst utility for parsing non-Send/Conversion requests."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required (PASS). For incremental improvement: (1) Query EXW_Wallet.CryptoTypes for full CryptoId dictionary and list inline. (2) Add explicit Phase Gate Checklist section. (3) Consider Tier 2 for partition_date.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "5.0M rows",
+                                                                                  "July 2018 to present",
+                                                                                  "CreateWallet ~2.5M rows",
+                                                                                  "SendTransaction ~1.3M",
+                                                                                  "DeviceId 100% NULL",
+                                                                                  "etr_* 100% NULL",
+                                                                                  "DetailsJson ~50% NULL"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phases 11/14 — 3 unidentified phases skipped"
+                                                           ]
+                                    }
+                }
+}

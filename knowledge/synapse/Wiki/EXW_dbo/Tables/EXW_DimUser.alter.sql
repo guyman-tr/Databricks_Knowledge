@@ -68,3 +68,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser ALTER COLUMN `Use
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser ALTER COLUMN `UserRegion_State` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser ALTER COLUMN `Club` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser ALTER COLUMN `ComplianceClosureEvent` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:32:08 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 1
+-- Statements: 44/44 succeeded
+-- ====================

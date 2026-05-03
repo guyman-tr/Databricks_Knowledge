@@ -1,0 +1,162 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_DailyPanel_Copy",
+    "elapsed_seconds":  241,
+    "exit_code":  null,
+    "cost_usd":  2.3739,
+    "input_tokens":  3,
+    "output_tokens":  11954,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_DailyPanel_Copy",
+                    "weighted_score":  6.80,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  6,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "UserName",
+                                                  "upstream_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "wiki_quote":  "Customer login username. Unique (case-insensitive, enforced via UserName_LOWER computed column index).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Gender",
+                                                  "upstream_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only.",
+                                                  "wiki_quote":  "Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Country",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Passthrough from Dim_Country.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Manual override name for the marketing region, from Ext_Dim_Country. May differ from the automated MarketingRegion label (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Used when the automated MarketingRegion label needs a business-friendly correction.",
+                                                  "wiki_quote":  "Manual override name for the marketing region, from Ext_Dim_Country. May differ from the automated MarketingRegion label (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Passthrough from Dim_Country.MarketingRegionManualName.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used when the automated MarketingRegion label needs a business-friendly correction\u0027"
+                                              },
+                                              {
+                                                  "column":  "Language",
+                                                  "upstream_quote":  "Language display name. UNIQUE constraint. Used in back-office language selectors and reporting.",
+                                                  "wiki_quote":  "Language display name. Used in back-office language selectors and reporting. Passthrough from Dim_Language.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027UNIQUE constraint\u0027"
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Passthrough from Dim_PlayerLevel.Name.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in BackOffice reporting JOINs and customer-facing UI\u0027"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Values: None, CySEC, FCA, NFA, ASIC, BVI, eToroUS, FinCEN, FinCEN+FINRA, FSA Seychelles, ASIC\u0026GAML, FSRA, FINRAONLY, MAS, NYDFS+FINRA. Passthrough from Dim_Regulation.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027 and \u0027Values match production Dictionary.Regulation.Name\u0027; added inline values (good enrichment)"
+                                              },
+                                              {
+                                                  "column":  "PortfolioType",
+                                                  "upstream_quote":  "Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting. Describes the fundamental strategy approach of the fund category.",
+                                                  "wiki_quote":  "Fund type label for Portfolio CopyType accounts. 1=TopTraders (copy-based), 2=Partners (external strategist), 3=Market (thematic index). NULL for PI and RemovedPI. Passthrough from Dim_FundType.FundTypeName via Dim_Fund.",
+                                                  "match":  "NO",
+                                                  "loss":  "Complete rewrite. Dropped \u0027platform UI, fund details pages, and management reporting\u0027 and \u0027fundamental strategy approach\u0027. Upstream description not quoted at all."
+                                              },
+                                              {
+                                                  "column":  "GuruStatus",
+                                                  "upstream_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration.",
+                                                  "wiki_quote":  "Human-readable PI tier name. Values: No, Certified, Cadet, Rising Star, Champion, Elite, Elite Pro, Removed, Rejected. Used in BackOffice customer views, Trade procedures, and SalesForce integration. Passthrough from Dim_GuruStatus.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label from the snapshot date. Values: Normal, Blocked, Chat Blocked, Blocked Upon Request, Warning, Under Investigation, Scalpers Block, PayPal Investigation, Trade \u0026 MIMO Blocked, Deposit Blocked, Social Index, Copy Block, Pending Verification, Failed Verification, Block Deposit \u0026 Trading. Passthrough from Dim_PlayerStatus.",
+                                                  "match":  "NO",
+                                                  "loss":  "Dropped \u0027Unique per status\u0027, \u0027Used in BackOffice UI, compliance reports, and monitoring dashboards\u0027, and RTRIM() trailing-spaces note"
+                                              },
+                                              {
+                                                  "column":  "RealizedEquity",
+                                                  "upstream_quote":  "V_Liabilities output column #4: Fact_SnapshotEquity.RealizedEquity — Direct passthrough (T1). No detailed upstream description available in V_Liabilities wiki.",
+                                                  "wiki_quote":  "Realized equity (cash + credit + in-process cashouts) on the snapshot date. Direct passthrough from V_Liabilities.RealizedEquity.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description to quote verbatim; writer\u0027s enrichment is reasonable but unverifiable against source"
+                                              },
+                                              {
+                                                  "column":  "TotalPositionsAmount",
+                                                  "upstream_quote":  "V_Liabilities output column #5: Fact_SnapshotEquity.TotalPositionsAmount — Direct passthrough (T1). No detailed upstream description available.",
+                                                  "wiki_quote":  "Total invested amount across all open positions on the snapshot date. Direct passthrough from V_Liabilities.TotalPositionsAmount.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description to quote verbatim"
+                                              },
+                                              {
+                                                  "column":  "PositionPnL",
+                                                  "upstream_quote":  "V_Liabilities output column #17: Fact_CustomerUnrealized_PnL.PositionPnL — Direct passthrough (T1). No detailed upstream description available.",
+                                                  "wiki_quote":  "Unrealized position profit/loss on the snapshot date. Direct passthrough from V_Liabilities.PositionPnL.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description to quote verbatim"
+                                              },
+                                              {
+                                                  "column":  "Credit",
+                                                  "upstream_quote":  "V_Liabilities output column #12: Fact_SnapshotEquity.Credit — Direct passthrough (T1). No detailed upstream description available.",
+                                                  "wiki_quote":  "Available credit balance on the snapshot date. Direct passthrough from V_Liabilities.Credit.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "No upstream description to quote verbatim"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PortfolioType",
+                                       "problem":  "Tagged Tier 1 — Dictionary.FundType but upstream description completely rewritten. Upstream: \u0027Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting.\u0027 Wiki rewrites as \u0027Fund type label for Portfolio CopyType accounts...\u0027 — none of the upstream text is quoted."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "PlayerStatus",
+                                       "problem":  "Tagged Tier 1 — Dictionary.PlayerStatus but upstream description paraphrased with semantic loss. Dropped \u0027Unique per status\u0027, \u0027Used in BackOffice UI, compliance reports, and monitoring dashboards\u0027, and the RTRIM() trailing-spaces note."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u002712 T1\u0027 but the Elements table contains 14 columns tagged Tier 1 (UserName, Gender, Country, Region, Language, Club, Regulation, PortfolioType, GuruStatus, PlayerStatus, RealizedEquity, TotalPositionsAmount, PositionPnL, Credit). Tier count is wrong."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Region",
+                                       "problem":  "Tier 1 column drops upstream usage context: \u0027Used when the automated MarketingRegion label needs a business-friendly correction\u0027 replaced with \u0027Passthrough from Dim_Country.MarketingRegionManualName\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Club",
+                                       "problem":  "Tier 1 column drops upstream usage context: \u0027Used in BackOffice reporting JOINs and customer-facing UI\u0027 replaced with \u0027Passthrough from Dim_PlayerLevel.Name\u0027."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) PortfolioType: quote upstream verbatim first (\u0027Human-readable label for the fund type. Used in the platform UI, fund details pages, and management reporting.\u0027) then append table-specific context (NULL for PI/RemovedPI, value mappings). (2) PlayerStatus: restore dropped phrases (\u0027Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: trailing spaces — apply RTRIM().\u0027) before inline values. (3) Fix footer tier count from \u002712 T1\u0027 to \u002714 T1, 43 T2\u0027. (4) Region, Language, Club, Regulation: restore dropped upstream usage phrases before the passthrough note. (5) All T1 columns: quote upstream descriptions verbatim first, then append enrichment after a separator.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)",
+                                                               "2 additional phases (unknown, likely P12-P14)"
+                                                           ]
+                                    }
+                }
+}

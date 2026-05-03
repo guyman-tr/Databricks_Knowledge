@@ -1,0 +1,68 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsActivities_RiskActions-322546",
+    "elapsed_seconds":  85,
+    "exit_code":  null,
+    "cost_usd":  0.2148,
+    "input_tokens":  2,
+    "output_tokens":  3530,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsActivities_RiskActions-322546",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] marks for P1–P3. Footer claims \u0027Phases: 13/14\u0027 but does not identify which phase was skipped or confirm P2/P3 data sampling was performed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7 (Query 7.3)",
+                                       "problem":  "JOIN query references columns HolderId, AccountId, TransactionAmount, TransactionCurrencyAlpha, TransactionCode from AccountsActivities_AccountActivity-833937 without verifying these column names against that table\u0027s DDL."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Section 8 is minimal — states \u0027No Atlassian sources searched (regen harness mode)\u0027 with only a Freshservice link. Acceptable for raw ingestion but provides no knowledge base context."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.1 / @Id indexes",
+                                       "problem":  "Duplicate NCI on [@Id] (ClusteredIndex_AA_322546_Id and idx_322546_Id) is mentioned as an observation but not flagged as a warning or anti-pattern in the query advisory."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Element 4 (NotifyCardholderBySendingTAIsNotification)",
+                                       "problem":  "No activation rate stats provided for NotifyCardholderBySendingTAIsNotification or ChangeAccountStatusToSuspended, unlike MarkTransactionAsSuspicious (0.08%) and ChangeCardStatusToRisk (2 rows). Inconsistent evidence depth across similar flag columns."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "MarkTransactionAsSuspicious: 0.08% activation rate (6,006/7.2M in 2026)",
+                                                                                  "ChangeCardStatusToRisk: 2 occurrences in 2026",
+                                                                                  "RejectTransaction: 0 activations in 2026",
+                                                                                  "Row count: 29.8M",
+                                                                                  "Date range: 2023-12-20 to 2026-04-26"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section missing — cannot determine which phase was skipped"
+                                                           ]
+                                    }
+                }
+}

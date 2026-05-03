@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsSnapshots_AccountSnapshot-956050",
+    "elapsed_seconds":  78,
+    "exit_code":  null,
+    "cost_usd":  0.2234,
+    "input_tokens":  2,
+    "output_tokens":  3408,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsSnapshots_AccountSnapshot-956050",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "AccountStatus (element #13, Section 2.1)",
+                                       "problem":  "Status code labels S=Suspended, B=Blocked, P=Pending, R=Restricted are inferred from common eMoney patterns, not confirmed from source data. Only A=Active is confirmed via AccountStatusDescription. Wiki presents all labels as established fact."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ProgramId (element #9)",
+                                       "problem":  "Values 175, 39, 177 observed but business meaning unknown. Description is name-inferred (\u0027Identifies the eMoney program\u0027). Should explicitly note meaning is unconfirmed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ReservedBalance (element #23)",
+                                       "problem":  "Description says \u0027Passed through to ETL_AccountSnapshot (not directly — enriched via bank account join)\u0027 which is imprecise and potentially misleading. If it\u0027s not directly passed through, the parenthetical needs clearer grounding."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 13/14\u0027 but doesn\u0027t identify which phase was skipped, reducing transparency about data claim reliability."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@AccountsSnapshots@Id-509416 (element #3)",
+                                       "problem":  "Wiki notes value equals @Id in sample data but doesn\u0027t strongly flag this as a potential data quality concern or structural invariant requiring investigation."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required (PASS). Minor improvements: (1) Qualify inferred status code labels S/B/P/R with \u0027inferred\u0027 marker rather than presenting as confirmed. (2) Clarify ReservedBalance passthrough claim — remove or ground the \u0027not directly\u0027 parenthetical. (3) Add explicit Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 14 (unknown — not identified in footer)"
+                                                           ]
+                                    }
+                }
+}

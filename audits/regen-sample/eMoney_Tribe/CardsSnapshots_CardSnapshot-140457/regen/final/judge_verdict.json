@@ -1,0 +1,66 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots_CardSnapshot-140457",
+    "elapsed_seconds":  95,
+    "exit_code":  null,
+    "cost_usd":  0.2746,
+    "input_tokens":  2,
+    "output_tokens":  3795,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots_CardSnapshot-140457",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Address (#36)",
+                                       "problem":  "Self-contradictory description: says \u0027not passed through to ETL_CardSnapshot\u0027 but then \u0027(selected into temp table but present in final output)\u0027. These statements conflict — writer must verify from SP code whether Address appears in the final ETL_CardSnapshot output."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SynapseUpdateDate (#65), partition_date (#66)",
+                                       "problem":  "Tagged Tier 3 but both are ETL-generated (GETDATE() and derived date respectively). These fit Tier 2 (ETL-computed) better than Tier 3 (no source traceable). Minor classification edge case given no upstream wiki exists."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Placeholder text \u0027No Atlassian sources searched (regen harness mode)\u0027 provides no value. Should either contain relevant links or a clean \u0027None identified\u0027 statement."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 11/14\u0027 but no Phase Gate Checklist section exists to identify which 3 phases were skipped. Cannot verify data evidence claims without this."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Created (#67)",
+                                       "problem":  "Description hedges with \u0027May represent the source system creation time vs pipeline creation time\u0027. Should commit to \u0027semantics vs @Created unclear, both carry identical values in sampled data\u0027 rather than speculating."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (wiki passes): (1) Fix contradictory Address (#36) description — verify from SP code whether it reaches ETL_CardSnapshot final output. (2) Consider re-tagging SynapseUpdateDate and partition_date as Tier 2 (ETL-computed). (3) Add explicit Phase Gate Checklist section listing completed vs skipped phases. (4) Remove speculative hedging from Created (#67). (5) Clean up Section 8 placeholder.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "CardStatusCode distributions (A=41%, E=29%, N=26%, S=2.6%, L=1%)",
+                                                                                  "DefaultCardCurrency split (GBP=78%, EUR=22%)",
+                                                                                  "CountryCode distribution (826=78%)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Cannot determine — no Phase Gate Checklist section exists, footer only says 11/14"
+                                                           ]
+                                    }
+                }
+}

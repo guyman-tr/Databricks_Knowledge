@@ -1,0 +1,68 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "Conversions",
+    "elapsed_seconds":  101,
+    "exit_code":  null,
+    "cost_usd":  0.2119,
+    "input_tokens":  2,
+    "output_tokens":  4136,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "Conversions",
+                    "weighted_score":  7.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Tagged Tier 3 but derivation is known (year/month/date extracted from Occurred by Generic Pipeline). Should be Tier 2 — Derived from ETL logic."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section structure",
+                                       "problem":  "No Phase Gate Checklist section. Footer claims \u0027Phases: 12/14\u0027 but doesn\u0027t specify which were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ConversionTypeId",
+                                       "problem":  "All rows have value 1 but no description of what type 1 represents. Appropriately flagged in review-needed but still a gap for analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FromCryptoId, ToCryptoId",
+                                       "problem":  "25 distinct values with distribution counts listed but no crypto asset name mapping. No dictionary table found — correctly noted but limits utility."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "FromAmount, ToAmount",
+                                       "problem":  "Value ranges cited as \u0027sample values\u0027 which may not represent the full distribution min/max."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Re-tag etr_y, etr_ym, etr_ymd as Tier 2 — Generic Pipeline; year/month/date extracted from Occurred. (2) Add an explicit Phase Gate Checklist section showing which phases were completed. (3) Use full-table MIN/MAX for FromAmount and ToAmount rather than sample ranges.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "row count 50,268",
+                                                                                  "date range Oct 2018 – June 2023",
+                                                                                  "ConversionTypeId=1 all rows",
+                                                                                  "FromCryptoId 25 distinct values with top-4 distribution",
+                                                                                  "ToCryptoId 25 distinct values with top-4 distribution"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section absent — cannot determine which phases were skipped"
+                                                           ]
+                                    }
+                }
+}

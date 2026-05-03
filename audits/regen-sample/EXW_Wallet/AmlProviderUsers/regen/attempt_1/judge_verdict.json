@@ -1,0 +1,98 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "AmlProviderUsers",
+    "elapsed_seconds":  137,
+    "exit_code":  null,
+    "cost_usd":  0.5006,
+    "input_tokens":  107,
+    "output_tokens":  6403,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "AmlProviderUsers",
+                    "weighted_score":  9.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Id",
+                                                  "upstream_quote":  "Auto-incrementing surrogate primary key.",
+                                                  "wiki_quote":  "Auto-incrementing surrogate primary key.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "AmlProviderId",
+                                                  "upstream_quote":  "The AML screening provider this registration is for: 1=Chainalysis, 4=ChainalysisCDN. See [AML Provider](../../_glossary.md#aml-provider). FK to Dictionary.AmlProviders.",
+                                                  "wiki_quote":  "The AML screening provider this registration is for: 1=Chainalysis, 2=BlackList, 3=Unsupported, 4=ChainalysisCDN. FK to Dictionary.AmlProviders.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Added 2=BlackList, 3=Unsupported from live data (enrichment, not loss); dropped production-context glossary link"
+                                              },
+                                              {
+                                                  "column":  "Gcid",
+                                                  "upstream_quote":  "Global Customer ID. The eToro customer this AML provider registration belongs to. Part of unique constraint with AmlProviderId.",
+                                                  "wiki_quote":  "Global Customer ID. The eToro customer this AML provider registration belongs to. Part of unique constraint with AmlProviderId.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ProviderUserId",
+                                                  "upstream_quote":  "The customer\u0027s user identifier on the AML provider\u0027s system. Base64-encoded representation of the Gcid (e.g., Gcid 46870594 -\u003e \"NDY4NzA1OTQ=\"). Used in all API calls to the provider.",
+                                                  "wiki_quote":  "The customer\u0027s user identifier on the AML provider\u0027s system. Base64-encoded representation of the Gcid (e.g., Gcid 46870594 -\u003e \"NDY4NzA1OTQ=\"). Used in all API calls to the provider.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "Timestamp when this customer was first registered with the AML provider.",
+                                                  "wiki_quote":  "Timestamp when this customer was first registered with the AML provider.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AmlProviderId",
+                                       "problem":  "Description adds 2=BlackList, 3=Unsupported values not present in upstream wiki (enrichment from live data). Upstream only lists 1=Chainalysis, 4=ChainalysisCDN. Strict verbatim fidelity requires quoting upstream as-is."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Harness bundle declared no upstream wiki resolvable, but Wallet.AmlProviderUsers wiki exists at knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/. Writer found it independently. Harness routing gap for EXW_Wallet → CryptoDBs/WalletDB path."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No explicit Phase Gate Checklist section itemizing completed vs skipped phases. Footer says \u0027Phases: 13/14\u0027 but individual phase status is not shown."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Gcid",
+                                       "problem":  "Type narrowing risk (production bigint vs Synapse int) mentioned in gotchas but no specific threshold check (current max Gcid vs int max 2,147,483,647) included in the wiki."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "Append strategy with no uniqueness constraint could introduce duplicates. Mentioned in Section 3.4 gotchas but not in the ETL logic section where analysts look for data quality rules."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. Minor polish: (1) Quote AmlProviderId verbatim from upstream, add extra provider values as a data-observation note. (2) Add explicit Phase Gate Checklist section.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 14 (unknown — 13/14 completed)"
+                                                           ]
+                                    }
+                }
+}

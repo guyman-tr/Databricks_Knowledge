@@ -1,0 +1,77 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots_Account-513255",
+    "elapsed_seconds":  91,
+    "exit_code":  null,
+    "cost_usd":  0.223,
+    "input_tokens":  2,
+    "output_tokens":  4045,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots_Account-513255",
+                    "weighted_score":  7.2,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "@Id",
+                                                  "upstream_quote":  "No upstream wiki exists in the bundle",
+                                                  "wiki_quote":  "PK. (Tier 1 — Tribe.CardsSnapshots_Account-513255)",
+                                                  "match":  "NO",
+                                                  "loss":  "False Tier 1 claim — no upstream wiki was available in the bundle to quote from. Must be Tier 3."
+                                              },
+                                              {
+                                                  "column":  "Created",
+                                                  "upstream_quote":  "No upstream wiki exists in the bundle",
+                                                  "wiki_quote":  "Source timestamp. (Tier 1 — Tribe.CardsSnapshots_Account-513255)",
+                                                  "match":  "NO",
+                                                  "loss":  "False Tier 1 claim — no upstream wiki was available in the bundle to quote from. Must be Tier 3."
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "@Id",
+                                       "problem":  "Tagged Tier 1 citing Tribe.CardsSnapshots_Account-513255 as upstream wiki, but the upstream bundle explicitly states no wiki was resolvable for any source. Must be Tier 3."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Created",
+                                       "problem":  "Tagged Tier 1 citing Tribe.CardsSnapshots_Account-513255 as upstream wiki, but the upstream bundle contains no wiki for this source. Must be Tier 3."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00272 T1, 0 T2, 23 T3\u0027 but should be \u00270 T1, 0 T2, 25 T3\u0027 since no upstream wiki exists in the bundle."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id",
+                                       "problem":  "Description says only \u0027PK.\u0027 which is extremely sparse even for Tier 3. Should describe the column\u0027s role as the unique snapshot record identifier used for HASH distribution and clustered index."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 13/14\u0027 but P2/P3 completion status is not verifiable from the wiki content."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag @Id as Tier 3 — no upstream wiki exists in the bundle. (2) Re-tag Created as Tier 3 — no upstream wiki exists in the bundle. (3) Update footer tier counts to 0 T1, 0 T2, 25 T3. (4) Expand @Id description beyond \u0027PK.\u0027 to describe its role as unique snapshot record identifier, HASH distribution key, and clustered index column. (5) Update lineage file to mark @Id and Created as Tier 3 instead of Tier 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -266,3 +266,9 @@ ALTER TABLE main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_asse
 ALTER TABLE main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history ALTER COLUMN `P31_Response` SET TAGS ('pii' = 'none');
 ALTER TABLE main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history ALTER COLUMN `P31_Risk` SET TAGS ('pii' = 'none');
 ALTER TABLE main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history ALTER COLUMN `UpdateDate` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:16:09 UTC
+-- Batch deploy resume: eMoney_dbo deploy batch 1
+-- Statements: 242/242 succeeded
+-- ====================

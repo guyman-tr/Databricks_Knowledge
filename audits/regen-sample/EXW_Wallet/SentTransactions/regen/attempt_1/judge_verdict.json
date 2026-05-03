@@ -1,0 +1,58 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "SentTransactions",
+    "elapsed_seconds":  75,
+    "exit_code":  null,
+    "cost_usd":  0.1922,
+    "input_tokens":  2,
+    "output_tokens":  2939,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "SentTransactions",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TransactionTypeId",
+                                       "problem":  "Element description lists types 0-14 but omits type 15 (141 rows in data), which is flagged in gotchas but not in the element description itself."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Empty Atlassian sources section — likely correct for Wallet team table but worth confirming."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "All production columns",
+                                       "problem":  "All 8 production-sourced columns are Tier 3 due to no upstream wiki. Correct behavior, but should be upgraded when WalletDB wiki becomes available."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 1,860,740 rows, 2018-04-23 to 2026-04-27",
+                                                                                  "Section 1: CustomerMoneyOut 829K (44.6%), Redeem 772K (41.5%)",
+                                                                                  "Section 1: Top cryptos XRP 689K, ETH 452K, BTC 366K",
+                                                                                  "CryptoId element: top values with row counts, 121 distinct values",
+                                                                                  "Gotchas: TransactionTypeId 15 has 141 rows"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phases 12-14 appear skipped per footer (11/14)"
+                                                           ]
+                                    }
+                }
+}

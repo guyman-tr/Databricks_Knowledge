@@ -1,0 +1,67 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsSnapshots_BankAccounts-795870",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.2207,
+    "input_tokens":  2,
+    "output_tokens":  4478,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsSnapshots_BankAccounts-795870",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 11/14\u0027 but no Phase Gate Checklist section is shown in the wiki body. Without knowing which 3 phases were skipped, data claims (row counts, distribution analysis, etr_ population rates) cannot be independently verified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y",
+                                       "problem":  "etr_y has a small finite set of populated values (likely just \u00272023\u0027, \u00272024\u0027) that should be enumerated inline per the dictionary-column guideline."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7.2",
+                                       "problem":  "Sample query references columns from related tables (snap.AccountId, snap.HolderId, snap.AvailableBalance, bank.BankAccountIban, bank.BankAccountStatus) that are assumed but not verified against those tables\u0027 DDL. Could produce errors if column names differ."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table — Refresh",
+                                       "problem":  "\u0027Continuous via Tribe data pipeline\u0027 is imprecise. For a 1.52B-row table, analysts need to know whether refresh is hourly, daily, or event-driven to plan query timing."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "partition_date",
+                                       "problem":  "Wiki says partition_date \u0027aligns with the date portion of Created\u0027 suggesting a derivation/transform, which could arguably be Tier 2 rather than Tier 3. However, since the derivation occurs in the pipeline (not a Synapse SP), Tier 3 is defensible."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (wiki passes): (1) Add an explicit Phase Gate Checklist section showing which of the 14 phases were completed vs skipped. (2) Enumerate the few populated etr_y values inline (e.g., \u00272023\u0027, \u00272024\u0027). (3) Verify column names in Section 7.2 sample query against actual DDL of AccountsSnapshots_AccountSnapshot-956050 and AccountsSnapshots_BankAccount-393561 tables. (4) Replace \u0027Continuous via Tribe data pipeline\u0027 with actual refresh schedule.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "1.52B rows (Section 1, element 8 description)",
+                                                                                  "date range 2023-12-20 to 2026-04-26 (Section 1)",
+                                                                                  "100% match between @Id and parent FK (Section 2.1)",
+                                                                                  "etr_ fields mostly empty, only Dec 2023/Jan 2024 populated (Section 2.2)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "3 of 14 phases skipped per footer, specific phases unknown"
+                                                           ]
+                                    }
+                }
+}

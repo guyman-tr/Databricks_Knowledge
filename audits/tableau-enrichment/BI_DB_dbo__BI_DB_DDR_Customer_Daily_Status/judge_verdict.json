@@ -1,0 +1,21 @@
+{
+  "ts": "2026-04-30T15:56:18Z",
+  "wiki": "knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_DDR_Customer_Daily_Status.md",
+  "tableau": "knowledge\\tableau\\sql_dp_prod_we__BI_DB_dbo\\BI_DB_DDR_Customer_Daily_Status.md",
+  "mode": "apply",
+  "raw_output": "\n\n```json\n{\n  \"verdict\": \"DISCARD\",\n  \"rationale\": \"Both custom SQL queries are simple row-count monitoring queries (SELECT DateID, count(*) GROUP BY DateID) with no business logic, CASE expressions, or derived attributes. There are zero downstream calculated fields. The workbooks are ETL monitoring dashboards, not analytical dashboards encoding business rules.\",\n  \"table_findings\": [],\n  \"column_findings\": []\n}\n```\n",
+  "parsed": {
+    "verdict": "DISCARD",
+    "rationale": "Both custom SQL queries are simple row-count monitoring queries (SELECT DateID, count(*) GROUP BY DateID) with no business logic, CASE expressions, or derived attributes. There are zero downstream calculated fields. The workbooks are ETL monitoring dashboards, not analytical dashboards encoding business rules.",
+    "table_findings": [],
+    "column_findings": []
+  },
+  "verdict_normalized": {
+    "verdict": "DISCARD",
+    "rationale": "Both custom SQL queries are simple row-count monitoring queries (SELECT DateID, count(*) GROUP BY DateID) with no business logic, CASE expressions, or derived attributes. There are zero downstream calculated fields. The workbooks are ETL monitoring dashboards, not analytical dashboards encoding business rules.",
+    "table_findings": [],
+    "column_findings": [],
+    "dropped_unknown_columns": []
+  },
+  "error": null
+}

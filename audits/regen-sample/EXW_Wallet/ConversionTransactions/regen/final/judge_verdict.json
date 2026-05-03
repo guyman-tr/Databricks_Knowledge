@@ -1,0 +1,69 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "ConversionTransactions",
+    "elapsed_seconds":  116,
+    "exit_code":  null,
+    "cost_usd":  0.2516,
+    "input_tokens":  2,
+    "output_tokens":  5133,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "ConversionTransactions",
+                    "weighted_score":  8.20,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Lineage metadata",
+                                       "problem":  "Footer says \u0027Elements: 13/13\u0027 and \u0027Tier 3: 13\u0027, lineage says \u0027DDL column count: 13\u0027, but DDL has 14 columns and Elements table correctly lists 14 rows. Internal inconsistency across three locations."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Tagged Tier 3 but these are ETL-computed columns (year/month/date extracted from Occurred by Generic Pipeline). Could be argued as Tier 2 since they are derived via ETL logic rather than being untraced."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CryptoId",
+                                       "problem":  "25 distinct values listed by frequency but not mapped to crypto asset names. Even partial mapping (e.g., 1=BTC, 2=ETH) would improve analyst usability."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "No Phase Gate Checklist with explicit P2/P3 checkboxes. Section 8 is \u0027Atlassian Knowledge Sources\u0027 instead. Footer references \u0027Phases: 12/14\u0027 without showing which phases were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "EtoroFeePercentage",
+                                       "problem":  "Has only 3 distinct values (0.10, 0.50, 1.00) qualifying for key=value dictionary format per completeness checklist, but values are listed narratively rather than as structured pairs."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Update footer and lineage metadata from 13 to 14 columns in three locations (wiki footer, lineage DDL column count, lineage tier summary). (2) Consider re-tagging etr_y/etr_ym/etr_ymd as Tier 2 — Generic Pipeline derived from Occurred. (3) Add Phase Gate Checklist section with P2/P3 checkboxes. (4) Map top CryptoId values to crypto names if CryptoTypes data is available.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 98,713 in Section 1",
+                                                                                  "Date range Oct 2018 - Jun 2023 in Section 1",
+                                                                                  "49,955 distinct ConversionIds in ConversionId description",
+                                                                                  "43,469 distinct WalletIds in WalletId description",
+                                                                                  "EtoroFeePercentage distribution in element description",
+                                                                                  "CryptoId top-6 frequency in element description"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,93 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "SettlementsTransactions_SettlementTransaction-637239",
+    "elapsed_seconds":  121,
+    "exit_code":  null,
+    "cost_usd":  0.3761,
+    "input_tokens":  2,
+    "output_tokens":  5385,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "SettlementsTransactions_SettlementTransaction-637239",
+                    "weighted_score":  7.10,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  5,
+                                             "upstream_fidelity":  5,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "@Created",
+                                                  "upstream_quote":  "No upstream wiki exists in the bundle",
+                                                  "wiki_quote":  "DWH timestamp. (Tier 1 — FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 — no upstream wiki was available; should be Tier 3"
+                                              },
+                                              {
+                                                  "column":  "@Id",
+                                                  "upstream_quote":  "No upstream wiki exists in the bundle",
+                                                  "wiki_quote":  "PK. Unique GUID identifier for this settlement transaction record. Indexed by ClusteredIndex_ST_637239 and idx_637239_Id. Used as the primary JOIN key to sibling tables (RiskActions-236807, SecurityChecks-426253) and parent table (SettlementsTransactions-333243). (Tier 1 — FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 — writer-composed description attributed as upstream verbatim; no upstream wiki exists"
+                                              },
+                                              {
+                                                  "column":  "@SettlementsTransactions@Id-333243",
+                                                  "upstream_quote":  "No upstream wiki exists in the bundle",
+                                                  "wiki_quote":  "FK to parent. Links to the parent SettlementsTransactions-333243 container record. Contains identical GUID values to @Id in sampled data (1:1 relationship). Indexed by ClusteredIndex_ST_637239_c2. (Tier 1 — FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 — no upstream wiki was available; should be Tier 3"
+                                              },
+                                              {
+                                                  "column":  "Created",
+                                                  "upstream_quote":  "No upstream wiki exists in the bundle",
+                                                  "wiki_quote":  "Source timestamp. Timestamp of when the settlement record was created in the source system (FiatDwhDB.Tribe). Used as the incremental load watermark by SP_eMoney_Reconciliation_ETLs (WHERE @Created \u003e= @SettlementsTransactions_DATE). (Tier 1 — FiatDwhDB.Tribe.SettlementsTransactions_SettlementTransaction-637239)",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated Tier 1 — writer-composed description attributed as upstream verbatim; no upstream wiki exists"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "@Created, @Id, @SettlementsTransactions@Id-333243, Created",
+                                       "problem":  "All 4 columns tagged Tier 1 but the upstream bundle explicitly states \u0027NO UPSTREAM WIKI was resolvable for any source listed in the lineage.\u0027 These are writer-composed descriptions falsely attributed as verbatim upstream quotes. Must be re-tagged as Tier 3."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 Tier Legend",
+                                       "problem":  "Tier 1 legend reads \u0027Verbatim from upstream production wiki (FiatDwhDB.Tribe)\u0027 but no such wiki exists in the bundle. Legend is technically correct in definition but the writer violated it by tagging columns as Tier 1 anyway."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer claims \u00274 T1, 5 T2, 103 T3\u0027 — should be \u00270 T1, 5 T2, 107 T3\u0027 after correcting the fabricated Tier 1 assignments."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "review-needed sidecar Section 1",
+                                       "problem":  "Sidecar references \u0027upstream production wiki (Tribe.SettlementsTransactions_SettlementTransaction-637239.md)\u0027 as if it exists and documents 4 columns — but the bundle says NO upstream wiki was resolvable. Writer may have accessed a source outside the provided bundle."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.1",
+                                       "problem":  "Duplicate NCI documentation is accurate (ClusteredIndex_ST_637239 and idx_637239_Id both on @Id) — correctly identified but not a wiki deficiency."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag @Created, @Id, @SettlementsTransactions@Id-333243, and Created as Tier 3 — no upstream wiki was available in the bundle. (2) Update footer tier counts from \u00274 T1, 5 T2, 103 T3\u0027 to \u00270 T1, 5 T2, 107 T3\u0027. (3) Remove or annotate the Tier 1 legend row to indicate no Tier 1 columns exist for this table. (4) Keep all other content — business meaning, completeness, evidence, and shape are strong.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "TransactionClass: Domestic 94%, Interregional 5%, Regional \u003c1%, Unknown \u003c0.1%",
+                                                                                  "Row count: 2,942,573",
+                                                                                  "Date range: 2021-09-05 to 2026-04-25"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

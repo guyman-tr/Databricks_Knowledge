@@ -1,0 +1,65 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel",
+    "elapsed_seconds":  98,
+    "exit_code":  null,
+    "cost_usd":  0.2144,
+    "input_tokens":  2,
+    "output_tokens":  3693,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel",
+                    "weighted_score":  8.1,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  8,
+                                             "data_evidence":  5,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range provided for OccurredAt. Section 1 states ~295K rows but omits the temporal span of the snapshot (e.g., earliest/latest OccurredAt values)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Shape (Phase Gate)",
+                                       "problem":  "No explicit Phase Gate Checklist subsection. Footer claims \u0027Phases: 12/14\u0027 but does not identify which 2 phases were skipped, making data provenance claims unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Tier tag source attribution says \u0027Bronze partition path\u0027 which is vague compared to the fuller description in the element text. Minor consistency issue."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 (multiple columns)",
+                                       "problem":  "No NULL-rate analysis for GCID, OccurredAt, QuestionId, AnswerId, QuestionText. Only FreeText and threshold columns mention NULL behavior."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "QuestionId",
+                                       "problem":  "QuestionId mapping completeness uncertain. Review-needed sidecar flags QuestionId 28 and 110 as observed in data but absent from SP comment headers. Wiki includes them but cannot confirm the list is exhaustive."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (PASS): (1) Add date range to Section 1 — state the OccurredAt span observed in the current snapshot. (2) Add an explicit Phase Gate Checklist subsection with [x]/[ ] markers for all 14 phases. (3) Add NULL-rate observations for GCID, OccurredAt, QuestionId, and AnswerId columns.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~295K rows",
+                                                                                  "~54% False, ~46% True (MultipleSelection)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "unknown — footer says 12/14 but no Phase Gate Checklist section identifies which were skipped"
+                                                           ]
+                                    }
+                }
+}

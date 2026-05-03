@@ -1,0 +1,58 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_US_Stocks",
+    "elapsed_seconds":  76,
+    "exit_code":  null,
+    "cost_usd":  0.1708,
+    "input_tokens":  2,
+    "output_tokens":  2929,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_US_Stocks",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist block with [x] checkboxes for P1-P5. Footer uses summary format (Phases: 12/14) instead of individual phase status."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "Pipeline diagram is minimal — justified given no writer SP exists, but could note the unknown original load mechanism more explicitly."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Writer correctly identified dormancy and downstream risk (stale Is_US_Stock flag). No action needed — this is good defensive documentation."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 1,025 in Section 1",
+                                                                                  "Date range 2019-03-24 to 2019-11-24 in Section 1",
+                                                                                  "1,021 distinct InstrumentIDs in InstrumentID description",
+                                                                                  "1,018 distinct Names in Name description",
+                                                                                  "Duplicate IDs 5945-5948 in Section 3.4 and InstrumentID description"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

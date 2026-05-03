@@ -1,0 +1,67 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "SettlementsTransactions_RiskActions-236807",
+    "elapsed_seconds":  85,
+    "exit_code":  null,
+    "cost_usd":  0.2142,
+    "input_tokens":  2,
+    "output_tokens":  3317,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "SettlementsTransactions_RiskActions-236807",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id / idx_236807_Id",
+                                       "problem":  "Duplicate NCI indexes on @Id noted as gotcha but not explicitly flagged as a DBA action item in Section 3."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7, Query 7.3",
+                                       "problem":  "Bracket placement in JOIN syntax (ra.[@Id] = st.[@Id]) is inconsistent with bracket-free usage in queries 7.1 and 7.2."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1 / MarkTransactionAsSuspicious",
+                                       "problem":  "Specific count \u00271,179 rows\u0027 will become stale as Append pipeline adds data daily. Could note these are point-in-time observations."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.1",
+                                       "problem":  "Relationship described as \u00271:1 on @Id\u0027 but the actual FK column is @SettlementsTransactions_SettlementTransaction@Id-637239. They hold identical values but the semantic distinction matters."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Writer self-assessed quality at 7.0/10 which is conservative for the quality of work produced."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 2.87M in Section 1",
+                                                                                  "MarkTransactionAsSuspicious trigger count 1,179 in Section 2.1",
+                                                                                  "ChangeCardStatusToRisk trigger count 230 in Section 2.1",
+                                                                                  "Empty-string rates 1.8% and 34% in Sections 2.1 and 3.4"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

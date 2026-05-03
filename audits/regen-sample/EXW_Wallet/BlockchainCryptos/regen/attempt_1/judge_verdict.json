@@ -1,0 +1,95 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "BlockchainCryptos",
+    "elapsed_seconds":  135,
+    "exit_code":  null,
+    "cost_usd":  0.3951,
+    "input_tokens":  3,
+    "output_tokens":  6858,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "BlockchainCryptos",
+                    "weighted_score":  9.15,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Id",
+                                                  "upstream_quote":  "Unique blockchain network identifier. Manually assigned (not IDENTITY) to maintain stable IDs across environments. Referenced by Wallet.CryptoTypes, Wallet.Wallets, Wallet.WalletPool, and Wallet.BlockchainCryptoProviders as BlockchainCryptoId. Gaps exist in sequence (e.g., 5, 7 missing) - likely reserved IDs for blockchains that were planned but not launched.",
+                                                  "wiki_quote":  "Unique blockchain network identifier. Manually assigned (not IDENTITY) to maintain stable IDs across environments. Referenced by Wallet.CryptoTypes, Wallet.Wallets, Wallet.WalletPool, and Wallet.BlockchainCryptoProviders as BlockchainCryptoId. Gaps exist in sequence (e.g., 5, 7 missing) - likely reserved IDs for blockchains that were planned but not launched.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Name",
+                                                  "upstream_quote":  "Standard ticker symbol for the blockchain (e.g., BTC, ETH, XRP, SOL). Unique constraint enforced by IX_Wallet_BlockchainCryptos__Name. Used for human-readable identification and API parameter matching.",
+                                                  "wiki_quote":  "Standard ticker symbol for the blockchain (e.g., BTC, ETH, XRP, SOL). Unique constraint enforced by IX_Wallet_BlockchainCryptos__Name. Used for human-readable identification and API parameter matching.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "Timestamp when this blockchain was added to the system. Original blockchains (BTC, ETH, BCH, XRP, LTC, XLM) all share the same date (2019-06-11), indicating the initial platform launch batch. Newer chains have later dates tracking their go-live.",
+                                                  "wiki_quote":  "Timestamp when this blockchain was added to the system. Original blockchains (BTC, ETH, BCH, XRP, LTC, XLM) all share the same date (2019-06-11), indicating the initial platform launch batch. Newer chains have later dates tracking their go-live.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "CryptoCoinProviderId",
+                                                  "upstream_quote":  "Blockchain provider implementation used for this chain: 1=BitGoBlockchainProviderV2 (UTXO chains like BTC, LTC, BCH, also SOL, ADA, DOGE, TRX, ETC), 2=BitGoEthereumProviderV2 (ETH/ERC-20), 3=BitgoRippleProviderV2 (XRP), 4=BitGoStellarProviderV2 (XLM), 5=BitGoEOSProviderV2 (EOS). See [Crypto Coin Provider](../../_glossary.md#crypto-coin-provider). FK to Dictionary.CryptoCoinProviders.",
+                                                  "wiki_quote":  "Blockchain provider implementation used for this chain: 1=BitGoBlockchainProviderV2 (UTXO chains like BTC, LTC, BCH, also SOL, ADA, DOGE, TRX, ETC), 2=BitGoEthereumProviderV2 (ETH/ERC-20), 3=BitgoRippleProviderV2 (XRP), 4=BitGoStellarProviderV2 (XLM), 5=BitGoEOSProviderV2 (EOS). FK to Dictionary.CryptoCoinProviders.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped glossary cross-reference link \u0027See [Crypto Coin Provider](../../_glossary.md#crypto-coin-provider).\u0027 — navigation artifact only, no semantic content lost"
+                                              },
+                                              {
+                                                  "column":  "AddressPattern",
+                                                  "upstream_quote":  "Regex pattern for validating blockchain addresses before any transaction. Each blockchain has a unique pattern matching its address format. The default `(.*?)` accepts all strings (used when provider handles validation). Updated when chains add new address formats (e.g., Bitcoin SegWit).",
+                                                  "wiki_quote":  "Regex pattern for validating blockchain addresses before any transaction. Each blockchain has a unique pattern matching its address format. The default `(.*?)` accepts all strings (used when provider handles validation). Updated when chains add new address formats (e.g., Bitcoin SegWit).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CryptoCoinProviderId",
+                                       "problem":  "Dropped glossary cross-reference link \u0027See [Crypto Coin Provider](../../_glossary.md#crypto-coin-provider).\u0027 from upstream Tier 1 description. Navigation artifact only — no semantic loss."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7",
+                                       "problem":  "Sample queries are simple single-table SELECTs. The upstream wiki includes richer examples with JOINs to Dictionary.CryptoCoinProviders. Adding a JOIN example would be more useful for analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims \u0027Phases: 11/14\u0027 without specifying which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Harness bundle reported _no_upstream_found.txt but the writer correctly found and used the upstream wiki at CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.BlockchainCryptos.md independently. This is a harness lineage resolution gap, not a wiki quality issue."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count: 12",
+                                                                                  "Date range: 2019-06-11 to 2026-02-16",
+                                                                                  "Id gap analysis: 5, 7, 9-17, 20, 22, 24-26 missing"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "3 of 14 phases unspecified"
+                                                           ]
+                                    }
+                }
+}

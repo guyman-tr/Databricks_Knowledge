@@ -1,0 +1,766 @@
+[
+  {
+    "description": "Treasury Hub data Q&A space. Tables migrated 2026-04-30 to main.finance_hubs_stg with the data team's path-derived naming convention (catalog name = bi_output_<lowercased path with '/' replaced by '_'>). Curated for executive (CEO/CFO) and operational (Treasury team) questions on liquidity, concentration, term deposits, and counterparty exposure. All balances are USD-equivalent (column: usd_equivalent_balance). 'classification' = Clients | Corporate | Long-term Restricted. 'liquidity_bucket' = Overnight | QMMF | TermDeposit | RestrictedCash | PSP | CashInTransit. Reconciliation gold standard 31-Mar-2026: Clients $3,464,193,803.30 / Corporate $1,047,903,693.18 / Long-term Restricted $11,570,360.69.\n\nBuilt with Databricks AI Dev Kit",
+    "space_id": "01f1256c396113b682181c93915bba43",
+    "title": "Treasury Hub Q&A (FinanceCYTreasury)",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01f14469b87810f78ac2e068df8dbe62",
+    "title": "DEV - Customer Support Case Analytics",
+    "warehouse_id": "39b1e32f407ac813"
+  },
+  {
+    "space_id": "01f14465081b1ce5ad870d3d58da09ab",
+    "title": "Subscription Revenue Insights",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This space provides analytics on user notification events, enabling insights into notification delivery, engagement, and performance across devices, countries, and user segments.\n\n**Capabilities:**\n- Track notification delivery, opens, and user engagement by type, category, device, region, and time frame.\n- Analyze key metrics such as notifications planned, sent, received, opened, and user device/channel opt-ins.\n- Monitor notification performance trends and compare engagement across user segments, apps, or countries.\n- Identify notification types and categories that drive the highest engagement and action rates.\n\n**Limitations:**\n- Does not capture detailed notification message content or user sentiment.\n- Lacks direct integration with campaign attribution or downstream conversion metrics.\n- Cannot provide in-depth analysis of user behavioral context outside of notification interactions.",
+    "space_id": "01f1439c57a819a59c1a7f3eb069091c",
+    "title": "Notification Events Analytics",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f14394002815a288421fd85f36d595",
+    "title": "Investment Portfolio Analytics",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "This space enables in-depth analysis of eToro users' buying power, trading activity, and position exposures across products, combining customer, position, instrument, leverage, and liability data.\n\n**Capabilities:**\n- Identify and segment customers by buying power, regulatory regime, and loyalty tier (PlayerLevel)\n- Analyze customer trading activity and exposures, including position amounts, leverage, and P&L by asset class (stocks, crypto, futures, margin)\n- Assess liabilities, assets under management (AUM), bonus credits, and realizable equity at customer and portfolio level\n- Track instruments traded, instrument types, and regulatory compliance parameters such as leverage limits by country/entity\n- Evaluate detailed position-level metrics including commissions, hedge status, settlement type (CFD vs real), and copy-trading relationships\n- Measure portfolio risk and analyze copy-trading performance and impact\n\n**Limitations:**\n- No access to full PII or customer-sensitive data (only masked customer attributes available)\n- Cannot analyze intra-day trading activity; all metrics are daily snapshots\n- Historical thresholds for PlayerLevel (realized equity required) not available due to schema drift\n- Limited to the listed asset classes and dimensions; does not track non-trade financial products or off-platform activity",
+    "space_id": "01f1423bfe1913c1b305f00eafc9a479",
+    "title": "Buying Power - Rollout Plan Analysis",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "This space provides a comprehensive view of marketing campaigns performance, enabling analysis of spend, engagement, registrations, user actions, and conversions by date, region, and channel.\n\nCapabilities:\n\n- Analyze campaign spend, impressions, clicks, and conversion metrics (registrations, first-time deposits, verification levels)\n- Compare marketing performance across regions, platforms, and channels\n- Track user flow through the marketing funnel and identify first user actions by asset type (e.g., Crypto, Stocks, Copy Trading)\n- Monitor performance discrepancies between different data sources (AppsFlyer vs. Channel UI)\n\nLimitations:\n\n- Does not include granular user-level data or creative-level campaign details\n- No direct attribution of long-term user value or retention metrics\n- Lacks qualitative insights on campaign content or audience segments",
+    "space_id": "01f1418befa310f0a03ec500a2bdb587",
+    "title": "Marketing Campaigns Performance",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "OPS General Genie \u2014 the Operations team's self-service investigation tool for customer tickets and compliance queries.\n\nKey capabilities:\n\n\u2022 Customer 360: Full profiles including KYC status, verification levels, regulatory classification, club tier, equity, balance, and contact details.\n\n\u2022 eMoney Accounts: eMoney account details, IBAN/BIC, eligibility status, card info, and balance in USD.\n\n\n\u2022 eMoney Transactions: Transaction-level data with type, status, amounts (holder/local/USD), payment schema, risk rules, and account manager.\n\n\n\u2022 Risk Alerts: Sift scores and 61 alert types (AML, KYC, Risk, Cashouts, Tax, Trading) with resolution status and agent assignments.\n\n\n\u2022 Audit Trail: Back-office action history \u2014 who changed player status, set document status, blocked/unblocked users, and why.\n\n\n\u2022 Deposits: Transaction details by status, funding type, flow, BIN/MOP country, depot/gateway, and FTD flagging.\n\n\n\u2022 Withdrawals: Cashout details by status, withdrawal type, flow, and amounts.\n\n\n\u2022 Trading & Positions: Individual position details (open/closed, P&L, leverage, copy trading) and pre-aggregated trading summaries per customer and instrument.\n\n\n\u2022 Customer Logins: Login events with country-by-IP, proxy detection, device info, and country risk grouping.\n\n\n\u2022 Relations: Linked accounts by match reason (shared device, funding ID, name similarity).\n\n\n\u2022 KYC Answers: Questionnaire responses and free-text submissions.\n\n\n\u2022 Document Verification: Document uploads, classification, rejection reasons, vendor outcomes, and electronic verification status.\n\n\n\u2022 STS Audit: Session-level user operations with IP, device ID, and user agent for fraud investigation.\n\n\n\u2022 FTD Funnel: Registration-to-first-deposit journey tracking with verification milestones and conversion metrics.\n\n\n\u2022 Electronic Verification Cohort: Cohort-level electronic verification analysis.",
+    "space_id": "01f13c8fb28d1ea6a614c04b2176a96e",
+    "title": "OPS - General Genie",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f107201f5e18109cc73243ee2b53a5",
+    "title": "OPS - Electronic Verification",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "description": "Refer-a-Friend (RAF) program analysis space. Data source: main.etoro_kpi_stg.vw_raf_for_genie (one row per referral pair, 305K records). All monetary values are in USD. RafStatusName = 'RafGiven' means successful (~93%). RafStatusName can be comma-separated composite \u2014 use LIKE for substring matching.",
+    "space_id": "01f131c0593f15a78348669d6a09cc73",
+    "title": "Raf Genie test Noga",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f13e3361841740a14591cc76c52cb5",
+    "title": "Validation Event Analysis",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This space enables analysis of user behavior and engagement on the eToro feed by leveraging detailed Mixpanel event data, user profiles, trading positions, and content interaction logs.\n\n**Capabilities:**\n\n- Track key user actions (e.g., post reads, post creations, trades, engagement) over time using Mixpanel event data (filterable by date - etr\\_ymd is a index for that table and does not need to apply date format, you can directly filter it and event type (mp\\_event\\_name - type ).\n- Analyze user activity and retention by joining Mixpanel event data with customer demographics and trading behavior (e.g., by country, account type, trading volume).\n- Assess content performance and feed interactions(**Feed - Item Clicked**), such as post views (**Feed - Post Read**), starting feed reading (**Feed - View Default Feed**)\n\n**Limitations:**\n\n- Analysis is limited to available event properties and fields present in the Mixpanel schema; custom or missing fields cannot be generated.\n- Queries must always be filtered by date due to data volume; historical analysis is restricted unless proper filters are applied.\n- Certain behavioral or content data may be unavailable if not explicitly logged in events.\n- Real-time or streaming analytics may not be supported; analysis reflects ingested and processed data only.",
+    "space_id": "01f105b421e7187baa5e81595599f7f3",
+    "title": "Feed Analytics Genie",
+    "warehouse_id": "0576a5479bc95763"
+  },
+  {
+    "description": "ABtoro is eToro's internal system and app for analysing AB test results, allowing us to discern customers with scientific precision. It analyses over 300 metrics by dozens of user segments for each AB so we can know at a glance what happened. It embodies cutting-edge research and methodology to make sure we surpass competition. \n\nMain functionalities:\n\n- Allows saving ABs in one place with 300 metrics sliced by dozens of user segments with validity checks\n\n- Warns us if an AB creates damage to our balance sheet while it runs in real time\n\n- Covers whole AB cycle with experiment designer, easy test import, LLM summaries, AI opportunities discovery module, results commentary by responsible analysts\n\n- Determines our ability to impact customers across all past experiments and ask AI for our best results \n\nFor curated, at-a-glance, one-click results and more features such as AI opportunities, please go to the app: https://adb-dp-5142916747090026.6.azuredatabricks.net/driver-proxy/o/5142916747090026/0207-112048-ex43ovjs/7258/ \n\nThis genie can:\n\n- Tell you what experiments are being run, have been conducted and what is the summary of the results\n- What were the significant results you should base your decisions on and which user segments are responsible for driving this result\n- Can tell in real time if a test is damaging our main CVR metrics like CVR to Trade, CVR to deposit, etc.",
+    "space_id": "01f1380bddbf1f39918a6ff73748f082",
+    "title": "ABtoro Genie (AB Tests Results)",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f1398a93c8117a81df2bf5d24c4242",
+    "title": "Webinar Impact Analysis - Deposits & Trading",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This space provides comprehensive data for analyzing client AML (Anti-Money Laundering) risk classification, behavioral patterns, and documentation status across multiple reporting levels.\n\n**Capabilities:**\n- Assess AML risk levels (high, medium, low, null) for individual clients or aggregated groups, track changes in risk status, and evaluate distribution over time or by regulation/country.\n- Identify key compliance gaps such as missing documentation, rejected applications, or high-risk flags (e.g., PEP matches, sanction hits, third-party deposits, multiple accounts).\n- Monitor client onboarding and activity, detect common compliance issues like no logins, dormant accounts, and high-risk country interactions.\n- Analyze client segmentation by risk level, verification status, and special categories (e.g., eMoney clients, Platinum/Diamond tiers).\n\n**Limitations:**\n- Does not contain detailed transaction data or client-specific financial activity beyond compliance and risk indicators.\n- Lacks granular audit trails or workflow information for document review or compliance actions taken.\n- Cannot answer questions unrelated to AML risk or compliance status, such as marketing engagement or full customer lifecycle analytics.",
+    "space_id": "01f13403b01312c3b6e6e9f42de9a5c1",
+    "title": "Test - AML CMP ",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f138d29d521270b905b55c37b4b130",
+    "title": "Urban Push Notification Analytics",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This space provides a comprehensive view of customer trading positions, linked with rich customer profiles and instrument metadata, enabling detailed analysis of trading behavior, performance, and client segmentation on the eToro platform.\n\n**Capabilities:**\n- Analyze open and closed trading positions by customer, including traded instruments, trade sizes, leverage, hedging, PnL, fees, and settlement types.\n- Segment and profile customers by attributes such as regulatory classification, verification status, acquisition source, risk tier, deposit activity, and trading restrictions.\n- Explore performance and trading flows at instrument level, including asset class, exchange, industry, symbol, and instrument status.\n- Track and monitor key metrics such as active positions, trade volumes, realized/unrealized PnL, commissions, customer growth, and trading segmentation.\n- Investigate business questions such as: Who are the most active or profitable customers? What instruments drive the most trading or profit? How do trading behaviors or asset preferences differ by region, regulation, or customer type?\n\n**Limitations:**\n- No direct access to sensitive PII (all customer data is masked and anonymized).\n- Does not include detailed transaction-level execution data, order book depth, or real-time position changes (position data is end-of-day snapshots).\n- Limited for direct marketing attribution (only high-level affiliate/campaign data included).\n- Cannot analyze external portfolio holdings or non-eToro activity.",
+    "space_id": "01f138c3c0d718ba8e3f69c13b94a9d3",
+    "title": "ORACLE - Weekly Volume",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This space consolidates trading position details and customer KYC data to support compliance analysis and trading behavior insights.\n\n**Capabilities:**\n- Analyze trading activity with granular position details, including instrument metadata, open/close reasons, leverage, P&L, and partial close relationships.\n- Segment positions by regulation, asset type, hedge model, settlement status, or copy-trade hierarchy.\n- Track customer identification, regulatory requirements, and KYC/suitability responses over time, enabling compliance and customer risk reviews.\n- Link trading outcomes with customer profile and compliance status for deeper behavioral or regulatory analyses.\n\n**Limitations:**\n- Does not include real-time position updates or intraday trading events (data is snapshot-based).\n- Does not contain trading order book, price-time series, or detailed instrument fundamentals beyond supplied metadata.\n- No direct insight into customer account balances, financial transactions beyond position P&L, or non-KYC profile data.",
+    "space_id": "01f11b99d1711509b1beefae304c8705",
+    "title": "Compliance Genie - DEV",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f138b7445415b89624b7baab3b619a",
+    "title": "Employee Absence Management",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This space consolidates trading position details and customer KYC data to support compliance analysis and trading behavior insights.\n\n**Capabilities:**\n- Analyze trading activity with granular position details, including instrument metadata, open/close reasons, leverage, P&L, and partial close relationships.\n- Segment positions by regulation, asset type, hedge model, settlement status, or copy-trade hierarchy.\n- Track customer identification, regulatory requirements, and KYC/suitability responses over time, enabling compliance and customer risk reviews.\n- Link trading outcomes with customer profile and compliance status for deeper behavioral or regulatory analyses.\n\n**Limitations:**\n- Does not include real-time position updates or intraday trading events (data is snapshot-based).\n- Does not contain trading order book, price-time series, or detailed instrument fundamentals beyond supplied metadata.\n- No direct insight into customer account balances, financial transactions beyond position P&L, or non-KYC profile data.",
+    "space_id": "01f137f76a75126fb15b03341732911f",
+    "title": "PROD - Compliance Genie",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f138027211195bade445204dd73f87",
+    "title": "Customer Satisfaction Surveys",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f137fa01561a6cba257c4c967228bc",
+    "title": "Liquidity Providers Research",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f137e1e7b61d68a6e7f2064da02900",
+    "title": "Customer Messaging Analytics",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "space_id": "01f13712cf8516878dbc9663f5f73eb7",
+    "title": "eToro DDR - dor dev",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "description": "Customer KPI analysis space for exploring revenue, deposits/withdrawals, AUM, and customer attributes across eToro's platform. Supports daily granular analysis with segmentation by regulation, country, club tier, instrument type, and more.",
+    "space_id": "01f130f7ce381418bcccd51a56e9e4f5",
+    "title": "DDR dev dor",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01f134a6e09d11089d7e6133b915d7c5",
+    "title": "Financial Instruments Overview",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This space provides detailed insights into daily trading activity on the eToro platform, capturing every customer position open and close event alongside comprehensive instrument metadata for analysis.\n\n**Capabilities:**\n- Analyze trading activity by customer, instrument, date, country, regulation, account type, and more, including segmentation by player tier, copy trading, CFD vs. real asset, leverage, and special flags (e.g., airdrop, IBAN, eMoney).\n- Track key metrics such as number of positions opened/closed, trade volume and units, commission, ticket fees, and other trade-specific attributes.\n- Enrich trade event analysis with deep instrument attributes (industry, sector, exchange, market cap, symbol, classification, and trade configuration), enabling granular performance, risk, and behavior breakdowns.\n- Understand regulatory, geographic, and marketing region distributions of trading activity.\n\n**Limitations:**\n- Cannot analyze real-time trade activity (data is refreshed daily; no intraday granularity).\n- Lacks individual trade lifecycle details beyond daily aggregate open/close events.\n- Does not provide direct access to non-trading activities (like deposits/withdrawals) or customer personal data beyond trading-relevant dimensions.\n- Certain financial and operational fields are subject to ETL processing choices and may not reflect the full set of live trading system attributes.",
+    "space_id": "01f133292663122ba7a16a3f7eedb215",
+    "title": "Low Touch Trading",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f12f4e42bf122284dcc8de0eba4e29",
+    "title": "Churn Win-Back Campaign",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This space provides comprehensive insight into the Popular Investor (PI) program and portfolio eligibility, enabling analysis of user behavior, trading performance, social activity, and program status across eToro\u2019s platform.\n\n**Capabilities:**\n- Track and analyze PI program participation, user demographics, trading history, risk scores, and account health to assess eligibility, tier progression, and performance trends.\n- Evaluate trading strategies, portfolio compositions, and position-level PnL with details on instruments, asset classes, and leverage.\n- Monitor user engagement, social feed activity, and manager assignments to understand factors affecting user retention and PI status changes.\n- Segment or filter users by geography, regulation, account type, deposit activity, and other attributes for detailed cohort or regional analysis.\n\n**Limitations:**\n- Does not provide real-time trading data or current market prices.\n- Lacks granular trade execution details and direct financial instrument analytics beyond user-level aggregates.\n- Limited historical social engagement data due to partial or deprecated columns.\n- Does not include qualitative user feedback or reasons for PI rejection/removal beyond available status fields.",
+    "space_id": "01f12c2d3d8f1e4ea52cf9b4224b7152",
+    "title": "PI-SP Portfolio & Eligibility",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f1291bcd971e928ef3268355147f22",
+    "title": "Financial Trading and Execution Analytics",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This Genie space supports analysis across eMoney adoption, trading activity, card usage, and Open Banking deposits, with customer attributes always reflecting their state at the time of the activity.\n\nScope Overview\n\nTrading \u2013 LC/TP Positions\nAnalyze number of positions and total amount by CID and date, including club level, country, asset type, base currency, CFD/non-CFD indication, open/close event, account type, and whether the position was opened from LC or TP.\n\nOpen Banking Deposits\nTrack deposit attempts by CID, provider (Volt/Tink), date, and status (success/failed).\n\nCard Transactions & Status\nAnalyze card transactions by type, currency, and amount, as well as card order, activation, and expiration dates.\n\nCustomer Lifecycle in eMoney\nIncludes eMoney account creation date, FMI, FMO, and first five actions in the account.\n\nAdditional attributes available across datasets: country, club, regulation, region, verification level, and account type.\n\n\ud83d\udc49 Please always include a clear timeframe (date, month, or range) when asking questions \u2014 results are time-dependent.",
+    "space_id": "01f0c51e5a4a1506bb34d4751918b4d2",
+    "title": "eMoney Adoption & Trading",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f125cd42af12d4bcc267b42f87ab21",
+    "title": "Customer AML Compliance Data",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f122020cb3178380de2efa0b990279",
+    "title": "UK BA space [WIP]",
+    "warehouse_id": "fcec103c55a4e055"
+  },
+  {
+    "space_id": "01f122c65f7f1eb2b714de163ec1a1d1",
+    "title": "Premier Customer Trading Analysis",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f1222508af1e0088e874f397286707",
+    "title": "New Space (2)",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f1222490081ef99650818fccc7e94c",
+    "title": "Customer Account and Deposit Analytics",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f1220c3154166185c3a31f3b5f4b63",
+    "title": "New Space (1)",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f1220d412d10e0827e76f15dbe785d",
+    "title": "Customer Compliance and Profile",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f1220ba7721b93881c732cfc2579eb",
+    "title": "Customer Support Case Analytics",
+    "warehouse_id": "39b1e32f407ac813"
+  },
+  {
+    "space_id": "01f11e0d038417b2978e44a176c2a8a4",
+    "title": "Trade Summary Analytics",
+    "warehouse_id": "43d35565e5c2aa07"
+  },
+  {
+    "space_id": "01f11d42a1e811a09a48ccaa06ce8816",
+    "title": "Daily Financial Interest Analytics",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f11d415503192da75ecce62b1f96d3",
+    "title": "find_PI",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "This space provides insight into eToro\u2019s copy trading ecosystem, enabling analysis of money flows, user behavior, and performance of Popular Investors (PIs) and their copiers over time.\n\n**Capabilities:**\n- Track and analyze copy trading actions, including when users start, add to, remove from, or stop copying a PI or smart portfolio.\n- Monitor key metrics at the PI level such as assets under copy (AUC), number of copiers, portfolio performance, user demographics, risk scores, and trading permissions.\n- Understand money movement within copy relationships (e.g., new copy, incremental deposits/withdrawals, detaching copies).\n- Segment and report by timeframes (day, week, month, quarter, year), region, account status, and club tier for both PIs and copiers.\n- Identify trends in user retention, behavior, and portfolio strategies via status changes, trading activity, and risk profiles.\n\n**Limitations:**\n- Does not provide individual trade-level details or specific asset transaction logs per copier.\n- Cannot analyze non-copy (manual) trading activity outside the context of the copy trading program.\n- Real-time intraday analysis is not supported; data is structured for daily or period-end snapshots.\n- Some fields may rely on derived or mapped values (e.g., region, regulation) and require updates for changes in business logic.",
+    "space_id": "01f119f87031113585b2cf7d78c15744",
+    "title": "etoro_copy",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "space_id": "01f118a536541c2689d08f0d824fb36d",
+    "title": "(Clone) eToro DDR TESTONLY",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "This space brings together customer, investment, and performance data to analyze customer behavior, investment trends, and the impact of \u201cguru\u201d investors on the platform.\n\n**Capabilities:**\n- Analyze customer profiles, investment histories, and account characteristics across various dimensions such as country, account type, verification status, and risk profile.\n- Track customer actions and investment outcomes, including cash flows, PnL (profit and loss), deposits, and withdrawals over time.\n- Assess the performance and influence of \u201cguru\u201d investors (users being copied), including their historical status, the number of copiers, investment amounts, and profitability.\n- Compare investment instruments using GuruFocus scores to evaluate fundamental quality and market appeal.\n- Segment customers by affiliation, campaign, regulation, and account status for targeted business insights.\n- Study trends in customer acquisition, engagement, and retention.\n\n**Limitations:**\n- Does not include real-time or streaming data; analysis is limited to historical snapshots.\n- No detailed instrument-level trading/order book data beyond aggregated investment and customer actions.\n- Lacks direct customer sentiment or qualitative feedback data.\n- Does not provide detailed financial statement data for instruments\u2014only summary scores and rankings from GuruFocus.\n- External data beyond GuruFocus is not integrated.",
+    "space_id": "01f117decb9613aa9e808e3edea9a125",
+    "title": "Investment & Customer Analytics",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f117de1efa18389dcab44bc63ec8f2",
+    "title": "Customer Data and Activity Analysis",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f117af9e0b14b492adf37aa0d88311",
+    "title": "Customer Profile and Management",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f112f8be471673b7071990bab21849",
+    "title": "New Space",
+    "warehouse_id": "0576a5479bc95763"
+  },
+  {
+    "space_id": "01f1124a400f1059a36b5bc92ae7800a",
+    "title": "Customer Segmentation mail",
+    "warehouse_id": "ab714d381d90649e"
+  },
+  {
+    "description": "This space provides a comprehensive view of customer feedback and behavior, enabling analysis of sentiment, issues, and engagement trends across multiple customer touchpoints.\n\n**Capabilities:**\n- Analyze customer sentiment and feedback over time, by language, or by product/channel.\n- Identify common issues or recurring themes in customer service conversations, including chatbot interactions.\n- Link customer feedback to onboarding, demographic, and engagement data to uncover drivers of satisfaction or dissatisfaction.\n- Track key customer milestones (e.g., first deposit, registration) alongside feedback to understand the customer journey.\n- Segment feedback and sentiment by customer attributes such as country, language, verification status, and activity history.\n\n**Limitations:**\n- Does not capture feedback or sentiment outside the captured channels (e.g., social media or phone calls not logged in these systems).\n- Lacks detailed product usage analytics\u2014focuses on feedback, sentiment, and onboarding/engagement milestones.\n- Advanced text analytics or topic modeling beyond stored fields would require external tools.",
+    "space_id": "01f1118c0f38118a8b9361c02b3f7409",
+    "title": "Voice Of The Customer",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "space_id": "01f11153b1511fdaaf74137069005bfe",
+    "title": "eToro DDR - Jan",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f10ee4b48e1bde9d62c905c9c37496",
+    "title": "etoro_club",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f10dbaac661f67b23e5c624ddd1d19",
+    "title": "Application Cost Tracking(DBA)",
+    "warehouse_id": "39b1e32f407ac813"
+  },
+  {
+    "space_id": "01f10cbd30f11f78bb53d30de1b08437",
+    "title": "Customer Segmentation",
+    "warehouse_id": "ab714d381d90649e"
+  },
+  {
+    "space_id": "01f10cb7eb7715dcb1283eb51007d0fe",
+    "title": "New Space (1)",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f10cb794561c71844b60ecb8b81362",
+    "title": "New Space",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f10c0735eb1e23b45a22b7e9c898c5",
+    "title": "New Space",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "description": "This space provides comprehensive analytics on eToro trading activity, allowing for detailed examination of instrument performance, user behavior, positions, and regulatory compliance across multiple dimensions.\n\n**Capabilities:**\n- Analyze trading activity (trades, volume, positions) by asset type, instrument, regulation, region, and time period.\n- Identify top instruments, volume changes, revenue, and active user trends, with comparisons versus 7-day and 30-day averages.\n- Track new instruments added to the platform and assess user engagement (manual trades, unique clients, account manager activity).\n- Examine futures metrics (including lots and multipliers), instrument metadata, groupings, and internal vs. external clubs.\n- Segment performance and P&L by regulation, exchange, MiFID status, and region.\n- Filter results to exclude copy trades, airdrops, and internal accounts; analyze active positions and client types (retail/professional).\n\n**Limitations:**\n- Does not provide real-time data (uses end-of-day snapshots).\n- Lacks individual order book details or granular trade execution timelines.\n- Excludes certain hedge server instruments (e.g., HS 35) by default.\n- Not designed for portfolio-level risk analysis or client-specific case investigations beyond trading metrics.\n- Some advanced calculations (e.g., slippage) may require external data or predefined report queries.",
+    "space_id": "01f1001f16b117bb948db14cb26f8928",
+    "title": "PROD - etoro_trading_ai",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This space tracks the full onboarding journey of new clients from registration through verification and their first deposit, enabling analysis of the registration-to-first-time-deposit  and first action funnel.\n\n**Capabilities:**\n\n- Analyze client progression through each onboarding and verification stage (registration, KYC steps, approval checks, FTD).\n- Measure funnel conversion rates, drop-offs, and timing between steps.\n- Segment and compare client behaviors by acquisition channel, country, regulation, marketing region, age, and investor type.\n- Track KYC compliance, key verification actions, deposit events, first trading actions, and funding types.\n- Cohort analysis based on registration date and standardized country groupings.\n\n**Limitations:**\n\n- Cannot analyze post-deposit trading behavior in depth beyond first action or instrument.\n- Does not include detailed transaction or portfolio history after onboarding.\n- Limited historical marketing attribution beyond provided banners and channels.\n- Some exclusion flags may limit ability to see all registered users (filtered users marked as excluded).",
+    "space_id": "01f1003cd92b1430826100f723a359d2",
+    "title": "PROD - Registration to FTD",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f1072f0d4f10848e644b23888f9621",
+    "title": "New Space",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f105b1f4f51422ab4df907a9a71e5a",
+    "title": "New Space",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f10589afce155fa231b00e5bd62525",
+    "title": "Keti Test Space",
+    "warehouse_id": "0576a5479bc95763"
+  },
+  {
+    "space_id": "01f0eba696c21d888fbd9fbfb82ee322",
+    "title": "Registration to FTD for mail",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "This Genie provides insights into the AML KPIs",
+    "space_id": "01f104ece26a11dbbd640243d7336b12",
+    "title": "AML Insights Genie",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f10280c7ea10e8862ce6bd5d45bd6c",
+    "title": "DBA Genie",
+    "warehouse_id": "0576a5479bc95763"
+  },
+  {
+    "description": "Main source for the Data Room - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms",
+    "space_id": "01f0cf5a8c741eb09f1082f9f8736b82",
+    "title": "eToro eMoney - MIMO",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f100f036831e4b8f2f839eca630264",
+    "title": "New Space",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f0f9bbcb1b1216b5620ff201610aaa",
+    "title": "Test Registration to FTD",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "Operational analysis of document uploads and verification outcomes.\nUse this Genie to analyse document processing (manual vs automated), rejection patterns, processing times, resubmissions, and verification context at the time of upload.\nResults are document-level unless explicitly stated otherwise.",
+    "space_id": "01f0f77496571e68a9f115149bcc48d9",
+    "title": "OPS  - Documents & Verification",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "Use this Genie to explore registrations, verification progress, conversion to deposit, and funnel performance across countries and time periods.",
+    "space_id": "01f0f5e75c2112178fb9639f4212aba1",
+    "title": "OPS - Registrations Funnel",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01f0e49f7e741c1a8de8ee1773559739",
+    "title": "eToro Customer Support",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "Analyze Salesforce contact activity by Account Manager and evaluate customer responses after contact using customer profile and activity data.",
+    "space_id": "01f0ebab1a09124d944c484672a2bb5d",
+    "title": "eToro Customer Facing",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01f0eae90bee1751b50adc8306c8f94a",
+    "title": "GlobalDeposit Space View",
+    "warehouse_id": "0576a5479bc95763"
+  },
+  {
+    "space_id": "01f0ba2facfe1ef2a1ec824a19c85505",
+    "title": "Customer Radar PoC",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f0e74540661ef1bfc44afc441ba1fa",
+    "title": "Billing and Jobs",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f0e64eca311e49b52b1474a27aa48a",
+    "title": "GlobalFTD Space View",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f0e1820cf410489b45b57a16f14e60",
+    "title": "GlobalFTD Space",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "description": "Only Billing data for testing data Quant and Qual",
+    "space_id": "01f0d5b9bcae19a1afac765e5cf066d4",
+    "title": "billing_test_quality and source",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f0d537940b11a9902a409b8d8d0195",
+    "title": "eMoney Clients Attributes & Txs (Test)",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "space_id": "01f0d06a1f251080b0fe28481cf203e4",
+    "title": "Live Acquisition Insights",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01f0cdd8c4031e03b9ad850fcf0ca73a",
+    "title": "eToro acquistion funnel analysis",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f0c863b8ba153f96432d9e39911cbf",
+    "title": "AI Usage",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "This Genie Space lets you explore various Customer-related measures, such as:\n-Segmentation (as of yesterday): Country/Region, Club tier, Regulation, Seniority, Channel/Sub-Channel, Affiliate details, Account Manager\n-Key Dates: Registration date, FTD date, First Pos Open Date, Verification levels dates\n-First/Last Activity Dates: Login, Open Position (Manual/Mirror), Deposit, Cashout\n-Indications (as of yesterday): IsFunded, IsActive (overall/ by asset type), IsOTD, IsPro\n-Financial metrics snapshot (as of yesterday): Acc Revenue (overall/ by asset type), Equity (overall/ by asset type), Realized Equity, Acc PnL (overall/ by asset type), AUM, Credit, Acc Deposits/CO/CO Fee/Net Deposits, Acc Withdrawal to Wallet\nAnd more...\n\n*These measures can be aggregated and analyzed over customer segments.\n*If needed, you can upload a file with a user list (including a CID/CGIC column) using the 'Attach a file' button to obtain data for your specific list. In your request, mention if you uploaded CID or GCID.\n*If something looks off in Genie\u2019s response, please use the 'Review Request' option.",
+    "space_id": "01f081a9d0561054a9e353e3369a56b8",
+    "title": "eToro Customer Current Snapshot",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01f0c520a83912479875290faad56803",
+    "title": "Generic Pipeline - Table Usage",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01f0c48591b71d6886b232094b62d68e",
+    "title": "eMoney Test",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "space_id": "01f0c467d6381917a8e73b673e580325",
+    "title": "MixPanel test",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01f0c44de7681512ac12be13537efbcb",
+    "title": "Customer Radar V2 (Minimized Dataset)",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f0c3b615a51178a0ac4a9267bf94ab",
+    "title": "Crypto Finance",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01f0c38d864d10be9b493dfec1f100eb",
+    "title": "Breaches Investigation Bot",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "space_id": "01f0beca321f14bba3158e0c020643a4",
+    "title": "eToro DDR",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f0bdf764c411ada105c7f4ba82cb79",
+    "title": "Torri",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "description": "The data detective of the ML Solution Team",
+    "space_id": "01f0bd7496e61277b452c1b8c1672041",
+    "title": "Data Detective",
+    "warehouse_id": "21308b53c0225a36"
+  },
+  {
+    "space_id": "01f0b9848eee109e883469fd3139e493",
+    "title": "Solutions Analysis Co pilot",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f096cd65ef1c2dbdf1d593ec0bc3d9",
+    "title": "ido ezra space",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "description": "This Genie Space lets you explore trading activity data on Asset/Users level:\n\n**WHEN ASKING ABOUT ASSETS, USE ACCURATE ASSET NAME!**\n\n*Segmentation\n- Asset/Asset Type\n- Customer data\n\n*Key Dates: \n- Open Trade Date\n- Close Trade Date \n- First Dates (Registration date, FTD date)\n\n*Metrics (Manual/Mirror,Real/CFD)\n- Total trades / Open Trades / Close Trades\n- Invested Amount open / Closed",
+    "space_id": "01f0a282c0e21f16ad0e6c9fcbcb04d7",
+    "title": "eToro Trades",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01f0a5b496b91318b35f56c60fd1f3c6",
+    "title": "New Space",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01f0a3d5d2e7163e9e63549889eb6c9c",
+    "title": "New Space (2)",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f092e17ee2107fa66a9ef29845b965",
+    "title": "Crypto ops",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This Genie answers all the Acquisition Funnel related questions.\n- Customer level data.\n- Includes all acquisition funnel steps- from Reg to FTD (Reg, V1, V2, V3, EV, PhoneVerification, EmailVerification, POA/POI, Screening, FTD).\n- Can show aggregated data or specific users' data (by uploading a list).\n- Can show Cohort view (e.g. V1toV2 same week)/ Snapshot view.\n- Absolute numbers/CVR trend over time.\n\n\n",
+    "space_id": "01f0898c08461af599355bee6e1177a8",
+    "title": "eToro Marketing Acquisition",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f092d3fdc716e9a734f2d1f9ca787c",
+    "title": "New Space",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f092d3b7d3120f889da5ebede3b4c2",
+    "title": "New Space",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f09200a8f11ce7b03d1bf87f2c23cc",
+    "title": "New Space",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f08ef1ebf51141be31a54f17f65e5b",
+    "title": "New Space (1)",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f08ee55d6e1a6287e955f75b59a91d",
+    "title": "New Space",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f08d955d2d116fb8651051133ccd70",
+    "title": "T3 - Hackathon",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "Welcome!\n\nDiscover your campaign data with AI-powered, self-service analytics.\n\nTrack and analyze key KPIs - such as open, click, and bounce rates - and easily filter or drill down across campaign and user dimensions like equity, channels, and regions. Gain actionable insights in seconds, without the need for manual reporting.",
+    "space_id": "01f08bcaeeed1607b8e4fc0b69790a23",
+    "title": "Marketing Campaigns",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "space_id": "01f07770201d193aba13d57fbea1ea1c",
+    "title": "etoro_club_room_offers",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f06879c85d1047b176e03c4842987a",
+    "title": "Table Size",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "description": "This space answers all club related questions.",
+    "space_id": "01f0615112211aa8a2b6b3e59ddd4c5a",
+    "title": "etoro_club_room",
+    "warehouse_id": "208214768b0e0308"
+  },
+  {
+    "space_id": "01f05b10393a185ebf4b2f240cd70cb2",
+    "title": "BO Audit",
+    "warehouse_id": "39b1e32f407ac813"
+  },
+  {
+    "description": "This space provides a comprehensive view of streaming profit and loss (PnL) for dealing accounts and customers, enabling analysis of both realized and unrealized PnL over time across instruments and hedge servers.\n\n**Capabilities:**\n- Track and analyze realized and unrealized PnL by instrument, hedge server, and additional time dimensions (hourly, daily, weekly).\n- Calculate net PnL changes over time or compare PnL snapshots between different periods.\n- Assess trading metrics such as commissions, total external fees, open positions, and conversion rates.\n- Evaluate PnL for specific liquidity accounts and price rates.\n\n**Limitations:**\n- Does not include detailed trade-by-trade breakdowns or customer-level identifiers beyond instrument and hedge server.\n- Lacks direct integration with external market data or order book details.\n- Unable to analyze non-PnL-related risk, exposure, or portfolio aggregation outside the available fields.",
+    "space_id": "01f024d2ad241a89abec5a4145c08839",
+    "title": "dealing streaming",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f04442ea2e1c32a79659a607e7c11e",
+    "title": "Data Analyst Assistant",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "space_id": "01f0407afa161723834ea2f9807207f7",
+    "title": "SQL Server Errorlog Analysis",
+    "warehouse_id": "ab714d381d90649e"
+  },
+  {
+    "space_id": "01f02f2723451cadaa533a0b1a87effb",
+    "title": "Trading AI Agents",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f02076867c1df38dba2e7baebac54d",
+    "title": "Unity Catalog",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01f00fdbb4f11db2a8723dfa670be9c8",
+    "title": "US movers",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f00ec64ab01d70b2a0da57a00c8605",
+    "title": "Raw Pricing and Crypto",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f00e66deb11b45bb4d9da9521c04d7",
+    "title": "New Space",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "Multiple Tables",
+    "space_id": "01f004a9fe1d1b3398481abe4b2295bf",
+    "title": "Multiple Tables",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f00b0879fa1fca92be250d13d30564",
+    "title": "HedgeUnits Sais",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f00b086d9f1df3a6a907c4f5ba6eab",
+    "title": "failures",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f00b0862581d46aba2d013b4ac8096",
+    "title": "EMS Order",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f00644648716f7bb8dd99bd6d31f22",
+    "title": "ExecutionLog & Hedge.EMSOrders",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "This Genie Space includes raw copy-trading data indicating which client is copying which other client on eToro. It contains both current and historical state tables, and queries should explicitly differentiate between the two to ensure accurate analysis.",
+    "space_id": "01f0055486e018e7aef116cb175276eb",
+    "title": "etoro copy activity",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": "Clients failures",
+    "space_id": "01f004df62ff1693b485342658da940e",
+    "title": "History.PositionFail",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "space_id": "01f004b146fe1ce88d974a57d9c4f9ed",
+    "title": "Slippage Table",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "Data that comes from streams of posts\n",
+    "space_id": "01efd96e83811afda1f9ad84bb9a89e4",
+    "title": "Feed",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01efa5de15f11add9c8e460ed88f0df9",
+    "title": "OCT",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01ef9c08aea118e899a2cec44db931b5",
+    "title": "positions data",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "space_id": "01ef7c0dc6591d859a5b76a78951ddf6",
+    "title": "examples on system",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "description": "Daily Incoming of Cases and Chats",
+    "space_id": "01ef7a3a203f15bb9854e99951f9f7c3",
+    "title": "CS Daily Incoming",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "space_id": "01ef5a3d2e5a14abafcc1938e0391fe2",
+    "title": "Local Currency",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01eeaeed57b41c6ca0f4119606355809",
+    "title": "etoro_trading",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "Customer, Deposit and withdrawl data",
+    "space_id": "01ef2e6b2f3f16d08fe4355da09a0933",
+    "title": "Billing",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "description": "This space should be able to answer questions regarding main.dwh tables and Mixpanel Silver Data.\nSeems not to be working while Mixpanel Data is Included",
+    "space_id": "01ef2e4a84bf18b9921c136daa39139e",
+    "title": "Product Analytics",
+    "warehouse_id": "0576a5479bc95763"
+  },
+  {
+    "space_id": "01eef6741b6911ffac1a5d6ba95a6c95",
+    "title": "etoro_club",
+    "warehouse_id": "5f6c5302def2ad2c"
+  },
+  {
+    "description": " ",
+    "space_id": "01eee432f55a11379019b91b46b84346",
+    "title": "Customer activity - Flow",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "space_id": "01eed182f986192686f4104b3c47f4d6",
+    "title": "dwh data",
+    "warehouse_id": "3b4776061663c956"
+  },
+  {
+    "space_id": "01eecfdc6e121d3a9c1551c473de87f5",
+    "title": "Dealing Investigation Tool",
+    "warehouse_id": "db12d2f50b050305"
+  },
+  {
+    "description": "Value and Trend of VaR,\nTop contributors of VaR, NOP, NOP Hedged, NOP exposure, Leverage, Concentration(value and trend)",
+    "space_id": "01eeb60bf5421e2ca8466b973b81b994",
+    "title": "etoro_risk",
+    "warehouse_id": "4149944dda87a462"
+  },
+  {
+    "space_id": "01eeaf099b87164ba7f7486c8ca0ddfc",
+    "title": "Marketing + Finance",
+    "warehouse_id": "96cd390a7e172342"
+  },
+  {
+    "description": "This space provides a comprehensive view of marketing notification performance across regions, device types, and timeframes to support data-driven campaign optimization.\n\n**Capabilities:**  \n- Analyze planned, sent, received, and opened notification metrics by date, country, region, club, device type (iOS/Android), notification type, and category.\n- Track notification engagement trends and compare performance across aggregation levels and time periods (day, month, year).\n- Support segmentation and targeting strategies by filtering on device type, geography, regulation, or notification characteristics.\n\n**Limitations:**  \n- Individual user- or customer-level analysis is restricted to records with valid user identifiers (excludes null or '0').\n- No direct access to raw device data\u2014use the gold_devices_scd table for device details when needed.\n- Insights are limited to the dimensions and metrics available; demographic or channel-specific breakdowns are not included.",
+    "space_id": "01eeafad7e3512b8a13b42a700a05d86",
+    "title": "Marketing Notifications",
+    "warehouse_id": "6f72189f967b42a9"
+  },
+  {
+    "description": "This Genie Space contains raw data including a customer table with client details, a positions table with both open and closed positions and multiple attributes, and an instruments table covering both tradable and non-tradable assets.\n ",
+    "space_id": "01ee9e3a900a1db1b5db5f4f5e2fd95f",
+    "title": "etoro_main",
+    "warehouse_id": "5f6c5302def2ad2c"
+  }
+]

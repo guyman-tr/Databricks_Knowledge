@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "Authorizes_Authorize-312243",
+    "elapsed_seconds":  107,
+    "exit_code":  null,
+    "cost_usd":  0.3159,
+    "input_tokens":  2,
+    "output_tokens":  4638,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "Authorizes_Authorize-312243",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "States \u0027All 80 columns\u0027 but DDL and Elements table both have 81 column definitions. Off-by-one factual error."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x] markers. Phase completion is only embedded in the footer line (\u0027Phases: 11/14\u0027)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "Claims \u0027except metadata columns\u0027 without listing which columns are metadata. Imprecise — reader must scan all 81 elements to identify the 3 non-varchar columns."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3 / DDL",
+                                       "problem":  "Two redundant NCIs on @Id (ClusteredIndex_Authorizes_312243 and idx_312243_Id) are documented in the property table but not flagged as a redundancy concern in Query Advisory."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TokenizedRequest",
+                                       "problem":  "Description is the thinnest of all 81 elements — no format, length, or domain context for \u0027tokenization event\u0027. Acceptable for Tier 3 but weakest entry."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Change \u0027All 80 columns\u0027 to \u0027All 81 columns\u0027 in Section 1. (2) Add an explicit Phase Gate Checklist subsection with [x]/[ ] markers for each phase. (3) Clarify which columns are \u0027metadata columns\u0027 (the 3 non-varchar: @Created, @WorkDate, SynapseUpdateDate, partition_date, Created — actually 5 non-varchar columns).",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,74 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots_BankAccounts-83854",
+    "elapsed_seconds":  150,
+    "exit_code":  null,
+    "cost_usd":  0.4925,
+    "input_tokens":  6,
+    "output_tokens":  7406,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots_BankAccounts-83854",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "@Id",
+                                                  "upstream_quote":  "PK. Referenced by BankAccount-341626.",
+                                                  "wiki_quote":  "PK. Referenced by BankAccount-341626. Distribution key and clustered index. Contains GUIDs (e.g. \"6381bdf9-108b-4554-b8a2-bd94f1ad2fad\"). In sampled data, always equals @CardsSnapshots_Account@Id-513255.",
+                                                  "match":  "YES",
+                                                  "loss":  "None — upstream text preserved verbatim at start; Synapse-specific context appended"
+                                              },
+                                              {
+                                                  "column":  "Created",
+                                                  "upstream_quote":  "Source timestamp.",
+                                                  "wiki_quote":  "Source timestamp. Used by SP_eMoney_Reconciliation_ETLs as part of the incremental load watermark (MAX(Created)) in the card snapshot reconciliation pipeline.",
+                                                  "match":  "YES",
+                                                  "loss":  "None — upstream text preserved verbatim at start; SP consumption context appended"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 11/14\u0027 but no explicit Phase Gate Checklist section enumerates which phases were completed, making it impossible to audit P2/P3 data-gathering claims."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Descriptions correctly note population for 2023-12 only, but don\u0027t confirm no downstream UC consumers depend on these fields being populated."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Harness bundle resolver failed to find Tribe.CardsSnapshots_BankAccounts-83854.md at knowledge/ProdSchemas/BankingDBs/FiatDwhDB/Wiki/Tribe/Tables/. Writer correctly found it independently. Harness resolver should be updated to search BankingDBs paths."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "@CardsSnapshots_Account@Id-513255",
+                                       "problem":  "Tier 3 is correct — production has @CardsSnapshots@Id-890718 (FK to root) while Synapse has @CardsSnapshots_Account@Id-513255 (FK to intermediate Account-513255). Structural divergence well-documented in review-needed sidecar."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 86.4M and date range 2023-12-20 to 2026-04-26 in Section 1",
+                                                                                  "1:1 relationship between @Id and @CardsSnapshots_Account@Id-513255 noted from sampled data",
+                                                                                  "etr_* population pattern (2023-12 only, empty 2024+) from data observation"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

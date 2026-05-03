@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "SentTransactionStatuses",
+    "elapsed_seconds":  84,
+    "exit_code":  null,
+    "cost_usd":  0.1921,
+    "input_tokens":  2,
+    "output_tokens":  3343,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "SentTransactionStatuses",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims 13/14 phases but verification is implicit."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SynapseUpdateDate",
+                                       "problem":  "Description says \u0027mostly NULL for older rows\u0027 but does not include the earliest non-NULL date (2023-12-12) that the review-needed sidecar identifies."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Id",
+                                       "problem":  "Described as \u0027Primary key\u0027 and \u0027Auto-incrementing surrogate\u0027 but DDL defines it as bigint NULL. Should note the NULL is a Synapse Generic Pipeline artifact."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "States SP_EXW_C2F_E2E uses PARTITION BY st.Id (SentTransactions.Id), but Section 1 summary says \u0027partitioned by SentTransactionId\u0027 — slight mismatch in partition column reference."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "No Atlassian knowledge sources listed. Confirm none exist."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. For polish: (1) Add explicit Phase Gate Checklist section. (2) Include earliest non-NULL date (2023-12-12) in SynapseUpdateDate description. (3) Clarify ROW_NUMBER partition column in Section 2.2. (4) Note that Id bigint NULL is a Synapse DDL artifact.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

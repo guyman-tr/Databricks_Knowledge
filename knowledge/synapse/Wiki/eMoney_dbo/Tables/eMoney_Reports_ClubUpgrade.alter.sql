@@ -52,3 +52,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade ALTER COLUMN `AccountProgram` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade ALTER COLUMN `AccountSubProgram` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade ALTER COLUMN `UpdateDate` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:24:45 UTC
+-- Batch deploy resume: eMoney_dbo deploy batch 1
+-- Statements: 28/28 succeeded
+-- ====================

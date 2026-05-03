@@ -1,0 +1,70 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Social_Activity",
+    "elapsed_seconds":  116,
+    "exit_code":  null,
+    "cost_usd":  0.3414,
+    "input_tokens":  2,
+    "output_tokens":  4963,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Social_Activity",
+                    "weighted_score":  9.15,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  9,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "RealCID",
+                                                  "upstream_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables.",
+                                                  "wiki_quote":  "Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Passthrough from Dim_Customer via Username JOIN.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Appended provenance note (\u0027Passthrough from Dim_Customer via Username JOIN\u0027); no semantic loss from upstream description"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Shape",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] checkboxes. Footer says \u0027Phases: 11/14\u0027 but doesn\u0027t specify which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 2 / Section 3.4 Gotchas",
+                                       "problem":  "Posts INSERT does not exclude SharedEntryId IS NOT NULL, so shared Discussion posts with RootId=ParentId=Id would be inserted as both Post (ActionTypeID=1) and Share (ActionTypeID=4). This potential duplication is not documented."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit numeric quality score in footer as expected by golden shape reference."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "MediaTypeID",
+                                       "problem":  "Wiki says \u0027observed values include 5 and 6\u0027 without distribution counts. Flagged in review-needed but could be stronger with actual frequencies."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1 / Shares",
+                                       "problem":  "Shares are Discussion-type entries that have MessageBody available but the SP deliberately NULLs MessageText/Size/WordNum. This intentional suppression isn\u0027t explained in the business logic section."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (PASS): (1) Add explicit Phase Gate Checklist section with [x]/[ ] for P1-P3. (2) Add Gotcha about potential duplicate insertion for shared Discussion posts where RootId=ParentId=Id AND SharedEntryId IS NOT NULL. (3) Add numeric quality score to footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section missing entirely — cannot determine which phases were skipped"
+                                                           ]
+                                    }
+                }
+}

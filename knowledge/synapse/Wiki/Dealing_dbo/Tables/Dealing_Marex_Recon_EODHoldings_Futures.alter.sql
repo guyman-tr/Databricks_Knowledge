@@ -52,10 +52,10 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eod
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex_LocalAmount COMMENT 'Marex position value in local currency. (Tier 2 - SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ClientsUSDAmount COMMENT 'Client NOP in USD. From eToro client netting. (Tier 2 - SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex_USDAmount COMMENT 'Marex position value in USD. Note: named `Marex_USDAmount` here (vs `Marex_AmountUSD` in base tables). (Tier 2 - SP_Marex_Recon)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_Units COMMENT '**Recon diff**: `ISNULL(Marex_Units,0) - ISNULL(ClientUnits,0)`. Unit-level break. (Tier 2 - SP_Marex_Recon)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_USDAmount COMMENT '**Recon diff**: `ISNULL(Marex_USDAmount,0) - ISNULL(ClientsUSDAmount,0)`. USD break. (Tier 2 - SP_Marex_Recon)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_Lots COMMENT '**Recon diff**: `Marex_Lots - Clients_Lots`. Lot-level break. (Tier 2 - SP_Marex_Recon)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_Price COMMENT '**Recon diff**: Marex price vs client price. Price discrepancy between Marex and client entry. (Tier 2 - SP_Marex_Recon)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_Units` COMMENT '**Recon diff**: `ISNULL(Marex_Units,0) - ISNULL(ClientUnits,0)`. Unit-level break. (Tier 2 - SP_Marex_Recon)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_USDAmount` COMMENT '**Recon diff**: `ISNULL(Marex_USDAmount,0) - ISNULL(ClientsUSDAmount,0)`. USD break. (Tier 2 - SP_Marex_Recon)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_Lots` COMMENT '**Recon diff**: `Marex_Lots - Clients_Lots`. Lot-level break. (Tier 2 - SP_Marex_Recon)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_Price` COMMENT '**Recon diff**: Marex price vs client price. Price discrepancy between Marex and client entry. (Tier 2 - SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN UpdateDate COMMENT 'ETL metadata: timestamp when this row was last updated by the ETL pipeline. GETDATE() on INSERT. (Tier 2 - SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ForexRate_AfterADJ COMMENT 'FX rate after ADJ adjustment (added Jul 2025). NULL for rows before July 2025. (Tier 2 - SP_Marex_Recon)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ADJ_Value COMMENT 'ADJ adjustment factor applied to FX rate (added Jul 2025). NULL for rows before July 2025. (Tier 2 - SP_Marex_Recon)';
@@ -90,18 +90,17 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eod
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex_LocalAmount SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ClientsUSDAmount SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex_USDAmount SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_Units SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_USDAmount SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_Lots SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN Marex-Clients_Price SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_Units` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_USDAmount` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_Lots` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN `Marex-Clients_Price` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ForexRate_AfterADJ SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN ADJ_Value SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures ALTER COLUMN OrderID SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 14:05:20 UTC
--- Batch deploy resume: Dealing_dbo deploy batch 1
--- Statements: 66/74 succeeded
--- Error: [INVALID_IDENTIFIER] The unquoted identifier Marex-Clients_Price is invalid and must be back quoted as: `Marex-Clients_Price`. Unquoted identifiers can only contain ASCII letters ('a' - 'z', 'A' - 'Z'), digits ('0' - '9'), and underbar ('_'). Unquoted identifiers must also not start with a digit. Different data sources and meta stores may impose additional restrictions on valid identifiers. SQLSTATE: 42602 (line 1, pos 115) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_deali
+-- Timestamp: 2026-05-03 06:08:11 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 2
+-- Statements: 74/74 succeeded
 -- ====================

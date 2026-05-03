@@ -1,0 +1,162 @@
+{
+  "schema": "Dealing_dbo",
+  "object": "Dealing_IndiciesIntraHour_Clients",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Tables\\Dealing_dbo.Dealing_IndiciesIntraHour_Clients.sql",
+  "lineage_path": null,
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_IntraHourIndexReport.sql"
+  ],
+  "candidates_found": 12,
+  "resolved_synapse": 2,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 9,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_IndiciesIntraHour_Clients\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 91811,
+  "resolutions": [
+    {
+      "raw_name": "Dealing_dbo.SP_IntraHourIndexReport",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "SP_IntraHourIndexReport",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_IntraHourIndexReport.sql",
+      "bytes_read": 24697,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_staging.etoro_History_PortfolioConversionConfigurations",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "etoro_History_PortfolioConversionConfigurations",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.etoro_Hedge_PortfolioConversionConfigurations",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "etoro_Hedge_PortfolioConversionConfigurations",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "sys.all_objects",
+      "db": null,
+      "schema": "sys",
+      "object": "all_objects",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "CopyFromLake.PriceLog_History_CurrencyPrice",
+      "db": null,
+      "schema": "CopyFromLake",
+      "object": "PriceLog_History_CurrencyPrice",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Position",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Position",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Position.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Customer",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Customer",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Customer.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "CopyFromLake.etoro_Hedge_ExecutionLog",
+      "db": null,
+      "schema": "CopyFromLake",
+      "object": "etoro_Hedge_ExecutionLog",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.etoro_Trade_LiquidityAccounts",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "etoro_Trade_LiquidityAccounts",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.etoro_Hedge_Netting",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "etoro_Hedge_Netting",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_staging.etoro_History_Netting_History",
+      "db": null,
+      "schema": "Dealing_staging",
+      "object": "etoro_History_Netting_History",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_IndiciesIntraHour_Etoro",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_IndiciesIntraHour_Etoro",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    }
+  ]
+}

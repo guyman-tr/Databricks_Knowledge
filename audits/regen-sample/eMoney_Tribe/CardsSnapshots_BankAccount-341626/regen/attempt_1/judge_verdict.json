@@ -1,0 +1,68 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots_BankAccount-341626",
+    "elapsed_seconds":  85,
+    "exit_code":  null,
+    "cost_usd":  0.2059,
+    "input_tokens":  2,
+    "output_tokens":  3245,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots_BankAccount-341626",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Shape / Evidence",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] items. Footer claims \u0027Phases: 11/14\u0027 but reader cannot verify which phases were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Section 8 is a stub — states no Atlassian sources were searched. Freshservice #20353 is mentioned but not linked or described."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "BankAccountStatus",
+                                       "problem":  "Claims \u0027Values: Yes (100% of 2026 data)\u0027 but does not state the distribution across the full 88.3M rows or earlier years."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Hedges with \u0027suggesting a schema or pipeline change\u0027 — could be more definitive about the deprecation of ETR columns post-2023-12."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "BankAccountDirectDebitsIn, BankAccountDirectDebitsOut, BankAccountInstantPaymentsIn, BankAccountInstantPaymentsOut",
+                                       "problem":  "States \u0027Yes in 2023-12, empty in 2024+\u0027 but does not specify the exact cutoff date or whether the transition was gradual or abrupt."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add explicit Phase Gate Checklist section with [x]/[ ] items for all 14 phases. (2) Link or describe Freshservice #20353 in Section 8. (3) Clarify BankAccountStatus distribution across full date range. (4) Specify exact date boundary for payment flag value change. (5) Use formal key=value enumeration for dictionary columns.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "88.3M rows",
+                                                                                  "2023-12-20 to 2026-04-26",
+                                                                                  "BIC predominantly MRMIGB22XXX",
+                                                                                  "sort code 041335 most common",
+                                                                                  "BankAccountStatus Yes 100% of 2026 data"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section not present — cannot determine which 3 of 14 phases were skipped"
+                                                           ]
+                                    }
+                }
+}

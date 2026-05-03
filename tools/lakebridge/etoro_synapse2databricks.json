@@ -1,0 +1,101 @@
+{
+  "//": "eToro Synapse -> Databricks BladeBridge custom config.",
+  "//_purpose": "Forces every generated table/view into main.de_output_synapse_migration so the transpiler can never overwrite existing gold mirrors (e.g. History.Credit, BI_DB gold paths). Also strips LOCATION clauses so generated tables are managed in UC, never bound to an external lake path.",
+  "//_install": "databricks labs lakebridge install-transpile  ->  override existing  ->  paste the absolute path to this file when prompted.",
+  "//_inherit_path_note": "The inherit_from path below is for Windows install of lakebridge with Python 3.10. If your venv uses python3.11+ or you are on macOS/Linux, edit the path. Keep forward slashes inside the JSON string.",
+
+  "inherit_from": [
+    "C:/Users/guyman/.databricks/labs/remorph-transpilers/bladebridge/lib/.venv/lib/python3.10/site-packages/databricks/labs/bladebridge/Converter/Configs/base_synapse2databricks_sql.json"
+  ],
+
+  "target_sql_file_header": "USE CATALOG main;\nUSE SCHEMA de_output_synapse_migration;\n",
+
+  "line_subst": [
+    { "//": "--- Schema redirects: every <synapse_schema>. reference becomes de_output_synapse_migration. ---",
+      "//_order": "Order matters: longest/most-specific schemas first. _staging / _tmp suffixes before _dbo so they win." },
+
+    { "from": "\\bBI_DB_Migration\\b\\.",          "to": "de_output_synapse_migration." },
+    { "from": "\\bBI_DB_mixpanel\\b\\.",            "to": "de_output_synapse_migration." },
+    { "from": "\\bBI_DB_python\\b\\.",              "to": "de_output_synapse_migration." },
+    { "from": "\\bBI_DB_staging\\b\\.",             "to": "de_output_synapse_migration." },
+    { "from": "\\bBI_DB_dbo\\b\\.",                 "to": "de_output_synapse_migration." },
+
+    { "from": "\\bCopyFromLake_staging\\b\\.",      "to": "de_output_synapse_migration." },
+    { "from": "\\bCopyFromLake\\b\\.",              "to": "de_output_synapse_migration." },
+
+    { "from": "\\bDealing_staging\\b\\.",           "to": "de_output_synapse_migration." },
+    { "from": "\\bDealing_dbo\\b\\.",               "to": "de_output_synapse_migration." },
+
+    { "from": "\\bDWH_Migration\\b\\.",             "to": "de_output_synapse_migration." },
+    { "from": "\\bDWH_pagetracking\\b\\.",          "to": "de_output_synapse_migration." },
+    { "from": "\\bDWH_staging\\b\\.",               "to": "de_output_synapse_migration." },
+    { "from": "\\bDWH_tracking\\b\\.",              "to": "de_output_synapse_migration." },
+    { "from": "\\bDWH_watchlists\\b\\.",            "to": "de_output_synapse_migration." },
+    { "from": "\\bDWH_dbo\\b\\.",                   "to": "de_output_synapse_migration." },
+
+    { "from": "\\bDE_dbo\\b\\.",                    "to": "de_output_synapse_migration." },
+
+    { "from": "\\beMoney_Dictionary_tmp\\b\\.",     "to": "de_output_synapse_migration." },
+    { "from": "\\beMoney_Dictionary\\b\\.",         "to": "de_output_synapse_migration." },
+    { "from": "\\beMoney_Tribe_tmp\\b\\.",          "to": "de_output_synapse_migration." },
+    { "from": "\\beMoney_Tribe\\b\\.",              "to": "de_output_synapse_migration." },
+    { "from": "\\beMoney_dbo_tmp\\b\\.",            "to": "de_output_synapse_migration." },
+    { "from": "\\beMoney_dbo\\b\\.",                "to": "de_output_synapse_migration." },
+    { "from": "\\beMoney_google_sheets\\b\\.",      "to": "de_output_synapse_migration." },
+
+    { "from": "\\bEXW_Currency_tmp\\b\\.",          "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Currency\\b\\.",              "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Dictionary_tmp\\b\\.",        "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Dictionary\\b\\.",            "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Settings_tmp\\b\\.",          "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Settings\\b\\.",              "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Staking_tmp\\b\\.",           "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Staking\\b\\.",               "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Wallet_tmp\\b\\.",            "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_Wallet\\b\\.",                "to": "de_output_synapse_migration." },
+    { "from": "\\bEXW_dbo\\b\\.",                   "to": "de_output_synapse_migration." },
+
+    { "from": "\\bEXE_dbo\\b\\.",                   "to": "de_output_synapse_migration." },
+    { "from": "\\bEXE\\b\\.",                       "to": "de_output_synapse_migration." },
+
+    { "from": "\\bMoneyTransfe_Billing_tmp\\b\\.",  "to": "de_output_synapse_migration." },
+    { "from": "\\bMoneyTransfe_Billing\\b\\.",      "to": "de_output_synapse_migration." },
+
+    { "from": "\\bGCP_DataSet_BQ_Status\\b\\.",     "to": "de_output_synapse_migration." },
+    { "from": "\\bGCP_DataSet_Copy_Discovery\\b\\.","to": "de_output_synapse_migration." },
+    { "from": "\\bGCP_DataSet_Experiments\\b\\.",   "to": "de_output_synapse_migration." },
+    { "from": "\\bGCP_DataSet_RecoSys\\b\\.",       "to": "de_output_synapse_migration." },
+
+    { "from": "\\bFivetran_google_sheets\\b\\.",    "to": "de_output_synapse_migration." },
+    { "from": "\\bML_General_DataSet\\b\\.",        "to": "de_output_synapse_migration." },
+    { "from": "\\bSalesForce_dbo\\b\\.",            "to": "de_output_synapse_migration." },
+    { "from": "\\bsalesforce\\b\\.",                "to": "de_output_synapse_migration." },
+    { "from": "\\bProdData_dbo\\b\\.",              "to": "de_output_synapse_migration." },
+    { "from": "\\bgeneral_tmp\\b\\.",               "to": "de_output_synapse_migration." },
+    { "from": "\\bgeneral\\b\\.",                   "to": "de_output_synapse_migration." },
+    { "from": "\\bSHA\\b\\.",                       "to": "de_output_synapse_migration." },
+    { "from": "\\bQG\\b\\.",                        "to": "de_output_synapse_migration." },
+    { "from": "\\bdbo\\b\\.",                       "to": "de_output_synapse_migration." },
+
+    { "//": "--- Catalog/qualified-name redirects: any leftover [DB].[schema]. or [DB].dbo. land in the safe schema ---" },
+    { "from": "\\bsql_dp_prod_we\\b\\.\\w+\\b\\.",  "to": "de_output_synapse_migration." },
+    { "from": "\\bsql_dp_stage_we\\b\\.\\w+\\b\\.", "to": "de_output_synapse_migration." },
+
+    { "//": "--- LOCATION-stripping safety net: prevent BladeBridge from binding a generated table to an existing lake path ---" },
+    { "from": "(?i)\\bLOCATION\\s+'abfss:[^']*'",   "to": "" },
+    { "from": "(?i)\\bLOCATION\\s+'dbfs:[^']*'",    "to": "" },
+    { "from": "(?i)\\bLOCATION\\s+'s3:[^']*'",      "to": "" },
+    { "from": "(?i)\\bLOCATION\\s+'wasb[s]?:[^']*'","to": "" },
+    { "from": "(?i)\\bLOCATION\\s+\"abfss:[^\"]*\"","to": "" },
+    { "from": "(?i)\\bLOCATION\\s+\"dbfs:[^\"]*\"", "to": "" },
+
+    { "//": "--- Force EXTERNAL TABLE -> regular managed TABLE (no path needed) ---" },
+    { "from": "(?i)\\bCREATE\\s+EXTERNAL\\s+TABLE\\b", "to": "CREATE TABLE" },
+    { "from": "(?i)\\bCREATE\\s+OR\\s+REPLACE\\s+EXTERNAL\\s+TABLE\\b", "to": "CREATE OR REPLACE TABLE" }
+  ],
+
+  "block_subst": [
+    { "//": "Strip Synapse-style WITH (LOCATION = ...) blocks if any survive line_subst" },
+    { "from": "(?is)\\bWITH\\s*\\(\\s*LOCATION\\s*=[^)]*\\)", "to": "" }
+  ]
+}

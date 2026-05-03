@@ -1,0 +1,68 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_SpreadedPriceCandle60MinSplitted",
+    "elapsed_seconds":  91,
+    "exit_code":  null,
+    "cost_usd":  0.2232,
+    "input_tokens":  2,
+    "output_tokens":  3584,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_SpreadedPriceCandle60MinSplitted",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ProviderID",
+                                       "problem":  "Writer labels ProviderID=0 as \u0027secondary/fallback source\u0027 without evidence. Could be test data. Review-needed sidecar correctly flags this for human confirmation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Section titled \u0027Atlassian Knowledge Sources\u0027 rather than a standard heading. Minor naming deviation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit Phase Gate Checklist subsection. Footer reports \u0027Phases: 11/14\u0027 but does not enumerate which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AskFirstOccurred / BidFirstOccurred",
+                                       "problem":  "Claims occurrence timestamps can precede DateFrom by hours (weekend/holiday carryover) based on \u0027sample data observation\u0027 but does not cite specific rows or prevalence."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Four downstream SPs documented as actively reading from this dormant table. Review-needed sidecar correctly flags potential stale-price risk."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. For polish: (1) Add explicit Phase Gate Checklist subsection. (2) Qualify ProviderID=0 \u0027secondary/fallback\u0027 label as speculative. (3) Cite specific sample rows for occurrence-timestamp-outside-window observation.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 48.8M in Section 1",
+                                                                                  "ProviderID distribution (48.8M vs 4,349) in Section 1 and Element #1",
+                                                                                  "8,445 distinct instruments in Section 1 and Element #2",
+                                                                                  "Date range 2015-01-01 to 2024-06-02 in Section 1 and Element #3",
+                                                                                  "UpdateDate range 2019-11-12 to 2024-06-02 in Element #21"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

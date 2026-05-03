@@ -1,0 +1,68 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "CustomerWalletsView",
+    "elapsed_seconds":  91,
+    "exit_code":  null,
+    "cost_usd":  0.232,
+    "input_tokens":  2,
+    "output_tokens":  3962,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "CustomerWalletsView",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] checkboxes. Footer references \u0027Phases: 11/14\u0027 but does not enumerate which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "WalletProviderId",
+                                       "problem":  "Provider names (1=BitGo, 2=Fireblocks) presented as fact in the wiki but flagged as inferred in the review-needed sidecar. Should be qualified as inferred or removed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "WalletTypeId",
+                                       "problem":  "6 of 7 wallet type values listed as \u0027unknown\u0027. The label \u0027standard\u0027 for type 5 appears to be an inference, not confirmed. Limited analytical value."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y / etr_ym / etr_ymd",
+                                       "problem":  "Columns described as \u0027currently empty\u0027 based on sampled data without qualifying that this is sample-based observation. Could be populated in non-sampled rows or future loads."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer lacks an explicit numeric quality score per the golden reference shape format."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add explicit Phase Gate Checklist section with [x]/[ ] checkboxes for P1-P3. (2) Qualify WalletProviderId values as \u0027inferred\u0027 rather than confirmed. (3) Add numeric quality score to footer. (4) Qualify etr_y/etr_ym/etr_ymd emptiness claim with \u0027in sampled data\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count: 1,780,174 in Section 1",
+                                                                                  "Status distribution: 99.6%/0.4% in Section 2.1 and Column #9",
+                                                                                  "WalletTypeId distribution: 7 values with counts in review-needed and Column #7",
+                                                                                  "Date range: 2019-06-11 to present in Section 1 and Column #6",
+                                                                                  "SynapseUpdateDate: 2026-04-27 04:26:19 in Column #17"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

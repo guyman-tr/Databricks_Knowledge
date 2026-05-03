@@ -24,9 +24,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclos
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN 4 stars COMMENT '`(Tier 1 - ...)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN 3 stars COMMENT '`(Tier 2 - ...)`';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN 2 stars COMMENT '`(Tier 3 - ...)`';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `4 stars` COMMENT '`(Tier 1 - ...)`';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `3 stars` COMMENT '`(Tier 2 - ...)`';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `2 stars` COMMENT '`(Tier 3 - ...)`';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Date COMMENT 'Report date. Set to `@Date` SP parameter (typically yesterday). One day''s worth of clicks per load. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN DateID COMMENT 'Date as YYYYMMDD integer. `CAST(CONVERT(VARCHAR(8), @Date, 112) AS INT)`. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN SellCurrency COMMENT 'Text abbreviation of the instrument''s sell-side (denomination) currency. Example: USD, EUR, GBX (GBP pence). DWH-added for query convenience. (Tier 2 - SP_Dim_Instrument)';
@@ -51,7 +51,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclos
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN RegulationID COMMENT 'Customer''s regulatory jurisdiction at snapshot date. FK to Dim_Regulation. 1=CySEC, 2=FCA, etc. (Tier 2 - SP_Fact_SnapshotCustomer)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Regulation COMMENT 'Regulation name from Dim_Regulation.Name. Examples: CySEC, FCA, ASIC. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsIslamic COMMENT 'Islamic (swap-free) account flag. `CASE WHEN WeekendFeePrecentage = 0 THEN 1 ELSE 0 END`. Source: Dim_Customer.WeekendFeePrecentage. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Size of Tickets COMMENT 'Volume bucket label. 16 buckets from ''1$-10$'' to ''Over2000000$''. Open clicks bucketed on VolumeOpened, close clicks on VolumeClosed. ''0'' = zero volume. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `Size of Tickets` COMMENT 'Volume bucket label. 16 buckets from ''1$-10$'' to ''Over2000000$''. Open clicks bucketed on VolumeOpened, close clicks on VolumeClosed. ''0'' = zero volume. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN OpenOrClose COMMENT 'Row type: `''Open Click''` or `''Close Click''`. Literal string set by SP. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN OpenOrCloseID COMMENT 'Row type numeric: 1=Open Click, 0=Close Click. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Click COMMENT 'Trade event count. `SUM(NumberofPositionsOpened)` for opens (1 per non-partial-close position opened on @Date), `SUM(NumberofPositionsClosed)` for closes. Aggregated in GROUP BY. (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
@@ -71,9 +71,9 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclos
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsLowTouch COMMENT 'Low-touch instrument flag. From Dim_Instrument.OperationMode. Indicates instruments with simplified execution flow. Added SR-346605 (2025-12-07). (Tier 2 - SP_Clicks_OpenClose_Breakdown)';
 
 -- ---- Column PII Tags ----
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN 4 stars SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN 3 stars SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN 2 stars SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `4 stars` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `3 stars` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `2 stars` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Date SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN DateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN SellCurrency SET TAGS ('pii' = 'none');
@@ -98,7 +98,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclos
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN RegulationID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Regulation SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsIslamic SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Size of Tickets SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN `Size of Tickets` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN OpenOrClose SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN OpenOrCloseID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Click SET TAGS ('pii' = 'none');
@@ -118,8 +118,8 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclos
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN IsLowTouch SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 13:58:16 UTC
--- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Timestamp: 2026-05-03 06:06:32 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 2
 -- Statements: 84/92 succeeded
--- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near 'of'. SQLSTATE: 42601 (line 1, pos 110) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown ALTER COLUMN Size of Tickets SET TAGS ('pii' = 'none'); --------------------------------------------------------------------------------------------------------------^^^
+-- Error: [RequestId=09c3b145-93d9-4e27-86d2-8d18ed07fdb6 ErrorClass=RESOURCE_DOES_NOT_EXIST] Column `Size of Tickets` does not exist.
 -- ====================

@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "WalletPoolStatuses",
+    "elapsed_seconds":  85,
+    "exit_code":  null,
+    "cost_usd":  0.1982,
+    "input_tokens":  2,
+    "output_tokens":  3367,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "WalletPoolStatuses",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 without itemizing which phases were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-assessed quality score of 7.5/10 with zero Tier 1 columns and all Tier 3 may be slightly generous, though data evidence richness partially justifies it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "PromotionTagId",
+                                       "problem":  "No dictionary found for PromotionTagId values beyond value 1. Review-needed sidecar correctly flags this but the wiki cannot resolve it without upstream documentation."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "CryptoId",
+                                       "problem":  "Lists 11 distinct CryptoId values but does not map them to cryptocurrency names. Could be enriched if EXW_Wallet.CryptoTypes wiki exists."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Id",
+                                       "problem":  "Described as \u0027surrogate key\u0027 and \u0027unique identifier per row\u0027 but DDL shows it as nullable. Production PK constraint unconfirmed. Review-needed sidecar correctly flags this."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. Future improvements: (1) Add explicit Phase Gate Checklist section with P2/P3 attestation. (2) Upgrade columns 1-8 to Tier 1 when upstream WalletDB wiki becomes available. (3) Add PromotionTag dictionary mappings if found in WalletDB.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

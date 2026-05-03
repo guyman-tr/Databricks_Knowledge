@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "SentTransactionOutputs",
+    "elapsed_seconds":  81,
+    "exit_code":  null,
+    "cost_usd":  0.2007,
+    "input_tokens":  2,
+    "output_tokens":  3243,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "SentTransactionOutputs",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section (missing)",
+                                       "problem":  "No explicit Phase Gate Checklist section. Phase completion is only noted in the footer line (\u0027Phases: 11/14\u0027) with no detail on which 3 phases were skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SynapseUpdateDate",
+                                       "problem":  "Description hedges with \u0027suggests this column may not be populated for all rows\u0027 instead of stating definitively that the column is NULL in all sampled data."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SourceIdType",
+                                       "problem":  "Value 2 is described as \u0027alternate source type\u0027 without concrete meaning. Correctly flagged in review-needed but the element description could note this is unconfirmed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Empty Atlassian Knowledge Sources section adds no value. Minor structural concern only."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Writer self-scored 7.5/10 quality. Reasonable but no breakdown of what drove the deductions."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. Minor improvements: (1) Add explicit Phase Gate Checklist section detailing which 3 of 14 phases were skipped. (2) Make SynapseUpdateDate description definitive rather than hedging. (3) Re-run if upstream WalletDB wiki becomes available to upgrade Tier 3 to Tier 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "3 of 14 phases skipped per footer but not individually identified"
+                                                           ]
+                                    }
+                }
+}

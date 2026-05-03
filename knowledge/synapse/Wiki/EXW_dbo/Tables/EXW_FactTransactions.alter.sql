@@ -116,3 +116,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions ALTER CO
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions ALTER COLUMN `LastStatusUpdateOccurred` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions ALTER COLUMN `ReceivedTransactionTypeID` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions ALTER COLUMN `ReceivedTransactionType` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:33:47 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 1
+-- Statements: 92/92 succeeded
+-- ====================

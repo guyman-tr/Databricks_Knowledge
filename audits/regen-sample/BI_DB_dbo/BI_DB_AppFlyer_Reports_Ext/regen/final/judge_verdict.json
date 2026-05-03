@@ -1,0 +1,67 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_AppFlyer_Reports_Ext",
+    "elapsed_seconds":  95,
+    "exit_code":  null,
+    "cost_usd":  0.2691,
+    "input_tokens":  2,
+    "output_tokens":  3650,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_AppFlyer_Reports_Ext",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 12/14\u0027 but no Phase Gate Checklist section exists with [x] marks. Cannot verify which 2 phases were skipped or confirm P2/P3 completion independently."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Property Table",
+                                       "problem":  "Refresh described as \u0027Daily by DateID partition — externally loaded\u0027 with no time-of-day or SLA context. Analysts cannot judge data freshness."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SubParam1–SubParam5 (Elements 25–29)",
+                                       "problem":  "All five sub-parameter descriptions are nearly identical boilerplate. Acceptable for raw landing table with no upstream docs, but any known eToro-specific conventions for these fields are missing."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.3 Common JOINs",
+                                       "problem":  "Only one join listed (BI_DB_AppFlyer_Reports). Potential join to user/account tables via CustomerUserID not mentioned."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "DateID (Element 82) / Section 3.4 Gotchas",
+                                       "problem":  "Gotcha about DateID \u0027loaded as string context\u0027 is confusing — DDL defines DateID as int, which is authoritative. The note may mislead analysts."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 130.3M rows, 2020 to present",
+                                                                                  "Region: EU (71%), AS (8%), AU (3%), SA (2%), AF (2%), NA (\u003c1%), None (12%), empty (3%)",
+                                                                                  "AttributedTouchType: click (53%), impression (14%), NULL/empty (33%)",
+                                                                                  "CountryCode: top countries DE, UK, FR, IT, AE"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Unknown — no Phase Gate Checklist section present, footer says 12/14"
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "CryptoTypes",
+    "elapsed_seconds":  89,
+    "exit_code":  null,
+    "cost_usd":  0.2368,
+    "input_tokens":  2,
+    "output_tokens":  3555,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "CryptoTypes",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1 (AssetTypeId vs Status)",
+                                       "problem":  "AssetTypeId=1 counts 12 assets while Status=1 counts 13 rows. While likely accurate (different columns), the proximity without clarification could confuse analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u0027Phases: 12/14\u0027 but does not identify which 2 phases were skipped."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "All 31 production columns",
+                                       "problem":  "All production columns are Tier 3 due to missing upstream wiki for WalletDB.Wallet.CryptoTypes. Correct classification but limits documentation quality ceiling."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "CryptoCategoryName",
+                                       "problem":  "Case inconsistency (\u0027baseCrypto\u0027 vs \u0027BaseCrypto\u0027) correctly flagged in Gotchas and review-needed sidecar."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "InstrumentId",
+                                       "problem":  "Element #25 references \u0027eToro\u0027s instrument system\u0027 and Section 6.1 says \u0027eToro Instrument system\u0027 — the FK target table (EXW_Currency.Instruments) mentioned in the description could be more precisely documented in Relationships."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Unknown — footer says 12/14 but does not identify which 2 were skipped"
+                                                           ]
+                                    }
+                }
+}

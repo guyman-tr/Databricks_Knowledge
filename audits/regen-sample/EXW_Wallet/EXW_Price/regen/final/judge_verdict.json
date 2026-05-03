@@ -1,0 +1,68 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "EXW_Price",
+    "elapsed_seconds":  109,
+    "exit_code":  null,
+    "cost_usd":  0.2802,
+    "input_tokens":  2,
+    "output_tokens":  4455,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "EXW_Price",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BlockchainCryptoId",
+                                       "problem":  "12 distinct int values but no ID→name key=value mapping provided. BlockchainCryptoName lists the 12 names; BlockchainCryptoId should provide the corresponding int→name dictionary."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 13/14\u0027 but does not show which phases were completed or which was skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 Gotchas",
+                                       "problem":  "SP_Prices has a self-referencing join condition (b.DateTo = b.DateTo) in #pricesprep LEFT JOIN that effectively ignores DateTo, potentially producing duplicates. Not documented."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Quality score placeholder \u0027pending judge\u0027 should be populated after judging."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "OUTER APPLY uses p.DateFrom \u003c= a.DateFrom (inclusive of current hour). Description is accurate but could note this nuance for precision-sensitive use cases."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add key=value dictionary for BlockchainCryptoId mapping each int to its blockchain name. (2) Add explicit Phase Gate Checklist section showing P2/P3 status. (3) Document the b.DateTo = b.DateTo self-join condition in SP_Prices as a gotcha. (4) Populate quality score in footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "~9.95M rows",
+                                                                                  "172 instruments",
+                                                                                  "12 blockchain networks",
+                                                                                  "~65% NULL eToroInstrumentID",
+                                                                                  "~93% ETH-based"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 14 (unknown — not documented)"
+                                                           ]
+                                    }
+                }
+}

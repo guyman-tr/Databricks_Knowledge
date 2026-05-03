@@ -1,0 +1,67 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots_Account-513255",
+    "elapsed_seconds":  100,
+    "exit_code":  null,
+    "cost_usd":  0.2182,
+    "input_tokens":  2,
+    "output_tokens":  3826,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots_Account-513255",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Phase Gate Checklist (missing section)",
+                                       "problem":  "Footer claims \u0027Phases: 14/14\u0027 but no Phase Gate Checklist section is rendered in the wiki body. Reader cannot verify which phases were completed."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "@Id (Element #1)",
+                                       "problem":  "Description claims @Id \u0027shares the same value as @CardsSnapshots_Accounts@Id-350640\u0027. These are structurally different columns — @Id is the row\u0027s own GUID, while @CardsSnapshots_Accounts@Id-350640 is an FK to the parent table. Misleading to analysts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.3 (Balance Snapshot)",
+                                       "problem":  "States \u0027CurrentBalance = AvailableBalance + BlockedAmount\u0027 as a logical relationship without noting uncertainty about whether ReservedBalance is included, despite the review-needed sidecar flagging this for SME validation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AccountStatus (Element #4)",
+                                       "problem":  "Enum value meanings (A=Active, S=Suspended, B=Blocked, P=Pending, R=Restricted) are presented as fact but are inferred from naming conventions. Should include qualification language."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 (Atlassian Knowledge Sources)",
+                                       "problem":  "Section is empty. Acceptable if no sources exist, but should confirm this is not a search failure."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only (wiki passes): (1) Add explicit Phase Gate Checklist subsection showing P1-P3 completion status. (2) Fix @Id description — remove false claim that it shares values with @CardsSnapshots_Accounts@Id-350640. (3) Add qualification language to inferred AccountStatus enum meanings. (4) Surface ReservedBalance ambiguity from review-needed sidecar into Section 2.3.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "AccountStatus: A ~94%, S ~4.1%, B ~1.1%, P ~0.5%, R ~0.08%",
+                                                                                  "AccountCurrency: GBP ~77%, EUR ~23%",
+                                                                                  "AccountLimitsGroupName: Green ~68%, Black ~14%, Black EU EUR ~13%, Green EU EUR ~4%",
+                                                                                  "Row count: 86.4M, date range: 2023-12-20 to 2026-04-26"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

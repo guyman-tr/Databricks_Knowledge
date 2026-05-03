@@ -1,0 +1,68 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "SettlementsTransactions-333243",
+    "elapsed_seconds":  98,
+    "exit_code":  null,
+    "cost_usd":  0.217,
+    "input_tokens":  2,
+    "output_tokens":  4102,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "SettlementsTransactions-333243",
+                    "weighted_score":  8.60,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  9,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "partition_date",
+                                       "problem":  "Tagged Tier 3 but is a known ETL derivation (date extraction from @Created). Transform logic is documented, making this a candidate for Tier 2 rather than Tier 3."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Created",
+                                       "problem":  "Tagged Tier 3 but is a known copy of @Created populated only for newer records. Transform logic is documented, making this a candidate for Tier 2 rather than Tier 3."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u0027Phases: 11/14\u0027 but no explicit Phase Gate Checklist with P2/P3 checkboxes is included. Data evidence appears genuine but phase completion is not formally verified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id",
+                                       "problem":  "No explicit NULL-rate stated for @Id despite it being the critical join key to all child tables. Other metadata columns (@FileName, SynapseUpdateDate) have explicit NULL-rate callouts."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 Gotchas",
+                                       "problem":  "Index ClusteredIndex_ST_333243 is misleadingly named — it is actually a NONCLUSTERED INDEX per DDL. This naming discrepancy is not called out as a gotcha for analysts reviewing query plans."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Consider re-tagging partition_date and Created as Tier 2 since their ETL derivation from @Created is documented. (2) Add explicit NULL-rate for @Id. (3) Add a Phase Gate Checklist section with P2/P3 checkboxes. (4) Note the misleading ClusteredIndex_ST_333243 name (actually non-clustered) in Gotchas.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 2,946,011 in Section 1",
+                                                                                  "Date range 2021-09-05 to 2026-04-25 in Section 1",
+                                                                                  "etr_* NULL rate 99.8% (2,939,946 of 2,946,011) in Elements",
+                                                                                  "Created NULL rate 26% (770,930 of 2,946,011) in Elements",
+                                                                                  "SynapseUpdateDate bulk value 2023-12-24 16:13:17.613 in Elements"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase gate checklist not explicitly present — 11/14 phases claimed in footer"
+                                                           ]
+                                    }
+                }
+}

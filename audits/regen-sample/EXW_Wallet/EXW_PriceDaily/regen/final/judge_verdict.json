@@ -1,0 +1,69 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "EXW_PriceDaily",
+    "elapsed_seconds":  93,
+    "exit_code":  null,
+    "cost_usd":  0.2565,
+    "input_tokens":  2,
+    "output_tokens":  3915,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "EXW_PriceDaily",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BlockchainCryptoId",
+                                       "problem":  "Has 12 distinct values (≤15 threshold) but only lists \u0027e.g., 1=BTC, 2=ETH\u0027 instead of enumerating all key=value pairs inline."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "BlockchainCryptoName vs BlockchainCryptoId",
+                                       "problem":  "BlockchainCryptoName claims 13 distinct values while BlockchainCryptoId claims 12. The discrepancy is not explained."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section footer",
+                                       "problem":  "Footer states \u0027Phases: 11/14\u0027 but no explicit Phase Gate Checklist section is included to show which phases passed or were skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Description says \u0027Derived from EXW_Currency.Instruments.Id via CryptoMarketRatesMappings join\u0027 but the final value comes from a CASE on eToroInstrumentID or CryptoId, not directly from Instruments.Id."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.3",
+                                       "problem":  "Gap-fill description omits that AskLast and LastBid are also independently forward-filled via separate OUTER APPLY subqueries in the SP, which can affect downstream AvgPrice computation."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Enumerate all 12 BlockchainCryptoId key=value pairs in the element description. (2) Clarify 13 vs 12 discrepancy between BlockchainCryptoName and BlockchainCryptoId. (3) Refine InstrumentID description to clarify the CASE logic produces the value, not a direct passthrough from Instruments.Id.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "414K rows",
+                                                                                  "2018-04-23 to 2026-04-25",
+                                                                                  "173 CryptoIDs",
+                                                                                  "13 blockchain networks",
+                                                                                  "83% NULL eToroInstrumentID",
+                                                                                  "344K/414K"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

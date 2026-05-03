@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "generated_at_utc": "2026-04-30T05:05:00.598005+00:00",
+    "generated_at_utc": "2026-04-30T09:48:56.267607+00:00",
     "dep_order_mtime_utc": "2026-03-23T11:31:19.005262+00:00",
     "health_scan": "audits\\wiki_health_scan_20260427_140059.csv",
     "hops": 20,
     "slop_threshold_t4": 1,
-    "in_scope_count": 1008,
-    "mapped_no_synapse_mirror_count": 1194
+    "in_scope_count": 1030,
+    "mapped_no_synapse_mirror_count": 1354
   },
   "in_scope": [
     {
@@ -368,8 +368,8 @@
       "kind": "seed_dwh_internal",
       "hops_from_seed": 0,
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DailyPanel_Copy.md",
       "slop_t4_hits": 0
     },
     {
@@ -392,6 +392,17 @@
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DailyZeroPnL_Stocks.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_dbo.bi_db_dcm_dashboard",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_DCM_Dashboard",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dcm_dashboard",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DCM_Dashboard.md",
       "slop_t4_hits": 0
     },
     {
@@ -458,6 +469,17 @@
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_dbo.bi_db_ddr_fact_pnl",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_DDR_Fact_PnL",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_PnL.md",
       "slop_t4_hits": 0
     },
     {
@@ -571,6 +593,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "bi_db_dbo.bi_db_finance_non_us_settlement_new_2025",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_Finance_Non_US_Settlement_New_2025",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_non_us_settlement_new_2025",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_Finance_Non_US_Settlement_New_2025.md",
+      "slop_t4_hits": 0
+    },
+    {
       "object": "bi_db_dbo.bi_db_first5actions",
       "schema": "BI_DB_dbo",
       "name": "BI_DB_First5Actions",
@@ -579,6 +612,17 @@
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_First5Actions.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_dbo.bi_db_ifrs15_daily_balance",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_IFRS15_Daily_Balance",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ifrs15_daily_balance",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_IFRS15_Daily_Balance.md",
       "slop_t4_hits": 0
     },
     {
@@ -645,6 +689,17 @@
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_LTV_BI_Actual.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_dbo.bi_db_marketingclouddaily",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_MarketingCloudDaily",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_MarketingCloudDaily.md",
       "slop_t4_hits": 0
     },
     {
@@ -835,6 +890,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "bi_db_dbo.bi_db_qmmf_report",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_QMMF_Report",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_qmmf_report",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_QMMF_Report.md",
+      "slop_t4_hits": 0
+    },
+    {
       "object": "bi_db_dbo.bi_db_rolloverfee_dividends",
       "schema": "BI_DB_dbo",
       "name": "BI_DB_RollOverFee_Dividends",
@@ -863,8 +929,8 @@
       "kind": "seed_dwh_internal",
       "hops_from_seed": 0,
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity",
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_Social_Activity.md",
       "slop_t4_hits": 0
     },
     {
@@ -874,8 +940,8 @@
       "kind": "seed_dwh_internal",
       "hops_from_seed": 0,
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted",
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_SpreadedPriceCandle60MinSplitted.md",
       "slop_t4_hits": 0
     },
     {
@@ -907,8 +973,8 @@
       "kind": "seed_dwh_internal",
       "hops_from_seed": 0,
       "mapped_uc": "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_withdraw_rollback_pips",
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_Withdraw_Rollback_PIPs.md",
       "slop_t4_hits": 0
     },
     {
@@ -1886,17 +1952,6 @@
       "kind": "seed_external",
       "hops_from_seed": 0,
       "mapped_uc": "bi_db.bronze_etoro_history_instrumentmetadata",
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "bi_db_dbo.external_etoro_history_instrumentspread",
-      "schema": "BI_DB_dbo",
-      "name": "External_etoro_history_InstrumentSpread",
-      "kind": "seed_external",
-      "hops_from_seed": 0,
-      "mapped_uc": "dealing.bronze_etoro_history_instrumentspread",
       "currently_documented": false,
       "wiki_path": null,
       "slop_t4_hits": 0
@@ -3079,6 +3134,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dealing_dbo.dealing_boundary_cost",
+      "schema": "Dealing_dbo",
+      "name": "Dealing_Boundary_Cost",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Boundary_Cost.md",
+      "slop_t4_hits": 1
+    },
+    {
       "object": "dealing_dbo.dealing_clicks_openclose_breakdown",
       "schema": "Dealing_dbo",
       "name": "Dealing_Clicks_OpenClose_Breakdown",
@@ -3131,6 +3197,17 @@
       "mapped_uc": "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Duco_ActivityRecon.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dealing_dbo.dealing_duco_eodrecon",
+      "schema": "Dealing_dbo",
+      "name": "Dealing_Duco_EODRecon",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Duco_EODRecon.md",
       "slop_t4_hits": 0
     },
     {
@@ -3263,6 +3340,39 @@
       "mapped_uc": "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_SAXORecon_EODHoldings.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dealing_dbo.dealing_staking_dailypool",
+      "schema": "Dealing_dbo",
+      "name": "Dealing_Staking_DailyPool",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_dailypool",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Staking_DailyPool.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dealing_dbo.dealing_staking_optedout",
+      "schema": "Dealing_dbo",
+      "name": "Dealing_Staking_OptedOut",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_optedout",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Staking_OptedOut.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dealing_dbo.dealing_staking_parameters",
+      "schema": "Dealing_dbo",
+      "name": "Dealing_Staking_Parameters",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_parameters",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Staking_Parameters.md",
       "slop_t4_hits": 0
     },
     {
@@ -3585,6 +3695,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dealing_staging.external_etoro_history_instrumentspread",
+      "schema": "Dealing_staging",
+      "name": "External_Etoro_History_InstrumentSpread",
+      "kind": "seed_external",
+      "hops_from_seed": 0,
+      "mapped_uc": "dealing.bronze_etoro_history_instrumentspread",
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "dealing_staging.external_etoro_history_interestrateoverride",
       "schema": "Dealing_staging",
       "name": "External_Etoro_History_InterestRateOverride",
@@ -3767,17 +3888,6 @@
       "kind": "seed_external",
       "hops_from_seed": 0,
       "mapped_uc": "bi_db.bronze_fivetran_dealing_instrumentsmapping_dailyspreadsaggregated",
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "dealing_staging.external_fivetran_dealing_overnight_fees",
-      "schema": "Dealing_staging",
-      "name": "External_Fivetran_dealing_overnight_fees",
-      "kind": "seed_external",
-      "hops_from_seed": 0,
-      "mapped_uc": "bi_db.bronze_fivetran_dealing_overnight_fees",
       "currently_documented": false,
       "wiki_path": null,
       "slop_t4_hits": 0
@@ -4212,17 +4322,6 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "dwh_dbo.dim_instrument_snapshot",
-      "schema": "DWH_dbo",
-      "name": "Dim_Instrument_Snapshot",
-      "kind": "seed_dwh_internal",
-      "hops_from_seed": 0,
-      "mapped_uc": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_snapshot",
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Instrument_Snapshot.md",
-      "slop_t4_hits": 0
-    },
-    {
       "object": "dwh_dbo.dim_label",
       "schema": "DWH_dbo",
       "name": "Dim_Label",
@@ -4630,6 +4729,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dwh_dbo.fact_history_cost",
+      "schema": "DWH_dbo",
+      "name": "Fact_History_Cost",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_History_Cost.md",
+      "slop_t4_hits": 1
+    },
+    {
       "object": "dwh_dbo.fact_regulationtransfer",
       "schema": "DWH_dbo",
       "name": "Fact_RegulationTransfer",
@@ -4649,6 +4759,17 @@
       "mapped_uc": "dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/STS_User_Operations_Data_History.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dwh_dbo.v_fact_snapshotcustomer",
+      "schema": "DWH_dbo",
+      "name": "V_Fact_SnapshotCustomer",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_masked",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Views/V_Fact_SnapshotCustomer.md",
       "slop_t4_hits": 0
     },
     {
@@ -5004,6 +5125,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "exw_dbo.exw_c2p_e2e",
+      "schema": "EXW_dbo",
+      "name": "EXW_C2P_E2E",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_C2P_E2E.md",
+      "slop_t4_hits": 0
+    },
+    {
       "object": "exw_dbo.exw_compensationclosingcountries",
       "schema": "EXW_dbo",
       "name": "EXW_CompensationClosingCountries",
@@ -5015,6 +5147,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "exw_dbo.exw_dimuser",
+      "schema": "EXW_dbo",
+      "name": "EXW_DimUser",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_DimUser.md",
+      "slop_t4_hits": 0
+    },
+    {
       "object": "exw_dbo.exw_ethfeesent_blockchain",
       "schema": "EXW_dbo",
       "name": "EXW_EthFeeSent_Blockchain",
@@ -5023,6 +5166,17 @@
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_ethfeesent_blockchain",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_EthFeeSent_Blockchain.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "exw_dbo.exw_facttransactions",
+      "schema": "EXW_dbo",
+      "name": "EXW_FactTransactions",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_FactTransactions.md",
       "slop_t4_hits": 0
     },
     {
@@ -5067,6 +5221,17 @@
       "mapped_uc": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity",
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_WalletEntity.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "exw_dbo.exw_walletinventory",
+      "schema": "EXW_dbo",
+      "name": "EXW_WalletInventory",
+      "kind": "seed_dwh_internal",
+      "hops_from_seed": 0,
+      "mapped_uc": "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory",
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_WalletInventory.md",
       "slop_t4_hits": 0
     },
     {
@@ -5142,8 +5307,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AppFlyer_Reports_Ext.md",
       "slop_t4_hits": 0
     },
     {
@@ -5186,8 +5351,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_ClusteringLog.md",
       "slop_t4_hits": 0
     },
     {
@@ -5202,14 +5367,25 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "bi_db_dbo.bi_db_countrydcm",
+      "schema": "BI_DB_dbo",
+      "name": "BI_DB_CountryDCM",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "bi_db_dbo.bi_db_creditline_amounts",
       "schema": "BI_DB_dbo",
       "name": "BI_DB_CreditLine_Amounts",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_CreditLine_Amounts.md",
       "slop_t4_hits": 0
     },
     {
@@ -5312,17 +5488,6 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "bi_db_dbo.bi_db_ddr_fact_pnl",
-      "schema": "BI_DB_dbo",
-      "name": "BI_DB_DDR_Fact_PnL",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 1,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_PnL.md",
-      "slop_t4_hits": 0
-    },
-    {
       "object": "bi_db_dbo.bi_db_fb_report",
       "schema": "BI_DB_dbo",
       "name": "BI_DB_FB_Report",
@@ -5373,8 +5538,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_KYC_Questions_Answers.md",
       "slop_t4_hits": 0
     },
     {
@@ -5439,8 +5604,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_RiskClassification.md",
       "slop_t4_hits": 0
     },
     {
@@ -5450,8 +5615,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_SF_Cases_Panel.md",
       "slop_t4_hits": 0
     },
     {
@@ -5461,8 +5626,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_US_Stocks.md",
       "slop_t4_hits": 0
     },
     {
@@ -5752,6 +5917,28 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "bi_db_dbo.external_fivetran_google_cashback_merchant_list_2025_50_k_1",
+      "schema": "BI_DB_dbo",
+      "name": "External_Fivetran_google_cashback_merchant_list_2025_50_k_1",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_dbo.external_fivetran_google_cashback_merchant_list_2025_50_k_2",
+      "schema": "BI_DB_dbo",
+      "name": "External_Fivetran_google_cashback_merchant_list_2025_50_k_2",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "bi_db_dbo.external_fivetran_google_sheets_emoney_customer_risk_assessment_manual_override_table",
       "schema": "BI_DB_dbo",
       "name": "External_Fivetran_google_sheets_eMoney_Customer_Risk_Assessment_Manual_Override_Table",
@@ -5824,8 +6011,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube.md",
       "slop_t4_hits": 0
     },
     {
@@ -5837,6 +6024,17 @@
       "mapped_uc": null,
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_Instrument_Snapshot_Enriched.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_dbo.function_pnl_single_day",
+      "schema": "BI_DB_dbo",
+      "name": "Function_PnL_Single_Day",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_PnL_Single_Day.md",
       "slop_t4_hits": 0
     },
     {
@@ -6066,8 +6264,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/Group_LTV_Table.md",
       "slop_t4_hits": 0
     },
     {
@@ -6077,8 +6275,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/LTV_Conversions_Multipliers_Table.md",
       "slop_t4_hits": 0
     },
     {
@@ -6099,8 +6297,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel.md",
       "slop_t4_hits": 0
     },
     {
@@ -6118,6 +6316,17 @@
       "object": "bi_db_python.bi_db_jira_status_data",
       "schema": "BI_DB_python",
       "name": "BI_DB_JIRA_Status_Data",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "bi_db_staging.pricelog_history_currencyprice_active_tmp",
+      "schema": "BI_DB_staging",
+      "name": "PriceLog_History_CurrencyPrice_Active_tmp",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
@@ -6357,6 +6566,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "copyfromlake.walletdb_dictionary_receivedtransactiontypes",
+      "schema": "CopyFromLake",
+      "name": "WalletDB_Dictionary_ReceivedTransactionTypes",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "copyfromlake.walletdb_dictionary_requeststatuses",
       "schema": "CopyFromLake",
       "name": "WalletDB_Dictionary_RequestStatuses",
@@ -6371,6 +6591,17 @@
       "object": "copyfromlake.walletdb_dictionary_transactionstatus",
       "schema": "CopyFromLake",
       "name": "WalletDB_Dictionary_TransactionStatus",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "copyfromlake.walletdb_dictionary_walletpoolstatuses",
+      "schema": "CopyFromLake",
+      "name": "WalletDB_Dictionary_WalletPoolStatuses",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
@@ -6401,9 +6632,53 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "copyfromlake.watchlistdb_dbo_watchlistitems",
+      "schema": "CopyFromLake",
+      "name": "WatchListDB_dbo_WatchlistItems",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "copyfromlake.watchlistdb_dbo_watchlists",
+      "schema": "CopyFromLake",
+      "name": "WatchListDB_dbo_Watchlists",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "copyfromlake.watchlistdb_history_watchlists",
+      "schema": "CopyFromLake",
+      "name": "WatchListDB_History_Watchlists",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "dbo.blockedsessionsnew",
       "schema": "dbo",
       "name": "BlockedSessionsNew",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dbo.etoro_hedge_instrumentboundaries",
+      "schema": "dbo",
+      "name": "etoro_Hedge_InstrumentBoundaries",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
@@ -6420,17 +6695,6 @@
       "mapped_uc": null,
       "currently_documented": false,
       "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "dealing_dbo.dealing_duco_eodrecon",
-      "schema": "Dealing_dbo",
-      "name": "Dealing_Duco_EODRecon",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 1,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Duco_EODRecon.md",
       "slop_t4_hits": 0
     },
     {
@@ -6486,17 +6750,6 @@
       "mapped_uc": null,
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Staking_Emails.md",
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "dealing_dbo.dealing_staking_parameters",
-      "schema": "Dealing_dbo",
-      "name": "Dealing_Staking_Parameters",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 1,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/Dealing_dbo/Tables/Dealing_Staking_Parameters.md",
       "slop_t4_hits": 0
     },
     {
@@ -6602,6 +6855,17 @@
       "object": "dealing_staging.etoro_trade_liquidityaccounts",
       "schema": "Dealing_staging",
       "name": "etoro_Trade_LiquidityAccounts",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dealing_staging.external_fivetran_dealing_overnight_fees",
+      "schema": "Dealing_staging",
+      "name": "External_Fivetran_dealing_overnight_fees",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
@@ -7391,6 +7655,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dwh_dbo.dim_instrument_snapshot",
+      "schema": "DWH_dbo",
+      "name": "Dim_Instrument_Snapshot",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Instrument_Snapshot.md",
+      "slop_t4_hits": 0
+    },
+    {
       "object": "dwh_dbo.dim_position",
       "schema": "DWH_dbo",
       "name": "Dim_Position",
@@ -7427,6 +7702,17 @@
       "object": "dwh_dbo.etoro_trade_indexdividends",
       "schema": "DWH_dbo",
       "name": "etoro_Trade_IndexDividends",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dwh_dbo.etoro_trade_positionshedgeserverchangelog",
+      "schema": "DWH_dbo",
+      "name": "etoro_Trade_PositionsHedgeServerChangeLog",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
@@ -7963,6 +8249,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dwh_dbo.ext_history_cost",
+      "schema": "DWH_dbo",
+      "name": "Ext_History_Cost",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "dwh_dbo.fact_cashout_state",
       "schema": "DWH_dbo",
       "name": "Fact_Cashout_State",
@@ -7982,17 +8279,6 @@
       "mapped_uc": null,
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_Deposit_State.md",
-      "slop_t4_hits": 1
-    },
-    {
-      "object": "dwh_dbo.fact_history_cost",
-      "schema": "DWH_dbo",
-      "name": "Fact_History_Cost",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 1,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_History_Cost.md",
       "slop_t4_hits": 1
     },
     {
@@ -9283,6 +9569,28 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dwh_watchlists.fact_watchlists",
+      "schema": "DWH_watchlists",
+      "name": "Fact_Watchlists",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "dwh_watchlists.fact_watchlistsitems",
+      "schema": "DWH_watchlists",
+      "name": "Fact_WatchlistsItems",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "emoney_dbo.customereodbalance",
       "schema": "eMoney_dbo",
       "name": "CustomerEODBalance",
@@ -9415,6 +9723,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "emoney_dbo.emoney_panel_retention_daily",
+      "schema": "eMoney_dbo",
+      "name": "eMoney_Panel_Retention_Daily",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/eMoney_dbo/Tables/eMoney_Panel_Retention_Daily.md",
+      "slop_t4_hits": 0
+    },
+    {
       "object": "emoney_dbo.etl_accountsnapshot",
       "schema": "eMoney_dbo",
       "name": "ETL_AccountSnapshot",
@@ -9451,6 +9770,17 @@
       "object": "emoney_dbo.fiatcardstatuses",
       "schema": "eMoney_dbo",
       "name": "FiatCardStatuses",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "emoney_dbo.fiatcurrencybalances",
+      "schema": "eMoney_dbo",
+      "name": "FiatCurrencyBalances",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
@@ -9520,8 +9850,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/eMoney_Tribe/Tables/AccountsActivities_862157.md",
       "slop_t4_hits": 0
     },
     {
@@ -9531,8 +9861,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/eMoney_Tribe/Tables/AccountsActivities_AccountActivity-833937.md",
       "slop_t4_hits": 0
     },
     {
@@ -9542,8 +9872,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/eMoney_Tribe/Tables/AccountsActivities_RiskActions-322546.md",
       "slop_t4_hits": 0
     },
     {
@@ -9811,17 +10141,6 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "exw_dbo.exw_dimuser",
-      "schema": "EXW_dbo",
-      "name": "EXW_DimUser",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 1,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_DimUser.md",
-      "slop_t4_hits": 0
-    },
-    {
       "object": "exw_dbo.exw_dimuser_enriched",
       "schema": "EXW_dbo",
       "name": "EXW_DimUser_Enriched",
@@ -9844,14 +10163,14 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "exw_dbo.exw_facttransactions",
+      "object": "exw_dbo.exw_testusers",
       "schema": "EXW_dbo",
-      "name": "EXW_FactTransactions",
+      "name": "EXW_TestUsers",
       "kind": "lineage_upstream",
       "hops_from_seed": 1,
       "mapped_uc": null,
       "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_FactTransactions.md",
+      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_TestUsers.md",
       "slop_t4_hits": 0
     },
     {
@@ -9863,17 +10182,6 @@
       "mapped_uc": null,
       "currently_documented": true,
       "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_WalletClosedCountryProjects.md",
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "exw_dbo.exw_walletinventory",
-      "schema": "EXW_dbo",
-      "name": "EXW_WalletInventory",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 1,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_WalletInventory.md",
       "slop_t4_hits": 0
     },
     {
@@ -9940,6 +10248,28 @@
       "mapped_uc": null,
       "currently_documented": false,
       "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "exw_wallet.amlvalidations",
+      "schema": "EXW_Wallet",
+      "name": "AmlValidations",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_Wallet/Tables/AmlValidations.md",
+      "slop_t4_hits": 0
+    },
+    {
+      "object": "exw_wallet.blockchaincryptos",
+      "schema": "EXW_Wallet",
+      "name": "BlockchainCryptos",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_Wallet/Tables/BlockchainCryptos.md",
       "slop_t4_hits": 0
     },
     {
@@ -10174,6 +10504,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "exw_wallet.walletpoolstatuses",
+      "schema": "EXW_Wallet",
+      "name": "WalletPoolStatuses",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 1,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "exw_wallet.wallets",
       "schema": "EXW_Wallet",
       "name": "Wallets",
@@ -10317,25 +10658,14 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "bi_db_dbo.function_pnl_single_day",
-      "schema": "BI_DB_dbo",
-      "name": "Function_PnL_Single_Day",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Functions/Function_PnL_Single_Day.md",
-      "slop_t4_hits": 0
-    },
-    {
       "object": "bi_db_dbo.rev_cluster_dict",
       "schema": "BI_DB_dbo",
       "name": "Rev_Cluster_Dict",
       "kind": "lineage_upstream",
       "hops_from_seed": 2,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/Rev_Cluster_Dict.md",
       "slop_t4_hits": 0
     },
     {
@@ -10345,30 +10675,8 @@
       "kind": "lineage_upstream",
       "hops_from_seed": 2,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "copyfromlake.walletdb_dictionary_receivedtransactiontypes",
-      "schema": "CopyFromLake",
-      "name": "WalletDB_Dictionary_ReceivedTransactionTypes",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "copyfromlake.walletdb_dictionary_walletpoolstatuses",
-      "schema": "CopyFromLake",
-      "name": "WalletDB_Dictionary_WalletPoolStatuses",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/BI_DB_dbo/Tables/Synapse_Table_etoro_History_DepositAction.md",
       "slop_t4_hits": 0
     },
     {
@@ -10680,17 +10988,6 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "dwh_dbo.ext_history_cost",
-      "schema": "DWH_dbo",
-      "name": "Ext_History_Cost",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
       "object": "dwh_dbo.util_resultsliabilities_cycle",
       "schema": "DWH_dbo",
       "name": "Util_ResultsLiabilities_Cycle",
@@ -10834,6 +11131,17 @@
       "slop_t4_hits": 0
     },
     {
+      "object": "dwh_staging.historycosts_history_costs",
+      "schema": "DWH_staging",
+      "name": "HistoryCosts_History_Costs",
+      "kind": "lineage_upstream",
+      "hops_from_seed": 2,
+      "mapped_uc": null,
+      "currently_documented": false,
+      "wiki_path": null,
+      "slop_t4_hits": 0
+    },
+    {
       "object": "dwh_staging.pricelog_candles_getspreadedpricecandle60minsplitted",
       "schema": "DWH_staging",
       "name": "PriceLog_Candles_GetSpreadedPriceCandle60MinSplitted",
@@ -10955,17 +11263,6 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "emoney_dbo.fiatcurrencybalances",
-      "schema": "eMoney_dbo",
-      "name": "FiatCurrencyBalances",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
       "object": "exw_currency.vinstrumentratesforweek",
       "schema": "EXW_Currency",
       "name": "vInstrumentRatesForWeek",
@@ -10988,58 +11285,14 @@
       "slop_t4_hits": 0
     },
     {
-      "object": "exw_dbo.exw_testusers",
-      "schema": "EXW_dbo",
-      "name": "EXW_TestUsers",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": true,
-      "wiki_path": "knowledge/synapse/Wiki/EXW_dbo/Tables/EXW_TestUsers.md",
-      "slop_t4_hits": 0
-    },
-    {
       "object": "exw_wallet.amlproviderusers",
       "schema": "EXW_Wallet",
       "name": "AmlProviderUsers",
       "kind": "lineage_upstream",
       "hops_from_seed": 2,
       "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "exw_wallet.amlvalidations",
-      "schema": "EXW_Wallet",
-      "name": "AmlValidations",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "exw_wallet.blockchaincryptos",
-      "schema": "EXW_Wallet",
-      "name": "BlockchainCryptos",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
-    },
-    {
-      "object": "exw_wallet.walletpoolstatuses",
-      "schema": "EXW_Wallet",
-      "name": "WalletPoolStatuses",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 2,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
+      "currently_documented": true,
+      "wiki_path": "knowledge/synapse/Wiki/EXW_Wallet/Tables/AmlProviderUsers.md",
       "slop_t4_hits": 0
     },
     {
@@ -11085,17 +11338,6 @@
       "currently_documented": false,
       "wiki_path": null,
       "slop_t4_hits": 0
-    },
-    {
-      "object": "dwh_staging.historycosts_history_costs",
-      "schema": "DWH_staging",
-      "name": "HistoryCosts_History_Costs",
-      "kind": "lineage_upstream",
-      "hops_from_seed": 3,
-      "mapped_uc": null,
-      "currently_documented": false,
-      "wiki_path": null,
-      "slop_t4_hits": 0
     }
   ],
   "mapped_no_synapse_mirror": [
@@ -11110,6 +11352,12 @@
       "schema_name": "History",
       "table_name": "Alert",
       "uc_table": "billing.bronze_alertservicedb_history_alert"
+    },
+    {
+      "database_name": "CalendarDB",
+      "schema_name": "Market",
+      "table_name": "DefaultWeeklyCalendars",
+      "uc_table": "dealing.bronze_calendardb_market_defaultweeklycalendars"
     },
     {
       "database_name": "CalendarDB",
@@ -11202,10 +11450,58 @@
       "uc_table": "bi_db.bronze_candles_trade_spreadtogroup"
     },
     {
+      "database_name": "Candles4",
+      "schema_name": "dbo",
+      "table_name": "EyalIsTheKing",
+      "uc_table": "general.bronze_candles4_dbo_eyalistheking"
+    },
+    {
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle10Min",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle10min"
+    },
+    {
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle15Min",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle15min"
+    },
+    {
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle1Min",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle1min"
+    },
+    {
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle30Min",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle30min"
+    },
+    {
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle5Min",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle5min"
+    },
+    {
+      "database_name": "Candles_History",
+      "schema_name": "Candles",
+      "table_name": "V_History_T_PriceCandle60Min",
+      "uc_table": "bi_db.bronze_candles_history_candles_v_history_t_pricecandle60min"
+    },
+    {
       "database_name": "ClubService",
       "schema_name": "Clubs",
       "table_name": "DowngradeRisk",
       "uc_table": "bi_db.bronze_clubservice_clubs_downgraderisk"
+    },
+    {
+      "database_name": "ClubService",
+      "schema_name": "Clubs",
+      "table_name": "UserProducts",
+      "uc_table": "experience.bronze_clubservice_clubs_userproducts"
     },
     {
       "database_name": "ClubService",
@@ -11214,22 +11510,10 @@
       "uc_table": "bi_db.bronze_clubservice_dictionary_balancesourcetypes"
     },
     {
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "ExternalReconciliation",
-      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliation"
-    },
-    {
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "ExternalReconciliationTotalPriority",
-      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliationtotalpriority"
-    },
-    {
-      "database_name": "Cmrdb",
-      "schema_name": "dbo",
-      "table_name": "NOPBeRegulation",
-      "uc_table": "finance.bronze_cmrdb_dbo_nopberegulation"
+      "database_name": "ClubService",
+      "schema_name": "Dictionary",
+      "table_name": "PlayerLevel",
+      "uc_table": "experience.bronze_clubservice_dictionary_playerlevel"
     },
     {
       "database_name": "ComplianceStateDB",
@@ -11248,6 +11532,12 @@
       "schema_name": "Compliance",
       "table_name": "CustomerConsents",
       "uc_table": "bi_db.bronze_compliancestatedb_compliance_customerconsents"
+    },
+    {
+      "database_name": "ComplianceStateDB",
+      "schema_name": "Compliance",
+      "table_name": "CustomerInstruments",
+      "uc_table": "compliance.bronze_compliancestatedb_compliance_customerinstruments"
     },
     {
       "database_name": "ComplianceStateDB",
@@ -11278,6 +11568,12 @@
       "schema_name": "Compliance",
       "table_name": "CustomerRequirmentsView",
       "uc_table": "bi_db.bronze_compliancestatedb_compliance_customerrequirmentsview"
+    },
+    {
+      "database_name": "ComplianceStateDB",
+      "schema_name": "Compliance",
+      "table_name": "CustomerSubsidiary",
+      "uc_table": "compliance.bronze_compliancestatedb_compliance_customersubsidiary"
     },
     {
       "database_name": "ComplianceStateDB",
@@ -11350,6 +11646,12 @@
       "schema_name": "Compliance",
       "table_name": "UserCryptoTradingData",
       "uc_table": "bi_db.bronze_compliancestatedb_compliance_usercryptotradingdata"
+    },
+    {
+      "database_name": "ComplianceStateDB",
+      "schema_name": "Compliance",
+      "table_name": "UserPositions",
+      "uc_table": "bi_db.bronze_compliancestatedb_compliance_userpositions"
     },
     {
       "database_name": "ComplianceStateDB",
@@ -11456,6 +11758,12 @@
     {
       "database_name": "CustomerFinanceDB",
       "schema_name": "Customer",
+      "table_name": "DefaultAccount",
+      "uc_table": "billing.bronze_customerfinancedb_customer_defaultaccount"
+    },
+    {
+      "database_name": "CustomerFinanceDB",
+      "schema_name": "Customer",
       "table_name": "FirstTimeDeposits",
       "uc_table": "bi_db.bronze_customerfinancedb_customer_firsttimedeposits"
     },
@@ -11524,6 +11832,18 @@
       "schema_name": "DBA",
       "table_name": "V_NumRows_Sizes",
       "uc_table": "general.bronze_db_logs_dba_v_numrows_sizes"
+    },
+    {
+      "database_name": "DB_Logs",
+      "schema_name": "Hedge",
+      "table_name": "AutoDiffAuditLogger",
+      "uc_table": "dealing.bronze_db_logs_hedge_autodiffauditlogger"
+    },
+    {
+      "database_name": "DB_Logs",
+      "schema_name": "Hedge",
+      "table_name": "ExecutionChangeLog",
+      "uc_table": "dealing.bronze_db_logs_hedge_executionchangelog"
     },
     {
       "database_name": "DB_Logs",
@@ -11605,15 +11925,45 @@
     },
     {
       "database_name": "DB_Logs",
+      "schema_name": "History",
+      "table_name": "OrdersMarketFail",
+      "uc_table": "bi_db.bronze_db_logs_history_ordersmarketfail"
+    },
+    {
+      "database_name": "DB_Logs",
       "schema_name": "Trade",
       "table_name": "OrderForOpen",
       "uc_table": "trading.bronze_db_logs_trade_orderforopen"
+    },
+    {
+      "database_name": "DB_Logs_31_5",
+      "schema_name": "History",
+      "table_name": "CloseExecutionPlan",
+      "uc_table": "general.bronze_db_logs_31_5_history_closeexecutionplan"
+    },
+    {
+      "database_name": "DB_Logs_31_5",
+      "schema_name": "History",
+      "table_name": "ExecutedCloseOrders",
+      "uc_table": "general.bronze_db_logs_31_5_history_executedcloseorders"
+    },
+    {
+      "database_name": "DB_Logs_31_5",
+      "schema_name": "History",
+      "table_name": "OrderForClose",
+      "uc_table": "general.bronze_db_logs_31_5_history_orderforclose"
     },
     {
       "database_name": "DailyTrades_Copy4Eyal",
       "schema_name": "History",
       "table_name": "DailyTrades_DailyPnL_Archive",
       "uc_table": "general.bronze_dailytrades_copy4eyal_history_dailytrades_dailypnl_archive"
+    },
+    {
+      "database_name": "DealingLogs",
+      "schema_name": "Price",
+      "table_name": "SkewCost",
+      "uc_table": "dealing.bronze_dealinglogs_price_skewcost"
     },
     {
       "database_name": "DeltaApp",
@@ -11746,6 +12096,138 @@
       "schema_name": "Dictionary",
       "table_name": "TribeScriptStatus",
       "uc_table": "emoney.bronze_fiatdwhdb_dictionary_tribescriptstatus"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_862157",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_862157"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_AccountActivity-833937",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_accountactivity-833937"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_RiskActions-322546",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_riskactions-322546"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities_SecurityChecks-471048",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountsactivities_securitychecks-471048"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots-509416",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots-509416"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots_AccountSnapshot-956050",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots_accountsnapshot-956050"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots_BankAccount-393561",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots_bankaccount-393561"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsSnapshots_BankAccounts-795870",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_accountssnapshots_bankaccounts-795870"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes-837045",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes-837045"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes_Authorize-312243",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes_authorize-312243"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes_RiskActions-796100",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes_riskactions-796100"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "Authorizes_SecurityChecks-30662",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_authorizes_securitychecks-30662"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots-890718",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots-890718"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_Account-513255",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_account-513255"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_Accounts-350640",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_accounts-350640"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_BankAccount-341626",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccount-341626"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_BankAccounts-83854",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_bankaccounts-83854"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "CardsSnapshots_CardSnapshot-140457",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_cardssnapshots_cardsnapshot-140457"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions-333243",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions-333243"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions_RiskActions-236807",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions_riskactions-236807"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions_SecurityChecks-426253",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions_securitychecks-426253"
+    },
+    {
+      "database_name": "FiatDwhDB",
+      "schema_name": "Tribe",
+      "table_name": "SettlementsTransactions_SettlementTransaction-637239",
+      "uc_table": "emoney.bronze_fiatdwhdb_tribe_settlementstransactions_settlementtransaction-637239"
     },
     {
       "database_name": "FiatDwhDB",
@@ -12140,6 +12622,12 @@
     {
       "database_name": "Fivetran",
       "schema_name": "dealing",
+      "table_name": "overnightfees",
+      "uc_table": "bi_db.bronze_fivetran_dealing_overnight_fees"
+    },
+    {
+      "database_name": "Fivetran",
+      "schema_name": "dealing",
       "table_name": "staking_airdrop_hs",
       "uc_table": "dealing.bronze_fivetran_dealing_staking_airdrop_hs"
     },
@@ -12154,6 +12642,12 @@
       "schema_name": "delighted",
       "table_name": "v_response",
       "uc_table": "marketing.bronze_fivetran_delighted_response"
+    },
+    {
+      "database_name": "Fivetran",
+      "schema_name": "double_click_campaign_manager",
+      "table_name": "V_media_campaign",
+      "uc_table": "bi_db.bronze_fivetran_double_click_campaign_manager_v_media_campaign"
     },
     {
       "database_name": "Fivetran",
@@ -12734,6 +13228,12 @@
     {
       "database_name": "Fivetran",
       "schema_name": "google_sheets",
+      "table_name": "marex_mapping_table",
+      "uc_table": "bi_db.bronze_fivetran_google_sheets_marex_mapping_table"
+    },
+    {
+      "database_name": "Fivetran",
+      "schema_name": "google_sheets",
       "table_name": "marex_mapping_table_2",
       "uc_table": "bi_db.bronze_fivetran_google_sheets_marex_mapping_table_2"
     },
@@ -13250,6 +13750,12 @@
     {
       "database_name": "KycAnalyzer",
       "schema_name": "",
+      "table_name": "ClientRiskProfile",
+      "uc_table": "compliance.bronze_kycanalyzer_clientriskprofile"
+    },
+    {
+      "database_name": "KycAnalyzer",
+      "schema_name": "",
       "table_name": "ClientRiskProfileLog",
       "uc_table": "compliance.bronze_kycanalyzer_clientriskprofilelog"
     },
@@ -13276,6 +13782,12 @@
       "schema_name": "Analyzer",
       "table_name": "NotificationAudit",
       "uc_table": "compliance.bronze_kycanalyzer_analyzer_notificationaudit"
+    },
+    {
+      "database_name": "KycAnalyzer",
+      "schema_name": "Analyzer",
+      "table_name": "Suitability",
+      "uc_table": "bi_db.bronze_kycanalyzer_analyzer_suitability"
     },
     {
       "database_name": "KycAnalyzer",
@@ -13375,6 +13887,12 @@
     },
     {
       "database_name": "MarketMaker",
+      "schema_name": "ExchangesData",
+      "table_name": "Trades_Archive_Before_20231001",
+      "uc_table": "dealing.bronze_marketmaker_exchangesdata_trades_archive_before_20231001"
+    },
+    {
+      "database_name": "MarketMaker",
       "schema_name": "dbo",
       "table_name": "Exposures",
       "uc_table": "dealing.bronze_marketmaker_dbo_exposures"
@@ -13388,8 +13906,20 @@
     {
       "database_name": "MarketMaker",
       "schema_name": "dbo",
+      "table_name": "HedgeOrders_Archive_Before_20231001",
+      "uc_table": "dealing.bronze_marketmaker_dbo_hedgeorders_archive_before_20231001"
+    },
+    {
+      "database_name": "MarketMaker",
+      "schema_name": "dbo",
       "table_name": "HedgeTrades",
       "uc_table": "dealing.bronze_marketmaker_dbo_hedgetrades"
+    },
+    {
+      "database_name": "MarketMaker",
+      "schema_name": "dbo",
+      "table_name": "HedgeTrades_Archive_Before_20231001",
+      "uc_table": "dealing.bronze_marketmaker_dbo_hedgetrades_archive_before_20231001"
     },
     {
       "database_name": "MarketMaker",
@@ -13408,6 +13938,12 @@
       "schema_name": "dbo",
       "table_name": "RFQHedgeUnits",
       "uc_table": "dealing.bronze_marketmaker_dbo_rfqhedgeunits"
+    },
+    {
+      "database_name": "MarketMaker",
+      "schema_name": "dbo",
+      "table_name": "TargetTrades",
+      "uc_table": "dealing.bronze_marketmaker_dbo_targettrades"
     },
     {
       "database_name": "MarketMaker",
@@ -13432,6 +13968,174 @@
       "schema_name": "dbo",
       "table_name": "V_HBCHedgeTrades",
       "uc_table": "bi_db.bronze_marketmaker_dbo_v_hbchedgetrades"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ArticleMovementType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_articlemovementtype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ArticleType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_articletype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "Countries",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_countries"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "DividendFrequencyType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_dividendfrequencytype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ExchangeInfo",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_exchangeinfo"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "ExperimentStatus",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_experimentstatus"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "InstrumentReferenceType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_instrumentreferencetype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "MarketEventStatusType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_marketeventstatustype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "MarketEventType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_marketeventtype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "NotificationStatus",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_notificationstatus"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "RateChangeInterval",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_ratechangeinterval"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "RateChangeSize",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_ratechangesize"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "RateChangeType",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_ratechangetype"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "Regulations",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_regulations"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "Dictionary",
+      "table_name": "StreakInterval",
+      "uc_table": "bi_db.bronze_marketnotifications_dictionary_streakinterval"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "ArticleEvents",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_articleevents"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "Currencies",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_currencies"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "DividendEvents",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_dividendevents"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "EarningReportEvents",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_earningreportevents"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "EarningReportTemplates",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_earningreporttemplates"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "Instruments",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_instruments"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "RateChangeTemplates",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_ratechangetemplates"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "RateChangeTriggerConfigurations",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_ratechangetriggerconfigurations"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "SendAllConfigurations",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_sendallconfigurations"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "StreakEvents",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_streakevents"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "StreakTemplates",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_streaktemplates"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "StreakTriggerConfigurations",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_streaktriggerconfigurations"
+    },
+    {
+      "database_name": "MarketNotifications",
+      "schema_name": "MarketNotifications",
+      "table_name": "Templates",
+      "uc_table": "bi_db.bronze_marketnotifications_marketnotifications_templates"
     },
     {
       "database_name": "MarketPerformance",
@@ -13531,9 +14235,45 @@
     },
     {
       "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "TransactionStatusReasons",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_transactionstatusreasons"
+    },
+    {
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "TransactionStatuses",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_transactionstatuses"
+    },
+    {
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "WithdrawCancellationSources",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_withdrawcancellationsources"
+    },
+    {
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "WithdrawStatusReasons",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_withdrawstatusreasons"
+    },
+    {
+      "database_name": "MoneyBusDB",
+      "schema_name": "Dictionary",
+      "table_name": "WithdrawStatuses",
+      "uc_table": "billing.bronze_moneybusdb_dictionary_withdrawstatuses"
+    },
+    {
+      "database_name": "MoneyBusDB",
       "schema_name": "MoneyBus",
       "table_name": "Transactions",
       "uc_table": "billing.bronze_moneybusdb_moneybus_transactions"
+    },
+    {
+      "database_name": "MoneyBusDB",
+      "schema_name": "MoneyBus",
+      "table_name": "TransferLimits",
+      "uc_table": "billing.bronze_moneybusdb_moneybus_transferlimits"
     },
     {
       "database_name": "MoneyTransfer",
@@ -13694,6 +14434,12 @@
     {
       "database_name": "NotificationDB",
       "schema_name": "Notifications",
+      "table_name": "ClientTime",
+      "uc_table": "experience.bronze_notificationdb_notifications_clienttime"
+    },
+    {
+      "database_name": "NotificationDB",
+      "schema_name": "Notifications",
       "table_name": "ConfigLabelLanguageNamesCampaignIds",
       "uc_table": "experience.bronze_notificationdb_notifications_configlabellanguagenamescampaignids"
     },
@@ -13820,6 +14566,24 @@
     {
       "database_name": "OpsDB",
       "schema_name": "dbo",
+      "table_name": "DataLakeTableStatus",
+      "uc_table": "bi_db.bronze_opsdb_dbo_datalaketablestatus"
+    },
+    {
+      "database_name": "OpsDB",
+      "schema_name": "dbo",
+      "table_name": "ObjectsStatus",
+      "uc_table": "bi_db.bronze_opsdb_dbo_objectsstatus"
+    },
+    {
+      "database_name": "OpsDB",
+      "schema_name": "dbo",
+      "table_name": "ProcedureDependencies",
+      "uc_table": "bi_db.bronze_opsdb_dbo_proceduredependencies"
+    },
+    {
+      "database_name": "OpsDB",
+      "schema_name": "dbo",
       "table_name": "SQLSources_Config",
       "uc_table": "general.bronze_opsdb_dbo_sqlsources_config"
     },
@@ -13912,6 +14676,12 @@
       "schema_name": "History",
       "table_name": "CurrencyPriceMaxDate",
       "uc_table": "dealing.bronze_pricelog_history_currencypricemaxdate"
+    },
+    {
+      "database_name": "PriceLog",
+      "schema_name": "History",
+      "table_name": "CurrencyPrice_Active",
+      "uc_table": "dealing.bronze_pricelog_history_currencyprice_active"
     },
     {
       "database_name": "PriceLog",
@@ -14192,6 +14962,18 @@
     {
       "database_name": "Rankings",
       "schema_name": "MarketEvents",
+      "table_name": "DWH_EventCustomers_Part",
+      "uc_table": "bi_db.bronze_rankings_marketevents_dwh_eventcustomers_part"
+    },
+    {
+      "database_name": "Rankings",
+      "schema_name": "MarketEvents",
+      "table_name": "DWH_EventCustomers_Part",
+      "uc_table": "experience.bronze_rankings_marketevents_eventcustomers"
+    },
+    {
+      "database_name": "Rankings",
+      "schema_name": "MarketEvents",
       "table_name": "Events",
       "uc_table": "experience.bronze_rankings_marketevents_events"
     },
@@ -14206,6 +14988,12 @@
       "schema_name": "MarketEvents",
       "table_name": "MlCustomersAnalysis",
       "uc_table": "bi_db.bronze_rankings_marketevents_mlcustomersanalysis"
+    },
+    {
+      "database_name": "Rankings",
+      "schema_name": "MarketEvents",
+      "table_name": "OpenedTrades",
+      "uc_table": "experience.bronze_rankings_marketevents_openedtrades"
     },
     {
       "database_name": "Rankings",
@@ -14248,6 +15036,12 @@
       "schema_name": "dbo",
       "table_name": "BI_DB_MarketEvents_To_Synapse",
       "uc_table": "data.bronze_rankings_dbo_bi_db_marketevents_to_synapse"
+    },
+    {
+      "database_name": "RankingsDaily_For_Archive_20251106",
+      "schema_name": "History",
+      "table_name": "DailyGainAnon",
+      "uc_table": "general.bronze_rankingsdaily_for_archive_20251106_history_dailygainanon"
     },
     {
       "database_name": "RecurringInvestment",
@@ -14456,6 +15250,24 @@
     {
       "database_name": "RegReportDB_Prod",
       "schema_name": "dbo",
+      "table_name": "MIFID2_ClientData__DSR_8521_22",
+      "uc_table": "pii_data.bronze_regreportdb_prod_dbo_mifid2_clientdata__dsr_8521_22"
+    },
+    {
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "MIFID2_ETORO_Report_BKREP2025_OnlyBackreportingData_DSR_8521",
+      "uc_table": "regtech.bronze_regreportdb_prod_dbo_mifid2_etoro_report_bkrep2025_onlybackreportingdata_dsr_8521"
+    },
+    {
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "MIFID2_Report_BKREP2025_OnlyBackreportingData_DSR_8521",
+      "uc_table": "regtech.bronze_regreportdb_prod_dbo_mifid2_report_bkrep2025_onlybackreportingdata_dsr_8521"
+    },
+    {
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
       "table_name": "NPD_UPDATE_Names_with_special_characters_fix_v4__DSR_8521",
       "uc_table": "pii_data.bronze_regreportdb_prod_dbo_npd_update_names_with_special_characters_fix_v4__dsr_8521"
     },
@@ -14526,10 +15338,22 @@
       "uc_table": "regtech.gold_regreportdb_prod_dbo_reg_us_rep_dictionary"
     },
     {
+      "database_name": "RegReportDB_Prod",
+      "schema_name": "dbo",
+      "table_name": "UpdatedCONCATvaluesv2_DSR_8521",
+      "uc_table": "pii_data.bronze_regreportdb_prod_dbo_updatedconcatvaluesv2_dsr_8521"
+    },
+    {
       "database_name": "RelationService",
       "schema_name": "",
       "table_name": "audit",
       "uc_table": "general.bronze_relationservice_audit"
+    },
+    {
+      "database_name": "RelationService",
+      "schema_name": "aa",
+      "table_name": "audit",
+      "uc_table": "general.bronze_relationservice_aa_audit"
     },
     {
       "database_name": "RiskClassification",
@@ -14652,6 +15476,12 @@
       "uc_table": "general.bronze_sts_audit_stsaudit_useroperations"
     },
     {
+      "database_name": "STS_Audit_Backup_20240204",
+      "schema_name": "StsAudit",
+      "table_name": "UserOperations",
+      "uc_table": "general.bronze_sts_audit_backup_20240204_stsaudit_useroperations"
+    },
+    {
       "database_name": "ScreeningService",
       "schema_name": "Dictionary",
       "table_name": "ScreeningProcess",
@@ -14716,6 +15546,18 @@
       "schema_name": "Settings",
       "table_name": "SelectedValueElectingStrategy",
       "uc_table": "general.bronze_settingsdb_settings_selectedvalueelectingstrategy"
+    },
+    {
+      "database_name": "SettingsDB",
+      "schema_name": "SettingsData",
+      "table_name": "CustomerData",
+      "uc_table": "general.bronze_settingsdb_settingsdata_customerdata"
+    },
+    {
+      "database_name": "SettingsDB",
+      "schema_name": "SettingsData",
+      "table_name": "KeyType",
+      "uc_table": "general.bronze_settingsdb_settingsdata_keytype"
     },
     {
       "database_name": "Sodreconciliation",
@@ -14930,6 +15772,12 @@
     {
       "database_name": "Spaceship",
       "schema_name": "metabase",
+      "table_name": "super_unit_prices",
+      "uc_table": "spaceship.bronze_spaceship_metabase_super_unit_prices"
+    },
+    {
+      "database_name": "Spaceship",
+      "schema_name": "metabase",
       "table_name": "super_user_balances",
       "uc_table": "spaceship.bronze_spaceship_metabase_super_user_balances"
     },
@@ -15078,10 +15926,40 @@
       "uc_table": "general.bronze_tradegain_dictionary_intervaltype"
     },
     {
+      "database_name": "TradeGain",
+      "schema_name": "Ranking",
+      "table_name": "Gain",
+      "uc_table": "general.bronze_tradegain_ranking_gain"
+    },
+    {
+      "database_name": "Trading",
+      "schema_name": "Trade",
+      "table_name": "InterestConsent",
+      "uc_table": "trading.bronze_trading_trade_interestconsent"
+    },
+    {
+      "database_name": "Trading",
+      "schema_name": "Trade",
+      "table_name": "InterestDaily",
+      "uc_table": "trading.bronze_trading_trade_interestdaily"
+    },
+    {
+      "database_name": "Trading",
+      "schema_name": "Trade",
+      "table_name": "InterestMonthly",
+      "uc_table": "trading.bronze_trading_trade_interestmonthly"
+    },
+    {
       "database_name": "TravelRuleDB",
       "schema_name": "",
       "table_name": "TravelRuleTransactions",
       "uc_table": "bi_db.bronze_travelruledb_travelruletransactions"
+    },
+    {
+      "database_name": "TribeReportDB",
+      "schema_name": "Tribe",
+      "table_name": "AccountsActivities-862157",
+      "uc_table": "bi_db.bronze_tribereportdb_tribe_accountsactivities_862157"
     },
     {
       "database_name": "USABroker",
@@ -15196,6 +16074,12 @@
       "schema_name": "apex",
       "table_name": "OptionsReasoningFormQuestionsAnswers",
       "uc_table": "bi_db.bronze_usabroker_apex_optionsreasoningformquestionsanswers"
+    },
+    {
+      "database_name": "USABroker",
+      "schema_name": "apex",
+      "table_name": "SketchInvestigationDoNotAppealReason",
+      "uc_table": "bi_db.bronze_usabroker_apex_sketchinvestigationdonotappealreason"
     },
     {
       "database_name": "USABroker",
@@ -15560,6 +16444,12 @@
     {
       "database_name": "WalletDB",
       "schema_name": "Staking",
+      "table_name": "StakingRewards",
+      "uc_table": "wallet.bronze_walletdb_staking_stakingrewards"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Staking",
       "table_name": "StakingStatuses",
       "uc_table": "wallet.bronze_walletdb_staking_stakingstatuses"
     },
@@ -15592,6 +16482,24 @@
       "schema_name": "Wallet",
       "table_name": "BlockchainCryptos",
       "uc_table": "wallet.bronze_walletdb_wallet_blockchaincryptos"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "ConversionStatuses",
+      "uc_table": "wallet.bronze_walletdb_wallet_conversionstatuses"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "ConversionTransactions",
+      "uc_table": "wallet.bronze_walletdb_wallet_conversiontransactions"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "Conversions",
+      "uc_table": "wallet.bronze_walletdb_wallet_conversions"
     },
     {
       "database_name": "WalletDB",
@@ -15640,6 +16548,24 @@
       "schema_name": "Wallet",
       "table_name": "LimitationsDefinitions",
       "uc_table": "wallet.bronze_walletdb_wallet_limitationsdefinitions"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "PaymentStatuses",
+      "uc_table": "wallet.bronze_walletdb_wallet_paymentstatuses"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "PaymentTransactions",
+      "uc_table": "wallet.bronze_walletdb_wallet_paymenttransactions"
+    },
+    {
+      "database_name": "WalletDB",
+      "schema_name": "Wallet",
+      "table_name": "Payments",
+      "uc_table": "wallet.bronze_walletdb_wallet_payments"
     },
     {
       "database_name": "WalletDB",
@@ -15810,6 +16736,54 @@
       "uc_table": "bi_db.bronze_wealth_france_wealth_france_users_data"
     },
     {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "DailyTask",
+      "uc_table": "finance.bronze_cmrdb_dbo_dailytask"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "ExternalReconciliation",
+      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliation"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "ExternalReconciliationTotalPriority",
+      "uc_table": "finance.bronze_cmrdb_dbo_externalreconciliationtotalpriority"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "IRRowSchema",
+      "uc_table": "finance.bronze_cmrdb_dbo_irrowschema"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "IRSchema",
+      "uc_table": "finance.bronze_cmrdb_dbo_irschema"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "IRValue",
+      "uc_table": "finance.bronze_cmrdb_dbo_irvalue"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "InternalReconciliation",
+      "uc_table": "finance.bronze_cmrdb_dbo_internalreconciliation"
+    },
+    {
+      "database_name": "cmrdb",
+      "schema_name": "dbo",
+      "table_name": "NOPBeRegulation",
+      "uc_table": "finance.bronze_cmrdb_dbo_nopberegulation"
+    },
+    {
       "database_name": "contactverification",
       "schema_name": "Phone",
       "table_name": "Customer",
@@ -15826,6 +16800,30 @@
       "schema_name": "dbo",
       "table_name": "vAccountSummary",
       "uc_table": "finance.bronze_cwadb_dbo_vaccountsummary"
+    },
+    {
+      "database_name": "databricks_postgres",
+      "schema_name": "public",
+      "table_name": "chat_history",
+      "uc_table": "bi_db.bronze_databricks_postgres_public_chat_history"
+    },
+    {
+      "database_name": "databricks_postgres",
+      "schema_name": "public",
+      "table_name": "eilon_test",
+      "uc_table": "bi_db.bronze_databricks_postgres_public_eilon_test"
+    },
+    {
+      "database_name": "eDocsDB",
+      "schema_name": "Translation",
+      "table_name": "TranslationRequests",
+      "uc_table": "bi_db.bronze_edocsdb_translation_translationrequests"
+    },
+    {
+      "database_name": "eDocsDB",
+      "schema_name": "Translation",
+      "table_name": "Translations",
+      "uc_table": "bi_db.bronze_edocsdb_translation_translations"
     },
     {
       "database_name": "eToroLogs_Real",
@@ -15902,6 +16900,24 @@
     {
       "database_name": "etoro",
       "schema_name": "Billing",
+      "table_name": "AftRouting",
+      "uc_table": "billing.bronze_etoro_billing_aftrouting"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "BadBin",
+      "uc_table": "billing.bronze_etoro_billing_badbin"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "ConversionFee",
+      "uc_table": "billing.bronze_etoro_billing_conversionfee"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Billing",
       "table_name": "CurrencySettings",
       "uc_table": "bi_db.bronze_etoro_billing_currencysettings"
     },
@@ -15932,8 +16948,20 @@
     {
       "database_name": "etoro",
       "schema_name": "Billing",
+      "table_name": "LimitedBins",
+      "uc_table": "billing.bronze_etoro_billing_limitedbins"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Billing",
       "table_name": "MapMerchantCodeToMid",
       "uc_table": "bi_db.bronze_etoro_billing_mapmerchantcodetomid"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Billing",
+      "table_name": "ScheduledTaskState",
+      "uc_table": "billing.bronze_etoro_billing_scheduledtaskstate"
     },
     {
       "database_name": "etoro",
@@ -16010,6 +17038,12 @@
     {
       "database_name": "etoro",
       "schema_name": "Customer",
+      "table_name": "RafEligibleCustomers",
+      "uc_table": "general.bronze_etoro_customer_rafeligiblecustomers"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Customer",
       "table_name": "TwoFactorVerificationDetails",
       "uc_table": "general.bronze_etoro_customer_twofactorverificationdetails"
     },
@@ -16058,6 +17092,18 @@
     {
       "database_name": "etoro",
       "schema_name": "DWH",
+      "table_name": "HistoryBackOfficeCustomer",
+      "uc_table": "bi_db.bronze_etoro_dwh_historybackofficecustomer"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "DWH",
+      "table_name": "HistoryMirrorHourly",
+      "uc_table": "bi_db.bronze_etoro_dwh_historymirrorhourly"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "DWH",
       "table_name": "HistoryOrderForClose",
       "uc_table": "general.bronze_etoro_dwh_historyorderforclose"
     },
@@ -16066,6 +17112,12 @@
       "schema_name": "DWH",
       "table_name": "HistoryOrderForOpen",
       "uc_table": "general.bronze_etoro_dwh_historyorderforopen"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "DWH",
+      "table_name": "RafCustomers",
+      "uc_table": "experience.bronze_etoro_dwh_rafcustomers"
     },
     {
       "database_name": "etoro",
@@ -16796,6 +17848,24 @@
     {
       "database_name": "etoro",
       "schema_name": "Dictionary",
+      "table_name": "OrdersEntryActionType",
+      "uc_table": "general.bronze_etoro_dictionary_ordersentryactiontype"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Dictionary",
+      "table_name": "OrdersExitActionType",
+      "uc_table": "general.bronze_etoro_dictionary_ordersexitactiontype"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Dictionary",
+      "table_name": "OrdersExitCloseActionType",
+      "uc_table": "general.bronze_etoro_dictionary_ordersexitcloseactiontype"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Dictionary",
       "table_name": "PCL_ChangeType",
       "uc_table": "general.bronze_etoro_dictionary_pcl_changetype"
     },
@@ -17353,6 +18423,18 @@
     },
     {
       "database_name": "etoro",
+      "schema_name": "Hedge",
+      "table_name": "SupportedInstrumentsAccount",
+      "uc_table": "dealing.bronze_etoro_hedge_supportedinstrumentsaccount"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Hedge",
+      "table_name": "ViewExecutionLog_isnull",
+      "uc_table": "general.bronze_etoro_hedge_viewexecutionlog_isnull"
+    },
+    {
+      "database_name": "etoro",
       "schema_name": "History",
       "table_name": "AuditHistory",
       "uc_table": "general.bronze_etoro_history_audithistory"
@@ -17374,6 +18456,12 @@
       "schema_name": "History",
       "table_name": "BackOfficeCustomer",
       "uc_table": "general.bronze_etoro_history_backofficecustomer"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "CEPListCIDMappings",
+      "uc_table": "general.bronze_etoro_history_ceplistcidmappings"
     },
     {
       "database_name": "etoro",
@@ -17552,6 +18640,18 @@
     {
       "database_name": "etoro",
       "schema_name": "History",
+      "table_name": "OrdersEntryTbl",
+      "uc_table": "general.bronze_etoro_history_ordersentrytbl"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "History",
+      "table_name": "OrdersExitTbl",
+      "uc_table": "general.bronze_etoro_history_ordersexittbl"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "History",
       "table_name": "PortfolioConversionConfigurations",
       "uc_table": "dealing.bronze_etoro_history_portfolioconversionconfigurations"
     },
@@ -17678,6 +18778,12 @@
     {
       "database_name": "etoro",
       "schema_name": "Trade",
+      "table_name": "Fund",
+      "uc_table": "bi_db.bronze_etoro_trade_fund"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Trade",
       "table_name": "FuturesMetaData",
       "uc_table": "trading.bronze_etoro_trade_futuresmetadata"
     },
@@ -17786,6 +18892,18 @@
     {
       "database_name": "etoro",
       "schema_name": "Trade",
+      "table_name": "OrdersEntryTbl",
+      "uc_table": "trading.bronze_etoro_trade_ordersentrytbl"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "OrdersExitTbl",
+      "uc_table": "trading.bronze_etoro_trade_ordersexittbl"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Trade",
       "table_name": "PositionAirdropLog",
       "uc_table": "trading.bronze_etoro_trade_positionairdroplog"
     },
@@ -17800,6 +18918,12 @@
       "schema_name": "Trade",
       "table_name": "PositionsHedgeServerChangeLog",
       "uc_table": "trading.bronze_etoro_trade_positionshedgeserverchangelog"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "Trade",
+      "table_name": "PositionsHedgeServerChangeLog_INT_2021",
+      "uc_table": "trading.bronze_etoro_trade_positionshedgeserverchangelog_int_2021"
     },
     {
       "database_name": "etoro",
@@ -17840,6 +18964,12 @@
     {
       "database_name": "etoro",
       "schema_name": "dbo",
+      "table_name": "SYN_etoroGeneralCustomerSettings",
+      "uc_table": "general.bronze_etoro_dbo_syn_etorogeneralcustomersettings"
+    },
+    {
+      "database_name": "etoro",
+      "schema_name": "dbo",
       "table_name": "SYN_etoroGeneral_DWH_CustomerSettings",
       "uc_table": "bi_db.bronze_etoro_dbo_syn_etorogeneral_dwh_customersettings"
     },
@@ -17860,6 +18990,12 @@
       "schema_name": "dbo",
       "table_name": "Copiers_DATA",
       "uc_table": "bi_db.bronze_etorogeneral_dbo_copiers_data"
+    },
+    {
+      "database_name": "etoro_Archive",
+      "schema_name": "Billing",
+      "table_name": "ScheduledTaskState",
+      "uc_table": "billing.bronze_etoro_archive_billing_scheduledtaskstate"
     },
     {
       "database_name": "fiktivo",
@@ -17890,6 +19026,12 @@
       "schema_name": "AffiliateCommission",
       "table_name": "ClosedPositionVW",
       "uc_table": "bi_db.bronze_fiktivo_affiliatecommission_closedpositionvw"
+    },
+    {
+      "database_name": "fiktivo",
+      "schema_name": "AffiliateCommission",
+      "table_name": "CreditAccountMapping",
+      "uc_table": "experience.bronze_fiktivo_affiliatecommission_creditaccountmapping"
     },
     {
       "database_name": "fiktivo",
@@ -17936,6 +19078,12 @@
     {
       "database_name": "fiktivo",
       "schema_name": "AffiliateCommission",
+      "table_name": "RegistrationMetaData",
+      "uc_table": "experience.bronze_fiktivo_affiliatecommission_registrationmetadata"
+    },
+    {
+      "database_name": "fiktivo",
+      "schema_name": "AffiliateCommission",
       "table_name": "RegistrationVW",
       "uc_table": "bi_db.bronze_fiktivo_affiliatecommission_registration"
     },
@@ -17962,6 +19110,12 @@
       "schema_name": "Dictionary",
       "table_name": "ChangedSections",
       "uc_table": "general.bronze_fiktivo_dictionary_changedsections"
+    },
+    {
+      "database_name": "fiktivo",
+      "schema_name": "Dictionary",
+      "table_name": "MarketingRegion",
+      "uc_table": "experience.bronze_fiktivo_dictionary_marketingregion"
     },
     {
       "database_name": "fiktivo",
@@ -18066,6 +19220,18 @@
       "uc_table": "bi_db.bronze_marketplace_applications_applications"
     },
     {
+      "database_name": "navigation",
+      "schema_name": "",
+      "table_name": "navigation",
+      "uc_table": "bi_db.bronze_navigation__navigation"
+    },
+    {
+      "database_name": "navigation",
+      "schema_name": "",
+      "table_name": "navigation",
+      "uc_table": "bi_db.bronze_navigation_navigation"
+    },
+    {
       "database_name": "prod-psp-data-sql-we",
       "schema_name": "dbo",
       "table_name": "AccountSilver",
@@ -18094,6 +19260,12 @@
       "schema_name": "Customer",
       "table_name": "RafTrackingProcessed",
       "uc_table": "experience.bronze_rafcompensations_customer_raftrackingprocessed"
+    },
+    {
+      "database_name": "rafcompensations",
+      "schema_name": "Dictionary",
+      "table_name": "RafModelType",
+      "uc_table": "experience.bronze_rafcompensations_dictionary_rafmodeltype"
     },
     {
       "database_name": "rafcompensations",
@@ -18146,14 +19318,32 @@
     {
       "database_name": "sql_dp_prod_we",
       "schema_name": "BI_DB_dbo",
+      "table_name": "From_Synapse_EmoneyClientBalance_To_Generic_20260216",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_bi_db_dbo_from_synapse_emoneyclientbalance_to_generic_20260216"
+    },
+    {
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "BI_DB_dbo",
       "table_name": "V_BI_DB_BO_Generated_Compensations",
       "uc_table": "general.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_bo_generated_compensations"
+    },
+    {
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DE_dbo",
+      "table_name": "SP_Tangani",
+      "uc_table": "general.gold_sql_dp_prod_we_de_dbo_sp_tangani"
     },
     {
       "database_name": "sql_dp_prod_we",
       "schema_name": "DWH_dbo",
       "table_name": "Dim_AffiliateCostType",
       "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliatecosttype"
+    },
+    {
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DWH_dbo",
+      "table_name": "Dim_ContactType",
+      "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_contacttype"
     },
     {
       "database_name": "sql_dp_prod_we",
@@ -18188,6 +19378,12 @@
     {
       "database_name": "sql_dp_prod_we",
       "schema_name": "DWH_dbo",
+      "table_name": "V_Fact_CustomerAction_for_generic",
+      "uc_table": "bi_db.gold_sql_dp_prod_we_dwh_dbo_v_fact_customeraction_for_generic"
+    },
+    {
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "DWH_dbo",
       "table_name": "v_Dim_Mirror",
       "uc_table": "dwh.gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror"
     },
@@ -18196,6 +19392,12 @@
       "schema_name": "Dealing_dbo",
       "table_name": "Dealing_RiskMatrix_V2",
       "uc_table": "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_riskmatrix_v2"
+    },
+    {
+      "database_name": "sql_dp_prod_we",
+      "schema_name": "EXW_dbo",
+      "table_name": "EXW_V_RedeemReconciliation",
+      "uc_table": "wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation"
     },
     {
       "database_name": "sql_dp_prod_we",

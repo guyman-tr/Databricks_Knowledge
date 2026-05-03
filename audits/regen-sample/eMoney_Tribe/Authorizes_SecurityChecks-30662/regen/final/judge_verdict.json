@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "Authorizes_SecurityChecks-30662",
+    "elapsed_seconds":  88,
+    "exit_code":  null,
+    "cost_usd":  0.2205,
+    "input_tokens":  2,
+    "output_tokens":  3565,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "Authorizes_SecurityChecks-30662",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 13/14\u0027 but no explicit Phase Gate Checklist section is present in the wiki body. Cannot verify which phase was skipped or confirm P2/P3 completion."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AccountNames",
+                                       "problem":  "Column purpose remains unclear (observed values: \u00270\u0027 or empty string). Correctly flagged in review-needed sidecar for SME follow-up."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 / Indexes",
+                                       "problem":  "ClusteredIndex_Authorizes_30662 is misleadingly named — it is an NCI on a HEAP, not a clustered index. Wiki notes the redundancy but not the misleading name."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 7.3",
+                                       "problem":  "Join condition auth.[@Id] = aas.[@Id] could confuse analysts since @Id is semantically different in each table (parent PK vs child PK). Section 2.2 mitigates but the query comment could be clearer."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "States \u0027@Id equals @Authorizes_Authorize@Id-312243 in many rows indicating 1:1 relationship\u0027 — this is an observed pattern but no percentage or count is given to quantify \u0027many\u0027."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. Optional improvements: (1) Add explicit Phase Gate Checklist section. (2) Note the misleading name of ClusteredIndex_Authorizes_30662 (NCI, not clustered). (3) Quantify the 1:1 @Id relationship claim in Section 2.2 with a percentage.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 14 (unknown — not documented)"
+                                                           ]
+                                    }
+                }
+}

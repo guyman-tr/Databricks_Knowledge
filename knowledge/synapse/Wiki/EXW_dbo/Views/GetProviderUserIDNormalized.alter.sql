@@ -40,3 +40,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized A
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized ALTER COLUMN `ProviderUserIDNormalized` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized ALTER COLUMN `PlayerStatus` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_getprovideruseridnormalized ALTER COLUMN `UserWalletAllowance` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:37:32 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 1
+-- Statements: 16/16 succeeded
+-- ====================

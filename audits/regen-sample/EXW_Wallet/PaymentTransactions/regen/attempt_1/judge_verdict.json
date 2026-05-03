@@ -1,0 +1,130 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "PaymentTransactions",
+    "elapsed_seconds":  122,
+    "exit_code":  null,
+    "cost_usd":  0.4945,
+    "input_tokens":  4,
+    "output_tokens":  6178,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "PaymentTransactions",
+                    "weighted_score":  9.3,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  8,
+                                             "business_meaning":  10,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Id",
+                                                  "upstream_quote":  "Auto-incrementing primary key.",
+                                                  "wiki_quote":  "Auto-incrementing primary key.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PaymentId",
+                                                  "upstream_quote":  "Parent payment. FK to Wallet.Payments.Id. Unique constraint - one transaction record per payment.",
+                                                  "wiki_quote":  "Parent payment. FK to Wallet.Payments.Id. Unique constraint - one transaction record per payment.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ExchangeRate",
+                                                  "upstream_quote":  "Fiat-to-crypto exchange rate at execution time. Used to convert the fiat Amount to crypto.",
+                                                  "wiki_quote":  "Fiat-to-crypto exchange rate at execution time. Used to convert the fiat Amount to crypto.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ToAddress",
+                                                  "upstream_quote":  "Blockchain destination address for the purchased crypto.",
+                                                  "wiki_quote":  "Blockchain destination address for the purchased crypto.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "Amount of crypto being purchased/transferred.",
+                                                  "wiki_quote":  "Amount of crypto being purchased/transferred.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EtoroFeePercentage",
+                                                  "upstream_quote":  "eToro service fee as a percentage.",
+                                                  "wiki_quote":  "eToro service fee as a percentage.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EtoroFeeCalculated",
+                                                  "upstream_quote":  "Calculated eToro fee in crypto units.",
+                                                  "wiki_quote":  "Calculated eToro fee in crypto units.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ProviderFeePercentage",
+                                                  "upstream_quote":  "Payment provider\u0027s fee as a percentage.",
+                                                  "wiki_quote":  "Payment provider\u0027s fee as a percentage.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "ProviderFeeCalculated",
+                                                  "upstream_quote":  "Calculated provider fee in crypto units.",
+                                                  "wiki_quote":  "Calculated provider fee in crypto units.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "EstimatedBlockChainFee",
+                                                  "upstream_quote":  "Estimated blockchain network fee.",
+                                                  "wiki_quote":  "Estimated blockchain network fee.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Occurred",
+                                                  "upstream_quote":  "Timestamp of record creation.",
+                                                  "wiki_quote":  "Timestamp of record creation.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "EtoroFeePercentage, ProviderFeePercentage",
+                                       "problem":  "Low-cardinality columns (2 distinct values each) should have inline key=value pairs in Elements descriptions. Values are documented in Section 2.2 but not at the element level."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims 12/14 phases but individual gates are not enumerated."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Upstream Bundle",
+                                       "problem":  "Harness upstream resolution failed (marked _no_upstream_found.txt) but wiki exists at knowledge/ProdSchemas/CryptoDBs/WalletDB/Wiki/Wallet/Tables/Wallet.PaymentTransactions.md. Writer correctly found and used it. Harness routing for WalletDB/Wallet schema needs fixing."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add inline value listings in Elements for EtoroFeePercentage (1.00=standard 99.97%, 0.01=anomalous 0.03%) and ProviderFeePercentage (4.00=standard 99.97%, 0.04=anomalous 0.03%). (2) Add explicit Phase Gate Checklist section. (3) Fix harness upstream resolution for WalletDB/Wallet schema.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

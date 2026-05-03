@@ -1,0 +1,77 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_IndiciesIntraHour_Clients",
+    "elapsed_seconds":  160,
+    "exit_code":  null,
+    "cost_usd":  0.5389,
+    "input_tokens":  2,
+    "output_tokens":  7451,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_IndiciesIntraHour_Clients",
+                    "weighted_score":  9.5,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "InstrumentID",
+                                                  "upstream_quote":  "FK to Trade.Instrument. Financial instrument being traded.",
+                                                  "wiki_quote":  "FK to Trade.Instrument. Financial instrument being traded. Filtered to three index instruments: 27 (S\u0026P 500), 28 (DJ30), 32 (GER30).",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "HedgeServerID",
+                                                  "upstream_quote":  "FK to Trade.HedgeServer. Hedge server managing this position.",
+                                                  "wiki_quote":  "FK to Trade.HedgeServer. Hedge server managing this position. Added 2024-04-30 (SR-249626). NULL for pre-2024 rows.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 Gotchas / VolumeBuy / VolumeSell / Realized",
+                                       "problem":  "SP final INSERT joins #OP_complete to #Volume and #Realized on (fromMinute, InstrumentID) without HedgeServerID. Since both temp tables group by HedgeServerID, volumes and realized P\u0026L may fan out across HedgeServerIDs. Not flagged in Gotchas."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "No explicit numeric quality score in footer. Only tier counts and phase count present."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Missing section",
+                                       "problem":  "No formal Phase Gate Checklist section with [x]/[ ] checkboxes. Footer says \u0027Phases: 11/14\u0027 without specifying which."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2 (OP_Buy / OP_Sell)",
+                                       "problem":  "Says \u0027priced at start-of-minute bid\u0027 but FirstBid is LAG(LastBid,1) — previous minute\u0027s last bid. Section 2.5 explains this correctly for Bid/Ask but Section 2.2 could be more precise."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Minimal content — notes Phase 10 was skipped but SR-249626 and SR-257613 are not linked or expanded."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian scan)"
+                                                           ]
+                                    }
+                }
+}

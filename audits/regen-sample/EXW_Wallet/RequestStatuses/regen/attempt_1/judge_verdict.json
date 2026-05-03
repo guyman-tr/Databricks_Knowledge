@@ -1,0 +1,70 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "RequestStatuses",
+    "elapsed_seconds":  94,
+    "exit_code":  null,
+    "cost_usd":  0.2055,
+    "input_tokens":  2,
+    "output_tokens":  3708,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "RequestStatuses",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  7
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 7.1",
+                                       "problem":  "ROW_NUMBER() used directly in WHERE clause — syntactically invalid in SQL Server. Writer added a disclaimer note but should have written valid SQL using a CTE/subquery."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer claims \u0027Phases: 12/14\u0027 but no explicit Phase Gate Checklist with [x]/[ ] markers is present in the wiki to verify which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Tagged as \u0027Tier 2 — Generic Pipeline\u0027 but the specific format patterns (YYYY-MM, YYYY-MM-DD) appear inferred from data samples rather than documented pipeline behavior. Could be argued as Tier 3."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "RequestStatusId",
+                                       "problem":  "Element description lists a partial subset of the 29 known status values. Since \u003e15 values, inline listing is not required, but the partial list could mislead. Consider referencing the dictionary table as the authoritative source."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "DetailsJson",
+                                       "problem":  "JSON schema is flagged as unknown in review-needed sidecar. Wiki describes it as \u0027additional context\u0027 without noting that the structure is variable/undocumented."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "48.4M rows total",
+                                                                                  "ReadByExecuter 24.1M rows (49.8%)",
+                                                                                  "Start 5M rows",
+                                                                                  "ExecuterEnqueued 3.9M rows",
+                                                                                  "Done 3.8M rows",
+                                                                                  "DetailsJson ~85% NULL (41.3M of 48.4M)",
+                                                                                  "23 of 29 dictionary values present"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phases 12/14 claimed but no explicit checklist shown"
+                                                           ]
+                                    }
+                }
+}

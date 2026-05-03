@@ -1,0 +1,66 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "ReceivedTransactions",
+    "elapsed_seconds":  83,
+    "exit_code":  null,
+    "cost_usd":  0.2132,
+    "input_tokens":  2,
+    "output_tokens":  3331,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "ReceivedTransactions",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section structure",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] markers for P1-P3. Footer references \u0027Phases: 12/14\u0027 but body lacks structured checklist."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "partition_date",
+                                       "problem":  "Element 20 claims partition_date \u0027Matches the date portion of Occurred\u0027 — stated as fact but is an inference. Should be tagged as inferred or verified."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CryptoId",
+                                       "problem":  "Element 11 lists CryptoId distribution by numeric ID (21=37%, 4=25%) but does not decode to crypto asset names. Section 1 mentions \u0027Stellar-based\u0027 for CryptoId 21 but the element description uses only numeric IDs."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Section 8 is a placeholder: \u0027No Atlassian sources searched (regen-harness mode)\u0027. Honest but adds no value."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4",
+                                       "problem":  "Self-receive filtering caveat is documented in Section 2.2 and review-needed sidecar but not explicitly listed in Section 3.4 Gotchas where analysts are most likely to look."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. For polish: (1) Add explicit Phase Gate Checklist section with P1/P2/P3 checkboxes. (2) Decode CryptoId numeric values to crypto asset names in element 11. (3) Add self-receive filtering caveat to Section 3.4 Gotchas.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count: 2,519,368 in Section 1",
+                                                                                  "ReceivedTransactionTypeId distribution percentages in Section 2.1 and element 12",
+                                                                                  "CryptoId distribution percentages in element 11"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

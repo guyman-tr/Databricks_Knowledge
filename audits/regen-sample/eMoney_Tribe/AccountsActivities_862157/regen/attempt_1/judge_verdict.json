@@ -1,0 +1,67 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsActivities_862157",
+    "elapsed_seconds":  95,
+    "exit_code":  null,
+    "cost_usd":  0.2079,
+    "input_tokens":  2,
+    "output_tokens":  3841,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsActivities_862157",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer states \u0027Phases: 11/14\u0027 but no explicit Phase Gate Checklist section showing which phases (P1–P3) were completed vs skipped. Cannot formally verify P2/P3 execution."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id (Element #2)",
+                                       "problem":  "References index \u0027ClusteredIndex_AA_862157_Id\u0027 by name without clarifying it is actually a NONCLUSTERED index despite the misleading name. Section 3.1 correctly states nonclustered but the element description could confuse readers."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Only one Atlassian reference (Freshservice CR #20353). No mention of external Treezor API documentation or eMoney team confluence pages that may provide additional context."
+                                   },
+                                   {
+                                       "severity":  "negligible",
+                                       "column_or_section":  "partition_date (Element #8)",
+                                       "problem":  "States \u0027Corresponds to the date component of @Created\u0027 as fact but this is inferred, not confirmed. The review-needed sidecar correctly flags this for verification."
+                                   },
+                                   {
+                                       "severity":  "negligible",
+                                       "column_or_section":  "Section 1 / Property Table",
+                                       "problem":  "Missing a formal grain statement (e.g., \u0027Grain: one row per Treezor XML document\u0027) in the property table. The narrative describes the grain but a structured callout would improve scannability."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed — wiki passes at 8.85. For future polish: (1) Add an explicit Phase Gate Checklist subsection with P1–P3 checkboxes. (2) Clarify in element #2 that ClusteredIndex_AA_862157_Id is a nonclustered index despite its name. (3) Add external Treezor API documentation references to Section 8 if available.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "29.8M rows",
+                                                                                  "2021-09-05 to 2026-04-26",
+                                                                                  "etr_* ~99.8% NULL",
+                                                                                  "Created ~41.6% NULL"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

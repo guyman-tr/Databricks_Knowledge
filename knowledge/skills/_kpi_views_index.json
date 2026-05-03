@@ -1,0 +1,1360 @@
+[
+  {
+    "schema": "etoro_kpi",
+    "name": "cfd_statusinfo_v",
+    "self_ref": "etoro_kpi.cfd_statusinfo_v",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market"
+    ],
+    "ddl_chars": 275
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "cidfirstdates_v",
+    "self_ref": "etoro_kpi.cidfirstdates_v",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "general.bronze_etoro_dictionary_regulation"
+    ],
+    "ddl_chars": 2249
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "customer_exclude_list",
+    "self_ref": "etoro_kpi.customer_exclude_list",
+    "refs": [
+      "general.bronze_etoro_customer_customer_masked"
+    ],
+    "ddl_chars": 611
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "customer_segments_mail_v",
+    "self_ref": "etoro_kpi.customer_segments_mail_v",
+    "refs": [
+      "bi_output.bi_output_marketing_sfmc_sfmc_report",
+      "mixpanel.login_events"
+    ],
+    "ddl_chars": 640
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "customer_segments_v",
+    "self_ref": "etoro_kpi.customer_segments_v",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "bi_dealing.bi_output_dealing_cidage_data",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition",
+      "etoro_kpi_stg.bi_output_vg_aum_slim"
+    ],
+    "ddl_chars": 1352
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "customer_snapshot_v",
+    "self_ref": "etoro_kpi.customer_snapshot_v",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "bi_output.bi_output_vg_date",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "general.bronze_etoro_dictionary_mifidcategorization"
+    ],
+    "ddl_chars": 3571
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ddr_aum_v",
+    "self_ref": "etoro_kpi.ddr_aum_v",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum",
+      "bi_output.bi_output_vg_date"
+    ],
+    "ddl_chars": 1468
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ddr_customer_current_flags",
+    "self_ref": "etoro_kpi.ddr_customer_current_flags",
+    "refs": [
+      "etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd"
+    ],
+    "ddl_chars": 333
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ddr_mimo_v",
+    "self_ref": "etoro_kpi.ddr_mimo_v",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "bi_output.bi_output_vg_date"
+    ],
+    "ddl_chars": 3718
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ddr_revenue_v",
+    "self_ref": "etoro_kpi.ddr_revenue_v",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "bi_output.bi_output_vg_date",
+      "bi_output.bi_ouput_v_dim_instrumenttype",
+      "bi_output.bi_output_customer_ddr_revenue_metrics"
+    ],
+    "ddl_chars": 1808
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ftd_click_v",
+    "self_ref": "etoro_kpi.ftd_click_v",
+    "refs": [
+      "etoro_kpi.de_output_ftd_click",
+      "pivoted",
+      "logic_base"
+    ],
+    "ddl_chars": 1429
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ftd_click_v_testing_dup_cancle",
+    "self_ref": "etoro_kpi.ftd_click_v_testing_dup_cancle",
+    "refs": [
+      "etoro_kpi.de_output_ftd_click",
+      "pivoted",
+      "logic_base"
+    ],
+    "ddl_chars": 1429
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ftd_funnel_kyc",
+    "self_ref": "etoro_kpi.ftd_funnel_kyc",
+    "refs": [
+      "compliance.bronze_userapidb_kyc_customeranswers"
+    ],
+    "ddl_chars": 250
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ftd_funnel_v",
+    "self_ref": "etoro_kpi.ftd_funnel_v",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_platform",
+      "general.bronze_etoro_dictionary_country",
+      "bi_dealing.bi_output_dealing_cidage_data",
+      "general.bronze_etoro_dictionary_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "etoro_kpi.ftd_funnel_kyc",
+      "etoro_kpi.customer_exclude_list",
+      "etoro_kpi.ftd_click_v",
+      "bi_db.bronze_moneybusdb_dictionary_accounttypes"
+    ],
+    "ddl_chars": 6142
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "ftd_funnel_v_dev",
+    "self_ref": "etoro_kpi.ftd_funnel_v_dev",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_platform",
+      "general.bronze_etoro_dictionary_country",
+      "bi_dealing.bi_output_dealing_cidage_data",
+      "general.bronze_etoro_dictionary_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_operations_onboarding_flow_userkpis",
+      "etoro_kpi.ftd_funnel_kyc",
+      "etoro_kpi.customer_exclude_list",
+      "etoro_kpi.ftd_click_v"
+    ],
+    "ddl_chars": 6132
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "kyc_for_compliance_v",
+    "self_ref": "etoro_kpi.kyc_for_compliance_v",
+    "refs": [
+      "compliance.bronze_userapidb_kyc_customeranswers",
+      "compliance.bronze_userapidb_history_customeranswers",
+      "compliance.bronze_userapidb_kyc_questions",
+      "compliance.bronze_userapidb_kyc_answers",
+      "general.bronze_etoro_customer_customer_masked"
+    ],
+    "ddl_chars": 746
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "positions_for_compliance_v",
+    "self_ref": "etoro_kpi.positions_for_compliance_v",
+    "refs": [
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+    ],
+    "ddl_chars": 2092
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "v_spaceship_aum",
+    "self_ref": "etoro_kpi.v_spaceship_aum",
+    "refs": [
+      "spaceship.bronze_spaceship_metabase_user_beta",
+      "member_canonical",
+      "spaceship.bronze_spaceship_metabase_super_user_balances",
+      "super_bal_raw",
+      "super_last_weekday",
+      "spaceship.spaceship_metabase_voyager_user_balances",
+      "user_id_map",
+      "voyager_bal_raw",
+      "voyager_last_weekday",
+      "spaceship.bronze_spaceship_metabase_nova_user_balances",
+      "super_bal",
+      "voyager_bal",
+      "nova_bal",
+      "bi_db.bronze_sub_accounts_accounts",
+      "spaceship.bronze_spaceship_metabase_contact",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "combined",
+      "user_gcid",
+      "aud_usd_rates"
+    ],
+    "ddl_chars": 5585
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "v_spaceship_fees",
+    "self_ref": "etoro_kpi.v_spaceship_fees",
+    "refs": [
+      "spaceship.bronze_spaceship_metabase_user_beta",
+      "spaceship.bronze_spaceship_metabase_super_transactions",
+      "user_accounts",
+      "spaceship.bronze_spaceship_metabase_voyager_account_fees",
+      "spaceship.bronze_spaceship_metabase_voyager_management_fees",
+      "spaceship.spaceship_metabase_voyager_product_balances",
+      "spaceship.bronze_spaceship_metabase_nova_fees",
+      "spaceship.bronze_spaceship_metabase_nova_transactions",
+      "bi_db.bronze_sub_accounts_accounts",
+      "spaceship.bronze_spaceship_metabase_contact",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "super_fees",
+      "voyager_fees",
+      "voyager_mgmt_fees",
+      "nova_fees",
+      "nova_fx_fees",
+      "user_gcid",
+      "aud_usd_rates"
+    ],
+    "ddl_chars": 5140
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "v_spaceship_mimo",
+    "self_ref": "etoro_kpi.v_spaceship_mimo",
+    "refs": [
+      "etoro_kpi_prep.v_spaceship_mimo"
+    ],
+    "ddl_chars": 50
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_crm_case",
+    "self_ref": "etoro_kpi.vg_crm_case",
+    "refs": [
+      "crm.gold_crm_case_tiny_for_genie",
+      "crm.gold_crm_web_chat_sessions",
+      "crm.gold_crm_bot_eligible_chats",
+      "crm.gold_crm_case_deescalation",
+      "bi_output.bi_output_vg_case_event",
+      "crm.silver_crm_case",
+      "DeEscalation",
+      "deflection",
+      "Solved"
+    ],
+    "ddl_chars": 5534
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_customer_customer_first_dates",
+    "self_ref": "etoro_kpi.vg_customer_customer_first_dates",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "bi_db.bronze_moneybusdb_dictionary_accounttypes",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+    ],
+    "ddl_chars": 1384
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_customer_daily_snapshot",
+    "self_ref": "etoro_kpi.vg_customer_daily_snapshot",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+    ],
+    "ddl_chars": 3965
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_customer_monthly_snapshot",
+    "self_ref": "etoro_kpi.vg_customer_monthly_snapshot",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager"
+    ],
+    "ddl_chars": 4856
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_ddr_revenue",
+    "self_ref": "etoro_kpi.vg_ddr_revenue",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics",
+      "bi_output.bi_ouput_v_dim_instrumenttype"
+    ],
+    "ddl_chars": 1061
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_dealing_clicks_openclose_breakdown",
+    "self_ref": "etoro_kpi.vg_dealing_clicks_openclose_breakdown",
+    "refs": [
+      "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked"
+    ],
+    "ddl_chars": 1155
+  },
+  {
+    "schema": "etoro_kpi",
+    "name": "vg_dealing_dealingdashboard_cid",
+    "self_ref": "etoro_kpi.vg_dealing_dealingdashboard_cid",
+    "refs": [
+      "dealing.bi_output_dealing_dealingdashboard_cid"
+    ],
+    "ddl_chars": 1166
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "mv_revenue_trading",
+    "self_ref": "etoro_kpi_prep.mv_revenue_trading",
+    "refs": [
+      "etoro_kpi_prep.v_revenue_fullcommission",
+      "etoro_kpi_prep.v_revenue_commission",
+      "etoro_kpi_prep.v_revenue_ticketfee_fixed",
+      "etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+      "etoro_kpi_prep.v_revenue_rollover",
+      "etoro_kpi_prep.v_revenue_dividend",
+      "etoro_kpi_prep.v_revenue_adminfee",
+      "etoro_kpi_prep.v_revenue_spotadjustfee",
+      "dwh.dim_Position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "trading.bronze_etoro_trade_instrumentgroups",
+      "BASEDATA",
+      "DIMPOS",
+      "MIRRORS",
+      "IBANOPEN",
+      "IBANCLOSE",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "SQF"
+    ],
+    "ddl_chars": 4173
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_copyfund_positions",
+    "self_ref": "etoro_kpi_prep.v_copyfund_positions",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "dwh.dim_position",
+      "copyfund_mirrors",
+      "copyfund_positions"
+    ],
+    "ddl_chars": 906
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_ddr_revenues",
+    "self_ref": "etoro_kpi_prep.v_ddr_revenues",
+    "refs": [
+      "etoro_kpi_prep.v_fact_customeraction_w_metrics",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype",
+      "base",
+      "unpivoted",
+      "dimensioned",
+      "etoro_kpi_prep.v_revenue_optionsplatform",
+      "etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
+      "etoro_kpi_prep.v_revenue_interestfee",
+      "etoro_kpi_prep.v_revenue_stakingfee"
+    ],
+    "ddl_chars": 14220
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_dim_dataplatform_uuid",
+    "self_ref": "etoro_kpi_prep.v_dim_dataplatform_uuid",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "bi_db.bronze_sub_accounts_accounts",
+      "etoro_kpi.v_spaceship_aum",
+      "sps_all",
+      "sps_cross",
+      "etoro",
+      "sps_only"
+    ],
+    "ddl_chars": 1772
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_dim_ftdplatform",
+    "self_ref": "etoro_kpi_prep.v_dim_ftdplatform",
+    "refs": [
+      "bi_db.bronze_moneybusdb_dictionary_accounttypes"
+    ],
+    "ddl_chars": 286
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_dim_instrument_enriched",
+    "self_ref": "etoro_kpi_prep.v_dim_instrument_enriched",
+    "refs": [
+      "trading.bronze_etoro_trade_instrumentmetadata_daily",
+      "trading.bronze_etoro_trade_providertoinstrument",
+      "rth_instruments",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "trading.bronze_etoro_trade_instrumentgroups",
+      "instruments_245"
+    ],
+    "ddl_chars": 2361
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_fact_customeraction",
+    "self_ref": "etoro_kpi_prep.v_fact_customeraction",
+    "refs": [
+      "trading.bronze_etoro_history_positionchangelog",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.dim_position",
+      "mirror_changelog",
+      "passive_actions_enriched",
+      "active_actions"
+    ],
+    "ddl_chars": 5947
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_fact_customeraction_enriched",
+    "self_ref": "etoro_kpi_prep.v_fact_customeraction_enriched",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.dim_position",
+      "passive_actions_enriched",
+      "active_actions"
+    ],
+    "ddl_chars": 5403
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_fact_customeraction_w_metrics",
+    "self_ref": "etoro_kpi_prep.v_fact_customeraction_w_metrics",
+    "refs": [
+      "general.bronze_recurringinvestment_recurringinvestment_planinstances",
+      "dwh.dim_position",
+      "etoro_kpi_prep.v_fact_customeraction_enriched",
+      "etoro_kpi_prep.v_dim_instrument_enriched",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_Reversals",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "recurring_positions",
+      "bi_db.bronze_etoro_trade_adminpositionlog"
+    ],
+    "ddl_chars": 7517
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_globalftdplatform",
+    "self_ref": "etoro_kpi_prep.v_globalftdplatform",
+    "refs": [
+      "bi_db.bronze_moneybusdb_dictionary_accounttypes"
+    ],
+    "ddl_chars": 286
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_instrument_conversion_rates_dwh",
+    "self_ref": "etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "LatestDailyPrices",
+      "AllDates",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "ddl_chars": 3386
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_mimo_allplatforms",
+    "self_ref": "etoro_kpi_prep.v_mimo_allplatforms",
+    "refs": [
+      "etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+      "etoro_kpi_prep.v_mimo_tradingplatform",
+      "etoro_kpi_prep.v_mimo_emoneyplatform",
+      "etoro_kpi_prep.v_mimo_optionsplatform",
+      "global_ftds",
+      "tp_mimo",
+      "emoney_mimo",
+      "options_mimo",
+      "moneyfarm_ftds",
+      "unified_mimo"
+    ],
+    "ddl_chars": 3385
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_mimo_emoneyplatform",
+    "self_ref": "etoro_kpi_prep.v_mimo_emoneyplatform",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "ftd_iban",
+      "deposits_iban",
+      "cashout_iban",
+      "mimo_iban_prep",
+      "mimo_iban_deduped"
+    ],
+    "ddl_chars": 3911
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_mimo_first_deposit_all_platforms",
+    "self_ref": "etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "emoney.bronze_fiatdwhdb_dbo_fiattransactions",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "new_iban",
+      "new_tp",
+      "c2usd",
+      "dimcust"
+    ],
+    "ddl_chars": 3749
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_mimo_options_platform",
+    "self_ref": "etoro_kpi_prep.v_mimo_options_platform",
+    "refs": [
+      "finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "general.bronze_usabroker_apex_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "MIMORecords",
+      "DEPOSIT_UNIQUE_FOR_FTDJOIN",
+      "FINRAONLY_ftd_date",
+      "FINRAONLY_FTD_records",
+      "FTDSingle",
+      "FTDMultiple",
+      "GLOBAL_FTD",
+      "FinalFTD"
+    ],
+    "ddl_chars": 5061
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_mimo_optionsplatform",
+    "self_ref": "etoro_kpi_prep.v_mimo_optionsplatform",
+    "refs": [
+      "finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "general.bronze_usabroker_apex_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "MIMORecords",
+      "DEPOSIT_UNIQUE_FOR_FTDJOIN",
+      "FINRAONLY_ftd_date",
+      "FINRAONLY_FTD_records",
+      "FTDSingle",
+      "FTDMultiple",
+      "GLOBAL_FTD",
+      "FinalFTD"
+    ],
+    "ddl_chars": 4988
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_mimo_tradingplatform",
+    "self_ref": "etoro_kpi_prep.v_mimo_tradingplatform",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "deposits_tp",
+      "cashout_tp",
+      "mimo_combined",
+      "mimo_deduped"
+    ],
+    "ddl_chars": 3804
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_moneyfarm_aum",
+    "self_ref": "etoro_kpi_prep.v_moneyfarm_aum",
+    "refs": [
+      "money_farm.silver_moneyfarm_etoro_mf_aum",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "daily_portfolio_balances",
+      "aggregated_balances",
+      "gbp_usd_rates"
+    ],
+    "ddl_chars": 1054
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_moneyfarm_fees",
+    "self_ref": "etoro_kpi_prep.v_moneyfarm_fees",
+    "refs": [],
+    "ddl_chars": 254
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_moneyfarm_mimo",
+    "self_ref": "etoro_kpi_prep.v_moneyfarm_mimo",
+    "refs": [
+      "compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "raw_events",
+      "parsed_events",
+      "mimo_daily",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "first_deposit_dates",
+      "gbp_usd_rates"
+    ],
+    "ddl_chars": 2649
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_options_aum",
+    "self_ref": "etoro_kpi_prep.v_options_aum",
+    "refs": [
+      "general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+      "buypower_ranked",
+      "latest_daily_buypower",
+      "general.bronze_usabroker_apex_options",
+      "first_funding"
+    ],
+    "ddl_chars": 1520
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_active_traders",
+    "self_ref": "etoro_kpi_prep.v_population_active_traders",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "etoro_kpi_prep.v_revenue_optionsplatform",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "actionsprep",
+      "active_options",
+      "activetypes_prep",
+      "activetypes"
+    ],
+    "ddl_chars": 3292
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_active_traders_lite",
+    "self_ref": "etoro_kpi_prep.v_population_active_traders_lite",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "etoro_kpi_prep.v_revenue_optionsplatform",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "actionsprep",
+      "active_options",
+      "activetypes_prep",
+      "activetypes"
+    ],
+    "ddl_chars": 2861
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_balance_only_accounts",
+    "self_ref": "etoro_kpi_prep.v_population_balance_only_accounts",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+      "snapshot_dates",
+      "balanceprep_tp",
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance",
+      "general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+      "general.bronze_usabroker_apex_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "maxbalance_tp",
+      "max_iban",
+      "max_options",
+      "candidates",
+      "balance_users",
+      "etoro_kpi_prep.v_population_active_traders",
+      "etoro_kpi_prep.v_population_portfolio_only"
+    ],
+    "ddl_chars": 2905
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_first_time_funded",
+    "self_ref": "etoro_kpi_prep.v_population_first_time_funded",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "etoro_kpi_prep.v_mimo_allplatforms",
+      "etoro_kpi_prep.v_globalftdplatform",
+      "REMOVE_BAD_FTDS",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.dim_position",
+      "etoro_kpi_prep.v_revenue_optionsplatform",
+      "DWH_FTD",
+      "Verification",
+      "Trade",
+      "First_IOB",
+      "OptionsTrade"
+    ],
+    "ddl_chars": 4120
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_first_trading_action",
+    "self_ref": "etoro_kpi_prep.v_population_first_trading_action",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "ddl_chars": 1586
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_funded",
+    "self_ref": "etoro_kpi_prep.v_population_funded",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance",
+      "etoro_kpi_prep.v_options_aum",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "etoro_kpi_prep.v_population_first_time_funded"
+    ],
+    "ddl_chars": 1084
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_otd_daterange",
+    "self_ref": "etoro_kpi_prep.v_population_otd_daterange",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "PREP",
+      "FilteredRealCID",
+      "RankedDeposits",
+      "DATERANGE"
+    ],
+    "ddl_chars": 1740
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_population_portfolio_only",
+    "self_ref": "etoro_kpi_prep.v_population_portfolio_only",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new",
+      "snapshot_dates",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+      "general.bronze_usabroker_apex_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "holders",
+      "options_aum",
+      "merged",
+      "etoro_kpi_prep.v_population_active_traders",
+      "filtered2"
+    ],
+    "ddl_chars": 5205
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_adminfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_adminfee",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+    ],
+    "ddl_chars": 512
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_cashoutfee_excluderedeem",
+    "self_ref": "etoro_kpi_prep.v_revenue_cashoutfee_excluderedeem",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 547
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_cashoutfee_incredeem",
+    "self_ref": "etoro_kpi_prep.v_revenue_cashoutfee_incredeem",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 505
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_commission",
+    "self_ref": "etoro_kpi_prep.v_revenue_commission",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+    ],
+    "ddl_chars": 1174
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_conversionfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_conversionfee",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw"
+    ],
+    "ddl_chars": 1187
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_conversionfee_withpositiondata",
+    "self_ref": "etoro_kpi_prep.v_revenue_conversionfee_withpositiondata",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "ddl_chars": 2080
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_cryptotofiat_c2f",
+    "self_ref": "etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 1256
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_dividend",
+    "self_ref": "etoro_kpi_prep.v_revenue_dividend",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+    ],
+    "ddl_chars": 316
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_dormantfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_dormantfee",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 535
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_fullcommission",
+    "self_ref": "etoro_kpi_prep.v_revenue_fullcommission",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+    ],
+    "ddl_chars": 1214
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_interestfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_interestfee",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 456
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_optionsplatform",
+    "self_ref": "etoro_kpi_prep.v_revenue_optionsplatform",
+    "refs": [
+      "finance.bronze_sodreconciliation_apex_ext1047_revenuereports",
+      "PREP",
+      "FIRSTTRADE",
+      "general.bronze_usabroker_apex_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "ddl_chars": 2400
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_rollover",
+    "self_ref": "etoro_kpi_prep.v_revenue_rollover",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction"
+    ],
+    "ddl_chars": 328
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_sdrt",
+    "self_ref": "etoro_kpi_prep.v_revenue_sdrt",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "ddl_chars": 651
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_share_lending",
+    "self_ref": "etoro_kpi_prep.v_revenue_share_lending",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 727
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_spotadjustfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_spotadjustfee",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution"
+    ],
+    "ddl_chars": 432
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_stakingfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_stakingfee",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_results",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "BadMonths"
+    ],
+    "ddl_chars": 2153
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_ticketfee_bypercent",
+    "self_ref": "etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+    "refs": [
+      "general.bronze_historycosts_history_costs",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "before_20260308_open",
+      "before_20260308_close",
+      "after_20260308"
+    ],
+    "ddl_chars": 3077
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_ticketfee_fixed",
+    "self_ref": "etoro_kpi_prep.v_revenue_ticketfee_fixed",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution",
+      "general.bronze_historycosts_history_costs",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "before_20250525",
+      "mid_period_open",
+      "mid_period_close",
+      "after_20260308"
+    ],
+    "ddl_chars": 3553
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_revenue_transfercoinfee",
+    "self_ref": "etoro_kpi_prep.v_revenue_transfercoinfee",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range"
+    ],
+    "ddl_chars": 526
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_spaceship_mimo",
+    "self_ref": "etoro_kpi_prep.v_spaceship_mimo",
+    "refs": [
+      "spaceship.bronze_spaceship_metabase_user_beta",
+      "spaceship.bronze_spaceship_metabase_contact",
+      "spaceship.bronze_spaceship_metabase_super_transactions",
+      "user_accounts",
+      "spaceship.bronze_spaceship_analytics_fct_money_transactions",
+      "contact_mapping",
+      "spaceship.spaceship_metabase_voyager_user_balances",
+      "spaceship.bronze_spaceship_metabase_nova_transactions",
+      "super_mimo",
+      "money_mimo",
+      "voyager_mimo",
+      "nova_mimo",
+      "mimo_aggregated",
+      "first_deposit_dates",
+      "bi_db.bronze_sub_accounts_accounts",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "mimo_final",
+      "user_gcid",
+      "aud_usd_rates"
+    ],
+    "ddl_chars": 11863
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_trading_volume_and_amount",
+    "self_ref": "etoro_kpi_prep.v_trading_volume_and_amount",
+    "refs": [
+      "dwh.dim_position",
+      "volume_open",
+      "volume_close",
+      "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e",
+      "etoro_kpi_prep.v_dim_instrument_enriched",
+      "all_volumes",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "sqf",
+      "c2p",
+      "etoro_kpi_prep.v_copyfund_positions",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban"
+    ],
+    "ddl_chars": 5293
+  },
+  {
+    "schema": "etoro_kpi_prep",
+    "name": "v_trading_volume_positionlevel",
+    "self_ref": "etoro_kpi_prep.v_trading_volume_positionlevel",
+    "refs": [
+      "dwh.dim_position",
+      "volume_open",
+      "volume_close",
+      "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2p_e2e",
+      "etoro_kpi_prep.v_dim_instrument_enriched",
+      "all_volumes",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "sqf",
+      "c2p",
+      "etoro_kpi_prep.v_copyfund_positions",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_closed_to_iban"
+    ],
+    "ddl_chars": 5293
+  },
+  {
+    "schema": "etoro_kpi_prep_stg",
+    "name": "v_ddr_mimo_allplatforms",
+    "self_ref": "etoro_kpi_prep_stg.v_ddr_mimo_allplatforms",
+    "refs": [
+      "etoro_kpi_prep_stg.v_dim_dataplatform_uuid",
+      "etoro_kpi_prep_stg.v_ddr_mimo_tradingplatform",
+      "xw",
+      "etoro_kpi_prep_stg.v_ddr_mimo_emoney",
+      "etoro_kpi_prep_stg.v_ddr_mimo_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "ddl_chars": 4555
+  },
+  {
+    "schema": "etoro_kpi_prep_stg",
+    "name": "v_ddr_mimo_emoney",
+    "self_ref": "etoro_kpi_prep_stg.v_ddr_mimo_emoney",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "base",
+      "fx_daily",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "fx_latest",
+      "ftd_iban",
+      "enriched"
+    ],
+    "ddl_chars": 4187
+  },
+  {
+    "schema": "etoro_kpi_prep_stg",
+    "name": "v_ddr_mimo_options",
+    "self_ref": "etoro_kpi_prep_stg.v_ddr_mimo_options",
+    "refs": [
+      "finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "general.bronze_usabroker_apex_options",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "mimo_records",
+      "deposit_unique",
+      "finra_ftd_date",
+      "finra_ftd_records",
+      "ftd_single",
+      "ftd_multiple",
+      "global_ftd",
+      "final_ftd"
+    ],
+    "ddl_chars": 3811
+  },
+  {
+    "schema": "etoro_kpi_prep_stg",
+    "name": "v_ddr_mimo_tradingplatform",
+    "self_ref": "etoro_kpi_prep_stg.v_ddr_mimo_tradingplatform",
+    "refs": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "deposits",
+      "cashouts",
+      "combined"
+    ],
+    "ddl_chars": 5449
+  },
+  {
+    "schema": "etoro_kpi_prep_stg",
+    "name": "v_fact_customeraction_w_metrics",
+    "self_ref": "etoro_kpi_prep_stg.v_fact_customeraction_w_metrics",
+    "refs": [
+      "general.bronze_recurringinvestment_recurringinvestment_planinstances",
+      "dwh.dim_position",
+      "etoro_kpi_prep.v_fact_customeraction_enriched",
+      "etoro_kpi_prep.v_dim_instrument_enriched",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_Reversals",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "recurring_positions",
+      "bi_db.bronze_etoro_trade_adminpositionlog"
+    ],
+    "ddl_chars": 8085
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "bi_output_vg_aum_slim",
+    "self_ref": "etoro_kpi_stg.bi_output_vg_aum_slim",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum",
+      "bi_output.bi_output_vg_date"
+    ],
+    "ddl_chars": 858
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "bi_output_vg_mimo_slim",
+    "self_ref": "etoro_kpi_stg.bi_output_vg_mimo_slim",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "bi_output.bi_output_vg_date"
+    ],
+    "ddl_chars": 4715
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "bi_output_vg_revenue_slim",
+    "self_ref": "etoro_kpi_stg.bi_output_vg_revenue_slim",
+    "refs": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "bi_output.bi_output_vg_date",
+      "bi_output.bi_ouput_v_dim_Instrumenttype",
+      "bi_output.bi_output_customer_ddr_revenue_metrics"
+    ],
+    "ddl_chars": 1205
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "crm_csat_survey_per_case_v",
+    "self_ref": "etoro_kpi_stg.crm_csat_survey_per_case_v",
+    "refs": [
+      "crm.silver_crm_csat_survey_entry__c",
+      "ranked"
+    ],
+    "ddl_chars": 580
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "crm_quality_assessment_per_case_v",
+    "self_ref": "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+    "refs": [
+      "crm.silver_crm_surveytaker__c",
+      "ranked"
+    ],
+    "ddl_chars": 952
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "crm_user_v",
+    "self_ref": "etoro_kpi_stg.crm_user_v",
+    "refs": [
+      "crm.silver_crm_user",
+      "hierarchy",
+      "rm_choice"
+    ],
+    "ddl_chars": 2670
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "v_marketing_campaigns_funnel",
+    "self_ref": "etoro_kpi_stg.v_marketing_campaigns_funnel",
+    "refs": [
+      "bi_db.bronze_funnel_social_acqiuisition_social",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "sharepoint.silver_sharepoint_marketing_region_mapping",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "sac_agg",
+      "cfd_agg"
+    ],
+    "ddl_chars": 2689
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "v_marketing_campaigns_rivery",
+    "self_ref": "etoro_kpi_stg.v_marketing_campaigns_rivery",
+    "refs": [
+      "bi_db.bronze_rivery_google_ad_google_campaign_conv",
+      "bi_db.bronze_rivery_google_ad_google_campaign_perf",
+      "conv_pivot"
+    ],
+    "ddl_chars": 3134
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "vw_raf_config_for_genie",
+    "self_ref": "etoro_kpi_stg.vw_raf_config_for_genie",
+    "refs": [
+      "experience.bronze_rafcompensations_config_viewconfig",
+      "general.bronze_etoro_dictionary_regulation"
+    ],
+    "ddl_chars": 866
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "vw_raf_for_genie",
+    "self_ref": "etoro_kpi_stg.vw_raf_for_genie",
+    "refs": [
+      "experience.bronze_rafcompensations_customer_raftrackingprocessed",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_dictionary_playerlevel",
+      "general.bronze_etoro_dictionary_gurustatus",
+      "general.bronze_etoro_dictionary_country",
+      "general.bronze_etoro_dictionary_regulation",
+      "bi_db.bronze_etoro_customer_customermoney",
+      "etoro_kpi_stg.bi_output_vg_aum_slim"
+    ],
+    "ddl_chars": 2699
+  },
+  {
+    "schema": "etoro_kpi_stg",
+    "name": "vw_raf_for_genie2",
+    "self_ref": "etoro_kpi_stg.vw_raf_for_genie2",
+    "refs": [
+      "experience.bronze_rafcompensations_customer_raftrackingprocessed",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_dictionary_playerlevel",
+      "general.bronze_etoro_dictionary_gurustatus",
+      "general.bronze_etoro_dictionary_country",
+      "general.bronze_etoro_dictionary_regulation",
+      "bi_db.bronze_etoro_customer_customermoney",
+      "etoro_kpi_stg.bi_output_vg_aum_slim"
+    ],
+    "ddl_chars": 4163
+  }
+]

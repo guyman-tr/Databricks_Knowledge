@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsSnapshots_BankAccount-393561",
+    "elapsed_seconds":  91,
+    "exit_code":  null,
+    "cost_usd":  0.2244,
+    "input_tokens":  2,
+    "output_tokens":  3500,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsSnapshots_BankAccount-393561",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "EpmMethodId",
+                                       "problem":  "Values 4 and 5 observed but no key=value meanings provided. Should explicitly state \u0027meaning unknown — requires Tribe team clarification\u0027."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No explicit Phase Gate Checklist section with checkboxes. Footer claims \u0027Phases: 13/14\u0027 but individual phase completion is unverifiable."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "BankAccountBankStateBranch, BankAccountBankBranchCode",
+                                       "problem":  "Described as \u0027all NULL in sampled data\u0027 without noting sample size. Could be populated for specific providers or regions not in the sample."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id",
+                                       "problem":  "DDL type is varchar(255) but described as \u0027GUID\u0027. GUIDs are 36 chars — the 255 limit is not flagged as unusual or explained."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "\u0027No Atlassian sources searched (regen-harness mode)\u0027 is a placeholder that adds no analytical value."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. Minor improvements: (1) Add explicit Phase Gate Checklist section with [x]/[ ] checkboxes. (2) Note sample size for NULL claims on BankAccountBankStateBranch and BankAccountBankBranchCode. (3) Flag varchar(255) vs GUID semantic note on @Id. (4) Mark EpmMethodId values as \u0027meaning unknown\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "BankAccountStatus distribution (A ~90%, B ~10%, S \u003c0.01%)"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

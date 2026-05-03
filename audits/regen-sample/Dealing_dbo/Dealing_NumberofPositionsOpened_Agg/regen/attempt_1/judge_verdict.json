@@ -1,0 +1,91 @@
+{
+    "schema":  "Dealing_dbo",
+    "object":  "Dealing_NumberofPositionsOpened_Agg",
+    "elapsed_seconds":  135,
+    "exit_code":  null,
+    "cost_usd":  0.8201,
+    "input_tokens":  2,
+    "output_tokens":  6520,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "Dealing_dbo",
+                    "object":  "Dealing_NumberofPositionsOpened_Agg",
+                    "weighted_score":  6.20,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "DateID",
+                                                  "upstream_quote":  "Date as YYYYMMDD integer. (Tier 2 — SP_DealingDashboard_Clients)",
+                                                  "wiki_quote":  "Snapshot date as YYYYMMDD integer. Passthrough GROUP BY key from Dealing_DealingDashboard_Clients. Range: 20220101 to present. Clustered index column. (Tier 2 — Dealing_DealingDashboard_Clients)",
+                                                  "match":  "NO",
+                                                  "loss":  "Should be Tier 1; description paraphrased (\u0027Date as YYYYMMDD integer\u0027 → \u0027Snapshot date as YYYYMMDD integer\u0027)"
+                                              },
+                                              {
+                                                  "column":  "Date",
+                                                  "upstream_quote":  "Reporting date. (Tier 2 — SP_DealingDashboard_Clients)",
+                                                  "wiki_quote":  "Reporting calendar date. Passthrough GROUP BY key from Dealing_DealingDashboard_Clients. (Tier 2 — Dealing_DealingDashboard_Clients)",
+                                                  "match":  "NO",
+                                                  "loss":  "Should be Tier 1; \u0027Reporting date\u0027 paraphrased to \u0027Reporting calendar date\u0027"
+                                              },
+                                              {
+                                                  "column":  "InstrumentType",
+                                                  "upstream_quote":  "Asset class from Dim_Instrument. (Tier 2 — SP_DealingDashboard_Clients)",
+                                                  "wiki_quote":  "Asset class label: Currencies, Commodities, Indices, Stocks, ETF, Crypto Currencies. Passthrough GROUP BY key from Dealing_DealingDashboard_Clients; originates from Dim_Instrument.InstrumentType (CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies). (Tier 2 — Dim_Instrument)",
+                                                  "match":  "NO",
+                                                  "loss":  "Should be Tier 1; heavily expanded from upstream\u0027s terse \u0027Asset class from Dim_Instrument\u0027; tier source changed from SP_DealingDashboard_Clients to Dim_Instrument"
+                                              },
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Client\u0027s geographic region. From Fact_SnapshotCustomer. (Tier 2 — SP_DealingDashboard_Clients)",
+                                                  "wiki_quote":  "Marketing region label. Passthrough GROUP BY key from Dealing_DealingDashboard_Clients; originates from Dim_Country.Region (loaded from Dictionary.MarketingRegion.Name). 21 distinct values including USA, UK, Spain, ROW, ROE, Africa, etc. (Tier 2 — Dim_Country)",
+                                                  "match":  "NO",
+                                                  "loss":  "Should be Tier 1; semantic change: \u0027Client\u0027s geographic region\u0027 → \u0027Marketing region label\u0027; dropped \u0027From Fact_SnapshotCustomer\u0027; tier source changed from SP_DealingDashboard_Clients to Dim_Country"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "DateID, Date, InstrumentType, Region",
+                                       "problem":  "All four passthrough columns tagged Tier 2 but should be Tier 1 — upstream wiki for Dealing_DealingDashboard_Clients exists in the bundle and these are GROUP BY passthroughs with no transform."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "Region",
+                                       "problem":  "Upstream description is \u0027Client\u0027s geographic region. From Fact_SnapshotCustomer.\u0027 but wiki says \u0027Marketing region label\u0027 — semantic change. Dim_Country wiki explicitly warns geographic region ≠ marketing region."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 4 — Tier Legend",
+                                       "problem":  "Tier legend only shows Tier 2 row, omitting Tier 1. Footer states \u00270 T1\u0027 which is incorrect — 4 columns should be Tier 1."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "InstrumentType, Region",
+                                       "problem":  "Tier source attribution changed from the direct upstream (SP_DealingDashboard_Clients) to deeper ancestors (Dim_Instrument, Dim_Country), bypassing the immediate source Dealing_DealingDashboard_Clients."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentType",
+                                       "problem":  "Element description embeds full CASE mapping (1=Currencies, 2=Commodities, etc.) duplicating Section 2.2 business logic. Element descriptions should be concise."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag DateID, Date, InstrumentType, Region as Tier 1 from Dealing_DealingDashboard_Clients, quoting upstream wiki descriptions verbatim. (2) For Region, use upstream text exactly: \u0027Client\u0027s geographic region. From Fact_SnapshotCustomer.\u0027 — do not substitute \u0027marketing region label\u0027. (3) Update Section 4 tier legend to include Tier 1 row. (4) Update footer tier counts to 4 T1, 2 T2. (5) Keep InstrumentType element description concise; move CASE mapping to Section 2.2 only.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

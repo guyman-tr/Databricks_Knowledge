@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "WalletAssets",
+    "elapsed_seconds":  88,
+    "exit_code":  null,
+    "cost_usd":  0.2009,
+    "input_tokens":  2,
+    "output_tokens":  3556,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "WalletAssets",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No formal Phase Gate Checklist section. Footer says \u0027Phases: 11/14\u0027 but does not enumerate which phases were completed or skipped, making independent P2/P3 verification impossible."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CryptoId",
+                                       "problem":  "CryptoId FK target is described as \u0027production crypto dictionary in WalletDB\u0027 but no specific server/database/table name is given for the lookup. The review-needed sidecar flags this but could be more prescriptive."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian Knowledge Sources section says \u0027search skipped\u0027 — provides no value. Could note whether relevant Confluence spaces for WalletDB/eToroX are known to exist."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "These columns are derived from Occurred (year/month/day extraction) which is arguably a Tier 2 transformation. Marked Tier 3 passthrough because the derivation happens production-side and columns pass through as-is. Defensible but debatable."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Only two downstream consumers listed (EXW_CustomerWalletsView, EXW_TransactionsView). If other objects consume WalletAssets, they are not captured — likely a codebase limitation, not a writer error."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. For a future polish pass: (1) Add a formal Phase Gate Checklist section enumerating completed/skipped phases. (2) If WalletDB server/instance name is known, add it to Section 6.1 for CryptoId FK resolution. (3) Consider re-tagging etr_y/etr_ym/etr_ymd as Tier 2 (derived from Occurred on production side) with a note that the derivation is pre-Synapse.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,5185 @@
+[
+  {
+    "cluster_id": 4,
+    "size": 173,
+    "internal_weight": 1039.0,
+    "src_breakdown": {
+      "wiki": 931,
+      "genie": 101,
+      "kpi": 3,
+      "kpi_prep": 4
+    },
+    "schema_breakdown": {
+      "BI_DB_DailyDividendsByPosition": 1,
+      "BI_DB_dbo": 91,
+      "BI_DB_staging": 1,
+      "DWH_dbo": 16,
+      "DWH_pagetracking": 1,
+      "DWH_staging": 2,
+      "DWH_watchlists": 1,
+      "Dealing_dbo": 22,
+      "Dealing_staging": 2,
+      "Dictionary": 1,
+      "Dim_Instrument": 2,
+      "Hedge": 1,
+      "History": 1,
+      "StockInfo": 1,
+      "Trade": 9,
+      "Trading": 1,
+      "data_rooms": 5,
+      "dbo": 1,
+      "dealing": 4,
+      "eMoney_dbo": 1,
+      "etoro_kpi": 2,
+      "etoro_kpi_prep": 3,
+      "general": 2,
+      "risk": 1,
+      "risk_stg": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Instrument",
+        "weight": 478.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Position",
+        "weight": 441.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_PositionPnL",
+        "weight": 185.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Date",
+        "weight": 122.0
+      },
+      {
+        "node": "DWH_dbo.Fact_CurrencyPriceWithSplit",
+        "weight": 51.0
+      },
+      {
+        "node": "Trade.PositionTbl",
+        "weight": 49.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Crypto_Dashboard",
+        "weight": 34.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2023",
+        "weight": 33.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Boundary_Cost",
+        "weight": 31.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_EY_Audit_ChangeLog",
+        "weight": 29.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Index_Dividend_TaxReport_CID_Level",
+        "weight": 29.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_M_Compliance_CDIM_Report",
+        "weight": 29.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_PI_Positions",
+        "weight": 28.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CID_DailyCluster",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_IFRS_15_Daily_Positions",
+        "weight": 27.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_DailyDividendsByPosition.DividendID",
+      "BI_DB_dbo.AML_InstrumentMetaData_Daily_Email",
+      "BI_DB_dbo.AML_InstrumentMetaData_Daily_Email_DayToDay_Changes",
+      "BI_DB_dbo.BI_DB_ABook_Exposure",
+      "BI_DB_dbo.BI_DB_ABook_Exposure_History",
+      "BI_DB_dbo.BI_DB_ABook_Exposure_NOPHedged",
+      "BI_DB_dbo.BI_DB_AML_FCA_Crypto_Threshold",
+      "BI_DB_dbo.BI_DB_AbuseAPI",
+      "BI_DB_dbo.BI_DB_CID_DailyCluster",
+      "BI_DB_dbo.BI_DB_CID_LifeStageDefinition",
+      "BI_DB_dbo.BI_DB_ClusteringDailyPrepData",
+      "BI_DB_dbo.BI_DB_ClusteringLog",
+      "BI_DB_dbo.BI_DB_Compliance_Clients_Dashboard_EOM_Pos",
+      "BI_DB_dbo.BI_DB_Cross_Selling_Daily",
+      "BI_DB_dbo.BI_DB_Cross_Selling_Monthly",
+      "BI_DB_dbo.BI_DB_CryptoDashboardNew",
+      "BI_DB_dbo.BI_DB_Crypto_Dashboard",
+      "BI_DB_dbo.BI_DB_Crypto_NOP",
+      "BI_DB_dbo.BI_DB_Crypto_NOP_CID",
+      "BI_DB_dbo.BI_DB_DailyDividendsByPosition",
+      "BI_DB_dbo.BI_DB_DailyNOP_ByInstrument",
+      "BI_DB_dbo.BI_DB_DailyZeroPnL_Stocks",
+      "BI_DB_dbo.BI_DB_DailyZero_TreeSize_NEW_InvalidCustomers",
+      "BI_DB_dbo.BI_DB_Daily_CID_Dividend_TaxReport",
+      "BI_DB_dbo.BI_DB_Daily_Open_Closed_Position",
+      "BI_DB_dbo.BI_DB_Daily_TradeData",
+      "BI_DB_dbo.BI_DB_Demo_CID_Panel",
+      "BI_DB_dbo.BI_DB_EOD_USD_cr",
+      "BI_DB_dbo.BI_DB_EOMExposures",
+      "BI_DB_dbo.BI_DB_EY_Audit_Automation_IFRSControl_Results",
+      "BI_DB_dbo.BI_DB_EY_Audit_CashoutFees",
+      "BI_DB_dbo.BI_DB_EY_Audit_ChangeLog",
+      "BI_DB_dbo.BI_DB_Employee_Crypto_NWA",
+      "BI_DB_dbo.BI_DB_EquitiesWithSustainabilityStamp",
+      "BI_DB_dbo.BI_DB_FSRA_Weekly_Report",
+      "BI_DB_dbo.BI_DB_Finance_IFRS_Automation_KTCD_eToro_Side",
+      "BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2023",
+      "BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2025",
+      "BI_DB_dbo.BI_DB_Finance_Panel_Reports_New",
+      "BI_DB_dbo.BI_DB_Finance_Real_Futures_Custody_And_Transfers",
+      "BI_DB_dbo.BI_DB_Finance_eToro_vs_Positions",
+      "BI_DB_dbo.BI_DB_FirstTimeRev10",
+      "BI_DB_dbo.BI_DB_FirstTimeRev5",
+      "BI_DB_dbo.BI_DB_Futures_Finance_Prep_Data",
+      "BI_DB_dbo.BI_DB_German_Open_Real_Crypto_Positions_Daily",
+      "BI_DB_dbo.BI_DB_IFRS15_Daily_Balance",
+      "BI_DB_dbo.BI_DB_IFRS_15_Daily_Positions",
+      "BI_DB_dbo.BI_DB_IndexDividends_Alert",
+      "BI_DB_dbo.BI_DB_Index_Dividend_TaxReport",
+      "BI_DB_dbo.BI_DB_Index_Dividend_TaxReport_CID_Level",
+      "BI_DB_dbo.BI_DB_Instrument_Overview",
+      "BI_DB_dbo.BI_DB_Instruments_BidAndAsk",
+      "BI_DB_dbo.BI_DB_M_Compliance_CDIM_Report",
+      "BI_DB_dbo.BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months",
+      "BI_DB_dbo.BI_DB_M_ESMA_ProfitableClients_CFD_Last12Months_Instrument",
+      "BI_DB_dbo.BI_DB_M_LifeStage_Matrix",
+      "BI_DB_dbo.BI_DB_MarketingCloudDaily",
+      "BI_DB_dbo.BI_DB_MarketingCloudUserBehaviorInstrument",
+      "BI_DB_dbo.BI_DB_Mirror_Assets_Allocation",
+      "BI_DB_dbo.BI_DB_NOP_Risk_Daily",
+      "BI_DB_dbo.BI_DB_PI_Positions",
+      "BI_DB_dbo.BI_DB_PTM_Levy_Report",
+      "BI_DB_dbo.BI_DB_PositionPnL",
+      "BI_DB_dbo.BI_DB_PositionPnL_Agg_daily_Staking",
+      "BI_DB_dbo.BI_DB_PositionPnL_EU_Custody",
+      "BI_DB_dbo.BI_DB_PositionPnL_EU_Custody_Instrument_Agg",
+      "BI_DB_dbo.BI_DB_PositionPnL_SWITCH",
+      "BI_DB_dbo.BI_DB_PositionPnL_UK_Custody",
+      "BI_DB_dbo.BI_DB_PositionPnL_UK_Custody_Resolver",
+      "BI_DB_dbo.BI_DB_PositionPnL_UK_Instrument_Agg",
+      "BI_DB_dbo.BI_DB_PositionPnL_UnrealizedPnL_Close_Adjustment",
+      "BI_DB_dbo.BI_DB_Reg_UK_Compliance_VolumeByInstrument",
+      "BI_DB_dbo.BI_DB_ReturnCalculation",
+      "BI_DB_dbo.BI_DB_ReturnCalculation_Daily_Data",
+      "BI_DB_dbo.BI_DB_RollOverFee_ByInstrument",
+      "BI_DB_dbo.BI_DB_Snapshot_CID_LifeStageDefinition",
+      "BI_DB_dbo.BI_DB_SpreadedPriceCandle60MinSplitted",
+      "BI_DB_dbo.BI_DB_Staking_Email_For_Marcin",
+      "BI_DB_dbo.BI_DB_Stocks_HS121_CIDs",
+      "BI_DB_dbo.BI_DB_Stocks_HS125",
+      "BI_DB_dbo.BI_DB_Stocks_Opportunities",
+      "BI_DB_dbo.BI_DB_Trading_Failures_Risk",
+      "BI_DB_dbo.BI_DB_US_Apex_Stocks_Activity_Apex",
+      "BI_DB_dbo.BI_DB_US_Apex_Stocks_Activity_eToroDB",
+      "BI_DB_dbo.BI_DB_US_Apex_Transactions_Trading_Activity",
+      "BI_DB_dbo.BI_DB_US_Stocks",
+      "BI_DB_dbo.BI_DB_US_Stocks_Transactions_Per_Time_Unit",
+      "BI_DB_dbo.BI_DB_Unsettled_Trades_Risk",
+      "BI_DB_dbo.BI_DB_Vulnerability_LifetimeMetrics",
+      "BI_DB_dbo.BI_DB_Vulnerability_Positions",
+      "BI_DB_dbo.BI_DB_rsk_DailyRiskAgg",
+      "BI_DB_dbo.BI_DB_rsk_Portfolio",
+      "BI_DB_staging.PriceLog_History_CurrencyPrice_Active_tmp",
+      "DWH_dbo.Dim_Date",
+      "DWH_dbo.Dim_GetSpreadedPriceCandle60MinSplitted",
+      "DWH_dbo.Dim_HedgeServer",
+      "DWH_dbo.Dim_HistorySplitRatio",
+      "DWH_dbo.Dim_Instrument",
+      "DWH_dbo.Dim_Instrument_Correlation",
+      "DWH_dbo.Dim_Instrument_Snapshot",
+      "DWH_dbo.Dim_Position",
+      "DWH_dbo.Dim_PositionChangeLog",
+      "DWH_dbo.Dim_PositionHedgeServerChangeLog_Snapshot",
+      "DWH_dbo.Ext_FCPWS_Instrument",
+      "DWH_dbo.Fact_CurrencyPriceWithSplit",
+      "DWH_dbo.Fact_FirstCustomerAction",
+      "DWH_dbo.Fact_Position_Futures_Snapshot",
+      "DWH_dbo.Fact_Settlement_Prices",
+      "DWH_dbo.SP_Dim_Position_PositionHedgeServerChangeLog",
+      "DWH_pagetracking.Fact_MarketPageViews",
+      "DWH_staging.EndOfDay_EOD_SettlementPrices",
+      "DWH_staging.PriceLog_Candles_CurrencyPriceMaxDateWithSplitView",
+      "DWH_watchlists.Fact_WatchlistsItems",
+      "Dealing_dbo.DSC_HedgeOnIndices",
+      "Dealing_dbo.DSC_HedgeOnIndices_H",
+      "Dealing_dbo.Dealing_AbuseAPI",
+      "Dealing_dbo.Dealing_Apex_PnL",
+      "Dealing_dbo.Dealing_Apex_PnL_Daily",
+      "Dealing_dbo.Dealing_Apex_PnL_EE",
+      "Dealing_dbo.Dealing_Apex_PnL_EE_Daily",
+      "Dealing_dbo.Dealing_Boundary_Cost",
+      "Dealing_dbo.Dealing_Boundary_Cost_H_Indices",
+      "Dealing_dbo.Dealing_CEP_ExecutionMonitoring",
+      "Dealing_dbo.Dealing_CFDs_Stocks_Credit_Risk",
+      "Dealing_dbo.Dealing_Clicks_OpenClose_Breakdown",
+      "Dealing_dbo.Dealing_ClientsCapitalAdequacy",
+      "Dealing_dbo.Dealing_DailyZeroPnL_Stocks",
+      "Dealing_dbo.Dealing_Execution_Slippage",
+      "Dealing_dbo.Dealing_HedgeCost",
+      "Dealing_dbo.Dealing_IndiciesIntraHour_Clients",
+      "Dealing_dbo.Dealing_IndiciesIntraHour_Etoro",
+      "Dealing_dbo.Dealing_LP_StocksNOP",
+      "Dealing_dbo.Dealing_NOP_LPandClients",
+      "Dealing_dbo.Dealing_NumberofPositionsOpened_Agg",
+      "Dealing_dbo.External_Gold_Dealing_Marex_Trader_OrderID",
+      "Dealing_staging.LP_APEX_EXT869_3EU",
+      "Dealing_staging.LP_APEX_EXT981_3EU",
+      "Dictionary.Tradinginstrumentgroups",
+      "Dim_Instrument.InstrumentDisplayName",
+      "Dim_Instrument.InstrumentID",
+      "Hedge.ExecutionLog",
+      "History.SplitRatio",
+      "StockInfo.InstrumentData",
+      "Trade.FuturesMetaData",
+      "Trade.Futuresmetadata",
+      "Trade.GetInstrument",
+      "Trade.HedgeServer",
+      "Trade.IndexDividends",
+      "Trade.InstrumentMetaData",
+      "Trade.Instrumentgroups",
+      "Trade.PositionTbl",
+      "Trade.ProviderToInstrument",
+      "Trading.Position",
+      "data_rooms.vw_bi_output_dealing_newinstruments",
+      "data_rooms.vw_failures_execution_fail_suc_rate",
+      "data_rooms.vw_failures_execution_fails_drill_down",
+      "data_rooms.vw_risk_effective_leverage",
+      "data_rooms.vw_risk_var_nop_main_instruments_history",
+      "dbo.etoro_Hedge_InstrumentBoundaries",
+      "dealing.bi_output_dealing_bestexecution_report",
+      "dealing.bi_output_dealing_dealingdashboard_cid",
+      "dealing.bronze_etoro_hedge_executionlog_v",
+      "dealing.bronze_pricesfromprovider_marketcurrencyprice",
+      "eMoney_dbo.eMoney_Currency_Mapping_ISO",
+      "etoro_kpi.vg_dealing_clicks_openclose_breakdown",
+      "etoro_kpi.vg_dealing_dealingdashboard_cid",
+      "etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+      "etoro_kpi_prep.v_moneyfarm_aum",
+      "etoro_kpi_prep.v_moneyfarm_mimo",
+      "general.gold_lukka_all_transfers",
+      "general.gold_lukka_flat_custom_report",
+      "risk.risk_output_rm_tables_history_var_cvar",
+      "risk_stg.risk_output_rm_tables_cfds_concentration_results"
+    ],
+    "genie_overlap": [
+      {
+        "title": "etoro_risk",
+        "overlap": 8,
+        "n_tables": 8
+      },
+      {
+        "title": "PROD - etoro_trading_ai",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "etoro_trading",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "Financial Trading and Execution Analytics",
+        "overlap": 4,
+        "n_tables": 4
+      },
+      {
+        "title": "Crypto Finance",
+        "overlap": 4,
+        "n_tables": 4
+      },
+      {
+        "title": "Buying Power - Rollout Plan Analysis",
+        "overlap": 3,
+        "n_tables": 8
+      },
+      {
+        "title": "UK BA space [WIP]",
+        "overlap": 3,
+        "n_tables": 30
+      },
+      {
+        "title": "Data Detective",
+        "overlap": 3,
+        "n_tables": 17
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.vg_dealing_clicks_openclose_breakdown",
+      "etoro_kpi.vg_dealing_dealingdashboard_cid",
+      "etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+      "etoro_kpi_prep.v_moneyfarm_aum",
+      "etoro_kpi_prep.v_moneyfarm_mimo"
+    ]
+  },
+  {
+    "cluster_id": 11,
+    "size": 152,
+    "internal_weight": 693.0,
+    "src_breakdown": {
+      "wiki": 553,
+      "genie": 57,
+      "kpi_prep": 41,
+      "tableau": 46,
+      "kpi": 19
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 67,
+      "Compensations": 1,
+      "DWH_Migration": 2,
+      "DWH_dbo": 26,
+      "Dictionary": 10,
+      "Dim_Position": 1,
+      "EXW_Settings": 1,
+      "EXW_dbo": 5,
+      "External_": 2,
+      "History": 1,
+      "Reports": 1,
+      "Settings": 1,
+      "Trade": 1,
+      "bi_output": 1,
+      "crm": 3,
+      "de_output": 4,
+      "eMoney_dbo": 5,
+      "etoro_kpi": 2,
+      "etoro_kpi_prep": 15,
+      "etoro_kpi_stg": 1,
+      "general": 1,
+      "pii_data": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Country",
+        "weight": 397.5
+      },
+      {
+        "node": "DWH_dbo.Dim_Regulation",
+        "weight": 269.5
+      },
+      {
+        "node": "DWH_dbo.Fact_SnapshotCustomer",
+        "weight": 187.5
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CIDFirstDates",
+        "weight": 166.0
+      },
+      {
+        "node": "DWH_dbo.Dim_PlayerLevel",
+        "weight": 165.5
+      },
+      {
+        "node": "DWH_dbo.V_Fact_SnapshotCustomer_FromDateID",
+        "weight": 83.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Range",
+        "weight": 78.5
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end",
+        "weight": 51.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_start",
+        "weight": 47.0
+      },
+      {
+        "node": "DWH_dbo.Dim_AccountType",
+        "weight": 31.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Reg_UK_Compliance_Professional_OptUp",
+        "weight": 28.0
+      },
+      {
+        "node": "DWH_dbo.Dim_MifidCategorization",
+        "weight": 27.0
+      },
+      {
+        "node": "DWH_dbo.Dim_PlayerStatusReasons",
+        "weight": 27.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Language",
+        "weight": 24.0
+      },
+      {
+        "node": "DWH_dbo.Dim_PlayerStatusSubReasons",
+        "weight": 24.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_AML_SubEntity_Categorization",
+      "BI_DB_dbo.BI_DB_AML_Terror_Monitor_Dashboard",
+      "BI_DB_dbo.BI_DB_ASIC_CreditLine_At_transfer",
+      "BI_DB_dbo.BI_DB_ASIC_Monitoring_CFD",
+      "BI_DB_dbo.BI_DB_ASIC_Monthly_Positions",
+      "BI_DB_dbo.BI_DB_AccountClosure",
+      "BI_DB_dbo.BI_DB_ActiveAffActualMonthly_Region_GroupAffName",
+      "BI_DB_dbo.BI_DB_ActiveAffiliatesPlanned",
+      "BI_DB_dbo.BI_DB_ActiveAffiliatesPlanned_Actual",
+      "BI_DB_dbo.BI_DB_Airdrop_Data",
+      "BI_DB_dbo.BI_DB_AppFlyer_Reports",
+      "BI_DB_dbo.BI_DB_CIDFirstDates",
+      "BI_DB_dbo.BI_DB_CID_DailyPanel_Club",
+      "BI_DB_dbo.BI_DB_CID_Daily_AcquisitionFunnel_VBT",
+      "BI_DB_dbo.BI_DB_CO_Cluster_Daily",
+      "BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New",
+      "BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New_Blocked",
+      "BI_DB_dbo.BI_DB_ClubChangeLog",
+      "BI_DB_dbo.BI_DB_Corporates_SummaryReport",
+      "BI_DB_dbo.BI_DB_CustomerDTDAggregatedData",
+      "BI_DB_dbo.BI_DB_CySEC_Submission_ICF",
+      "BI_DB_dbo.BI_DB_Daily_CreditLine",
+      "BI_DB_dbo.BI_DB_FB_Conversion",
+      "BI_DB_dbo.BI_DB_FB_Performance",
+      "BI_DB_dbo.BI_DB_FB_Report",
+      "BI_DB_dbo.BI_DB_FCA_Liabilities",
+      "BI_DB_dbo.BI_DB_Finance_Staking_Report",
+      "BI_DB_dbo.BI_DB_GST_Report",
+      "BI_DB_dbo.BI_DB_ICF_Report",
+      "BI_DB_dbo.BI_DB_InterestDaily",
+      "BI_DB_dbo.BI_DB_InterestMonthly",
+      "BI_DB_dbo.BI_DB_Investors",
+      "BI_DB_dbo.BI_DB_Investors_STG",
+      "BI_DB_dbo.BI_DB_Investors_Unclustered",
+      "BI_DB_dbo.BI_DB_LimitedAccountsWithReasonsNEW",
+      "BI_DB_dbo.BI_DB_M_AML_Account_Closed",
+      "BI_DB_dbo.BI_DB_M_Affiliates_FraudMonitoring_Relations",
+      "BI_DB_dbo.BI_DB_Monthly_InterestPayment_Dashboard",
+      "BI_DB_dbo.BI_DB_OPS_Fraud_Alert_Analysis",
+      "BI_DB_dbo.BI_DB_PLTV",
+      "BI_DB_dbo.BI_DB_PR_MonthlyData",
+      "BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN",
+      "BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN",
+      "BI_DB_dbo.BI_DB_ProfessionalCustomers",
+      "BI_DB_dbo.BI_DB_ProfessionalCustomersDocuments",
+      "BI_DB_dbo.BI_DB_ProfessionalCustomersPending",
+      "BI_DB_dbo.BI_DB_QSR_Balance_New",
+      "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end",
+      "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_InvestorType",
+      "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_Market_Value",
+      "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_end_Positions",
+      "BI_DB_dbo.BI_DB_Q_AML_FSA_Report_start",
+      "BI_DB_dbo.BI_DB_RAF_Invitees_KPIs",
+      "BI_DB_dbo.BI_DB_Reg_UK_Compliance_KYC_Weekly_Export",
+      "BI_DB_dbo.BI_DB_Reg_UK_Compliance_Professional_OptUp",
+      "BI_DB_dbo.BI_DB_RevenueForum",
+      "BI_DB_dbo.BI_DB_Tax_Reports_Status",
+      "BI_DB_dbo.BI_DB_Twitter",
+      "BI_DB_dbo.BI_DB_US_Apex_Address_Change",
+      "BI_DB_dbo.BI_DB_US_Citizens_Under_Non_US_Regulation",
+      "BI_DB_dbo.Compliance_BI_Leverage_Dashboard",
+      "BI_DB_dbo.Dealing_CryptoRebate",
+      "BI_DB_dbo.External_Gold_DE_FiatDwhDB_CustomerEODBalance_ClubChange",
+      "BI_DB_dbo.External_MoneyTransfer_Billing_Transfers",
+      "BI_DB_dbo.External_etoro_BackOffice_Customer",
+      "BI_DB_dbo.SP_M_AML_Report",
+      "BI_DB_dbo.SP_MarketingCloudDaily",
+      "Compensations.CreditDate",
+      "DWH_Migration.Dim_CustomerChangeType",
+      "DWH_Migration.Dim_Desk",
+      "DWH_dbo.Dim_AccountManager",
+      "DWH_dbo.Dim_AccountType",
+      "DWH_dbo.Dim_Country",
+      "DWH_dbo.Dim_CustomerChangeType",
+      "DWH_dbo.Dim_Desk",
+      "DWH_dbo.Dim_Language",
+      "DWH_dbo.Dim_MifidCategorization",
+      "DWH_dbo.Dim_PendingClosureStatus",
+      "DWH_dbo.Dim_PhoneVerified",
+      "DWH_dbo.Dim_PlayerLevel",
+      "DWH_dbo.Dim_PlayerStatusReasons",
+      "DWH_dbo.Dim_PlayerStatusSubReasons",
+      "DWH_dbo.Dim_Range",
+      "DWH_dbo.Dim_Regulation",
+      "DWH_dbo.Dim_ScreeningStatus",
+      "DWH_dbo.Dim_State_and_Province",
+      "DWH_dbo.Ext_Dim_Country",
+      "DWH_dbo.Ext_Dim_Country_Region_Desk",
+      "DWH_dbo.Fact_RegulationTransfer",
+      "DWH_dbo.Fact_SnapshotCustomer",
+      "DWH_dbo.Fact_SnapshotCustomerCloseYear",
+      "DWH_dbo.V_Dim_Customer",
+      "DWH_dbo.V_Fact_SnapshotCustomer",
+      "DWH_dbo.V_Fact_SnapshotCustomer_FromDateID",
+      "DWH_dbo.V_Fact_SnapshotEquity",
+      "DWH_dbo.V_M2M_Date_DateRange",
+      "Dictionary.AccountType",
+      "Dictionary.CountryRiskGroup",
+      "Dictionary.Language",
+      "Dictionary.MarketingRegion",
+      "Dictionary.MifidCategorization",
+      "Dictionary.PendingClosureStatus",
+      "Dictionary.PhoneVerified",
+      "Dictionary.PlayerLevel",
+      "Dictionary.RegionByIP",
+      "Dictionary.RegionName",
+      "Dim_Position.OpenOccurred",
+      "EXW_Settings.Resources",
+      "EXW_dbo.EXW_C2P_E2E",
+      "EXW_dbo.EXW_Conversion_Allowed_Country",
+      "EXW_dbo.EXW_Payment_Allowed_Country",
+      "EXW_dbo.EXW_Staking_Allowed_Country",
+      "EXW_dbo.EXW_WalletElligibleCountries",
+      "External_.closed_to_iban_parquet",
+      "External_.opened_from_iban_parquet",
+      "History.BackOfficeCustomer",
+      "Reports.Report",
+      "Settings.Resources",
+      "Trade.InterestMonthly",
+      "bi_output.bi_output_customer_customer_support_case",
+      "crm.silver_casehistory",
+      "crm.silver_crm_casehistory",
+      "crm.silver_crm_livechattranscriptevent",
+      "de_output.de_output_voice_of_the_customer_comments",
+      "de_output.de_output_voice_of_the_customer_feeds",
+      "de_output.de_output_voice_of_the_customer_messagingsession",
+      "de_output.de_output_voice_of_the_customer_torii",
+      "eMoney_dbo.CustomerEODBalance",
+      "eMoney_dbo.eMoney_Country_Codes_Mapping_ISO",
+      "eMoney_dbo.eMoney_Daily_MIMO_New_Reports_Action",
+      "eMoney_dbo.eMoney_Dim_Country_Rollout",
+      "eMoney_dbo.eMoney_Reports_MIMO_Actions",
+      "etoro_kpi.vg_customer_daily_snapshot",
+      "etoro_kpi.vg_customer_monthly_snapshot",
+      "etoro_kpi_prep.v_copyfund_positions",
+      "etoro_kpi_prep.v_ddr_revenues",
+      "etoro_kpi_prep.v_population_active_traders_lite",
+      "etoro_kpi_prep.v_revenue_cashoutfee_excluderedeem",
+      "etoro_kpi_prep.v_revenue_cashoutfee_incredeem",
+      "etoro_kpi_prep.v_revenue_conversionfee",
+      "etoro_kpi_prep.v_revenue_conversionfee_withpositiondata",
+      "etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
+      "etoro_kpi_prep.v_revenue_dormantfee",
+      "etoro_kpi_prep.v_revenue_interestfee",
+      "etoro_kpi_prep.v_revenue_share_lending",
+      "etoro_kpi_prep.v_revenue_stakingfee",
+      "etoro_kpi_prep.v_revenue_transfercoinfee",
+      "etoro_kpi_prep.v_trading_volume_and_amount",
+      "etoro_kpi_prep.v_trading_volume_positionlevel",
+      "etoro_kpi_stg.v_marketing_campaigns_funnel",
+      "general.etoro_History_BackOfficeCustomer",
+      "pii_data.de_output_voice_of_the_customer_proinvestorclaw"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Voice Of The Customer",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "UK BA space [WIP]",
+        "overlap": 5,
+        "n_tables": 30
+      },
+      {
+        "title": "Product Analytics",
+        "overlap": 5,
+        "n_tables": 12
+      },
+      {
+        "title": "CS Daily Incoming",
+        "overlap": 4,
+        "n_tables": 4
+      },
+      {
+        "title": "Buying Power - Rollout Plan Analysis",
+        "overlap": 2,
+        "n_tables": 8
+      },
+      {
+        "title": "Marketing + Finance",
+        "overlap": 2,
+        "n_tables": 8
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.vg_customer_daily_snapshot",
+      "etoro_kpi.vg_customer_monthly_snapshot",
+      "etoro_kpi_prep.v_copyfund_positions",
+      "etoro_kpi_prep.v_ddr_revenues",
+      "etoro_kpi_prep.v_population_active_traders_lite",
+      "etoro_kpi_prep.v_revenue_cashoutfee_excluderedeem",
+      "etoro_kpi_prep.v_revenue_cashoutfee_incredeem",
+      "etoro_kpi_prep.v_revenue_conversionfee",
+      "etoro_kpi_prep.v_revenue_conversionfee_withpositiondata",
+      "etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
+      "etoro_kpi_prep.v_revenue_dormantfee",
+      "etoro_kpi_prep.v_revenue_interestfee",
+      "etoro_kpi_prep.v_revenue_share_lending",
+      "etoro_kpi_prep.v_revenue_stakingfee",
+      "etoro_kpi_prep.v_revenue_transfercoinfee"
+    ]
+  },
+  {
+    "cluster_id": 10,
+    "size": 146,
+    "internal_weight": 735.0,
+    "src_breakdown": {
+      "wiki": 638,
+      "genie": 97
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 104,
+      "BackOffice": 2,
+      "Customer": 1,
+      "DWH_dbo": 12,
+      "Dictionary": 5,
+      "Dim_Affiliate": 1,
+      "Dim_Country": 1,
+      "Dim_Manager": 1,
+      "Dim_Regulation": 1,
+      "History": 2,
+      "StsAudit": 1,
+      "bi_db": 2,
+      "compliance": 3,
+      "dbo": 1,
+      "eMoney_dbo": 1,
+      "experience": 4,
+      "general": 3,
+      "mixpanel": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Customer",
+        "weight": 922.0
+      },
+      {
+        "node": "DWH_dbo.V_Liabilities",
+        "weight": 192.0
+      },
+      {
+        "node": "DWH_dbo.Dim_PlayerStatus",
+        "weight": 124.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Manager",
+        "weight": 51.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_Users",
+        "weight": 45.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CIDFunnelFlow",
+        "weight": 39.0
+      },
+      {
+        "node": "BI_DB_dbo.DWH_GainDaily",
+        "weight": 39.0
+      },
+      {
+        "node": "Dictionary.PlayerStatus",
+        "weight": 34.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Operations_Onboarding_Flow_UserKPIs",
+        "weight": 32.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_PI_Dashboard_COPYDATA_RuningSideBySide",
+        "weight": 30.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_AML_Documents_Dashboard",
+        "weight": 29.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_AMLPeriodicReview",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_KYC_Panel",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_TIN_Gap",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_UsageTracking_SF",
+        "weight": 27.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.AML_Alerts_OPS_Report",
+      "BI_DB_dbo.Apex_UserProgramEnrolment_2024_01_25",
+      "BI_DB_dbo.BI_DB_AB_Test",
+      "BI_DB_dbo.BI_DB_AB_Test_Data",
+      "BI_DB_dbo.BI_DB_AMLComment_Risk_Score_Report_Ext",
+      "BI_DB_dbo.BI_DB_AMLPeriodicReview",
+      "BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_SameDeviceID",
+      "BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_SameIP",
+      "BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_Users",
+      "BI_DB_dbo.BI_DB_AML_BI_Alerts_New",
+      "BI_DB_dbo.BI_DB_AML_Benchmarks_AML_Alerts",
+      "BI_DB_dbo.BI_DB_AML_Benchmarks_Risk_Classification",
+      "BI_DB_dbo.BI_DB_AML_Daily_Alerts",
+      "BI_DB_dbo.BI_DB_AML_Daily_Alerts_From_oglesheet",
+      "BI_DB_dbo.BI_DB_AML_Daily_Alerts_History",
+      "BI_DB_dbo.BI_DB_AML_Documents_Dashboard",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_DeviceID",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_DeviceID_FullData",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_SameIP",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_SameIP_FullData",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_Withdraw",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_Withdrawfulldata",
+      "BI_DB_dbo.BI_DB_AM_Contacted",
+      "BI_DB_dbo.BI_DB_ASIC_ClientBalanceFinance",
+      "BI_DB_dbo.BI_DB_AffData",
+      "BI_DB_dbo.BI_DB_AffID_Dictionary",
+      "BI_DB_dbo.BI_DB_Affiliates_VerificationSLA",
+      "BI_DB_dbo.BI_DB_AvgHoldingTime",
+      "BI_DB_dbo.BI_DB_CIDFunnelFlow",
+      "BI_DB_dbo.BI_DB_CID_BalanceDays",
+      "BI_DB_dbo.BI_DB_CID_NPS_Panel",
+      "BI_DB_dbo.BI_DB_CID_WeeklyPanel_FullData",
+      "BI_DB_dbo.BI_DB_CashRiskMatrix",
+      "BI_DB_dbo.BI_DB_CryptoMarketingList",
+      "BI_DB_dbo.BI_DB_DailyRiskAlert",
+      "BI_DB_dbo.BI_DB_DailyTaboolaCombineAffwiz",
+      "BI_DB_dbo.BI_DB_Depositors_By_Managers",
+      "BI_DB_dbo.BI_DB_Employees_Program",
+      "BI_DB_dbo.BI_DB_EquitySnapshots",
+      "BI_DB_dbo.BI_DB_Failed_Verification_MA",
+      "BI_DB_dbo.BI_DB_German_Crypto_Transition_To_Tangany",
+      "BI_DB_dbo.BI_DB_GuruRatios",
+      "BI_DB_dbo.BI_DB_H_OPS_HighCompensationsVsDeposits",
+      "BI_DB_dbo.BI_DB_InvestorsKPI",
+      "BI_DB_dbo.BI_DB_KYCUserRawDataLeveled",
+      "BI_DB_dbo.BI_DB_KYC_DOBover85",
+      "BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment",
+      "BI_DB_dbo.BI_DB_KYC_Panel",
+      "BI_DB_dbo.BI_DB_KYC_Questions_Answers_Row_Data",
+      "BI_DB_dbo.BI_DB_KYC_Score_CID_Level",
+      "BI_DB_dbo.BI_DB_LimitedAccountsWithReasons",
+      "BI_DB_dbo.BI_DB_M_AML_Finance_Report",
+      "BI_DB_dbo.BI_DB_MonthlyGain",
+      "BI_DB_dbo.BI_DB_Negative_Balance_Monitor_Risk",
+      "BI_DB_dbo.BI_DB_NewBonusReport",
+      "BI_DB_dbo.BI_DB_NewContactsActivityPerRep",
+      "BI_DB_dbo.BI_DB_NonPI_HighAUM",
+      "BI_DB_dbo.BI_DB_OPS_HighCompensationsVsDeposits",
+      "BI_DB_dbo.BI_DB_OPS_KYC_Verification",
+      "BI_DB_dbo.BI_DB_OPS_MastersAndSubAccounts_AlignmentMonitoringReport",
+      "BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Verifications",
+      "BI_DB_dbo.BI_DB_Operations_Onboarding_Flow_UserKPIs",
+      "BI_DB_dbo.BI_DB_PI_Dashboard_COPYDATA_RuningSideBySide",
+      "BI_DB_dbo.BI_DB_PI_GainDaily",
+      "BI_DB_dbo.BI_DB_PI_WeeklyTrades",
+      "BI_DB_dbo.BI_DB_PastYearsGain",
+      "BI_DB_dbo.BI_DB_Publications",
+      "BI_DB_dbo.BI_DB_QTFN_Report",
+      "BI_DB_dbo.BI_DB_Revenue14DaysToBigQuery",
+      "BI_DB_dbo.BI_DB_SF_Cases_Panel",
+      "BI_DB_dbo.BI_DB_StocksETFs_SignificantAllocation",
+      "BI_DB_dbo.BI_DB_SuspiciousActivityTrading_Investing",
+      "BI_DB_dbo.BI_DB_TIN_Gap",
+      "BI_DB_dbo.BI_DB_TIN_Gap_Temp_pop",
+      "BI_DB_dbo.BI_DB_Tax_1099_PartA",
+      "BI_DB_dbo.BI_DB_Tax_1099_PartB",
+      "BI_DB_dbo.BI_DB_Tax_Compensation_for_1099",
+      "BI_DB_dbo.BI_DB_Tax_Compliance_Trade_CFD_US_Stocks",
+      "BI_DB_dbo.BI_DB_US_Apex_Corporate_CA_Apex",
+      "BI_DB_dbo.BI_DB_US_Apex_Corporate_CA_etoro",
+      "BI_DB_dbo.BI_DB_US_Apex_Fees_Charge",
+      "BI_DB_dbo.BI_DB_US_Apex_Rejected_Accounts",
+      "BI_DB_dbo.BI_DB_UsageTracking_SF",
+      "BI_DB_dbo.BI_DB_User_Segment_Snapshot",
+      "BI_DB_dbo.BI_DB_VAT_Transactions",
+      "BI_DB_dbo.BI_DB_Vulnerable_Customers",
+      "BI_DB_dbo.BI_DB_W8_Users_Status",
+      "BI_DB_dbo.BI_DB_W_Wed_Compliance_Vulnerability_ALL",
+      "BI_DB_dbo.BI_DB_WeeklyCopyBlock",
+      "BI_DB_dbo.BI_DB_YearlyGain",
+      "BI_DB_dbo.BI_DB_eTorian_NetProfit",
+      "BI_DB_dbo.BI_DB_eTorian_PnL",
+      "BI_DB_dbo.BI_DB_rsk_Risk_PI_Correl",
+      "BI_DB_dbo.BI_DB_rsk_Risk_PI_Stats",
+      "BI_DB_dbo.DWH_CIDs7DaysDeviation",
+      "BI_DB_dbo.DWH_CIDsDailyRisk",
+      "BI_DB_dbo.DWH_GainDaily",
+      "BI_DB_dbo.External_Fivetran_google_sheets_population_1_1099",
+      "BI_DB_dbo.External_UserApiDB_Customer_ExtendedUserField",
+      "BI_DB_dbo.External_UserApiDB_KYC_Answers",
+      "BI_DB_dbo.External_UserApiDB_KYC_Questions",
+      "BI_DB_dbo.External_etoro_BackOffice_CustomerDocument",
+      "BI_DB_dbo.Rev_Cluster_Dict",
+      "BI_DB_dbo.SP_PI_Dashboard_COPYDATA_RuningSideBySide",
+      "BackOffice.CustomerDocumentToDocumentType",
+      "BackOffice.Manager",
+      "Customer.BlockedCustomerOperations",
+      "DWH_dbo.Dim_AccountStatus",
+      "DWH_dbo.Dim_Customer",
+      "DWH_dbo.Dim_EvMatchStatus",
+      "DWH_dbo.Dim_Manager",
+      "DWH_dbo.Dim_PlayerStatus",
+      "DWH_dbo.Dim_RiskClassification",
+      "DWH_dbo.Dim_WorldCheck",
+      "DWH_dbo.Fact_CustomerUnrealized_PnL",
+      "DWH_dbo.Fact_CustomerUnrealized_PnL_UserAPI",
+      "DWH_dbo.STS_User_Operations_Data_History",
+      "DWH_dbo.V_Liabilities",
+      "DWH_dbo.Vw_STS_User_Operations_Data_History",
+      "Dictionary.AccountStatus",
+      "Dictionary.EvMatchStatus",
+      "Dictionary.PlayerStatus",
+      "Dictionary.RiskClassification",
+      "Dictionary.WorldCheck",
+      "Dim_Affiliate.AffiliateID",
+      "Dim_Country.Name",
+      "Dim_Manager.ManagerID",
+      "Dim_Regulation.Name",
+      "History.BlockedCustomerOperations",
+      "History.Position",
+      "StsAudit.UserOperations",
+      "bi_db.bronze_fivetran_compliance_leverage_settings_data",
+      "bi_db.gold_bi_db_bi_db_positionpnl",
+      "compliance.bronze_userapidb_kyc_answers",
+      "compliance.bronze_userapidb_kyc_customeranswers",
+      "compliance.bronze_userapidb_kyc_questions",
+      "dbo.Publications",
+      "eMoney_dbo.eMoney_AM_Target",
+      "experience.bronze_event_hub_prod_event_streaming_we_impression_events_impressionevent",
+      "experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "experience.bronze_watchlistdb_dbo_watchlistitems",
+      "experience.bronze_watchlistdb_dbo_watchlists",
+      "general.bronze_factset_prices_volumes",
+      "general.bronze_factset_returns",
+      "general.etoroGeneral_History_GuruCopiers",
+      "mixpanel.silver"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Data Detective",
+        "overlap": 12,
+        "n_tables": 17
+      },
+      {
+        "title": "Feed Analytics Genie",
+        "overlap": 6,
+        "n_tables": 8
+      },
+      {
+        "title": "Buying Power - Rollout Plan Analysis",
+        "overlap": 3,
+        "n_tables": 8
+      },
+      {
+        "title": "Product Analytics",
+        "overlap": 3,
+        "n_tables": 12
+      },
+      {
+        "title": "Marketing + Finance",
+        "overlap": 3,
+        "n_tables": 8
+      },
+      {
+        "title": "UK BA space [WIP]",
+        "overlap": 2,
+        "n_tables": 30
+      },
+      {
+        "title": "Customer Compliance and Profile",
+        "overlap": 2,
+        "n_tables": 2
+      },
+      {
+        "title": "Solutions Analysis Co pilot",
+        "overlap": 2,
+        "n_tables": 5
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 1,
+    "size": 123,
+    "internal_weight": 655.0,
+    "src_breakdown": {
+      "wiki": 479,
+      "genie": 165,
+      "kpi_prep": 11
+    },
+    "schema_breakdown": {
+      "Apex": 2,
+      "BI_DB_dbo": 39,
+      "BackOffice": 2,
+      "Billing": 4,
+      "Compliance": 3,
+      "Customer": 4,
+      "DWH_dbo": 5,
+      "Dictionary": 16,
+      "Dim_AccountStatus": 1,
+      "Dim_Country": 2,
+      "Dim_Customer": 1,
+      "Dim_PlayerLevel": 1,
+      "Dim_PlayerStatus": 1,
+      "Dim_Regulation": 1,
+      "EXW_Wallet": 2,
+      "EXW_dbo": 18,
+      "Settings": 1,
+      "Wallet": 3,
+      "bi_db": 2,
+      "billing": 1,
+      "compliance": 3,
+      "dbo": 1,
+      "etoro": 1,
+      "etoro_kpi_stg": 3,
+      "experience": 1,
+      "fiktivo_dbo": 1,
+      "general": 1,
+      "regtech": 1,
+      "trading": 1,
+      "wallet": 1
+    },
+    "top_members": [
+      {
+        "node": "Customer.CustomerStatic",
+        "weight": 173.0
+      },
+      {
+        "node": "BackOffice.Customer",
+        "weight": 115.0
+      },
+      {
+        "node": "Dictionary.Country",
+        "weight": 109.0
+      },
+      {
+        "node": "EXW_dbo.EXW_DimUser",
+        "weight": 87.0
+      },
+      {
+        "node": "Billing.Deposit",
+        "weight": 63.0
+      },
+      {
+        "node": "Dictionary.Regulation",
+        "weight": 61.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_EY_Audit_BO_Deposits_With_PIPs",
+        "weight": 48.0
+      },
+      {
+        "node": "EXW_dbo.EXW_DimUser_Enriched",
+        "weight": 48.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_AML_Documents_Request",
+        "weight": 43.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Compliance_Illegal_Trades_Alerts",
+        "weight": 43.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients",
+        "weight": 36.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_OPS_MultipleAccounts",
+        "weight": 35.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market",
+        "weight": 35.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_WatchListsByFunnel",
+        "weight": 31.0
+      },
+      {
+        "node": "Dictionary.Deposittype",
+        "weight": 31.0
+      }
+    ],
+    "all_members": [
+      "Apex.ApexData",
+      "Apex.UserData",
+      "BI_DB_dbo.AML_German_Video_Ident",
+      "BI_DB_dbo.BI_DB_AML_Documents_Request",
+      "BI_DB_dbo.BI_DB_AML_High_Risk_Wallet",
+      "BI_DB_dbo.BI_DB_AML_IOB_Report",
+      "BI_DB_dbo.BI_DB_AML_PlayerStatus_Changes",
+      "BI_DB_dbo.BI_DB_AML_SAR_Report_FCA",
+      "BI_DB_dbo.BI_DB_ApproperiatenessTest_FTP_CID_Level",
+      "BI_DB_dbo.BI_DB_Blocked_Customers",
+      "BI_DB_dbo.BI_DB_CID_VerificationLevel",
+      "BI_DB_dbo.BI_DB_Compliance_Illegal_Trades_Alerts",
+      "BI_DB_dbo.BI_DB_EY_Audit_BO_Deposits_With_PIPs",
+      "BI_DB_dbo.BI_DB_KYC_eToroMoney_UpgradedClubMembers",
+      "BI_DB_dbo.BI_DB_LiveAcquisitionDashboard_Daily",
+      "BI_DB_dbo.BI_DB_Negative_Market_Monthly_Aggregated",
+      "BI_DB_dbo.BI_DB_OPS_MultipleAccounts",
+      "BI_DB_dbo.BI_DB_OPS_VerificationLevel2Stuck",
+      "BI_DB_dbo.BI_DB_OPS_VerificationPipeline_OverLevel2",
+      "BI_DB_dbo.BI_DB_QMMF_Report",
+      "BI_DB_dbo.BI_DB_QMMF_Report_Finance",
+      "BI_DB_dbo.BI_DB_Q_AML_EDD_US_Report",
+      "BI_DB_dbo.BI_DB_RiskAlertManagementTool",
+      "BI_DB_dbo.BI_DB_RiskClassification",
+      "BI_DB_dbo.BI_DB_RiskPayPalDepositors",
+      "BI_DB_dbo.BI_DB_Scored_Appropriateness_Negative_Market",
+      "BI_DB_dbo.BI_DB_USA_FinanceReport_forTax",
+      "BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients",
+      "BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients_Crypto_Stocks",
+      "BI_DB_dbo.BI_DB_US_Customer_Acount_Reconcilation",
+      "BI_DB_dbo.BI_DB_US_Mailing_Address_Non_US_Regulation",
+      "BI_DB_dbo.BI_DB_US_Mailing_Address_Non_US_Regulation_Email",
+      "BI_DB_dbo.BI_DB_VerificationStatus30Days",
+      "BI_DB_dbo.BI_DB_W_AML_PEP_Customers",
+      "BI_DB_dbo.BI_DB_W_AML_PEP_Customers_Trun",
+      "BI_DB_dbo.BI_DB_W_Mon_Compliance_CDIM_Report",
+      "BI_DB_dbo.BI_DB_W_Tue_Email_for_KYT",
+      "BI_DB_dbo.BI_DB_WatchListsByFunnel",
+      "BI_DB_dbo.BI_DB_Watchlist_Tracking_High_Level",
+      "BI_DB_dbo.BI_DB_Watchlist_Tracking_Item_Level",
+      "BI_DB_dbo.SP_W_Tue_Email_for_KYT",
+      "BackOffice.Customer",
+      "BackOffice.CustomerDocument",
+      "Billing.Deposit",
+      "Billing.DepositRollbackTracking",
+      "Billing.Fundingdatafactory",
+      "Billing.Login",
+      "Compliance.CustomerInteractionActionCounts",
+      "Compliance.CustomerInteractions",
+      "Compliance.UserInteractionDetails",
+      "Customer.CustomerStatic",
+      "Customer.Customermoney",
+      "Customer.FirstTimeDeposits",
+      "Customer.PlayerLevel",
+      "DWH_dbo.CustomerStatic",
+      "DWH_dbo.Dim_DocumentStatus",
+      "DWH_dbo.Dim_Product",
+      "DWH_dbo.Dim_VerificationLevel",
+      "DWH_dbo.Fact_SnapshotEquity",
+      "Dictionary.ApexStatus",
+      "Dictionary.Country",
+      "Dictionary.Deposittype",
+      "Dictionary.DocumentStatus",
+      "Dictionary.DocumentType",
+      "Dictionary.Fundingtype",
+      "Dictionary.Paymentstatus",
+      "Dictionary.PlayerStatusReasons",
+      "Dictionary.PlayerStatusSubReasons",
+      "Dictionary.Playerlevel",
+      "Dictionary.Playerstatus",
+      "Dictionary.Playerstatusreasons",
+      "Dictionary.Playerstatussubreasons",
+      "Dictionary.Regulation",
+      "Dictionary.ScreeningStatus",
+      "Dictionary.VerificationLevel",
+      "Dim_AccountStatus.AccountStatusName",
+      "Dim_Country.Abbreviation",
+      "Dim_Country.RiskGroupID",
+      "Dim_Customer.GCID",
+      "Dim_PlayerLevel.Name",
+      "Dim_PlayerStatus.Name",
+      "Dim_Regulation.ID",
+      "EXW_Wallet.AmlProviderUsers",
+      "EXW_Wallet.EXW_CustomerWalletsView",
+      "EXW_dbo.EXW_AMLProviderID",
+      "EXW_dbo.EXW_AML_Users_Report",
+      "EXW_dbo.EXW_CompensationClosingCountries",
+      "EXW_dbo.EXW_DimUser",
+      "EXW_dbo.EXW_DimUser_Enriched",
+      "EXW_dbo.EXW_EOMReportingBalances",
+      "EXW_dbo.EXW_FCA_UserLogin",
+      "EXW_dbo.EXW_ReimbursementFollowUp",
+      "EXW_dbo.EXW_ReimbursementSumTable",
+      "EXW_dbo.EXW_ReportingBalances",
+      "EXW_dbo.EXW_TestUsers",
+      "EXW_dbo.EXW_UserSettingsWalletAllowance",
+      "EXW_dbo.EXW_WalletClosedCountryProjects",
+      "EXW_dbo.EXW_WalletEntity",
+      "EXW_dbo.EXW_WalletRegulation",
+      "EXW_dbo.EXW_WalletUsers_30_Days",
+      "EXW_dbo.GetProviderUserIDNormalized",
+      "EXW_dbo.SP_EXW_UserSettingsWalletAllowance",
+      "Settings.CustomerData",
+      "Wallet.AmlProviderUsers",
+      "Wallet.CustomerTermsAndConditions",
+      "Wallet.TermsAndConditions",
+      "bi_db.bronze_compliancestatedb_compliance_kycflowevaluator",
+      "bi_db.bronze_customerfinancedb_customer_globalftds",
+      "billing.bronze_moneybusdb_moneybus_transactions",
+      "compliance.bronze_compliancestatedb_compliance_kycflow",
+      "compliance.bronze_compliancestatedb_dictionary_kycflowtype",
+      "compliance.bronze_compliancestatedb_history_kycflow",
+      "dbo.V_RiskClassificationDataLake",
+      "etoro.CustomerFinanceDB",
+      "etoro_kpi_stg.vw_raf_config_for_genie",
+      "etoro_kpi_stg.vw_raf_for_genie",
+      "etoro_kpi_stg.vw_raf_for_genie2",
+      "experience.bronze_rafcompensations_customer_raftrackingprocessed",
+      "fiktivo_dbo.tblaff_Affiliates",
+      "general.bronze_settingsdb_settings_gcidtodynamicgroups",
+      "regtech.gold_exposure_business_undertaking",
+      "trading.bronze_iban_trade_ordertoexternaloperation",
+      "wallet.bronze_settingsdb_dictionary_dynamicgroup"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Breaches Investigation Bot",
+        "overlap": 17,
+        "n_tables": 20
+      },
+      {
+        "title": "GlobalFTD Space",
+        "overlap": 7,
+        "n_tables": 8
+      },
+      {
+        "title": "Local Currency",
+        "overlap": 3,
+        "n_tables": 4
+      },
+      {
+        "title": "Raf Genie test Noga",
+        "overlap": 2,
+        "n_tables": 2
+      },
+      {
+        "title": "billing_test_quality and source",
+        "overlap": 2,
+        "n_tables": 3
+      },
+      {
+        "title": "Multiple Tables",
+        "overlap": 2,
+        "n_tables": 11
+      },
+      {
+        "title": "Billing",
+        "overlap": 2,
+        "n_tables": 5
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi_stg.vw_raf_config_for_genie",
+      "etoro_kpi_stg.vw_raf_for_genie",
+      "etoro_kpi_stg.vw_raf_for_genie2"
+    ]
+  },
+  {
+    "cluster_id": 7,
+    "size": 115,
+    "internal_weight": 641.5,
+    "src_breakdown": {
+      "wiki": 622,
+      "kpi_prep": 18,
+      "tableau": 3
+    },
+    "schema_breakdown": {
+      "AffiliateCommission": 2,
+      "BI_DB_dbo": 50,
+      "BI_OUTPUT": 2,
+      "BackOffice": 1,
+      "Billing": 7,
+      "DWH_dbo": 28,
+      "Dictionary": 14,
+      "History": 2,
+      "etoro_kpi_prep": 5,
+      "etoro_kpi_prep_stg": 4
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Fact_BillingDeposit",
+        "weight": 94.0
+      },
+      {
+        "node": "DWH_dbo.Fact_BillingWithdraw",
+        "weight": 89.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Currency",
+        "weight": 83.5
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals",
+        "weight": 76.0
+      },
+      {
+        "node": "DWH_dbo.Dim_FundingType",
+        "weight": 66.0
+      },
+      {
+        "node": "DWH_dbo.Fact_Cashout_State",
+        "weight": 55.0
+      },
+      {
+        "node": "Billing.Withdraw",
+        "weight": 52.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_AllDeposits",
+        "weight": 45.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Withdraw_Rollback_PIPs",
+        "weight": 37.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Affiliates",
+        "weight": 36.0
+      },
+      {
+        "node": "DWH_dbo.Fact_Cashout_Rollback",
+        "weight": 33.0
+      },
+      {
+        "node": "BI_DB_dbo.Synapse_Table_etoro_History_DepositAction",
+        "weight": 32.0
+      },
+      {
+        "node": "DWH_dbo.Fact_Deposit_State",
+        "weight": 32.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DepositWithdrawFee",
+        "weight": 28.0
+      },
+      {
+        "node": "DWH_dbo.Dim_BillingDepot",
+        "weight": 28.0
+      }
+    ],
+    "all_members": [
+      "AffiliateCommission.ClosedPositionFromEtoro",
+      "AffiliateCommission.RegistrationMetaData",
+      "BI_DB_dbo.BI_DB_ACH_PWMB_Flag_Report_History",
+      "BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_Aff_data",
+      "BI_DB_dbo.BI_DB_AML_Affiliate_Abuse_Agg",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_Dep",
+      "BI_DB_dbo.BI_DB_AML_Multiple_Accounts_Dep_fulldata",
+      "BI_DB_dbo.BI_DB_AdvancedDeposit_Ext",
+      "BI_DB_dbo.BI_DB_AllDeposits",
+      "BI_DB_dbo.BI_DB_All_Deposit_Hourly",
+      "BI_DB_dbo.BI_DB_Cashout_Performance_Monitoring",
+      "BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform",
+      "BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform",
+      "BI_DB_dbo.BI_DB_Daily_AffiliatesPaidAndCashout",
+      "BI_DB_dbo.BI_DB_Daily_HighCashoutEmailsForManagement",
+      "BI_DB_dbo.BI_DB_DepositWithdrawFee",
+      "BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals",
+      "BI_DB_dbo.BI_DB_Deposit_Reversals_PIPs",
+      "BI_DB_dbo.BI_DB_Deposits",
+      "BI_DB_dbo.BI_DB_EY_Audit_CashoutReason",
+      "BI_DB_dbo.BI_DB_EY_Audit_Cashouts",
+      "BI_DB_dbo.BI_DB_Finance_Cashout_RollbackDetails",
+      "BI_DB_dbo.BI_DB_Finance_Net_MIMO",
+      "BI_DB_dbo.BI_DB_H_SEA_CashoutsEstimation",
+      "BI_DB_dbo.BI_DB_High_Cashout_Emails_For_Management_Analysis",
+      "BI_DB_dbo.BI_DB_HourlyReport_Redeems",
+      "BI_DB_dbo.BI_DB_HourlyReport_Withdraws",
+      "BI_DB_dbo.BI_DB_LargeCashoutReport",
+      "BI_DB_dbo.BI_DB_Local_Currencies_MIMO",
+      "BI_DB_dbo.BI_DB_MarketingMonthlyRawData",
+      "BI_DB_dbo.BI_DB_Money_In_New_Management_Dashboard",
+      "BI_DB_dbo.BI_DB_Money_Out_New_Management_Dashboard",
+      "BI_DB_dbo.BI_DB_Money_Out_STPAnalysis_OPS_Dashboard",
+      "BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Affiliates",
+      "BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Cashouts",
+      "BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Wires",
+      "BI_DB_dbo.BI_DB_PIPs_Report_MID_Settings",
+      "BI_DB_dbo.BI_DB_PaymentSent_Results",
+      "BI_DB_dbo.BI_DB_Payoneer_Revenue_Report",
+      "BI_DB_dbo.BI_DB_RecurringInvestment_Positions",
+      "BI_DB_dbo.BI_DB_TicketsForOPS_NEW",
+      "BI_DB_dbo.BI_DB_Vulnerability_CanceledWithdrawals",
+      "BI_DB_dbo.BI_DB_Wire_PIP_Report",
+      "BI_DB_dbo.BI_DB_Withdraw_Rollback_PIPs",
+      "BI_DB_dbo.External_etoro_Billing_ProtocolMIDSettings",
+      "BI_DB_dbo.External_etoro_Dictionary_MarketingRegion",
+      "BI_DB_dbo.External_etoro_Dictionary_Response",
+      "BI_DB_dbo.SP_DDR_Fact_Fact_MIMO_AllPlatforms",
+      "BI_DB_dbo.SP_EY_Audit_BO_Deposits_With_PIPs",
+      "BI_DB_dbo.SP_H_Deposits",
+      "BI_DB_dbo.Synapse_Table_etoro_History_DepositAction",
+      "BI_DB_dbo.fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube",
+      "BI_OUTPUT.Customer_Support_Agent_User",
+      "BI_OUTPUT.Customer_Support_Case",
+      "BackOffice.WithdrawApproval",
+      "Billing.BI_Cashout_State_Report",
+      "Billing.CashoutRollbackTracking",
+      "Billing.Depot",
+      "Billing.ProtocolMIDSettings",
+      "Billing.Withdraw",
+      "Billing.WithdrawToFunding",
+      "Billing.vWithdrawToFunding",
+      "DWH_dbo.Dim_BillingDepot",
+      "DWH_dbo.Dim_BillingProtocolMIDSettingsID",
+      "DWH_dbo.Dim_CardType",
+      "DWH_dbo.Dim_CashoutMode",
+      "DWH_dbo.Dim_CashoutReason",
+      "DWH_dbo.Dim_CashoutStatus",
+      "DWH_dbo.Dim_ClientWithdrawReason",
+      "DWH_dbo.Dim_CountryBin",
+      "DWH_dbo.Dim_Currency",
+      "DWH_dbo.Dim_FundingType",
+      "DWH_dbo.Dim_Funnel",
+      "DWH_dbo.Dim_Instrument_Correlation_UnionedPartitions",
+      "DWH_dbo.Dim_Label",
+      "DWH_dbo.Dim_PaymentStatus",
+      "DWH_dbo.Dim_Platform",
+      "DWH_dbo.Dim_RiskManagementStatus",
+      "DWH_dbo.Dim_RiskStatus",
+      "DWH_dbo.Dim_ThreeDsResponseTypes",
+      "DWH_dbo.Fact_BillingDeposit",
+      "DWH_dbo.Fact_BillingWithdraw",
+      "DWH_dbo.Fact_Cashout_Rollback",
+      "DWH_dbo.Fact_Cashout_State",
+      "DWH_dbo.Fact_Deposit_Fees",
+      "DWH_dbo.Fact_Deposit_State",
+      "DWH_dbo.Fact_Reverse_Deposits",
+      "DWH_dbo.Fact_Withdraw_Fees",
+      "DWH_dbo.SP_Dictionaries_DL_To_Synapse",
+      "DWH_dbo.SP_Fact_BillingDeposit",
+      "Dictionary.CardType",
+      "Dictionary.CashoutMode",
+      "Dictionary.CashoutReason",
+      "Dictionary.CashoutStatus",
+      "Dictionary.ClientWithdrawReason",
+      "Dictionary.CountryBin6",
+      "Dictionary.FundingType",
+      "Dictionary.Funnel",
+      "Dictionary.Label",
+      "Dictionary.PaymentStatus",
+      "Dictionary.Platform",
+      "Dictionary.RiskManagementStatus",
+      "Dictionary.RiskStatus",
+      "Dictionary.ThreeDsResponseTypes",
+      "History.DepositAction",
+      "History.vWithdrawToFundingAction",
+      "etoro_kpi_prep.v_mimo_allplatforms",
+      "etoro_kpi_prep.v_mimo_emoneyplatform",
+      "etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+      "etoro_kpi_prep.v_mimo_optionsplatform",
+      "etoro_kpi_prep.v_mimo_tradingplatform",
+      "etoro_kpi_prep_stg.v_ddr_mimo_allplatforms",
+      "etoro_kpi_prep_stg.v_ddr_mimo_emoney",
+      "etoro_kpi_prep_stg.v_ddr_mimo_options",
+      "etoro_kpi_prep_stg.v_ddr_mimo_tradingplatform"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": [
+      "etoro_kpi_prep.v_mimo_allplatforms",
+      "etoro_kpi_prep.v_mimo_emoneyplatform",
+      "etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+      "etoro_kpi_prep.v_mimo_optionsplatform",
+      "etoro_kpi_prep.v_mimo_tradingplatform",
+      "etoro_kpi_prep_stg.v_ddr_mimo_allplatforms",
+      "etoro_kpi_prep_stg.v_ddr_mimo_emoney",
+      "etoro_kpi_prep_stg.v_ddr_mimo_options",
+      "etoro_kpi_prep_stg.v_ddr_mimo_tradingplatform"
+    ]
+  },
+  {
+    "cluster_id": 45,
+    "size": 97,
+    "internal_weight": 594.0,
+    "src_breakdown": {
+      "wiki": 594
+    },
+    "schema_breakdown": {
+      "CopyFromLake": 3,
+      "CryptoTypes": 1,
+      "Dictionary": 1,
+      "EXW_Currency": 2,
+      "EXW_Dictionary": 4,
+      "EXW_ECPBank": 1,
+      "EXW_PaymentReconciliation": 1,
+      "EXW_SimplexMapping": 1,
+      "EXW_Wallet": 27,
+      "EXW_dbo": 29,
+      "Staking": 3,
+      "Wallet": 24
+    },
+    "top_members": [
+      {
+        "node": "EXW_Wallet.CryptoTypes",
+        "weight": 88.0
+      },
+      {
+        "node": "EXW_Wallet.CustomerWalletsView",
+        "weight": 37.0
+      },
+      {
+        "node": "Wallet.CryptoTypes",
+        "weight": 35.0
+      },
+      {
+        "node": "EXW_Wallet.SentTransactions",
+        "weight": 34.0
+      },
+      {
+        "node": "EXW_Wallet.ReceivedTransactions",
+        "weight": 30.0
+      },
+      {
+        "node": "EXW_dbo.EXW_WalletInventory",
+        "weight": 29.0
+      },
+      {
+        "node": "Wallet.Wallets",
+        "weight": 27.0
+      },
+      {
+        "node": "EXW_Wallet.EXW_Price",
+        "weight": 26.0
+      },
+      {
+        "node": "EXW_dbo.EXW_FactConversions",
+        "weight": 26.0
+      },
+      {
+        "node": "EXW_Wallet.Redemptions",
+        "weight": 25.0
+      },
+      {
+        "node": "EXW_dbo.EXW_FactRedeemTransactions",
+        "weight": 25.0
+      },
+      {
+        "node": "EXW_dbo.EXW_FactTransactions",
+        "weight": 25.0
+      },
+      {
+        "node": "EXW_Wallet.Wallets",
+        "weight": 24.0
+      },
+      {
+        "node": "Wallet.Redemptions",
+        "weight": 23.0
+      },
+      {
+        "node": "EXW_Wallet.Requests",
+        "weight": 21.0
+      }
+    ],
+    "all_members": [
+      "CopyFromLake.WalletDB_Dictionary_RequestStatuses",
+      "CopyFromLake.WalletDB_Dictionary_RequestTypes",
+      "CopyFromLake.WalletDB_Dictionary_WalletPoolStatuses",
+      "CryptoTypes.InstrumentId",
+      "Dictionary.PaymentStatuses",
+      "EXW_Currency.Instruments",
+      "EXW_Currency.vInstrumentRatesForWeek",
+      "EXW_Dictionary.ReceivedTransactionTypes",
+      "EXW_Dictionary.TransactionStatus",
+      "EXW_Dictionary.TransactionTypes",
+      "EXW_Dictionary.WalletTypes",
+      "EXW_ECPBank.uti",
+      "EXW_PaymentReconciliation.UTI",
+      "EXW_SimplexMapping.long_id",
+      "EXW_Wallet.AmlValidations",
+      "EXW_Wallet.BlockchainCryptos",
+      "EXW_Wallet.ConversionTransactions",
+      "EXW_Wallet.Conversions",
+      "EXW_Wallet.CryptoMarketRatesMappings",
+      "EXW_Wallet.CryptoTypes",
+      "EXW_Wallet.CustomerWalletsView",
+      "EXW_Wallet.ETL_InstrumentRates_ByHour",
+      "EXW_Wallet.EXW_Price",
+      "EXW_Wallet.EXW_PriceDaily",
+      "EXW_Wallet.EXW_TransactionsView",
+      "EXW_Wallet.FiatTypes",
+      "EXW_Wallet.PaymentTransactions",
+      "EXW_Wallet.Payments",
+      "EXW_Wallet.ReceivedTransactionStatuses",
+      "EXW_Wallet.ReceivedTransactions",
+      "EXW_Wallet.Redemptions",
+      "EXW_Wallet.RequestStatuses",
+      "EXW_Wallet.Requests",
+      "EXW_Wallet.SentTransactionOutputs",
+      "EXW_Wallet.SentTransactionStatuses",
+      "EXW_Wallet.SentTransactions",
+      "EXW_Wallet.WalletAddresses",
+      "EXW_Wallet.WalletAssets",
+      "EXW_Wallet.WalletPool",
+      "EXW_Wallet.WalletPoolStatuses",
+      "EXW_Wallet.Wallets",
+      "EXW_dbo.EXW_ECPBank",
+      "EXW_dbo.EXW_ETH_FeeData_Blockchain",
+      "EXW_dbo.EXW_EthFeeSent_Blockchain",
+      "EXW_dbo.EXW_FactBalance",
+      "EXW_dbo.EXW_FactConversions",
+      "EXW_dbo.EXW_FactPayments",
+      "EXW_dbo.EXW_FactRedeemTransactions",
+      "EXW_dbo.EXW_FactTransactions",
+      "EXW_dbo.EXW_FirstTimeWalletsAndUsers",
+      "EXW_dbo.EXW_InternalWallet",
+      "EXW_dbo.EXW_Inventory_Snapshot_History",
+      "EXW_dbo.EXW_PaymentReconciliation",
+      "EXW_dbo.EXW_SimplexChargebacks",
+      "EXW_dbo.EXW_SimplexMapping",
+      "EXW_dbo.EXW_Transactions_Monthly",
+      "EXW_dbo.EXW_UserCalculatedBalance",
+      "EXW_dbo.EXW_WalletInventory",
+      "EXW_dbo.External_WalletDB_Wallet_TransactionsView",
+      "EXW_dbo.Hourly_CustomerBalances",
+      "EXW_dbo.Hourly_OmnibusBalances",
+      "EXW_dbo.Hourly_RedeemActivity",
+      "EXW_dbo.Hourly_WalletAllocations",
+      "EXW_dbo.Hourly_WalletInventory",
+      "EXW_dbo.New_UsersAndWallets_Inventory",
+      "EXW_dbo.SP_EXW_Hourly",
+      "EXW_dbo.Staking_BI_Version_ETH_Transactions",
+      "EXW_dbo.Staking_BI_Version_WalletUserRewards",
+      "EXW_dbo.Staking_ETH_Rewards_Parameters",
+      "EXW_dbo.Staking_WalletUserRewards",
+      "Staking.Staking",
+      "Staking.StakingRewards",
+      "Staking.StakingTransactions",
+      "Wallet.AmlValidations",
+      "Wallet.BlockchainCryptos",
+      "Wallet.ConversionTransactions",
+      "Wallet.Conversions",
+      "Wallet.CryptoTypes",
+      "Wallet.CustomerWalletsView",
+      "Wallet.FiatTypes",
+      "Wallet.PaymentStatuses",
+      "Wallet.PaymentTransactions",
+      "Wallet.Payments",
+      "Wallet.ReceivedTransactionStatuses",
+      "Wallet.ReceivedTransactions",
+      "Wallet.Redemptions",
+      "Wallet.RequestStatuses",
+      "Wallet.Requests",
+      "Wallet.SentTransactionOutputs",
+      "Wallet.SentTransactionStatuses",
+      "Wallet.SentTransactions",
+      "Wallet.TransactionsView",
+      "Wallet.WalletAddresses",
+      "Wallet.WalletAssets",
+      "Wallet.WalletPool",
+      "Wallet.WalletPoolStatuses",
+      "Wallet.Wallets"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 6,
+    "size": 86,
+    "internal_weight": 280.0,
+    "src_breakdown": {
+      "wiki": 259,
+      "kpi_prep": 21
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 48,
+      "BackOffice": 2,
+      "DWH_dbo": 12,
+      "Dictionary": 4,
+      "Dim_Customer": 1,
+      "Dim_Date": 1,
+      "Dim_Instrument": 1,
+      "Dim_Position": 1,
+      "EXW_dbo": 1,
+      "History": 1,
+      "dbo": 1,
+      "etoro_kpi_prep": 12,
+      "general": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Fact_CustomerAction",
+        "weight": 223.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DailyCopyRevenue",
+        "weight": 33.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_UsersEngagement",
+        "weight": 24.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Social_Activity",
+        "weight": 23.0
+      },
+      {
+        "node": "History.Credit",
+        "weight": 22.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DDR_CID_Level",
+        "weight": 21.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DLT_Tangany_Trades_Netting",
+        "weight": 21.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CustomerFirst5OpenPositions",
+        "weight": 19.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide",
+        "weight": 18.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Finance_Audit_Auxillary_Datapoints",
+        "weight": 18.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_ReverseCoReport",
+        "weight": 18.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_USA_FinanceReport_forTax_CreditID",
+        "weight": 17.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Investors_Top10",
+        "weight": 16.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_ClientBalance_DDR_Data_Integrity_Alert",
+        "weight": 15.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_CLData_AllTimeData_Optimove",
+      "BI_DB_dbo.BI_DB_AML_Periodic_Review_MOP",
+      "BI_DB_dbo.BI_DB_CMR_Phase2_ClientBalance",
+      "BI_DB_dbo.BI_DB_CMR_Phase2_CycleGap",
+      "BI_DB_dbo.BI_DB_CMR_Phase2_FinraGap",
+      "BI_DB_dbo.BI_DB_CMR_Phase2_Finra_NonCash_Comps",
+      "BI_DB_dbo.BI_DB_CMR_Phase2_LiabilityDecomp",
+      "BI_DB_dbo.BI_DB_CMR_Phase2_USA_CustomerBalance_ApexAdjusted",
+      "BI_DB_dbo.BI_DB_ClientBalance_DDR_Data_Integrity_Alert",
+      "BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New",
+      "BI_DB_dbo.BI_DB_Compensation_Activity_Data_CompensationReason",
+      "BI_DB_dbo.BI_DB_Compensation_Activity_Data_Regulation",
+      "BI_DB_dbo.BI_DB_CopyDailyData",
+      "BI_DB_dbo.BI_DB_CreditLineData_Optimove",
+      "BI_DB_dbo.BI_DB_Crypto_Active_Open_Churn_Winback",
+      "BI_DB_dbo.BI_DB_CustomerCross",
+      "BI_DB_dbo.BI_DB_CustomerCross_New",
+      "BI_DB_dbo.BI_DB_CustomerFirst5OpenPositions",
+      "BI_DB_dbo.BI_DB_DDR_CID_Level",
+      "BI_DB_dbo.BI_DB_DDR_CID_Level_Auxiliary_Metrics",
+      "BI_DB_dbo.BI_DB_DDR_Daily_Aggregated",
+      "BI_DB_dbo.BI_DB_DDR_Daily_Aggregated_Auxiliary_Metrics",
+      "BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions",
+      "BI_DB_dbo.BI_DB_DDR_TimeRange_Aggregated_Country_Level",
+      "BI_DB_dbo.BI_DB_DLT_Tangany_Trades_Netting",
+      "BI_DB_dbo.BI_DB_DailyCopyRevenue",
+      "BI_DB_dbo.BI_DB_Daily_PI_Performance_COPYDATA_RuningSideBySide",
+      "BI_DB_dbo.BI_DB_Deposit_checking_temp_table",
+      "BI_DB_dbo.BI_DB_EY_Audit_Automation_UnrealizedCommissions_PerRegulation",
+      "BI_DB_dbo.BI_DB_EY_Audit_Automation_UnrealizedCommissions_Results",
+      "BI_DB_dbo.BI_DB_Equity_Real_Crypto_Stocks_Total_Cash_by_Regulation",
+      "BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution",
+      "BI_DB_dbo.BI_DB_Finance_Audit_Auxillary_Datapoints",
+      "BI_DB_dbo.BI_DB_FirstTimeFunded",
+      "BI_DB_dbo.BI_DB_Investors_Top10",
+      "BI_DB_dbo.BI_DB_NonUS_Logins",
+      "BI_DB_dbo.BI_DB_PI_Dashboard",
+      "BI_DB_dbo.BI_DB_ReverseCoReport",
+      "BI_DB_dbo.BI_DB_Social_Activity",
+      "BI_DB_dbo.BI_DB_Social_Activity_Type",
+      "BI_DB_dbo.BI_DB_Staking_Platform_Compensations",
+      "BI_DB_dbo.BI_DB_Technical_Issues_Compensation_Risk",
+      "BI_DB_dbo.BI_DB_UK_CommissionReport_byLeverage",
+      "BI_DB_dbo.BI_DB_USA_FinanceReport_forTax_CreditID",
+      "BI_DB_dbo.BI_DB_US_Popular_Investor",
+      "BI_DB_dbo.BI_DB_UsersEngagement",
+      "BI_DB_dbo.Function_Revenue_TicketFeeByPercent",
+      "BI_DB_dbo.SP_EY_Audit_Auditor_Unrealized_Calculations",
+      "BackOffice.BonusType",
+      "BackOffice.CompensationReason",
+      "DWH_dbo.Dim_BonusType",
+      "DWH_dbo.Dim_ClosePositionReason",
+      "DWH_dbo.Dim_CompensationReason",
+      "DWH_dbo.Dim_CountryIP",
+      "DWH_dbo.Dim_CountryIPAnonymous",
+      "DWH_dbo.Dim_CountryIPAnonymousProxyType",
+      "DWH_dbo.Dim_CreditType",
+      "DWH_dbo.Dim_MoveMoneyReason",
+      "DWH_dbo.Dim_PlatformType",
+      "DWH_dbo.Fact_BillingCompensation",
+      "DWH_dbo.Fact_CustomerAction",
+      "DWH_dbo.SP_Fact_CustomerAction",
+      "Dictionary.ClosePositionActionType",
+      "Dictionary.CountryIP",
+      "Dictionary.CreditType",
+      "Dictionary.MoveMoneyReason",
+      "Dim_Customer.CID",
+      "Dim_Date.DateKey",
+      "Dim_Instrument.Name",
+      "Dim_Position.PositionID",
+      "EXW_dbo.EXW_WalletLogins",
+      "History.Credit",
+      "dbo.Entries",
+      "etoro_kpi_prep.mv_revenue_trading",
+      "etoro_kpi_prep.v_fact_customeraction",
+      "etoro_kpi_prep.v_population_otd_daterange",
+      "etoro_kpi_prep.v_revenue_adminfee",
+      "etoro_kpi_prep.v_revenue_commission",
+      "etoro_kpi_prep.v_revenue_dividend",
+      "etoro_kpi_prep.v_revenue_fullcommission",
+      "etoro_kpi_prep.v_revenue_rollover",
+      "etoro_kpi_prep.v_revenue_sdrt",
+      "etoro_kpi_prep.v_revenue_spotadjustfee",
+      "etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+      "etoro_kpi_prep.v_revenue_ticketfee_fixed",
+      "general.bronze_historycosts_history_costs"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": [
+      "etoro_kpi_prep.mv_revenue_trading",
+      "etoro_kpi_prep.v_fact_customeraction",
+      "etoro_kpi_prep.v_population_otd_daterange",
+      "etoro_kpi_prep.v_revenue_adminfee",
+      "etoro_kpi_prep.v_revenue_commission",
+      "etoro_kpi_prep.v_revenue_dividend",
+      "etoro_kpi_prep.v_revenue_fullcommission",
+      "etoro_kpi_prep.v_revenue_rollover",
+      "etoro_kpi_prep.v_revenue_sdrt",
+      "etoro_kpi_prep.v_revenue_spotadjustfee",
+      "etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+      "etoro_kpi_prep.v_revenue_ticketfee_fixed"
+    ]
+  },
+  {
+    "cluster_id": 13,
+    "size": 74,
+    "internal_weight": 429.0,
+    "src_breakdown": {
+      "wiki": 147,
+      "genie": 191,
+      "tableau": 144,
+      "kpi": 11,
+      "kpi_prep": 8
+    },
+    "schema_breakdown": {
+      "BI_DB_CID_MonthlyPanel_FullData": 1,
+      "BI_DB_dbo": 41,
+      "DWH_dbo": 7,
+      "Dealing_dbo": 1,
+      "Dictionary": 1,
+      "Dim_Country": 2,
+      "EXW_dbo": 1,
+      "bi_db": 1,
+      "bi_output": 2,
+      "compliance": 1,
+      "eMoneyClientBalance": 1,
+      "eMoney_dbo": 4,
+      "etoro_kpi": 3,
+      "etoro_kpi_prep": 2,
+      "money_farm": 1,
+      "spaceship": 5
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms",
+        "weight": 87.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status",
+        "weight": 79.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Affiliate",
+        "weight": 75.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData",
+        "weight": 70.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_LTV_BI_Actual",
+        "weight": 68.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CID_DailyPanel_FullData",
+        "weight": 66.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions",
+        "weight": 65.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status",
+        "weight": 56.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_DailyCommisionReport",
+        "weight": 55.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_First5Actions",
+        "weight": 53.0
+      },
+      {
+        "node": "DWH_dbo.Dim_ActionType",
+        "weight": 51.0
+      },
+      {
+        "node": "eMoney_dbo.eMoneyClientBalance",
+        "weight": 42.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Channel",
+        "weight": 39.0
+      },
+      {
+        "node": "bi_db.bronze_sub_accounts_accounts",
+        "weight": 39.0
+      },
+      {
+        "node": "money_farm.silver_moneyfarm_etoro_mf_aum",
+        "weight": 38.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_CID_MonthlyPanel_FullData.ClusterDetail",
+      "BI_DB_dbo.BI_DB_CID_DailyPanel_FullData",
+      "BI_DB_dbo.BI_DB_CID_DailyPanel_FullData_SWITCH",
+      "BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData",
+      "BI_DB_dbo.BI_DB_ClubUsersDataRemarketingGoogle",
+      "BI_DB_dbo.BI_DB_CorpDevDashboard",
+      "BI_DB_dbo.BI_DB_Crypto_Top_1000_List",
+      "BI_DB_dbo.BI_DB_DCM_Dashboard",
+      "BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status",
+      "BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status",
+      "BI_DB_dbo.BI_DB_DDR_Fact_AUM",
+      "BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms",
+      "BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform",
+      "BI_DB_dbo.BI_DB_DDR_Fact_PnL",
+      "BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions",
+      "BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport_Instrument_Agg",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport_Last2weeks",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport_LastYear",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport_MonthlyData",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport_ThisMonth",
+      "BI_DB_dbo.BI_DB_DailyCommisionReport_Yesterday",
+      "BI_DB_dbo.BI_DB_Diversification",
+      "BI_DB_dbo.BI_DB_First5Actions",
+      "BI_DB_dbo.BI_DB_LTV_BI_Actual",
+      "BI_DB_dbo.BI_DB_LTV_By_FTD_MOP",
+      "BI_DB_dbo.BI_DB_LTV_Predictions",
+      "BI_DB_dbo.BI_DB_LTV_Revenue_Multipliers",
+      "BI_DB_dbo.BI_DB_V_DDR_*",
+      "BI_DB_dbo.BI_DB_V_DDR_AUM",
+      "BI_DB_dbo.Bi_Db_Ddr_Daily_Aggregated",
+      "BI_DB_dbo.Dim_Revenue_Metrics",
+      "BI_DB_dbo.Function_DDR_Aggregation_*",
+      "BI_DB_dbo.Function_MIMO_First_Deposit_All_Platforms",
+      "BI_DB_dbo.Function_PnL_Single_Day",
+      "BI_DB_dbo.Function_Population_First_Time_Funded",
+      "BI_DB_dbo.Group_LTV_Table",
+      "BI_DB_dbo.LTV_Conversions_Multipliers_Table",
+      "BI_DB_dbo.LTV_FromDB_ToBigQuery",
+      "BI_DB_dbo.SP_DDR_Customer_Daily_Status",
+      "BI_DB_dbo.SP_LTV_Multiplier_Model",
+      "DWH_dbo.Dim_ActionType",
+      "DWH_dbo.Dim_Affiliate",
+      "DWH_dbo.Dim_Channel",
+      "DWH_dbo.Dim_ContractType",
+      "DWH_dbo.Dim_FTDPlatform",
+      "DWH_dbo.Dim_InstrumentType",
+      "DWH_dbo.Fact_AffiliateCommission",
+      "Dealing_dbo.Dealing_DealingDashboard_Clients",
+      "Dictionary.AccountTypes",
+      "Dim_Country.MarketingRegionManualName",
+      "Dim_Country.Region",
+      "EXW_dbo.EXW_C2F_E2E",
+      "bi_db.bronze_sub_accounts_accounts",
+      "bi_output.bi_output_moneyfarm_fact_portfolio_snapshot",
+      "bi_output.bi_output_moneyfarm_fact_transactions",
+      "compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "eMoneyClientBalance.BalanceDateID",
+      "eMoney_dbo.SP_eMoney_ClientBalance",
+      "eMoney_dbo.eMoneyClientBalance",
+      "eMoney_dbo.eMoney_Client_Balance_Check_Exceptions_Gap",
+      "eMoney_dbo.eMoney_Client_Balance_Check_Opening_Balance",
+      "etoro_kpi.v_spaceship_aum",
+      "etoro_kpi.v_spaceship_fees",
+      "etoro_kpi.vg_ddr_revenue",
+      "etoro_kpi_prep.v_dim_dataplatform_uuid",
+      "etoro_kpi_prep.v_spaceship_mimo",
+      "money_farm.silver_moneyfarm_etoro_mf_aum",
+      "spaceship.bronze_spaceship_metabase_contact",
+      "spaceship.bronze_spaceship_metabase_nova_transactions",
+      "spaceship.bronze_spaceship_metabase_super_transactions",
+      "spaceship.bronze_spaceship_metabase_user_beta",
+      "spaceship.spaceship_metabase_voyager_user_balances"
+    ],
+    "genie_overlap": [
+      {
+        "title": "UK BA space [WIP]",
+        "overlap": 19,
+        "n_tables": 30
+      },
+      {
+        "title": "New Space (2)",
+        "overlap": 3,
+        "n_tables": 3
+      },
+      {
+        "title": "New Space (1)",
+        "overlap": 2,
+        "n_tables": 2
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.v_spaceship_aum",
+      "etoro_kpi.v_spaceship_fees",
+      "etoro_kpi.vg_ddr_revenue",
+      "etoro_kpi_prep.v_dim_dataplatform_uuid",
+      "etoro_kpi_prep.v_spaceship_mimo"
+    ]
+  },
+  {
+    "cluster_id": 14,
+    "size": 66,
+    "internal_weight": 376.0,
+    "src_breakdown": {
+      "wiki": 75,
+      "genie": 299,
+      "kpi_prep": 1,
+      "kpi": 1
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 7,
+      "BackOffice": 1,
+      "CopyFromLake": 1,
+      "Customer": 1,
+      "DWH_dbo": 4,
+      "Dictionary": 4,
+      "History": 4,
+      "Trade": 8,
+      "bi_db": 3,
+      "bi_dealing": 1,
+      "bi_output": 4,
+      "bi_output_stg": 4,
+      "data": 1,
+      "data_rooms": 6,
+      "dealing": 4,
+      "etoro_kpi": 1,
+      "etoro_kpi_prep": 1,
+      "general": 2,
+      "mixpanel": 1,
+      "ml": 1,
+      "pii_data": 1,
+      "product_analytics_stg": 1,
+      "trading": 2,
+      "trading_stg": 1,
+      "wallet": 2
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Mirror",
+        "weight": 135.0
+      },
+      {
+        "node": "Customer.Customer",
+        "weight": 75.0
+      },
+      {
+        "node": "DWH_dbo.Dim_GuruStatus",
+        "weight": 52.0
+      },
+      {
+        "node": "data_rooms.vw_cidfirstdates",
+        "weight": 49.0
+      },
+      {
+        "node": "Dictionary.Currency",
+        "weight": 38.0
+      },
+      {
+        "node": "Trade.Currencyprice",
+        "weight": 38.0
+      },
+      {
+        "node": "data_rooms.vw_dim_position",
+        "weight": 36.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_CapitalGuarantee_Panel",
+        "weight": 35.0
+      },
+      {
+        "node": "Trade.Mirror",
+        "weight": 35.0
+      },
+      {
+        "node": "dealing.bronze_pricelog_history_currencyprice",
+        "weight": 34.0
+      },
+      {
+        "node": "Trade.Instrument",
+        "weight": 33.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_PositionHoldingTime",
+        "weight": 31.0
+      },
+      {
+        "node": "Trade.Instrumentmetadata",
+        "weight": 31.0
+      },
+      {
+        "node": "data_rooms.vw_dim_instrument",
+        "weight": 26.0
+      },
+      {
+        "node": "History.Positiondatafactory",
+        "weight": 22.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_CapitalGuarantee_Panel",
+      "BI_DB_dbo.BI_DB_DailyPanel_Copy",
+      "BI_DB_dbo.BI_DB_Investment_Monthly_Data",
+      "BI_DB_dbo.BI_DB_Investment_PIMeetup",
+      "BI_DB_dbo.BI_DB_PI_Affiliate",
+      "BI_DB_dbo.BI_DB_PI_StatusPanel",
+      "BI_DB_dbo.BI_DB_PositionHoldingTime",
+      "BackOffice.Customerdocument",
+      "CopyFromLake.etoro_History_Mirror",
+      "Customer.Customer",
+      "DWH_dbo.Dim_GuruStatus",
+      "DWH_dbo.Dim_Mirror",
+      "DWH_dbo.Dim_MirrorType",
+      "DWH_dbo.Fact_Guru_Copiers",
+      "Dictionary.Currency",
+      "Dictionary.GuruStatus",
+      "Dictionary.Gurustatus",
+      "Dictionary.MirrorType",
+      "History.Mirror",
+      "History.Orders",
+      "History.Positionchangelog",
+      "History.Positiondatafactory",
+      "Trade.Currencyprice",
+      "Trade.Getinstrument",
+      "Trade.Indexdividends",
+      "Trade.Instrument",
+      "Trade.Instrumentmetadata",
+      "Trade.Mirror",
+      "Trade.Orders",
+      "Trade.Providertoinstrument",
+      "bi_db.bronze_etoro_price_exchange",
+      "bi_db.bronze_fivetran_google_sheets_pis_lists_country_level",
+      "bi_db.bronze_fivetran_google_sheets_pis_lists_region_level",
+      "bi_dealing.bi_output_dealing_premier_customer",
+      "bi_output.bi_output_customer_customer_facing_club_inventory_asset",
+      "bi_output.bi_output_customer_customer_facing_club_loyalty_offer",
+      "bi_output.bi_output_customer_customer_facing_club_loyalty_offer_request",
+      "bi_output.bi_output_customer_social_social_feed",
+      "bi_output_stg.bi_output_emoney_static_currency_iso_instrument_mapping",
+      "bi_output_stg.customer_interaction_current_snapshot",
+      "bi_output_stg.customer_requirement_current_snapshot",
+      "bi_output_stg.customer_user_trading_data",
+      "data.bronze_gdpr_gdpr_processconfiguration",
+      "data_rooms.vw_cidfirstdates",
+      "data_rooms.vw_dim_instrument",
+      "data_rooms.vw_dim_position",
+      "data_rooms.vw_history_mirror",
+      "data_rooms.vw_mixpanel_login_events",
+      "data_rooms.vw_trade_mirror",
+      "dealing.bestexecution_results",
+      "dealing.bronze_etorologs_real_hedge_emsorders",
+      "dealing.bronze_pricelog_history_currencyprice",
+      "dealing.candles_get_spreaded_price_candle60min_splitted",
+      "etoro_kpi.customer_segments_mail_v",
+      "etoro_kpi_prep.v_population_first_trading_action",
+      "general.bronze_etorogeneral_history_gurucopiers",
+      "general.bronze_etorogeneral_history_gurucopiers_new",
+      "mixpanel.login_events",
+      "ml.ml_output_models_signals_data_backtest_guru_focus_signals",
+      "pii_data.vw_gold_torii_logs_prod",
+      "product_analytics_stg.bi_output_product_analytics_jarek_tables_feature_retention_table",
+      "trading.bronze_db_logs_trade_orderforopen",
+      "trading.silver_etoro_trade_position",
+      "trading_stg.silver_etoro_trade_position",
+      "wallet.bronze_marketratesdb_currency_currencies",
+      "wallet.bronze_marketratesdb_currency_currencyrateproviders"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Trading AI Agents",
+        "overlap": 15,
+        "n_tables": 16
+      },
+      {
+        "title": "Customer Radar PoC",
+        "overlap": 9,
+        "n_tables": 9
+      },
+      {
+        "title": "Multiple Tables",
+        "overlap": 9,
+        "n_tables": 11
+      },
+      {
+        "title": "PI-SP Portfolio & Eligibility",
+        "overlap": 8,
+        "n_tables": 10
+      },
+      {
+        "title": "Raw Pricing and Crypto",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "Investment & Customer Analytics",
+        "overlap": 6,
+        "n_tables": 9
+      },
+      {
+        "title": "New Space",
+        "overlap": 5,
+        "n_tables": 5
+      },
+      {
+        "title": "find_PI",
+        "overlap": 4,
+        "n_tables": 4
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.customer_segments_mail_v",
+      "etoro_kpi_prep.v_population_first_trading_action"
+    ]
+  },
+  {
+    "cluster_id": 17,
+    "size": 61,
+    "internal_weight": 266.0,
+    "src_breakdown": {
+      "wiki": 266
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 6,
+      "Dictionary": 7,
+      "Dim_Country": 1,
+      "Dim_Customer": 1,
+      "Dim_PlayerLevel": 1,
+      "Dim_PlayerStatus": 1,
+      "Dim_Regulation": 1,
+      "SubPrograms": 1,
+      "dbo": 8,
+      "eMoney_Dictionary_AccountProgram": 1,
+      "eMoney_Dim_Account": 3,
+      "eMoney_dbo": 30
+    },
+    "top_members": [
+      {
+        "node": "eMoney_dbo.eMoney_Dim_Account",
+        "weight": 108.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dim_Transaction",
+        "weight": 79.5
+      },
+      {
+        "node": "Dim_Customer.RealCID",
+        "weight": 52.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Panel_FirstDates",
+        "weight": 43.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Card_Monthly_Snapshot",
+        "weight": 36.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Fact_Transaction_Status",
+        "weight": 36.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Reports_AcquisitionFunnel",
+        "weight": 34.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Card_Instance_Summary",
+        "weight": 26.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Marketing_EmailTracking",
+        "weight": 20.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Snapshot_Settled_Balance",
+        "weight": 19.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_UserData_Marketing",
+        "weight": 19.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Account_Mappings",
+        "weight": 16.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_AccountSubProgram",
+        "weight": 13.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_AccountProgram",
+        "weight": 12.0
+      },
+      {
+        "node": "Dim_Country.CountryID",
+        "weight": 10.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_CIDs",
+      "BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Countries",
+      "BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Forbidden_Trading",
+      "BI_DB_dbo.BI_DB_Deposits_WiresFromGooglesheets",
+      "BI_DB_dbo.BI_DB_Document_Vendors",
+      "BI_DB_dbo.BI_DB_SFMC_Report",
+      "Dictionary.AccountPrograms",
+      "Dictionary.AccountStatuses",
+      "Dictionary.CardStatuses",
+      "Dictionary.CurrencyBalanceStatuses",
+      "Dictionary.TransactionCategories",
+      "Dictionary.TransactionStatuses",
+      "Dictionary.TransactionTypes",
+      "Dim_Country.CountryID",
+      "Dim_Customer.RealCID",
+      "Dim_PlayerLevel.PlayerLevelID",
+      "Dim_PlayerStatus.PlayerStatusID",
+      "Dim_Regulation.DWHRegulationID",
+      "SubPrograms.Id",
+      "dbo.FiatAccount",
+      "dbo.FiatBankAccount",
+      "dbo.FiatCardInstances",
+      "dbo.FiatCardStatuses",
+      "dbo.FiatCards",
+      "dbo.FiatCurrencyBalances",
+      "dbo.FiatTransactions",
+      "dbo.SubPrograms",
+      "eMoney_Dictionary_AccountProgram.AccountProgramID",
+      "eMoney_Dim_Account.AccountID",
+      "eMoney_Dim_Account.CardID",
+      "eMoney_Dim_Account.CurrencyBalanceID",
+      "eMoney_dbo.eMoney_Account_Mappings",
+      "eMoney_dbo.eMoney_Aggregated_Tribe_Balance",
+      "eMoney_dbo.eMoney_BankPaymentsUK",
+      "eMoney_dbo.eMoney_Calculated_Balance",
+      "eMoney_dbo.eMoney_Card_Instance_Summary",
+      "eMoney_dbo.eMoney_Card_Monthly_Snapshot",
+      "eMoney_dbo.eMoney_Currency_Instrument_Mapping_Static",
+      "eMoney_dbo.eMoney_Customer_Risk_Assessment",
+      "eMoney_dbo.eMoney_Dictionary_AccountProgram",
+      "eMoney_dbo.eMoney_Dictionary_AccountStatus",
+      "eMoney_dbo.eMoney_Dictionary_AccountSubProgram",
+      "eMoney_dbo.eMoney_Dictionary_CardStatus",
+      "eMoney_dbo.eMoney_Dictionary_CurrencyBalanceStatus",
+      "eMoney_dbo.eMoney_Dictionary_TransactionCategory",
+      "eMoney_dbo.eMoney_Dictionary_TransactionStatus",
+      "eMoney_dbo.eMoney_Dictionary_TransactionType",
+      "eMoney_dbo.eMoney_Dim_Account",
+      "eMoney_dbo.eMoney_Dim_Transaction",
+      "eMoney_dbo.eMoney_EntityByCurrencyISO_MappingStatic",
+      "eMoney_dbo.eMoney_Fact_Transaction_Status",
+      "eMoney_dbo.eMoney_Marketing_EmailTracking",
+      "eMoney_dbo.eMoney_Panel_FirstDates",
+      "eMoney_dbo.eMoney_Reports_AcquisitionFunnel",
+      "eMoney_dbo.eMoney_Reports_AcquisitionFunnelAggregated",
+      "eMoney_dbo.eMoney_Reports_ClubUpgrade",
+      "eMoney_dbo.eMoney_Risk_Portfolio",
+      "eMoney_dbo.eMoney_Snapshot_Settled_Balance",
+      "eMoney_dbo.eMoney_UserData_Marketing",
+      "eMoney_dbo.v_eMoney_Card_Instance_Summary",
+      "eMoney_dbo.v_eMoney_Dim_Account"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 16,
+    "size": 32,
+    "internal_weight": 263.0,
+    "src_breakdown": {
+      "genie": 252,
+      "kpi": 7,
+      "kpi_prep": 4
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 1,
+      "bi_output": 17,
+      "bi_output_stg": 1,
+      "etoro_kpi": 9,
+      "etoro_kpi_stg": 3,
+      "pii_data_stg": 1
+    },
+    "top_members": [
+      {
+        "node": "etoro_kpi.customer_snapshot_v",
+        "weight": 45.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_ClubChangeLogProduct",
+        "weight": 42.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_mimo",
+        "weight": 39.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_revenue",
+        "weight": 38.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_customer_snapshot",
+        "weight": 36.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_aum",
+        "weight": 33.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_customer_first_dates",
+        "weight": 32.0
+      },
+      {
+        "node": "etoro_kpi_stg.bi_output_vg_aum_slim",
+        "weight": 28.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_volume_amount",
+        "weight": 27.0
+      },
+      {
+        "node": "etoro_kpi.kyc_for_compliance_v",
+        "weight": 24.0
+      },
+      {
+        "node": "etoro_kpi.positions_for_compliance_v",
+        "weight": 23.0
+      },
+      {
+        "node": "etoro_kpi_stg.bi_output_vg_revenue_slim",
+        "weight": 21.0
+      },
+      {
+        "node": "etoro_kpi.cfd_statusinfo_v",
+        "weight": 20.0
+      },
+      {
+        "node": "etoro_kpi.ddr_revenue_v",
+        "weight": 20.0
+      },
+      {
+        "node": "etoro_kpi_stg.bi_output_vg_mimo_slim",
+        "weight": 19.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_ClubChangeLogProduct",
+      "bi_output.bi_ouput_v_dim_instrumenttype",
+      "bi_output.bi_output_customer_ddr_revenue_metrics",
+      "bi_output.bi_output_vg_aum",
+      "bi_output.bi_output_vg_case",
+      "bi_output.bi_output_vg_case_event",
+      "bi_output.bi_output_vg_cf_crm_contact",
+      "bi_output.bi_output_vg_club",
+      "bi_output.bi_output_vg_club_offers",
+      "bi_output.bi_output_vg_crm_user",
+      "bi_output.bi_output_vg_customer_assignment",
+      "bi_output.bi_output_vg_customer_first_dates",
+      "bi_output.bi_output_vg_customer_snapshot",
+      "bi_output.bi_output_vg_customer_snapshot_test",
+      "bi_output.bi_output_vg_date",
+      "bi_output.bi_output_vg_mimo",
+      "bi_output.bi_output_vg_revenue",
+      "bi_output.bi_output_vg_volume_amount",
+      "bi_output_stg.customer_ddr_dailystatus_scd_test",
+      "etoro_kpi.cfd_statusinfo_v",
+      "etoro_kpi.customer_snapshot_v",
+      "etoro_kpi.ddr_aum_v",
+      "etoro_kpi.ddr_customer_current_flags",
+      "etoro_kpi.ddr_mimo_v",
+      "etoro_kpi.ddr_revenue_v",
+      "etoro_kpi.kyc_for_compliance_v",
+      "etoro_kpi.positions_for_compliance_v",
+      "etoro_kpi.vg_customer_customer_first_dates",
+      "etoro_kpi_stg.bi_output_vg_aum_slim",
+      "etoro_kpi_stg.bi_output_vg_mimo_slim",
+      "etoro_kpi_stg.bi_output_vg_revenue_slim",
+      "pii_data_stg.gold_de_aml_snapshot_customer_enriched_v"
+    ],
+    "genie_overlap": [
+      {
+        "title": "PROD - Compliance Genie",
+        "overlap": 8,
+        "n_tables": 8
+      },
+      {
+        "title": "(Clone) eToro DDR TESTONLY",
+        "overlap": 8,
+        "n_tables": 9
+      },
+      {
+        "title": "Compliance Genie - DEV",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "eToro DDR - dor dev",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "Customer AML Compliance Data",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "eToro DDR - Jan",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "eToro DDR",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "etoro_club",
+        "overlap": 6,
+        "n_tables": 6
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.cfd_statusinfo_v",
+      "etoro_kpi.customer_snapshot_v",
+      "etoro_kpi.ddr_aum_v",
+      "etoro_kpi.ddr_customer_current_flags",
+      "etoro_kpi.ddr_mimo_v",
+      "etoro_kpi.ddr_revenue_v",
+      "etoro_kpi.kyc_for_compliance_v",
+      "etoro_kpi.positions_for_compliance_v",
+      "etoro_kpi.vg_customer_customer_first_dates",
+      "etoro_kpi_stg.bi_output_vg_aum_slim",
+      "etoro_kpi_stg.bi_output_vg_mimo_slim",
+      "etoro_kpi_stg.bi_output_vg_revenue_slim"
+    ]
+  },
+  {
+    "cluster_id": 47,
+    "size": 30,
+    "internal_weight": 90.0,
+    "src_breakdown": {
+      "wiki": 15,
+      "genie": 45,
+      "kpi_prep": 30
+    },
+    "schema_breakdown": {
+      "EXW_dbo": 2,
+      "Trade": 1,
+      "Wallet": 1,
+      "bi_db": 1,
+      "bi_output": 5,
+      "bi_output_stg": 3,
+      "etoro_kpi_prep": 12,
+      "etoro_kpi_prep_stg": 1,
+      "finance": 1,
+      "general": 3
+    },
+    "top_members": [
+      {
+        "node": "EXW_dbo.EXW_FinanceReportsBalancesNew",
+        "weight": 42.0
+      },
+      {
+        "node": "Wallet.FinanceReportRecords",
+        "weight": 13.0
+      },
+      {
+        "node": "bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+        "weight": 12.0
+      },
+      {
+        "node": "bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+        "weight": 12.0
+      },
+      {
+        "node": "finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+        "weight": 12.0
+      },
+      {
+        "node": "etoro_kpi_prep.v_fact_customeraction_w_metrics",
+        "weight": 11.0
+      },
+      {
+        "node": "etoro_kpi_prep_stg.v_fact_customeraction_w_metrics",
+        "weight": 10.0
+      },
+      {
+        "node": "bi_output.bi_output_finance_tables_ptp_tax",
+        "weight": 9.0
+      },
+      {
+        "node": "bi_output.bi_output_finance_tables_ptp_tax_backup",
+        "weight": 9.0
+      },
+      {
+        "node": "bi_output.bi_output_finance_tables_tax_ptp_monitoring",
+        "weight": 9.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_finance_tables_ptp_tax",
+        "weight": 9.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_finance_tables_ptp_tax_temp",
+        "weight": 9.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_finance_tables_tax_ptp_monitoring",
+        "weight": 9.0
+      },
+      {
+        "node": "etoro_kpi_prep.v_population_active_traders",
+        "weight": 9.0
+      },
+      {
+        "node": "etoro_kpi_prep.v_population_portfolio_only",
+        "weight": 9.0
+      }
+    ],
+    "all_members": [
+      "EXW_dbo.EXW_30DayBalanceExtract",
+      "EXW_dbo.EXW_FinanceReportsBalancesNew",
+      "Trade.Adminpositionlog",
+      "Wallet.FinanceReportRecords",
+      "bi_db.bronze_moneybusdb_dictionary_accounttypes",
+      "bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "bi_output.bi_output_finance_tables_ptp_tax",
+      "bi_output.bi_output_finance_tables_ptp_tax_backup",
+      "bi_output.bi_output_finance_tables_tax_ptp_monitoring",
+      "bi_output_stg.bi_output_finance_tables_ptp_tax",
+      "bi_output_stg.bi_output_finance_tables_ptp_tax_temp",
+      "bi_output_stg.bi_output_finance_tables_tax_ptp_monitoring",
+      "etoro_kpi_prep.v_dim_instrument_enriched",
+      "etoro_kpi_prep.v_fact_customeraction_enriched",
+      "etoro_kpi_prep.v_fact_customeraction_w_metrics",
+      "etoro_kpi_prep.v_globalftdplatform",
+      "etoro_kpi_prep.v_mimo_options_platform",
+      "etoro_kpi_prep.v_options_aum",
+      "etoro_kpi_prep.v_population_active_traders",
+      "etoro_kpi_prep.v_population_balance_only_accounts",
+      "etoro_kpi_prep.v_population_first_time_funded",
+      "etoro_kpi_prep.v_population_funded",
+      "etoro_kpi_prep.v_population_portfolio_only",
+      "etoro_kpi_prep.v_revenue_optionsplatform",
+      "etoro_kpi_prep_stg.v_fact_customeraction_w_metrics",
+      "finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "general.bronze_recurringinvestment_recurringinvestment_planinstances",
+      "general.bronze_sodreconciliation_apex_ext981_buypowersummary",
+      "general.bronze_usabroker_apex_options"
+    ],
+    "genie_overlap": [
+      {
+        "title": "ido ezra space",
+        "overlap": 10,
+        "n_tables": 10
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi_prep.v_dim_instrument_enriched",
+      "etoro_kpi_prep.v_fact_customeraction_enriched",
+      "etoro_kpi_prep.v_fact_customeraction_w_metrics",
+      "etoro_kpi_prep.v_globalftdplatform",
+      "etoro_kpi_prep.v_mimo_options_platform",
+      "etoro_kpi_prep.v_options_aum",
+      "etoro_kpi_prep.v_population_active_traders",
+      "etoro_kpi_prep.v_population_balance_only_accounts",
+      "etoro_kpi_prep.v_population_first_time_funded",
+      "etoro_kpi_prep.v_population_funded",
+      "etoro_kpi_prep.v_population_portfolio_only",
+      "etoro_kpi_prep.v_revenue_optionsplatform",
+      "etoro_kpi_prep_stg.v_fact_customeraction_w_metrics"
+    ]
+  },
+  {
+    "cluster_id": 55,
+    "size": 30,
+    "internal_weight": 174.0,
+    "src_breakdown": {
+      "kpi": 10,
+      "genie": 164
+    },
+    "schema_breakdown": {
+      "bi_dealing": 1,
+      "bi_output_stg": 14,
+      "etoro_kpi": 14,
+      "general": 1
+    },
+    "top_members": [
+      {
+        "node": "etoro_kpi.ftd_funnel_v",
+        "weight": 32.0
+      },
+      {
+        "node": "etoro_kpi.customer_exclude_list",
+        "weight": 21.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_documentanalysis",
+        "weight": 16.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_electronic_verification_cohort",
+        "weight": 16.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_audit_trail",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_customer_info",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_customer_logins",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_deposits",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_emoney_customer_info",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_emoney_transactions",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_kyc_answers",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_positions_details",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_relations",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_trading_summary",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_operations_ops_withdrawals",
+        "weight": 15.0
+      }
+    ],
+    "all_members": [
+      "bi_dealing.bi_output_dealing_cidage_data",
+      "bi_output_stg.bi_output_operations_documentanalysis",
+      "bi_output_stg.bi_output_operations_electronic_verification_cohort",
+      "bi_output_stg.bi_output_operations_ops_audit_trail",
+      "bi_output_stg.bi_output_operations_ops_customer_info",
+      "bi_output_stg.bi_output_operations_ops_customer_logins",
+      "bi_output_stg.bi_output_operations_ops_deposits",
+      "bi_output_stg.bi_output_operations_ops_emoney_customer_info",
+      "bi_output_stg.bi_output_operations_ops_emoney_transactions",
+      "bi_output_stg.bi_output_operations_ops_kyc_answers",
+      "bi_output_stg.bi_output_operations_ops_positions_details",
+      "bi_output_stg.bi_output_operations_ops_relations",
+      "bi_output_stg.bi_output_operations_ops_trading_summary",
+      "bi_output_stg.bi_output_operations_ops_withdrawals",
+      "bi_output_stg.bi_output_operations_risk_alert_management_tool",
+      "etoro_kpi.customer_exclude_list",
+      "etoro_kpi.customer_segments_v",
+      "etoro_kpi.de_output_ftd_click",
+      "etoro_kpi.ftd_click_v",
+      "etoro_kpi.ftd_funnel_aus",
+      "etoro_kpi.ftd_funnel_fr",
+      "etoro_kpi.ftd_funnel_ger",
+      "etoro_kpi.ftd_funnel_ita",
+      "etoro_kpi.ftd_funnel_kyc",
+      "etoro_kpi.ftd_funnel_uae",
+      "etoro_kpi.ftd_funnel_uk",
+      "etoro_kpi.ftd_funnel_usa",
+      "etoro_kpi.ftd_funnel_v",
+      "etoro_kpi.ftd_funnel_v_dev",
+      "general.bronze_sts_audit_stsaudit_useroperations"
+    ],
+    "genie_overlap": [
+      {
+        "title": "OPS - General Genie",
+        "overlap": 16,
+        "n_tables": 16
+      },
+      {
+        "title": "Registration to FTD for mail",
+        "overlap": 8,
+        "n_tables": 8
+      },
+      {
+        "title": "Test Registration to FTD",
+        "overlap": 3,
+        "n_tables": 3
+      },
+      {
+        "title": "OPS - Electronic Verification",
+        "overlap": 2,
+        "n_tables": 2
+      },
+      {
+        "title": "Customer Segmentation",
+        "overlap": 2,
+        "n_tables": 2
+      },
+      {
+        "title": "OPS  - Documents & Verification",
+        "overlap": 2,
+        "n_tables": 2
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.customer_exclude_list",
+      "etoro_kpi.customer_segments_v",
+      "etoro_kpi.ftd_click_v",
+      "etoro_kpi.ftd_funnel_kyc",
+      "etoro_kpi.ftd_funnel_v",
+      "etoro_kpi.ftd_funnel_v_dev"
+    ]
+  },
+  {
+    "cluster_id": 28,
+    "size": 24,
+    "internal_weight": 82.0,
+    "src_breakdown": {
+      "wiki": 82
+    },
+    "schema_breakdown": {
+      "CopyFromLake": 1,
+      "Dealing_Duco_ActivityRecon": 5,
+      "Dealing_Duco_EODRecon": 4,
+      "Dealing_dbo": 12,
+      "LP_IG_OH_OrderHistory": 1,
+      "LP_JPM_EOD_eToro_Report_ComponentUnderlyings": 1
+    },
+    "top_members": [
+      {
+        "node": "Dealing_dbo.Dealing_IGReconEODHolding",
+        "weight": 25.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Duco_EODRecon",
+        "weight": 22.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_JPMReconEODHolding",
+        "weight": 16.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Marex_Recon_Trades",
+        "weight": 15.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_IGReconTrades",
+        "weight": 13.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_VisionRecon_EODHoldings",
+        "weight": 12.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_VisionRecon_Trades",
+        "weight": 12.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Duco_ActivityRecon",
+        "weight": 11.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_JPMReconTrades",
+        "weight": 11.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Marex_Recon_Trades_Futures",
+        "weight": 11.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Marex_Recon_EODHoldings",
+        "weight": 9.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_Marex_Recon_EODHoldings_Futures",
+        "weight": 8.0
+      },
+      {
+        "node": "CopyFromLake.etoro_Hedge_ExecutionLog",
+        "weight": 6.0
+      },
+      {
+        "node": "Dealing_Duco_ActivityRecon.eToroUSDAmount",
+        "weight": 4.0
+      },
+      {
+        "node": "Dealing_Duco_ActivityRecon.eToro_Units",
+        "weight": 4.0
+      }
+    ],
+    "all_members": [
+      "CopyFromLake.etoro_Hedge_ExecutionLog",
+      "Dealing_Duco_ActivityRecon.ClientAmount",
+      "Dealing_Duco_ActivityRecon.ClientUnits",
+      "Dealing_Duco_ActivityRecon.eToroLocalAmount",
+      "Dealing_Duco_ActivityRecon.eToroUSDAmount",
+      "Dealing_Duco_ActivityRecon.eToro_Units",
+      "Dealing_Duco_EODRecon.ClientAmount",
+      "Dealing_Duco_EODRecon.ClientUnits",
+      "Dealing_Duco_EODRecon.eToroUSDAmount",
+      "Dealing_Duco_EODRecon.eToro_Units",
+      "Dealing_dbo.Dealing_Duco_ActivityRecon",
+      "Dealing_dbo.Dealing_Duco_EODRecon",
+      "Dealing_dbo.Dealing_IGReconEODHolding",
+      "Dealing_dbo.Dealing_IGReconTrades",
+      "Dealing_dbo.Dealing_JPMReconEODHolding",
+      "Dealing_dbo.Dealing_JPMReconTrades",
+      "Dealing_dbo.Dealing_Marex_Recon_EODHoldings",
+      "Dealing_dbo.Dealing_Marex_Recon_EODHoldings_Futures",
+      "Dealing_dbo.Dealing_Marex_Recon_Trades",
+      "Dealing_dbo.Dealing_Marex_Recon_Trades_Futures",
+      "Dealing_dbo.Dealing_VisionRecon_EODHoldings",
+      "Dealing_dbo.Dealing_VisionRecon_Trades",
+      "LP_IG_OH_OrderHistory.Deal",
+      "LP_JPM_EOD_eToro_Report_ComponentUnderlyings.Market"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 49,
+    "size": 20,
+    "internal_weight": 121.0,
+    "src_breakdown": {
+      "wiki": 121
+    },
+    "schema_breakdown": {
+      "FiatDwhDB": 1,
+      "Tribe": 4,
+      "eMoney_Tribe": 13,
+      "eMoney_dbo": 2
+    },
+    "top_members": [
+      {
+        "node": "FiatDwhDB.Tribe",
+        "weight": 38.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsSnapshots_BankAccount-393561",
+        "weight": 29.0
+      },
+      {
+        "node": "Tribe.AccountsSnapshots_BankAccount-393561",
+        "weight": 23.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsSnapshots_AccountSnapshot-956050",
+        "weight": 23.0
+      },
+      {
+        "node": "eMoney_Tribe.SettlementsTransactions_SecurityChecks-426253",
+        "weight": 21.0
+      },
+      {
+        "node": "eMoney_Tribe.SettlementsTransactions_RiskActions-236807",
+        "weight": 15.0
+      },
+      {
+        "node": "eMoney_Tribe.SettlementsTransactions_SettlementTransaction-637239",
+        "weight": 13.0
+      },
+      {
+        "node": "eMoney_Tribe.CardsSnapshots_Account-513255",
+        "weight": 12.0
+      },
+      {
+        "node": "eMoney_Tribe.CardsSnapshots_Accounts-350640",
+        "weight": 12.0
+      },
+      {
+        "node": "eMoney_Tribe.CardsSnapshots_CardSnapshot-140457",
+        "weight": 11.0
+      },
+      {
+        "node": "Tribe.SettlementsTransactions_RiskActions-236807",
+        "weight": 10.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsSnapshots_BankAccounts-795870",
+        "weight": 9.0
+      },
+      {
+        "node": "eMoney_Tribe.CardsSnapshots-890718",
+        "weight": 7.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsSnapshots-509416",
+        "weight": 6.0
+      },
+      {
+        "node": "eMoney_Tribe.CardsSnapshots_BankAccounts-83854",
+        "weight": 4.0
+      }
+    ],
+    "all_members": [
+      "FiatDwhDB.Tribe",
+      "Tribe.AccountsSnapshots_BankAccount-393561",
+      "Tribe.CardsSnapshots_Account-513255",
+      "Tribe.CardsSnapshots_BankAccounts-83854",
+      "Tribe.SettlementsTransactions_RiskActions-236807",
+      "eMoney_Tribe.AccountsSnapshots-509416",
+      "eMoney_Tribe.AccountsSnapshots_AccountSnapshot-956050",
+      "eMoney_Tribe.AccountsSnapshots_BankAccount-393561",
+      "eMoney_Tribe.AccountsSnapshots_BankAccounts-795870",
+      "eMoney_Tribe.CardsSnapshots-890718",
+      "eMoney_Tribe.CardsSnapshots_Account-513255",
+      "eMoney_Tribe.CardsSnapshots_Accounts-350640",
+      "eMoney_Tribe.CardsSnapshots_BankAccounts-83854",
+      "eMoney_Tribe.CardsSnapshots_CardSnapshot-140457",
+      "eMoney_Tribe.SettlementsTransactions-333243",
+      "eMoney_Tribe.SettlementsTransactions_RiskActions-236807",
+      "eMoney_Tribe.SettlementsTransactions_SecurityChecks-426253",
+      "eMoney_Tribe.SettlementsTransactions_SettlementTransaction-637239",
+      "eMoney_dbo.ETL_AccountSnapshot",
+      "eMoney_dbo.ETL_SettlementsTransactions"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 37,
+    "size": 17,
+    "internal_weight": 69.0,
+    "src_breakdown": {
+      "wiki": 69
+    },
+    "schema_breakdown": {
+      "Dealing_dbo": 14,
+      "Dealing_staging": 3
+    },
+    "top_members": [
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_CP",
+        "weight": 18.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_Rules",
+        "weight": 17.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_ConditionToCP",
+        "weight": 16.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_CPToRule",
+        "weight": 15.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_Conditions",
+        "weight": 15.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_CP",
+        "weight": 12.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_ListCIDMapping",
+        "weight": 9.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_NameLists",
+        "weight": 8.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPDailyAudit_ListCIDMapping",
+        "weight": 7.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_Conditions",
+        "weight": 6.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_ConditionToCP",
+        "weight": 5.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_Rules",
+        "weight": 5.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_CPToRule",
+        "weight": 4.0
+      },
+      {
+        "node": "Dealing_dbo.Dealing_CEPWeeklyAudit_NameLists",
+        "weight": 3.0
+      },
+      {
+        "node": "Dealing_staging.External_Etoro_CEP_CompoundProperties",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "Dealing_dbo.Dealing_CEPDailyAudit_CP",
+      "Dealing_dbo.Dealing_CEPDailyAudit_CPToRule",
+      "Dealing_dbo.Dealing_CEPDailyAudit_ConditionToCP",
+      "Dealing_dbo.Dealing_CEPDailyAudit_Conditions",
+      "Dealing_dbo.Dealing_CEPDailyAudit_ListCIDMapping",
+      "Dealing_dbo.Dealing_CEPDailyAudit_NameLists",
+      "Dealing_dbo.Dealing_CEPDailyAudit_Rules",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_CP",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_CPToRule",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_ConditionToCP",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_Conditions",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_ListCIDMapping",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_NameLists",
+      "Dealing_dbo.Dealing_CEPWeeklyAudit_Rules",
+      "Dealing_staging.External_Etoro_CEP_CompoundProperties",
+      "Dealing_staging.External_Etoro_CEP_Conditions",
+      "Dealing_staging.External_Etoro_CEP_ListCIDMappings"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 30,
+    "size": 13,
+    "internal_weight": 32.0,
+    "src_breakdown": {
+      "wiki": 32
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 7,
+      "Dictionary": 6
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Fact_History_Cost",
+        "weight": 29.0
+      },
+      {
+        "node": "DWH_dbo.Dim_CostConfigurationId",
+        "weight": 6.0
+      },
+      {
+        "node": "DWH_dbo.Dim_CostSubtype",
+        "weight": 6.0
+      },
+      {
+        "node": "DWH_dbo.Dim_CostType",
+        "weight": 6.0
+      },
+      {
+        "node": "DWH_dbo.Dim_CalculationType",
+        "weight": 5.0
+      },
+      {
+        "node": "DWH_dbo.Dim_ExecutionOperationType",
+        "weight": 5.0
+      },
+      {
+        "node": "DWH_dbo.Dim_FeeOperationTypes",
+        "weight": 4.0
+      },
+      {
+        "node": "Dictionary.CalculationType",
+        "weight": 3.0
+      },
+      {
+        "node": "Dictionary.CostConfigurationId",
+        "weight": 2.0
+      },
+      {
+        "node": "Dictionary.CostSubtype",
+        "weight": 2.0
+      },
+      {
+        "node": "Dictionary.CostType",
+        "weight": 2.0
+      },
+      {
+        "node": "Dictionary.ExecutionOperationType",
+        "weight": 2.0
+      },
+      {
+        "node": "Dictionary.FeeOperationTypes",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.Dim_CalculationType",
+      "DWH_dbo.Dim_CostConfigurationId",
+      "DWH_dbo.Dim_CostSubtype",
+      "DWH_dbo.Dim_CostType",
+      "DWH_dbo.Dim_ExecutionOperationType",
+      "DWH_dbo.Dim_FeeOperationTypes",
+      "DWH_dbo.Fact_History_Cost",
+      "Dictionary.CalculationType",
+      "Dictionary.CostConfigurationId",
+      "Dictionary.CostSubtype",
+      "Dictionary.CostType",
+      "Dictionary.ExecutionOperationType",
+      "Dictionary.FeeOperationTypes"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 61,
+    "size": 13,
+    "internal_weight": 44.0,
+    "src_breakdown": {
+      "genie": 44
+    },
+    "schema_breakdown": {
+      "bi_output": 13
+    },
+    "top_members": [
+      {
+        "node": "bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+        "weight": 15.0
+      },
+      {
+        "node": "bi_output.vg_emoney_panel_firstdates_em1",
+        "weight": 11.0
+      },
+      {
+        "node": "bi_output.vg_positionsvolumeandattributes_lc4_source",
+        "weight": 10.0
+      },
+      {
+        "node": "bi_output.vg_emoney_card_instance_summary",
+        "weight": 8.0
+      },
+      {
+        "node": "bi_output.vg_emoney_card_transactions",
+        "weight": 8.0
+      },
+      {
+        "node": "bi_output.vg_emoney_openbankingdeposit",
+        "weight": 8.0
+      },
+      {
+        "node": "bi_output.vg_acquisitionfunnel_em1",
+        "weight": 6.0
+      },
+      {
+        "node": "bi_output.vg_fact_billingwithdraw_for_genie",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_output.vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_output.vg_fact_billingdepost_forgenie_new",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_output.vg_fullbincodelist",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_output.vg_emoney_potentialclients_attributes",
+        "weight": 2.0
+      },
+      {
+        "node": "bi_output.vg_emoney_txs",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "bi_output.vg_acquisitionfunnel_em1",
+      "bi_output.vg_emoney_card_instance_summary",
+      "bi_output.vg_emoney_card_transactions",
+      "bi_output.vg_emoney_openbankingdeposit",
+      "bi_output.vg_emoney_panel_firstdates_em1",
+      "bi_output.vg_emoney_potentialclients_attributes",
+      "bi_output.vg_emoney_txs",
+      "bi_output.vg_fact_billingdepost_forgenie_new",
+      "bi_output.vg_fact_billingwithdraw_for_genie",
+      "bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+      "bi_output.vg_fullbincodelist",
+      "bi_output.vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+      "bi_output.vg_positionsvolumeandattributes_lc4_source"
+    ],
+    "genie_overlap": [
+      {
+        "title": "eMoney Adoption & Trading",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "eToro eMoney - MIMO",
+        "overlap": 5,
+        "n_tables": 5
+      },
+      {
+        "title": "eMoney Clients Attributes & Txs (Test)",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 12,
+    "size": 12,
+    "internal_weight": 61.0,
+    "src_breakdown": {
+      "wiki": 61
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 12
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Dictionary_AdGroup",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Dictionary_Campaign",
+        "weight": 27.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Ad_Conv",
+        "weight": 9.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Ad_Pref",
+        "weight": 8.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Geo_Conv",
+        "weight": 8.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Keywords_Conv",
+        "weight": 8.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Search_Conv",
+        "weight": 8.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Geo_Pref",
+        "weight": 7.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Keywords_Pref",
+        "weight": 7.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Campaign_Performance_Report",
+        "weight": 5.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Search_Perf",
+        "weight": 5.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Adwords_Conversion_Performance_Report",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_Adwords_Ad_Conv",
+      "BI_DB_dbo.BI_DB_Adwords_Ad_Pref",
+      "BI_DB_dbo.BI_DB_Adwords_Campaign_Performance_Report",
+      "BI_DB_dbo.BI_DB_Adwords_Conversion_Performance_Report",
+      "BI_DB_dbo.BI_DB_Adwords_Dictionary_AdGroup",
+      "BI_DB_dbo.BI_DB_Adwords_Dictionary_Campaign",
+      "BI_DB_dbo.BI_DB_Adwords_Geo_Conv",
+      "BI_DB_dbo.BI_DB_Adwords_Geo_Pref",
+      "BI_DB_dbo.BI_DB_Adwords_Keywords_Conv",
+      "BI_DB_dbo.BI_DB_Adwords_Keywords_Pref",
+      "BI_DB_dbo.BI_DB_Adwords_Search_Conv",
+      "BI_DB_dbo.BI_DB_Adwords_Search_Perf"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 26,
+    "size": 12,
+    "internal_weight": 45.0,
+    "src_breakdown": {
+      "genie": 43,
+      "kpi_prep": 2
+    },
+    "schema_breakdown": {
+      "bi_output_stg": 2,
+      "crm": 5,
+      "etoro_kpi": 2,
+      "etoro_kpi_stg": 3
+    },
+    "top_members": [
+      {
+        "node": "etoro_kpi.vg_crm_case",
+        "weight": 20.0
+      },
+      {
+        "node": "etoro_kpi.cidfirstdates_v",
+        "weight": 18.0
+      },
+      {
+        "node": "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+        "weight": 13.0
+      },
+      {
+        "node": "etoro_kpi_stg.crm_csat_survey_per_case_v",
+        "weight": 11.0
+      },
+      {
+        "node": "etoro_kpi_stg.crm_user_v",
+        "weight": 11.0
+      },
+      {
+        "node": "crm.silver_crm_csat_survey_entry__c",
+        "weight": 5.0
+      },
+      {
+        "node": "crm.silver_crm_surveytaker__c",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_output_stg.churn_winback_recent_targets",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_output_stg.churn_winback_summary",
+        "weight": 4.0
+      },
+      {
+        "node": "crm.silver_crm_survey__c",
+        "weight": 4.0
+      },
+      {
+        "node": "crm.silver_crm_survey_question__c",
+        "weight": 4.0
+      },
+      {
+        "node": "crm.silver_crm_surveyquestionresponse__c",
+        "weight": 4.0
+      }
+    ],
+    "all_members": [
+      "bi_output_stg.churn_winback_recent_targets",
+      "bi_output_stg.churn_winback_summary",
+      "crm.silver_crm_csat_survey_entry__c",
+      "crm.silver_crm_survey__c",
+      "crm.silver_crm_survey_question__c",
+      "crm.silver_crm_surveyquestionresponse__c",
+      "crm.silver_crm_surveytaker__c",
+      "etoro_kpi.cidfirstdates_v",
+      "etoro_kpi.vg_crm_case",
+      "etoro_kpi_stg.crm_csat_survey_per_case_v",
+      "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+      "etoro_kpi_stg.crm_user_v"
+    ],
+    "genie_overlap": [
+      {
+        "title": "DEV - Customer Support Case Analytics",
+        "overlap": 5,
+        "n_tables": 5
+      },
+      {
+        "title": "Customer Satisfaction Surveys",
+        "overlap": 5,
+        "n_tables": 5
+      },
+      {
+        "title": "Customer Support Case Analytics",
+        "overlap": 5,
+        "n_tables": 5
+      },
+      {
+        "title": "Churn Win-Back Campaign",
+        "overlap": 3,
+        "n_tables": 4
+      }
+    ],
+    "kpi_views_in_cluster": [
+      "etoro_kpi.cidfirstdates_v",
+      "etoro_kpi.vg_crm_case",
+      "etoro_kpi_stg.crm_csat_survey_per_case_v",
+      "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+      "etoro_kpi_stg.crm_user_v"
+    ]
+  },
+  {
+    "cluster_id": 46,
+    "size": 12,
+    "internal_weight": 66.0,
+    "src_breakdown": {
+      "genie": 66
+    },
+    "schema_breakdown": {
+      "finance_hubs_stg": 12
+    },
+    "top_members": [
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_bank_concentration",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_client_daily_mix",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_corporate_daily_mix",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_data_quality",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_liquidity_daily",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_maturity_ladder",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_qmmf_consent",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_silver_mmf_fund_characteristics",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_mapping",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_term_deposits",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_term_deposits_app",
+        "weight": 11.0
+      },
+      {
+        "node": "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_trial_balance",
+        "weight": 11.0
+      }
+    ],
+    "all_members": [
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_bank_concentration",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_client_daily_mix",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_corporate_daily_mix",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_data_quality",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_liquidity_daily",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_maturity_ladder",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_qmmf_consent",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_mmf_fund_characteristics",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_mapping",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_term_deposits",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_term_deposits_app",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_trial_balance"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Treasury Hub Q&A (FinanceCYTreasury)",
+        "overlap": 12,
+        "n_tables": 12
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 5,
+    "size": 11,
+    "internal_weight": 36.0,
+    "src_breakdown": {
+      "genie": 36
+    },
+    "schema_breakdown": {
+      "config": 9,
+      "general": 2
+    },
+    "top_members": [
+      {
+        "node": "config.bronze_dba_dbo_historydbsizes",
+        "weight": 11.0
+      },
+      {
+        "node": "config.bronze_dba_dbo_historytablesizes",
+        "weight": 11.0
+      },
+      {
+        "node": "config.bronze_dba_dbo_v_historybackup",
+        "weight": 6.0
+      },
+      {
+        "node": "config.bronze_dba_dbo_v_historyblitz_results",
+        "weight": 6.0
+      },
+      {
+        "node": "config.bronze_dba_dbo_v_historyblitzfirst_results",
+        "weight": 6.0
+      },
+      {
+        "node": "config.bronze_dba_dbo_v_historyreaderrorlog",
+        "weight": 6.0
+      },
+      {
+        "node": "general.bronze_dba_dbo_v_historyjobexecutionlogs",
+        "weight": 6.0
+      },
+      {
+        "node": "config.bronze_etoro_dba_v_numrows_sizes",
+        "weight": 5.0
+      },
+      {
+        "node": "config.bronze_etorogeneral_dba_v_numrows_sizes",
+        "weight": 5.0
+      },
+      {
+        "node": "config.bronze_userapidb_dba_v_numrows_sizes",
+        "weight": 5.0
+      },
+      {
+        "node": "general.bronze_db_logs_dba_v_numrows_sizes",
+        "weight": 5.0
+      }
+    ],
+    "all_members": [
+      "config.bronze_dba_dbo_historydbsizes",
+      "config.bronze_dba_dbo_historytablesizes",
+      "config.bronze_dba_dbo_v_historybackup",
+      "config.bronze_dba_dbo_v_historyblitz_results",
+      "config.bronze_dba_dbo_v_historyblitzfirst_results",
+      "config.bronze_dba_dbo_v_historyreaderrorlog",
+      "config.bronze_etoro_dba_v_numrows_sizes",
+      "config.bronze_etorogeneral_dba_v_numrows_sizes",
+      "config.bronze_userapidb_dba_v_numrows_sizes",
+      "general.bronze_db_logs_dba_v_numrows_sizes",
+      "general.bronze_dba_dbo_v_historyjobexecutionlogs"
+    ],
+    "genie_overlap": [
+      {
+        "title": "DBA Genie",
+        "overlap": 7,
+        "n_tables": 7
+      },
+      {
+        "title": "Table Size",
+        "overlap": 6,
+        "n_tables": 6
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 20,
+    "size": 9,
+    "internal_weight": 37.0,
+    "src_breakdown": {
+      "wiki": 37
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 1,
+      "BackOffice": 1,
+      "Billing": 2,
+      "DWH_dbo": 3,
+      "Dictionary": 2
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Fact_BillingRedeem",
+        "weight": 20.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_STP_Redeems",
+        "weight": 19.0
+      },
+      {
+        "node": "Billing.Redeem",
+        "weight": 17.0
+      },
+      {
+        "node": "DWH_dbo.Dim_RedeemStatus",
+        "weight": 9.0
+      },
+      {
+        "node": "BackOffice.RedeemApproval",
+        "weight": 6.0
+      },
+      {
+        "node": "Billing.Funding",
+        "weight": 6.0
+      },
+      {
+        "node": "DWH_dbo.Dim_RedeemReason",
+        "weight": 5.0
+      },
+      {
+        "node": "Dictionary.RedeemStatus",
+        "weight": 4.0
+      },
+      {
+        "node": "Dictionary.RedeemReason",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_STP_Redeems",
+      "BackOffice.RedeemApproval",
+      "Billing.Funding",
+      "Billing.Redeem",
+      "DWH_dbo.Dim_RedeemReason",
+      "DWH_dbo.Dim_RedeemStatus",
+      "DWH_dbo.Fact_BillingRedeem",
+      "Dictionary.RedeemReason",
+      "Dictionary.RedeemStatus"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 22,
+    "size": 9,
+    "internal_weight": 36.0,
+    "src_breakdown": {
+      "genie": 36
+    },
+    "schema_breakdown": {
+      "product_analytics_stg": 9
+    },
+    "top_members": [
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_early_alerting_yeast_bounds",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_exp_desinger_audiences",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_exp_desinger_metrics_agg",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_metric_values",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_quality_checks",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_results",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_user_segments_results",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_metrics_md",
+        "weight": 8.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_storage_experiments_md",
+        "weight": 8.0
+      }
+    ],
+    "all_members": [
+      "product_analytics_stg.bi_output_product_analytics_abtoro_early_alerting_yeast_bounds",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_exp_desinger_audiences",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_exp_desinger_metrics_agg",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_metric_values",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_quality_checks",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_results",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_user_segments_results",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_metrics_md",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_storage_experiments_md"
+    ],
+    "genie_overlap": [
+      {
+        "title": "New Space",
+        "overlap": 9,
+        "n_tables": 9
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 21,
+    "size": 7,
+    "internal_weight": 18.0,
+    "src_breakdown": {
+      "wiki": 18
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 2,
+      "Customer": 1,
+      "DWH_dbo": 1,
+      "Dictionary": 2,
+      "KYC": 1
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.BI_DB_Tax_Compliance_TIN",
+        "weight": 24.0
+      },
+      {
+        "node": "Customer.ExtendedUserField",
+        "weight": 11.0
+      },
+      {
+        "node": "Dictionary.ExtendedUserField",
+        "weight": 4.0
+      },
+      {
+        "node": "DWH_dbo.Dim_ExtendedUserField",
+        "weight": 3.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Tax_Compliance_W8",
+        "weight": 2.0
+      },
+      {
+        "node": "Dictionary.ExtendedUserValueType",
+        "weight": 2.0
+      },
+      {
+        "node": "KYC.ReasonsForNoTaxID",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_Tax_Compliance_TIN",
+      "BI_DB_dbo.BI_DB_Tax_Compliance_W8",
+      "Customer.ExtendedUserField",
+      "DWH_dbo.Dim_ExtendedUserField",
+      "Dictionary.ExtendedUserField",
+      "Dictionary.ExtendedUserValueType",
+      "KYC.ReasonsForNoTaxID"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 52,
+    "size": 7,
+    "internal_weight": 40.0,
+    "src_breakdown": {
+      "wiki": 40
+    },
+    "schema_breakdown": {
+      "Tribe": 2,
+      "eMoney_Tribe": 4,
+      "eMoney_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "eMoney_Tribe.Authorizes_SecurityChecks-30662",
+        "weight": 20.0
+      },
+      {
+        "node": "eMoney_Tribe.Authorizes_RiskActions-796100",
+        "weight": 17.0
+      },
+      {
+        "node": "Tribe.Authorizes_SecurityChecks-30662",
+        "weight": 14.0
+      },
+      {
+        "node": "eMoney_Tribe.Authorizes_Authorize-312243",
+        "weight": 11.0
+      },
+      {
+        "node": "Tribe.Authorizes_RiskActions-796100",
+        "weight": 10.0
+      },
+      {
+        "node": "eMoney_Tribe.Authorizes-837045",
+        "weight": 6.0
+      },
+      {
+        "node": "eMoney_dbo.ETL_Authorize",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "Tribe.Authorizes_RiskActions-796100",
+      "Tribe.Authorizes_SecurityChecks-30662",
+      "eMoney_Tribe.Authorizes-837045",
+      "eMoney_Tribe.Authorizes_Authorize-312243",
+      "eMoney_Tribe.Authorizes_RiskActions-796100",
+      "eMoney_Tribe.Authorizes_SecurityChecks-30662",
+      "eMoney_dbo.ETL_Authorize"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 50,
+    "size": 6,
+    "internal_weight": 15.0,
+    "src_breakdown": {
+      "genie": 15
+    },
+    "schema_breakdown": {
+      "Trade": 2,
+      "bi_dealing": 3,
+      "trading": 1
+    },
+    "top_members": [
+      {
+        "node": "Trade.Liquidityprovidercontracts",
+        "weight": 5.0
+      },
+      {
+        "node": "Trade.Liquidityprovidertype",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_dealing.bi_output_dealing_lp_fees_saxo",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_dealing.bi_output_dealing_lp_fees_virtu_real_by_exchange",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty",
+        "weight": 5.0
+      },
+      {
+        "node": "trading.gold_ontologydb_dbo_providers",
+        "weight": 5.0
+      }
+    ],
+    "all_members": [
+      "Trade.Liquidityprovidercontracts",
+      "Trade.Liquidityprovidertype",
+      "bi_dealing.bi_output_dealing_lp_fees_saxo",
+      "bi_dealing.bi_output_dealing_lp_fees_virtu_real_by_exchange",
+      "bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty",
+      "trading.gold_ontologydb_dbo_providers"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Liquidity Providers Research",
+        "overlap": 6,
+        "n_tables": 6
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 42,
+    "size": 6,
+    "internal_weight": 15.0,
+    "src_breakdown": {
+      "genie": 15
+    },
+    "schema_breakdown": {
+      "dealing": 6
+    },
+    "top_members": [
+      {
+        "node": "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_calculation_step_evh",
+        "weight": 5.0
+      },
+      {
+        "node": "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_fix_message_evh",
+        "weight": 5.0
+      },
+      {
+        "node": "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_hedge_request_evh",
+        "weight": 5.0
+      },
+      {
+        "node": "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_order_execution_evh",
+        "weight": 5.0
+      },
+      {
+        "node": "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_routed_execution_evh",
+        "weight": 5.0
+      },
+      {
+        "node": "dealing.v_bronze_event_hub_prod_event_streaming_we_investigation_tool_execution_result_evh",
+        "weight": 5.0
+      }
+    ],
+    "all_members": [
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_calculation_step_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_fix_message_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_hedge_request_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_order_execution_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_routed_execution_evh",
+      "dealing.v_bronze_event_hub_prod_event_streaming_we_investigation_tool_execution_result_evh"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Dealing Investigation Tool",
+        "overlap": 6,
+        "n_tables": 6
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 2,
+    "size": 5,
+    "internal_weight": 17.0,
+    "src_breakdown": {
+      "wiki": 17
+    },
+    "schema_breakdown": {
+      "BI_DB_Bing_PBI_Campaign_Dict": 1,
+      "BI_DB_dbo": 4
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.BI_DB_Bing_PBI_Daily_Perf",
+        "weight": 10.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Bing_PBI_Group_Dict",
+        "weight": 10.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Bing_PBI_Goals_Funnels",
+        "weight": 8.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_Bing_PBI_Campaign_Dict",
+        "weight": 7.0
+      },
+      {
+        "node": "BI_DB_Bing_PBI_Campaign_Dict.id",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_Bing_PBI_Campaign_Dict.id",
+      "BI_DB_dbo.BI_DB_Bing_PBI_Campaign_Dict",
+      "BI_DB_dbo.BI_DB_Bing_PBI_Daily_Perf",
+      "BI_DB_dbo.BI_DB_Bing_PBI_Goals_Funnels",
+      "BI_DB_dbo.BI_DB_Bing_PBI_Group_Dict"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 36,
+    "size": 5,
+    "internal_weight": 22.0,
+    "src_breakdown": {
+      "wiki": 22
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 3,
+      "History": 1,
+      "Trade": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.History_CurrencyPrice",
+        "weight": 29.0
+      },
+      {
+        "node": "History.CurrencyPrice",
+        "weight": 10.0
+      },
+      {
+        "node": "Trade.CurrencyPrice",
+        "weight": 10.0
+      },
+      {
+        "node": "DWH_dbo.SP_Dim_Instrument",
+        "weight": 2.0
+      },
+      {
+        "node": "DWH_dbo.SP_Dim_Position_DL_To_Synapse",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.History_CurrencyPrice",
+      "DWH_dbo.SP_Dim_Instrument",
+      "DWH_dbo.SP_Dim_Position_DL_To_Synapse",
+      "History.CurrencyPrice",
+      "Trade.CurrencyPrice"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 51,
+    "size": 5,
+    "internal_weight": 36.0,
+    "src_breakdown": {
+      "wiki": 36
+    },
+    "schema_breakdown": {
+      "Tribe": 1,
+      "eMoney_Tribe": 4
+    },
+    "top_members": [
+      {
+        "node": "eMoney_Tribe.AccountsActivities_SecurityChecks-471048",
+        "weight": 25.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsActivities_AccountActivity-833937",
+        "weight": 15.0
+      },
+      {
+        "node": "Tribe.AccountsActivities_SecurityChecks-471048",
+        "weight": 14.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsActivities_862157",
+        "weight": 11.0
+      },
+      {
+        "node": "eMoney_Tribe.AccountsActivities_RiskActions-322546",
+        "weight": 9.0
+      }
+    ],
+    "all_members": [
+      "Tribe.AccountsActivities_SecurityChecks-471048",
+      "eMoney_Tribe.AccountsActivities_862157",
+      "eMoney_Tribe.AccountsActivities_AccountActivity-833937",
+      "eMoney_Tribe.AccountsActivities_RiskActions-322546",
+      "eMoney_Tribe.AccountsActivities_SecurityChecks-471048"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 57,
+    "size": 5,
+    "internal_weight": 10.0,
+    "src_breakdown": {
+      "genie": 10
+    },
+    "schema_breakdown": {
+      "bi_dealing_stg": 5
+    },
+    "top_members": [
+      {
+        "node": "bi_dealing_stg.bi_output_dealing_nixar_adivolumes3",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_dealing_stg.bi_output_dealing_nixar_cryptodata",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_dealing_stg.bi_output_dealing_nixar_cryptoprices",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_dealing_stg.bi_output_dealing_nixar_fireblocksfinal",
+        "weight": 4.0
+      },
+      {
+        "node": "bi_dealing_stg.bi_output_dealing_nixar_historicalprices2",
+        "weight": 4.0
+      }
+    ],
+    "all_members": [
+      "bi_dealing_stg.bi_output_dealing_nixar_adivolumes3",
+      "bi_dealing_stg.bi_output_dealing_nixar_cryptodata",
+      "bi_dealing_stg.bi_output_dealing_nixar_cryptoprices",
+      "bi_dealing_stg.bi_output_dealing_nixar_fireblocksfinal",
+      "bi_dealing_stg.bi_output_dealing_nixar_historicalprices2"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Crypto ops",
+        "overlap": 5,
+        "n_tables": 5
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 3,
+    "size": 5,
+    "internal_weight": 9.0,
+    "src_breakdown": {
+      "genie": 9
+    },
+    "schema_breakdown": {
+      "compute": 1,
+      "information_schema": 3,
+      "query": 1
+    },
+    "top_members": [
+      {
+        "node": "information_schema.columns",
+        "weight": 5.0
+      },
+      {
+        "node": "information_schema.tables",
+        "weight": 5.0
+      },
+      {
+        "node": "query.history",
+        "weight": 4.0
+      },
+      {
+        "node": "compute.warehouse_events",
+        "weight": 3.0
+      },
+      {
+        "node": "information_schema.catalogs",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "compute.warehouse_events",
+      "information_schema.catalogs",
+      "information_schema.columns",
+      "information_schema.tables",
+      "query.history"
+    ],
+    "genie_overlap": [
+      {
+        "title": "examples on system",
+        "overlap": 4,
+        "n_tables": 4
+      },
+      {
+        "title": "Data Analyst Assistant",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 19,
+    "size": 5,
+    "internal_weight": 10.0,
+    "src_breakdown": {
+      "genie": 10
+    },
+    "schema_breakdown": {
+      "monitoring": 5
+    },
+    "top_members": [
+      {
+        "node": "monitoring.app_genie_app_cost30d",
+        "weight": 4.0
+      },
+      {
+        "node": "monitoring.app_genie_mcp_and_warehouse_cost30d",
+        "weight": 4.0
+      },
+      {
+        "node": "monitoring.app_llm_endpoint_cost30d",
+        "weight": 4.0
+      },
+      {
+        "node": "monitoring.dba_output_genie_workspace_names",
+        "weight": 4.0
+      },
+      {
+        "node": "monitoring.dba_total_genie_costs",
+        "weight": 4.0
+      }
+    ],
+    "all_members": [
+      "monitoring.app_genie_app_cost30d",
+      "monitoring.app_genie_mcp_and_warehouse_cost30d",
+      "monitoring.app_llm_endpoint_cost30d",
+      "monitoring.dba_output_genie_workspace_names",
+      "monitoring.dba_total_genie_costs"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Application Cost Tracking(DBA)",
+        "overlap": 5,
+        "n_tables": 5
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 33,
+    "size": 4,
+    "internal_weight": 17.0,
+    "src_breakdown": {
+      "wiki": 17
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 2,
+      "Dictionary": 1,
+      "Trade": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Fund",
+        "weight": 15.0
+      },
+      {
+        "node": "Trade.Fund",
+        "weight": 11.0
+      },
+      {
+        "node": "DWH_dbo.Dim_FundType",
+        "weight": 7.0
+      },
+      {
+        "node": "Dictionary.FundType",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.Dim_Fund",
+      "DWH_dbo.Dim_FundType",
+      "Dictionary.FundType",
+      "Trade.Fund"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 53,
+    "size": 4,
+    "internal_weight": 12.0,
+    "src_breakdown": {
+      "genie": 12
+    },
+    "schema_breakdown": {
+      "bi_compliance_stg": 4
+    },
+    "top_members": [
+      {
+        "node": "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_group_level",
+        "weight": 7.0
+      },
+      {
+        "node": "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_window_level",
+        "weight": 7.0
+      },
+      {
+        "node": "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_level",
+        "weight": 5.0
+      },
+      {
+        "node": "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_level",
+        "weight": 5.0
+      }
+    ],
+    "all_members": [
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_group_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_window_level"
+    ],
+    "genie_overlap": [
+      {
+        "title": "AML Insights Genie",
+        "overlap": 4,
+        "n_tables": 4
+      },
+      {
+        "title": "Test - AML CMP ",
+        "overlap": 3,
+        "n_tables": 3
+      },
+      {
+        "title": "New Space",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 58,
+    "size": 4,
+    "internal_weight": 6.0,
+    "src_breakdown": {
+      "genie": 6
+    },
+    "schema_breakdown": {
+      "bi_output": 1,
+      "bi_output_stg": 1,
+      "crm": 1,
+      "experience": 1
+    },
+    "top_members": [
+      {
+        "node": "bi_output.bi_output_customer_customer_support_salesforce_reply",
+        "weight": 3.0
+      },
+      {
+        "node": "bi_output_stg.bi_output_customer_customer_support_salesforce_reply",
+        "weight": 3.0
+      },
+      {
+        "node": "crm.gold_crm_salesforcetobomanagermapping",
+        "weight": 3.0
+      },
+      {
+        "node": "experience.bronze_notificationdb_notifications_salesforcecontact",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "bi_output.bi_output_customer_customer_support_salesforce_reply",
+      "bi_output_stg.bi_output_customer_customer_support_salesforce_reply",
+      "crm.gold_crm_salesforcetobomanagermapping",
+      "experience.bronze_notificationdb_notifications_salesforcecontact"
+    ],
+    "genie_overlap": [
+      {
+        "title": "T3 - Hackathon",
+        "overlap": 4,
+        "n_tables": 4
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 15,
+    "size": 4,
+    "internal_weight": 6.0,
+    "src_breakdown": {
+      "genie": 6
+    },
+    "schema_breakdown": {
+      "github": 4
+    },
+    "top_members": [
+      {
+        "node": "github.cursor_usage",
+        "weight": 3.0
+      },
+      {
+        "node": "github.github_copilot_metrics_code_completions",
+        "weight": 3.0
+      },
+      {
+        "node": "github.github_copilot_seatsusage",
+        "weight": 3.0
+      },
+      {
+        "node": "github.linearb_rawmeasurements",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "github.cursor_usage",
+      "github.github_copilot_metrics_code_completions",
+      "github.github_copilot_seatsusage",
+      "github.linearb_rawmeasurements"
+    ],
+    "genie_overlap": [
+      {
+        "title": "AI Usage",
+        "overlap": 4,
+        "n_tables": 4
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 18,
+    "size": 3,
+    "internal_weight": 19.0,
+    "src_breakdown": {
+      "wiki": 19
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 2,
+      "Rankings": 1
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.BI_DB_DailyGain_History",
+        "weight": 23.0
+      },
+      {
+        "node": "Rankings.MonthlyGainAnon",
+        "weight": 17.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_PI_Gain",
+        "weight": 7.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_DailyGain_History",
+      "BI_DB_dbo.BI_DB_PI_Gain",
+      "Rankings.MonthlyGainAnon"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 34,
+    "size": 3,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "wiki": 3
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 3
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Position_Account_Statement_AmountInUnitsDecimal",
+        "weight": 2.0
+      },
+      {
+        "node": "DWH_dbo.Dim_Position_Account_Statement_NetProfit",
+        "weight": 2.0
+      },
+      {
+        "node": "DWH_dbo.Fact_Positions",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.Dim_Position_Account_Statement_AmountInUnitsDecimal",
+      "DWH_dbo.Dim_Position_Account_Statement_NetProfit",
+      "DWH_dbo.Fact_Positions"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 44,
+    "size": 3,
+    "internal_weight": 4.0,
+    "src_breakdown": {
+      "wiki": 4
+    },
+    "schema_breakdown": {
+      "Dictionary": 1,
+      "Tribe": 1,
+      "eMoney_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_TribeScriptStatus",
+        "weight": 4.0
+      },
+      {
+        "node": "Dictionary.TribeScriptStatus",
+        "weight": 2.0
+      },
+      {
+        "node": "Tribe.FilesScriptHistoryStatus",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "Dictionary.TribeScriptStatus",
+      "Tribe.FilesScriptHistoryStatus",
+      "eMoney_dbo.eMoney_Dictionary_TribeScriptStatus"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 56,
+    "size": 3,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "genie": 3
+    },
+    "schema_breakdown": {
+      "bi_dealing": 3
+    },
+    "top_members": [
+      {
+        "node": "bi_dealing.bi_output_dealing_premier_clients_2026_positions_report",
+        "weight": 2.0
+      },
+      {
+        "node": "bi_dealing.bi_output_dealing_premier_customer_2026",
+        "weight": 2.0
+      },
+      {
+        "node": "bi_dealing.bi_output_dealing_premier_customer_2026_info",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "bi_dealing.bi_output_dealing_premier_clients_2026_positions_report",
+      "bi_dealing.bi_output_dealing_premier_customer_2026",
+      "bi_dealing.bi_output_dealing_premier_customer_2026_info"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Premier Customer Trading Analysis",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 59,
+    "size": 3,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "genie": 3
+    },
+    "schema_breakdown": {
+      "bi_output": 2,
+      "mixpanel": 1
+    },
+    "top_members": [
+      {
+        "node": "bi_output.bi_output_urban_notifications_daily_panel",
+        "weight": 2.0
+      },
+      {
+        "node": "bi_output.bi_output_urban_notifications_daily_panel_agg",
+        "weight": 2.0
+      },
+      {
+        "node": "mixpanel.notifications_events",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "bi_output.bi_output_urban_notifications_daily_panel",
+      "bi_output.bi_output_urban_notifications_daily_panel_agg",
+      "mixpanel.notifications_events"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Notification Events Analytics",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 0,
+    "size": 3,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "genie": 3
+    },
+    "schema_breakdown": {
+      "billing": 1,
+      "compute": 2
+    },
+    "top_members": [
+      {
+        "node": "billing.usage",
+        "weight": 2.0
+      },
+      {
+        "node": "compute.clusters",
+        "weight": 2.0
+      },
+      {
+        "node": "compute.node_timeline",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "billing.usage",
+      "compute.clusters",
+      "compute.node_timeline"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Billing and Jobs",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 9,
+    "size": 3,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "genie": 3
+    },
+    "schema_breakdown": {
+      "dealing": 3
+    },
+    "top_members": [
+      {
+        "node": "dealing.bronze_dealingstreaming_pnl_dealing_account_pl",
+        "weight": 2.0
+      },
+      {
+        "node": "dealing.bronze_dealingstreaming_pnl_dealing_realized_customer_pl",
+        "weight": 2.0
+      },
+      {
+        "node": "dealing.bronze_dealingstreaming_pnl_dealing_unrealized_customer_pl",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "dealing.bronze_dealingstreaming_pnl_dealing_account_pl",
+      "dealing.bronze_dealingstreaming_pnl_dealing_realized_customer_pl",
+      "dealing.bronze_dealingstreaming_pnl_dealing_unrealized_customer_pl"
+    ],
+    "genie_overlap": [
+      {
+        "title": "dealing streaming",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 54,
+    "size": 3,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "genie": 3
+    },
+    "schema_breakdown": {
+      "product_analytics_stg": 3
+    },
+    "top_members": [
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_participants",
+        "weight": 2.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_significant_results_view",
+        "weight": 2.0
+      },
+      {
+        "node": "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_user_segments_driving_significant_results_view",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_participants",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_significant_results_view",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_user_segments_driving_significant_results_view"
+    ],
+    "genie_overlap": [
+      {
+        "title": "ABtoro Genie (AB Tests Results)",
+        "overlap": 3,
+        "n_tables": 3
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 8,
+    "size": 2,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "wiki": 3
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 2
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.BI_DB_AGGSilverpopCampaign",
+        "weight": 4.0
+      },
+      {
+        "node": "BI_DB_dbo.BI_DB_AGGSilverpopCampaign_ByDomain",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.BI_DB_AGGSilverpopCampaign",
+      "BI_DB_dbo.BI_DB_AGGSilverpopCampaign_ByDomain"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 23,
+    "size": 2,
+    "internal_weight": 17.0,
+    "src_breakdown": {
+      "wiki": 17
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 1,
+      "History": 1
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.External_Price_History_LastPriceBeforeClose_Range",
+        "weight": 19.0
+      },
+      {
+        "node": "History.LastPriceBeforeClose",
+        "weight": 17.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.External_Price_History_LastPriceBeforeClose_Range",
+      "History.LastPriceBeforeClose"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 24,
+    "size": 2,
+    "internal_weight": 10.0,
+    "src_breakdown": {
+      "wiki": 10
+    },
+    "schema_breakdown": {
+      "BI_DB_dbo": 1,
+      "dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "BI_DB_dbo.UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel",
+        "weight": 13.0
+      },
+      {
+        "node": "dbo.V_CustomerAnswers",
+        "weight": 10.0
+      }
+    ],
+    "all_members": [
+      "BI_DB_dbo.UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel",
+      "dbo.V_CustomerAnswers"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 25,
+    "size": 2,
+    "internal_weight": 17.0,
+    "src_breakdown": {
+      "wiki": 17
+    },
+    "schema_breakdown": {
+      "BackOffice": 1,
+      "DWH_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_Campaign",
+        "weight": 20.0
+      },
+      {
+        "node": "BackOffice.Campaign",
+        "weight": 17.0
+      }
+    ],
+    "all_members": [
+      "BackOffice.Campaign",
+      "DWH_dbo.Dim_Campaign"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 29,
+    "size": 2,
+    "internal_weight": 4.0,
+    "src_breakdown": {
+      "wiki": 4
+    },
+    "schema_breakdown": {
+      "DWH_Migration": 1,
+      "DWH_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_Migration.Dim_AffiliateCostType",
+        "weight": 4.0
+      },
+      {
+        "node": "DWH_dbo.Dim_AffiliateCostType",
+        "weight": 4.0
+      }
+    ],
+    "all_members": [
+      "DWH_Migration.Dim_AffiliateCostType",
+      "DWH_dbo.Dim_AffiliateCostType"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 31,
+    "size": 2,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "wiki": 3
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 1,
+      "Dictionary": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_CashoutFeeGroup",
+        "weight": 3.0
+      },
+      {
+        "node": "Dictionary.CashoutFeeGroup",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.Dim_CashoutFeeGroup",
+      "Dictionary.CashoutFeeGroup"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 32,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "wiki": 2
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 1,
+      "Dictionary": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_ExchangeInfo",
+        "weight": 2.0
+      },
+      {
+        "node": "Dictionary.ExchangeInfo",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.Dim_ExchangeInfo",
+      "Dictionary.ExchangeInfo"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 35,
+    "size": 2,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "wiki": 3
+    },
+    "schema_breakdown": {
+      "DWH_dbo": 1,
+      "Dictionary": 1
+    },
+    "top_members": [
+      {
+        "node": "DWH_dbo.Dim_VerificationStatus",
+        "weight": 3.0
+      },
+      {
+        "node": "Dictionary.VerificationStatus",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "DWH_dbo.Dim_VerificationStatus",
+      "Dictionary.VerificationStatus"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 39,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "wiki": 2
+    },
+    "schema_breakdown": {
+      "Dictionary": 1,
+      "eMoney_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "Dictionary.AuthorizationTypes",
+        "weight": 2.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_AuthorizationType",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "Dictionary.AuthorizationTypes",
+      "eMoney_dbo.eMoney_Dictionary_AuthorizationType"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 40,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "wiki": 2
+    },
+    "schema_breakdown": {
+      "Dictionary": 1,
+      "eMoney_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "Dictionary.PaymentSchemaType",
+        "weight": 2.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_PaymentSchemaType",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "Dictionary.PaymentSchemaType",
+      "eMoney_dbo.eMoney_Dictionary_PaymentSchemaType"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 41,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "wiki": 2
+    },
+    "schema_breakdown": {
+      "Dictionary": 1,
+      "eMoney_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "Dictionary.PaymentSpecificationTypes",
+        "weight": 2.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_PaymentSpecificationType",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "Dictionary.PaymentSpecificationTypes",
+      "eMoney_dbo.eMoney_Dictionary_PaymentSpecificationType"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 43,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "wiki": 2
+    },
+    "schema_breakdown": {
+      "Dictionary": 1,
+      "eMoney_dbo": 1
+    },
+    "top_members": [
+      {
+        "node": "Dictionary.Providers",
+        "weight": 2.0
+      },
+      {
+        "node": "eMoney_dbo.eMoney_Dictionary_Provider",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "Dictionary.Providers",
+      "eMoney_dbo.eMoney_Dictionary_Provider"
+    ],
+    "genie_overlap": [],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 60,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "genie": 2
+    },
+    "schema_breakdown": {
+      "bi_output": 2
+    },
+    "top_members": [
+      {
+        "node": "bi_output.bi_output_vg_copy_mimo",
+        "weight": 2.0
+      },
+      {
+        "node": "bi_output.bi_output_vg_parentcid",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "bi_output.bi_output_vg_copy_mimo",
+      "bi_output.bi_output_vg_parentcid"
+    ],
+    "genie_overlap": [
+      {
+        "title": "etoro_copy",
+        "overlap": 2,
+        "n_tables": 2
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 27,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "genie": 2
+    },
+    "schema_breakdown": {
+      "bi_output_stg": 2
+    },
+    "top_members": [
+      {
+        "node": "bi_output_stg.customer_radar_2_table_customer_action",
+        "weight": 2.0
+      },
+      {
+        "node": "bi_output_stg.customer_radar_2_table_dim_customer",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "bi_output_stg.customer_radar_2_table_customer_action",
+      "bi_output_stg.customer_radar_2_table_dim_customer"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Customer Radar V2 (Minimized Dataset)",
+        "overlap": 2,
+        "n_tables": 2
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 38,
+    "size": 2,
+    "internal_weight": 3.0,
+    "src_breakdown": {
+      "genie": 3
+    },
+    "schema_breakdown": {
+      "data_rooms": 2
+    },
+    "top_members": [
+      {
+        "node": "data_rooms.bi_output_marketing_liveacquisitiondashboard_mt",
+        "weight": 3.0
+      },
+      {
+        "node": "data_rooms.dealing_clicks_openclose_breakdown_mt",
+        "weight": 3.0
+      }
+    ],
+    "all_members": [
+      "data_rooms.bi_output_marketing_liveacquisitiondashboard_mt",
+      "data_rooms.dealing_clicks_openclose_breakdown_mt"
+    ],
+    "genie_overlap": [
+      {
+        "title": "Live Acquisition Insights",
+        "overlap": 2,
+        "n_tables": 2
+      }
+    ],
+    "kpi_views_in_cluster": []
+  },
+  {
+    "cluster_id": 48,
+    "size": 2,
+    "internal_weight": 2.0,
+    "src_breakdown": {
+      "genie": 2
+    },
+    "schema_breakdown": {
+      "money_stg": 2
+    },
+    "top_members": [
+      {
+        "node": "money_stg.vw_deposit",
+        "weight": 2.0
+      },
+      {
+        "node": "money_stg.vw_ftd",
+        "weight": 2.0
+      }
+    ],
+    "all_members": [
+      "money_stg.vw_deposit",
+      "money_stg.vw_ftd"
+    ],
+    "genie_overlap": [
+      {
+        "title": "GlobalFTD Space View",
+        "overlap": 2,
+        "n_tables": 2
+      }
+    ],
+    "kpi_views_in_cluster": []
+  }
+]

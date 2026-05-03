@@ -1,0 +1,70 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "LTV_Conversions_Multipliers_Table",
+    "elapsed_seconds":  197,
+    "exit_code":  null,
+    "cost_usd":  0.6835,
+    "input_tokens":  2,
+    "output_tokens":  9283,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "LTV_Conversions_Multipliers_Table",
+                    "weighted_score":  9.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  10,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Region",
+                                                  "upstream_quote":  "Manual override name for the marketing region, from Ext_Dim_Country. May differ from Region (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Used when the automated MarketingRegion label needs a business-friendly correction.",
+                                                  "wiki_quote":  "Manual override name for the marketing region, from Ext_Dim_Country. May differ from Region (e.g., Albania: Region=ROE, MarketingRegionManualName=CEE). Used when the automated MarketingRegion label needs a business-friendly correction. Passthrough from Dim_Country (renamed from MarketingRegionManualName). 14 distinct values: Arabic, Australia, CEE, French, German, Italian, Latam, Nordics, ROW, SEA, Spain, UK, Unknown, USA.",
+                                                  "match":  "YES",
+                                                  "loss":  "None — upstream text preserved verbatim with additive lineage and enum context"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 1 / Opening summary",
+                                       "problem":  "Revenue accumulation date stated as \u00272024-09-30\u0027 but SP code calls Function_Revenue_Total(20190101, 20241027, 1) — actual end date is 2024-10-27. Writer followed SP comment instead of code."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TotalFullCommission (Element 4)",
+                                       "problem":  "Description says Metric=\u0027FullCommission\u0027 is renamed to \u0027TotalFullCommission\u0027 via CASE, but the WHERE clause filters for \u0027TotalFullCommission\u0027 directly. After the 2025-10-17 DDR refactor, the CASE may be a defensive no-op. Note could mislead analysts about the actual metric name in the DDR source."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Missing section",
+                                       "problem":  "No Phase Gate Checklist section with explicit P2/P3 checkboxes. Data claims (336 rows, 31 NULLs, Clients range 0–219458) appear genuine but lack formal phase gate documentation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian knowledge sources skipped — no external documentation enrichment. Noted as \u0027No Atlassian MCP available.\u0027"
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "Section 3.4 / review-needed #4",
+                                       "problem":  "Empty string vs NULL Currency semantics correctly documented in Gotchas and review-needed sidecar. Good coverage of a subtle JOIN hazard."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Change \u0027accumulated through 2024-09-30\u0027 to \u0027accumulated through 2024-10-27\u0027 in Section 1 and opening summary to match the actual SP parameter 20241027. (2) Clarify Element 4 TotalFullCommission description — note that the Metric CASE rename from \u0027FullCommission\u0027 may be a no-op after the DDR refactor since the WHERE filters for \u0027TotalFullCommission\u0027 directly. (3) Add a Phase Gate Checklist section documenting which data-validation phases were completed.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as a formal section"
+                                                           ]
+                                    }
+                }
+}

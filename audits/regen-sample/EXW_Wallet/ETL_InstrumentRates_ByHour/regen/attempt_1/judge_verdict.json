@@ -1,0 +1,67 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "ETL_InstrumentRates_ByHour",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.2318,
+    "input_tokens":  2,
+    "output_tokens":  4341,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "ETL_InstrumentRates_ByHour",
+                    "weighted_score":  8.25,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No Phase Gate Checklist section exists. Footer claims \u0027Phases: 13/14\u0027 but does not identify which phases were completed or skipped. Data claims (6.7M rows, ~193 instruments, ~0.01 spread) cannot be verified as grounded in live queries."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.2",
+                                       "problem":  "Date Boundary Handling describes the CASE logic generically using @date, but the first INSERT block in the SP uses @prevdate as the boundary threshold. Section 2.3 partially clarifies this but 2.2 in isolation is misleading."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "Section 5.1 marks InstrumentID transform as \u0027Passthrough\u0027 while Section 4 tags it Tier 2. Both are correct (passthrough column but no upstream wiki), but the combination is confusing without explanation."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "InstrumentID",
+                                       "problem":  "No sample InstrumentID values or explicit cross-reference to EXW_Currency.Instruments in the Elements description, despite ~193 distinct values being mentioned in Section 1."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "Downstream claim that SP_Prices joins on InstrumentID + DateHour is plausible but unverifiable — SP_Prices source code was not in the upstream bundle."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add explicit Phase Gate Checklist section with P1/P2/P3 completion status. (2) In Section 2.2, clarify that the CASE logic applies per-INSERT-block with @prevdate for pass 1 and @date for pass 2. (3) Add parenthetical to InstrumentID element noting \u0027no upstream wiki available; Tier 2 ceiling.\u0027",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "6.7M rows (Section 1)",
+                                                                                  "~193 distinct instruments (Section 1)",
+                                                                                  "~0.01 bid-ask spread (Section 3.4)",
+                                                                                  "April 2018 to present (Section 1)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section missing entirely — cannot determine which phases were skipped"
+                                                           ]
+                                    }
+                }
+}

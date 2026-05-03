@@ -31,7 +31,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALT
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN InstrumentID COMMENT 'eToro instrument identifier. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.InstrumentID)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN ISINCode COMMENT 'ISIN code from LP netting or instrument master. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.ISINCode)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN InstrumentDisplayName COMMENT 'Instrument display name. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.InstrumentDisplayName)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN Buy/Sell COMMENT 'Direction of the position: ''Buy'' or ''Sell'', derived from net units sign. (Tier 2 -- SP_DataForDuco, computed from eToro_Units / ClientUnits sign)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN `Buy/Sell` COMMENT 'Direction of the position: ''Buy'' or ''Sell'', derived from net units sign. (Tier 2 -- SP_DataForDuco, computed from eToro_Units / ClientUnits sign)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN eToro_Units COMMENT 'Total LP hedge units held at EOD on the eToro side. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Units)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN ClientUnits COMMENT 'Total client NOP units from BI_DB_PositionPnL for the instrument. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN eToroLocalAmount COMMENT 'LP hedge position value in the instrument''s local currency. (Tier 2 -- SP_DataForDuco, Dealing_staging.etoro_Hedge_Netting.Amount)';
@@ -59,7 +59,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALT
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN ISINCode SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN InstrumentDisplayName SET TAGS ('pii' = 'none');
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN Buy/Sell SET TAGS ('pii' = 'none');
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN `Buy/Sell` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN eToro_Units SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN ClientUnits SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN eToroLocalAmount SET TAGS ('pii' = 'none');
@@ -80,8 +80,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALT
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN CUSIP SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 14:01:46 UTC
--- Batch deploy resume: Dealing_dbo deploy batch 1
--- Statements: 52/54 succeeded
--- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near '/'. SQLSTATE: 42601 (line 1, pos 93) == SQL == ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon ALTER COLUMN Buy/Sell SET TAGS ('pii' = 'none'); ---------------------------------------------------------------------------------------------^^^
+-- Timestamp: 2026-05-03 06:07:41 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 2
+-- Statements: 54/54 succeeded
 -- ====================

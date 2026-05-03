@@ -1,0 +1,68 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "Authorizes-837045",
+    "elapsed_seconds":  87,
+    "exit_code":  null,
+    "cost_usd":  0.2068,
+    "input_tokens":  2,
+    "output_tokens":  3741,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "Authorizes-837045",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Property table (Synapse Index)",
+                                       "problem":  "Index description \u0027HEAP + NCI on @Id, partition_date, @Created\u0027 reads as one composite NCI. DDL defines three separate NCIs: ClusteredIndex_Authorizes_837045 on @Id, XI_partition_date on partition_date, idx_837045_created on @Created. Should list individually."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@Id (Element #2)",
+                                       "problem":  "References index \u0027ClusteredIndex_Authorizes_837045\u0027 without noting it is actually a NONCLUSTERED INDEX despite the misleading name. Analyst may assume clustered ordering exists."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / missing section",
+                                       "problem":  "Footer claims \u0027Phases: 12/14\u0027 but no Phase Gate Checklist section exists. Reader cannot verify which 2 phases were skipped or whether data claims are affected."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Created (Element #9)",
+                                       "problem":  "Description uses speculative \u0027may represent a business-level event timestamp\u0027. Should state \u0027purpose unconfirmed by upstream documentation\u0027 to avoid implying partial knowledge."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.1 (Source Columns)",
+                                       "problem":  "Source column names (\u0027Created attribute\u0027, \u0027Id attribute\u0027) are inferred from @ prefix convention, not from actual XML schema documentation. Looks more authoritative than warranted."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required (PASS). Minor improvements: (1) Expand property table index line to list three separate NCIs by name. (2) Note that ClusteredIndex_Authorizes_837045 is misleadingly named — it is NCI, not clustered. (3) Add explicit Phase Gate Checklist section. (4) Replace speculative \u0027may represent\u0027 in Created description with factual \u0027purpose unconfirmed\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 3,772,924 in Section 1",
+                                                                                  "Date range 2021-09-05 to 2026-04-26 in Section 1",
+                                                                                  "etr_* 99.8% NULL in Elements 4-6",
+                                                                                  "Created ~11% NULL (364,581 of 3,174,513) in Element 9",
+                                                                                  "SynapseUpdateDate latest 2026-04-26 06:33:40 in Element 7"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section absent; footer claims 12/14 but does not identify which 2 were skipped"
+                                                           ]
+                                    }
+                }
+}

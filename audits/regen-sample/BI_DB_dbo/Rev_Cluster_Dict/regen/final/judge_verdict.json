@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "Rev_Cluster_Dict",
+    "elapsed_seconds":  74,
+    "exit_code":  null,
+    "cost_usd":  0.1817,
+    "input_tokens":  2,
+    "output_tokens":  3030,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "Rev_Cluster_Dict",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer claims \u0027Phases: 13/14\u0027 but this is not verifiable from the wiki body."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Section titled \u0027Atlassian Knowledge Sources\u0027 rather than a standard section name per the golden reference shape."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-assessed \u0027Quality: 7.5/10\u0027 in footer with no independent validation basis shown in the wiki."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "All index columns",
+                                       "problem":  "No primary key or unique constraint on the 3-index combination. Correctly documented as a gotcha but worth flagging."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Last update was 2023-11-14 (\u003e2 years ago). Cluster definitions may be stale. Correctly flagged in review-needed sidecar."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed. Minor polish suggestions: (1) Add an explicit Phase Gate Checklist section with P2/P3 checkboxes. (2) Standardize Section 8 title to match golden reference shape.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

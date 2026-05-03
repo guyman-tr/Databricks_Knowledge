@@ -2,10 +2,10 @@
 
 | Field | Value |
 |--------|--------|
-| **When** | 2026-03-30 15:40:47 UTC |
+| **When** | 2026-05-03 07:13:26 UTC |
 | **SQL file** | `knowledge\synapse\Wiki\_downstream_column_comments.sql` |
-| **Statements attempted** | 2571 |
-| **Succeeded** | 2568 |
+| **Statements attempted** | 2573 |
+| **Succeeded** | 2570 |
 | **Failed** | 3 |
 
 ## Failures

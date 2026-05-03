@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "AmlValidations",
+    "elapsed_seconds":  104,
+    "exit_code":  null,
+    "cost_usd":  0.2169,
+    "input_tokens":  2,
+    "output_tokens":  3798,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "AmlValidations",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 11/14\u0027 but does not enumerate which phases were completed or skipped, making P2/P3 verification impossible."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "AmlProviderId",
+                                       "problem":  "Providers 3 and 4 labeled \u0027legacy provider\u0027 and \u0027additional provider\u0027 — unconfirmed identities. Review-needed correctly flags this but element description could be more explicit about uncertainty."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CategoryId",
+                                       "problem":  "Example values in element description (46, 21, 16, 9) are a subset of 17 observed values. Semantic labels (sanctions, darknet, ransomware) are inferred, not confirmed."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd",
+                                       "problem":  "Columns appear unpopulated in sampled data. Correctly flagged but may indicate deprecated Generic Pipeline columns that could be removed from the DDL."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "Section 5",
+                                       "problem":  "No SP transformation exists for this Generic Pipeline import. Writer appropriately compensated by analyzing downstream consumer SP_EXW_Fact_Transactions."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required. For incremental improvement: (1) Add explicit Phase Gate Checklist section. (2) Confirm AmlProviderId 3 and 4 identities with Crypto Wallet team. (3) Re-run when WalletDB.Wallet.AmlValidations upstream wiki becomes available to upgrade Tier 3 to Tier 1.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

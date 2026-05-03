@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "FiatTypes",
+    "elapsed_seconds":  78,
+    "exit_code":  null,
+    "cost_usd":  0.1826,
+    "input_tokens":  2,
+    "output_tokens":  3120,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "FiatTypes",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range in Section 1 summary. Table has no business date column so this is arguably N/A, but the completeness checklist expects it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Phase Gate Checklist",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer says \u0027Phases: 13/14\u0027 but the structured checklist is absent."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "InstrumentId",
+                                       "problem":  "FK target marked as \u0027(inferred)\u0027 in Section 6.1. Exact target table (e.g., Dim_Instrument or WalletDB instrument table) is unconfirmed."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "FiatId",
+                                       "problem":  "FiatId=4 gap is documented but unexplained. Review-needed sidecar correctly flags for team confirmation."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 3.4",
+                                       "problem":  "Limited to 4 currencies. Wiki correctly notes this as a gotcha, which is good documentation practice."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration needed — wiki passes at 8.55. Minor improvements: (1) Add note in Section 1 that date range is N/A for static reference table. (2) Add explicit Phase Gate Checklist section with P2/P3 checkboxes confirming data sampling was performed. (3) Upgrade Tier 3 to Tier 1 if WalletDB.Wallet.FiatTypes wiki becomes available in future.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

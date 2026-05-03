@@ -35,19 +35,19 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_recon
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_Units COMMENT 'EOD position units reported by BNY custodian. (Tier 2 - LP_BNY_Custody_Valuation)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_Units COMMENT 'EOD hedge units from eToro''s internal hedge position. (Tier 1 - Dealing_Duco_EODRecon.eToro_Units)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN Clients_Units COMMENT 'Aggregated client NOP units. (Tier 1 - Dealing_Duco_EODRecon.ClientUnits)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_Units COMMENT '**Reconciliation diff**: BNY_Units - eToro_Units. Non-zero = recon break to investigate.';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-Clients_Units COMMENT 'BNY_Units - Clients_Units. LP vs client position comparison.';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_Units` COMMENT '**Reconciliation diff**: BNY_Units - eToro_Units. Non-zero = recon break to investigate.';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-Clients_Units` COMMENT 'BNY_Units - Clients_Units. LP vs client position comparison.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_LocalAmount COMMENT 'Position market value in local currency (BNY reported).';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_LocalAmount COMMENT 'eToro''s local amount valuation. GBX normalised ÷100.';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_LocalAmount COMMENT 'BNY_LocalAmount - eToro_LocalAmount.';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_LocalAmount` COMMENT 'BNY_LocalAmount - eToro_LocalAmount.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_AmountUSD COMMENT 'Position value in USD (BNY reported).';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_AmountUSD COMMENT 'eToro position value in USD.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN Clients_AmountUSD COMMENT 'Client NOP value in USD.';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_AmountUSD COMMENT 'BNY_AmountUSD - eToro_AmountUSD. Dollar value of the recon break.';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-Clients_AmountUSD COMMENT 'BNY_AmountUSD - Clients_AmountUSD.';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_AmountUSD` COMMENT 'BNY_AmountUSD - eToro_AmountUSD. Dollar value of the recon break.';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-Clients_AmountUSD` COMMENT 'BNY_AmountUSD - Clients_AmountUSD.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_Rate COMMENT 'BNY''s price per unit in local currency.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_Rate COMMENT 'eToro''s price per unit.';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_Rate COMMENT 'BNY_Rate - eToro_Rate. Price discrepancy.';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_Rate` COMMENT 'BNY_Rate - eToro_Rate. Price discrepancy.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_FXRate COMMENT 'BNY''s FX rate (local -> USD).';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_FXRate COMMENT 'eToro''s FX rate.';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN UpdateDate COMMENT 'ETL metadata: timestamp when this row was last updated by the ETL pipeline.';
@@ -65,27 +65,26 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_recon
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_Units SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_Units SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN Clients_Units SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_Units SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-Clients_Units SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_Units` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-Clients_Units` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_LocalAmount SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_LocalAmount SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_LocalAmount SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_LocalAmount` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_AmountUSD SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_AmountUSD SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN Clients_AmountUSD SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_AmountUSD SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-Clients_AmountUSD SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_AmountUSD` SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-Clients_AmountUSD` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_Rate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_Rate SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY-eToro_Rate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN `BNY-eToro_Rate` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN BNY_FXRate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN eToro_FXRate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding ALTER COLUMN activity SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 13:57:01 UTC
--- Batch deploy resume: Dealing_dbo deploy batch 1
--- Statements: 46/58 succeeded
--- Error: [INVALID_IDENTIFIER] The unquoted identifier BNY-eToro_Rate is invalid and must be back quoted as: `BNY-eToro_Rate`. Unquoted identifiers can only contain ASCII letters ('a' - 'z', 'A' - 'Z'), digits ('0' - '9'), and underbar ('_'). Unquoted identifiers must also not start with a digit. Different data sources and meta stores may impose additional restrictions on valid identifiers. SQLSTATE: 42602 (line 1, pos 107) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_vir
+-- Timestamp: 2026-05-03 06:05:29 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 2
+-- Statements: 58/58 succeeded
 -- ====================

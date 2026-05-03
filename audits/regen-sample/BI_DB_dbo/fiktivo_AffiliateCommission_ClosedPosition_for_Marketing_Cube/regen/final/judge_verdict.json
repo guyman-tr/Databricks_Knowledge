@@ -1,0 +1,66 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube",
+    "elapsed_seconds":  96,
+    "exit_code":  null,
+    "cost_usd":  0.2488,
+    "input_tokens":  2,
+    "output_tokens":  4047,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube",
+                    "weighted_score":  8.65,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  9,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "PlayerLevelID",
+                                       "problem":  "5 distinct values (1,2,3,5,6) listed but no key=value name mapping provided. Value 4 is absent from data but referenced in SP changelog — gap not called out."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "ValidFrom, UpdateDate",
+                                       "problem":  "Marked Tier 2 (ClosedPositionVW) but described as system-generated passthrough timestamps. If not computed by the view, Tier 3 would be more accurate."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 (Gotchas) — OriginalCID+17",
+                                       "problem":  "Legacy offset convention mentioned but not explained. Analyst would not understand why 17 is added or what it maps to."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "HedgeCommission",
+                                       "problem":  "Description claims \u0027Typically ~10% of Amount based on sample data\u0027 without specifying median/mean or sample size. Vague quantitative claim."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CountryID",
+                                       "problem":  "Top 5 CountryID values (218, 79, 102, 74, 191) listed numerically but not mapped to country names despite Dim_Country being available."
+                                   }
+                               ],
+                    "regeneration_feedback":  "PASS — no regeneration required. Polish suggestions: (1) Map PlayerLevelID values to names and note absence of value 4. (2) Clarify ValidFrom/UpdateDate origin and reconsider tier. (3) Explain OriginalCID+17 offset purpose. (4) Replace ~10% HedgeCommission claim with concrete aggregate. (5) Map top CountryID values to country names.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "HedgeCommission (~10% of Amount)",
+                                                                                  "Valid (72.5%/27.5%)",
+                                                                                  "IsProcessed (72.5%/27.5%)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P7 (no view dependencies)"
+                                                           ]
+                                    }
+                }
+}

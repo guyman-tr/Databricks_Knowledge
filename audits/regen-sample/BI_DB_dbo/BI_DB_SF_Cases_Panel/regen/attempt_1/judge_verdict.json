@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_SF_Cases_Panel",
+    "elapsed_seconds":  109,
+    "exit_code":  null,
+    "cost_usd":  0.3027,
+    "input_tokens":  2,
+    "output_tokens":  4870,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_SF_Cases_Panel",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "DepositorType_Last, Regulation_Last, ClubTier_Last, and 17 other _Last columns",
+                                       "problem":  "Lazy cross-references (\u0027Same domain as X_AtOpen\u0027) instead of standalone descriptions. An analyst reading only the _Last column gets no observed values or semantics."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Phase_AtOpen, Priority_AtOpen, PlayerStatus_AtOpen",
+                                       "problem":  "Small-domain columns use \u0027and others\u0027 instead of exhaustive value lists. If these have ≤15 distinct values, the full set should be enumerated."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 12/14\u0027 but does not enumerate which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "TotalTimeSpent",
+                                       "problem":  "Description hedges on the unit (\u0027minutes or seconds — unit not confirmed\u0027). Should state \u0027unit unknown\u0027 clearly rather than guessing."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Property table — Refresh",
+                                       "problem":  "Refresh property says \u0027Unknown\u0027 but should say \u0027Dormant (last load 2024-04-08)\u0027 since this is established from the data."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Not required (PASS). For improvement: (1) Make _Last column descriptions standalone — repeat observed values instead of cross-referencing _AtOpen counterparts. (2) Enumerate full value lists for small-domain columns (Phase_AtOpen, Priority_AtOpen, PlayerStatus_AtOpen). (3) Add explicit Phase Gate Checklist section. (4) Change Refresh property to \u0027Dormant (last load 2024-04-08)\u0027.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

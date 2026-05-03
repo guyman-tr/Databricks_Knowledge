@@ -1,0 +1,54 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "Wallets",
+    "elapsed_seconds":  75,
+    "exit_code":  null,
+    "cost_usd":  0.1936,
+    "input_tokens":  2,
+    "output_tokens":  3068,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "Wallets",
+                    "weighted_score":  8.95,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian knowledge sources not searched (Phase 10 skipped). Could have provided additional business context to upgrade Tier 3 descriptions."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Gcid",
+                                       "problem":  "Section 6.1 (References To) does not list a FK relationship for Gcid to any customer dimension table (e.g., DWH_dbo.Dim_Customer). If the relationship exists, it should be documented."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Id",
+                                       "problem":  "Wiki describes Id as \u0027surrogate record identifier\u0027 but does not confirm uniqueness or PK status. Review-needed sidecar flags this appropriately."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 — Atlassian Knowledge Sources"
+                                                           ]
+                                    }
+                }
+}

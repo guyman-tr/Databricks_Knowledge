@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "CardsSnapshots-890718",
+    "elapsed_seconds":  81,
+    "exit_code":  null,
+    "cost_usd":  0.1895,
+    "input_tokens":  2,
+    "output_tokens":  3231,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "CardsSnapshots-890718",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Lineage file — Source Objects",
+                                       "problem":  "Lineage file lists CardsSnapshots_CardSnapshot-140457, CardsSnapshots_Accounts-350640, etc. as \u0027Source Objects\u0027 but these are peer tables co-joined in the downstream SP, not upstream sources that feed data INTO this table. Column lineage correctly shows \u0027Data Lake XML\u0027 as the source, creating an internal contradiction."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer references \u0027Phases: 11/14\u0027 but no section enumerates which phases were completed vs. skipped, making it impossible to verify whether data claims are grounded in actual sampling."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "@FileName (Element #3)",
+                                       "problem":  "Example filename pattern (cards-snapshots-11-15967860899208-10079563-YYYYMMDD-SubFile-NNNNN.xml) may be speculative if not directly sampled from data."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Created (Element #8)",
+                                       "problem":  "Description says \u0027Synapse-side copy of the ingestion timestamp\u0027 but does not explain the derivation mechanism (computed column, pipeline artifact, etc.)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Only one Freshservice ticket referenced. Adequate given limited external docs but shallow compared to typical Section 8 content."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. Minor improvements if regenerating: (1) Fix lineage Source Objects to distinguish peer tables (joined via SP) from actual upstream data sources (Data Lake XML). (2) Add explicit Phase Gate Checklist section enumerating completed/skipped phases. (3) Verify @FileName example pattern against actual data sample.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phases 12-14 appear skipped per footer (11/14) but not enumerated"
+                                                           ]
+                                    }
+                }
+}

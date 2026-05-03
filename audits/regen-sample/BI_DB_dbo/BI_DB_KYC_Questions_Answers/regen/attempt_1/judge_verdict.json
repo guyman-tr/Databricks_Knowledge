@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_KYC_Questions_Answers",
+    "elapsed_seconds":  82,
+    "exit_code":  null,
+    "cost_usd":  0.1773,
+    "input_tokens":  2,
+    "output_tokens":  3224,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_KYC_Questions_Answers",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  6,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range in Section 1 summary. Table is empty so inherently unavailable, but the completeness checklist counts it."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape",
+                                       "problem":  "No explicit Phase Gate Checklist subsection. Footer reports \u0027Phases: 11/14\u0027 but no itemized [x]/[ ] checklist showing which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "QuestionId, AnswerId",
+                                       "problem":  "Known value enumerations are grounded in SP_KYC_Panel which operates on the different Row_Data table. Values may not apply if this table were populated from a different source. Writer correctly notes the grounding source."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 5.2",
+                                       "problem":  "ETL diagram includes detailed pipeline for the related active Row_Data table. Helpful context but documents a different object\u0027s lineage. Clearly labeled as \u0027Related active pipeline (different table)\u0027 so no confusion risk."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 6.2",
+                                       "problem":  "States no SPs or views reference this table. Consistent with dormant status but could be verified with a codebase grep."
+                                   }
+                               ],
+                    "regeneration_feedback":  "No regeneration required — wiki passes at 8.35. For optional polish: (1) Add an explicit Phase Gate Checklist subsection itemizing completed/skipped phases. (2) Add a note in Section 1 that date range is not applicable for an empty table.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist subsection not present in wiki body"
+                                                           ]
+                                    }
+                }
+}

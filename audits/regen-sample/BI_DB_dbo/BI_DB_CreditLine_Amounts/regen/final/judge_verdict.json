@@ -1,0 +1,54 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CreditLine_Amounts",
+    "elapsed_seconds":  78,
+    "exit_code":  null,
+    "cost_usd":  0.1698,
+    "input_tokens":  2,
+    "output_tokens":  3056,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CreditLine_Amounts",
+                    "weighted_score":  8.35,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1",
+                                       "problem":  "No date range in Section 1 summary. Static table has no temporal dimension, but the completeness checklist requires a date range or explicit acknowledgment of its absence."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer says \u0027Phases: 12/14\u0027 without specifying which phases were skipped, making it impossible to verify data claim provenance."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "UpdateDate",
+                                       "problem":  "Claim that UpdateDate is NULL across all 13 rows is plausible but not verifiable without Phase Gate evidence confirming live data queries were executed."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add a note to Section 1 acknowledging no date range applies to this static reference table. (2) Add an explicit Phase Gate Checklist section listing completed and skipped phases. (3) Clarify in the footer which 2 of 14 phases were skipped.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase details unknown — no Phase Gate Checklist section present"
+                                                           ]
+                                    }
+                }
+}

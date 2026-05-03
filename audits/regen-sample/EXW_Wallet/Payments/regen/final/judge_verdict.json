@@ -1,0 +1,57 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "Payments",
+    "elapsed_seconds":  80,
+    "exit_code":  null,
+    "cost_usd":  0.197,
+    "input_tokens":  2,
+    "output_tokens":  3287,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "Payments",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Shape / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P1/P2/P3 checkboxes. Footer references \u0027Phases: 12/14\u0027 but does not enumerate which phases were completed or skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Footer says \u002712/14\u0027 phases but does not identify which 2 phases were skipped. Traceability gap for future reviewers."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Id",
+                                       "problem":  "Id is described as \u0027Primary key\u0027 and \u0027Auto-incremented identifier\u0027 but DDL defines it as NULL. This schema anomaly is not flagged in the review-needed sidecar."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add an explicit Phase Gate Checklist section with P1/P2/P3 checkboxes and list which 2 of 14 phases were skipped. (2) Flag in review-needed sidecar that Id is nullable despite being described as a primary key — verify against production source schema.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 113,579 in Section 1 and Id description",
+                                                                                  "Date range 2019-01-29 to 2022-09-20 in Section 1 and Occurred description",
+                                                                                  "FiatId distribution: EUR 70%, GBP 30%",
+                                                                                  "CryptoId distribution: BTC 71%, ETH 15%, LTC 5%, XLM 4%, XRP 3%, BCH 2%"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "2 of 14 phases skipped — specific phases not identified in wiki"
+                                                           ]
+                                    }
+                }
+}

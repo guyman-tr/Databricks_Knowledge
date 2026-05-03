@@ -1,0 +1,154 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_Withdraw_Rollback_PIPs",
+    "elapsed_seconds":  223,
+    "exit_code":  null,
+    "cost_usd":  2.2712,
+    "input_tokens":  3,
+    "output_tokens":  12298,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_Withdraw_Rollback_PIPs",
+                    "weighted_score":  9.2,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  8,
+                                             "completeness":  10,
+                                             "business_meaning":  10,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "Customer",
+                                                  "upstream_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format.",
+                                                  "wiki_quote":  "APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Currency",
+                                                  "upstream_quote":  "Ticker symbol. \"USD\", \"EUR\", \"AAPL.US\". UNIQUE constraint in production. The primary identifier used in UIs and APIs.",
+                                                  "wiki_quote":  "Ticker symbol. \"USD\", \"EUR\", \"AAPL.US\". UNIQUE constraint in production. The primary identifier used in UIs and APIs. Passthrough from Dim_Currency via Fact_BillingWithdraw.ProcessCurrencyID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "LabelID",
+                                                  "upstream_quote":  "Internal segment label. FK to Dictionary.Label. LabelID=26 = BonusOnly customer (triggers IsHedged=0). Default=0.",
+                                                  "wiki_quote":  "Internal segment label. FK to Dictionary.Label. LabelID=26 = BonusOnly customer (triggers IsHedged=0). Default=0. Passthrough from Dim_Customer.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerLevelID",
+                                                  "upstream_quote":  "Customer experience/permission level. FK to Dictionary.PlayerLevel. 1=Standard (94%); 4=Popular Investor; 7=VIP. Determines available features and risk limits. Default=0.",
+                                                  "wiki_quote":  "Customer experience/permission level. FK to Dictionary.PlayerLevel. 1=Standard; 4=Popular Investor; 7=VIP. Determines available features and risk limits. Default=0. Passthrough from Dim_Customer.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped distribution percentage \u0027(94%)\u0027 from upstream"
+                                              },
+                                              {
+                                                  "column":  "Regulation",
+                                                  "upstream_quote":  "Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name.",
+                                                  "wiki_quote":  "Short code for the regulation. Values match production Dictionary.Regulation.Name. Dim-lookup passthrough via Fact_SnapshotCustomer.RegulationID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Used in V_Dim_Customer and analytics dashboards\u0027"
+                                              },
+                                              {
+                                                  "column":  "Label",
+                                                  "upstream_quote":  "Brand name displayed in BackOffice interfaces, reports, and internal systems. Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = \u0027eToro\u0027).",
+                                                  "wiki_quote":  "Brand name displayed in BackOffice interfaces, reports, and internal systems. Dim-lookup passthrough via Dim_Label.LabelID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped multi-LabelID sharing detail (0, 1, 9 all = eToro)"
+                                              },
+                                              {
+                                                  "column":  "ExchangeFee",
+                                                  "upstream_quote":  "Exchange fee in provider-specific integer units.",
+                                                  "wiki_quote":  "Exchange fee in provider-specific integer units. Passthrough from Fact_BillingWithdraw.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Depot",
+                                                  "upstream_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports.",
+                                                  "wiki_quote":  "Human-readable depot name (e.g., \u0027MoneyBookers USD\u0027, \u0027Neteller\u0027, \u0027Wire\u0027). Unique across all depots. Used in admin dashboards, routing logs, and discrepancy reports. Dim-lookup passthrough via Fact_BillingWithdraw.DepotID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "Club",
+                                                  "upstream_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI.",
+                                                  "wiki_quote":  "Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. Dim-lookup passthrough via Fact_SnapshotCustomer.PlayerLevelID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "PlayerStatus",
+                                                  "upstream_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.",
+                                                  "wiki_quote":  "Human-readable restriction state label. Unique per status. Used in BackOffice UI, compliance reports, and monitoring dashboards. Dim-lookup passthrough via Fact_SnapshotCustomer.PlayerStatusID.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped trailing-spaces warning from upstream"
+                                              },
+                                              {
+                                                  "column":  "RegCountry",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. Dim-lookup passthrough from Dim_Country via Dim_Customer.CountryID.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              },
+                                              {
+                                                  "column":  "RegCountryByIP",
+                                                  "upstream_quote":  "Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.",
+                                                  "wiki_quote":  "Full country name in English. Dim-lookup passthrough from Dim_Country via Dim_Customer.CountryIDByIP.",
+                                                  "match":  "MINOR",
+                                                  "loss":  "Dropped \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 — significant abbreviation vs identical source column RegCountry"
+                                              },
+                                              {
+                                                  "column":  "CardType",
+                                                  "upstream_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting.",
+                                                  "wiki_quote":  "Card brand name. Unique constraint prevents duplicates in production. Used in payment UI, transaction records, and fraud reporting. Dim-lookup passthrough from Dim_CardType via Dim_CountryBin.CardTypeID from Fact_BillingWithdraw.BinCodeAsString.",
+                                                  "match":  "YES",
+                                                  "loss":  null
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RegCountryByIP (#31)",
+                                       "problem":  "T1 description significantly abbreviated: dropped \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 from Dictionary.Country upstream. Inconsistent with RegCountry (#30) which preserves the full text for the same source column."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "PlayerLevelID (#17)",
+                                       "problem":  "Dropped \u0027(94%)\u0027 distribution percentage from Dim_Customer upstream description. Minor data point lost."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Label (#19)",
+                                       "problem":  "Dropped \u0027Multiple LabelIDs can share the same Name (e.g., 0, 1, 9 all = eToro)\u0027 from Dim_Label upstream. Useful context for analysts doing GROUP BY on Label."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "PlayerStatus (#28)",
+                                       "problem":  "Dropped trailing-spaces warning from Dim_PlayerStatus upstream: \u0027Note: some values have trailing spaces in live data -- apply RTRIM() for string comparisons.\u0027 Practical gotcha lost."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist with P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 but does not specify which phases were completed vs skipped."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Restore full upstream text for RegCountryByIP #31 — add \u0027Unique per row. Used in UI dropdowns, compliance documents, and analytical reports.\u0027 to match RegCountry #30 treatment. (2) Restore \u0027(94%)\u0027 for PlayerLevelID #17. (3) Restore multi-LabelID sharing detail for Label #19. (4) Restore trailing-spaces warning for PlayerStatus #28. (5) Add explicit Phase Gate Checklist section marking P2/P3 completion status.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 status unclear from footer"
+                                                           ]
+                                    }
+                }
+}

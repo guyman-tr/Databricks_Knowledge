@@ -64,3 +64,9 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory ALTER COL
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory ALTER COLUMN `BlockchainCryptoName` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory ALTER COLUMN `CreatedDateID` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletinventory ALTER COLUMN `NormalizedAddress` SET TAGS ('pii' = 'direct');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:36:10 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 1
+-- Statements: 40/40 succeeded
+-- ====================

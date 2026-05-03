@@ -1,0 +1,162 @@
+{
+  "schema": "Dealing_dbo",
+  "object": "Dealing_NumberofPositionsOpened_Agg",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Tables\\Dealing_dbo.Dealing_NumberofPositionsOpened_Agg.sql",
+  "lineage_path": null,
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_DealingDashboard_Clients.sql"
+  ],
+  "candidates_found": 12,
+  "resolved_synapse": 10,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 1,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\Dealing_dbo\\Dealing_NumberofPositionsOpened_Agg\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 218788,
+  "resolutions": [
+    {
+      "raw_name": "Dealing_dbo.SP_DealingDashboard_Clients",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "SP_DealingDashboard_Clients",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\Dealing_dbo\\Stored Procedures\\Dealing_dbo.SP_DealingDashboard_Clients.sql",
+      "bytes_read": 19556,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Fact_SnapshotCustomer",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Fact_SnapshotCustomer",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_SnapshotCustomer.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Range",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Range",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Range.md",
+      "sp_path": null,
+      "bytes_read": 11117,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Regulation",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Regulation",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Regulation.md",
+      "sp_path": null,
+      "bytes_read": 11793,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Country",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Country",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Country.md",
+      "sp_path": null,
+      "bytes_read": 21054,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_MifidCategorization",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_MifidCategorization",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_MifidCategorization.md",
+      "sp_path": null,
+      "bytes_read": 7513,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Date",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Date",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "BI_DB_dbo.BI_DB_PositionPnL",
+      "db": null,
+      "schema": "BI_DB_dbo",
+      "object": "BI_DB_PositionPnL",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\BI_DB_dbo\\Tables\\BI_DB_PositionPnL.md",
+      "sp_path": null,
+      "bytes_read": 11032,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Instrument",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Instrument",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Instrument.md",
+      "sp_path": null,
+      "bytes_read": 22972,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Dim_Position",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Dim_Position",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Dim_Position.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "DWH_dbo.Fact_CustomerAction",
+      "db": null,
+      "schema": "DWH_dbo",
+      "object": "Fact_CustomerAction",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\DWH_dbo\\Tables\\Fact_CustomerAction.md",
+      "sp_path": null,
+      "bytes_read": 30720,
+      "truncated": true,
+      "note": ""
+    },
+    {
+      "raw_name": "Dealing_dbo.Dealing_DealingDashboard_Clients",
+      "db": null,
+      "schema": "Dealing_dbo",
+      "object": "Dealing_DealingDashboard_Clients",
+      "kind": "synapse",
+      "wiki_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\synapse\\Wiki\\Dealing_dbo\\Tables\\Dealing_DealingDashboard_Clients.md",
+      "sp_path": null,
+      "bytes_read": 11731,
+      "truncated": false,
+      "note": ""
+    }
+  ]
+}

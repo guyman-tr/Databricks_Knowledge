@@ -1,0 +1,54 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_CountryDCM",
+    "elapsed_seconds":  76,
+    "exit_code":  null,
+    "cost_usd":  0.1763,
+    "input_tokens":  2,
+    "output_tokens":  3196,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_CountryDCM",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  9,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims 13/14 phases but does not detail which phase was skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "MarketingRegionManualName",
+                                       "problem":  "18 region values listed redundantly in both Section 2.2 and the Element description. Minor duplication, not harmful."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "Section 1 / review-needed",
+                                       "problem":  "No mention in Section 1 of whether the 231 rows are still complete relative to current DCM country list. Review-needed sidecar correctly flags this as an open question."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section not explicitly present"
+                                                           ]
+                                    }
+                }
+}

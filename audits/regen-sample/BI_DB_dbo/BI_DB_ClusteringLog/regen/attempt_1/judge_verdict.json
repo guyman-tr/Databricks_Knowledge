@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_ClusteringLog",
+    "elapsed_seconds":  80,
+    "exit_code":  null,
+    "cost_usd":  0.1836,
+    "input_tokens":  2,
+    "output_tokens":  3349,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_ClusteringLog",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 7.3 (Sample Query)",
+                                       "problem":  "Self-join uses `b.DateID = a.DateID + 1` which fails across month boundaries (20260131 + 1 = 20260132, not 20260201). Should use DATEADD on the Date column or join via Dim_Date to find next calendar day."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 without itemizing which were completed vs. skipped."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.2 (Query Pattern 1)",
+                                       "problem":  "Query filters WHERE DateID = @Today but includes ORDER BY DateID DESC — redundant ordering on a single-value filter."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 5.2 (ETL Pipeline)",
+                                       "problem":  "Promotion step from BI_DB_python to BI_DB_dbo is presented as established fact but the mechanism is unknown (no SP found, may be CTAS/RENAME/external orchestration)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Elements (all columns)",
+                                       "problem":  "No NULL-rate observations in element descriptions despite all columns being nullable and sample data showing zero NULLs."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Fix Section 7.3 self-join to use DATEADD(DAY,1,a.Date) or Dim_Date instead of DateID+1 arithmetic. (2) Add Phase Gate Checklist section itemizing completed/skipped phases. (3) Qualify the staging-to-production promotion step as \u0027mechanism unknown\u0027 in Section 5.2. (4) Fix Section 3.2 first query pattern to remove redundant ORDER BY when filtering to a single DateID.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section missing — cannot determine which of the 3 skipped phases were P2/P3"
+                                                           ]
+                                    }
+                }
+}

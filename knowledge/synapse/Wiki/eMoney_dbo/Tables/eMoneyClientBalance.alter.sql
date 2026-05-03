@@ -184,3 +184,10 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance ALTER 
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance ALTER COLUMN `ClosingPositiveBalanceBORepCur` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance ALTER COLUMN `ClosingPositiveBalanceCalcRepCur` SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance ALTER COLUMN `ClosingPositiveBalanceGAPRepCur` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:26:42 UTC
+-- Batch deploy resume: eMoney_dbo deploy batch 1
+-- Statements: 146/160 succeeded
+-- Error: [COLUMN_NOT_FOUND_IN_TABLE] Column 'Column' not found in table 'main'.'bi_db'.'gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance''. SQLSTATE: 42703
+-- ====================

@@ -1,0 +1,68 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "Authorizes_RiskActions-796100",
+    "elapsed_seconds":  81,
+    "exit_code":  null,
+    "cost_usd":  0.2098,
+    "input_tokens":  2,
+    "output_tokens":  3263,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "Authorizes_RiskActions-796100",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "minor",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with P1/P2/P3 checkboxes. Footer says \u0027Phases: 11/14\u0027 but doesn\u0027t itemize which phases were completed vs skipped."
+                                   },
+                                   {
+                                       "severity":  "minor",
+                                       "column_or_section":  "Section 7.3",
+                                       "problem":  "Sample query references a.TransactionDateTime, a.TransactionAmount, a.MerchantName, a.ResponseCode from parent table Authorizes_Authorize-312243 but these column names are assumed — no DDL or wiki for the parent table was in scope."
+                                   },
+                                   {
+                                       "severity":  "minor",
+                                       "column_or_section":  "@Id / @Authorizes_Authorize@Id-312243",
+                                       "problem":  "Wiki states these columns are always equal in \u0027all observed rows\u0027 as if it were a constraint. This is observational only — no DDL constraint enforces it."
+                                   },
+                                   {
+                                       "severity":  "trivial",
+                                       "column_or_section":  "etr_y / etr_ym / etr_ymd",
+                                       "problem":  "NULL explanation uses \u0027likely\u0027 — could be verified with a date-range query rather than speculated."
+                                   },
+                                   {
+                                       "severity":  "trivial",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Self-score \u0027Logic: 7/10\u0027 seems conservative given the thorough business logic documentation in Section 2."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Wiki passes. Optional polish: (1) Add explicit Phase Gate Checklist section with P1/P2/P3 checkboxes. (2) Verify parent table column names in Section 7.3 query against actual Authorizes_Authorize-312243 DDL. (3) Clarify that @Id = @Authorizes_Authorize@Id-312243 equivalence is observational, not DDL-enforced.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "MarkTransactionAsSuspicious: ~0.4% trigger rate",
+                                                                                  "ChangeCardStatusToRisk: ~0.02% trigger rate",
+                                                                                  "ChangeAccountStatusToSuspended: zero triggers in 2026",
+                                                                                  "Row count: ~3.8M",
+                                                                                  "Date range: 2023-12-20 to 2026-04-26"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase gate checklist section not present — cannot determine skipped phases"
+                                                           ]
+                                    }
+                }
+}

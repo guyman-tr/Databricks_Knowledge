@@ -1,0 +1,62 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "ReceivedTransactionStatuses",
+    "elapsed_seconds":  89,
+    "exit_code":  null,
+    "cost_usd":  0.2007,
+    "input_tokens":  2,
+    "output_tokens":  3534,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "ReceivedTransactionStatuses",
+                    "weighted_score":  8.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section (missing)",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x]/[ ] marks. Footer claims \u0027Phases: 11/14\u0027 but the claim is not verifiable from the wiki content."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Placeholder text \u0027No Atlassian sources searched (regen-harness mode)\u0027 provides no value. Should note whether Confluence/Jira pages exist for eToroX Wallet / WalletDB."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "StatusId",
+                                       "problem":  "EXW_Dictionary.TransactionStatus was queried live for status values but no cross-reference to its wiki (if one exists) for potential Tier 1 inheritance of status name descriptions."
+                                   },
+                                   {
+                                       "severity":  "informational",
+                                       "column_or_section":  "partition_date",
+                                       "problem":  "Description says \u0027derived from the source record\u0027 but does not specify the exact Generic Pipeline derivation logic (e.g., CAST(Occurred AS date) or similar)."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Row count 5,609,610 in Section 1",
+                                                                                  "StatusId distribution percentages (47%/47%/6%/\u003c1%) in Section 1 and Element 3",
+                                                                                  "SynapseUpdateDate NULL rate ~54% (3.0M of 5.6M) in Element 9 and Section 3.4",
+                                                                                  "Date range Sep 2018 to Apr 2026 in Section 1"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist section not present — cannot determine which 3 of 14 phases were skipped"
+                                                           ]
+                                    }
+                }
+}

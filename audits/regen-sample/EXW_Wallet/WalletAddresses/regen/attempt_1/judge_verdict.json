@@ -1,0 +1,68 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "WalletAddresses",
+    "elapsed_seconds":  75,
+    "exit_code":  null,
+    "cost_usd":  0.1897,
+    "input_tokens":  2,
+    "output_tokens":  2966,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "WalletAddresses",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "CustomerWalletStatusId",
+                                       "problem":  "Has exactly 1 known value (1) but lacks inline key=value formatting (e.g., 1=Active?). Dictionary columns with ≤15 values should list key=value pairs."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8 / Footer",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x] checkboxes. Phases summarized only in footer as 13/14."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "IsMain",
+                                       "problem":  "Bit column well-described with distribution stats but could benefit from inline key=value format: 0=Secondary, 1=Primary."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "BalanceAccountID",
+                                       "problem":  "Described as \u0027sparsely populated\u0027 without a specific NULL percentage. Writer had data access and could have provided exact rate."
+                                   },
+                                   {
+                                       "severity":  "info",
+                                       "column_or_section":  "WalletId",
+                                       "problem":  "Helpful note about varchar(4000) vs actual 36-char UUIDs — no action needed, just confirming good practice."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "IsMain: 99.998% True (2,465,304 of 2,465,354)",
+                                                                                  "CustomerWalletStatusId: all rows = 1",
+                                                                                  "etr_y: 814,946 NULL rows",
+                                                                                  "Row count: 2.47M",
+                                                                                  "Date range: 2018-04-23 to 2026-04-26"
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

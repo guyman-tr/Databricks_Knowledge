@@ -1,0 +1,64 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "BI_DB_RiskClassification",
+    "elapsed_seconds":  85,
+    "exit_code":  null,
+    "cost_usd":  0.2999,
+    "input_tokens":  2,
+    "output_tokens":  3443,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "BI_DB_RiskClassification",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section with [x] markers for P1-P3. Footer shows \u0027Phases: 11/14\u0027 but does not enumerate completed vs skipped phases."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Elements 55-98 (EDD factors)",
+                                       "problem":  "EDD factor descriptions (EstablishmentApproved through PaymentsThirdParty) are highly repetitive — nearly all end with \u0027\"Predefined Questions\" is the most common value\u0027 with minimal differentiating insight per factor."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.1 — RiskScore → Dim_RiskClassification",
+                                       "problem":  "Join described as \u0027conceptual; not FK\u0027 but Section 2.2 provides specific mapping values (0=Low, 50=Medium, 100=High, 200=Unacceptable). The relationship is functional even if not enforced — description could be clearer."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 6.2 — Downstream SPs",
+                                       "problem":  "Claims SP_LTV_By_FTD_MOP and SP_EXW_UserSettingsWalletAllowance consume this table with specific join conditions and column references. Not verifiable from the bundle alone."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 1 / Property table",
+                                       "problem":  "Uses hedging language \u0027appears dormant\u0027 despite conclusive evidence (all UpdateDate = 2024-06-02). Should state \u0027dormant since 2024-06-02\u0027 definitively."
+                                   }
+                               ],
+                    "regeneration_feedback":  null,
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase Gate Checklist not present as explicit section"
+                                                           ]
+                                    }
+                }
+}

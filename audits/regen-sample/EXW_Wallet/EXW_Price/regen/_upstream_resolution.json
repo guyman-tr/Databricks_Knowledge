@@ -1,0 +1,102 @@
+{
+  "schema": "EXW_Wallet",
+  "object": "EXW_Price",
+  "ddl_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\EXW_Wallet\\Tables\\EXW_Wallet.EXW_Price.sql",
+  "lineage_path": null,
+  "writer_sps_discovered": [
+    "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\EXW_Wallet\\Stored Procedures\\EXW_Wallet.SP_Prices.sql"
+  ],
+  "candidates_found": 7,
+  "resolved_synapse": 0,
+  "resolved_production": 0,
+  "resolved_sp": 1,
+  "unresolved": 6,
+  "bundle_path": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\audits\\regen-sample\\EXW_Wallet\\EXW_Price\\regen\\_upstream_bundle.md",
+  "bundle_size_bytes": 16568,
+  "resolutions": [
+    {
+      "raw_name": "EXW_Wallet.SP_Prices",
+      "db": null,
+      "schema": "EXW_Wallet",
+      "object": "SP_Prices",
+      "kind": "synapse_sp",
+      "wiki_path": null,
+      "sp_path": "c:\\Users\\guyman\\Documents\\github\\DataPlatform\\SynapseSQLPool1\\sql_dp_prod_we\\EXW_Wallet\\Stored Procedures\\EXW_Wallet.SP_Prices.sql",
+      "bytes_read": 13416,
+      "truncated": false,
+      "note": ""
+    },
+    {
+      "raw_name": "EXW_Currency.Instruments",
+      "db": null,
+      "schema": "EXW_Currency",
+      "object": "Instruments",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "EXW_Currency.Currencies",
+      "db": null,
+      "schema": "EXW_Currency",
+      "object": "Currencies",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "EXW_Wallet.CryptoMarketRatesMappings",
+      "db": null,
+      "schema": "EXW_Wallet",
+      "object": "CryptoMarketRatesMappings",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "EXW_Wallet.CryptoTypes",
+      "db": null,
+      "schema": "EXW_Wallet",
+      "object": "CryptoTypes",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "EXW_Wallet.ETL_InstrumentRates_ByHour",
+      "db": null,
+      "schema": "EXW_Wallet",
+      "object": "ETL_InstrumentRates_ByHour",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    },
+    {
+      "raw_name": "EXW_Wallet.EXW_PriceDaily",
+      "db": null,
+      "schema": "EXW_Wallet",
+      "object": "EXW_PriceDaily",
+      "kind": "unresolved",
+      "wiki_path": null,
+      "sp_path": null,
+      "bytes_read": 0,
+      "truncated": false,
+      "note": "no wiki found in local Synapse or production routing"
+    }
+  ]
+}

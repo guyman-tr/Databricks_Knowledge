@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "WalletPool",
+    "elapsed_seconds":  98,
+    "exit_code":  null,
+    "cost_usd":  0.2156,
+    "input_tokens":  2,
+    "output_tokens":  3968,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "WalletPool",
+                    "weighted_score":  7.85,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  8,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "BlockchainCryptoId",
+                                       "problem":  "12 distinct values (≤15 cardinality) but no key=value mapping provided. Writer should have queried EXW_Wallet.CryptoTypes to resolve IDs to crypto names inline (e.g., 1=BTC, 2=ETH)."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "WalletProviderId",
+                                       "problem":  "Only 2 values observed but provider names not resolved. Wiki lists counts/percentages without identifying the providers (e.g., Fireblocks, etc.)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "etr_y, etr_ym, etr_ymd, SynapseUpdateDate, partition_date",
+                                       "problem":  "All 5 ETL-generated columns tagged Tier 3 but transform is known (CopyFromLake pipeline). Tier 2 would be more precise per tier rules: \u0027ETL-computed → Tier 2\u0027."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer",
+                                       "problem":  "Quality score reads \u0027pending/10\u0027 instead of a computed numeric value."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Atlassian sources not searched due to regen harness mode. Potential WalletDB documentation gap."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Query EXW_Wallet.CryptoTypes to add inline key=value pairs for BlockchainCryptoId (e.g., 1=BTC, 2=ETH). (2) Attempt to resolve WalletProviderId names from any available reference table or domain knowledge. (3) Re-tag etr_y, etr_ym, etr_ymd, SynapseUpdateDate, partition_date as Tier 2 (CopyFromLake pipeline) since the transform source is known. (4) Compute and populate the quality score in the footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "AccountsActivities_AccountActivity-833937",
+    "elapsed_seconds":  86,
+    "exit_code":  null,
+    "cost_usd":  0.3115,
+    "input_tokens":  2,
+    "output_tokens":  3519,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "AccountsActivities_AccountActivity-833937",
+                    "weighted_score":  8.75,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  10,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer/Shape",
+                                       "problem":  "No explicit Phase Gate Checklist with [x]/[ ] markers for P1-P3. Footer states \u0027Phases: 14/14\u0027 but the checklist section is missing from the wiki body."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "EpmTransactionStatus (#81)",
+                                       "problem":  "Description says \u0027Sample: 1\u0027 but column name suggests human-readable status text. Value \u00271\u0027 looks like a numeric code, potentially conflated with EpmTransactionStatusCode (#73)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 3.4 Gotchas",
+                                       "problem":  "Documents duplicate WorkDate and Created columns but lacks a definitive prescriptive recommendation on which is authoritative for each use case."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "LoadType (#67)",
+                                       "problem":  "Values 0, 1, 2 documented with percentages but no business meaning assigned. Should explicitly note meanings are unknown and inferred from sample data only."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 2.1 Transaction Direction",
+                                       "problem":  "TransactionCode mapping (1,2,4,56,57) stated as fact but inferred from sample. Gaps in sequence (3, 5-55) suggest potentially undocumented transaction types."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add explicit Phase Gate Checklist section with [x]/[ ] markers. (2) Verify EpmTransactionStatus vs EpmTransactionStatusCode — confirm whether \u00271\u0027 is a readable status or numeric code. (3) Mark LoadType and EpmMethodId value mappings as \u0027inferred from sample data — not confirmed\u0027. (4) Add prescriptive recommendation for which WorkDate and Created column is authoritative. (5) Add missing-codes caveat to TransactionCode mapping.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+
+                                                           ]
+                                    }
+                }
+}

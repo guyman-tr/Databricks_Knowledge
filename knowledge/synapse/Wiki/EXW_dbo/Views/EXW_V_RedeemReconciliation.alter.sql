@@ -128,3 +128,9 @@ ALTER TABLE main.wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation A
 ALTER TABLE main.wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation ALTER COLUMN `ManagerID` SET TAGS ('pii' = 'none');
 ALTER TABLE main.wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation ALTER COLUMN `EtoroRemark` SET TAGS ('pii' = 'none');
 ALTER TABLE main.wallet.gold_sql_dp_prod_we_exw_dbo_exw_v_redeemreconciliation ALTER COLUMN `UpdateDate` SET TAGS ('pii' = 'none');
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-03 06:37:26 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 1
+-- Statements: 104/104 succeeded
+-- ====================

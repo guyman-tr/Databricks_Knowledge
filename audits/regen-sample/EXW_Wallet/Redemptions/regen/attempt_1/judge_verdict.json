@@ -1,0 +1,64 @@
+{
+    "schema":  "EXW_Wallet",
+    "object":  "Redemptions",
+    "elapsed_seconds":  86,
+    "exit_code":  null,
+    "cost_usd":  0.213,
+    "input_tokens":  2,
+    "output_tokens":  3338,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "EXW_Wallet",
+                    "object":  "Redemptions",
+                    "weighted_score":  8.55,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  8,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "RedemptionStatus",
+                                       "problem":  "Only 3 distinct values (2, 3, 4) — under ≤15 threshold — but no key=value meaning mappings provided inline. Meanings flagged as unknown in review-needed sidecar but not in the element description itself."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "TransactionTypeId",
+                                       "problem":  "EXW_TransactionsView filters on TransactionTypeId IN (0, 8) but value 8 not observed in data. Discrepancy noted in review-needed but not in element description."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 8",
+                                       "problem":  "Empty section with \u0027Phase 10 skipped\u0027 note. Adds no value but structurally present."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "SourceWalletId",
+                                       "problem":  "All-NULL column described as \u0027may be unpopulated or deprecated\u0027 — should commit to a stronger recommendation rather than hedging."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "EndDate",
+                                       "problem":  "Sentinel universality stated based on sample only. No full-table query run to confirm whether any rows have a real EndDate."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor improvements only: (1) Add inline key=value stub for RedemptionStatus with \u0027meaning unconfirmed\u0027 labels. (2) Note TransactionTypeId=8 discrepancy in element description. (3) Strengthen SourceWalletId deprecation language. (4) Verify EndDate sentinel universality with a full-table query. (5) List the 2 skipped phases explicitly in footer.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Phase 10 (Atlassian)"
+                                                           ]
+                                    }
+                }
+}

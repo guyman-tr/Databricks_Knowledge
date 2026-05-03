@@ -1,0 +1,2045 @@
+[
+  {
+    "space_id": "01f14469b87810f78ac2e068df8dbe62",
+    "title": "DEV - Customer Support Case Analytics",
+    "description": "",
+    "warehouse_id": "39b1e32f407ac813",
+    "tables": [
+      "etoro_kpi.cidfirstdates_v",
+      "etoro_kpi.vg_crm_case",
+      "etoro_kpi_stg.crm_csat_survey_per_case_v",
+      "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+      "etoro_kpi_stg.crm_user_v"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 4
+  },
+  {
+    "space_id": "01f14465081b1ce5ad870d3d58da09ab",
+    "title": "Subscription Revenue Insights",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output.bi_output_deltaapp_subscription_view",
+      "bi_output_stg.subscription"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1439c57a819a59c1a7f3eb069091c",
+    "title": "Notification Events Analytics",
+    "description": "This space provides analytics on user notification events, enabling insights into notification delivery, engagement, and performance across devices, countries, and user segments.\n\n**Capabilities:**\n- Track notification delivery, opens, and user engagement by type, category, device, region, and time ",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_urban_notifications_daily_panel",
+      "bi_output.bi_output_urban_notifications_daily_panel_agg",
+      "mixpanel.notifications_events"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f14394002815a288421fd85f36d595",
+    "title": "Investment Portfolio Analytics",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_moneyfarm_fact_portfolio_snapshot"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1423bfe1913c1b305f00eafc9a479",
+    "title": "Buying Power - Rollout Plan Analysis",
+    "description": "This space enables in-depth analysis of eToro users' buying power, trading activity, and position exposures across products, combining customer, position, instrument, leverage, and liability data.\n\n**Capabilities:**\n- Identify and segment customers by buying power, regulatory regime, and loyalty tie",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.bronze_fivetran_compliance_leverage_settings_data",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1418befa310f0a03ec500a2bdb587",
+    "title": "Marketing Campaigns Performance",
+    "description": "This space provides a comprehensive view of marketing campaigns performance, enabling analysis of spend, engagement, registrations, user actions, and conversions by date, region, and channel.\n\nCapabilities:\n\n- Analyze campaign spend, impressions, clicks, and conversion metrics (registrations, first-",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi_stg.v_marketing_campaigns_funnel"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f13c8fb28d1ea6a614c04b2176a96e",
+    "title": "OPS - General Genie",
+    "description": "OPS General Genie \u2014 the Operations team's self-service investigation tool for customer tickets and compliance queries.\n\nKey capabilities:\n\n\u2022 Customer 360: Full profiles including KYC status, verification levels, regulatory classification, club tier, equity, balance, and contact details.\n\n\u2022 eMoney Ac",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output_stg.bi_output_operations_documentanalysis",
+      "bi_output_stg.bi_output_operations_electronic_verification_cohort",
+      "bi_output_stg.bi_output_operations_ops_audit_trail",
+      "bi_output_stg.bi_output_operations_ops_customer_info",
+      "bi_output_stg.bi_output_operations_ops_customer_logins",
+      "bi_output_stg.bi_output_operations_ops_deposits",
+      "bi_output_stg.bi_output_operations_ops_emoney_customer_info",
+      "bi_output_stg.bi_output_operations_ops_emoney_transactions",
+      "bi_output_stg.bi_output_operations_ops_kyc_answers",
+      "bi_output_stg.bi_output_operations_ops_positions_details",
+      "bi_output_stg.bi_output_operations_ops_relations",
+      "bi_output_stg.bi_output_operations_ops_trading_summary",
+      "bi_output_stg.bi_output_operations_ops_withdrawals",
+      "bi_output_stg.bi_output_operations_risk_alert_management_tool",
+      "etoro_kpi.ftd_funnel_v",
+      "general.bronze_sts_audit_stsaudit_useroperations"
+    ],
+    "n_tables": 16,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f107201f5e18109cc73243ee2b53a5",
+    "title": "OPS - Electronic Verification",
+    "description": "",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_output_stg.bi_output_operations_electronic_verification_cohort",
+      "etoro_kpi.ftd_funnel_v"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f131c0593f15a78348669d6a09cc73",
+    "title": "Raf Genie test Noga",
+    "description": "Refer-a-Friend (RAF) program analysis space. Data source: main.etoro_kpi_stg.vw_raf_for_genie (one row per referral pair, 305K records). All monetary values are in USD. RafStatusName = 'RafGiven' means successful (~93%). RafStatusName can be comma-separated composite \u2014 use LIKE for substring matchin",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi_stg.vw_raf_config_for_genie",
+      "etoro_kpi_stg.vw_raf_for_genie2"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f13e3361841740a14591cc76c52cb5",
+    "title": "Validation Event Analysis",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_validation_step_evh"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f105b421e7187baa5e81595599f7f3",
+    "title": "Feed Analytics Genie",
+    "description": "This space enables analysis of user behavior and engagement on the eToro feed by leveraging detailed Mixpanel event data, user profiles, trading positions, and content interaction logs.\n\n**Capabilities:**\n\n- Track key user actions (e.g., post reads, post creations, trades, engagement) over time usin",
+    "warehouse_id": "0576a5479bc95763",
+    "tables": [
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "experience.bronze_event_hub_prod_event_streaming_we_impression_events_impressionevent",
+      "experience.bronze_event_hub_prod_event_streaming_we_streams_post",
+      "experience.bronze_watchlistdb_dbo_watchlistitems",
+      "experience.bronze_watchlistdb_dbo_watchlists",
+      "mixpanel.silver"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 6
+  },
+  {
+    "space_id": "01f1380bddbf1f39918a6ff73748f082",
+    "title": "ABtoro Genie (AB Tests Results)",
+    "description": "ABtoro is eToro's internal system and app for analysing AB test results, allowing us to discern customers with scientific precision. It analyses over 300 metrics by dozens of user segments for each AB so we can know at a glance what happened. It embodies cutting-edge research and methodology to make",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_participants",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_significant_results_view",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_user_segments_driving_significant_results_view"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1398a93c8117a81df2bf5d24c4242",
+    "title": "Webinar Impact Analysis - Deposits & Trading",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "pii_data.bronze_etoro_customer_customer"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f13403b01312c3b6e6e9f42de9a5c1",
+    "title": "Test - AML CMP ",
+    "description": "This space provides comprehensive data for analyzing client AML (Anti-Money Laundering) risk classification, behavioral patterns, and documentation status across multiple reporting levels.\n\n**Capabilities:**\n- Assess AML risk levels (high, medium, low, null) for individual clients or aggregated grou",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_group_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_window_level"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f138d29d521270b905b55c37b4b130",
+    "title": "Urban Push Notification Analytics",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "urban.gold_push_body",
+      "urban.gold_push_body_message"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f138c3c0d718ba8e3f69c13b94a9d3",
+    "title": "ORACLE - Weekly Volume",
+    "description": "This space provides a comprehensive view of customer trading positions, linked with rich customer profiles and instrument metadata, enabling detailed analysis of trading behavior, performance, and client segmentation on the eToro platform.\n\n**Capabilities:**\n- Analyze open and closed trading positio",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f11b99d1711509b1beefae304c8705",
+    "title": "Compliance Genie - DEV",
+    "description": "This space consolidates trading position details and customer KYC data to support compliance analysis and trading behavior insights.\n\n**Capabilities:**\n- Analyze trading activity with granular position details, including instrument metadata, open/close reasons, leverage, P&L, and partial close relat",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi.cfd_statusinfo_v",
+      "etoro_kpi.customer_snapshot_v",
+      "etoro_kpi.kyc_for_compliance_v",
+      "etoro_kpi.positions_for_compliance_v",
+      "etoro_kpi_stg.bi_output_vg_aum_slim",
+      "etoro_kpi_stg.bi_output_vg_mimo_slim",
+      "etoro_kpi_stg.bi_output_vg_revenue_slim"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 3
+  },
+  {
+    "space_id": "01f138b7445415b89624b7baab3b619a",
+    "title": "Employee Absence Management",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "crm.silver_crm_absence__c"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f137f76a75126fb15b03341732911f",
+    "title": "PROD - Compliance Genie",
+    "description": "This space consolidates trading position details and customer KYC data to support compliance analysis and trading behavior insights.\n\n**Capabilities:**\n- Analyze trading activity with granular position details, including instrument metadata, open/close reasons, leverage, P&L, and partial close relat",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi.cfd_statusinfo_v",
+      "etoro_kpi.customer_snapshot_v",
+      "etoro_kpi.ddr_aum_v",
+      "etoro_kpi.ddr_mimo_v",
+      "etoro_kpi.ddr_revenue_v",
+      "etoro_kpi.kyc_for_compliance_v",
+      "etoro_kpi.positions_for_compliance_v",
+      "etoro_kpi_stg.bi_output_vg_aum_slim"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 3
+  },
+  {
+    "space_id": "01f138027211195bade445204dd73f87",
+    "title": "Customer Satisfaction Surveys",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "crm.silver_crm_csat_survey_entry__c",
+      "crm.silver_crm_survey__c",
+      "crm.silver_crm_survey_question__c",
+      "crm.silver_crm_surveyquestionresponse__c",
+      "crm.silver_crm_surveytaker__c"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f137fa01561a6cba257c4c967228bc",
+    "title": "Liquidity Providers Research",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_db.bronze_etoro_trade_liquidityprovidertype",
+      "bi_dealing.bi_output_dealing_lp_fees_saxo",
+      "bi_dealing.bi_output_dealing_lp_fees_virtu_real_by_exchange",
+      "bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty",
+      "general.bronze_etoro_trade_liquidityprovidercontracts",
+      "trading.gold_ontologydb_dbo_providers"
+    ],
+    "n_tables": 6,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f137e1e7b61d68a6e7f2064da02900",
+    "title": "Customer Messaging Analytics",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "crm.silver_crm_messagingsession"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f13712cf8516878dbc9663f5f73eb7",
+    "title": "eToro DDR - dor dev",
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "etoro_kpi.customer_snapshot_v",
+      "etoro_kpi.ddr_aum_v",
+      "etoro_kpi.ddr_customer_current_flags",
+      "etoro_kpi.ddr_mimo_v",
+      "etoro_kpi.ddr_revenue_v",
+      "etoro_kpi.vg_customer_customer_first_dates",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 4
+  },
+  {
+    "space_id": "01f130f7ce381418bcccd51a56e9e4f5",
+    "title": "DDR dev dor",
+    "description": "Customer KPI analysis space for exploring revenue, deposits/withdrawals, AUM, and customer attributes across eToro's platform. Supports daily granular analysis with segmentation by regulation, country, club tier, instrument type, and more.",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "etoro_kpi_stg.bi_output_vg_aum_slim",
+      "etoro_kpi_stg.bi_output_vg_mimo_slim",
+      "etoro_kpi_stg.bi_output_vg_revenue_slim"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f134a6e09d11089d7e6133b915d7c5",
+    "title": "Financial Instruments Overview",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f133292663122ba7a16a3f7eedb215",
+    "title": "Low Touch Trading",
+    "description": "This space provides detailed insights into daily trading activity on the eToro platform, capturing every customer position open and close event alongside comprehensive instrument metadata for analysis.\n\n**Capabilities:**\n- Analyze trading activity by customer, instrument, date, country, regulation, ",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f12f4e42bf122284dcc8de0eba4e29",
+    "title": "Churn Win-Back Campaign",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output_stg.churn_winback_recent_targets",
+      "bi_output_stg.churn_winback_summary",
+      "etoro_kpi.cidfirstdates_v",
+      "mixpanel.login_events"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 3
+  },
+  {
+    "space_id": "01f12c2d3d8f1e4ea52cf9b4224b7152",
+    "title": "PI-SP Portfolio & Eligibility",
+    "description": "This space provides comprehensive insight into the Popular Investor (PI) program and portfolio eligibility, enabling analysis of user behavior, trading performance, social activity, and program status across eToro\u2019s platform.\n\n**Capabilities:**\n- Track and analyze PI program participation, user demo",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.bronze_fivetran_google_sheets_pis_lists_country_level",
+      "bi_db.bronze_fivetran_google_sheets_pis_lists_region_level",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailypanel_copy",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "bi_output.bi_output_customer_social_social_feed",
+      "data_rooms.vw_cidfirstdates",
+      "data_rooms.vw_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "general.bronze_etoro_backoffice_customer",
+      "mixpanel.login_events"
+    ],
+    "n_tables": 10,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1291bcd971e928ef3268355147f22",
+    "title": "Financial Trading and Execution Analytics",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bi_output_dealing_bestexecution_report",
+      "dealing.bronze_etoro_hedge_executionlog_v",
+      "dealing.bronze_pricesfromprovider_marketcurrencyprice",
+      "dwh.dim_position"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c51e5a4a1506bb34d4751918b4d2",
+    "title": "eMoney Adoption & Trading",
+    "description": "This Genie space supports analysis across eMoney adoption, trading activity, card usage, and Open Banking deposits, with customer attributes always reflecting their state at the time of the activity.\n\nScope Overview\n\nTrading \u2013 LC/TP Positions\nAnalyze number of positions and total amount by CID and d",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.vg_acquisitionfunnel_em1",
+      "bi_output.vg_emoney_card_instance_summary",
+      "bi_output.vg_emoney_card_transactions",
+      "bi_output.vg_emoney_openbankingdeposit",
+      "bi_output.vg_emoney_panel_firstdates_em1",
+      "bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+      "bi_output.vg_positionsvolumeandattributes_lc4_source"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 9
+  },
+  {
+    "space_id": "01f125cd42af12d4bcc267b42f87ab21",
+    "title": "Customer AML Compliance Data",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi.cfd_statusinfo_v",
+      "etoro_kpi.kyc_for_compliance_v",
+      "etoro_kpi.positions_for_compliance_v",
+      "etoro_kpi_stg.bi_output_vg_aum_slim",
+      "etoro_kpi_stg.bi_output_vg_mimo_slim",
+      "etoro_kpi_stg.bi_output_vg_revenue_slim",
+      "pii_data_stg.gold_de_aml_snapshot_customer_enriched_v"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 3
+  },
+  {
+    "space_id": "01f1256c396113b682181c93915bba43",
+    "title": "FinanceCYTreasury",
+    "description": "This space consolidates treasury and liquidity data to support financial reporting, cash position analysis, term deposit tracking, and bank account monitoring across entities.",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_bank_concentration",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_client_daily_mix",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_corporate_daily_mix",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_data_quality",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_liquidity_daily",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_maturity_ladder",
+      "finance_hubs_stg.bi_output_finance_hubs_gold_treasury_qmmf_consent",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_mmf_fund_characteristics",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_mapping",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_term_deposits",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_term_deposits_app",
+      "finance_hubs_stg.bi_output_finance_hubs_silver_treasury_trial_balance"
+    ],
+    "n_tables": 12,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f122020cb3178380de2efa0b990279",
+    "title": "UK BA space [WIP]",
+    "description": "",
+    "warehouse_id": "fcec103c55a4e055",
+    "tables": [
+      "bi_db.bronze_sub_accounts_accounts",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics",
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance",
+      "bi_output.bi_output_moneyfarm_fact_portfolio_snapshot",
+      "bi_output.bi_output_moneyfarm_fact_transactions",
+      "compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_channel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "money_farm.silver_moneyfarm_etoro_mf_aum",
+      "pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate",
+      "pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer"
+    ],
+    "n_tables": 30,
+    "n_join_specs": 52
+  },
+  {
+    "space_id": "01f122c65f7f1eb2b714de163ec1a1d1",
+    "title": "Premier Customer Trading Analysis",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_dealing.bi_output_dealing_premier_clients_2026_positions_report",
+      "bi_dealing.bi_output_dealing_premier_customer_2026",
+      "bi_dealing.bi_output_dealing_premier_customer_2026_info"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1222508af1e0088e874f397286707",
+    "title": "New Space (2)",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated",
+      "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients",
+      "dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1222490081ef99650818fccc7e94c",
+    "title": "Customer Account and Deposit Analytics",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1220c3154166185c3a31f3b5f4b63",
+    "title": "New Space (1)",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1220d412d10e0827e76f15dbe785d",
+    "title": "Customer Compliance and Profile",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "compliance.bronze_userapidb_kyc_customeranswers",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1220ba7721b93881c732cfc2579eb",
+    "title": "Customer Support Case Analytics",
+    "description": "",
+    "warehouse_id": "39b1e32f407ac813",
+    "tables": [
+      "etoro_kpi.cidfirstdates_v",
+      "etoro_kpi.vg_crm_case",
+      "etoro_kpi_stg.crm_csat_survey_per_case_v",
+      "etoro_kpi_stg.crm_quality_assessment_per_case_v",
+      "etoro_kpi_stg.crm_user_v"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 4
+  },
+  {
+    "space_id": "01f11e0d038417b2978e44a176c2a8a4",
+    "title": "Trade Summary Analytics",
+    "description": "",
+    "warehouse_id": "43d35565e5c2aa07",
+    "tables": [
+      "general.gold_jpm_etoro_na_trade_summary_tradedata"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f11d42a1e811a09a48ccaa06ce8816",
+    "title": "Daily Financial Interest Analytics",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_bo_generated_compensations"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f11d415503192da75ecce62b1f96d3",
+    "title": "find_PI",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers",
+      "general.bronze_etoro_dictionary_gurustatus",
+      "general.bronze_etorogeneral_history_gurucopiers_new"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f119f87031113585b2cf7d78c15744",
+    "title": "etoro_copy",
+    "description": "This space provides insight into eToro\u2019s copy trading ecosystem, enabling analysis of money flows, user behavior, and performance of Popular Investors (PIs) and their copiers over time.\n\n**Capabilities:**\n- Track and analyze copy trading actions, including when users start, add to, remove from, or s",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output.bi_output_vg_copy_mimo",
+      "bi_output.bi_output_vg_parentcid"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f118a536541c2689d08f0d824fb36d",
+    "title": "(Clone) eToro DDR TESTONLY",
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_vg_aum",
+      "bi_output.bi_output_vg_customer_first_dates",
+      "bi_output.bi_output_vg_customer_snapshot_test",
+      "bi_output.bi_output_vg_mimo",
+      "bi_output.bi_output_vg_revenue",
+      "bi_output.bi_output_vg_volume_amount",
+      "bi_output_stg.customer_ddr_dailystatus_scd_test",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+    ],
+    "n_tables": 9,
+    "n_join_specs": 13
+  },
+  {
+    "space_id": "01f117decb9613aa9e808e3edea9a125",
+    "title": "Investment & Customer Analytics",
+    "description": "This space brings together customer, investment, and performance data to analyze customer behavior, investment trends, and the impact of \u201cguru\u201d investors on the platform.\n\n**Capabilities:**\n- Analyze customer profiles, investment histories, and account characteristics across various dimensions such ",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers",
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_gurustatus",
+      "general.bronze_etorogeneral_history_gurucopiers",
+      "ml.ml_output_models_signals_data_backtest_guru_focus_signals"
+    ],
+    "n_tables": 9,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f117de1efa18389dcab44bc63ec8f2",
+    "title": "Customer Data and Activity Analysis",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_dealing.bi_output_dealing_premier_customer",
+      "billing.bronze_etoro_backoffice_customerdocument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etoro_customer_customer_masked"
+    ],
+    "n_tables": 6,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f117af9e0b14b492adf37aa0d88311",
+    "title": "Customer Profile and Management",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_dealing.bi_output_dealing_premier_customer",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etoro_customer_customer_masked"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f112f8be471673b7071990bab21849",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "0576a5479bc95763",
+    "tables": [
+      "product_analytics_stg.bi_output_product_analytics_abtoro_early_alerting_yeast_bounds",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_exp_desinger_audiences",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_exp_desinger_metrics_agg",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_metric_values",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_quality_checks",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_results",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_experiment_user_segments_results",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_metrics_md",
+      "product_analytics_stg.bi_output_product_analytics_abtoro_storage_experiments_md"
+    ],
+    "n_tables": 9,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1124a400f1059a36b5bc92ae7800a",
+    "title": "Customer Segmentation mail",
+    "description": "",
+    "warehouse_id": "ab714d381d90649e",
+    "tables": [
+      "etoro_kpi.customer_segments_mail_v"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1118c0f38118a8b9361c02b3f7409",
+    "title": "Voice Of The Customer",
+    "description": "This space provides a comprehensive view of customer feedback and behavior, enabling analysis of sentiment, issues, and engagement trends across multiple customer touchpoints.\n\n**Capabilities:**\n- Analyze customer sentiment and feedback over time, by language, or by product/channel.\n- Identify commo",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "bi_output.bi_output_customer_customer_support_case",
+      "de_output.de_output_voice_of_the_customer_comments",
+      "de_output.de_output_voice_of_the_customer_feeds",
+      "de_output.de_output_voice_of_the_customer_messagingsession",
+      "de_output.de_output_voice_of_the_customer_torii",
+      "pii_data.de_output_voice_of_the_customer_proinvestorclaw"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 5
+  },
+  {
+    "space_id": "01f11153b1511fdaaf74137069005bfe",
+    "title": "eToro DDR - Jan",
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_vg_aum",
+      "bi_output.bi_output_vg_customer_first_dates",
+      "bi_output.bi_output_vg_customer_snapshot",
+      "bi_output.bi_output_vg_mimo",
+      "bi_output.bi_output_vg_revenue",
+      "bi_output.bi_output_vg_volume_amount",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 9
+  },
+  {
+    "space_id": "01f10ee4b48e1bde9d62c905c9c37496",
+    "title": "etoro_club",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output.bi_output_vg_aum",
+      "bi_output.bi_output_vg_club",
+      "bi_output.bi_output_vg_club_offers",
+      "bi_output.bi_output_vg_customer_snapshot",
+      "bi_output.bi_output_vg_mimo",
+      "bi_output.bi_output_vg_revenue"
+    ],
+    "n_tables": 6,
+    "n_join_specs": 4
+  },
+  {
+    "space_id": "01f10dbaac661f67b23e5c624ddd1d19",
+    "title": "Application Cost Tracking(DBA)",
+    "description": "",
+    "warehouse_id": "39b1e32f407ac813",
+    "tables": [
+      "monitoring.app_genie_app_cost30d",
+      "monitoring.app_genie_mcp_and_warehouse_cost30d",
+      "monitoring.app_llm_endpoint_cost30d",
+      "monitoring.dba_output_genie_workspace_names",
+      "monitoring.dba_total_genie_costs"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f10cbd30f11f78bb53d30de1b08437",
+    "title": "Customer Segmentation",
+    "description": "",
+    "warehouse_id": "ab714d381d90649e",
+    "tables": [
+      "etoro_kpi.customer_segments_v",
+      "etoro_kpi.ftd_funnel_v"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f10cb7eb7715dcb1283eb51007d0fe",
+    "title": "New Space (1)",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etorogeneral_history_gurucopiers"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f10cb794561c71844b60ecb8b81362",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "general.bronze_etorogeneral_history_gurucopiers"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f10c0735eb1e23b45a22b7e9c898c5",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1001f16b117bb948db14cb26f8928",
+    "title": "PROD - etoro_trading_ai",
+    "description": "This space provides comprehensive analytics on eToro trading activity, allowing for detailed examination of instrument performance, user behavior, positions, and regulatory compliance across multiple dimensions.\n\n**Capabilities:**\n- Analyze trading activity (trades, volume, positions) by asset type,",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "data_rooms.vw_bi_output_dealing_newinstruments",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date",
+      "etoro_kpi.vg_dealing_clicks_openclose_breakdown",
+      "etoro_kpi.vg_dealing_dealingdashboard_cid",
+      "trading.bronze_etoro_dictionary_tradinginstrumentgroups",
+      "trading.bronze_etoro_trade_futuresmetadata",
+      "trading.bronze_etoro_trade_instrumentgroups"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 2
+  },
+  {
+    "space_id": "01f1003cd92b1430826100f723a359d2",
+    "title": "PROD - Registration to FTD",
+    "description": "This space tracks the full onboarding journey of new clients from registration through verification and their first deposit, enabling analysis of the registration-to-first-time-deposit  and first action funnel.\n\n**Capabilities:**\n\n- Analyze client progression through each onboarding and verification",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi.ftd_funnel_v"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f1072f0d4f10848e644b23888f9621",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f105b1f4f51422ab4df907a9a71e5a",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_group_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_window_level"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f10589afce155fa231b00e5bd62525",
+    "title": "Keti Test Space",
+    "description": "",
+    "warehouse_id": "0576a5479bc95763",
+    "tables": [
+      "dwh.dim_position",
+      "mixpanel.silver"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0eba696c21d888fbd9fbfb82ee322",
+    "title": "Registration to FTD for mail",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi.customer_exclude_list",
+      "etoro_kpi.ftd_funnel_aus",
+      "etoro_kpi.ftd_funnel_fr",
+      "etoro_kpi.ftd_funnel_ger",
+      "etoro_kpi.ftd_funnel_ita",
+      "etoro_kpi.ftd_funnel_uae",
+      "etoro_kpi.ftd_funnel_uk",
+      "etoro_kpi.ftd_funnel_usa"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 7
+  },
+  {
+    "space_id": "01f104ece26a11dbbd640243d7336b12",
+    "title": "AML Insights Genie",
+    "description": "This Genie provides insights into the AML KPIs",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_group_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_level",
+      "bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_window_level"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f10280c7ea10e8862ce6bd5d45bd6c",
+    "title": "DBA Genie",
+    "description": "",
+    "warehouse_id": "0576a5479bc95763",
+    "tables": [
+      "config.bronze_dba_dbo_historydbsizes",
+      "config.bronze_dba_dbo_historytablesizes",
+      "config.bronze_dba_dbo_v_historybackup",
+      "config.bronze_dba_dbo_v_historyblitz_results",
+      "config.bronze_dba_dbo_v_historyblitzfirst_results",
+      "config.bronze_dba_dbo_v_historyreaderrorlog",
+      "general.bronze_dba_dbo_v_historyjobexecutionlogs"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0cf5a8c741eb09f1082f9f8736b82",
+    "title": "eToro eMoney - MIMO",
+    "description": "Main source for the Data Room - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.vg_fact_billingdepost_forgenie_new",
+      "bi_output.vg_fact_billingwithdraw_for_genie",
+      "bi_output.vg_fact_snapshotcustomer_for_emoney_genie",
+      "bi_output.vg_fullbincodelist",
+      "bi_output.vg_payments_mimo_basedonddrallplatfrommimo_for_genie"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f100f036831e4b8f2f839eca630264",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "dwh.dim_position"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0f9bbcb1b1216b5620ff201610aaa",
+    "title": "Test Registration to FTD",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "etoro_kpi.customer_exclude_list",
+      "etoro_kpi.ftd_funnel_fr",
+      "etoro_kpi.ftd_funnel_uk"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 2
+  },
+  {
+    "space_id": "01f0f77496571e68a9f115149bcc48d9",
+    "title": "OPS  - Documents & Verification",
+    "description": "Operational analysis of document uploads and verification outcomes.\nUse this Genie to analyse document processing (manual vs automated), rejection patterns, processing times, resubmissions, and verification context at the time of upload.\nResults are document-level unless explicitly stated otherwise.",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output_stg.bi_output_operations_documentanalysis",
+      "etoro_kpi.ftd_funnel_v"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0f5e75c2112178fb9639f4212aba1",
+    "title": "OPS - Registrations Funnel",
+    "description": "Use this Genie to explore registrations, verification progress, conversion to deposit, and funnel performance across countries and time periods.",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_output_stg.bi_output_operations_registrationfunnel"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0e49f7e741c1a8de8ee1773559739",
+    "title": "eToro Customer Support",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_vg_case",
+      "bi_output.bi_output_vg_case_event",
+      "bi_output.bi_output_vg_crm_user"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 3
+  },
+  {
+    "space_id": "01f0ebab1a09124d944c484672a2bb5d",
+    "title": "eToro Customer Facing",
+    "description": "Analyze Salesforce contact activity by Account Manager and evaluate customer responses after contact using customer profile and activity data.",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_output.bi_output_vg_cf_crm_contact",
+      "bi_output.bi_output_vg_crm_user",
+      "bi_output.bi_output_vg_customer_assignment",
+      "bi_output.bi_output_vg_customer_snapshot",
+      "bi_output.bi_output_vg_mimo",
+      "bi_output.bi_output_vg_revenue"
+    ],
+    "n_tables": 6,
+    "n_join_specs": 4
+  },
+  {
+    "space_id": "01f0eae90bee1751b50adc8306c8f94a",
+    "title": "GlobalDeposit Space View",
+    "description": "",
+    "warehouse_id": "0576a5479bc95763",
+    "tables": [
+      "money_stg.vw_deposit"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0ba2facfe1ef2a1ec824a19c85505",
+    "title": "Customer Radar PoC",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output_stg.customer_interaction_current_snapshot",
+      "bi_output_stg.customer_requirement_current_snapshot",
+      "bi_output_stg.customer_user_trading_data",
+      "data_rooms.vw_cidfirstdates",
+      "data_rooms.vw_dim_instrument",
+      "data_rooms.vw_dim_position",
+      "data_rooms.vw_mixpanel_login_events",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror",
+      "product_analytics_stg.bi_output_product_analytics_jarek_tables_feature_retention_table"
+    ],
+    "n_tables": 9,
+    "n_join_specs": 7
+  },
+  {
+    "space_id": "01f0e74540661ef1bfc44afc441ba1fa",
+    "title": "Billing and Jobs",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "billing.usage",
+      "compute.clusters",
+      "compute.node_timeline"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0e64eca311e49b52b1474a27aa48a",
+    "title": "GlobalFTD Space View",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "money_stg.vw_deposit",
+      "money_stg.vw_ftd"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f0e1820cf410489b45b57a16f14e60",
+    "title": "GlobalFTD Space",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_db.bronze_customerfinancedb_customer_globalftds",
+      "billing.bronze_etoro_billing_deposit",
+      "billing.bronze_etoro_billing_funding_datafactory",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "general.bronze_etoro_dictionary_country",
+      "general.bronze_etoro_dictionary_deposittype",
+      "general.bronze_etoro_dictionary_fundingtype",
+      "general.bronze_etoro_dictionary_paymentstatus"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0d5b9bcae19a1afac765e5cf066d4",
+    "title": "billing_test_quality and source",
+    "description": "Only Billing data for testing data Quant and Qual",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "billing.bronze_etoro_billing_deposit",
+      "billing.bronze_etoro_billing_depot",
+      "billing.bronze_etoro_billing_funding_datafactory"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0d537940b11a9902a409b8d8d0195",
+    "title": "eMoney Clients Attributes & Txs (Test)",
+    "description": "",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "bi_output.vg_emoney_potentialclients_attributes",
+      "bi_output.vg_emoney_txs",
+      "bi_output.vg_positionsvolumeandattributes_lc4_source"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0d06a1f251080b0fe28481cf203e4",
+    "title": "Live Acquisition Insights",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "data_rooms.bi_output_marketing_liveacquisitiondashboard_mt",
+      "data_rooms.dealing_clicks_openclose_breakdown_mt"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 2
+  },
+  {
+    "space_id": "01f0cdd8c4031e03b9ad850fcf0ca73a",
+    "title": "eToro acquistion funnel analysis",
+    "description": "",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output_stg.bi_output_vg_funnel"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c863b8ba153f96432d9e39911cbf",
+    "title": "AI Usage",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "github.cursor_usage",
+      "github.github_copilot_metrics_code_completions",
+      "github.github_copilot_seatsusage",
+      "github.linearb_rawmeasurements"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f081a9d0561054a9e353e3369a56b8",
+    "title": "eToro Customer Current Snapshot",
+    "description": "This Genie Space lets you explore various Customer-related measures, such as:\n-Segmentation (as of yesterday): Country/Region, Club tier, Regulation, Seniority, Channel/Sub-Channel, Affiliate details, Account Manager\n-Key Dates: Registration date, FTD date, First Pos Open Date, Verification levels d",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_output_stg.vg_customer_panel_snapshot"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c520a83912479875290faad56803",
+    "title": "Generic Pipeline - Table Usage",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables",
+      "query.history"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c48591b71d6886b232094b62d68e",
+    "title": "eMoney Test",
+    "description": "",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "bi_output.bi_ouput_vg_etoro_emoney"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c467d6381917a8e73b673e580325",
+    "title": "MixPanel test",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "mixpanel.silver"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c44de7681512ac12be13537efbcb",
+    "title": "Customer Radar V2 (Minimized Dataset)",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output_stg.customer_radar_2_table_customer_action",
+      "bi_output_stg.customer_radar_2_table_dim_customer"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f0c3b615a51178a0ac4a9267bf94ab",
+    "title": "Crypto Finance",
+    "description": "",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid",
+      "general.gold_lukka_all_transfers",
+      "general.gold_lukka_flat_custom_report"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0c38d864d10be9b493dfec1f100eb",
+    "title": "Breaches Investigation Bot",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_db.bronze_compliancestatedb_compliance_kycflowevaluator",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_compliance_illegal_trades_alerts",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_scored_appropriateness_negative_market",
+      "billing.bronze_etoro_billing_deposit",
+      "compliance.bronze_compliancestatedb_compliance_kycflow",
+      "compliance.bronze_compliancestatedb_dictionary_kycflowtype",
+      "compliance.bronze_compliancestatedb_history_kycflow",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_country",
+      "general.bronze_etoro_dictionary_deposittype",
+      "general.bronze_etoro_dictionary_playerstatus",
+      "general.bronze_etoro_dictionary_playerstatusreasons",
+      "general.bronze_etoro_dictionary_playerstatussubreasons",
+      "general.bronze_etoro_dictionary_regulation",
+      "general.bronze_settingsdb_settings_gcidtodynamicgroups",
+      "regtech.gold_exposure_business_undertaking",
+      "wallet.bronze_settingsdb_dictionary_dynamicgroup"
+    ],
+    "n_tables": 20,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0beca321f14bba3158e0c020643a4",
+    "title": "eToro DDR",
+    "description": "This genie space will answer all DDR related questions.   \n\nAlways specify a properly defined timeframe. (Date,week,month,year)!",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_vg_aum",
+      "bi_output.bi_output_vg_customer_first_dates",
+      "bi_output.bi_output_vg_customer_snapshot",
+      "bi_output.bi_output_vg_mimo",
+      "bi_output.bi_output_vg_revenue",
+      "bi_output.bi_output_vg_volume_amount",
+      "general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 9
+  },
+  {
+    "space_id": "01f0bdf764c411ada105c7f4ba82cb79",
+    "title": "Torri",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "data_rooms.vw_cidfirstdates",
+      "pii_data.vw_gold_torii_logs_prod"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 1
+  },
+  {
+    "space_id": "01f0bd7496e61277b452c1b8c1672041",
+    "title": "Data Detective",
+    "description": "The data detective of the ML Solution Team",
+    "warehouse_id": "21308b53c0225a36",
+    "tables": [
+      "bi_db.gold_bi_db_bi_db_positionpnl",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily",
+      "compliance.bronze_userapidb_kyc_answers",
+      "compliance.bronze_userapidb_kyc_customeranswers",
+      "compliance.bronze_userapidb_kyc_questions",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "general.bronze_factset_prices_volumes",
+      "general.bronze_factset_returns",
+      "pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer"
+    ],
+    "n_tables": 17,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0b9848eee109e883469fd3139e493",
+    "title": "Solutions Analysis Co pilot",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "data.bronze_gdpr_gdpr_processconfiguration",
+      "data_rooms.vw_dim_position",
+      "data_rooms.vw_mixpanel_login_events",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "mixpanel.silver"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f096cd65ef1c2dbdf1d593ec0bc3d9",
+    "title": "ido ezra space",
+    "description": "",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew",
+      "bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "bi_output.bi_output_finance_tables_ptp_tax",
+      "bi_output.bi_output_finance_tables_ptp_tax_backup",
+      "bi_output.bi_output_finance_tables_tax_ptp_monitoring",
+      "bi_output_stg.bi_output_finance_tables_ptp_tax",
+      "bi_output_stg.bi_output_finance_tables_ptp_tax_temp",
+      "bi_output_stg.bi_output_finance_tables_tax_ptp_monitoring",
+      "finance.bronze_sodreconciliation_apex_ext869_cashactivity"
+    ],
+    "n_tables": 10,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0a282c0e21f16ad0e6c9fcbcb04d7",
+    "title": "eToro Trades",
+    "description": "This Genie Space lets you explore trading activity data on Asset/Users level:\n\n**WHEN ASKING ABOUT ASSETS, USE ACCURATE ASSET NAME!**\n\n*Segmentation\n- Asset/Asset Type\n- Customer data\n\n*Key Dates: \n- Open Trade Date\n- Close Trade Date \n- First Dates (Registration date, FTD date)\n\n*Metrics (Manual/Mi",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_output.vg_trades"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0a5b496b91318b35f56c60fd1f3c6",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0a3d5d2e7163e9e63549889eb6c9c",
+    "title": "New Space (2)",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_history_credit",
+      "trading.bronze_etoro_history_position_datafactory",
+      "trading.silver_etoro_trade_position"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f092e17ee2107fa66a9ef29845b965",
+    "title": "Crypto ops",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_dealing_stg.bi_output_dealing_nixar_adivolumes3",
+      "bi_dealing_stg.bi_output_dealing_nixar_cryptodata",
+      "bi_dealing_stg.bi_output_dealing_nixar_cryptoprices",
+      "bi_dealing_stg.bi_output_dealing_nixar_fireblocksfinal",
+      "bi_dealing_stg.bi_output_dealing_nixar_historicalprices2"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0898c08461af599355bee6e1177a8",
+    "title": "eToro Marketing Acquisition",
+    "description": "This Genie answers all the Acquisition Funnel related questions.\n- Customer level data.\n- Includes all acquisition funnel steps- from Reg to FTD (Reg, V1, V2, V3, EV, PhoneVerification, EmailVerification, POA/POI, Screening, FTD).\n- Can show aggregated data or specific users' data (by uploading a li",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output_stg.vg_acquisition_funnel"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f092d3fdc716e9a734f2d1f9ca787c",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dwh.dim_position"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f092d3b7d3120f889da5ebede3b4c2",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "money_farm.silver_moneyfarm_etoro_mf_aum"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f09200a8f11ce7b03d1bf87f2c23cc",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f08ef1ebf51141be31a54f17f65e5b",
+    "title": "New Space (1)",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "trading.silver_etoro_trade_position"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f08ee55d6e1a6287e955f75b59a91d",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "general.bronze_etoro_dictionary_currency",
+      "bi_output_stg.bi_output_emoney_static_currency_iso_instrument_mapping",
+      "trading.bronze_etoro_trade_currencyprice",
+      "wallet.bronze_marketratesdb_currency_currencies",
+      "wallet.bronze_marketratesdb_currency_currencyrateproviders"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f08d955d2d116fb8651051133ccd70",
+    "title": "T3 - Hackathon",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_customer_customer_support_salesforce_reply",
+      "bi_output_stg.bi_output_customer_customer_support_salesforce_reply",
+      "crm.gold_crm_salesforcetobomanagermapping",
+      "experience.bronze_notificationdb_notifications_salesforcecontact"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f08bcaeeed1607b8e4fc0b69790a23",
+    "title": "Marketing Campaigns",
+    "description": "Welcome!\n\nDiscover your campaign data with AI-powered, self-service analytics.\n\nTrack and analyze key KPIs - such as open, click, and bounce rates - and easily filter or drill down across campaign and user dimensions like equity, channels, and regions. Gain actionable insights in seconds, without th",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "bi_output_stg.mvg_marketing_automation"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f07770201d193aba13d57fbea1ea1c",
+    "title": "etoro_club_room_offers",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output_stg.bi_output_customer_customer_facing_club_club_offer_eligibilty_metric_view"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f06879c85d1047b176e03c4842987a",
+    "title": "Table Size",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "config.bronze_dba_dbo_historydbsizes",
+      "config.bronze_dba_dbo_historytablesizes",
+      "config.bronze_etoro_dba_v_numrows_sizes",
+      "config.bronze_etorogeneral_dba_v_numrows_sizes",
+      "config.bronze_userapidb_dba_v_numrows_sizes",
+      "general.bronze_db_logs_dba_v_numrows_sizes"
+    ],
+    "n_tables": 6,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0615112211aa8a2b6b3e59ddd4c5a",
+    "title": "etoro_club_room",
+    "description": "This space answers all club related questions.",
+    "warehouse_id": "208214768b0e0308",
+    "tables": [
+      "bi_output_stg.bi_output_genie_club"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f05b10393a185ebf4b2f240cd70cb2",
+    "title": "BO Audit",
+    "description": "",
+    "warehouse_id": "39b1e32f407ac813",
+    "tables": [
+      "billing.bronze_etoro_backoffice_manager",
+      "general.bronze_db_logs_backoffice_auditaction"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f024d2ad241a89abec5a4145c08839",
+    "title": "dealing streaming",
+    "description": "This space provides a comprehensive view of streaming profit and loss (PnL) for dealing accounts and customers, enabling analysis of both realized and unrealized PnL over time across instruments and hedge servers.\n\n**Capabilities:**\n- Track and analyze realized and unrealized PnL by instrument, hedg",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_dealingstreaming_pnl_dealing_account_pl",
+      "dealing.bronze_dealingstreaming_pnl_dealing_realized_customer_pl",
+      "dealing.bronze_dealingstreaming_pnl_dealing_unrealized_customer_pl"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f04442ea2e1c32a79659a607e7c11e",
+    "title": "Data Analyst Assistant",
+    "description": "",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "information_schema.catalogs",
+      "information_schema.columns",
+      "information_schema.tables"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0407afa161723834ea2f9807207f7",
+    "title": "SQL Server Errorlog Analysis",
+    "description": "",
+    "warehouse_id": "ab714d381d90649e",
+    "tables": [
+      "config.bronze_dba_dbo_v_historyreaderrorlog"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f02f2723451cadaa533a0b1a87effb",
+    "title": "Trading AI Agents",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "data_rooms.vw_cidfirstdates",
+      "data_rooms.vw_dim_position",
+      "dealing.bronze_etoro_history_orders",
+      "dealing.bronze_etoro_trade_orders",
+      "dealing.bronze_pricelog_history_currencyprice",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_currency",
+      "trading.bronze_db_logs_trade_orderforopen",
+      "trading.bronze_etoro_history_mirror",
+      "trading.bronze_etoro_history_positionchangelog",
+      "trading.bronze_etoro_trade_currencyprice",
+      "trading.bronze_etoro_trade_indexdividends",
+      "trading.bronze_etoro_trade_instrument",
+      "trading.bronze_etoro_trade_instrumentmetadata",
+      "trading.bronze_etoro_trade_mirror"
+    ],
+    "n_tables": 16,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f02076867c1df38dba2e7baebac54d",
+    "title": "Unity Catalog",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "general.bronze_opsdb_dbo_vw_unitycatalog_mapping_tables"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00fdbb4f11db2a8723dfa670be9c8",
+    "title": "US movers",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_pricelog_history_currencyprice",
+      "dealing.candles_get_spreaded_price_candle60min_splitted",
+      "trading.bronze_etoro_trade_currencyprice",
+      "trading_stg.silver_etoro_trade_position"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00ec64ab01d70b2a0da57a00c8605",
+    "title": "Raw Pricing and Crypto",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_pricelog_history_currencyprice",
+      "trading.bronze_etoro_history_position_datafactory",
+      "trading.bronze_etoro_trade_currencyprice",
+      "trading.bronze_etoro_trade_getinstrument",
+      "trading.bronze_etoro_trade_instrument",
+      "trading.bronze_etoro_trade_instrumentmetadata",
+      "trading.bronze_etoro_trade_providertoinstrument"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00e66deb11b45bb4d9da9521c04d7",
+    "title": "New Space",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_db.hedgenetting"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f004a9fe1d1b3398481abe4b2295bf",
+    "title": "Multiple Tables",
+    "description": "Multiple Tables",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_db.bronze_etoro_price_exchange",
+      "dealing.bestexecution_results",
+      "dealing.bronze_etorologs_real_hedge_emsorders",
+      "dealing.bronze_pricelog_history_currencyprice",
+      "general.bronze_etoro_backoffice_customer",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_country",
+      "trading.bronze_etoro_history_position_datafactory",
+      "trading.bronze_etoro_trade_currencyprice",
+      "trading.bronze_etoro_trade_instrumentmetadata",
+      "trading.silver_etoro_trade_position"
+    ],
+    "n_tables": 11,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00b0879fa1fca92be250d13d30564",
+    "title": "HedgeUnits Sais",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "bi_db.hedgenetting"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00b086d9f1df3a6a907c4f5ba6eab",
+    "title": "failures",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_positionfailreal_history_positionfail_dwh"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00b0862581d46aba2d013b4ac8096",
+    "title": "EMS Order",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_etorologs_real_hedge_emsorders"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f00644648716f7bb8dd99bd6d31f22",
+    "title": "ExecutionLog & Hedge.EMSOrders",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_etoro_hedge_executionlog",
+      "dealing.bronze_etorologs_real_hedge_emsorders"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f0055486e018e7aef116cb175276eb",
+    "title": "etoro copy activity",
+    "description": "This Genie Space includes raw copy-trading data indicating which client is copying which other client on eToro. It contains both current and historical state tables, and queries should explicitly differentiate between the two to ensure accurate analysis.",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "data_rooms.vw_cidfirstdates",
+      "data_rooms.vw_history_mirror",
+      "data_rooms.vw_trade_mirror"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f004df62ff1693b485342658da940e",
+    "title": "History.PositionFail",
+    "description": "Clients failures",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_positionfailreal_history_positionfail_dwh"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01f004b146fe1ce88d974a57d9c4f9ed",
+    "title": "Slippage Table",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bi_output_dealing_bestexecution_report"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01efd96e83811afda1f9ad84bb9a89e4",
+    "title": "Feed",
+    "description": "Data that comes from streams of posts\n",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "experience.bronze_event_hub_prod_event_streaming_we_streams_post"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01efa5de15f11add9c8e460ed88f0df9",
+    "title": "OCT",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "data_rooms.oct_data"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ef9c08aea118e899a2cec44db931b5",
+    "title": "positions data",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "data_rooms.vw_dim_instrument",
+      "trading.bronze_etoro_history_position_datafactory",
+      "trading.silver_etoro_trade_position"
+    ],
+    "n_tables": 3,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ef7c0dc6591d859a5b76a78951ddf6",
+    "title": "examples on system",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "compute.warehouse_events",
+      "information_schema.columns",
+      "information_schema.tables",
+      "query.history"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ef7a3a203f15bb9854e99951f9f7c3",
+    "title": "CS Daily Incoming",
+    "description": "Daily Incoming of Cases and Chats",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_output.bi_output_customer_customer_support_case",
+      "crm.silver_casehistory",
+      "crm.silver_crm_casehistory",
+      "crm.silver_crm_livechattranscriptevent"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ef5a3d2e5a14abafcc1938e0391fe2",
+    "title": "Local Currency",
+    "description": "",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "billing.bronze_etoro_billing_deposit",
+      "billing.bronze_moneybusdb_moneybus_transactions",
+      "dwh.dim_position",
+      "trading.bronze_iban_trade_ordertoexternaloperation"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eeaeed57b41c6ca0f4119606355809",
+    "title": "etoro_trading",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "data_rooms.vw_bi_output_dealing_newinstruments",
+      "dealing.bi_output_dealing_bestexecution_report",
+      "dealing.bi_output_dealing_dealingdashboard_cid",
+      "dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown",
+      "trading.bronze_etoro_dictionary_tradinginstrumentgroups",
+      "trading.bronze_etoro_trade_futuresmetadata",
+      "trading.bronze_etoro_trade_instrumentgroups"
+    ],
+    "n_tables": 7,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ef2e6b2f3f16d08fe4355da09a0933",
+    "title": "Billing",
+    "description": "Customer, Deposit and withdrawl data",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "billing.bronze_etoro_billing_deposit",
+      "billing.bronze_etoro_billing_withdraw",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "general.bronze_etoro_customer_customer_masked",
+      "general.bronze_etoro_dictionary_deposittype"
+    ],
+    "n_tables": 5,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ef2e4a84bf18b9921c136daa39139e",
+    "title": "Product Analytics",
+    "description": "This space should be able to answer questions regarding main.dwh tables and Mixpanel Silver Data.\nSeems not to be working while Mixpanel Data is Included",
+    "warehouse_id": "0576a5479bc95763",
+    "tables": [
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_monthlypanel_fulldata",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities"
+    ],
+    "n_tables": 12,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eef6741b6911ffac1a5d6ba95a6c95",
+    "title": "etoro_club",
+    "description": "",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "bi_output.bi_output_customer_customer_facing_club_inventory_asset",
+      "bi_output.bi_output_customer_customer_facing_club_loyalty_offer",
+      "bi_output.bi_output_customer_customer_facing_club_loyalty_offer_request",
+      "data_rooms.vw_cidfirstdates"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eee432f55a11379019b91b46b84346",
+    "title": "Customer activity - Flow",
+    "description": " ",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "data_rooms.vw_fact_customeraction"
+    ],
+    "n_tables": 2,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eed182f986192686f4104b3c47f4d6",
+    "title": "dwh data",
+    "description": "",
+    "warehouse_id": "3b4776061663c956",
+    "tables": [
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "data_rooms.vw_dim_instrument",
+      "data_rooms.vw_dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eecfdc6e121d3a9c1551c473de87f5",
+    "title": "Dealing Investigation Tool",
+    "description": "",
+    "warehouse_id": "db12d2f50b050305",
+    "tables": [
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_calculation_step_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_fix_message_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_hedge_request_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_order_execution_evh",
+      "dealing.bronze_event_hub_prod_event_streaming_we_investigation_tool_routed_execution_evh",
+      "dealing.v_bronze_event_hub_prod_event_streaming_we_investigation_tool_execution_result_evh"
+    ],
+    "n_tables": 6,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eeb60bf5421e2ca8466b973b81b994",
+    "title": "etoro_risk",
+    "description": "Value and Trend of VaR,\nTop contributors of VaR, NOP, NOP Hedged, NOP exposure, Leverage, Concentration(value and trend)",
+    "warehouse_id": "4149944dda87a462",
+    "tables": [
+      "data_rooms.vw_failures_execution_fail_suc_rate",
+      "data_rooms.vw_failures_execution_fails_drill_down",
+      "data_rooms.vw_risk_effective_leverage",
+      "data_rooms.vw_risk_var_nop_main_instruments_history",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "risk.risk_output_rm_tables_history_var_cvar",
+      "risk_stg.risk_output_rm_tables_cfds_concentration_results"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eeaf099b87164ba7f7486c8ca0ddfc",
+    "title": "Marketing + Finance",
+    "description": "",
+    "warehouse_id": "96cd390a7e172342",
+    "tables": [
+      "bi_db.gold_bi_db_bi_db_positionpnl",
+      "bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates_masked",
+      "dwh.dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities"
+    ],
+    "n_tables": 8,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01eeafad7e3512b8a13b42a700a05d86",
+    "title": "Marketing Notifications",
+    "description": "This space provides a comprehensive view of marketing notification performance across regions, device types, and timeframes to support data-driven campaign optimization.\n\n**Capabilities:**  \n- Analyze planned, sent, received, and opened notification metrics by date, country, region, club, device typ",
+    "warehouse_id": "6f72189f967b42a9",
+    "tables": [
+      "bi_output.bi_output_urban_notifications_daily_panel_agg"
+    ],
+    "n_tables": 1,
+    "n_join_specs": 0
+  },
+  {
+    "space_id": "01ee9e3a900a1db1b5db5f4f5e2fd95f",
+    "title": "etoro_main",
+    "description": "This Genie Space contains raw data including a customer table with client details, a positions table with both open and closed positions and multiple attributes, and an instruments table covering both tradable and non-tradable assets.\n ",
+    "warehouse_id": "5f6c5302def2ad2c",
+    "tables": [
+      "data_rooms.vw_cidfirstdates",
+      "data_rooms.vw_dim_instrument",
+      "data_rooms.vw_dim_position",
+      "dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities"
+    ],
+    "n_tables": 4,
+    "n_join_specs": 1
+  }
+]

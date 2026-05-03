@@ -31,7 +31,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityre
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN InstrumentID COMMENT 'eToro instrument identifier. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.InstrumentID)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN ISINCode COMMENT 'ISIN code from instrument master. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.ISINCode)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN InstrumentDisplayName COMMENT 'Instrument display name. (Tier 2 -- SP_DataForDuco, DWH_dbo.Dim_Instrument.InstrumentDisplayName)';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN Buy/Sell COMMENT 'Direction: ''Buy'' or ''Sell'', derived from net units sign. (Tier 2 -- SP_DataForDuco, computed from sign of eToro_Units / ClientUnits)';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN `Buy/Sell` COMMENT 'Direction: ''Buy'' or ''Sell'', derived from net units sign. (Tier 2 -- SP_DataForDuco, computed from sign of eToro_Units / ClientUnits)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN eToro_Units COMMENT 'Total LP units executed on the hedge server for the date. (Tier 2 -- SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Units)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN ClientUnits COMMENT 'Total client position units opened/closed on the date. (Tier 2 -- SP_DataForDuco, BI_DB_dbo.BI_DB_PositionPnL.AmountInUnitsDecimal)';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN eToroLocalAmount COMMENT 'LP execution value in local instrument currency. (Tier 2 -- SP_DataForDuco, CopyFromLake.etoro_Hedge_ExecutionLog.Amount)';
@@ -58,7 +58,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityre
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN InstrumentID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN ISINCode SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN InstrumentDisplayName SET TAGS ('pii' = 'none');
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN Buy/Sell SET TAGS ('pii' = 'none');
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN `Buy/Sell` SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN eToro_Units SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN ClientUnits SET TAGS ('pii' = 'none');
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN eToroLocalAmount SET TAGS ('pii' = 'none');
@@ -78,8 +78,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityre
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN CUSIP SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 14:01:14 UTC
--- Batch deploy resume: Dealing_dbo deploy batch 1
--- Statements: 50/52 succeeded
--- Error: [PARSE_SYNTAX_ERROR] Syntax error at or near '/'. SQLSTATE: 42601 (line 1, pos 100) == SQL == ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon ALTER COLUMN Buy/Sell SET TAGS ('pii' = 'none'); ----------------------------------------------------------------------------------------------------^^^
+-- Timestamp: 2026-05-03 06:07:09 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 2
+-- Statements: 52/52 succeeded
 -- ====================

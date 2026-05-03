@@ -1,0 +1,64 @@
+{
+    "schema":  "eMoney_Tribe",
+    "object":  "SettlementsTransactions_SecurityChecks-426253",
+    "elapsed_seconds":  105,
+    "exit_code":  null,
+    "cost_usd":  0.2418,
+    "input_tokens":  2,
+    "output_tokens":  4314,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "eMoney_Tribe",
+                    "object":  "SettlementsTransactions_SecurityChecks-426253",
+                    "weighted_score":  8.45,
+                    "verdict":  "PASS",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  10,
+                                             "upstream_fidelity":  7,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  9
+                                         },
+                    "t1_fidelity_table":  [
+
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Section 3.3 / Query 7.3",
+                                       "problem":  "Join to parent entity shown as @Id = @Id, but the canonical FK is @SettlementsTransactions_SettlementTransaction@Id-637239. Wiki notes \u0027often\u0027 1:1 match but this is not guaranteed — could silently lose rows."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "review-needed.md #5",
+                                       "problem":  "Title says \u0027OfflinePIN and Signature Not Consumed by SP\u0027 but body text lists Signature as consumed. Title contradicts body."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Section 4 Elements (CVM flags)",
+                                       "problem":  "Boolean flag columns have exactly 2 values but do not use inline key=value format (e.g., 0=Not present, 1=Present)."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "Footer says Phases: 11/14 but no Phase Gate Checklist section is included to show which phases were completed."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Query 7.3",
+                                       "problem":  "Sample query joins on st.[@Id] = sc.[@Id] rather than on the FK column @SettlementsTransactions_SettlementTransaction@Id-637239."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Minor fixes only: (1) Clarify join condition in Section 3.3 and Query 7.3 — use the FK column @SettlementsTransactions_SettlementTransaction@Id-637239 as canonical join, or document why @Id is safe. (2) Add inline 0=Not present, 1=Present to CVM flag descriptions. (3) Fix review-needed #5 title to remove \u0027Signature\u0027 since it IS consumed by the SP. (4) Add Phase Gate Checklist subsection.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "P2/P3 status unclear — footer says 11/14 but no checklist shown"
+                                                           ]
+                                    }
+                }
+}

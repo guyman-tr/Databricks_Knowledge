@@ -1,89 +1,85 @@
 ---
 schema: eMoney_dbo
-total_objects: 49
-with_uc_target: 36
-knowledge_only_stubs: 9
-no_uc_table: 4
-last_updated: 2026-04-21
-status: Generated (not yet deployed)
+database: Synapse DWH
+total_deployable: 45
+generated: 0
+deployed: 14
+failed: 22
+stub_only: 9
+last_generate_batch: 0
+last_deploy_batch: 1
+last_updated: "2026-05-03"
 ---
 
-# eMoney_dbo Deploy Index
+## Schema ALTER + Deployment Progress
 
-## Summary
+| Metric                             | Value      |
+| ---------------------------------- | ---------- |
+| **Schema**                         | eMoney_dbo   |
+| **Total deployable**               | 45  |
+| **Pending (no .alter.sql)**        | 0          |
+| **Generated (awaiting UC deploy)** | 0        |
+| **Deployed (UC)**                  | 14         |
+| **Stub-only (no UC)**              | 9   |
+| **Failed**                         | 22         |
+| **Stale**                          | 0          |
+| **Last generate batch**            | 0          |
+| **Last deploy batch**              | 1          |
+| **Last updated**                   | 2026-05-03       |
 
-| Metric | Value |
-|--------|-------|
-| **Schema** | eMoney_dbo |
-| **Total Documented** | 49 |
-| **With UC Target (ALTER generated)** | 36 |
-| **Knowledge-only Stubs** | 9 |
-| **No UC Table Exists** | 4 |
-| **Last Updated** | 2026-04-21 |
-| **Deploy Status** | Generated — not yet deployed to UC |
+> **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
 
----
+## Tables (44)
 
-## Objects With UC Targets (36)
+| Object | Deploy status |
+|--------|---------------|
+| [eMoney_dbo.eMoney_Account_Mappings](Tables/eMoney_Account_Mappings.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_emoney_dbo_emoney_account_mapp|
+| [eMoney_dbo.eMoney_Aggregated_Tribe_Balance](Tables/eMoney_Aggregated_Tribe_Balance.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_emoney_dbo_emoney_aggregated_t|
+| [eMoney_dbo.eMoney_AM_Target](Tables/eMoney_AM_Target.md) | Stub only |
+| [eMoney_dbo.eMoney_BankPaymentsUK](Tables/eMoney_BankPaymentsUK.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_bankpayment|
+| [eMoney_dbo.eMoney_Card_Instance_Summary](Tables/eMoney_Card_Instance_Summary.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Card_Monthly_Snapshot](Tables/eMoney_Card_Monthly_Snapshot.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_card_monthl|
+| [eMoney_dbo.eMoney_Client_Balance_Check_Exceptions_Gap](Tables/eMoney_Client_Balance_Check_Exceptions_Gap.md) | Stub only |
+| [eMoney_dbo.eMoney_Client_Balance_Check_Opening_Balance](Tables/eMoney_Client_Balance_Check_Opening_Balance.md) | Stub only |
+| [eMoney_dbo.eMoney_Country_Codes_Mapping_ISO](Tables/eMoney_Country_Codes_Mapping_ISO.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_country_cod|
+| [eMoney_dbo.eMoney_Currency_Mapping_ISO](Tables/eMoney_Currency_Mapping_ISO.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_currency_ma|
+| [eMoney_dbo.eMoney_Customer_Risk_Assessment](Tables/eMoney_Customer_Risk_Assessment.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Customer_Risk_Assessment_History](Tables/eMoney_Customer_Risk_Assessment_History.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Daily_MIMO_New_Reports_Action](Tables/eMoney_Daily_MIMO_New_Reports_Action.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_emoney_dbo_emoney_daily_mimo_n|
+| [eMoney_dbo.eMoney_Dictionary_AccountProgram](Tables/eMoney_Dictionary_AccountProgram.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_AccountStatus](Tables/eMoney_Dictionary_AccountStatus.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_AccountSubProgram](Tables/eMoney_Dictionary_AccountSubProgram.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_AuthorizationType](Tables/eMoney_Dictionary_AuthorizationType.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_CardStatus](Tables/eMoney_Dictionary_CardStatus.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_CurrencyBalanceStatus](Tables/eMoney_Dictionary_CurrencyBalanceStatus.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_PaymentSchemaType](Tables/eMoney_Dictionary_PaymentSchemaType.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_PaymentSpecificationType](Tables/eMoney_Dictionary_PaymentSpecificationType.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_Provider](Tables/eMoney_Dictionary_Provider.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_TransactionCategory](Tables/eMoney_Dictionary_TransactionCategory.md) | Stub only |
+| [eMoney_dbo.eMoney_Dictionary_TransactionStatus](Tables/eMoney_Dictionary_TransactionStatus.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_TransactionType](Tables/eMoney_Dictionary_TransactionType.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dictionary_TribeScriptStatus](Tables/eMoney_Dictionary_TribeScriptStatus.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
+| [eMoney_dbo.eMoney_Dim_Account](Tables/eMoney_Dim_Account.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Dim_Country_Rollout](Tables/eMoney_Dim_Country_Rollout.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Dim_Transaction](Tables/eMoney_Dim_Transaction.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Fact_Transaction_Status](Tables/eMoney_Fact_Transaction_Status.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Marketing_EmailTracking](Tables/eMoney_Marketing_EmailTracking.md) | Stub only |
+| [eMoney_dbo.eMoney_Panel_FirstDates](Tables/eMoney_Panel_FirstDates.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Panel_Retention_Daily](Tables/eMoney_Panel_Retention_Daily.md) | Stub only |
+| [eMoney_dbo.eMoney_Panel_Retention_Monthly](Tables/eMoney_Panel_Retention_Monthly.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Reports_AcquisitionFunnel](Tables/eMoney_Reports_AcquisitionFunnel.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Reports_AcquisitionFunnelAggregated](Tables/eMoney_Reports_AcquisitionFunnelAggregated.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Reports_ClubUpgrade](Tables/eMoney_Reports_ClubUpgrade.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Reports_MIMO_Actions](Tables/eMoney_Reports_MIMO_Actions.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_emoney_dbo_emoney_reports_mimo|
+| [eMoney_dbo.eMoney_Risk_Portfolio](Tables/eMoney_Risk_Portfolio.md) | Stub only |
+| [eMoney_dbo.eMoney_Snapshot_Settled_Balance](Tables/eMoney_Snapshot_Settled_Balance.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_snapshot_se|
+| [eMoney_dbo.eMoney_UserData_Marketing](Tables/eMoney_UserData_Marketing.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoneyClientBalance](Tables/eMoneyClientBalance.md) | Failed (deploy Batch 1) — [COLUMN_NOT_FOUND_IN_TABLE] Column 'Column' not found in table 'main'.'bi_db'.'gold_sql_dp_prod_we_emoney_dbo_emoneyclie|
+| [eMoney_dbo.eMoneyProcessStatusLog](Tables/eMoneyProcessStatusLog.md) | Stub only |
+| [eMoney_dbo.v_eMoney_Card_Instance_Summary](Tables/v_eMoney_Card_Instance_Summary.md) | Deployed (Batch 1) — 2026-05-03|
 
-| Object | UC Target | Classification | Cols |
-|--------|-----------|----------------|------|
-| eMoney_Dim_Account | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account | Non-standard | 89 |
-| eMoney_Dim_Transaction | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction | Non-standard | 77 |
-| eMoney_Fact_Transaction_Status | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status | Non-standard | 77 |
-| eMoney_Panel_FirstDates | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_firstdates | Non-standard | 65 |
-| eMoney_Panel_Retention_Monthly | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_panel_retention_monthly | Non-standard | 86 |
-| eMoney_Reports_AcquisitionFunnel | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_acquisitionfunnel | Non-standard | 15 |
-| eMoney_Reports_AcquisitionFunnelAggregated | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_acquisitionfunnelaggregated | Non-standard | 5 |
-| eMoney_Reports_ClubUpgrade | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_clubupgrade | Non-standard | 13 |
-| eMoney_Dim_Country_Rollout | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_country_rollout | Non-standard | 7 |
-| eMoney_Account_Mappings | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_account_mappings | Non-standard | 24 |
-| eMoney_Card_Instance_Summary | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_card_instance_summary | Non-standard | 18 |
-| eMoney_Card_Monthly_Snapshot | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_card_monthly_snapshot | Non-standard | 23 |
-| eMoney_Snapshot_Settled_Balance | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_snapshot_settled_balance | Non-standard | 27 |
-| eMoney_BankPaymentsUK | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_bankpaymentsuk | Non-standard | 18 |
-| eMoney_Aggregated_Tribe_Balance | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_aggregated_tribe_balance | Non-standard | 28 |
-| eMoney_Daily_MIMO_New_Reports_Action | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_daily_mimo_new_reports_action | Non-standard | 20 |
-| eMoney_Reports_MIMO_Actions | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_mimo_actions | Non-standard | 20 |
-| eMoney_UserData_Marketing | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_userdata_marketing | Non-standard | 13 |
-| eMoneyClientBalance | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance | Non-standard | 79 |
-| eMoney_Customer_Risk_Assessment | main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment | Non-standard | 120 |
-| eMoney_Customer_Risk_Assessment_History | main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history | Non-standard | 120 |
-| eMoney_Country_Codes_Mapping_ISO | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_country_codes_mapping_iso | Non-standard | 6 |
-| eMoney_Currency_Mapping_ISO | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_currency_mapping_iso | Non-standard | 4 |
-| eMoney_Dictionary_AccountProgram | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_accountprogram | Non-standard | 3 |
-| eMoney_Dictionary_AccountStatus | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_accountstatus | Non-standard | 3 |
-| eMoney_Dictionary_AccountSubProgram | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_accountsubprogram | Non-standard | 5 |
-| eMoney_Dictionary_AuthorizationType | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_authorizationtype | Non-standard | 3 |
-| eMoney_Dictionary_CardStatus | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_cardstatus | Non-standard | 3 |
-| eMoney_Dictionary_CurrencyBalanceStatus | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_currencybalancestatus | Non-standard | 3 |
-| eMoney_Dictionary_PaymentSchemaType | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_paymentschematype | Non-standard | 3 |
-| eMoney_Dictionary_PaymentSpecificationType | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_paymentspecificationtype | Non-standard | 3 |
-| eMoney_Dictionary_Provider | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_provider | Non-standard | 3 |
-| eMoney_Dictionary_TransactionStatus | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_transactionstatus | Non-standard | 3 |
-| eMoney_Dictionary_TransactionType | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_transactiontype | Non-standard | 3 |
-| eMoney_Dictionary_TribeScriptStatus | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_tribescriptstatus | Non-standard | 3 |
-| v_eMoney_Card_Instance_Summary | main.bi_db.gold_sql_dp_prod_we_emoney_dbo_v_emoney_card_instance_summary | Non-standard | 17 |
+## Views (1)
 
-## Knowledge-Only Stubs (9)
-
-| Object | Reason |
-|--------|--------|
-| eMoney_AM_Target | No UC table exists |
-| eMoney_Client_Balance_Check_Exceptions_Gap | No UC table exists |
-| eMoney_Client_Balance_Check_Opening_Balance | No UC table exists |
-| eMoney_Dictionary_TransactionCategory | No UC table exists |
-| eMoney_Marketing_EmailTracking | No UC table exists |
-| eMoney_Panel_Retention_Daily | No UC table exists |
-| eMoney_Risk_Portfolio | No UC table exists |
-| eMoneyProcessStatusLog | No UC table exists |
-| v_eMoney_Dim_Account | No UC table exists (view) |
-
-## No UC Table (4 — no ALTER file generated)
-
-| Object | Reason |
-|--------|--------|
-| eMoney_Calculated_Balance | Not exported to UC via Generic Pipeline |
-| eMoney_Currency_Instrument_Mapping_Static | Not exported to UC via Generic Pipeline |
-| eMoney_Daily_Shortfall_CID_Level | Not exported to UC via Generic Pipeline |
-| eMoney_EntityByCurrencyISO_MappingStatic | Not exported to UC via Generic Pipeline |
+| Object | Deploy status |
+|--------|---------------|
+| [eMoney_dbo.v_eMoney_Dim_Account](Views/v_eMoney_Dim_Account.md) | Stub only |

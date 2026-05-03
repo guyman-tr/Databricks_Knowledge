@@ -1,0 +1,233 @@
+{
+    "schema":  "BI_DB_dbo",
+    "object":  "fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube",
+    "elapsed_seconds":  138,
+    "exit_code":  null,
+    "cost_usd":  0.318,
+    "input_tokens":  2,
+    "output_tokens":  7097,
+    "verdict_json_present":  true,
+    "parse_error":  null,
+    "verdict":  {
+                    "schema":  "BI_DB_dbo",
+                    "object":  "fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube",
+                    "weighted_score":  5.80,
+                    "verdict":  "FAIL",
+                    "dimension_scores":  {
+                                             "tier_accuracy":  3,
+                                             "upstream_fidelity":  3,
+                                             "completeness":  8,
+                                             "business_meaning":  9,
+                                             "data_evidence":  7,
+                                             "shape_fidelity":  8
+                                         },
+                    "t1_fidelity_table":  [
+                                              {
+                                                  "column":  "ClosedPositionID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Unique identifier of the closed position. Matches the position ID from the trading system (ClosedPositionFromEtoro). PK with idempotency guard in InsertClosedPosition - duplicate inserts are silently ignored.",
+                                                  "match":  "NO",
+                                                  "loss":  "Entire description fabricated — no upstream wiki available in bundle"
+                                              },
+                                              {
+                                                  "column":  "CommissionDate",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Timestamp when the commission was calculated or last updated. Set initially during InsertClosedPosition and updated by SaveClosedPositionCommission when commissions are recalculated. Used for commission reporting periods.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "Amount",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Gross commission amount for the position in USD. Represents the base commission before hedge adjustments. Can be 0 for positions that are valid but generate no commission (e.g., certain affiliate agreement types).",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "HedgeCommission",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Additional commission component from hedging activity on this position. Typically a fraction of the main Amount. Combined with Amount for total commission calculation.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "CID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Customer ID of the trader who held the position. References the customer in the external customer system. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "OriginalCID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Original customer ID in copy-trading scenarios. When a position is copied from another trader, this holds the CID of the original trader. NULL for independently opened positions. Used in commission attribution to follow the referral chain. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "AffiliateID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "The affiliate attributed with this customer\u0027s registration. Can change via re-attribution (tracked by system versioning). Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "AffiliateCampaign",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Campaign tracking string from the affiliate link. May contain encoded tracking parameters. Empty string when no campaign context was captured. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "ProviderID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Current provider/entity responsible for the position. In multi-entity brokerage setups, identifies which regulated entity processes the position. Commonly 1 for the primary entity.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "OriginalProviderID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Provider that originally opened the position. 0 indicates the position was opened directly (not transferred between providers). Used to track provider migrations and white-label attribution.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "RealProviderID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Actual execution entity for the trade. In white-label arrangements, this identifies the real broker executing the trade while ProviderID represents the customer-facing entity.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "CountryID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Country identifier for the customer\u0027s registration country. Used in commission rules that vary by geography (e.g., regulatory region-specific commission rates).",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "NetProfit",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Net profit/loss of the position in USD. Negative values indicate a losing position. Used in commission calculations where commission may depend on position profitability.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "FunnelID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Marketing funnel identifier. NULL when funnel tracking is not applicable or not configured for the affiliate. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "LabelID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Always NULL. Column preserved for backward compatibility with legacy consumers. Hardcoded as NULL in ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available; also should be Tier 2 (hardcoded NULL is a view transform)"
+                                              },
+                                              {
+                                                  "column":  "PlayerLevelID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Player level classification at registration time. 1 = standard new player. May be updated as player progresses. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "DownloadID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Download/app install tracking ID. 0 = no download tracked. Links to app installation events. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "LotCount",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Size of the position in lots. Represents the traded volume, which may influence commission calculations for volume-based affiliate agreements.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "BannerID",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Banner that led to the registration. 0 = no banner tracked. References the banner/creative system. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "Valid",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Whether this position is eligible for commission payout. 1 = valid/eligible, 0 = disqualified. Positions may be invalidated if the underlying trade was reversed, the customer was flagged for fraud, or the affiliate violated terms.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "TrackingDate",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Timestamp when the position first entered the affiliate commission tracking system. May precede CommissionDate if the position was tracked before commissions were calculated.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "IsProcessed",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Processing completion flag. 0 = pending commission calculation, 1 = commission has been calculated and saved. Set to 1 by SaveClosedPositionCommission and UpdateClosedPositionTracking.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "ValidFrom",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "System versioning start time. When this version of the row became effective. Automatically set by SQL Server temporal tables. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              },
+                                              {
+                                                  "column":  "AdditionalData",
+                                                  "upstream_quote":  "No upstream wiki exists",
+                                                  "wiki_quote":  "Extensible metadata field. Defaults to empty string. Allows additional attribution data without schema changes. Sourced from RegistrationMetaData via ClosedPositionVW.",
+                                                  "match":  "NO",
+                                                  "loss":  "Fabricated — no upstream wiki available"
+                                              }
+                                          ],
+                    "issues":  [
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "All 22 claimed Tier 1 columns",
+                                       "problem":  "Every Tier 1 attribution is fabricated. The upstream bundle explicitly states \u0027NO UPSTREAM WIKI was resolvable for any source listed in the lineage.\u0027 All 22 columns tagged Tier 1 should be Tier 3. The writer invented upstream wiki content that does not exist."
+                                   },
+                                   {
+                                       "severity":  "high",
+                                       "column_or_section":  "ClosedPositionID, CommissionDate, IsProcessed",
+                                       "problem":  "Descriptions cite specific production stored procedures (InsertClosedPosition, SaveClosedPositionCommission, UpdateClosedPositionTracking) as if quoting documented upstream wikis. These details were fabricated — no upstream documentation was available to the writer."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "LabelID",
+                                       "problem":  "Tagged Tier 1 from ClosedPositionVW but the column is hardcoded NULL in the view — this is a view-level computation (Tier 2), not a passthrough. Additionally, no upstream wiki exists regardless."
+                                   },
+                                   {
+                                       "severity":  "medium",
+                                       "column_or_section":  "Valid, IsProcessed",
+                                       "problem":  "Bit columns with exactly 2 possible values (0/1) should have inline key=value enum pairs in the Elements table per completeness requirements."
+                                   },
+                                   {
+                                       "severity":  "low",
+                                       "column_or_section":  "Footer / Phase Gate",
+                                       "problem":  "No explicit Phase Gate Checklist section. Footer claims \u0027Phases: 12/14\u0027 but doesn\u0027t identify which 2 phases were skipped, making data evidence provenance unverifiable."
+                                   }
+                               ],
+                    "regeneration_feedback":  "Re-run with: (1) Re-tag all 22 \u0027Tier 1\u0027 columns as Tier 3 — no upstream wikis were available in the bundle. (2) Rewrite all column descriptions to be grounded in DDL types, SP logic, and column naming conventions — not presented as upstream wiki quotes. (3) Add inline enum values for Valid (0=disqualified, 1=eligible) and IsProcessed (0=pending, 1=calculated). (4) Re-classify LabelID as Tier 2 (hardcoded NULL is a view transform). (5) Add explicit Phase Gate Checklist section. (6) Update footer tier breakdown from \u002722 T1, 6 T2\u0027 to \u00270 T1, 9 T2, 19 T3\u0027 reflecting reality.",
+                    "stats_check":  {
+                                        "table_level_stats_in_descriptions":  [
+                                                                                  "Section 1: 36.8M rows, date range 2026-03-01 to 2026-04-27",
+                                                                                  "Section 1: 72.4% Valid=True/IsProcessed=True, 27.6% invalid/unprocessed",
+                                                                                  "Section 1: CountryID 218 (6.4M rows), 79 (4.2M), 102 (3.8M)"
+                                                                              ],
+                                        "skipped_phases":  [
+                                                               "Footer says 12/14 phases completed; specific skipped phases not identified"
+                                                           ]
+                                    }
+                }
+}
