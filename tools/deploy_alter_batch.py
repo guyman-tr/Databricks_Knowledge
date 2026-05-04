@@ -37,14 +37,17 @@ def reset_deployed_batch_to_generated(
     new_lines: list[str] = []
     for line in text.splitlines():
         if f"Deployed (Batch {batch_num})" in line and line.strip().startswith("|"):
+            # Match either DWH-framework `(Tables/x.md)` or UC-domain
+            # `(schemas/<schema>/Tables/x.md)` link form.
             m = re.search(
-                rf"\[{re.escape(schema)}\.([^\]]+)\]\((Tables|Views|Functions)/[^\)]+\.md\)",
+                rf"\[{re.escape(schema)}\.([^\]]+)\]\(((?:schemas/{re.escape(schema)}/)?(Tables|Views|Functions))/[^\)]+\.md\)",
                 line,
             )
             if m:
                 name = m.group(1)
-                folder = m.group(2)
-                new_lines.append(f"| [{schema}.{name}]({folder}/{name}.md) | Generated |")
+                link_prefix = m.group(2)  # either "Tables" or "schemas/<schema>/Tables"
+                folder = m.group(3)       # always one of Tables/Views/Functions
+                new_lines.append(f"| [{schema}.{name}]({link_prefix}/{name}.md) | Generated |")
                 rows.append((name, folder))
                 continue
         new_lines.append(line)
@@ -65,7 +68,12 @@ def parse_generated_objects(deploy_index: Path, schema: str) -> list[tuple[str, 
         if status != "Generated":
             continue
         for folder in ("Tables", "Views", "Functions"):
-            m = re.search(rf"\]\({folder}/([^)]+\.md)\)", line)
+            # Match either DWH-framework `(Tables/x.md)` or UC-domain
+            # `(schemas/<schema>/Tables/x.md)` link form.
+            m = re.search(
+                rf"\]\((?:schemas/{re.escape(schema)}/)?{folder}/([^)]+\.md)\)",
+                line,
+            )
             if m:
                 out.append((m.group(1).replace(".md", ""), folder))
                 break
@@ -81,12 +89,20 @@ def strip_footer(raw: str) -> str:
     ).rstrip()
 
 
+_STMT_STARTS = ("ALTER TABLE", "ALTER VIEW", "COMMENT ON")
+
+
+def _is_stmt_start(line: str) -> bool:
+    s = line.strip().upper()
+    return any(s.startswith(p) for p in _STMT_STARTS)
+
+
 def parse_statements(content: str) -> list[str]:
     content = strip_footer(content)
     statements: list[str] = []
     current: list[str] = []
     for line in content.splitlines():
-        if line.strip().startswith("ALTER TABLE"):
+        if _is_stmt_start(line):
             if current:
                 statements.append("\n".join(current).strip())
             current = [line]
@@ -106,7 +122,7 @@ def is_stub(content: str) -> bool:
         s = line.strip()
         if not s or s.startswith("--"):
             continue
-        if s.startswith("ALTER TABLE") or s.startswith("ALTER VIEW"):
+        if _is_stmt_start(s):
             return False
     return True
 
@@ -125,6 +141,19 @@ def extract_uc_table(content: str) -> str | None:
     m = re.search(r"ALTER TABLE\s+(main\.[\w.]+)\s", content)
     if m:
         return m.group(1).strip()
+    # COMMENT ON {TABLE|VIEW|COLUMN} main.<schema>.<name>[.<col>] ...
+    m = re.search(
+        r"COMMENT\s+ON\s+(?:TABLE|VIEW|COLUMN)\s+(main\.[\w.]+)",
+        content,
+        flags=re.IGNORECASE,
+    )
+    if m:
+        # Strip trailing column ref to get a DESCRIBE-able object
+        ident = m.group(1).strip()
+        parts = ident.split(".")
+        if len(parts) >= 4:
+            ident = ".".join(parts[:3])
+        return ident
     return None
 
 
@@ -148,12 +177,35 @@ def main() -> None:
     ap.add_argument(
         "--schema",
         default="DWH_dbo",
-        help="Wiki folder under knowledge/synapse/Wiki/ (default: DWH_dbo)",
+        help="Schema folder name (default: DWH_dbo). For DWH framework this is a child of "
+             "knowledge/synapse/Wiki/. For UC-domain framework, pass --wiki-root pointing at "
+             "knowledge/uc_domains/{domain}/schemas/ and the schema is the child folder.",
+    )
+    ap.add_argument(
+        "--wiki-root",
+        default=None,
+        help="Override the parent of the schema folder (default: knowledge/synapse/Wiki). "
+             "For UC domains: knowledge/uc_domains/{domain}/schemas",
+    )
+    ap.add_argument(
+        "--deploy-index",
+        default=None,
+        help="Override the path to _deploy-index.md (default: <wiki-root>/<schema>/_deploy-index.md). "
+             "UC domains keep ONE deploy-index per domain so this is set to "
+             "knowledge/uc_domains/{domain}/_deploy-index.md",
     )
     args = ap.parse_args()
 
-    wiki = REPO / "knowledge" / "synapse" / "Wiki" / args.schema
-    deploy_index = wiki / "_deploy-index.md"
+    if args.wiki_root:
+        wiki = (REPO / args.wiki_root / args.schema).resolve()
+    else:
+        wiki = REPO / "knowledge" / "synapse" / "Wiki" / args.schema
+
+    if args.deploy_index:
+        deploy_index = (REPO / args.deploy_index).resolve()
+    else:
+        deploy_index = wiki / "_deploy-index.md"
+
     if not deploy_index.is_file():
         print(f"Missing deploy index: {deploy_index}", file=sys.stderr)
         sys.exit(1)
