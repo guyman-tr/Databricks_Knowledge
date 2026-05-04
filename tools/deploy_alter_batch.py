@@ -404,7 +404,10 @@ def main() -> None:
     for name, folder, success, msg, ok, fcnt in results:
         if msg == "skipped stub":
             continue
-        link_re = re.escape(f"[{args.schema}.{name}]({folder}/{name}.md)")
+        link_re = (
+            rf"\[{re.escape(args.schema)}\.{re.escape(name)}\]"
+            rf"\((?:schemas/{re.escape(args.schema)}/)?{re.escape(folder)}/{re.escape(name)}\.md\)"
+        )
         row_pat = re.compile(
             rf"^(\|\s*{link_re}\s*\|\s*)([^\|]+)(\|\s*)$",
             re.MULTILINE,

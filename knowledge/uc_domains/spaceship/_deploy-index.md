@@ -2,12 +2,12 @@
 domain: spaceship
 framework: uc-domain-doc
 total_deployable: 1
-generated: 1
-deployed: 0
+generated: 0
+deployed: 1
 failed: 0
 stub_only: 0
 last_generate_batch: 0
-last_deploy_batch: 0
+last_deploy_batch: 1
 last_updated: "2026-05-04"
 ---
 
@@ -18,11 +18,11 @@ last_updated: "2026-05-04"
 | **Domain**                         | spaceship |
 | **Total deployable**               | 1  |
 | **Pending (no .alter.sql)**        | 0          |
-| **Generated (awaiting UC deploy)** | 1    |
-| **Deployed (UC)**                  | 0          |
+| **Generated (awaiting UC deploy)** | 0        |
+| **Deployed (UC)**                  | 1         |
 | **Stub-only (no UC)**              | 0   |
-| **Failed**                         | 0          |
-| **Last deploy batch**              | 0          |
+| **Failed**                         | 0         |
+| **Last deploy batch**              | 1          |
 | **Last updated**                   | 2026-05-04       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER/COMMENT, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -43,4 +43,4 @@ Authenticate via `DATABRICKS_TOKEN` (PAT) or `DATABRICKS_MCP_PROFILE=DEFAULT`.
 
 | Object | Deploy status |
 |--------|---------------|
-| [etoro_kpi.v_spaceship_fees](schemas/etoro_kpi/Views/v_spaceship_fees.md) | Generated |
+| [etoro_kpi.v_spaceship_fees](schemas/etoro_kpi/Views/v_spaceship_fees.md) | Deployed (Batch 1) — 2026-05-04 |
