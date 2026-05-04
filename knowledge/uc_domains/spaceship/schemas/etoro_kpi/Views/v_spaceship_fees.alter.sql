@@ -31,7 +31,7 @@ COMMENT ON COLUMN main.etoro_kpi.v_spaceship_fees.total_fees_aud IS 'Absolute to
 COMMENT ON COLUMN main.etoro_kpi.v_spaceship_fees.total_fees_usd IS 'Total fees converted to USD via AUD/USD mid-rate ((Ask+Bid)/2 from fact_currencypricewithsplit, InstrumentID=7).';
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-04 12:18:27 UTC
--- Batch deploy resume: etoro_kpi deploy batch 1
+-- Timestamp: 2026-05-04 13:00:22 UTC
+-- Batch deploy resume: etoro_kpi deploy batch 3
 -- Statements: 8/8 succeeded
 -- ====================
