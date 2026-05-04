@@ -1,0 +1,144 @@
+---
+description: "Phase 5 — Generate object documentation for an acquired-company UC domain. Synthesizes UC discovery + Confluence + Tableau + Databricks-native evidence into a per-object wiki + ALTER stub. Defines the UC-only Tier 1–4 policy and the golden template."
+globs:
+alwaysApply: false
+---
+
+# Phase 5 — Generate Doc
+
+## CONTRACT — Phase 5
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_domain_card.md`, `_discovery/uc_inventory.json`, `_discovery/confluence_index.json` (+ cached pages), `_discovery/tableau_index.json`, `_discovery/databricks_assets.json` |
+| **Outputs required** | `schemas/{schema}/{Type}/{Object}.md` (wiki) + `schemas/{schema}/{Type}/{Object}.alter.sql` (UC ALTER stub for P6 deploy) |
+| **MUST NOT** | Invent column meanings. Anything not anchored to Tier 1–4 evidence is `[UNVERIFIED]` and stays in the sidecar. |
+| **MUST NOT** | Use the SSDT-anchored Tier policy from `dwh-semantic-doc/11-generate-documentation.mdc` — that policy assumes a `.sql` source file that does not exist for acquired domains. |
+| **Failure mode** | **HARD** — a wiki without Tier-evidence anchors must not be written |
+
+---
+
+## UC-only Tier policy
+
+For acquired-company domains, evidence is ranked by **provenance type**, not by source-system:
+
+| Tier | Source class | Where it lives | What counts |
+|------|--------------|----------------|-------------|
+| **Tier 1** | Owner-authored documentation | Confluence pages from `confluence_index.json` (especially BDP / acquisition-team / BI-KPI spaces); UC comments already authored by a domain analyst (length > 200 chars and explicitly referencing column/business-rule semantics) | Direct text quote from the doc; cite by `cloud_id__space__page_id` or by `[uc_comment as of generated_at]` |
+| **Tier 2** | Tableau workbook custom-SQL / calc-field formulas / curated workbook captions | `tableau_index.json[*].objects[full_name].{custom_sql,calc_fields,workbooks}` | Direct quote from a calc-field formula; cite by `<workbook>::<datasource>::<field>`. Workbook captions / project membership count as soft Tier 2. |
+| **Tier 3** | Databricks-native curated artifacts | `databricks_assets.json[*].genie_spaces[*]` join_specs / text_instructions / sql_snippets; ingest notebooks under `databricks/de/{Domain}` | Direct quote from a join_spec SQL or instruction text; cite by `genie:<space_id>::<feature>` or `notebook:<path>` |
+| **Tier 4** | UC sampled values + naming conventions + cluster brief | `_discovery/uc_inventory.json` per-object `samples` and `sample_rows`; `knowledge/skills/_brief_cluster_*.md`; FK / join graph hints | Cite by `[uc_sample]` / `[cluster_brief]` |
+| `[UNVERIFIED]` | Pure agent inference | — | NEVER lands in the main wiki. Goes into the sidecar `<Object>.review-needed.md`. |
+
+The DWH framework's Tier-1 anchor (SSDT comment) does NOT exist here. UC comments authored by a domain analyst can substitute as Tier 1 IF they meet the threshold above (length + explicit semantics) — anything shorter is Tier 4 at best.
+
+## Golden template
+
+```markdown
+---
+object: <fully qualified UC name>
+domain: <domain>
+table_type: VIEW | TABLE | EXTERNAL | MATERIALIZED_VIEW
+format: DELTA | PARQUET | null
+column_count: N
+row_count: N | null
+generated_at: <ISO8601>
+tier_breakdown:
+  tier1_columns: N
+  tier2_columns: N
+  tier3_columns: N
+  tier4_columns: N
+  unverified_columns: N
+sources:
+  confluence: [<page_ids quoted>]
+  tableau:    [<workbook ids quoted>]
+  databricks: [<genie space ids / notebook paths quoted>]
+  uc_comment: true | false
+---
+
+# <bare object name>
+
+## 1. What it is (1 paragraph)
+
+[Tier 1 quote where possible. Otherwise Tier 4 inferred summary anchored to
+sample data + cluster brief. Sentence 1 must answer "what is this row" — the
+grain. Sentence 2 must answer "what does this view aggregate / what produces
+this table". Sentence 3+ may quote gotchas from Tier 1 sources verbatim.]
+
+## 2. Identity & Lineage
+
+| Attribute | Value | Source |
+|-----------|-------|--------|
+| Full name | `main.{schema}.{name}` | UC inventory |
+| Type | … | UC inventory |
+| Format | … | UC inventory `DESCRIBE EXTENDED` |
+| Owner | … | UC `DESCRIBE EXTENDED` |
+| Row count | … | `SELECT COUNT(*)` (P1) |
+| Upstream | bullet list of `*.refs[]` from `_kpi_views_index.json` for views, or `_generic_pipeline_mapping.json[uc_table=…]` for ingest tables | _kpi_views_index / generic_pipeline_mapping |
+| Downstream | tables/views that import this one (cross-link in P6) | _join_graph + Tableau index |
+
+## 3. Columns (`## Elements` if matching synapse-Wiki conventions)
+
+For every column:
+
+| Column | Type | Tier | Description (with citation) | Sample values |
+|--------|------|------|----------------------------|---------------|
+| `date` | DATE | T1 | "Date the fee event occurred (Australia/Sydney). [uc_comment §granularity]" | 2025-01-07 |
+| `total_fees_aud` | DOUBLE | T1 | "Sum of fees for that (date, product, user_id) combination, in AUD source. [uc_comment §scope]" | 3.0 |
+| ... | ... | ... | ... | ... |
+
+The Tier column is a 1-letter code (T1/T2/T3/T4/UNV). Every row MUST have a
+citation. If you cannot cite, write `UNV` and put the field in the sidecar.
+
+## 4. Common usage / JOINs
+
+If Tableau hits exist, list the workbooks and the calc-field formulas that use
+this object. If Genie space hits exist, list the join_specs verbatim.
+
+If neither, copy the cluster-brief JOINs (Tier 4) and mark them `[cluster_brief]`.
+
+## 5. Gotchas
+
+Direct verbatim quotes from Tier-1 sources. NEVER paraphrase. Each gotcha must
+have a citation.
+
+## 6. UC ALTER provenance
+
+A short paragraph documenting which evidence the `.alter.sql` companion file
+draws from for each column. This is the audit trail P6 deploy uses.
+```
+
+## Procedure
+
+1. For target object `{schema}.{name}`:
+   1. Load its row from `uc_inventory.json[schemas[schema].objects[…]]`.
+   2. If `uc_comment` is non-empty AND > 200 chars, mark all columns it explicitly mentions as **Tier 1**.
+   3. Cross-reference `confluence_index.json` for any cached pages that mention this object's bare name OR its product family (`Voyager`, `Nova`, `Super`, `MoneyFarm` portfolio types). Mark anything mentioned there as Tier 1.
+   4. Cross-reference `tableau_index.json[objects[full_name]]`. If `custom_sql` is non-empty, read each query for column references and tier-2-tag any matched columns.
+   5. Cross-reference `databricks_assets.json[per_object_index[full_name]]`. If a Genie space includes this object, read its `space_config.instructions.{join_specs, text_instructions, sql_snippets}` and tier-3-tag any column referenced there.
+   6. Remaining columns get Tier 4 if their `samples` array is non-empty (sample data lets you infer type semantics e.g. ISO currency, UUIDs, timestamps); otherwise UNVERIFIED.
+2. Write the wiki using the golden template.
+3. Write the matching `.alter.sql` skeleton — one `ALTER TABLE … COMMENT '…'` per object plus one `ALTER COLUMN … COMMENT '…'` per Tier 1–3 column. Tier-4 column comments are optional; UNVERIFIED columns are NEVER emitted (they stay in the sidecar).
+4. Commit. Do NOT deploy yet — that's P6.
+
+## Anti-patterns
+
+- ❌ Writing column descriptions like "Identifier for the user" without a citation. If the only evidence is "the column is named `user_id`", that's Tier 4 inference; write `[uc_sample] UUID-like values matching Spaceship Metabase user identifiers.` and mark T4.
+- ❌ Citing a Confluence page that mentions the keyword once but isn't actually about the object. Tier 1 requires the page to be ABOUT the object, not just to MENTION it.
+- ❌ Generating `.alter.sql` for UNVERIFIED columns. The sidecar is the staging area; only verified columns go to UC.
+- ❌ Treating UC comments as authoritative without checking length / specificity. A 50-char "TEMP" comment is a Tier 4 placeholder, not Tier 1.
+- ❌ Pulling JOIN information from `_brief_cluster_*.md` and quoting it as Tier 1. Cluster briefs are Tier 4 — they were inferred from the join graph, not authored.
+
+## Output paths
+
+```
+knowledge/uc_domains/{domain}/schemas/{schema}/{ObjectType}/{ObjectName}.md
+knowledge/uc_domains/{domain}/schemas/{schema}/{ObjectType}/{ObjectName}.alter.sql
+knowledge/uc_domains/{domain}/schemas/{schema}/{ObjectType}/{ObjectName}.review-needed.md   # only if UNV exists
+```
+
+`{ObjectType}` is `Tables` for everything except VIEW / MATERIALIZED_VIEW which go under `Views`.
+
+## Review escape hatch
+
+If after P1–P4 + this phase, fewer than 50 % of columns achieve Tier 1–3 evidence and most fall back to Tier 4 / UNVERIFIED, **stop generating** and add a note at the top of the wiki saying so. Mass-producing Tier-4 wikis is a known anti-pattern (the original DWH framework's `[UNVERIFIED]` ratchet exists for this exact reason).

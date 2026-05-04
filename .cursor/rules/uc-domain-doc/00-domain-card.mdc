@@ -1,0 +1,113 @@
+---
+description: "Phase 0 — Domain Card. Hand-curated scope sheet for a UC-only acquired-company domain (Spaceship, MoneyFarm, etc). Establishes domain identity, source-system context, the in-scope UC schema patterns, and the accessible Atlassian cloudIds before any automation runs."
+globs:
+alwaysApply: false
+---
+
+# Phase 0 — Domain Card
+
+## CONTRACT — Phase 0
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | Domain name; existing skills (`knowledge/skills/`), cluster briefs (`knowledge/skills/_brief_cluster_*.md`), `_kpi_views_index.json`, `_generic_pipeline_mapping.json` |
+| **Outputs required** | `knowledge/uc_domains/{domain}/_domain_card.md` (human-readable scope), `_domain_card.yaml` block embedded at top (machine-readable schema patterns) |
+| **MUST NOT** | Run any UC / Confluence / Tableau / Databricks discovery yet — those need the schema patterns this card defines |
+| **Failure mode** | **HARD** — without a domain card, downstream phases have no schema filter and produce noise |
+
+---
+
+## Purpose
+
+For acquired-company domains we have **no source SQL**. The only contract between the agent and the domain is:
+
+1. The set of **UC schema patterns** that materialize the domain (e.g. `spaceship.*`, `etoro_kpi.v_spaceship_*`, `bizops_output.bizops_output_spaceship_*`).
+2. The set of **Atlassian cloudIds + space keys** that may host owner-authored documentation.
+3. The known cluster / skill index entries that already mention the domain.
+
+Phase 0 captures all three on a single page so Phases 1–5 can run automatically.
+
+## Why this is different from DWH `00-execution-card.mdc`
+
+The DWH execution card describes a per-object 16-step pipeline anchored on SSDT files. Acquired domains have no SSDT. Phase 0 is therefore a **domain-level** card (one per domain), not a per-object card.
+
+## Card structure
+
+`knowledge/uc_domains/{domain}/_domain_card.md` MUST start with this YAML frontmatter:
+
+```yaml
+---
+domain: spaceship
+display_name: "Spaceship — UK SIPP / ISA / Voyager / Nova / Super"
+acquisition_year: 2023
+source_systems:
+  - name: Metabase BigQuery (Spaceship internal DW)
+    nature: read-only ingest
+    materialized_as: spaceship.bronze_spaceship_*
+schemas:
+  primary:
+    - schema: spaceship
+      pattern: "spaceship.*"
+      role: "Acquired-company bronze + raw silver tables ingested from Spaceship"
+  derived:
+    - schema: etoro_kpi
+      pattern: "etoro_kpi.v_spaceship_*"
+      role: "eToro-side KPI views aggregating bronze_spaceship_* into AUM / fees / MIMO panels"
+    - schema: etoro_kpi_prep
+      pattern: "etoro_kpi_prep.v_spaceship_*"
+      role: "Prep tier feeding etoro_kpi (e.g. v_spaceship_mimo)"
+    - schema: bizops_output
+      pattern: "bizops_output.bizops_output_spaceship_*"
+      role: "eToro-side dim/fact pivots for Spaceship product reporting"
+atlassian:
+  cloudIds:
+    - id: "<resolved via getAccessibleAtlassianResources>"
+      scope: "etoro internal Confluence"
+  spaces:
+    - "DDR — DataDriven & Reporting"
+    - "Acquisition — Spaceship"  # if it exists
+related_skills:
+  - knowledge/skills/revenue-and-fees/SKILL.md  # routing super-domain
+  - knowledge/skills/_brief_cluster_13.md       # DDR/Spaceship/MoneyFarm cluster brief
+existing_kpi_index_entries:
+  - etoro_kpi.v_spaceship_aum
+  - etoro_kpi.v_spaceship_fees
+  - etoro_kpi.v_spaceship_mimo
+  - etoro_kpi_prep.v_spaceship_mimo
+known_genie_spaces:
+  - "<discovered in P4>"
+out_of_scope:
+  - eToro-side trading objects that just happen to mention Spaceship
+  - Generic DWH dims (Dim_Customer, Dim_Country, etc.) — those belong to dwh-semantic-doc
+---
+```
+
+After the frontmatter, free-form prose:
+
+1. **What the domain is** — one paragraph in plain English (acquisition story, what the company does, what shipped to UC).
+2. **Mental model** — Mermaid diagram showing the bronze-zone tables fanning into the eToro-side `v_*_aum` / `v_*_fees` / `v_*_mimo` views.
+3. **Cluster provenance** — link to the cluster brief that anchored the discovery (`_brief_cluster_13.md` for the DDR/MIMO cluster).
+4. **Authoring policy** — note that domain wikis under this folder follow the UC-only Tier 1–4 policy from `05-generate-doc.mdc`, NOT the SSDT-anchored DWH policy.
+
+## Procedure (agent-led, ~20 min per domain)
+
+1. Find the cluster brief that ranks the domain (Cluster 13 for Spaceship/MoneyFarm/DDR/MIMO).
+2. Search `knowledge/skills/_kpi_views_index.json` for `{domain}` and list every `etoro_kpi*` view that references the domain — those are the **derived** schemas in scope.
+3. Search `knowledge/synapse/Wiki/_generic_pipeline_mapping.json` for the source-system → UC pattern mapping for the acquired company.
+4. Run **once** in this session:
+   ```text
+   getAccessibleAtlassianResources()  # MCP plugin-atlassian-atlassian
+   ```
+   Record the cloudId(s) for `etoro.atlassian.net` (or whatever workspace your tenant uses).
+5. Write the YAML frontmatter + prose. Do not invent schema patterns — only use patterns that have at least one match in `_kpi_views_index.json`, `_brief_cluster_*.md`, or `_generic_pipeline_mapping.json`.
+6. Land the file at `knowledge/uc_domains/{domain}/_domain_card.md`.
+
+## Gate — Phase 0 → Phase 1
+
+Phase 1 (UC discovery) reads the `schemas:` block and must be able to expand each pattern to at least one real UC table. If P1 returns zero tables for a pattern, P0 is wrong — fix the card before continuing.
+
+## Anti-patterns
+
+- ❌ Listing every UC schema the domain "could touch". Pattern stays narrow; eToro-side dims live in dwh-semantic-doc, not here.
+- ❌ Authoring rich content in the card. The card is **scope and pointers**, not the documentation. Object docs live under `schemas/{schema}/{Type}/{Object}.md`.
+- ❌ Skipping `getAccessibleAtlassianResources` — without a real cloudId, P2 cannot search Confluence and silently returns empty.

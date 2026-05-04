@@ -1,0 +1,107 @@
+---
+description: "Phase 3 — Tableau Discovery. For an acquired-company UC domain, find every Tableau workbook / custom-SQL query / calc field that touches a domain object. Wraps the existing `tools/tableau/extract_table_metadata.py` extractor with a UC-domain filter, keeps the global Tableau index intact, and writes a domain-scoped index that P5 reads."
+globs:
+alwaysApply: false
+---
+
+# Phase 3 — Tableau Discovery
+
+## CONTRACT — Phase 3
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_discovery/uc_inventory.json` (P1); Tableau Connected App credentials in `tools/tableau/.env` |
+| **Outputs required** | `_discovery/tableau_index.json` (per-object Tableau hit counts + workbook IDs) + per-object `.md` files written by the existing extractor under `knowledge/tableau/` (shared, not domain-scoped) |
+| **MUST NOT** | Re-implement the Tableau Metadata API client. Reuse `tools/tableau/extract_table_metadata.py`. |
+| **Failure mode** | **SOFT** — many acquired-domain objects have zero Tableau hits (especially raw bronze tables); record `0` and move on |
+
+---
+
+## Why this matters
+
+Tableau workbooks are **Tier-2 evidence** for UC-only domains: the way a workbook joins/filters/labels a column tells you what the column means in business terms, even when the source has no SSDT comment.
+
+The existing eToro Tableau index is heavily skewed to Synapse (`BI_DB_dbo.*`) tables — `knowledge/tableau/_index/workbooks.csv` has zero matches for `spaceship` because nobody pre-extracted those tables. Phase 3 does that extraction on demand, scoped to the domain.
+
+## Tools
+
+| Tool | Role |
+|------|------|
+| `tools/tableau/extract_table_metadata.py` (pre-existing) | Core extractor — Tableau GraphQL Metadata API → per-object `.md` + global `_index/*.csv` rows |
+| `tools/uc_domains/filter_tableau_by_domain.py` (new) | Drives the extractor with object names from `uc_inventory.json` and writes the domain-scoped index |
+
+## Procedure
+
+### Step 1 — Build the table-name list
+
+Read `uc_inventory.json` and collect every object's **bare table name** (Tableau's GraphQL only filters by `name`, not by `schema.table`). Example for Spaceship:
+
+```text
+bronze_spaceship_metabase_user_beta
+bronze_spaceship_metabase_super_user_balances
+spaceship_metabase_voyager_user_balances
+v_spaceship_aum
+v_spaceship_fees
+v_spaceship_mimo
+bizops_output_spaceship_dim_customers
+...
+```
+
+### Step 2 — Run the extractor
+
+```bash
+python tools/uc_domains/filter_tableau_by_domain.py \
+  --domain spaceship \
+  --inventory knowledge/uc_domains/spaceship/_discovery/uc_inventory.json \
+  --out knowledge/uc_domains/spaceship/_discovery/tableau_index.json
+```
+
+The wrapper:
+
+1. Reads the inventory.
+2. Spawns `extract_table_metadata.py --tables-file <tmp_list>` once with all names.
+3. Re-reads `knowledge/tableau/_index/{workbooks,custom_sql,calc_fields}.csv` (which the extractor just appended to).
+4. Filters those CSV rows where `table_full_name`'s table-name part matches one of our inventory names AND the schema part matches our domain UC schemas (avoid false-positive collisions like `customers` matching some unrelated Synapse `Customer.customers`).
+5. Writes per-object aggregated counts.
+
+### Step 3 — Output schema (`tableau_index.json`)
+
+```jsonc
+{
+  "domain": "spaceship",
+  "generated_at": "...",
+  "objects": {
+    "main.etoro_kpi.v_spaceship_fees": {
+      "workbooks": [
+        { "id": "1aa494cb-60d7-119c-72e1-77de6539ad1f",
+          "name": "new ddrs monitoring - extract for email send",
+          "project": "DDR's",
+          "owner": "Guy Manova",
+          "updated_at": "..." }
+      ],
+      "custom_sql": [
+        { "query_id": "...", "name": "Custom SQL Query1", "chars": 2338 }
+      ],
+      "calc_fields": [
+        { "field_name": "Fee Total AUD", "formula_chars": 24,
+          "workbook": "...", "datasource": "..." }
+      ]
+    },
+    "main.spaceship.bronze_spaceship_metabase_voyager_account_fees": { ... }
+  },
+  "stats": {
+    "objects_total": 60,
+    "objects_with_workbook_hits": 12,
+    "workbook_hits_total": 47,
+    "custom_sql_hits_total": 18,
+    "calc_field_hits_total": 92
+  }
+}
+```
+
+## Anti-patterns
+
+- ❌ Filtering `_index/workbooks.csv` by table-name only. The CSV `table_full_name` includes a Synapse-style `schema.table` prefix; without a schema check, `accounts` matches both `bi_db.accounts` and `Customer.accounts`.
+- ❌ Re-running the extractor inside the agent loop per object. Always batch all names into one `--tables-file` invocation.
+- ❌ Writing per-object Tableau MDs into `knowledge/uc_domains/{domain}/`. The extractor already writes them under `knowledge/tableau/{DB}_{schema}/`; cross-link from the per-object wiki in P5 instead.
+- ❌ Treating zero-hit objects as failure. Bronze ingest tables routinely have zero Tableau usage — the canonical view above them is the Tableau target.

@@ -1,0 +1,102 @@
+{
+  "domain": "spaceship",
+  "generated_at": "2026-05-04T07:42:15Z",
+  "cloud_ids": [
+    "1d3038a6-59ab-451c-bf3b-55c45c5a07d8"
+  ],
+  "searches_run": [
+    {
+      "cql": "title ~ \"Spaceship\" AND type = page",
+      "results": 14,
+      "kept": 3,
+      "ran_at": "2026-05-04T07:43:00Z",
+      "comment": "14 title-match pages; only 3 kept as Tier-1/Tier-2 anchors. Rest are NOC runbooks / Grafana dashboards / sub-account adapter ops docs (not data semantics)."
+    },
+    {
+      "cql": "title ~ \"v_spaceship\" AND type = page",
+      "results": 0,
+      "ran_at": "2026-05-04T07:43:00Z",
+      "comment": "Zero pages title Confluence pages document the etoro_kpi.v_spaceship_* views by name."
+    },
+    {
+      "cql": "(title ~ \"Voyager\" OR title ~ \"Nova\") AND text ~ \"Spaceship\" AND type = page",
+      "results": 0,
+      "ran_at": "2026-05-04T07:43:00Z",
+      "comment": "Zero — Voyager/Nova product-line pages don't reference Spaceship explicitly enough for this AND filter."
+    },
+    {
+      "cql": "text ~ \"v_spaceship\" AND type = page",
+      "results": 0,
+      "ran_at": "2026-05-04T07:44:00Z",
+      "comment": "Zero — no Confluence page references our UC view names. Confirms doc gap: KPI views have no human-readable definition outside UC comments."
+    },
+    {
+      "cql": "text ~ \"bronze_spaceship\" AND type = page",
+      "results": 0,
+      "ran_at": "2026-05-04T07:44:00Z",
+      "comment": "Zero — no Confluence page references bronze_spaceship_* table names. Confirms doc gap on bronze layer too."
+    },
+    {
+      "cql": "(title ~ \"Spaceship AUM\" OR title ~ \"Spaceship FTD\" OR title ~ \"Spaceship MIMO\" OR title ~ \"Spaceship fee\" OR title ~ \"Spaceship KPI\") AND type = page",
+      "results": 0,
+      "ran_at": "2026-05-04T07:44:00Z",
+      "comment": "Zero KPI-flavoured Spaceship pages. The BI/KPI Confluence space hasn't onboarded Spaceship yet."
+    }
+  ],
+  "pages": [
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "page_id": "12918358038",
+      "title": "Spaceship Data transfer to eToro Datalake - Security requirements",
+      "space_key": "BDP",
+      "space_name": "Big Data Platform",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/BDP/pages/12918358038/Spaceship+Data+transfer+to+eToro+Datalake+-+Security+requirements",
+      "matched_query": "title ~ \"Spaceship\" AND type = page",
+      "matched_keyword": "Spaceship",
+      "confidence": "high",
+      "last_modified": "2025-01-28T14:35:15.151Z",
+      "fetched_at": "2026-05-04T07:45:00Z",
+      "relevance_to_domain": "Tier-1 anchor: defines the read-only ingest contract from Spaceship GCP datalake → eToro Azure datalake (the bronze_spaceship_* tables). Confirms the Bronze → Silver → Gold pipeline shape, PII-separation rule, and that no eToro data flows back. Single most authoritative source for the data-transfer half of the domain.",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__BDP__12918358038.md",
+      "body_chars": 4078
+    },
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "page_id": "13131186194",
+      "title": "SpaceShip Integration - LLD",
+      "space_key": "BG",
+      "space_name": "Wallet Group",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/BG/pages/13131186194/SpaceShip+Integration+-+LLD",
+      "matched_query": "title ~ \"Spaceship\" AND type = page",
+      "matched_keyword": "Spaceship",
+      "confidence": "high",
+      "last_modified": "2025-11-20T11:49:52.269Z",
+      "fetched_at": "2026-05-04T07:45:00Z",
+      "relevance_to_domain": "Tier-2 evidence: backend Low-Level Design defines the runtime balance API contract (BalanceAdapter.SpaceShip → /api/v1/balances/{gcid}), the BalanceType enum (CASH, US_INVESTING, SUPER, VOYAGER), and the daily refresh cadence. Useful for interpreting bronze_spaceship_metabase_*_user_balances tables — confirms that the four product lines are CASH/Available money, US_INVESTING, SUPER, VOYAGER (not Nova as a separate type — Nova is a Voyager product family).",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__BG__13131186194.md",
+      "body_chars": 3496
+    },
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "page_id": "13335789570",
+      "title": "Spaceship (retirement funds in Australia)",
+      "space_key": "CS",
+      "space_name": "Customer Service",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/13335789570/Spaceship+retirement+funds+in+Australia",
+      "matched_query": "title ~ \"Spaceship\" AND type = page",
+      "matched_keyword": "Spaceship",
+      "confidence": "high",
+      "last_modified": "2026-04-13T09:54:59.609Z",
+      "fetched_at": "2026-05-04T07:45:00Z",
+      "relevance_to_domain": "Tier-1 business primer: defines what Spaceship IS (Australian retirement-funds platform), the three product lines (Super, Voyager, US Investing), eligibility (Australian residency, KYC), and the rollout phasing. Authoritative business context for the etoro_kpi.v_spaceship_* views.",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__CS__13335789570.md",
+      "body_chars": 4105
+    }
+  ],
+  "stats": {
+    "page_count": 3,
+    "high_confidence_count": 3,
+    "search_runs": 6,
+    "search_results_total": 14
+  }
+}

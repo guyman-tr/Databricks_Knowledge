@@ -1,0 +1,128 @@
+---
+description: "Phase 1 — UC Discovery. For an acquired-company domain, expand the schema patterns from the domain card into a complete UC inventory: schemas, tables, views, columns, types, format, location, row counts, sample rows. This is the single source of truth for downstream phases — equivalent of P1+P2+P3+P5+P7 from dwh-semantic-doc collapsed into one UC-only pass."
+globs:
+alwaysApply: false
+---
+
+# Phase 1 — UC Discovery
+
+## CONTRACT — Phase 1
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_domain_card.md` (specifically the `schemas:` block with primary + derived patterns) |
+| **Outputs required** | `knowledge/uc_domains/{domain}/_discovery/uc_inventory.json` |
+| **MUST NOT** | Use Synapse SSDT, Synapse MCP, or any source-SQL system. UC is the canonical truth for acquired domains. |
+| **Failure mode** | **HARD** — P2/P3/P4/P5 all key off this inventory; if it is missing or stale, downstream phases reason about objects that don't exist |
+
+---
+
+## Purpose
+
+Replace 5 different DWH phases (DDL read, sampling, distribution, view-dep, structure) with **one** Databricks-side discovery pass. The UC `information_schema` already has every column, type, comment, and the table format / location; sampling 5 rows per table gives realistic value distributions; `DESCRIBE EXTENDED` adds owner / created-at / last-modified — far cheaper than querying SSDT files we don't have.
+
+## Tool
+
+`tools/uc_domains/discover_uc.py` — driven by the patterns in `_domain_card.md`.
+
+```bash
+python tools/uc_domains/discover_uc.py \
+  --domain spaceship \
+  --pattern "spaceship.*" \
+  --pattern "etoro_kpi.v_spaceship_*" \
+  --pattern "etoro_kpi_prep.v_spaceship_*" \
+  --pattern "bizops_output.bizops_output_spaceship_*" \
+  --sample-rows 5 \
+  --out knowledge/uc_domains/spaceship/_discovery/uc_inventory.json
+```
+
+The tool:
+
+1. Connects via the same OAuth/PAT path as `tools/dbx_query.py` (profile from env, falling back to `guyman`).
+2. Resolves each pattern against `system.information_schema.tables` (catalog `main`, schema/table glob).
+3. For every match: pulls columns from `system.information_schema.columns`, then `DESCRIBE EXTENDED` for format/location/owner/comment, then `SELECT * LIMIT N` for samples (typed as JSON).
+4. Writes a **single** JSON file with the shape below.
+
+## Output schema (`uc_inventory.json`)
+
+```jsonc
+{
+  "domain": "spaceship",
+  "generated_at": "2026-05-04T07:09:00Z",
+  "patterns": ["spaceship.*", "etoro_kpi.v_spaceship_*", ...],
+  "schemas": {
+    "spaceship": {
+      "object_count": 23,
+      "objects": [
+        {
+          "name": "bronze_spaceship_metabase_user_beta",
+          "full_name": "main.spaceship.bronze_spaceship_metabase_user_beta",
+          "type": "MANAGED" | "EXTERNAL" | "VIEW" | "MATERIALIZED_VIEW",
+          "format": "DELTA" | "PARQUET" | null,
+          "location": "abfss://...",
+          "owner": "...",
+          "comment": null,
+          "row_count": 1234567,            // null if VIEW or sampling skipped
+          "column_count": 18,
+          "columns": [
+            {
+              "name": "user_id",
+              "ordinal": 1,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": ["abc-123", "abc-124", "abc-125"]   // up to 5 distinct
+            }
+          ],
+          "sample_rows": [ { "user_id": "abc-123", ... }, ... ]   // first N rows
+        }
+      ]
+    },
+    "etoro_kpi": { ... }
+  },
+  "stats": {
+    "objects_total": 31,
+    "tables": 23,
+    "views": 8,
+    "columns_total": 412,
+    "columns_with_uc_comment": 0,
+    "objects_with_uc_comment": 0
+  }
+}
+```
+
+`columns_with_uc_comment` and `objects_with_uc_comment` are tracked because acquired domains usually start at 0 % — they are the baseline that P5 → P6 will lift.
+
+## Sampling rules
+
+- For VIEWs: skip row count; just `SELECT * LIMIT 5`. Some views are heavy; if `LIMIT 5` exceeds 30 s, abort sampling for that view, set `sample_rows: null`, and add `sampling_skipped_reason` so P5 knows it must rely on cluster brief / Tableau usage instead.
+- For columns containing `email`, `phone`, `address`, `ssn`, `iban`, `card`: emit samples as `["<masked>"]`. These domains are acquired — PII rules are stricter than DWH.
+- Skip `DESCRIBE HISTORY` here. CTAS-wipe diagnosis is part of P6 deploy planning, not discovery.
+
+## What this phase does **not** do
+
+- Does not read DDL — UC has the column list, that's enough.
+- Does not run `EXPLAIN`/cost estimation — too noisy for first pass.
+- Does not chase upstream provenance — that's P4 (Databricks notebooks) + P3 (Tableau) + P2 (Confluence).
+- Does not attempt FK / join discovery — that's done lazily in P5 by re-reading the existing `_join_graph.json`.
+
+## Gate — Phase 1 → Phases 2/3/4
+
+The next three discovery phases all key on `uc_inventory.json`:
+
+- P2 (Confluence) searches Confluence for object names from this file.
+- P3 (Tableau) filters `knowledge/tableau/_index/*.csv` to schemas listed here.
+- P4 (Databricks-native) lists notebooks / Genie spaces / queries that touch tables in this file.
+
+If `uc_inventory.json` is empty or has < 3 objects per primary pattern, P0 was wrong. Stop and fix the domain card; do not paper over it in P5.
+
+## Re-running
+
+Re-running the script is idempotent — it overwrites `uc_inventory.json`. Schedule a re-run weekly while a domain is being actively documented; once stable, run quarterly.
+
+## Anti-patterns
+
+- ❌ Reading individual `DESCRIBE EXTENDED` results inline inside the agent loop. Always read from `uc_inventory.json` — that's why we wrote it.
+- ❌ Sampling more than 5 rows per object during discovery. P5 (doc generation) can sample more on a per-object basis when needed.
+- ❌ Including UC schemas not in the domain card. The card is the contract; if you discover a relevant schema during P1, update P0 first, then re-run P1.
