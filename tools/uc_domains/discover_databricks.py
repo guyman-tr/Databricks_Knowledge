@@ -169,7 +169,8 @@ def list_local_notebooks(local_repo: Path, domain_folder: str,
     if not folder.exists():
         return []
     out: list[dict] = []
-    for p in sorted(folder.rglob("*.py")):
+    candidates = sorted(list(folder.rglob("*.py")) + list(folder.rglob("*.ipynb")))
+    for p in candidates:
         try:
             text = p.read_text(encoding="utf-8")
         except Exception:
@@ -177,12 +178,20 @@ def list_local_notebooks(local_repo: Path, domain_folder: str,
         # Find every UC table mention (catalog.schema.table) that's in our inventory.
         text_lower = text.lower()
         hits = sorted(t for t in our_full_names if t in text_lower)
+        # Treat each two-part schema.table as a less specific mention for fallback,
+        # since notebooks often write via abfss path, not UC name.
+        bare_hits = sorted({
+            t.split(".", 1)[1]  # schema.table
+            for t in our_full_names
+            if t.split(".", 1)[1] in text_lower
+        }) if not hits else []
         out.append({
             "path": str(p.relative_to(local_repo)).replace("\\", "/"),
-            "language": "PYTHON",
+            "language": "PYTHON" if p.suffix == ".py" else "JUPYTER",
             "size_bytes": p.stat().st_size,
             "modified_at": dt.datetime.fromtimestamp(p.stat().st_mtime).isoformat(),
             "uc_table_mentions": hits,
+            "bare_schema_table_mentions": bare_hits,
         })
     return out
 

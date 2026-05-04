@@ -105,7 +105,7 @@ def collect_searches(path: Path | None) -> list[dict]:
     if not path or not path.exists():
         return []
     out = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
             continue
@@ -142,7 +142,19 @@ def main() -> int:
         "pages": pages,
         "stats": {
             "page_count": len(pages),
-            "high_confidence_count": sum(1 for p in pages if p.get("confidence") == "high"),
+            "high_confidence_count": sum(
+                1 for p in pages
+                if p.get("confidence") == "high"
+                or str(p.get("relevance_to_domain", "")).lower().startswith(("tier1", "tier-1"))
+            ),
+            "tier1_count": sum(
+                1 for p in pages
+                if str(p.get("relevance_to_domain", "")).lower().startswith(("tier1", "tier-1"))
+            ),
+            "tier2_count": sum(
+                1 for p in pages
+                if str(p.get("relevance_to_domain", "")).lower().startswith(("tier2", "tier-2"))
+            ),
             "search_runs": len(searches),
             "search_results_total": sum(int(s.get("results", 0) or 0) for s in searches),
         },

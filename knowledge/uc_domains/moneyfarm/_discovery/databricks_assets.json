@@ -1,0 +1,156 @@
+{
+  "domain": "moneyfarm",
+  "generated_at": "2026-05-04T08:30:51Z",
+  "genie_spaces": [
+    {
+      "space_id": "01f14394002815a288421fd85f36d595",
+      "title": "Investment Portfolio Analytics",
+      "warehouse_id": "5f6c5302def2ad2c",
+      "description": null,
+      "table_count": 1,
+      "domain_table_overlap": 1,
+      "overlap_tables": [
+        "main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot"
+      ],
+      "text_instruction_hits": 0,
+      "join_spec_hits": 0,
+      "snippet_filter_hits": 0,
+      "snippet_measure_hits": 0,
+      "exported_path": "_discovery\\genie_spaces\\01f14394002815a288421fd85f36d595__investment-portfolio-analytics.json"
+    },
+    {
+      "space_id": "01f122020cb3178380de2efa0b990279",
+      "title": "UK BA space [WIP]",
+      "warehouse_id": "fcec103c55a4e055",
+      "description": null,
+      "table_count": 30,
+      "domain_table_overlap": 3,
+      "overlap_tables": [
+        "main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot",
+        "main.bi_output.bi_output_moneyfarm_fact_transactions",
+        "main.money_farm.silver_moneyfarm_etoro_mf_aum"
+      ],
+      "text_instruction_hits": 0,
+      "join_spec_hits": 16,
+      "snippet_filter_hits": 0,
+      "snippet_measure_hits": 0,
+      "exported_path": "_discovery\\genie_spaces\\01f122020cb3178380de2efa0b990279__uk-ba-space-wip.json"
+    },
+    {
+      "space_id": "01f092d3b7d3120f889da5ebede3b4c2",
+      "title": "New Space",
+      "warehouse_id": "db12d2f50b050305",
+      "description": null,
+      "table_count": 1,
+      "domain_table_overlap": 1,
+      "overlap_tables": [
+        "main.money_farm.silver_moneyfarm_etoro_mf_aum"
+      ],
+      "text_instruction_hits": 0,
+      "join_spec_hits": 0,
+      "snippet_filter_hits": 0,
+      "snippet_measure_hits": 0,
+      "exported_path": "_discovery\\genie_spaces\\01f092d3b7d3120f889da5ebede3b4c2__new-space.json"
+    }
+  ],
+  "notebooks": [
+    {
+      "path": "databricks/de/MoneyFarm/MoneyFarm_Daily.ipynb",
+      "language": "JUPYTER",
+      "size_bytes": 21582,
+      "modified_at": "2025-05-13T13:47:58.519567",
+      "uc_table_mentions": [
+        "main.money_farm.silver_moneyfarm_etoro_mf_aum"
+      ],
+      "bare_schema_table_mentions": []
+    }
+  ],
+  "per_object_index": {
+    "main.etoro_kpi_prep.v_moneyfarm_mimo": {
+      "genie_spaces": [],
+      "notebook_paths": []
+    },
+    "main.money_farm.silver_moneyfarm_etoro_mf_aum": {
+      "genie_spaces": [
+        {
+          "space_id": "01f122020cb3178380de2efa0b990279",
+          "title": "UK BA space [WIP]",
+          "join_spec_hits": 16,
+          "text_instruction_hits": 0,
+          "snippet_filter_hits": 0,
+          "snippet_measure_hits": 0
+        },
+        {
+          "space_id": "01f092d3b7d3120f889da5ebede3b4c2",
+          "title": "New Space",
+          "join_spec_hits": 0,
+          "text_instruction_hits": 0,
+          "snippet_filter_hits": 0,
+          "snippet_measure_hits": 0
+        }
+      ],
+      "notebook_paths": [
+        "databricks/de/MoneyFarm/MoneyFarm_Daily.ipynb"
+      ]
+    },
+    "main.bi_output.bi_output_moneyfarm_fact_transactions": {
+      "genie_spaces": [
+        {
+          "space_id": "01f122020cb3178380de2efa0b990279",
+          "title": "UK BA space [WIP]",
+          "join_spec_hits": 16,
+          "text_instruction_hits": 0,
+          "snippet_filter_hits": 0,
+          "snippet_measure_hits": 0
+        }
+      ],
+      "notebook_paths": []
+    },
+    "main.experience.bronze_fivetran_experience_money_farm_product_names": {
+      "genie_spaces": [],
+      "notebook_paths": []
+    },
+    "main.general.bronze_moneyfarm_users": {
+      "genie_spaces": [],
+      "notebook_paths": []
+    },
+    "main.etoro_kpi_prep.v_moneyfarm_fees": {
+      "genie_spaces": [],
+      "notebook_paths": []
+    },
+    "main.etoro_kpi_prep.v_moneyfarm_aum": {
+      "genie_spaces": [],
+      "notebook_paths": []
+    },
+    "main.bi_output.bi_output_moneyfarm_customers": {
+      "genie_spaces": [],
+      "notebook_paths": []
+    },
+    "main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot": {
+      "genie_spaces": [
+        {
+          "space_id": "01f14394002815a288421fd85f36d595",
+          "title": "Investment Portfolio Analytics",
+          "join_spec_hits": 0,
+          "text_instruction_hits": 0,
+          "snippet_filter_hits": 0,
+          "snippet_measure_hits": 0
+        },
+        {
+          "space_id": "01f122020cb3178380de2efa0b990279",
+          "title": "UK BA space [WIP]",
+          "join_spec_hits": 16,
+          "text_instruction_hits": 0,
+          "snippet_filter_hits": 0,
+          "snippet_measure_hits": 0
+        }
+      ],
+      "notebook_paths": []
+    }
+  },
+  "stats": {
+    "domain_objects": 9,
+    "genie_spaces_matching": 3,
+    "notebooks_found": 1
+  }
+}

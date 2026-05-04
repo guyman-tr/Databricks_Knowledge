@@ -1,0 +1,88 @@
+{
+  "domain": "moneyfarm",
+  "generated_at": "2026-05-04T08:28:40Z",
+  "cloud_ids": [
+    "1d3038a6-59ab-451c-bf3b-55c45c5a07d8"
+  ],
+  "searches_run": [
+    {
+      "ts": "2026-05-04T08:20:00Z",
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "cql": "title ~ \"moneyfarm\" OR title ~ \"money farm\"",
+      "limit": 30,
+      "results": 30,
+      "high_confidence_kept": 4,
+      "notes": "Most hits are CTO-office meeting notes / runbooks (low semantic value). Tier-1 keepers: Moneyfarm V2 - HLD (12216961926), MF additions Deposit Event (13551468545), MoneyFarm global payments configurations (13600227427). Tier-2 keeper: ISA - MoneyFarm For CS TLs (13209534657)."
+    }
+  ],
+  "pages": [
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "space_key": "CS",
+      "space_name": "Customer Service",
+      "page_id": "13209534657",
+      "title": "Individual Savings Account (ISA) - MoneyFarm (For CS TLs)",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/CS/pages/13209534657/Individual+Savings+Account+ISA+-+MoneyFarm+For+CS+TLs",
+      "created_at": "2025-06-04T11:35:47.467Z",
+      "last_updated_at": "2026-04-17T13:00:32.311Z",
+      "fetched_at": "2026-05-04T08:25:00Z",
+      "relevance_to_domain": "tier2",
+      "relevance_reason": "Customer-Service operational guide. Confirms MoneyFarm = ISA (Individual Savings Account) and that the CS team relies on a Tableau report 'ISACustomerLookupDashboard / ISACustomerDashboard' for MoneyFarm External ID lookups. Useful as Tier-2 evidence that an analyst dashboard already exists touching the same MoneyFarm entity space.",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__CS__13209534657.md",
+      "body_chars": 1910
+    },
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "space_key": "MG",
+      "space_name": "MIMO Group",
+      "page_id": "13600227427",
+      "title": "MoneyFarm - global payments configurations",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/MG/pages/13600227427/MoneyFarm+-+global+payments+configurations",
+      "created_at": "2025-11-02T08:43:47.797Z",
+      "last_updated_at": "2025-11-02T11:24:36.061Z",
+      "author": "itzikga@etoro.com",
+      "fetched_at": "2026-05-04T08:25:00Z",
+      "relevance_to_domain": "tier1",
+      "relevance_reason": "Authoritative dictionary mapping for MoneyFarm: AccountTypeID=4, FundingTypeID=44, PaymentMethodTypeId=44 (mapped to MoneyFarm), DefaultCurrency=5. Connects MoneyFarm to the eToro payments DB joins (Dictionary.AccountTypes, Dictionary.FundingType). Critical for explaining why downstream MIMO/AUM/Fees panels filter on AccountTypeID=4.",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__MG__13600227427.md",
+      "body_chars": 2795
+    },
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "space_key": "XP",
+      "space_name": "Experience Group",
+      "page_id": "12216961926",
+      "title": "Moneyfarm V2 - HLD",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/XP/pages/12216961926/Moneyfarm+V2+-+HLD",
+      "created_at": "2024-01-28T17:30:53.727Z",
+      "last_updated_at": "2024-02-15T12:07:35.166Z",
+      "author_id": "5a1d53e84e4af91417f1ca26",
+      "fetched_at": "2026-05-04T08:25:00Z",
+      "relevance_to_domain": "tier1",
+      "relevance_reason": "Authoritative HLD for the V2 MoneyFarm integration. Defines eligibility criteria (countryID=UK + designatedRegulation=FCA + playerStatus=Normal + ≥1 Approved deposit + non-legacy), redirect URLs, CCM feature flags. Establishes the upstream business contract that explains why bi_output_moneyfarm_customers exists and what populates it.",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__XP__12216961926.md",
+      "body_chars": 2826
+    },
+    {
+      "cloud_id": "1d3038a6-59ab-451c-bf3b-55c45c5a07d8",
+      "space_key": "XP",
+      "space_name": "Experience Group",
+      "page_id": "13551468545",
+      "title": "MF additions - Support for Money Farm Deposit Event",
+      "url": "https://etoro-jira.atlassian.net/wiki/spaces/XP/pages/13551468545/MF+additions+-+Support+for+Money+Farm+Deposit+Event",
+      "fetched_at": "2026-05-04T08:25:00Z",
+      "relevance_to_domain": "tier1",
+      "relevance_reason": "Authoritative HLD describing how MoneyFarm PORTFOLIO_DEPOSIT events flow from Sub-Accounts EventHub through sub-accounts-experience-worker to the payments-metrics Service Bus. This is the data-lineage contract for v_moneyfarm_mimo: it explains the Transaction-ID hash (GCID, valueDate, Amount), the AccountTypeId=4 hardcode, the FTD detection path, and which compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts events are MoneyFarm-relevant.",
+      "cached_path": "_discovery\\confluence_pages\\1d3038a6-59ab-451c-bf3b-55c45c5a07d8__XP__13551468545.md",
+      "body_chars": 4572
+    }
+  ],
+  "stats": {
+    "page_count": 4,
+    "high_confidence_count": 3,
+    "tier1_count": 3,
+    "tier2_count": 1,
+    "search_runs": 1,
+    "search_results_total": 30
+  }
+}
