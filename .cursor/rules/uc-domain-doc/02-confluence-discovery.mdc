@@ -1,0 +1,125 @@
+---
+description: "Phase 2 — Confluence Discovery. Find owner-authored documentation for an acquired-company domain via Atlassian MCP CQL search. Output is a curated index of relevant pages plus their cached bodies, used as Tier-1 evidence in P5."
+globs:
+alwaysApply: false
+---
+
+# Phase 2 — Confluence Discovery
+
+## CONTRACT — Phase 2
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_domain_card.md` (cloudIds + candidate spaces), `_discovery/uc_inventory.json` (object names to grep) |
+| **Outputs required** | `_discovery/confluence_index.json` (one row per matching page) + `_discovery/confluence_pages/<cloudId>__<spaceKey>__<pageId>.md` (cached body in markdown) |
+| **MUST NOT** | Search public spaces or non-listed cloudIds. Stay inside the cloudIds enumerated in P0. |
+| **Failure mode** | **SOFT** — domain may genuinely have no Confluence presence. Record an empty index with `searches_run` so P5 doesn't re-search. |
+
+---
+
+## Why this matters
+
+For acquired-company domains, **Confluence is the most likely Tier-1 source** — the original Spaceship/MoneyFarm documentation usually lives in our internal Confluence as either an onboarding/integration page or a BI/KPI definition page. The DWH framework anchors on SSDT comments instead; we have no SSDT, so Confluence is promoted from "nice context" to "Tier 1 anchor".
+
+## Tools (agent-driven via MCP)
+
+The MCP server `plugin-atlassian-atlassian` exposes the relevant tools:
+
+| MCP tool | Use |
+|----------|-----|
+| `getAccessibleAtlassianResources` | One-time per session — confirm cloudIds match `_domain_card.md` |
+| `searchConfluenceUsingCql` | Run CQL queries against a cloudId; returns page metadata (id, title, space, link) |
+| `getConfluencePage` | Fetch a single page with `contentFormat=markdown` so we can persist it locally |
+| `getConfluenceSpaces` | Use only if `candidate_spaces` in P0 is unverified |
+| `getPagesInConfluenceSpace` | Walk a small space exhaustively (<200 pages) when CQL is too noisy |
+
+The agent runs these MCP calls directly. There is also a small helper `tools/uc_domains/discover_confluence.py` for the **post-processing** half: take a JSON list of pages already discovered via MCP and write the canonical `confluence_index.json` + writes any pages the agent has saved into `_discovery/confluence_pages/`.
+
+## Procedure
+
+### Step 1 — Build a search keyword list
+
+From `_domain_card.md` and `uc_inventory.json` derive search keywords:
+
+1. Domain display name + acquisition company name (e.g. `"Spaceship"`, `"MoneyFarm"`).
+2. Product line names from the domain card mental model (e.g. `Voyager`, `Nova`, `Super`).
+3. Top 5 view names from `uc_inventory.json` (e.g. `v_spaceship_fees`, `v_spaceship_aum`).
+4. Source-system names (`Metabase BigQuery`, `Spaceship analytics dbt`).
+
+Avoid generic words (`fee`, `aum`) — they return thousands of unrelated pages.
+
+### Step 2 — Run CQL searches
+
+Loop the keyword list, for each keyword run two searches:
+
+```text
+searchConfluenceUsingCql(cloudId=<...>, cql='text ~ "<keyword>" AND type = page', limit=25)
+searchConfluenceUsingCql(cloudId=<...>, cql='title ~ "<keyword>" AND type = page', limit=25)
+```
+
+Title-only matches go into a dedicated **`high_confidence`** list because the page is likely about the keyword, not just mentioning it in passing. Body-text matches go into **`broad`** and need agent triage.
+
+### Step 3 — Triage results
+
+For every result, capture:
+
+```jsonc
+{
+  "cloud_id": "...",
+  "page_id": "1234567",
+  "title": "Spaceship Voyager Fees — KPI definition",
+  "space_key": "BI",
+  "space_name": "BI / KPI",
+  "url": "https://etoro-jira.atlassian.net/wiki/spaces/BI/pages/1234567/...",
+  "matched_query": "title ~ \"Spaceship Voyager Fees\"",
+  "matched_keyword": "Spaceship Voyager Fees",
+  "confidence": "high" | "broad",
+  "last_modified": "2024-...",
+  "labels": ["bi", "spaceship"]
+}
+```
+
+The agent decides which broad-match pages to fetch and cache — usually only those whose title clearly matches the domain.
+
+### Step 4 — Cache the page body
+
+For every kept page, fetch and save:
+
+```text
+getConfluencePage(cloudId=<...>, pageId=<...>, contentFormat="markdown")
+```
+
+Write to:
+
+```
+_discovery/confluence_pages/<cloudId>__<spaceKey>__<pageId>.md
+```
+
+with a YAML frontmatter recording the metadata above. The frontmatter is what `discover_confluence.py` reads to (re)build the index without re-fetching.
+
+### Step 5 — Write the index
+
+`_discovery/confluence_index.json`:
+
+```jsonc
+{
+  "domain": "spaceship",
+  "generated_at": "...",
+  "cloud_ids": ["..."],
+  "searches_run": [
+    {"cql": "text ~ \"Spaceship\" AND type = page", "results": 18},
+    {"cql": "title ~ \"v_spaceship_fees\"", "results": 0},
+    ...
+  ],
+  "pages": [ /* same shape as Step 3 entries, plus a cached_path field */ ]
+}
+```
+
+The `searches_run` list is critical — it's our audit trail that tells the next agent run "we already searched X and found nothing", so we don't waste tokens re-running fruitless searches.
+
+## Anti-patterns
+
+- ❌ Fetching the body of every CQL hit. CQL on `text ~ "Spaceship"` regularly returns 100+ pages, most about Slack channels or random meeting notes. Use the title/body split as a triage gate.
+- ❌ Storing page bodies as raw HTML or ADF. Always use `contentFormat=markdown` so `grep`/Cursor can search them.
+- ❌ Promoting a body-text match to Tier-1 without reading it. P5's Tier-1 anchor requires that the page is actually about the object, not just mentioning it once.
+- ❌ Searching open Confluence cloudIds outside the ones listed in `_domain_card.md`. Acquired-company spaces sometimes leak into the same Atlassian site under different scopes.

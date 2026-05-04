@@ -1,0 +1,137 @@
+---
+description: "Phase 4 — Databricks-Native Discovery. Find every Databricks-side asset (Genie space, notebook, workflow query) that touches a domain object. This is the closest analog to DWH framework's 'production lineage' phase but built from UC artifacts only — no SSDT, no SP scan."
+globs:
+alwaysApply: false
+---
+
+# Phase 4 — Databricks-Native Discovery
+
+## CONTRACT — Phase 4
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_discovery/uc_inventory.json` (P1) |
+| **Outputs required** | `_discovery/databricks_assets.json` |
+| **MUST NOT** | Re-implement Genie space export. Use the existing `genie-reader` skill. |
+| **Failure mode** | **SOFT** — domain may have no Genie / notebook coverage; record empty and move on |
+
+---
+
+## Why this matters
+
+For acquired-company UC domains, **Databricks-native artifacts are Tier-3 evidence**:
+
+- **Genie spaces** — semantic layer over UC tables. Each space's `data_sources.tables[]`, `instructions.text_instructions[]`, `instructions.join_specs[]`, and `instructions.sql_snippets.{filters,measures}[]` are explicit semantic documentation written by analysts. If a Genie space includes one of our domain tables, that space's instructions ARE the canonical analyst-authored doc.
+- **Notebooks** — DataPlatform/databricks/de/{Domain}/*.py — typically the ETL pipeline that materializes the bronze tables. The notebook code is the only authoritative source for "what does column X come from?" for ingest tables.
+- **Query history** — what SQL has actually been run against these tables in the last 30 days. Useful as Tier-4 evidence ("most-used filter columns", "common JOIN partners").
+
+## Tools
+
+| Tool / Skill | Role |
+|--------------|------|
+| `genie-reader` skill | List + export Genie spaces (uses Databricks CLI) |
+| `tools/uc_domains/discover_databricks.py` (new) | Crawl notebooks via Databricks SDK + cross-reference Genie spaces against the UC inventory |
+
+## Procedure
+
+### Step 1 — List all Genie spaces
+
+Per the `genie-reader` skill:
+
+```text
+C:\Users\guyman\databricks-cli-new\databricks.exe genie list-spaces -o json
+```
+
+Filter the result to spaces whose `title` contains the domain name OR whose serialized `data_sources.tables[]` contains any object from `uc_inventory.json`.
+
+### Step 2 — Export the matching spaces
+
+For each match, run the genie-reader skill's Step 2:
+
+```text
+databricks.exe genie get-space <SPACE_ID> --include-serialized-space -o json
+```
+
+Cache the parsed JSON under `_discovery/genie_spaces/<space_id>__<title-slug>.json`.
+
+### Step 3 — Per-table reverse index
+
+For each Genie space, walk its `data_sources.tables[]` and `instructions.{text_instructions, join_specs, sql_snippets.{filters,measures}}[]`. Build:
+
+```jsonc
+{
+  "main.spaceship.bronze_spaceship_metabase_super_user_balances": {
+    "genie_spaces": [
+      {
+        "space_id": "...",
+        "title": "UK BA space [WIP]",
+        "in_data_sources": true,
+        "join_spec_count": 3,
+        "text_instruction_hits": 1,
+        "snippet_hits": { "filters": 0, "measures": 2 }
+      }
+    ]
+  }
+}
+```
+
+### Step 4 — Notebook crawl
+
+Use the Databricks SDK Workspace API to list notebooks under predictable paths:
+
+```text
+/Workspace/Repos/<user>/DataPlatform/databricks/de/{Domain}/*
+/Workspace/Repos/<user>/DataPlatform/databricks/de/{Domain capitalized}/*
+```
+
+For Spaceship there's `DataPlatform/databricks/de/Spaceship/Spaceship- Main.py` etc — the ingest orchestration. Don't read the body; just record the paths and last-modified dates as references.
+
+### Step 5 — Query-history hits
+
+`SELECT statement_text, statement_type, executed_by, end_time
+ FROM system.query.history
+ WHERE end_time > current_date - INTERVAL 30 DAYS
+   AND statement_type IN ('SELECT', 'INSERT', 'MERGE')
+   AND lower(statement_text) RLIKE '<schema_pattern>'`
+
+Aggregate per-object hits (no statement bodies — too verbose). This step is OPTIONAL; only do it for the pilot wiki if you need usage data to choose between candidate columns.
+
+## Output schema (`databricks_assets.json`)
+
+```jsonc
+{
+  "domain": "spaceship",
+  "generated_at": "...",
+  "genie_spaces": [
+    { "space_id": "...", "title": "UK BA space [WIP]", "warehouse_id": "...",
+      "table_count": 30, "domain_table_overlap": 5,
+      "exported_path": "_discovery/genie_spaces/<id>__uk-ba-space-wip.json" }
+  ],
+  "notebooks": [
+    { "path": "/Workspace/Repos/.../DataPlatform/databricks/de/Spaceship/Spaceship- Main.py",
+      "language": "PYTHON",
+      "last_modified": "..." }
+  ],
+  "query_history": {
+    "window_days": 30,
+    "objects": {
+      "main.spaceship.bronze_spaceship_metabase_super_user_balances": {
+        "select_count": 412, "insert_count": 0, "merge_count": 30
+      }
+    }
+  },
+  "per_object_index": {
+    "main.spaceship.bronze_spaceship_metabase_super_user_balances": {
+      "genie_spaces": [...],
+      "notebook_paths": [...]
+    }
+  }
+}
+```
+
+## Anti-patterns
+
+- ❌ Storing full `serialized_space` JSON inline in the index. Cache it in `_discovery/genie_spaces/<id>.json` and reference it.
+- ❌ Reading every notebook in the workspace. Stay within the predictable `de/{Domain}` paths.
+- ❌ Joining query history by table name alone. The schema-qualified RLIKE is required to avoid false positives like `account_fees` matching unrelated tables.
+- ❌ Running query history during the pilot phase. It's optional; defer until a deploy-pass to keep iteration fast.

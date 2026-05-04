@@ -1,0 +1,1681 @@
+{
+  "domain": "moneyfarm",
+  "generated_at": "2026-05-04T08:16:19Z",
+  "catalog": "main",
+  "patterns": [
+    "money_farm.*",
+    "etoro_kpi_prep.v_moneyfarm_*",
+    "bi_output.bi_output_moneyfarm_*",
+    "general.bronze_moneyfarm_*",
+    "experience.bronze_fivetran_experience_money_farm_*"
+  ],
+  "schemas": {
+    "bi_output": {
+      "object_count": 3,
+      "objects": [
+        {
+          "name": "bi_output_moneyfarm_customers",
+          "full_name": "main.bi_output.bi_output_moneyfarm_customers",
+          "table_type": "EXTERNAL",
+          "format": "delta",
+          "location": "abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/BI_OUTPUT/Moneyfarm/Customers",
+          "owner": "eyalbo@etoro.com",
+          "created_at": "Sun Feb 15 10:58:41 UTC 2026",
+          "uc_comment": null,
+          "row_count": 96256,
+          "column_count": 4,
+          "columns": [
+            {
+              "name": "GCID",
+              "ordinal": 0,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                29066999,
+                47397446,
+                47411560,
+                47411224,
+                32817776
+              ]
+            },
+            {
+              "name": "MF_Journey_Beginning",
+              "ordinal": 1,
+              "type": "DATE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "<masked>"
+              ]
+            },
+            {
+              "name": "Date_Source_Type",
+              "ordinal": 2,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "Live Event (New)"
+              ]
+            },
+            {
+              "name": "UpdateDate",
+              "ordinal": 3,
+              "type": "TIMESTAMP",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-03-31T05:43:12.587423+00:00"
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "GCID": 29066999,
+              "MF_Journey_Beginning": "<masked>",
+              "Date_Source_Type": "Live Event (New)",
+              "UpdateDate": "2026-03-31T05:43:12.587423+00:00"
+            },
+            {
+              "GCID": 47397446,
+              "MF_Journey_Beginning": "<masked>",
+              "Date_Source_Type": "Live Event (New)",
+              "UpdateDate": "2026-03-31T05:43:12.587423+00:00"
+            },
+            {
+              "GCID": 47411560,
+              "MF_Journey_Beginning": "<masked>",
+              "Date_Source_Type": "Live Event (New)",
+              "UpdateDate": "2026-03-31T05:43:12.587423+00:00"
+            },
+            {
+              "GCID": 47411224,
+              "MF_Journey_Beginning": "<masked>",
+              "Date_Source_Type": "Live Event (New)",
+              "UpdateDate": "2026-03-31T05:43:12.587423+00:00"
+            },
+            {
+              "GCID": 32817776,
+              "MF_Journey_Beginning": "<masked>",
+              "Date_Source_Type": "Live Event (New)",
+              "UpdateDate": "2026-03-31T05:43:12.587423+00:00"
+            }
+          ],
+          "describe_error": null
+        },
+        {
+          "name": "bi_output_moneyfarm_fact_portfolio_snapshot",
+          "full_name": "main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot",
+          "table_type": "EXTERNAL",
+          "format": "delta",
+          "location": "abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/BI_OUTPUT/Moneyfarm/Fact_Portfolio_Snapshot",
+          "owner": "eyalbo@etoro.com",
+          "created_at": "Sun Feb 15 10:58:52 UTC 2026",
+          "uc_comment": null,
+          "row_count": 40885,
+          "column_count": 10,
+          "columns": [
+            {
+              "name": "GCID",
+              "ordinal": 0,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                23352640,
+                45527620,
+                16843865,
+                21512264,
+                44314534
+              ]
+            },
+            {
+              "name": "PortfolioID",
+              "ordinal": 1,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "18471683-a0e0-4bee-9ae1-8a43a117d24b",
+                "2d8f1ea9-66f2-4d98-ba2a-479599d3c723",
+                "772d2a6d-3ae3-413b-b236-fba5bd4d58c4",
+                "21e28cd8-9afc-422f-8fb7-ce5fb740a2fd",
+                "5fac03f8-c7b6-43fa-b885-326b489b3429"
+              ]
+            },
+            {
+              "name": "Product_Onboarding_Date",
+              "ordinal": 2,
+              "type": "DATE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-04-15",
+                "2025-11-11",
+                "2025-08-28",
+                "2025-12-27",
+                "2025-05-30"
+              ]
+            },
+            {
+              "name": "Product_Name",
+              "ordinal": 3,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "Managed ISA",
+                "DIY ISA",
+                "Cash ISA"
+              ]
+            },
+            {
+              "name": "Current_Market_Value_GBP",
+              "ordinal": 4,
+              "type": "DECIMAL",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "0.00",
+                "70806.19"
+              ]
+            },
+            {
+              "name": "Portfolio_Risk_Level",
+              "ordinal": 5,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "P7",
+                "P0"
+              ]
+            },
+            {
+              "name": "Last_Risk_Level_Change_Date",
+              "ordinal": 6,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Previous_Risk_Level",
+              "ordinal": 7,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Source_Type",
+              "ordinal": 8,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "Live Event",
+                "Silver History"
+              ]
+            },
+            {
+              "name": "UpdateDate",
+              "ordinal": 9,
+              "type": "TIMESTAMP",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-05-04T05:22:26.307190+00:00"
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "GCID": 23352640,
+              "PortfolioID": "18471683-a0e0-4bee-9ae1-8a43a117d24b",
+              "Product_Onboarding_Date": "2026-04-15",
+              "Product_Name": "Managed ISA",
+              "Current_Market_Value_GBP": "0.00",
+              "Portfolio_Risk_Level": "P7",
+              "Last_Risk_Level_Change_Date": null,
+              "Previous_Risk_Level": null,
+              "Source_Type": "Live Event",
+              "UpdateDate": "2026-05-04T05:22:26.307190+00:00"
+            },
+            {
+              "GCID": 45527620,
+              "PortfolioID": "2d8f1ea9-66f2-4d98-ba2a-479599d3c723",
+              "Product_Onboarding_Date": "2025-11-11",
+              "Product_Name": "DIY ISA",
+              "Current_Market_Value_GBP": "0.00",
+              "Portfolio_Risk_Level": null,
+              "Last_Risk_Level_Change_Date": null,
+              "Previous_Risk_Level": null,
+              "Source_Type": "Live Event",
+              "UpdateDate": "2026-05-04T05:22:26.307190+00:00"
+            },
+            {
+              "GCID": 16843865,
+              "PortfolioID": "772d2a6d-3ae3-413b-b236-fba5bd4d58c4",
+              "Product_Onboarding_Date": "2025-08-28",
+              "Product_Name": "DIY ISA",
+              "Current_Market_Value_GBP": "0.00",
+              "Portfolio_Risk_Level": null,
+              "Last_Risk_Level_Change_Date": null,
+              "Previous_Risk_Level": null,
+              "Source_Type": "Silver History",
+              "UpdateDate": "2026-05-04T05:22:26.307190+00:00"
+            },
+            {
+              "GCID": 21512264,
+              "PortfolioID": "21e28cd8-9afc-422f-8fb7-ce5fb740a2fd",
+              "Product_Onboarding_Date": "2025-12-27",
+              "Product_Name": "Cash ISA",
+              "Current_Market_Value_GBP": "70806.19",
+              "Portfolio_Risk_Level": "P0",
+              "Last_Risk_Level_Change_Date": null,
+              "Previous_Risk_Level": null,
+              "Source_Type": "Live Event",
+              "UpdateDate": "2026-05-04T05:22:26.307190+00:00"
+            },
+            {
+              "GCID": 44314534,
+              "PortfolioID": "5fac03f8-c7b6-43fa-b885-326b489b3429",
+              "Product_Onboarding_Date": "2025-05-30",
+              "Product_Name": "DIY ISA",
+              "Current_Market_Value_GBP": "0.00",
+              "Portfolio_Risk_Level": null,
+              "Last_Risk_Level_Change_Date": null,
+              "Previous_Risk_Level": null,
+              "Source_Type": "Silver History",
+              "UpdateDate": "2026-05-04T05:22:26.307190+00:00"
+            }
+          ],
+          "describe_error": null
+        },
+        {
+          "name": "bi_output_moneyfarm_fact_transactions",
+          "full_name": "main.bi_output.bi_output_moneyfarm_fact_transactions",
+          "table_type": "EXTERNAL",
+          "format": "delta",
+          "location": "abfss://analysis@dldataplatformprodwe.dfs.core.windows.net/BI_OUTPUT/Moneyfarm/Fact_Transactions",
+          "owner": "079a992a-c990-4a3a-b901-af1042066afa",
+          "created_at": "Fri Mar 13 06:27:40 UTC 2026",
+          "uc_comment": null,
+          "row_count": 29371,
+          "column_count": 7,
+          "columns": [
+            {
+              "name": "event_correlation_ID",
+              "ordinal": 0,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "aea76e71-3bf8-4e74-8b62-0b3472c70db1_PORTFOLIO_WITHDRAW",
+                "be204f00-8cea-4287-8a96-045adc6a6e5d_PORTFOLIO_WITHDRAW",
+                "9078ec7c-3b2c-4dec-befb-364afe4fa89f_PORTFOLIO_WITHDRAW",
+                "2df0d4e3-23f4-465b-a83f-b0ccf32de000_PORTFOLIO_WITHDRAW",
+                "271c30c9-4a02-44b5-b339-13bd9be5b0e6_PORTFOLIO_WITHDRAW"
+              ]
+            },
+            {
+              "name": "GCID",
+              "ordinal": 1,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                24737425,
+                18260286,
+                45177544,
+                30752350,
+                45203451
+              ]
+            },
+            {
+              "name": "PortfolioID",
+              "ordinal": 2,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "961b754e-87ed-41f8-8d21-33b68f1b1781",
+                "e8c00d03-4376-45b8-b6be-88fdb1b2dffd",
+                "bd5e011c-810f-457c-a35d-cd86cba173f6",
+                "fe490767-9305-4887-845f-212e68967820",
+                "8ec684d0-0fa6-4732-bde0-b2d4a780b09e"
+              ]
+            },
+            {
+              "name": "TransactionType",
+              "ordinal": 3,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "Withdrawal"
+              ]
+            },
+            {
+              "name": "Transaction_Date",
+              "ordinal": 4,
+              "type": "TIMESTAMP",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2025-10-10T15:31:32.586149+00:00",
+                "2025-10-10T15:31:42.284635+00:00",
+                "2025-10-10T15:31:45.321056+00:00",
+                "2025-10-10T15:31:47.555345+00:00",
+                "2025-10-10T15:31:48.438060+00:00"
+              ]
+            },
+            {
+              "name": "Amount_GBP",
+              "ordinal": 5,
+              "type": "DECIMAL",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "-1000.00",
+                "-200.00",
+                "-500.00",
+                "-6174.98",
+                "-750.00"
+              ]
+            },
+            {
+              "name": "UpdateDate",
+              "ordinal": 6,
+              "type": "TIMESTAMP",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-03-13T06:27:38.232901+00:00"
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "event_correlation_ID": "aea76e71-3bf8-4e74-8b62-0b3472c70db1_PORTFOLIO_WITHDRAW",
+              "GCID": 24737425,
+              "PortfolioID": "961b754e-87ed-41f8-8d21-33b68f1b1781",
+              "TransactionType": "Withdrawal",
+              "Transaction_Date": "2025-10-10T15:31:32.586149+00:00",
+              "Amount_GBP": "-1000.00",
+              "UpdateDate": "2026-03-13T06:27:38.232901+00:00"
+            },
+            {
+              "event_correlation_ID": "be204f00-8cea-4287-8a96-045adc6a6e5d_PORTFOLIO_WITHDRAW",
+              "GCID": 18260286,
+              "PortfolioID": "e8c00d03-4376-45b8-b6be-88fdb1b2dffd",
+              "TransactionType": "Withdrawal",
+              "Transaction_Date": "2025-10-10T15:31:42.284635+00:00",
+              "Amount_GBP": "-200.00",
+              "UpdateDate": "2026-03-13T06:27:38.232901+00:00"
+            },
+            {
+              "event_correlation_ID": "9078ec7c-3b2c-4dec-befb-364afe4fa89f_PORTFOLIO_WITHDRAW",
+              "GCID": 45177544,
+              "PortfolioID": "bd5e011c-810f-457c-a35d-cd86cba173f6",
+              "TransactionType": "Withdrawal",
+              "Transaction_Date": "2025-10-10T15:31:45.321056+00:00",
+              "Amount_GBP": "-500.00",
+              "UpdateDate": "2026-03-13T06:27:38.232901+00:00"
+            },
+            {
+              "event_correlation_ID": "2df0d4e3-23f4-465b-a83f-b0ccf32de000_PORTFOLIO_WITHDRAW",
+              "GCID": 30752350,
+              "PortfolioID": "fe490767-9305-4887-845f-212e68967820",
+              "TransactionType": "Withdrawal",
+              "Transaction_Date": "2025-10-10T15:31:47.555345+00:00",
+              "Amount_GBP": "-6174.98",
+              "UpdateDate": "2026-03-13T06:27:38.232901+00:00"
+            },
+            {
+              "event_correlation_ID": "271c30c9-4a02-44b5-b339-13bd9be5b0e6_PORTFOLIO_WITHDRAW",
+              "GCID": 45203451,
+              "PortfolioID": "8ec684d0-0fa6-4732-bde0-b2d4a780b09e",
+              "TransactionType": "Withdrawal",
+              "Transaction_Date": "2025-10-10T15:31:48.438060+00:00",
+              "Amount_GBP": "-750.00",
+              "UpdateDate": "2026-03-13T06:27:38.232901+00:00"
+            }
+          ],
+          "describe_error": null
+        }
+      ]
+    },
+    "etoro_kpi_prep": {
+      "object_count": 3,
+      "objects": [
+        {
+          "name": "v_moneyfarm_aum",
+          "full_name": "main.etoro_kpi_prep.v_moneyfarm_aum",
+          "table_type": "VIEW",
+          "format": null,
+          "location": null,
+          "owner": "guyman@etoro.com",
+          "created_at": "Mon Mar 23 10:24:11 UTC 2026",
+          "uc_comment": "MoneyFarm AUM snapshot by date_id (YYYYMMDD int) and customer keys. External MoneyFarm feed; filter date_id. Example: SELECT COUNT(*) FROM main.etoro_kpi_prep.v_moneyfarm_aum WHERE date_id = 20251231;",
+          "row_count": null,
+          "column_count": 7,
+          "columns": [
+            {
+              "name": "date",
+              "ordinal": 0,
+              "type": "DATE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-05-03",
+                "2026-05-04"
+              ]
+            },
+            {
+              "name": "dateid",
+              "ordinal": 1,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                20260503,
+                20260504
+              ]
+            },
+            {
+              "name": "gcid",
+              "ordinal": 2,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                22673750,
+                21347365,
+                18559568,
+                29910740,
+                34932995
+              ]
+            },
+            {
+              "name": "total_balance_gbp",
+              "ordinal": 3,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0.0,
+                5013.03
+              ]
+            },
+            {
+              "name": "total_balance_usd",
+              "ordinal": 4,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0.0
+              ]
+            },
+            {
+              "name": "is_funded",
+              "ordinal": 5,
+              "type": "BOOLEAN",
+              "nullable": false,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                false,
+                true
+              ]
+            },
+            {
+              "name": "portfolio_count",
+              "ordinal": 6,
+              "type": "LONG",
+              "nullable": false,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                1
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "date": "2026-05-03",
+              "dateid": 20260503,
+              "gcid": 22673750,
+              "total_balance_gbp": 0.0,
+              "total_balance_usd": 0.0,
+              "is_funded": false,
+              "portfolio_count": 1
+            },
+            {
+              "date": "2026-05-03",
+              "dateid": 20260503,
+              "gcid": 21347365,
+              "total_balance_gbp": 0.0,
+              "total_balance_usd": 0.0,
+              "is_funded": false,
+              "portfolio_count": 1
+            },
+            {
+              "date": "2026-05-04",
+              "dateid": 20260504,
+              "gcid": 18559568,
+              "total_balance_gbp": 5013.03,
+              "total_balance_usd": 0.0,
+              "is_funded": true,
+              "portfolio_count": 1
+            },
+            {
+              "date": "2026-05-04",
+              "dateid": 20260504,
+              "gcid": 29910740,
+              "total_balance_gbp": 0.0,
+              "total_balance_usd": 0.0,
+              "is_funded": false,
+              "portfolio_count": 1
+            },
+            {
+              "date": "2026-05-04",
+              "dateid": 20260504,
+              "gcid": 34932995,
+              "total_balance_gbp": 0.0,
+              "total_balance_usd": 0.0,
+              "is_funded": false,
+              "portfolio_count": 1
+            }
+          ],
+          "describe_error": null
+        },
+        {
+          "name": "v_moneyfarm_fees",
+          "full_name": "main.etoro_kpi_prep.v_moneyfarm_fees",
+          "table_type": "VIEW",
+          "format": null,
+          "location": null,
+          "owner": "guyman@etoro.com",
+          "created_at": "Mon Mar 23 10:22:39 UTC 2026",
+          "uc_comment": "MoneyFarm fee facts by date_id. Filter date_id for one day. Example: SELECT SUM(fee_amount) FROM main.etoro_kpi_prep.v_moneyfarm_fees WHERE date_id = 20251231;",
+          "row_count": null,
+          "column_count": 5,
+          "columns": [
+            {
+              "name": "date",
+              "ordinal": 0,
+              "type": "DATE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "dateid",
+              "ordinal": 1,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "gcid",
+              "ordinal": 2,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "total_fees_gbp",
+              "ordinal": 3,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "total_fees_usd",
+              "ordinal": 4,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            }
+          ],
+          "sample_rows": [],
+          "describe_error": null
+        },
+        {
+          "name": "v_moneyfarm_mimo",
+          "full_name": "main.etoro_kpi_prep.v_moneyfarm_mimo",
+          "table_type": "VIEW",
+          "format": null,
+          "location": null,
+          "owner": "guyman@etoro.com",
+          "created_at": "Mon Mar 23 10:24:39 UTC 2026",
+          "uc_comment": "MoneyFarm MIMO (first deposit) style facts by date_id. Filter date_id. Example: SELECT * FROM main.etoro_kpi_prep.v_moneyfarm_mimo WHERE date_id = 20251231 LIMIT 50;",
+          "row_count": null,
+          "column_count": 12,
+          "columns": [
+            {
+              "name": "date",
+              "ordinal": 0,
+              "type": "DATE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-03-09",
+                "2026-03-10",
+                "2026-03-12"
+              ]
+            },
+            {
+              "name": "dateid",
+              "ordinal": 1,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                20260309,
+                20260310,
+                20260312
+              ]
+            },
+            {
+              "name": "gcid",
+              "ordinal": 2,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                23123175,
+                42202202,
+                34458625,
+                45686015,
+                8684529
+              ]
+            },
+            {
+              "name": "total_deposits_gbp",
+              "ordinal": 3,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0.0,
+                500.0,
+                100.0,
+                2020.0
+              ]
+            },
+            {
+              "name": "total_withdrawals_gbp",
+              "ordinal": 4,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                5899.75,
+                0.0,
+                13476.46
+              ]
+            },
+            {
+              "name": "net_flow_gbp",
+              "ordinal": 5,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                -5899.75,
+                500.0,
+                100.0,
+                -13476.46,
+                2020.0
+              ]
+            },
+            {
+              "name": "total_deposits_usd",
+              "ordinal": 6,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0.0,
+                671.1949999999999,
+                134.1975,
+                2697.0333
+              ]
+            },
+            {
+              "name": "total_withdrawals_usd",
+              "ordinal": 7,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                7919.7654025,
+                0.0,
+                18085.072408499997
+              ]
+            },
+            {
+              "name": "net_flow_usd",
+              "ordinal": 8,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                -7919.7654025,
+                671.1949999999999,
+                134.1975,
+                -18085.072408499997,
+                2697.0333
+              ]
+            },
+            {
+              "name": "count_deposits",
+              "ordinal": 9,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0,
+                1
+              ]
+            },
+            {
+              "name": "count_withdrawals",
+              "ordinal": 10,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                1,
+                0
+              ]
+            },
+            {
+              "name": "is_ftd",
+              "ordinal": 11,
+              "type": "BOOLEAN",
+              "nullable": false,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                false
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "date": "2026-03-09",
+              "dateid": 20260309,
+              "gcid": 23123175,
+              "total_deposits_gbp": 0.0,
+              "total_withdrawals_gbp": 5899.75,
+              "net_flow_gbp": -5899.75,
+              "total_deposits_usd": 0.0,
+              "total_withdrawals_usd": 7919.7654025,
+              "net_flow_usd": -7919.7654025,
+              "count_deposits": 0,
+              "count_withdrawals": 1,
+              "is_ftd": false
+            },
+            {
+              "date": "2026-03-09",
+              "dateid": 20260309,
+              "gcid": 42202202,
+              "total_deposits_gbp": 500.0,
+              "total_withdrawals_gbp": 0.0,
+              "net_flow_gbp": 500.0,
+              "total_deposits_usd": 671.1949999999999,
+              "total_withdrawals_usd": 0.0,
+              "net_flow_usd": 671.1949999999999,
+              "count_deposits": 1,
+              "count_withdrawals": 0,
+              "is_ftd": false
+            },
+            {
+              "date": "2026-03-10",
+              "dateid": 20260310,
+              "gcid": 34458625,
+              "total_deposits_gbp": 100.0,
+              "total_withdrawals_gbp": 0.0,
+              "net_flow_gbp": 100.0,
+              "total_deposits_usd": 134.1975,
+              "total_withdrawals_usd": 0.0,
+              "net_flow_usd": 134.1975,
+              "count_deposits": 1,
+              "count_withdrawals": 0,
+              "is_ftd": false
+            },
+            {
+              "date": "2026-03-10",
+              "dateid": 20260310,
+              "gcid": 45686015,
+              "total_deposits_gbp": 0.0,
+              "total_withdrawals_gbp": 13476.46,
+              "net_flow_gbp": -13476.46,
+              "total_deposits_usd": 0.0,
+              "total_withdrawals_usd": 18085.072408499997,
+              "net_flow_usd": -18085.072408499997,
+              "count_deposits": 0,
+              "count_withdrawals": 1,
+              "is_ftd": false
+            },
+            {
+              "date": "2026-03-12",
+              "dateid": 20260312,
+              "gcid": 8684529,
+              "total_deposits_gbp": 2020.0,
+              "total_withdrawals_gbp": 0.0,
+              "net_flow_gbp": 2020.0,
+              "total_deposits_usd": 2697.0333,
+              "total_withdrawals_usd": 0.0,
+              "net_flow_usd": 2697.0333,
+              "count_deposits": 1,
+              "count_withdrawals": 0,
+              "is_ftd": false
+            }
+          ],
+          "describe_error": null
+        }
+      ]
+    },
+    "experience": {
+      "object_count": 1,
+      "objects": [
+        {
+          "name": "bronze_fivetran_experience_money_farm_product_names",
+          "full_name": "main.experience.bronze_fivetran_experience_money_farm_product_names",
+          "table_type": "EXTERNAL",
+          "format": "parquet",
+          "location": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/Fivetran/experience/money_farm_product_names",
+          "owner": "fb0e925c-48b1-48f5-a619-6579d42fb7d4",
+          "created_at": "Tue Jun 10 14:15:51 UTC 2025",
+          "uc_comment": null,
+          "row_count": 9,
+          "column_count": 4,
+          "columns": [
+            {
+              "name": "_row",
+              "ordinal": 0,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            {
+              "name": "_fivetran_synced",
+              "ordinal": 1,
+              "type": "TIMESTAMP",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2025-06-13T05:55:38.048000+00:00",
+                "2025-06-13T05:55:38.063000+00:00"
+              ]
+            },
+            {
+              "name": "product_name",
+              "ordinal": 2,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "gia-discretionary",
+                "isa-discretionary",
+                "jisa-discretionary",
+                "sipp-discretionary",
+                "gia-execution-only"
+              ]
+            },
+            {
+              "name": "is_included_in_balance",
+              "ordinal": 3,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0,
+                1
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "_row": 1,
+              "_fivetran_synced": "2025-06-13T05:55:38.048000+00:00",
+              "product_name": "gia-discretionary",
+              "is_included_in_balance": 0
+            },
+            {
+              "_row": 2,
+              "_fivetran_synced": "2025-06-13T05:55:38.063000+00:00",
+              "product_name": "isa-discretionary",
+              "is_included_in_balance": 1
+            },
+            {
+              "_row": 3,
+              "_fivetran_synced": "2025-06-13T05:55:38.063000+00:00",
+              "product_name": "jisa-discretionary",
+              "is_included_in_balance": 0
+            },
+            {
+              "_row": 4,
+              "_fivetran_synced": "2025-06-13T05:55:38.063000+00:00",
+              "product_name": "sipp-discretionary",
+              "is_included_in_balance": 0
+            },
+            {
+              "_row": 5,
+              "_fivetran_synced": "2025-06-13T05:55:38.063000+00:00",
+              "product_name": "gia-execution-only",
+              "is_included_in_balance": 0
+            }
+          ],
+          "describe_error": null
+        }
+      ]
+    },
+    "general": {
+      "object_count": 1,
+      "objects": [
+        {
+          "name": "bronze_moneyfarm_users",
+          "full_name": "main.general.bronze_moneyfarm_users",
+          "table_type": "EXTERNAL",
+          "format": "parquet",
+          "location": "abfss://internal-sources@dldataplatformprodwe.dfs.core.windows.net/Bronze/Moneyfarm/users",
+          "owner": "fb0e925c-48b1-48f5-a619-6579d42fb7d4",
+          "created_at": "Tue Nov 12 12:22:25 UTC 2024",
+          "uc_comment": null,
+          "row_count": 24202,
+          "column_count": 10,
+          "columns": [
+            {
+              "name": "gcid",
+              "ordinal": 0,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                45999106,
+                42454563,
+                47517522,
+                27409449,
+                47518695
+              ]
+            },
+            {
+              "name": "externalUserId",
+              "ordinal": 1,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "H30LVtrvVj_5UXoyhGDgYXGKZ_pVo7xhCKcZMEQpcuN-43xo0YH6Sjxk6i-HGJQP",
+                "3CA3aJItE9_xn8yMzTkXL4Q5X62Omak10see0btcVRHmzhrZ1hGqE2p9hgcb34j9",
+                "lhoaFGJwsAZR4WrCpkSQdIwJjmz_dVWOOwAW5uU2NFHDuDeUd2oP3PS5tfp7k-_d",
+                "7wa_BCJ9V6fR4g-PA9vmZM5zexEacKY08QRJhfGoERDYICYuO7hOF6ejAEb6S2eZ",
+                "6GBOtxL86Qhr3yZLtuCf-gE3RQN61gbrYmHP-xaxbTGbADGuVy8LRJCJhY9Ns4iB"
+              ]
+            },
+            {
+              "name": "moneyfarmUserId",
+              "ordinal": 2,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "eebac9e0-a185-4e38-880d-b9ac62e4f054",
+                "a02b4a1c-b8a2-4517-a896-adc7adf3531a",
+                "20b22dd0-fea4-415d-88b1-58099076337b",
+                "19adaaf8-a498-4382-9d88-bc6d9efc63fe",
+                "addfe785-873d-47de-94c3-d40569ec6a0d"
+              ]
+            },
+            {
+              "name": "createdAt",
+              "ordinal": 3,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "2026-04-07T19:10:00.4172639Z",
+                "2026-04-07T19:13:44.0000098Z",
+                "2026-04-07T19:28:25.134485Z",
+                "2026-04-07T19:33:09.6556992Z",
+                "2026-04-07T19:35:21.3354307Z"
+              ]
+            },
+            {
+              "name": "id",
+              "ordinal": 4,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "45999106",
+                "42454563",
+                "47517522",
+                "27409449",
+                "47518695"
+              ]
+            },
+            {
+              "name": "_rid",
+              "ordinal": 5,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "B9EzAIVcHmELsAAAAAAAAA==",
+                "B9EzAIVcHmEMsAAAAAAAAA==",
+                "B9EzAIVcHmENsAAAAAAAAA==",
+                "B9EzAIVcHmEOsAAAAAAAAA==",
+                "B9EzAIVcHmEPsAAAAAAAAA=="
+              ]
+            },
+            {
+              "name": "_self",
+              "ordinal": 6,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmELsAAAAAAAAA==/",
+                "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmEMsAAAAAAAAA==/",
+                "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmENsAAAAAAAAA==/",
+                "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmEOsAAAAAAAAA==/",
+                "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmEPsAAAAAAAAA==/"
+              ]
+            },
+            {
+              "name": "_etag",
+              "ordinal": 7,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "\"7a090fa0-0000-0c00-0000-69d5568a0000\"",
+                "\"7a0903de-0000-0c00-0000-69d557680000\"",
+                "\"7b09a1ce-0000-0c00-0000-69d55adb0000\"",
+                "\"7c091d1b-0000-0c00-0000-69d55bf50000\"",
+                "\"7c093849-0000-0c00-0000-69d55c790000\""
+              ]
+            },
+            {
+              "name": "_attachments",
+              "ordinal": 8,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "attachments/"
+              ]
+            },
+            {
+              "name": "_ts",
+              "ordinal": 9,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                1775589002,
+                1775589223,
+                1775590107,
+                1775590389,
+                1775590521
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "gcid": 45999106,
+              "externalUserId": "H30LVtrvVj_5UXoyhGDgYXGKZ_pVo7xhCKcZMEQpcuN-43xo0YH6Sjxk6i-HGJQP",
+              "moneyfarmUserId": "eebac9e0-a185-4e38-880d-b9ac62e4f054",
+              "createdAt": "2026-04-07T19:10:00.4172639Z",
+              "id": "45999106",
+              "_rid": "B9EzAIVcHmELsAAAAAAAAA==",
+              "_self": "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmELsAAAAAAAAA==/",
+              "_etag": "\"7a090fa0-0000-0c00-0000-69d5568a0000\"",
+              "_attachments": "attachments/",
+              "_ts": 1775589002
+            },
+            {
+              "gcid": 42454563,
+              "externalUserId": "3CA3aJItE9_xn8yMzTkXL4Q5X62Omak10see0btcVRHmzhrZ1hGqE2p9hgcb34j9",
+              "moneyfarmUserId": "a02b4a1c-b8a2-4517-a896-adc7adf3531a",
+              "createdAt": "2026-04-07T19:13:44.0000098Z",
+              "id": "42454563",
+              "_rid": "B9EzAIVcHmEMsAAAAAAAAA==",
+              "_self": "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmEMsAAAAAAAAA==/",
+              "_etag": "\"7a0903de-0000-0c00-0000-69d557680000\"",
+              "_attachments": "attachments/",
+              "_ts": 1775589223
+            },
+            {
+              "gcid": 47517522,
+              "externalUserId": "lhoaFGJwsAZR4WrCpkSQdIwJjmz_dVWOOwAW5uU2NFHDuDeUd2oP3PS5tfp7k-_d",
+              "moneyfarmUserId": "20b22dd0-fea4-415d-88b1-58099076337b",
+              "createdAt": "2026-04-07T19:28:25.134485Z",
+              "id": "47517522",
+              "_rid": "B9EzAIVcHmENsAAAAAAAAA==",
+              "_self": "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmENsAAAAAAAAA==/",
+              "_etag": "\"7b09a1ce-0000-0c00-0000-69d55adb0000\"",
+              "_attachments": "attachments/",
+              "_ts": 1775590107
+            },
+            {
+              "gcid": 27409449,
+              "externalUserId": "7wa_BCJ9V6fR4g-PA9vmZM5zexEacKY08QRJhfGoERDYICYuO7hOF6ejAEb6S2eZ",
+              "moneyfarmUserId": "19adaaf8-a498-4382-9d88-bc6d9efc63fe",
+              "createdAt": "2026-04-07T19:33:09.6556992Z",
+              "id": "27409449",
+              "_rid": "B9EzAIVcHmEOsAAAAAAAAA==",
+              "_self": "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmEOsAAAAAAAAA==/",
+              "_etag": "\"7c091d1b-0000-0c00-0000-69d55bf50000\"",
+              "_attachments": "attachments/",
+              "_ts": 1775590389
+            },
+            {
+              "gcid": 47518695,
+              "externalUserId": "6GBOtxL86Qhr3yZLtuCf-gE3RQN61gbrYmHP-xaxbTGbADGuVy8LRJCJhY9Ns4iB",
+              "moneyfarmUserId": "addfe785-873d-47de-94c3-d40569ec6a0d",
+              "createdAt": "2026-04-07T19:35:21.3354307Z",
+              "id": "47518695",
+              "_rid": "B9EzAIVcHmEPsAAAAAAAAA==",
+              "_self": "dbs/B9EzAA==/colls/B9EzAIVcHmE=/docs/B9EzAIVcHmEPsAAAAAAAAA==/",
+              "_etag": "\"7c093849-0000-0c00-0000-69d55c790000\"",
+              "_attachments": "attachments/",
+              "_ts": 1775590521
+            }
+          ],
+          "describe_error": null
+        }
+      ]
+    },
+    "money_farm": {
+      "object_count": 1,
+      "objects": [
+        {
+          "name": "silver_moneyfarm_etoro_mf_aum",
+          "full_name": "main.money_farm.silver_moneyfarm_etoro_mf_aum",
+          "table_type": "EXTERNAL",
+          "format": "delta",
+          "location": "abfss://external-sources@dldataplatformprodwe.dfs.core.windows.net/VN/Silver/MoneyFarm/ETORO-MF-AUM",
+          "owner": "fb0e925c-48b1-48f5-a619-6579d42fb7d4",
+          "created_at": "Sun Apr 27 13:11:29 UTC 2025",
+          "uc_comment": "The silver_moneyfarm_etoro_mf_aum table contains data on the portfolio investments and disinvestments, market value, risk level, and cash status of various portfolios. It also includes information on portfolio model changes and their corresponding dates, as well as the average price and calculated amount in USD. The table provides a comprehensive view of the investment performance and risk levels of different portfolios, which can be used by the business to make informed decisions on portfolio management and allocation of resources.\n-- moneyfarm balance",
+          "row_count": 10226218,
+          "column_count": 23,
+          "columns": [
+            {
+              "name": "Identifier_Value",
+              "ordinal": 0,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "63680776657619161668",
+                "64004845699542531882",
+                "63463503758209900567",
+                "63679207580543100411",
+                "61140763746144300272"
+              ]
+            },
+            {
+              "name": "Portfolio_Id",
+              "ordinal": 1,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "1ff7d183-715c-4d95-b7ce-84cfc9c077e1",
+                "ba7b7a96-b5f2-4aa8-b692-372a909a3509",
+                "d1d96219-ed7f-4d82-b14e-77bf0ccaa57b",
+                "35365ae2-a489-46da-b1ac-9e3df2c8684d",
+                "e80dcead-3f82-41fe-be36-18e6db429648"
+              ]
+            },
+            {
+              "name": "Portfolio_Risk_Level",
+              "ordinal": 2,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "P0",
+                "P6",
+                "P4",
+                "P5"
+              ]
+            },
+            {
+              "name": "Total_Investments",
+              "ordinal": 3,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "0.00",
+                "2000.00"
+              ]
+            },
+            {
+              "name": "Total_Disinvestments",
+              "ordinal": 4,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "0.00"
+              ]
+            },
+            {
+              "name": "Market_Value",
+              "ordinal": 5,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "0.00",
+                "1985.45"
+              ]
+            },
+            {
+              "name": "Portfolio_Model_Change",
+              "ordinal": 6,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "No"
+              ]
+            },
+            {
+              "name": "Date_of_Portfolio_Model_change",
+              "ordinal": 7,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Old_Portfolio_Risk_Level",
+              "ordinal": 8,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Cash",
+              "ordinal": 9,
+              "type": "BOOLEAN",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Channel",
+              "ordinal": 10,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Portfolio_Model_Id",
+              "ordinal": 11,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "moneyfarm-gb-r0-c1",
+                "moneyfarm-esg-gb-r6-c1",
+                "moneyfarm-gb-r4-c1",
+                "moneyfarm-gb-r5-c1"
+              ]
+            },
+            {
+              "name": "Old_Portfolio_Model_Id",
+              "ordinal": 12,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "GCID",
+              "ordinal": 13,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                19282716,
+                25394645,
+                16168084,
+                19169635,
+                5601526
+              ]
+            },
+            {
+              "name": "Avg_Price",
+              "ordinal": 14,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                1.26316
+              ]
+            },
+            {
+              "name": "CalculatedAmountInUSD",
+              "ordinal": 15,
+              "type": "DOUBLE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                0.0,
+                2526.32
+              ]
+            },
+            {
+              "name": "countAll",
+              "ordinal": 16,
+              "type": "LONG",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "Total_Records",
+              "ordinal": 17,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": [
+                "641"
+              ]
+            },
+            {
+              "name": "Product",
+              "ordinal": 18,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "SourceFile",
+              "ordinal": 19,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": false,
+              "samples": []
+            },
+            {
+              "name": "etr_y",
+              "ordinal": 20,
+              "type": "INT",
+              "nullable": true,
+              "comment": null,
+              "is_partition": true,
+              "samples": [
+                2023
+              ]
+            },
+            {
+              "name": "etr_ym",
+              "ordinal": 21,
+              "type": "STRING",
+              "nullable": true,
+              "comment": null,
+              "is_partition": true,
+              "samples": [
+                "2023-05"
+              ]
+            },
+            {
+              "name": "etr_ymd",
+              "ordinal": 22,
+              "type": "DATE",
+              "nullable": true,
+              "comment": null,
+              "is_partition": true,
+              "samples": [
+                "2023-05-05"
+              ]
+            }
+          ],
+          "sample_rows": [
+            {
+              "Identifier_Value": "63680776657619161668",
+              "Portfolio_Id": "1ff7d183-715c-4d95-b7ce-84cfc9c077e1",
+              "Portfolio_Risk_Level": "P0",
+              "Total_Investments": "0.00",
+              "Total_Disinvestments": "0.00",
+              "Market_Value": "0.00",
+              "Portfolio_Model_Change": "No",
+              "Date_of_Portfolio_Model_change": null,
+              "Old_Portfolio_Risk_Level": null,
+              "Cash": null,
+              "Channel": null,
+              "Portfolio_Model_Id": "moneyfarm-gb-r0-c1",
+              "Old_Portfolio_Model_Id": null,
+              "GCID": 19282716,
+              "Avg_Price": 1.26316,
+              "CalculatedAmountInUSD": 0.0,
+              "countAll": null,
+              "Total_Records": "641",
+              "Product": null,
+              "SourceFile": null,
+              "etr_y": 2023,
+              "etr_ym": "2023-05",
+              "etr_ymd": "2023-05-05"
+            },
+            {
+              "Identifier_Value": "64004845699542531882",
+              "Portfolio_Id": "ba7b7a96-b5f2-4aa8-b692-372a909a3509",
+              "Portfolio_Risk_Level": "P6",
+              "Total_Investments": "2000.00",
+              "Total_Disinvestments": "0.00",
+              "Market_Value": "1985.45",
+              "Portfolio_Model_Change": "No",
+              "Date_of_Portfolio_Model_change": null,
+              "Old_Portfolio_Risk_Level": null,
+              "Cash": null,
+              "Channel": null,
+              "Portfolio_Model_Id": "moneyfarm-esg-gb-r6-c1",
+              "Old_Portfolio_Model_Id": null,
+              "GCID": 25394645,
+              "Avg_Price": 1.26316,
+              "CalculatedAmountInUSD": 2526.32,
+              "countAll": null,
+              "Total_Records": "641",
+              "Product": null,
+              "SourceFile": null,
+              "etr_y": 2023,
+              "etr_ym": "2023-05",
+              "etr_ymd": "2023-05-05"
+            },
+            {
+              "Identifier_Value": "63463503758209900567",
+              "Portfolio_Id": "d1d96219-ed7f-4d82-b14e-77bf0ccaa57b",
+              "Portfolio_Risk_Level": "P4",
+              "Total_Investments": "0.00",
+              "Total_Disinvestments": "0.00",
+              "Market_Value": "0.00",
+              "Portfolio_Model_Change": "No",
+              "Date_of_Portfolio_Model_change": null,
+              "Old_Portfolio_Risk_Level": null,
+              "Cash": null,
+              "Channel": null,
+              "Portfolio_Model_Id": "moneyfarm-gb-r4-c1",
+              "Old_Portfolio_Model_Id": null,
+              "GCID": 16168084,
+              "Avg_Price": 1.26316,
+              "CalculatedAmountInUSD": 0.0,
+              "countAll": null,
+              "Total_Records": "641",
+              "Product": null,
+              "SourceFile": null,
+              "etr_y": 2023,
+              "etr_ym": "2023-05",
+              "etr_ymd": "2023-05-05"
+            },
+            {
+              "Identifier_Value": "63679207580543100411",
+              "Portfolio_Id": "35365ae2-a489-46da-b1ac-9e3df2c8684d",
+              "Portfolio_Risk_Level": "P5",
+              "Total_Investments": "0.00",
+              "Total_Disinvestments": "0.00",
+              "Market_Value": "0.00",
+              "Portfolio_Model_Change": "No",
+              "Date_of_Portfolio_Model_change": null,
+              "Old_Portfolio_Risk_Level": null,
+              "Cash": null,
+              "Channel": null,
+              "Portfolio_Model_Id": "moneyfarm-gb-r5-c1",
+              "Old_Portfolio_Model_Id": null,
+              "GCID": 19169635,
+              "Avg_Price": 1.26316,
+              "CalculatedAmountInUSD": 0.0,
+              "countAll": null,
+              "Total_Records": "641",
+              "Product": null,
+              "SourceFile": null,
+              "etr_y": 2023,
+              "etr_ym": "2023-05",
+              "etr_ymd": "2023-05-05"
+            },
+            {
+              "Identifier_Value": "61140763746144300272",
+              "Portfolio_Id": "e80dcead-3f82-41fe-be36-18e6db429648",
+              "Portfolio_Risk_Level": "P4",
+              "Total_Investments": "0.00",
+              "Total_Disinvestments": "0.00",
+              "Market_Value": "0.00",
+              "Portfolio_Model_Change": "No",
+              "Date_of_Portfolio_Model_change": null,
+              "Old_Portfolio_Risk_Level": null,
+              "Cash": null,
+              "Channel": null,
+              "Portfolio_Model_Id": "moneyfarm-gb-r4-c1",
+              "Old_Portfolio_Model_Id": null,
+              "GCID": 5601526,
+              "Avg_Price": 1.26316,
+              "CalculatedAmountInUSD": 0.0,
+              "countAll": null,
+              "Total_Records": "641",
+              "Product": null,
+              "SourceFile": null,
+              "etr_y": 2023,
+              "etr_ym": "2023-05",
+              "etr_ymd": "2023-05-05"
+            }
+          ],
+          "describe_error": null
+        }
+      ]
+    }
+  },
+  "stats": {
+    "objects_total": 9,
+    "tables": 6,
+    "views": 3,
+    "columns_total": 82,
+    "columns_with_uc_comment": 0,
+    "objects_with_uc_comment": 4,
+    "wall_seconds": 41.5
+  }
+}

@@ -1,0 +1,87 @@
+---
+description: "Phase 6 — Deploy a UC domain's ALTERs to Unity Catalog and maintain the per-domain _deploy-index.md. Reuses tools/deploy_alter_batch.py with the new --wiki-root / --deploy-index overrides. Cross-object enrichment (downstream comment propagation) is also covered here."
+globs:
+alwaysApply: false
+---
+
+# Phase 6 — Deploy + Cross-Object Enrichment
+
+## CONTRACT — Phase 6
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | All P5 outputs (`schemas/{schema}/{Type}/{Object}.md` + `.alter.sql` for each documented object), `_deploy-index.md` |
+| **Outputs required** | Updated `_deploy-index.md` reflecting deploy state; UC objects with newly-set `COMMENT ON …` text; optionally cross-object enrichment patches under `schemas/<schema>/.../<Object>.downstream.alter.sql` |
+| **MUST NOT** | Deploy any column or object whose evidence is `[UNVERIFIED]`. Those rows are NOT emitted to `.alter.sql` by P5 in the first place — verify before deploy that no UNVERIFIED text leaked in. |
+| **Failure mode** | **SOFT** — failed individual ALTERs are logged in the deploy index with the schema-prefixed `Failed (deploy Batch N)` status; the next batch can resume. |
+
+---
+
+## Procedure
+
+### 6.1 Build the per-domain deploy index
+
+```
+python tools/uc_domains/build_deploy_index.py --domain {domain}
+```
+
+Writes `knowledge/uc_domains/{domain}/_deploy-index.md`. ONE deploy index per domain (NOT per schema, unlike the synapse-Wiki framework). The index links objects with `(schemas/{schema}/{Type}/{Object}.md)` style relative paths. Run once per discovery cycle.
+
+### 6.2 Deploy a batch
+
+```
+python tools/deploy_alter_batch.py \
+    --wiki-root knowledge/uc_domains/{domain}/schemas \
+    --deploy-index knowledge/uc_domains/{domain}/_deploy-index.md \
+    --schema {schema} \
+    --batch-size 5 \
+    --deploy-batch N
+```
+
+Required env (one of):
+- `DATABRICKS_TOKEN` — PAT for headless deploy.
+- `DATABRICKS_MCP_PROFILE=DEFAULT` — uses the working profile from `~/.databrickscfg`.
+
+The deploy runner:
+1. Reads `_deploy-index.md`, picks the next `--batch-size` rows whose status is `Generated`.
+2. For each row, reads `schemas/{schema}/{folder}/{name}.alter.sql`, parses statements (ALTER TABLE, ALTER VIEW, COMMENT ON …) and executes them in a single Databricks SQL session.
+3. Updates the row's status to `Deployed (Batch N) — YYYY-MM-DD` on success or `Failed (deploy Batch N)` with a one-line error otherwise.
+4. Appends a `-- == LAST EXECUTION ==` footer to each `.alter.sql` for audit.
+
+### 6.3 Redeploy a batch (if comments need correction)
+
+```
+python tools/deploy_alter_batch.py --redo-batch N \
+    --wiki-root knowledge/uc_domains/{domain}/schemas \
+    --deploy-index knowledge/uc_domains/{domain}/_deploy-index.md \
+    --schema {schema} \
+    --deploy-batch N+1
+```
+
+This resets `Deployed (Batch N)` rows back to `Generated`, then deploys them again under a new batch number. Use after editing `.alter.sql` comments based on review feedback.
+
+### 6.4 Cross-object enrichment (deferred)
+
+Once ≥3 wikis exist for a domain, also generate downstream patches: where a documented column flows verbatim into an undocumented downstream object (per the join_specs in `databricks_assets.json`), emit a `<Downstream>.downstream.alter.sql` that copies the documented column's comment onto the downstream object. The DWH framework's `_downstream_column_comments.sql` is the prior art.
+
+This phase is **not implemented** for UC domains yet — the wiki-set is too small. Track in the per-domain card under `cross_object_enrichment_status: pending`.
+
+---
+
+## When to deploy
+
+The plan defers Build 5 ("deploy first 2-3 ALTERs") until at least 2-3 wikis exist per pilot. Today (2026-05-04) we have ONE wiki per pilot:
+
+- `spaceship/etoro_kpi/Views/v_spaceship_fees`
+- `moneyfarm/bi_output/Tables/bi_output_moneyfarm_fact_portfolio_snapshot`
+
+With only one wiki per domain, the deploy is feasible (the `--dry-run -v` validates the path discovery and statement parsing) but should wait until each domain accumulates 2-3 verified wikis. The tooling is in place; the actual deploy is a one-liner when the user is ready.
+
+---
+
+## Anti-patterns
+
+- ❌ Building one `_deploy-index.md` per schema for a UC domain. UC domains are unit-of-deploy; per-schema indexes fragment the audit trail.
+- ❌ Deploying with `--batch-size 100` on a fresh domain. Use 3-5 first; review the footer + UC-side comment in `system.information_schema.columns`; then scale up.
+- ❌ Running `--redo-batch` without first updating the `.alter.sql` content. Redo without code change is a no-op that costs deploy budget.
+- ❌ Treating `Stub only` rows as deploy candidates. They have no executable statement; the index correctly excludes them.
