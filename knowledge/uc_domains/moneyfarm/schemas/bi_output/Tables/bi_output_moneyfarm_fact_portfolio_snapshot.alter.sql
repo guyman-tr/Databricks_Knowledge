@@ -41,3 +41,9 @@ ALTER TABLE main.bi_output.bi_output_moneyfarm_fact_portfolio_snapshot ALTER COL
 --   Previous_Risk_Level          — STRING type, sample is all NULL
 -- Promote these by appending ALTER COLUMN … COMMENT lines after analyst review,
 -- and add the corresponding T5 entry to the review-log.md.
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-04 12:20:38 UTC
+-- Batch deploy resume: bi_output deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================

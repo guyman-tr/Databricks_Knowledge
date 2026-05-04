@@ -29,3 +29,9 @@ COMMENT ON COLUMN main.etoro_kpi.v_spaceship_fees.user_id        IS 'Canonical S
 COMMENT ON COLUMN main.etoro_kpi.v_spaceship_fees.gcid           IS 'eToro Global Customer ID. NULL if no cross-sell linkage.';
 COMMENT ON COLUMN main.etoro_kpi.v_spaceship_fees.total_fees_aud IS 'Absolute total fees in AUD. Voyager mgmt fees are pro-rated: user_fee = total_fee x (user_balance / portfolio_NAV). For zero-NAV portfolios (EARTH, EXPLORER, GALAXY), falls back to SUM(user_balance) as denominator. Excludes Super SFT event (2024-05-18).';
 COMMENT ON COLUMN main.etoro_kpi.v_spaceship_fees.total_fees_usd IS 'Total fees converted to USD via AUD/USD mid-rate ((Ask+Bid)/2 from fact_currencypricewithsplit, InstrumentID=7).';
+
+-- == LAST EXECUTION ==
+-- Timestamp: 2026-05-04 12:18:27 UTC
+-- Batch deploy resume: etoro_kpi deploy batch 1
+-- Statements: 8/8 succeeded
+-- ====================
