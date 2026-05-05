@@ -40,7 +40,7 @@ ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_pltv ALTER COLUMN P
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_pltv ALTER COLUMN updateDate SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 13:11:51 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Timestamp: 2026-05-05 13:34:18 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 18/18 succeeded
 -- ====================

@@ -4,11 +4,12 @@ framework: uc-domain-doc
 total_deployable: 7
 generated: 0
 deployed: 4
-failed: 3
+failed: 0
+skipped: 3
 stub_only: 0
 last_generate_batch: 0
 last_deploy_batch: 4
-last_updated: "2026-05-04"
+last_updated: "2026-05-05"
 ---
 
 # spaceship — UC ALTER Deployment Index
@@ -21,9 +22,16 @@ last_updated: "2026-05-04"
 | **Generated (awaiting UC deploy)** | 0 |
 | **Deployed (UC)**                  | 4 |
 | **Stub-only (no UC)**              | 0 |
-| **Failed**                         | 3 |
+| **Failed**                         | 0 |
+| **Skipped (no permission)**        | 3 |
 | **Last deploy batch**              | 4          |
-| **Last updated**                   | 2026-05-04       |
+| **Last updated**                   | 2026-05-05       |
+
+> **Skipped**: `bizops_output.*` tables are owned by service principal
+> `fb0e925c-48b1-48f5-a619-6579d42fb7d4`. Our user has no `MODIFY` privilege,
+> so the `.alter.sql` files are kept as **documentation only**. Wikis remain
+> the source of truth for column semantics; UC `COMMENT` on these objects
+> would require the SP owner to apply it.
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER/COMMENT, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
 
@@ -43,9 +51,9 @@ Authenticate via `DATABRICKS_TOKEN` (PAT) or `DATABRICKS_MCP_PROFILE=DEFAULT`.
 
 | Object | Deploy status |
 |--------|---------------|
-| [bizops_output.bizops_output_spaceship_dim_customers](schemas/bizops_output/Tables/bizops_output_spaceship_dim_customers.md) | Failed (deploy Batch 2) — PERMISSION_DENIED: User does not have MODIFY on Table 'main.bizops_output.bizops_output_spaceship_dim_customers'.|
-| [bizops_output.bizops_output_spaceship_fact_customer_products](schemas/bizops_output/Tables/bizops_output_spaceship_fact_customer_products.md) | Failed (deploy Batch 2) — PERMISSION_DENIED: User does not have MODIFY on Table 'main.bizops_output.bizops_output_spaceship_fact_customer_products|
-| [bizops_output.bizops_output_spaceship_gold_daily_update](schemas/bizops_output/Tables/bizops_output_spaceship_gold_daily_update.md) | Failed (deploy Batch 2) — PERMISSION_DENIED: User does not have MODIFY on Table 'main.bizops_output.bizops_output_spaceship_gold_daily_update'.|
+| [bizops_output.bizops_output_spaceship_dim_customers](schemas/bizops_output/Tables/bizops_output_spaceship_dim_customers.md) | Skipped (no MODIFY on main.bizops_output.*; wiki kept as documentation, ALTER not deployed)|
+| [bizops_output.bizops_output_spaceship_fact_customer_products](schemas/bizops_output/Tables/bizops_output_spaceship_fact_customer_products.md) | Skipped (no MODIFY on main.bizops_output.*; wiki kept as documentation, ALTER not deployed)|
+| [bizops_output.bizops_output_spaceship_gold_daily_update](schemas/bizops_output/Tables/bizops_output_spaceship_gold_daily_update.md) | Skipped (no MODIFY on main.bizops_output.*; wiki kept as documentation, ALTER not deployed)|
 
 ## Schema: `etoro_kpi` — 3 deployable, 0 stubs
 

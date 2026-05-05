@@ -3,12 +3,12 @@ schema: EXW_dbo
 database: Synapse DWH
 total_deployable: 61
 generated: 0
-deployed: 12
-failed: 1
+deployed: 13
+failed: 0
 stub_only: 48
 last_generate_batch: 0
-last_deploy_batch: 1
-last_updated: "2026-05-03"
+last_deploy_batch: 2
+last_updated: "2026-05-05"
 ---
 
 ## Schema ALTER + Deployment Progress
@@ -19,12 +19,12 @@ last_updated: "2026-05-03"
 | **Total deployable**               | 61  |
 | **Pending (no .alter.sql)**        | 0          |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 12         |
+| **Deployed (UC)**                  | 13         |
 | **Stub-only (no UC)**              | 48   |
-| **Failed**                         | 1         |
+| **Failed**                         | 0         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 1          |
+| **Last deploy batch**              | 2          |
 | **Last updated**                   | 2026-05-03       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -38,26 +38,26 @@ last_updated: "2026-05-03"
 | [EXW_dbo.EXW_AML_Users_Report](Tables/EXW_AML_Users_Report.md) | Stub only |
 | [EXW_dbo.EXW_AMLProviderID](Tables/EXW_AMLProviderID.md) | Stub only |
 | [EXW_dbo.EXW_C2F_E2E](Tables/EXW_C2F_E2E.md) | Deployed (Batch 1) — 2026-05-03|
-| [EXW_dbo.EXW_C2P_E2E](Tables/EXW_C2P_E2E.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_C2P_E2E](Tables/EXW_C2P_E2E.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_Coin_Transfer_Allowed_Country](Tables/EXW_Coin_Transfer_Allowed_Country.md) | Stub only |
-| [EXW_dbo.EXW_CompensationClosingCountries](Tables/EXW_CompensationClosingCountries.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_CompensationClosingCountries](Tables/EXW_CompensationClosingCountries.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_Conversion_Allowed_Country](Tables/EXW_Conversion_Allowed_Country.md) | Stub only |
-| [EXW_dbo.EXW_DimUser](Tables/EXW_DimUser.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_DimUser](Tables/EXW_DimUser.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_DimUser_Enriched](Tables/EXW_DimUser_Enriched.md) | Stub only |
 | [EXW_dbo.EXW_ECPBank](Tables/EXW_ECPBank.md) | Stub only |
 | [EXW_dbo.EXW_EOMReportingBalances](Tables/EXW_EOMReportingBalances.md) | Stub only |
 | [EXW_dbo.EXW_ETH_FeeData_Blockchain](Tables/EXW_ETH_FeeData_Blockchain.md) | Stub only |
-| [EXW_dbo.EXW_EthFeeSent_Blockchain](Tables/EXW_EthFeeSent_Blockchain.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_EthFeeSent_Blockchain](Tables/EXW_EthFeeSent_Blockchain.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_FactBalance](Tables/EXW_FactBalance.md) | Stub only |
 | [EXW_dbo.EXW_FactConversions](Tables/EXW_FactConversions.md) | Stub only |
 | [EXW_dbo.EXW_FactPayments](Tables/EXW_FactPayments.md) | Stub only |
 | [EXW_dbo.EXW_FactRedeemTransactions](Tables/EXW_FactRedeemTransactions.md) | Stub only |
-| [EXW_dbo.EXW_FactTransactions](Tables/EXW_FactTransactions.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_FactTransactions](Tables/EXW_FactTransactions.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_FCA_UserLogin](Tables/EXW_FCA_UserLogin.md) | Stub only |
 | [EXW_dbo.EXW_FinanceReportsBalancesNew](Tables/EXW_FinanceReportsBalancesNew.md) | Deployed (Batch 1) — 2026-05-03|
 | [EXW_dbo.EXW_FirstTimeWalletsAndUsers](Tables/EXW_FirstTimeWalletsAndUsers.md) | Stub only |
 | [EXW_dbo.EXW_InternalWallet](Tables/EXW_InternalWallet.md) | Stub only |
-| [EXW_dbo.EXW_Inventory_Snapshot_History](Tables/EXW_Inventory_Snapshot_History.md) | Failed (deploy Batch 1) — [RequestId=c9a05319-6a78-4014-8c5e-6f505b0b0111 ErrorClass=RESOURCE_DOES_NOT_EXIST] Column `Created 30 days` does not ex|
+| [EXW_dbo.EXW_Inventory_Snapshot_History](Tables/EXW_Inventory_Snapshot_History.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_Payment_Allowed_Country](Tables/EXW_Payment_Allowed_Country.md) | Stub only |
 | [EXW_dbo.EXW_PaymentReconciliation](Tables/EXW_PaymentReconciliation.md) | Stub only |
 | [EXW_dbo.EXW_RedeemReconciliation](Tables/EXW_RedeemReconciliation.md) | Stub only |
@@ -70,11 +70,11 @@ last_updated: "2026-05-03"
 | [EXW_dbo.EXW_TestUsers](Tables/EXW_TestUsers.md) | Stub only |
 | [EXW_dbo.EXW_Transactions_Monthly](Tables/EXW_Transactions_Monthly.md) | Stub only |
 | [EXW_dbo.EXW_UserCalculatedBalance](Tables/EXW_UserCalculatedBalance.md) | Stub only |
-| [EXW_dbo.EXW_UserSettingsWalletAllowance](Tables/EXW_UserSettingsWalletAllowance.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_UserSettingsWalletAllowance](Tables/EXW_UserSettingsWalletAllowance.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_WalletClosedCountryProjects](Tables/EXW_WalletClosedCountryProjects.md) | Stub only |
 | [EXW_dbo.EXW_WalletElligibleCountries](Tables/EXW_WalletElligibleCountries.md) | Stub only |
 | [EXW_dbo.EXW_WalletEntity](Tables/EXW_WalletEntity.md) | Deployed (Batch 1) — 2026-05-03|
-| [EXW_dbo.EXW_WalletInventory](Tables/EXW_WalletInventory.md) | Deployed (Batch 1) — 2026-05-03|
+| [EXW_dbo.EXW_WalletInventory](Tables/EXW_WalletInventory.md) | Deployed (Batch 2) — 2026-05-05|
 | [EXW_dbo.EXW_WalletLogins](Tables/EXW_WalletLogins.md) | Stub only |
 | [EXW_dbo.EXW_WalletRegulation](Tables/EXW_WalletRegulation.md) | Stub only |
 | [EXW_dbo.EXW_WalletUsers_30_Days](Tables/EXW_WalletUsers_30_Days.md) | Stub only |

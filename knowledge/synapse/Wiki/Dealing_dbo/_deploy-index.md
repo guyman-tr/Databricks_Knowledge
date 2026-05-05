@@ -7,8 +7,8 @@ generated: 0
 deployed: 28
 failed: 4
 last_generate_batch: 0
-last_deploy_batch: 9
-last_updated: "2026-05-03"
+last_deploy_batch: 10
+last_updated: "2026-05-05"
 
 ## Schema ALTER + Deployment Progress
 
@@ -23,7 +23,7 @@ last_updated: "2026-05-03"
 | **Failed**                         | 4         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 9          |
+| **Last deploy batch**              | 10          |
 | **Last updated**                   | 2026-03-30 |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present, UC not deployed in this index pass. `Deployed` = UC ALTERs executed.
@@ -47,7 +47,7 @@ last_updated: "2026-05-03"
 | [Dealing_dbo.Dealing_Duco_EODRecon](Tables/Dealing_Duco_EODRecon.md)                                                         | Deployed (Batch 2) — 2026-05-03|
 | [Dealing_dbo.Dealing_Employees_Report](Tables/Dealing_Employees_Report.md)                                                   | Deployed (Batch 1) — 2026-03-30|
 | [Dealing_dbo.Dealing_ESMANetLoss](Tables/Dealing_ESMANetLoss.md)                                                             | Deployed (Batch 1) — 2026-03-30|
-| [Dealing_dbo.Dealing_Islamic_Daily_Administrative_Fee](Tables/Dealing_Islamic_Daily_Administrative_Fee.md)                   | Deployed (Batch 1) — 2026-03-30|
+| [Dealing_dbo.Dealing_Islamic_Daily_Administrative_Fee](Tables/Dealing_Islamic_Daily_Administrative_Fee.md)                   | Deployed (Batch 10) — 2026-05-05|
 | [Dealing_dbo.Dealing_Islamic_Daily_Spot_Price_Adjustment](Tables/Dealing_Islamic_Daily_Spot_Price_Adjustment.md)             | Deployed (Batch 1) — 2026-03-30|
 | [Dealing_dbo.Dealing_ManipulationReport_RealStocks](Tables/Dealing_ManipulationReport_RealStocks.md)                         | Deployed (Batch 1) — 2026-03-30|
 | [Dealing_dbo.Dealing_ManipulationReport_RealStocks_CID](Tables/Dealing_ManipulationReport_RealStocks_CID.md)                 | Deployed (Batch 1) — 2026-03-30|
@@ -56,10 +56,10 @@ last_updated: "2026-05-03"
 | [Dealing_dbo.Dealing_RiskMatrix_V2](Tables/Dealing_RiskMatrix_V2.md)                                                         | Failed (deploy Batch 2) — [PARSE_SYNTAX_ERROR] Syntax error at or near '…'. SQLSTATE: 42601 (line 1, pos 106) == SQL == ALTER TABLE main.dealing.g|
 | [Dealing_dbo.Dealing_Rollover_Assurance](Tables/Dealing_Rollover_Assurance.md)                                               | Failed (deploy Batch 2) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`dwh`.`gold_sql_dp_prod_we_dealing_dbo_dealing_rollover_ass|
 | [Dealing_dbo.Dealing_SAXORecon_EODHoldings](Tables/Dealing_SAXORecon_EODHoldings.md)                                         | Deployed (Batch 2) — 2026-05-03|
-| [Dealing_dbo.Dealing_Staking_DailyPool](Tables/Dealing_Staking_DailyPool.md)                                                 | Deployed (Batch 1) — 2026-03-30|
-| [Dealing_dbo.Dealing_Staking_OptedOut](Tables/Dealing_Staking_OptedOut.md)                                                   | Deployed (Batch 1) — 2026-03-30|
-| [Dealing_dbo.Dealing_Staking_Parameters](Tables/Dealing_Staking_Parameters.md)                                               | Deployed (Batch 1) — 2026-03-30|
-| [Dealing_dbo.Dealing_Staking_Results](Tables/Dealing_Staking_Results.md)                                                     | Deployed (Batch 1) — 2026-03-30|
+| [Dealing_dbo.Dealing_Staking_DailyPool](Tables/Dealing_Staking_DailyPool.md)                                                 | Deployed (Batch 10) — 2026-05-05|
+| [Dealing_dbo.Dealing_Staking_OptedOut](Tables/Dealing_Staking_OptedOut.md)                                                   | Deployed (Batch 10) — 2026-05-05|
+| [Dealing_dbo.Dealing_Staking_Parameters](Tables/Dealing_Staking_Parameters.md)                                               | Deployed (Batch 10) — 2026-05-05|
+| [Dealing_dbo.Dealing_Staking_Results](Tables/Dealing_Staking_Results.md)                                                     | Deployed (Batch 10) — 2026-05-05|
 | [Dealing_dbo.Dealing_Staking_Summary](Tables/Dealing_Staking_Summary.md)                                                     | Deployed (Batch 1) — 2026-03-30|
 
 ## Tables (3)

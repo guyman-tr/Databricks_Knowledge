@@ -70,7 +70,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_knowledge_assessm
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_kyc_knowledge_assessment ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 12:56:48 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Timestamp: 2026-05-05 13:33:01 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 48/48 succeeded
 -- ====================
