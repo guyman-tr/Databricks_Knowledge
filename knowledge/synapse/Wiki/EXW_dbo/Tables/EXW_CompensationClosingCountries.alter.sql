@@ -72,7 +72,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_compensationclosingcountr
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_compensationclosingcountries ALTER COLUMN `DateClosure` SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 06:31:38 UTC
--- Batch deploy resume: EXW_dbo deploy batch 1
+-- Timestamp: 2026-05-05 13:17:12 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 2
 -- Statements: 46/46 succeeded
 -- ====================

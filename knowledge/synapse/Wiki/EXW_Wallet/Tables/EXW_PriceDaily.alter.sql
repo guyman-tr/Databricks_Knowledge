@@ -44,7 +44,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_wallet_exw_pricedaily ALTER COLUM
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_wallet_exw_pricedaily ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 12:17:44 UTC
--- Batch deploy resume: EXW_Wallet deploy batch 1
+-- Timestamp: 2026-05-05 13:08:32 UTC
+-- Batch deploy resume: EXW_Wallet deploy batch 2
 -- Statements: 22/22 succeeded
 -- ====================

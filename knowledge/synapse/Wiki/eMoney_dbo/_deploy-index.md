@@ -7,8 +7,8 @@ deployed: 15
 failed: 22
 stub_only: 9
 last_generate_batch: 0
-last_deploy_batch: 9
-last_updated: "2026-05-03"
+last_deploy_batch: 10
+last_updated: "2026-05-05"
 ---
 
 ## Schema ALTER + Deployment Progress
@@ -24,7 +24,7 @@ last_updated: "2026-05-03"
 | **Failed**                         | 22         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 9          |
+| **Last deploy batch**              | 10          |
 | **Last updated**                   | 2026-05-03       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -60,23 +60,23 @@ last_updated: "2026-05-03"
 | [eMoney_dbo.eMoney_Dictionary_TransactionType](Tables/eMoney_Dictionary_TransactionType.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
 | [eMoney_dbo.eMoney_Dictionary_TribeScriptStatus](Tables/eMoney_Dictionary_TribeScriptStatus.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_|
 | [eMoney_dbo.eMoney_Dim_Account](Tables/eMoney_Dim_Account.md) | Deployed (Batch 1) — 2026-05-03|
-| [eMoney_dbo.eMoney_Dim_Country_Rollout](Tables/eMoney_Dim_Country_Rollout.md) | Deployed (Batch 1) — 2026-05-03|
-| [eMoney_dbo.eMoney_Dim_Transaction](Tables/eMoney_Dim_Transaction.md) | Deployed (Batch 1) — 2026-05-03|
-| [eMoney_dbo.eMoney_Fact_Transaction_Status](Tables/eMoney_Fact_Transaction_Status.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Dim_Country_Rollout](Tables/eMoney_Dim_Country_Rollout.md) | Deployed (Batch 10) — 2026-05-05|
+| [eMoney_dbo.eMoney_Dim_Transaction](Tables/eMoney_Dim_Transaction.md) | Deployed (Batch 10) — 2026-05-05|
+| [eMoney_dbo.eMoney_Fact_Transaction_Status](Tables/eMoney_Fact_Transaction_Status.md) | Deployed (Batch 10) — 2026-05-05|
 | [eMoney_dbo.eMoney_Marketing_EmailTracking](Tables/eMoney_Marketing_EmailTracking.md) | Stub only |
 | [eMoney_dbo.eMoney_Panel_FirstDates](Tables/eMoney_Panel_FirstDates.md) | Deployed (Batch 1) — 2026-05-03|
 | [eMoney_dbo.eMoney_Panel_Retention_Daily](Tables/eMoney_Panel_Retention_Daily.md) | Stub only |
-| [eMoney_dbo.eMoney_Panel_Retention_Monthly](Tables/eMoney_Panel_Retention_Monthly.md) | Deployed (Batch 1) — 2026-05-03|
-| [eMoney_dbo.eMoney_Reports_AcquisitionFunnel](Tables/eMoney_Reports_AcquisitionFunnel.md) | Deployed (Batch 1) — 2026-05-03|
-| [eMoney_dbo.eMoney_Reports_AcquisitionFunnelAggregated](Tables/eMoney_Reports_AcquisitionFunnelAggregated.md) | Deployed (Batch 1) — 2026-05-03|
-| [eMoney_dbo.eMoney_Reports_ClubUpgrade](Tables/eMoney_Reports_ClubUpgrade.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.eMoney_Panel_Retention_Monthly](Tables/eMoney_Panel_Retention_Monthly.md) | Deployed (Batch 10) — 2026-05-05|
+| [eMoney_dbo.eMoney_Reports_AcquisitionFunnel](Tables/eMoney_Reports_AcquisitionFunnel.md) | Deployed (Batch 10) — 2026-05-05|
+| [eMoney_dbo.eMoney_Reports_AcquisitionFunnelAggregated](Tables/eMoney_Reports_AcquisitionFunnelAggregated.md) | Deployed (Batch 10) — 2026-05-05|
+| [eMoney_dbo.eMoney_Reports_ClubUpgrade](Tables/eMoney_Reports_ClubUpgrade.md) | Deployed (Batch 10) — 2026-05-05|
 | [eMoney_dbo.eMoney_Reports_MIMO_Actions](Tables/eMoney_Reports_MIMO_Actions.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_emoney_dbo_emoney_reports_mimo|
 | [eMoney_dbo.eMoney_Risk_Portfolio](Tables/eMoney_Risk_Portfolio.md) | Stub only |
 | [eMoney_dbo.eMoney_Snapshot_Settled_Balance](Tables/eMoney_Snapshot_Settled_Balance.md) | Failed (deploy Batch 1) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`emoney`.`gold_sql_dp_prod_we_emoney_dbo_emoney_snapshot_se|
 | [eMoney_dbo.eMoney_UserData_Marketing](Tables/eMoney_UserData_Marketing.md) | Deployed (Batch 1) — 2026-05-03|
 | [eMoney_dbo.eMoneyClientBalance](Tables/eMoneyClientBalance.md) | Failed (deploy Batch 1) — [COLUMN_NOT_FOUND_IN_TABLE] Column 'Column' not found in table 'main'.'bi_db'.'gold_sql_dp_prod_we_emoney_dbo_emoneyclie|
 | [eMoney_dbo.eMoneyProcessStatusLog](Tables/eMoneyProcessStatusLog.md) | Stub only |
-| [eMoney_dbo.v_eMoney_Card_Instance_Summary](Tables/v_eMoney_Card_Instance_Summary.md) | Deployed (Batch 1) — 2026-05-03|
+| [eMoney_dbo.v_eMoney_Card_Instance_Summary](Tables/v_eMoney_Card_Instance_Summary.md) | Deployed (Batch 10) — 2026-05-05|
 
 ## Views (2)
 

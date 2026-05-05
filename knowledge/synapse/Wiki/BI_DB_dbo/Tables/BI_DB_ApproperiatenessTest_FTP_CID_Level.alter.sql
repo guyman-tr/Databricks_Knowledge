@@ -46,7 +46,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_approperiatenesstest_
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_approperiatenesstest_ftp_cid_level ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 12:25:14 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Timestamp: 2026-05-05 13:31:44 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 24/24 succeeded
 -- ====================

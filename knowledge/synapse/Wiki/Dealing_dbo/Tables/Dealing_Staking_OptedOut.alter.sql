@@ -64,7 +64,7 @@ ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_optedou
 ALTER TABLE main.finance.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_optedout ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 14:06:52 UTC
--- Batch deploy resume: Dealing_dbo deploy batch 1
+-- Timestamp: 2026-05-05 13:13:33 UTC
+-- Batch deploy resume: Dealing_dbo deploy batch 10
 -- Statements: 38/38 succeeded
 -- ====================

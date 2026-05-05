@@ -8,8 +8,8 @@ generated: 0
 deployed: 90
 failed: 1
 last_generate_batch: 0
-last_deploy_batch: 9
-last_updated: "2026-05-03"
+last_deploy_batch: 10
+last_updated: "2026-05-05"
 
 ## Schema ALTER + Deployment Progress
 
@@ -25,7 +25,7 @@ last_updated: "2026-05-03"
 | **Failed**                         | 1         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 9          |
+| **Last deploy batch**              | 10          |
 | **Last updated**                   | 2026-04-12 |
 
 
@@ -61,7 +61,7 @@ last_updated: "2026-05-03"
 | [DWH_dbo.Dim_CostConfigurationId](Tables/Dim_CostConfigurationId.md)                                                         | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Dim_CostSubtype](Tables/Dim_CostSubtype.md)                                                                         | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Dim_CostType](Tables/Dim_CostType.md)                                                                               | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
-| [DWH_dbo.Dim_Country](Tables/Dim_Country.md)                                                                                 | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
+| [DWH_dbo.Dim_Country](Tables/Dim_Country.md)                                                                                 | Deployed (Batch 10) — 2026-05-05|
 | [DWH_dbo.Dim_CountryBin](Tables/Dim_CountryBin.md)                                                                           | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_CountryIP](Tables/Dim_CountryIP.md)                                                                             | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_CountryIPAnonymous](Tables/Dim_CountryIPAnonymous.md)                                                           | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
@@ -84,13 +84,13 @@ last_updated: "2026-05-03"
 | [DWH_dbo.Dim_Funnel](Tables/Dim_Funnel.md)                                                                                   | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_GuruStatus](Tables/Dim_GuruStatus.md)                                                                           | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_HistorySplitRatio](Tables/Dim_HistorySplitRatio.md)                                                             | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
-| [DWH_dbo.Dim_Instrument](Tables/Dim_Instrument.md)                                                                           | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
+| [DWH_dbo.Dim_Instrument](Tables/Dim_Instrument.md)                                                                           | Deployed (Batch 10) — 2026-05-05|
 | [DWH_dbo.Dim_Instrument_Snapshot](Tables/Dim_Instrument_Snapshot.md)                                                         | Stub (no UC at mapped Gold path)                                                                                                                   |
 | [DWH_dbo.Dim_Label](Tables/Dim_Label.md)                                                                                     | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_Language](Tables/Dim_Language.md)                                                                               | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
-| [DWH_dbo.Dim_Manager](Tables/Dim_Manager.md)                                                                                 | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
+| [DWH_dbo.Dim_Manager](Tables/Dim_Manager.md)                                                                                 | Deployed (Batch 10) — 2026-05-05|
 | [DWH_dbo.Dim_MifidCategorization](Tables/Dim_MifidCategorization.md)                                                         | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
-| [DWH_dbo.Dim_Mirror](Tables/Dim_Mirror.md)                                                                                   | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
+| [DWH_dbo.Dim_Mirror](Tables/Dim_Mirror.md)                                                                                   | Deployed (Batch 10) — 2026-05-05|
 | [DWH_dbo.Dim_MirrorType](Tables/Dim_MirrorType.md)                                                                           | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_MoveMoneyReason](Tables/Dim_MoveMoneyReason.md)                                                                 | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_PaymentStatus](Tables/Dim_PaymentStatus.md)                                                                     | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
@@ -107,7 +107,7 @@ last_updated: "2026-05-03"
 | [DWH_dbo.Dim_Position_Account_Statement_NetProfit](Tables/Dim_Position_Account_Statement_NetProfit.md)                       | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.Dim_PositionChangeLog](Tables/Dim_PositionChangeLog.md)                                                             | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_PositionHedgeServerChangeLog_Snapshot](Tables/Dim_PositionHedgeServerChangeLog_Snapshot.md)                     | Stub (no UC at mapped Gold path)                                                                                                                   |
-| [DWH_dbo.Dim_Product](Tables/Dim_Product.md)                                                                                 | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
+| [DWH_dbo.Dim_Product](Tables/Dim_Product.md)                                                                                 | Deployed (Batch 10) — 2026-05-05|
 | [DWH_dbo.Dim_Range](Tables/Dim_Range.md)                                                                                     | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_RedeemReason](Tables/Dim_RedeemReason.md)                                                                       | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_RedeemStatus](Tables/Dim_RedeemStatus.md)                                                                       | Deployed (Batch 1) — 2026-03-30                                                                                                                    |

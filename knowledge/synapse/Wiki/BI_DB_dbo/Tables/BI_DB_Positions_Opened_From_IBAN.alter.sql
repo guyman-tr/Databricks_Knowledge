@@ -30,7 +30,7 @@ ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_fr
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positions_opened_from_iban ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 13:12:55 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Timestamp: 2026-05-05 13:34:29 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 8/8 succeeded
 -- ====================

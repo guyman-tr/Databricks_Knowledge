@@ -8,8 +8,8 @@ deployed: 88
 failed: 2
 stub_only: 45
 last_generate_batch: 0
-last_deploy_batch: 9
-last_updated: "2026-05-03"
+last_deploy_batch: 10
+last_updated: "2026-05-05"
 
 ## Schema ALTER + Deployment Progress
 
@@ -24,7 +24,7 @@ last_updated: "2026-05-03"
 | **Failed**                         | 2         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 9          |
+| **Last deploy batch**              | 10          |
 | **Last updated**                   | 2026-04-12       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed in this index pass. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -35,7 +35,7 @@ last_updated: "2026-05-03"
 | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [BI_DB_dbo.BI_DB_CB_CycleGap_Categorization](Tables/BI_DB_CB_CycleGap_Categorization.md)                                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_CID_Daily_NWA](Tables/BI_DB_CID_Daily_NWA.md)                                                               | Deployed (Batch 1) — 2026-03-30|
-| [BI_DB_dbo.BI_DB_CIDFirstDates](Tables/BI_DB_CIDFirstDates.md)                                                               | Deployed (Batch 1) — 2026-03-30|
+| [BI_DB_dbo.BI_DB_CIDFirstDates](Tables/BI_DB_CIDFirstDates.md)                                                               | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_CIDLevel_Settlement_Report](Tables/BI_DB_CIDLevel_Settlement_Report.md)                                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New](Tables/BI_DB_Client_Balance_Aggregate_Level_New.md)                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New](Tables/BI_DB_Client_Balance_CID_Level_New.md)                                 | Deployed (Batch 1) — 2026-03-30|
@@ -60,9 +60,9 @@ last_updated: "2026-05-03"
 | [BI_DB_dbo.BI_DB_ABook_Exposure_NOPHedged](Tables/BI_DB_ABook_Exposure_NOPHedged.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_AML_SAR_Report_FCA](Tables/BI_DB_AML_SAR_Report_FCA.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_AML_Singapore_Risk_Classification](Tables/BI_DB_AML_Singapore_Risk_Classification.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_AML_SubEntity_Categorization](Tables/BI_DB_AML_SubEntity_Categorization.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_AML_SubEntity_Categorization](Tables/BI_DB_AML_SubEntity_Categorization.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_AMLPeriodicReview](Tables/BI_DB_AMLPeriodicReview.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_ApproperiatenessTest_FTP_CID_Level](Tables/BI_DB_ApproperiatenessTest_FTP_CID_Level.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_ApproperiatenessTest_FTP_CID_Level](Tables/BI_DB_ApproperiatenessTest_FTP_CID_Level.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_ASIC_ClientBalanceFinance](Tables/BI_DB_ASIC_ClientBalanceFinance.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_CID_DailyCluster](Tables/BI_DB_CID_DailyCluster.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_CID_DailyPanel_Club](Tables/BI_DB_CID_DailyPanel_Club.md) | Deployed (Batch 9) — 2026-05-03|
@@ -79,7 +79,7 @@ last_updated: "2026-05-03"
 | [BI_DB_dbo.BI_DB_DCM_Dashboard](Tables/BI_DB_DCM_Dashboard.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_DDR_CID_Level](Tables/BI_DB_DDR_CID_Level.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_DDR_Fact_PnL](Tables/BI_DB_DDR_Fact_PnL.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_Demo_CID_Panel](Tables/BI_DB_Demo_CID_Panel.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_Demo_CID_Panel](Tables/BI_DB_Demo_CID_Panel.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_Deposit_Reversals_PIPs](Tables/BI_DB_Deposit_Reversals_PIPs.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_DepositUsersFirstTouchPoints](Tables/BI_DB_DepositUsersFirstTouchPoints.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals](Tables/BI_DB_DepositWithdrawFee_Reversals.md) | Deployed (Batch 9) — 2026-05-03|
@@ -88,33 +88,33 @@ last_updated: "2026-05-03"
 | [BI_DB_dbo.BI_DB_Finance_eToro_vs_Positions](Tables/BI_DB_Finance_eToro_vs_Positions.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Finance_Non_US_Settlement_New_2025](Tables/BI_DB_Finance_Non_US_Settlement_New_2025.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_First5Actions](Tables/BI_DB_First5Actions.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_IFRS15_Daily_Balance](Tables/BI_DB_IFRS15_Daily_Balance.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_IFRS15_Daily_Balance](Tables/BI_DB_IFRS15_Daily_Balance.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_InvestorsDetail](Tables/BI_DB_InvestorsDetail.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment](Tables/BI_DB_KYC_Knowledge_Assessment.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_KYC_Knowledge_Assessment](Tables/BI_DB_KYC_Knowledge_Assessment.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_KYC_Panel](Tables/BI_DB_KYC_Panel.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_LiveAcquisitionDashboard_Daily](Tables/BI_DB_LiveAcquisitionDashboard_Daily.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_LiveAcquisitionDashboard_Daily](Tables/BI_DB_LiveAcquisitionDashboard_Daily.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_LTV_BI_Actual](Tables/BI_DB_LTV_BI_Actual.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_MarketingCloudDaily](Tables/BI_DB_MarketingCloudDaily.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_MarketingDailyRawData](Tables/BI_DB_MarketingDailyRawData.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Money_In_New_Management_Dashboard](Tables/BI_DB_Money_In_New_Management_Dashboard.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Money_Out_New_Management_Dashboard](Tables/BI_DB_Money_Out_New_Management_Dashboard.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_Money_Out_STPAnalysis_OPS_Dashboard](Tables/BI_DB_Money_Out_STPAnalysis_OPS_Dashboard.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_Money_Out_STPAnalysis_OPS_Dashboard](Tables/BI_DB_Money_Out_STPAnalysis_OPS_Dashboard.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_NewBonusReport](Tables/BI_DB_NewBonusReport.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Operations_Onboarding_Flow_UserKPIs](Tables/BI_DB_Operations_Onboarding_Flow_UserKPIs.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_OPS_Fraud_Alert_Analysis](Tables/BI_DB_OPS_Fraud_Alert_Analysis.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_OPS_KYC_Verification](Tables/BI_DB_OPS_KYC_Verification.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_OPS_VerificationPipeline_OverLevel2](Tables/BI_DB_OPS_VerificationPipeline_OverLevel2.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_OPS_VerificationPipeline_OverLevel2](Tables/BI_DB_OPS_VerificationPipeline_OverLevel2.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_PI_StatusPanel](Tables/BI_DB_PI_StatusPanel.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_PLTV](Tables/BI_DB_PLTV.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_PLTV](Tables/BI_DB_PLTV.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_PositionPnL_EU_Custody](Tables/BI_DB_PositionPnL_EU_Custody.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_PositionPnL_UK_Custody](Tables/BI_DB_PositionPnL_UK_Custody.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_PositionPnL_UK_Custody_Resolver](Tables/BI_DB_PositionPnL_UK_Custody_Resolver.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN](Tables/BI_DB_Positions_Closed_To_IBAN.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN](Tables/BI_DB_Positions_Opened_From_IBAN.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_Positions_Closed_To_IBAN](Tables/BI_DB_Positions_Closed_To_IBAN.md) | Deployed (Batch 10) — 2026-05-05|
+| [BI_DB_dbo.BI_DB_Positions_Opened_From_IBAN](Tables/BI_DB_Positions_Opened_From_IBAN.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_QMMF_Report](Tables/BI_DB_QMMF_Report.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Social_Activity](Tables/BI_DB_Social_Activity.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_SpreadedPriceCandle60MinSplitted](Tables/BI_DB_SpreadedPriceCandle60MinSplitted.md) | Deployed (Batch 9) — 2026-05-03|
-| [BI_DB_dbo.BI_DB_Tax_Compliance_TIN](Tables/BI_DB_Tax_Compliance_TIN.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.BI_DB_Tax_Compliance_TIN](Tables/BI_DB_Tax_Compliance_TIN.md) | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_Trading_Failures_Risk](Tables/BI_DB_Trading_Failures_Risk.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Withdraw_Rollback_PIPs](Tables/BI_DB_Withdraw_Rollback_PIPs.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level](Tables/Client_Balance_Breakdown_Instrument_Level.md) | Deployed (Batch 9) — 2026-05-03|

@@ -52,7 +52,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_usersettingswalletallowan
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_usersettingswalletallowance ALTER COLUMN `UpdateDate` SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 06:35:19 UTC
--- Batch deploy resume: EXW_dbo deploy batch 1
+-- Timestamp: 2026-05-05 13:20:06 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 2
 -- Statements: 26/26 succeeded
 -- ====================

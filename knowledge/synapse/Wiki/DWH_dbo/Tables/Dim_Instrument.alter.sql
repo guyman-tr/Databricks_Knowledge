@@ -122,7 +122,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN Set
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument ALTER COLUMN OperationMode SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 11:23:30 UTC
--- Batch deploy resume: DWH_dbo deploy batch 1
+-- Timestamp: 2026-05-05 13:11:03 UTC
+-- Batch deploy resume: DWH_dbo deploy batch 10
 -- Statements: 96/96 succeeded
 -- ====================

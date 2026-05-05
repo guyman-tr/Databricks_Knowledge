@@ -42,7 +42,7 @@ ALTER TABLE main.compliance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_subentity_ca
 ALTER TABLE main.compliance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_subentity_categorization ALTER COLUMN AML_Sub_Entity SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 12:23:22 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Timestamp: 2026-05-05 13:31:27 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 20/20 succeeded
 -- ====================

@@ -311,8 +311,9 @@ ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COL
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastCashoutDate SET TAGS ('pii' = 'none');
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastPublishedPostDate SET TAGS ('pii' = 'none');
 ALTER TABLE pii_data.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidfirstdates ALTER COLUMN LastActionDateForLifeStage SET TAGS ('pii' = 'none');
+
 -- == LAST EXECUTION ==
--- Timestamp: 2026-04-16 08:46:56 UTC
--- TVF DDR enrichment deploy
+-- Timestamp: 2026-05-05 13:31:13 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 280/280 succeeded
 -- ====================

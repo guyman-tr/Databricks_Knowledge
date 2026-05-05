@@ -64,7 +64,7 @@ ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ifrs15_daily_balanc
 ALTER TABLE main.finance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ifrs15_daily_balance ALTER COLUMN Regulation SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 12:55:39 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
+-- Timestamp: 2026-05-05 13:32:26 UTC
+-- Batch deploy resume: BI_DB_dbo deploy batch 10
 -- Statements: 42/42 succeeded
 -- ====================

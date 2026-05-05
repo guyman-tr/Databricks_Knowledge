@@ -38,7 +38,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_acquisition
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_reports_acquisitionfunnelaggregated ALTER COLUMN `UpdateDate` SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 06:24:23 UTC
--- Batch deploy resume: eMoney_dbo deploy batch 1
+-- Timestamp: 2026-05-05 13:27:11 UTC
+-- Batch deploy resume: eMoney_dbo deploy batch 10
 -- Statements: 12/12 succeeded
 -- ====================

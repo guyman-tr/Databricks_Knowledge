@@ -64,8 +64,7 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_inventory_snapshot_histor
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_inventory_snapshot_history ALTER COLUMN `Created_30_days` SET TAGS ('pii' = 'none');
 
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 06:34:59 UTC
--- Batch deploy resume: EXW_dbo deploy batch 1
--- Statements: 12/38 succeeded
--- Error: [RequestId=c9a05319-6a78-4014-8c5e-6f505b0b0111 ErrorClass=RESOURCE_DOES_NOT_EXIST] Column `Created_30_days` does not exist.
+-- Timestamp: 2026-05-05 13:19:49 UTC
+-- Batch deploy resume: EXW_dbo deploy batch 2
+-- Statements: 38/38 succeeded
 -- ====================
