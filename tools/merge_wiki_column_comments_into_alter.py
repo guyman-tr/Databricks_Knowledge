@@ -54,11 +54,23 @@ _TYPE_CELL = re.compile(
     re.I,
 )
 
+# Stricter variant: cell must contain ONLY a SQL type, optionally with a single
+# `(...)` qualifier (or `[...](N)` Synapse-style). Used by the format-flexible
+# parser so a description like "int discussion" doesn't get mistaken for a
+# type cell.
+_TYPE_CELL_STRICT = re.compile(
+    r"^(int|bigint|smallint|tinyint|bit|datetime|datetime2|date|time|smalldatetime|"
+    r"uniqueidentifier|money|decimal|numeric|float|real|varchar|nvarchar|char|nchar|"
+    r"text|ntext|varbinary|xml|geography|geometry|sql_variant|image|timestamp|"
+    r"unknown|any)(\([^)]*\))?$",
+    re.I,
+)
 
-def _type_cell_ok(parts: list[str]) -> bool:
-    if len(parts) < 4:
+
+def _type_cell_at(parts: list[str], idx: int) -> bool:
+    if len(parts) <= idx:
         return False
-    raw = parts[3].strip()
+    raw = parts[idx].strip()
     # Element tables sometimes use `[int]`, `[varchar](100)` instead of plain `varchar(100)`.
     if raw.startswith("["):
         end = raw.find("]")
@@ -68,6 +80,29 @@ def _type_cell_ok(parts: list[str]) -> bool:
     else:
         base = raw.split("(", 1)[0].strip()
     return bool(_TYPE_CELL.match(base + " "))
+
+
+def _type_cell_ok(parts: list[str]) -> bool:
+    return _type_cell_at(parts, 3)
+
+
+def _is_sql_type_cell(raw: str) -> bool:
+    """Strict check: cell value is a SQL type (optionally with a parenthesized
+    size). Filters out narrative cells that merely *contain* a type word."""
+    s = (raw or "").strip()
+    if not s:
+        return False
+    if s.startswith("["):
+        end = s.find("]")
+        if end <= 1:
+            return False
+        base = s[1:end].strip()
+        suffix = s[end + 1:].strip()
+        # Synapse `[varchar](100)` pattern: tolerate (...) suffix
+        if suffix and not re.match(r"^\([^)]*\)$", suffix):
+            return False
+        return bool(_TYPE_CELL_STRICT.match(base))
+    return bool(_TYPE_CELL_STRICT.match(s))
 
 
 def is_plausible_column_name(name: str) -> bool:
@@ -90,7 +125,23 @@ def is_plausible_column_name(name: str) -> bool:
 
 
 def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
-    """Return ordered (column_name, description) from Elements-style markdown rows."""
+    """Return ordered (column_name, description) from Elements-style markdown rows.
+
+    Format-flexible. Locates the SQL-type cell anywhere in the row, takes the
+    column name as the first plausible identifier *before* it, and the
+    description as the last non-empty cell *after* it. Handles all observed
+    wiki shapes:
+
+    - OLD 5-cell ordinal:  ``| # | Column | Type | NULL | Description |``
+    - NEW 3-cell:          ``| Column | Type | Description |``
+    - NEW 4-cell nullable: ``| Column | Nullable | Type | Description |``
+    - NEW 5-cell ordinal:  ``| # | Column | Type | NULL | Description |``
+                           (= same as OLD; covered)
+
+    A row is accepted only when a strict SQL-type token (e.g. ``int``,
+    ``varchar(4000)``) appears as a standalone cell — that gates out
+    property tables, narrative tables, and value-map tables.
+    """
     rows: list[tuple[str, str]] = []
     seen: set[str] = set()
 
@@ -99,28 +150,70 @@ def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
         if not raw.startswith("|"):
             continue
         parts = [p.strip() for p in raw.split("|")]
-        if len(parts) < 5:
-            continue
-        ord_cell = parts[1]
-        if not ord_cell.isdigit():
-            continue
-        col_name = parts[2].strip().strip("`")
-        if not is_plausible_column_name(col_name):
-            continue
-        if not _type_cell_ok(parts):
+        # parts[0] and parts[-1] are empties from leading/trailing pipes.
+        cells = parts[1:-1] if (parts and parts[0] == "" and parts[-1] == "") else parts
+        if len(cells) < 3:
             continue
 
-        if len(parts) < 6:
-            continue
-        if len(parts) >= 8:
-            desc = parts[6]
-        elif len(parts) == 7:
-            desc = parts[5]
+        # Primary path: locate a strict SQL-type cell and anchor on it.
+        type_idx = -1
+        for i, c in enumerate(cells):
+            if _is_sql_type_cell(c):
+                type_idx = i
+                break
+
+        col_name = ""
+        desc = ""
+
+        if type_idx >= 0:
+            # Column name = first plausible identifier strictly before the type cell.
+            for j in range(type_idx):
+                cand = cells[j].strip().strip("`")
+                if is_plausible_column_name(cand):
+                    col_name = cand
+                    break
+            if not col_name:
+                continue
+            # Description = first *substantial* cell after the type cell. Skips
+            # nullability flags ("NULL"/"NOT NULL"/"YES"/"NO"/"0"/"1") and short
+            # tags ("Tier 1"). Fallback: last non-empty cell.
+            _SKIP = {"", "NULL", "NOT NULL", "YES", "NO", "0", "1", "TRUE", "FALSE", "---", "------"}
+            for k in range(type_idx + 1, len(cells)):
+                v = cells[k].strip()
+                if v.upper() in _SKIP:
+                    continue
+                # Substantial: contains a space (likely a sentence) OR length >= 25.
+                if " " in v or len(v) >= 25:
+                    desc = v
+                    break
+            if not desc:
+                # No "substantial" candidate — fall back to last non-empty cell
+                for k in range(len(cells) - 1, type_idx, -1):
+                    v = cells[k].strip()
+                    if v and v.upper() not in _SKIP:
+                        desc = v
+                        break
         else:
-            desc = parts[4]
+            # Fallback: ordinal-anchored shape with no Type column, e.g.
+            #   | # | Column | Description | Source | Tier |
+            # Conservative — must have a strict digit ordinal at cells[0],
+            # plausible column at cells[1], and a meaty description at cells[2].
+            if len(cells) < 3:
+                continue
+            if not cells[0].strip().isdigit():
+                continue
+            cand_col = cells[1].strip().strip("`")
+            if not is_plausible_column_name(cand_col):
+                continue
+            cand_desc = cells[2].strip()
+            if len(cand_desc) < 30 or cand_desc in ("---", "------"):
+                continue
+            col_name = cand_col
+            desc = cand_desc
 
-        if not desc or desc in ("---", "------"):
+        if not desc:
             continue
+
         if col_name in seen:
             continue
         seen.add(col_name)
@@ -135,9 +228,20 @@ def sql_string_for_comment(text: str, max_len: int = 1024) -> str:
     return t
 
 
+def quote_column_name(col: str) -> str:
+    """Backtick-quote column names that contain non-identifier chars (e.g.
+    ``EOD_Equity_FX/Comm/Ind``). Plain ``A-Za-z0-9_`` names are emitted bare
+    to preserve historical alter-file output."""
+    c = col.strip().strip("`")
+    if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", c):
+        return c
+    return f"`{c}`"
+
+
 def format_comment_line(table: str, col: str, description: str) -> str:
     esc = sql_string_for_comment(description)
-    return f"ALTER TABLE {table} ALTER COLUMN {col} COMMENT '{esc}';"
+    qcol = quote_column_name(col)
+    return f"ALTER TABLE {table} ALTER COLUMN {qcol} COMMENT '{esc}';"
 
 
 def merge_alter_file(alter_path: Path, wiki_cols: list[tuple[str, str]]) -> tuple[bool, str]:

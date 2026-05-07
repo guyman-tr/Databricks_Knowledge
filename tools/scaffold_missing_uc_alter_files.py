@@ -23,6 +23,7 @@ _spec.loader.exec_module(_merge)
 parse_wiki_column_catalog = _merge.parse_wiki_column_catalog
 format_comment_line = _merge.format_comment_line
 sql_string_for_comment = _merge.sql_string_for_comment
+quote_column_name = _merge.quote_column_name
 
 
 def full_uc_qualifier(uc_table: str) -> str:
@@ -118,8 +119,9 @@ def build_alter_content(
     lines.append("")
     lines.append("-- ---- Column PII Tags ----")
     for col, _ in cols:
+        qcol = quote_column_name(col)
         lines.append(
-            f"ALTER TABLE {full_uc} ALTER COLUMN {col} SET TAGS ('pii' = 'none');"
+            f"ALTER TABLE {full_uc} ALTER COLUMN {qcol} SET TAGS ('pii' = 'none');"
         )
     lines.append("")
     return "\n".join(lines)
