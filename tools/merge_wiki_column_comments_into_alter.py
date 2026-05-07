@@ -88,21 +88,25 @@ def _type_cell_ok(parts: list[str]) -> bool:
 
 def _is_sql_type_cell(raw: str) -> bool:
     """Strict check: cell value is a SQL type (optionally with a parenthesized
-    size). Filters out narrative cells that merely *contain* a type word."""
+    size, optionally followed by a NULL/NOT NULL qualifier). Filters out
+    narrative cells that merely *contain* a type word."""
     s = (raw or "").strip()
     if not s:
         return False
-    if s.startswith("["):
-        end = s.find("]")
+    # Strip trailing nullability qualifier so cells like `int NOT NULL`,
+    # `decimal(16,2) NULL`, `varchar(50) NOT NULL` are all recognized.
+    s_no_null = re.sub(r"\s+(NOT\s+NULL|NULL)\s*$", "", s, flags=re.I).strip()
+    if s_no_null.startswith("["):
+        end = s_no_null.find("]")
         if end <= 1:
             return False
-        base = s[1:end].strip()
-        suffix = s[end + 1:].strip()
+        base = s_no_null[1:end].strip()
+        suffix = s_no_null[end + 1:].strip()
         # Synapse `[varchar](100)` pattern: tolerate (...) suffix
         if suffix and not re.match(r"^\([^)]*\)$", suffix):
             return False
         return bool(_TYPE_CELL_STRICT.match(base))
-    return bool(_TYPE_CELL_STRICT.match(s))
+    return bool(_TYPE_CELL_STRICT.match(s_no_null))
 
 
 def is_plausible_column_name(name: str) -> bool:
@@ -118,8 +122,9 @@ def is_plausible_column_name(name: str) -> bool:
         return False
     if "★" in n or "☆" in n:
         return False
-    # Synapse / UC may use slashes (Organic/Paid), hyphens (BNY-eToro_Units), etc.
-    if not re.match(r"^[A-Za-z0-9_/\-]+$", n):
+    # Synapse / UC may use slashes (Organic/Paid), hyphens (BNY-eToro_Units),
+    # plus/percent/period (UnitsNOP+1%, UnitsNOP-50%, etoro.IsActive_v2), etc.
+    if not re.match(r"^[A-Za-z0-9_/\-+%.]+$", n):
         return False
     return True
 
@@ -156,24 +161,32 @@ def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
             continue
 
         # Primary path: locate a strict SQL-type cell and anchor on it.
-        type_idx = -1
-        for i, c in enumerate(cells):
-            if _is_sql_type_cell(c):
-                type_idx = i
-                break
+        # Some column names (e.g., `Date`, `Time`, `Money`) collide with SQL
+        # types — in 4-cell ordinal rows ``| 1 | Date | date | desc |`` the
+        # column-name cell at idx 1 also passes ``_is_sql_type_cell`` and would
+        # be wrongly anchored. So gather ALL candidate type indexes and pick
+        # the first one that yields a non-empty col_name search.
+        candidate_type_idxs = [i for i, c in enumerate(cells) if _is_sql_type_cell(c)]
 
         col_name = ""
         desc = ""
+        type_idx = -1
 
-        if type_idx >= 0:
-            # Column name = first plausible identifier strictly before the type cell.
-            for j in range(type_idx):
+        for cand_idx in candidate_type_idxs:
+            # Column name = first plausible identifier strictly before this idx.
+            for j in range(cand_idx):
                 cand = cells[j].strip().strip("`")
                 if is_plausible_column_name(cand):
                     col_name = cand
+                    type_idx = cand_idx
                     break
-            if not col_name:
-                continue
+            if col_name:
+                break
+
+        if candidate_type_idxs and not col_name:
+            continue
+
+        if type_idx >= 0:
             # Description = first *substantial* cell after the type cell. Skips
             # nullability flags ("NULL"/"NOT NULL"/"YES"/"NO"/"0"/"1") and short
             # tags ("Tier 1"). Fallback: last non-empty cell.

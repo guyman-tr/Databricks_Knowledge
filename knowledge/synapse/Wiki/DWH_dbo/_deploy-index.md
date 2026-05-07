@@ -3,13 +3,13 @@
 ## schema: DWH_dbo
 
 database: Synapse DWH
-total_deployable: 130
+total_deployable: 132
 generated: 0
-deployed: 90
-failed: 1
+deployed: 91
+failed: 2
 last_generate_batch: 0
-last_deploy_batch: 10
-last_updated: "2026-05-05"
+last_deploy_batch: 11
+last_updated: "2026-05-07"
 
 ## Schema ALTER + Deployment Progress
 
@@ -20,12 +20,12 @@ last_updated: "2026-05-05"
 | **Total deployable**               | 130        |
 | **Pending (no .alter.sql)**        | 1          |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 90         |
+| **Deployed (UC)**                  | 91         |
 | **Stub-only (no UC)**              | 41         |
-| **Failed**                         | 1         |
+| **Failed**                         | 2         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 10          |
+| **Last deploy batch**              | 11          |
 | **Last updated**                   | 2026-04-12 |
 
 
@@ -70,6 +70,7 @@ last_updated: "2026-05-05"
 | [DWH_dbo.Dim_Currency](Tables/Dim_Currency.md)                                                                               | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_Customer](Tables/Dim_Customer.md)                                                                               | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_CustomerChangeType](Tables/Dim_CustomerChangeType.md)                                                           | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
+| [DWH_dbo.Dim_Date](Tables/Dim_Date.md) | Deployed (Batch 11) — 2026-05-07|
 | [DWH_dbo.Dim_Desk](Tables/Dim_Desk.md)                                                                                       | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_DocumentStatus](Tables/Dim_DocumentStatus.md)                                                                   | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
 | [DWH_dbo.Dim_EvMatchStatus](Tables/Dim_EvMatchStatus.md)                                                                     | Deployed (Batch 1) — 2026-03-30                                                                                                                    |
@@ -161,6 +162,7 @@ last_updated: "2026-05-05"
 | [DWH_dbo.V_Dim_Instrument_Correlation](Views/V_Dim_Instrument_Correlation.md)                                 | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.V_Dim_Instrument_Correlation_Test_Full](Views/V_Dim_Instrument_Correlation_Test_Full.md)             | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.v_Dim_Mirror](Views/v_Dim_Mirror.md)                                                                 | Deployed (full) 2026-04-12 — 26 inherited cols from Dim_Mirror added (52 statements; 26 COMMENT + 26 SET TAGS)                                     |
+| [DWH_dbo.V_Fact_CustomerAction_for_generic](Views/V_Fact_CustomerAction_for_generic.md) | Failed (deploy Batch 11) — DESCRIBE: [TABLE_OR_VIEW_NOT_FOUND] The table or view `main`.`bi_db`.`gold_sql_dp_prod_we_dwh_dbo_v_fact_customeraction_|
 | [DWH_dbo.V_Fact_CustomerUnrealized_PnL_For_DWH_Rep](Views/V_Fact_CustomerUnrealized_PnL_For_DWH_Rep.md)       | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.V_Fact_RegulationTransfer](Views/V_Fact_RegulationTransfer.md)                                       | Stub only — not in UC (confirmed 2026-04-12)                                                                                                       |
 | [DWH_dbo.V_Fact_SnapshotCustomer](Views/V_Fact_SnapshotCustomer.md)                                           | Deployed (full) 2026-04-12 — 43 inherited cols from Fact_SnapshotCustomer added (86 statements); pii_data target. Phase 2 deep-lineage: 85 stmts → 3 downstream objects (bi_output Genie view + both FSC_FromDateID variants) |

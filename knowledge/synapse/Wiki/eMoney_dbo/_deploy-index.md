@@ -1,14 +1,14 @@
 ---
 schema: eMoney_dbo
 database: Synapse DWH
-total_deployable: 46
+total_deployable: 49
 generated: 0
-deployed: 15
+deployed: 18
 failed: 22
 stub_only: 9
 last_generate_batch: 0
-last_deploy_batch: 10
-last_updated: "2026-05-05"
+last_deploy_batch: 5
+last_updated: "2026-05-07"
 ---
 
 ## Schema ALTER + Deployment Progress
@@ -19,12 +19,12 @@ last_updated: "2026-05-05"
 | **Total deployable**               | 45  |
 | **Pending (no .alter.sql)**        | 0          |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 15         |
+| **Deployed (UC)**                  | 18         |
 | **Stub-only (no UC)**              | 9   |
 | **Failed**                         | 22         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 10          |
+| **Last deploy batch**              | 5          |
 | **Last updated**                   | 2026-05-03       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -76,6 +76,9 @@ last_updated: "2026-05-05"
 | [eMoney_dbo.eMoney_UserData_Marketing](Tables/eMoney_UserData_Marketing.md) | Deployed (Batch 1) — 2026-05-03|
 | [eMoney_dbo.eMoneyClientBalance](Tables/eMoneyClientBalance.md) | Failed (deploy Batch 1) — [COLUMN_NOT_FOUND_IN_TABLE] Column 'Column' not found in table 'main'.'bi_db'.'gold_sql_dp_prod_we_emoney_dbo_emoneyclie|
 | [eMoney_dbo.eMoneyProcessStatusLog](Tables/eMoneyProcessStatusLog.md) | Stub only |
+| [eMoney_dbo.ETL_AccountsActivities](Tables/ETL_AccountsActivities.md) | Deployed (Batch 5) — 2026-05-07|
+| [eMoney_dbo.ETL_SettlementsTransactions](Tables/ETL_SettlementsTransactions.md) | Deployed (Batch 5) — 2026-05-07|
+| [eMoney_dbo.FiatAccount](Tables/FiatAccount.md) | Deployed (Batch 4) — 2026-05-07|
 | [eMoney_dbo.v_eMoney_Card_Instance_Summary](Tables/v_eMoney_Card_Instance_Summary.md) | Deployed (Batch 10) — 2026-05-05|
 
 ## Views (2)

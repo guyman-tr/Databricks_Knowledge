@@ -2,13 +2,13 @@
 
 ## schema: Dealing_dbo
 database: Synapse DWH
-total_deployable: 32
+total_deployable: 33
 generated: 0
-deployed: 28
+deployed: 29
 failed: 4
 last_generate_batch: 0
-last_deploy_batch: 10
-last_updated: "2026-05-05"
+last_deploy_batch: 11
+last_updated: "2026-05-07"
 
 ## Schema ALTER + Deployment Progress
 
@@ -18,12 +18,12 @@ last_updated: "2026-05-05"
 | **Total deployable**               | 29        |
 | **Pending (no .alter.sql)**        | 0        |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 28         |
+| **Deployed (UC)**                  | 29         |
 | **Stub-only (no UC)**              | 0          |
 | **Failed**                         | 4         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 10          |
+| **Last deploy batch**              | 11          |
 | **Last updated**                   | 2026-03-30 |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present, UC not deployed in this index pass. `Deployed` = UC ALTERs executed.
@@ -69,3 +69,9 @@ last_updated: "2026-05-05"
 | [Dealing_dbo.Dealing_IndiciesIntraHour_Clients](Tables/Dealing_IndiciesIntraHour_Clients.md) | Deployed (Batch 9) — 2026-05-03|
 | [Dealing_dbo.Dealing_IndiciesIntraHour_Etoro](Tables/Dealing_IndiciesIntraHour_Etoro.md) | Deployed (Batch 9) — 2026-05-03|
 | [Dealing_dbo.Dealing_NumberofPositionsOpened_Agg](Tables/Dealing_NumberofPositionsOpened_Agg.md) | Deployed (Batch 9) — 2026-05-03|
+
+## Views (1)
+
+| Object | Deploy status |
+|--------|---------------|
+| [Dealing_dbo.V_Dealing_Duco_EODRecon](Views/V_Dealing_Duco_EODRecon.md) | Deployed (Batch 11) — 2026-05-07|

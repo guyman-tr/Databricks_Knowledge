@@ -2,13 +2,13 @@
 
 ## schema: BI_DB_dbo
 database: Synapse DWH
-total_deployable: 135
+total_deployable: 143
 generated: 0
-deployed: 92
+deployed: 100
 failed: 2
 stub_only: 45
 last_generate_batch: 0
-last_deploy_batch: 12
+last_deploy_batch: 5
 last_updated: "2026-05-07"
 
 ## Schema ALTER + Deployment Progress
@@ -19,12 +19,12 @@ last_updated: "2026-05-07"
 | **Total deployable**               | 75  |
 | **Pending (no .alter.sql)**        | 0          |
 | **Generated (awaiting UC deploy)** | 0        |
-| **Deployed (UC)**                  | 92         |
+| **Deployed (UC)**                  | 100         |
 | **Stub-only (no UC)**              | 47   |
 | **Failed**                         | 2         |
 | **Stale**                          | 0          |
 | **Last generate batch**            | 0          |
-| **Last deploy batch**              | 12          |
+| **Last deploy batch**              | 5          |
 | **Last updated**                   | 2026-05-07       |
 
 > **Rows**: `Pending` = no local `.alter.sql`. `Generated` = `.alter.sql` present with executable ALTER, UC not deployed in this index pass. `Deployed` = UC ALTERs executed. `Stub only` = comment-only `.alter.sql` (no UC target).
@@ -57,6 +57,7 @@ last_updated: "2026-05-07"
 | [BI_DB_dbo.BI_DB_Compliance_Illegal_Trades_Alerts](Tables/BI_DB_Compliance_Illegal_Trades_Alerts.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Compliance_Restriction_Lists_Forbidden_Trading](Tables/BI_DB_Compliance_Restriction_Lists_Forbidden_Trading.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_CopyDailyData](Tables/BI_DB_CopyDailyData.md) | Deployed (Batch 11) — 2026-05-07|
+| [BI_DB_dbo.BI_DB_CreditRiskMatrix](Tables/BI_DB_CreditRiskMatrix.md) | Deployed (Batch 5) — 2026-05-07|
 | [BI_DB_dbo.BI_DB_Cross_Selling_Monthly](Tables/BI_DB_Cross_Selling_Monthly.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Crypto_NOP](Tables/BI_DB_Crypto_NOP.md)                                                                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_Crypto_NOP_CID](Tables/BI_DB_Crypto_NOP_CID.md)                                                             | Deployed (Batch 1) — 2026-03-30|
@@ -73,6 +74,7 @@ last_updated: "2026-05-07"
 | [BI_DB_dbo.BI_DB_DDR_CID_Level](Tables/BI_DB_DDR_CID_Level.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status](Tables/BI_DB_DDR_Customer_Daily_Status.md)                                       | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status](Tables/BI_DB_DDR_Customer_Periodic_Status.md)                                 | Deployed (Batch 1) — 2026-03-30|
+| [BI_DB_dbo.BI_DB_DDR_Daily_Aggregated](Tables/BI_DB_DDR_Daily_Aggregated.md) | Deployed (Batch 13) — 2026-05-07|
 | [BI_DB_dbo.BI_DB_DDR_Fact_AUM](Tables/BI_DB_DDR_Fact_AUM.md)                                                                 | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms](Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md)                                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_DDR_Fact_PnL](Tables/BI_DB_DDR_Fact_PnL.md) | Deployed (Batch 9) — 2026-05-03|
@@ -100,6 +102,7 @@ last_updated: "2026-05-07"
 | [BI_DB_dbo.BI_DB_Money_In_New_Management_Dashboard](Tables/BI_DB_Money_In_New_Management_Dashboard.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Money_Out_New_Management_Dashboard](Tables/BI_DB_Money_Out_New_Management_Dashboard.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Money_Out_STPAnalysis_OPS_Dashboard](Tables/BI_DB_Money_Out_STPAnalysis_OPS_Dashboard.md) | Deployed (Batch 10) — 2026-05-05|
+| [BI_DB_dbo.BI_DB_MonthlyRiskScore](Tables/BI_DB_MonthlyRiskScore.md) | Deployed (Batch 5) — 2026-05-07|
 | [BI_DB_dbo.BI_DB_NewBonusReport](Tables/BI_DB_NewBonusReport.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Operations_Onboarding_Flow_UserKPIs](Tables/BI_DB_Operations_Onboarding_Flow_UserKPIs.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_OPS_Fraud_Alert_Analysis](Tables/BI_DB_OPS_Fraud_Alert_Analysis.md) | Deployed (Batch 9) — 2026-05-03|
@@ -122,9 +125,19 @@ last_updated: "2026-05-07"
 | [BI_DB_dbo.BI_DB_Trading_Failures_Risk](Tables/BI_DB_Trading_Failures_Risk.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Withdraw_Rollback_PIPs](Tables/BI_DB_Withdraw_Rollback_PIPs.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.Client_Balance_Breakdown_Instrument_Level](Tables/Client_Balance_Breakdown_Instrument_Level.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.Dim_Revenue_Metrics](Tables/Dim_Revenue_Metrics.md) | Deployed (Batch 13) — 2026-05-07|
 | [BI_DB_dbo.DWH_CIDs7DaysDeviation](Tables/DWH_CIDs7DaysDeviation.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.DWH_CIDsDailyRisk](Tables/DWH_CIDsDailyRisk.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.DWH_GainDaily](Tables/DWH_GainDaily.md) | Deployed (Batch 9) — 2026-05-03|
+| [BI_DB_dbo.External_Cmrdb_FxRate](Tables/External_Cmrdb_FxRate.md) | Deployed (Batch 13) — 2026-05-07|
+
+## Views (2)
+
+| Object | Deploy status |
+| ------ | ------------- |
+| [BI_DB_dbo.V_BI_DB_AllDeposits](Views/V_BI_DB_AllDeposits.md) | Deployed (Batch 13) — 2026-05-07|
+| [BI_DB_dbo.V_BI_DB_BO_Generated_Compensations](Views/V_BI_DB_BO_Generated_Compensations.md) | Deployed (Batch 5) — 2026-05-07|
+| [BI_DB_dbo.V_BI_DB_KYC_Score_CID_Level](Views/V_BI_DB_KYC_Score_CID_Level.md) | Deployed (Batch 13) — 2026-05-07|
 
 ## Functions (47)
 
