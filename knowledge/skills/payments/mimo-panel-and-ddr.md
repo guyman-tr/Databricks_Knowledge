@@ -1,49 +1,62 @@
 ---
 name: payments-mimo-panel-and-ddr
 description: |
-  Cross-platform Money-In / Money-Out (MIMO) panel and the Daily Data Report
-  (DDR) layer above it. THIS IS THE DEFAULT skill for any "how much money
-  flowed", "FTD count", "customer money status by date", "deposit/withdrawal
-  volumes" question. Anchored on BI_DB_DDR_Fact_MIMO_AllPlatforms (91.5M rows,
-  unifies TradingPlatform + eMoney + Options + MoneyFarm) and the daily/
-  periodic CID panel views built on top of it. Use INSTEAD of joining raw
-  Fact_BillingDeposit/Withdraw/eMoney/EXW tables — those are for forensic
+  Cross-platform Money-In / Money-Out (MIMO) panel and the new Daily Data
+  Report (DDR) framework above it. THIS IS THE DEFAULT skill for any "how
+  much money flowed", "FTD count", "customer money status by date",
+  "deposit/withdrawal volumes" question. Anchored on
+  BI_DB_DDR_Fact_MIMO_AllPlatforms (UC: bi_db.gold_*_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms,
+  91.5M rows, unifies TradingPlatform + eMoney + Options/Apex + MoneyFarm-FTD)
+  and the daily / periodic DDR Customer status tables. Use INSTEAD of joining
+  raw Fact_BillingDeposit/Withdraw/eMoney/EXW tables — those are for forensic
   drill-down only.
+
+  Per-platform MIMO objects (Trading_Platform / eMoney_Platform /
+  Options_Platform) are NOT materialized in UC; they are exposed as views in
+  main.etoro_kpi_prep (v_mimo_tradingplatform, v_mimo_emoneyplatform,
+  v_mimo_options_platform). Crypto wallet activity is OFF the MIMO graph
+  unless C2F-converted to fiat. Old DDR (BI_DB_LTV_*, BI_DB_CID_*Panel_*)
+  is deprecated — use the new DDR_Fact_* / DDR_Customer_* tables only.
 keywords: [MIMO, money in money out, DDR, daily data report, panel, FTD,
            IsGlobalFTD, IsPlatformFTD, IsCryptoToFiat, IsRecurring,
            IsTradeFromIBAN, IsInternalTransfer, customer daily status,
            customer periodic status, AUM, PnL, revenue generating actions,
-           LTV, MoneyFarm, Options, eMoney, TradingPlatform]
+           MoneyFarm, Options, eMoney, TradingPlatform, v_mimo_allplatforms,
+           v_mimo_tradingplatform, v_mimo_emoneyplatform, v_mimo_options_platform,
+           bi_db.gold_bi_db_ddr_fact_mimo_allplatforms]
 load_after: [_router.md, payments/SKILL.md]
 intersects_with:
   - payments/deposits-and-withdrawals
   - payments/emoney-accounts-and-cards
   - payments/crypto-wallet
   - payments/finance-recon-and-balances
-  - payments/fees-and-revenue
+  - revenue-and-fees/SKILL
   - bridges/recurring-deposit-to-trade
   - bridges/crypto-to-fiat
 primary_objects:
-  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
-  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform
-  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
-  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform
-  - BI_DB_dbo.Function_MIMO_First_Deposit_All_Platforms
-  - BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
-  - BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status
-  - BI_DB_dbo.BI_DB_DDR_CID_Level
-  - BI_DB_dbo.BI_DB_DDR_Fact_AUM
-  - BI_DB_dbo.BI_DB_DDR_Fact_PnL
-  - BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
-  - BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
-  - BI_DB_dbo.BI_DB_LTV_BI_Actual
-  - BI_DB_dbo.BI_DB_LTV_Predictions
-  - BI_DB_dbo.BI_DB_CID_DailyPanel_FullData
-  - BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData
-  - etoro_kpi_prep.v_mimo_allplatforms
-  - etoro_kpi_prep.v_mimo_first_deposit_all_platforms
-  - etoro_kpi_prep_stg.v_ddr_mimo_allplatforms
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - main.etoro_kpi_prep.v_mimo_tradingplatform  # VIEW | Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform
+  - main.etoro_kpi_prep.v_mimo_emoneyplatform  # VIEW | Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+  - main.etoro_kpi_prep.v_mimo_options_platform  # VIEW | Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Options_Platform
+  - main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms  # Synapse: BI_DB_dbo.Function_MIMO_First_Deposit_All_Platforms
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status  # Synapse: BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status  # Synapse: BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_AUM
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_PnL
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
+  - main.etoro_kpi_prep.v_mimo_allplatforms  # VIEW | Synapse: etoro_kpi_prep.v_mimo_allplatforms (passthrough over AllPlatforms)
+  - main.etoro_kpi_prep_stg.v_ddr_mimo_allplatforms  # VIEW | Synapse: etoro_kpi_prep_stg.v_ddr_mimo_allplatforms (staging variant)
 ---
+
+<!--
+UC validation audit (auto-generated by tools/skills/apply_uc_object_map.py):
+# REMOVED on UC validation: `BI_DB_dbo.BI_DB_LTV_BI_Actual` (deprecated_old_ddr). Old DDR (LTV). Use new DDR framework. Do not reference.
+# REMOVED on UC validation: `BI_DB_dbo.BI_DB_LTV_Predictions` (deprecated_old_ddr). Old DDR (LTV). Use new DDR framework. Do not reference.
+# REMOVED on UC validation: `BI_DB_dbo.BI_DB_CID_DailyPanel_FullData` (deprecated_old_ddr). Old DDR (super-wide daily panel). Use new DDR framework. Do not reference.
+# REMOVED on UC validation: `BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData` (deprecated_old_ddr). Old DDR (super-wide monthly panel). Use new DDR framework. Do not reference.
+-->
+
 
 # C.2 — MIMO Panel & DDR (the cross-platform money flow layer)
 
@@ -57,118 +70,133 @@ already applied.
 `eMoney_Dim_Transaction` + `EXW_Wallet.SentTransactions` — STOP and use
 this skill instead.**
 
+> **Genie / SQL note:** SQL examples below use Synapse aliases for
+> readability. When generating SQL on Databricks, use the Unity Catalog
+> FQNs from `primary_objects:` above (or the inline `UC:` notes in the
+> mental model). The cardinal one to remember:
+> `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms`.
+
+> **Per-platform MIMO objects are VIEWS in UC, not materialized tables.**
+> Synapse `BI_DB_DDR_Fact_MIMO_Trading_Platform` → UC
+> `main.etoro_kpi_prep.v_mimo_tradingplatform`. Same for eMoney
+> (`v_mimo_emoneyplatform`) and Options (`v_mimo_options_platform`).
+> They sit on top of the materialized `_AllPlatforms` table.
+
 ## Mental model
 
 ```mermaid
 graph TB
-    TP[Fact_BillingDeposit/Withdraw<br/>TradingPlatform] --> TPMimo[BI_DB_DDR_Fact_MIMO_Trading_Platform<br/>68.2M rows]
-    EM[eMoney_Dim_Transaction] --> EMMimo[BI_DB_DDR_Fact_MIMO_eMoney_Platform<br/>23.2M rows]
-    OP[Apex Options ledger] --> OPMimo[BI_DB_DDR_Fact_MIMO_Options_Platform<br/>98K rows]
-    MF[Dim_Customer FTDs] --> MFMimo[BI_DB_DDR_Fact_MIMO_MoneyFarm<br/>FTD-only]
+    TP["Fact_BillingDeposit/Withdraw<br/>TradingPlatform source"] --> TPMimo["BI_DB_DDR_Fact_MIMO_Trading_Platform<br/>UC view: etoro_kpi_prep.v_mimo_tradingplatform<br/>~68M rows"]
+    EM["eMoney_Dim_Transaction"] --> EMMimo["BI_DB_DDR_Fact_MIMO_eMoney_Platform<br/>UC view: etoro_kpi_prep.v_mimo_emoneyplatform<br/>~23M rows"]
+    OP["Apex Options ledger (Gatsby brand)"] --> OPMimo["BI_DB_DDR_Fact_MIMO_Options_Platform<br/>UC view: etoro_kpi_prep.v_mimo_options_platform<br/>~98K rows"]
+    MF["Dim_Customer.MoneyFarm FTDs"] -.FTD-only injection.-> AllPlat
 
-    TPMimo --> AllPlat[BI_DB_DDR_Fact_MIMO_AllPlatforms<br/>91.5M rows<br/>UNION ALL + IsGlobalFTD]
+    TPMimo --> AllPlat["BI_DB_DDR_Fact_MIMO_AllPlatforms<br/>UC: bi_db.gold_*_bi_db_ddr_fact_mimo_allplatforms<br/>~91.5M rows — UNION ALL + IsGlobalFTD"]
     EMMimo --> AllPlat
     OPMimo --> AllPlat
-    MFMimo --> AllPlat
-    GlobFn[Function_MIMO_First_Deposit_All_Platforms] --> AllPlat
+    GlobFn["Function_MIMO_First_Deposit_All_Platforms<br/>UC view: etoro_kpi_prep.v_mimo_first_deposit_all_platforms"] --> AllPlat
 
-    AllPlat --> CDS[BI_DB_DDR_Customer_Daily_Status<br/>1 row per CID per day]
-    AUM[BI_DB_DDR_Fact_AUM] --> CDS
-    PnL[BI_DB_DDR_Fact_PnL] --> CDS
+    AllPlat --> CDS["BI_DB_DDR_Customer_Daily_Status<br/>UC: bi_db.gold_*_bi_db_ddr_customer_daily_status<br/>1 row per CID per day"]
+    AUM["BI_DB_DDR_Fact_AUM"] --> CDS
+    PnL["BI_DB_DDR_Fact_PnL"] --> CDS
+    RGA["BI_DB_DDR_Fact_Revenue_Generating_Actions"] --> CDS
+    TVA["BI_DB_DDR_Fact_Trading_Volumes_And_Amounts"] --> CDS
 
-    CDS --> CPS[BI_DB_DDR_Customer_Periodic_Status<br/>weekly/monthly rollup]
-    CDS --> CIDLevel[BI_DB_DDR_CID_Level<br/>full daily customer picture]
+    CDS --> CPS["BI_DB_DDR_Customer_Periodic_Status<br/>UC: bi_db.gold_*_bi_db_ddr_customer_periodic_status<br/>weekly / monthly rollup"]
 
-    CIDLevel --> LTV[BI_DB_LTV_BI_Actual<br/>BI_DB_LTV_Predictions]
-    CIDLevel --> Daily[BI_DB_CID_DailyPanel_FullData]
-    CIDLevel --> Monthly[BI_DB_CID_MonthlyPanel_FullData]
-
-    AllPlat --> KPI[etoro_kpi_prep.v_mimo_*<br/>etoro_kpi_prep_stg.v_ddr_mimo_*]
+    AllPlat --> KPI["etoro_kpi_prep.v_mimo_*<br/>etoro_kpi_prep_stg.v_ddr_mimo_*<br/>(thin views over AllPlat)"]
 ```
 
-The DDR layer has three tiers, in increasing aggregation:
+The new DDR framework has two tiers, in increasing aggregation:
 
-1. **Transactional MIMO** — `BI_DB_DDR_Fact_MIMO_AllPlatforms` and the four
-   sub-platform tables. Grain = one row per money movement.
-2. **Daily customer panel** — `BI_DB_DDR_Customer_Daily_Status`,
-   `BI_DB_DDR_Fact_AUM`, `BI_DB_DDR_Fact_PnL`,
-   `BI_DB_DDR_Fact_Revenue_Generating_Actions`,
+1. **Transactional MIMO** — `BI_DB_DDR_Fact_MIMO_AllPlatforms` (materialized
+   in UC) and the three per-platform views (`v_mimo_tradingplatform`,
+   `v_mimo_emoneyplatform`, `v_mimo_options_platform`) plus the global FTD
+   view (`v_mimo_first_deposit_all_platforms`). Grain = one row per money
+   movement.
+2. **Daily / periodic customer panels** — `BI_DB_DDR_Customer_Daily_Status`
+   joined per-fact to `BI_DB_DDR_Fact_AUM`, `BI_DB_DDR_Fact_PnL`,
+   `BI_DB_DDR_Fact_Revenue_Generating_Actions`, and
    `BI_DB_DDR_Fact_Trading_Volumes_And_Amounts`. Grain = one row per CID
-   per DateID.
-3. **Periodic / lifetime panels** — `BI_DB_DDR_Customer_Periodic_Status`,
-   `BI_DB_CID_DailyPanel_FullData`, `BI_DB_CID_MonthlyPanel_FullData`,
-   `BI_DB_LTV_*`. Grain = one row per CID per period (week/month/lifetime).
+   per DateID. Periodic rollups land in `BI_DB_DDR_Customer_Periodic_Status`.
+
+> **Old DDR (deprecated — do NOT use)**: `BI_DB_LTV_BI_Actual`,
+> `BI_DB_LTV_Predictions`, `BI_DB_CID_DailyPanel_FullData`,
+> `BI_DB_CID_MonthlyPanel_FullData`, `BI_DB_DDR_CID_Level`. These are the
+> previous super-wide panels and LTV tables; they are being retired in favor
+> of the per-fact split above. None of them should appear in new analyses.
 
 ## Primary objects
 
-| Object | Grain | Rows | Notes |
-|--------|-------|------|-------|
-| [`BI_DB_DDR_Fact_MIMO_AllPlatforms`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md) | Transaction × CID × Date × Platform × Action | 91.5M | HASH(RealCID), CCI. **The canonical "did money flow" table.** |
-| [`BI_DB_DDR_Fact_MIMO_Trading_Platform`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_Trading_Platform.md) | Same, TP only | 68.2M | Built from `Fact_BillingDeposit/Withdraw` + Dim resolution. |
-| [`BI_DB_DDR_Fact_MIMO_eMoney_Platform`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_eMoney_Platform.md) | Same, eMoney only | 23.2M | Built from `eMoney_Dim_Transaction` + status. |
-| [`BI_DB_DDR_Fact_MIMO_Options_Platform`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_Options_Platform.md) | Same, Options only | 98K | Apex/Gatsby broker; full delete/re-insert each run (data arrival is unreliable). |
-| `Function_MIMO_First_Deposit_All_Platforms` | Function — returns one row per CID's FTD across all platforms | — | Source-of-truth for cross-platform FTD. **Excludes 13K bad-FTD cohort** (Aug 18-20 2025, $1 deposits with no follow-up). |
-| [`BI_DB_DDR_Customer_Daily_Status`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Customer_Daily_Status.md) | CID × DateID | — | The daily customer state: balance, AUM, PnL, MIMO, country, regulation. The **default daily customer rollup**. |
-| [`BI_DB_DDR_Customer_Periodic_Status`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Customer_Periodic_Status.md) | CID × Period | — | Weekly / monthly rollup of `_Daily_Status`. |
-| [`BI_DB_DDR_CID_Level`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_CID_Level.md) | CID × DateID | — | Full daily picture (joins MIMO + AUM + PnL + RevenueActions). Most BI dashboards point here. |
-| [`BI_DB_DDR_Fact_AUM`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_AUM.md) | CID × DateID | — | Assets-under-management snapshot per customer per day. |
-| [`BI_DB_DDR_Fact_PnL`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_PnL.md) | CID × DateID × InstrumentType | — | Revenue per customer per day per instrument class. |
-| [`BI_DB_DDR_Fact_Revenue_Generating_Actions`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md) | CID × DateID × ActionType × RevenueMetric | — | Granular revenue events (open / close / manual close). |
-| [`BI_DB_DDR_Fact_Trading_Volumes_And_Amounts`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.md) | CID × DateID × InstrumentType | — | Volume + notional amounts per customer per day. |
-| [`BI_DB_LTV_BI_Actual`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_LTV_BI_Actual.md) | CID × cohort | — | Realized LTV per customer cohort. |
-| [`BI_DB_LTV_Predictions`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_LTV_Predictions.md) | CID × cohort | — | Predicted LTV. |
-| [`BI_DB_CID_DailyPanel_FullData`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_CID_DailyPanel_FullData.md) | CID × DateID, ultra-wide | — | Convenience super-wide daily panel. |
-| [`BI_DB_CID_MonthlyPanel_FullData`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_CID_MonthlyPanel_FullData.md) | CID × Month, ultra-wide | — | Convenience super-wide monthly panel. |
+| Object | UC name | Grain | Rows | Notes |
+|--------|---------|-------|------|-------|
+| `BI_DB_DDR_Fact_MIMO_AllPlatforms` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms` (TABLE) | Transaction × CID × Date × Platform × Action | 91.5M | HASH(RealCID), CCI. **The canonical "did money flow" table.** |
+| `BI_DB_DDR_Fact_MIMO_Trading_Platform` | `main.etoro_kpi_prep.v_mimo_tradingplatform` (VIEW) | Same, TP only | 68.2M | Built from `Fact_BillingDeposit/Withdraw` + Dim resolution. **Not materialized in UC** — view over AllPlatforms. |
+| `BI_DB_DDR_Fact_MIMO_eMoney_Platform` | `main.etoro_kpi_prep.v_mimo_emoneyplatform` (VIEW) | Same, eMoney only | 23.2M | Built from `eMoney_Dim_Transaction` + status. **View over AllPlatforms.** |
+| `BI_DB_DDR_Fact_MIMO_Options_Platform` | `main.etoro_kpi_prep.v_mimo_options_platform` (VIEW) | Same, Options only | 98K | Apex broker (Gatsby brand); full delete/re-insert each run (data arrival is unreliable). **View over AllPlatforms.** |
+| `Function_MIMO_First_Deposit_All_Platforms` | `main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms` (VIEW) | One row per CID's FTD across all platforms | — | Source-of-truth for cross-platform FTD. **Excludes 13K bad-FTD cohort** (Aug 18-20 2025, $1 deposits with no follow-up). |
+| `BI_DB_DDR_Customer_Daily_Status` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status` (TABLE) | CID × DateID | — | The daily customer state: balance, AUM, PnL, MIMO, country, regulation. The **default daily customer rollup**. |
+| `BI_DB_DDR_Customer_Periodic_Status` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status` (TABLE) | CID × Period | — | Weekly / monthly rollup of `_Daily_Status`. |
+| `BI_DB_DDR_Fact_AUM` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum` (TABLE) | CID × DateID | — | Assets-under-management snapshot per customer per day. |
+| `BI_DB_DDR_Fact_PnL` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl` (TABLE) | CID × DateID × InstrumentType | — | Revenue per customer per day per instrument class. |
+| `BI_DB_DDR_Fact_Revenue_Generating_Actions` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions` (TABLE) | CID × DateID × ActionType × RevenueMetric | — | Granular revenue events (open / close / manual close). |
+| `BI_DB_DDR_Fact_Trading_Volumes_And_Amounts` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts` (TABLE) | CID × DateID × InstrumentType | — | Volume + notional amounts per customer per day. |
 
-KPI views built on this layer (Unity Catalog):
+KPI / DDR views built on this layer (Unity Catalog, fully-qualified):
 
-- `etoro_kpi_prep.v_mimo_allplatforms` — direct UC mirror of the AllPlatforms fact
-- `etoro_kpi_prep.v_mimo_tradingplatform` / `v_mimo_emoneyplatform` / `v_mimo_optionsplatform` — per-platform mirrors
-- `etoro_kpi_prep.v_mimo_first_deposit_all_platforms` — UC mirror of the FTD function
-- `etoro_kpi_prep_stg.v_ddr_mimo_allplatforms` / `v_ddr_mimo_emoney` / `v_ddr_mimo_options` / `v_ddr_mimo_tradingplatform` — staging variants
-- `etoro_kpi.vg_ddr_revenue` — DDR revenue rollup
+- `main.etoro_kpi_prep.v_mimo_allplatforms` — passthrough view over the AllPlatforms fact
+- `main.etoro_kpi_prep.v_mimo_tradingplatform` / `v_mimo_emoneyplatform` / `v_mimo_options_platform` — per-platform views (these ARE the UC representation of the per-platform MIMOs)
+- `main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms` — global FTD view
+- `main.etoro_kpi_prep_stg.v_ddr_mimo_allplatforms` / `v_ddr_mimo_emoney` / `v_ddr_mimo_options` / `v_ddr_mimo_tradingplatform` — staging variants
+- `main.etoro_kpi.vg_ddr_revenue` — DDR revenue rollup
 
 ## Canonical joins
 
+> SQL below uses **Unity Catalog FQNs** so Databricks Genie can run them as-is.
+
 ```sql
--- Daily MIMO with customer demographics (90% of analyst Qs)
-FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms m
-JOIN DWH_dbo.Dim_Customer    dc  ON dc.RealCID = m.RealCID
-JOIN DWH_dbo.Dim_FundingType dft ON dft.FundingTypeID = m.FundingTypeID
-JOIN DWH_dbo.Dim_Currency    dcu ON dcu.CurrencyID = m.CurrencyID
-WHERE m.DateID BETWEEN @from AND @to
-  AND m.MIMOAction = 'Deposit'
+-- Daily MIMO with customer demographics (90% of analyst Qs) — UC
+SELECT m.*, dc.Country, dft.Name AS FundingType, dcu.Symbol AS Currency
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked dc
+     ON dc.RealCID = m.RealCID
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype dft
+     ON dft.FundingTypeID = m.FundingTypeID
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency dcu
+     ON dcu.CurrencyID = m.CurrencyID
+WHERE m.DateID BETWEEN :from_dt AND :to_dt
+  AND m.MIMOAction   = 'Deposit'
   AND m.MIMOPlatform = 'TradingPlatform'  -- or remove for cross-platform
 ```
 
 ```sql
--- Daily customer status with full enrichment
-FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status cds
-LEFT JOIN BI_DB_dbo.BI_DB_DDR_Fact_AUM    aum ON aum.RealCID = cds.RealCID AND aum.DateID = cds.DateID
-LEFT JOIN BI_DB_dbo.BI_DB_DDR_Fact_PnL    pnl ON pnl.RealCID = cds.RealCID AND pnl.DateID = cds.DateID
-LEFT JOIN BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms m
-       ON m.RealCID = cds.RealCID AND m.DateID = cds.DateID
-JOIN DWH_dbo.Dim_Customer   dc  ON dc.RealCID = cds.RealCID
-JOIN DWH_dbo.Dim_Regulation dr  ON dr.RegulationID = cds.RegulationID
-JOIN DWH_dbo.Dim_Country    dco ON dco.CountryID = cds.CountryID
-WHERE cds.DateID = @date
+-- Daily customer status with full enrichment — UC
+SELECT cds.*, aum.AUM, pnl.PnL, m.AmountUSD AS DailyMimo
+FROM      main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status cds
+LEFT JOIN main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum             aum
+       ON aum.RealCID = cds.RealCID AND aum.DateID = cds.DateID
+LEFT JOIN main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl             pnl
+       ON pnl.RealCID = cds.RealCID AND pnl.DateID = cds.DateID
+LEFT JOIN main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
+       ON m.RealCID  = cds.RealCID AND m.DateID  = cds.DateID
+JOIN      main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked   dc
+       ON dc.RealCID = cds.RealCID
+JOIN      main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country           dco
+       ON dco.CountryID = cds.CountryID
+WHERE cds.DateID = :as_of
 ```
 
 ```sql
--- Full daily customer picture (preferred — already has MIMO + AUM + PnL + revenue actions)
-FROM BI_DB_dbo.BI_DB_DDR_CID_Level cl
-JOIN DWH_dbo.Dim_Customer dc ON dc.RealCID = cl.RealCID
-WHERE cl.DateID BETWEEN @from AND @to
-  AND cl.RealCID = @cid
-```
-
-```sql
--- Revenue events with metric definitions (instead of computing from PnL)
-FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions r
-JOIN BI_DB_dbo.Dim_Revenue_Metrics drm ON drm.RevenueMetricID = r.RevenueMetricID
-JOIN DWH_dbo.Dim_ActionType        dat ON dat.ActionTypeID    = r.ActionTypeID    -- filter -1
-JOIN DWH_dbo.Dim_InstrumentType    dit ON dit.InstrumentTypeID = r.InstrumentTypeID -- filter -1
-WHERE r.DateID BETWEEN @from AND @to
+-- Revenue events with metric definitions (instead of computing from PnL) — UC
+SELECT r.*, drm.MetricName, dat.ActionType, dit.InstrumentType
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions r
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype       dat
+     ON dat.ActionTypeID    = r.ActionTypeID
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrumenttype   dit
+     ON dit.InstrumentTypeID = r.InstrumentTypeID
+WHERE r.DateID BETWEEN :from_dt AND :to_dt
+  AND r.ActionTypeID     <> -1
+  AND r.InstrumentTypeID <> -1
 ```
 
 ## KPI / pattern catalog
@@ -187,7 +215,6 @@ WHERE r.DateID BETWEEN @from AND @to
 | **MoneyFarm FTDs** | `WHERE MIMOPlatform='MoneyFarm'` — only FTDs appear here. `Currency='GBP'` is hardcoded. |
 | **Daily customer count by status** | `BI_DB_DDR_Customer_Daily_Status GROUP BY DateID, Status` (use the Daily Status table, not raw MIMO, when the question is about the customer rather than the transaction) |
 | **AUM per customer per day** | `BI_DB_DDR_Fact_AUM` directly. Don't derive from positions. |
-| **Realized LTV by cohort** | `BI_DB_LTV_BI_Actual GROUP BY CohortMonth, RegulationID` — already cohorted. |
 
 ## Gotchas
 
@@ -204,7 +231,9 @@ WHERE r.DateID BETWEEN @from AND @to
 11. **eMoney MOP reclassification**: downstream Tableau dashboards override `Dim_FundingType.Name` for eMoney external deposits — they call it `'OpenBanking'` if there's a matching `External_MoneyTransfer_Billing_Transfers` row with `TransferStatusID=10`, else `'WireTransfer'`. The table itself doesn't carry this distinction; you compute it on read. For analyst-grade question accept the dim name; for OpenBanking-specific accuracy do the join.
 12. **Don't join the four sub-platform tables yourself** — they UNION ALL into `_AllPlatforms` already. Joining them again is double-counting.
 13. **`BI_DB_DDR_Customer_Daily_Status` has one row per CID per day**, even if the customer had no MIMO that day. So COUNT(*) on it is *active customer count*, not transaction count.
-14. **`BI_DB_DDR_CID_Level` is the BIGGEST one-stop table** — joins MIMO + AUM + PnL + RevenueActions per CID per day. Prefer it over multi-table joins for "daily customer picture" questions.
+14. **For the "full daily customer picture" use `BI_DB_DDR_Customer_Daily_Status` joined to the per-fact tables** (`_Fact_AUM`, `_Fact_PnL`, `_Fact_Revenue_Generating_Actions`, `_Fact_Trading_Volumes_And_Amounts`) on `(RealCID, DateID)`. There is no single one-stop table in the new DDR framework — the per-fact split is intentional (smaller scans, clearer grain).
+15. **Per-platform MIMO objects are VIEWS in UC, not tables.** `BI_DB_DDR_Fact_MIMO_Trading_Platform` → `etoro_kpi_prep.v_mimo_tradingplatform`. The view is fast (it's just a filter on the materialized AllPlatforms table) but **don't try `DESCRIBE TABLE` on a Synapse name** in Genie — use the UC view name.
+16. **Old DDR (LTV / panel) tables are deprecated** — `BI_DB_LTV_BI_Actual`, `BI_DB_LTV_Predictions`, `BI_DB_CID_DailyPanel_FullData`, `BI_DB_CID_MonthlyPanel_FullData`, `BI_DB_DDR_CID_Level`. They are still in Synapse (some still in UC) but should not be used for new work. Use the new `BI_DB_DDR_Fact_*` / `BI_DB_DDR_Customer_*` framework.
 
 ## When to bridge / when to drill down
 
@@ -215,17 +244,17 @@ WHERE r.DateID BETWEEN @from AND @to
 | **eMoney-side IBAN, card, OpenBanking specifics** | [`emoney-accounts-and-cards.md`](emoney-accounts-and-cards.md) — MIMO doesn't carry eMoney transaction status. |
 | **On-chain hash / wallet-side crypto transactions** | [`crypto-wallet.md`](crypto-wallet.md) |
 | **Realtime customer balance** (vs the daily snapshot here) | [`finance-recon-and-balances.md`](finance-recon-and-balances.md) |
-| **Fee revenue specifically** | [`fees-and-revenue.md`](fees-and-revenue.md) — MIMO has Amounts but not fee composition. |
+| **Fee revenue specifically** | [Revenue & Fees super-domain](../revenue-and-fees/SKILL.md) — MIMO has Amounts but not fee composition. |
 | **Customer's first trade after FTD** | [`../bridges/recurring-deposit-to-trade.md`](../bridges/recurring-deposit-to-trade.md) |
 | **Crypto deposit → fiat conversion chain** | [`../bridges/crypto-to-fiat.md`](../bridges/crypto-to-fiat.md) — `IsCryptoToFiat` flag is here, but the journey is in C.4 + C.3. |
 | **Provider statement reconciliation** | [`../bridges/provider-reconciliation.md`](../bridges/provider-reconciliation.md) |
 
 ## Deep reads
 
-- [`BI_DB_DDR_Fact_MIMO_AllPlatforms.md`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md) — full 21-column schema, FTD machinery, platform-specific transformations.
-- [`BI_DB_DDR_Customer_Daily_Status.md`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Customer_Daily_Status.md) — daily CID rollup columns.
-- [`BI_DB_DDR_CID_Level.md`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_CID_Level.md) — the super-wide daily customer table that BI dashboards consume.
-- [`BI_DB_DDR_Fact_Revenue_Generating_Actions.md`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md) — revenue event grain.
+- [`BI_DB_DDR_Fact_MIMO_AllPlatforms.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_MIMO_AllPlatforms.md) — full 21-column schema, FTD machinery, platform-specific transformations.
+- [`BI_DB_DDR_Customer_Daily_Status.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Customer_Daily_Status.md) — daily CID rollup columns.
+- [`BI_DB_DDR_Customer_Periodic_Status.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Customer_Periodic_Status.md) — periodic (weekly / monthly) rollup columns.
+- [`BI_DB_DDR_Fact_Revenue_Generating_Actions.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_Fact_Revenue_Generating_Actions.md) — revenue event grain.
 
 ## Cluster provenance
 

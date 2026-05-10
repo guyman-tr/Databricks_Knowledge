@@ -1,20 +1,17 @@
 ---
 name: payments-deposits-and-withdrawals
 description: |
-  Trading-platform fiat deposits and withdrawals — the raw billing facts plus
-  the production-side enrichment tables that bring accurate per-transaction
-  conversion fee (pipscalculation) and MID routing. Use when the question
-  mentions: deposit, FTD, withdrawal, cashout, reversal, chargeback, refund,
-  funding type, depot, BIN, MID, recurring deposit, payment status, 3DS,
-  decline reason, payment provider routing, single-deposit forensics.
-  Anchored on Fact_BillingDeposit and Fact_BillingWithdraw. NOT for MIMO
-  panel queries (use mimo-panel-and-ddr), NOT for eMoney IBAN deposits
-  (use emoney-accounts-and-cards), NOT for fee REVENUE aggregation (use
-  the Revenue & Fees super-domain).
-keywords: [deposit, FTD, withdrawal, cashout, reversal, chargeback,
-           refund, funding type, depot, BIN, MID, recurring, 3DS,
-           PaymentStatusID, ProcessRegulationID, FlowID, DeclineByRRE,
-           pipscalculation, conversion fee, MID routing]
+  Trading-platform fiat deposits and withdrawals — the analyst-facing
+  ranking of which TP-side payment table to reach for, and in what order.
+  Anchored on the RnD PIPS-based 2025 canonical view BI_DB_DepositWithdrawFee
+  (+ _Reversals). Use when the question is TP-specific (one customer's
+  deposits, decline-rate by MID, fee composition, refund chain). Cross-platform
+  money-flow questions go to mimo-panel-and-ddr; eMoney goes to
+  emoney-accounts-and-cards; crypto goes to crypto-wallet.
+keywords: [deposit, FTD, withdrawal, cashout, MID, MIDName, BinCountry,
+           CardType, PIPsCalculation, conversion fee, reversal, chargeback,
+           refund, funding type, depot, recurring, decline, RegCountry,
+           DepositWithdrawFee, WithdrawPaymentID, DepositID, CreditID]
 load_after: [_router.md, payments/SKILL.md]
 intersects_with:
   - payments/mimo-panel-and-ddr
@@ -25,222 +22,226 @@ intersects_with:
   - bridges/recurring-deposit-to-trade
   - bridges/provider-reconciliation
 primary_objects:
-  - DWH_dbo.Fact_BillingDeposit
-  - DWH_dbo.Fact_BillingWithdraw
-  - DWH_dbo.Fact_Deposit_State
-  - DWH_dbo.Fact_Cashout_State
-  - DWH_dbo.Fact_Cashout_Rollback
-  - BI_DB_dbo.BI_DB_AllDeposits
-  - DWH_dbo.Dim_FundingType
-  - DWH_dbo.Dim_BillingDepot
-  - DWH_dbo.Dim_CashoutStatus
-  - DWH_dbo.Dim_PaymentStatus
-  - DWH_dbo.Dim_BillingProtocolMIDSettingsID
-  - DWH_dbo.Dim_CardType
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction  # Synapse: DWH_dbo.Fact_CustomerAction
+  - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # Synapse: de_output.de_output_etoro_kpi_fact_customeraction_w_metrics | canonical UC table — w_metrics enrichment of Fact_CustomerAction (excludes ActionTypeID 14 + 41)
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw  # Synapse: DWH_dbo.Fact_BillingWithdraw
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype  # Synapse: DWH_dbo.Dim_FundingType
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot  # Synapse: DWH_dbo.Dim_BillingDepot
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus  # Synapse: DWH_dbo.Dim_PaymentStatus
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus  # Synapse: DWH_dbo.Dim_CashoutStatus
+qa_only_objects:
+  - main.billing.bronze_etoro_billing_deposit  # TABLE | Synapse: Billing.Deposit
+  - "history.billing.* (UC bronze — full event-sourced transition logs)"
+synapse_only_objects:
+  - "DWH_dbo.Dim_BillingProtocolMIDSettingsID (wiki only; never ingested)"
+  - "DWH_dbo.Fact_Deposit_State (alter.sql says _Not_Migrated)"
+  - "DWH_dbo.Fact_Cashout_State (wiki only; never ingested)"
+  - "DWH_dbo.Fact_Cashout_Rollback (wiki only; never ingested)"
 ---
 
-# Deposits & Withdrawals (Trading Platform)
+# C.1 — Deposits & Withdrawals (Trading Platform)
 
-The trading-platform fiat-money facts plus their production-side enrichment.
-**Two intent + current-state tables** (`Fact_BillingDeposit`,
-`Fact_BillingWithdraw`) carry the row-level deposit/withdrawal record with
-its CURRENT state (`PaymentStatusID`, `CashoutStatusID`). Two enrichment
-tables (`Fact_Deposit_State`, `Fact_Cashout_State`) are NOT
-state-transition logs — despite the name. They exist to bring accurate
-**conversion-fee (`pipscalculation`)** and **MID routing** straight from
-production (`Billing.Deposit`, `Billing.Withdraw`) rather than recomputing
-them in DWH. Rollbacks live in `Fact_Cashout_Rollback`. Fees and reversals
-get rolled up by the BI layer (which is owned by the Revenue & Fees
-super-domain).
+This skill is a **ranking + routing** layer for TP fiat payment questions, not a mini-wiki. The skill tells you WHICH table to reach for first; the column-level detail lives in the wikis (cloned to UC) and in UC column descriptions.
 
-> **Aside on true historical state**: if you genuinely need the full
-> transition history of a deposit (every state change, who changed it, when)
-> — go to bronze `history.billing.deposit` / `history.billing.withdraw` in
-> Unity Catalog. Those are the historical event-sourced versions. They are
-> rich and elaborate but **rarely needed for analytical work** — for almost
-> every analytical question, the current-state row in `Fact_BillingDeposit`
-> + the enrichment columns in `Fact_Deposit_State` are sufficient.
+> **Genie / SQL note:** SQL examples below use UC FQNs. Synapse names that
+> still appear in body prose / mermaid are aliases — see `primary_objects:`
+> for the canonical UC FQN. Four upstream State tables are listed in
+> `synapse_only_objects:` (Fact_Deposit_State, Fact_Cashout_State,
+> Fact_Cashout_Rollback, Dim_BillingProtocolMIDSettingsID) — they are
+> queryable in Synapse only. The QA section below explicitly says when to
+> drop down to them.
 
-## Mental model
+## The reach order (start at #1, descend only when needed)
+
+| # | Reach for | Why | When to stop here |
+|---|---|---|---|
+| **0** | `BI_DB_DDR_Fact_MIMO_AllPlatforms` *(C.2)* | Cross-platform unified, dim-resolved, FTD machinery applied. Carries `OrigIdentifier`/`TransactionID` (= the source-platform row ID, including `WithdrawPaymentID` for TP withdrawals). | Question is about volumes, FTDs, deposit/withdraw counts at any aggregate. **~90% of TP payment questions stop here.** |
+| **1** | **`BI_DB_DepositWithdrawFee` + `BI_DB_DepositWithdrawFee_Reversals`** | The canonical analyst-facing TP row-level view. **Replaces legacy deposit/withdraw logic with the RnD PIPS-based 2025 pipeline.** UNION ALL of deposits + withdrawals, already dim-resolved (`PaymentMethod`, `MIDName`, `Depot`, `RegCountry`, `BinCountry`, `Club`, `PlayerStatus`, `CardType`, `Regulation`), already sign-corrected, with `PIPsCalculation` (production conversion fee) baked in. | Question needs row-level TP detail with dim attributes — fee composition, MID-level breakdown, single-customer deposit forensics, refund/chargeback aggregation. **The default TP row table.** |
+| **2** | **`Fact_CustomerAction` / `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`** | The 11B-row TP behavioral master — every position open/close + deposit + cashout + login + bonus + fee tied together. The `_w_metrics` table enriches FCA with the most relevant DDR metrics (TP revenues, special comp types, classifiers like CopyFunds / SQF / TradeFromIBAN, …) at the most granular transaction level. **Excludes ActionTypeID 14 + 41** (large + irrelevant) and prunes some columns. Bridges deposits ↔ trades ↔ logins. | Question correlates a deposit/withdrawal with what the customer DID before/after — first trade after FTD, deposit-to-trade lag, fee event tied to a specific position close, bonus events. |
+| **3** | `Fact_BillingDeposit` / `Fact_BillingWithdraw` | Row-level Synapse facts with all 80+ XML-extracted columns (BIN, IBAN, SWIFT, BankName, 3DS response, RiskManagementStatusID, ThreeDsResponseType, declines). Less convenient (not dim-resolved). | Only when you need a column NOT in `BI_DB_DepositWithdrawFee` — typically: 3DS forensics, BIN/IBAN string detail, RiskManagementStatusID drill, declined-attempt analysis (decline rows are dropped from the BI layer). |
+| **QA** | `Fact_Deposit_State` / `Fact_Cashout_State` / `Fact_Cashout_Rollback` | Upstream wiring of the `BI_DB_DepositWithdrawFee` SP. Carries `pipscalculation` and MID at row level — the SP joins them in. | **Don't reach here for analyst questions.** Use only for QA — e.g. "row in DepositWithdrawFee looks wrong, where did the SP go astray". |
+| **Recon** | `Billing.Deposit` / `Billing.Withdraw` / `Billing.WithdrawToFunding` / `Billing.Funding` *(production OLTP)*, `history.billing.*` *(UC bronze, full state-event log)* | Truth source. Production tables that DWH derives everything from. | Only for production reconciliation, audit, or when you doubt the DWH/BI layer. The full historical event log is in `history.billing.*`. |
+
+**The cardinal rule**: do not "go upstream" for an answer the analyst-facing tables already give you. If MIMO has it, stop at MIMO. If `BI_DB_DepositWithdrawFee` has it, stop there. The State tables and raw billing exist because the BI layer is BUILT from them, not because analysts query them.
+
+## Mental model (right-side-up pyramid)
 
 ```mermaid
 graph TB
-    Submit[Customer submits deposit<br/>Billing.Deposit insert]
-    BillingD[Billing.Deposit prod<br/>current state + transitions in app code]
-    Stage[Risk + 3DS<br/>RiskManagementStatusID]
-    Provider[Provider auth<br/>3DS / risk engine]
-    BillingDFinal[Billing.Deposit prod<br/>final PaymentStatusID]
-    History[history.billing.deposit bronze<br/>full transition log<br/>seldom needed]
+    subgraph T0["Analyst entry — start here"]
+        Mimo[BI_DB_DDR_Fact_MIMO_AllPlatforms<br/>cross-platform, FTD-aware<br/>~90% of payment questions stop here]
+    end
 
-    Submit --> BillingD --> Stage --> Provider --> BillingDFinal
-    BillingD -.event sourced.-> History
+    subgraph T1["TP row-level — second reach"]
+        DWF[BI_DB_DepositWithdrawFee + _Reversals<br/>2025 PIPS-based, dim-resolved<br/>row per DepositID-D / WithdrawPaymentID-W]
+    end
 
-    BillingDFinal --> FactBD[DWH_dbo.Fact_BillingDeposit<br/>row per deposit, current state<br/>PaymentStatusID, ExchangeFee, BaseExchangeRate, MID*]
-    BillingDFinal --> FactDS[DWH_dbo.Fact_Deposit_State<br/>row per deposit + enrichment from prod<br/>pipscalculation, MID routing — NOT a transition log]
+    subgraph T2["TP behavioral correlation"]
+        FCA[Fact_CustomerAction 11B rows<br/>+ de_output.de_output_etoro_kpi_fact_customeraction_w_metrics<br/>excludes ActionTypeID 14 and 41<br/>ActionTypeID 7 Deposit, 8 Cashout, 30 Processed Cashout, ...]
+    end
 
-    FactBD --> Reversal[Reversal events]
-    Reversal --> FactCRev[Reversal facts roll up to<br/>BI_DB_DepositWithdrawFee_Reversals<br/>see Revenue & Fees super-domain]
+    subgraph T3["Forensic-only XML drill"]
+        FBD[Fact_BillingDeposit ~91 cols<br/>BIN, IBAN, 3DS, RiskMgmtStatus...]
+        FBW[Fact_BillingWithdraw ~83 cols<br/>BIN, IBAN, BankName, ...]
+    end
+
+    subgraph QA["QA only — SP wiring"]
+        FDS[Fact_Deposit_State<br/>pipscalculation + MID source]
+        FCS[Fact_Cashout_State<br/>pipscalculation + MID source]
+    end
+
+    subgraph Recon["Production truth"]
+        Prod[Billing.Deposit / Billing.Withdraw<br/>+ Billing.WithdrawToFunding + Billing.Funding<br/>history.billing.* event log]
+    end
+
+    Mimo -.drill.-> DWF
+    Mimo -.cross-correlate.-> FCA
+    DWF -.drill.-> FBD
+    DWF -.drill.-> FBW
+    DWF -.bridge via CreditID.-> FCA
+    DWF -.upstream wiring.-> FDS
+    DWF -.upstream wiring.-> FCS
+    FBD -.derives from.-> Prod
+    FBW -.derives from.-> Prod
+    FDS -.derives from.-> Prod
+    FCS -.derives from.-> Prod
 ```
 
-The withdrawal side mirrors this exactly: `Fact_BillingWithdraw` carries
-intent + current `CashoutStatusID`, `Fact_Cashout_State` brings
-production-side fee/MID enrichment, and `Fact_Cashout_Rollback` captures
-rollbacks. Reversals roll up to the same fee table family (Revenue & Fees
-super-domain).
+## Worked example — the `WithdrawPaymentID` lineage
 
-**Key clarification**: `PaymentStatusID` on `Fact_BillingDeposit` IS the
-current state. The state ID enum is canonical (2=Approved, 35=DeclineByRRE,
-etc.). What `Fact_Deposit_State` adds is NOT a list of past transitions —
-it's a single enrichment row per deposit with the production-side
-`pipscalculation` (used for accurate conversion-fee accounting) and MID
-routing (used to know which physical Worldpay/SafeCharge/Nuvei MID handled
-the transaction).
+Where does this column live, what does it mean, how do I use it.
 
-## Primary objects
+| Tier | Table | Column | Notes |
+|------|-------|--------|-------|
+| **Production** | `Billing.WithdrawToFunding` | `ID` | Surrogate primary key of the withdraw execution leg. One customer withdrawal request → 1 `Billing.Withdraw` row → **N `Billing.WithdrawToFunding` rows** (one per execution leg) → 1 `Billing.Funding` per leg. |
+| **DWH analytical** | `Fact_BillingWithdraw` | `WithdrawPaymentID` | Renamed from prod `ID` to disambiguate from `WithdrawID` / `FundingID`. **`WithdrawPaymentID` is unique per row in `Fact_BillingWithdraw` — no dedupe needed.** Distribution is `HASH(WithdrawID)` so multiple legs of the same Withdraw co-locate, but the leg ID itself is the unique row key. (One Withdraw → N WithdrawToFunding legs; each leg = one unique `WithdrawPaymentID`.) |
+| **BI analyst-facing** | `BI_DB_DepositWithdrawFee` | `WithdrawPaymentID` (col 43) — populated only on withdraw rows; NULL on deposit rows. Deposit-side equivalent is `DepositID` (col 42). | The SP already deduped Fact_BillingWithdraw before the join, so analysts don't see the multi-row issue here. |
+| **Top aggregate (cross-platform)** | `BI_DB_DDR_Fact_MIMO_AllPlatforms` | `OrigIdentifier = 'WithdrawPaymentID'` (col 5) + `TransactionID = <the value>` (col 6) | MIMO carries it, just labelled. Use `WHERE OrigIdentifier = 'WithdrawPaymentID' AND TransactionID = @wpid` to find a TP withdrawal in the cross-platform view. |
+| **Behavioral correlate** | `Fact_CustomerAction` | (Not directly — bridges via `CreditID`) | `BI_DB_DepositWithdrawFee.CreditID` (col 44) ties a withdrawal to its `Fact_CustomerAction` row. ActionTypeID 8 (Cashout) / 30 (Processed Cashout) are the TP withdraw events. |
 
-| Object | Grain | Rows | Notes |
-|--------|-------|------|-------|
-| [`DWH_dbo.Fact_BillingDeposit`](../../synapse/Wiki/DWH_dbo/Tables/Fact_BillingDeposit.md) | One row per deposit attempt, **current state** | 73.9M | HASH(DepositID), NC on `(PaymentStatusID, ExpirationDateID)`. ~91 XML-extracted columns from `PaymentData`/`FundingData`. `PaymentStatusID` IS the current state. |
-| [`DWH_dbo.Fact_BillingWithdraw`](../../synapse/Wiki/DWH_dbo/Tables/Fact_BillingWithdraw.md) | One row per withdrawal request, **current state** | — | HASH(WithdrawID). Mirrors deposit. **Dedupe on `WithdrawPaymentID` before joining** — BankName field creates duplicates (~200 rows/day). `CashoutStatusID` IS the current state. |
-| [`DWH_dbo.Fact_Deposit_State`](../../synapse/Wiki/DWH_dbo/Tables/Fact_Deposit_State.md) | **One enrichment row per deposit** | — | **MIS-NAMED.** Not a state-transition log. Brings `pipscalculation` (production conversion-fee math) and MID routing straight from `Billing.Deposit` rather than re-deriving in DWH. Filter `TransactionType='Deposit'` for primary deposits (other transaction types feed reversal/rollback enrichment). |
-| [`DWH_dbo.Fact_Cashout_State`](../../synapse/Wiki/DWH_dbo/Tables/Fact_Cashout_State.md) | **One enrichment row per cashout** | — | Same role as `Fact_Deposit_State` for the withdraw side. Brings `pipscalculation` + MID routing from `Billing.Withdraw`. `TransactionType='Withdraw'` for primary; rest for rollbacks. |
-| [`DWH_dbo.Fact_Cashout_Rollback`](../../synapse/Wiki/DWH_dbo/Tables/Fact_Cashout_Rollback.md) | One row per rollback event | — | Rollback (cancel-withdrawal) lifecycle. |
-| [`BI_DB_dbo.BI_DB_AllDeposits`](../../synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AllDeposits.md) | One row per approved deposit, dim-resolved | — | Convenience view for cross-platform deposit dashboards. |
-| `history.billing.deposit` *(UC bronze)* | Full event-sourced transition log per deposit | very large | True historical state. Rarely needed for analytical work. Reach for it only when you need "show me every state this deposit went through with timestamps". |
-| `history.billing.withdraw` *(UC bronze)* | Same for withdrawals | very large | Same caveat. |
+## Canonical joins (using the right table)
 
-**Note on fee tables**: `BI_DB_dbo.BI_DB_DepositWithdrawFee` and
-`BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals` are part of the **Revenue
-& Fees super-domain**, not this one. C.1 owns the deposit/withdrawal facts;
-the fee skill owns the fee aggregations. They share `DepositID` /
-`WithdrawPaymentID` keys.
-
-Dim tables you'll always need:
-
-- `DWH_dbo.Dim_FundingType` (FundingTypeID → "CreditCard" / "Wire" / "PayPal" / "Skrill" / "Neteller" / …)
-- `DWH_dbo.Dim_BillingDepot` (DepotID → "MoneyBookers USD" / "Neteller" / "Wire" / …)
-- `DWH_dbo.Dim_PaymentStatus` (PaymentStatusID → "Approved" / "DeclineByRRE" / "Refund" / …)
-- `DWH_dbo.Dim_CashoutStatus` (CashoutStatusID, withdraw side)
-- `DWH_dbo.Dim_BillingProtocolMIDSettingsID` (ProtocolMIDSettingsID → MID config)
-- `DWH_dbo.Dim_CardType` (CarTypeID → "Visa" / "MasterCard" / "Maestro")
-
-## Canonical joins (use these, not your own invention)
+> SQL below uses **Unity Catalog FQNs** so Databricks Genie can run them as-is.
+> The QA-only example for `Fact_Deposit_State` is shown in **Synapse** form
+> because the table is `_Not_Migrated` and only queryable there.
 
 ```sql
--- Deposit + customer + dims (90% of analyst queries)
-FROM DWH_dbo.Fact_BillingDeposit fbd
-JOIN DWH_dbo.Dim_Customer dc       ON dc.RealCID = fbd.CID
-JOIN DWH_dbo.Dim_Currency dcur     ON dcur.CurrencyID = fbd.CurrencyID
-JOIN DWH_dbo.Dim_FundingType dft   ON dft.FundingTypeID = fbd.FundingTypeID
-JOIN DWH_dbo.Dim_BillingDepot db   ON db.DepotID = fbd.DepotID
-JOIN DWH_dbo.Dim_PaymentStatus ps  ON ps.PaymentStatusID = fbd.PaymentStatusID
-LEFT JOIN DWH_dbo.Dim_Platform dp  ON dp.PlatformID = fbd.PlatformID  -- nullable
-WHERE fbd.ModificationDateID BETWEEN @from AND @to
-  AND fbd.PaymentStatusID = 2  -- approved only
+-- Withdrawal volume by Regulation × MID — analyst-facing, no JOINs needed for dim resolution (UC)
+SELECT Regulation, MIDName, MIDValue, Depot,
+       SUM(AmountUSD) AS volume_usd, COUNT(*) AS n
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee
+WHERE TransactionType = 'Withdraw'
+  AND DateID BETWEEN :from_dt AND :to_dt
+GROUP BY Regulation, MIDName, MIDValue, Depot
 ```
 
 ```sql
--- Withdraw + customer + dims, with mandatory dedup
-FROM (SELECT DISTINCT ON (WithdrawPaymentID) * FROM DWH_dbo.Fact_BillingWithdraw) fbw
-JOIN DWH_dbo.Dim_Customer dc      ON dc.RealCID = fbw.CID
-JOIN DWH_dbo.Dim_Currency dcur    ON dcur.CurrencyID = fbw.CurrencyID
-JOIN DWH_dbo.Dim_CashoutStatus cs ON cs.CashoutStatusID = fbw.CashoutStatusID
-JOIN DWH_dbo.Dim_FundingType dft  ON dft.FundingTypeID = fbw.FundingTypeID_Withdraw  -- NB: NOT FundingTypeID
-WHERE fbw.ModificationDateID BETWEEN @from AND @to
+-- Single-customer deposit forensics — one table for ~95% of attributes (UC)
+SELECT DateID, Occurred, TransactionType, PaymentMethod, Currency,
+       Amount, AmountUSD, PIPsCalculation, MIDName, Depot, RegCountry,
+       BinCountry, CardType, CardCategory, ExternalTransactionID,
+       TransactionStatus, PreviousTransactionStatus, DepositID, WithdrawPaymentID
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee
+WHERE CID    = :cid
+  AND DateID BETWEEN :from_dt AND :to_dt
+ORDER BY Occurred
 ```
 
 ```sql
--- Deposit + production-side fee/MID enrichment (when you need the actual MID
--- the provider used, or the production pipscalculation rather than the
--- DWH-computed ExchangeFee approximation)
-FROM DWH_dbo.Fact_BillingDeposit fbd
-LEFT JOIN DWH_dbo.Fact_Deposit_State fds
-       ON fds.DepositID = fbd.DepositID
-      AND fds.TransactionType = 'Deposit'  -- primary; other types are reversal enrichment
-JOIN DWH_dbo.Dim_BillingProtocolMIDSettingsID dmid
-       ON dmid.ProtocolMIDSettingsID = fds.ProtocolMIDSettingsID
-WHERE fbd.ModificationDateID BETWEEN @from AND @to
-  AND fbd.PaymentStatusID = 2
+-- Customer behavior correlation: deposit → first trade lag (UC; uses FCA, not billing)
+WITH first_dep AS (
+  SELECT RealCID, MIN(ActionDate) AS first_dep_at
+  FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+  WHERE ActionTypeID IN (7, 38, 44)              -- Deposit / Affiliate / Internal
+  GROUP BY RealCID
+), first_trade AS (
+  SELECT RealCID, MIN(ActionDate) AS first_open_at
+  FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+  WHERE ActionTypeID IN (1, 2, 3, 39)            -- position opens
+  GROUP BY RealCID
+)
+SELECT fd.RealCID,
+       (UNIX_TIMESTAMP(ft.first_open_at) - UNIX_TIMESTAMP(fd.first_dep_at)) / 60.0
+         AS minutes_dep_to_trade
+FROM first_dep fd
+JOIN first_trade ft USING (RealCID)
 ```
 
 ```sql
--- Single-deposit forensics (one customer, one deposit, full picture)
-SELECT fbd.DepositID, fbd.CID, fbd.PaymentStatusID, ps.Status,
-       fbd.Amount, fbd.AmountUSD, fbd.ExchangeRate, fbd.BaseExchangeRate,
-       fds.pipscalculation, dmid.MIDName, dmid.MIDValue,
-       fbd.RiskManagementStatusID, fbd.ThreeDsResponseType
-FROM DWH_dbo.Fact_BillingDeposit fbd
-LEFT JOIN DWH_dbo.Fact_Deposit_State fds ON fds.DepositID = fbd.DepositID AND fds.TransactionType = 'Deposit'
-LEFT JOIN DWH_dbo.Dim_PaymentStatus    ps ON ps.PaymentStatusID = fbd.PaymentStatusID
-LEFT JOIN DWH_dbo.Dim_BillingProtocolMIDSettingsID dmid ON dmid.ProtocolMIDSettingsID = fds.ProtocolMIDSettingsID
-WHERE fbd.DepositID = @depositId
+-- ONLY when you need an XML-extracted column not in DepositWithdrawFee — UC
+-- e.g. 3DS response type or RiskManagementStatusID drill
+SELECT *
+FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit fbd
+WHERE fbd.ModificationDateID BETWEEN :from_dt AND :to_dt
+  AND fbd.PaymentStatusID = 35                    -- DeclineByRRE
+  AND TRY_CAST(fbd.ThreeDsResponseType AS INT) IS NOT NULL
 ```
 
 ```sql
--- Reversal investigation lives in the Revenue & Fees super-domain.
--- See: knowledge/skills/revenue-and-fees/SKILL.md (BI_DB_DepositWithdrawFee_Reversals)
+-- QA ONLY: row in DepositWithdrawFee looks wrong — check upstream State table.
+-- This runs in SYNAPSE only (Fact_Deposit_State is _Not_Migrated to UC).
+SELECT *
+FROM DWH_dbo.Fact_Deposit_State fds
+WHERE fds.DepositID = @suspect_deposit_id
+  AND fds.TransactionType = 'Deposit'
 ```
 
 ## KPI / pattern catalog
 
-| Question | Pattern |
-|----------|---------|
-| **Daily approved deposit volume** | `SELECT ModificationDateID, SUM(AmountUSD) FROM Fact_BillingDeposit WHERE PaymentStatusID=2 AND ModificationDateID BETWEEN @from AND @to GROUP BY ModificationDateID` |
-| **FTD (first-time deposit) detection** | `WHERE IsFTD=1 AND PaymentStatusID=2`. **Do NOT join other tables to find FTDs** — `IsFTD` is the source of truth from production (monotonic per CID). For *cross-platform* FTD use `IsGlobalFTD` from `BI_DB_DDR_Fact_MIMO_AllPlatforms` (route to MIMO sub-skill). |
-| **Decline-by-risk-engine rate** | `COUNT_IF(PaymentStatusID=35) * 1.0 / COUNT(*)` over a date window. ~10.2% baseline. Drill via `RiskManagementStatusID` (69 distinct codes). |
-| **Funding-method mix by regulation** | Join `Fact_BillingDeposit` to `Dim_FundingType` + `Dim_Regulation` and group. (For dim-resolved volume aggregation across platforms use C.2 MIMO/DDR.) |
-| **Recurring-deposit subscribers** | `WHERE IsRecurring = 1 AND PaymentStatusID = 2` — count distinct CID per period. For "how many of these turned into trades" → bridge skill. |
-| **Provider / MID drill (which MID handled this)** | Join `Fact_BillingDeposit` → `Fact_Deposit_State` (TransactionType='Deposit') → `Dim_BillingProtocolMIDSettingsID` for `MIDName`/`MIDValue`/`MOPCountry`. |
-| **3DS outcome breakdown** | `JOIN Dim_ThreeDsResponseTypes ON TRY_CAST(ThreeDsResponseType AS INT) = ResponseTypeID` — `ThreeDsResponseType` is XML-extracted nvarchar so the cast is mandatory. |
-| **Withdraw rollback investigation** | Start from `Fact_Cashout_Rollback` (one row per rollback) → join to `Fact_Cashout_State ON CID, WithdrawID` for fee/MID enrichment; finally to `Fact_BillingWithdraw ON WithdrawID` for current state. |
-| **Per-row accurate conversion fee from prod** | Join to `Fact_Deposit_State.pipscalculation` instead of recomputing from `(ExchangeRate - BaseExchangeRate) * Amount`. The DWH-computed value is an approximation; pipscalculation is the production-truth value. |
-| **Fee REVENUE aggregation (any fee, any product)** | → [Revenue & Fees super-domain](../revenue-and-fees/SKILL.md). Don't reinvent fee math here. |
-| **Reversal / refund / chargeback aggregation** | → Revenue & Fees super-domain (`BI_DB_DepositWithdrawFee_Reversals` lives there). For the FORENSIC chain across one specific dispute → bridge `refund-chargeback-chain`. |
+| Question | Reach for | Pattern |
+|---|---|---|
+| Daily approved deposit volume by Regulation | **DepositWithdrawFee** | `WHERE TransactionType='Deposit' GROUP BY DateID, Regulation` |
+| Cross-platform FTD count | **MIMO** *(C.2)* | `WHERE IsGlobalFTD=1 AND MIMOAction='Deposit' GROUP BY DateID, MIMOPlatform` |
+| TP-only FTD count | **MIMO** *(C.2)* | `WHERE IsPlatformFTD=1 AND MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit'` |
+| Single-deposit forensics for one customer | **DepositWithdrawFee** | row-grain query above |
+| Refund / chargeback aggregation | **DepositWithdrawFee_Reversals** | Amounts pre-signed; group by TransactionType. *(For the FORENSIC chain on one specific dispute use the `refund-chargeback-chain` bridge.)* |
+| Decline-by-risk-engine rate | **Fact_BillingDeposit** | `COUNT_IF(PaymentStatusID=35) / COUNT(*)`. DepositWithdrawFee drops most declines (it's an "approved" view). |
+| MID-level approval rate | **DepositWithdrawFee** for approved rows; **Fact_BillingDeposit + Fact_Deposit_State** for full coverage incl. declines | `DepositWithdrawFee` carries `MIDName` / `MIDValue` directly for approved rows; for decline-rate by MID drop down to Synapse via the State table (`Fact_Deposit_State` is `_Not_Migrated`, query in Synapse). |
+| Funding-method mix | **DepositWithdrawFee** | `GROUP BY PaymentMethod` (already dim-resolved as `Dim_FundingType.Name`). |
+| Recurring-deposit subscribers | **MIMO** or **Fact_BillingDeposit** | `IsRecurring=1`. MIMO has it cross-platform; Fact_BillingDeposit for TP-only. |
+| First trade after FTD (per CID) | **Fact_CustomerAction** | join on RealCID, ActionTypeID windows; or use the bridge `recurring-deposit-to-trade`. |
+| Per-row PIPs / production conversion fee | **DepositWithdrawFee** (`PIPsCalculation` col) | Already plumbed from `Fact_*_State.PIPsInUSD` with sign correction. |
+| 3DS outcome, RiskManagementStatusID drill | **Fact_BillingDeposit** | XML-extracted columns not in BI layer. |
+| Withdraw rollback investigation | **DepositWithdrawFee_Reversals** (UC) for the dim-resolved reversal row; **Fact_Cashout_Rollback** (Synapse-only) for the upstream event | Rollback events × dim-resolved reversal row. From Genie use the `_Reversals` UC table; for upstream provenance run the Synapse query separately. |
 
-## Gotchas (these will bite you)
+## Gotchas
 
-1. **`Fact_Deposit_State` / `Fact_Cashout_State` are NOT state-transition logs** despite the name. They have one row per deposit/cashout (filter `TransactionType='Deposit'` / `'Withdraw'` for primary). Their job is to bring `pipscalculation` (production conversion-fee) and MID routing from `Billing.*` straight through to DWH. If you want true historical state transitions, go to bronze `history.billing.deposit/withdraw` (rarely needed).
-2. **`PaymentStatusID` on `Fact_BillingDeposit` IS the current state.** Don't try to derive it from the State tables.
-3. **`FundingTypeID` on the withdraw side is `FundingTypeID_Withdraw` or `FundingTypeID_Funding`** — NOT a column literally named `FundingTypeID`. Look at the `Fact_BillingWithdraw` wiki §3.3 if unsure.
-4. **`AmountUSD` is ETL-computed** (`Amount × ExchangeRate`). For reconciliation against production, recompute from `Amount × ExchangeRate` directly. For accurate conversion-fee accounting, use `Fact_Deposit_State.pipscalculation` instead of `(ExchangeRate - BaseExchangeRate) * Amount`.
-5. **Amount is capped** as of 2025-04-17 to prevent outliers. Aggregations exclude extreme tails.
-6. **`PlatformID` is from a second ETL pass** (JOIN `Fact_CustomerAction` ON `SessionID` WHERE `ActionTypeID=14`) and may be NULL. Don't assume it's populated.
-7. **`IsFTD` is integer not bit**. `WHERE IsFTD=1`, never `WHERE IsFTD`.
-8. **Withdraw dedup is mandatory**. `Fact_BillingWithdraw` has ~200 dup rows/day from BankName variation. SPs already DISTINCT on `WithdrawPaymentID`; if you query directly, do the same.
-9. **MID routing belongs to `Fact_Deposit_State`, not `Fact_BillingDeposit`.** If you need to know which physical Worldpay/SafeCharge/Nuvei MID handled a deposit, you must join to the State table → `Dim_BillingProtocolMIDSettingsID`.
-10. **`ThreeDsResponseType` is XML-extracted nvarchar.** Always `TRY_CAST(... AS INT)` before joining to `Dim_ThreeDsResponseTypes`.
+1. **Stop reaching upstream.** `Fact_Deposit_State` and `Fact_Cashout_State` are NOT for analyst queries. They're the SP plumbing for `BI_DB_DepositWithdrawFee`. Use them only for QA — e.g. "I see a duplicate in DepositWithdrawFee that the State table doesn't show, hinting at SP problem".
+2. **Declines don't make it into `BI_DB_DepositWithdrawFee`.** The PIPS pipeline filters to "money-impacting" rows. For decline-rate / 3DS / risk-engine analysis you must go to `Fact_BillingDeposit` (the only table that retains every attempt with `PaymentStatusID = 35` etc.).
+3. **`WithdrawPaymentID` IS in MIMO** — labelled by `OrigIdentifier='WithdrawPaymentID'`, value in `TransactionID`. Use this to find a specific TP withdrawal in MIMO.
+4. **`WithdrawPaymentID` is UNIQUE in `Fact_BillingWithdraw` — no dedupe needed.** It's the surrogate key from `Billing.WithdrawToFunding.ID`, unique per payment-execution leg by construction. Distribution is `HASH(WithdrawID)` so multiple legs of the same Withdraw co-locate, but each leg has a distinct `WithdrawPaymentID`. (Older wiki text saying "dedupe on WithdrawPaymentID" is wrong; ignore it.) One Withdraw → N WithdrawToFunding legs is still true; you don't dedupe to find the legs, you SUM them.
+5. **`PIPsCalculation` is the production-truth conversion fee** (sourced from `Fact_*_State.PIPsInUSD`). Do not recompute as `(ExchangeRate − BaseExchangeRate) × Amount` from `Fact_BillingDeposit/Withdraw` — that's the DWH approximation; the prod-truth value is what the BI layer carries.
+6. **`Amount` and `AmountUSD` in DepositWithdrawFee/_Reversals are PRE-SIGNED.** Refunds / chargebacks negative; chargeback-reversals positive. Don't `* -1` or `ABS` unless you specifically want absolute.
+7. **`CreditID` in DepositWithdrawFee bridges to `Fact_CustomerAction`** — that's the explicit reconciliation key. Use it for "show me the customer-action row for this withdrawal".
+8. **`CreditTypeID`, `MOPCountry`, `IsGermanBaFin`** are NULL in the modern SP. Don't filter on them.
+9. **`TransactionID` in DepositWithdrawFee is synthetic** — `CAST(DepositID AS varchar) + 'D'` for deposits, `CAST(WPID AS varchar) + 'W'` for withdrawals. Don't try to join on it as a numeric.
+10. **`IsRecurring` is integer not bit**, `IsFTD` is integer not bit. `WHERE IsRecurring = 1`, never `WHERE IsRecurring`.
+11. **Do NOT use `BI_DB_AllDeposits`.** The table is alive (still being written to) but useless — superseded entirely by `BI_DB_DepositWithdrawFee`. Do not reach for it for analyst questions, do not include it in mental models, do not suggest it. If you see it referenced in old wiki text or legacy SQL, treat that as legacy.
 
-## When to bridge out
+## When to bridge / drill out
 
-| If the question also asks about… | …load… |
-|---------------------------------|--------|
-| Net MIMO across all platforms / DDR-style daily customer money flows | [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) (instead — don't join raw billing to a panel) |
-| eMoney IBAN deposits, card transactions on eMoney | [`emoney-accounts-and-cards.md`](emoney-accounts-and-cards.md) |
-| Customer balance after deposit | [`finance-recon-and-balances.md`](finance-recon-and-balances.md) |
-| **Fee revenue / fee aggregation / reversal aggregation** | [Revenue & Fees super-domain](../revenue-and-fees/SKILL.md) |
-| **Bonuses (deposit / refer-a-friend / club / campaign)** | Compensation super-domain *(planned)* — bonuses are NOT payments. |
-| **BackOffice manual deposit / operator action** | Operations super-domain *(planned)* — `Fact_CustomerAction` lives there. |
-| First trade after first deposit, recurring-plan-driven trades | [`../bridges/recurring-deposit-to-trade.md`](../bridges/recurring-deposit-to-trade.md) |
-| Chargeback investigation including AML flag history | [`../bridges/refund-chargeback-chain.md`](../bridges/refund-chargeback-chain.md) |
-| Provider statement matching (Worldpay/SafeCharge/Nuvei) | [`../bridges/provider-reconciliation.md`](../bridges/provider-reconciliation.md) |
+| If the question also asks about… | …go to… |
+|---|---|
+| Cross-platform money flow | **MIMO** (C.2) — start there, not here |
+| eMoney IBAN deposits | C.3 — DepositWithdrawFee covers TP only |
+| Crypto wallet deposits | C.4 |
+| Customer balance | C.5 |
+| **Fee revenue / aggregation** | Revenue & Fees super-domain |
+| **Bonuses** | Compensation super-domain *(planned)* |
+| **BackOffice operator action** | Operations super-domain *(planned, Fact_CustomerAction is the audit trail)* |
+| First trade after first deposit | bridge `recurring-deposit-to-trade` |
+| Chargeback case forensics | bridge `refund-chargeback-chain` |
+| Provider statement reconciliation | bridge `provider-reconciliation` |
 
-## Deep reads (load only when you need column-level detail)
+## Deep reads (column-level detail)
 
-- [`Fact_BillingDeposit.md`](../../synapse/Wiki/DWH_dbo/Tables/Fact_BillingDeposit.md) — full 91-column XML schema, complete `PaymentStatusID` enum, ETL pattern.
-- [`Fact_BillingWithdraw.md`](../../synapse/Wiki/DWH_dbo/Tables/Fact_BillingWithdraw.md) — withdraw column map, `FundingTypeID_Withdraw` vs `_Funding`.
-- [`Fact_Deposit_State.md`](../../synapse/Wiki/DWH_dbo/Tables/Fact_Deposit_State.md) — `pipscalculation`, MID routing source, `TransactionType` enum.
-- [`Fact_Cashout_State.md`](../../synapse/Wiki/DWH_dbo/Tables/Fact_Cashout_State.md) — withdraw-side enrichment.
-- [`Dim_FundingType.md`](../../synapse/Wiki/DWH_dbo/Tables/Dim_FundingType.md) — full payment method enum.
-- [`Dim_BillingProtocolMIDSettingsID.md`](../../synapse/Wiki/DWH_dbo/Tables/Dim_BillingProtocolMIDSettingsID.md) — MID configuration (provider × MID name × value × MOPCountry).
+These wikis carry the full column-level truth. The skill above only encodes the ranking — column descriptions and full enums live in the wikis (also cloned to UC column descriptions for direct UC access).
 
-## Cluster provenance
-
-- Cluster 7 from the Louvain partition (115 members, intra-cluster weight
-  641.5, schema mix `BI_DB_dbo:50, DWH_dbo:28, Dictionary:14, Billing:7,
-  etoro_kpi_prep:5+4`).
-- KPI views referencing this cluster: `v_mimo_allplatforms`,
-  `v_mimo_first_deposit_all_platforms`, `v_mimo_tradingplatform`,
-  `v_mimo_emoneyplatform`, `v_mimo_optionsplatform`, plus
-  `v_ddr_mimo_*` (these belong to MIMO sub-skill but reference these tables).
-- See [`../_brief_cluster_7.md`](../_brief_cluster_7.md) for the full member
-  list, all wiki §3.3 join tables, and out-cluster bridge candidates.
+- [`BI_DB_DepositWithdrawFee.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DepositWithdrawFee.md) — 44-column dim-resolved view, sign rules, PIPS pipeline.
+- [`BI_DB_DepositWithdrawFee_Reversals.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DepositWithdrawFee_Reversals.md) — reversal-type enum, sign-correction map.
+- [`Fact_CustomerAction.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md) — full ActionTypeID enum + columns × event-type sparsity rules.
+- [`Fact_BillingDeposit.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_BillingDeposit.md) — 91-column XML schema, full PaymentStatusID enum.
+- [`Fact_BillingWithdraw.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_BillingWithdraw.md) — 83-col XML schema, dual status / dual funding-type / dual amount rules.

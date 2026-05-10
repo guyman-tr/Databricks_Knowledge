@@ -18,13 +18,13 @@ connects:
 intersects_with:
   - revenue-and-fees/SKILL  # C2F revenue lives there (v_revenue_cryptotofiat_c2f)
 primary_objects:
-  - EXW_dbo.EXW_C2F_E2E
-  - eMoney_dbo.eMoney_Dim_Transaction
-  - EXW_Wallet.SentTransactions
-  - EXW_Wallet.ReceivedTransactions
-  - EXW_Wallet.Conversions
-  - DWH_dbo.Fact_BillingDeposit
-  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e  # Synapse: EXW_dbo.EXW_C2F_E2E
+  - main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction  # Synapse: eMoney_dbo.eMoney_Dim_Transaction
+  - main.wallet.bronze_walletdb_wallet_senttransactions  # TABLE | Synapse: EXW_Wallet.SentTransactions
+  - main.wallet.bronze_walletdb_wallet_receivedtransactions  # TABLE | Synapse: EXW_Wallet.ReceivedTransactions
+  - main.wallet.bronze_walletdb_wallet_conversions  # TABLE | Synapse: EXW_Wallet.Conversions
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
 ---
 
 # Bridge — Crypto-to-Fiat (C2F) End-to-End
@@ -33,6 +33,10 @@ The C2F flow is eToro's customer off-ramp: a crypto holding is converted
 to fiat and credited to the customer's eMoney IBAN (or trading-platform
 USD wallet). This bridge stitches the four data sources that each see one
 piece of the story.
+
+> **Genie / SQL note:** SQL examples below use **Unity Catalog FQNs**.
+> Synapse names in prose are aliases — see `primary_objects:` for the
+> canonical UC FQN.
 
 ## The chain
 
@@ -82,10 +86,10 @@ the whole business" — it's a single column on a single fact.
 ```sql
 -- 1. C2F volume across all platforms in a period (USE MIMO marker — fastest)
 SELECT DateID, MIMOPlatform, SUM(AmountUSD) AS C2F_USD, COUNT(*) AS Tx
-FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms
 WHERE IsCryptoToFiat = 1
-  AND MIMOAction = 'Deposit'
-  AND DateID BETWEEN @from AND @to
+  AND MIMOAction      = 'Deposit'
+  AND DateID BETWEEN :from_dt AND :to_dt
 GROUP BY DateID, MIMOPlatform
 ORDER BY DateID, MIMOPlatform
 ```
@@ -93,42 +97,44 @@ ORDER BY DateID, MIMOPlatform
 ```sql
 -- 2. End-to-end C2F drill for a specific customer (USE the E2E table)
 SELECT *
-FROM EXW_dbo.EXW_C2F_E2E
-WHERE GCID = @gcid
-  AND C2F_DateID BETWEEN @from AND @to
+FROM main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e
+WHERE GCID = :gcid
+  AND C2F_DateID BETWEEN :from_dt AND :to_dt
 ORDER BY C2F_DateID
 ```
 
 ```sql
 -- 3. Manual chain walk (only when E2E is incomplete)
 WITH crypto_in AS (
-  SELECT *
-  FROM EXW_Wallet.ReceivedTransactions r
-  JOIN EXW_Wallet.CustomerWalletsView cw ON cw.Id = r.WalletId
-  WHERE cw.Gcid = @gcid
-    AND r.CreatedDate BETWEEN @from AND @to
+  SELECT r.*
+  FROM main.wallet.bronze_walletdb_wallet_receivedtransactions r
+  JOIN main.wallet.bronze_walletdb_wallet_customerwallets       cw
+       ON cw.Id = r.WalletId
+  WHERE cw.Gcid = :gcid
+    AND r.CreatedDate BETWEEN :from_dt AND :to_dt
 ), conversions AS (
   SELECT *
-  FROM EXW_Wallet.Conversions c
-  WHERE c.SendingGCID = @gcid
-    AND c.CreatedDate BETWEEN @from AND @to
+  FROM main.wallet.bronze_walletdb_wallet_conversions
+  WHERE SendingGCID = :gcid
+    AND CreatedDate BETWEEN :from_dt AND :to_dt
 ), iban_credit AS (
-  SELECT *
-  FROM eMoney_dbo.eMoney_Dim_Transaction dt
-  JOIN eMoney_dbo.eMoney_Dim_Account da
+  SELECT dt.*
+  FROM main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction dt
+  JOIN main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account     da
        ON da.CID = dt.CID
       AND da.GCID_Unique_Count = 1
-  WHERE da.GCID = @gcid
+  WHERE da.GCID = :gcid
     AND dt.TransactionTypeID = 14
-    AND dt.TxDateID BETWEEN @from AND @to
+    AND dt.TxDateID BETWEEN :from_dt AND :to_dt
 ), tp_credit AS (
-  SELECT *
-  FROM DWH_dbo.Fact_BillingDeposit fbd
-  JOIN DWH_dbo.Dim_Customer dc ON dc.RealCID = fbd.CID
-  WHERE dc.GCID = @gcid
+  SELECT fbd.*
+  FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit fbd
+  JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked dc
+       ON dc.RealCID = fbd.CID
+  WHERE dc.GCID = :gcid
     AND fbd.FundingTypeID = 27
     AND fbd.PaymentStatusID = 2
-    AND fbd.ModificationDateID BETWEEN @from AND @to
+    AND fbd.ModificationDateID BETWEEN :from_dt AND :to_dt
 )
 SELECT 'crypto_in' AS stage, * FROM crypto_in
 UNION ALL SELECT 'conversion', * FROM conversions

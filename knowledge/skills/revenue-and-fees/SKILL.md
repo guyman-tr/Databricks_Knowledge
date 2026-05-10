@@ -22,13 +22,14 @@ sub_skills:
   - fees-trading-platform
   - fees-emoney
   - fees-crypto-wallet
-  - revenue-options-platform
+  - revenue-options-platform     # Gatsby brand, Apex (= USABroker) SFTP feed
   - revenue-staking
-  - revenue-spaceship
-  - revenue-moneyfarm
+  - revenue-spaceship            # AU acquisition — Voyager / Nova / Super
+  - revenue-moneyfarm            # UK managed investing
+  - revenue-wealthfrance         # FR managed investing (planned, not yet ingested)
   - dividends-and-tax
   - affiliate-commission
-  - lp-fees-and-cogs
+  - lp-fees-and-cogs             # broker identity → dealing_dbo (Trading)
 out_of_scope:
   - Customer money flow (deposits/withdrawals as VOLUMES) → Payments super-domain
   - Bonuses paid TO customers → Compensation super-domain (planned)
@@ -78,16 +79,20 @@ graph TB
         Stk[v_revenue_stakingfee<br/>Staking.StakingRewards<br/>Staking_BI_Version_*<br/>BI_DB_Staking_Platform_Compensations<br/>BI_DB_Finance_Staking_Report]
     end
 
-    subgraph Options["Options (Apex)"]
+    subgraph Options["Options — Gatsby brand / Apex broker (Apex SFTP only)"]
         Opt[v_revenue_optionsplatform<br/>BI_DB_US_Apex_Fees_Charge]
     end
 
-    subgraph Spaceship["Spaceship (UK SIPP/ISA/Voyager/Nova/Super)"]
+    subgraph Spaceship["Spaceship — AU (Voyager / Nova / Super)"]
         Sp[v_spaceship_fees<br/>v_spaceship_aum<br/>v_spaceship_mimo<br/>bronze_spaceship_metabase_*]
     end
 
-    subgraph MoneyFarm["MoneyFarm (UK managed investing)"]
+    subgraph MoneyFarm["MoneyFarm — UK managed investing"]
         Mf[v_moneyfarm_aum<br/>v_moneyfarm_mimo<br/>bi_output_moneyfarm_*<br/>silver_moneyfarm_etoro_mf_aum]
+    end
+
+    subgraph WealthFrance["WealthFrance — FR (not yet ingested)"]
+        Wf[no UC schema yet]
     end
 
     subgraph Aff["Affiliate / partner"]
@@ -146,13 +151,44 @@ unions them.
 | `fees-trading-platform.md` _(planned)_ | Per-fee TP revenue | `v_revenue_commission`, `v_revenue_fullcommission`, `v_revenue_rollover`, `v_revenue_ticketfee_*`, `v_revenue_spotadjustfee`, `v_revenue_share_lending`, `v_revenue_dormantfee`, `v_revenue_interestfee`, `v_revenue_adminfee`, `v_revenue_sdrt`, `Function_Revenue_*` | Specific TP fee questions, e.g. "rollover fee revenue this month", "share-lending revenue last quarter" |
 | `fees-emoney.md` _(planned)_ | eMoney / IBAN side fees | `v_revenue_conversionfee`, `v_revenue_conversionfee_withpositiondata`, eMoney exchange spread tables | "FX markup we earned from eMoney IBAN deposits", "OpenBanking conversion fee" |
 | `fees-crypto-wallet.md` _(planned)_ | Crypto fees | `v_revenue_transfercoinfee`, `v_revenue_cryptotofiat_c2f`, `EXW_EthFeeSent_Blockchain`, `EXW_ETH_FeeData_Blockchain` | "Transfercoin fee revenue", "C2F revenue", "ETH gas fee charged" |
-| `revenue-options-platform.md` _(planned)_ | Options fees | `v_revenue_optionsplatform`, `BI_DB_US_Apex_Fees_Charge` | Options/Apex revenue questions |
+| `revenue-options-platform.md` _(planned)_ | Options fees (Gatsby brand) | `v_revenue_optionsplatform`, `BI_DB_US_Apex_Fees_Charge` | Options revenue questions. **Gatsby = product brand (acquired); Apex = the broker (= USABroker).** Lake only contains Apex SFTP reports — Gatsby-side systems were never ingested. NOTE: Apex also clears US-resident customer equities (US stocks), but those rows land in regular trading tables (`Dim_Position`, `Fact_Position`, etc.), NOT in the Options panel. |
 | `revenue-staking.md` _(planned)_ | Staking | `v_revenue_stakingfee`, `Staking.Staking*`, `EXW_dbo.Staking_*`, `BI_DB_Finance_Staking_Report`, `BI_DB_Staking_Platform_Compensations`, `BI_DB_PositionPnL_Agg_daily_Staking` | Staking rewards distribution, staking platform compensation, our cut |
-| `revenue-spaceship.md` _(planned)_ | UK Spaceship (SIPP / ISA / Voyager / Nova / Super) | `v_spaceship_fees`, `v_spaceship_aum`, `v_spaceship_mimo`, `bronze_spaceship_metabase_*` | UK pension / ISA fees and AUM. Spaceship has multiple products: Voyager, Nova, Super. |
-| `revenue-moneyfarm.md` _(planned)_ | MoneyFarm UK managed investing | `v_moneyfarm_aum`, `v_moneyfarm_mimo`, `bi_output_moneyfarm_fact_portfolio_snapshot`, `silver_moneyfarm_etoro_mf_aum` | MoneyFarm-specific fee/AUM questions. (Note: MoneyFarm FTDs ALSO appear in `BI_DB_DDR_Fact_MIMO_AllPlatforms` — that's a Payments view.) |
+| `revenue-spaceship.md` _(planned)_ | Spaceship — Australian micro-investing + superannuation | `v_spaceship_fees`, `v_spaceship_aum`, `v_spaceship_mimo`, `bronze_spaceship_metabase_*` (Voyager / Nova / Super product lines) | Spaceship is an **Australian** acquisition (2024). Three distinct products in their own bronze families: Voyager (goal-based investing, the original Spaceship product), Nova (newer, US-flavoured), Super (Australian superannuation — NOT UK SIPP). Source-of-truth is `knowledge/uc_domains/spaceship/_domain_card.md`; do not infer Spaceship facts. |
+| `revenue-moneyfarm.md` _(planned)_ | MoneyFarm — UK managed investing | `v_moneyfarm_aum`, `v_moneyfarm_mimo`, `bi_output_moneyfarm_fact_portfolio_snapshot`, `silver_moneyfarm_etoro_mf_aum` | MoneyFarm is the **UK** equivalent of Spaceship — managed investing, separate product, separate domain card (`knowledge/uc_domains/moneyfarm/_domain_card.md`). MoneyFarm FTDs also appear in `BI_DB_DDR_Fact_MIMO_AllPlatforms` (Payments view). |
+| `revenue-wealthfrance.md` _(planned)_ | WealthFrance — French managed investing | _(no UC schema yet — not ingested)_ | French equivalent of MoneyFarm. Sub-skill placeholder only; revisit once a UC domain card / bronze schema lands. |
 | `dividends-and-tax.md` _(planned)_ | Dividend pass-through + index dividend tax | `BI_DB_Index_Dividend_TaxReport*`, `BI_DB_DailyDividendsByPosition`, `BI_DB_Daily_CID_Dividend_TaxReport`, `BI_DB_IndexDividends_Alert`, `Trade.IndexDividends`, `v_revenue_dividend` | "Dividend revenue per regulation", "tax-withheld dividend report", index dividend reconciliation |
 | `affiliate-commission.md` _(planned)_ | Affiliate / partner payouts | `Fact_AffiliateCommission`, `BI_DB_fiktivo_AffiliateCommission_ClosedPosition_for_Marketing_Cube`, `AffiliateCommission.*` | Affiliate-paid revenue share. **NEGATIVE revenue** from eToro POV (it's a cost of acquisition). |
-| `lp-fees-and-cogs.md` _(planned)_ | LP (liquidity provider) fees + dealing COGS | `bi_dealing.bi_output_dealing_lp_fees_saxo`, `bi_dealing.bi_output_dealing_lp_fees_virtu_real_by_exchange`, `bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty` | What we PAY brokers. Cost-of-goods, NEGATIVE revenue. Owned with Trading super-domain (broker-side). |
+| `lp-fees-and-cogs.md` _(planned)_ | LP (liquidity provider) fees + dealing COGS | `bi_dealing.bi_output_dealing_lp_fees_saxo`, `bi_dealing.bi_output_dealing_lp_fees_virtu_real_by_exchange`, `bi_dealing.bi_output_dealing_lp_fees_virtu_stamp_duty` | What we PAY brokers. Cost-of-goods, NEGATIVE revenue. **Broker / LP identity master lives in `dealing_dbo` (hedge server + LP IDs), NOT in any payments-side table.** Owned with Trading super-domain. |
+
+## Regional acquisition products — DO NOT GUESS
+
+Each regional product is its own UC domain with a curated `_domain_card.md`.
+**Read the card before writing SQL or describing the product.** All "heavy
+lifting" is already done in those cards.
+
+| Product | Region | UC domain card | Status | Notes |
+|---------|--------|----------------|--------|-------|
+| **Spaceship** | Australia | `knowledge/uc_domains/spaceship/_domain_card.md` | Ingested (`spaceship.*`) | Three product lines: Voyager (goal-based investing, original AU product), Nova (newer, US-flavoured), Super (Australian superannuation — NOT UK SIPP). Source: Spaceship-side BigQuery + Metabase, daily SFTP. |
+| **MoneyFarm** | UK | `knowledge/uc_domains/moneyfarm/_domain_card.md` | Ingested (`bi_output.bi_output_moneyfarm_*`, `silver_moneyfarm_*`) | UK managed investing — the UK equivalent of Spaceship for AUM/fee questions. |
+| **WealthFrance** | France | _(not yet ingested)_ | Acquired, no UC schema | French equivalent. Mention but do not invent tables. |
+| **Zengo** | _various_ | _(not yet ingested)_ | Acquired, no UC schema | Out of scope until ingest lands. |
+| **Delta** | _various_ | _(no money data)_ | Tools/trackers, not money-oriented | Likely out of scope for this super-domain. |
+
+If the question mentions a regional acquired product, **load the domain card
+first, then this skill**. Do not pattern-match on table names or assume
+geography from the brand.
+
+## Apex / Gatsby disambiguation
+
+`Apex` and `Gatsby` look like two brokers in some legacy wiki text. They are
+not. Lock this in before answering any Options or US-stocks question:
+
+- **Gatsby** = the eToro Options product (acquired). It is a **product brand**, not a broker. Gatsby-side systems were **never ingested** into the lake.
+- **Apex** = the actual broker (= **USABroker**). Apex feeds the lake via daily SFTP reports.
+- **Two ingest paths off the same broker**:
+  - Gatsby Options → Apex SFTP → `BI_DB_US_Apex_Fees_Charge`, `v_revenue_optionsplatform` (the Options panel).
+  - US-resident customer equities (regular stock trading for US customers) → Apex as clearing broker → **regular trading tables** (`Dim_Position`, `Fact_Position`, etc.). Same broker, ordinary trading pipeline. No "Apex" silo for US equities.
+- Therefore: **never claim US-equity revenue lives under Options/Gatsby**, and never claim Gatsby has its own ingest.
 
 ## Cross-cutting facts
 
@@ -174,6 +210,11 @@ unions them.
   views (they have already-applied rules and bug fixes). Fall back to
   Synapse `BI_DB_DDR_Fact_Revenue_Generating_Actions` only if the UC view
   doesn't exist for that fee type or if you need a Synapse-only join.
+- **Broker / LP identity is NOT in this skill**. Cross-broker questions
+  ("which LP charged X?", "what's the hedge mapping for instrument Y?")
+  resolve through `dealing_dbo` (hedge server + LP IDs) — Trading & Markets
+  super-domain. Payment-side `BankName` / `MID` / `PaymentProviderName` are
+  PSP identities, not broker identities; do not conflate.
 - **`pipscalculation`** — production-side conversion math. Lives on
   `Fact_Deposit_State` / `Fact_Cashout_State` (Payments C.1). When per-deposit
   fee accuracy matters (audit, recon), use `pipscalculation` rather than
@@ -206,8 +247,8 @@ Anchor evidence:
 - `mv_revenue_trading` — Cluster 47 (Finance Recon, outflow)
 - `v_revenue_*` family (~20 views) — scattered across kpi_prep
 - Staking subgraph — Cluster ~ (EXW-related)
-- Spaceship subgraph — Cluster 13 (DDR/MIMO)
-- MoneyFarm subgraph — Cluster 13 (DDR/MIMO)
+- Spaceship subgraph (AU) — Cluster 13 (DDR/MIMO); see `knowledge/uc_domains/spaceship/_domain_card.md`
+- MoneyFarm subgraph (UK) — Cluster 13 (DDR/MIMO); see `knowledge/uc_domains/moneyfarm/_domain_card.md`
 - Affiliate commission — Cluster ~ (separate)
 - LP fees — Cluster ~ (Trading)
 

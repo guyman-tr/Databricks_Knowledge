@@ -20,13 +20,14 @@ connects:
 intersects_with:
   - revenue-and-fees/SKILL  # Reversal-side fee accounting lives there
 primary_objects:
-  - DWH_dbo.Fact_BillingDeposit
-  - DWH_dbo.Fact_BillingWithdraw
-  - DWH_dbo.Fact_Deposit_State
-  - DWH_dbo.Fact_Cashout_State
-  - DWH_dbo.Dim_BillingProtocolMIDSettingsID
-  - EXW_dbo.EXW_PaymentReconciliation
-  - finance.bronze_sodreconciliation_apex_ext869_cashactivity
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw  # Synapse: DWH_dbo.Fact_BillingWithdraw
+  - main.finance.bronze_sodreconciliation_apex_ext869_cashactivity  # Synapse: finance.bronze_sodreconciliation_apex_ext869_cashactivity
+synapse_only_objects:
+  - "DWH_dbo.Fact_Deposit_State (alter.sql says _Not_Migrated)"
+  - "DWH_dbo.Fact_Cashout_State (wiki only; never ingested)"
+  - "DWH_dbo.Dim_BillingProtocolMIDSettingsID (wiki only; never ingested)"
+  - "EXW_dbo.EXW_PaymentReconciliation (alter.sql says _Not_Migrated)"
 ---
 
 # Bridge — Provider Reconciliation
@@ -37,6 +38,17 @@ in UK, etc.). Each provider sends back a daily settlement file. This bridge
 captures how to JOIN our internal deposit row to the provider's settlement
 record so finance / payment-ops can answer "did Worldpay pay us what we
 expected".
+
+> **⚠ Synapse-only workflow:** the MID-routing core of this bridge lives in
+> `Fact_Deposit_State`, `Fact_Cashout_State`, and
+> `Dim_BillingProtocolMIDSettingsID` — **none of these are in UC**
+> (`_Not_Migrated` / wiki-only). On Databricks Genie this bridge will fail
+> on the MID-decoding join. **Run provider-recon SQL against Synapse
+> directly** (synapse_prod_sql / synapse_sql MCP, or pyodbc).
+>
+> The Apex SOD recon (`finance.bronze_sodreconciliation_apex_*`,
+> `general.bronze_usabroker_apex_options`) IS in UC and is shown separately
+> below — that part can run in Genie.
 
 ## The chain
 

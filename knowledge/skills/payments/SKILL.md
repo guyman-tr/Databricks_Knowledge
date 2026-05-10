@@ -16,11 +16,11 @@ sub_skills:
   - crypto-wallet
   - finance-recon-and-balances
 out_of_scope:
-  - Fees / fee revenue / commission / rollover / dividend / spread / staking / spaceship / moneyfarm fees → Revenue & Fees super-domain
-  - Bonuses (deposit, refer-a-friend, club, marketing campaign) → Compensation super-domain (planned)
-  - BackOffice manual deposit / operator action audit → Operations super-domain (planned, anchored on Fact_CustomerAction)
-  - Tribe / FiatDwh / eMoney audit trail → Compliance & AML super-domain (Tribe is the audit-trail proxy for eMoney/IBAN objects)
-  - Dealing IG / Saxo / Duco EOD broker recon → Trading super-domain (broker holdings = position truth, not payment truth)
+  - Fees / fee revenue / commission / rollover / dividend / spread / staking / spaceship / moneyfarm fees → Revenue & Fees super-domain (H)
+  - Bonuses (deposit, refer-a-friend, club, marketing campaign) → Compensation regular domain (planned, NOT a super-domain)
+  - BackOffice manual deposit / operator action audit → Operations regular domain (planned, anchored on Fact_CustomerAction)
+  - Tribe / FiatDwh / Treezor audit envelopes / eMoney audit trail → bridges/tribe-emoney-audit (Compliance ↔ C.3 eMoney bridge skill)
+  - Dealing IG / Saxo / Duco EOD broker recon, broker / LP identity, hedge mapping → Trading & Markets super-domain (dealing_dbo)
 ---
 
 # Payments Super-Domain
@@ -40,15 +40,22 @@ moving between platforms, sitting on customer balances. It is **not** about:
   moneyfarm, commission, rollover, dividend, dormant, share-lending) all
   live there.
 - **Bonuses** (deposit bonus, refer-a-friend, club, campaign) → Compensation
-  super-domain. Bonuses are pay-OUT to customers, accounted differently.
+  regular domain (planned, NOT a super-domain). Bonuses are pay-OUT to
+  customers, accounted differently.
 - **BackOffice manual operations** (operator-driven adjustments, refunds,
-  manual credits) → Operations super-domain (`Fact_CustomerAction`).
-- **Tribe / eMoney audit trail** → Compliance super-domain. Tribe is the
-  SOC2 audit log; consumers are risk/compliance teams. Useful proxy for
-  Tribe lookups: the corresponding `eMoney_Dim_Account` /
-  `eMoney_Dim_Transaction` row in C.3.
-- **Broker recon** (Dealing IG / Saxo / Duco EOD position holdings) →
-  Trading super-domain.
+  manual credits) → Operations regular domain (planned, NOT a super-domain;
+  data is too sprawled across `Trading.*`, `Billing.*`, `UserAPIDB.*`,
+  `Settings.*`). For the audit-trail piece, anchor on `Fact_CustomerAction`.
+- **Tribe / FiatDwh / eMoney audit trail** → [`bridges/tribe-emoney-audit.md`](../bridges/tribe-emoney-audit.md).
+  Tribe is the **Treezor XML audit envelope feed**; FiatDwhDB is Treezor's
+  operational fiat mirror. The bridge owns the audit-trail map and supplies
+  the recon patterns. C.3 (eMoney) supplies the join keys (`AccountID`,
+  `GCID`, `CardID`, `TransactionID`).
+- **Broker recon** (Dealing IG / Saxo / Duco EOD position holdings) and
+  **broker / LP identity** (hedge server, LP IDs) → Trading & Markets
+  super-domain (`dealing_dbo`). Payment-side `BankName` / `MID` /
+  `PaymentProviderName` are PSP identities, NOT broker identities — do
+  not conflate.
 
 ## Routing waypoint — read this first
 
@@ -86,8 +93,10 @@ graph LR
 ```
 
 **Out of scope here**: position-vs-broker EOD recon (`Dealing_IGRecon*`)
-lives in the Trading super-domain. SOC2 audit-trail (`FiatDwhDB.Tribe`,
-`eMoney_Tribe.*`) lives in the Compliance super-domain.
+and broker / LP identity (`dealing_dbo`) live in the Trading super-domain.
+Treezor SOC2 audit envelopes (`FiatDwhDB.Tribe`, `eMoney_Tribe.*`,
+`bronze_fiatdwhdb_tribe_*`) live in the [`tribe-emoney-audit`](../bridges/tribe-emoney-audit.md)
+bridge; Compliance super-domain owns the interpretation rules when built.
 
 Every sub-skill below owns **one slice** of that lifecycle. The slices are
 designed so that:
@@ -101,20 +110,21 @@ designed so that:
 
 | Sub-skill | Anchor | When to load |
 |-----------|--------|--------------|
-| [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) _(planned)_ | `BI_DB_DDR_Fact_MIMO_AllPlatforms`, `BI_DB_DDR_Customer_Daily_Status`, `BI_DB_DDR_Customer_Periodic_Status`, `etoro_kpi_prep.v_mimo_*`, `v_ddr_mimo_*` | **DEFAULT for "money flowed" Qs.** Pre-aggregated panel layer above raw billing. Use when the question is "net MIMO last month", "daily/monthly customer money-in money-out by platform", "global FTD across platforms (`IsGlobalFTD`)", DDR-style queries. NEVER join raw billing tables here. |
-| [`deposits-and-withdrawals.md`](deposits-and-withdrawals.md) | `Fact_BillingDeposit`, `Fact_BillingWithdraw`, `Fact_Deposit_State`, `Fact_Cashout_State` | Trading-platform fiat deposits and withdrawals — the raw billing facts and their state machines. Use for FTD detection at row-level, payment status lifecycle drill, reversals, refunds, chargebacks, funding-type/depot/BIN routing, single-deposit forensics. |
-| [`emoney-accounts-and-cards.md`](emoney-accounts-and-cards.md) _(planned)_ | `eMoney_Dim_Account`, `eMoney_Dim_Transaction`, `eMoney_Fact_Transaction_Status`, `eMoneyClientBalance`, `eMoney_Panel_FirstDates` | eMoney IBAN/card accounts and their transactions. Distinct platform from trading-platform billing — has its own state machine, ledger, and balance table. |
-| [`crypto-wallet.md`](crypto-wallet.md) _(planned)_ | `EXW_Wallet.CryptoTypes`, `CustomerWalletsView`, `SentTransactions`, `ReceivedTransactions` | Crypto wallet operations on the EXW platform. On-chain sends, receives, holdings. Bridge to fiat is via the C2F skill. |
-| [`finance-recon-and-balances.md`](finance-recon-and-balances.md) _(planned)_ | `EXW_FinanceReportsBalancesNew`, balance-by-depot/MID views | Internal customer balance reconciliation — the source of truth for "what does the company owe each customer right now". Owned by the Finance team. Genie space `ido ezra space` covers 10/10 of its tables. |
+| [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) | `BI_DB_DDR_Fact_MIMO_AllPlatforms`, `BI_DB_DDR_Customer_Daily_Status`, `BI_DB_DDR_Customer_Periodic_Status`, `etoro_kpi_prep.v_mimo_*`, `v_ddr_mimo_*` | **DEFAULT for "money flowed" Qs.** Pre-aggregated panel layer above raw billing. Use when the question is "net MIMO last month", "daily/monthly customer money-in money-out by platform", "global FTD across platforms (`IsGlobalFTD`)", DDR-style queries. NEVER join raw billing tables here. |
+| [`deposits-and-withdrawals.md`](deposits-and-withdrawals.md) | **`BI_DB_DepositWithdrawFee`** + `BI_DB_DepositWithdrawFee_Reversals`, `Fact_CustomerAction`, `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`, `Fact_BillingDeposit`, `Fact_BillingWithdraw` (`Fact_*_State` are QA-only) | Trading-platform fiat deposits and withdrawals — ranking + routing layer. `BI_DB_DepositWithdrawFee` is the canonical analyst-facing TP table; reach into `Fact_Billing*` only for XML detail not in BI; reach into `Fact_*_State` only for QA. |
+| [`emoney-accounts-and-cards.md`](emoney-accounts-and-cards.md) | `BI_DB_DDR_Fact_MIMO_eMoney_Platform`, `eMoney_Dim_Account`, `eMoney_Dim_Transaction`, `eMoneyClientBalance`, `eMoney_Card_Instance_Summary`, `eMoney_Panel_FirstDates`, `eMoney_Reports_AcquisitionFunnel` | eMoney IBAN/card accounts and transactions. Distinct platform — own state machine, ledger, balance, provider partner (Treezor). For audit-trail (Tribe), use the `tribe-emoney-audit` bridge instead. |
+| [`crypto-wallet.md`](crypto-wallet.md) | `BI_DB_DDR_Fact_MIMO_Crypto_Platform`, `EXW_dbo.EXW_FactTransactions / EXW_FactRedeemTransactions / EXW_FactConversions`, `EXW_DimUser`, `EXW_WalletInventory`, `EXW_Wallet.CustomerWalletsView` + `SentTransactions` + `ReceivedTransactions` + `Conversions` + `Redemptions` | Crypto wallet operations on the EXW platform. On-chain sends, receives, swaps, redemptions. C2F off-ramp is delegated to the `crypto-to-fiat` bridge (which owns `EXW_C2F_E2E`). |
+| [`finance-recon-and-balances.md`](finance-recon-and-balances.md) | `EXW_FinanceReportsBalancesNew`, `etoro_kpi_prep.v_population_*`, `BI_DB_Client_Balance_CID_Level_New`, Apex SOD recon feeds | Internal customer balance source-of-truth + Finance-team external recon. Owned by Finance; Genie space `ido ezra space` covers 9/10 of its tables. |
 
 ## Bridges (load these instead of two parents)
 
 | Bridge | Connects | When to load |
 |--------|----------|--------------|
-| [`../bridges/crypto-to-fiat.md`](../bridges/crypto-to-fiat.md) _(planned)_ | C.4 ↔ C.3 via `EXW_C2F_E2E` | "Crypto came into wallet then converted to EUR/USD on IBAN" — answer needs both wallet and eMoney tables. |
-| [`../bridges/recurring-deposit-to-trade.md`](../bridges/recurring-deposit-to-trade.md) _(planned)_ | C.1 ↔ A. Trading | "Customer deposited via recurring plan → opened first position within N days" — bridges payments and trading. |
-| [`../bridges/provider-reconciliation.md`](../bridges/provider-reconciliation.md) _(planned)_ | C.1/C.5 ↔ external providers | Settlement-level recon: `ExternalTransactionID` matching against provider statement files (Worldpay/SafeCharge/Nuvei/etc.). |
-| [`../bridges/refund-chargeback-chain.md`](../bridges/refund-chargeback-chain.md) _(planned)_ | C.1 ↔ D. Compliance/AML | Investigating a single dispute end-to-end: original deposit → refund/chargeback → AML flag → resolution. |
+| [`../bridges/crypto-to-fiat.md`](../bridges/crypto-to-fiat.md) | C.4 ↔ C.3 via `EXW_C2F_E2E` | "Crypto came into wallet then converted to EUR/USD on IBAN" — bridge owns the E2E underbelly map. |
+| [`../bridges/recurring-deposit-to-trade.md`](../bridges/recurring-deposit-to-trade.md) | C.1 ↔ A. Trading | "Customer deposited via recurring plan → opened first position within N days". Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
+| [`../bridges/provider-reconciliation.md`](../bridges/provider-reconciliation.md) | C.1/C.5 ↔ external providers | Settlement-level recon: `ExternalTransactionID` matching against provider statement files (Worldpay/SafeCharge/Nuvei/etc.). |
+| [`../bridges/refund-chargeback-chain.md`](../bridges/refund-chargeback-chain.md) | C.1 ↔ H. Revenue & Fees ↔ D. Compliance | Investigating a single dispute end-to-end: original deposit → refund/chargeback → AML flag → resolution. |
+| [`../bridges/tribe-emoney-audit.md`](../bridges/tribe-emoney-audit.md) | D. Compliance ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) + FiatDwhDB operational mirrors. SOC2 audit trail / "who authorized this" / operator-action forensics on eMoney accounts/cards/IBAN. C.3 supplies join keys; bridge supplies the audit map. |
 
 ## Cross-cutting facts
 
@@ -145,16 +155,18 @@ These hold whether you load any sub-skill or not:
   all aggregations live in the [Revenue & Fees super-domain](../revenue-and-fees/SKILL.md).
 - It does not cover **bonuses** — those are pay-OUT to customers, owned by
   Compensation.
-- It does not cover **broker EOD position recon** — that's Trading.
-- It does not cover **operator audit trail** (`Fact_CustomerAction`) — that's
-  Operations.
+- It does not cover **broker EOD position recon** or **broker / LP identity** — those are Trading & Markets (`dealing_dbo`).
+- It does not cover **operator audit trail** (`Fact_CustomerAction` for back-office actions) — that's the planned Operations regular domain.
+- It does not cover **Treezor / Tribe / FiatDwhDB audit envelopes** — that's the [`tribe-emoney-audit`](../bridges/tribe-emoney-audit.md) bridge.
 
 ## Skill provenance
 
-- Cluster source: 5 Louvain clusters (7, 13, 17, 28, 45) collapsed into
-  5 sub-skills + 1 horizontal (fees) + 4 bridges. Two original clusters
-  moved out: cluster 47 (Tribe → Compliance) and cluster 49 (Dealing IG
-  → Trading).
+- Cluster source: Louvain clusters covering raw billing, MIMO/DDR, eMoney,
+  crypto wallet, and finance-recon collapsed into 5 sub-skills + 5 bridges.
+  Tribe (Treezor audit envelopes) was originally co-located with eMoney but
+  promoted to its own bridge skill (`tribe-emoney-audit`). Dealing IG /
+  Saxo / Duco broker recon was moved out to Trading & Markets. Fees /
+  revenue was lifted into its own super-domain (H. Revenue & Fees).
 - Total nodes covered: ~377 (was 421 before the two moves).
 - Genie space coverage: `ido ezra space` (10/10 — finance recon), `UK BA
   space [WIP]` (19/30 — broad payments analytics), `eMoney Adoption &

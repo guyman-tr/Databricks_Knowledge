@@ -18,14 +18,14 @@ connects:
 intersects_with:
   - revenue-and-fees/SKILL
 primary_objects:
-  - DWH_dbo.Fact_BillingDeposit
-  - DWH_dbo.Dim_Customer
-  - DWH_dbo.Fact_CustomerAction
-  - DWH_dbo.Dim_Position
-  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
-  - BI_DB_dbo.BI_DB_First5Actions
-  - general.bronze_recurringinvestment_recurringinvestment_planinstances
-  - etoro_kpi_prep.v_fact_customeraction_w_metrics
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked  # Synapse: DWH_dbo.Dim_Customer
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction  # Synapse: DWH_dbo.Fact_CustomerAction
+  - main.dwh.dim_position  # Synapse: DWH_dbo.Dim_Position
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions  # Synapse: BI_DB_dbo.BI_DB_First5Actions
+  - main.general.bronze_recurringinvestment_recurringinvestment_planinstances  # Synapse: general.bronze_recurringinvestment_recurringinvestment_planinstances
+  - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # Synapse: de_output.de_output_etoro_kpi_fact_customeraction_w_metrics | canonical UC table; excludes ActionTypeID 14 + 41
 ---
 
 # Bridge — Recurring Deposit → Trade
@@ -35,6 +35,10 @@ sometimes on a recurring plan — and then opens trading positions. This
 bridge captures the join from the deposit (C.1 / C.2) to the resulting
 trade (Trading) and answers "how often did the deposit lead to a trade,
 and how soon."
+
+> **Genie / SQL note:** SQL examples below use **Unity Catalog FQNs**.
+> Synapse names in prose are aliases — see `primary_objects:` for the
+> canonical UC FQN.
 
 ## The chain
 
@@ -61,20 +65,20 @@ There are 3 layers depending on what you need:
 1. **`Dim_Customer.FTDDate` and `Dim_Customer.FirstTradeDate`** — already-computed canonical "first deposit date" and "first trade date" per CID. For *FTD-to-FT funnel* analysis at scale, USE THESE — don't re-derive.
 2. **`BI_DB_dbo.BI_DB_First5Actions`** — first 5 distinct customer actions per CID (e.g. registration, KYC, FTD, first deposit on TP, first trade). Useful for "what was action #2 / action #3" funnel questions.
 3. **`general.bronze_recurringinvestment_recurringinvestment_planinstances`** *(UC bronze)* — the recurring-plan definitions. Each row = one customer's recurring investment plan instance with cadence, instrument, amount.
-4. **`etoro_kpi_prep.v_fact_customeraction_w_metrics`** *(UC view)* — already JOINS `Fact_CustomerAction` + recurring plan instances + position data + fee revenue. **This is the pre-stitched bridge view.** Use it for cohort-level "deposit → trade" analysis.
+4. **`de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`** *(UC table — `de_output` schema)* — already enriches `Fact_CustomerAction` with the most relevant DDR metrics (TP revenues, special comp types, classifiers like CopyFunds / SQF / TradeFromIBAN, …) at the most granular transaction level. **Excludes ActionTypeID 14 + 41** (large + irrelevant) and prunes some columns. **This is the pre-stitched bridge table.** Use it for cohort-level "deposit → trade" analysis.
 
 ## Canonical patterns
 
 ```sql
--- 1. FTD-to-FT funnel (TIME from first deposit to first trade), already-computed dates
+-- 1. FTD-to-FT funnel — already-computed canonical dates
 SELECT
-  DATEDIFF(day, dc.FTDDate, dc.FirstTradeDate) AS days_ftd_to_ft,
-  COUNT(*) AS customers
-FROM DWH_dbo.Dim_Customer dc
-WHERE dc.FTDDate BETWEEN @from AND @to
+  DATEDIFF(dc.FirstTradeDate, dc.FTDDate) AS days_ftd_to_ft,
+  COUNT(*)                                 AS customers
+FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked dc
+WHERE dc.FTDDate BETWEEN :from_dt AND :to_dt
   AND dc.FirstTradeDate IS NOT NULL
-GROUP BY DATEDIFF(day, dc.FTDDate, dc.FirstTradeDate)
-ORDER BY days_ftd_to_ft
+GROUP BY 1
+ORDER BY 1
 ```
 
 ```sql
@@ -86,34 +90,35 @@ SELECT
   rp.PlannedAmount,
   rp.PlannedInstrument,
   MIN(fbd.ModificationDate) AS first_deposit_under_plan,
-  MIN(fca.ActionDate)        AS first_trade_after_plan
-FROM general.bronze_recurringinvestment_recurringinvestment_planinstances rp
-JOIN DWH_dbo.Fact_BillingDeposit fbd
+  MIN(fca.ActionDate)       AS first_trade_after_plan
+FROM main.general.bronze_recurringinvestment_recurringinvestment_planinstances rp
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  fbd
        ON fbd.CID = rp.CID
       AND fbd.IsRecurring = 1
       AND fbd.PaymentStatusID = 2
-LEFT JOIN DWH_dbo.Fact_CustomerAction fca
+LEFT JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction fca
        ON fca.CID = rp.CID
       AND fca.ActionTypeID IN (/* trade-open action codes */ 1, 2, 5)
       AND fca.ActionDate >= fbd.ModificationDate
-      AND fca.ActionDate < DATEADD(day, @window_days, fbd.ModificationDate)
-WHERE rp.PlanCreatedDate BETWEEN @from AND @to
+      AND fca.ActionDate <  DATE_ADD(fbd.ModificationDate, :window_days)
+WHERE rp.PlanCreatedDate BETWEEN :from_dt AND :to_dt
 GROUP BY rp.CID, rp.PlanInstanceID, rp.Cadence, rp.PlannedAmount, rp.PlannedInstrument
 ```
 
 ```sql
--- 3. Use the pre-stitched view for cohort-level analysis
+-- 3. Pre-stitched table for cohort-level analysis
+--    (de_output schema, TABLE; excludes ActionTypeID 14 + 41)
 SELECT *
-FROM etoro_kpi_prep.v_fact_customeraction_w_metrics
-WHERE DateID BETWEEN @from AND @to
-  AND CID = @cid
+FROM main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
+WHERE DateID BETWEEN :from_dt AND :to_dt
+  AND CID = :cid
 ```
 
 ```sql
 -- 4. "What was action #N for this customer" using First5
 SELECT *
-FROM BI_DB_dbo.BI_DB_First5Actions
-WHERE CID = @cid
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions
+WHERE CID = :cid
 ORDER BY ActionOrdinal
 ```
 
@@ -125,7 +130,7 @@ ORDER BY ActionOrdinal
 4. **`IsRecurring = 1` on `Fact_BillingDeposit` marks the DEPOSIT as initiated by a recurring plan.** It does NOT mean the customer has a plan currently active. A plan can have ended, but the past deposits still carry `IsRecurring = 1`.
 5. **For cross-platform "deposit then trade" go to MIMO** — `BI_DB_DDR_Fact_MIMO_AllPlatforms` has `IsRecurring`, plus an FTD framing already (`IsGlobalFTD`). The trade side still needs `Fact_CustomerAction` / `Dim_Position`.
 6. **Trading-side action codes** (`ActionTypeID`) — see `DWH_dbo.Dim_ActionType` for the full enum. Open-position codes vary by platform (CFD vs stocks vs crypto wallet purchase). Filter carefully.
-7. **`v_fact_customeraction_w_metrics` is an UC view** that already does the joining. Prefer it over manual JOINs unless the query is purely Synapse-side.
+7. **`de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` is a UC TABLE** (not a view), in the `de_output` schema, that pre-enriches `Fact_CustomerAction` with the most relevant DDR metrics. **It excludes ActionTypeID 14 + 41** (large + irrelevant) and prunes some columns. Prefer it over manual JOINs unless the query is purely Synapse-side or you specifically need ActionTypeID 14/41 rows.
 8. **Time window matters.** "Trade within N days of deposit" — N=1 (intraday), N=7 (weekly), N=30 (monthly) are common bands. The funnel result changes dramatically with N; pick deliberately.
 
 ## Common questions this bridge answers

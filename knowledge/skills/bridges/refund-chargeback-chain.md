@@ -21,13 +21,14 @@ intersects_with:
   - payments/mimo-panel-and-ddr
   - payments/finance-recon-and-balances
 primary_objects:
-  - DWH_dbo.Fact_BillingDeposit
-  - DWH_dbo.Fact_BillingWithdraw
-  - DWH_dbo.Fact_Deposit_State
-  - DWH_dbo.Fact_Cashout_Rollback
-  - BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals
-  - DWH_dbo.Fact_CustomerAction
-  - DWH_dbo.Dim_PaymentStatus
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw  # Synapse: DWH_dbo.Fact_BillingWithdraw
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction  # Synapse: DWH_dbo.Fact_CustomerAction
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus  # Synapse: DWH_dbo.Dim_PaymentStatus
+synapse_only_objects:
+  - "DWH_dbo.Fact_Deposit_State (alter.sql says _Not_Migrated)"
+  - "DWH_dbo.Fact_Cashout_Rollback (wiki only; never ingested)"
 ---
 
 # Bridge — Refund / Chargeback Chain
@@ -42,6 +43,15 @@ A dispute event in fiat payments has many actors:
 5. The AML/risk context (was this customer flagged before/after?).
 
 This bridge stitches the chain so a single dispute can be fully audited.
+
+> **Mixed UC / Synapse coverage.** The aggregate reversal table
+> (`BI_DB_DepositWithdrawFee_Reversals`) and the customer-action audit
+> (`Fact_CustomerAction`) are in UC. The State-table provenance
+> (`Fact_Deposit_State`, `Fact_Cashout_Rollback`) is `_Not_Migrated` —
+> only available in Synapse. On Databricks Genie you can do the
+> reversal-aggregate analysis; for the full forensic chain (which State
+> row triggered which reversal) drop down to Synapse via the synapse_*
+> MCP servers.
 
 ## The chain
 
