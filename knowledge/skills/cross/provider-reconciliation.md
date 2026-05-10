@@ -1,5 +1,5 @@
 ---
-name: bridge-provider-reconciliation
+name: cross-provider-reconciliation
 description: |
   Reconciliation between eToro's internal deposit/withdrawal record and the
   external payment provider's settlement statement (Worldpay / SafeCharge /
@@ -30,19 +30,19 @@ synapse_only_objects:
   - "EXW_dbo.EXW_PaymentReconciliation (alter.sql says _Not_Migrated)"
 ---
 
-# Bridge — Provider Reconciliation
+# Cross-domain skill — Provider Reconciliation
 
 eToro routes customer deposits/withdrawals through external payment
 providers (Worldpay, SafeCharge/Nuvei, PayPal, Skrill, Neteller, OpenPayd
-in UK, etc.). Each provider sends back a daily settlement file. This bridge
+in UK, etc.). Each provider sends back a daily settlement file. This cross-domain skill
 captures how to JOIN our internal deposit row to the provider's settlement
 record so finance / payment-ops can answer "did Worldpay pay us what we
 expected".
 
-> **⚠ Synapse-only workflow:** the MID-routing core of this bridge lives in
+> **⚠ Synapse-only workflow:** the MID-routing core of this cross-domain skill lives in
 > `Fact_Deposit_State`, `Fact_Cashout_State`, and
 > `Dim_BillingProtocolMIDSettingsID` — **none of these are in UC**
-> (`_Not_Migrated` / wiki-only). On Databricks Genie this bridge will fail
+> (`_Not_Migrated` / wiki-only). On Databricks Genie this cross-domain skill will fail
 > on the MID-decoding join. **Run provider-recon SQL against Synapse
 > directly** (synapse_prod_sql / synapse_sql MCP, or pyodbc).
 >
@@ -164,11 +164,11 @@ ORDER BY DateID, Provider
 6. **Settlement date ≠ deposit date.** Providers settle T+1, T+2 or longer depending on agreement. Always use SETTLEMENT date on the external side and JOIN on a date window, not equality.
 7. **`MOPCountry`** = method-of-payment country. Useful for routing rules ("UK customer must use UK MID"). NULL for some providers.
 8. **One MID can be used by many countries / customers.** And one customer can be routed to multiple MIDs over time (failover). Don't assume CID→MID is stable.
-9. **Provider chargebacks** come back as a different transaction type — they appear in `Fact_Deposit_State` as a reversal row (e.g. `TransactionType='Chargeback'` or similar) referencing the original `DepositID`. For chargeback investigation chain → `bridges/refund-chargeback-chain.md`.
+9. **Provider chargebacks** come back as a different transaction type — they appear in `Fact_Deposit_State` as a reversal row (e.g. `TransactionType='Chargeback'` or similar) referencing the original `DepositID`. For chargeback investigation chain → `cross/refund-chargeback-chain.md`.
 10. **`EXW_PaymentReconciliation`** is the EXW (crypto wallet) side recon — separate from fiat provider recon. Same conceptual pattern (match internal vs external) but different tables.
 
 ## When to load just one parent instead
 
 - "What's our approval rate this week" alone → C.1 alone.
 - "What's the company's customer balance" → C.5 alone.
-- "Did provider X pay us correctly" / "show me MID-level breakdown" → load this bridge.
+- "Did provider X pay us correctly" / "show me MID-level breakdown" → load this cross-domain skill.

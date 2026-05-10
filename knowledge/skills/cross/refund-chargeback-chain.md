@@ -1,5 +1,5 @@
 ---
-name: bridge-refund-chargeback-chain
+name: cross-refund-chargeback-chain
 description: |
   Forensic chain for a single dispute event — refund, chargeback,
   chargeback-reversal — joining the original deposit (Payments C.1), the
@@ -31,7 +31,7 @@ synapse_only_objects:
   - "DWH_dbo.Fact_Cashout_Rollback (wiki only; never ingested)"
 ---
 
-# Bridge — Refund / Chargeback Chain
+# Cross-domain skill — Refund / Chargeback Chain
 
 A dispute event in fiat payments has many actors:
 1. The original deposit (or withdrawal).
@@ -42,7 +42,7 @@ A dispute event in fiat payments has many actors:
    chargeback because we won the case).
 5. The AML/risk context (was this customer flagged before/after?).
 
-This bridge stitches the chain so a single dispute can be fully audited.
+This cross-domain skill stitches the chain so a single dispute can be fully audited.
 
 > **Mixed UC / Synapse coverage.** The aggregate reversal table
 > (`BI_DB_DepositWithdrawFee_Reversals`) and the customer-action audit
@@ -101,7 +101,7 @@ chargeback-reversal lands here. **Key properties:**
 - **`CreditTypeID`, `MOPCountry`, `IsGermanBaFin`** are ALWAYS NULL here
   (per SR-313302 / SR-359957). Don't filter on them.
 - Owned by **Revenue & Fees super-domain** for aggregate questions, but
-  used by THIS bridge for chain-walking.
+  used by THIS cross-domain skill for chain-walking.
 
 ## Canonical patterns
 
@@ -209,11 +209,11 @@ in the source SP — trust the table's signed value, don't re-derive.)
 5. **Operator audit trail** lives in `Fact_CustomerAction` — but that's owned by the planned **Operations super-domain**, not Compliance. If a refund was operator-initiated, look there.
 6. **Chargeback ≠ Refund.** Chargeback is bank-initiated (we may dispute it back). Refund is internal-initiated (customer asked, or ops gave). Different commercial implications, different processes.
 7. **Partial reversals** complicate aggregation. Sum across all reversal rows for one `DepositID`, then compare to the original `AmountUSD`, to know if the deposit was fully or partially reversed.
-8. **For aggregate volume / rate questions** (chargeback rate, refund rate, recovery rate over time), GO TO Revenue & Fees super-domain. This bridge is for SINGLE-CASE forensics.
+8. **For aggregate volume / rate questions** (chargeback rate, refund rate, recovery rate over time), GO TO Revenue & Fees super-domain. This cross-domain skill is for SINGLE-CASE forensics.
 
 ## When to load just one parent instead
 
 - "Total refund volume this month" → Revenue & Fees super-domain alone.
 - "Was deposit X approved" → C.1 alone (`Fact_BillingDeposit.PaymentStatusID`).
 - "Show me the AML alerts for this customer" → Compliance super-domain alone.
-- "Walk me through what happened to deposit X — refund? chargeback? when? who?" → load this bridge.
+- "Walk me through what happened to deposit X — refund? chargeback? when? who?" → load this cross-domain skill.

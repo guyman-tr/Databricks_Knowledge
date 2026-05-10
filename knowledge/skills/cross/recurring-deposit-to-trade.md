@@ -1,5 +1,5 @@
 ---
-name: bridge-recurring-deposit-to-trade
+name: cross-recurring-deposit-to-trade
 description: |
   Connects a customer's deposit cadence (especially recurring/auto-deposit
   plans) to the trades they subsequently open. The classic eToro funnel
@@ -28,11 +28,11 @@ primary_objects:
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # Synapse: de_output.de_output_etoro_kpi_fact_customeraction_w_metrics | canonical UC table; excludes ActionTypeID 14 + 41
 ---
 
-# Bridge — Recurring Deposit → Trade
+# Cross-domain skill — Recurring Deposit → Trade
 
 The flagship eToro funnel story. A customer deposits — sometimes once,
 sometimes on a recurring plan — and then opens trading positions. This
-bridge captures the join from the deposit (C.1 / C.2) to the resulting
+cross-domain skill captures the join from the deposit (C.1 / C.2) to the resulting
 trade (Trading) and answers "how often did the deposit lead to a trade,
 and how soon."
 
@@ -65,7 +65,7 @@ There are 3 layers depending on what you need:
 1. **`Dim_Customer.FTDDate` and `Dim_Customer.FirstTradeDate`** — already-computed canonical "first deposit date" and "first trade date" per CID. For *FTD-to-FT funnel* analysis at scale, USE THESE — don't re-derive.
 2. **`BI_DB_dbo.BI_DB_First5Actions`** — first 5 distinct customer actions per CID (e.g. registration, KYC, FTD, first deposit on TP, first trade). Useful for "what was action #2 / action #3" funnel questions.
 3. **`general.bronze_recurringinvestment_recurringinvestment_planinstances`** *(UC bronze)* — the recurring-plan definitions. Each row = one customer's recurring investment plan instance with cadence, instrument, amount.
-4. **`de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`** *(UC table — `de_output` schema)* — already enriches `Fact_CustomerAction` with the most relevant DDR metrics (TP revenues, special comp types, classifiers like CopyFunds / SQF / TradeFromIBAN, …) at the most granular transaction level. **Excludes ActionTypeID 14 + 41** (large + irrelevant) and prunes some columns. **This is the pre-stitched bridge table.** Use it for cohort-level "deposit → trade" analysis.
+4. **`de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`** *(UC table — `de_output` schema)* — already enriches `Fact_CustomerAction` with the most relevant DDR metrics (TP revenues, special comp types, classifiers like CopyFunds / SQF / TradeFromIBAN, …) at the most granular transaction level. **Excludes ActionTypeID 14 + 41** (large + irrelevant) and prunes some columns. **This is the pre-stitched cross-domain table.** Use it for cohort-level "deposit → trade" analysis.
 
 ## Canonical patterns
 
@@ -133,7 +133,7 @@ ORDER BY ActionOrdinal
 7. **`de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` is a UC TABLE** (not a view), in the `de_output` schema, that pre-enriches `Fact_CustomerAction` with the most relevant DDR metrics. **It excludes ActionTypeID 14 + 41** (large + irrelevant) and prunes some columns. Prefer it over manual JOINs unless the query is purely Synapse-side or you specifically need ActionTypeID 14/41 rows.
 8. **Time window matters.** "Trade within N days of deposit" — N=1 (intraday), N=7 (weekly), N=30 (monthly) are common bands. The funnel result changes dramatically with N; pick deliberately.
 
-## Common questions this bridge answers
+## Common questions this cross-domain skill answers
 
 - "What % of FTDs trade within their first 7 days?"
 - "For customers on a recurring deposit plan, how does cadence ($50/wk vs $200/mo) affect first-position size?"
@@ -144,4 +144,4 @@ ORDER BY ActionOrdinal
 
 - "Recurring-deposit count this month" alone → C.1 / C.2 alone.
 - "First-trade volume by cohort" alone → Trading alone (using `Dim_Customer.FirstTradeDate`).
-- "Both: did the deposit lead to a trade" → load this bridge.
+- "Both: did the deposit lead to a trade" → load this cross-domain skill.

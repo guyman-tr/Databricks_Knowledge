@@ -1,7 +1,7 @@
 ---
-name: bridge-tribe-emoney-audit
+name: cross-tribe-emoney-audit
 description: |
-  Bridge skill connecting the Compliance super-domain to Payments C.3 (eMoney
+  Cross-domain skill connecting the Compliance super-domain to Payments C.3 (eMoney
   Accounts & Cards). Covers the Tribe / FiatDwhDB audit-trail layer — the
   Treezor-side raw XML envelope feed and the FiatDwhDB operational fiat tables
   that Compliance uses for SOC2-grade investigation of operator/system actions
@@ -41,7 +41,7 @@ synapse_only_objects:
   - "eMoney_dbo.SP_eMoney_Reconciliation_ETLs (stored procedure — runs in Synapse to populate ETL_AccountsActivities; not a queryable object in UC)"
 ---
 
-# Bridge — Tribe / FiatDwh ↔ eMoney audit trail
+# Cross-domain skill — Tribe / FiatDwh ↔ eMoney audit trail
 
 eToro's eMoney (IBAN + debit card) platform is operated jointly with **Treezor**
 as the regulated e-money issuer. Treezor exports daily **XML audit envelopes**
@@ -52,8 +52,8 @@ mirror **`emoney.bronze_fiatdwhdb_tribe_*`**). A reconciliation SP
 detail tables to produce flattened **`eMoney_dbo.ETL_*`** tables Compliance
 can query.
 
-**This bridge does NOT own audit-trail interpretation logic** — Compliance
-does, when that super-domain is built. What this bridge owns:
+**This cross-domain skill does NOT own audit-trail interpretation logic** — Compliance
+does, when that super-domain is built. What this cross-domain skill owns:
 
 > **Genie / SQL note:** the Tribe envelope tables exist in BOTH halves
 > (Synapse `eMoney_Tribe.*` and UC bronze `main.emoney.bronze_fiatdwhdb_tribe_*`).
@@ -71,7 +71,7 @@ does, when that super-domain is built. What this bridge owns:
 3. The **don't-go-there warnings** — querying raw `eMoney_Tribe.*` tables
    without going through the ETL_* recon layer is almost always wrong.
 
-## When to load this bridge
+## When to load this cross-domain skill
 
 - "Who authorized transaction X?" / "Show me the audit trail for account Y."
 - "I see an eMoney transaction in `eMoney_Dim_Transaction` that has no
@@ -83,7 +83,7 @@ does, when that super-domain is built. What this bridge owns:
   or settlement disputes.
 
 If the question is purely about **eMoney transaction VOLUMES** (no audit
-intent), stay in C.3 (`emoney-accounts-and-cards.md`). Don't load this bridge.
+intent), stay in C.3 (`emoney-accounts-and-cards.md`). Don't load this cross-domain skill.
 
 ## Mental model
 
@@ -290,9 +290,9 @@ WHERE cb.BalanceDate = @date
 |---|---|
 | eMoney customer transaction volumes / FX spread / IBAN inflows | C.3 (`emoney-accounts-and-cards.md`) |
 | Compliance KYC / risk-rule logic / regulator-facing reports | Compliance super-domain (when built) |
-| Crypto came in → converted to fiat on IBAN forensics | `bridges/crypto-to-fiat.md` |
-| Provider statement reconciliation for fiat deposits/withdrawals (not eMoney) | `bridges/provider-reconciliation.md` |
-| Refund / chargeback chain on a customer dispute | `bridges/refund-chargeback-chain.md` |
+| Crypto came in → converted to fiat on IBAN forensics | `cross/crypto-to-fiat.md` |
+| Provider statement reconciliation for fiat deposits/withdrawals (not eMoney) | `cross/provider-reconciliation.md` |
+| Refund / chargeback chain on a customer dispute | `cross/refund-chargeback-chain.md` |
 
 ## Cluster provenance
 

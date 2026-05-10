@@ -18,9 +18,9 @@ intersects_with:
   - payments/mimo-panel-and-ddr
   - payments/finance-recon-and-balances
   - revenue-and-fees/SKILL
-  - bridges/crypto-to-fiat
-  - bridges/refund-chargeback-chain
-  - bridges/tribe-emoney-audit
+  - cross/crypto-to-fiat
+  - cross/refund-chargeback-chain
+  - cross/tribe-emoney-audit
 primary_objects:
   - main.etoro_kpi_prep.v_mimo_emoneyplatform  # VIEW | Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform | cross-platform slice — Tier 0
   - main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_account  # Synapse: eMoney_dbo.eMoney_Dim_Account | canonical account hub — Tier 1
@@ -45,7 +45,7 @@ primary_objects:
   - main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_dictionary_transactionstatus  # Synapse: eMoney_dbo.eMoney_Dictionary_TransactionStatus
 qa_only_objects:
   - main.emoney.bronze_fiatdwhdb_dbo_fiataccount  # TABLE | Synapse: dbo.FiatAccount
-  - "FiatDwhDB.dbo.* (provider-side mirrors — see tribe-emoney-audit bridge for recon use)"
+  - "FiatDwhDB.dbo.* (provider-side mirrors — see tribe-emoney-audit cross-domain skill for recon use)"
 synapse_only_objects:
   - "eMoney_dbo.eMoney_Marketing_EmailTracking (alter.sql says _Not_Migrated)"
 ---
@@ -66,7 +66,7 @@ via `CID = RealCID`, but a "deposit" on eMoney is a row in
 > `bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms`.
 > The Treezor audit envelopes / FiatDwhDB mirrors are in UC bronze under
 > `main.emoney.bronze_fiatdwhdb_*` and `main.bi_db.bronze_fiatdwhdb_*` — see
-> `bridges/tribe-emoney-audit.md`. One Synapse-only object remains:
+> `cross/tribe-emoney-audit.md`. One Synapse-only object remains:
 > `eMoney_Marketing_EmailTracking` (`_Not_Migrated`).
 
 ## The reach order (start at #1, descend only when needed)
@@ -78,8 +78,8 @@ via `CID = RealCID`, but a "deposit" on eMoney is a row in
 | **2** | **Panel views** — `eMoney_Panel_FirstDates`, `eMoney_Reports_AcquisitionFunnel`, `eMoney_Card_Monthly_Snapshot`, `eMoney_Reports_ClubUpgrade` | Pre-aggregated panels for the recurring eMoney KPIs: FMI / FMO / first-card / first-IBAN milestones, acquisition-funnel cohort tracking, monthly card retention, Club upgrade history. | Question is "first-X" / funnel / retention. Don't recompute — the panels apply the right exclusions and timezone normalisations. |
 | **3** | **`eMoney_Fact_Transaction_Status`** | True state-event log — one row per status transition per transaction. Unlike its TP cousin (`Fact_Deposit_State`), this IS the right place for analyst-facing "why did this transaction fail" / "when did it post" forensics — it's the eMoney status timeline. | Per-transaction status forensics, dispute investigation, latency analysis between status events. |
 | **4** | `eMoney_BankPaymentsUK` | UK-specific OpenBanking + domestic wire feed. Its rows feed `eMoney_Dim_Transaction` but carry UK-bank-specific columns (sort code, payee bank). | UK-only OpenBanking / wire forensics where you need bank-side detail not in `eMoney_Dim_Transaction`. |
-| **Audit** | `eMoney_Tribe.*` / `FiatDwhDB.*` | Treezor audit envelopes + provider-side fiat mirrors. Rich SOC2 detail. | **Don't reach here from this skill.** Load `bridges/tribe-emoney-audit.md` instead — it owns the audit-trail map and provides the join keys. |
-| **Recon** | `dbo.FiatAccount` / `dbo.FiatTransactions` / `dbo.FiatCardStatuses` *(production OLTP)* | Truth source. | Only when reconciling against production OLTP. Almost never needed — `FiatDwhDB` (Tribe bridge) is the better recon target. |
+| **Audit** | `eMoney_Tribe.*` / `FiatDwhDB.*` | Treezor audit envelopes + provider-side fiat mirrors. Rich SOC2 detail. | **Don't reach here from this skill.** Load `cross/tribe-emoney-audit.md` instead — it owns the audit-trail map and provides the join keys. |
+| **Recon** | `dbo.FiatAccount` / `dbo.FiatTransactions` / `dbo.FiatCardStatuses` *(production OLTP)* | Truth source. | Only when reconciling against production OLTP. Almost never needed — `FiatDwhDB` (Tribe cross-domain skill) is the better recon target. |
 
 **The cardinal rule**: eMoney questions about money flow start at MIMO; questions about account/customer/card detail start at the dim trio; first-of-X questions go to `eMoney_Panel_FirstDates`. Don't cascade through state events for a question that didn't ask "why did this fail."
 
@@ -111,8 +111,8 @@ graph TB
         BPK[eMoney_BankPaymentsUK<br/>UK OpenBanking / wire bank detail]
     end
 
-    subgraph Audit["Audit / SOC2 — bridge skill"]
-        Tribe[eMoney_Tribe.* + FiatDwhDB.*<br/>Treezor XML envelopes + provider mirrors<br/>see bridges/tribe-emoney-audit]
+    subgraph Audit["Audit / SOC2 — cross-domain skill"]
+        Tribe[eMoney_Tribe.* + FiatDwhDB.*<br/>Treezor XML envelopes + provider mirrors<br/>see cross/tribe-emoney-audit]
     end
 
     subgraph Recon["Production truth"]
@@ -207,12 +207,12 @@ ORDER BY EventDate
 | Std → Club → Plus upgrade chain per CID | **`eMoney_Reports_ClubUpgrade`** | ordered by upgrade date. |
 | Card lifecycle (issue → activate → block → expire) | **`eMoney_Card_Instance_Summary`** | row per card instance per CID; **use `v_eMoney_Card_Instance_Summary` to avoid `MaskedPAN` PII**. |
 | IBAN Quick Transfer count | **`eMoney_Dim_Transaction`** | `WHERE IsIBANQuickTransfer = 1` (= `MoveMoneyReasonID = 6`). |
-| Crypto-to-Fiat into IBAN | **`eMoney_Dim_Transaction`** | `WHERE TransactionTypeID = 14` (= `IsCryptoToFiat = 1`). For full E2E flow → `bridges/crypto-to-fiat`. |
+| Crypto-to-Fiat into IBAN | **`eMoney_Dim_Transaction`** | `WHERE TransactionTypeID = 14` (= `IsCryptoToFiat = 1`). For full E2E flow → `cross/crypto-to-fiat`. |
 | OpenBanking deposit detection | **`eMoney_Dim_Transaction` + `External_MoneyTransfer_Billing_Transfers`** | The dim row alone doesn't say OpenBanking; you need `(IsInternalTransfer=0 AND IsIBANTrade=0 AND EXISTS row in External_MoneyTransfer_Billing_Transfers WITH TransferStatusID=10) THEN 'OpenBanking' ELSE 'WireTransfer'`. See MIMO sub-skill gotcha #11. |
 | UK bank-side detail (sort code, payee bank) | **`eMoney_BankPaymentsUK`** | UK-only; other regions don't have an equivalent. |
 | Status timeline / failure forensics | **`eMoney_Fact_Transaction_Status`** | one row per status event; pivot for SLA analysis. |
 | FX spread / OpenBanking conversion fee revenue | **Revenue & Fees super-domain** | `v_revenue_conversionfee*` — leave this skill. |
-| Operator audit trail / SOC2 | **`bridges/tribe-emoney-audit`** | this skill supplies the join keys; the bridge owns the Tribe map. |
+| Operator audit trail / SOC2 | **`cross/tribe-emoney-audit`** | this skill supplies the join keys; the cross-domain skill owns the Tribe map. |
 
 ## Gotchas
 
@@ -221,7 +221,7 @@ ORDER BY EventDate
 3. **`eMoneyClientBalance` is the SOURCE OF TRUTH for eMoney balance.** Don't compute from `SUM(Amount)` over `eMoney_Dim_Transaction` — pending and settled differ.
 4. **Use `IsValidETM = 1` to filter to "real" eMoney customers.** Without this you pick up partial onboardings, deleted accounts, etc.
 5. **Use `RegulationIDTxDate` / `CountryIDTxDate`** (snapshot at transaction time) for transaction-level slicing — not the current `RegulationID` from `eMoney_Dim_Account`. A customer can change regulation; transactions are stamped at the time.
-6. **Crypto-to-Fiat tag**: `eMoney_Dim_Transaction.TransactionTypeID = 14` is the canonical C2F flag on eMoney side. The MIMO panel mirrors this as `IsCryptoToFiat = 1`. For full C2F flow → bridge `crypto-to-fiat`.
+6. **Crypto-to-Fiat tag**: `eMoney_Dim_Transaction.TransactionTypeID = 14` is the canonical C2F flag on eMoney side. The MIMO panel mirrors this as `IsCryptoToFiat = 1`. For full C2F flow → cross-domain skill `crypto-to-fiat`.
 7. **IBAN Quick Transfer ≠ TP Internal Transfer.** `IsIBANQuickTransfer` is eMoney-side `MoveMoneyReasonID = 6`. `IsInternalTransfer` (on TP MIMO rows) is TP-side TP↔eMoney move. Both should be excluded for "real" external money flow.
 8. **`eMoney_BankPaymentsUK` is UK-only** — OpenBanking + UK domestic wires. Other regions don't have the same separate table.
 9. **Card PII**: `eMoney_Card_Instance_Summary` exposes `MaskedPAN`. Use `v_eMoney_Card_Instance_Summary` (same grain, `MaskedPAN` excluded) for analytics. Marketing tables (`_EmailTracking`, `_UserData_Marketing`) are likewise PII-heavy.
@@ -237,9 +237,9 @@ ORDER BY EventDate
 | Trading-platform fiat deposits/withdrawals (NOT eMoney) | [`deposits-and-withdrawals.md`](deposits-and-withdrawals.md) (C.1) |
 | Customer balance ALSO from trading + crypto + options | [`finance-recon-and-balances.md`](finance-recon-and-balances.md) (C.5) |
 | **eMoney FX spread / OpenBanking conversion fee revenue** | [revenue-and-fees](../revenue-and-fees/SKILL.md) (`v_revenue_conversionfee*`) |
-| Crypto came in → converted to EUR/USD on IBAN | [`../bridges/crypto-to-fiat.md`](../bridges/crypto-to-fiat.md) |
-| **Operator / SOC2 audit trail / Tribe forensics** | [`../bridges/tribe-emoney-audit.md`](../bridges/tribe-emoney-audit.md) — owns the Tribe / FiatDwhDB map. This skill supplies the join keys (`AccountID`, `GCID`, `TransactionID`, `CardID`). |
-| Chargeback / refund forensics | [`../bridges/refund-chargeback-chain.md`](../bridges/refund-chargeback-chain.md) |
+| Crypto came in → converted to EUR/USD on IBAN | [`../cross/crypto-to-fiat.md`](../cross/crypto-to-fiat.md) |
+| **Operator / SOC2 audit trail / Tribe forensics** | [`../cross/tribe-emoney-audit.md`](../cross/tribe-emoney-audit.md) — owns the Tribe / FiatDwhDB map. This skill supplies the join keys (`AccountID`, `GCID`, `TransactionID`, `CardID`). |
+| Chargeback / refund forensics | [`../cross/refund-chargeback-chain.md`](../cross/refund-chargeback-chain.md) |
 
 ## Deep reads (column-level detail)
 
@@ -259,5 +259,5 @@ The skill above only encodes ranking + routing. Column-level descriptions and fu
 - Cluster 17 from the Louvain partition (61 members, intra-cluster weight 266.0).
 - Schema mix: `eMoney_dbo:30, dbo:8, Dictionary:7, BI_DB_dbo:6, eMoney_Dim_Account:3` (the latter is a known sub-schema).
 - Edge sources: 100% wiki — eMoney has no Genie space coverage and no KPI views referencing it directly (other than via the MIMO eMoney platform table, which sits in C.2).
-- Top out-cluster bridges: `Dim_Customer` (30.5), `Dim_Country` (11.0), `BI_DB_DDR_Fact_MIMO_eMoney_Platform` (10.0), `Fact_SnapshotCustomer` (8.5).
+- Top out-cluster cross-domain edges: `Dim_Customer` (30.5), `Dim_Country` (11.0), `BI_DB_DDR_Fact_MIMO_eMoney_Platform` (10.0), `Fact_SnapshotCustomer` (8.5).
 - See [`../_brief_cluster_17.md`](../_brief_cluster_17.md) for full member list.

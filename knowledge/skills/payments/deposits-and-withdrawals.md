@@ -18,9 +18,9 @@ intersects_with:
   - payments/emoney-accounts-and-cards
   - payments/finance-recon-and-balances
   - revenue-and-fees/SKILL
-  - bridges/refund-chargeback-chain
-  - bridges/recurring-deposit-to-trade
-  - bridges/provider-reconciliation
+  - cross/refund-chargeback-chain
+  - cross/recurring-deposit-to-trade
+  - cross/provider-reconciliation
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals
@@ -197,12 +197,12 @@ WHERE fds.DepositID = @suspect_deposit_id
 | Cross-platform FTD count | **MIMO** *(C.2)* | `WHERE IsGlobalFTD=1 AND MIMOAction='Deposit' GROUP BY DateID, MIMOPlatform` |
 | TP-only FTD count | **MIMO** *(C.2)* | `WHERE IsPlatformFTD=1 AND MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit'` |
 | Single-deposit forensics for one customer | **DepositWithdrawFee** | row-grain query above |
-| Refund / chargeback aggregation | **DepositWithdrawFee_Reversals** | Amounts pre-signed; group by TransactionType. *(For the FORENSIC chain on one specific dispute use the `refund-chargeback-chain` bridge.)* |
+| Refund / chargeback aggregation | **DepositWithdrawFee_Reversals** | Amounts pre-signed; group by TransactionType. *(For the FORENSIC chain on one specific dispute use the `refund-chargeback-chain` cross-domain skill.)* |
 | Decline-by-risk-engine rate | **Fact_BillingDeposit** | `COUNT_IF(PaymentStatusID=35) / COUNT(*)`. DepositWithdrawFee drops most declines (it's an "approved" view). |
 | MID-level approval rate | **DepositWithdrawFee** for approved rows; **Fact_BillingDeposit + Fact_Deposit_State** for full coverage incl. declines | `DepositWithdrawFee` carries `MIDName` / `MIDValue` directly for approved rows; for decline-rate by MID drop down to Synapse via the State table (`Fact_Deposit_State` is `_Not_Migrated`, query in Synapse). |
 | Funding-method mix | **DepositWithdrawFee** | `GROUP BY PaymentMethod` (already dim-resolved as `Dim_FundingType.Name`). |
 | Recurring-deposit subscribers | **MIMO** or **Fact_BillingDeposit** | `IsRecurring=1`. MIMO has it cross-platform; Fact_BillingDeposit for TP-only. |
-| First trade after FTD (per CID) | **Fact_CustomerAction** | join on RealCID, ActionTypeID windows; or use the bridge `recurring-deposit-to-trade`. |
+| First trade after FTD (per CID) | **Fact_CustomerAction** | join on RealCID, ActionTypeID windows; or use the cross-domain skill `recurring-deposit-to-trade`. |
 | Per-row PIPs / production conversion fee | **DepositWithdrawFee** (`PIPsCalculation` col) | Already plumbed from `Fact_*_State.PIPsInUSD` with sign correction. |
 | 3DS outcome, RiskManagementStatusID drill | **Fact_BillingDeposit** | XML-extracted columns not in BI layer. |
 | Withdraw rollback investigation | **DepositWithdrawFee_Reversals** (UC) for the dim-resolved reversal row; **Fact_Cashout_Rollback** (Synapse-only) for the upstream event | Rollback events × dim-resolved reversal row. From Genie use the `_Reversals` UC table; for upstream provenance run the Synapse query separately. |
@@ -232,9 +232,9 @@ WHERE fds.DepositID = @suspect_deposit_id
 | **Fee revenue / aggregation** | Revenue & Fees super-domain |
 | **Bonuses** | Compensation super-domain *(planned)* |
 | **BackOffice operator action** | Operations super-domain *(planned, Fact_CustomerAction is the audit trail)* |
-| First trade after first deposit | bridge `recurring-deposit-to-trade` |
-| Chargeback case forensics | bridge `refund-chargeback-chain` |
-| Provider statement reconciliation | bridge `provider-reconciliation` |
+| First trade after first deposit | cross-domain skill `recurring-deposit-to-trade` |
+| Chargeback case forensics | cross-domain skill `refund-chargeback-chain` |
+| Provider statement reconciliation | cross-domain skill `provider-reconciliation` |
 
 ## Deep reads (column-level detail)
 

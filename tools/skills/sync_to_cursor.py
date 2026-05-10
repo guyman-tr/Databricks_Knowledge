@@ -7,7 +7,7 @@ Layout in .cursor/skills:
     SKILL.md                                 (= knowledge/skills/_router.md)
     payments/SKILL.md                        (= knowledge/skills/payments/SKILL.md)
     payments/deposits-and-withdrawals.md     (verbatim copy)
-    bridges/<name>.md                        (verbatim copy when written)
+    cross/<name>.md                          (verbatim copy when written)
 
 Files starting with `_` are working artifacts (graphs, briefs, candidates,
 node summaries) and are NOT mirrored.

@@ -1,5 +1,5 @@
 ---
-name: bridge-crypto-to-fiat
+name: cross-crypto-to-fiat
 description: |
   The "crypto came into the wallet, then was converted to EUR/USD on the
   customer's IBAN" off-ramp story. Bridges Payments C.4 (Crypto Wallet) and
@@ -27,11 +27,11 @@ primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
 ---
 
-# Bridge — Crypto-to-Fiat (C2F) End-to-End
+# Cross-domain skill — Crypto-to-Fiat (C2F) End-to-End
 
 The C2F flow is eToro's customer off-ramp: a crypto holding is converted
 to fiat and credited to the customer's eMoney IBAN (or trading-platform
-USD wallet). This bridge stitches the four data sources that each see one
+USD wallet). This cross-domain skill stitches the four data sources that each see one
 piece of the story.
 
 > **Genie / SQL note:** SQL examples below use **Unity Catalog FQNs**.
@@ -157,4 +157,4 @@ UNION ALL SELECT 'tp_credit', * FROM tp_credit
 - "How much C2F volume in Q1?" → MIMO marker alone (C.2 is enough).
 - "Show me crypto holdings of customer X" → C.4 alone.
 - "Show me eMoney transactions of customer X" → C.3 alone.
-- "Trace the full off-ramp chain for customer X over Q1" → load this bridge.
+- "Trace the full off-ramp chain for customer X over Q1" → load this cross-domain skill.

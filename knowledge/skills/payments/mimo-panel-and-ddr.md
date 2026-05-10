@@ -31,8 +31,8 @@ intersects_with:
   - payments/crypto-wallet
   - payments/finance-recon-and-balances
   - revenue-and-fees/SKILL
-  - bridges/recurring-deposit-to-trade
-  - bridges/crypto-to-fiat
+  - cross/recurring-deposit-to-trade
+  - cross/crypto-to-fiat
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
   - main.etoro_kpi_prep.v_mimo_tradingplatform  # VIEW | Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform
@@ -207,7 +207,7 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **Net MIMO (deposit − withdraw)** | `SUM(CASE WHEN MIMOAction='Deposit' THEN AmountUSD ELSE -AmountUSD END)` — withdrawals are positive in this fact, so subtract on aggregation |
 | **Global FTD count per day per platform** | `WHERE IsGlobalFTD=1 AND MIMOAction='Deposit' GROUP BY DateID, MIMOPlatform`. **Cross-platform unique first deposits.** |
 | **Platform FTD count per day** | `WHERE IsPlatformFTD=1 AND MIMOAction='Deposit' GROUP BY DateID, MIMOPlatform`. Different from global — a customer can have eMoney FTD AFTER a TP FTD. |
-| **Crypto-to-fiat deposit volume** | `WHERE IsCryptoToFiat=1 AND MIMOAction='Deposit'`. Dual-source flag (sub-platform + UPDATE). For the full conversion story → bridge `crypto-to-fiat`. |
+| **Crypto-to-fiat deposit volume** | `WHERE IsCryptoToFiat=1 AND MIMOAction='Deposit'`. Dual-source flag (sub-platform + UPDATE). For the full conversion story → cross-domain skill `crypto-to-fiat`. |
 | **Recurring-deposit penetration** | `COUNT(DISTINCT CASE WHEN IsRecurring=1 AND MIMOAction='Deposit' THEN RealCID END) * 1.0 / COUNT(DISTINCT RealCID)` |
 | **IBAN-initiated trades (eMoney quick transfer)** | `WHERE MIMOPlatform='eMoney' AND IsTradeFromIBAN=1`. For the eMoney → trading deposit story specifically. |
 | **Internal transfers (TP↔eMoney) excluded from "real" MIMO** | `AND IsInternalTransfer=0`. Always apply when measuring true money flow. |
@@ -245,9 +245,9 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **On-chain hash / wallet-side crypto transactions** | [`crypto-wallet.md`](crypto-wallet.md) |
 | **Realtime customer balance** (vs the daily snapshot here) | [`finance-recon-and-balances.md`](finance-recon-and-balances.md) |
 | **Fee revenue specifically** | [Revenue & Fees super-domain](../revenue-and-fees/SKILL.md) — MIMO has Amounts but not fee composition. |
-| **Customer's first trade after FTD** | [`../bridges/recurring-deposit-to-trade.md`](../bridges/recurring-deposit-to-trade.md) |
-| **Crypto deposit → fiat conversion chain** | [`../bridges/crypto-to-fiat.md`](../bridges/crypto-to-fiat.md) — `IsCryptoToFiat` flag is here, but the journey is in C.4 + C.3. |
-| **Provider statement reconciliation** | [`../bridges/provider-reconciliation.md`](../bridges/provider-reconciliation.md) |
+| **Customer's first trade after FTD** | [`../cross/recurring-deposit-to-trade.md`](../cross/recurring-deposit-to-trade.md) |
+| **Crypto deposit → fiat conversion chain** | [`../cross/crypto-to-fiat.md`](../cross/crypto-to-fiat.md) — `IsCryptoToFiat` flag is here, but the journey is in C.4 + C.3. |
+| **Provider statement reconciliation** | [`../cross/provider-reconciliation.md`](../cross/provider-reconciliation.md) |
 
 ## Deep reads
 
@@ -271,4 +271,4 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 - KPI view coverage: `v_mimo_*` family + `v_ddr_mimo_*` family (these
   reference cluster 7 tables but conceptually belong here).
 - See [`../_brief_cluster_13.md`](../_brief_cluster_13.md) for full member
-  list and out-cluster bridge candidates.
+  list and out-cluster cross-domain candidates.

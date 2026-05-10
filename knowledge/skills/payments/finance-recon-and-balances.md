@@ -22,7 +22,7 @@ intersects_with:
   - payments/emoney-accounts-and-cards
   - payments/crypto-wallet
   - revenue-and-fees/SKILL
-  - bridges/provider-reconciliation
+  - cross/provider-reconciliation
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew  # Synapse: EXW_dbo.EXW_FinanceReportsBalancesNew | Tier 0 — canonical balance
   - main.etoro_kpi_prep.v_population_funded  # VIEW | Synapse: etoro_kpi_prep.v_population_funded | Tier 1 — population segmentation
@@ -120,7 +120,7 @@ graph TB
         Aml["EXW_AML_Users_Report<br/>(_Not_Migrated)"]
     end
 
-    subgraph Behav["Behavior bridge (TP-side)"]
+    subgraph Behav["Behavior link (TP-side)"]
         FCAm[de_output.de_output_etoro_kpi_fact_customeraction_w_metrics]
     end
 
@@ -276,9 +276,9 @@ ORDER BY frb.ReportDate
 | Per-platform balance breakdown (crypto inventory) | [`crypto-wallet.md`](crypto-wallet.md) (`EXW_WalletInventory`) |
 | Customer realizable equity from open positions | A. Trading & Markets (`V_Liabilities`, `Dim_Position`) |
 | Net MIMO that drove this balance | [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) (C.2) |
-| Provider statement vs internal recon | [`../bridges/provider-reconciliation.md`](../bridges/provider-reconciliation.md) |
+| Provider statement vs internal recon | [`../cross/provider-reconciliation.md`](../cross/provider-reconciliation.md) |
 | **Revenue per CID per period** | Revenue & Fees super-domain (`mv_revenue_trading`, `BI_DB_DDR_Fact_Revenue_Generating_Actions`) |
-| AML investigation case detail | D. Compliance & AML; for eMoney audit trail use [`../bridges/tribe-emoney-audit.md`](../bridges/tribe-emoney-audit.md) |
+| AML investigation case detail | D. Compliance & AML; for eMoney audit trail use [`../cross/tribe-emoney-audit.md`](../cross/tribe-emoney-audit.md) |
 
 ## Deep reads (column-level detail)
 
@@ -292,5 +292,5 @@ ORDER BY frb.ReportDate
 - Schema mix: `etoro_kpi_prep:12, bi_output:5, bi_output_stg:3, EXW_dbo:2, finance:1, general:3, others`.
 - Edge sources: `wiki:15, genie:45, kpi_prep:30` — **HEAVILY Genie-curated** (the highest Genie:wiki ratio in Payments).
 - Genie space: **`ido ezra space` covers 9/10 of the cluster's tables** — the Finance team's curated query workspace.
-- Top out-cluster bridges: `Dim_Customer` (7.0), `Dim_Position` (5.0), `Dim_Mirror` (4.0), `mv_revenue_trading` (2.0 → Revenue & Fees), `eMoneyClientBalance` (2.0 → C.3), `BI_DB_Client_Balance_CID_Level_New` (3.0).
+- Top out-cluster cross-domain edges: `Dim_Customer` (7.0), `Dim_Position` (5.0), `Dim_Mirror` (4.0), `mv_revenue_trading` (2.0 → Revenue & Fees), `eMoneyClientBalance` (2.0 → C.3), `BI_DB_Client_Balance_CID_Level_New` (3.0).
 - See [`../_brief_cluster_47.md`](../_brief_cluster_47.md) for full member list.

@@ -18,7 +18,7 @@ priority: always_load
 You have access to a tightly curated semantic skill library covering eToro's
 DWH (Synapse), Unity Catalog mirrors, and production OLTP databases. **Load
 the most specific skill first**; only load a second skill if the question
-truly spans two domains (use a `bridges/*` skill in that case).
+truly spans two domains (use a `cross/*` skill in that case).
 
 ## Genie / Databricks SQL — read this first
 
@@ -55,12 +55,12 @@ for cross-reference with Synapse wikis only.
    "customer", "balance", "FTD funnel").
 2. Match against the **Anchor objects** column below. The first match wins.
 3. If the question mentions two distinct nouns from different rows (e.g.
-   "deposits that turned into trades within 7 days"), check the **Bridges**
+   "deposits that turned into trades within 7 days"), check the **Cross-domain skills**
    table for a dedicated cross-domain skill.
 4. Read that skill's `SKILL.md` (and its sub-skill if there is one).
 5. Only deep-read the wiki pages it links to if the skill itself isn't enough.
 
-**Hard rule**: never load more than one anchor skill plus one bridge skill at
+**Hard rule**: never load more than one anchor skill plus one cross-domain skill at
 once. If you need a third, the question is asking for an executive summary —
 answer with a short narrative and offer to drill into one domain at the user's
 choice.
@@ -87,18 +87,18 @@ These are regular-sized domains, not super-domains. They have their own skills (
 | I | _(planned)_ **compensation** | regular domain — bonuses live here | _TBD — bonus tables_ | Question mentions: deposit bonus, refer-a-friend bonus, club bonus, marketing campaign bonus, club perk, customer pay-out, club status reward. **Sub-domain: bonuses.** Compensation is NOT a super-domain. |
 | J | _(planned, deferred)_ **operations / back-office** | likely too sprawled to be a super-domain — DWH coverage is thin (data lives in `Trading.*`, `Billing.*`, `UserAPIDB.*`, `Settings.*`). For now treat as regular domain anchored on `Fact_CustomerAction` for the audit-trail piece. | `Fact_CustomerAction`, BackOffice operator-action tables | Question mentions: BackOffice manual operation, operator action, manual deposit, operator refund, customer action audit, ActionTypeID, SessionID. |
 
-## Bridges
+## Cross-domain skills
 
-When a question crosses two super-domains, prefer a bridge skill over loading
+When a question crosses two super-domains, prefer a cross-domain skill over loading
 both anchor skills.
 
-| Bridge | Connects | When to load |
+| Cross-domain | Connects | When to load |
 |--------|----------|--------------|
-| [`bridges/crypto-to-fiat.md`](bridges/crypto-to-fiat.md) | C.4 Crypto Wallet ↔ C.3 eMoney IBAN | Question mentions C2F, fiat conversion, wallet-to-IBAN, `EXW_C2F_E2E`, off-ramp. **The bridge owns the E2E underbelly map** — C.4 stops at "crypto sent off-platform"; the full chain stitching lives here. |
-| [`bridges/recurring-deposit-to-trade.md`](bridges/recurring-deposit-to-trade.md) | C.1 Deposits ↔ A. Trading | Question mentions deposit-to-trade conversion, FTD-to-first-position, recurring deposit driving trades, deposit cadence funnel. Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
-| [`bridges/provider-reconciliation.md`](bridges/provider-reconciliation.md) | C.1/C.5 ↔ external providers | Question mentions Worldpay, SafeCharge, Nuvei, MID-level recon, provider settlement, `ExternalTransactionID` matching, provider statement vs DWH. |
-| [`bridges/refund-chargeback-chain.md`](bridges/refund-chargeback-chain.md) | C.1 Deposits ↔ D. Compliance | Question mentions chargeback investigation, refund AML flag, dispute chain, `BI_DB_DepositWithdrawFee_Reversals` lifecycle. |
-| [`bridges/tribe-emoney-audit.md`](bridges/tribe-emoney-audit.md) | D. Compliance ↔ C.3 eMoney | Question mentions Tribe, FiatDwhDB, Treezor audit envelopes, `eMoney_Tribe.*`, `bronze_fiatdwhdb_tribe_*`, SOC2 audit trail, "who authorized this", operator-action forensics on eMoney accounts/cards/IBAN. **Bridge supplies the audit-trail map**; C.3 supplies the join keys (`AccountID`, `GCID`, `CardID`, `TransactionID`). |
+| [`cross/crypto-to-fiat.md`](cross/crypto-to-fiat.md) | C.4 Crypto Wallet ↔ C.3 eMoney IBAN | Question mentions C2F, fiat conversion, wallet-to-IBAN, `EXW_C2F_E2E`, off-ramp. **The cross-domain skill owns the E2E underbelly map** — C.4 stops at "crypto sent off-platform"; the full chain stitching lives here. |
+| [`cross/recurring-deposit-to-trade.md`](cross/recurring-deposit-to-trade.md) | C.1 Deposits ↔ A. Trading | Question mentions deposit-to-trade conversion, FTD-to-first-position, recurring deposit driving trades, deposit cadence funnel. Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
+| [`cross/provider-reconciliation.md`](cross/provider-reconciliation.md) | C.1/C.5 ↔ external providers | Question mentions Worldpay, SafeCharge, Nuvei, MID-level recon, provider settlement, `ExternalTransactionID` matching, provider statement vs DWH. |
+| [`cross/refund-chargeback-chain.md`](cross/refund-chargeback-chain.md) | C.1 Deposits ↔ D. Compliance | Question mentions chargeback investigation, refund AML flag, dispute chain, `BI_DB_DepositWithdrawFee_Reversals` lifecycle. |
+| [`cross/tribe-emoney-audit.md`](cross/tribe-emoney-audit.md) | D. Compliance ↔ C.3 eMoney | Question mentions Tribe, FiatDwhDB, Treezor audit envelopes, `eMoney_Tribe.*`, `bronze_fiatdwhdb_tribe_*`, SOC2 audit trail, "who authorized this", operator-action forensics on eMoney accounts/cards/IBAN. **Cross-domain skill supplies the audit-trail map**; C.3 supplies the join keys (`AccountID`, `GCID`, `CardID`, `TransactionID`). |
 
 ## Tie-breakers (disambiguation)
 
@@ -109,22 +109,22 @@ both anchor skills.
 | "deposit" / "withdrawal" + trading platform | [`payments/deposits-and-withdrawals.md`](payments/deposits-and-withdrawals.md) (C.1) | Trading-platform fiat deposits live in `Fact_BillingDeposit/Withdraw`. |
 | "deposit" + "eMoney" or "IBAN" or "card" | [`payments/emoney-accounts-and-cards.md`](payments/emoney-accounts-and-cards.md) (C.3) | eMoney deposits use `eMoney_Dim_Transaction`, NOT `Fact_BillingDeposit`. |
 | "deposit" + "crypto" or "wallet" or "on-chain" | [`payments/crypto-wallet.md`](payments/crypto-wallet.md) (C.4) | Crypto deposits live in EXW_Wallet, not fiat billing tables. |
-| "recurring deposit" → trade | [`bridges/recurring-deposit-to-trade.md`](bridges/recurring-deposit-to-trade.md) | Bridge across C.1 and A. |
+| "recurring deposit" → trade | [`cross/recurring-deposit-to-trade.md`](cross/recurring-deposit-to-trade.md) | Cross-domain skill across C.1 and A. |
 | "balance" of a customer alone | [`payments/finance-recon-and-balances.md`](payments/finance-recon-and-balances.md) (C.5) | Authoritative customer balances live in `EXW_FinanceReportsBalancesNew`. |
 | "balance" + "open positions equity" or "realizable equity" | A. Trading (`V_Liabilities`) | Realizable equity from positions is a trading view. |
 | **ANY fee question** (deposit fee / withdraw fee / cashout / transfercoin / FX / exchange / commission / rollover / dividend / staking / spaceship / moneyfarm / SDRT / share lending / dormant / ticket / admin / spot adjust / interest / Apex / LP / affiliate) | [`revenue-and-fees/SKILL.md`](revenue-and-fees/SKILL.md) (H) | All fee revenue lives in H, not Payments. |
 | "MID routing" / "which MID handled this deposit" / "pipscalculation" | [`payments/deposits-and-withdrawals.md`](payments/deposits-and-withdrawals.md) (C.1) | MID routing and production pipscalculation enrichment live in `Fact_Deposit_State` / `Fact_Cashout_State`. |
 | "true historical state" / "every state transition this deposit went through" | bronze `history.billing.deposit` / `history.billing.withdraw` | Note in C.1: rarely needed for analytical work. |
-| "chargeback" investigation / "AML refund" | [`bridges/refund-chargeback-chain.md`](bridges/refund-chargeback-chain.md) | Crosses C.1 + H + Compliance. |
-| "C2F" or "fiat conversion" or "wallet → IBAN" | [`bridges/crypto-to-fiat.md`](bridges/crypto-to-fiat.md) | Crosses C.4 + C.3. |
+| "chargeback" investigation / "AML refund" | [`cross/refund-chargeback-chain.md`](cross/refund-chargeback-chain.md) | Crosses C.1 + H + Compliance. |
+| "C2F" or "fiat conversion" or "wallet → IBAN" | [`cross/crypto-to-fiat.md`](cross/crypto-to-fiat.md) | Crosses C.4 + C.3. |
 | "broker recon" / "IG EOD" / "Saxo holdings" / "Duco" | A. Trading & Markets (`dealing_dbo`) | Broker recon is position-truth, NOT payment-truth. Lives in `Dealing_*` / `dealing_dbo`. |
 | **"which broker" / "LP identity" / "hedge mapping" / "which liquidity provider"** | A. Trading & Markets (`dealing_dbo`) | Broker / LP master lives in `dealing_dbo` (hedge server + LP IDs), NOT in any payments-side table. Payment-side `BankName` / `MID` / `PaymentProviderName` are PSP identities, not broker identities — do not conflate. |
 | **"Apex" or "Gatsby" or "Options"** | H. Revenue & Fees (`v_revenue_optionsplatform`) for fees / **C.5 finance-recon-and-balances** for Apex SOD recon / **A. Trading** for US-resident equity trading | **Gatsby = product brand (acquired); Apex = the broker (= USABroker).** Lake only has Apex SFTP reports. Apex also clears US-resident customer equities, but those land in REGULAR trading tables — there is no "Apex silo" for US equities. Three roles, one broker; route by what's actually being asked. |
 | **"Spaceship" / "MoneyFarm" / "WealthFrance" / regional acquired product** | H. Revenue & Fees + the relevant `_domain_card.md` | **Spaceship = Australian** (Voyager/Nova/Super product lines); **MoneyFarm = UK**; **WealthFrance = French (not yet ingested)**. Always read the `knowledge/uc_domains/<product>/_domain_card.md` first — heavy lifting is done there. **Do not pattern-match on table names or assume geography.** |
-| "Tribe" / "SOC2 audit trail" / "eMoney audit log" / "who-did-what-when on eMoney" / "FiatDwhDB" / "Treezor" | [`bridges/tribe-emoney-audit.md`](bridges/tribe-emoney-audit.md) | Tribe is Treezor's XML audit envelope feed; FiatDwhDB is Treezor's operational fiat mirror. **Bridge owns the map**; C.3 supplies the join keys. Compliance super-domain (D) owns the interpretation rules when built. |
+| "Tribe" / "SOC2 audit trail" / "eMoney audit log" / "who-did-what-when on eMoney" / "FiatDwhDB" / "Treezor" | [`cross/tribe-emoney-audit.md`](cross/tribe-emoney-audit.md) | Tribe is Treezor's XML audit envelope feed; FiatDwhDB is Treezor's operational fiat mirror. **Cross-domain skill owns the map**; C.3 supplies the join keys. Compliance super-domain (D) owns the interpretation rules when built. |
 | "bonus" / "deposit bonus" / "refer-a-friend" / "club perk" | I. Compensation _(planned)_ | Bonuses are pay-OUT, not payments. Different domain. |
 | "BackOffice manual deposit" / "operator action" / "manual refund by ops" | J. Operations _(planned)_ | `Fact_CustomerAction` — operator audit trail, not payment movement. |
-| "MIMO" + per-MID / per-provider drill-down | [`bridges/provider-reconciliation.md`](bridges/provider-reconciliation.md) | C.2 doesn't carry MID; need C.1 raw + provider statement. |
+| "MIMO" + per-MID / per-provider drill-down | [`cross/provider-reconciliation.md`](cross/provider-reconciliation.md) | C.2 doesn't carry MID; need C.1 raw + provider statement. |
 
 ## What this router is NOT
 
