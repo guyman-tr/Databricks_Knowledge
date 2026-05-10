@@ -51,7 +51,7 @@ last_updated: "2026-05-07"
 | [BI_DB_dbo.BI_DB_CIDFirstDates](Tables/BI_DB_CIDFirstDates.md)                                                               | Deployed (Batch 10) — 2026-05-05|
 | [BI_DB_dbo.BI_DB_CIDLevel_Settlement_Report](Tables/BI_DB_CIDLevel_Settlement_Report.md)                                     | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New](Tables/BI_DB_Client_Balance_Aggregate_Level_New.md)                     | Deployed (Batch 1) — 2026-03-30|
-| [BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New](Tables/BI_DB_Client_Balance_CID_Level_New.md)                                 | Deployed (Batch 1) — 2026-03-30|
+| [BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New](Tables/BI_DB_Client_Balance_CID_Level_New.md)                                 | Deployed (Batch 1) — 2026-03-30; hot-fix 2026-05-10 — RealizedEquity comment corrected (was: Confluence "Unrealized Equity" misattribution from Fact_SnapshotEquity wiki); 4 UC cols re-applied (`...client_balance_cid_level_new.realizedEquity`, `...ddr_fact_aum.RealizedEquityGlobal/TP`, `...v_fact_snapshotequity_fromdateid.RealizedEquity`)|
 | [BI_DB_dbo.BI_DB_Client_New_CompensationBreakdown](Tables/BI_DB_Client_New_CompensationBreakdown.md)                         | Deployed (Batch 1) — 2026-03-30|
 | [BI_DB_dbo.BI_DB_ClubChangeLogProduct](Tables/BI_DB_ClubChangeLogProduct.md) | Deployed (Batch 9) — 2026-05-03|
 | [BI_DB_dbo.BI_DB_Compliance_Illegal_Trades_Alerts](Tables/BI_DB_Compliance_Illegal_Trades_Alerts.md) | Deployed (Batch 9) — 2026-05-03|
