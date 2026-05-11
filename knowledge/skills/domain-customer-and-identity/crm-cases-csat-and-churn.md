@@ -1,234 +1,475 @@
 ---
-name: customer-and-identity-crm-cases-csat-and-churn
-description: |
-  CRM Salesforce cases, customer satisfaction (CSAT) surveys, quality
-  assessments, and the churn-winback campaign machinery. Anchored on
-  vg_crm_case (cluster 19 hub) plus clusters 36 (CSAT survey + quality
-  assessment per case) and 48 (churn-winback summary + recent targets).
-  Three Genie spaces sit on this stack: DEV/Customer Support Case
-  Analytics (5/5), Customer Satisfaction Surveys (5/5), Churn Win-Back
-  Campaign (3/4), plus the T3 Hackathon space (4/4).
-
-  Use this skill when the question concerns:
-  - "How many support cases for customer X this year?"
-  - "Average CSAT score by region / language / product line"
-  - "Quality assessment scores per case agent"
-  - "Customers targeted by the latest churn-winback campaign"
-  - "Reply chains on a Salesforce case"
-  - "CRM agent-to-customer mapping"
-
-  KYC-survey-via-V_CustomerAnswers ALSO sits in cluster 19 — that is the
-  customer-onboarding answer record (separate from CRM cases). Document
-  both here for keyword coverage; route based on intent.
-keywords: [vg_crm_case, CRM case, Salesforce case, customer support,
-           support case, case agent, case lifecycle, CSAT,
-           customer satisfaction, satisfaction survey,
-           crm_csat_survey_per_case_v, quality assessment,
-           crm_quality_assessment_per_case_v, crm_user_v, CRM agent,
-           Salesforce reply, churn, winback, churn winback,
-           churn_winback_summary, churn_winback_recent_targets,
-           gold_crm_salesforcetobomanagermapping, V_CustomerAnswers,
-           UserApiDB V_CustomerAnswers, KYC questionnaire,
-           Customer Support Case Analytics, Customer Satisfaction Surveys,
-           T3 Hackathon, customer voice, agent quality, NPS]
-load_after: [_router.md, domain-customer-and-identity/SKILL.md]
-intersects_with:
-  - domain-customer-and-identity/customer-master-record
-  - domain-customer-and-identity/customer-action-audit-trail
-  - domain-customer-and-identity/oltp-customer-static-and-breaches
-  - domain-customer-and-identity/customer-models-and-segmentation
-primary_objects:
-  - main.etoro_kpi.vg_crm_case  # cluster 19 hub
-  - main.etoro_kpi.cidfirstdates_v  # cluster 19 member; also referenced from B.2
-  - main.etoro_kpi_stg.crm_csat_survey_per_case_v  # cluster 36 — CSAT survey scoring per case
-  - main.etoro_kpi_stg.crm_quality_assessment_per_case_v  # cluster 36 — agent QA score per case
-  - main.etoro_kpi_stg.crm_user_v  # cluster 36 — CRM user dimension (agents)
-  - main.bi_output_stg.churn_winback_summary  # cluster 48 — churn-winback campaign summary
-  - main.bi_output_stg.churn_winback_recent_targets  # cluster 48 — recent campaign target list
-  - main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked  # Synapse: BI_DB_dbo.UserApiDB_dbo_V_CustomerAnswers (KYC questionnaire answers, masked)
-synapse_only_objects:
-  - BI_DB_dbo.UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel  # not in UC; Synapse-only KYC range panel
-  - dbo.V_CustomerAnswers  # production OLTP source view
-  - CRM Salesforce reply / mapping tables (gold_crm_salesforcetobomanagermapping etc.) — partially in UC, partially still Synapse; check the wiki
-referenced_workspace_skills:
-  - /Workspace/.assistant/skills/customer-populations  # for "how many customers churned" -> use population skill, NOT churn_winback (which is campaign target list, different thing)
+id: crm-cases-csat-and-churn
+name: "CRM Cases, CSAT, QA & Churn-Winback"
+description: "CRM Salesforce cases, CSAT survey scores, agent quality assessments, KYC questionnaire answers, and the churn-winback targeting model. Anchored on vg_crm_case (etoro_kpi, 110 cols, ~8.9M cases all-time on ~3.2M CIDs, since 2014, CID is STRING). Adjacent staging-tier views in etoro_kpi_stg: crm_csat_survey_per_case_v (4 cols, Salesforce-flavoured names with simplesurvey__Case__c FK and simplesurvey__Survey_Score__c metric), crm_quality_assessment_per_case_v (8 cols, every metric col uses Salesforce __c suffix — Case__c / Survey__c / Agent_Under_Assessment__c / Quality_Score__c DOUBLE / Compliance_a__c / Type_of_Communication__c / Team__c / CreatedDate), crm_user_v (22 cols, agent + manager + RM hierarchy with FullName / Department / Team / IsActive). Churn-winback (bi_output_stg): churn_winback_summary (8 cols per CID — segment, age, country, reason_for_churn_prediction, suggested_winback_text, expected_ltv, budget_to_winback) and churn_winback_recent_targets (12 cols, adds winback_score, pct_deposits_withdrawn, recent_withdrawal_usd, incentive_type). These are the targeting / scoring output of a predictive churn model — NOT a churn-population definition. Salesforce reply chain mirror lives at bi_output.bi_output_customer_customer_support_salesforce_reply (9 cols at the parent ticket grain). SF-to-BO manager mapping at crm.gold_crm_salesforcetobomanagermapping. KYC questionnaire raw answers across 5 UC locations: bi_db.bronze_userapidb_dbo_v_customeranswers (14 cols, GCID-keyed — NOT RealCID), _masked variant, bi_db.bronze_userapidb_asic_customeranswers (ASIC region 8 cols), compliance.bronze_userapidb_kyc_customeranswers, compliance.bronze_userapidb_history_customeranswers."
+triggers:
+  - vg_crm_case
+  - CRM case
+  - Salesforce case
+  - customer support case
+  - support ticket
+  - case ledger
+  - case status
+  - case category
+  - IsSolved
+  - IsClosedOnCreate
+  - IsReOpened
+  - IsOfficialComplaint
+  - IsEscalated
+  - IsDeflected
+  - IsDeEscalated
+  - TouchCount
+  - TimeToFirstResponse
+  - TotalTimeToResolve
+  - GoodwillGesture
+  - TechnicalRefund
+  - JiraID
+  - QCSurvey
+  - CaseSkillSet
+  - crm_csat_survey_per_case_v
+  - CSAT
+  - simplesurvey
+  - Survey_Score
+  - Customer Satisfaction
+  - cSAT_Date
+  - crm_quality_assessment_per_case_v
+  - QA
+  - Quality Score
+  - Agent_Under_Assessment
+  - Type_of_Communication
+  - Compliance_a
+  - crm_user_v
+  - CRM agent
+  - CRM user
+  - BO_User_ID
+  - Manager hierarchy
+  - RM_UserId
+  - SalesforceToBoManagerMapping
+  - SFManagerID
+  - bi_output_customer_customer_support_salesforce_reply
+  - DaysToReplyEmail
+  - LastRepliedDate
+  - churn_winback_summary
+  - churn_winback_recent_targets
+  - churn winback
+  - winback campaign
+  - winback_score
+  - expected_ltv
+  - budget_to_winback
+  - reason_for_churn_prediction
+  - suggested_winback_text
+  - incentive_type
+  - pct_deposits_withdrawn
+  - V_CustomerAnswers
+  - bronze_userapidb_dbo_v_customeranswers
+  - bronze_userapidb_dbo_v_customeranswers_masked
+  - bronze_userapidb_asic_customeranswers
+  - bronze_userapidb_kyc_customeranswers
+  - bronze_userapidb_history_customeranswers
+  - KYC questionnaire
+  - KYC answers
+  - QuestionText
+  - AnswerText
+  - MinThreshold
+  - MaxThreshold
+  - MultipleSelection
+  - FreeText
+  - DEV Customer Support Case Analytics Genie
+  - Customer Satisfaction Surveys Genie
+  - Churn Win-Back Campaign Genie
+  - T3 Hackathon Genie
+required_tables:
+  - main.etoro_kpi.vg_crm_case
+  - main.etoro_kpi_stg.crm_csat_survey_per_case_v
+  - main.etoro_kpi_stg.crm_quality_assessment_per_case_v
+  - main.etoro_kpi_stg.crm_user_v
+  - main.bi_output_stg.churn_winback_summary
+  - main.bi_output_stg.churn_winback_recent_targets
+  - main.bi_output.bi_output_customer_customer_support_salesforce_reply
+  - main.crm.gold_crm_salesforcetobomanagermapping
+  - main.bi_db.bronze_userapidb_dbo_v_customeranswers
+  - main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked
+  - main.bi_db.bronze_userapidb_asic_customeranswers
+  - main.compliance.bronze_userapidb_kyc_customeranswers
+  - main.compliance.bronze_userapidb_history_customeranswers
+sample_questions:
+  - "How many support cases did this customer open this year? Latest status?"
+  - "Average CSAT score per agent (and team) over the last 90 days"
+  - "Agent quality scores for a CID's cases — who handled them?"
+  - "Cases with a JiraID — escalations to engineering"
+  - "Cases reopened more than once for the same CID"
+  - "First response time and total resolution time by case category / product"
+  - "Customers on the latest churn-winback target list with their expected LTV"
+  - "What KYC questions did this customer answer? With free-text?"
+  - "Map a Salesforce manager ID (SFManagerID) to the eToro BO Manager ID"
+  - "Salesforce reply chain length / days-to-reply for a ticket"
+  - "Cases marked IsOfficialComplaint=TRUE in the last quarter, by Regulation"
+domain_tags:
+  - crm
+  - customer
+  - support
+  - cases
+  - csat
+  - quality
+  - agent
+  - churn
+  - winback
+  - kyc
+  - salesforce
+version: 2
+owner: "dataplatform"
+last_validated_at: "2026-05-11"
 ---
 
-# B.6 — CRM Cases, CSAT & Churn-Winback
+# B.6 — CRM Cases, CSAT, QA & Churn-Winback
 
-A small, three-cluster slice of the super-domain (~16 nodes total) but
-with **outsized Genie usage** — four Genie spaces consume these tables.
-Treat as one logical sub-skill because the use-cases overlap (a
-support case → CSAT score → quality assessment → churn-winback target)
-even though the join graph splits them.
+The CRM working set: Salesforce-source case ledger + per-case CSAT
+survey + per-case agent quality assessment + agent / manager hierarchy +
+KYC questionnaire raw answers + churn-winback prediction & target list.
+Four Genie spaces consume this stack: PROD-Customer Support Case
+Analytics (and a DEV variant), Customer Satisfaction Surveys, Churn
+Win-Back Campaign, and the T3 Hackathon space.
+
+**Side classification:** broker-side customer-facing Salesforce
+operational layer + predictive-model targeting output (churn-winback).
+
+## When to Use
+
+Use this skill when the question is about:
+
+- A Salesforce case (status, owner, category, escalation, resolution
+  time, complaint flag, reopen, deflection) → `vg_crm_case`.
+- Survey-based CSAT scoring per case (Salesforce-style column names) →
+  `crm_csat_survey_per_case_v`.
+- Internal agent QA scoring per case → `crm_quality_assessment_per_case_v`.
+- CRM agent / manager / RM hierarchy → `crm_user_v`.
+- The Salesforce reply-chain mirror (ticket reply timing) →
+  `bi_output_customer_customer_support_salesforce_reply`.
+- Mapping a Salesforce-system manager id back to the BackOffice
+  ManagerID (numeric) → `gold_crm_salesforcetobomanagermapping`.
+- KYC-questionnaire answers (raw OLTP → bronzed UC): 5 variants —
+  general, ASIC, KYC, history, masked.
+- Churn-winback targeting (which CIDs are predicted to churn and what
+  the targeting model recommends) → `churn_winback_summary` /
+  `churn_winback_recent_targets`.
+
+Do **NOT** use this skill for:
+
+- KYC verdict / decision (the answer to the questionnaire is here; the
+  verdict is `kyc_for_compliance_v` in B.5).
+- "How many customers churned?" or "show me the dormant cohort" — those
+  are population questions; use the `customer-populations` DE workspace
+  skill. `churn_winback_*` is **predictive-model output**, not the
+  authoritative churn definition.
+- BackOffice operator actions on the account (not a Salesforce ticket)
+  → that's `Fact_CustomerAction` (B.4).
+- Customer-master attributes (Region / Country / Regulation / Club tier)
+  → that's `Dim_Customer` (B.1) or `customer_snapshot_v` (B.5).
+
+## Scope
+
+In scope: 110-col `vg_crm_case` ledger (all status / owner / channel /
+category / metric columns), the staging-tier CSAT + QA + user views (and
+their Salesforce-flavoured column names — `__c` suffixes,
+`simplesurvey__*` prefixes, `cSAT_Date` lower-case S), the
+`crm_user_v` 22-col hierarchy with Manager / RM denormalization, the
+churn-winback model output (predictive scores + suggested winback
+copy + budget + incentive type — NOT a campaign-execution table),
+the SF-reply mirror, the SF→BO manager mapping, and all five UC-resident
+`*customeranswers*` variants.
+
+Out of scope: a separate compliance KYC verdict view (B.5
+`kyc_for_compliance_v`), a population-shape churn metric (DE workspace
+`customer-populations`), operator-driven account events (B.4
+`Fact_CustomerAction`).
+
+Last verified: 2026-05-11
 
 ## Mental model
 
 ```mermaid
 graph TB
-    subgraph Cases [Cluster 19 — CRM cases + KYC questionnaire]
-      Case["vg_crm_case<br/>cluster 19 hub<br/>Salesforce case ledger"]
-      FD["cidfirstdates_v<br/>(also in B.2)<br/>milestone joins"]
-      KYCAnswers["V_CustomerAnswers<br/>UC: bi_db.bronze_userapidb_dbo_v_customeranswers_masked<br/>KYC questionnaire raw"]
-    end
-
-    subgraph CSAT [Cluster 36 — CSAT + agent quality]
-      Csat["crm_csat_survey_per_case_v"]
-      QA["crm_quality_assessment_per_case_v"]
-      Agent["crm_user_v<br/>CRM agent dimension"]
-      Csat --> QA
-      QA --> Agent
-    end
-
-    subgraph Churn [Cluster 48 — churn-winback campaign]
-      Sum["churn_winback_summary"]
-      Tgt["churn_winback_recent_targets"]
-      Sum --> Tgt
-    end
+    Case["vg_crm_case<br/>etoro_kpi, 110 cols, ~8.9M cases since 2014<br/>CID STRING, CaseID STRING"]
+    Csat["crm_csat_survey_per_case_v<br/>4 cols, SF-flavoured names<br/>(simplesurvey__Case__c, simplesurvey__Survey_Score__c)"]
+    QA["crm_quality_assessment_per_case_v<br/>8 cols, __c suffixed<br/>(Case__c, Quality_Score__c DOUBLE, Compliance_a__c)"]
+    User["crm_user_v<br/>22 cols, agent + manager + RM hierarchy"]
+    Reply["bi_output_customer_customer_support_salesforce_reply<br/>9 cols ParentId-keyed"]
+    Map["crm.gold_crm_salesforcetobomanagermapping<br/>SFManagerID -> BackOffice ManagerID (INT)"]
 
     Case --> Csat
     Case --> QA
-    Case --> Agent
-    Case --> Tgt
+    QA --> User
+    Case --> User
+    Case --> Reply
+
+    subgraph KYC [KYC answers - 5 UC variants]
+      direction LR
+      Dbo["bi_db.bronze_userapidb_dbo_v_customeranswers<br/>(14 cols, GCID-keyed)"]
+      Masked["..._masked (same 14 cols)"]
+      ASIC["bi_db.bronze_userapidb_asic_customeranswers<br/>(8 cols, ASIC region)"]
+      KYCv["compliance.bronze_userapidb_kyc_customeranswers<br/>(8 cols)"]
+      Hist["compliance.bronze_userapidb_history_customeranswers<br/>(10 cols + OccurredAt_InSource)"]
+    end
+
+    Sum["churn_winback_summary<br/>per-CID predictive output<br/>+ expected_ltv + budget"]
+    Tgt["churn_winback_recent_targets<br/>per-CID actionable target list<br/>+ winback_score + incentive_type"]
+    Sum -.-> Tgt
 ```
 
-## CRM cases — `vg_crm_case`
+## Critical warnings (read before writing any SQL)
 
-**UC:** `main.etoro_kpi.vg_crm_case`
+1. **`vg_crm_case` column names DO NOT match the v1 guess.** Correct:
+   `CaseID (STRING)`, `CID (STRING — not INT, not RealCID)`,
+   `CaseNumber (STRING)`, `Status (NOT CaseStatus)`, `Origin (NOT
+   CaseChannel)`, `Subject (NOT CaseSubject)`, `Category (NOT
+   CaseCategory)`, `CaseType / SubType / SubType2 (NOT CaseSubcategory)`,
+   `OwnerId (NOT CaseOwner — STRING reference to crm_user_v.UserId)`,
+   `IsSolved (BOOLEAN, NOT IsResolved)`, `TotalTimeToResolve (NOT
+   ResolutionTime)`, `TimeToFirstResponse`,
+   `ResolutionTimeFromFirstResponse`. There is **no** `CaseDescription`,
+   `Severity`, `CaseChannel` field.
+2. **`Status` enum** (observed values): `Closed, Solved, Pending,
+   On-hold, In Routing, Open, Rejected, New, Approved, Verification,
+   On it, Messaging Session Routing`. `Closed` and `Solved` together
+   account for the bulk of recent cases. Use `IsSolved (BOOLEAN)` to
+   filter "resolved" cases generically; use `IsClosedOnCreate` for the
+   instant-deflect bucket.
+3. **`vg_crm_case` carries deep escalation + complaint + reopen
+   metadata.** Key flags: `IsOfficialComplaint`, `IsReOpened`,
+   `IsEscalated`, `EscalationStatus`, `IsDeEscalated`, `IsDeflected`,
+   `EscalatedBy`, `EscalationDate`, `FinalEscalationResponseDate`,
+   `Phase`, `OwnerSubRole`, `CS_OPS`. Linkage to other domains:
+   `WithdrawalID`, `DepositID`, `PositionID`, `MirrorID`, `JiraID`,
+   `EventID`. Money-impact: `GoodwillGesture` (DECIMAL),
+   `TechnicalRefund` (DECIMAL). Note: `SolvedDate` is **STRING** (not
+   TIMESTAMP — beware when comparing dates).
+4. **CSAT view has 4 cols only, all Salesforce-style.** Real:
+   `Id (STRING)`, `cSAT_Date (TIMESTAMP — lower-case 'c')`,
+   `simplesurvey__Case__c (STRING — FK to vg_crm_case.CaseID)`,
+   `simplesurvey__Survey_Score__c (DECIMAL — typically 1-5)`. **No**
+   `CaseID / CSATScore / NPSScore / SurveyDate / free-text feedback`.
+   Backtick the `simplesurvey__*` columns in Spark SQL since they
+   contain double underscores that some parsers handle awkwardly:
+   ` `simplesurvey__Survey_Score__c` `.
+5. **QA view has 8 cols, every metric col uses Salesforce `__c`
+   suffix.** Real: `Case__c (STRING — FK to vg_crm_case.CaseID)`,
+   `Survey__c`, `Agent_Under_Assessment__c (STRING — FK to crm_user_v
+   .UserId)`, `Quality_Score__c (DOUBLE)`, `Compliance_a__c (DECIMAL)`,
+   `Type_of_Communication__c`, `Team__c`, `CreatedDate (TIMESTAMP)`.
+   **No** `QAReviewerID / QAScore / QACategoryScores / QAReviewDate`.
+6. **`crm_user_v` agent dim has 22 cols and `FullName` not
+   `AgentName`.** It also denormalizes a **manager and RM hierarchy**:
+   `UserId (STRING — PK)`, `BO_User_ID (STRING — BackOffice agent
+   numeric-as-string)`, `FullName`, `Department`, `Title`, `Position`,
+   `Desk`, `Team`, `IsActive (BOOLEAN)`, `ManagerId`, plus
+   `Manager_BO_User_ID / FullName / Department / Title / Position /
+   Desk / Team / IsActive`, plus `RM_UserId / RM_FullName`,
+   `TimeZoneSidKeys`. There is **no** `Tier` column.
+7. **Salesforce-to-BO-manager mapping is keyed by `SFManagerID`
+   (STRING) → `ManagerID` (INT).** Use this to bridge from the
+   Salesforce side back to the analytic BackOffice manager id used by
+   `Dim_Customer.ManagerID`.
+8. **`churn_winback_*` are predictive-model OUTPUT, not campaign-history
+   tables.** `churn_winback_summary` (8 cols per CID): `CID,
+   segment_name, age (STRING — usually a bucket like "25-34"),
+   country, reason_for_churn_prediction, suggested_winback_text,
+   expected_ltv (DECIMAL), budget_to_winback (INT)`. The "recent
+   targets" variant adds `winback_score, pct_deposits_withdrawn,
+   recent_withdrawal_usd, incentive_type`. **There is no** `CampaignID`,
+   `TargetDate`, `ContactedAt`, `RespondedAt`, `CampaignName`,
+   `CohortSize`, `ConversionRate` — v1 of this skill invented all of
+   these. For population churn metrics use the `customer-populations`
+   DE workspace skill.
+9. **`bi_output_customer_customer_support_salesforce_reply` is at the
+   parent-ticket grain.** 9 cols: `CreatedDateTicket (STRING — date as
+   string, not timestamp!), ParentId (STRING — FK to vg_crm_case.CaseID
+   for the parent / root case), Club, TicketStatus, DaysToReplyEmail
+   (LONG), LastRepliedDate (STRING), etr_y/ym/ymd (STRING partitions)`.
+   The reply *content* lives elsewhere — this is only the timing /
+   status summary.
+10. **KYC `V_CustomerAnswers` has FIVE UC variants — pick the right
+    one.** All are GCID-keyed (NOT RealCID).
+    - `bi_db.bronze_userapidb_dbo_v_customeranswers` — 14 cols, general
+      population, full + masked sibling. Cols: `GCID, OccurredAt,
+      FreeText, QuestionId, QuestionText, AnswerId, AnswerText,
+      MinThreshold, MaxThreshold, MultipleSelection (BOOLEAN), etr_*`.
+    - `bi_db.bronze_userapidb_dbo_v_customeranswers_masked` — same 14
+      cols, masked for non-PII pipelines.
+    - `bi_db.bronze_userapidb_asic_customeranswers` — 8 cols, **ASIC
+      region** answers. Cols: `CustomerAnswerId (INT), TestId (INT),
+      Question (STRING), Answer (STRING), OccurredAt, etr_*` — note
+      these are FREE-TEXT Question / Answer, not QuestionId/AnswerId.
+    - `compliance.bronze_userapidb_kyc_customeranswers` — 8 cols, KYC
+      questions only, lives in `compliance` catalog schema. Cols:
+      `GCID, QuestionId, AnswerId, OccurredAt, FreeText, etr_*`.
+    - `compliance.bronze_userapidb_history_customeranswers` — 10 cols
+      with `OccurredAt_InSource` extra. Use when you need the
+      "answered-then-revised" history.
+11. **Watch for STRING-typed dates / IDs.** `vg_crm_case.SolvedDate`,
+    `bi_output_customer_customer_support_salesforce_reply.CreatedDateTicket`,
+    and `LastRepliedDate` are STRING — cast or parse if you need to
+    compare. `OwnerId`, `UserId`, `Case__c`, `Survey__c`,
+    `Agent_Under_Assessment__c` are all STRING (Salesforce 15/18-char
+    ids).
 
-The Salesforce-source case ledger, ETLed and curated for analytics. One
-row per Salesforce case with:
+## Anchor object reference
 
-- `CaseID` (Salesforce case number)
-- `CID` / `RealCID` (customer the case is about)
-- `CaseSubject`, `CaseDescription` (free text)
-- `CreatedDate`, `ClosedDate`, `CaseStatus`
-- `CaseOwner` (CRM agent — joins to `crm_user_v`)
-- `CaseChannel` (chat / email / phone)
-- `CaseCategory`, `CaseSubcategory` (the Salesforce taxonomy)
-- `Priority`, `Severity`
-- `IsResolved`, `ResolutionTime`
+### `vg_crm_case` (110 cols) — selected families
 
-Use it when the question is shaped like "support cases for customer X" /
-"average resolution time by category" / "case-volume trends".
+- **Identity / linkage**: `CaseID`, `CaseNumber`, `CID (STRING)`,
+  `OwnerId (STRING — FK to crm_user_v.UserId)`, `CaseOwnerTitle`,
+  `ClosedBy`, `DoneBy`, `WithdrawalID`, `DepositID`, `PositionID`,
+  `MirrorID`, `JiraID`, `EventID`
+- **Status / lifecycle**: `Status (STRING enum)`, `IsSolved`,
+  `IsClosedOnCreate`, `IsReOpened`, `Phase`, `CreatedDate`,
+  `ClosedDate`, `SolvedDate (STRING)`, `IsDeflected`
+- **Routing / taxonomy**: `Origin`, `Subject`, `Priority`, `Product`,
+  `Category`, `CaseType`, `SubType`, `SubType2`, `ServiceLanguage`,
+  `CaseSkillSet`, `CaseCreatedByRole`
+- **Service metrics**: `IncomingEmailCount`, `OutboundEmailCount`,
+  `InternalCommentCount`, `FirstResponseDateTime`,
+  `TimeToFirstResponse`, `ResolutionTimeFromFirstResponse`,
+  `TotalTimeToResolve`, `TouchCount`, `Touches (LONG)`
+- **Compliance / quality**: `IsOfficialComplaint`, `AMLState`,
+  `QCSurvey`, `Regulation`, `ClubLevel`, `IsEscalated`,
+  `EscalationStatus`, `EscalatedBy`, `EscalationDate`,
+  `FinalEscalationResponseDate`, `IsDeEscalated`, `OwnerSubRole`,
+  `CS_OPS`
+- **Money impact**: `GoodwillGesture (DECIMAL)`,
+  `TechnicalRefund (DECIMAL)`
 
-For the Salesforce reply chain (per-message detail within a case),
-some tables are partially deployed to UC and partially Synapse-only —
-check `gold_crm_salesforcetobomanagermapping` and related tables in the
-Wiki before joining.
+### `crm_user_v` (22 cols)
 
-## V_CustomerAnswers — KYC questionnaire (cluster 19, separate domain)
+`UserId (PK), BO_User_ID, FullName, Department, Title, Position, Desk,
+Team, IsActive (BOOLEAN), TimeZoneSidKeys, ManagerId,
+Manager_BO_User_ID, Manager_FullName, Manager_Department, Manager_Title,
+Manager_Position, Manager_Desk, Manager_Team, Manager_IsActive,
+RM_UserId, RM_FullName`.
 
-Sometimes confused with CRM cases because both touch customer
-"answers" — but `V_CustomerAnswers` is the **KYC-onboarding questionnaire**
-(income range, trading experience, source of funds), not a support case.
+### Churn-winback (bi_output_stg, per-CID predictive output)
 
-**UC (masked):** `main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked`
-
-Use when the question is about KYC questionnaire answers (e.g.
-"customers who answered 'high' to source-of-funds risk"). The
-range-panel variant (`UserApiDB_dbo_V_CustomerAnswers_Range_KYC_Panel`)
-is **Synapse-only** — query via Synapse MCP.
-
-## CSAT and agent quality — cluster 36
-
-| View | UC FQN | Granularity |
-|---|---|---|
-| `crm_csat_survey_per_case_v` | `main.etoro_kpi_stg.crm_csat_survey_per_case_v` | One row per (case, survey response). Columns: `CaseID`, `CSATScore` (1–5 typically), `NPSScore`, `SurveyDate`, free-text feedback. |
-| `crm_quality_assessment_per_case_v` | `main.etoro_kpi_stg.crm_quality_assessment_per_case_v` | One row per (case, internal QA review). Columns: `CaseID`, `QAReviewerID`, `QAScore`, `QACategoryScores`, `QAReviewDate`. |
-| `crm_user_v` | `main.etoro_kpi_stg.crm_user_v` | CRM agent dimension. Columns: `CRMUserID`, `AgentName`, `Team`, `IsActive`, `Tier`. |
-
-**Schema note:** these views live in `etoro_kpi_stg` (staging-tier), not
-`etoro_kpi`. The cases-layer view (`vg_crm_case`) is in `etoro_kpi`. Watch
-the schema when joining.
-
-## Churn-winback — cluster 48
-
-| Table | UC FQN | Role |
-|---|---|---|
-| `churn_winback_summary` | `main.bi_output_stg.churn_winback_summary` | Per-campaign / per-segment summary: cohort size, contact attempts, response rate, conversion-back-to-active rate. |
-| `churn_winback_recent_targets` | `main.bi_output_stg.churn_winback_recent_targets` | The list of CIDs targeted by the most recent winback wave. Use this to filter "customers we recently tried to reactivate". |
-
-**These tables are NOT a churn-population definition.** They are the
-**campaign target list** and **campaign outcome summary**. If the question
-is "how many customers churned?" / "show me the dormant cohort", that's a
-**population question** — load the DE workspace skill `customer-populations`
-instead, which has the canonical "dormant" / "inactive" segment.
-
-## Critical anti-patterns
-
-1. **DO NOT compute churn rates from `churn_winback_summary`.** That is
-   campaign performance, not churn measurement. For churn / dormant /
-   reactivation segments, use `customer-populations` workspace skill.
-2. **DO NOT confuse `vg_crm_case` with `Fact_CustomerAction` (B.4).** A
-   CRM case is a Salesforce ticket (customer-initiated support); a
-   CustomerAction is an account-level event (operator action on the
-   account, status change, etc.). They overlap on `CID` only.
-3. **DO NOT skip the schema prefix.** Cases are in `etoro_kpi`; CSAT/QA are
-   in `etoro_kpi_stg`; churn-winback is in `bi_output_stg`. A query that
-   types `crm_user_v` without a schema will fail unless the session catalog
-   is set right.
-4. **DO NOT trust raw CSAT response counts as customer-base-wide opinion.**
-   Surveys are sent only to a subset of cases. Always normalize by
-   surveys-sent or use the survey-response-rate from
-   `crm_csat_survey_per_case_v` directly.
-5. **DO NOT join `V_CustomerAnswers` for live KYC.** It is the
-   questionnaire raw answer; for the compliance-shaped KYC verdict use
-   `kyc_for_compliance_v` (B.5) or `BI_DB_KYC_Panel` (B.1).
+- `churn_winback_summary` (8 cols): `CID, segment_name, age, country,
+  reason_for_churn_prediction, suggested_winback_text, expected_ltv,
+  budget_to_winback`.
+- `churn_winback_recent_targets` (12 cols): adds `winback_score (DECIMAL),
+  pct_deposits_withdrawn, recent_withdrawal_usd, incentive_type`.
 
 ## SQL patterns
 
 ### Pattern 1 — case history for a customer
 
 ```sql
-SELECT c.CaseID, c.CaseSubject, c.CaseStatus, c.CreatedDate, c.ClosedDate,
-       c.ResolutionTime, u.AgentName, c.CaseCategory, c.Priority
+SELECT c.CaseID, c.CaseNumber, c.Subject, c.Status, c.IsSolved,
+       c.Origin, c.Product, c.Category, c.CaseType, c.SubType, c.Priority,
+       c.CreatedDate, c.ClosedDate, c.TotalTimeToResolve,
+       c.TimeToFirstResponse, c.TouchCount,
+       c.IsOfficialComplaint, c.IsEscalated, c.IsReOpened,
+       u.FullName AS AgentName, u.Team, u.Manager_FullName
 FROM main.etoro_kpi.vg_crm_case        c
-LEFT JOIN main.etoro_kpi_stg.crm_user_v u ON u.CRMUserID = c.CaseOwner
-WHERE c.CID = :realcid
+LEFT JOIN main.etoro_kpi_stg.crm_user_v u ON u.UserId = c.OwnerId
+WHERE c.CID = CAST(:realcid AS STRING)
 ORDER BY c.CreatedDate DESC;
 ```
 
 ### Pattern 2 — average CSAT per agent (last 90 days)
 
 ```sql
-SELECT u.AgentName,
-       u.Team,
-       COUNT(*)                 AS SurveyCount,
-       AVG(s.CSATScore)         AS AvgCSAT,
-       AVG(s.NPSScore)          AS AvgNPS
+SELECT u.FullName, u.Team,
+       COUNT(*)                                         AS Surveys,
+       AVG(s.`simplesurvey__Survey_Score__c`)           AS AvgCSAT
 FROM main.etoro_kpi_stg.crm_csat_survey_per_case_v s
-JOIN main.etoro_kpi.vg_crm_case                    c ON c.CaseID    = s.CaseID
-JOIN main.etoro_kpi_stg.crm_user_v                 u ON u.CRMUserID = c.CaseOwner
-WHERE s.SurveyDate >= CURRENT_DATE() - INTERVAL 90 DAYS
-GROUP BY u.AgentName, u.Team
+JOIN main.etoro_kpi.vg_crm_case   c ON c.CaseID = s.`simplesurvey__Case__c`
+JOIN main.etoro_kpi_stg.crm_user_v u ON u.UserId = c.OwnerId
+WHERE s.cSAT_Date >= CURRENT_DATE() - INTERVAL 90 DAYS
+GROUP BY u.FullName, u.Team
 HAVING COUNT(*) >= 10
 ORDER BY AvgCSAT DESC;
 ```
 
-### Pattern 3 — was this customer a churn-winback target?
+### Pattern 3 — agent QA scores per case + agent context
 
 ```sql
-SELECT t.CID, t.CampaignID, t.TargetDate, t.ContactedAt, t.RespondedAt,
-       s.CampaignName, s.CohortSize, s.ConversionRate
+SELECT q.Case__c                AS CaseID,
+       q.`Quality_Score__c`     AS QualityScore,
+       q.`Compliance_a__c`      AS ComplianceScore,
+       q.`Type_of_Communication__c` AS Channel,
+       q.`Team__c`              AS Team,
+       q.CreatedDate            AS QADate,
+       u.FullName               AS AgentName,
+       u.Manager_FullName
+FROM main.etoro_kpi_stg.crm_quality_assessment_per_case_v q
+LEFT JOIN main.etoro_kpi_stg.crm_user_v u
+       ON u.UserId = q.`Agent_Under_Assessment__c`
+WHERE q.CreatedDate >= CURRENT_DATE() - INTERVAL 30 DAYS
+ORDER BY q.CreatedDate DESC LIMIT 200;
+```
+
+### Pattern 4 — churn-winback targets for a CID
+
+```sql
+SELECT t.CID, t.segment_name, t.country, t.winback_score,
+       t.reason_for_churn_prediction, t.suggested_winback_text,
+       t.pct_deposits_withdrawn, t.recent_withdrawal_usd,
+       t.expected_ltv, t.budget_to_winback, t.incentive_type
 FROM main.bi_output_stg.churn_winback_recent_targets t
-LEFT JOIN main.bi_output_stg.churn_winback_summary  s ON s.CampaignID = t.CampaignID
-WHERE t.CID = :realcid
-ORDER BY t.TargetDate DESC;
+WHERE t.CID = :realcid;
 ```
 
-### Pattern 4 — KYC questionnaire answers for a customer
+### Pattern 5 — KYC answers (general dbo variant)
 
 ```sql
-SELECT a.RealCID, a.QuestionID, a.QuestionText, a.AnswerText, a.AnsweredDate
+SELECT a.GCID, a.OccurredAt, a.QuestionId, a.QuestionText,
+       a.AnswerId, a.AnswerText, a.FreeText,
+       a.MinThreshold, a.MaxThreshold, a.MultipleSelection
 FROM main.bi_db.bronze_userapidb_dbo_v_customeranswers_masked a
-WHERE a.RealCID = :realcid
-ORDER BY a.AnsweredDate;
+WHERE a.GCID = :gcid
+ORDER BY a.OccurredAt;
 ```
 
-## Wiki deep-reads
+For ASIC region (free-text, no QuestionId / AnswerId):
 
-- KPI view sources for `vg_crm_case`, `crm_csat_survey_per_case_v`, `crm_quality_assessment_per_case_v`, `crm_user_v`: see `knowledge/uc_views/etoro_kpi*/`.
+```sql
+SELECT a.CustomerAnswerId, a.TestId, a.Question, a.Answer, a.OccurredAt
+FROM main.bi_db.bronze_userapidb_asic_customeranswers a
+WHERE a.TestId = :asic_test_id
+ORDER BY a.OccurredAt;
+```
+
+### Pattern 6 — escalations + complaints in the last quarter, by Regulation
+
+```sql
+SELECT c.Regulation, c.OwnerSubRole, c.EscalationStatus,
+       COUNT(*) AS Cases,
+       SUM(c.GoodwillGesture)  AS Goodwill_USD,
+       SUM(c.TechnicalRefund)  AS Refund_USD,
+       AVG(c.TotalTimeToResolve) AS AvgResolveHrs
+FROM main.etoro_kpi.vg_crm_case c
+WHERE c.CreatedDate >= CURRENT_DATE() - INTERVAL 90 DAYS
+  AND (c.IsEscalated = 1 OR c.IsOfficialComplaint = TRUE)
+GROUP BY c.Regulation, c.OwnerSubRole, c.EscalationStatus
+ORDER BY Cases DESC;
+```
+
+### Pattern 7 — Salesforce reply timing per parent case
+
+```sql
+SELECT r.ParentId AS CaseID, r.TicketStatus,
+       r.DaysToReplyEmail, r.LastRepliedDate, r.CreatedDateTicket, r.Club
+FROM main.bi_output.bi_output_customer_customer_support_salesforce_reply r
+WHERE r.ParentId = :case_id;
+```
+
+### Pattern 8 — bridge Salesforce manager → BO manager
+
+```sql
+SELECT m.SFManagerID, m.Name, m.ManagerID, m.CreatedDate
+FROM main.crm.gold_crm_salesforcetobomanagermapping m
+WHERE m.SFManagerID = :sf_manager_id;
+```
+
+## Wiki / KPI source deep-reads
+
+- `knowledge/uc_views/etoro_kpi/vg_crm_case.sql` (view definition)
+- `knowledge/uc_views/etoro_kpi_stg/{crm_csat_survey_per_case_v, crm_quality_assessment_per_case_v, crm_user_v}.sql`
 - `knowledge/synapse/Wiki/BI_DB_dbo/Tables/UserApiDB_dbo_V_CustomerAnswers.md`
-- For churn-winback campaign methodology: see the BI team's churn-winback runbook in Confluence; the tables are the artifacts, not the documentation.
-- For the Salesforce-to-BO-manager mapping: `gold_crm_salesforcetobomanagermapping` (table location varies by ingestion; check `_uc_object_map.md` and the Wiki).
+- For churn-winback model methodology see the Customer Retention / BI churn-winback runbook in Confluence.
