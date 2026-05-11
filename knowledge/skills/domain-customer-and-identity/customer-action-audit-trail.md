@@ -1,219 +1,483 @@
 ---
-name: customer-and-identity-customer-action-audit-trail
-description: |
-  Customer-action AUDIT TRAIL — what an operator or system did to / on a
-  customer's account: status changes, level upgrades / downgrades, club
-  upgrades, manual interventions, copy-trading enrollments, social
-  engagement events, position-distribution snapshots taken at action time.
-  Anchored on Fact_CustomerAction (UC: dwh.gold_*_fact_customeraction,
-  cluster 6 hub, weight 223 — the second-largest customer-side hub after
-  Dim_Customer).
-
-  Fact_CustomerAction is the per-event ledger: one row per action, with
-  ActionTypeID, ActionDate, OperatorID/SessionID, RealCID, and a JSON-ish
-  ActionDetail blob. The enriched view v_fact_customeraction_enriched
-  (etoro_kpi_prep) and the metrics-augmented variant
-  de_output_etoro_kpi_fact_customeraction_w_metrics (de_output) layer on
-  Position-distribution / engagement metrics.
-
-  The original-trading-action classification ("first deposit-to-trade",
-  "first crypto-to-trade") that the domain-cross/recurring-deposit-to-trade
-  cross-domain skill stitches together comes from this fact joined back to
-  Fact_BillingDeposit / Fact_TradePosition. Position-distribution snapshots
-  at action-time live in BI_DB_Fact_Customer_Action_Position_Distribution.
-keywords: [Fact_CustomerAction, customer action, action audit, ActionTypeID,
-           ActionDate, OperatorID, SessionID, BackOffice action,
-           manual intervention, status change, level change,
-           BI_DB_Fact_Customer_Action_Position_Distribution,
-           BI_DB_DailyCopyRevenue, BI_DB_UsersEngagement,
-           BI_DB_Social_Activity, BI_DB_DDR_CID_Level,
-           BI_DB_CustomerFirst5OpenPositions, BI_DB_Investors_Top10,
-           BI_DB_ClientBalance_DDR_Data_Integrity_Alert,
-           v_fact_customeraction_enriched,
-           de_output_etoro_kpi_fact_customeraction_w_metrics,
-           operator audit, session, copy trading, social engagement,
-           position distribution, customer journey events]
-load_after: [_router.md, domain-customer-and-identity/SKILL.md]
-intersects_with:
-  - domain-customer-and-identity/customer-master-record
-  - domain-customer-and-identity/identity-jurisdiction-and-regulation
-  - domain-customer-and-identity/oltp-customer-static-and-breaches
-  - domain-customer-and-identity/customer-models-and-segmentation
-  - domain-cross/recurring-deposit-to-trade
-  - domain-cross/tribe-emoney-audit
-  - domain-revenue-and-fees/SKILL
-primary_objects:
-  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction  # Synapse: DWH_dbo.Fact_CustomerAction (cluster 6 hub, weight 223)
-  - main.etoro_kpi_prep.v_fact_customeraction_enriched  # Synapse: etoro_kpi_prep.v_fact_customeraction_enriched (enriched view: action + customer + metrics)
-  - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # Synapse-equivalent of etoro_kpi.fact_customeraction_w_metrics — pre-stitched action + position metrics, used by domain-cross/recurring-deposit-to-trade
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution  # Synapse: BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue  # Synapse: BI_DB_dbo.BI_DB_DailyCopyRevenue (per-day copy enrollment + revenue per copier)
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity  # Synapse: BI_DB_dbo.BI_DB_Social_Activity
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level  # Synapse: BI_DB_dbo.BI_DB_DDR_CID_Level (per-CID dimensional rollup)
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions  # Synapse: BI_DB_dbo.BI_DB_First5Actions
-synapse_only_objects:
-  - BI_DB_dbo.BI_DB_UsersEngagement  # not migrated to UC
-  - BI_DB_dbo.BI_DB_Investors_Top10  # not migrated to UC
-  - BI_DB_dbo.BI_DB_CustomerFirst5OpenPositions  # not migrated to UC
-  - BI_DB_dbo.BI_DB_ClientBalance_DDR_Data_Integrity_Alert  # not migrated to UC
-  - History.Credit  # production OLTP, not in UC main catalog as a clean alias
-deprecated_or_relocated:
-  - BI_DB_dbo.BI_DB_DDR_CID_Level (also referenced in customer-master-record for current-state rollup)
+id: customer-action-audit-trail
+name: "Customer Action Audit Trail"
+description: "Per-event ledger of every significant customer action — position opens/closes, deposits, cashouts, fees, bonuses, registrations, logins, mirror ops, edit-stoploss, compensations, refunds/chargebacks. Anchored on Fact_CustomerAction (UC: main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction, 74 cols, ~11B rows all-time, ~4M rows/day, partitioned etr_y/etr_ym/etr_ymd). Five-source UNION classified by ActionTypeID against Dim_ActionType (45 rows). Most columns are sparse — populated only for the ActionTypeIDs they relate to. Enrichment layers add position context (v_fact_customeraction_enriched, 79 cols, LEFT JOIN to dim_position with detach-aware MirrorID, TicketFeeAction derivation, and compensation-PositionID back-resolution from the last word of Description) and per-action monetary metrics (v_fact_customeraction_w_metrics — authoritative for trading-side amounts). Adjacent UC-available cluster-6 tables: BI_DB_Fact_Customer_Action_Position_Distribution (action-time customer-state snapshot per position, NOT a portfolio-shape distribution), BI_DB_DailyCopyRevenue (per-day per-PARENT/popular-investor revenue split by asset class), BI_DB_Social_Activity (live social-pipeline text — FCA 21-26 are DEAD DATA, do not use), BI_DB_DDR_CID_Level (per-day per-CID 175-col rollup, NOT lifetime), BI_DB_First5Actions (per-CID first-5-action + 1/7/14/30/60/90/180/360-day windows + LTV). Synapse-only siblings (NOT in UC): BI_DB_UsersEngagement, BI_DB_Investors_Top10, BI_DB_CustomerFirst5OpenPositions, BI_DB_ClientBalance_DDR_Data_Integrity_Alert. Use for single-CID forensics, BackOffice timelines, fee / commission attribution per ActionTypeID, and per-event volume (Active-only — Passive rows have NULL VolumeOnOpen by design)."
+triggers:
+  - Fact_CustomerAction
+  - fact_customeraction
+  - customer action
+  - action audit
+  - audit trail
+  - customer event log
+  - ActionTypeID
+  - Dim_ActionType
+  - dim_actiontype
+  - Occurred
+  - HistoryID
+  - SessionID
+  - IsFTD
+  - IsFeeDividend
+  - End of Week Fee
+  - End Of The Week Fee
+  - overnight fee
+  - dividend fee
+  - SDRT
+  - ticket fee
+  - TicketFeeAction
+  - IsPartialCloseParent
+  - IsPartialCloseChild
+  - ReopenForPositionID
+  - IsReOpen
+  - CompensationReasonID
+  - MoveMoneyReasonID
+  - DLTOpen
+  - DLTClose
+  - v_fact_customeraction_enriched
+  - v_fact_customeraction_w_metrics
+  - de_output_etoro_kpi_fact_customeraction_w_metrics
+  - BI_DB_Fact_Customer_Action_Position_Distribution
+  - BI_DB_DailyCopyRevenue
+  - BI_DB_Social_Activity
+  - BI_DB_DDR_CID_Level
+  - BI_DB_First5Actions
+  - VolumeOnOpen
+  - VolumeOnClose
+  - ManualPositionOpen
+  - CopyPositionOpen
+  - CopyPositionClose
+  - PositionOpenTypeUnknown
+  - Affiliate Deposit
+  - InternalDeposit
+  - InternalWithdraw
+  - Compensation
+  - Cashout request
+  - Processed Cashout
+  - Reverse cashout
+  - Reverse Deposit
+  - Edit StopLoss
+  - Open Stock Order
+  - Customer Registration
+  - LoggedIn
+  - Cashier Loggin
+  - Detach position from mirror
+  - first 5 actions
+  - first-five actions
+  - LTV
+required_tables:
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype
+  - main.etoro_kpi_prep.v_fact_customeraction_enriched
+  - main.etoro_kpi_prep.v_fact_customeraction_w_metrics
+  - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level
+  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions
+sample_questions:
+  - "Show every action for RealCID 12345 in the last 30 days"
+  - "Fee waterfall (overnight / dividend / SDRT / ticket) for a customer in 2026"
+  - "Per-action volume on / off the platform for a CID this year"
+  - "Which positions did this customer open via copy trading?"
+  - "How do I tell a manual close from a copy close?"
+  - "How do I back-resolve a Compensation event (ActionTypeID=36) to a position?"
+  - "Customer state at action-time for every position this CID has opened"
+  - "Per-day per-CID DDR rollup with deposits, cashouts, revenue, equity"
+  - "First five actions and 360-day LTV for a CID"
+  - "Per-day per-popular-investor copy-trading revenue split by asset class"
+domain_tags:
+  - customer
+  - audit
+  - actions
+  - events
+  - fees
+  - commissions
+  - positions
+  - deposits
+  - cashouts
+  - lifecycle
+version: 2
+owner: "dataplatform"
+last_validated_at: "2026-05-11"
 ---
 
 # B.4 — Customer Action Audit Trail
 
-This skill answers "**what happened to / on this customer's account?**" — the
-event ledger, indexed by `(RealCID, ActionDate, ActionTypeID)`. Use it for:
+The unified customer event log. One row per significant action a customer
+performed (or had performed on their account), classified by `ActionTypeID`
+and enriched with sparse, action-type-specific payload columns. Use this
+for single-CID forensics ("what did this customer do, when, and what
+financial details?"), per-action revenue / fee / commission attribution
+(via the enriched and w_metrics views), and cohort-shaped funnels
+(deposit → first trade, registration → first deposit) — though for cohort
+work prefer the pre-stitched cross-domain skill below.
 
-- BackOffice / operator-driven actions on a customer (manual deposits, manual
-  refunds, status changes, level overrides)
-- System-driven actions (auto-suspensions, KYC-gate triggers, club tier
-  recalculations)
-- Customer-initiated lifecycle events (copy-trading enrollment / disenrollment,
-  social follows, post events) with their position-distribution snapshot at
-  action-time
+**Side classification:** broker-side customer-event ledger and its
+position-context + state-at-action-time enrichment layers.
 
-**Routing notes:**
+## When to Use
 
-- For the **deposit-to-first-trade conversion** chain (FTD → first position),
-  prefer the cross-domain skill [`domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md). It owns the
-  pre-stitched `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`
-  table and the cohort patterns. This skill (B.4) owns the raw fact for
-  one-off audit / forensics.
-- For **eMoney/IBAN audit envelopes** (Treezor XML, FiatDwhDB), the audit
-  story is in [`domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md). `Fact_CustomerAction` does NOT
-  carry eMoney-side action types.
-- For the **fee / revenue per action** breakdown, route to
-  [`domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md) — the revenue layer joins to `Fact_CustomerAction`
-  and to `Fact_RevenueGeneratingActions`.
+Use this skill when the question is about events on a single customer's
+account, the catalog of action types, fee sub-classification, partial-close
+or reopen mechanics, per-action volume / commission attribution, the
+action-time customer-state snapshot, copy-trade revenue per popular
+investor, the per-day per-CID DDR rollup, or first-five-action lifecycle
+classification with early-window LTV.
+
+Do **NOT** use this skill for:
+
+- **Deposit-to-first-trade / FTD funnel cohorts** → use
+  [`domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md). It owns
+  `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` and the
+  cohort patterns. This skill (B.4) owns the raw fact for one-off forensics.
+- **eMoney / IBAN / wallet-side audit** →
+  [`domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md). `Fact_CustomerAction`
+  does NOT carry eMoney-side action types (Treezor XML envelope lives
+  separately).
+- **Fee / revenue per ActionTypeID rolled up into the canonical revenue
+  layer** → [`domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md).
+  The revenue layer reuses `Fact_CustomerAction` (especially
+  `ActionTypeID=35` fees) and `Fact_RevenueGeneratingActions`.
+- **Position state / open-vs-current attributes** →
+  [`domain-trading/position-state-and-grain.md`](../domain-trading/position-state-and-grain.md). FCA
+  records *what happened* per position event; `Dim_Position` records
+  *current* (and partially historical) state per position.
+
+## Scope
+
+In scope:
+
+- `Fact_CustomerAction` schema, ETL sources, ActionTypeID taxonomy via
+  `Dim_ActionType`, sparse-column semantics, partial-close / reopen
+  mechanics, fee sub-classification (`IsFeeDividend`,
+  `CompensationReasonID`), DLT flags, FTD flag.
+- `v_fact_customeraction_enriched`: how the Active vs Passive split
+  works, what each enriches with (Dim_Position context, VolumeOnOpen /
+  VolumeOnClose, detach-aware MirrorID, TicketFeeAction derivation,
+  compensation-PositionID back-resolution from Description).
+- `v_fact_customeraction_w_metrics` and its `de_output` cohort variant.
+- Action-time customer-state snapshot
+  (`BI_DB_Fact_Customer_Action_Position_Distribution`, 40 cols), the
+  per-day per-CID rollup (`BI_DB_DDR_CID_Level`, 175 cols), per-CID
+  first-five-action + LTV (`BI_DB_First5Actions`, 86 cols), per-day
+  per-PARENT copy revenue (`BI_DB_DailyCopyRevenue`, 18 cols), and the
+  live social pipeline (`BI_DB_Social_Activity`, 18 cols).
+- Documentation of what does **NOT** exist on FCA (no OperatorID, no
+  IsManual, no ActionDetail JSON blob, no BeforeValue / AfterValue) so
+  callers stop asking for it.
+
+Out of scope: revenue accounting at the company level (use revenue-and-fees
+domain), copy enrollment-vs-revenue at copier granularity (need a join
+to `Dim_Mirror`), eMoney / Tribe XML envelope audit (use cross-domain
+skill), Treezor authorisation audit.
+
+Last verified: 2026-05-11
 
 ## Mental model
 
 ```mermaid
 graph TB
-    OLTP["Trading.* / Billing.* / BackOffice.*<br/>OLTP truth"] --> FCA["Fact_CustomerAction<br/>UC: dwh.gold_*_fact_customeraction<br/>cluster 6 hub"]
-    FCA --> Enr["v_fact_customeraction_enriched<br/>UC: etoro_kpi_prep.v_fact_customeraction_enriched"]
-    Enr --> Metrics["de_output_etoro_kpi_fact_customeraction_w_metrics<br/>UC: de_output.de_output_etoro_kpi_fact_customeraction_w_metrics<br/>(used by domain-cross/recurring-deposit-to-trade)"]
+    Trade["Trade.OpenPositionEndOfDay<br/>Position opens 1-3, 39"] --> FCA
+    Close["History.ClosePositionEndOfDay<br/>Position closes 4-6, 28, 40"] --> FCA
+    Credit["History.Credit + History.ActiveCredit<br/>Money + fees + bonuses 7-13, 15-20, 27, 30, 32-38, 42-45"] --> FCA
+    STS["STS_Audit_UserOperationsData<br/>Logins 14"] --> FCA
+    Reg["Customer.CustomerStatic<br/>Registrations 41"] --> FCA
 
-    FCA --> Pos["BI_DB_Fact_Customer_Action_Position_Distribution<br/>position snapshot at action-time"]
-    FCA --> Copy["BI_DB_DailyCopyRevenue<br/>copy enrollment + per-day revenue"]
-    FCA --> Soc["BI_DB_Social_Activity<br/>social engagement events"]
-    FCA --> DDR["BI_DB_DDR_CID_Level<br/>per-CID dimensional rollup"]
-    FCA --> F5["BI_DB_First5Actions<br/>first-five-action classification per CID"]
+    FCA["Fact_CustomerAction<br/>74 cols, ~11B rows, ~4M/day<br/>UC: dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction<br/>partition: etr_y / etr_ym / etr_ymd"]
 
-    FCA -.fees per action.-> Rev["revenue-and-fees super-domain<br/>Fact_RevenueGeneratingActions"]
-    FCA -.deposit -> trade chain.-> Cross["domain-cross/recurring-deposit-to-trade"]
+    FCA --> Enr["v_fact_customeraction_enriched<br/>+ Dim_Position context + VolumeOnOpen/Close<br/>+ TicketFeeAction Open/Close<br/>UC: etoro_kpi_prep.v_fact_customeraction_enriched"]
+    Enr --> WM["v_fact_customeraction_w_metrics<br/>+ per-action monetary metrics<br/>UC: etoro_kpi_prep.v_fact_customeraction_w_metrics"]
+    WM --> WMstg["de_output.de_output_etoro_kpi_fact_customeraction_w_metrics<br/>(cohort-ready, used by domain-cross/recurring-deposit-to-trade)"]
+
+    FCA --> Pos["BI_DB_Fact_Customer_Action_Position_Distribution<br/>per (RealCID, PositionID, ActionTypeID) + customer state at action-time"]
+    FCA -.via ParentCID.-> Copy["BI_DB_DailyCopyRevenue<br/>per-day, per-PARENT (popular investor) revenue split by asset class"]
+    Soc["BI_DB_Social_Activity<br/>post / comment / like text + media<br/>(NOT sourced from FCA - separate social pipeline)"]
+    FCA --> DDR["BI_DB_DDR_CID_Level<br/>per-day, per-CID 175-col rollup<br/>(NOT lifetime, per-day grain via DateID)"]
+    FCA --> F5["BI_DB_First5Actions<br/>per-CID first-5-action classification + 1/7/14/30/60/90/180/360-day windows<br/>+ LTV"]
 ```
 
-## Fact_CustomerAction — the columns
+## Critical warnings (read before writing any SQL)
 
-| Column | Meaning | Notes |
+1. **`Fact_CustomerAction` has NO `OperatorID`, NO `IsManual`, NO
+   `ActionDetail` JSON blob, NO `BeforeValue`/`AfterValue`.** Those
+   column names are NOT in the table (verified 2026-05-11 against
+   `information_schema.columns`, 74 cols total). The real identifiers
+   are: `HistoryID` (DECIMAL — DOC says "intended as a unique key but
+   contains duplicates - NOT reliable as a primary/unique identifier")
+   and `SessionID` (LONG, from STS service, monotonically increasing —
+   useful to chain a sequence of actions but NOT an operator key).
+   Operator-driven actions ARE captured (the source `History.Credit` is
+   trigger-fed from BackOffice and the production cashier), but there is
+   no in-table "operator" field. To identify operator-driven money
+   movements, filter on `MoveMoneyReasonID` (1=Adjustment, 5=InternalTransfer
+   Trade, 6=InternalTransfer, 8=Recurring Deposit, 9=Recurring Investment)
+   and `CompensationReasonID` (via `BackOffice.CompensationReason`).
+2. **The timestamp column is `Occurred`, NOT `ActionDate`.** The day-grain
+   surrogate is `DateID` (INT, YYYYMMDD format, derived from `@Yesterday`
+   in the ETL). The parquet partition is `etr_ymd` (STRING). For
+   high-selectivity queries, filter on `etr_ymd` (it's the partition
+   pruner) AND/OR `DateID` (it's the clustered index).
+3. **`Dim_ActionType` has 45 rows total** (IDs 0-45 with 13, 31 missing
+   gaps — actually 31 IS used for "Open CRM Case"). NOT 150+ as a prior
+   version of this skill claimed. Active per-day distinct ActionTypeIDs:
+   ~25. The dictionary IS stable across product history — the prior
+   "renumbered in 2023" warning was wrong. The unstable thing is which
+   ActionTypeIDs are *being populated*: e.g., 21-26 (social Publish/Receive
+   Post/Comment/Like) are flagged "DEAD DATA — legacy rows exist but no
+   longer updated" by the table wiki; for active social engagement use
+   `BI_DB_Social_Activity` (which is sourced from the live social
+   pipeline, NOT from FCA).
+4. **Position-side ActionTypeIDs come in pairs, and the pair matters.**
+   1=ManualPositionOpen vs 2=CopyPositionOpen vs 3=CopyPlusPositionOpen
+   are distinguished by `MirrorID` and `OrigParentPositionID` at source;
+   closes mirror this (4/5/6 + 28=DetachedClose + 40=Unknown). When
+   counting "trades" you almost always want `ActionTypeID IN (1, 2, 3, 39)`
+   for opens; for "real positions ever held by this CID" you want either
+   the open OR the close (each position appears twice — once open, once
+   close). 39 (PositionOpenTypeUnknown) and 40 (PositionCloseTypeUnknown)
+   are fixed up at weekly maintenance when the matching `History.Credit`
+   row arrives.
+5. **`IsFeeDividend` sub-classifies `ActionTypeID=35` only.** Per
+   DSM-1463: 1=overnight/weekend fee, 2=dividend, 3=SDRT, 4=ticket fees
+   (`Description IN ('OpenTotalFees','CloseTotalFees')`). NULL for any
+   `ActionTypeID != 35`. The enriched view derives `TicketFeeAction`
+   = 'Open' / 'Close' / NULL from `Description` for ticket fees.
+6. **Partial-close mechanics are NOT optional.** `IsPartialCloseParent=1`
+   marks the parent position that was partially closed;
+   `IsPartialCloseChild=1` marks the child (remainder). Per the column
+   comment: *"Generally filter out CHILD positions from most metrics on
+   OPEN when aggregating, but not all (e.g., volume is already pro-rated
+   so excluding these is wrong). NEVER filter these out on CLOSE."*
+   `CommissionByUnits` / `FullCommissionByUnits` /
+   `OpenMarkupByUnits` are the pro-rated values for partial-close PnL
+   computations.
+7. **Reopen mechanics: `CommissionOnClose` and `FullCommissionOnClose`
+   are adjusted by `SP_Dim_Position` when a position is reopened.**
+   `CommissionOnCloseOrig` / `FullCommissionOnCloseOrig` store the
+   pre-adjustment values. `ReopenForPositionID` references the
+   erroneously closed PositionID; `IsReOpen=1` when this row IS the
+   reopened position.
+8. **`v_fact_customeraction_enriched` splits actions into Passive vs
+   Active and joins differently.** Passive = `ActionTypeID IN (32, 35, 19)`
+   OR `(36 AND CompensationReasonID IN (56, 117, 118))`. For
+   Passive Actions, `VolumeOnOpen` and `VolumeOnClose` are forced to
+   NULL to prevent aggregation duplication. For Compensation rows with
+   `CompensationReasonID IN (117, 118)`, the view extracts a PositionID
+   encoded as the LAST WORD in `Description` via
+   `TRY_CAST(REVERSE(SUBSTRING(REVERSE(Description), 1, CHARINDEX(' ', REVERSE(Description)) - 1)) AS BIGINT)`
+   — read that twice. This is the only way to back-resolve compensation
+   to a position. For Active Actions, `VolumeOnOpen = ROUND(InitialUnits *
+   InitForexRate * InitConversionRate)` from `dim_position`,
+   `VolumeOnClose` is taken from `dim_position.VolumeOnClose`.
+9. **`MirrorID` in the enriched view is detach-aware.** It compares
+   `fca.Occurred` against `MAX(Occurred)` of any `ActionTypeID=19`
+   (Detach position from mirror) for that PositionID — if the action
+   happened after the detach event, MirrorID is forced to 0. This means
+   raw `Fact_CustomerAction.MirrorID` will tell you the original copy
+   state, but the enriched view tells you the effective copy state at
+   action-time.
+10. **Some "cluster-6" tables are Synapse-only (verified 2026-05-11):**
+    `BI_DB_UsersEngagement`, `BI_DB_Investors_Top10`,
+    `BI_DB_CustomerFirst5OpenPositions`,
+    `BI_DB_ClientBalance_DDR_Data_Integrity_Alert`. Query Synapse
+    directly via the Synapse MCP / pyodbc for these. The UC-available
+    cluster-6 tables are: `BI_DB_Fact_Customer_Action_Position_Distribution`,
+    `BI_DB_DailyCopyRevenue`, `BI_DB_Social_Activity`, `BI_DB_DDR_CID_Level`,
+    `BI_DB_First5Actions`.
+
+## Anchor object reference
+
+### `Fact_CustomerAction` — actual schema highlights (74 cols)
+
+| Column | Type | Meaning | Notes |
+|---|---|---|---|
+| `HistoryID` | DECIMAL | "Intended unique key" — DO NOT use as PK (has dups). Tier 5 |
+| `GCID` | INT | Global CID (cross-platform). Distribution key in Synapse |
+| `RealCID` | INT | Real-money CID. NULL when session was demo-only |
+| `DemoCID` | INT | Demo CID. NULL when real-only |
+| `Occurred` | TIMESTAMP | **The action timestamp** (NOT "ActionDate") |
+| `ActionTypeID` | INT | FK → `Dim_ActionType` (45 rows). The classifier |
+| `DateID` | INT | YYYYMMDD partition / clustered-index key |
+| `TimeID` | INT | Hour 0-23, `DATEPART(HOUR, Occurred)` |
+| `SessionID` | LONG | STS session id (monotonic). NOT an operator id |
+| `IsFTD` | INT | First-Time Deposit flag. NULL for non-deposit events |
+| `IsFeeDividend` | INT | 1/2/3/4 for ActionTypeID=35 sub-type. NULL elsewhere |
+| `Description` | STRING | Sparse — fees, compensation, edit-stoploss text |
+| `CompensationReasonID` | INT | For ActionTypeID=36 + airdrop opens. → `BackOffice.CompensationReason` |
+| `MoveMoneyReasonID` | INT | 1=Adj, 5=Internal Trade, 6=Internal, 8=Recurring Dep, 9=Recurring Inv |
+| `PaymentStatusID` | INT | For deposit / cashout events. → `Dim_PaymentStatus` |
+| `FundingTypeID` | INT | Payment method. → `Dim_FundingType` |
+| `WithdrawID` / `WithdrawPaymentID` | INT | Cashout linkage. Dedup via WithdrawPaymentID |
+| `DepositID` / `CreditID` | INT/LONG | History.Credit linkage. CreditID added 2025-07 |
+| `LoginID` / `DurationInSeconds` | INT | Login session linkage |
+| `IPNumber` / `CountryIDByIP` / `IsAnonymousIP` / `ProxyType` | mix | Login / registration geolocation |
+| `PostID` / `PostRootID` | STRING | Social engagement (DEAD for 21-26) |
+| `CaseID` | INT | CRM case (ActionTypeID=31) |
+| `CampaignID` / `BonusTypeID` | INT | Marketing / bonus dictionary |
+| `PositionID`, `InstrumentID`, `Amount`, `Leverage`, `IsBuy`, `IsSettled`, `MirrorID`, `IsAirDrop`, `IsRedeem`, `IsDiscounted`, `SettlementTypeID`, `RegulationIDOnOpen` | mix | Position-side attributes (NULL/0 for non-position events) |
+| `Commission`, `FullCommission`, `CommissionOnClose`, `FullCommissionOnClose`, `CommissionByUnits`, `FullCommissionByUnits`, `CommissionOnCloseOrig`, `FullCommissionOnCloseOrig`, `OpenMarkupByUnits`, `NetProfit` | DECIMAL | Trade economics |
+| `IsPartialCloseParent`, `IsPartialCloseChild`, `InitialUnits`, `OriginalPositionID`, `ReopenForPositionID`, `IsReOpen` | mix | Partial-close / reopen mechanics |
+| `DLTOpen` / `DLTClose` | INT | DLT flags (added 2024-06-02) |
+| `RedeemID` / `RedeemStatus` / `DividendID` | INT | Cross-references |
+| `etr_y` / `etr_ym` / `etr_ymd` | STRING | Parquet partition columns — USE FOR PRUNING |
+
+### `Dim_ActionType` (45 rows) — the canonical key
+
+Join `Fact_CustomerAction` to `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype`
+on `ActionTypeID`. Don't hard-code names. Active families:
+
+| IDs | Family | Source |
 |---|---|---|
-| `CID` / `RealCID` | Customer (DWH side) | Sentinels `0` to filter |
-| `ActionDate` | UTC timestamp of the action | The day-grain SK is `DateID = YYYYMMDD` |
-| `ActionTypeID` | FK to action-type dictionary | See `Dim_PlayerStatusReasons` / `Dim_PlayerStatusSubReasons` for some types; product-side types are usually inline integers |
-| `OperatorID` | If operator-driven; sentinel `-1` / `0` for system | Joins to `Dim_Manager` for VIP-rep audits |
-| `SessionID` | Operator session identifier | Useful to chain together a sequence of actions in one BackOffice session |
-| `ActionDetail` | JSON-ish blob with action-type-specific payload | Schema varies by `ActionTypeID`; see Wiki for catalog |
-| `BeforeValue` / `AfterValue` | Prior and new values for SCD-style transitions (e.g. status change) | NULL for non-transition actions |
-| `IsManual` | 1 if operator-initiated, 0 if system | The most useful filter for "what did ops do?" questions |
+| 1, 2, 3, 39 | PositionOpen (Manual / Copy / Copy+ / Unknown) | Trade.OpenPositionEndOfDay |
+| 4, 5, 6, 28, 40 | PositionClose (Manual / Copy / Copy+ / Detached / Unknown) | History.ClosePositionEndOfDay |
+| 7, 27, 38, 44 | Deposit (Deposit / DepositAttempt / Affiliate / Internal) | History.Credit |
+| 8, 10, 30, 37, 42, 43, 45 | Cashout / Refund / Withdraw (8=Cashout, 10=Cashout request, 30=Processed, 37=Reverse, 42=Rollback, 43=Reverse Deposit, 45=InternalWithdraw) | History.Credit |
+| 9 | Bonus | History.Credit |
+| 11, 12, 13 | Chargeback / Refund / Refund-As-Chargeback | History.Credit |
+| 14, 29 | LoggedIn (web) / Cashier Login | STS / Billing.Login |
+| 15, 16, 17, 18, 19, 20 | Mirror ops (balance-to-mirror, mirror-to-balance, register, unregister, detach, detach stock) | History.Credit |
+| 21-26 | Social engagement (DEAD DATA) | n/a |
+| 31 | Open CRM Case | CRM |
+| 32 | Edit StopLoss | History.Credit (CreditTypeID=13) |
+| 34 | Open Stock Order | History.Credit (CreditTypeID=29) |
+| 35 | End Of The Week Fee (sub-classed by `IsFeeDividend`) | History.Credit (CreditTypeID=14) |
+| 36 | Compensation (sub-classed by `CompensationReasonID`) | History.Credit (CreditTypeID=6) |
+| 41 | Customer Registration | Customer.CustomerStatic |
 
-Action-type taxonomy is rich (~150+ distinct `ActionTypeID`s across the
-product surface). For a curated subset see the per-table wiki and the
-enriched view `v_fact_customeraction_enriched` which decodes the most
-common ones into named columns.
+## Enrichment & metrics views
 
-## Adjacent fact tables in cluster 6
-
-| Table | UC FQN | What it adds |
+| Layer | UC FQN | What it adds |
 |---|---|---|
-| `BI_DB_Fact_Customer_Action_Position_Distribution` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution` | Snapshot of customer's open positions at action-time (count, gross exposure, leverage distribution). Used to answer "what was their portfolio shape when this happened?" |
-| `BI_DB_DailyCopyRevenue` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue` | Per-day copy-trading enrollment and the revenue the copier generated (joins to `Dim_Mirror` from Trading super-domain). |
-| `BI_DB_Social_Activity` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity` | Social engagement events (follows, posts, reactions). Lower-granularity than Fact_CustomerAction. |
-| `BI_DB_DDR_CID_Level` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level` | Per-CID dimensional rollup over the new DDR framework — a denormalized current-state row per customer with all DDR metrics + dimensional tags. |
-| `BI_DB_First5Actions` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions` | First-five-action classification per CID (used in the "first trading action" classifier — also referenced by the registration-to-FTD funnel). |
+| `v_fact_customeraction_enriched` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | 79 cols. + `OpenDateID`/`CloseDateID`, `VolumeOnOpen`/`VolumeOnClose` (Active only — NULL for Passive), `TicketFeeAction`, detach-aware MirrorID, compensation-PositionID back-resolution. LEFT JOIN to `dim_position`. |
+| `v_fact_customeraction_w_metrics` | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | Per-action monetary metrics (revenue / fee splits) on top of enriched. **Authoritative for trading-side amounts** — see [`domain-trading/trading-volumes.md`](../domain-trading/trading-volumes.md). |
+| `de_output_*_fact_customeraction_w_metrics` | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` | Cohort-ready pre-materialised variant; used by [`domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md). |
 
-The remaining cluster-6 members (`BI_DB_UsersEngagement`,
-`BI_DB_Investors_Top10`, `BI_DB_CustomerFirst5OpenPositions`,
-`BI_DB_ClientBalance_DDR_Data_Integrity_Alert`, `History.Credit`) are
-**Synapse-only** (not migrated to UC). For those, query Synapse directly
-via the Synapse MCP / pyodbc; do NOT translate them to UC names.
+## Adjacent cluster-6 tables (UC-available)
 
-## Critical anti-patterns
-
-1. **DO NOT use `Fact_CustomerAction` for population trends.** It is per-event
-   — counting CIDs requires `COUNT(DISTINCT CID)` and is not a population
-   metric. For population, use `customer-populations` workspace skill.
-2. **DO NOT join to `Fact_BillingDeposit` directly to compute deposit→trade
-   conversion.** Use `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`
-   (pre-stitched) or [`domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md). The raw join silently
-   loses recurring-deposit chains.
-3. **DO NOT assume `ActionTypeID` is stable across product versions.** The
-   dictionary has been re-numbered twice in production history (most recently
-   in 2023). Filter on `ActionDate >= '2023-01-01'` when using `ActionTypeID`
-   directly, or use the named columns in `v_fact_customeraction_enriched`.
-4. **DO NOT confuse `OperatorID` with `Dim_Customer.ManagerID`.** `OperatorID`
-   is the BackOffice operator who performed the action (an internal
-   employee). `ManagerID` on `Dim_Customer` is the customer's assigned
-   account manager / VIP rep — also an employee, but a different role.
-5. **DO NOT count copy-trading revenue from `Fact_CustomerAction` alone.** Use
-   `BI_DB_DailyCopyRevenue` (which already has the per-day, per-copier
-   aggregation) — the copy enrollment events in `Fact_CustomerAction` only
-   tell you who started copying whom, not the revenue the copy generated.
+| Table | UC FQN | Cols | What it adds |
+|---|---|---|---|
+| `BI_DB_Fact_Customer_Action_Position_Distribution` | `main.bi_db.gold_..._customer_action_position_distribution` | 40 | One row per `(RealCID, PositionID, ActionTypeID)` with **customer-state dimensional IDs resolved at action-time** (CountryID, LabelID, VerificationLevelID, PlayerStatusID, RiskStatusID, RiskClassificationID, GuruStatusID, RegulationID, AccountStatusID, AccountManagerID, PlayerLevelID, AccountTypeID, IsDepositor, SuitabilityTestStatusID, MifidCategorizationID, IsValidCustomer, IsCreditReportValidCB, AffiliateID, SettlementTypeID). **NOT a portfolio-shape distribution** — it's an action-time customer-state snapshot per position. |
+| `BI_DB_DailyCopyRevenue` | `main.bi_db.gold_..._bi_db_dailycopyrevenue` | 18 | **Per-day, per-PARENT (popular investor / guru)** revenue split by asset class: `Revenue_Copy`, `Revenue_Real_Stocks`, `Revenue_CFD_Stocks`, `Revenue_Real_Crypto`, `Revenue_CFD_Crypto`, `Revenue_FX`, `Revenue_Comm`, `Revenue_Ind`. Grain = `Date` × `ParentCID`. **NOT "per-day per-copier"** — to enumerate copiers join to `Dim_Mirror`. |
+| `BI_DB_Social_Activity` | `main.bi_db.gold_..._bi_db_social_activity` | 18 | Social post / comment / like text + media. **NOT sourced from `Fact_CustomerAction`** — independent live social pipeline. Use for active social engagement (FCA 21-26 are DEAD). Key cols: `ActionTypeID`, `ActionDate`, `PostID`, `CommentID`, `RealCID`, `MessageText`, `MessageSize`, `MessageWordNum`, `MediaTypeID`, `ParentID`, `SubTypeName`, `ActionID`. |
+| `BI_DB_DDR_CID_Level` | `main.bi_db.gold_..._bi_db_ddr_cid_level` | 175 | **Per-day per-CID** (NOT lifetime, has `DateID` grain). Aggregated metrics. Real columns: `Deposits`, `Revenue`, `Equity`, `Bonus`, `Compensation`, `Cashouts`, `Regulation` (STRING), `Country`, `PlayerLevel`, `PlayerStatus`, `AccountType`, `ActiveTrader`, `Funded_New_Def`, `FirstDepositDate`, `FirstDepositors`, `Registrations`, …175 cols total. **NO `LifetimeDeposit/Revenue/AUM` etc.** — those names were fabricated in a prior version. |
+| `BI_DB_First5Actions` | `main.bi_db.gold_..._bi_db_first5actions` | 86 | **Per-CID** first-five-action classification: `FirstAction`/`SecondAction`/.../`FifthAction` + dates + leverages + instruments + cross-types + 1/7/14/30/60/90/180/360-day revenue/deposit/equity windows + `LTV`, `AffiliateID`, `NewMarketingRegion`. Used by the registration-to-FTD funnel and lifecycle classifiers. |
 
 ## SQL patterns
 
-### Pattern 1 — every operator action on a customer
+### Pattern 1 — every action for a single customer, with type names
 
 ```sql
-SELECT fca.ActionDate, fca.ActionTypeID, fca.OperatorID, fca.SessionID, fca.IsManual,
-       fca.BeforeValue, fca.AfterValue, fca.ActionDetail
+SELECT fca.DateID, fca.Occurred, fca.ActionTypeID, dat.Name AS ActionName, dat.Category,
+       fca.PositionID, fca.InstrumentID, fca.Amount, fca.MirrorID,
+       fca.Description, fca.IsFeeDividend, fca.CompensationReasonID
 FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction fca
-WHERE fca.CID = :realcid
-  AND fca.IsManual = 1
-ORDER BY fca.ActionDate DESC;
+LEFT JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype dat
+       ON fca.ActionTypeID = dat.ActionTypeID
+WHERE fca.RealCID = :realcid
+  AND fca.etr_ymd BETWEEN '2026-04-01' AND '2026-05-10'
+ORDER BY fca.Occurred DESC;
 ```
 
-### Pattern 2 — what actions happened before / after a deposit-to-trade conversion
-
-Prefer the pre-stitched table in domain-cross/recurring-deposit-to-trade. If you
-absolutely need the raw join (for forensics on a single CID):
+### Pattern 2 — fee waterfall for a customer (use IsFeeDividend)
 
 ```sql
-SELECT m.*
-FROM main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics m
-WHERE m.CID = :realcid
-ORDER BY m.ActionDate;
+SELECT fca.DateID,
+       CASE fca.IsFeeDividend
+         WHEN 1 THEN 'overnight/weekend'
+         WHEN 2 THEN 'dividend'
+         WHEN 3 THEN 'SDRT'
+         WHEN 4 THEN 'ticket'
+       END AS FeeType,
+       SUM(fca.Commission)         AS Commission_USD,
+       SUM(fca.FullCommission)     AS FullCommission_USD,
+       COUNT(*)                    AS FeeEvents
+FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction fca
+WHERE fca.RealCID = :realcid
+  AND fca.ActionTypeID = 35
+  AND fca.etr_y = '2026'
+GROUP BY fca.DateID, fca.IsFeeDividend
+ORDER BY fca.DateID DESC, FeeType;
 ```
 
-### Pattern 3 — portfolio shape at action-time
+### Pattern 3 — per-action volume (use the enriched view — Active only)
+
+`VolumeOnOpen` is NULL for Passive Actions (35, 32, 19, 36-with-56/117/118)
+by design — don't aggregate it without filtering on Active types.
 
 ```sql
-SELECT pd.CID, pd.ActionDate, pd.ActionTypeID,
-       pd.OpenPositionCount, pd.GrossExposure, pd.MaxLeverage, pd.AvgLeverage
-FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution pd
-WHERE pd.CID = :realcid
-ORDER BY pd.ActionDate DESC
+SELECT v.DateID,
+       SUM(v.VolumeOnOpen)  AS VolumeOpen_USD,
+       SUM(v.VolumeOnClose) AS VolumeClose_USD,
+       COUNT(*)             AS Actions
+FROM main.etoro_kpi_prep.v_fact_customeraction_enriched v
+WHERE v.RealCID = :realcid
+  AND v.ActionTypeID IN (1, 2, 3, 39, 4, 5, 6, 28, 40)
+  AND v.etr_y = '2026'
+GROUP BY v.DateID
+ORDER BY v.DateID DESC;
+```
+
+### Pattern 4 — back-resolve compensation events to a position
+
+For `ActionTypeID=36` (Compensation), the position is encoded in the last
+word of `Description` when `CompensationReasonID IN (117, 118)`. The
+enriched view does this for you (uses TRY_CAST + REVERSE + SUBSTRING):
+
+```sql
+SELECT v.RealCID, v.Occurred, v.PositionID, v.CompensationReasonID, v.Amount, v.Description
+FROM main.etoro_kpi_prep.v_fact_customeraction_enriched v
+WHERE v.ActionTypeID = 36
+  AND v.CompensationReasonID IN (117, 118)
+  AND v.RealCID = :realcid
+ORDER BY v.Occurred DESC
 LIMIT 20;
 ```
 
-### Pattern 4 — per-CID DDR rollup (current state)
+### Pattern 5 — customer state at action-time
 
 ```sql
-SELECT cid.CID, cid.LifetimeDeposit, cid.LifetimeRevenue, cid.LifetimeAUM,
-       cid.RegulationName, cid.ClubLevelName, cid.IsActiveTrader, cid.LastTradeDate
-FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level cid
-WHERE cid.CID = :realcid;
+SELECT pd.DateID, pd.PositionID, pd.ActionTypeID, pd.Amount, pd.Leverage, pd.IsBuy,
+       pd.CountryID, pd.LabelID, pd.RegulationID, pd.PlayerStatusID,
+       pd.RiskStatusID, pd.RiskClassificationID, pd.MifidCategorizationID,
+       pd.IsValidCustomer, pd.IsCreditReportValidCB
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution pd
+WHERE pd.RealCID = :realcid
+  AND pd.etr_y = '2026'
+ORDER BY pd.Occurred DESC
+LIMIT 50;
 ```
 
-`BI_DB_DDR_CID_Level` is a denormalized one-row-per-customer rollup — handy
-for dashboards but not for trend analysis (use the new DDR daily/periodic
-status tables in Payments super-domain for trend).
+### Pattern 6 — per-day per-CID DDR rollup
+
+```sql
+SELECT cid.DateID, cid.CID, cid.Deposits, cid.Cashouts, cid.Bonus, cid.Compensation,
+       cid.Revenue, cid.Equity, cid.NetDeposit, cid.UnrealizedPnL, cid.CustomerPnL,
+       cid.Regulation, cid.Country, cid.PlayerLevel, cid.PlayerStatus,
+       cid.ActiveTrader, cid.Funded_New_Def
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level cid
+WHERE cid.CID = :realcid
+  AND cid.DateID BETWEEN 20260401 AND 20260510
+ORDER BY cid.DateID DESC;
+```
+
+### Pattern 7 — first 5 actions + early-window LTV per CID
+
+```sql
+SELECT f5.CID, f5.FirstAction, f5.FirstActionDate, f5.FirstInstrument, f5.FirstLeverage,
+       f5.SecondAction, f5.SecondActionDate, f5.ThirdAction, f5.FourthAction, f5.FifthAction,
+       f5.TradedCrypto, f5.TradedCopy, f5.TradedCopyFund, f5."Traded_FX/Commodities/Indices",
+       f5."Traded_Stocks/ETFs",
+       f5.Revenue30days, f5.Revenue90days, f5.Revenue360days, f5.LTV
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_first5actions f5
+WHERE f5.CID = :realcid;
+```
+
+Note: `Traded_FX/Commodities/Indices` and `Traded_Stocks/ETFs` contain
+slashes in the column NAME — backtick-quote them in Spark SQL.
 
 ## Wiki deep-reads
 
-- `knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md` — full ActionTypeID catalog
+- `knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md` — full ActionTypeID catalog, ETL flow, partial-close + reopen mechanics
 - `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_Fact_Customer_Action_Position_Distribution.md`
 - `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DailyCopyRevenue.md`
 - `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DDR_CID_Level.md`
