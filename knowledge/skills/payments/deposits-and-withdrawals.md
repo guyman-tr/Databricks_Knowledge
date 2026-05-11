@@ -18,9 +18,9 @@ intersects_with:
   - payments/emoney-accounts-and-cards
   - payments/finance-recon-and-balances
   - revenue-and-fees/SKILL
-  - cross/refund-chargeback-chain
-  - cross/recurring-deposit-to-trade
-  - cross/provider-reconciliation
+  - cross-domain/refund-chargeback-chain
+  - cross-domain/recurring-deposit-to-trade
+  - cross-domain/provider-reconciliation
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals

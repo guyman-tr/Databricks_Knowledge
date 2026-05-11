@@ -31,8 +31,8 @@ intersects_with:
   - payments/crypto-wallet
   - payments/finance-recon-and-balances
   - revenue-and-fees/SKILL
-  - cross/recurring-deposit-to-trade
-  - cross/crypto-to-fiat
+  - cross-domain/recurring-deposit-to-trade
+  - cross-domain/crypto-to-fiat
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms  # Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
   - main.etoro_kpi_prep.v_mimo_tradingplatform  # VIEW | Synapse: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform
@@ -245,9 +245,9 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **On-chain hash / wallet-side crypto transactions** | [`crypto-wallet.md`](crypto-wallet.md) |
 | **Realtime customer balance** (vs the daily snapshot here) | [`finance-recon-and-balances.md`](finance-recon-and-balances.md) |
 | **Fee revenue specifically** | [Revenue & Fees super-domain](../revenue-and-fees/SKILL.md) — MIMO has Amounts but not fee composition. |
-| **Customer's first trade after FTD** | [`../cross/recurring-deposit-to-trade.md`](../cross/recurring-deposit-to-trade.md) |
-| **Crypto deposit → fiat conversion chain** | [`../cross/crypto-to-fiat.md`](../cross/crypto-to-fiat.md) — `IsCryptoToFiat` flag is here, but the journey is in C.4 + C.3. |
-| **Provider statement reconciliation** | [`../cross/provider-reconciliation.md`](../cross/provider-reconciliation.md) |
+| **Customer's first trade after FTD** | [`../cross-domain/recurring-deposit-to-trade.md`](../cross-domain/recurring-deposit-to-trade.md) |
+| **Crypto deposit → fiat conversion chain** | [`../cross-domain/crypto-to-fiat.md`](../cross-domain/crypto-to-fiat.md) — `IsCryptoToFiat` flag is here, but the journey is in C.4 + C.3. |
+| **Provider statement reconciliation** | [`../cross-domain/provider-reconciliation.md`](../cross-domain/provider-reconciliation.md) |
 
 ## Deep reads
 

@@ -22,7 +22,7 @@ intersects_with:
   - payments/emoney-accounts-and-cards
   - payments/crypto-wallet
   - revenue-and-fees/SKILL
-  - cross/provider-reconciliation
+  - cross-domain/provider-reconciliation
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew  # Synapse: EXW_dbo.EXW_FinanceReportsBalancesNew | Tier 0 — canonical balance
   - main.etoro_kpi_prep.v_population_funded  # VIEW | Synapse: etoro_kpi_prep.v_population_funded | Tier 1 — population segmentation
@@ -276,9 +276,9 @@ ORDER BY frb.ReportDate
 | Per-platform balance breakdown (crypto inventory) | [`crypto-wallet.md`](crypto-wallet.md) (`EXW_WalletInventory`) |
 | Customer realizable equity from open positions | A. Trading & Markets (`V_Liabilities`, `Dim_Position`) |
 | Net MIMO that drove this balance | [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) (C.2) |
-| Provider statement vs internal recon | [`../cross/provider-reconciliation.md`](../cross/provider-reconciliation.md) |
+| Provider statement vs internal recon | [`../cross-domain/provider-reconciliation.md`](../cross-domain/provider-reconciliation.md) |
 | **Revenue per CID per period** | Revenue & Fees super-domain (`mv_revenue_trading`, `BI_DB_DDR_Fact_Revenue_Generating_Actions`) |
-| AML investigation case detail | D. Compliance & AML; for eMoney audit trail use [`../cross/tribe-emoney-audit.md`](../cross/tribe-emoney-audit.md) |
+| AML investigation case detail | D. Compliance & AML; for eMoney audit trail use [`../cross-domain/tribe-emoney-audit.md`](../cross-domain/tribe-emoney-audit.md) |
 
 ## Deep reads (column-level detail)
 

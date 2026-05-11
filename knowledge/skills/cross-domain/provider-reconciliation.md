@@ -164,7 +164,7 @@ ORDER BY DateID, Provider
 6. **Settlement date ≠ deposit date.** Providers settle T+1, T+2 or longer depending on agreement. Always use SETTLEMENT date on the external side and JOIN on a date window, not equality.
 7. **`MOPCountry`** = method-of-payment country. Useful for routing rules ("UK customer must use UK MID"). NULL for some providers.
 8. **One MID can be used by many countries / customers.** And one customer can be routed to multiple MIDs over time (failover). Don't assume CID→MID is stable.
-9. **Provider chargebacks** come back as a different transaction type — they appear in `Fact_Deposit_State` as a reversal row (e.g. `TransactionType='Chargeback'` or similar) referencing the original `DepositID`. For chargeback investigation chain → `cross/refund-chargeback-chain.md`.
+9. **Provider chargebacks** come back as a different transaction type — they appear in `Fact_Deposit_State` as a reversal row (e.g. `TransactionType='Chargeback'` or similar) referencing the original `DepositID`. For chargeback investigation chain → `cross-domain/refund-chargeback-chain.md`.
 10. **`EXW_PaymentReconciliation`** is the EXW (crypto wallet) side recon — separate from fiat provider recon. Same conceptual pattern (match internal vs external) but different tables.
 
 ## When to load just one parent instead

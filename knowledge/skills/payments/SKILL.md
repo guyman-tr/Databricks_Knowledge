@@ -19,7 +19,7 @@ out_of_scope:
   - Fees / fee revenue / commission / rollover / dividend / spread / staking / spaceship / moneyfarm fees → Revenue & Fees super-domain (H)
   - Bonuses (deposit, refer-a-friend, club, marketing campaign) → Compensation regular domain (planned, NOT a super-domain)
   - BackOffice manual deposit / operator action audit → Operations regular domain (planned, anchored on Fact_CustomerAction)
-  - Tribe / FiatDwh / Treezor audit envelopes / eMoney audit trail → cross/tribe-emoney-audit (Compliance ↔ C.3 eMoney cross-domain skill)
+  - Tribe / FiatDwh / Treezor audit envelopes / eMoney audit trail → cross-domain/tribe-emoney-audit (Compliance ↔ C.3 eMoney cross-domain skill)
   - Dealing IG / Saxo / Duco EOD broker recon, broker / LP identity, hedge mapping → Trading & Markets super-domain (dealing_dbo)
 ---
 
@@ -46,7 +46,7 @@ moving between platforms, sitting on customer balances. It is **not** about:
   manual credits) → Operations regular domain (planned, NOT a super-domain;
   data is too sprawled across `Trading.*`, `Billing.*`, `UserAPIDB.*`,
   `Settings.*`). For the audit-trail piece, anchor on `Fact_CustomerAction`.
-- **Tribe / FiatDwh / eMoney audit trail** → [`cross/tribe-emoney-audit.md`](../cross/tribe-emoney-audit.md).
+- **Tribe / FiatDwh / eMoney audit trail** → [`cross-domain/tribe-emoney-audit.md`](../cross-domain/tribe-emoney-audit.md).
   Tribe is the **Treezor XML audit envelope feed**; FiatDwhDB is Treezor's
   operational fiat mirror. The cross-domain skill owns the audit-trail map and supplies
   the recon patterns. C.3 (eMoney) supplies the join keys (`AccountID`,
@@ -95,7 +95,7 @@ graph LR
 **Out of scope here**: position-vs-broker EOD recon (`Dealing_IGRecon*`)
 and broker / LP identity (`dealing_dbo`) live in the Trading super-domain.
 Treezor SOC2 audit envelopes (`FiatDwhDB.Tribe`, `eMoney_Tribe.*`,
-`bronze_fiatdwhdb_tribe_*`) live in the [`tribe-emoney-audit`](../cross/tribe-emoney-audit.md)
+`bronze_fiatdwhdb_tribe_*`) live in the [`tribe-emoney-audit`](../cross-domain/tribe-emoney-audit.md)
 cross-domain skill; Compliance super-domain owns the interpretation rules when built.
 
 Every sub-skill below owns **one slice** of that lifecycle. The slices are
@@ -120,11 +120,11 @@ designed so that:
 
 | Cross-domain | Connects | When to load |
 |--------|----------|--------------|
-| [`../cross/crypto-to-fiat.md`](../cross/crypto-to-fiat.md) | C.4 ↔ C.3 via `EXW_C2F_E2E` | "Crypto came into wallet then converted to EUR/USD on IBAN" — cross-domain skill owns the E2E underbelly map. |
-| [`../cross/recurring-deposit-to-trade.md`](../cross/recurring-deposit-to-trade.md) | C.1 ↔ A. Trading | "Customer deposited via recurring plan → opened first position within N days". Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
-| [`../cross/provider-reconciliation.md`](../cross/provider-reconciliation.md) | C.1/C.5 ↔ external providers | Settlement-level recon: `ExternalTransactionID` matching against provider statement files (Worldpay/SafeCharge/Nuvei/etc.). |
-| [`../cross/refund-chargeback-chain.md`](../cross/refund-chargeback-chain.md) | C.1 ↔ H. Revenue & Fees ↔ D. Compliance | Investigating a single dispute end-to-end: original deposit → refund/chargeback → AML flag → resolution. |
-| [`../cross/tribe-emoney-audit.md`](../cross/tribe-emoney-audit.md) | D. Compliance ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) + FiatDwhDB operational mirrors. SOC2 audit trail / "who authorized this" / operator-action forensics on eMoney accounts/cards/IBAN. C.3 supplies join keys; cross-domain skill supplies the audit map. |
+| [`../cross-domain/crypto-to-fiat.md`](../cross-domain/crypto-to-fiat.md) | C.4 ↔ C.3 via `EXW_C2F_E2E` | "Crypto came into wallet then converted to EUR/USD on IBAN" — cross-domain skill owns the E2E underbelly map. |
+| [`../cross-domain/recurring-deposit-to-trade.md`](../cross-domain/recurring-deposit-to-trade.md) | C.1 ↔ A. Trading | "Customer deposited via recurring plan → opened first position within N days". Canonical pre-stitched table: `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`. |
+| [`../cross-domain/provider-reconciliation.md`](../cross-domain/provider-reconciliation.md) | C.1/C.5 ↔ external providers | Settlement-level recon: `ExternalTransactionID` matching against provider statement files (Worldpay/SafeCharge/Nuvei/etc.). |
+| [`../cross-domain/refund-chargeback-chain.md`](../cross-domain/refund-chargeback-chain.md) | C.1 ↔ H. Revenue & Fees ↔ D. Compliance | Investigating a single dispute end-to-end: original deposit → refund/chargeback → AML flag → resolution. |
+| [`../cross-domain/tribe-emoney-audit.md`](../cross-domain/tribe-emoney-audit.md) | D. Compliance ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) + FiatDwhDB operational mirrors. SOC2 audit trail / "who authorized this" / operator-action forensics on eMoney accounts/cards/IBAN. C.3 supplies join keys; cross-domain skill supplies the audit map. |
 
 ## Cross-cutting facts
 
@@ -160,7 +160,7 @@ These hold whether you load any sub-skill or not:
   Compensation.
 - It does not cover **broker EOD position recon** or **broker / LP identity** — those are Trading & Markets (`dealing_dbo`).
 - It does not cover **operator audit trail** (`Fact_CustomerAction` for back-office actions) — that's the planned Operations regular domain.
-- It does not cover **Treezor / Tribe / FiatDwhDB audit envelopes** — that's the [`tribe-emoney-audit`](../cross/tribe-emoney-audit.md) cross-domain skill.
+- It does not cover **Treezor / Tribe / FiatDwhDB audit envelopes** — that's the [`tribe-emoney-audit`](../cross-domain/tribe-emoney-audit.md) cross-domain skill.
 
 ## Skill provenance
 

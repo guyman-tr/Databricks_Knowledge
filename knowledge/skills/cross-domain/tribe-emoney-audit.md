@@ -290,9 +290,9 @@ WHERE cb.BalanceDate = @date
 |---|---|
 | eMoney customer transaction volumes / FX spread / IBAN inflows | C.3 (`emoney-accounts-and-cards.md`) |
 | Compliance KYC / risk-rule logic / regulator-facing reports | Compliance super-domain (when built) |
-| Crypto came in → converted to fiat on IBAN forensics | `cross/crypto-to-fiat.md` |
-| Provider statement reconciliation for fiat deposits/withdrawals (not eMoney) | `cross/provider-reconciliation.md` |
-| Refund / chargeback chain on a customer dispute | `cross/refund-chargeback-chain.md` |
+| Crypto came in → converted to fiat on IBAN forensics | `cross-domain/crypto-to-fiat.md` |
+| Provider statement reconciliation for fiat deposits/withdrawals (not eMoney) | `cross-domain/provider-reconciliation.md` |
+| Refund / chargeback chain on a customer dispute | `cross-domain/refund-chargeback-chain.md` |
 
 ## Cluster provenance
 

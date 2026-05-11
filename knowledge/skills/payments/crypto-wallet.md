@@ -24,7 +24,7 @@ intersects_with:
   - payments/emoney-accounts-and-cards
   - payments/finance-recon-and-balances
   - revenue-and-fees/SKILL
-  - cross/crypto-to-fiat
+  - cross-domain/crypto-to-fiat
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions  # Synapse: EXW_dbo.EXW_FactTransactions | unified DWH transaction fact — Tier 1
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser  # Synapse: EXW_dbo.EXW_DimUser | EXW user dim — Tier 1
@@ -101,7 +101,7 @@ not here).
 | **2** | **`EXW_Wallet.*` ledger** *(UC: `main.wallet.bronze_walletdb_wallet_*`)* — `CustomerWalletsView`, `WalletBalances`, `SentTransactions`, `ReceivedTransactions`, `Conversions`/`ConversionTransactions`, `Redemptions`, `SentTransactionOutputs`, `TransactionsView` | Production-mirror ledger with on-chain detail: `BlockchainTransactionId` (the on-chain hash), `WalletId`, public address (via `WalletPool`), `CorrelationId` (the cross-table linker), per-output destination amounts, real-time `WalletBalances`. | Question requires on-chain hash forensics, public-address detail, multi-output sends, real-time balance, sent↔received reconciliation, or crypto-crypto swap leg detail. |
 | **3** | **Status / AML / custodian detail** *(UC: `main.wallet.bronze_walletdb_wallet_*`)* — `SentTransactionStatuses`, `ReceivedTransactionStatuses`, `AmlValidations`, `Requests`, `WalletPool` | Per-event status logs (these are TRUE event logs, unlike TP `Fact_Deposit_State`), pre-send AML decisions, request-lifecycle events, custodial-provider mapping (Tangany / Simplex / etc.). | "When did this confirm / how long pending / did it retry / why was it AML-blocked / which custodian holds this address." |
 | **QA-only** | `EXW_dbo.EXW_FactRedeemTransactions`, `EXW_FactConversions`, `EXW_PaymentReconciliation` | Pre-enriched per-flow facts in Synapse (redemption already joined to sent + received; conversion already joined to send legs). **Not migrated to UC** — Genie cannot query these. | Use **only** when running QA in Synapse directly. From Databricks Genie, build the same join from Tier 2 (`SentTransactions` ↔ `Redemptions` / `Conversions`). |
-| **C2F** | `EXW_dbo.EXW_C2F_E2E` *(UC: `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e`)* — canonical end-to-end Crypto→Fiat | Stitches the full journey: crypto came into wallet → converted → fiat landed in IBAN. | **Don't reach here from this skill.** Load `cross/crypto-to-fiat.md` — it owns the E2E underbelly map (how it's stitched, which keys, which intermediate states). |
+| **C2F** | `EXW_dbo.EXW_C2F_E2E` *(UC: `main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e`)* — canonical end-to-end Crypto→Fiat | Stitches the full journey: crypto came into wallet → converted → fiat landed in IBAN. | **Don't reach here from this skill.** Load `cross-domain/crypto-to-fiat.md` — it owns the E2E underbelly map (how it's stitched, which keys, which intermediate states). |
 | **Cross-platform** | `BI_DB_DDR_Fact_MIMO_AllPlatforms WHERE MIMOPlatform='eMoney' AND IsCryptoToFiat=1` *(UC: `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms`)* | Crypto only enters MIMO after C2F. Filter `eMoney` rows that are C2F-tagged. | "How much customer-money entered IBAN via crypto last month" — answered here. **For pure on-chain volumes, use Tier 1 instead.** |
 | **Fees** | `EXW_dbo.EXW_EthFeeSent_Blockchain`, `EXW_ETH_FeeData_Blockchain` *(UC: `main.bi_db.gold_sql_dp_prod_we_exw_dbo_*`)* | ETH gas-fee revenue analysis. | **Don't reach here from this skill.** Route to Revenue & Fees super-domain (`fees-crypto-wallet` sub-skill, `v_revenue_transfercoinfee`, `v_revenue_cryptotofiat_c2f`). |
 | **Recon** | `Wallet.*` *(no `EXW_` prefix — production OLTP mirror)* | Truth source. Same table names as `EXW_Wallet.*` but without the ETL transformations. | Only for production reconciliation. **Use `EXW_Wallet.*` for all analytical work.** |
@@ -145,7 +145,7 @@ graph TB
     end
 
     subgraph C2FCross["Crypto-to-Fiat (off-ramp) — cross-domain skill"]
-        E2E["EXW_C2F_E2E<br/>UC: bi_db.gold_*_exw_dbo_exw_c2f_e2e<br/>see cross/crypto-to-fiat"]
+        E2E["EXW_C2F_E2E<br/>UC: bi_db.gold_*_exw_dbo_exw_c2f_e2e<br/>see cross-domain/crypto-to-fiat"]
     end
 
     subgraph Fees["Gas-fee / revenue — Revenue & Fees"]
@@ -279,7 +279,7 @@ WHERE s.Id = :sent_id
 | Reconcile sent → received for one blockchain hash | **`SentTransactions ↔ ReceivedTransactions`** | join on `BlockchainTransactionId`. |
 | AML-blocked sends | **`AmlValidations`** | join to `SentTransactions`; filter on AML decision. |
 | When did transaction X confirm / how long pending | **`SentTransactionStatuses`** | TRUE event log; pivot for SLA. |
-| Crypto came in → converted to EUR/USD on IBAN (off-ramp) | **`cross/crypto-to-fiat`** | `EXW_C2F_E2E` is the canonical E2E table; the cross-domain skill owns the underbelly. |
+| Crypto came in → converted to EUR/USD on IBAN (off-ramp) | **`cross-domain/crypto-to-fiat`** | `EXW_C2F_E2E` is the canonical E2E table; the cross-domain skill owns the underbelly. |
 | "How much customer money entered IBAN via crypto last month" | **MIMO_AllPlatforms** | `WHERE MIMOPlatform='eMoney' AND IsCryptoToFiat=1` — crypto only enters MIMO post-C2F. |
 | Crypto staking rewards | **Revenue & Fees** | `Staking.*`, `EXW_dbo.Staking_*`, `v_revenue_stakingfee`. |
 | Gas fee paid for an ETH send | **Revenue & Fees** | `EXW_EthFeeSent_Blockchain`. |
@@ -301,7 +301,7 @@ WHERE s.Id = :sent_id
 11. **`AmlValidations` runs PRE-send.** A send may exist with an AmlValidation row that blocked it — check status.
 12. **DWH `EXW_dbo` Fact tables that ARE in UC** (`EXW_FactTransactions`, `EXW_DimUser`, `EXW_WalletInventory`) are populated by `SP_EXW_*` procs in Synapse. If a fact looks stale, check the SP run; don't roll your own from raw `EXW_Wallet`.
 13. **Tangany / Simplex are custodial wallet providers** — see `WalletPool.Provider`. Not all wallets are on the same provider.
-14. **C2F (Crypto-to-Fiat) belongs in the cross-domain skill, not here.** This skill stops at "crypto sent off-platform" / "crypto-crypto swap". The full E2E flow into IBAN fiat lives in `cross/crypto-to-fiat`. Anchor for that cross-domain skill: `EXW_dbo.EXW_C2F_E2E` (UC: `bi_db.gold_*_exw_dbo_exw_c2f_e2e`).
+14. **C2F (Crypto-to-Fiat) belongs in the cross-domain skill, not here.** This skill stops at "crypto sent off-platform" / "crypto-crypto swap". The full E2E flow into IBAN fiat lives in `cross-domain/crypto-to-fiat`. Anchor for that cross-domain skill: `EXW_dbo.EXW_C2F_E2E` (UC: `bi_db.gold_*_exw_dbo_exw_c2f_e2e`).
 15. **Staking and gas-fee revenue are NOT here.** They're in Revenue & Fees super-domain. This skill points to the on-chain transactions; the *fee revenue* analysis routes elsewhere.
 
 ## When to bridge / drill out
@@ -309,7 +309,7 @@ WHERE s.Id = :sent_id
 | If the question also asks about… | …go to… |
 |---|---|
 | Cross-platform money flow (TP + eMoney + Crypto + Options) | [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) (C.2) |
-| **Crypto came in → converted to EUR/USD on IBAN** (full E2E off-ramp) | [`../cross/crypto-to-fiat.md`](../cross/crypto-to-fiat.md) — owns `EXW_C2F_E2E` and the underbelly map |
+| **Crypto came in → converted to EUR/USD on IBAN** (full E2E off-ramp) | [`../cross-domain/crypto-to-fiat.md`](../cross-domain/crypto-to-fiat.md) — owns `EXW_C2F_E2E` and the underbelly map |
 | **Crypto staking rewards / staking-platform fees / ETH gas-fee revenue** | [revenue-and-fees](../revenue-and-fees/SKILL.md) (`v_revenue_stakingfee`, `v_revenue_transfercoinfee`, `EXW_EthFeeSent_Blockchain`) |
 | Customer total balance (crypto + fiat + open positions) | [`finance-recon-and-balances.md`](finance-recon-and-balances.md) (C.5) |
 | Crypto CFD trading (positions, P&L on ETH/BTC pair) | A. Trading & Markets (NOT here — CFD is a derivative on price, not a wallet position) |
