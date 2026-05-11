@@ -31,7 +31,10 @@ required_tables:
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
-version: 1
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog
+  - main.trading.bronze_etoro_trade_position_datafactory
+  - main.trading.bronze_etoro_history_position_datafactory
+version: 2
 owner: "dataplatform"
 last_validated_at: "2026-05-11"
 ---
@@ -82,7 +85,9 @@ Last verified: 2026-05-11
 | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` | **PRIMARY** — granular per-event state. State-at-event-time, fastest source, the fact for all transactional questions. ~billions of rows; partitioned. |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position` | Position metadata master. `OpenRate`, `Leverage` (often), `OpenDateID`, fill prices, spread snapshots at open. Mutable fields (`MirrorID`, `MirrorTypeID`, `IsActiveTrade`, current `CloseRate`) — DO NOT trust for at-event-time. |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` | Older / less enriched granular fact. `fact_customeraction_w_metrics` supersedes it for most queries — use this only when you need a column the metrics-fact doesn't have. |
-| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_positionchangelog` *(or `main.trade.positionchangelog` mirror)* | Point-in-time change-log. Every mutation, every timestamp. Rare use, deterministic. |
+| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog` | Point-in-time change-log. Every mutation, every timestamp. Rare use, deterministic. |
+| `main.trading.bronze_etoro_trade_position_datafactory` | OLTP bronze mirror of `Trade.Position_DataFactory` — open positions only. Use when you need OrderID→PositionID and the dim's NULLs aren't enough. |
+| `main.trading.bronze_etoro_history_position_datafactory` | OLTP bronze mirror of `History.Position_DataFactory` — closed positions only. Pair with the trade-side bronze for full lifecycle bridging. |
 
 ---
 
@@ -214,10 +219,11 @@ WHERE PositionID = 123456789;
 ### Pattern 5 — State AT ARBITRARY DATE Y (the slow but deterministic answer)
 ```sql
 SELECT *
-FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_positionchangelog
+FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog
 WHERE PositionID = 123456789
-  AND ChangeDate <= '2026-03-15 14:30:00'
-ORDER BY ChangeDate DESC
+  AND Occurred <= '2026-03-15 14:30:00'
+  AND OccurredDateID BETWEEN 20260301 AND 20260316
+ORDER BY Occurred DESC
 LIMIT 1;
 ```
 **Use when:** "what was position X's state on March 15?", regulator queries, retrospective audit. Rare. Slow. Authoritative.
@@ -247,6 +253,135 @@ WHERE ActionTypeID IN (1, 2, 3, 39)
   AND ActionDate >= CURRENT_DATE - 1;
 ```
 **Use when:** "how many copy trades opened yesterday?". Uses the fact, MirrorID at the open event. Do NOT use the dim — see Critical Warning #1.
+
+---
+
+## Worked Example — OrderID → PositionID (the "half are NULL" question)
+
+**Question shape:** "How do I go from `OrderID` to `PositionID`? I see `OrderID` on `Dim_Position` but it's NULL for ~half the rows."
+
+This is the textbook case where the dim is **actually authoritative** and the fact does not help — `fact_customeraction_w_metrics` has `PositionID` but no `OrderID`, because at fact-event granularity the originating order is already irrelevant.
+
+### Why ~half are NULL (it's not a bug)
+
+Per the `Dim_Position` wiki:
+
+> `OrderID | int | YES | FK to Trade.Orders. Originating order. **NULL for corporate action/dividend positions.**`
+> `ExitOrderID | int | YES | Order that closed the position (exit order).`
+
+So `Dim_Position.OrderID` is populated only when the position was opened **through `Trade.OrderTbl`** (limit / stop / scheduled-rate / entry orders). It is NULL for any pathway that bypassed the order book:
+
+- Corporate-action positions (stock splits, dividends-as-units, airdrops)
+- Reopen positions (`IsReOpen = 1`)
+- Copy-trade hierarchical opens — see `OpenPositionReasonID = 1 (Hierarchical Open)`
+- ACATS in-transfers (`OpenPositionReasonID = 13`)
+- Direct market fills that never sat in the order book
+
+`Dim_Position.OpenPositionReasonID` tells you **which pathway** opened the position, so you can predict whether `OrderID` will be populated.
+
+### The three canonical bridges (all carry `OrderID + PositionID`)
+
+```sql
+-- OPEN positions (bronze mirror of OLTP Trade.Position_DataFactory)
+main.trading.bronze_etoro_trade_position_datafactory     -- bronze
+main.trading.silver_etoro_trade_position                 -- silver (cleaner types)
+
+-- CLOSED positions (bronze mirror of OLTP History.Position_DataFactory)
+main.trading.bronze_etoro_history_position_datafactory   -- bronze (no silver exists)
+
+-- UNIFIED (open + closed, plus enriched columns)
+main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position        -- the one you already use
+```
+
+`Dim_Position` IS the union — it carries both open (`CloseDateID = 0`) and closed (`CloseDateID > 0`) rows. The 50% NULL rate on `OrderID` is real and would also appear in a fresh union of the two bronze tables.
+
+### The query (fresh bronze, bypassing dim's ETL latency)
+
+```sql
+SELECT OrderID, PositionID, 'OPEN' AS lifecycle_state, OpenDateID
+FROM   main.trading.bronze_etoro_trade_position_datafactory
+WHERE  OrderID = <your_order_id>
+  AND  COALESCE(IsDelete, 0) = 0
+
+UNION ALL
+
+SELECT OrderID, PositionID, 'CLOSED' AS lifecycle_state, OpenDateID
+FROM   main.trading.bronze_etoro_history_position_datafactory
+WHERE  OrderID = <your_order_id>
+  AND  COALESCE(IsDelete, 0) = 0;
+```
+
+### Gotchas specific to this bridge
+
+1. **One `OrderID` → N `PositionID`s.** A single eToro order can split-fill (especially real-money equities/crypto). Treat the relationship as 1-to-many.
+2. **`Dim_Position` is already partitioned by `CloseDateID`.** When using the dim, always add `WHERE CloseDateID BETWEEN X AND Y` (closed) or `WHERE CloseDateID = 0` (open) for partition pruning — without it Synapse scans 230+ monthly partitions; in UC the equivalent is full Delta scan.
+3. **The closing-side OrderID lives in `ExitOrderID`, not `OrderID`.** If your question is "what order closed this position?", join on `ExitOrderID`, not the opening `OrderID`.
+4. **Hedge-side OrderID is a different concept.** If the question is actually "the LP-side hedge order — which client positions did it cover?", that lives in `main.dealing.bronze_etoro_hedge_executionlog` / `*_hbcorderlog` / `*_hbcexecutionlog` / `*_manualorderexecutionlog`. Bridge via `HedgeID` / `HBCID`, **not** `Trade.OrderTbl.OrderID`. See [`dealing-investigation-and-execution.md`](dealing-investigation-and-execution.md).
+5. **`fact_customeraction_w_metrics` won't help — by design.** The fact carries `PositionID` but no `OrderID`. This is correct: at event granularity, the pre-open order is metadata, not a transaction. This is the rare case where the fact-first rule does NOT apply.
+
+---
+
+## Deep `Dim_Position` gotchas (harvested from wiki)
+
+UC table comments give you the 1024-char authored summary. The full wiki (`knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.md`, ~534 lines, 134 columns) has gotchas no UC comment will surface. The ones every analyst running against `Dim_Position` needs:
+
+1. **`CloseDateID = 19000101` is a transient ETL state, NOT closed.** During `SP_Dim_Position_DL_To_Synapse @dt`, closing positions are first UPDATEd back to `CloseOccurred='1900-01-01', CloseDateID=19000101` before being re-inserted from staging. For confirmed-closed positions always filter `WHERE CloseDateID NOT IN (0, 19000101)`.
+2. **`OpenDateID` / `CloseDateID` are INT YYYYMMDD, NOT date.** Convert with `CAST(CAST(OpenDateID AS VARCHAR(8)) AS DATE)`. `CloseDateID = 0` means still open.
+3. **`IsPartialCloseChild` filter is asymmetric.** Use `WHERE COALESCE(IsPartialCloseChild, 0) = 0` when aggregating **open-side** metrics — but NEVER on close-side metrics. Some open-side columns (e.g., `Volume`) are already pro-rated for the child, so excluding children would double-discount. Apply case-by-case; the safe default for CLOSE-side aggregations is to include all rows.
+4. **`Volume` and `VolumeOnClose` are ETL-computed `ROUND(...)` approximations.** Formula: `ROUND(AmountInUnitsDecimal * InitForexRate * USD_conversion, 0)`. For precise USD notional use `AmountInUnitsDecimal * InitForex_USDConversionRate`, not `Volume`.
+5. **`RegulationIDOnOpen = 0` means "ETL JOIN to `etoro_History_BackOfficeCustomer` found nothing", not "no regulation".** Defaulted via `ISNULL(..., 0)`. A naïve `IS NULL` filter misses these — use `RegulationIDOnOpen > 0` instead.
+6. **`UpdateDate` mixes `GETDATE()` (new inserts) and `GETUTCDATE()` (updates of closing positions).** Not a reliable "data freshness" indicator — there's a timezone discontinuity within the same column.
+7. **PK on `(PositionID, CloseDateID)` is NOT ENFORCED.** Synapse does not validate uniqueness; if ETL has a bug, duplicates can exist. Don't assume `PositionID` is globally unique without de-dup.
+8. **Late-added column NULL patterns.** Many columns have addition dates after some positions were already loaded — these columns will be NULL for older positions:
+   - `OpenMarket_*` / `CloseMarket_*` (Group J): added 2023-03-07
+   - `OpenMarkup` / `CloseMarkup` / `SpreadedCommission` (Group L): added 2024-01-15
+   - `DLTOpen` / `DLTClose`: added 2024-06-02
+   - `CommissionVersion`: added 2024-08-22
+   - `OpenTotalTaxes` / `CloseTotalTaxes` / `OpenTotalFees` / `CloseTotalFees`: added 2025-06-25
+   - `Close_CalculationRate` / `Close_ConversionRate` / `Close_PriceType`: added 2025-09-08
+9. **`HedgeID` is NULL until the hedge fires.** A newly opened position has `HedgeID = NULL` until the LP-side hedge order is placed. Don't `INNER JOIN` to `Trade.Hedge` if you want to include un-hedged positions.
+10. **`SettlementTypeID` supersedes `IsSettled`.** `SettlementTypeID`: 0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE. The boolean `IsSettled` is legacy and only true/false — for futures (`SettlementTypeID = 4`) or TRS (`= 2`) reach for the new column.
+11. **The ETL has six supplementary staging joins.** `SP_Dim_Position_DL_To_Synapse @dt` reads from staging in `etoro_History_BackOfficeCustomer` (regulation), `etoro_Trade_GetInstrument` (`IsSettled` logic), `etoro_History_PositionChangeLog` (`IsSettled` + `Amount` corrections), `etoro_Trade_PositionAirdropLog` (`IsAirDrop`), `PriceLog_History_CurrencyPrice_Active` (price book), and `Ext_Dim_Position_FundCIDs` (`IsCopyFundPosition`). If you're reconciling a `Dim_Position` discrepancy, the source is almost always one of these six staging tables, not the position bronze itself.
+
+---
+
+## Deep `Dim_PositionChangeLog` gotchas (harvested from wiki)
+
+The change-log table (`main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog`, ~17 columns) carries its own traps:
+
+1. **Multiple rows per `(PositionID, OccurredDateID)`.** A position can have many change events on the same day — particularly `ChangeTypeID = 12` (amount adjustments) which the `Dim_Position` ETL sums via `SUM(AmountChanged) GROUP BY PositionID`. Do NOT assume one row per position-day.
+2. **`ChangeTypeID` is UNDOCUMENTED in DWH.** Values inferred from SP code (all Tier 4 unverified):
+   - `0` = Initial open event (used to detect first appearance in changelog for hedge-server snapshot)
+   - `1` = Rate change (StopRate or LimitRate modification)
+   - `2` = Unknown — seen in live data
+   - `5` = Added 2024-04-30, unknown
+   - `11` = Partial close related event
+   - `12` = Amount adjustment (sum cumulatively for same-day mods)
+   - `13` = Unknown
+3. **Historical completeness gap.** Before **2025-01-05**, only `ChangeTypeID ∈ {1, 5, 11, 12, 13}` were loaded. Pre-2025-01-05 history for `ChangeTypeID ∈ {0, 2, …}` is **missing**. If you're reconstructing position state across the 2025 boundary, expect gaps in initial-open events for old positions.
+4. **`AmountChanged = 0` is valid.** A row with `AmountChanged = 0` can represent a StopRate/LimitRate-only change (no amount modification).
+5. **`PreviousIsSettled` can be NULL.** If the change event did not involve settlement-status mutation, both `IsSettled` and `PreviousIsSettled` are NULL — filter explicitly when looking for settlement transitions.
+6. **`PreviousStopRate` and `StopRate` are NOT NULL but can be `0.0`.** Treat `0.0` as "no stop set", not as a real rate.
+
+---
+
+## Position-reason lookups (`Dim_Position.OpenPositionReasonID` / `ClosePositionReasonID`)
+
+These are **separate** from the fact's `ActionTypeID` enumeration. They tell you the **reason** a position opened/closed, which is the strongest predictor of whether `OrderID` will be populated:
+
+| Field | Value | Meaning |
+|---|---:|---|
+| `OpenPositionReasonID` | 0 | Customer-initiated open (most common; `OrderID` usually populated if from order book) |
+| `OpenPositionReasonID` | 1 | Hierarchical Open — copy-trade child auto-opened (`OrderID` typically NULL) |
+| `OpenPositionReasonID` | 2 | Reopen — `IsReOpen = 1`, `ReopenForPositionID` points to the original |
+| `OpenPositionReasonID` | 3 | Open Open — `IsOpenOpen = 1` copy behavior |
+| `OpenPositionReasonID` | 13 | ACATS_IN — incoming external account transfer (`OrderID` NULL) |
+| `ClosePositionReasonID` | 0 | Customer-initiated close |
+| `ClosePositionReasonID` | 1 | Stop Loss triggered |
+| `ClosePositionReasonID` | 5 | Take Profit triggered |
+| `ClosePositionReasonID` | 9 | Hierarchical Close — copy-trade parent close cascaded |
+
+Source: `SP_Dim_Position_DL_To_Synapse` mapping from production `ActionType` columns. The full `Dim_ClosePositionReason` dimension exists at `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason` — join when you want the human-readable name rather than the ID.
 
 ---
 
@@ -281,3 +416,15 @@ If you remember nothing else from this skill: **the fact wins for everything tra
 - Per-position revenue / fees → [`../domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md) — join by `PositionID` / `ActionID`
 - Copy-trade economics, Popular Investor compensation → `copy-trading-and-mirror.md` *(pending dealing-analyst skill)*
 - Execution forensics on a single position → [`dealing-investigation-and-execution.md`](dealing-investigation-and-execution.md)
+
+## Deeper reading — authoritative wikis
+
+This skill summarizes and routes. For full column-level reference (134 columns on Dim_Position, 17 on PositionChangeLog), ETL SP source, daily refresh logic, and tier confidence per column, drill into the underlying wikis:
+
+- `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.md` — 534 lines, the source of every gotcha above. ETL: `SP_Dim_Position_DL_To_Synapse @dt`. Column inventory in 26 groups (A–Z). Includes Synapse and UC partitioning advice.
+- `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.lineage.md` — full lineage chain `etoroDB-REAL → Bronze → DWH_staging → Dim_Position → UC` per column, with transform type (passthrough / rename / ETL-computed).
+- `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PositionChangeLog.md` — 17-column reference for the change-log, including the historical-completeness 2025-01-05 boundary.
+- `knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md` — the older granular fact (superseded by `fact_customeraction_w_metrics` for most queries but still has columns the metrics-fact lacks).
+- `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_ClosePositionReason.md`, `Dim_PositionHedgeServerChangeLog_Snapshot.md`, `Dim_Position_Account_Statement_*.md` — companion dim/snapshot tables.
+
+**Doctrine for this skill family:** skills route, wikis explain. When a question goes past the gotchas captured here, drill to the wiki for the column-by-column ground truth.
