@@ -43,7 +43,7 @@ required_tables:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog
   - main.trading.bronze_etoro_trade_position_datafactory
   - main.trading.bronze_etoro_history_position_datafactory
-version: 3
+version: 4
 owner: "dataplatform"
 last_validated_at: "2026-05-11"
 ---
@@ -88,9 +88,11 @@ Last verified: 2026-05-11
 2. **Tier 1 — The fact's grain is ONE ROW PER ACTION EVENT, not one row per position.** A single `PositionID` appears multiple times in `fact_customeraction_w_metrics` — once for open, possibly several for modifications, and once or more for close (partial closes stack). `SELECT * WHERE PositionID = X` returns the whole lifecycle. For state-at-event-time, filter by `ActionTypeID`. For state-now, take the most recent event by `ActionDate`. Source: `Fact_CustomerAction.md` §1 (corrected from "per customer per day" to "per event" by reviewer Guy, 2026-03-03).
 3. **Tier 1 — `ActionTypeID = 28` is NOT partial close.** Partial-close is signaled by `IsPartialCloseParent = 1` and `IsPartialCloseChild = 1` on the same close event row. `ActionTypeID = 28` is **`DetachedPositionClose`** — a close after the position was detached from its mirror. `ActionTypeID = 3` is `CopyPlusPositionOpen` (`MirrorID=0, OrigParentPositionID>0`), NOT "Smart Portfolio" — Smart Portfolio identification is `MirrorTypeID = 4`. `ActionTypeID = 39` is `PositionOpenTypeUnknown` (position open without matching History.Credit), and `ActionTypeID = 40` is `PositionCloseTypeUnknown` (close without matching credit). Source: `Fact_CustomerAction.md` §2.1.
 4. **Tier 1 — `w_metrics` UC column comments are MISATTRIBUTED on at least two columns.** Trusting `comment` on `de_output_etoro_kpi_fact_customeraction_w_metrics` directly is unsafe: `PositionID.comment` currently carries the description for `CompensationReasonID`, and `IsCopyFund.comment` carries the `MirrorTypeID` enum. The wiki is canonical; UC needs a metadata refresh. Source: live `SELECT comment FROM main.information_schema.columns WHERE table_name='de_output_etoro_kpi_fact_customeraction_w_metrics'` 2026-05-11.
-5. **Tier 2 — `Dim_PositionChangeLog` is the ONLY deterministic point-in-time source for arbitrary dates.** The fact captures *events*; the change log captures *every mutation with timestamps*. For "what was position X on 2026-03-15 14:30?", only `Dim_PositionChangeLog` answers. Don't reach for it for state-at-open / state-at-close / state-now — the fact is far faster.
-6. **Tier 2 — `Dim_PositionChangeLog` ETL uses DELETE+INSERT (not MERGE).** SP deletes `WHERE OccurredDateID >= @YesterdayID` and re-inserts from staging `WHERE Occurred >= @Yesterday`. A change event whose `Occurred` is one day but processed the next can be **deleted and lost**. Late-arrival risk for retrospective queries near day boundaries. Source: `Dim_PositionChangeLog.review-needed.md`.
-7. **Tier 3 — `IsActiveTrade` is current-state on the dim and at-event-time on the fact.** "Was this position active at open?" doesn't make sense — it WAS active because it was just opened. "Is it active now?" → `Dim_Position.IsActiveTrade`. "Was it active as of date Y?" → compute from events (max `ActionDate ≤ Y` AND no close event by Y) or use `Dim_PositionChangeLog`.
+5. **Tier 1 — `InvestedAmountIn` / `InvestedAmountOut` / `Amount` are SIGNED on `w_metrics` (wallet-flow convention).** Live data 2026-05-01: `SUM(InvestedAmountIn)` across opens (ActionTypeID 1,2,3,39) = **-$226.79M** (negative — cash leaving wallet to fund positions); `SUM(InvestedAmountOut)` across closes (ActionTypeID 4,5,6,28,40) = **+$242.47M** (positive — cash returning to wallet). The DDR Fact_Trading_Volumes_And_Amounts stores these as positive magnitudes (no sign). When you switch between the two, wrap w_metrics in `ABS()` if you want magnitudes, or use the sign for true wallet-flow accounting (net deployment = `SUM(InvestedAmountIn) + SUM(InvestedAmountOut)`). The sign comes from `Fact_CustomerAction.Amount` upstream which carries cash-flow direction. Source: live UC SELECT 2026-05-11. See `trading-volumes.md` Warning #1+#2 for the full divergence story including the planned DDR rebuild.
+6. **Tier 1 — `w_metrics.InvestedAmountOut` ≠ DDR `InvestedAmountClosed` semantically.** w_metrics uses `Fact_CustomerAction.Amount` (actual cash returned to wallet on close — `History.Credit` value). DDR uses `Dim_Position.Amount` (original capital invested at OPEN, summed over positions that closed today). Same position, different number. The diff is approximately the realized P&L on closed positions. Live aggregate diff up to $11.5M/day on May 2026 sample. **w_metrics is authoritative**; DDR will adopt the w_metrics formula when the SP is rebuilt on Databricks. See `trading-volumes.md` Warning #1 for the multi-day diff table.
+7. **Tier 2 — `Dim_PositionChangeLog` is the ONLY deterministic point-in-time source for arbitrary dates.** The fact captures *events*; the change log captures *every mutation with timestamps*. For "what was position X on 2026-03-15 14:30?", only `Dim_PositionChangeLog` answers. Don't reach for it for state-at-open / state-at-close / state-now — the fact is far faster.
+8. **Tier 2 — `Dim_PositionChangeLog` ETL uses DELETE+INSERT (not MERGE).** SP deletes `WHERE OccurredDateID >= @YesterdayID` and re-inserts from staging `WHERE Occurred >= @Yesterday`. A change event whose `Occurred` is one day but processed the next can be **deleted and lost**. Late-arrival risk for retrospective queries near day boundaries. Source: `Dim_PositionChangeLog.review-needed.md`.
+9. **Tier 3 — `IsActiveTrade` is current-state on the dim and at-event-time on the fact.** "Was this position active at open?" doesn't make sense — it WAS active because it was just opened. "Is it active now?" → `Dim_Position.IsActiveTrade`. "Was it active as of date Y?" → compute from events (max `ActionDate ≤ Y` AND no close event by Y) or use `Dim_PositionChangeLog`.
 
 ## Tables
 
@@ -402,6 +404,40 @@ If you remember nothing else: **fact wins for everything transactional**, dim is
 - Copy-trade economics, Popular Investor compensation → `copy-trading-and-mirror.md` *(pending dealing-analyst skill)*
 - Execution forensics on a single position → `dealing-investigation-and-execution.md`
 
+## w_metrics view chain (for the curious)
+
+`de_output_etoro_kpi_fact_customeraction_w_metrics` is materialized from a 3-step Databricks view chain (live UC view defs, 2026-05-11):
+
+```
+main.dwh.gold_..._fact_customeraction
+   ▼
+main.etoro_kpi_prep.v_fact_customeraction_enriched   ← joins to dim_position;
+   │  ACTIVE branch: VolumeOnOpen = ROUND(InitialUnits × InitForexRate × InitConversionRate)
+   │                 VolumeOnClose = dp.VolumeOnClose
+   │  PASSIVE branch (ActionType 35/32/19/36 w/ CompReason 56/117/118): Volume=NULL
+   │  COALESCES InstrumentID/Leverage/IsSettled/MirrorID/IsAirDrop/SettlementTypeID/IsBuy
+   ▼
+main.etoro_kpi_prep.v_fact_customeraction_w_metrics  ← adds 30+ derived cols:
+   │  InvestedAmountIn  = CASE WHEN ActionTypeID IN (1,2,3,39)    THEN fca.Amount       ELSE 0
+   │  InvestedAmountOut = CASE WHEN ActionTypeID IN (4,5,6,28,40) THEN fca.Amount       ELSE 0
+   │  VolumeOpen        = CASE WHEN ActionTypeID IN (1,2,3,39)    THEN fca.VolumeOnOpen ELSE 0
+   │  VolumeClose       = CASE WHEN ActionTypeID IN (4,5,6,28,40) THEN fca.VolumeOnClose ELSE 0
+   │  + 22 fee/adjustment cols + 8 flag cols + ParentCID + ParentUserName
+   │  Joins: v_dim_instrument_enriched, bi_db_depositwithdrawfee(_Reversals),
+   │         dim_mirror, positions_(opened_from|closed_to)_iban,
+   │         recurringinvestment_planinstances, trade_adminpositionlog
+   │  Filter: ActionTypeID NOT IN (14, 41)   ← drops logins & registrations
+   ▼
+main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  ← 9.1B rows, Delta EXTERNAL
+```
+
+This matters for state queries because:
+- **`w_metrics.InstrumentID`/`Leverage`/`IsSettled`/`MirrorID`/`IsBuy` etc.** are `COALESCE(dim_position.X, fca.X)` — i.e., they prefer the dim's value when present, falling back to the FCA staging value. This means even for a "pure" fact query you are getting *some* dim enrichment, and a position whose dim row gets retroactively mutated will quietly change the value seen on its older w_metrics rows. This is a subtle source of state drift — the events are NOT cryogenically frozen at event time. (Reviewer flag: confirm whether the materialized Delta gets re-built on every dim mutation, or whether it's append-only.)
+- **`InvestedAmountIn` / `InvestedAmountOut` are signed** per the wallet-flow convention (Critical Warning 5). The DDR fact downstream stores positive magnitudes.
+- **VolumeOpen is QA-recomputed** (Units × Forex × Conversion) — different from the dim's persisted `Volume` only in fractional rounding and partial-close handling.
+
+---
+
 ## Deeper reading — authoritative sources
 
 This skill summarizes and routes. For full column-level reference, ETL SP source, daily refresh logic, and tier confidence:
@@ -434,6 +470,8 @@ Per-anchor reach record. `Class`: S = Synapse-first, L = Lake-first, H = Hybrid.
 | main.dwh.gold_..._dim_positionchangelog | S | 1a | knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PositionChangeLog.review-needed.md | DELETE+INSERT late-arrival gotcha |
 | main.de_output..._w_metrics | H | 1b | UC `information_schema.columns` 2026-05-11 | **PositionID.comment and IsCopyFund.comment misattributed** — flagged in Critical Warning 4 |
 | main.de_output..._w_metrics | H | 1b | UC column `Leverage.comment` | Gross notional formula `Amount × Leverage` |
+| main.de_output..._w_metrics | H | 2 | UC `information_schema.views.view_definition` for `v_fact_customeraction_w_metrics` + `v_fact_customeraction_enriched` (2026-05-11) | **NEW v4**: full 3-step lineage chain documented. Reveals `InvestedAmountIn/Out = fca.Amount` (signed) and `VolumeOpen/Close = VolumeOnOpen/OnClose` from enriched view. State-coalesce mechanism documented. Filter: `ActionTypeID NOT IN (14, 41)`. |
+| main.de_output..._w_metrics | H | 4 | UC live SUM by ActionTypeID for 2026-05-01 | **NEW v4**: signed wallet-flow convention confirmed (opens negative, closes positive). Drives Critical Warning 8 + 9. |
 | main.trading.bronze_..._trade_position_datafactory | L | 1a | UC `information_schema.tables.comment` | Tier-1 wiki-derived description (Generic Pipeline, 60-min refresh) |
 | main.trading.bronze_..._trade_position_datafactory | L | 1b | UC `information_schema.columns` | Mostly empty; only PositionID + CID carry Tier-1 text |
 | main.trading.bronze_..._history_position_datafactory | L | 1b | UC `information_schema.columns` | `MirrorID.comment` confirms post-detachment value reflects "still active copy"; `OrderID.comment` confirms NULL = no order link |
