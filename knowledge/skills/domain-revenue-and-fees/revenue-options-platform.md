@@ -30,11 +30,11 @@ triggers: [Options, options revenue, Options_PFOF, PFOF, payment for order flow,
            v_options_aum, v_mimo_options_platform, v_mimo_optionsplatform,
            usabroker, options eligibility, options reasoning form, PTP,
            buying power]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - revenue-and-fees/trading-revenue-and-fees    # US-equity trades land in regular trading tables, NOT here
-  - payments/mimo-panel-and-ddr                  # Options-side MIMO rolls up to BI_DB_DDR_Fact_MIMO_AllPlatforms
-  - cross-domain/dealing-broker-identity                # planned — broker / LP master
+  - domain-revenue-and-fees/trading-revenue-and-fees    # US-equity trades land in regular trading tables, NOT here
+  - domain-payments/mimo-panel-and-ddr                  # Options-side MIMO rolls up to BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - domain-cross/dealing-broker-identity                # planned — broker / LP master
 primary_objects:
   - main.etoro_kpi_prep.v_revenue_optionsplatform     # canonical Options revenue KPI view (Options_PFOF)
   - main.etoro_kpi_prep.v_options_aum                 # canonical Options AUM panel
@@ -164,7 +164,7 @@ All arrive daily via SFTP. The `bronze_sodreconciliation_apex_*` family is the r
 
 ## Identity bridge
 
-Apex account number → eToro customer is via `general.bronze_sodreconciliation_apex_ext765_accountmaster.AccountNumber` (the Apex side) cross-referenced with the **Customer & Identity** super-domain's identity model. See `customer-and-identity/SKILL.md` for the Apex `AccountNumber` cross-reference table (currently maintained alongside Spaceship `user_id`, MoneyFarm `moneyfarmUserId`, etc.).
+Apex account number → eToro customer is via `general.bronze_sodreconciliation_apex_ext765_accountmaster.AccountNumber` (the Apex side) cross-referenced with the **Customer & Identity** super-domain's identity model. See `domain-customer-and-identity/SKILL.md` for the Apex `AccountNumber` cross-reference table (currently maintained alongside Spaceship `user_id`, MoneyFarm `moneyfarmUserId`, etc.).
 
 ## Query patterns
 

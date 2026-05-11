@@ -18,10 +18,10 @@ triggers: [DormantFee, dormant fee, inactivity fee, monthly inactivity,
            CompensationReasonID 30, account-level fee, InterestFee,
            margin interest, deprecated interest, Other category,
            v_revenue_dormantfee, v_revenue_interestfee]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - revenue-and-fees/revenue-options-platform     # Options_PFOF lives there
-  - revenue-and-fees/trading-revenue-and-fees     # Dividends + SDRT live there
+  - domain-revenue-and-fees/revenue-options-platform     # Options_PFOF lives there
+  - domain-revenue-and-fees/trading-revenue-and-fees     # Dividends + SDRT live there
 primary_objects:
   - main.etoro_kpi_prep.v_revenue_dormantfee
   - main.etoro_kpi_prep.v_revenue_interestfee     # deprecated post-Jul-2023

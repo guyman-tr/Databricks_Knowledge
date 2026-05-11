@@ -12,15 +12,15 @@ keywords: [deposit, FTD, withdrawal, cashout, MID, MIDName, BinCountry,
            CardType, PIPsCalculation, conversion fee, reversal, chargeback,
            refund, funding type, depot, recurring, decline, RegCountry,
            DepositWithdrawFee, WithdrawPaymentID, DepositID, CreditID]
-load_after: [_router.md, payments/SKILL.md]
+load_after: [_router.md, domain-payments/SKILL.md]
 intersects_with:
-  - payments/mimo-panel-and-ddr
-  - payments/emoney-accounts-and-cards
-  - payments/finance-recon-and-balances
-  - revenue-and-fees/SKILL
-  - cross-domain/refund-chargeback-chain
-  - cross-domain/recurring-deposit-to-trade
-  - cross-domain/provider-reconciliation
+  - domain-payments/mimo-panel-and-ddr
+  - domain-payments/emoney-accounts-and-cards
+  - domain-payments/finance-recon-and-balances
+  - domain-revenue-and-fees/SKILL
+  - domain-cross/refund-chargeback-chain
+  - domain-cross/recurring-deposit-to-trade
+  - domain-cross/provider-reconciliation
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals  # Synapse: BI_DB_dbo.BI_DB_DepositWithdrawFee_Reversals

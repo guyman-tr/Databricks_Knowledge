@@ -1,5 +1,5 @@
 ---
-id: customer-and-identity
+id: domain-customer-and-identity
 name: "Customer & Identity Super-Domain"
 description: "Routes inside the Customer & Identity super-domain. Covers the customer master record, the identity model across platforms (RealCID, GCID, MasterCID, EmoneyAccountID, EXWCustomerID), customer attributes (regulation, jurisdiction, club tier, Popular Investor status, channel, country, marketing segments), point-in-time customer SCD, milestone first-dates, customer-action audit trail, customer-property models (LTV, daily cluster, segments), CRM case / CSAT / churn-winback, and cross-system identity resolution joins. Incorporates two DataPlatform DE workspace skills as authoritative sub-skills: customer-populations (Funded / Active / Portfolio Only / Balance Only / FTF segments and lifecycle milestones) and registration-to-ftd-funnel (the canonical reg-to-FTD onboarding funnel via etoro_kpi.ftd_funnel_v). Load this hub for any question about WHO the customer is and to be routed to the right sub-skill or referenced workspace skill."
 triggers:
@@ -96,10 +96,10 @@ eToro's customer model is **not** a single ID. A real human can have one row in 
 
 This super-domain is about **WHO the customer is** — the master record, the identifiers, the long-lived attributes (jurisdiction, regulation, club tier, PI status, channel, country, marketing segments), the customer-property models (LTV, daily cluster, segments), the CRM case history, and the cross-platform identity joins. It is **not** about:
 
-- **Money flow into / out of a customer's wallet** → Payments super-domain (`payments/SKILL.md`). Customer balances, deposits, withdrawals, MIMO panel.
+- **Money flow into / out of a customer's wallet** → Payments super-domain (`domain-payments/SKILL.md`). Customer balances, deposits, withdrawals, MIMO panel.
 - **Trading positions, P&L, instrument exposure** → Trading & Markets super-domain (planned).
 - **AML risk classification, sanctions, PEP, watchlist alerts on a customer** → Compliance & AML super-domain (planned).
-- **Fee revenue or fee composition on a customer** → Revenue & Fees super-domain (`revenue-and-fees/SKILL.md`).
+- **Fee revenue or fee composition on a customer** → Revenue & Fees super-domain (`domain-revenue-and-fees/SKILL.md`).
 
 When a question is about **what the customer DID** (deposited, traded), route to the relevant doing-domain (Payments / Trading). When a question is about **who the customer IS** (their identifiers, jurisdiction, attributes, master record, segments, lifecycle status, onboarding funnel position, support history), it stays here.
 
@@ -179,7 +179,7 @@ graph LR
 
 - A question that names a single ID type (e.g. "show me RealCID 12345") stays in DWH-only context — no cross-platform joins needed.
 - A question that crosses platforms (e.g. "this customer's deposits AND eMoney transactions AND wallet balance") requires `GCID` as the bridge, not `RealCID`.
-- Audit-trail questions on eMoney accounts ("who authorized this transfer") cross into the Tribe envelope feed — those route to the [`cross-domain/tribe-emoney-audit`](../cross-domain/tribe-emoney-audit.md) cross-domain skill, which supplies the audit map; this super-domain supplies the join keys.
+- Audit-trail questions on eMoney accounts ("who authorized this transfer") cross into the Tribe envelope feed — those route to the [`domain-cross/tribe-emoney-audit`](../domain-cross/tribe-emoney-audit.md) cross-domain skill, which supplies the audit map; this super-domain supplies the join keys.
 - Acquired-platform identity (Spaceship / MoneyFarm / Apex) joins through `GCID`. The detailed product / AUM / fee questions live in **Revenue & Fees** super-domain and the per-product domain cards (`knowledge/uc_domains/spaceship/_domain_card.md`, `knowledge/uc_domains/moneyfarm/_domain_card.md`). This super-domain owns **only** the cross-reference: "given a `RealCID`, what's their Spaceship `user_id` / MoneyFarm `moneyfarmUserId` / Apex `AccountNumber`?"
 
 ## Sub-skill routing
@@ -209,7 +209,7 @@ These two are NOT mirrored locally. The hub above lists them in `required_tables
 
 | Cross-domain | Connects | When to load |
 |---|---|---|
-| [`../cross-domain/tribe-emoney-audit.md`](../cross-domain/tribe-emoney-audit.md) | This super-domain ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) joined back to the customer master via `EmoneyAccountID` ↔ `GCID`. The customer-side join keys live in this super-domain; the audit-trail map lives in the cross-domain skill. |
+| [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md) | This super-domain ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) joined back to the customer master via `EmoneyAccountID` ↔ `GCID`. The customer-side join keys live in this super-domain; the audit-trail map lives in the cross-domain skill. |
 
 Additional cross-domain skills will be added as siblings span this super-domain (Trading & Markets, Compliance & AML when built). A B↔Compliance customer-AML cross-domain is a likely candidate once D is built.
 
@@ -232,7 +232,7 @@ These hold whether you load any sub-skill or not:
   | **Apex** (US-resident equity + Options/Gatsby) | `AccountNumber` — the Apex broker account number | `main.finance.bronze_sodreconciliation_apex_ext*`, `main.general.bronze_sodreconciliation_apex_ext765_accountmaster`, `main.dealing.gold_*_dealing_apexrecon_*` | Apex `AccountNumber` ↔ DWH side requires a mapping table; check Trading super-domain when built. For fee-side questions, the link is pre-stitched in `etoro_kpi_prep.v_revenue_optionsplatform`. |
   | **Alpaca** (Spaceship Nova clearing broker) | `alpaca_account_id` | `main.spaceship.bronze_spaceship_metabase_nova_*` | Nests under Spaceship `user_id`; Spaceship ↔ Alpaca is one-to-one per Nova account |
 
-  For deep questions on any of these platforms (AUM, fees, transactions, recon), load **`revenue-and-fees/SKILL.md`** + the per-platform sub-skill (`revenue-spaceship` / `revenue-moneyfarm` / `revenue-options`). This super-domain only owns the identity cross-reference.
+  For deep questions on any of these platforms (AUM, fees, transactions, recon), load **`domain-revenue-and-fees/SKILL.md`** + the per-platform sub-skill (`revenue-spaceship` / `revenue-moneyfarm` / `revenue-options`). This super-domain only owns the identity cross-reference.
 
 ## What this skill is NOT
 

@@ -29,10 +29,10 @@ triggers: [MoneyFarm, moneyfarm, UK robo-advisor, managed investing, ISA, SIPP,
            Cosmos, CosmosDB, moneyfarmUserId, externalUserId,
            moneyfarm AUM, moneyfarm fees, moneyfarm MIMO,
            AccountTypeID 4, UK BA Genie space, robo-advisor]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - customer-and-identity/SKILL.md   # moneyfarmUserId / externalUserId bridge to GCID
-  - payments/SKILL.md                # MoneyFarm MIMO also lands in BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - domain-customer-and-identity/SKILL.md   # moneyfarmUserId / externalUserId bridge to GCID
+  - domain-payments/SKILL.md                # MoneyFarm MIMO also lands in BI_DB_DDR_Fact_MIMO_AllPlatforms
 primary_objects:
   - main.etoro_kpi_prep.v_moneyfarm_aum
   - main.etoro_kpi_prep.v_moneyfarm_mimo
@@ -49,7 +49,7 @@ authoritative_external_files:
 out_of_scope:
   - eToro-native trading revenue → trading-revenue-and-fees.md
   - eToro-native MIMO fees → fees-deposit-withdraw-fx.md
-  - Cross-platform customer identity → customer-and-identity/SKILL.md
+  - Cross-platform customer identity → domain-customer-and-identity/SKILL.md
   - WealthFrance (French equivalent — not yet ingested)
 
 version: 1
@@ -105,7 +105,7 @@ MoneyFarm is a digital wealth management / robo-advisor platform headquartered i
 |-------------------|-------------|------------------------------|
 | `moneyfarmUserId` (sometimes `externalUserId`) | `general.bronze_moneyfarm_users` (raw Cosmos export); `bi_output.bi_output_moneyfarm_customers` (curated) | Via `main.bi_db.bronze_sub_accounts_accounts` with `providerName = 'MoneyFarm'` (same pattern as Spaceship) |
 
-See `customer-and-identity/SKILL.md` for the full identity-layer model and the Acquired-platform user IDs lookup table.
+See `domain-customer-and-identity/SKILL.md` for the full identity-layer model and the Acquired-platform user IDs lookup table.
 
 ## What rolls into DDR — and what doesn't
 

@@ -37,12 +37,12 @@ keywords: [Customer.CustomerStatic, OLTP customer, BackOffice.Customer,
            linked accounts, watchlist, IsTestUser, IsExcludedFromReporting,
            IsFraud, customer flag, OLTP truth, GlobalFTD,
            Breaches Investigation Bot]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/customer-master-record
-  - customer-and-identity/identity-jurisdiction-and-regulation
-  - customer-and-identity/compliance-customer-snapshot-and-club
-  - cross-domain/tribe-emoney-audit
+  - domain-customer-and-identity/customer-master-record
+  - domain-customer-and-identity/identity-jurisdiction-and-regulation
+  - domain-customer-and-identity/compliance-customer-snapshot-and-club
+  - domain-cross/tribe-emoney-audit
 primary_objects:
   - main.general.bronze_etoro_customer_customerstatic_masked  # Synapse: Customer.CustomerStatic — masked OLTP variant (analyst-facing)
   - main.pii_data.bronze_etoro_customer_customerstatic  # Synapse: Customer.CustomerStatic — full PII OLTP variant
@@ -172,7 +172,7 @@ trading, etc.
 to UC main). Query it via Synapse MCP / pyodbc when needed.
 
 For deep crypto-wallet questions (transactions, balances, on-chain),
-route to Payments super-domain `payments/crypto-wallet.md`.
+route to Payments super-domain `domain-payments/crypto-wallet.md`.
 
 ## Breach / alert tables (the Breaches Investigation Bot Genie cluster)
 
@@ -262,7 +262,7 @@ FROM main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser eu
 WHERE eu.GCID = :gcid;
 ```
 
-For deeper crypto-wallet questions, route to `payments/crypto-wallet.md`.
+For deeper crypto-wallet questions, route to `domain-payments/crypto-wallet.md`.
 
 ## Wiki deep-reads
 

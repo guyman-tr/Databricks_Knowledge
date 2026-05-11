@@ -14,9 +14,9 @@ keywords: [Tribe, FiatDwh, FiatDwhDB, Treezor, audit trail, SOC2, eMoney audit,
            reconciliation, ETL_AccountsActivities, fiattransactions,
            eligibilityrules, programtransitions, fiatcardinstances,
            customereodbalance, provider statement, SP_eMoney_Reconciliation_ETLs]
-load_after: [_router.md, payments/SKILL.md, payments/emoney-accounts-and-cards.md]
+load_after: [_router.md, domain-payments/SKILL.md, domain-payments/emoney-accounts-and-cards.md]
 parents:
-  - knowledge/skills/payments/emoney-accounts-and-cards.md   # C.3 — supplies join keys
+  - knowledge/skills/domain-payments/emoney-accounts-and-cards.md   # C.3 — supplies join keys
   - knowledge/skills/compliance/SKILL.md                     # D — owns audit-trail interpretation (planned)
 primary_objects:
   # Treezor XML audit envelopes — UC bronze (note: dashed names need backticks in SQL)
@@ -290,9 +290,9 @@ WHERE cb.BalanceDate = @date
 |---|---|
 | eMoney customer transaction volumes / FX spread / IBAN inflows | C.3 (`emoney-accounts-and-cards.md`) |
 | Compliance KYC / risk-rule logic / regulator-facing reports | Compliance super-domain (when built) |
-| Crypto came in → converted to fiat on IBAN forensics | `cross-domain/crypto-to-fiat.md` |
-| Provider statement reconciliation for fiat deposits/withdrawals (not eMoney) | `cross-domain/provider-reconciliation.md` |
-| Refund / chargeback chain on a customer dispute | `cross-domain/refund-chargeback-chain.md` |
+| Crypto came in → converted to fiat on IBAN forensics | `domain-cross/crypto-to-fiat.md` |
+| Provider statement reconciliation for fiat deposits/withdrawals (not eMoney) | `domain-cross/provider-reconciliation.md` |
+| Refund / chargeback chain on a customer dispute | `domain-cross/refund-chargeback-chain.md` |
 
 ## Cluster provenance
 
@@ -312,4 +312,4 @@ WHERE cb.BalanceDate = @date
 - [`eMoney_Tribe/Tables/CardsSnapshots_CardSnapshot-140457.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/eMoney_Tribe/Tables/CardsSnapshots_CardSnapshot-140457.md)
 - [`eMoney_dbo` / `_FOLLOWUPS.md`](https://github.com/guyman-tr/Databricks_Knowledge/blob/master/knowledge/synapse/Wiki/_FOLLOWUPS.md) — open
   questions on the bronze_fiatdwhdb_tribe_* coverage gap.
-- [Parent skill — payments/emoney-accounts-and-cards.md](../payments/emoney-accounts-and-cards.md) — supplies the GCID / AccountID / CardID join keys.
+- [Parent skill — domain-payments/emoney-accounts-and-cards.md](../domain-payments/emoney-accounts-and-cards.md) — supplies the GCID / AccountID / CardID join keys.

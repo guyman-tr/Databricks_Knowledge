@@ -31,12 +31,12 @@ keywords: [vg_crm_case, CRM case, Salesforce case, customer support,
            UserApiDB V_CustomerAnswers, KYC questionnaire,
            Customer Support Case Analytics, Customer Satisfaction Surveys,
            T3 Hackathon, customer voice, agent quality, NPS]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/customer-master-record
-  - customer-and-identity/customer-action-audit-trail
-  - customer-and-identity/oltp-customer-static-and-breaches
-  - customer-and-identity/customer-models-and-segmentation
+  - domain-customer-and-identity/customer-master-record
+  - domain-customer-and-identity/customer-action-audit-trail
+  - domain-customer-and-identity/oltp-customer-static-and-breaches
+  - domain-customer-and-identity/customer-models-and-segmentation
 primary_objects:
   - main.etoro_kpi.vg_crm_case  # cluster 19 hub
   - main.etoro_kpi.cidfirstdates_v  # cluster 19 member; also referenced from B.2

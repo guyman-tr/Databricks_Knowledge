@@ -14,12 +14,12 @@ keywords: [chargeback, refund, dispute, reversal, chargeback reversal,
            ReversalType, fraud chargeback]
 load_after: [_router.md]
 connects:
-  - payments/deposits-and-withdrawals
-  - revenue-and-fees/SKILL
+  - domain-payments/deposits-and-withdrawals
+  - domain-revenue-and-fees/SKILL
   # - compliance/SKILL  (planned)
 intersects_with:
-  - payments/mimo-panel-and-ddr
-  - payments/finance-recon-and-balances
+  - domain-payments/mimo-panel-and-ddr
+  - domain-payments/finance-recon-and-balances
 primary_objects:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw  # Synapse: DWH_dbo.Fact_BillingWithdraw

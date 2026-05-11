@@ -29,12 +29,12 @@ keywords: [jurisdiction, regulation, country, MiFID, MifidCategorization,
            Dim_PlayerStatusReasons, Dim_PlayerStatusSubReasons,
            Dim_Range, vg_customer_daily_snapshot, vg_customer_monthly_snapshot,
            AML FSA, regulation change history, jurisdiction migration]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/customer-master-record
-  - customer-and-identity/compliance-customer-snapshot-and-club
-  - customer-and-identity/customer-action-audit-trail
-  - cross-domain/tribe-emoney-audit
+  - domain-customer-and-identity/customer-master-record
+  - domain-customer-and-identity/compliance-customer-snapshot-and-club
+  - domain-customer-and-identity/customer-action-audit-trail
+  - domain-cross/tribe-emoney-audit
 primary_objects:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country  # Synapse: DWH_dbo.Dim_Country (cluster 1 hub)
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation  # Synapse: DWH_dbo.Dim_Regulation

@@ -30,15 +30,15 @@ keywords: [LTV, lifetime value, BI_DB_LTV_BI_Actual, customer cluster,
            club downgrade, BI_DB_ClubChangeLogProduct, club balance,
            etoro_club_balances, segmentation, audience, marketing segment,
            Diamond, Platinum, Gold, Silver, Bronze, club perk, VIP]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/customer-master-record
-  - customer-and-identity/identity-jurisdiction-and-regulation
-  - customer-and-identity/compliance-customer-snapshot-and-club
-  - customer-and-identity/customer-action-audit-trail
-  - payments/mimo-panel-and-ddr
-  - revenue-and-fees/SKILL
-  - cross-domain/recurring-deposit-to-trade
+  - domain-customer-and-identity/customer-master-record
+  - domain-customer-and-identity/identity-jurisdiction-and-regulation
+  - domain-customer-and-identity/compliance-customer-snapshot-and-club
+  - domain-customer-and-identity/customer-action-audit-trail
+  - domain-payments/mimo-panel-and-ddr
+  - domain-revenue-and-fees/SKILL
+  - domain-cross/recurring-deposit-to-trade
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual  # Synapse: BI_DB_dbo.BI_DB_LTV_BI_Actual — actuals per CID feeding LTV bucketization
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster  # Synapse: BI_DB_dbo.BI_DB_CID_DailyCluster — daily cluster assignment per CID
@@ -54,8 +54,8 @@ referenced_workspace_skills:
   - /Workspace/.assistant/skills/customer-populations  # customer-populations is the right skill if the question is "how many customers in segment X are funded?"
 delegated_join_patterns:
   - Trading and Markets super-domain (planned) — for LTV joined with copy-trading network metrics or per-trade volumes, route there. This skill owns LTV LOOKUP; trading-side joins live in the trading skill.
-  - payments/mimo-panel-and-ddr.md — for DailyCluster cross-tab against MIMO daily status (the DDR rollup absorbs DailyCluster as a dimensional tag).
-  - revenue-and-fees/SKILL.md — for LTV-bucket-vs-revenue analyses; the revenue layer joins to BI_DB_LTV_BI_Actual on RealCID.
+  - domain-payments/mimo-panel-and-ddr.md — for DailyCluster cross-tab against MIMO daily status (the DDR rollup absorbs DailyCluster as a dimensional tag).
+  - domain-revenue-and-fees/SKILL.md — for LTV-bucket-vs-revenue analyses; the revenue layer joins to BI_DB_LTV_BI_Actual on RealCID.
 ---
 
 # B.7 — Customer Models & Segmentation

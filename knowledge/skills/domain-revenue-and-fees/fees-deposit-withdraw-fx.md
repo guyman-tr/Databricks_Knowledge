@@ -31,11 +31,11 @@ triggers: [ConversionFee, ConversionFeeDeposit, ConversionFeeWithdraw,
            v_revenue_conversionfee, v_revenue_conversionfee_withpositiondata,
            v_revenue_cashoutfee_excluderedeem, v_revenue_cashoutfee_incredeem,
            v_revenue_transfercoinfee, v_revenue_cryptotofiat_c2f]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - revenue-and-fees/trading-revenue-and-fees      # ConversionFee triplet ALSO lives in w_metrics
-  - payments/SKILL.md                              # the underlying deposit / withdraw VOLUMES (we own the fees only)
-  - payments/emoney-and-iban                       # IsIBANTrade flag join
+  - domain-revenue-and-fees/trading-revenue-and-fees      # ConversionFee triplet ALSO lives in w_metrics
+  - domain-payments/SKILL.md                              # the underlying deposit / withdraw VOLUMES (we own the fees only)
+  - domain-payments/emoney-and-iban                       # IsIBANTrade flag join
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals
@@ -76,7 +76,7 @@ Load when the question is about MIMO-side fees — conversion fee, FX markup, ca
 
 ## Scope
 In scope: ConversionFee (FX markup on deposit/withdraw), CashoutFeeExclRedeem, TransferCoinFee, CryptoToFiatFee, BI_DB_DepositWithdrawFee raw fee panel, PIPsCalculation, ExchangeRate/BaseExchangeRate markup, MID/Depot/CardType context
-Out of scope: Trading-platform fees (FullCommission, Rollover, Tickets) → trading-revenue-and-fees.md; Customer money VOLUMES (deposits/withdrawals as flows) → Payments super-domain; eMoney account identity → Payments/eMoney
+Out of scope: Trading-platform fees (FullCommission, Rollover, Tickets) → trading-revenue-and-fees.md; Customer money VOLUMES (deposits/withdrawals as flows) → Payments super-domain; eMoney account identity → domain-payments/eMoney
 Last verified: 2026-05-10
 
 This sub-skill owns the four MIMO-category revenue metrics — the fees eToro earns when money moves INTO or OUT OF a customer's account (deposits, withdrawals, crypto transfers, fiat conversions).

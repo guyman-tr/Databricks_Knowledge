@@ -17,7 +17,7 @@ description: |
   Position-distribution / engagement metrics.
 
   The original-trading-action classification ("first deposit-to-trade",
-  "first crypto-to-trade") that the cross-domain/recurring-deposit-to-trade
+  "first crypto-to-trade") that the domain-cross/recurring-deposit-to-trade
   cross-domain skill stitches together comes from this fact joined back to
   Fact_BillingDeposit / Fact_TradePosition. Position-distribution snapshots
   at action-time live in BI_DB_Fact_Customer_Action_Position_Distribution.
@@ -33,19 +33,19 @@ keywords: [Fact_CustomerAction, customer action, action audit, ActionTypeID,
            de_output_etoro_kpi_fact_customeraction_w_metrics,
            operator audit, session, copy trading, social engagement,
            position distribution, customer journey events]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/customer-master-record
-  - customer-and-identity/identity-jurisdiction-and-regulation
-  - customer-and-identity/oltp-customer-static-and-breaches
-  - customer-and-identity/customer-models-and-segmentation
-  - cross-domain/recurring-deposit-to-trade
-  - cross-domain/tribe-emoney-audit
-  - revenue-and-fees/SKILL
+  - domain-customer-and-identity/customer-master-record
+  - domain-customer-and-identity/identity-jurisdiction-and-regulation
+  - domain-customer-and-identity/oltp-customer-static-and-breaches
+  - domain-customer-and-identity/customer-models-and-segmentation
+  - domain-cross/recurring-deposit-to-trade
+  - domain-cross/tribe-emoney-audit
+  - domain-revenue-and-fees/SKILL
 primary_objects:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction  # Synapse: DWH_dbo.Fact_CustomerAction (cluster 6 hub, weight 223)
   - main.etoro_kpi_prep.v_fact_customeraction_enriched  # Synapse: etoro_kpi_prep.v_fact_customeraction_enriched (enriched view: action + customer + metrics)
-  - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # Synapse-equivalent of etoro_kpi.fact_customeraction_w_metrics — pre-stitched action + position metrics, used by cross-domain/recurring-deposit-to-trade
+  - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # Synapse-equivalent of etoro_kpi.fact_customeraction_w_metrics — pre-stitched action + position metrics, used by domain-cross/recurring-deposit-to-trade
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution  # Synapse: BI_DB_dbo.BI_DB_Fact_Customer_Action_Position_Distribution
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue  # Synapse: BI_DB_dbo.BI_DB_DailyCopyRevenue (per-day copy enrollment + revenue per copier)
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity  # Synapse: BI_DB_dbo.BI_DB_Social_Activity
@@ -77,15 +77,15 @@ event ledger, indexed by `(RealCID, ActionDate, ActionTypeID)`. Use it for:
 **Routing notes:**
 
 - For the **deposit-to-first-trade conversion** chain (FTD → first position),
-  prefer the cross-domain skill [`cross-domain/recurring-deposit-to-trade.md`](../cross-domain/recurring-deposit-to-trade.md). It owns the
+  prefer the cross-domain skill [`domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md). It owns the
   pre-stitched `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`
   table and the cohort patterns. This skill (B.4) owns the raw fact for
   one-off audit / forensics.
 - For **eMoney/IBAN audit envelopes** (Treezor XML, FiatDwhDB), the audit
-  story is in [`cross-domain/tribe-emoney-audit.md`](../cross-domain/tribe-emoney-audit.md). `Fact_CustomerAction` does NOT
+  story is in [`domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md). `Fact_CustomerAction` does NOT
   carry eMoney-side action types.
 - For the **fee / revenue per action** breakdown, route to
-  [`revenue-and-fees/SKILL.md`](../revenue-and-fees/SKILL.md) — the revenue layer joins to `Fact_CustomerAction`
+  [`domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md) — the revenue layer joins to `Fact_CustomerAction`
   and to `Fact_RevenueGeneratingActions`.
 
 ## Mental model
@@ -94,7 +94,7 @@ event ledger, indexed by `(RealCID, ActionDate, ActionTypeID)`. Use it for:
 graph TB
     OLTP["Trading.* / Billing.* / BackOffice.*<br/>OLTP truth"] --> FCA["Fact_CustomerAction<br/>UC: dwh.gold_*_fact_customeraction<br/>cluster 6 hub"]
     FCA --> Enr["v_fact_customeraction_enriched<br/>UC: etoro_kpi_prep.v_fact_customeraction_enriched"]
-    Enr --> Metrics["de_output_etoro_kpi_fact_customeraction_w_metrics<br/>UC: de_output.de_output_etoro_kpi_fact_customeraction_w_metrics<br/>(used by cross-domain/recurring-deposit-to-trade)"]
+    Enr --> Metrics["de_output_etoro_kpi_fact_customeraction_w_metrics<br/>UC: de_output.de_output_etoro_kpi_fact_customeraction_w_metrics<br/>(used by domain-cross/recurring-deposit-to-trade)"]
 
     FCA --> Pos["BI_DB_Fact_Customer_Action_Position_Distribution<br/>position snapshot at action-time"]
     FCA --> Copy["BI_DB_DailyCopyRevenue<br/>copy enrollment + per-day revenue"]
@@ -103,7 +103,7 @@ graph TB
     FCA --> F5["BI_DB_First5Actions<br/>first-five-action classification per CID"]
 
     FCA -.fees per action.-> Rev["revenue-and-fees super-domain<br/>Fact_RevenueGeneratingActions"]
-    FCA -.deposit -> trade chain.-> Cross["cross-domain/recurring-deposit-to-trade"]
+    FCA -.deposit -> trade chain.-> Cross["domain-cross/recurring-deposit-to-trade"]
 ```
 
 ## Fact_CustomerAction — the columns
@@ -147,7 +147,7 @@ via the Synapse MCP / pyodbc; do NOT translate them to UC names.
    metric. For population, use `customer-populations` workspace skill.
 2. **DO NOT join to `Fact_BillingDeposit` directly to compute deposit→trade
    conversion.** Use `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`
-   (pre-stitched) or [`cross-domain/recurring-deposit-to-trade.md`](../cross-domain/recurring-deposit-to-trade.md). The raw join silently
+   (pre-stitched) or [`domain-cross/recurring-deposit-to-trade.md`](../domain-cross/recurring-deposit-to-trade.md). The raw join silently
    loses recurring-deposit chains.
 3. **DO NOT assume `ActionTypeID` is stable across product versions.** The
    dictionary has been re-numbered twice in production history (most recently
@@ -177,7 +177,7 @@ ORDER BY fca.ActionDate DESC;
 
 ### Pattern 2 — what actions happened before / after a deposit-to-trade conversion
 
-Prefer the pre-stitched table in cross-domain/recurring-deposit-to-trade. If you
+Prefer the pre-stitched table in domain-cross/recurring-deposit-to-trade. If you
 absolutely need the raw join (for forensics on a single CID):
 
 ```sql

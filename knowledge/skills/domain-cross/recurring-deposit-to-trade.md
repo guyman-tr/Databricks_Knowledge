@@ -12,11 +12,11 @@ keywords: [deposit to trade, FTD to FT, first time funded to first trade,
            bronze_recurringinvestment]
 load_after: [_router.md]
 connects:
-  - payments/deposits-and-withdrawals
-  - payments/mimo-panel-and-ddr
+  - domain-payments/deposits-and-withdrawals
+  - domain-payments/mimo-panel-and-ddr
   # - trading/SKILL  (planned)
 intersects_with:
-  - revenue-and-fees/SKILL
+  - domain-revenue-and-fees/SKILL
 primary_objects:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked  # Synapse: DWH_dbo.Dim_Customer

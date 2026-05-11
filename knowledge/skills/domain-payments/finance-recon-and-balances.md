@@ -15,14 +15,14 @@ keywords: [balance, finance recon, FinanceReports, FinanceReportRecords,
            BalanceCID, Client_Balance_CID_Level, balance-only, portfolio-only,
            active traders, first-time funded, population, ido ezra, wallet
            allowance, AML balance, USABroker, SOD reconciliation]
-load_after: [_router.md, payments/SKILL.md]
+load_after: [_router.md, domain-payments/SKILL.md]
 intersects_with:
-  - payments/mimo-panel-and-ddr
-  - payments/deposits-and-withdrawals
-  - payments/emoney-accounts-and-cards
-  - payments/crypto-wallet
-  - revenue-and-fees/SKILL
-  - cross-domain/provider-reconciliation
+  - domain-payments/mimo-panel-and-ddr
+  - domain-payments/deposits-and-withdrawals
+  - domain-payments/emoney-accounts-and-cards
+  - domain-payments/crypto-wallet
+  - domain-revenue-and-fees/SKILL
+  - domain-cross/provider-reconciliation
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew  # Synapse: EXW_dbo.EXW_FinanceReportsBalancesNew | Tier 0 — canonical balance
   - main.etoro_kpi_prep.v_population_funded  # VIEW | Synapse: etoro_kpi_prep.v_population_funded | Tier 1 — population segmentation
@@ -159,7 +159,7 @@ customer equities**. Apex = **USABroker**.
   Revenue & Fees (`v_revenue_optionsplatform`, `BI_DB_US_Apex_Fees_Charge`).
 - US-resident customer **equity trading** through Apex lives in regular
   trading tables (`Dim_Position`, `Fact_Position`), not here.
-- See `revenue-and-fees/SKILL.md` "Apex / Gatsby disambiguation" for the
+- See `domain-revenue-and-fees/SKILL.md` "Apex / Gatsby disambiguation" for the
   full picture.
 
 ## Canonical joins
@@ -276,9 +276,9 @@ ORDER BY frb.ReportDate
 | Per-platform balance breakdown (crypto inventory) | [`crypto-wallet.md`](crypto-wallet.md) (`EXW_WalletInventory`) |
 | Customer realizable equity from open positions | A. Trading & Markets (`V_Liabilities`, `Dim_Position`) |
 | Net MIMO that drove this balance | [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) (C.2) |
-| Provider statement vs internal recon | [`../cross-domain/provider-reconciliation.md`](../cross-domain/provider-reconciliation.md) |
+| Provider statement vs internal recon | [`../domain-cross/provider-reconciliation.md`](../domain-cross/provider-reconciliation.md) |
 | **Revenue per CID per period** | Revenue & Fees super-domain (`mv_revenue_trading`, `BI_DB_DDR_Fact_Revenue_Generating_Actions`) |
-| AML investigation case detail | D. Compliance & AML; for eMoney audit trail use [`../cross-domain/tribe-emoney-audit.md`](../cross-domain/tribe-emoney-audit.md) |
+| AML investigation case detail | D. Compliance & AML; for eMoney audit trail use [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md) |
 
 ## Deep reads (column-level detail)
 

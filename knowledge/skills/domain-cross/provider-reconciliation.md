@@ -14,11 +14,11 @@ keywords: [provider recon, reconciliation, MID, MIDName, MIDValue, MOPCountry,
            settlement gap, MID decline rate, provider chargeback]
 load_after: [_router.md]
 connects:
-  - payments/deposits-and-withdrawals
-  - payments/finance-recon-and-balances
-  - payments/mimo-panel-and-ddr
+  - domain-payments/deposits-and-withdrawals
+  - domain-payments/finance-recon-and-balances
+  - domain-payments/mimo-panel-and-ddr
 intersects_with:
-  - revenue-and-fees/SKILL  # Reversal-side fee accounting lives there
+  - domain-revenue-and-fees/SKILL  # Reversal-side fee accounting lives there
 primary_objects:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit  # Synapse: DWH_dbo.Fact_BillingDeposit
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw  # Synapse: DWH_dbo.Fact_BillingWithdraw
@@ -160,11 +160,11 @@ ORDER BY DateID, Provider
 2. **Filter `TransactionType='Deposit'` (or `'Withdraw'`)** on the State join — other transaction types are reversal/rollback enrichment rows and would double-count.
 3. **`ExTransactionID` is the provider's primary key**, not eToro's. Different providers use different ID formats (numeric, GUID, alphanumeric). Trim/normalize before string compare.
 4. **Provider statement feed schemas vary.** Worldpay, SafeCharge/Nuvei, PayPal, Skrill, Neteller, OpenPayd — each lands in a different table with different column names. There is no universal "settlement file" table. Build per-provider matching.
-5. **Net vs Gross.** Provider statements are typically NET of provider fee; internal `AmountUSD` is GROSS. Reconciliation must subtract provider fee before comparing — and provider fee composition lives in [Revenue & Fees](../revenue-and-fees/SKILL.md).
+5. **Net vs Gross.** Provider statements are typically NET of provider fee; internal `AmountUSD` is GROSS. Reconciliation must subtract provider fee before comparing — and provider fee composition lives in [Revenue & Fees](../domain-revenue-and-fees/SKILL.md).
 6. **Settlement date ≠ deposit date.** Providers settle T+1, T+2 or longer depending on agreement. Always use SETTLEMENT date on the external side and JOIN on a date window, not equality.
 7. **`MOPCountry`** = method-of-payment country. Useful for routing rules ("UK customer must use UK MID"). NULL for some providers.
 8. **One MID can be used by many countries / customers.** And one customer can be routed to multiple MIDs over time (failover). Don't assume CID→MID is stable.
-9. **Provider chargebacks** come back as a different transaction type — they appear in `Fact_Deposit_State` as a reversal row (e.g. `TransactionType='Chargeback'` or similar) referencing the original `DepositID`. For chargeback investigation chain → `cross-domain/refund-chargeback-chain.md`.
+9. **Provider chargebacks** come back as a different transaction type — they appear in `Fact_Deposit_State` as a reversal row (e.g. `TransactionType='Chargeback'` or similar) referencing the original `DepositID`. For chargeback investigation chain → `domain-cross/refund-chargeback-chain.md`.
 10. **`EXW_PaymentReconciliation`** is the EXW (crypto wallet) side recon — separate from fiat provider recon. Same conceptual pattern (match internal vs external) but different tables.
 
 ## When to load just one parent instead

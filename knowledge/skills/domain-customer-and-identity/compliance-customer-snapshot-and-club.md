@@ -41,13 +41,13 @@ keywords: [customer_snapshot_v, kyc_for_compliance_v,
            AML enriched snapshot, CFD status, leverage cap,
            periodic AML review, KYC for compliance,
            compliance snapshot, regulatory reporting]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/customer-master-record
-  - customer-and-identity/identity-jurisdiction-and-regulation
-  - customer-and-identity/customer-models-and-segmentation
-  - customer-and-identity/oltp-customer-static-and-breaches
-  - cross-domain/tribe-emoney-audit
+  - domain-customer-and-identity/customer-master-record
+  - domain-customer-and-identity/identity-jurisdiction-and-regulation
+  - domain-customer-and-identity/customer-models-and-segmentation
+  - domain-customer-and-identity/oltp-customer-static-and-breaches
+  - domain-cross/tribe-emoney-audit
 primary_objects:
   - main.etoro_kpi.customer_snapshot_v  # cluster 10 hub — compliance customer snapshot
   - main.etoro_kpi.kyc_for_compliance_v  # KYC verdict shaped for compliance review
@@ -162,7 +162,7 @@ filtered to live customers, denormalized to one row per (CID, snapshot date)
 or (CID, current state), and PII-aware.
 
 For the **transactional** new DDR (the BI_DB_DDR_Fact_* family with row-per-event
-grain), route to Payments super-domain `payments/mimo-panel-and-ddr.md`.
+grain), route to Payments super-domain `domain-payments/mimo-panel-and-ddr.md`.
 
 ## bi_output_vg_* — the Genie-ready mirrors
 

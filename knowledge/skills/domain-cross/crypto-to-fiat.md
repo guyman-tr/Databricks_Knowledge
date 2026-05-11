@@ -12,11 +12,11 @@ keywords: [C2F, crypto to fiat, fiat conversion, off-ramp, on-ramp,
            TransactionTypeID 14, EXW_C2F_E2E, FundingTypeID 27]
 load_after: [_router.md]
 connects:
-  - payments/crypto-wallet
-  - payments/emoney-accounts-and-cards
-  - payments/mimo-panel-and-ddr
+  - domain-payments/crypto-wallet
+  - domain-payments/emoney-accounts-and-cards
+  - domain-payments/mimo-panel-and-ddr
 intersects_with:
-  - revenue-and-fees/SKILL  # C2F revenue lives there (v_revenue_cryptotofiat_c2f)
+  - domain-revenue-and-fees/SKILL  # C2F revenue lives there (v_revenue_cryptotofiat_c2f)
 primary_objects:
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e  # Synapse: EXW_dbo.EXW_C2F_E2E
   - main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_dim_transaction  # Synapse: eMoney_dbo.eMoney_Dim_Transaction

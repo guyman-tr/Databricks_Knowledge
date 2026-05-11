@@ -27,13 +27,13 @@ keywords: [Dim_Customer, customer master, RealCID, CID, GCID, MasterCID,
            Dim_MifidCategorization, Dim_Range, Dim_Language,
            BI_DB_KYC_Panel, BI_DB_AMLPeriodicReview, BI_DB_DDR_CID_Level,
            customer demographics, customer attributes]
-load_after: [_router.md, customer-and-identity/SKILL.md]
+load_after: [_router.md, domain-customer-and-identity/SKILL.md]
 intersects_with:
-  - customer-and-identity/identity-jurisdiction-and-regulation
-  - customer-and-identity/oltp-customer-static-and-breaches
-  - customer-and-identity/compliance-customer-snapshot-and-club
-  - customer-and-identity/customer-action-audit-trail
-  - cross-domain/tribe-emoney-audit
+  - domain-customer-and-identity/identity-jurisdiction-and-regulation
+  - domain-customer-and-identity/oltp-customer-static-and-breaches
+  - domain-customer-and-identity/compliance-customer-snapshot-and-club
+  - domain-customer-and-identity/customer-action-audit-trail
+  - domain-cross/tribe-emoney-audit
 primary_objects:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked  # Synapse: DWH_dbo.Dim_Customer (analyst-facing masked variant)
   - main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer  # Synapse: DWH_dbo.Dim_Customer (full PII variant — restricted access)
@@ -208,7 +208,7 @@ WHERE v.CID = :realcid;
 ```
 
 `V_Liabilities` is a current-state view, refreshed nightly. For point-in-time
-balances, see Payments super-domain `payments/finance-recon-and-balances.md`.
+balances, see Payments super-domain `domain-payments/finance-recon-and-balances.md`.
 
 ### Pattern 3 — current KYC / AML state for a CID (without walking history)
 

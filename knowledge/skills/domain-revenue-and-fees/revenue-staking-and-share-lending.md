@@ -23,11 +23,11 @@ triggers: [share lending, ShareLending, share-lending, ShareLendingFeeEtoroShare
            stakingrewards, staking_data, treasury staking,
            staking_countries_classification, staking eligibility,
            v_revenue_share_lending, v_revenue_stakingfee, RevShare]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - revenue-and-fees/trading-revenue-and-fees   # share-lending columns ALSO in w_metrics
-  - payments/crypto-wallet                      # EXW / wallet staking source tables
-  - cross-domain/dealing-staking-bridge                # planned — dealing-side staking pool
+  - domain-revenue-and-fees/trading-revenue-and-fees   # share-lending columns ALSO in w_metrics
+  - domain-payments/crypto-wallet                      # EXW / wallet staking source tables
+  - domain-cross/dealing-staking-bridge                # planned — dealing-side staking pool
 primary_objects:
   - main.etoro_kpi_prep.v_revenue_share_lending
   - main.etoro_kpi_prep.v_revenue_stakingfee
@@ -79,7 +79,7 @@ Load when the question is about staking revenue, share lending revenue, or the s
 
 ## Scope
 In scope: StakingLagOneMonth revenue, share lending revenue splits (EtoroShare, UserShare, BrokerShare, GrossAmount), staking lag mechanics, CompensationReasonID=119, v_revenue_sharelending, v_revenue_staking
-Out of scope: Trading fees (commission, rollover, tickets) → trading-revenue-and-fees.md; Crypto wallet staking operations (not revenue) → Payments/crypto-wallet; Security lending operational data (Equilend) → separate domain
+Out of scope: Trading fees (commission, rollover, tickets) → trading-revenue-and-fees.md; Crypto wallet staking operations (not revenue) → domain-payments/crypto-wallet; Security lending operational data (Equilend) → separate domain
 Last verified: 2026-05-10
 
 This sub-skill owns the two **RevShare-category** revenue metrics (DDR `RevenueMetricCategoryID = 4`) — where eToro takes a CUT of yield or income generated on customer-owned assets.

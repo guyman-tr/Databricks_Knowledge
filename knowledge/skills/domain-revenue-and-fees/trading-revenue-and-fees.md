@@ -41,11 +41,11 @@ triggers: [FullCommission, Commission, CommissionTotal, FullCommissionTotal,
            v_revenue_ticketfee_fixed, v_revenue_ticketfee_bypercent,
            v_revenue_rollover, v_revenue_adminfee, v_revenue_spotadjustfee,
            v_revenue_dividend, v_revenue_sdrt]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - revenue-and-fees/fees-deposit-withdraw-fx          # ConversionFee triplet co-exists in w_metrics
-  - revenue-and-fees/revenue-staking-and-share-lending # share-lending fee columns also in w_metrics
-  - revenue-and-fees/fees-misc-dormant-options-interest
+  - domain-revenue-and-fees/fees-deposit-withdraw-fx          # ConversionFee triplet co-exists in w_metrics
+  - domain-revenue-and-fees/revenue-staking-and-share-lending # share-lending fee columns also in w_metrics
+  - domain-revenue-and-fees/fees-misc-dormant-options-interest
 primary_objects:
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # per-action granular fee source — 98 cols, headline
   - main.etoro_kpi_prep.mv_revenue_trading                            # materialised cross-fee trading union (8 components)

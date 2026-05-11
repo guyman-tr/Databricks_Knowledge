@@ -27,10 +27,10 @@ triggers: [Spaceship, spaceship, AU investment, Australian investment,
            Net Deposits, Voyager mgmt fee, Nova platform fee, Nova FX fee,
            AUD, Sydney, weekend fill-forward, signed aud_amount,
            Australian dollar, alpaca, alpaca_account_id]
-load_after: [_router.md, revenue-and-fees/SKILL.md]
+load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
-  - customer-and-identity/SKILL.md   # GCID bridge — Spaceship user_id → eToro GCID
-  - payments/SKILL.md                # Spaceship MIMO also lands in BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - domain-customer-and-identity/SKILL.md   # GCID bridge — Spaceship user_id → eToro GCID
+  - domain-payments/SKILL.md                # Spaceship MIMO also lands in BI_DB_DDR_Fact_MIMO_AllPlatforms
 primary_objects:
   - main.etoro_kpi.v_spaceship_fees
   - main.etoro_kpi.v_spaceship_aum
@@ -44,7 +44,7 @@ authoritative_external_skills:
 out_of_scope:
   - eToro-native trading revenue (FullCommission, Rollover, Ticket etc.) → trading-revenue-and-fees.md
   - eToro-native MIMO fees → fees-deposit-withdraw-fx.md
-  - Cross-platform customer identity → customer-and-identity/SKILL.md
+  - Cross-platform customer identity → domain-customer-and-identity/SKILL.md
 
 version: 1
 owner: "dataplatform"
