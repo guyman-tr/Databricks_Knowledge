@@ -135,7 +135,7 @@ Last verified: 2026-05-11
 12. **Tier 2 — Account-type 4 ("Pricing") is excluded everywhere.** Procedures `GetHSUnitConversionRatio`, `GetHedgeSupportedInstruments`, `GetAccountSupportedInstruments` all filter `AccountTypeID != 4` — pricing accounts (OMS IM Pricing) provide quotes only, never execute. Don't include them in "active routing" counts.
 13. **Tier 3 — The LP hierarchy is 4 layers deep, each with its own naming.** `LiquidityProviderType` (145 types — abstract source: FXCM, FD, BMFN, OMS, Virtu, …) → `LiquidityProviders` (187 instances — concrete deployments: "FXCM Real", "FD RealStream Production REAL 208.100.16.161") → `LiquidityAccounts` (391 accounts — login credentials per instance per env) → `HedgeServerToLiquidityAccount` (78 rows — assigns accounts to one of 43 hedge servers). An "LP" question is ambiguous; always clarify which layer.
 14. **Tier 3 — `AltRatesLiquidityAccountID` is the secondary pricing-only account on a hedge server.** NULL in all 78 live rows currently (the architecture supports it but it's not deployed). HedgeServerID=8 (OMS) has 2 accounts (IM3 IM Pricing + IM4 IM Hedging) — that's done via TWO rows in `HedgeServerToLiquidityAccount`, NOT via AltRates. Easy to confuse.
-15. **Tier 3 — No unified hedge-cost fact exists in DDR.** Searched UC for `fact_hedge%`, `fact_lp%`, `%cost_of_hedg%`, `hedgecost%`, `fact_dealing%` — zero hits. LP cost is reconstructed by joining: (i) `Hedge.ExecutionLog` (LP fill price × fill qty — see [`dealing-investigation-and-execution.md`](dealing-investigation-and-execution.md)), (ii) `ApexRecon_TradeActivity` / Marex / IG recon trade-activity tables (see [`broker-and-lp-reconciliation.md`](broker-and-lp-reconciliation.md)), (iii) unit-conversion ratios and contract mapping (this skill). When the dealing-analyst skill set publishes such a fact, this skill should incorporate it.
+15. **Tier 3 — No `BI_DB_DDR_*` hedge-cost fact exists, but a canonical HC ledger DOES exist outside DDR.** The dealing-team-produced `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` (1.65M rows, 9 asset classes, refreshed daily from the `eToro/HedgeCostAgent` pipeline) IS the canonical realised-HC ledger. Use it for hedge-cost rollups, ICC HC, per-asset-class HC trends, and "net trading revenue" questions (join to revenue side on `(AssetClass, date)`). See [`hedge-cost-recon.md`](hedge-cost-recon.md). The reconstruction-via-ExecutionLog + recon-files workflow described historically here is now a **deep-methodology forensic path**, not an analytical default — only used when investigating WHY the HC ledger has a specific value, not WHAT it is.
 
 ## Tables — the LP-and-hedge configuration map
 
@@ -354,16 +354,16 @@ WHERE hsla.HedgeServerID = 8  -- OMS server
 ```
 **Use when:** multi-account hedge servers (single-account servers bypass the allowlist).
 
-### Pattern 9 — Cost-of-hedging RESEARCH workflow (no unified fact; cross-skill join)
+### Pattern 9 — Hedge cost: ROUTE to the canonical HC ledger
 ```sql
--- Combine LP execution fills × contract mapping × unit-conv to approximate hedge cost per (instrument, day).
--- Step 1: get LP fill data from dealing-investigation-and-execution.md (Hedge.ExecutionLog)
--- Step 2: get contract → LP-type via Trade.LiquidityProviderContracts (Pattern 1)
--- Step 3: convert LP-native fill qty to eToro units via ProviderUnitConversionRatio (Pattern 4)
--- Step 4: align by date with revenue side from domain-revenue-and-fees / Fact_Revenue_Generating_Actions
--- This is a research workflow — there is NO unified fact_lp_cost table in DDR today.
+-- For ANALYTICAL HC questions ("hedge cost YTD", "ICC HC last month", "Real Stocks HC trend",
+-- "net trading revenue by asset class"), use the canonical HC ledger directly:
+SELECT AssetClass, ROUND(SUM(Hedge_Cost)/1e6, 2) AS hc_usd_m
+FROM main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1
+WHERE etr_ymd >= '2026-01-01'
+GROUP BY AssetClass ORDER BY hc_usd_m;
 ```
-**Use when:** "what does it cost us to hedge crypto this quarter?" — until a dealing-analyst hedge-cost fact is published, follow this 4-step reconstruction.
+**Use when:** any hedge-cost rollup — load [`hedge-cost-recon.md`](hedge-cost-recon.md). The historic ExecutionLog + recon + contract-mapping reconstruction is only for FORENSIC deep-dives ("why is the HC ledger value X on date Y?"), not for analytical defaults.
 
 ---
 
@@ -372,22 +372,25 @@ WHERE hsla.HedgeServerID = 8  -- OMS server
 ```
 Trading-platform NET P&L
   = Revenue from customers              [domain-revenue-and-fees]
-  − LP hedge costs (LP fill price + LP fees + slippage)   [reconstructed here + dealing-investigation]
+  − Hedge cost                          [hedge-cost-recon.md — main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1]
   − Operational costs                   [out of scope]
 ```
 
-**No unified DDR hedge-cost fact exists today.** Reconstruction sources:
+**Canonical HC source:** `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` — daily EOD ledger from the `eToro/HedgeCostAgent` pipeline. See [`hedge-cost-recon.md`](hedge-cost-recon.md) for the table and query patterns.
+
+This LP-config skill provides the **upstream pipeline truth** (which LP, which contract, which unit-conversion ratio) — used during HC investigations to explain WHY a row has its value. For ANALYTICAL HC, go straight to the HC ledger.
+
+Forensic reconstruction sources (only when the HC ledger value itself is being audited):
 
 - `Hedge.ExecutionLog` (LP fill rate, slippage vs eToro execution-rate-at-send) — see [`dealing-investigation-and-execution.md`](dealing-investigation-and-execution.md).
 - LP-recon trade-activity tables (`ApexRecon_TradeActivity`, Marex non-futures, JPM trade activity) — see [`broker-and-lp-reconciliation.md`](broker-and-lp-reconciliation.md).
 - LP contracts + conversion ratios (this skill).
 
-When the dealing-analyst skill set publishes a unified hedge-cost fact, this skill should incorporate it.
-
 ---
 
 ## Cross-references
 
+- **Realised hedge cost (canonical HC ledger)** → [`hedge-cost-recon.md`](hedge-cost-recon.md) — `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1`. Default destination for any "hedge cost" rollup.
 - Hedge-execution events / LP fill audit log → [`dealing-investigation-and-execution.md`](dealing-investigation-and-execution.md)
 - EOD LP recon → [`broker-and-lp-reconciliation.md`](broker-and-lp-reconciliation.md)
 - Revenue side of trading P&L → [`../domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md)

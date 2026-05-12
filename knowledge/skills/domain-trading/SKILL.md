@@ -79,6 +79,21 @@ triggers:
   - TSLA
   - BTC
   - ETH
+  - hedge cost
+  - HC
+  - HedgeCost
+  - HedgeCostAgent
+  - bi_output_dealing_HC_auto_agent
+  - dealing HC
+  - cost of hedging
+  - Client_Zero
+  - Account_PnL
+  - LP_Financing
+  - ICC hedge cost
+  - crypto hedge cost
+  - net trading revenue
+  - revenue minus hedge cost
+  - FX_Hedge_PnL
 required_tables:
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_position
@@ -86,6 +101,7 @@ required_tables:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl
+  - main.bi_dealing_stg.bi_output_dealing_hc_auto_agent_v1
 sample_questions:
   - "What was the state of position X when it opened?"
   - "How much was traded in real stocks this quarter?"
@@ -99,6 +115,10 @@ sample_questions:
   - "How many trades failed in February?"
   - "Recreate position 12345's state on 2026-03-15"
   - "Show me the LP fees we paid for crypto last month"
+  - "How much hedge cost did we make in ICC YTD?"
+  - "What's our crypto hedge cost trend?"
+  - "Net trading revenue by asset class last month"
+  - "Why was Real Stocks HC so big on 2026-04-15?"
 domain_tags:
   - trading
   - positions
@@ -114,9 +134,10 @@ domain_tags:
   - best-execution
   - pricing
   - crypto-ops
-version: 3
+  - hedge-cost
+version: 4
 owner: "dataplatform"
-last_validated_at: "2026-05-11"
+last_validated_at: "2026-05-12"
 ---
 
 # Trading & Markets Super-Domain
@@ -169,6 +190,7 @@ Load when the question concerns position state, instrument selection, trade volu
 - "ExecutionLog for position X", "manual order audit", "HBC execution trail"
 - "USD/JPY rate at 14:00 yesterday", "spot price for ETH on March 1"
 - "Crypto hedge cost", "LP contract fee", "what did we pay liquidity providers"
+- "Hedge cost YTD", "ICC HC last month", "net trading revenue by asset class", "why was Real Stocks HC big on date X" — route to [`hedge-cost-recon.md`](hedge-cost-recon.md), the canonical HC source (`main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1`)
 - "Slippage report", "NBBO compliance", "trade fails report", "execution latency", "Best Execution Committee output"
 
 Do **not** load for:
@@ -180,9 +202,9 @@ Do **not** load for:
 
 ## Scope
 
-In scope: position lifecycle, `Dim_Position` metadata, `fact_customeraction_w_metrics` granular state, `PositionChangeLog` point-in-time reconstruction, `Dim_Instrument` and the enriched view (asset class, suffix, IsFuture, Tradeable, IsSQF), notional & invested trading volumes (`bi_db_ddr_fact_trading_volumes_and_amounts`), AUM / NOP / equity snapshots (`bi_db_ddr_fact_aum`), daily PnL changes (`bi_db_ddr_fact_pnl`), copy-trading semantics (MirrorID / MirrorTypeID / IsCopy / IsCopyFund), broker & liquidity-provider reconciliation (Duco EOD, Apex, BNY-Virtu, Saxo, Marex, JPM, IG, Vision), dealing investigation feeds (ExecutionLog, HBCExecutionLog, EMSOrders), pricing history (`History.CurrencyPrice`, market currency price logs), liquidity-provider contracts and the cost-of-goods-sold side of trading, crypto trading ops (Nixar pipelines, Fireblocks settlement), best-execution analytics (NBBO, slippage, fails, latency, Best Execution Committee output).
+In scope: position lifecycle, `Dim_Position` metadata, `fact_customeraction_w_metrics` granular state, `PositionChangeLog` point-in-time reconstruction, `Dim_Instrument` and the enriched view (asset class, suffix, IsFuture, Tradeable, IsSQF), notional & invested trading volumes (`bi_db_ddr_fact_trading_volumes_and_amounts`), AUM / NOP / equity snapshots (`bi_db_ddr_fact_aum`), daily PnL changes (`bi_db_ddr_fact_pnl`), copy-trading semantics (MirrorID / MirrorTypeID / IsCopy / IsCopyFund), broker & liquidity-provider reconciliation (Duco EOD, Apex, BNY-Virtu, Saxo, Marex, JPM, IG, Vision), dealing investigation feeds (ExecutionLog, HBCExecutionLog, EMSOrders), pricing history (`History.CurrencyPrice`, market currency price logs), liquidity-provider contracts and the cost-of-goods-sold side of trading, **hedge cost reconstruction (`main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` — canonical daily HC ledger from the `eToro/HedgeCostAgent` pipeline; 9 asset classes; ICC = CFD Indices+Commodities+FX; formula `HC = Client_Zero − Account_PnL − LP_Financing`)**, crypto trading ops (Nixar pipelines, Fireblocks settlement), best-execution analytics (NBBO, slippage, fails, latency, Best Execution Committee output).
 Out of scope: customer master record (Customer & Identity), deposit/withdrawal flows (Payments), fee revenue composition (Revenue & Fees), AML risk classification (Compliance), acquired-platform product AUM / fees (Revenue & Fees per-product sub-skills — `revenue-spaceship`, `revenue-moneyfarm`, `revenue-options`).
-Last verified: 2026-05-11
+Last verified: 2026-05-12
 
 ## Critical Warnings
 
@@ -245,7 +267,8 @@ graph TB
 | [`broker-and-lp-reconciliation.md`](broker-and-lp-reconciliation.md) | **Bridge** | `main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon`, plus per-LP recon tables | Duco end-of-day recon, Apex recon (US equity + Options), BNY-Mellon / Virtu (non-US equity), Saxo, Marex, JPM, IG, Vision. Broker breaks, position discrepancies, settlement state. **Bridge**: Duco SP joins broker-side `BI_DB_PositionPnL` + `Dim_Instrument` to dealer-side `Hedge.Netting`. |
 | [`dealing-investigation-and-execution.md`](dealing-investigation-and-execution.md) | **D** | `main.dealing.bronze_etoro_hedge_executionlog`, `main.dealing.bronze_etoro_hedge_hbcexecutionlog`, `main.dealing.bronze_etoro_hedge_manualorderexecutionlog` | Per-execution forensic drill-down, manual order log, EMS investigation tool. Operator-side audit. Recent `ExecutionLog` data is 100% EMS-path (`OrderID = -1`, key is `EMSOrderID`); HBC archive ends 2024-02-29. |
 | [`pricing-and-currency-history.md`](pricing-and-currency-history.md) | **B** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit`, market currency price logs | Spot FX rates over time, instrument price history, intraday pricing log, mark-to-market inputs. Mostly broker-side mark-to-market; intra-day tick archive used by best-exec for NBBO. |
-| [`lp-contracts-and-cogs.md`](lp-contracts-and-cogs.md) | **D** | `main.trade.liquidityprovidercontracts`, plus LP cost-of-goods tables | LP contract terms, fees paid TO providers (cost-of-goods-sold side), `ProviderUnitConversionRatio`, hedge cost. **Cost-of-trading, NOT revenue.** |
+| [`lp-contracts-and-cogs.md`](lp-contracts-and-cogs.md) | **D** | `main.trade.liquidityprovidercontracts`, plus LP cost-of-goods tables | LP **configuration** — contract terms, unit conversion ratios, hedge-strategy thresholds, routing. **Cost-of-trading CONFIG, not realised HC** — for realised hedge cost go to `hedge-cost-recon.md`. |
+| [`hedge-cost-recon.md`](hedge-cost-recon.md) | **D** | `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` | **CANONICAL HEDGE COST.** Daily EOD HC ledger from the `eToro/HedgeCostAgent` pipeline. 9 asset classes (CFD Stocks / FX / Commodities / Indices / ETF-Futures + Real Stocks + Crypto Real / CFD / Nostro). Formula `HC = Client_Zero − Account_PnL − LP_Financing`. ICC = `AssetClass IN ('CFD Indices', 'CFD Commodities', 'CFD FX')`. Shallow questions (asset-class / ICC / per-instrument HC, net trading revenue when joined to `domain-revenue-and-fees`) live here; deep methodology (decision trees, auto-rules, per-asset-class Account_PnL construction) lives in `eToro/HedgeCostAgent` repo. |
 | `crypto-trading-ops-nixar.md` *(pending — fills when dealing-analyst skill lands)* | **D** | `main.dealing.gold_*_nixar_*` family, plus Fireblocks settlement views | Crypto-settlement pipeline (Nixar), Fireblocks custody, hedge book, on-chain confirmation flow. **Placeholder** — see `/Workspace/Repos/dealing/BI-Dealing/databricks/Nixar/` for production code reference. |
 | [`best-execution.md`](best-execution.md) | **D** (with bridge anchors) | `main.dealing.bestexecution_results`, `main.dealing.bi_output_dealing_bestexecution_report`, `main.dealing.bi_output_dealing_latency_compensation`, `Hedge.Report_TCA`, `Hedge.SSRS_Latency_Report` | NBBO, slippage, fails, latency, **TCA** (SpreadCost + Slippage + InternalCost + ExternalCost = TotalTransactionCost). The four pillars of execution quality plus TCA cost decomposition. Anchored on the dealing-team-curated UC stack (`bestexecution_results` is a bridge table carrying PositionID + ExecutionID + CID + OrderID together). Routes into `/Workspace/Shared/(Clone) Execution Quality Presentation/` and the dealing repo at `/Workspace/Repos/dealing/BI-Dealing/databricks/Dealing_Tasks/`. |
 

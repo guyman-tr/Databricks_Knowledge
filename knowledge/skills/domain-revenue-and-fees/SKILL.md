@@ -73,9 +73,9 @@ required_tables:
   - main.etoro_kpi_prep.mv_revenue_trading
   - main.etoro_kpi.vg_ddr_revenue
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics
-version: 1
+version: 2
 owner: "guyman@etoro.com"
-last_validated_at: "2026-05-10"
+last_validated_at: "2026-05-12"
 ---
 
 # Revenue & Fees Super-Domain
@@ -110,8 +110,8 @@ The DDR layer (Daily Data Report) pre-aggregates **18 canonical revenue metrics*
 ## Scope
 
 In scope: All 18 revenue/fee metrics in `Dim_Revenue_Metrics`, the DDR fact and its derivatives (`vg_ddr_revenue`, `mv_revenue_trading`), the 15 `etoro_kpi_prep.v_revenue_*` atomic per-fee views, the per-action granular `de_output_etoro_kpi_fact_customeraction_w_metrics`, regional revenue surfaces (Spaceship, MoneyFarm, Options/Apex), share-lending revenue splits, staking lag mechanics, dividend pass-through and SDRT, the `IncludedInTotalRevenue` semantics, and `Total Net Revenue` calculation.
-Out of scope: Customer money flow as VOLUMES (Payments super-domain owns deposits / withdrawals / cashouts / MIMO panel), bonuses paid out (Compensation), treasury / GL / company-level finance (Finance & Treasury), affiliate commission (per-domain decision: ignored — folded into FullCommission as partner-share, or treated as marketing cost), LP-fee reconciliation tables (`bi_dealing.bi_output_dealing_lp_fees_*` — operational dealing recon, not a revenue / COGS line; belongs in Trading super-domain).
-Last verified: 2026-05-10
+Out of scope: Customer money flow as VOLUMES (Payments super-domain owns deposits / withdrawals / cashouts / MIMO panel), bonuses paid out (Compensation), treasury / GL / company-level finance (Finance & Treasury), affiliate commission (per-domain decision: ignored — folded into FullCommission as partner-share, or treated as marketing cost), LP-fee reconciliation tables (`bi_dealing.bi_output_dealing_lp_fees_*` — operational dealing recon, not a revenue / COGS line; belongs in Trading super-domain), **HEDGE COST** as a cost-line on revenue (route to [`../domain-trading/hedge-cost-recon.md`](../domain-trading/hedge-cost-recon.md) — `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` is the canonical HC source, joinable to revenue at the asset-class level).
+Last verified: 2026-05-12
 
 ## Critical Warnings
 
@@ -132,6 +132,42 @@ Last verified: 2026-05-10
 15. **Tier 3 — Spaceship fees do NOT flow into the DDR fact.** Spaceship has its own `etoro_kpi.v_spaceship_fees` view (Super management fees, Voyager management fees, Nova platform + FX). Same for MoneyFarm and Options/Apex — each regional acquisition has its own fee surface. The DDR fact is **eToro-native trading only**.
 16. **Tier 3 — `fact_customeraction_w_metrics` columns `ConversionFeeDeposit`, `ConversionFeeWithdraw`, `ConversionFeeReversal` are three SEPARATE columns** — the DDR metric `ConversionFee` is the sum. If you need the directional split (deposit-side vs withdraw-side), use the w_metrics table directly.
 17. **Tier 3 — `bi_dealing.bi_output_dealing_lp_fees_*` (Saxo / Virtu daily fee recons) are NOT revenue and NOT COGS** in the accounting sense. They are operational dealing-team recons matching LP invoices against internal trade records. Do not query them from this skill — route to the Trading super-domain.
+18. **Tier 3 — Hedge cost (HC) is OUT OF SCOPE for this skill.** `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` is the canonical hedge-cost table (Hedge Cost = Client Zero − Account PnL − LP Financing, per asset class × instrument × day, 1.65M rows, refreshed daily). Net trading revenue questions ("commission revenue minus hedge cost for ICC last month") need BOTH this skill (revenue side) AND [`../domain-trading/hedge-cost-recon.md`](../domain-trading/hedge-cost-recon.md) (HC side). Join on `(AssetClass, etr_ymd)`.
+
+---
+
+## Fast path — the 90% questions (shallow-tier inline)
+
+Most questions reduce to "how much revenue / what fee / which category, sliced by some flag, in some date window." The canonical answer is **`main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`** — three-second answer, every metric, every flag, every category.
+
+```sql
+-- "Total revenue last month"
+SELECT SUM(Amount) AS total_revenue_usd
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions
+WHERE Date >= '2026-04-01' AND Date < '2026-05-01'
+  AND IncludedInTotalRevenue = 1;
+
+-- "ICC revenue YTD by metric" (ICC = InstrumentTypeID IN (1,2,4) — Currencies + Commodities + Indices)
+SELECT Metric, ROUND(SUM(Amount)/1e6, 2) AS rev_usd_m
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions
+WHERE Date >= '2026-01-01' AND IncludedInTotalRevenue = 1
+  AND InstrumentTypeID IN (1, 2, 4)
+GROUP BY Metric ORDER BY rev_usd_m DESC;
+
+-- "Revenue breakdown by 5-bucket category" — fastest top-line slice
+SELECT m.RevenueMetricCategory, ROUND(SUM(f.Amount)/1e6, 2) AS rev_usd_m
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions f
+JOIN main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics m
+  ON f.RevenueMetricID = m.RevenueMetricID
+WHERE f.Date >= '2026-01-01' AND f.IncludedInTotalRevenue = 1
+GROUP BY m.RevenueMetricCategory ORDER BY rev_usd_m DESC;
+```
+
+For country / regulation / club / FTD / segment slicing, JOIN `Dim_Customer` on `RealCID` (the DDR fact's distribution key) — see [Customer & Identity super-domain](../domain-customer-and-identity/SKILL.md) for the customer dimensions.
+
+For per-position / per-instrument-ID / per-leverage / per-copy granularity, drop to **`main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`** instead — same speed, more grain, fees as named columns.
+
+For methodology / fee-rules / audit ("why does this fee compute this way?"), the `etoro_kpi_prep.v_revenue_*` family is the right place — but at ~3-4 minutes per view, never use them for rollups.
 
 ---
 
@@ -299,17 +335,27 @@ Use these categories for the canonical "Trading vs Non-Trading revenue" split:
 | `IsRecurring` | Recurring-investment position | UPDATE-JOIN from `recurringinvestment_positions_parquet` |
 | `IsC2P` | Copy-to-Portfolio | `V_C2P_Positions.PositionID IS NOT NULL` |
 
-### `InstrumentTypeID` values
+### `InstrumentTypeID` values — authoritative dictionary
 
-| ID | Type | Notes |
-|----|------|-------|
-| -1 | N/A (account-level fee) | `DormantFee`, `ConversionFee`, `CashoutFee`, `InterestFee` have no instrument |
-| 1 | Stocks | |
-| 2 | Currencies (FX) | |
-| 3 | Commodities | |
-| 4 | Indices | |
-| 5 | Crypto | |
-| 6 | ETFs | |
+**Source of truth:** `main.bi_output.bi_ouput_v_dim_instrumenttype` (the UC dictionary view). The DDR fact's own `InstrumentTypeID` column COMMENT is stale (says `1=Stocks, 2=Currencies, ...`) — **ignore it; use the dictionary below.** Same values apply across the entire trading + revenue stack (`fact_customeraction_w_metrics`, `Dim_Instrument`, `mv_revenue_trading`).
+
+| ID | Type | Active? | ICC member? | YTD 2026 rev rows (DDR) |
+|----|------|---------|-------------|--------------------------|
+| -1 | N/A (account-level fee) | ✅ | — | 5.4M — `DormantFee`, `ConversionFee`, `CashoutFee`, `InterestFee` (no instrument) |
+| 1 | **Currencies (FX)** | ✅ | **✅ ICC** | 3.3M |
+| 2 | **Commodities** | ✅ | **✅ ICC** | 21.1M |
+| 3 | CFD | ⛔ legacy placeholder | — | 0 rows in live data |
+| 4 | **Indices** | ✅ | **✅ ICC** | 10.6M |
+| 5 | **Stocks** | ✅ | — | 70.5M (#1 by row count) |
+| 6 | **ETF** | ✅ | — | 15.5M |
+| 7 | Bonds | ⛔ legacy placeholder | — | 0 rows in live data |
+| 8 | TrustFunds | ⛔ legacy placeholder | — | 0 rows in live data |
+| 9 | Options | ⛔ inactive | — | 21K rows (Options_PFOF arrives via DDR, not instrument grain) |
+| 10 | **Crypto Currencies** | ✅ | — | 18.5M |
+
+**ICC = `InstrumentTypeID IN (1, 2, 4)`** — Currencies + Commodities + Indices. These three are the **primary CFD revenue drivers** (the "real money makers" alongside Stocks). The `IsICC` flag in the DDR fact and `mv_revenue_trading` is defined as `IsFuture = 1 OR InstrumentTypeID IN (1, 2, 4)`. Always lead with `WHERE InstrumentTypeID IN (1, 2, 4)` for any "ICC revenue / volume / hedge cost" question.
+
+**Legacy / inactive IDs (3, 7, 8, 9):** vestigial from eToro's forex-era origins. Either never populated in modern data (CFD, Bonds, TrustFunds) or carry zero/near-zero analytical signal in revenue (Options, which routes through `RevenueMetricID = 18 Options_PFOF` in the DDR fact instead of an instrument-grain row). Filter them out implicitly by joining to live `bi_ouput_v_dim_instrumenttype` or explicitly with `InstrumentTypeID IN (-1, 1, 2, 4, 5, 6, 10)`.
 
 ### Reference lookups (used in the source `fact_customeraction` and TVFs)
 
@@ -416,6 +462,7 @@ Each regional product is its own UC domain with a curated `_domain_card.md`. **R
 - It does NOT own **affiliate commission** — per explicit decision, this is treated as either a cost-of-acquisition (affiliate-paid-out → marketing cost) or already embedded in the partner-share component of `FullCommission`. Not revenue.
 - It does NOT own **LP fee recons** (`bi_dealing.bi_output_dealing_lp_fees_*` — Saxo, Virtu daily fee recons). Those are operational dealing-team artefacts (matching LP invoices against internal trade records), neither revenue nor COGS — route to Trading super-domain.
 - It does NOT own **broker / LP identity**. Broker / LP mapping lives in the Trading super-domain (`dealing_dbo`).
+- It does NOT own **hedge cost (HC)**. `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` is the canonical HC source — covered by [`../domain-trading/hedge-cost-recon.md`](../domain-trading/hedge-cost-recon.md). HC questions like "ICC hedge cost last quarter" route there, not here. For "**net** trading revenue" (revenue − HC), load BOTH skills and join on `(AssetClass, date)`.
 
 ## Cluster provenance
 
