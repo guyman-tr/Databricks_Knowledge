@@ -7,7 +7,7 @@ Brief contains:
   3. KPI views in or referencing the cluster, with their DDL excerpts
   4. Genie spaces overlapping the cluster, with description + tables list
   5. Sample lineage edges (§5.1) that go OUT of the cluster - useful to
-     identify bridge needs
+     identify cross-domain skill needs
 
 Usage:
   python tools/skills/extract_subdomain_brief.py --cluster 7
@@ -198,7 +198,7 @@ def main() -> int:
             lines.append(f"- `{t}`")
         lines.append("")
 
-    lines.append("## Out-cluster neighbors (likely bridge candidates)")
+    lines.append("## Out-cluster neighbors (likely cross-domain candidates)")
     lines.append("")
     for n, w in out_neighbors.most_common(20):
         lines.append(f"- `{n}` — outflow weight {w:.1f}")

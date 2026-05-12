@@ -205,7 +205,7 @@ deep-read links to wikis for full context. Router stays under 2KB.
    files at `knowledge/skills/bridges/` so the AI can route to a bridge
    without loading both parent skills. User to confirm.
 
-3. **Skill location** — recommendation: `knowledge/skills/payments/<name>.md`
+3. **Skill location** — recommendation: `knowledge/skills/domain-payments/<name>.md`
    for sub-skills, with `knowledge/skills/_router.md` as the always-loaded
    entry point. User to confirm.
 

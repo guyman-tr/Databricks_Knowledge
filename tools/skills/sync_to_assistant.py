@@ -1,18 +1,19 @@
 """
 Mirror knowledge/skills/* (curated content only — no underscore-prefixed
-audit/working files) to C:/Users/guyman/.cursor/skills/dwh-domain/.
+audit/working files) to C:/Users/guyman/.assistant/skills/dwh-domain/.
 
-Layout in .cursor/skills:
-  dwh-domain/
+Identical layout to sync_to_cursor.py — only the destination changes:
+
+  .assistant/skills/dwh-domain/
     SKILL.md                                 (= knowledge/skills/_router.md)
     payments/SKILL.md                        (= knowledge/skills/payments/SKILL.md)
     payments/deposits-and-withdrawals.md     (verbatim copy)
-    cross/<name>.md                          (verbatim copy when written)
+    cross/<name>.md                          (verbatim copy)
 
 Files starting with `_` are working artifacts (graphs, briefs, candidates,
-node summaries) and are NOT mirrored.
+node summaries, UC object map, etc.) and are NOT mirrored.
 
-Usage: python tools/skills/sync_to_cursor.py
+Usage: python tools/skills/sync_to_assistant.py
 """
 from __future__ import annotations
 
@@ -22,7 +23,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SRC = REPO_ROOT / "knowledge" / "skills"
-DST = Path(r"C:\Users\guyman\.cursor\skills\dwh-domain")
+DST = Path(r"C:\Users\guyman\.assistant\skills\dwh-domain")
 
 
 def is_curated(p: Path) -> bool:
@@ -54,28 +55,27 @@ def main() -> int:
         print(f"Source missing: {SRC}", file=sys.stderr)
         return 2
 
-    # Wipe destination (idempotent overwrite — small folder, safe)
     if DST.exists():
         shutil.rmtree(DST)
     DST.mkdir(parents=True, exist_ok=True)
 
-    # Top-level: rename _router.md -> SKILL.md when copying so .cursor/skills
-    # treats the router as the entry point of the dwh-domain skill.
     router_src = SRC / "_router.md"
     if router_src.exists():
         router_dst = DST / "SKILL.md"
         shutil.copy2(router_src, router_dst)
         print(f"_router.md -> {router_dst} (renamed to SKILL.md)", flush=True)
     else:
-        print("WARN: knowledge/skills/_router.md missing — destination will not have SKILL.md", file=sys.stderr)
+        print(
+            "WARN: knowledge/skills/_router.md missing — destination will not have SKILL.md",
+            file=sys.stderr,
+        )
 
-    # Now copy all curated subfolders/files
     n = 0
     for entry in sorted(SRC.iterdir()):
         if entry.is_dir() and is_curated(entry):
             n += copy_curated(entry, DST / entry.name)
         elif entry.is_file() and entry.name == "_router.md":
-            continue  # already handled
+            continue
         elif entry.is_file() and is_curated(entry):
             shutil.copy2(entry, DST / entry.name)
             print(f"{entry.name} -> {DST / entry.name}", flush=True)
