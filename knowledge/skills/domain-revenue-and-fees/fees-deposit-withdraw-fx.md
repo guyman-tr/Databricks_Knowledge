@@ -1,5 +1,5 @@
 ---
-id: revenue-fees-deposit-withdraw-fx
+id: fees-deposit-withdraw-fx
 name: revenue-and-fees-fees-deposit-withdraw-fx
 description: |
   MIMO-side fees — fees earned on money movement INTO and OUT of customer

@@ -1,5 +1,5 @@
 ---
-id: revenue-trading-revenue-and-fees
+id: trading-revenue-and-fees
 name: revenue-and-fees-trading-revenue-and-fees
 description: |
   Trading-platform fee questions across BOTH the canonical aggregated panel AND
