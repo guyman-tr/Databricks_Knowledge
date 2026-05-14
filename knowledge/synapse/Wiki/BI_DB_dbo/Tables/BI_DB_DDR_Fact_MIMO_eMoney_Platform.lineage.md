@@ -3,30 +3,30 @@
 | Property | Value |
 |----------|-------|
 | **DWH Table** | `BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform` |
-| **UC Target** | _Pending — resolved during write-objects_ |
+| **UC Target (Databricks)** | **Not found** — `SHOW TABLES IN main.bi_db LIKE '*mimo*'` returned only `gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms` (2026-05-14 MCP check). Intended/export name may still follow `gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_emoney_platform`; verify with governance index / lakebridge mapping before deploy. |
 | **Primary Source** | `eMoney_dbo.eMoney_Fact_Transaction_Status` |
-| **ETL SP** | `SP_DDR_Fact_MIMO_eMoney_Platform` |
+| **ETL SP** | `BI_DB_dbo.SP_DDR_Fact_MIMO_eMoney_Platform` |
 | **Secondary Sources** | `DWH_dbo.Dim_Customer`, `DWH_dbo.Dim_Currency`, `eMoney_dbo.eMoney_Currency_Instrument_Mapping_Static` |
-| **Generated** | 2026-03-26 |
+| **Generated** | 2026-05-14 |
 
 ## Lineage Chain
 
 ```
-eMoney_dbo.eMoney_Fact_Transaction_Status (settled IBAN transactions)
-DWH_dbo.Dim_Customer (FTD reference + amount override)
-DWH_dbo.Dim_Currency (currency ID for withdrawals)
-eMoney_dbo.eMoney_Currency_Instrument_Mapping_Static (currency ID for deposits)
-  |
-  |-- SP_DDR_Fact_MIMO_eMoney_Platform(@date):
-  |     1. #FTDIBAN: FTD deposits from eMoney_Fact_Transaction_Status JOIN Dim_Customer
-  |     2. #depositsIBAN: Date-filtered deposits (TxTypeID 7,5,14)
-  |     3. UPDATE deposits with Dim_Customer FTD amount
-  |     4. #cashoutIBAN: Date-filtered withdrawals (TxTypeID 8,6)
-  |     5. UNION ALL → #MIMOIBANPREP → dedupe by TransactionID → #MIMOIBAN
-  |     6. DELETE/INSERT by DateID
-  |     7. FTD recovery UPDATE from Dim_Customer for DateID >= 20250901
-  v
-BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform (23.2M rows, transaction-level grain)
+eMoney_dbo.eMoney_Fact_Transaction_Status (settled TxStatusID = 2 rows, filtered by TxTypeID & TxStatusModificationDateID)
+    + DWH_dbo.Dim_Customer (#FTDIBAN + FTD recovery UPDATE)
+    + eMoney_dbo.eMoney_Currency_Instrument_Mapping_Static (deposit CurrencyID path)
+    + DWH_dbo.Dim_Currency (withdraw CurrencyID path)
+          |
+          |-- BI_DB_dbo.SP_DDR_Fact_MIMO_eMoney_Platform(@date):
+          |       #FTDIBAN  (TxStatusID=2, TxTypeID IN (7,14) + Dim_Customer FTD join)
+          |       #depositsIBAN (TxStatusModificationDateID=@dateID, TxStatusID=2, TxTypeID IN (7,5,14))
+          |       UPDATE #depositsIBAN amounts from #FTDIBAN
+          |       #cashoutIBAN (same DateID filter, TxStatusID=2, TxTypeID IN (8,6))
+          |       UNION ALL -> dedupe ROW_NUMBER -> #MIMOIBAN
+          |       DELETE WHERE DateID=@dateID -> INSERT
+          |       FTD recovery UPDATE on target (DateID>=20250901, Deposit, IsFTD=0)
+          v
+BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
 ```
 
 ## Column Lineage
@@ -35,47 +35,42 @@ BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform (23.2M rows, transaction-level gra
 
 | Transform | Meaning |
 |-----------|---------|
-| **passthrough** | Column copied as-is from source |
-| **rename** | Same value, different column name |
-| **ETL-computed** | Derived/calculated by SP logic |
-| **join-enriched** | Joined from secondary source during ETL |
-| **coerce** | ISNULL null-to-zero/default coercion applied |
+| **passthrough** | Same column from source, possibly renamed |
+| **ETL-computed** | `CASE`, literal, or expression in SP |
+| **join-enriched** | Value from JOIN to another table |
+| **coerce** | `ISNULL` / casting on INSERT |
 
 ### Columns
 
-| DWH Column | Source Table | Source Column | Transform | Computation Formula | Notes |
-|-----------|-------------|---------------|-----------|---------------------|-------|
-| DateID | — | — | ETL-computed | `@dateID = CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)` | SP parameter |
-| Date | — | — | ETL-computed | `@date` parameter | SP parameter |
-| RealCID | eMoney_Fact_Transaction_Status | CID | rename | `mfts.CID AS RealCID` | Renamed CID→RealCID |
-| MIMOAction | — | — | ETL-computed | Literal: `'Deposit'` or `'Withdraw'` based on query branch | |
-| OrigIdentifier | — | — | ETL-computed | Literal: `'TransactionID'` for all eMoney transactions | Always 'TransactionID' |
-| TransactionID | eMoney_Fact_Transaction_Status | TransactionID | passthrough+coerce | `ISNULL(i.TransactionID, -1)` | -1 sentinel for NULLs |
-| ReferenceNumber | eMoney_Fact_Transaction_Status | ReferenceNumber | passthrough+coerce | `ISNULL(i.ReferenceNumber, -1)` | Payment gateway reference |
-| AmountUSD | eMoney_Fact_Transaction_Status | USDAmountApprox | rename | `mfts.USDAmountApprox AS AmountUSD`; deposits positive, withdrawals negated (`-1 * mfts.USDAmountApprox`); FTD amounts overridden from Dim_Customer | |
-| AmountOrigCurrency | eMoney_Fact_Transaction_Status | LocalAmount | rename | `mfts.LocalAmount AS AmountOrigCurrency`; withdrawals negated | |
-| FundingTypeID | eMoney_Fact_Transaction_Status | TxTypeID | ETL-computed | Deposits: `CASE WHEN TxTypeID IN (5) THEN 33 ELSE 0 END`; Withdrawals: `CASE WHEN TxTypeID IN (6) THEN 33 ELSE 0 END` | 33 = internal transfer type |
-| CurrencyID | eMoney_Currency_Instrument_Mapping_Static / Dim_Currency | SellCurrencyID / CurrencyID | join-enriched | Deposits: `dc.SellCurrencyID` via `HolderCurrencyISO = CurrencyISO`; Withdrawals: `dc.CurrencyID` via `HolderCurrencyDesc = Abbreviation` | Different join paths per action |
-| Currency | eMoney_Fact_Transaction_Status | HolderCurrencyDesc | passthrough | Direct: `mfts.HolderCurrencyDesc AS Currency` | ISO currency code |
-| IsFTD | eMoney_Fact_Transaction_Status + Dim_Customer | TransactionID | ETL-computed+coerce | `CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END`; `ISNULL(i.IsFTD, 0)`; + FTD recovery UPDATE for DateID >= 20250901 | Platform-level first deposit |
-| IsInternalTransfer | eMoney_Fact_Transaction_Status | TxTypeID | ETL-computed+coerce | Deposits: `CASE WHEN TxTypeID IN (5) THEN 1 ELSE 0 END`; Withdrawals: `CASE WHEN TxTypeID IN (6) THEN 1 ELSE 0 END`; `ISNULL(...,0)` | TxTypeID 5/6 = internal transfers |
-| IsRedeem | — | — | ETL-computed+coerce | `ISNULL(NULL, 0)` — always NULL in source, coerced to 0 | Placeholder; not populated for eMoney |
-| TxTypeID | eMoney_Fact_Transaction_Status | TxTypeID | passthrough | Direct: `mfts.TxTypeID` | 5=internal in, 6=internal out, 7=deposit, 8=withdraw, 14=C2F |
-| IsTradeFromIBAN | eMoney_Fact_Transaction_Status | ReferenceNumber + TxTypeID | ETL-computed+coerce | `CASE WHEN LEFT(ReferenceNumber,1) != 'P' AND TxStatusModificationDateID >= 20240403 AND TxTypeID = 5 THEN 1 ELSE 0 END` (deposits); `... AND TxTypeID = 6 ...` (withdrawals); `ISNULL(...,0)` | Reference-based IBAN trade detection |
-| UpdateDate | — | — | ETL-computed | `GETDATE()` | ETL timestamp |
-| IsCryptoToFiat | eMoney_Fact_Transaction_Status | TxTypeID | ETL-computed+coerce | `CASE WHEN TxTypeID IN (14) THEN 1 ELSE 0 END`; `ISNULL(...,0)` | TxTypeID 14 = crypto to fiat |
-| IsRecurring | — | — | ETL-computed | Hardcoded `0` | Placeholder; eMoney does not track recurring |
-| IsIBANQuickTransfer | — | — | ETL-computed | Hardcoded `0` | Placeholder; populated upstream but reset here |
+| DWH Column | Source Table | Source Column | Transform | Notes |
+|-----------|-------------|---------------|-----------|-------|
+| DateID | — | — | ETL-computed | `@dateID = CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)`; seeded `@dateID` into both legs |
+| Date | — | — | ETL-computed | INSERT selects `@date` |
+| RealCID | eMoney_Fact_Transaction_Status | CID | passthrough | `mfts.CID AS RealCID` |
+| MIMOAction | — | — | ETL-computed | Literals `'Deposit'` / `'Withdraw'` |
+| OrigIdentifier | — | — | ETL-computed | Literal `'TransactionID'` |
+| TransactionID | eMoney_Fact_Transaction_Status | TransactionID | coerce | INSERT `ISNULL(i.TransactionID, -1)` |
+| ReferenceNumber | eMoney_Fact_Transaction_Status | ReferenceNumber | coerce | INSERT `ISNULL(i.ReferenceNumber, -1)` |
+| AmountUSD | eMoney_Fact_Transaction_Status | USDAmountApprox | ETL-computed | Deposits: `mfts.USDAmountApprox`; Withdrawals: `-1 * mfts.USDAmountApprox`; optional UPDATE from `#FTDIBAN` |
+| AmountOrigCurrency | eMoney_Fact_Transaction_Status | LocalAmount | ETL-computed | Deposits: `LocalAmount`; Withdrawals: `-1 * LocalAmount` |
+| FundingTypeID | eMoney_Fact_Transaction_Status | TxTypeID | ETL-computed | Deposits: `CASE WHEN mfts.TxTypeID IN (5) THEN 33 ELSE 0 END`; Withdrawals: `CASE WHEN mfts.TxTypeID IN (6) THEN 33 ELSE 0 END` |
+| CurrencyID | eMoney_Currency_Instrument_Mapping_Static / Dim_Currency | SellCurrencyID / CurrencyID | join-enriched | Deposits: `SellCurrencyID` via `HolderCurrencyISO = CurrencyISO` (static mapping `BuyCurrencyID = 1`); Withdrawals: `Dim_Currency.CurrencyID` via `HolderCurrencyDesc = Abbreviation` |
+| Currency | eMoney_Fact_Transaction_Status | HolderCurrencyDesc | passthrough | `mfts.HolderCurrencyDesc AS Currency` |
+| IsFTD | #FTDIBAN + post UPDATE | — | ETL-computed + coerce | Deposits: `CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END`; Withdrawals: `0`; INSERT `ISNULL(i.IsFTD,0)`; plus `UPDATE ... SET IsFTD=1` join `Dim_Customer` / `eMoney_Fact_Transaction_Status` (see SP) |
+| IsInternalTransfer | eMoney_Fact_Transaction_Status | TxTypeID | ETL-computed + coerce | Deposits: `CASE WHEN mfts.TxTypeID IN (5) THEN 1 ELSE 0 END`; Withdrawals: `CASE WHEN mfts.TxTypeID IN (6) THEN 1 ELSE 0 END`; INSERT `ISNULL(...,0)` |
+| IsRedeem | — | — | ETL-computed + coerce | Both legs: `NULL AS IsRedeem`; INSERT `ISNULL(i.IsRedeem, 0)` -> always **0** |
+| TxTypeID | eMoney_Fact_Transaction_Status | TxTypeID | passthrough | Carried from `mfts` |
+| IsTradeFromIBAN | eMoney_Fact_Transaction_Status | ReferenceNumber, TxTypeID, TxStatusModificationDateID | ETL-computed + coerce | Deposits: `case when left(ReferenceNumber,1) != 'P' and TxStatusModificationDateID >= 20240403 and TxTypeID = 5 then 1 else 0 end`; Withdrawals: `... TxTypeID = 6 ...`; INSERT `ISNULL(...,0)` |
+| UpdateDate | — | — | ETL-computed | `GETDATE()` |
+| IsCryptoToFiat | eMoney_Fact_Transaction_Status | TxTypeID | ETL-computed + coerce | Deposits: `CASE WHEN mfts.TxTypeID IN (14) THEN 1 ELSE 0 END`; Withdrawals: `0 AS IsCryptoToFiat`; INSERT `ISNULL(IsCryptoToFiat,0)` |
+| IsRecurring | — | — | ETL-computed | INSERT literal `0 AS IsRecurring` |
+| IsIBANQuickTransfer | — | — | ETL-computed | INSERT literal `0 AS IsIBANQuickTransfer` (SP header notes MoveMoneyReason=6 feature; **no** `MoveMoneyReasonID` predicate in body) |
 
 ## Summary
 
 | Category | Count |
 |----------|-------|
-| **Passthrough** | 3 |
-| **Passthrough+coerce** | 2 |
-| **Rename** | 2 |
-| **ETL-computed** | 7 |
-| **ETL-computed+coerce** | 5 |
-| **Join-enriched** | 1 |
-| **Rename** | 1 |
-| **Total** | 21 |
+| Passthrough / rename | 4 |
+| Join-enriched | 1 |
+| ETL-computed / coerce | 16 |
+| **Total columns** | **21** |

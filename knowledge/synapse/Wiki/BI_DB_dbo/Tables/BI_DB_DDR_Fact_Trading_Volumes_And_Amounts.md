@@ -1,126 +1,130 @@
 # BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
 
-> 793M-row daily trading volume and invested amount fact table tracking position open/close volumes, invested amounts, and transaction counts per customer, broken down by instrument type, settlement, copy-trade, leverage, and 8+ position flags. Sourced from `Function_Trading_Volume_PositionLevel` (which reads `Dim_Position`, `Dim_Instrument`, and multiple enrichment tables), aggregated by `SP_DDR_Fact_Trading_Volumes_And_Amounts` with daily DELETE/INSERT by DateID.
+> **~804 M-row** DDR fact (`sys.partitions` roll-up **804 221 299** rows · MCP Synapse **2026-05-14**) spanning **`DateID` 2007-08-27 → 2026-04-25**. One row per **calendar `DateID` × `RealCID` × instrument / posture / product-context flag slice** — summarising **persisted notionals** (`VolumeOpen`/`VolumeClose`/`TotalVolume`) and **invested cash legs** (`InitialAmountCents`-driven opens vs **`Amount`** closes) aggregated from **`BI_DB_dbo.Function_Trading_Volume_PositionLevel`**. Loads **daily** via **`BI_DB_dbo.SP_DDR_Fact_Trading_Volumes_And_Amounts`** (**DELETE + INSERT by `DateID`**) with guarded **`BI_DB_VolumeQA`** dump. UC Gold **`main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts`** (**Merge**, **1440 min** cadence).
 
 | Property | Value |
 |----------|-------|
 | **Schema** | BI_DB_dbo |
-| **Object Type** | Table |
-| **Production Source** | `BI_DB_dbo.Function_Trading_Volume_PositionLevel` → `DWH_dbo.Dim_Position` + `DWH_dbo.Dim_Instrument` |
-| **Refresh** | Daily (DELETE/INSERT by DateID) |
-| | |
-| **Synapse Distribution** | HASH(RealCID) |
-| **Synapse Index** | CLUSTERED COLUMNSTORE INDEX |
-| | |
-| **UC Target** | _Pending — resolved during write-objects_ |
-| **UC Format** | _Pending — resolved during write-objects_ |
-| **UC Partitioned By** | _Pending — resolved during write-objects_ |
-| **UC Table Type** | _Pending — resolved during write-objects_ |
+| **Object Type** | Fact table |
+| **Row count / span** | ~804 M rows · `MIN(DateID)=20070827` · `MAX(DateID)=20260425` (Synapse MCP 2026-05-14) |
+| **Production source (logical)** | `DWH_dbo.Dim_Position` + `DWH_dbo.Dim_Instrument` + BI_DB enrichment TVFs/helpers (see `.lineage.md`) |
+| **Refresh** | Daily — `DELETE … WHERE DateID=@dateID` then `INSERT` from `#data` staged `Function_Trading_Volume_PositionLevel(@dateID,@dateID,0)` |
+| **Synapse distribution** | `HASH(RealCID)` |
+| **Synapse index** | `CLUSTERED COLUMNSTORE` (`ClusteredIndex_2275066b80394ff29122d4e1516d87f1` · MCP catalog) |
+| **UC Target** | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts` |
+| **UC Format** | Delta EXTERNAL (Generic Pipeline classify) |
+| **UC partitioned by** | *(Databricks partition columns mirror pipeline defaults — reconcile with UC `SHOW TBLPROPERTIES` when deploying comments)* |
 
 ---
 
 ## 1. Business Meaning
 
-This table is the **daily trading volume and invested amount fact table** within the DDR framework. Each row represents the aggregated open/close trading activity for a customer on a specific date, broken down by instrument type, settlement, copy-trade status, buy/sell direction, leverage, and multiple position attribute flags.
+`BI_DB_DDR_Fact_Trading_Volumes_And_Amounts` is the **DDR “TV&A”** slice for **management / compliance-ready trading volume & invested-flow reporting** aggregated from position-level DDR logic that already aligned with **`Function_Trading_Volume`** semantics but now preserves **grain through `Function_Trading_Volume_PositionLevel`** (authored migration **2026-01-15** per SP changelog) **before** the final `GROUP BY` to customer × segmentation keys.
 
-It answers: "What was the total trading volume and invested amount for each customer today, by asset class and trade characteristics? How many positions were opened and closed?"
+Every measure on the row is **`SUM`** of TVF outputs for all position open/close micro-rows sharing the **same categorical bucket** (`DateID`, renamed `CID` as `RealCID`, `InstrumentTypeID`, settlement/copy/direction/leverage/instrument-kind flags, copy-fund / recurring / IBAN / airdrop / margin / SQF / C2P markers). Because **open legs and close legs generate separate underlying rows**, a customer opening and closing intra-day contributes **volume to both legs** consistent with **`Function_Trading_Volume`** documentation (`Function_Trading_Volume.md` §1).
 
-Data originates from `Function_Trading_Volume_PositionLevel`, which produces one row per position per open/close event from `Dim_Position`. The function outputs 32 columns including persisted volumes (from `Dim_Position.Volume` and `VolumeOnClose`), computed QA volumes (recomputed from units × FX rates), and invested amounts. The SP aggregates these position-level rows into CID × dimension-group granularity using SUM for all measure columns.
+**Instrument mix (distribution evidence — MCP `WHERE DateID ≥ 20260101`, TOP instrument types)**:
 
-The SP was authored 2025-04-20, making it newer than most DDR SPs. Key changes: IsSQF (2025-06-23), IsMarginTrade (2025-10-23), IsC2P (2025-12-14), and source function replacement with position-level granularity + QA dump (2026-01-15). A QA dump to `BI_DB_VolumeQA` is performed alongside the main INSERT for data quality validation.
+| InstrumentTypeID | Row groups (approx.) |
+|------------------|----------------------|
+| 5 | 14 361 924 |
+| 2 | 4 565 482 |
+| 6 | 4 199 403 |
+| 10 | 3 226 669 |
+| 4 | 1 813 861 |
+| 1 | 691 946 |
+
+SP authorship (**2025-04-20**) post-dates legacy DDR loaders; changelog tracks **`IsSQF`**, **`IsMarginTrade`** (`SettlementTypeID=5` path), **`IsC2P`**, CAST/`ISNULL` hardening, and the **QA table** **`BI_DB_VolumeQA`** (optional object — guarded `IF OBJECT_ID`).
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Volume Aggregation
+### 2.1 Open vs close volumetrics
 
-**What**: Position-level open/close volumes are aggregated to CID × dimension group level
+**What**: Persisted Synapse **`Volume`** / **`VolumeOnClose`** integers sourced from **`Dim_Position`**, BIGINT-summed.  
+**Columns**: `VolumeOpen`, `VolumeClose`, `TotalVolume`.  
+**Rules**:
 
-**Columns Involved**: `VolumeOpen`, `VolumeClose`, `TotalVolume`
+- Opens (`OpenDateID` window inside TVF) populate **`VolumeOpen`** (`ISNULL(CAST(Volume AS BIGINT),0)`); closes populate **`VolumeClose`** (`VolumeOnClose`).  
+- Partial-close-child opens zero-out open volume counters per **`Function_Trading_Volume_PositionLevel.md`**.  
+- **`TotalVolume`** is TVF **`VolumeOpen+VolumeClose` per union row**, then **`SUM`** in this SP.
+
+### 2.2 Invested amount legs
+
+**What**: Mirrors TVF **`InvestedAmountOpen` / `InvestedAmountClosed`** → **`SUM`**.  
+**Columns**: `InvestedAmountOpen`, `InvestedAmountClosed`, `NetInvestedAmount`.  
+**Rules**:
+
+- Opens (non-child) **`InitialAmountCents / 100.0`**; closes **`CAST(Amount AS FLOAT)`** · see **`Dim_Position`** (`InitialAmountCents`, `Amount`).  
+- **`NetInvestedAmount`** aggregates row-level **`InvestedAmountOpen − InvestedAmountClosed`** sums.
+
+### 2.3 Transaction counters
+
+**What**: Opens vs closes counted per TVF semantics.  
+**Columns**: `CountOpenTransactions`, `CountCloseTransactions`, `CountTotalTransactions`.  
+**Rules**: Partial-close-child opens suppressed from **open counts** (`Function_Trading_Volume_PositionLevel.md` §4 rows 58–60).
+
+### 2.4 Leverage & margin posture
+
+**What**: Exposure toggles.
+
+**Columns**: `IsLeverage`, `IsMarginTrade`.
 
 **Rules**:
-- `VolumeOpen` = SUM of persisted volume from `Dim_Position.Volume` (BIGINT cast) for positions opened on this date
-- `VolumeClose` = SUM of persisted volume from `Dim_Position.VolumeOnClose` for positions closed on this date
-- `TotalVolume` = SUM of `VolumeOpen + VolumeClose` per position (computed in the function, then summed)
-- Partial-close-child positions have `VolumeOpen = 0` and `CountOpenTransactions = 0` (they're not new opens)
 
-### 2.2 Invested Amount Calculation
+- **`IsLeverage`** = **`CASE WHEN Leverage > 1 THEN 1 ELSE 0 END`** (**SP-level** duplication of grouping CASE). **`Leverage`** semantics: *“Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type.”* (`Dim_Position.md` §4 Group E `#30`).  
+- **`IsMarginTrade`** derives inside TVF where **`SettlementTypeID = 5` → `MARGIN_TRADE`** (**`Dictionary.SettlementTypes`** excerpt in `Dim_Position.md` § Group L `#115`). **Verbatim grounding**: *Modern settlement classification. Dictionary.SettlementTypes: `0=CFD, 1=REAL, 2=TRS, 3=CMT, 4=REAL_FUTURES, 5=MARGIN_TRADE.` … (`Tier 1 — Trade.PositionTbl`).* **Applied flag**: **`1`** iff **`SettlementTypeID = 5`**, else **`0`** (TVF `CASE`, grouped here).
 
-**What**: Tracks money invested in opens vs money returned on closes
+### 2.5 Futures vs SpotQuotedFuture (SQF)
 
-**Columns Involved**: `InvestedAmountOpen`, `InvestedAmountClosed`, `NetInvestedAmount`
+**What**: Distinct derivatives flags.
 
-**Rules**:
-- `InvestedAmountOpen` = SUM of `InitialAmountCents / 100.0` (excluding partial-close children, which contribute 0)
-- `InvestedAmountClosed` = SUM of `CAST(Amount AS FLOAT)` for closed positions
-- `NetInvestedAmount` = SUM of (InvestedAmountOpen - InvestedAmountClosed) per position, then summed
-- Positive NetInvestedAmount = net new investment; negative = net disinvestment
-
-### 2.3 Transaction Counting
-
-**What**: Counts trading actions separately for opens and closes
-
-**Columns Involved**: `CountOpenTransactions`, `CountCloseTransactions`, `CountTotalTransactions`
+**Columns**: `IsFuture`, `IsSQF`.
 
 **Rules**:
-- `CountOpenTransactions` = count of position opens (excludes partial-close children)
-- `CountCloseTransactions` = count of position closes
-- `CountTotalTransactions` = Open + Close (computed per position in function, then summed)
-- A position opened and closed on the same day contributes to both open and close counts
 
-### 2.4 Leverage Classification
+- **`IsFuture`** — join-through from **`Dim_Instrument.IsFuture`**. **Verbatim**: *`1=futures contract (instrument in Trade.InstrumentGroups WHERE GroupID=25), 0=not futures. 243 flagged as futures.` (`Tier 2 — SP_Dim_Instrument`)* (`Dim_Instrument.md` Elements `#41`).  
+- **`IsSQF`** — **not** thematic “ESG”; see §4 verbatim **Tier 5** correction (instrument **SpotQuotedFuture** / **`GroupID=59`** path via **`Function_Instrument_Snapshot_Enriched`**).
 
-**What**: Binary flag for leveraged positions
+### 2.6 Copy → portfolio (C2P)
 
-**Columns Involved**: `IsLeverage`
+**What**: Identifies migrated copy positions kept in the customer's own portfolio.
 
-**Rules**:
-- `IsLeverage = 1` when `Leverage > 1` in the source function
-- Column named `IsLeverage` (not `IsLeveraged` like other DDR tables)
-- Applied at GROUP BY level — each leverage state gets its own aggregation row
+**Column**: `IsC2P`.
+
+**Rules**: TVF **`LEFT JOIN`** / `CASE` on **`BI_DB_dbo.V_C2P_Positions`** (*CASE WHEN join match THEN 1 ELSE 0 END* · `Function_Trading_Volume_PositionLevel.md` row 72).
 
 ---
 
 ## 3. Query Advisory
 
-### 3.1 Synapse Distribution & Index
+### 3.1 Synapse distribution & indexing
 
-**In Synapse**, this table is HASH-distributed on `RealCID` with a CLUSTERED COLUMNSTORE INDEX. Always include `RealCID` in WHERE or JOIN conditions for optimal distribution-aligned queries. With 793M rows, always filter by `DateID`.
+HASH on **`RealCID`** → filter **`DateID` + `RealCID`** (and **`InstrumentTypeID`**) before wide joins **to avoid shuffle-heavy scans**. Columnstore benefits from analytic **`SUM`/GROUP aggregates** aligned to partition elimination on **`DateID`**.
 
-### 3.1b UC (Databricks) Storage & Partitioning
+### 3.2 Common patterns
 
-_Pending — resolved during write-objects._
-
-### 3.2 Common Query Patterns
-
-| Analyst Question | Recommended Approach |
-|-----------------|---------------------|
-| Total volume for a customer | `WHERE RealCID = @cid AND DateID BETWEEN @s AND @e` — SUM `TotalVolume` |
-| Volume by instrument type | `GROUP BY DateID, InstrumentTypeID` — SUM `TotalVolume`, `NetInvestedAmount` |
-| Copy vs manual trading volumes | `GROUP BY DateID, IsCopy` — SUM volume and amount measures |
-| Daily traded count | `GROUP BY DateID` — SUM `CountTotalTransactions` |
-| IBAN-originated trading | `WHERE IsOpenedFromIBAN = 1 GROUP BY DateID` |
-| Leveraged vs unleveraged volume | `GROUP BY DateID, IsLeverage` — SUM `TotalVolume` |
+| Question | Approach |
+|----------|-----------|
+| Daily TV&A by stocks vs crypto | `WHERE InstrumentTypeID IN (5,10)` (+ `IsSettled` split) joining `Dim_InstrumentType` labels |
+| Copy vs manual footprint | Partition by `IsCopy`, `IsCopyFund`, `IsC2P` (**mutually nuanced** — do not double-label) |
+| Margin vs cash leverage | **`IsMarginTrade`** (settlement **`MARGIN_TRADE`**) differs from **`IsLeverage`** (mechanical **`Leverage>1`**) |
 
 ### 3.3 Common JOINs
 
-| Join To | Join Condition | Purpose |
-|---------|---------------|---------|
-| `DWH_dbo.Dim_InstrumentType` | `ON v.InstrumentTypeID = dit.InstrumentTypeID` | Instrument class name |
-| `DWH_dbo.Dim_Customer` | `ON v.RealCID = dc.RealCID` | Customer demographics |
-| `BI_DB_dbo.BI_DB_DDR_CID_Level` | `ON v.RealCID = cl.RealCID AND v.DateID = cl.DateID` | Full DDR daily picture per customer |
+| Join target | Predicate | Purpose |
+|-------------|-----------|---------|
+| `DWH_dbo.Dim_Customer` | `dc.RealCID = f.RealCID` | Customer demographics / country |
+| `DWH_dbo.Dim_Instrument` | `di.InstrumentTypeID = f.InstrumentTypeID` (+ optional instrument drill-down if denormalising) | Type / **`IsFuture`** truth at dim grain |
+| `DWH_dbo.Dim_Date` | `dd.DateID = f.DateID` | Calendar attributes |
 
 ### 3.4 Gotchas
 
-- **793M rows** — always filter by `DateID`.
-- **IsOpenedFromIBAN is VARCHAR(100)** — DDL defines this as `varchar(100)`, not `int` like other boolean flags. Compare as string `'1'` or `'0'`, not integer. This is likely a DDL artifact.
-- **IsLeverage vs IsLeveraged** — this table uses `IsLeverage` (no 'd'), unlike other DDR tables that use `IsLeveraged`. Same semantics.
-- **VolumeOpen/VolumeClose are BIGINT** — not decimal. These represent notional volume in the instrument's native units × FX rate, expressed as whole numbers.
-- **InvestedAmountOpen/Closed are MONEY** — Synapse `money` type, not `decimal`. Be aware of potential precision differences.
-- **Partial-close children** — excluded from open counts and invested amounts to avoid double-counting. They appear only on the close side.
-- **TotalVolume ≠ VolumeOpen + VolumeClose at aggregated level** — `TotalVolume` is SUM of per-position (VolumeOpen + VolumeClose), which equals SUM(VolumeOpen) + SUM(VolumeClose) only when the same positions aren't counted in both columns within the same group.
-- **QA dump** — `BI_DB_VolumeQA` receives position-level detail for data validation. It's not consumed by downstream reporting.
+- **Nullable columns in catalogue** (`IS_NULLABLE = true` everywhere) despite business **0/1** flags — coerce defensively (`ISNULL(flag,0)`) unless profiling proves non-NULL invariant. **`IsAirDrop`** sampled **`NULL`** in MCP TOP 10 (`DateID≥20260101`).  
+- **`IsOpenedFromIBAN` is `varchar(100)`** — compare as **`'1'/'0'` strings** (historic DDR pattern).  
+- **`IsLeverage`** naming — not **`IsLeveraged`** (other DDR docs).  
+- **`IsFuture` vs `IsSQF`** — orthogonal encodings (**`GroupID=25`** futures vs **`GroupID=59`** SQF staging per **`Function_Instrument_Snapshot_Enriched.md`** §4 col 7 commentary).  
 
 ---
 
@@ -128,157 +132,137 @@ _Pending — resolved during write-objects._
 
 ### Confidence Tier Legend
 
-| Stars | Tiers | Tag |
-|-------|-------|-----|
-| 3 stars | Tier 2 (Synapse SP code / function) | `(Tier 2 — ...)` |
+| Tier | Meaning |
+|------|---------|
+| **Tier 1** | Production-grounded (`Trade.*`, `Customer.*`) — verbatim inherited where available |
+| **Tier 2** | TVF / SP / enrichment transforms |
+| **Tier 5** | Expert adjudication · disputed heritage |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | int | YES | Date key in YYYYMMDD format. DELETE/INSERT partition key. Direct from `Function_Trading_Volume_PositionLevel.DateID` (open or close date). (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 2 | Date | date | YES | Calendar date. `CONVERT(DATE, CONVERT(VARCHAR(8), ftv.DateID), 112)`. Derived from DateID in SP. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 3 | RealCID | int | YES | Customer identifier. Renamed from `Function_Trading_Volume_PositionLevel.CID`. Distribution key. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 4 | InstrumentTypeID | int | YES | Instrument asset class ID. Key values: **1=Currencies/Forex, 2=Commodities, 4=Indices, 5=Stocks, 6=ETFs, 9=Options, 10=Crypto.** Combine with IsSettled: ID=5+IsSettled=1 = real stocks; ID=10+IsSettled=0 = crypto CFD; ID=10+IsSettled=1 = real crypto; ID=9 = Options (always real). JOIN to DWH_dbo.Dim_InstrumentType for name. Source: Dim_Instrument via Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 5 | IsSettled | int | YES | **Real-asset settlement flag.** 1 = real/settled ownership (actual transfer of ownership: real crypto, real stocks/ETFs). 0 = CFD (Contract for Difference — synthetic price exposure, no ownership). Critical for volume reporting: regulators and management track CFD vs real volumes separately. Also used in DDR Active Trader segmentation for crypto real vs CFD breakdown. Source: Dim_Position.IsSettled via Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 6 | IsCopy | int | YES | **Copy-trade flag.** CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END. 1 = position created as part of copying another trader (MirrorID links to a copy relationship in Dim_Mirror). 0 = manual/self-directed trade. Does not distinguish CopyFund (Smart Portfolio) from regular copy — use IsCopyFund for that. Source: Dim_Position.MirrorID via Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 7 | IsBuy | int | YES | Trade direction. 1=buy/long, 0=sell/short. Direct from function → `Dim_Position.IsBuy`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 8 | IsLeverage | int | YES | Leverage flag. `CASE WHEN ftv.Leverage > 1 THEN 1 ELSE 0 END`. Note: named `IsLeverage` (not `IsLeveraged`). (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 9 | IsFuture | int | YES | Futures contract flag. Direct from function → `Dim_Instrument.IsFuture`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 10 | IsCopyFund | int | YES | **CopyFund / Smart Portfolio flag.** 1 = position belongs to a managed Smart Portfolio (CopyFund) product where a portfolio manager allocates across assets on the customer's behalf. Distinct from regular copy-trading: CopyFunds are discretionary managed products, not peer-to-peer copying. Lookup via BI_DB_CopyFund_Positions. Source: Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 11 | IsOpenedFromIBAN | varchar(100) | YES | Position opened from eMoney IBAN flag. `CASE WHEN BI_DB_Positions_Opened_From_IBAN.PositionID IS NOT NULL THEN 1 ELSE 0 END` in function. **DDL is varchar(100), stores '0'/'1' as strings.** (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 12 | IsClosedToIBAN | int | YES | Position closed to eMoney IBAN flag. `CASE WHEN BI_DB_Positions_Closed_To_IBAN.PositionID IS NOT NULL THEN 1 ELSE 0 END` in function. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 13 | IsRecurring | int | YES | **Recurring investment flag.** 1 = position opened via the Recurring Investment auto-invest feature (customer schedules automated periodic investments). Lookup via BI_DB_RecurringInvestment_Positions. Useful for segmenting auto-investing behaviour vs manual trading. Source: Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 14 | IsAirDrop | int | YES | AirDrop (free share) flag. Direct from function → `Dim_Position.IsAirDrop`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 15 | VolumeOpen | bigint | YES | **Aggregated notional volume from position opens on this date (BIGINT).** SUM of CAST(Dim_Position.Volume AS BIGINT) for open legs. Partial-close children are excluded (their VolumeOpen=0) to avoid double-counting. BIGINT represents native instrument units × FX rate. Primary KPI for new positions opened. Source: Dim_Position.Volume via Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 16 | VolumeClose | bigint | YES | **Aggregated notional volume from position closes on this date (BIGINT).** SUM of CAST(Dim_Position.VolumeOnClose AS BIGINT) for close legs. Source: Dim_Position.VolumeOnClose via Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 17 | InvestedAmountOpen | money | YES | Aggregated invested amount from position opens. `SUM(ftv.InvestedAmountOpen)`. Source: `InitialAmountCents / 100.0` (0 for partial-close children). (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 18 | InvestedAmountClosed | money | YES | Aggregated invested amount from position closes. `SUM(ftv.InvestedAmountClosed)`. Source: `CAST(Dim_Position.Amount AS FLOAT)` on close legs. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 19 | TotalVolume | bigint | YES | **Combined notional volume: open + close on this date (BIGINT).** SUM of per-position (VolumeOpen+VolumeClose). A position opened AND closed on the same day contributes to both open and close sides. This is the primary trading volume KPI used in eToro management and regulatory reporting. Source: Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
-| 20 | NetInvestedAmount | money | YES | Net investment flow. `SUM(ftv.NetInvestedAmount)`. Per position: `InvestedAmountOpen - InvestedAmountClosed`. Positive = net new investment. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 21 | CountOpenTransactions | int | YES | Count of position opens (excl. partial-close children). `SUM(ftv.CountOpenTransactions)`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 22 | CountCloseTransactions | int | YES | Count of position closes. `SUM(ftv.CountCloseTransactions)`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 23 | CountTotalTransactions | int | YES | Total open + close count. `SUM(ftv.CountTotalTransactions)`. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 24 | UpdateDate | datetime | YES | ETL load timestamp. `GETDATE()` at SP execution time. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 25 | IsSQF | int | YES | Sustainable & Quality-Focused instrument flag. From `Function_Instrument_Snapshot_Enriched` in the source function. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 26 | IsMarginTrade | int | YES | Margin trade flag. `CASE WHEN SettlementTypeID = 5 THEN 1 ELSE 0 END` in function. (Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts) |
-| 27 | IsC2P | int | YES | **Copy-to-Portfolio (C2P) flag.** 1 = position was migrated from a copy relationship into the customer's own self-directed portfolio after they stopped copying a trader. Allows customers to keep holding a position without the ongoing copy overhead. Lookup via V_C2P_Positions. Source: Function_Trading_Volume_PositionLevel. (Tier 1 — Function_Trading_Volume_PositionLevel) |
+| 1 | DateID | int | YES | Event calendar surrogate (`YYYYMMDD`). Determined inside **`Function_Trading_Volume_PositionLevel`** from **`Dim_Position.OpenDateID` / `CloseDateID`** union legs. PARTITION key for nightly reload. (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 2 | Date | date | YES | `CONVERT(DATE, CONVERT(VARCHAR(8), ftv.DateID), 112)` — derived **DATE** companion to **`DateID`**. (`Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts`) |
+| 3 | RealCID | int | YES | Global real-account **`CID`** surfaced as HASH key (`ftv.CID AS RealCID`). **Verbatim parity — `Fact_CustomerAction.md`**: *Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID.* (`Tier 1 — Customer.CustomerStatic`) |
+| 4 | InstrumentTypeID | int | YES | **Verbatim parity — `Dim_Instrument.md`**: *From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType.* (`Tier 1 — Trade.GetInstrument`) |
+| 5 | IsSettled | int | YES | **Verbatim parity — `Dim_Position.md`**: *1 = real asset, 0 = CFD asset.* (`Tier 5 — Expert Review`) |
+| 6 | IsCopy | int | YES | TVF derivation **`CASE WHEN MirrorID > 0 THEN 1 ELSE 0`** on **`Dim_Position.MirrorID`** (`Function_Trading_Volume_PositionLevel.md` §4 `#22`). (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 7 | IsBuy | int | YES | **Verbatim parity — `Dim_Position.md`**: *1 = Long/Buy (profit when price rises), 0 = Short/Sell.* (`Tier 1 — Trade.PositionTbl`) |
+| 8 | IsLeverage | int | YES | **`CASE WHEN Leverage > 1 THEN 1 ELSE 0 END`** in **`SP_DDR_Fact_Trading_Volumes_And_Amounts`** (GROUP BY duplication). Leverage originates from **`Dim_Position.Leverage`** (*“(1, 5, 10, …)”* · `Dim_Position.md` `#30`). (`Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts`) |
+| 9 | IsFuture | int | YES | **Verbatim grounding — `Dim_Instrument.md`**: *1=futures contract (instrument in Trade.InstrumentGroups WHERE GroupID=25), 0=not futures.* (`Tier 2 — SP_Dim_Instrument`) |
+| 10 | IsCopyFund | int | YES | **1** when the position `PositionID` appears in `BI_DB_CopyFund_Positions` (Smart Portfolio / copy-fund trees). (`Tier 2 — BI_DB_CopyFund_Positions`) |
+| 11 | IsOpenedFromIBAN | varchar(100) | YES | **1/0 varchar** sentinel from **`BI_DB_Positions_Opened_From_IBAN`**. DDL mismatch vs `BIT` semantics — compare as strings. (`Tier 2 — BI_DB_Positions_Opened_From_IBAN`) |
+| 12 | IsClosedToIBAN | int | YES | Presence flag from **`BI_DB_Positions_Closed_To_IBAN`**. (`Tier 2 — BI_DB_Positions_Closed_To_IBAN`) |
+| 13 | IsRecurring | int | YES | Presence flag from **`BI_DB_RecurringInvestment_Positions`** auto-invest instrumentation. (`Tier 2 — BI_DB_RecurringInvestment_Positions`) |
+| 14 | IsAirDrop | int | YES | **Verbatim — `Dim_Position.md` `#107`**: `1=position was created via an airdrop event (crypto). ETL-computed: JOIN to etoro_Trade_PositionAirdropLog. NULL=not an airdrop.` (`Tier 2 — SP_Dim_Position_DL_To_Synapse`) |
+| 15 | VolumeOpen | bigint | YES | **`SUM`** of TVF **`VolumeOpen`** (**`CAST(Dim_Position.Volume BIGINT)` on qualifying opens** · `Dim_Position.md` **`Volume`** *ROUND(units × InitForexRate × USD conversion)*). (`Tier 2 — SP_Dim_Position_DL_To_Synapse`) |
+| 16 | VolumeClose | bigint | YES | **`SUM`** of TVF **`VolumeClose`** (**`Dim_Position.VolumeOnClose`** *ROUND amount × `EndForexRate`* ). (`Tier 2 — SP_Dim_Position_DL_To_Synapse`) |
+| 17 | InvestedAmountOpen | money | YES | **`SUM`** of **`InitialAmountCents/100`** open leg (excluding partial-close children). **`InitialAmountCents`**: *Initial amount in cents… (`Tier 1 — Trade.PositionTbl`).* (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 18 | InvestedAmountClosed | money | YES | **`SUM`** of closed **`CAST(Amount AS FLOAT)`** legs. **`Amount`**: *Position size in currency… (`Tier 1 — Trade.PositionTbl`).* (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 19 | TotalVolume | bigint | YES | **`SUM`** of **`VolumeOpen+VolumeClose`** intra-TVF totals (then aggregated). KPI for combined open+close persisted notionals same day slice. (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 20 | NetInvestedAmount | money | YES | **`SUM`** of **`InvestedAmountOpen − InvestedAmountClosed`** from TVF. (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 21 | CountOpenTransactions | int | YES | **`SUM`** (`CountOpenTransactions`) — excludes partial-close child opens (`Function_Trading_Volume_PositionLevel.md` `#13`). (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 22 | CountCloseTransactions | int | YES | **`SUM`** per-close indicator column inside TVF. (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 23 | CountTotalTransactions | int | YES | **`SUM`** (**open counter + close counter** per underlying row). (`Tier 2 — Function_Trading_Volume_PositionLevel`) |
+| 24 | UpdateDate | datetime | YES | ETL watermark **`GETDATE()`** captured at **`SP_DDR_Fact_Trading_Volumes_And_Amounts`** run. (`Tier 2 — SP_DDR_Fact_Trading_Volumes_And_Amounts`) |
+| 25 | IsSQF | int | YES | `IsSQF` (SpotQuotedFuture flag) — 1 = instrument is a SpotQuotedFuture (smaller-contract variant of eToro RealFutures, traded on the CME). 0 = not. Source: `Function_Instrument_Snapshot_Enriched(@dateInt)` via membership in `Trade.InstrumentGroups` with `GroupID = 59`. (Tier 5 — user expert correction; previously mis-described as “Sustainable & Quality-Focused”) |
+| 26 | IsMarginTrade | int | YES | **Verbatim dictionary anchoring**: *`SettlementTypeID` … `Dictionary.SettlementTypes`: … **`5=MARGIN_TRADE`*** (`Dim_Position.md` `#115` excerpt). **`1`** when **`SettlementTypeID = 5`**, else **`0`** (TVF `CASE`). (`Tier 1 — Trade.PositionTbl`) |
+| 27 | IsC2P | int | YES | Copy-to-portfolio migrated position (**1** when TVF **`LEFT JOIN`** to `BI_DB_dbo.V_C2P_Positions` matches **`PositionID`**, else **0**) — customer keeps economics after unlinking copy. (`Tier 2 — BI_DB_dbo.V_C2P_Positions`) |
 
 ---
 
 ## 5. Lineage
 
-### 5.1 Production Sources
+### 5.1 Production sources (rollup)
 
-| Synapse Column | Production Source | Source Column | Transform |
-|---------------|-------------------|---------------|-----------|
-| RealCID | Dim_Position (via function) | CID | rename |
-| IsLeverage | Dim_Position (via function) | Leverage | CASE WHEN > 1 |
-| VolumeOpen | Dim_Position (via function) | Volume | SUM(CAST AS BIGINT) |
-| VolumeClose | Dim_Position (via function) | VolumeOnClose | SUM(CAST AS BIGINT) |
-| InvestedAmountOpen | Dim_Position (via function) | InitialAmountCents | SUM(/ 100.0, excl. partial-close) |
-| InvestedAmountClosed | Dim_Position (via function) | Amount | SUM(CAST AS FLOAT) |
-| IsCopy | Dim_Position (via function) | MirrorID | CASE WHEN > 0 |
-| IsMarginTrade | Dim_Position (via function) | SettlementTypeID | CASE WHEN = 5 |
+| Synapse Column | Immediate Source | Ultimate / Transform reference |
+|----------------|-----------------|--------------------------------|
+| Keys / flags | **`Function_Trading_Volume_PositionLevel`** | **`Dim_Position`**, **`Dim_Instrument`**, BI_DB helper tables (+ **`Function_Instrument_Snapshot_Enriched`**) · see **`BI_DB_DDR_Fact_Trading_Volumes_And_Amounts.lineage.md`** column table |
+| Measures | **`SUM` over TVF** | Persisted **`Volume`/`VolumeOnClose`**, **`InitialAmountCents`**, **`Amount`** (`Dim_Position` lineage) |
 
-### 5.2 ETL Pipeline
+### 5.2 ETL pipeline diagram
 
 ```
-DWH_dbo.Dim_Position (position opens + closes for date range)
-  + DWH_dbo.Dim_Instrument (InstrumentTypeID, IsFuture)
-  + BI_DB enrichment tables (CopyFund, C2P, Recurring, IBAN open/close, SQF)
-  |
-  |-- Function_Trading_Volume_PositionLevel(@dateID, @dateID, 0)
-  |     → 32 columns per position event (open leg + close leg UNIONed)
-  |
-  |-- SP_DDR_Fact_Trading_Volumes_And_Amounts(@date):
-  |     #data = full function output
-  |     GROUP BY 14 dimension columns, SUM 9 measure columns
-  |     DELETE/INSERT by DateID
-  |     + QA dump to BI_DB_VolumeQA
-  v
-BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts (793M rows)
-```
+DWH staging / EXTERNAL (Bronze Generic Pipeline ─ Trade / History lake feeds)
+       │
+       ▼
+┌─────────────────────────────┐
+│ DWH_dbo.Dim_Position        │ ◄─┐ rounding-based Volume / Amount economics
+│ DWH_dbo.Dim_Instrument      │ ◄─┤ instrument typing + futures flag
+└─────────────────────────────┘   │
+               │ UNION open/close position legs
+               ▼
+   BI_DB_dbo.Function_Trading_Volume_PositionLevel(@dt,@dt,0)
+               │
+               └── temp `#data` (heap · ROUND_ROBIN)
+                       │
+                       └── BI_DB_dbo.SP_DDR_Fact_Trading_Volumes_And_Amounts (@date)
+                              DELETE slice + INSERT aggregates
+                              optional BI_DB_VolumeQA QA dump same DateID
 
-| Step | Object | Description |
-|------|--------|-------------|
-| Source | Dim_Position, Dim_Instrument, enrichment tables | Position-level trading data |
-| TVF | Function_Trading_Volume_PositionLevel | 32-column position-level volume and amount output |
-| ETL | SP_DDR_Fact_Trading_Volumes_And_Amounts | GROUP BY aggregation, DELETE/INSERT, QA dump |
-| Target | BI_DB_DDR_Fact_Trading_Volumes_And_Amounts | Aggregated trading volume fact |
+Synapse CLUSTERED COLUMNSTORE fact (HASH RealCID · ~804M rows)
+       │
+       └── Generic Pipeline Merge (1440 min) → main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts
+```
 
 ---
 
 ## 6. Relationships
 
-### 6.1 References To (this object points to)
+### 6.1 References to
 
-| Element | Related Object | Description |
-|---------|---------------|-------------|
-| RealCID | DWH_dbo.Dim_Customer | Customer dimension |
-| InstrumentTypeID | DWH_dbo.Dim_InstrumentType | Instrument class name |
+| Concept | Targets | Notes |
+|---------|---------|-------|
+| Customer | **`DWH_dbo.Dim_Customer`** (`RealCID`) | Surrogate linkage — **business customer id** (**PII coupling via join**) |
+| Instrument typing | **`DWH_dbo.Dim_Instrument` / dictionaries** (`InstrumentTypeID`, `InstrumentType`) | Grain mismatch — fact only stores type id |
 
-### 6.2 Referenced By (other objects point to this)
+### 6.2 Referenced by
 
-| Source Object | Source Element | Description |
-|--------------|---------------|-------------|
-| BI_DB_dbo.BI_DB_DDR_CID_Level | — | CID-level daily DDR aggregation |
-| BI_DB_dbo.Function_DDR_Aggregation_* | — | Time-range aggregation functions |
+MCP **`sys.sql_expression_dependencies`** probe returned **zero** referencing objects (**2026-05-14** catalog scope) — consumers may hide inside dynamic SQL outside catalog.
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Daily volume by instrument type
+### 7.1 Daily equities volume by customer (stocks slice)
 
 ```sql
-SELECT DateID,
-       dit.Name AS InstrumentType,
-       SUM(TotalVolume) AS TotalVolume,
-       SUM(NetInvestedAmount) AS NetInvested,
-       SUM(CountTotalTransactions) AS Transactions
-FROM BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts v
-JOIN DWH_dbo.Dim_InstrumentType dit ON v.InstrumentTypeID = dit.InstrumentTypeID
-WHERE v.DateID = 20260309
-GROUP BY v.DateID, dit.Name
+SELECT TOP 50
+       DateID,
+       RealCID,
+       TotalVolume,
+       NetInvestedAmount,
+       CountTotalTransactions,
+       IsCopy,
+       IsMarginTrade,
+       IsFuture,
+       IsSQF,
+       IsC2P
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
+WHERE  DateID BETWEEN 20260101 AND 20260425
+AND    InstrumentTypeID = 5
 ORDER BY TotalVolume DESC;
 ```
 
-### 7.2 Customer trading activity summary
+### 7.2 Sanity check SQF rarity vs futures
 
 ```sql
-SELECT DateID,
-       SUM(VolumeOpen) AS VolOpen,
-       SUM(VolumeClose) AS VolClose,
-       SUM(InvestedAmountOpen) AS InvestedOpen,
-       SUM(InvestedAmountClosed) AS InvestedClosed,
-       SUM(CountOpenTransactions) AS Opens,
-       SUM(CountCloseTransactions) AS Closes
+SELECT SUM(CASE WHEN IsFuture = 1 THEN 1 ELSE 0 END) AS rows_future,
+       SUM(CASE WHEN IsSQF  = 1 THEN 1 ELSE 0 END) AS rows_sqf
 FROM BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
-WHERE RealCID = 12345678
-  AND DateID BETWEEN 20260301 AND 20260309
-GROUP BY DateID
-ORDER BY DateID;
-```
-
-### 7.3 Copy vs manual volume comparison
-
-```sql
-SELECT CASE WHEN IsCopy = 1 THEN 'CopyTrade' ELSE 'Manual' END AS TradeType,
-       SUM(TotalVolume) AS Volume,
-       SUM(CountTotalTransactions) AS Transactions
-FROM BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts
-WHERE DateID = 20260309
-GROUP BY IsCopy
-ORDER BY IsCopy;
+WHERE DateID = 20260301;
 ```
 
 ---
 
-## 8. Atlassian Knowledge Sources
+## 8. Atlassian knowledge sources
 
-No Atlassian sources found for this object.
+- **Dedicated Confluence page** tying this fact name *(BI_DB_DDR_Fact_Trading_Volumes_And_Amounts / TV&A)* → **none** surfaced via CQL `text ~ "BI_DB_DDR_Fact_Trading_Volumes"` (`0` hits · **2026-05-14**).  
+- **Peripheral relevance** *(volume / DDR general)*: e.g. *MIMO Analysis* workspace page ([Finance CY · MCP search hit](https://etoro-jira.atlassian.net/wiki/spaces/FC/pages/12000690235/MIMO+Analysis)).
 
 ---
 
-*Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
-*Tiers: 0 T1, 27 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
-*Object: BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts | Type: Table | Production Source: Function_Trading_Volume_PositionLevel → Dim_Position + Dim_Instrument*
+*Generated: 2026-05-14 · Quality (author): **8.2**/10 · Phases: **14**/14 checkpoints recorded (pipeline) · PHASE 16 eval: **7.9**/10 weighted (subagent synthesis — Tier accuracy **8**/10, lineage fidelity **9**/10, upstream glossary **9**/10, sceptic hardness **7**/10, doc hygiene **8**/10)*  
+
+*Tiers: **4 Tier 1**, **21 Tier 2**, **0 Tier 3**, **0 Tier 4**, **2 Tier 5** | **Elements 27 / DDL 27** | Logic depth **9**/10*
+
+*PII stance: **`RealCID` is a customer surrogate** · no direct email/phone/name stored — treat joins to `Dim_Customer` plus external feeds as sensitivity boundary (UC deploy tags **`pii=none`** on scaffolded ALTER aligns with surrogate-only columns).*

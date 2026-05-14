@@ -167,7 +167,7 @@ The table is read by SP_EY_Audit_Opened_Positions for UnrealizedCommissionChange
 | 18 | PlayerStatus | varchar(50) | YES | Player status name (e.g., Normal, Blocked). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 19 | AccountStatusID | int | YES | Integer account status key. GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 20 | AccountStatusName | varchar(50) | YES | Account status label. GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
-| 21 | AccountTypeID | int | YES | Integer account type key (1=Personal, 2=Corporate, 14=SMSF, etc.). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
+| 21 | AccountTypeID | int | YES | Integer account type key (1=Private, 2=Corporate, 14=SMSF, etc.). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 22 | AccountType | varchar(50) | YES | Account type name (Personal, Corporate, etc.). GROUP BY pass-through. (Tier 2 — SP_DailyCommisionReport) |
 | 23 | IsOutlier | int | YES | **Always NULL.** Legacy column inherited from parent DDL; statistical outlier flag that was never activated. Do not use. (Tier 4 — Legacy/Deprecated) |
 | 24 | Transition | varchar(50) | YES | **Always NULL.** Legacy column inherited from parent DDL; regulatory transition label that was never populated. Do not use. (Tier 4 — Legacy/Deprecated) |

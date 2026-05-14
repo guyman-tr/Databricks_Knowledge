@@ -110,7 +110,7 @@ Approved/Confirmed -> Chargeback (11) -> ChargebackReversal (37)
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | PaymentStatusID | int | NO | Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally. (Tier 1 — Dictionary.PaymentStatus) |
+| 1 | PaymentStatusID | int | NO | Primary key identifying the payment state. 1=New, 2=Approved, 3=Decline, 4=Technical, 5=InProcess, 6=Canceled, 7=Confirmed. (Tier 1 — Dictionary.PaymentStatus) |
 | 2 | Name | varchar(50) | NO | Human-readable status label. UNIQUE constraint. Used in back-office payment management UI and reconciliation reports. (Tier 1 — Dictionary.PaymentStatus) |
 | 3 | DWHPaymentStatusID | int | YES | Always equal to PaymentStatusID for IDs >= 1. Exception: PaymentStatusID=-1 has DWHPaymentStatusID=0 (manual sentinel). Standard DWH DWH{X}ID pattern. Do not use for JOINs. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |
 | 4 | StatusID | int | YES | Hardcoded to 1 for all SP-loaded rows. Conveys no information. (Tier 2 -- SP_Dictionaries_DL_To_Synapse) |

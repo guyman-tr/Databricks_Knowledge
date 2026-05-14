@@ -161,7 +161,7 @@ HASH(CID) with CLUSTERED COLUMNSTORE INDEX. At ~19.8K rows the table is small; f
 | 17 | PlayerLevelID | int | YES | eToro Club loyalty tier at the time of the reversal. Point-in-time snapshot from Fact_SnapshotCustomer. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum Plus, 7=Diamond. (Tier 2 — SP_DepositWithdrawFee) |
 | 18 | Regulation | varchar(200) | YES | Short code for the regulation. Passthrough from Dim_Regulation. (Tier 1 — Dictionary.Regulation) |
 | 19 | Label | varchar(200) | YES | Brand name displayed in BackOffice interfaces, reports, and internal systems. Passthrough from Dim_Label. (Tier 1 — Dictionary.Label) |
-| 20 | IsValidCustomer | int | YES | 1 when not Popular Investor (PlayerLevelID != 4), not label 30/26, and not CountryID=250. Point-in-time snapshot from Fact_SnapshotCustomer. (Tier 2 — SP_DepositWithdrawFee) |
+| 20 | IsValidCustomer | int | YES | 1 when not Internal (PlayerLevelID != 4), not label 30/26, and not CountryID=250. Point-in-time snapshot from Fact_SnapshotCustomer. (Tier 2 — SP_DepositWithdrawFee) |
 | 21 | UpdateDate | datetime | NO | Row load timestamp (GETDATE() at insert). (Tier 2 — SP_DepositWithdrawFee) |
 | 22 | BaseExchangeRate | numeric(38,8) | YES | Reference exchange rate before fee markup from the state fact. Spread = ExchangeRate minus BaseExchangeRate. (Tier 2 — SP_DepositWithdrawFee) |
 | 23 | ExchangeFee | numeric(38,8) | YES | Exchange fee from the state fact in provider-specific encoding. (Tier 2 — SP_DepositWithdrawFee) |

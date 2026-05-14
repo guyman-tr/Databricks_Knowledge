@@ -98,7 +98,7 @@ ROUND_ROBIN distribution with CLUSTERED INDEX on (DateID, DepositID). Range scan
 | 5 | CurrencyID | bigint | YES | Currency of the deposit amount. 1=USD, 2=EUR, 3=GBP, etc. (Tier 1 — Billing.Deposit) |
 | 6 | PaymentStatusID | bigint | YES | Current deposit status. Key values: 1=New, 2=Approved, 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE. (Tier 1 — Billing.Deposit) |
 | 7 | ManagerID | bigint | YES | Operations manager who processed this deposit. 0=automated. (Tier 1 — Billing.Deposit) |
-| 8 | RiskManagementStatusID | bigint | YES | Result of the pre-processing risk management check. 69 distinct risk reason codes. NULL=no risk check recorded. Key codes: 1=Success, 35=DeclineByRRE, 47=ML, 49=CustomerToFundingViolation. (Tier 1 — Billing.Deposit) |
+| 8 | RiskManagementStatusID | bigint | YES | Result of the pre-processing risk management check. 69 distinct risk reason codes. NULL=no risk check recorded. Key codes: 1=Success, 35=KYCLevel3, 47=ML, 49=CustomerToFundingViolation. (Tier 1 — Billing.Deposit) |
 | 9 | Amount | money | YES | Deposit amount in the deposit currency (CurrencyID). Capped via CASE expression in upstream ETL to prevent extreme outlier values. (Tier 1 — Billing.Deposit) |
 | 10 | ExchangeRate | numeric(16,8) | YES | Exchange rate from deposit currency to USD at processing time. Cannot be 0 in production. (Tier 1 — Billing.Deposit) |
 | 11 | ModificationDate | datetime | YES | UTC timestamp of the most recent modification to this deposit record. Used by ETL for incremental detection. (Tier 1 — Billing.Deposit) |

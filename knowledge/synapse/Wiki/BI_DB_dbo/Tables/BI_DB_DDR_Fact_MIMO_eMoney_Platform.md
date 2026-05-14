@@ -1,97 +1,124 @@
 # BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
 
-> 23.2M-row transaction-level MIMO (Money In / Money Out) fact table for the eMoney (IBAN) platform, tracking deposits and withdrawals from `eMoney_Fact_Transaction_Status` including internal transfers, crypto-to-fiat conversions, and first-time deposit flags. Assembled by `SP_DDR_Fact_MIMO_eMoney_Platform` with daily DELETE/INSERT by DateID, deduplication by TransactionID, and post-insert FTD recovery from `Dim_Customer`.
+> ~25.1M-row DDR MIMO fact at **eMoney / IBAN fiat transaction** grain (one row per settled `TransactionID` per day slice). Date span from live data **2020-11-10** through **2026-04-25**; daily `DELETE WHERE DateID=@dateID` + `INSERT` via `SP_DDR_Fact_MIMO_eMoney_Platform`. Fed from `eMoney_Fact_Transaction_Status` (not `Fact_CustomerAction`). Unions with `BI_DB_DDR_Fact_MIMO_Trading_Platform` inside `SP_DDR_Fact_Fact_MIMO_AllPlatforms`.
 
 | Property | Value |
 |----------|-------|
 | **Schema** | BI_DB_dbo |
-| **Object Type** | Table |
-| **Production Source** | `eMoney_dbo.eMoney_Fact_Transaction_Status` |
-| **Refresh** | Daily (DELETE/INSERT by DateID) |
-| | |
-| **Synapse Distribution** | HASH(RealCID) |
+| **Object Type** | Table (Fact) |
+| **Production Source** | Upstream eToro Money facts in Synapse: `eMoney_dbo.eMoney_Fact_Transaction_Status` (FiatDwhDB lineage per eMoney wiki); FTD joins `DWH_dbo.Dim_Customer` |
+| **Refresh** | Daily (parameter `@date`); idempotent delete/insert for single `DateID` |
+| **Synapse Distribution** | `HASH(RealCID)` |
 | **Synapse Index** | CLUSTERED COLUMNSTORE INDEX |
-| | |
-| **UC Target** | _Pending — resolved during write-objects_ |
-| **UC Format** | _Pending — resolved during write-objects_ |
-| **UC Partitioned By** | _Pending — resolved during write-objects_ |
-| **UC Table Type** | _Pending — resolved during write-objects_ |
+| **Row Count** | ~25,131,569 (`sys.partitions` rollup, 2026-05-14) |
+| **UC Target** | **Not verified in Unity Catalog** — `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_emoney_platform` **missing** on sampled workspace; `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms` **present**. Confirm export name with data-platform mapping. |
+| **UC Format** | delta (when exported) |
+| **UC Partitioned By** | None |
 
 ---
 
 ## 1. Business Meaning
 
-This table is the **eMoney (IBAN) platform MIMO fact table** within the DDR (Daily Data Report) framework. Each row represents a single settled eMoney transaction — deposit or withdrawal — for a customer on a specific date. It answers: "What eMoney deposits and withdrawals settled for each customer today, at what amounts, and which was their first-time deposit?"
+This table is the **eMoney-platform sibling** of `BI_DB_DDR_Fact_MIMO_Trading_Platform`: both land in `BI_DB_DDR_Fact_MIMO_AllPlatforms` with identical column order. Where the trading table reads **billing + `Fact_CustomerAction`**, this table reads **settled eMoney ledger rows** filtered on `TxStatusID = 2` and a fixed `TxTypeID` allow-list (deposits vs withdrawals use different lists — see §2.1).
 
-The eMoney platform handles IBAN-based financial transactions including:
-- **Direct deposits** (TxTypeID = 7) — external money coming into the eMoney wallet
-- **Internal transfers IN** (TxTypeID = 5) — funds moved from trading platform to eMoney
-- **Crypto-to-fiat** (TxTypeID = 14) — crypto converted to fiat currency
-- **Withdrawals** (TxTypeID = 8) — money out from eMoney to bank
-- **Internal transfers OUT** (TxTypeID = 6) — funds moved from eMoney to trading platform
+Business scope (per SP header): **IBAN-linked deposits and withdrawals** on eToro Money, including **internal transfer** types (`TxTypeID` 5 inbound, 6 outbound) that set `FundingTypeID = 33` and `IsInternalTransfer = 1`. The SP author notes `TxTypeID = 8` **Payment** withdraw rows are **trade open** events on the fiat side and “may be removed” from DDR MIMO later — they remain in the withdrawal allow-list today (`TxTypeID IN (8,6)`).
 
-Data flows from `eMoney_Fact_Transaction_Status` (settled transactions only, `TxStatusID = 2`), enriched with FTD detection from `Dim_Customer` and currency resolution from `eMoney_Currency_Instrument_Mapping_Static` (deposits) or `Dim_Currency` (withdrawals).
-
-The SP runs daily via Service Broker (`SB_Daily`). It was authored 2024-07-02, with key evolution: C2F support (2025-03-17), IsIBANQuickTransfer placeholder (2025-06-16), global FTD coalescing (2025-09-04), FTD recovery UPDATE (2025-10-23), currency mapping fix for Danish Krona (2025-12-23), and deduplication for symmetry with TP (2025-12-31).
+**Grain**: one output row per surviving `TransactionID` after `ROW_NUMBER()` dedupe (`PARTITION BY TransactionID`).
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Deposit Classification by TxTypeID
+### 2.1 Settled rows & TxType allow-lists (verbatim predicates)
 
-**What**: eMoney deposits are classified into three types based on transaction type
+**What**: Only **settled** eMoney status rows on the **status modification business date** `@date` drive the fact.
 
-**Columns Involved**: `TxTypeID`, `IsInternalTransfer`, `IsCryptoToFiat`, `FundingTypeID`
+**Columns Involved**: `DateID`, `TxTypeID`, `MIMOAction`, `AmountUSD`, `AmountOrigCurrency`, `FundingTypeID`, `IsInternalTransfer`, `IsCryptoToFiat`, `IsTradeFromIBAN`.
 
-**Rules**:
-- TxTypeID = 7: External deposit → `IsInternalTransfer = 0`, `FundingTypeID = 0`
-- TxTypeID = 5: Internal transfer from TP → `IsInternalTransfer = 1`, `FundingTypeID = 33`
-- TxTypeID = 14: Crypto-to-fiat conversion → `IsCryptoToFiat = 1`, `FundingTypeID = 0`
-- All three types can qualify as FTDs
+**Rules** (from `SP_DDR_Fact_MIMO_eMoney_Platform`):
 
-### 2.2 First-Time Deposit Detection
+- Global date key: `@dateID int = CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)`.
+- **#FTDIBAN** pulls first-time-deposit candidates from `eMoney_Fact_Transaction_Status mfts`:
+  - `WHERE mfts.TxStatusID = 2` **and** `mfts.TxTypeID IN (7,14)`
+  - Join `DWH_dbo.Dim_Customer dc1 ON dc1.FTDTransactionID = mfts.SourceCugTransactionID AND dc1.FTDPlatformID = 3`.
+- **#depositsIBAN** (`MIMOAction = 'Deposit'`):
+  - `WHERE mfts.TxStatusModificationDateID = @dateID AND mfts.TxStatusID = 2 AND mfts.TxTypeID IN (7,5,14)`
+- **#cashoutIBAN** (`MIMOAction = 'Withdraw'`):
+  - `WHERE mfts.TxStatusModificationDateID = @dateID AND mfts.TxStatusID = 2 AND mfts.TxTypeID IN (8,6)`
+- **Sign convention**: withdrawals multiply `USDAmountApprox` / `LocalAmount` by `-1` in `#cashoutIBAN`; deposits remain positive (before FTD amount override UPDATE).
 
-**What**: Identifies the customer's first eMoney deposit using Dim_Customer as ground truth
+### 2.2 `FundingTypeID` = 33 on internal-transfer TxTypes
 
-**Columns Involved**: `IsFTD`
+**What**: When eMoney TxType denotes internal transfer, the SP emits **DDR funding type code 33** (aligns numeric hook used on TP DDR for internal-transfer channeling — decode names via `DWH_dbo.Dim_FundingType`).
 
-**Rules**:
-- #FTDIBAN temp table: JOIN `eMoney_Fact_Transaction_Status` to `Dim_Customer` on `SourceCugTransactionID = FTDTransactionID` AND `FTDPlatformID = 3`
-- Deposit matched to #FTDIBAN by TransactionID → `IsFTD = 1`
-- Post-insert recovery UPDATE for DateID >= 20250901: re-matches transactions to `Dim_Customer` to catch late-arriving FTD data
-- FTD amount is overridden with `Dim_Customer.FirstDepositAmount` via COALESCE
-
-### 2.3 IBAN Trade Detection
-
-**What**: Identifies eMoney-originated trades using reference number pattern
-
-**Columns Involved**: `IsTradeFromIBAN`
+**Columns Involved**: `FundingTypeID`, `TxTypeID`, `MIMOAction`.
 
 **Rules**:
-- `IsTradeFromIBAN = 1` when `LEFT(ReferenceNumber, 1) != 'P'` AND `TxStatusModificationDateID >= 20240403` AND `TxTypeID IN (5, 6)`
-- Only applies to internal transfers (TxTypeID 5 for deposits, 6 for withdrawals)
-- The 'P' prefix in ReferenceNumber indicates a platform-initiated transfer; non-'P' indicates an IBAN-initiated trade
+- Deposit leg: `CASE WHEN mfts.TxTypeID IN (5) THEN 33 ELSE 0 END`
+- Withdraw leg: `CASE WHEN mfts.TxTypeID IN (6) THEN 33 ELSE 0 END`
 
-### 2.4 Transaction Deduplication
+### 2.3 `IsInternalTransfer` (eMoney semantics — **not** TP `FundingTypeID=33` CASE)
 
-**What**: Ensures no duplicate TransactionIDs in the output
+**What**: On this table, internal transfer is **directly** the eMoney TxType allow-list above — **not** the trading-platform `CASE WHEN FundingTypeID = 33` pattern used in `SP_DDR_Fact_MIMO_Trading_Platform`.
 
-**Columns Involved**: all
-
-**Rules**:
-- After UNION ALL of deposits + withdrawals, `ROW_NUMBER() OVER (PARTITION BY TransactionID ORDER BY TransactionID)` eliminates duplicates
-- Only `RN = 1` is kept
-
-### 2.5 Withdrawal Sign Convention
-
-**What**: Withdrawal amounts are negated to indicate money out
-
-**Columns Involved**: `AmountUSD`, `AmountOrigCurrency`
+**Columns Involved**: `IsInternalTransfer`, `TxTypeID`.
 
 **Rules**:
-- Withdrawals: `AmountUSD = -1 * USDAmountApprox`, `AmountOrigCurrency = -1 * LocalAmount`
-- Deposits: positive values (original from source)
+- Deposits: `CASE WHEN mfts.TxTypeID IN (5) THEN 1 ELSE 0 END`
+- Withdrawals: `CASE WHEN mfts.TxTypeID IN (6) THEN 1 ELSE 0 END`
+- INSERT applies `ISNULL(i.IsInternalTransfer,0)`
+
+### 2.4 `IsRedeem` — schema parity only (NOT transfercoin; NOT bank redeem)
+
+**What**: `IsRedeem` on **this** fact is **not** sourced from `Fact_CustomerAction` and does **not** carry **transfer-to-coin / transfercoin** semantics documented for trading MIMO (`BI_DB_DDR_Fact_MIMO_Trading_Platform` §2.3) or the **dual-semantics `IsRedeem`** narrative in `Fact_CustomerAction.md`.
+
+**Columns Involved**: `IsRedeem`.
+
+**Rules**:
+- `#depositsIBAN` and `#cashoutIBAN` each set `NULL AS IsRedeem`.
+- Final INSERT: `ISNULL(i.IsRedeem, 0)` → persisted **always 0** (verified on `DateID >= 20260101`: 6,211,305 rows, all `IsRedeem=0`).
+- **Do not** explain this column as “eMoney balance redeemed to bank account” (legacy AllPlatforms-era wording conflicts with authoritative `Fact_CustomerAction` semantics and misstates this SP).
+
+### 2.5 `IsCryptoToFiat` — deposit leg only (`TxTypeID = 14`)
+
+**What**: Flags crypto-to-fiat deposit rows using the **eMoney TxType dictionary** (`TxTypeID = 14` per `eMoney_Fact_Transaction_Status` wiki).
+
+**Columns Involved**: `IsCryptoToFiat`, `TxTypeID`, `MIMOAction`.
+
+**Rules**:
+- Deposit leg: `CASE WHEN mfts.TxTypeID IN (14) THEN 1 ELSE 0 END`
+- Withdraw leg: `0 AS IsCryptoToFiat`
+- INSERT: `ISNULL(IsCryptoToFiat,0)`
+- Distribution check (`DateID>=20260101`): `IsCryptoToFiat=1` on **5,327** rows vs **6,205,978** zeros — aligns with **`TxTypeID=14`** volume (same window).
+
+### 2.6 `IsTradeFromIBAN` — reference guard + TxType split
+
+**What**: IBAN-originated **internal transfer** discriminator using **reference prefix** and effective date floor.
+
+**Columns Involved**: `ReferenceNumber`, `TxStatusModificationDateID`, `TxTypeID`.
+
+**Rules** (verbatim `CASE`):
+- Deposits: `case when left(ReferenceNumber,1) != 'P' and TxStatusModificationDateID >= 20240403 and TxTypeID = 5 then 1 else 0 end`
+- Withdrawals: `case when left(ReferenceNumber,1) != 'P' and TxStatusModificationDateID >= 20240403 and TxTypeID = 6 then 1 else 0 end`
+- INSERT: `ISNULL(i.IsTradeFromIBAN,0)`
+
+### 2.7 Platform FTD linkage & late recovery UPDATE
+
+**What**: Deposit-side FTD uses `#FTDIBAN` keyed to `Dim_Customer` global FTD transaction (`FTDPlatformID = 3`). Additional **post-insert UPDATE** lifts `IsFTD` when Dim_Customer links catch up (`DateID >= 20250901`).
+
+**Columns Involved**: `IsFTD`, `RealCID`, `TransactionID`.
+
+**Rules** (see SP block comment “recovered FTDs”): `UPDATE` sets `IsFTD = 1` where join matches `Dim_Customer.FTDTransactionID` to `SourceCugTransactionID` (`CAST` to `varchar`) for deposit rows previously `IsFTD=0`.
+
+### 2.8 `IsRecurring` and `IsIBANQuickTransfer` placeholders
+
+**What**: Columns exist for UNION symmetry with TP / AllPlatforms schemas.
+
+**Columns Involved**: `IsRecurring`, `IsIBANQuickTransfer`.
+
+**Rules**:
+- INSERT selects **literal** `0 AS IsRecurring` and **`0 AS IsIBANQuickTransfer`** regardless of `#MIMOIBAN` content — **all** rows `DateID>=20260101` show `IsIBANQuickTransfer=0`.
+- SP change log cites **MoveMoneyReason = 6** / “Internal Transfer in emoney”; **body does not reference `MoveMoneyReasonID`** — treat quick-transfer tagging as **unimplemented drift** pending SP fix.
 
 ---
 
@@ -99,43 +126,33 @@ The SP runs daily via Service Broker (`SB_Daily`). It was authored 2024-07-02, w
 
 ### 3.1 Synapse Distribution & Index
 
-**In Synapse**, this table is HASH-distributed on `RealCID` with a CLUSTERED COLUMNSTORE INDEX. Always include `RealCID` in WHERE or JOIN conditions for optimal distribution-aligned queries. With 23.2M rows, filter by `DateID` for time-bounded analysis.
-
-### 3.1b UC (Databricks) Storage & Partitioning
-
-_Pending — resolved during write-objects._
+`HASH(RealCID)` — join/filter on `RealCID` for colocation; avoid heavy `REFERENCE_NUMBER LIKE` predicates without `DateID` guard.
 
 ### 3.2 Common Query Patterns
 
 | Analyst Question | Recommended Approach |
-|-----------------|---------------------|
-| Customer's eMoney transaction history | `WHERE RealCID = @cid ORDER BY DateID` |
-| Daily eMoney FTD count | `WHERE IsFTD = 1 AND MIMOAction = 'Deposit' GROUP BY DateID` |
-| Internal transfer volume | `WHERE IsInternalTransfer = 1 GROUP BY DateID, MIMOAction` |
-| C2F conversion trends | `WHERE IsCryptoToFiat = 1 GROUP BY DateID` — SUM `AmountUSD` |
-| Net eMoney flow per day | `GROUP BY DateID` — SUM `AmountUSD` (deposits positive, withdrawals negative) |
+|------------------|---------------------|
+| eMoney deposits only | `WHERE MIMOAction='Deposit'` + `DateID` range |
+| Internal transfers only | `WHERE IsInternalTransfer=1` (= TxType 5 deposit / 6 withdraw per §2.3) |
+| Crypto→fiat ingress | `WHERE IsCryptoToFiat=1` (deposit `TxTypeID=14`) |
+| IBAN-trade style internals | `WHERE IsTradeFromIBAN=1` |
+| Exclude trade-open noise | Consider `WHERE NOT (MIMOAction='Withdraw' AND TxTypeID=8)` if product agrees |
 
 ### 3.3 Common JOINs
 
 | Join To | Join Condition | Purpose |
-|---------|---------------|---------|
-| `DWH_dbo.Dim_Customer` | `ON m.RealCID = dc.RealCID` | Customer demographics, registration |
-| `DWH_dbo.Dim_Currency` | `ON m.CurrencyID = dc.CurrencyID` | Full currency details |
-| `BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms` | `ON m.TransactionID = ap.TransactionID AND ap.MIMOPlatform = 'eMoney'` | Unified view with global FTD flags |
+|---------|----------------|---------|
+| `DWH_dbo.Dim_Customer` | `RealCID = RealCID` | Customer attributes |
+| `DWH_dbo.Dim_FundingType` | `FundingTypeID = FundingTypeID` | Decode 0 vs 33 |
+| `BI_DB_DDR_Fact_MIMO_AllPlatforms` | unioned downstream | Multi-platform KPIs |
 
 ### 3.4 Gotchas
 
-- **23.2M rows** — filter by `DateID` for efficient queries.
-- **Withdrawal amounts are negative** — `AmountUSD` and `AmountOrigCurrency` are negated for withdrawals. Net flow = SUM(AmountUSD).
-- **IsFTD is platform-level only** — for global (cross-platform) FTD, use `BI_DB_DDR_Fact_MIMO_AllPlatforms.IsGlobalFTD`.
-- **IsRedeem always 0** — column exists for schema compatibility with AllPlatforms union but is never populated.
-- **IsRecurring always 0** — placeholder for future use; eMoney does not yet track recurring deposits.
-- **IsIBANQuickTransfer always 0** — despite being added for the MoveMoneyReasonID=6 feature, it is hardcoded to 0 in this SP (populated at AllPlatforms level or not yet wired).
-- **FundingTypeID values** — only 0 (external) and 33 (internal) are used; this is not the same granularity as TP FundingTypeIDs.
-- **CurrencyID join path differs** — deposits use `eMoney_Currency_Instrument_Mapping_Static` (ISO-based), withdrawals use `Dim_Currency` (abbreviation-based). Danish Krona was lost in old mapping; fixed 2025-12-23.
-- **TransactionID = -1 sentinel** — ISNULL coercion replaces NULL TransactionIDs with -1.
-- **Date range starts 2020-11-10** — eMoney launched later than Trading Platform; no data before this date.
-- **TxTypeID 8 = trade open** — included in withdrawals but is actually a trading action; may be removed in future.
+- **`IsRedeem` always 0** — do not use for redemption analytics; trading transfercoin semantics live on TP / `Fact_CustomerAction`.
+- **`IsIBANQuickTransfer` always 0** despite column presence + SP header note — reconcile with DA before trusting AllPlatforms excerpts that mention MoveMoneyReasonID=6 for eMoney.
+- **`ReferenceNumber` nulls** become **`-1`** on INSERT (`ISNULL(i.ReferenceNumber, -1)`).
+- **`TransactionID` nulls** become **`-1`** on INSERT — treat as sentinel, not numeric FK.
+- **Withdraw `TxTypeID=8`** includes non–pure-MIMO flows per author comment — trend lines may shift if removed.
 
 ---
 
@@ -143,33 +160,36 @@ _Pending — resolved during write-objects._
 
 ### Confidence Tier Legend
 
-| Stars | Tiers | Tag |
-|-------|-------|-----|
-| 3 stars | Tier 2 (Synapse SP code) | `(Tier 2 — ...)` |
+| Tier | Meaning |
+|------|---------|
+| Tier 1 | Inherited verbatim / same origin as canonical DWH dimension wiki |
+| Tier 2 | Grounded in `SP_DDR_Fact_MIMO_eMoney_Platform` + eMoney fact wiki |
+| Tier 3 | Name / light inference only |
+| Tier 4 | Known doc/ETL drift — needs owner confirmation |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | int | YES | Date key in YYYYMMDD integer format. `CAST(CONVERT(VARCHAR(8), @date, 112) AS INT)` from SP parameter. DELETE/INSERT partition key. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 2 | Date | date | YES | Calendar date. `@date` SP input parameter. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 3 | RealCID | int | YES | Customer identifier. Renamed from `eMoney_Fact_Transaction_Status.CID`. Distribution key. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 4 | MIMOAction | varchar(20) | YES | Transaction direction. Literal `'Deposit'` for deposits, `'Withdraw'` for withdrawals. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 5 | OrigIdentifier | varchar(20) | YES | Source ID type label. Always `'TransactionID'` for all eMoney transactions. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 6 | TransactionID | int | YES | eMoney transaction identifier from `eMoney_Fact_Transaction_Status.TransactionID`. `ISNULL(..., -1)` — sentinel -1 for NULLs. Used for deduplication and FTD matching. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 7 | ReferenceNumber | varchar(4000) | YES | Payment gateway reference string from `eMoney_Fact_Transaction_Status.ReferenceNumber`. `ISNULL(..., -1)`. First character used for IBAN trade detection ('P' prefix = platform-initiated). (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 8 | AmountUSD | decimal(16,6) | YES | Transaction amount in USD. `mfts.USDAmountApprox` for deposits (positive); `-1 * mfts.USDAmountApprox` for withdrawals (negative). FTD deposits overridden with `Dim_Customer.FirstDepositAmount`. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 9 | AmountOrigCurrency | decimal(16,6) | YES | Transaction amount in original currency. `mfts.LocalAmount` for deposits (positive); `-1 * mfts.LocalAmount` for withdrawals (negative). (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 10 | FundingTypeID | int | YES | Payment method type. `CASE WHEN TxTypeID IN (5) THEN 33 ELSE 0 END` (deposits) / `CASE WHEN TxTypeID IN (6) THEN 33 ELSE 0 END` (withdrawals). 33 = internal transfer, 0 = external. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 11 | CurrencyID | int | YES | Currency identifier. Deposits: `eMoney_Currency_Instrument_Mapping_Static.SellCurrencyID` via ISO match. Withdrawals: `Dim_Currency.CurrencyID` via abbreviation match. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 12 | Currency | varchar(20) | YES | Currency ISO code. Direct from `eMoney_Fact_Transaction_Status.HolderCurrencyDesc`. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 13 | IsFTD | int | YES | Platform-level first-time deposit flag. `CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END` from #FTDIBAN match; `ISNULL(..., 0)`. Updated by FTD recovery for DateID >= 20250901. 645K deposits flagged out of 11.7M. (Tier 1 — Function_MIMO_First_Deposit_All_Platforms) |
-| 14 | IsInternalTransfer | int | YES | Internal fund transfer flag. `CASE WHEN TxTypeID IN (5) THEN 1 ELSE 0 END` (deposits) / `... IN (6) ...` (withdrawals). `ISNULL(..., 0)`. 1 = transfer between eMoney and trading platform. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 15 | IsRedeem | int | YES | Redemption flag. Always `ISNULL(NULL, 0) = 0`. Placeholder for schema compatibility with AllPlatforms union; never populated. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 16 | TxTypeID | int | YES | eMoney transaction type. Direct from `eMoney_Fact_Transaction_Status.TxTypeID`. Values: 5=internal deposit, 6=internal withdrawal, 7=external deposit, 8=trade open withdrawal, 14=crypto-to-fiat. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 17 | IsTradeFromIBAN | int | YES | IBAN-initiated trade flag. `CASE WHEN LEFT(ReferenceNumber,1) != 'P' AND TxStatusModificationDateID >= 20240403 AND TxTypeID IN (5,6) THEN 1 ELSE 0 END`. `ISNULL(..., 0)`. Non-'P' reference = IBAN-originated. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 18 | UpdateDate | datetime | YES | ETL load timestamp. `GETDATE()` at SP execution time. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 19 | IsCryptoToFiat | int | YES | Crypto-to-fiat flag. `CASE WHEN TxTypeID IN (14) THEN 1 ELSE 0 END` (deposits); hardcoded `0` (withdrawals). `ISNULL(..., 0)`. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 20 | IsRecurring | int | YES | Recurring deposit flag. Hardcoded `0`. Placeholder for schema compatibility; eMoney does not track recurring deposits. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
-| 21 | IsIBANQuickTransfer | int | YES | eMoney internal transfer (MoveMoneyReasonID = 6) flag. Hardcoded `0` in this SP. Feature exists but is wired at AllPlatforms level. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 1 | DateID | int | YES | Business partition key for daily reload. `CAST(CONVERT(VARCHAR(8),@date,112) AS INT)` seeded into both deposit/withdraw temp sets; `DELETE` targets the same key. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 2 | Date | date | YES | Calendar date parameter `@date` materialized on insert. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 3 | RealCID | int | YES | Global Real Customer Identifier on the ledger row (`mfts.CID` aliased as `RealCID`). (Tier 1 — Customer.CustomerStatic) |
+| 4 | MIMOAction | varchar(20) | YES | `'Deposit'` from `#depositsIBAN` or `'Withdraw'` from `#cashoutIBAN`. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 5 | OrigIdentifier | varchar(20) | YES | Literal discriminator `'TransactionID'` for DDR grain labeling. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 6 | TransactionID | int | YES | eMoney `TransactionID` with INSERT coercion `ISNULL(i.TransactionID, -1)`. (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 7 | ReferenceNumber | varchar(4000) | YES | Provider / bank reference from `mfts.ReferenceNumber`; INSERT coerces NULL to `-1`. (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 8 | AmountUSD | decimal(16,6) | YES | `USDAmountApprox` (deposits positive; withdraw leg multiplied by `-1`); FTD rows may take `USDAmountApprox` from `#FTDIBAN` via `UPDATE`. (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 9 | AmountOrigCurrency | decimal(16,6) | YES | `LocalAmount` with the same sign rule as `AmountUSD`. (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 10 | FundingTypeID | int | YES | `CASE WHEN mfts.TxTypeID IN (5) THEN 33 ELSE 0 END` on deposits; `CASE WHEN mfts.TxTypeID IN (6) THEN 33 ELSE 0 END` on withdrawals — join `Dim_FundingType` to decode. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 11 | CurrencyID | int | YES | Primary key. Universal instrument identifier. 0=NULL placeholder, 1-8=major forex currencies, ~1000+=stocks (AAPL, GOOG, etc.), ~100000+=crypto (BTC, ETH). Referenced by virtually all DWH fact tables. Legacy name: eToro originated as forex-only. Deposit path: `SellCurrencyID` from `eMoney_Currency_Instrument_Mapping_Static` on `HolderCurrencyISO = CurrencyISO` (`BuyCurrencyID = 1`). Withdraw path: `Dim_Currency.CurrencyID` on `HolderCurrencyDesc = Abbreviation`. (Tier 1 — Dictionary.Currency) |
+| 12 | Currency | varchar(20) | YES | Passthrough `mfts.HolderCurrencyDesc` display string from eMoney (not `Dim_Currency.Abbreviation` join). (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 13 | IsFTD | int | YES | Deposits: `CASE WHEN f.TransactionID IS NOT NULL THEN 1 ELSE 0 END` against `#FTDIBAN`; withdraws forced `0` in temp; INSERT `ISNULL(i.IsFTD,0)`; late `UPDATE` for `DateID>=20250901` per SP. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 14 | IsInternalTransfer | int | YES | Deposits: `CASE WHEN mfts.TxTypeID IN (5) THEN 1 ELSE 0 END`. Withdrawals: `CASE WHEN mfts.TxTypeID IN (6) THEN 1 ELSE 0 END`. INSERT `ISNULL(...,0)`. **Differs from TP**, which keys off `FundingTypeID=33` on billing facts — here TxType drives the flag directly. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 15 | IsRedeem | int | YES | `#depositsIBAN` / `#cashoutIBAN` both assign `NULL AS IsRedeem`; final INSERT applies `ISNULL(i.IsRedeem, 0)`, so the persisted value is always **0**. Column exists for **DDR / `UNION ALL` schema parity** with `BI_DB_DDR_Fact_MIMO_Trading_Platform`, where `IsRedeem` can surface **transfer-to-coin / transfercoin** semantics from `Fact_CustomerAction` (`ActionTypeID IN (8,45)` withdraw path) and cross-checks **`Function_Revenue_TransferCoinFee`** (`ActionTypeID = 30 AND IsRedeem = 1`). **This eMoney SP never reads `Fact_CustomerAction.IsRedeem`** — do **not** apply TP/Fact_CustomerAction “redeem” narratives or “eMoney balance redeemed to bank account” wording here. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 16 | TxTypeID | int | YES | Transaction type identifier. 1=CardPayment, 2=Contactless, 3=OnlinePayment, 4=CashWithdrawal, 5=TransferReceived, 6=Transfer, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBA, 12=DebitBA, 13=DirectDebit, 14=CryptoToFiat (15=CryptoToFiat via dictionary). Passthrough `mfts.TxTypeID` for filtered settled rows. (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 17 | IsTradeFromIBAN | int | YES | Deposits: `case when left(ReferenceNumber,1) != 'P' and TxStatusModificationDateID >= 20240403 and TxTypeID = 5 then 1 else 0 end`. Withdrawals: `case when left(ReferenceNumber,1) != 'P' and TxStatusModificationDateID >= 20240403 and TxTypeID = 6 then 1 else 0 end`. INSERT `ISNULL(i.IsTradeFromIBAN,0)`. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 18 | UpdateDate | datetime | YES | `GETDATE()` stamp on INSERT. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 19 | IsCryptoToFiat | int | YES | Deposit leg: `CASE WHEN mfts.TxTypeID IN (14) THEN 1 ELSE 0 END`. Withdraw leg: `0 AS IsCryptoToFiat`. INSERT: `ISNULL(IsCryptoToFiat,0)`. (Tier 2 — eMoney_Fact_Transaction_Status) |
+| 20 | IsRecurring | int | YES | Literal `0` on INSERT (`0 AS IsRecurring`) — recurring schedules are tracked on TP/billing, not here. (Tier 2 — SP_DDR_Fact_MIMO_eMoney_Platform) |
+| 21 | IsIBANQuickTransfer | int | YES | Literal `0` on INSERT (`0 AS IsIBANQuickTransfer`). SP changelog references **MoveMoneyReason = 6** for eMoney “Internal Transfer”, but **no** `MoveMoneyReasonID` filter exists in SQL — downstream AllPlatforms prose may assume behavior this SP does not implement. (Tier 4 — SP_DDR_Fact_MIMO_eMoney_Platform) |
 
 ---
 
@@ -177,46 +197,22 @@ _Pending — resolved during write-objects._
 
 ### 5.1 Production Sources
 
-| Synapse Column | Production Source | Source Column | Transform |
-|---------------|-------------------|---------------|-----------|
-| RealCID | eMoney_Fact_Transaction_Status | CID | rename |
-| TransactionID | eMoney_Fact_Transaction_Status | TransactionID | passthrough + ISNULL(-1) |
-| ReferenceNumber | eMoney_Fact_Transaction_Status | ReferenceNumber | passthrough + ISNULL(-1) |
-| AmountUSD | eMoney_Fact_Transaction_Status | USDAmountApprox | rename; negated for withdrawals |
-| AmountOrigCurrency | eMoney_Fact_Transaction_Status | LocalAmount | rename; negated for withdrawals |
-| CurrencyID | eMoney_Currency_Instrument_Mapping_Static / Dim_Currency | SellCurrencyID / CurrencyID | join-enriched (different path per action) |
-| Currency | eMoney_Fact_Transaction_Status | HolderCurrencyDesc | passthrough |
-| IsFTD | eMoney_Fact_Transaction_Status + Dim_Customer | TransactionID + FTDTransactionID | CASE match + recovery UPDATE |
-| TxTypeID | eMoney_Fact_Transaction_Status | TxTypeID | passthrough |
-| IsTradeFromIBAN | eMoney_Fact_Transaction_Status | ReferenceNumber + TxTypeID | CASE LEFT(...) pattern |
+| Synapse Column | Production / Synapse Origin | Transform |
+|----------------|----------------------------|-----------|
+| RealCID | `eMoney_Fact_Transaction_Status.CID` | Rename to RealCID |
+| Amounts / TxType / Reference | `eMoney_Fact_Transaction_Status` | Filters + sign rules |
+| CurrencyID | `eMoney_Currency_Instrument_Mapping_Static` / `Dim_Currency` | Dual join paths |
+| FTD keys | `Dim_Customer` (`FTDPlatformID=3`, `FTDTransactionID`) | JOIN + UPDATE recovery |
 
 ### 5.2 ETL Pipeline
 
 ```
-eMoney_dbo.eMoney_Fact_Transaction_Status (settled transactions: TxStatusID=2)
-  + DWH_dbo.Dim_Customer (FTD reference: FTDPlatformID=3)
-  + eMoney_dbo.eMoney_Currency_Instrument_Mapping_Static (deposit currency ID)
-  + DWH_dbo.Dim_Currency (withdrawal currency ID)
-  |
-  |-- SP_DDR_Fact_MIMO_eMoney_Platform(@date):
-  |     #FTDIBAN: FTD deposits matched to Dim_Customer
-  |     #depositsIBAN: TxTypeID IN (7,5,14), enriched with FTD flag + currency
-  |     UPDATE: FTD amount from Dim_Customer
-  |     #cashoutIBAN: TxTypeID IN (8,6), amounts negated
-  |     UNION ALL → dedupe by TransactionID
-  |     DELETE/INSERT by DateID
-  |     FTD recovery UPDATE (DateID >= 20250901)
-  v
-BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform (23.2M rows, transaction-level grain)
+FiatDwhDB (per eMoney pipeline) -> Generic Pipeline / eMoney loader
+    -> eMoney_dbo.eMoney_Fact_Transaction_Status
+    -> BI_DB_dbo.SP_DDR_Fact_MIMO_eMoney_Platform(@date)
+    -> BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+    -> BI_DB_dbo.SP_DDR_Fact_Fact_MIMO_AllPlatforms -> BI_DB_DDR_Fact_MIMO_AllPlatforms
 ```
-
-| Step | Object | Description |
-|------|--------|-------------|
-| Source | eMoney_Fact_Transaction_Status | Settled IBAN transactions (TxStatusID = 2) |
-| FTD Ref | Dim_Customer | FTD matching via FTDTransactionID + FTDPlatformID = 3 |
-| Currency | eMoney_Currency_Instrument_Mapping_Static / Dim_Currency | Currency ID resolution |
-| ETL | SP_DDR_Fact_MIMO_eMoney_Platform | Deposit+withdrawal extraction, FTD flagging, dedup, DELETE/INSERT |
-| Target | BI_DB_DDR_Fact_MIMO_eMoney_Platform | eMoney platform MIMO fact |
 
 ---
 
@@ -226,70 +222,68 @@ BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform (23.2M rows, transaction-level gra
 
 | Element | Related Object | Description |
 |---------|---------------|-------------|
-| RealCID | DWH_dbo.Dim_Customer | Customer dimension |
-| CurrencyID | DWH_dbo.Dim_Currency | Currency details |
-| TxTypeID | eMoney_dbo.Dim_TxType (implicit) | Transaction type name |
+| RealCID | `DWH_dbo.Dim_Customer` | Customer dimension |
+| FundingTypeID | `DWH_dbo.Dim_FundingType` | Decode 0 / 33 |
+| CurrencyID | `DWH_dbo.Dim_Currency` | Withdraw path instrument id |
 
 ### 6.2 Referenced By (other objects point to this)
 
-| Source Object | Source Element | Description |
-|--------------|---------------|-------------|
-| BI_DB_dbo.SP_DDR_Fact_Fact_MIMO_AllPlatforms | #IBAN_Mimo | Read as eMoney branch of AllPlatforms union |
-| BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms | — | Unified MIMO table consumes this as source |
+| Source Object | Notes |
+|--------------|-------|
+| `BI_DB_dbo.SP_DDR_Fact_Fact_MIMO_AllPlatforms` | `UNION ALL` source for AllPlatforms MIMO |
+| `BI_DB_dbo.SP_DDR_Process_Monitor` | Monitoring select |
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Daily eMoney deposit volume
+### 7.1 Daily eMoney internal-transfer volume (USD)
 
 ```sql
 SELECT DateID,
-       COUNT(*) AS TxCount,
-       SUM(AmountUSD) AS TotalUSD,
-       SUM(CASE WHEN IsFTD = 1 THEN 1 ELSE 0 END) AS FTDs
-FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
-WHERE MIMOAction = 'Deposit'
-  AND DateID BETWEEN 20260301 AND 20260309
+       SUM(AmountUSD) AS sum_usd,
+       COUNT_BIG(*)     AS n
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+WHERE  DateID BETWEEN 20260101 AND 20260131
+   AND IsInternalTransfer = 1
 GROUP BY DateID
 ORDER BY DateID;
 ```
 
-### 7.2 Internal vs external transfers
+### 7.2 Crypto-to-fiat deposits
 
 ```sql
 SELECT DateID,
-       IsInternalTransfer,
-       MIMOAction,
-       COUNT(*) AS TxCount,
-       SUM(AmountUSD) AS TotalUSD
-FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
-WHERE DateID = 20260309
-GROUP BY DateID, IsInternalTransfer, MIMOAction
-ORDER BY IsInternalTransfer, MIMOAction;
-```
-
-### 7.3 Crypto-to-fiat conversion analysis
-
-```sql
-SELECT DateID,
-       COUNT(*) AS C2F_Count,
-       SUM(AmountUSD) AS C2F_USD
-FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
-WHERE IsCryptoToFiat = 1
-  AND DateID BETWEEN 20260101 AND 20260309
+       SUM(AmountUSD) AS c2f_usd
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+WHERE  MIMOAction = 'Deposit'
+   AND IsCryptoToFiat = 1
+   AND DateID >= 20260101
 GROUP BY DateID
 ORDER BY DateID;
+```
+
+### 7.3 Compare IBAN internal flags
+
+```sql
+SELECT IsInternalTransfer,
+       IsTradeFromIBAN,
+       COUNT_BIG(*) AS n
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+WHERE  DateID >= 20260101
+GROUP BY IsInternalTransfer, IsTradeFromIBAN
+ORDER BY n DESC;
 ```
 
 ---
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object.
+- [DDR Tables](https://etoro-jira.atlassian.net/wiki/spaces/~164971827/pages/13596884995/DDR+Tables) — personal space overview mentioning MIMO sub-tables and eMoney context (excerpt references MIMO family; not object-specific).
+- No Confluence page specifically naming `SP_DDR_Fact_MIMO_eMoney_Platform` or `BI_DB_DDR_Fact_MIMO_eMoney_Platform` was returned by targeted CQL (`text ~ "SP_DDR_Fact_MIMO_eMoney"`, 0 hits).
 
 ---
 
-*Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
-*Tiers: 1 T1, 20 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
+*Generated: 2026-05-14 | Quality: 8.2/10 | Phases: 16/16 (SOFT eval)*
+*Tiers: 2 T1, 18 T2, 0 T3, 1 T4, 0 T5 | Elements: 21/21, Logic: 8/10, Relationships: 7/10, Sources: 8/10*
 *Object: BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform | Type: Table | Production Source: eMoney_Fact_Transaction_Status + Dim_Customer*

@@ -170,7 +170,7 @@ The NCI on `CID` speeds up `WHERE CID = N` predicates common in user-level queri
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 4 | CID | int | YES | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Renamed from RealCID in DWH_dbo.Dim_Customer. (Tier 1 — Customer.CustomerStatic) |
-| 5 | ClubID | int | YES | Customer experience/permission level. FK to Dictionary.PlayerLevel. 1=Standard; 4=Popular Investor; 7=VIP. Determines available features and risk limits. Default=0. Renamed from PlayerLevelID. (Tier 1 — Customer.CustomerStatic) |
+| 5 | ClubID | int | YES | Customer player-level tier. FK to DWH_dbo.Dim_PlayerLevel. Per dictionary (verified 2026-05-13): 0=N/A, 1=Bronze, 2=Platinum, 3=Gold, 4=Internal (in-house / eToro-employee accounts), 5=Silver, 6=Platinum Plus, 7=Diamond. NOT a Popular Investor signal (PI is tracked by GuruStatusID). NOT a demo flag (demo is AccountTypeID=2). Default=0. (Tier 2 - DWH_dbo.Dim_PlayerLevel)|
 | 6 | Club | varchar(50) | YES | Player level display name resolved from DWH_dbo.Dim_PlayerLevel. (Tier 2 — SP_eMoney_Dim_Account) |
 | 7 | ClubCategory | varchar(50) | YES | Grouped player level bucket. NoClub=PlayerLevelID 1; LowClub=3 or 5; HighClub=2, 6, or 7; Internal=4; Error=unmapped values. (Tier 2 — SP_eMoney_Dim_Account) |
 | 8 | RegulationID | int | YES | Regulatory entity governing this account. FK to Dictionary.Regulation. Top values: CySEC=7.39M, BVI=7.30M, FCA=1.17M. Changes trigger RegulationChangeDate update. (Tier 1 — BackOffice.Customer) |
@@ -178,10 +178,10 @@ The NCI on `CID` speeds up `WHERE CID = N` predicates common in user-level queri
 | 10 | CountryID | int | YES | Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0. (Tier 1 — Customer.CustomerStatic) |
 | 11 | Country | varchar(50) | YES | Country display name resolved from DWH_dbo.Dim_Country. (Tier 2 — SP_eMoney_Dim_Account) |
 | 12 | Region | varchar(50) | YES | Geographic region from DWH_dbo.Dim_Country.Region, resolved via CountryID. (Tier 2 — SP_eMoney_Dim_Account) |
-| 13 | PlayerStatusID | int | YES | Compliance and trading account status. FK to Dictionary.PlayerStatus. 1=Active/Registered; other values indicate restricted, closed, banned, or special states. Default=0. (Tier 1 — Customer.CustomerStatic) |
+| 13 | PlayerStatusID | int | YES | Compliance and trading account status. FK to Dictionary.PlayerStatus. 1=Normal; other values indicate restricted, closed, banned, or special states. Default=0. (Tier 1 — Customer.CustomerStatic) |
 | 14 | PlayerStatus | varchar(50) | YES | Player status display name resolved from DWH_dbo.Dim_PlayerStatus. (Tier 2 — SP_eMoney_Dim_Account) |
 | 15 | IsValidETM | int | YES | eToro Money validity flag. 1 when IsValidCustomer=1 AND IsTestAccount=0 AND IsCancelledAccount=0. Standard filter for eTM production analytics. (Tier 2 — SP_eMoney_Dim_Account) |
-| 16 | IsValidCustomer | int | YES | DWH-computed: 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. Passthrough from Dim_Customer. (Tier 2 — SP_Dim_Customer) |
+| 16 | IsValidCustomer | int | YES | DWH-computed: 1 when not Internal (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. Passthrough from Dim_Customer. (Tier 2 — SP_Dim_Customer) |
 | 17 | IsTestAccount | int | YES | 1 if GCID appears in the Fivetran Google Sheets test-user list (eMoney_google_sheets.emoney_test_users); 0 otherwise. Exclude from all production analytics. (Tier 2 — SP_eMoney_Dim_Account) |
 | 18 | IsCancelledAccount | int | YES | 1 when GCID=0 (cancelled accounts are recorded with a zero GCID in FiatDwhDB). (Tier 2 — SP_eMoney_Dim_Account) |
 | 19 | GCID_Unique_Count | int | YES | Rank of this currency balance account for its GCID, ordered by AccountCreateTime DESC. 1 = most recently created eMoney account for this customer (the primary account). Customer DWH enrichment columns (CID, ClubID, etc.) are only populated for rank=1 rows. (Tier 2 — SP_eMoney_Dim_Account) |

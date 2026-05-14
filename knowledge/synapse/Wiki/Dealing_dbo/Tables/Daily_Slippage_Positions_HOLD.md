@@ -112,7 +112,7 @@ The table was the **predecessor** to `Dealing_dbo.Dealing_Daily_Slippage_Positio
 | 3 | CID | int | YES | **Customer ID** — **PII**; join key to customer dimensions. (Tier 2 — inferred from structure) |
 | 4 | InstrumentID | int | YES | Traded instrument key; join to `DWH_dbo.Dim_Instrument`. (Tier 2 — inferred from structure) |
 | 5 | InstrumentName | varchar(45) | YES | Display name of the instrument (e.g. ticker / pair). (Tier 2 — inferred from structure) |
-| 6 | InstrumentTypeID | int | YES | Instrument type code (e.g. 1=FX, 2=CFD, 5=Real Stock, 6=ETF — values inferred from domain usage). (Tier 2 — inferred from structure) |
+| 6 | InstrumentTypeID | int | YES | Instrument type code (e.g. 1=Currencies, 2=Commodities, 5=Stocks, 6=ETF — values inferred from domain usage). (Tier 2 — inferred from structure) |
 | 7 | InstrumentType | varchar(50) | YES | Instrument type label (e.g. Crypto, Stocks). (Tier 2 — inferred from structure) |
 | 8 | HedgeServerID | int | YES | Hedge server / routing identifier determining **which LP stack** handled the flow. (Tier 2 — inferred from structure) |
 | 9 | MirrorID | int | YES | Copy / mirror portfolio identifier; **0** = not a copy trade. (Tier 2 — inferred from structure) |

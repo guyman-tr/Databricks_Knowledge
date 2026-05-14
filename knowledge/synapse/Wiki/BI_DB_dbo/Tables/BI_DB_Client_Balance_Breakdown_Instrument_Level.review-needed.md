@@ -37,3 +37,9 @@ None — all column descriptions are T2 (SP-derived, code-verified). No T3/T4 in
 - `RegTransferDirection = -1` rows: 142 rows on 2026-04-12 (very small population). If TotalZero checks fail, this population is the most likely source.
 - `InstrumentType = NULL` rows: 0 observed (good — all positions have valid instrument resolution).
 - `TanganyStatus` cardinality is higher than expected (7 values including NULL) — `Pending` had only 4 rows on 2026-04-12, may be transient.
+
+## Tier 5 Re-Review Needed
+
+| Column | Tier 5 Correction | Was Based On (old Tier 1-3) | New Tier 1-3 | Change Summary |
+|--------|-------------------|----------------------------|--------------|----------------|
+| IsSQF | SpotQuotedFuture flag — smaller-contract RealFutures on CME; `Trade.InstrumentGroups.GroupID = 59` via `Function_Instrument_Snapshot_Enriched`. | Tier 2 (lineage only) — "Technical lineage row, no business narrative" | Tier 5 (user expert 2026-05-14) | Replaced fabricated business narrative with grounded product semantic (SpotQuotedFuture, CME). |

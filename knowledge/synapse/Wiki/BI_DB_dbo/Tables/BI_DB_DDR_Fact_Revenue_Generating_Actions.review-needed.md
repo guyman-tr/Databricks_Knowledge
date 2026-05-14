@@ -1,34 +1,28 @@
-# BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions — Review Needed
+# Review Sidecar — `BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions`
 
-> Items flagged for offline domain expert review. The pipeline continues end-to-end; review happens asynchronously. Add corrections to `## Reviewer Corrections` and trigger a review-rerun to regenerate and re-deploy.
+_Encoding: UTF-8 · Generated: 2026-05-14_
 
-## Reviewer Corrections
+## Tier 5 Re-Review Needed
 
-> **Instructions**: Add corrections below. Each row becomes a Tier 5 (domain-expert confirmed)
-> override on the next pipeline rerun. Use `glossary` in the Scope column if the term should
-> also be added to `knowledge/glossary.md`.
+| Column | Tier 5 Correction | Was Based On | New Tier | Change Summary |
+|--------|-------------------|--------------|----------|----------------|
+| IsSQF | SpotQuotedFuture flag (smaller-contract RealFutures on CME); `GroupID=59` in `Trade.InstrumentGroups` | Tier 2 — "Sustainable & Quality-Focused instrument flag" | Tier 5 (user expert correction 2026-05-14) | Replaced fabricated business narrative with grounded product semantic (SpotQuotedFuture). |
 
-| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
-|----------------|-----------------|------------|-------|----------|------|
+## Tier 4 — Open Questions for Reviewers
 
-## Tier 4 (UNVERIFIED) Columns
+1. **NULL `ActionTypeID` bucket (~2.17M rows on `DateID≥20260101`)** — confirm whether historic loads predating `ISNULL(...,-1)` coercion or a legitimate third sentinel; align cleansing if accidental.
+2. **`InstrumentTypeID = 0` slice (~50k rows recent window)** — validate against `Dim_Instrument` hygiene (unexpected asset class zero).
+3. **Admin fee branch `IsLeverage` alias** — cosmetic typo vs TVF contract; confirm no consumer depends on column naming inside TVFs.
+4. **Options reload window** — `Function_Revenue_OptionsPlatform` spans `20000101` through current — document SLA impact on partition scans when joining without `Metric`/`RevenueMetricID` filters.
+5. **`IsSettled` remains Tier 5 Expert Review upstream** (`Fact_CustomerAction`) — escalate if instrument classification policy changes broadly.
 
-No Tier 4 columns — all 27 columns are Tier 2 with verified SP code provenance.
+## Soft-Fail Tracking (Pipeline)
 
-## Columns Needing Clarification
+| Item | Severity | Detail |
+|------|----------|--------|
+| Phase 10 Atlassian | SOFT skip | MCP search not executed — section 8 states gap explicitly. |
+| OpsDB SLA proof | SOFT | Mentioned orchestration verbally; OpsDB MCP not queried here for exact `Priority`/`SB_*` timings. |
 
-| Column | Question |
-|--------|----------|
-| IncludedInTotalRevenue | Confirm the complete list of metrics that should be IncludedInTotalRevenue=0 (currently: Commission, Dividends, SDRT) — has this changed? |
-| IsMarginTrade | New flag added 2025-10-23 — confirm business definition: is this margin-call-related or simply leveraged-with-margin? |
-| IsC2P | Copy-to-Portfolio flag added 2025-12-13 — confirm scope: does this cover all C2P positions or only specific ones from V_C2P_Positions? |
-| CountAsActiveTrade | Only counted for ActionTypeID IN (1,39) — confirm whether ManualClose or other action types should also count |
+## Checker Notes
 
-## Structural Questions
-
-| Topic | Question |
-|-------|----------|
-| SDRT recurrence | SP change history shows SDRT IncludedInTotalRevenue=1 kept reappearing and being fixed. Is there a root cause (code merge conflict?) that should be addressed? |
-| Staking lag | StakingLagOneMonth is shifted forward by one month — confirm whether downstream consumers (DDR reports) are aware of this lag |
-| Options reliability | All Options data is deleted and re-inserted every run — confirm impact on downstream caches or reports that may snapshot mid-day |
-| Dividend IsBuy override | IsBuy is overridden to 1 for positive dividends and 0 for negative — confirm whether this represents "long positions receive, short positions pay" |
+- **Parity gate:** Wiki element rows = Synapse DDL columns (27 vs 27) — ✅ this session (`INFORMATION_SCHEMA` vs `.lineage.md` summary).

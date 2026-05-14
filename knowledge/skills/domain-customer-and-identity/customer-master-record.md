@@ -89,7 +89,7 @@ Load when the question concerns the current customer master row, the broker-side
 
 - "Show the row for customer X", "master record for RealCID 12345"
 - "What country / regulation / MiFID category / language is customer X under right now?"
-- "Is customer X a Popular Investor?" (program status via `PlayerLevelID = 4` or `GuruStatusID`)
+- "Is customer X a Popular Investor?" (program status via `GuruStatusID` — `PlayerLevelID = 4` is the `Internal` employee level per `Dim_PlayerLevel`, not a PI flag)
 - "Is customer X a depositor? FTD date? FTD amount?"
 - "Which customers have an Apex broker / Tangany custody / EquiLend / DLT integration?"
 - "What's customer X's KYC verification level / EDD flag / WorldCheck status?"
@@ -116,7 +116,7 @@ Last verified: 2026-05-11
 
 1. **Tier 1 — `MasterCID`, `EmoneyAccountID`, `EXWCustomerID`, `ClubLevelID`, `MarketingRegion`, `IsPI` are NOT columns on `Dim_Customer`.** `SELECT MasterCID FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` will fail with "column not found". Verified 2026-05-11 against `information_schema.columns` (107 cols on Dim_Customer; zero of these six present). Where they actually live:
    - **`IsPI`** — derived. `Dim_Customer.PlayerLevelID = 4` is the Popular-Investor program level (`GuruStatusID` carries the substate). An explicit `IsPI INT` column lives on `main.etoro_kpi.customer_snapshot_v.IsPI`, `main.bi_output.bi_output_vg_customer_snapshot.IsPI`, and most `bi_output.bi_output_vg_*` views — that is the canonical enriched answer.
-   - **`ClubTier`** (string Bronze/Silver/Gold/Platinum/Diamond) — `main.etoro_kpi.customer_snapshot_v.ClubTier` and `main.bi_output.bi_output_vg_club.ClubTier`. Sourced from the club service (`bronze_clubservice_clubs_*`), not from `Dim_Customer`. Distinct from `Dim_Customer.PlayerLevelID` (1=Standard, 4=Popular Investor, 7=VIP) — see Warning 4.
+   - **`ClubTier`** (string Bronze/Silver/Gold/Platinum/Diamond) — `main.etoro_kpi.customer_snapshot_v.ClubTier` and `main.bi_output.bi_output_vg_club.ClubTier`. Sourced from the club service (`bronze_clubservice_clubs_*`), not from `Dim_Customer`. Distinct from `Dim_Customer.PlayerLevelID` — per `DWH_dbo.Dim_PlayerLevel` (verified 2026-05-13) the values are `0=N/A, 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum Plus, 7=Diamond`. Tier names overlap with `ClubTier` but are separate services with separate refresh paths. `PlayerLevelID = 4` (`Internal`) is the in-house / eToro-employee level and is NOT a Popular Investor signal. See Warning 4.
    - **`MarketingRegion`** — `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status.MarketingRegion`, `main.etoro_kpi.ftd_funnel_v.MarketingRegion`. Derived from Country + Affiliate logic downstream of Dim_Customer.
    - **`EmoneyAccountID` / `EXWCustomerID`** — no direct pointer column on Dim_Customer. Cross-platform join uses **`Dim_Customer.GCID = eMoney_Dim_Account.GCID`** and **`Dim_Customer.GCID = EXW_DimUser.GCID`**. The `HasWallet` flag on Dim_Customer signals existence but does NOT carry the foreign key.
    - **`MasterCID`** — does not exist anywhere in Unity Catalog (verified `information_schema.columns` 2026-05-11: zero rows). Linked-account consolidation is performed upstream in OLTP (`Customer.CustomerStatic.MasterCID` family); it has never been materialized into the DWH master. For unique-human counts on the DWH side, dedupe via `GCID` rather than reaching for a `MasterCID` that does not exist. For the OLTP-side consolidation, route to `oltp-customer-static-and-breaches`.
@@ -131,7 +131,7 @@ Last verified: 2026-05-11
    - `CountryID = 250` (eToro internal jurisdiction) is excluded by `IsValidCustomer`.
 
 4. **Tier 2 — `PlayerLevelID` (Popular-Investor program) and `ClubTier` (eToro Club) are DIFFERENT systems.** Do not conflate:
-   - `Dim_Customer.PlayerLevelID` — Popular-Investor program permission level. FK to `Dictionary.PlayerLevel`. `1 = Standard` (~94%), `4 = Popular Investor`, `7 = VIP`. Affects platform features and risk limits. Type-1 SCD on Dim_Customer.
+   - `Dim_Customer.PlayerLevelID` — internal account-level / tier classification. FK to `Dictionary.PlayerLevel`. Per `DWH_dbo.Dim_PlayerLevel` (verified 2026-05-13): `0 = N/A`, `1 = Bronze`, `2 = Platinum`, `3 = Gold`, `4 = Internal` (in-house / eToro-employee accounts), `5 = Silver`, `6 = Platinum Plus`, `7 = Diamond`. Affects platform features and risk limits. **Not a Popular Investor signal** — PI status lives on `GuruStatusID`. Type-1 SCD on `Dim_Customer`.
    - `Dim_Customer.GuruStatusID` — Guru/PI program substate (FK to `Dictionary.GuruStatus`). Active vs paused vs revoked etc.
    - `ClubTier` (Bronze / Silver / Gold / Platinum / Diamond / Platinum+ / Diamond+) — eToro Club product tier driven by account balance/activity. Lives on `main.etoro_kpi.customer_snapshot_v.ClubTier`, `main.bi_output.bi_output_vg_club.ClubTier`, and the change log `main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct`. Sourced from the club service. NOT physically on Dim_Customer.
 
@@ -202,7 +202,7 @@ graph TB
 | `CitizenshipCountryID`, `POBCountryID`, `CountryIDByIP` | Customer.CustomerStatic | Three separate country dimensions for KYC + fraud (citizenship, place of birth, IP-detected). |
 | `RegulationID` | BackOffice.Customer | CySEC / FCA / ASIC / BVI / ASA. Top values 2026-05: CySEC 7.39M, BVI 7.30M, FCA 1.17M. Type-1 SCD. `RegulationChangeDate` carries last-change timestamp. |
 | `DesignatedRegulationID` | BackOffice.Customer | Secondary/override regulation for multi-jurisdiction accounts. |
-| `PlayerLevelID` | Customer.CustomerStatic | 1=Standard, 4=Popular Investor, 7=VIP. NOT eToro Club tier (see Warning 4). Default 0. |
+| `PlayerLevelID` | Customer.CustomerStatic | Per `Dim_PlayerLevel` (verified 2026-05-13): 0=N/A, 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum Plus, 7=Diamond. NOT a Popular Investor flag (PI lives on `GuruStatusID`) and NOT the same as eToro Club tier (see Warning 4). Default 0. |
 | `PlayerStatusID` / `PlayerStatusReasonID` / `PlayerStatusSubReasonID` | Customer.CustomerStatic | Compliance status hierarchy. `1` = Active/Registered (~97.5%). Sub-reason added 2022 (COINF-1989). |
 | `AccountTypeID` | BackOffice.Customer | `1` = real retail (~18.6M rows). Demo / Sub-Account / Copy-Fund parent / etc. distributed in long tail. Default 1. |
 | `AccountStatusID` | Customer.CustomerStatic | Operational status. `1` = Active/Normal, `2` = Closed/Restricted. |
@@ -220,7 +220,7 @@ graph TB
 | `EmployeeAccount` | BackOffice.Customer | eToro employee personal trading account flag. Filter in or out explicitly. |
 | `IsValidCustomer` | DWH-computed | `PlayerLevelID ≠ 4 AND LabelID NOT IN (30,26) AND CountryID ≠ 250`. The standard analytics gate. |
 | `IsCreditReportValidCB` | DWH-computed | Stricter than `IsValidCustomer`; adds `AccountTypeID ≠ 2` and specific CID exceptions for CountryID=250. |
-| `LabelID` | Customer.CustomerStatic | Internal segment label. `26` = BonusOnly. Filter out for standard reporting. |
+| `LabelID` | Customer.CustomerStatic | Customer-segment label. FK to `Dictionary.Label` / `DWH_dbo.Dim_Label`. Per `Dim_Label` (verified 2026-05-13): `26 = ILQ`, `30 = Dealing` — both excluded by `IsValidCustomer` and used in the `IsHedged` trigger (along with `BackOffice.BonusOnlyCustomers` — a SEPARATE table-based list, not the same as `LabelID = 26`). Full label dictionary has many more values; query `Dim_Label` for the complete map. |
 | `AffiliateID` / `CampaignID` / `SubChannelID` / `FunnelID` | Customer.CustomerStatic | Acquisition tracking. Sub-affiliate path in `SubSerialID`. Type-1 SCD. |
 | `AccountManagerID` | BackOffice.Customer | VIP/sales rep. Sentinel `0` = unassigned. FK to `Dim_Manager`. |
 | `CashoutFeeGroupID` | BackOffice.Customer | Withdrawal fee schedule. FK to `Dictionary.CashoutFeeGroup`. |

@@ -1,86 +1,90 @@
 # BI_DB_dbo.BI_DB_DDR_Fact_AUM
 
-> 7.4B-row DDR Assets Under Management fact table — daily per-customer snapshot of equity, invested amounts, NOP, PnL, and credit breakdowns across Trading Platform, CopyTrading, manual stocks/crypto, IBAN (eMoney), and Options (Apex), providing a unified AUM view for the Daily Data Report framework.
+> DDR **Assets Under Management** fact — one row per `RealCID` per `DateID` after ETL dedupe/filter. Live samples show ~4.45M distinct customers per day (e.g. DateID **20260425**); observable `DateID` span since 20200101 tops out at **20260425**. Unifies TP balances from **`BI_DB_Client_Balance_CID_Level_New`**, mirrored/manual equity components from **`DWH_dbo.V_Liabilities`**, USD IBAN (**eMoney**) balances, and **Options (Apex)** equity from **`Function_AUM_OptionsPlatform`**.
 
 | Property | Value |
 |----------|-------|
 | **Schema** | BI_DB_dbo |
 | **Object Type** | Table (Fact — DDR daily AUM snapshot) |
-| **Production Source** | Derived — multi-source aggregate via `SP_DDR_Fact_AUM` from `BI_DB_Client_Balance_CID_Level_New`, `V_Liabilities`, `eMoneyClientBalance`, `Function_AUM_OptionsPlatform` |
-| **Refresh** | Daily — `DELETE WHERE DateID = @dateID` + `INSERT` per business date |
+| **Production Source** | Derived aggregate — `BI_DB_dbo.SP_DDR_Fact_AUM` blending Client Balance **SUM**, `V_Liabilities`, IBAN rollup, Apex options TVF |
+| **Refresh** | Daily parameter load — `DELETE WHERE DateID = @dateID` then INSERT from `#final`; `UpdateDate = GETDATE()` batch stamp |
 | | |
-| **Synapse Distribution** | HASH(RealCID) |
+| **Synapse Distribution** | HASH (`RealCID`) |
 | **Synapse Index** | CLUSTERED COLUMNSTORE INDEX |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
-| **UC Format** | _Pending — resolved during write-objects_ |
-| **UC Partitioned By** | _Pending — resolved during write-objects_ |
-| **UC Table Type** | _Pending — resolved during write-objects_ |
+| **UC Target** | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum` |
+| **UC Format** | delta |
+| **UC Partitioned By** | _(operational)_ — mirror Synapse partitioning policy in bundle metadata |
+| **UC Table Type** | Gold replicated export |
 
 ---
 
 ## 1. Business Meaning
 
-`BI_DB_DDR_Fact_AUM` is the **Assets Under Management fact table** for the DDR (Daily Data Report) framework. It stores one row per customer (`RealCID`) per calendar day, capturing the complete equity and balance picture across **all eToro platforms**: Trading Platform (TP), CopyTrading, manual stocks, manual crypto, IBAN/eMoney, and Options (Apex).
+`BI_DB_DDR_Fact_AUM` answers “How much USD-equivalent equity / credit / NOP does each customer carry across TP, copied portfolios, discretionary stocks/crypto, IBAN-held cash, and US options?” SP header (July 2024, Guy Manova) positions it explicitly as the **DDR framework CID-level assortment of balance items**, including historical **NON-TP instruments (IBAN)** with options-equity uplift added later (change log 20251017).
 
-The table was created in July 2024 by Guy Manova to power the new DDR dashboard framework. It aggregates data from four distinct sources:
-1. **`BI_DB_Client_Balance_CID_Level_New`** — core TP balance metrics (realized equity, liabilities, NOP, bonus, position PnL)
-2. **`DWH_dbo.V_Liabilities`** — copy equity, manual stock/crypto equity breakdowns, credit, ActualNWA
-3. **`eMoney_dbo.eMoneyClientBalance`** — IBAN balance (non-TP cash held in eMoney accounts)
-4. **`Function_AUM_OptionsPlatform`** — Options platform equity from Apex buy-power summary
+Row grain is **`(RealCID , DateID)`** after exclusions: PRIMARY population keeps customers with **`EquityGlobal <> 0`**. Supplemental second branch (`UNION` without `ALL`) restores edge cases whose Trading Platform **`TotalLiabilityTP` resolves to zero** yet residual TP exposures remain (NOP, PnL, cashouts etc.). Rows with **NULL RealCID are deleted**.
 
-Sources are joined via `FULL OUTER JOIN` on CID so customers present on any platform are included. Zero-equity global rows are excluded. Historical data spans from 2007-10-01 to present, with ~7.4 billion rows across ~6.7M distinct CIDs.
+**DDR “AUM” operational definition**: aggregate headline measure is **`EquityGlobal`**, authored in-SP as **`TotalEquity + IBANBalance + OptionsTotalEquity`**. `TotalEquity` itself is summed from **`ISNULL(TotalLiability,0) + ISNULL(actualNWA,0)`** in `#ClientBalance` (see verbatim block in **`BI_DB_DDR_Fact_AUM.lineage.md`**). This **differs conceptually from `TotalEquityTP` column label** (`TotalEquityTP` persists the same summed field from `#final`/`#equityPrep` lineage). Analysts validating balance equations should reconcile against **`BI_DB_Client_Balance_CID_Level_New`** duplicates (two regulation rows).
 
-**ETL**: `SP_DDR_Fact_AUM` runs daily at Priority 60 in the SB_Daily Service Broker process. It deletes and reinserts rows for a single `@dateID`.
+**USD / FX**:
+
+- Majority of TP-facing columns originate from BI Client Balance **`decimal(16,6)`** lineage already denominated USD in upstream reporting cubes.
+- **IBAN balances** multiply **`ClosingBalanceBO * USDApproxRate`** — approximate conversion, not treasury spot snapshot.
+
+### PII posture
+
+| Signal | Detail |
+|--------|--------|
+| Direct PII columns | none (numeric measures + surrogate keys/dates only) |
+| Sensitive identifiers | `RealCID` is a customer surrogate — treat joins to `Dim_Customer`/PII-bearing tables under GDPR tagging program |
+| Downstream tagging | Mirror Unity Catalog stewardship for `CID`‑class surrogate columns |
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Multi-Platform Equity Aggregation
+### 2.1 AUM rollup & platform scope (canonical formulas)
 
-**What**: Combines equity from four platforms into a unified per-CID daily snapshot.
+Interpretation **quotes SP comments verbatim** where authored:
 
-**Columns Involved**: All 40 columns; key merge columns: `RealCID`, `DateID`
+```
+-- Global totals from #final
+p.TotalEquity + p.IBANBalance + p.OptionsTotalEquity AS EquityGlobal
+```
 
-**Rules**:
-- TP equity columns come from `BI_DB_Client_Balance_CID_Level_New` (aggregated by CID/DateID with SUM)
-- Copy/stock/crypto breakdowns come from `V_Liabilities` (joined on CID + DateID)
-- IBAN balance from `eMoneyClientBalance` (SUM of ClosingBalanceBO × USDApproxRate per CID)
-- Options equity from `Function_AUM_OptionsPlatform` (latest available Apex date ≤ @dateID)
-- FULL OUTER JOIN ensures customers with only IBAN or only Options balances are included
+```
+-- SP comment preceding RealizedEquityGlobal assignment
+RealizedEquityGlobal -- excluding Options, which cannot differenciate invested from PNL
+p.realizedEquity + p.IBANBalance AS RealizedEquityGlobal
+```
 
-### 2.2 Global vs TP Metrics
+**Component coverage**
 
-**What**: "Global" columns aggregate across all platforms; "TP" columns are Trading Platform only.
+| Bucket | Goes into EquityGlobal via | Narrative |
+|--------|---------------------------|-----------|
+| Trading platform liability + NWA | `TotalEquity` from `#ClientBalance` | Mirrors BI Client Balance summed liability + ActualNWA |
+| Copy-trade cash/pnl | `CashInCopy`, `CopyInvestedAmount`, `CopyPositionPnL`, `EquityCopy` lineage | Mirrors / Popular Investor copied notionals (+ cash leg) sourced from VL |
+| Manual stocks/crypto | Equity / invested splits (`EquityStocksManual`, `EquityCryptoManual`, ...) | Separate manual vs mirrored positions using VL computations |
+| Non-TP IBAN wallets | `IBANBalance` | eMoney ClosingBalance aggregated & USD-scaled |
+| US Options | `OptionsTotalEquity` (+ `CreditGlobal` leverages `OptionsCashEquity`) | Latest Apex-derived batch date may trail `@date`; see lineage |
 
-**Columns Involved**: `RealizedEquityTP`, `RealizedEquityGlobal`, `TotalLiabilityTP`, `TotalLiabilityGlobal`, `TotalEquityTP`, `EquityGlobal`, `CreditTP`, `CreditGlobal`
+Excluded / cautions:
 
-**Rules**:
-- `RealizedEquityGlobal = RealizedEquityTP + IBANBalance` (Options excluded — cannot differentiate invested vs PnL)
-- `TotalLiabilityGlobal = TotalLiabilityTP + IBANBalance + OptionsTotalEquity`
-- `EquityGlobal = TotalEquityTP + IBANBalance + OptionsTotalEquity`
-- `CreditGlobal = CreditTP + IBANBalance + OptionsCashEquity` (uses cash component of options, not total)
+- **`InProcessCashout`** remains in TP aggregates but DDR filter logic does **not** automatically net pending withdrawals separately from headline `EquityGlobal`. Validate against AML / treasury dashboards if payouts are stuck.
+- **CFD**, **loan**, **futures**, **TRS** granular buckets stay inside **`BI_DB_Client_Balance_CID_Level_New`** / VL — this fact keeps **rolled TP + compartment** columns enumerated in §4 Elements.
 
-### 2.3 Equity Compartments (Copy, Manual Stocks, Manual Crypto)
+---
 
-**What**: Breaks equity into copy-trade vs manual components for stocks and crypto.
+### 2.2 Copy / Manual equity reconstruction
 
-**Columns Involved**: `CashInCopy`, `CopyInvestedAmount`, `EquityCopy`, `StockInvestedAmount`, `EquityStocksManual`, `InvestedAmountCryptoManual`, `EquityCryptoManual`
+See **Phase 9 verbatim `#vl`** block (`EquityCopy`, `InvestedAmountCopy`, `EquityStocksManual`, manual crypto composites) embedded in **`BI_DB_DDR_Fact_AUM.lineage.md`**.
 
-**Rules**:
-- Copy equity = mirror cash + mirror positions + mirror stock orders + copy PnL
-- Manual stock equity = total stock positions + stock orders + stock PnL − mirror stock positions − mirror stock PnL
-- Manual crypto equity = manual crypto position amount + manual crypto PnL
+---
 
-### 2.4 Zero-Equity Exclusion
+### 2.3 Options integration lag
 
-**What**: Rows with zero global equity are filtered out to prevent table inflation.
-
-**Rules**:
-- Primary filter: `WHERE NOT (EquityGlobal = 0)`
-- Secondary UNION catches TP-zero customers with non-zero individual components (NOP, realized equity, etc.)
-- Null RealCID rows are deleted post-insert
+Procedure sets `@OptionsMaxDateID` via **MAX(ProcessDate)** on **`BI_DB_dbo.External_Sodreconciliation_apex_EXT981_BuyPowerSummary`**, feeding **`Function_AUM_OptionsPlatform(@OptionsMaxDateID, 0)`** — inherently **≤ latest Apex ingestion**, not implicitly equal to **`@dateID`**.
 
 ---
 
@@ -88,39 +92,34 @@ Sources are joined via `FULL OUTER JOIN` on CID so customers present on any plat
 
 ### 3.1 Synapse Distribution & Index
 
-**In Synapse**, HASH(RealCID) with CLUSTERED COLUMNSTORE. Always filter on `DateID` and/or `RealCID` for optimal performance. Date-range queries without RealCID filter will scan the full columnstore segment.
+HASH(`RealCID`) + columnstore: always predicate **`DateID`**, ideally **`RealCID`** for keyed lookups.
 
-### 3.1b UC (Databricks) Storage & Partitioning
+### 3.2 UC (Databricks)
 
-_Pending — resolved during write-objects._
+Target table `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum`; comment metadata already surfaced via `DESCRIBE TABLE` aligns with lineage tiers from May 2026 sync.
 
-### 3.2 Common Query Patterns
+### 3.3 Common Query Patterns
 
 | Analyst Question | Recommended Approach |
 |-----------------|---------------------|
-| Total AUM for a date | `SELECT SUM(EquityGlobal) FROM BI_DB_DDR_Fact_AUM WHERE DateID = @dateID` |
-| Customer balance breakdown | `WHERE RealCID = @cid AND DateID = @dateID` — one row per CID per day |
-| AUM trend over time | `SELECT DateID, SUM(EquityGlobal) GROUP BY DateID` — filter date range |
-| IBAN vs TP split | Compare `TotalEquityTP` vs `IBANBalance` vs `OptionsTotalEquity` per CID |
-| Copy vs manual stock equity | Compare `EquityCopy` vs `EquityStocksManual` per CID |
+| Platform AUM (headline DDR) | `SELECT SUM(EquityGlobal)` ... `WHERE DateID = @d` |
+| Split TP vs IBAN vs Options | Compare `TotalEquityTP`, `IBANBalance`, `OptionsTotalEquity` columns |
+| Copy vs discretionary stock equity | `EquityCopy` vs `EquityStocksManual` |
+| Sanity vs Client Balance | Re-sum `SUM(...)` aggregates from **`BI_DB_Client_Balance_CID_Level_New`** and diff |
 
-### 3.3 Common JOINs
+### 3.4 Common JOINs
 
 | Join To | Join Condition | Purpose |
 |---------|---------------|---------|
-| DWH_dbo.Dim_Customer | RealCID | Customer attributes, country, regulation |
-| DWH_dbo.Dim_Date | DateID | Calendar attributes (week, month, quarter) |
-| BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status | RealCID + DateID | Customer segmentation flags for DDR |
-| BI_DB_dbo.BI_DB_V_DDR_AUM | — | View on top of this table with DDR aggregation |
+| `DWH_dbo.Dim_Customer` | `RealCID = RealCID` | Attributes / regulation overlays |
+| `DWH_dbo.Dim_Date` | `DateID` | Calendar rollups |
 
-### 3.4 Gotchas
+### 3.5 Gotchas
 
-- **One row per CID per day** — no multi-row grain unlike DDR_Fact_PnL. Safe to use directly without GROUP BY.
-- **Global vs TP naming**: `*TP` = Trading Platform only; `*Global` = TP + IBAN + Options. Options excluded from `RealizedEquityGlobal` because options cannot distinguish invested from PnL.
-- **IBAN balance is USD-converted**: `SUM(ClosingBalanceBO × USDApproxRate)` — approximate FX rate, not spot.
-- **Options date lag**: Options equity uses the latest available Apex date ≤ @dateID, which may lag by 1+ days.
-- **Historical data starts 2007**: Pre-DDR data was backfilled; DDR framework created July 2024.
-- **Null RealCID rows**: Deleted post-insert, but interim queries during ETL may encounter them.
+- **Regulation-transfer double rows upstream** ⇒ **DDR TP sums consolidate** duplicates—never assume Client Balance grain when reconciling intermediate exports.
+- **Options date ≠ business DateID**.
+- **`UNION`** filter resurrecting **`TotalLiabilityTP = 0`** edge cases adds rows outside simple `WHERE NOT EquityGlobal = 0` logic—document exploratory joins carefully.
+- **Legacy stock order columns**: VL documents `TotalStockOrders` / mirrored analogues **zero since 2019**—still participates arithmetically.
 
 ---
 
@@ -128,163 +127,161 @@ _Pending — resolved during write-objects._
 
 ### Confidence Tier Legend
 
-| Stars | Tier | Tag |
-|-------|------|-----|
-| ★★★★ | Tier 1 — upstream wiki (V_Liabilities) | (Tier 1 — V_Liabilities) |
-| ★★★ | Tier 2 — Synapse SP code | (Tier 2 — SP_DDR_Fact_AUM) |
-| ★★ | Tier 3 — live data | (Tier 3 — sampling) |
+| Tier | Meaning |
+|------|---------|
+| Tier 1 | Upstream analytic object publishes Tier-1 surrogate / passthrough lineage (`Dim_Customer`, `V_Liabilities`/FSE-derived columns documented as direct pulls) |
+| Tier 2 | Synapse-derived / aggregated / authored inside `SP_DDR_Fact_AUM` or composite totals (`EquityGlobal`, IBAN rollup, OPTIONS TVF bindings) |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RealCID | int | YES | Real customer ID. COALESCE(cb.CID, i.CID, ob.RealCID) across TP, IBAN, and Options sources. HASH distribution key. (Tier 2 — SP_DDR_Fact_AUM) |
-| 2 | DateID | int | YES | Business date as YYYYMMDD integer. Delete/replace key for the daily load. CAST(CONVERT(VARCHAR(8), @date, 112) AS INT). (Tier 2 — SP_DDR_Fact_AUM) |
-| 3 | Date | date | YES | Calendar date for the batch — equals parameter `@date` in SP_DDR_Fact_AUM. (Tier 2 — SP_DDR_Fact_AUM) |
-| 4 | RealizedEquityTP | decimal(16,6) | YES | Trading Platform realized equity. SUM(realizedEquity) from BI_DB_Client_Balance_CID_Level_New per CID/DateID. (Tier 2 — SP_DDR_Fact_AUM) |
-| 5 | TotalLiabilityTP | decimal(16,6) | YES | Trading Platform total liability. SUM(TotalLiability) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 6 | InProcessCashout | decimal(16,6) | YES | TP in-process cashout amount. SUM(InProcessCashout) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 7 | NOP | decimal(16,6) | YES | Net Open Position — total notional exposure. SUM(NOP) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 8 | NOPCrypto | decimal(16,6) | YES | NOP for crypto positions. SUM(NOPCrypto) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 9 | NOPCryptoCFD | decimal(16,6) | YES | NOP for crypto CFD positions. SUM(NOPCryptoCFD) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 10 | NOPStocks | decimal(16,6) | YES | NOP for stock positions. SUM(NOPStocks) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 11 | NOPStocksCFD | decimal(16,6) | YES | NOP for stock CFD positions. SUM(NOPStocksCFD) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 12 | TotalRealCryptoLoan | decimal(16,6) | YES | Real crypto loan amount. SUM(TotalRealCryptoLoan) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 13 | TotalPositionPNL | decimal(16,6) | YES | Total position PnL (renamed from PositionPNL). SUM(PositionPNL) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 14 | TotalInvestedAmount | decimal(16,6) | YES | Total invested amount (renamed from PositionAmount). SUM(PositionAmount) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 15 | TotalEquityTP | decimal(16,6) | YES | Trading Platform total equity. SUM(ISNULL(TotalLiability,0) + ISNULL(actualNWA,0)) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 16 | Bonus | decimal(16,6) | YES | Promotional bonus amount. SUM(Bonus) from BI_DB_Client_Balance_CID_Level_New. (Tier 2 — SP_DDR_Fact_AUM) |
-| 17 | CashInCopy | decimal(16,6) | YES | Cash allocated to copy trades. From V_Liabilities.TotalMirrorCash — total mirror cash held by copiers. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 18 | CopyInvestedAmount | decimal(16,6) | YES | Invested amount in copy trades. From V_Liabilities.TotalMirrorPositionsAmount — total mirror position amount. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 19 | CopyStockOrders | decimal(16,6) | YES | Stock orders within copy trades. From V_Liabilities.TotalMirrorStockOrders (legacy — always 0 since 2019). (Tier 1 — DWH_dbo.V_Liabilities) |
-| 20 | CopyPositionPnL | decimal(16,6) | YES | Unrealized PnL on copy positions. From V_Liabilities.CopyPositionPnL via Fact_CustomerUnrealized_PnL. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 21 | EquityCopy | decimal(16,6) | YES | Total copy equity. TotalMirrorCash + TotalMirrorPositionsAmount + TotalMirrorStockOrders + CopyPositionPnL from V_Liabilities. (Tier 2 — SP_DDR_Fact_AUM) |
-| 22 | InvestedAmountCopy | decimal(16,6) | YES | Invested amount in copy (excl cash). TotalMirrorPositionsAmount + TotalMirrorStockOrders + CopyPositionPnL from V_Liabilities. (Tier 2 — SP_DDR_Fact_AUM) |
-| 23 | StockInvestedAmount | decimal(16,6) | YES | Total stock position amount. From V_Liabilities.TotalStockPositionAmount via Fact_SnapshotEquity. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 24 | StockOrders | decimal(16,6) | YES | Total stock orders. From V_Liabilities.TotalStockOrders via Fact_SnapshotEquity (legacy — always 0 since 2019). (Tier 1 — DWH_dbo.V_Liabilities) |
-| 25 | StocksPositionPnL | decimal(16,6) | YES | Unrealized PnL on stock positions. From V_Liabilities.StocksPositionPnL via Fact_CustomerUnrealized_PnL. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 26 | MirrorStockInvestedAmount | decimal(16,6) | YES | Stock position amount in copy trades. From V_Liabilities.TotalMirrorStockPositionAmount via Fact_SnapshotEquity. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 27 | MirrorStocksPositionPnL | decimal(16,6) | YES | Stock PnL in copy trades. From V_Liabilities.MirrorStocksPositionPnL via Fact_CustomerUnrealized_PnL. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 28 | EquityStocksManual | decimal(16,6) | YES | Manual (non-copy) stock equity. TotalStockPositionAmount + TotalStockOrders + StocksPositionPnL − TotalMirrorStockPositionAmount − MirrorStocksPositionPnL. (Tier 2 — SP_DDR_Fact_AUM) |
-| 29 | InvestedAmountStocksManual | decimal(16,6) | YES | Manual stock invested amount (excl PnL). TotalStockPositionAmount + TotalStockOrders − TotalMirrorStockPositionAmount. (Tier 2 — SP_DDR_Fact_AUM) |
-| 30 | InvestedAmountCryptoManual | decimal(16,6) | YES | Manual crypto invested amount. From V_Liabilities.TotalCryptoManualPosition (= TotalCryptoPositionAmount − TotalMirrorCryptoPositionAmount). (Tier 1 — DWH_dbo.V_Liabilities) |
-| 31 | CryptoManualPositionPnL | decimal(16,6) | YES | Manual crypto unrealized PnL. From V_Liabilities.ManualCryptoPositionPnL via Fact_CustomerUnrealized_PnL. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 32 | EquityCryptoManual | decimal(16,6) | YES | Manual crypto total equity. TotalCryptoManualPosition + ManualCryptoPositionPnL from V_Liabilities. (Tier 2 — SP_DDR_Fact_AUM) |
-| 33 | TotalRealCrypto | decimal(16,6) | YES | Total real (non-CFD) crypto position amount. From V_Liabilities.TotalRealCrypto via Fact_SnapshotEquity. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 34 | TotalRealStocks | decimal(16,6) | YES | Total real (non-CFD) stock position amount. From V_Liabilities.TotalRealStocks via Fact_SnapshotEquity. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 35 | CreditTP | decimal(16,6) | YES | Trading Platform credit (promotional). From V_Liabilities.Credit via Fact_SnapshotEquity. Renamed from Credit. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 36 | ActualNWA | decimal(16,6) | YES | Non-Withdrawable Amount — credit-capped net worth. From V_Liabilities.ActualNWA: CASE WHEN NetEquity > BonusCredit THEN BonusCredit WHEN NetEquity < 0 THEN 0 ELSE NetEquity END. (Tier 1 — DWH_dbo.V_Liabilities) |
-| 37 | IBANBalance | decimal(16,6) | YES | IBAN (eMoney) balance in USD. SUM(ClosingBalanceBO × USDApproxRate) from eMoney_dbo.eMoneyClientBalance for the date. Excludes GCID=0 and NULL GCID. (Tier 2 — SP_DDR_Fact_AUM) |
-| 38 | RealizedEquityGlobal | decimal(16,6) | YES | Global realized equity. RealizedEquityTP + IBANBalance. Options excluded because options cannot differentiate invested vs PnL. (Tier 2 — SP_DDR_Fact_AUM) |
-| 39 | TotalLiabilityGlobal | decimal(16,6) | YES | Global total liability. TotalLiabilityTP + IBANBalance + OptionsTotalEquity. (Tier 2 — SP_DDR_Fact_AUM) |
-| 40 | EquityGlobal | decimal(16,6) | YES | Global total equity across all platforms. TotalEquityTP + IBANBalance + OptionsTotalEquity. (Tier 2 — SP_DDR_Fact_AUM) |
-| 41 | CreditGlobal | decimal(16,6) | YES | Global credit. CreditTP + IBANBalance + OptionsCashEquity. Uses options cash component (not total). (Tier 2 — SP_DDR_Fact_AUM) |
-| 42 | UpdateDate | datetime | YES | ETL load timestamp — GETDATE() at insert time. (Tier 2 — SP_DDR_Fact_AUM) |
-| 43 | OptionsTotalEquity | decimal(18,6) | YES | Options platform total equity from Apex buy-power summary. From Function_AUM_OptionsPlatform → External_Sodreconciliation_apex_EXT981_BuyPowerSummary.TotalEquity. Uses latest available Apex date ≤ @dateID. Excludes house accounts (4GS43999, 4GS00100-104). (Tier 2 — SP_DDR_Fact_AUM) |
+| 1 | RealCID | int | YES | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. HASH distribution grain for this fact. Merge key `COALESCE(cb.CID, i.CID, ob.RealCID)` resolves TP + IBAN + Options shell customers. (Tier 1 — Customer.CustomerStatic) |
+| 2 | DateID | int | YES | Business date encoded `YYYYMMDD`; matches `@dateID` CAST from `@date`; delete predicate key. (Tier 2 — SP_DDR_Fact_AUM) |
+| 3 | Date | date | YES | Calendar **`@date`** argument inserted literally; mirrors `DateID`. (Tier 2 — SP_DDR_Fact_AUM) |
+| 4 | RealizedEquityTP | decimal(16,6) | YES | Customer's **settled (realized) equity** — the realized portion of customer balance, **excluding unrealized PnL on open positions** (the unrealized component lives in `Fact_CustomerUnrealized_PnL.PositionPnL`). From `Fact_SnapshotEquity.RealizedEquity` via Client Balance. DDR transform: **SUM per CID/DateID** across Client Balance rows. (Tier 2 — SP_Client_Balance_New, from DWH_dbo.Fact_SnapshotEquity) |
+| 5 | TotalLiabilityTP | decimal(16,6) | YES | Total liability from open positions. From `V_Liabilities.Liabilities`. Represents the unrealized obligation (positive = amount owed to customer; negative = customer owes). DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 6 | InProcessCashout | decimal(16,6) | YES | Pending cashout amount not yet finalized. From `Fact_SnapshotEquity.InProcessCashouts`; excludes statuses 3=Processed, 4=Cancelled, 5, 6. DDR transform: SUM. (Tier 2 — SP_Client_Balance_New, from DWH_dbo.Fact_SnapshotEquity) |
+| 7 | NOP | decimal(16,6) | YES | Total Net Open Position across all asset classes. From `V_Liabilities.NOP`. Net market exposure. DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 8 | NOPCrypto | decimal(16,6) | YES | Net Open Position for crypto instruments. From `V_Liabilities`. Represents the net market exposure in crypto. DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 9 | NOPCryptoCFD | decimal(16,6) | YES | NOP for crypto CFDs specifically (not settled/real crypto). DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 10 | NOPStocks | decimal(16,6) | YES | Net Open Position for stock instruments. DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 11 | NOPStocksCFD | decimal(16,6) | YES | NOP for stock CFDs specifically. DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 12 | TotalRealCryptoLoan | decimal(16,6) | YES | Total leveraged real crypto loan amount. InitialAmount where `IsSettled=1` AND `InstrumentTypeID=10` AND `Leverage=2`. DDR transform: SUM. (Tier 2 — SP_Client_Balance_New, from DWH_dbo.Fact_SnapshotEquity) |
+| 13 | TotalPositionPNL | decimal(16,6) | YES | Total position PnL across all asset classes. From `V_Liabilities.PositionPnL`. Unrealized profit/loss on all open positions. DDR transform: SUM(`PositionPNL`). (Tier 2 — SP_Client_Balance_New) |
+| 14 | TotalInvestedAmount | decimal(16,6) | YES | Total position amount (`TotalPositionsAmount` lineage). Measures aggregate market value of exposures. DDR transform: SUM(`PositionAmount`). (Tier 2 — SP_Client_Balance_New, from DWH_dbo.Fact_SnapshotEquity) |
+| 15 | TotalEquityTP | decimal(16,6) | YES | Trading-platform **TotalEquity surrogate** summed as `SUM(ISNULL(TotalLiability,0) + ISNULL(actualNWA,0))` inside `#ClientBalance`. Not identical to interpreting “TP equity = liability view only”; treat as authoritative DDR column for `_TP` rollup. DDR transform: aggregate SUM pipeline. (Tier 2 — SP_DDR_Fact_AUM) |
+| 16 | Bonus | decimal(16,6) | YES | Bonus credits (`ActionTypeID=9`). DDR transform: SUM. (Tier 2 — SP_Client_Balance_New) |
+| 17 | CashInCopy | decimal(16,6) | YES | Allocation of **`TotalCash`** attributable to mirrored strategies — VL passes `Fact_SnapshotEquity.TotalMirrorCash`; represents copier-side cash earmarked inside copy envelopes. Passthrough VL daily snapshot filtered to `@dateID`. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalMirrorCash) |
+| 18 | CopyInvestedAmount | decimal(16,6) | YES | **`TotalMirrorPositionsAmount`** — mirrored strategy invested notionals aggregated at customer-day grain. Passthrough VL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalMirrorPositionsAmount) |
+| 19 | CopyStockOrders | decimal(16,6) | YES | **`TotalMirrorStockOrders`** — legacy pathway (documented VL as historically zero since 2019). Passthrough VL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalMirrorStockOrders) |
+| 20 | CopyPositionPnL | decimal(16,6) | YES | **`CopyPositionPnL`** mirrored strategy unrealized incremental PnL component from **`Fact_CustomerUnrealized_PnL`** via VL. Passthrough VL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_CustomerUnrealized_PnL.CopyPositionPnL) |
+| 21 | EquityCopy | decimal(16,6) | YES | **Composite copy equity**: `TotalMirrorCash + TotalMirrorPositionsAmount + TotalMirrorStockOrders + CopyPositionPnL`, null-guarded in SP verbatim block. Mirrors entire copy-trade economic bundle. (Tier 2 — SP_DDR_Fact_AUM) |
+| 22 | InvestedAmountCopy | decimal(16,6) | YES | **`TotalMirrorPositionsAmount + TotalMirrorStockOrders + CopyPositionPnL`** (copy invested + unrealized uplift). Cash excluded intentionally. SP-authored. (Tier 2 — SP_DDR_Fact_AUM) |
+| 23 | StockInvestedAmount | decimal(16,6) | YES | **`TotalStockPositionAmount`** equities exposure aggregate from **`Fact_SnapshotEquity`** via VL. Passthrough VL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalStockPositionAmount) |
+| 24 | StockOrders | decimal(16,6) | YES | **`TotalStockOrders`** equity route (legacy zeros). VL passthrough. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalStockOrders) |
+| 25 | StocksPositionPnL | decimal(16,6) | YES | **`StocksPositionPnL`** discretionary + house stock CFD PnL component from VL / FCUPNL join. Passthrough VL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_CustomerUnrealized_PnL.StocksPositionPnL) |
+| 26 | MirrorStockInvestedAmount | decimal(16,6) | YES | **`TotalMirrorStockPositionAmount`** — stock exposure executed inside copy overlays. VL passthrough. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalMirrorStockPositionAmount) |
+| 27 | MirrorStocksPositionPnL | decimal(16,6) | YES | **`MirrorStocksPositionPnL`** VL field isolating mirrored stock PnL. Passthrough VL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_CustomerUnrealized_PnL.MirrorStocksPositionPnL) |
+| 28 | EquityStocksManual | decimal(16,6) | YES | Manual (non-copy) stock equity authored per SP verbatim difference of totals & mirrors (see lineage Phase 9). (Tier 2 — SP_DDR_Fact_AUM) |
+| 29 | InvestedAmountStocksManual | decimal(16,6) | YES | Manual invested-only stock footprint **excluding** mirrored mirror stock leg (SP subtract). (Tier 2 — SP_DDR_Fact_AUM) |
+| 30 | InvestedAmountCryptoManual | decimal(16,6) | YES | **`TotalCryptoManualPosition`** = `TotalCryptoPositionAmount − TotalMirrorCryptoPositionAmount` per VL formula; VL-classified Tier-2 derivation because computed inside view. Alias renamed in DDR inserts. (Tier 2 — DWH_dbo.V_Liabilities) |
+| 31 | CryptoManualPositionPnL | decimal(16,6) | YES | **`ManualCryptoPositionPnL`** from FCUPNL via VL passthrough representing manual-route crypto PnL. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_CustomerUnrealized_PnL.ManualCryptoPositionPnL) |
+| 32 | EquityCryptoManual | decimal(16,6) | YES | **Manual crypto bundle** sums `TotalCryptoManualPosition + ManualCryptoPositionPnL` with DDR null guards. Authored `#vl`. (Tier 2 — SP_DDR_Fact_AUM) |
+| 33 | TotalRealCrypto | decimal(16,6) | YES | **`Fact_SnapshotEquity.TotalRealCrypto`** — outright crypto inventory dollars. VL passthrough. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalRealCrypto) |
+| 34 | TotalRealStocks | decimal(16,6) | YES | **`Fact_SnapshotEquity.TotalRealStocks`** — shares / cash equities inventories. VL passthrough. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.TotalRealStocks) |
+| 35 | CreditTP | decimal(16,6) | YES | Promotional **`Credit`** component from VL / `Fact_SnapshotEquity.Credit`; column renamed **`CreditTP`** for DDR clarity while identical numeric semantics. VL passthrough. (Tier 1 — DWH_dbo.V_Liabilities lineage: Fact_SnapshotEquity.Credit) |
+| 36 | ActualNWA | decimal(16,6) | YES | VL-computed capped net-worth share: **`CASE WHEN NetEquity > BonusCredit THEN BonusCredit WHEN NetEquity < 0 THEN 0 ELSE NetEquity END`** where `NetEquity = ISNULL(TotalPositionsAmount,0) + ISNULL(TotalCash,0) + ISNULL(TotalStockOrders,0) + ISNULL(PositionPnL,0)` (VL §2.2). Passthrough VL. (Tier 2 — DWH_dbo.V_Liabilities) |
+| 37 | IBANBalance | decimal(16,6) | YES | **Non-TP** IBAN-held balance aggregated `SUM(mcb.ClosingBalanceBO * mcb.USDApproxRate)` excluding `GCID IS NULL OR GCID=0`. Explicit USD approximation path. (Tier 2 — SP_DDR_Fact_AUM) |
+| 38 | RealizedEquityGlobal | decimal(16,6) | YES | **`RealizedEquityTP + IBANBalance`**; excludes Options equities per SP explanatory comment inability to split invested vs PnL. (Tier 2 — SP_DDR_Fact_AUM) |
+| 39 | TotalLiabilityGlobal | decimal(16,6) | YES | **`TotalLiabilityTP + IBANBalance + OptionsTotalEquity`** verbatim from `#final`. (Tier 2 — SP_DDR_Fact_AUM) |
+| 40 | EquityGlobal | decimal(16,6) | YES | **`TotalEquityTP + IBANBalance + OptionsTotalEquity`** — consolidated **DDR AUM / equity-under-management style metric**. Filter axis for primary INSERT. (Tier 2 — SP_DDR_Fact_AUM) |
+| 41 | CreditGlobal | decimal(16,6) | YES | **`CreditTP + IBANBalance + OptionsCashEquity`** — injects Apex **cash** component only (distinct from **`OptionsTotalEquity`** numerator). Authored verbatim in SP. (Tier 2 — SP_DDR_Fact_AUM) |
+| 42 | UpdateDate | datetime | YES | **GETDATE()`** stamp aligning insert batch concurrency control. (Tier 2 — SP_DDR_Fact_AUM) |
+| 43 | OptionsTotalEquity | decimal(18,6) | YES | Apex options economic value from **`Function_AUM_OptionsPlatform(@OptionsMaxDateID,0)`** keyed on latest external buy-power close ≤ ingestion; merges by `FULL OUTER` on **`RealCID`**; precision widened DDL `decimal(18,6)` versus TP metrics. House IDs filtered inside downstream function lineage. (Tier 2 — SP_DDR_Fact_AUM) |
 
 ---
 
 ## 5. Lineage
 
-### 5.1 Production Sources
+### 5.1 Production Sources — Column Groups
 
-| Synapse Column Group | Production Source | Columns | Transform |
-|---------------------|-------------------|---------|-----------|
-| TP balance metrics (cols 4-16) | BI_DB_Client_Balance_CID_Level_New | realizedEquity, TotalLiability, InProcessCashout, NOP*, Bonus, PositionPNL, PositionAmount | SUM per CID/DateID |
-| Copy/stock/crypto breakdown (cols 17-36) | DWH_dbo.V_Liabilities | TotalMirrorCash, TotalMirrorPositionsAmount, StocksPositionPnL, TotalRealCrypto, Credit, ActualNWA, etc. | Passthrough or computed |
-| IBAN balance (col 37) | eMoney_dbo.eMoneyClientBalance | ClosingBalanceBO × USDApproxRate | SUM per CID |
-| Options equity (col 43) | Function_AUM_OptionsPlatform → External_Sodreconciliation_apex_EXT981_BuyPowerSummary | TotalEquity | TVF with customer mapping |
-| Global aggregates (cols 38-41) | Multi-source | TP + IBAN + Options components | ETL-computed formulas |
+| Group | Immediate Synapse Inputs | Commentary |
+|-------|--------------------------|-------------|
+| TP rollup (cols `RealizedEquityTP`…`Bonus`, `TotalEquityTP`) | **`BI_DB_Client_Balance_CID_Level_New`** | Summed across potential duplicate regulation-transfer rows |
+| Copy / discretionary / credit / NWAs | **`DWH_dbo.V_Liabilities`** (+ underlying FSE / FCUPNL) | Mirrors manual vs copy decomposition |
+| IBAN buckets | **`eMoney_dbo.eMoneyClientBalance`** | USDApprox FX multiplier |
+| Options | External **`BuyPowerSummary` + Function** | Temporal alignment nuance |
 
-### 5.2 ETL Pipeline
+### 5.2 ETL Pipeline ASCII
 
 ```
-BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New (daily, P99)
-  |
-DWH_dbo.V_Liabilities (view on Fact_SnapshotEquity + Fact_CustomerUnrealized_PnL)
-  |
-eMoney_dbo.eMoneyClientBalance (daily eMoney balance)
-  |
-Function_AUM_OptionsPlatform(@dateID, 0) → External_Sodreconciliation_apex_EXT981_BuyPowerSummary
-  |
-  +-- FULL OUTER JOIN on CID --|
-  v
-SP_DDR_Fact_AUM(@date) [Priority 60, SB_Daily]
-  |-- DELETE WHERE DateID = @dateID
-  |-- INSERT from #final (excludes zero EquityGlobal + null RealCID)
-  v
-BI_DB_dbo.BI_DB_DDR_Fact_AUM (7.4B rows, 2007-present)
+eMoney + Apex Lake exports
+        \
+         -> External_Sodreconciliation_apex_EXT981_BuyPowerSummary (MAX(ProcessDate)->@OptionsMaxDateID)
+DWH snapshots (Fact_SnapshotEquity, FCUPNL) -> V_Liabilities ------------\
+                                                                           \
+BI_DB_Client_Balance_CID_Level_New (daily P99) -----------------------------+-> SP_DDR_Fact_AUM
+                                                                           /
+eMoneyClientBalance (IBAN) ----------------------------------------------/
+
+DELETE + INSERT HASH(RealCID) COLUMNSTORE FACT
+|
+v
+main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_aum  (Databricks Gold)
 ```
 
 ---
 
 ## 6. Relationships
 
-### 6.1 References To (this object points to)
+### 6.1 References To
 
 | Element | Related Object | Description |
-|---------|---------------|-------------|
-| RealCID | DWH_dbo.Dim_Customer | Customer dimension — demographics, regulation, account type |
-| DateID | DWH_dbo.Dim_Date | Calendar dimension — week, month, quarter, year |
+|---------|-----------------|-------------|
+| `RealCID` | `DWH_dbo.Dim_Customer` | Canonical customer attributes |
+| `DateID` | `DWH_dbo.Dim_Date` | Calendar |
 
-### 6.2 Referenced By (other objects point to this)
+### 6.2 Referenced By
 
-| Source Object | Source Element | Description |
-|--------------|---------------|-------------|
-| BI_DB_dbo.BI_DB_V_DDR_AUM | — | DDR view on top of this fact for aggregation functions |
-| BI_DB_dbo.SP_MarketingCloudDaily | BI_DB_DDR_Fact_AUM | Marketing cloud daily push references AUM data |
-| BI_DB_dbo.SP_RevenueForum | BI_DB_DDR_Fact_AUM | Revenue forum report references AUM data |
-| BI_DB_dbo.SP_AML_KYC_Process | BI_DB_DDR_Fact_AUM | AML/KYC monitoring references customer AUM |
+| Consumer | Purpose |
+|---------|---------|
+| `BI_DB_dbo.SP_MarketingCloudDaily` | Marketing exports referencing `EquityGlobal` / TP cash columns |
+| `BI_DB_dbo.SP_RevenueForum` | Investor deck style revenue vs AUM comps |
+| `BI_DB_dbo.SP_AML_KYC_Process` | Risk tiering overlays |
+| `BI_DB_dbo.BI_DB_V_DDR_AUM` | Thin DDR façade view |
+
+Canonical narrative siblings: **`BI_DB_Client_Balance_CID_Level_New.md`** (supply), **`DWH_dbo.V_Liabilities.md`** (compartments). **`Fact_SnapshotCustomer.md`** remains *indirect supplier* feeding Client Balance (not sampled this pass). **`Function_PnL_Single_Day`** is analytically adjacent for PnL-day drilldowns—not a direct DDL feeder.
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Total platform AUM for a specific date
+### 7.1 Headline DDR AUM
 
 ```sql
-SELECT SUM(EquityGlobal) AS TotalAUM_Global,
-       SUM(TotalEquityTP) AS TotalAUM_TP,
-       SUM(IBANBalance) AS TotalAUM_IBAN,
-       SUM(OptionsTotalEquity) AS TotalAUM_Options
+SELECT SUM(EquityGlobal) AS ddr_aum_usd
 FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM
-WHERE DateID = 20260309
+WHERE DateID = 20260425;
 ```
 
-### 7.2 Customer AUM breakdown across platforms
+### 7.2 Per-customer compartments
 
 ```sql
-SELECT RealCID,
-       TotalEquityTP AS TP_Equity,
-       EquityCopy AS Copy_Equity,
-       EquityStocksManual AS ManualStocks_Equity,
-       EquityCryptoManual AS ManualCrypto_Equity,
-       IBANBalance AS IBAN_Equity,
-       OptionsTotalEquity AS Options_Equity,
-       EquityGlobal AS Total_Global
+SELECT EquityCopy,
+       EquityStocksManual,
+       EquityCryptoManual,
+       IBANBalance,
+       OptionsTotalEquity,
+       EquityGlobal
 FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM
-WHERE RealCID = @cid AND DateID = @dateID
+WHERE RealCID = @cid
+  AND DateID = @d;
 ```
 
-### 7.3 AUM trend by month with customer count
+### 7.3 Duplicate regulations — reconcile TP sums
+
+Always aggregate **`BI_DB_Client_Balance_CID_Level_New`** before comparing to **`RealizedEquityTP`** / **`TotalEquityTP`**:
 
 ```sql
-SELECT DateID / 100 AS YearMonth,
-       COUNT(DISTINCT RealCID) AS Customers,
-       SUM(EquityGlobal) AS TotalAUM
-FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM
-WHERE DateID BETWEEN 20260101 AND 20260309
-  AND DateID % 100 = 1  -- first of month
-GROUP BY DateID / 100
-ORDER BY YearMonth
+SELECT CID,
+       SUM(realizedEquity) AS realized_agg,
+       SUM(TotalLiability) AS liability_agg,
+       SUM(ISNULL(actualNWA, 0)) AS nwa_agg
+FROM BI_DB_dbo.BI_DB_Client_Balance_CID_Level_New
+WHERE DateID = @dateid
+GROUP BY CID;
 ```
+
+Compare to **`BI_DB_DDR_Fact_AUM`** for the matching `RealCID`.
 
 ---
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object. The DDR framework is primarily documented via SP headers and internal engineering documentation by Guy Manova.
+- Local Synapse reference: **`DWH_dbo.V_Liabilities.md §8 Atlassian`** references “Summary of V-Liabilities (Confluence/BI)” for balance decomposition identities reused here.
+- No additional object-specific DDR Confluence slug captured in-repo (flagged Tier 4 follow-up).
 
 ---
 
-*Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 13/14*
-*Tiers: 12 T1, 31 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 9/10, Logic: 9/10, Relationships: 7/10, Sources: 8/10*
-*Object: BI_DB_dbo.BI_DB_DDR_Fact_AUM | Type: Table | Production Source: SP_DDR_Fact_AUM (multi-source)*
+*Generated: 2026-05-14 | Quality: Phase 16 weighted **8.1 / 10** (see sibling review-needed scorecard narrative)*
+*Tiers: 14 Tier 1, 29 Tier 2, 0 Tier 3, 0 Tier 4, 0 Tier 5 | Elements: **43 / 43** parity vs DDL ✓*
+*Object: BI_DB_dbo.BI_DB_DDR_Fact_AUM | Type: Table | Production Source: BI_DB_dbo.SP_DDR_Fact_AUM*

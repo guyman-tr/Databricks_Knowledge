@@ -10,10 +10,6 @@ Catches:
 - Drift after wiki edits without regenerating ALTER
 - Escape/sanitize mismatches (should be rare if both use the same helpers)
 
-Does NOT audit knowledge/synapse/Wiki/_downstream_column_comments.sql (aggregated
-deploy bundle); that is generated separately — fix the source wiki/ALTER or the
-downstream generator.
-
 Usage:
   python tools/audit_wiki_alter_comment_parity.py
   python tools/audit_wiki_alter_comment_parity.py path/to/Object.md

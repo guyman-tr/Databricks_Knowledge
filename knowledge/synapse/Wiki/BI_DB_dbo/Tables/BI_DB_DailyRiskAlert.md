@@ -197,7 +197,7 @@ Risk scores (1-8) are derived from DWH_CIDsDailyRisk.AvgSTD mapped to bands via 
 | 37 | SellPercent | decimal(12,2) | YES | Percentage of high-leverage flagged positions that are Sell-side. NOTE: SP labels are REVERSED — IsBuy=1 maps to SellPercent in the SP, but in eToro convention IsBuy=1 is Buy. (Tier 2 — SP_DailyRiskAlert) |
 | 38 | LastAvgRiskScore | int | YES | Average risk score for the previous calendar month. ROUND(AVG(RiskScore), 0) from DWH_CIDsDailyRisk for [FirstDayPrevMonth, LastDayPrevMonth]. (Tier 2 — SP_DailyRiskAlert) |
 | 39 | MaxRisckScore2Months | int | YES | Maximum risk score over the last 2 months. MAX(RiskScore) from DWH_CIDsDailyRisk. DDL typo: "Risck" instead of "Risk". (Tier 2 — SP_DailyRiskAlert) |
-| 40 | PlayerStatus | varchar(max) | YES | Player account status from Dim_PlayerStatus.Name via Dim_Customer.PlayerStatusID. Compliance and trading account status — 1=Normal/Active (majority), other values indicate restricted, closed, banned, or special states. (Tier 2 — SP_DailyRiskAlert via Dim_PlayerStatus) |
+| 40 | PlayerStatus | varchar(max) | YES | Player account status from Dim_PlayerStatus.Name via Dim_Customer.PlayerStatusID. Compliance and trading account status — 1=Normal (majority), other values indicate restricted, closed, banned, or special states. (Tier 2 — SP_DailyRiskAlert via Dim_PlayerStatus) |
 
 ---
 

@@ -2,113 +2,146 @@
 
 This folder holds the eToro-specific [BladeBridge](https://databrickslabs.github.io/lakebridge/docs/transpile/pluggable_transpilers/bladebridge/bladebridge_configuration/) configuration used by the [Databricks Labs Lakebridge](https://databrickslabs.github.io/lakebridge/) transpiler when converting Synapse SQL into Databricks SQL.
 
-## Why we need a custom config
+## Design — dual‑schema, single catalog (v3)
 
-By default BladeBridge will:
+We split the transpiler output across two sibling schemas inside the **`dwh_daily_process`** catalog so the migrated SPs can be tested end‑to‑end against a stable daily snapshot of the source data, without ever writing to production tables or to existing UC gold mirrors.
 
-- emit `CREATE TABLE <schema>.<name>` using the **source** Synapse schema names (`BI_DB_dbo.`, `DWH_dbo.`, etc.), which may collide with existing UC schemas
-- in some cases emit a `LOCATION '...'` clause that points at an **existing** Azure data‑lake path (e.g. `abfss://internal-sources@.../Gold/sql_dp_prod_we/DWH_dbo/Fact_CustomerAction`)
+| Synapse schema | UC destination | Role |
+| --- | --- | --- |
+| `DWH_staging.<X>` (131 staging tables) | `dwh_daily_process.daily_snapshot.<X>` | **Read‑only snapshot** of the production source data. The data engineering team loads this schema every morning. |
+| Everything else (`DWH_dbo`, `BI_DB_dbo`, `Dealing_dbo`, `EXW_dbo`, etc.) | `dwh_daily_process.migration_tables.<X>` | **Write target.** Every transpiled SP creates / writes its output here. Quarantined from real production. |
 
-The second case is the dangerous one — running the generated DDL on Databricks would register a new managed/external table on top of a path that's already owned by another production gold mirror, silently corrupting the existing table.
+Net effect: any SP we deploy will *read* from the morning's snapshot and *write* into the migration schema, so you can run the entire DWH daily pipeline in parallel with production and diff the outputs.
 
-The config in `etoro_synapse2databricks.json` defends against both:
+### History
 
-1. **Schema redirect** – every `<synapse_schema>.` reference is rewritten to `de_output_synapse_migration.`, so all generated tables live in **`main.de_output_synapse_migration`** — a quarantine schema that contains nothing else.
-2. **Catalog/schema header** – `target_sql_file_header` prepends `USE CATALOG main; USE SCHEMA de_output_synapse_migration;` to every output file.
-3. **`LOCATION` strip** – any `LOCATION 'abfss://…'` / `dbfs:` / `s3:` / `wasb:` clauses are removed.
-4. **External → managed** – `CREATE EXTERNAL TABLE` is rewritten to `CREATE TABLE`, so the generated tables are UC‑managed and live under the schema's default location.
+- **v1 (2026-04-29):** single quarantine schema `main.de_output_synapse_migration` (no read/write split, no snapshot). Only `sp_dim_customer` was deployed against this.
+- **v2 (2026-05-11):** dual‑catalog plan — `dwh_daily_process.daily_snapshot` (read) + `migration_output.migration_tables` (write). Plan only; `migration_output` catalog was never created.
+- **v3 (2026-05-11):** collapsed to one catalog — both `daily_snapshot` and `migration_tables` live under `dwh_daily_process`. This is what's actually in UC.
 
-Net effect: no transpiled object can ever land outside `main.de_output_synapse_migration`, and none can ever bind to an existing lake path.
+The `main.de_output_synapse_migration.sp_dim_customer` from v1 should be dropped during the v3 cutover; it reads/writes from the wrong schemas.
 
 ## Files
 
 | File | Purpose |
 | --- | --- |
-| `etoro_synapse2databricks.json` | The custom BladeBridge config (inherits from `base_synapse2databricks_sql.json`). |
+| `etoro_synapse2databricks.json` | The custom BladeBridge config (inherits from `base_synapse2databricks_sql.json`). Apply this when running `databricks labs lakebridge install-transpile` so future transpile runs are already routed correctly. |
+| `rewrite_to_dual_target.py` | Post‑hoc rewriter. Walks an existing transpile output dir and applies the same mappings as the JSON config. Use when you don't want to regenerate from scratch. |
 | `README.md` | This file. |
 
-The reference documentation for every supported attribute lives at `knowledge/lakebridge/bladebridge-configuration.md` (a clean ingest of the Lakebridge docs page).
+The reference documentation for every supported BladeBridge attribute lives at [`knowledge/lakebridge/bladebridge-configuration.md`](../../knowledge/lakebridge/bladebridge-configuration.md).
 
-## Pre‑reqs
+## Unity Catalog prerequisites
 
-- **Lakebridge installed** for the active Databricks profile:
-  ```powershell
-  databricks labs install lakebridge --profile name-of-profile
-  ```
-- **Target schema exists** in Unity Catalog. Run once:
-  ```sql
-  CREATE SCHEMA IF NOT EXISTS main.de_output_synapse_migration
-    COMMENT 'Quarantine schema for Synapse->Databricks transpiler output. Owned by Lakebridge migration; do not put production data here.';
-  ```
-- **Inherit path is correct.** The JSON's `inherit_from` points at:
-  ```
-  C:/Users/guyman/.databricks/labs/remorph-transpilers/bladebridge/lib/.venv/lib/python3.10/site-packages/databricks/labs/bladebridge/Converter/Configs/base_synapse2databricks_sql.json
-  ```
-  Adjust the `python3.10` segment if your venv differs (e.g. `python3.11`).
+Run once per environment:
 
-## How to register the config
-
-```powershell
-databricks labs lakebridge install-transpile --profile name-of-profile
-# Do you want to override the existing installation? (default: no): yes
-# Specify the config file to override the default[Bladebridge] config - press <enter> for none (default: <none>):
-C:/Users/guyman/Documents/github/Databricks_Knowledge/tools/lakebridge/etoro_synapse2databricks.json
+```sql
+CREATE CATALOG IF NOT EXISTS dwh_daily_process;
+CREATE SCHEMA  IF NOT EXISTS dwh_daily_process.daily_snapshot
+  COMMENT 'Daily morning snapshot of Synapse DWH_staging tables. Read-only for the migration pipeline.';
+CREATE SCHEMA  IF NOT EXISTS dwh_daily_process.migration_tables
+  COMMENT 'Write target for the Lakebridge Synapse->Databricks migration. Mirrors DWH_dbo and friends. Quarantined from production.';
 ```
 
-After this, every `databricks labs lakebridge transpile …` invocation will use this config.
+> As of 2026‑05‑11 both `dwh_daily_process.daily_snapshot` (131 external tables loaded) and `dwh_daily_process.migration_tables` (empty) exist in UC. Ready to receive the rewritten objects.
 
-## How to verify it's actually applied
+## Path A — apply to **future** Lakebridge transpile runs (preferred)
 
-After running a transpile, every generated `.sql` file should:
-
-1. Begin with the catalog/schema preamble:
-   ```sql
-   USE CATALOG main;
-   USE SCHEMA de_output_synapse_migration;
+1. Lakebridge already installed for the active Databricks profile:
+   ```powershell
+   databricks labs install lakebridge --profile name-of-profile
    ```
-2. Contain **zero** references to the source Synapse schemas (`BI_DB_dbo.`, `DWH_dbo.`, `Dealing_dbo.`, etc.).
-3. Contain **zero** `LOCATION '…'` clauses pointing at `abfss://`, `dbfs:`, `s3:`, or `wasb:` paths.
-4. Have all `CREATE TABLE` statements that reference unqualified table names (which then resolve under `de_output_synapse_migration`).
+2. Register this config so subsequent `transpile` calls use it:
+   ```powershell
+   databricks labs lakebridge install-transpile --profile name-of-profile
+   # Do you want to override the existing installation? (default: no): yes
+   # Specify the config file to override the default[Bladebridge] config - press <enter> for none (default: <none>):
+   C:/Users/guyman/Documents/github/Databricks_Knowledge/tools/lakebridge/etoro_synapse2databricks.json
+   ```
+3. Re‑run `databricks labs lakebridge transpile …`. Generated files will already use the dual‑target routing.
 
-Quick `rg` checks from the transpile output dir:
+> **Inherit path:** the JSON's `inherit_from` is hard‑coded to the Python 3.10 venv path. If your current Lakebridge install uses Python 3.11+, edit that one line in the JSON.
+
+## Path B — rewrite an **existing** transpile output without re‑running Lakebridge
+
+Use the post‑processor:
 
 ```powershell
-rg -n "BI_DB_dbo|DWH_dbo|Dealing_dbo|EXW_dbo" .   # should return nothing
-rg -n "LOCATION\s+'(abfss|dbfs|s3|wasb)" .         # should return nothing
-rg -n "CREATE\s+EXTERNAL\s+TABLE" .                # should return nothing
-rg -n "USE CATALOG main" .                         # should appear at top of every file
+python tools\lakebridge\rewrite_to_dual_target.py `
+  --src "C:\Users\guyman\Desktop\lakebridge_transplier" `
+  --dst "C:\Users\guyman\Desktop\lakebridge_transplier_v3" `
+  --clean
 ```
+
+Options:
+
+- `--src` — source directory (the raw transpile output). Default: `C:\Users\guyman\Desktop\lakebridge_transplier`.
+- `--dst` — destination directory (mirrored tree, originals never modified). Default: `C:\Users\guyman\Desktop\lakebridge_transplier_v3`.
+- `--clean` — wipe `--dst` before writing (safe; only re‑runnable mode).
+- `--limit N` — process only the first N files (sorted). Handy for spot checks.
+- `--only-name-contains S` — only process files whose name contains `S` (case‑insensitive).
+- `--dry-run` — count what *would* change without writing.
+
+After the run a CSV report `rewrite_report.csv` is written into `--dst` with per‑file counts of `snapshot_hits` / `output_hits` / `ignored_dot_refs`.
+
+### What the rewriter handles
+
+- All four reference styles BladeBridge emits:
+  - `` `DWH_dbo`.`Foo` ``, `` `DWH_dbo`.Foo ``, `` DWH_dbo.`Foo` ``, `DWH_dbo.Foo`
+- Procedure and view declarations (`CREATE OR REPLACE PROCEDURE \`DWH_dbo\`.\`SP_x\``).
+- Function calls (`BI_DB_dbo.Function_Revenue_Total(...)`).
+- `INSERT INTO`, `MERGE INTO`, `TRUNCATE TABLE`, `FROM … JOIN`, etc.
+
+### What it deliberately does **not** touch
+
+- Column aliases like `a.CountryID`, `b.RegulationID`. Schemas like `a`, `b`, `t` are not in the allow‑list, so these stay as is.
+- Comments referencing source schema names (left for traceability).
+- Dynamic SQL strings that embed backticked schema names inside single quotes (rare; review individually if any SP relies on them).
+
+## How to verify
+
+```powershell
+$v3 = "C:\Users\guyman\Desktop\lakebridge_transplier_v3"
+# (1) No source-schema references should remain (outside comments):
+Select-String -Path "$v3\*\*.sql" -Pattern '(?i)(?<![A-Za-z_])(DWH_staging|DWH_dbo|BI_DB_dbo|DE_dbo|DWH_pagetracking)\b\s*\.\s*\w+' -List
+# (2) Header should be present on every file:
+Get-ChildItem $v3 -Filter *.sql -Recurse | ForEach-Object {
+  $h = Get-Content $_.FullName -TotalCount 2
+  if ($h[0] -notmatch 'USE CATALOG dwh_daily_process' -or $h[1] -notmatch 'USE SCHEMA migration_tables') {
+    "MISSING HEADER: $($_.FullName)"
+  }
+}
+# (3) Snapshot reads + migration writes should target the right schemas:
+Select-String -Path "$v3\*\*.sql" -Pattern 'dwh_daily_process\.daily_snapshot\.'    | Measure-Object
+Select-String -Path "$v3\*\*.sql" -Pattern 'dwh_daily_process\.migration_tables\.'  | Measure-Object
+```
+
+Last full v3 run on 2026‑05‑11:
+
+- 528 files processed
+- 401 snapshot rewrites (DWH_staging → dwh_daily_process.daily_snapshot)
+- 3,202 output rewrites (DWH_dbo / BI_DB_dbo / DE_dbo / DWH_pagetracking → dwh_daily_process.migration_tables)
+- 11,026 dot references intentionally ignored (column aliases etc.)
+- 13 residual `DWH_dbo.[Foo]` references — all inside `--` SQL comments. 0 functional leakage.
 
 ## How to extend
 
-### Adding a new Synapse schema
+### Routing a new Synapse schema
 
-If you find a Synapse schema not yet in the list (re‑run the enumeration query in the file's `//_order` comments), add a new line in the `line_subst` array, **above** the catch‑all rules and **above** any partial‑name overlaps:
+Add a `line_subst` entry in `etoro_synapse2databricks.json` **above** any partial‑name overlaps (longer first), and add the lowercased name to `OUTPUT_SCHEMAS` (or `SNAPSHOT_SCHEMAS`) in `rewrite_to_dual_target.py`. Both layers must agree.
 
-```jsonc
-{ "from": "\\bMyNewSchema\\b\\.", "to": "de_output_synapse_migration." }
-```
+### Pointing a specific table at a different schema
 
-> Order matters: BladeBridge applies `line_subst` rules in array order, and longer/more‑specific patterns must come first. `BI_DB_staging` must precede `BI_DB_dbo`; both must precede a generic `\\bdbo\\b\\.` rule.
-
-### Routing a specific schema to a different UC schema
-
-If you decide that some objects should land in a different target schema (e.g. dimension tables in `main.dim_migration`), add explicit rules with that specific target before the generic ones. First match wins on rules with `"first_match": "1"`; otherwise BladeBridge applies all matching `line_subst` rules in order, so the **last** rule that matches a given segment is the one whose substitution sticks. Use `first_match` to be defensive:
+Add an explicit rule with `first_match` in the JSON, before the generic schema rules:
 
 ```jsonc
 { "from": "\\bDWH_dbo\\.Dim_", "to": "main.dim_migration.Dim_", "first_match": "1" }
 ```
 
-### Catching procedure / view bodies that reference unqualified objects
-
-Some Synapse SPs reference tables without a schema (e.g. `SELECT * FROM Fact_CustomerAction`). Those are not caught by the schema‑prefix rules. Either:
-
-- pre‑qualify them in source before transpiling, or
-- add per‑object rewrites in the `line_subst` array (less scalable).
+For the post‑processor you'd hardcode the override in `rewrite_match()`.
 
 ## Source documentation
 
-Mirror of the upstream BladeBridge config docs (clean ingest):
-[`knowledge/lakebridge/bladebridge-configuration.md`](../../knowledge/lakebridge/bladebridge-configuration.md)
+Mirror of the upstream BladeBridge config docs (clean ingest): [`knowledge/lakebridge/bladebridge-configuration.md`](../../knowledge/lakebridge/bladebridge-configuration.md)
 
 Original URL: <https://databrickslabs.github.io/lakebridge/docs/transpile/pluggable_transpilers/bladebridge/bladebridge_configuration/>

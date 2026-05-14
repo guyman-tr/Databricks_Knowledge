@@ -5,8 +5,7 @@ Repair mojibake and accidental spaces inside COMMENT in UC-oriented SQL files.
 Uses knowledge/synapse/Wiki/_uc_comment_sanitize.py (same rules as generators).
 
 Run from repo root:
-  python tools/fix_uc_sql_mojibake.py
-  python tools/fix_uc_sql_mojibake.py knowledge/synapse/Wiki/_downstream_column_comments.sql
+  python tools/fix_uc_sql_mojibake.py path/to/file.sql
   python tools/fix_uc_sql_mojibake.py --all-wiki-sql
   python tools/fix_uc_sql_mojibake.py --check path/to/file.sql   # exit 1 if changes needed
 """
@@ -45,13 +44,12 @@ def collect_sql_paths(explicit: list[str], all_wiki: bool) -> list[Path]:
         return sorted(set(out))
     if all_wiki:
         return sorted(WIKI.rglob("*.sql"))
-    default = WIKI / "_downstream_column_comments.sql"
-    return [default] if default.is_file() else []
+    return []
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Fix UC SQL comment mojibake / broken COMMENT keyword.")
-    ap.add_argument("paths", nargs="*", help="SQL files or directories (default: _downstream_column_comments.sql)")
+    ap.add_argument("paths", nargs="*", help="SQL files or directories")
     ap.add_argument("--all-wiki-sql", action="store_true", help="Process every .sql under knowledge/synapse/Wiki")
     ap.add_argument("--check", action="store_true", help="Do not write; exit 1 if any file would change")
     args = ap.parse_args()

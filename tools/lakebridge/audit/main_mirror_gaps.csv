@@ -1,0 +1,227 @@
+table_name,category,sp_count,sps,twin_count,twin_names,has_twin
+datasolutionsprocessesstatus,Other,1,DWH_dbo.SP_ProcessStatusLog,0,,N
+dim_accounttype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype,Y
+dim_affiliate,Dim_*,1,DWH_dbo.SP_Dim_Affiliate,2,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate_masked; main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_affiliate,Y
+dim_billingdepot,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_billingdepot,Y
+dim_billingprotocolmidsettingsid,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_bonustype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_bonustype,Y
+dim_calculationtype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_campaign,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign,Y
+dim_cashoutfeegroup,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutfeegroup,Y
+dim_cashoutmode,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutmode,Y
+dim_cashoutreason,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutreason,Y
+dim_cashoutstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_cashoutstatus,Y
+dim_channel,Dim_*,1,DWH_dbo.SP_Dim_Channel,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_channel,Y
+dim_clientwithdrawreason,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_clientwithdrawreason,Y
+dim_closepositionreason,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_closepositionreason,Y
+dim_compensationreason,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason,Y
+dim_costconfigurationid,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_costsubtype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_costtype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_country,Dim_*,1,DWH_dbo.SP_Dictionaries_Country_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country,Y
+dim_countrybin,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countrybin,Y
+dim_countryip,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_countryip,Y
+dim_countryipanonymous,Dim_*,1,DWH_dbo.SP_Dictionaries_Country_DL_To_Synapse,0,,N
+dim_credittype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_credittype,Y
+dim_currency,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_currency,Y
+dim_customer,Dim_*,2,"DWH_dbo.SP_Dim_Customer, DWH_dbo.SP_Dim_Customer_20240104",2,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked; main.pii_data.gold_sql_dp_prod_we_dwh_dbo_dim_customer,Y
+dim_date,Dim_*,1,DWH_dbo.SP_PopulateDimDate,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_date,Y
+dim_documentstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_documentstatus,Y
+dim_evmatchstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_evmatchstatus,Y
+dim_exchangeinfo,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_exchangeinfo,Y
+dim_executionoperationtype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_extendeduserfield,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_extendeduserfield,Y
+dim_feeoperationtypes,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+dim_fund,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fund,Y
+dim_fundingtype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundingtype,Y
+dim_fundtype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_fundtype,Y
+dim_funnel,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_funnel,Y
+dim_getspreadedpricecandle60minsplitted,Dim_*,1,DWH_dbo.SP_Dim_GetSpreadedPriceCandle60MinSplitted,0,,N
+dim_getspreadedpriceusdconversionrate,Dim_*,2,"DWH_dbo.SP_Dim_GetSpreadedPriceUSDConversionRate, DWH_dbo.SP_Dim_GetSpreadedPriceUSDConversionRate_InsertDataForHour",0,,N
+dim_gurustatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus,Y
+dim_historysplitratio,Dim_*,1,DWH_dbo.SP_Dim_HistorySplitRatio_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_historysplitratio,Y
+dim_instrument,Dim_*,2,"DWH_dbo.SP_Dim_Instrument, DWH_dbo.SP_Dim_Instrument_bkp_2025_11_24",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument,Y
+dim_instrument_correlation,Dim_*,1,DWH_dbo.JUNK_SP_Dim_Instrument_Correlation,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation,Y
+dim_instrument_correlation_groupsinstruments,Dim_*,1,DWH_dbo.SP_Dim_Instrument_Correlation_Build_GroupsInstruments,0,,N
+dim_instrument_correlation_half_records,Dim_*,1,DWH_dbo.SP_Dim_Instrument_Correlation_Half_Records,0,,N
+dim_instrument_snapshot,Dim_*,1,DWH_dbo.SP_Dim_Instrument_Snapshot,0,,N
+dim_label,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label,Y
+dim_language,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language,Y
+dim_manager,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager,Y
+dim_mifidcategorization,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization,Y
+dim_mirror,Dim_*,1,DWH_dbo.SP_Dim_Mirror_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror,Y
+dim_mirrortype,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirrortype,Y
+dim_paymentstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_paymentstatus,Y
+dim_pendingclosurestatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_pendingclosurestatus,Y
+dim_phoneverified,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_phoneverified,Y
+dim_platform,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_platform,Y
+dim_playerlevel,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel,Y
+dim_playerstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus,Y
+dim_playerstatusreasons,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatusreasons,Y
+dim_playerstatussubreasons,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatussubreasons,Y
+dim_position,Dim_*,4,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04, DWH_dbo.SP_Dim_Position_IsPartialCloseParent +1",1,main.dwh.dim_position,Y
+dim_position_switch_single,Dim_*,1,DWH_dbo.SP_Dim_Position_DL_To_Synapse,0,,N
+dim_positionchangelog,Dim_*,1,DWH_dbo.SP_Dim_PositionChangeLog_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog,Y
+dim_positionhedgeserverchangelog_snapshot,Dim_*,2,"DWH_dbo.SP_Dim_PositionHedgeServerChangeLog_DL_To_Synapse, DWH_dbo.SP_Dim_Position_PositionHedgeServerChangeLog",0,,N
+dim_range,Dim_*,3,"DWH_dbo.SP_Fact_SnapshotCustomer, DWH_dbo.SP_Fact_SnapshotCustomer_Eyal, DWH_dbo.SP_Fact_SnapshotEquity",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range,Y
+dim_redeemreason,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason,Y
+dim_redeemstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemstatus,Y
+dim_regulation,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation,Y
+dim_riskclassification,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_riskclassification,Y
+dim_riskmanagementstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_riskmanagementstatus,Y
+dim_riskstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_riskstatus,Y
+dim_screeningstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_screeningstatus,Y
+dim_state_and_province,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_state_and_province,Y
+dim_threedsresponsetypes,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_threedsresponsetypes,Y
+dim_verificationlevel,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel,Y
+dim_verificationstatus,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus,Y
+dim_worldcheck,Dim_*,1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_worldcheck,Y
+dwh_status,Other,1,DWH_dbo.SP_DWH_Status,0,,N
+ext_customerfinancedb_customer_firsttimedeposits,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_affiliate,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_affiliate_customer,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_affiliate_ftd,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_affiliate_ftde,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_affiliate_masteraffiliate,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_affiliate_registrations,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_channel,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_channel_affiliate_unifycode,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse,0,,N
+ext_dim_country_regulation,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_Country_DL_To_Synapse,0,,N
+ext_dim_customer_2fa,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_affiliate,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_avatars,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_bocustomer,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_customer,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_customeridentification,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_customeridentification_dlt,Ext_ staging (internal),2,"DWH_dbo.SP_Fact_SnapshotCustomer, DWH_dbo.SP_Fact_SnapshotCustomer_Eyal",0,,N
+ext_dim_customer_document,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_externalid_gcid,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Customer, DWH_dbo.SP_Dim_Customer_20240104",0,,N
+ext_dim_customer_phonecustomer,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_screeningstatusid,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_sf_id,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customer_stockslending,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_customerstatic,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_dim_instrument_receivedonpriceservercurrent,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Instrument, DWH_dbo.SP_Dim_Instrument_bkp_2025_11_24",0,,N
+ext_dim_instrument_receivedonpriceserverstatic,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Instrument, DWH_dbo.SP_Dim_Instrument_bkp_2025_11_24",0,,N
+ext_dim_instrument_stockinfo_instrumentdata,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Instrument, DWH_dbo.SP_Dim_Instrument_bkp_2025_11_24",0,,N
+ext_dim_instrument_stockinfo_instrumentdata_platform,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Instrument, DWH_dbo.SP_Dim_Instrument_bkp_2025_11_24",0,,N
+ext_dim_manager,Ext_ staging (internal),1,DWH_dbo.SP_Dictionaries_DL_To_Synapse,0,,N
+ext_dim_mirror_fundcids,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Mirror_DL_To_Synapse,0,,N
+ext_dim_mirror_history,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Mirror_DL_To_Synapse,0,,N
+ext_dim_mirror_real,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Mirror_DL_To_Synapse,0,,N
+ext_dim_mirror_sessionid,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Mirror_DL_To_Synapse,0,,N
+ext_dim_position_airdrop,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_currencyprice_active,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_first_open,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_fundcids,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_hbcexecutionlog,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_history_real,Ext_ staging (internal),3,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04, DWH_dbo.SP_Dim_Position_HedgeType_History",0,,N
+ext_dim_position_positionchangelog,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_positionchangelogamount,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_positionchangelogamount_changetype12,Ext_ staging (internal),2,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04",0,,N
+ext_dim_position_positionhedgeserverchangelog,Ext_ staging (internal),1,DWH_dbo.SP_Dim_PositionHedgeServerChangeLog_DL_To_Synapse,0,,N
+ext_dim_position_real,Ext_ staging (internal),3,"DWH_dbo.SP_Dim_Position_DL_To_Synapse, DWH_dbo.SP_Dim_Position_DL_To_Synapse_bkp_2024_08_04, DWH_dbo.SP_Dim_Position_HedgeType_Real",0,,N
+ext_dim_positionchangelog,Ext_ staging (internal),1,DWH_dbo.SP_Dim_PositionChangeLog_DL_To_Synapse,0,,N
+ext_dim_subchannel_unifycode,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Channel_Affiliate_UnifyCode_DL_To_Synapse,0,,N
+ext_etoro_billing_vdeposit,Ext_ staging (internal),1,DWH_dbo.SP_Dim_Customer_DL_To_Synapse,0,,N
+ext_fbd_fact_billingdeposit,Ext_ staging (internal),1,DWH_dbo.SP_Fact_BillingDeposit_DL_To_Synapse,0,,N
+ext_fbr_fact_billingredeem,Ext_ staging (internal),1,DWH_dbo.SP_Fact_BillingRedeem_DL_To_Synapse,0,,N
+ext_fbw_fact_billingwithdraw,Ext_ staging (internal),1,DWH_dbo.SP_Fact_BillingWithdraw_DL_To_Synapse,0,,N
+ext_fca_actiontypeid_14,Ext_ staging (internal),9,"DWH_dbo.SP_Fact_CustomerAction, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507 +6",0,,N
+ext_fca_backoffice_customer,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_billing_deposit,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_billing_withdraw,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_countryip,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_customer,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_deposit_attempt,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_fact_customeraction,Ext_ staging (internal),4,"DWH_dbo.SP_Fact_CustomerAction, DWH_dbo.SP_Fact_CustomerAction_bkp_2024_08_04, DWH_dbo.SP_Fact_CustomerAction_bkp_2024_08_20 +1",0,,N
+ext_fca_history_position,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_mirror_session,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_openbook_engagement,Ext_ staging (internal),4,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_20 +1",0,,N
+ext_fca_position_airdrop,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_position_session,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_positionchangelog,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_positionsprocessedforindexdividnds,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_real_audit_loggin,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_real_cashier_cashouttofunding,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_real_cashier_loggin,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_real_customer_registration,Ext_ staging (internal),9,"DWH_dbo.SP_Fact_CustomerAction, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507 +6",0,,N
+ext_fca_real_history_credit_forfactaction,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fca_real_history_credit_forfactaction_all,Ext_ staging (internal),4,"DWH_dbo.SP_Fact_CustomerAction, DWH_dbo.SP_Fact_CustomerAction_bkp_2024_08_04, DWH_dbo.SP_Fact_CustomerAction_bkp_2024_08_20 +1",0,,N
+ext_fca_real_position,Ext_ staging (internal),4,"DWH_dbo.SP_Fact_CustomerAction, DWH_dbo.SP_Fact_CustomerAction_bkp_2024_08_04, DWH_dbo.SP_Fact_CustomerAction_bkp_2024_08_20 +1",0,,N
+ext_fca_real_trade_position,Ext_ staging (internal),9,"DWH_dbo.SP_Fact_CustomerAction, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507 +6",0,,N
+ext_fca_tran_billing_withdraw,Ext_ staging (internal),5,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +2",0,,N
+ext_fcpws_history_splitratio,Ext_ staging (internal),2,"DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse, DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER",0,,N
+ext_fcpws_instrument,Ext_ staging (internal),2,"DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse, DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER",0,,N
+ext_fcupnl_backofficecustomer,Ext_ staging (internal),1,DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse,0,,N
+ext_fcupnl_currencypricemaxdatewithsplit,Ext_ staging (internal),1,DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse,0,,N
+ext_fcupnl_dictionary_instrument,Ext_ staging (internal),1,DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse,0,,N
+ext_fcupnl_getspreadedpricecandle60minsplitted,Ext_ staging (internal),1,DWH_dbo.SP_Load_Ext_FCUPNL_GetSpreadedPriceCandle60MinSplitted,0,,N
+ext_fcupnl_history_mirror,Ext_ staging (internal),1,DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse,0,,N
+ext_fcupnl_history_position,Ext_ staging (internal),3,"DWH_dbo.SP_Fact_CustomerUnrealized_PnL, DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerUnrealized_PnL_V0",0,,N
+ext_fcupnl_history_splitratio,Ext_ staging (internal),1,DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse,0,,N
+ext_fcupnl_positionchangelog,Ext_ staging (internal),1,DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse,0,,N
+ext_fcupnl_trade_position,Ext_ staging (internal),3,"DWH_dbo.SP_Fact_CustomerUnrealized_PnL, DWH_dbo.SP_Fact_CustomerUnrealized_PnL_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerUnrealized_PnL_V0",0,,N
+ext_fgc_guru_copiers,Ext_ staging (internal),1,DWH_dbo.SP_Fact_Guru_Copiers_DL_To_Synapse,0,,N
+ext_frt_backoffice_regulationchangelog,Ext_ staging (internal),1,DWH_dbo.SP_Fact_RegulationTransfer_DL_To_Synapse,0,,N
+ext_frt_backoffice_regulationchangelog_all,Ext_ staging (internal),1,DWH_dbo.SP_Fact_RegulationTransfer_DL_To_Synapse,0,,N
+ext_fsc_backoffice_customer,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_backoffice_customercloseyear,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomerCloseYear_DL_To_Synapse,0,,N
+ext_fsc_backoffice_regulationchangelog,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_backoffice_regulationchangelog_all,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_customer_firsttimedeposits,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_dimcustomercloseyear,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomerCloseYear_DL_To_Synapse,0,,N
+ext_fsc_phonecustomer,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_phonecustomercloseyear,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomerCloseYear_DL_To_Synapse,0,,N
+ext_fsc_real_customer_customer,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_real_customer_customercloseyear,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomerCloseYear_DL_To_Synapse,0,,N
+ext_fsc_real_history_credit,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fsc_stockslending,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotCustomer_DL_To_Synapse,0,,N
+ext_fse_billing_withdraw,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_billing_withdrawtofunding,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_fact_snapshotequity,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity,0,,N
+ext_fse_history_credit,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_history_position,Ext_ staging (internal),2,"DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse, DWH_dbo.SP_Fact_SnapshotEquity_TotalPositionAmount",0,,N
+ext_fse_history_withdrawaction,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_history_withdrawtofundingaction,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_inprocesscashouts,Ext_ staging (internal),2,"DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse, DWH_dbo.SP_Fact_SnapshotEquity_InProcessCashouts",0,,N
+ext_fse_positionchangelog,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_real_history_credit,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_totalcashchangeall,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse,0,,N
+ext_fse_totalpositionamount,Ext_ staging (internal),1,DWH_dbo.SP_Fact_SnapshotEquity_TotalPositionAmount,0,,N
+ext_fse_trade_position,Ext_ staging (internal),2,"DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse, DWH_dbo.SP_Fact_SnapshotEquity_TotalPositionAmount",0,,N
+ext_history_cost,Ext_ staging (internal),1,DWH_dbo.SP_Fact_History_Cost_DL_To_Synapse,0,,N
+fact_billingdeposit,Fact_*,2,"DWH_dbo.SP_Fact_BillingDeposit, DWH_dbo.SP_Fact_BillingDeposit_DL_To_Synapse",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit,Y
+fact_billingredeem,Fact_*,1,DWH_dbo.SP_Fact_BillingRedeem_DL_To_Synapse,2,main.dwh.gold_inc_test_dwh_dbo_fact_billingredeem; main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem,Y
+fact_billingwithdraw,Fact_*,2,"DWH_dbo.SP_Fact_BillingWithdraw, DWH_dbo.SP_Fact_BillingWithdraw_DL_To_Synapse",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw,Y
+fact_cashout_rollback,Fact_*,1,DWH_dbo.SP_Fact_Cashout_Rollback_DL_To_Synapse,0,,N
+fact_cashout_state,Fact_*,1,DWH_dbo.SP_Fact_Cashout_State,0,,N
+fact_currencypricewithsplit,Fact_*,2,"DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse, DWH_dbo.SP_Fact_CurrencyPriceWithSplit_DL_To_Synapse_OLD_VER",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit,Y
+fact_customeraction,Fact_*,6,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04 +3",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction,Y
+fact_customeraction_switch,Fact_*,1,DWH_dbo.SP_Fact_CustomerAction_SWITCH,0,,N
+fact_customerunrealized_pnl,Fact_*,2,"DWH_dbo.SP_Fact_CustomerUnrealized_PnL, DWH_dbo.SP_Fact_CustomerUnrealized_PnL_V0",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl,Y
+fact_customerunrealized_pnl_userapi,Fact_*,2,"DWH_dbo.SP_Fact_CustomerUnrealized_PnL, DWH_dbo.SP_Fact_CustomerUnrealized_PnL_V0",0,,N
+fact_deposit_fees,Fact_*,1,DWH_dbo.SP_Fact_Deposit_Fees_DL_To_Synapse,0,,N
+fact_deposit_state,Fact_*,1,DWH_dbo.SP_Fact_Deposit_State,0,,N
+fact_firstcustomeraction,Fact_*,1,DWH_dbo.SP_Fact_FirstCustomerAction,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction,Y
+fact_guru_copiers,Fact_*,2,"DWH_dbo.SP_Fact_Guru_Copiers, DWH_dbo.SP_Fact_Guru_Copiers_DL_To_Synapse",1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers,Y
+fact_history_cost,Fact_*,1,DWH_dbo.SP_Fact_History_Cost,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost,Y
+fact_position_futures_snapshot,Fact_*,1,DWH_dbo.SP_Fact_Position_Futures_Snapshot,0,,N
+fact_regulationtransfer,Fact_*,2,"DWH_dbo.SP_Fact_RegulationTransfer, DWH_dbo.SP_Fact_RegulationTransfer_DL_To_Synapse",1,main.compliance.gold_sql_dp_prod_we_dwh_dbo_fact_regulationtransfer,Y
+fact_reverse_deposits,Fact_*,1,DWH_dbo.SP_Fact_Reverse_Deposits_DL_To_Synapse,0,,N
+fact_settlement_prices,Fact_*,1,DWH_dbo.SP_Fact_Settlement_Prices,0,,N
+fact_snapshotcustomer,Fact_*,2,"DWH_dbo.SP_Fact_SnapshotCustomer, DWH_dbo.SP_Fact_SnapshotCustomerCloseYear",0,,N
+fact_snapshotequity,Fact_*,2,"DWH_dbo.SP_Fact_SnapshotEquity, DWH_dbo.SP_Fact_SnapshotEquity_DL_To_Synapse",0,,N
+fact_withdraw_fees,Fact_*,1,DWH_dbo.SP_Fact_Withdraw_Fees_DL_To_Synapse,0,,N
+log_main_full,Other,1,DWH_dbo.SP_Log_Full,0,,N
+parquetmetadata,Other,2,"DWH_dbo.DeleteFromParquetMetadata, DWH_dbo.InsertIntoParquetMetadata",0,,N
+sts_user_operations_data_history,Other,1,DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_20240507,1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history,Y
+sts_user_operations_data_history_switch,Other,1,DWH_dbo.SP_STS_User_Operations_Data_History_SWITCH,0,,N
+sts_user_operations_data_history_switch_single,Other,4,"DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_04, DWH_dbo.SP_Fact_CustomerAction_DL_To_Synapse_bkp_2024_08_20 +1",0,,N
+tablesupdatesprocessesstatus,Other,1,DWH_dbo.SP_Log_Table_Updates,0,,N
+util_resultsliabilities_cycle,Validation / util,2,"DWH_dbo.SP_Test_Liabilities_Cycle, DWH_dbo.SP_Validation_Cycle_Gap_DL_To_Synapse",0,,N
+util_resultssourcetotarget_actions,Validation / util,1,DWH_dbo.SP_ResultsSourceToTarget_Actions,0,,N
+val_fcv_closingbalance,Validation / util,1,DWH_dbo.SP_Validation_Cycle_Gap_DL_To_Synapse,0,,N
+val_fcv_comovements,Validation / util,1,DWH_dbo.SP_Validation_Cycle_Gap_DL_To_Synapse,0,,N
+val_fcv_movementsum,Validation / util,1,DWH_dbo.SP_Validation_Cycle_Gap_DL_To_Synapse,0,,N
+val_fcv_openingbalance,Validation / util,1,DWH_dbo.SP_Validation_Cycle_Gap_DL_To_Synapse,0,,N

@@ -415,7 +415,7 @@ Note: Upstream production wikis available for Trade.PositionTbl and Trade.OpenPo
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 106 | PlatformTypeID | tinyint | YES | FK to Dim_PlatformType. Platform used to open: 1=Web, 2=iOS, 3=Android, 0=Undefined/NULL. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
+| 106 | PlatformTypeID | tinyint | YES | FK to Dim_PlatformType. Platform used to open: 1=Web, 2=iOS, 3=Web, 0=. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
 | 107 | IsAirDrop | int | YES | 1=position was created via an airdrop event (crypto). ETL-computed: JOIN to etoro_Trade_PositionAirdropLog. NULL=not an airdrop. (Tier 2 - SP_Dim_Position_DL_To_Synapse) |
 | 108 | IsDiscounted | int | YES | 1=position received a discounted rate. DWH note: CAST from bit to int. (Tier 1 — Trade.PositionTbl) |
 

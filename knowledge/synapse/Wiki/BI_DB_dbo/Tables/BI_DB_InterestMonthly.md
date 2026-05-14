@@ -112,7 +112,7 @@ ROUND_ROBIN distribution with CLUSTERED INDEX on MonthOfInterest ASC. Always fil
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | CID | int | YES | Customer ID — unique identifier for a customer account in the eToro platform. FK to DWH_dbo.Dim_Customer.RealCID. (Tier 2 — SP_InterestMonthly, from Interest.Trade.InterestMonthly) |
-| 2 | RegulationID | int | YES | Regulatory entity ID governing this customer. FK to DWH_dbo.Dim_Regulation. Values observed: 1=CySEC, 2=FCA, 4=ASIC, 9=Seychelles, 10=ASIC-new, 11=FSRA, 13=other. (Tier 2 — SP_InterestMonthly, from Interest.Trade.InterestMonthly) |
+| 2 | RegulationID | int | YES | Regulatory entity ID governing this customer. FK to DWH_dbo.Dim_Regulation. Values observed: 1=CySEC, 2=FCA, 4=ASIC, 9=FSA Seychelles, 10=ASIC & GAML, 11=FSRA, 13=other. (Tier 2 — SP_InterestMonthly, from Interest.Trade.InterestMonthly) |
 | 3 | StatusID | tinyint | YES | Interest calculation status. Always 3 in this table (completed/approved). SP filters to StatusID=3 before inserting. (Tier 2 — SP_InterestMonthly, from Interest.Trade.InterestMonthly) |
 | 4 | MonthOfInterest | date | YES | First day of the month for which interest was calculated (e.g., 2026-03-01). Clustered index column — filter on this for efficient queries. (Tier 2 — SP_InterestMonthly, from Interest.Trade.InterestMonthly) |
 | 5 | MonthlyAccumulatedInterest | numeric(15,6) | YES | Gross accumulated interest for this CID for this month, before tax deduction. In USD. (Tier 2 — SP_InterestMonthly, from Interest.Trade.InterestMonthly) |

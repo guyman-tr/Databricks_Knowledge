@@ -134,7 +134,7 @@ The table contains ~1.27 billion rows spanning 2014-01-01 to 2025-09-04. Data st
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | ActionTypeID | smallint | NO | Social action classification. 1=Post, 2=Comment, 3=Like, 4=Share, 5=Automatic Post (BI_DB_Social_Activity_Type). Derived via CASE on Streams TypeName: Discussion→1, Comment→2, Like→3, Discussion+SharedEntryId→4, other entry types→5. (Tier 2 — Streams_dbo_Entries_Social_Activity_Daily) |
+| 1 | ActionTypeID | smallint | NO | Social action classification. 1=ManualPositionOpen, 2=CopyPositionOpen, 3=CopyPlusPositionOpen, 4=ManualPositionClose, 5=CopyPositionClose (BI_DB_Social_Activity_Type). Derived via CASE on Streams TypeName: Discussion→1, Comment→2, Like→3, Discussion+SharedEntryId→4, other entry types→5. (Tier 2 — Streams_dbo_Entries_Social_Activity_Daily) |
 | 2 | ActionDate | datetime | NO | Timestamp when the social action occurred. Passthrough from Streams OccurredAt field (renamed). (Tier 2 — Streams_dbo_Entries_Social_Activity_Daily) |
 | 3 | PostID | varchar(300) | YES | Identifier of the root post. For original posts: the entry Id; for comments and likes: the RootId (top-level post); for shares: the SharedEntryId (the shared post). GUID-based string format. (Tier 2 — Streams_dbo_Entries_Social_Activity_Daily) |
 | 4 | CommentID | varchar(150) | YES | Identifier of the comment. NULL for posts, likes-on-posts, and shares. For comments: the entry Id. For likes-on-comments: the ParentId (the liked comment). (Tier 2 — Streams_dbo_Entries_Social_Activity_Daily) |

@@ -247,7 +247,7 @@ HASH(CID) with CLUSTERED INDEX on CID. One row per customer. Optimal for CID-bas
 | 74 | VendorPOI | varchar(100) | YES | Name of the vendor that processed the Proof of Identity document. NULL if no POI processing. (Tier 2 — SP_Operations_Onboarding_Flow_UserKPIs) |
 | 75 | RejectionReasonPOI | varchar(100) | YES | Rejection reason text for the POI document. NULL if POI was approved or not submitted. (Tier 2 — SP_Operations_Onboarding_Flow_UserKPIs) |
 | 76 | CurrentRegulation | varchar(100) | YES | Current regulation name for the customer (via Dim_Customer.RegulationID -> Dim_Regulation.Name). May differ from DesignatedRegulation if customer's regulation changed after registration. (Tier 1 — Dictionary.Regulation) |
-| 77 | PlayerStatusID | int | YES | Compliance and trading account status. 1=Active/Registered (97.5% of accounts); other values indicate restricted, closed, banned, or special states. Default=0. (Tier 1 — Customer.CustomerStatic) |
+| 77 | PlayerStatusID | int | YES | Compliance and trading account status. 1=Normal (97.5% of accounts); other values indicate restricted, closed, banned, or special states. Default=0. (Tier 1 — Customer.CustomerStatic) |
 | 78 | PlayerStatusReasonID | int | YES | Reason code for current PlayerStatusID. Provides the why behind a non-Active status. (Tier 1 — Customer.CustomerStatic) |
 | 79 | POA_Manager | int | YES | ManagerID of the BackOffice agent who reviewed the POA document. 0 or NULL if automated. (Tier 2 — SP_Operations_Onboarding_Flow_UserKPIs) |
 | 80 | POI_Manager | int | YES | ManagerID of the BackOffice agent who reviewed the POI document. 0 or NULL if automated. (Tier 2 — SP_Operations_Onboarding_Flow_UserKPIs) |

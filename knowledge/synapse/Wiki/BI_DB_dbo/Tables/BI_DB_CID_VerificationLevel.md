@@ -147,7 +147,7 @@ The table does not contain Level 0 (unverified customers). Customers with Verifi
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | RealCID | int | YES | Customer identifier. FK into DWH_dbo.Dim_Customer. Up to 3 rows per RealCID (one per level achieved). ROUND_ROBIN distributed — CID-based JOINs require data movement. (T2 - SP_CID_VerificationLevel) |
-| 2 | VerificationLevelID | int | NO | KYC verification level achieved: 1=Basic (email/questionnaire), 2=Intermediate (POI submitted), 3=Full KYC (POI + POA confirmed, full platform access). Level 0 (unverified) is NOT stored. FK into DWH_dbo.Dim_VerificationLevel. (T1 - DWH_dbo.Dim_VerificationLevel wiki) |
+| 2 | VerificationLevelID | int | NO | KYC verification level achieved: 1=Level 1 (email/questionnaire), 2=Level 2 (POI submitted), 3=Level 3 (POI + POA confirmed, full platform access). Level 0 (unverified) is NOT stored. FK into DWH_dbo.Dim_VerificationLevel. (T1 - DWH_dbo.Dim_VerificationLevel wiki) |
 | 3 | FromDateID | int | NO | Date integer (YYYYMMDD) of the Fact_SnapshotCustomer SCD2 row that first showed the customer at this VerificationLevelID or higher. Approximates the date the customer first achieved this KYC level. NCI key — efficient for date-range queries. (T2 - SP_CID_VerificationLevel) |
 | 4 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted by SP_CID_VerificationLevel (GETDATE()). (T2 - SP_CID_VerificationLevel) |
 | 5 | FromDate | date | YES | Date equivalent of FromDateID (CONVERT(DATE, CONVERT(CHAR(8), FromDateID))). Provided for convenience. (T2 - SP_CID_VerificationLevel) |
