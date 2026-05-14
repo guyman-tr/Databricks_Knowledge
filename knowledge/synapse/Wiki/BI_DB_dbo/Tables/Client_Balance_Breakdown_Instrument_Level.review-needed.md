@@ -61,3 +61,9 @@
 | TanganyStatus | VERIFIED | 88.7% NULL, 5 non-null statuses |
 | UC mapping | CHECKED | Not in generic pipeline mapping — _Not_Migrated |
 | Known bugs documented | YES | @DateNextID bug flagged |
+
+## Tier 5 Re-Review Needed
+
+| Column | Tier 5 Correction | Was Based On (old Tier 1-3) | New Tier 1-3 | Change Summary |
+|--------|-------------------|----------------------------|--------------|----------------|
+| IsSQF | SpotQuotedFuture flag — smaller-contract RealFutures on CME; `Trade.InstrumentGroups.GroupID = 59` via `Function_Instrument_Snapshot_Enriched`. | Tier 2 — "Small Quantity Fee" | Tier 5 (user expert 2026-05-14) | Replaced fabricated business narrative with grounded product semantic (SpotQuotedFuture, CME). |

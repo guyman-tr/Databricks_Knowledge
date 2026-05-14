@@ -67,7 +67,7 @@ Read-only checks executed **2026-03-21**.
 | 3 | CID | int | YES | Customer identifier. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.CID) |
 | 4 | InstrumentID | int | YES | eToro instrument identifier. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.InstrumentID) |
 | 5 | InstrumentName | varchar(45) | YES | Short instrument name/ticker. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.Name) |
-| 6 | InstrumentTypeID | int | YES | Numeric instrument type (1=FX, 5=Stock, 6=ETF, etc.). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentTypeID) |
+| 6 | InstrumentTypeID | int | YES | Numeric instrument type (1=Currencies, 5=Stocks, 6=ETF, etc.). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentTypeID) |
 | 7 | InstrumentType | varchar(50) | YES | Instrument type string. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Instrument.InstrumentType) |
 | 8 | HedgeServerID | int | YES | Hedge server that processed the position. (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.HedgeServerID) |
 | 9 | MirrorID | int | YES | CopyPortfolio / mirror relationship ID (0 if not mirrored). (Tier 2 -- SP_Slippage_Report, DWH_dbo.Dim_Position.MirrorID) |

@@ -37,7 +37,7 @@ ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_a
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN IsTheDayBefore COMMENT '1 if position opened after 22:00 UTC';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN CloseDateID COMMENT 'Date position closed; 0 if still open';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN CloseOccurred COMMENT 'Exact close timestamp';
-ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN InstrumentTypeID COMMENT '1=FX, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto';
+ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN InstrumentTypeID COMMENT '1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN InstrumentID COMMENT 'Instrument identifier';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN InstrumentGroup COMMENT 'Manual Islamic group ID';
 ALTER TABLE main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_administrative_fee ALTER COLUMN Units_per_Contract COMMENT 'Contract size for Commodities';

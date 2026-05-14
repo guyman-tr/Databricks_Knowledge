@@ -142,7 +142,7 @@ _Pending — resolved during write-objects._
 | 3 | SubChannelID | tinyint | NO | Marketing sub-channel identifier. JOINs to Dim_Channel.SubChannelID. Values: 1=Affiliate Partners, 2=SEM, 3=SEO, etc. Sourced from Ext_Dim_SubChannel_UnifyCode. (Tier 2 — SP_Dim_Affiliate) |
 | 4 | Contact | nvarchar(1000) | YES | Primary contact information for the affiliate partner. (Tier 2 — Ext_Dim_Channel_Affiliate_UnifyCode) |
 | 5 | ContractName | nvarchar(100) | YES | Free-text name of the affiliate's contract/payment agreement. Used as input for the ContractType classification logic. E.g., "Rev Share + CPA", "CPL Standard". (Tier 2 — Ext_Dim_Channel_Affiliate_UnifyCode) |
-| 6 | ContractType | tinyint | YES | Computed affiliate payment model: 0=N/A, 2=CPA, 3=RevShare, 4=Hybrid, 6=eCost, 7=Zero Commission, 8=CPL/CPR. Derived from ContractName via CASE expression. (Tier 2 — SP_Dim_Affiliate) |
+| 6 | ContractType | tinyint | YES | Computed affiliate payment model: 0=N/A, 2=CPA, 3=Rev, 4=Hyb, 6=eCost, 7=ZeroCost, 8=CPL. Derived from ContractName via CASE expression. (Tier 2 — SP_Dim_Affiliate) |
 | 7 | AffiliatesGroupsName | nvarchar(50) | YES | Marketing group the affiliate belongs to. (Tier 2 — Ext_Dim_Channel_Affiliate_UnifyCode) |
 | 8 | AccountActivated | bit | YES | Whether the affiliate account is active. 1=Active, 0/NULL=Inactive. (Tier 2 — Ext_Dim_Channel_Affiliate_UnifyCode) |
 | 9 | LoginName | nvarchar(1000) | YES | Affiliate's login name in the AffWizz system. (Tier 2 — Ext_Dim_Channel_Affiliate_UnifyCode) |

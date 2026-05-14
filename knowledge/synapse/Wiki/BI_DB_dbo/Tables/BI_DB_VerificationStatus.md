@@ -119,7 +119,7 @@ ROUND_ROBIN with HEAP. No distribution key means joins on `RealCID` will cause d
 | 16 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was last inserted by the ETL pipeline. Set to GETDATE() on each daily TRUNCATE+INSERT. (Tier 2 — ETL metadata) |
 | 17 | PendingClosureStatusID | int | YES | Status in the pending closure workflow. Default=1 (no pending closure). Updated when customer requests account closure. From `DWH_dbo.Dim_Customer` (current snapshot). (Tier 1 — DWH_dbo wiki, Dim_Customer) |
 | 18 | PlayerStatusReasonID | int | YES | Reason code for current PlayerStatusID. Provides the why behind a non-Active status. From `DWH_dbo.Dim_Customer` (current snapshot). (Tier 1 — DWH_dbo wiki, Dim_Customer) |
-| 19 | PlayerStatusID | int | YES | Compliance and trading account status. FK to Dictionary.PlayerStatus. 1=Active/Registered (97.5% of accounts); other values indicate restricted, closed, banned, or special states. From `DWH_dbo.Dim_Customer` (current snapshot). (Tier 1 — DWH_dbo wiki, Dim_Customer) |
+| 19 | PlayerStatusID | int | YES | Compliance and trading account status. FK to Dictionary.PlayerStatus. 1=Normal (97.5% of accounts); other values indicate restricted, closed, banned, or special states. From `DWH_dbo.Dim_Customer` (current snapshot). (Tier 1 — DWH_dbo wiki, Dim_Customer) |
 
 ---
 

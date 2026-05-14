@@ -3,8 +3,8 @@
 Preflight checks for UC ALTER deployments.
 
 Consolidates encoding, mojibake, identifier, escape, and termination audits across
-the queue of `.alter.sql` files (and the downstream monolith). Auto-fixes what is
-safely fixable and writes a markdown report.
+the queue of `.alter.sql` files. Auto-fixes what is safely fixable and writes a
+markdown report.
 
 Checks performed (in order):
   1. UTF-8 encoding validity (block on failure)
@@ -18,9 +18,7 @@ Checks performed (in order):
   6. Statement termination — every ALTER must end with `;` (block)
 
 Usage:
-  python tools/preflight_alters.py --schemas Dealing_dbo eMoney_dbo EXW_dbo \\
-      --downstream knowledge/synapse/Wiki/_downstream_column_comments.sql \\
-      --apply
+  python tools/preflight_alters.py --schemas Dealing_dbo eMoney_dbo EXW_dbo --apply
 
 Without `--apply` the run is dry; auto-fixes are reported but not written.
 """
@@ -506,12 +504,6 @@ def main() -> int:
         help="If --bronze, restrict to these db folder names (e.g. CalendarDB etoro)",
     )
     ap.add_argument(
-        "--downstream",
-        type=Path,
-        default=None,
-        help="Optional downstream SQL monolith to include",
-    )
-    ap.add_argument(
         "--apply",
         action="store_true",
         help="Write auto-fixes (default: dry-run, only report)",
@@ -523,20 +515,14 @@ def main() -> int:
     )
     args = ap.parse_args()
 
-    extra: list[Path] = []
-    if args.downstream and args.downstream.is_file():
-        extra.append(args.downstream)
-
     queue: list[Path] = []
     if args.schemas:
-        queue.extend(collect_queue(args.schemas, extra))
-    elif extra:
-        queue.extend(extra)
+        queue.extend(collect_queue(args.schemas, []))
     if args.bronze:
         queue.extend(collect_bronze_queue(args.bronze_dbs))
     if not queue:
         print(
-            "No files to scan. Pass --schemas, --bronze, or --downstream.",
+            "No files to scan. Pass --schemas or --bronze.",
             file=sys.stderr,
         )
         return 1

@@ -1,24 +1,48 @@
-# BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions — Review Needed
+# BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions — Review needed
 
-> Items flagged for offline domain expert review.
+> Sidecar checklist — **no** Elements table here.
 
-## Reviewer Corrections
+## PII / sensitivity
 
-| Column / Topic | Current (wrong) | Correction | Scope | Reviewer | Date |
-|----------------|-----------------|------------|-------|----------|------|
+| Topic | Note |
+|-------|------|
+| `RealCID` | **Customer identifier** — join to `Dim_Customer` for demographics; follow **masked vs PII UC** policy on customer attributes (see `Dim_Customer.md`: `main.dwh.*_masked` vs `main.pii_data.*`). **This fact stores `RealCID` only** — no direct name/email columns. |
 
-## Tier 4 (UNVERIFIED) Columns
+## Phase 16 adversarial score (2026-05-14)
 
-No Tier 4 columns — all columns traced to SP code (Tier 2).
+**Overall: 8.7 / 10**
 
-## Columns Needing Clarification
+| Dimension | Score | Notes |
+|-----------|-------|-------|
+| Tier accuracy | 9/10 | **`RealCID`** upgraded to **Tier 1** verbatim from `Fact_CustomerAction.md`; remaining columns correctly **Tier 2** (SP `CASE`, aggregates, `GETDATE()`). |
+| Upstream fidelity | 9/10 | **`DateID`** uses Fact’s **`(Tier 2 — SP_Fact_CustomerAction)`** tag; **`RealCID`** copied verbatim (Tier 1 Customer.CustomerStatic). |
+| Evidence / grounding | 9/10 | SP read from **local DataPlatform file**; Synapse MCP row estimate, date span, Phase 3 TOP IDs, latest sample date. |
+| Operational completeness | 8/10 | Service Broker priority / job name **not re-verified** this session (soft). |
+| Deploy / UC honesty | 8/10 | Explicitly flags **missing Databricks table** vs canonical naming — avoids fake UC parity. |
 
-| Column | Question |
-|--------|----------|
-| ActionType | CompensationReasonID 22 maps to PnLAdjustment — but the CASE for CompensationReasonID 22 appears inside ActionTypeID 36 block. Is this intentional given the ordering? |
-| IsCopyFund | The SP notes Fact_CustomerAction doesn't have MirrorID for ActionTypeID=5 — is this still the case or has it been fixed? |
+### Phase 16 findings (actionable)
 
-## Structural Questions
+1. **UC Gold gap** — reconcile with Data Platform: table missing while **`..._revenue_generating_actions`** exists.
+2. **`RealCID` nullable in Synapse DDL** — inconsistent with fact semantics (likely type-system artifact); confirm with SSDT `CREATE TABLE`.
+3. **`ActionTypeID = 5` + `MirrorID` gap** — still an open data-quality question for `IsCopyFund` accuracy.
 
-- The "Registred" spelling (not "Registered") — is this a known spelling that should be preserved for compatibility, or is it a bug?
-- ActionTypeID 36 maps to 8+ ActionType strings. Is there a canonical reference for all CompensationReasonID values?
+## Reviewer corrections
+
+| Topic | Current | Correction | Reviewer | Date |
+|-------|---------|------------|----------|------|
+| | | | | |
+
+## Soft fails (this pipeline run)
+
+| Gate | Status | Detail |
+|------|--------|--------|
+| Phase 3 | **PARTIAL** | Only **15** distinct `ActionTypeID` values on **`DateID = 20260426`** — TOP 20 requested; table shows **15**. |
+| UC verify | **FAIL (expected)** | Databricks: table **not found**; sibling DDR Gold tables **visible**. |
+| Atlassian | **NO HITS** | Confluence CQL returned **0** rows. |
+| `sys.dm_pdw_table_mappings` | **N/A** | Not available on connected pool — distribution column taken as **`RealCID`** per BI DDR convention + property parity with sibling facts. |
+
+## Open questions
+
+1. When will **`main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_non_revenue_generating_actions`** be deployed, and will **`etr_*`** partitions match other BI_DB Gold exports?
+2. Should **`LoggedIn` vs `DepositorsLoggedIn`** split align with a formal data dictionary (depositor definition = `Fact_SnapshotCustomer.IsDepositor` on `@dateID`)?
+3. Are social action types **21–23** still business-relevant given sparse `PostID` lineage in `Fact_CustomerAction`?

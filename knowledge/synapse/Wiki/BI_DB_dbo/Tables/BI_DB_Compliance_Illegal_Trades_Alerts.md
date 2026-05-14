@@ -174,7 +174,7 @@ HASH(RealCID) with CLUSTERED INDEX on Date. Customer-level lookups (WHERE RealCI
 | 18 | PlayerStatus | varchar(100) | YES | Customer account status at alert time from Dim_PlayerStatus.Name. E.g., 'Normal', 'Blocked'. (Tier 2 — SP_Compliance_Forbidden_Trades) |
 | 19 | PlayerStatusReason | varchar(100) | YES | Reason for current player status from Dim_PlayerStatusReasons.Name. NULL if no block reason. (Tier 2 — SP_Compliance_Forbidden_Trades) |
 | 20 | PlayerSubReason | varchar(100) | YES | Sub-reason for player status from Dim_PlayerStatusSubReasons.PlayerStatusSubReasonName. NULL if no sub-reason. (Tier 2 — SP_Compliance_Forbidden_Trades) |
-| 21 | VerificationLevelID | varchar(100) | YES | Customer's KYC verification level as varchar: 0=None, 1=Basic, 2=Enhanced, 3=Full. (Tier 2 — SP_Compliance_Forbidden_Trades) |
+| 21 | VerificationLevelID | varchar(100) | YES | Customer's KYC verification level as varchar: 0=Level 0, 1=Level 1, 2=Level 2, 3=Level 3. (Tier 2 — SP_Compliance_Forbidden_Trades) |
 | 22 | RegisteredReal | varchar(100) | YES | Real account registration date as varchar ISO format (yyyy-mm-dd). (Tier 2 — Dim_Customer) |
 | 23 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was inserted. (Propagation) |
 | 24 | BlockDate | date | YES | Date when customer's account was most recently blocked (PlayerStatusID IN 2,4,9,13,15). NULL if never blocked. Computed from Fact_SnapshotCustomer PlayerStatus history. (Tier 2 — SP_Compliance_Forbidden_Trades) |

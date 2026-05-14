@@ -112,7 +112,7 @@ Last verified: 2026-05-11
 
 2. **Tier 1 — Speculative column names from v1 do NOT exist on `Customer.CustomerStatic`.** None of `IsTestUser`, `IsExcludedFromReporting`, `IsFraud`, `IsV1Accepted`, `V1ApprovalDate`, `V2ApprovalDate`, `V3ApprovalDate`, `MasterCID`, `IsTermsAcceptedYYYY`, `IsPrivacyAcceptedYYYY`, `IsCommunicationOptIn`, `MarketingConsentDate`, `IsCookieConsentGiven`, `PreferredDepositMethod`, `LastDepositMethodID`, `DepositMethodWhitelist`, `SupportChannelOptIns`, `IsLiveChatEnabled`, `IsWhatsAppOptedIn`, `LastAppVersion`, `LastWebVersion`, `LastDeviceID`, `IsBetaCohort`, `FeatureFlags` exist on the masked UC bronze. Verified 2026-05-11. The actual `Is*` columns are exactly five: `IsReal`, `IsEmailVerified`, `IsEmailActivated`, `IsRequestedCall`, `IsHedged`. For test-account / excluded-customer filtering use `IsValidCustomer` (DWH-computed on Dim_Customer); for breach/alert investigation use the BI_DB Compliance tables in this skill.
 
-3. **Tier 1 — `IsHedged` is trigger-driven, not analyst-set.** `Customer.CustomerStatic.IsHedged` defaults to `1` and is overwritten to `0` by `CustomerVersionInsert` / `CustomerVersionUpdate` triggers when ANY of: `LabelID = 26` (BonusOnly), `PlayerLevelID = 4` (Popular Investor), `CID IN CEP.ListCIDMappings(NamedListID = 3)`, or `CID IN BackOffice.BonusOnlyCustomers`. Reading `IsHedged = 0` without knowing the trigger logic leads to wrong conclusions about brokerage exposure. The downstream hedge truth lives in `Trade.PositionTbl.IsHedged` (per-position, current state) and the dealing-side execution log — see Trading super-domain `broker-and-lp-reconciliation`.
+3. **Tier 1 — `IsHedged` is trigger-driven, not analyst-set.** `Customer.CustomerStatic.IsHedged` defaults to `1` and is overwritten to `0` by `CustomerVersionInsert` / `CustomerVersionUpdate` triggers when ANY of: `LabelID = 26` (`Dim_Label.Name = 'ILQ'`), `PlayerLevelID = 4` (`Dim_PlayerLevel.Name = 'Internal'` — the in-house / eToro-employee account level, NOT a Popular Investor signal — verified 2026-05-13), `CID IN CEP.ListCIDMappings(NamedListID = 3)`, or `CID IN BackOffice.BonusOnlyCustomers`. Reading `IsHedged = 0` without knowing the trigger logic leads to wrong conclusions about brokerage exposure. The downstream hedge truth lives in `Trade.PositionTbl.IsHedged` (per-position, current state) and the dealing-side execution log — see Trading super-domain `broker-and-lp-reconciliation`.
 
 4. **Tier 1 — Four "breach cluster" tables are Synapse-only and NOT in UC.** Verified 2026-05-11 (`information_schema.tables` returned zero rows for these patterns):
    - `BI_DB_dbo.BI_DB_US_Compliance_Apex_Clients` — US-resident customers cleared by Apex; Apex-side compliance flags.
@@ -209,8 +209,8 @@ WHERE CID = :realcid;
 SELECT
   cs.CID,
   cs.IsHedged,
-  cs.LabelID                                        -- 26 = BonusOnly -> IsHedged = 0
-  , cs.PlayerLevelID                                -- 4 = Popular Investor -> IsHedged = 0
+  cs.LabelID                                        -- 26 = ILQ (Dim_Label.Name) -> IsHedged = 0
+  , cs.PlayerLevelID                                -- 4 = Internal (Dim_PlayerLevel.Name) -> IsHedged = 0
   , dl.LabelName                                    -- if Dim_Label available
 FROM main.general.bronze_etoro_customer_customerstatic_masked cs
 LEFT JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_label dl ON dl.LabelID = cs.LabelID

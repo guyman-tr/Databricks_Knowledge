@@ -45,10 +45,19 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SRC = REPO_ROOT / "knowledge" / "skills"
 LOCAL_STAGE = Path(os.path.expandvars(r"%USERPROFILE%\.assistant\skills\dwh-domain"))
 
+UNDERSCORE_DIR_ALLOWLIST = {"_shared"}
+
 
 def is_curated(p: Path) -> bool:
-    """Skip underscore-prefixed working files. Keep SKILL.md and named *.md."""
+    """Skip underscore-prefixed working files. Keep SKILL.md and named *.md.
+
+    Cross-cutting skill folders explicitly listed in UNDERSCORE_DIR_ALLOWLIST
+    are allowed even though they start with an underscore (visual marker for
+    "owned by no domain, applies to all").
+    """
     if p.is_dir():
+        if p.name in UNDERSCORE_DIR_ALLOWLIST:
+            return True
         return not p.name.startswith("_")
     if p.suffix != ".md":
         return False
@@ -143,7 +152,10 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Stage 2 — upload to Databricks Workspace (flat layout) via profile '{args.profile}'")
     print("=" * 72)
 
-    folders = [p for p in sorted(LOCAL_STAGE.iterdir()) if p.is_dir() and not p.name.startswith("_")]
+    folders = [
+        p for p in sorted(LOCAL_STAGE.iterdir())
+        if p.is_dir() and (p.name in UNDERSCORE_DIR_ALLOWLIST or not p.name.startswith("_"))
+    ]
     if args.only:
         wanted = set(args.only)
         folders = [p for p in folders if p.name in wanted]

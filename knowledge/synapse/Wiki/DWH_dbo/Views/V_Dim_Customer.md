@@ -61,7 +61,7 @@ The view explicitly comments out `ReferralID`, `UserName_Lower`, and `2FA` — t
 | 23 | SocialConnectID | int | Dim_Customer.SocialConnectID | Social media connection type. DEFAULT=0. (Tier 1 — inherited from Dim_Customer wiki) |
 | 24 | VerificationLevel | nvarchar | Dim_VerificationLevel.Name | KYC verification level name. Resolved from Dim_VerificationLevel via DC.VerificationLevelID INNER JOIN. Values: unverified, partial, intermediate, fully verified. (Tier 2 — view DDL dimension lookup) |
 | 25 | DocsOK | varchar(10) | Dim_Customer.DocsOK | Whether required documents are verified. CAST to varchar(10). (Tier 1 — inherited from Dim_Customer wiki) |
-| 26 | PlayerStatus | nvarchar | Dim_PlayerStatus.Name | Player/account status name. Resolved from Dim_PlayerStatus via DC.PlayerStatusID INNER JOIN. 1=Active/Registered (97.5%). (Tier 2 — view DDL dimension lookup) |
+| 26 | PlayerStatus | nvarchar | Dim_PlayerStatus.Name | Player/account status name. Resolved from Dim_PlayerStatus via DC.PlayerStatusID INNER JOIN. 1=Normal (97.5%). (Tier 2 — view DDL dimension lookup) |
 | 27 | Bankruptcy | varchar(10) | Dim_Customer.Bankruptcy | Bankruptcy flag. CAST to varchar(10). (Tier 1 — inherited from Dim_Customer wiki) |
 | 28 | FunnelID | int | Dim_Customer.FunnelID | Registration funnel ID. FK to Dictionary.Funnel. Tracks which user journey the customer came through. NULL when not tracked. (Tier 1 — inherited from Dim_Customer wiki) |
 | 29 | DownloadID | int | Dim_Customer.DownloadID | Platform download source ID. Legacy tracking for which platform installer the customer used. (Tier 1 — inherited from Dim_Customer wiki) |
@@ -81,7 +81,7 @@ The view explicitly comments out `ReferralID`, `UserName_Lower`, and `2FA` — t
 | 43 | NumOfRAF | int | Dim_Customer.NumOfRAF | Number of successful Refer-A-Friend referrals. (Tier 1 — inherited from Dim_Customer wiki) |
 | 44 | AccountTypeID | int | Dim_Customer.AccountTypeID | Customer account classification. Default=1 (real retail account). (Tier 1 — inherited from Dim_Customer wiki) |
 | 45 | Regulation | nvarchar | Dim_Regulation.Name | Regulatory entity name. Resolved from Dim_Regulation via DC.RegulationID INNER JOIN. Top: CySEC, BVI, FCA. (Tier 2 — view DDL dimension lookup) |
-| 46 | PlayerLevel | nvarchar | Dim_PlayerLevel.Name | Customer experience/permission level name. Resolved from Dim_PlayerLevel via DC.PlayerLevelID INNER JOIN. 1=Standard (94%), 4=Popular Investor, 7=VIP. (Tier 2 — view DDL dimension lookup) |
+| 46 | PlayerLevel | nvarchar | Dim_PlayerLevel.Name | Customer experience/permission level name. Resolved from Dim_PlayerLevel via DC.PlayerLevelID INNER JOIN. 1=Bronze (94%), 4=Internal, 7=Diamond. (Tier 2 — view DDL dimension lookup) |
 | 47 | AccountStatusID | int | Dim_Customer.AccountStatusID | Account operational status. Default=1 (Active/Normal). 2=Closed or Restricted. (Tier 1 — inherited from Dim_Customer wiki) |
 | 48 | AccountManagerID | int | Dim_Customer.AccountManagerID | Currently assigned BackOffice sales/service agent (renamed from ManagerID). FK to BackOffice.Manager. NULL = unassigned. (Tier 1 — inherited from Dim_Customer wiki) |
 | 49 | HasAvatar | varchar(10) | Dim_Customer.HasAvatar | Whether customer has uploaded a custom avatar. CAST to varchar(10). Updated post-load from Avatars staging. (Tier 1 — inherited from Dim_Customer wiki) |
@@ -104,7 +104,7 @@ The view explicitly comments out `ReferralID`, `UserName_Lower`, and `2FA` — t
 | 66 | SuitabilityTestStatusID | int | Dim_Customer.SuitabilityTestStatusID | MiFID II appropriateness/suitability test result. NULL if test not completed. (Tier 1 — inherited from Dim_Customer wiki) |
 | 67 | FirstDepositAmount | decimal(19,4) | Dim_Customer.FirstDepositAmount | Amount of first deposit (in USD). CAST to decimal(19,4). Updated from FTDAmountInUsd. (Tier 1 — inherited from Dim_Customer wiki) |
 | 68 | PrivacyPolicyID | int | Dim_Customer.PrivacyPolicyID | Version of the privacy policy the customer has accepted. FK to Dictionary.PrivacyPolicy. (Tier 1 — inherited from Dim_Customer wiki) |
-| 69 | MifidCategorizationID | int | Dim_Customer.MifidCategorizationID | MiFID II investor classification. FK to Dictionary.MifidCategorization. 1=Retail (97.3%), 4=Eligible Counterparty, 5=Professional. (Tier 1 — inherited from Dim_Customer wiki) |
+| 69 | MifidCategorizationID | int | Dim_Customer.MifidCategorizationID | MiFID II investor classification. FK to Dictionary.MifidCategorization. 1=Retail (97.3%), 4=Retail Pending, 5=Pending. (Tier 1 — inherited from Dim_Customer wiki) |
 | 70 | IsEmailVerified | int | Dim_Customer.IsEmailVerified | Whether the email address has been verified by clicking a confirmation link. NULL for older accounts. (Tier 1 — inherited from Dim_Customer wiki) |
 | 71 | IsValidCustomer | int | Dim_Customer.IsValidCustomer | DWH-computed: 1 when PlayerLevelID≠4, LabelID NOT IN (30,26), CountryID≠250. Filters non-standard customers from reporting. (Tier 1 — inherited from Dim_Customer wiki) |
 | 72 | DesignatedRegulationID | int | Dim_Customer.DesignatedRegulationID | Secondary/override regulation for accounts subject to multiple jurisdictions. FK to Dictionary.Regulation. (Tier 1 — inherited from Dim_Customer wiki) |

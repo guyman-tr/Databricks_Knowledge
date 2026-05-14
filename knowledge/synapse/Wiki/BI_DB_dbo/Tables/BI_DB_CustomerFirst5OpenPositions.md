@@ -107,7 +107,7 @@ ROUND_ROBIN distribution with CLUSTERED INDEX on DateID. Date-range queries are 
 |---|---------|------|----------|-------------|
 | 1 | RealCID | int | NO | Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. (Tier 1 — Customer.CustomerStatic) |
 | 2 | Occurred | datetime | NO | Timestamp when the position was opened. Passthrough from Fact_CustomerAction.Occurred. (Tier 2 — SP_CustomerFirst5OpenPositions) |
-| 3 | ActionTypeID | smallint | NO | Action type identifier. 1=Open Position, 17=Copy Open. Only these two values exist in this table. FK to Dim_ActionType. (Tier 2 — SP_CustomerFirst5OpenPositions) |
+| 3 | ActionTypeID | smallint | NO | Action type identifier. 1=ManualPositionOpen, 17=Register new mirror. Only these two values exist in this table. FK to Dim_ActionType. (Tier 2 — SP_CustomerFirst5OpenPositions) |
 | 4 | MirrorID | int | NO | Copy-trading mirror relationship ID. 0=direct (manual) trade, >0=copy trade (FK to Dim_Mirror). (Tier 2 — SP_CustomerFirst5OpenPositions) |
 | 5 | InstrumentID | int | NO | Financial instrument identifier. FK to Dim_Instrument. Determines the asset traded (stocks, crypto, FX, etc.). (Tier 2 — SP_CustomerFirst5OpenPositions) |
 | 6 | Leverage | int | NO | Position leverage multiplier. 1=unleveraged (real asset), >1=leveraged (CFD). Passthrough from Fact_CustomerAction. (Tier 2 — SP_CustomerFirst5OpenPositions) |

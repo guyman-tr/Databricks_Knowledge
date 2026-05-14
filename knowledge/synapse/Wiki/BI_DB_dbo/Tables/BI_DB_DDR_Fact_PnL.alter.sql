@@ -20,21 +20,21 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl SET TAGS
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN DateID COMMENT 'Date key in YYYYMMDD integer format. Partition/filter key for daily DELETE/INSERT. Direct from `Function_PnL_Single_Day.DateID`. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN Date COMMENT 'Calendar date corresponding to DateID. `@date` SP input parameter. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN RealCID COMMENT 'Customer identifier. Renamed from `CID` in `Function_PnL_Single_Day`. Distribution key. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN InstrumentTypeID COMMENT 'Instrument asset class. Join-enriched from `Dim_Instrument.InstrumentTypeID` via `frfc.InstrumentID = di.InstrumentID`. Common values: 4=Indices, 5=Stocks, 6=Commodities, 10=Crypto, 12=ETFs, 73=Currencies. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsCopy COMMENT 'Copy-trade flag. `CASE WHEN frfc.MirrorID > 0 THEN 1 ELSE 0 END`. 1=position opened via CopyTrader, 0=manual/independent. (Tier 2 - SP_DDR_Fact_PnL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN DateID COMMENT 'Calendar key in **`YYYYMMDD`** integer form. Matches the TVF’s `DateID` and the SP’s **`@dateID`**. (Tier 2 - Function_PnL_Single_Day)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN Date COMMENT 'Calendar **`date`** for the load: **`@date AS [Date]`** in `SP_DDR_Fact_PnL`. (Tier 2 - SP_DDR_Fact_PnL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN RealCID COMMENT 'Real-account Customer ID. HASH distribution key. References **`Dim_Customer.RealCID`**. Each customer has one real CID. BI_DB transform: column name **`RealCID`**; TVF source column is **`CID`** (same semantics as **`Dim_Position.CID`**). (Tier 1 - Customer.CustomerStatic)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN InstrumentTypeID COMMENT 'From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. Join-enriched via **`Dim_Instrument`** in **`SP_DDR_Fact_PnL`**. (Tier 1 - Trade.GetInstrument)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsCopy COMMENT '**`CASE WHEN frfc.MirrorID > 0 THEN 1 ELSE 0 END`**. **1** = copy-trade child path (see **`MirrorID`** semantics in `Dim_Position`). (Tier 2 - SP_DDR_Fact_PnL)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsSettled COMMENT '1 = real asset, 0 = CFD asset. (Tier 5 - Expert Review)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN UnrealizedPnLChange COMMENT 'Day-over-day change in unrealized P&L in USD. `SUM(frfc.UnrealizedPnLChange)` aggregated across all positions in the group. Represents the daily mark-to-market movement for open positions. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN NetProfit COMMENT 'Realized net profit in USD from positions closed on this date. `SUM(frfc.NetProfit)` aggregated across closed positions in the group. Zero for groups with no closes. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN CountPositions COMMENT 'Number of positions contributing to this row''s PnL. `COUNT(frfc.PositionID)` within the group. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. `GETDATE()` at SP execution time. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsFuture COMMENT 'Futures contract flag. `ISNULL(frfc.IsFuture, 0)`. 1=futures position, 0=non-futures. NULL coerced to 0. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsLeveraged COMMENT 'Leverage flag. `CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END`. 1=leveraged position (leverage multiplier > 1×), 0=unleveraged. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsBuy COMMENT 'Trade direction. 1=long (buy), 0=short (sell). Direct from `Function_PnL_Single_Day.IsBuy`. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsCopyFund COMMENT 'Smart Portfolio / Fund position flag. `ISNULL(frfc.IsCopyFund, 0)`. 1=position belongs to a Smart Portfolio or Fund vehicle, 0=regular. Derived from `BI_DB_CopyFund_Positions` lookup in the function. (Tier 2 - SP_DDR_Fact_PnL)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsSQF COMMENT 'Sustainable & Quality-Focused instrument flag. `ISNULL(frfc.IsSQF, 0)`. 1=instrument is SQF-classified via `Function_Instrument_Snapshot_Enriched`, 0=non-SQF. (Tier 2 - SP_DDR_Fact_PnL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN UnrealizedPnLChange COMMENT '**`SUM(frfc.UnrealizedPnLChange)`** from **`Function_PnL_Single_Day`**, where per-position change comes from **`BI_DB_PositionPnL`** prior vs current snapshot **`CASE`** (`UnrealizedPnLEnd - UnrealizedPnLStart` with NULL guards). (Tier 2 - BI_DB_PositionPnL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN NetProfit COMMENT '**`SUM(frfc.NetProfit)`** over the group. Base measure: Realized PnL. 0 when open; set on close. In position currency. (Tier 2 - Trade.PositionTbl)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN CountPositions COMMENT '**`COUNT(frfc.PositionID)`** - count of TVF position rows in each aggregate bucket. (Tier 2 - SP_DDR_Fact_PnL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp: **`GETDATE()`** at SP run. (Tier 2 - SP_DDR_Fact_PnL)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsFuture COMMENT '1=futures contract (instrument in Trade.InstrumentGroups WHERE GroupID=25), 0=not futures. 243 flagged as futures. **`ISNULL(frfc.IsFuture,0)`** in SP. (Tier 2 - SP_Dim_Instrument)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsLeveraged COMMENT '**`CASE WHEN frfc.Leverage > 1 THEN 1 ELSE 0 END`**. Derived from position **Leverage**: Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 2 - Trade.PositionTbl)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsBuy COMMENT '1 = Long/Buy (profit when price rises), 0 = Short/Sell. DWH note: **`bit`** in **`Dim_Position`**; here **int** from TVF/Synapse path. (Tier 1 - Trade.PositionTbl)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsCopyFund COMMENT 'Smart Portfolio / Fund position flag from TVF: **`CASE WHEN cpt.PositionID IS NOT NULL THEN 1 ELSE 0 END`** with **`LEFT JOIN BI_DB_CopyFund_Positions`**. **`ISNULL(...,0)`** in SP. (Tier 2 - Function_PnL_Single_Day)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsSQF COMMENT '**`IsSQF` (SpotQuotedFuture flag) - 1 = instrument is a SpotQuotedFuture (smaller-contract variant of eToro RealFutures, traded on the CME / Chicago Mercantile Exchange). 0 = not an SQF instrument. Source: **`Function_Instrument_Snapshot_Enriched(@dateInt)`** via membership in **`Trade.InstrumentGroups`** with **`GroupID = 59`**. **`ISNULL(frfc.IsSQF, 0)`** per SP. (Tier 5 - user expert correction; previously mis-described as "Sustainable & Quality-Focused")';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN DateID SET TAGS ('pii' = 'none');
@@ -53,8 +53,3 @@ ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER CO
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsCopyFund SET TAGS ('pii' = 'none');
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl ALTER COLUMN IsSQF SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 12:45:34 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
--- Statements: 32/32 succeeded
--- ====================

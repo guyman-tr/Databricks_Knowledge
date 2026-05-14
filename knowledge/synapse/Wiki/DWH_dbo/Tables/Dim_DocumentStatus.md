@@ -97,7 +97,7 @@ Customer uploads document
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DocumentStatusID | int | NO | Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. (Tier 1 — Dictionary.DocumentStatus) |
+| 1 | DocumentStatusID | int | NO | Primary key identifying the document review state. 1=New Upload, 2=Reviewed, 3=Accepted, 4=Rejected, 5=POIApproved. (Tier 1 — Dictionary.DocumentStatus) |
 | 2 | DocumentStatusName | varchar(50) | NO | Human-readable status label. Used in compliance review UI, customer communications, and regulatory reporting. (Tier 1 — Dictionary.DocumentStatus) |
 | 3 | UpdateDate | datetime | NO | ETL load timestamp. Set to GETDATE() on each daily full reload by SP_Dictionaries_DL_To_Synapse. Reflects ETL run time, not source data change time. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |
 

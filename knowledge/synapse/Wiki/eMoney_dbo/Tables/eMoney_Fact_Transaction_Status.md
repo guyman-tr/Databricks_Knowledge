@@ -172,7 +172,7 @@ The table uses `HASH(CID)` distribution — consistent with `eMoney_Dim_Transact
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 10 | TxTypeID | int | YES | Transaction type identifier. 1=CardPayment, 2=ContactlessPayment, 3=CardCashWithdrawal, 4=CardRefund, 5=Transfer, 6=TransferReceived, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBankAccount, 12=DebitBankAccount, 13=OnlinePayment, 14=DirectDebit (15=CryptoToFiat via dictionary). Passthrough from FiatTransactions.TransactionTypeId. (Tier 2 — SP_eMoney_DimFact_Transaction) |
+| 10 | TxTypeID | int | YES | Transaction type identifier. 1=CardPayment, 2=Contactless, 3=OnlinePayment, 4=CashWithdrawal, 5=TransferReceived, 6=Transfer, 7=PaymentReceived, 8=Payment, 9=Refund, 10=Fee, 11=CreditBA, 12=DebitBA, 13=DirectDebit, 14=CryptoToFiat (15=CryptoToFiat via dictionary). Passthrough from FiatTransactions.TransactionTypeId. (Tier 2 — SP_eMoney_DimFact_Transaction) |
 | 11 | TxType | varchar(50) | YES | Transaction type display name for TxTypeID, resolved from External_FiatDwhDB_Dictionary_TransactionTypes.Name. (Tier 2 — SP_eMoney_DimFact_Transaction) |
 | 12 | TxTypeCategory | varchar(50) | YES | Grouped transaction type bucket: Card (TxTypeID 1-4, 13), IBAN (TxTypeID 5-8), Other (all other TxTypeIDs). ETL CASE expression in Step 03. (Tier 2 — SP_eMoney_DimFact_Transaction) |
 | 13 | TxClientBalanceCategory | varchar(50) | YES | Client-facing balance impact category. ETL CASE maps all 14 TxTypeID values to one of 9 labels (e.g., Payments, Refunds, TransferIn, TransferOut, CashWithdrawal, Fee, DirectDebit, CryptoToFiat, Other). Step 03. (Tier 2 — SP_eMoney_DimFact_Transaction) |
@@ -230,7 +230,7 @@ The table uses `HASH(CID)` distribution — consistent with `eMoney_Dim_Transact
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 37 | IsValidETM | int | YES | eToro Money validity flag (current at ETL run time from eMoney_Dim_Account snapshot). 1 when IsValidCustomer=1 AND IsTestAccount=0 AND IsCancelledAccount=0. Standard filter for eTM production analytics. (Tier 2 — SP_eMoney_DimFact_Transaction) |
-| 38 | IsValidCustomer | int | YES | DWH-computed validity flag at TxLocalDate (from Fact_SnapshotCustomer snapshot, Step 08). 1 when not Popular Investor, not label 30/26, and not CountryID=250 at the time of the transaction. (Tier 2 — SP_eMoney_DimFact_Transaction) |
+| 38 | IsValidCustomer | int | YES | DWH-computed validity flag at TxLocalDate (from Fact_SnapshotCustomer snapshot, Step 08). 1 when not Internal, not label 30/26, and not CountryID=250 at the time of the transaction. (Tier 2 — SP_eMoney_DimFact_Transaction) |
 
 ### 4.9 Customer Snapshot at Transaction Date
 

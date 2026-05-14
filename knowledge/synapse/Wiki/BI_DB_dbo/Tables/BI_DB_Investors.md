@@ -119,7 +119,7 @@ ROUND_ROBIN with CLUSTERED INDEX on DateID ASC. Large table (132.9M rows). Alway
 | 2 | DateID | int | YES | Date identifier in YYYYMMDD integer format. Clustered index column. Used for delete-insert partitioning and efficient date-range queries. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
 | 3 | AccountManagerID | int | YES | Salesforce account manager ID. FK to DWH_dbo.Dim_AccountManager. Identifies which AM manages the customers in this bucket. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
 | 4 | CountryID | int | YES | Country of customer registration. FK to DWH_dbo.Dim_Country. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
-| 5 | RegulationID | tinyint | YES | Regulatory entity ID. FK to DWH_dbo.Dim_Regulation. 1=CySEC, 2=FCA, 4=ASIC, 9=Seychelles, etc. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
+| 5 | RegulationID | tinyint | YES | Regulatory entity ID. FK to DWH_dbo.Dim_Regulation. 1=CySEC, 2=FCA, 4=ASIC, 9=FSA Seychelles, etc. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
 | 6 | ActionType | varchar(50) | YES | Activity source stream: 'Manual' (direct trades), 'Copy' (copy-trading), 'Balance' (cash positions). From BI_DB_Investors_STG.SourceTable. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
 | 7 | InstrumentType | varchar(50) | YES | Instrument category: Stocks, ETF, Crypto Currencies, Commodities, Indices, Currencies. From BI_DB_Investors_STG. (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |
 | 8 | AssetType | varchar(50) | YES | Investment classification: 'Investment' (long-term holding), 'Trade' (short-term/leveraged). (Tier 2 — SP_InvestorReport_Cluster, from BI_DB_Investors_STG) |

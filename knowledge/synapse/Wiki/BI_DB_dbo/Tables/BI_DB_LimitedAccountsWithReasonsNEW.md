@@ -150,7 +150,7 @@ ROUND_ROBIN HEAP. Medium table (118K rows). Full scans are fast.
 | 18 | Equity_Level | varchar(max) | YES | Equity bracket. 'A:0-5' (83%), 'B:5-50', 'C:50-500', 'D: 500+'. Based on ISNULL(Equity, 0). (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
 | 19 | Region | varchar(50) | YES | Customer's geographic region. From Dim_Country.Region via Dim_Customer.CountryID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
 | 20 | Country | varchar(50) | YES | Customer's country name. From Dim_Country.Name via Dim_Customer.CountryID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
-| 21 | PlayerLevel | varchar(max) | YES | Customer's player level (e.g., Standard, Silver, Gold, Platinum, Diamond, Popular Investor). From Dim_PlayerLevel.Name via Dim_Customer.PlayerLevelID. (Tier 2 -- SP_LimitedAccountsWithReasonsNEW) |
+| 21 | PlayerLevel | varchar(max) | YES | Customer player-level tier. FK to DWH_dbo.Dim_PlayerLevel. Per dictionary (verified 2026-05-13): 0=N/A, 1=Bronze, 2=Platinum, 3=Gold, 4=Internal (in-house / eToro-employee accounts), 5=Silver, 6=Platinum Plus, 7=Diamond. NOT a Popular Investor signal (PI is tracked by GuruStatusID). NOT a demo flag (demo is AccountTypeID=2). Default=0. (Tier 2 - DWH_dbo.Dim_PlayerLevel)|
 | 22 | UpdateDate | datetime | NO | ETL metadata: timestamp when this row was inserted. Set to GETDATE(). (Tier 5 -- SP_LimitedAccountsWithReasonsNEW) |
 
 ---

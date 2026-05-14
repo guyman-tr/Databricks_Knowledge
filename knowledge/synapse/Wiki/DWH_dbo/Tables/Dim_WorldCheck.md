@@ -91,7 +91,7 @@ REPLICATE is optimal for this 5-row table — full local copy on every node, zer
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | WorldCheckID | int | NOT NULL | Primary key for the World-Check screening outcome. 0=Unscreened/default (empty name), 1=Pending WCH (screening in progress), 2=No Match (clear), 3=PEP Match (Enhanced Due Diligence triggered), 4=Risk Match (sanctions/high-risk, possible freeze). Stored on customer dimension tables to classify each customer's AML screening status. Referenced by risk classification procedures and economic reports. (Tier 1 — upstream wiki, Dictionary.WorldCheck) |
+| 1 | WorldCheckID | int | NOT NULL | Primary key for the World-Check screening outcome. 0= (empty name), 1=Pending WCH (screening in progress), 2=No Match (clear), 3=PEP Match (Enhanced Due Diligence triggered), 4=Risk Match (sanctions/high-risk, possible freeze). Stored on customer dimension tables to classify each customer's AML screening status. Referenced by risk classification procedures and economic reports. (Tier 1 — upstream wiki, Dictionary.WorldCheck) |
 | 2 | WorldCheckName | varchar(50) | NOT NULL | Display label for the screening outcome. ID=0 has an empty string (not NULL). Used in BackOffice UI, PEP reports, and compliance dashboards. Sourced directly from Dictionary.WorldCheck.WorldCheckName. (Tier 1 — upstream wiki, Dictionary.WorldCheck) |
 | 3 | UpdateDate | datetime | NOT NULL | ETL load timestamp. Set to GETDATE() on each daily reload by SP_Dictionaries_DL_To_Synapse. Not a production change timestamp — use for ETL freshness monitoring only. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |
 

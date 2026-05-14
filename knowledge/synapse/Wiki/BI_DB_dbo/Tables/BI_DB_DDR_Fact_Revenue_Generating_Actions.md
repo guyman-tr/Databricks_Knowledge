@@ -1,166 +1,140 @@
 # BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
 
-> 3.1B-row comprehensive revenue fact table capturing 18 distinct revenue streams (spreads, rollovers, ticket fees, conversion fees, dormant fees, dividends, staking, options PFOF, and more) per customer per day, broken down by instrument type, position flags, and trade characteristics. Sourced from 16+ `Function_Revenue_*` TVFs, enriched with IBAN/recurring/CopyFund/C2P position attributes, assembled by `SP_DDR_Fact_Revenue_Generating_Actions` with daily DELETE/INSERT plus special reload strategies for Options (full history) and Staking (monthly lag).
+> Unified DDR revenue fact (~**3.16B** logical rows via `SUM(sys.partitions.rows)`), **HASH(`RealCID`)** columnstore; history **DateID 20100103–20260425** (Synapse MCP). Daily `DELETE`/reload by `DateID` plus exceptional **full Options** reshuffle (`DELETE WHERE RevenueMetricID=18`), **Staking monthly slice rewinds** tied to staking source replays (`RevenueMetricID=12`). Each row rolls up revenue into stream label **`Metric`** (commissions vs overnight vs MIMO vs rev-share vs specials) keyed by segmented trade flags analysts use inside Genie. Unity Catalog mirror: **`main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions`**.
 
 | Property | Value |
 |----------|-------|
 | **Schema** | BI_DB_dbo |
-| **Object Type** | Table |
-| **Production Source** | Multiple — 16+ `Function_Revenue_*` TVFs + `Dim_Revenue_Metrics` + enrichment tables |
-| **Refresh** | Daily (DELETE/INSERT by DateID) + Options full reload + Staking monthly reload |
+| **Object Type** | DDR fact (granular revenue actions) |
+| **Production Source** | Multi-branch — `BI_DB_dbo.Function_Revenue_*` TVF family over `Fact_CustomerAction`/positions + parquet overlays orchestrated entirely inside Synapse (no single external table lineage) |
+| **Refresh** | Daily — partition wipe `DELETE … WHERE DateID=@dateID` + `INSERT` from `SP_DDR_Fact_Revenue_Generating_Actions @date`; options second pass reloads metric id **18**; staking deletes current calendar month slice before insert |
 | | |
-| **Synapse Distribution** | HASH(RealCID) |
-| **Synapse Index** | CLUSTERED COLUMNSTORE INDEX |
+| **Synapse Distribution** | `HASH (RealCID)` |
+| **Synapse Index** | `CLUSTERED COLUMNSTORE INDEX` |
 | | |
-| **UC Target** | _Pending — resolved during write-objects_ |
-| **UC Format** | _Pending — resolved during write-objects_ |
-| **UC Partitioned By** | _Pending — resolved during write-objects_ |
-| **UC Table Type** | _Pending — resolved during write-objects_ |
+| **UC Target** | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions` |
+| **UC Format** | delta (`DESCRIBE` confirmed 2026-05-14) |
+| **UC Partitioned By** | Align to Generic Pipeline Override metadata (typically `etr_*` surrogates — validate before wide scans in Databricks SQL) |
+| **UC Masked / PII** | **`main.pii_data`:** no sibling `*_revenue_generating_actions` table surfaced via `SHOW TABLES … LIKE '%revenue_generating%'` (Databricks MCP 2026-05-14). Column comments/tagging on gold table still mark key attributes `pii='none'` in deployed UC metadata. |
 
 ---
 
 ## 1. Business Meaning
 
-This table is the **master revenue fact table** within the DDR framework. Each row represents an aggregated revenue action for a customer on a specific date, categorized by `Metric` (revenue stream type) and broken down by instrument type, settlement status, copy-trade status, and 10+ binary position flags.
+`BI_DB_DDR_Fact_Revenue_Generating_Actions` (**RGA**) is eToro’s **long-format revenue bridge** tying every surfaced fee/revenue mechanic to analytic slices (instrument type, copy vs manual, CFD vs settled asset, SQF posture, recurring/IBAN/C2P flags, etc.). The SP fans in **sixteen BI_DB TVFs**, stages multi-step temp merges (`#rollovers … #staking`, `#optionsalltime`), enriches with **Smart Portfolio**, **copy-to-portfolio**, and **finance parquet** lookups, aligns dictionary ids through `Dim_Revenue_Metrics`, and finally merges into the physical table alongside **monthly staking repairs** plus **historic options reload**.
 
-It answers: "How much revenue did each customer generate today, by revenue stream and trade characteristics, and which streams count toward total reported revenue?"
+Row grain is logically **daily customer revenue slices**: `SUM` aggregates collapse raw position hits into stable keys so analyst queries can pivot on `Metric` while still retaining `ActionTypeID` fidelity for genuine trade actions (`ManualPositionOpen`, `ManualPositionClose`, etc.). Rows with `Metric IN ('Commission','Dividends','SDRT')` remain **financially tracked** yet **normally excluded from top-line totals** (`IncludedInTotalRevenue` follows `Dim_Revenue_Metrics` but SDRT additionally coerced inside the SP).
 
-**18 Revenue Streams** (via `Metric` column):
-
-| # | Metric | Source Function | IncludedInTotalRevenue | Description |
-|---|--------|----------------|----------------------|-------------|
-| 1 | FullCommission | Function_Revenue_FullCommissions | Yes | Full spread commission on position open/close |
-| 2 | Commission | Function_Revenue_Commissions | No | Commission sub-component (already counted in FullCommission) |
-| 3 | RollOverFee | Function_Revenue_RolloverFee | Yes | Overnight rollover/swap fee on open CFD positions |
-| 4 | TicketFee | Function_Revenue_TicketFee | Yes | Fixed ticket fee per trade |
-| 5 | TicketFeeByPercent | Function_Revenue_TicketFeeByPercent | Yes | Percentage-based ticket fee |
-| 6 | Dividends | Function_Revenue_Dividend | No | Dividend payments (cost, not revenue) |
-| 7 | SDRT | Function_Revenue_SDRT | No | UK Stamp Duty Reserve Tax (pass-through, not revenue) |
-| 8 | CashoutFeeExclRedeem | Function_Revenue_CashoutFee_ExcludeRedeem | Yes | Withdrawal fee excluding crypto redeems |
-| 9 | ConversionFee | Function_Revenue_ConversionFee | Yes | Currency conversion fee |
-| 10 | DormantFee | Function_Revenue_DormantFee | Yes | Dormant account maintenance fee |
-| 11 | InterestFee | Function_Revenue_InterestFee | Yes | Interest charged on margin |
-| 12 | TransferCoinFee | Function_Revenue_TransferCoinFee | Yes | Crypto withdrawal/transfer fee |
-| 13 | AdminFee | Function_Revenue_AdminFee | Yes | Administrative fee on positions |
-| 14 | SpotPriceAdjustment | Function_Revenue_SpotAdjustFee | Yes | Spot price adjustment fee |
-| 15 | ShareLending | Function_Revenue_Share_Lending | Yes | Revenue from lending customer shares |
-| 16 | CryptoToFiatFee | Function_Revenue_CryptoToFiat_C2F | Yes | Crypto-to-fiat conversion fee |
-| 17 | StakingLagOneMonth | Function_Revenue_StakingFee | Yes | Crypto staking fee (lagged one month) |
-| 18 | Options_PFOF | Function_Revenue_OptionsPlatform | Yes | Options payment for order flow |
-
-The SP runs daily via Service Broker. Three insertion strategies are used:
-1. **Daily DELETE/INSERT** by DateID for most metrics
-2. **Full historical reload** for Options (RevenueMetricID=18) — data arrives unreliably
-3. **Monthly DELETE/re-INSERT** for Staking (RevenueMetricID=12) — source data changes retroactively
+**`IsRedeem` does not ship as its own column** in this layout: transfercoin analytics still depend on **`Function_Revenue_TransferCoinFee`**, whose TVF predicates (`ActionTypeID = 30` AND `IsRedeem = 1`) are spelled out upstream on `Fact_CustomerAction` (`see §2.3`).
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Revenue Inclusion Flag
+### 2.1 Metric → TVF lineage (principal columns)
 
-**What**: Controls which metrics are summed into "total revenue" reporting
+**What**: Each **`Metric`** value maps to explicit TVF payloads feeding `Amount`.
 
-**Columns Involved**: `IncludedInTotalRevenue`, `Metric`
+| Metric | Amount column source (TVF) | SP predicate highlights |
+|--------|---------------------------|-------------------------|
+| `FullCommission` | `SUM(TotalFullCommission)` from `#fullcommissions` (`Function_Revenue_FullCommissions`) | Requires `JOIN DWH_dbo.Dim_ActionType`; `CASE WHEN ActionTypeID IN (1,39) AND ISNULL(IsAirDrop,0)=0 THEN 1 ELSE 0 END` for `CountAsActiveTrade`; `IncludedInTotalRevenue=1` baseline |
+| `Commission` | `SUM(TotalCommission)` from `#commissions` (`Function_Revenue_Commissions`) | Mirrors FullCommission branching but flagged out of totals (`IncludedInTotalRevenue=0` before dim join); **never sum simultaneously with FullCommission** (see `Dim_Revenue_Metrics §1`) |
+| `RollOverFee` | `#overnights` (`Function_Revenue_RolloverFee` rows aggregated) | Overnight branch exposes `WHERE frrf.Metric = 'Rollover'`; `Amount` summed from prior temp |
+| `Dividends` | `Function_Revenue_Dividend` (`Dividend` column aggregated) | `Function_Instrument_Snapshot_Enriched(@dateID)` supplies `IsSQF` enrichment on dividends; aggregates later null `IsSQF` inside `#overnights` union |
+| `SDRT` | `Function_Revenue_SDRT` | Hard-coded zero `IsFuture`, `IncludedInTotalRevenue` collapsed to zero via post `UPDATE`; `Metric='SDRT'` resets `IsMarginTrade` sentinel where relevant |
+| `TicketFee`, `TicketFeeByPercent` | `Function_Revenue_TicketFee`, `Function_Revenue_TicketFeeByPercent` | Feed overnight temp then second-stage filters `WHERE Metric IN (...)`
+| `CashoutFeeExclRedeem` | `CashoutFeeExcludeRedeem` from `Function_Revenue_CashoutFee_ExcludeRedeem` | CID-only grain; literals null-out instrument columns |
+| `ConversionFee` | `ConversionFee` from `Function_Revenue_ConversionFee` | Keeps textual `TransactionType` as `ActionType`; merges recurring flag |
+| `DormantFee` | `DormantFee` from `Function_Revenue_DormantFee` | Forces `IsAirDrop=0` sentinel |
+| `InterestFee` | `InterestFee` from `Function_Revenue_InterestFee` | Wrapped with `WHERE InterestFee IS NOT NULL` inside TVF call |
+| `TransferCoinFee` | `TransferCoinFee` aggregated from `Function_Revenue_TransferCoinFee` | TVF restricts `Fact_CustomerAction.ActionTypeID=30 AND IsRedeem=1`; table stores only aggregated revenue without separate `IsRedeem` projection |
+| `AdminFee`, `SpotPriceAdjustment` | `AdminFee`, `SpotAdjustFee` from `Function_Revenue_AdminFee`/`Function_Revenue_SpotAdjustFee` | `JOIN Dim_Instrument` to align `IsFuture` |
+| `ShareLending` | `ROUND(ShareLendingGrossAmount,6)` aggregates from `Function_Revenue_Share_Lending` | Fixed instrument attributes (`InstrumentTypeID=5`, settled, non-copy) inside SP union |
+| `CryptoToFiatFee` | `TotalFeeUSD` from `Function_Revenue_CryptoToFiat_C2F` | Post `UPDATE`s force sentinel `-1` for copy/buy/leverage/future/smart-portfolio sentinel columns (`Metric='CryptoToFiatFee'`) |
+| `StakingLagOneMonth` | `TotalUSDDistributed` from `Function_Revenue_StakingFee` | `DateID` shifted forward `(DATEADD(month,1,…)` + dynamic window into prior month staging); explicit `RevenueMetricID=12`, `Category=4`
+| `Options_PFOF` | `Amount`/`CountTransactions`/flags from `#optionsalltime` sourcing `Function_Revenue_OptionsPlatform` | Separate `DELETE`/`INSERT`; `WHERE RevenueMetricID=18`; resets `IsMarginTrade` selectively |
 
-**Rules**:
-- `IncludedInTotalRevenue = 1` for revenue-generating streams (spreads, fees, staking, etc.)
-- `IncludedInTotalRevenue = 0` for pass-through costs: Commission (subset of FullCommission), Dividends, SDRT
-- SDRT has been explicitly forced to 0 via repeated post-INSERT UPDATEs (corrected multiple times per change history)
-- Value ultimately comes from `Dim_Revenue_Metrics.IncludedInTotalRevenue` for the main INSERT
+### 2.2 Action type semantics & sentinel `-1`
 
-### 2.2 Active Trade Counting
+**What**: **`ActionTypeID`** stays faithful to trading grains for commissions; **`ISNULL(ActionTypeID,-1)` at insert collapses analytic streams without trading keys.
 
-**What**: Identifies rows that represent a revenue-generating trading action (not just a fee)
+**Columns Involved**: `ActionTypeID`, `ActionType`, `Metric`.
 
-**Columns Involved**: `CountAsActiveTrade`, `ActionTypeID`, `IsAirDrop`
+**Rules** — verbatim predicates from `#revenue` construction logic:
+- `'FullCommission'`, `'Commission'` unions honour real `fc.ActionTypeID` while joining `JOIN DWH_dbo.Dim_ActionType dat ON frfc.ActionTypeID = dat.ActionTypeID`.
+- Overnight-style unions push literal `NULL AS ActionTypeID` before insert coerces to `-1`.
+- Rolling metrics like `CashoutFeeExclRedeem`, `ConversionFee`, `TransferCoinFee`, etc., all emit `NULL AS ActionTypeID` prior to sentinel packaging.
 
-**Rules**:
-- `CountAsActiveTrade = 1` only for FullCommission/Commission rows where `ActionTypeID IN (1, 39)` (Open, Close) AND `IsAirDrop = 0`
-- All other metrics: `CountAsActiveTrade = 0`
-- AirDrop positions are excluded from active trade counts even if they generate spread revenue
+Recent slice (`WHERE DateID >= 20260101`) ActionType clustering (joined to `Dim_ActionType`):
 
-### 2.3 NULL Sentinel Convention
+| Rows (approx.) | ActionTypeID | Representative Dim name |
+|----------------|--------------|--------------------------|
+| 46.4M | -1 | *Sentinel for non-trade metrics / rolled NULLs*
+| 22.1M | 2 | CopyPositionOpen
+| 21.0M | 1 | ManualPositionOpen
+| 19.1M | 5 | CopyPositionClose
+| 17.3M | 4 | ManualPositionClose
+| 2.17M | NULL | Legacy NULL bucket (investigate loaders if unexpected)
+| 37.9k | 6 | CopyPlusPositionClose
+| 1.7k | 3 | CopyPlusPositionOpen |
 
-**What**: All boolean/dimension flags use -1 (not 0) as "not applicable" sentinel
+### 2.3 Transfercoin & **`IsRedeem`** semantics (upstream only)
 
-**Columns Involved**: All flag columns (IsCopy, IsBuy, IsLeveraged, IsFuture, IsCopyFund, IsOpenedFromIBAN, IsClosedToIBAN, IsRecurring, IsAirDrop, IsSQF, IsMarginTrade, IsC2P, ActionTypeID, InstrumentTypeID, IsSettled)
+Even though **`IsRedeem` is omitted from the physical schema**, interpreting **`Metric='TransferCoinFee'`** requires **`Fact_CustomerAction.IsRedeem` dual-semantics**:
 
-**Rules**:
-- `ISNULL(column, -1)` applied to all flags at INSERT time
-- -1 means "not applicable to this revenue stream" (e.g., IsCopy is meaningless for DormantFee)
-- 0 means "applicable but false" (e.g., IsCopy=0 for a non-copy trade's FullCommission)
-- Always filter with `WHERE column != -1` or `WHERE column IN (0, 1)` to exclude non-applicable rows
+> **Dual-semantics redeem flag.** (A) **Ledger / Crypto-wallet Path:** Loader CASE documented in **`Dim_FundingType.md` §2.3 (`CASE WHEN CreditTypeID = 2 AND FundingTypeID = 27 THEN 1 ELSE 0 END`)** tagging **eToroCryptoWallet (`FundingTypeID=27`) cash-outs** (`ActionTypeID = 8` sample slice **100 % FundingType 27 whenever `IsRedeem=1`** for `DateID≥20260101`). Revenue TVF **`Function_Revenue_TransferCoinFee`** filters **`Fact_CustomerAction` with `ActionTypeID = 30` AND `IsRedeem = 1`** — interpret as **transfer-to-coin / fiat-wallet → on-chain custody** (**not** shorthand for bank cash-out). (B) **CFD Billing.Redeem Path:** Positional closes (`ActionTypeID∈{4,5,6,…}`) can emit **`IsRedeem=1` alongside `RedeemID`/`RedeemStatus`** (Billing.Redeem integration per `Trade.PositionTbl`) — orthogonal to transfercoin semantics. CLOSE-branch **`CASE` text unavailable** (`sys.sql_modules.definition` **NULL** for `SP_Fact_CustomerAction` on this Synapse warehouse). **Do not equate blindly to non-existent `Dim_Position.IsRedeem` column.** (Tier 2 — SP_Fact_CustomerAction)
 
-### 2.4 Position-Level Enrichment
+### 2.4 Lake-merge key semantics (`NULL → -1`)
 
-**What**: Trading-related revenues are enriched with IBAN, recurring, CopyFund, and C2P flags
+**What**: 2025-12 changes replace merge-key NULLs with **`-1`** (and `CountTransactions` coerced to numeric zero).
 
-**Columns Involved**: `IsOpenedFromIBAN`, `IsClosedToIBAN`, `IsRecurring`, `IsCopyFund`, `IsC2P`
-
-**Rules**:
-- `IsOpenedFromIBAN`: set via UPDATE JOIN to `External_*_opened_from_iban_parquet` by PositionID; filtered to OpenDateID <= @dateID
-- `IsClosedToIBAN`: set via UPDATE JOIN to `External_*_closed_to_iban_parquet` by PositionID; filtered to CloseDateID <= @dateID and != 0
-- `IsRecurring`: set via UPDATE JOIN to `External_bi_db_recurringinvestment_positions_parquet` by PositionID
-- `IsCopyFund`: set via UPDATE JOIN to `BI_DB_CopyFund_Positions` by PositionID
-- `IsC2P`: set via LEFT JOIN to `V_C2P_Positions` by PositionID
-- Applied to overnight fees (Rollover, Dividend, SDRT, TicketFee, TicketFeeByPercent) and commission fees
-
-### 2.5 Staking Lag Logic
-
-**What**: Staking revenue is reported one month forward from when it was earned
-
-**Columns Involved**: `DateID` (for Staking rows), `Metric = 'StakingLagOneMonth'`
-
-**Rules**:
-- Source: `Function_Revenue_StakingFee` called for previous month's date range
-- DateID in target: `DATEADD(MONTH, 1, frcf.Date)` — shifted forward one month
-- DELETE scope: current month range, RevenueMetricID=12
-- Handles retroactive source data changes via monthly re-INSERT
+**Rules** (verbatim idea from changelog inside SP header + body):
+- Outer insert applies `ISNULL` to `RealCID`-adjacent sentinel columns (`IsCopy`, instrument columns, SQF column, …) to stabilise merges from lake SB automation.
 
 ---
 
 ## 3. Query Advisory
 
-### 3.1 Synapse Distribution & Index
+### 3.1 Synapse distribution & pruning
 
-**In Synapse**, this table is HASH-distributed on `RealCID` with a CLUSTERED COLUMNSTORE INDEX. Always include `RealCID` in WHERE or JOIN conditions for optimal distribution-aligned queries. With 3.1B rows, always filter by `DateID` and ideally also by `Metric` or `RevenueMetricID`.
+Targeting **`HASH(RealCID)`** mandates filters on **`DateID`** *and*, when possible, selective `RealCID` lists — never full-table scans (>3 B logical rows).
 
-### 3.1b UC (Databricks) Storage & Partitioning
+### 3.2 Patterns
 
-_Pending — resolved during write-objects._
-
-### 3.2 Common Query Patterns
-
-| Analyst Question | Recommended Approach |
-|-----------------|---------------------|
-| Total revenue for a date | `WHERE DateID = @dt AND IncludedInTotalRevenue = 1` — SUM `Amount` |
-| Revenue by stream | `GROUP BY Metric` — SUM `Amount` WHERE `IncludedInTotalRevenue = 1` |
-| Customer revenue breakdown | `WHERE RealCID = @cid AND DateID BETWEEN @s AND @e GROUP BY Metric` |
-| Active trades per day | `WHERE CountAsActiveTrade = 1 GROUP BY DateID` — SUM `CountTransactions` |
-| IBAN-originated revenue | `WHERE IsOpenedFromIBAN = 1 AND IncludedInTotalRevenue = 1` |
-| Copy vs manual revenue | `WHERE IsCopy IN (0, 1) GROUP BY IsCopy` — exclude -1 |
+| Question | Recommendation |
+|---------|----------------|
+| Total revenue dashboards | Join `Dim_Revenue_Metrics` and filter **`IncludedInTotalRevenue = 1`** remembering SDRT coercion already happened downstream |
+| Commission vs CFD economics | Pivot on **`Metric`** plus `InstrumentTypeID` / `IsSettled` combinations |
+| Transfercoin auditing | Focus `Metric='TransferCoinFee'` and cross-check **`Function_Revenue_TransferCoinFee`** definition for predicates |
+| Options panel | Isolate `WHERE RevenueMetricID = 18` knowing it's reloaded nightly across full horizon |
 
 ### 3.3 Common JOINs
 
-| Join To | Join Condition | Purpose |
-|---------|---------------|---------|
-| `DWH_dbo.Dim_InstrumentType` | `ON r.InstrumentTypeID = dit.InstrumentTypeID` | Instrument class name (filter -1) |
-| `DWH_dbo.Dim_Customer` | `ON r.RealCID = dc.RealCID` | Customer demographics |
-| `BI_DB_dbo.Dim_Revenue_Metrics` | `ON r.RevenueMetricID = drm.RevenueMetricID` | Metric name, category, inclusion rules |
-| `DWH_dbo.Dim_ActionType` | `ON r.ActionTypeID = dat.ActionTypeID` | Open/Close/ManualClose action names (filter -1) |
+| Join target | Predicate | Purpose |
+|-------------|-----------|---------|
+| `BI_DB_dbo.Dim_Revenue_Metrics` | `drm.Metric = f.Metric OR drm.RevenueMetricID = f.RevenueMetricID` | Inclusion flags + categories |
+| `DWH_dbo.Dim_ActionType` | `ActionTypeID` (ignore `-1`/NULL sentinel rows) | Action naming when applicable |
+| `DWH_dbo.Dim_Instrument` / `Dim_Instrument_Snapshot` | via separate modeling (not stored here) | Deep instrument facts |
+| `DWH_dbo.Dim_Customer` | `RealCID` | Customer attributes |
 
 ### 3.4 Gotchas
 
-- **3.1B rows** — always filter by `DateID` and `Metric`/`RevenueMetricID`. Unfiltered scans are extremely expensive.
-- **-1 sentinel, NOT 0** — all boolean flags use -1 for "not applicable". `WHERE IsCopy = 0` returns non-copy trades; `WHERE IsCopy = -1` returns metrics where copy status is undefined.
-- **Commission double-counting** — FullCommission includes the full spread. Commission is a subset. Do NOT sum both for total revenue; use `IncludedInTotalRevenue = 1`.
-- **SDRT is not revenue** — explicitly excluded from total revenue (`IncludedInTotalRevenue = 0`). It's a UK tax pass-through.
-- **Dividends are not revenue** — `IncludedInTotalRevenue = 0`. They represent payouts to customers, not company revenue.
-- **Staking is lagged** — `StakingLagOneMonth` DateID is one month AFTER the earning period. The actual staking period is the previous month.
-- **Options full reload** — all Options_PFOF data (RevenueMetricID=18) is deleted and re-inserted every run across full history. Row counts may change retroactively.
-- **IsSQF is NULL for some streams** — set to -1 for Dividends, SDRT; available for position-level metrics.
-- **CountTransactions is NULL for ShareLending/Staking** — these are aggregated differently and don't have meaningful transaction counts.
+- **Do not double-count `Commission` + `FullCommission`.** `Dim_Revenue_Metrics` explicitly treats `Commission` as subcomponent excluded from totals.
+- **`ActionTypeID = -1`** encodes “non-trading metric stream” — not a `Dim_ActionType` natural key.
+- **Staking rows lag one month** relative to TVF-sourced close dates (see SP `DATEADD(MONTH,1,…)`).
+- **Options** second pass can rewrite historical `DateID`s outside the nominal daily partition when SB replays backlog.
+- **InstrumentType sentinel `-1`** still shows heavy volume (**~4.8M rows / day slice**) — validates account-wide fees lacking instrument granularity.
+
+InstrumentType hotspots (`DateID >= 20260101`, Synapse MCP):
+
+| InstrumentTypeID | Rows (approx.) |
+|------------------|----------------|
+| 5 | 61.6M |
+| 2 | 19.2M |
+| 10 | 16.2M |
+| 6 | 13.9M |
+| 4 | 9.5M |
+| -1 | 4.77M |
 
 ---
 
@@ -168,158 +142,151 @@ _Pending — resolved during write-objects._
 
 ### Confidence Tier Legend
 
-| Stars | Tiers | Tag |
-|-------|-------|-----|
-| 3 stars | Tier 2 (Synapse SP code) | `(Tier 2 — ...)` |
+| Tier | Meaning |
+|------|---------|
+| 1 | Upstream wiki / dictionary-verified lineage |
+| 2 | SP/TVF-computed aggregates, composites, parquet overlays |
+| 5 | Domain expert reconciliation (prior narrative corrected) |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | int | YES | Date key in YYYYMMDD format. DELETE/INSERT partition key. Direct from revenue functions (except Staking: lagged one month via `DATEADD(MONTH,1,...)`). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 2 | Date | date | YES | Calendar date. `@date` SP parameter for main INSERT; computed from DateID for Staking. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 3 | RealCID | int | YES | Customer identifier. Distribution key. From revenue functions (CID renamed to RealCID for some). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 4 | ActionTypeID | int | YES | Trading action type. From `Function_Revenue_FullCommissions/Commissions.ActionTypeID` for trading fees; `ISNULL(...,-1)` — sentinel -1 for non-trading metrics. Values: 1=Open, 39=Close. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 5 | ActionType | varchar(50) | YES | Action or revenue stream label. `Dim_ActionType.Name` for commissions; literal string for others ('Rollover', 'SDRT', 'CashoutFeeExclRedeem', etc.). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 6 | InstrumentTypeID | int | YES | **Instrument asset class ID.** Values: 1=Stocks, 2=Currencies, 3=Commodities, 4=Indices, 5=Crypto, 6=ETFs. `ISNULL(...,-1)` — sentinel -1 for account-level fees (CashoutFee, ConversionFee, DormantFee, InterestFee have no instrument). From Function_Revenue_* TVFs. (Tier 1 — Function_Revenue_FullCommissions) |
-| 7 | IsSettled | int | YES | **1 = real/settled asset** (stocks, ETFs, crypto with actual ownership; eligible for dividends and share lending, no overnight rollover). **0 = CFD** (derivative without ownership; subject to spread and rollover fees). **Sentinel -1** = not applicable (account-level fees: DormantFee, ConversionFee, CashoutFee have no instrument). From Function_Revenue_* TVFs via Dim_Instrument.IsSettled. (Tier 1) |
-| 8 | IsCopy | int | YES | Copy-trade flag. `CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END`; `ISNULL(...,-1)`. C2F forced to -1. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 9 | Metric | varchar(50) | YES | Revenue stream identifier. 18 distinct values: 'FullCommission', 'Commission', 'RollOverFee', 'Dividends', 'SDRT', 'TicketFee', 'TicketFeeByPercent', 'CashoutFeeExclRedeem', 'ConversionFee', 'DormantFee', 'InterestFee', 'TransferCoinFee', 'AdminFee', 'SpotPriceAdjustment', 'ShareLending', 'CryptoToFiatFee', 'StakingLagOneMonth', 'Options_PFOF'. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 10 | Amount | decimal(16,6) | YES | Revenue amount in USD. `SUM(fee_column)` aggregated per CID × Metric × flags group. Positive = revenue, negative possible for dividends paid out. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 11 | CountTransactions | int | YES | Number of transactions/positions in the group. `COUNT(RealCID)` or `SUM(CountTransactions)`; `ISNULL(...,0)`. NULL/0 for ShareLending and Staking. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 12 | IncludedInTotalRevenue | int | YES | Revenue inclusion flag. From `Dim_Revenue_Metrics.IncludedInTotalRevenue`. 1 = counts toward total revenue, 0 = excluded (Commission, Dividends, SDRT). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 13 | CountAsActiveTrade | int | YES | Active trade indicator. `CASE WHEN ActionTypeID IN (1,39) AND ISNULL(IsAirDrop,0) = 0 THEN 1 ELSE 0 END`; `ISNULL(...,0)`. Only 1 for non-airdrop commission rows. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 14 | UpdateDate | datetime | YES | ETL load timestamp. `GETDATE()` at SP execution time. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 15 | IsBuy | int | YES | Trade direction. `ISNULL(...,-1)`. 1=buy/long, 0=sell/short, -1=not applicable. Dividends: overridden to 1 if Amount>0, 0 if Amount<0. C2F: forced -1. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 16 | IsLeveraged | int | YES | Leverage flag. `CASE WHEN Leverage > 1 THEN 1 ELSE 0 END`; `ISNULL(...,-1)`. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 17 | IsFuture | int | YES | Futures contract flag. From functions or `Dim_Instrument.IsFuture` (AdminFee/SpotAdjust). `ISNULL(...,-1)`. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 18 | IsCopyFund | int | YES | Smart Portfolio flag. `CASE WHEN BI_DB_CopyFund_Positions.PositionID IS NOT NULL THEN 1 ELSE 0 END`; `ISNULL(...,-1)`. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 19 | IsOpenedFromIBAN | int | YES | Position opened from eMoney IBAN flag. Set via UPDATE JOIN to `External_*_opened_from_iban_parquet`; `ISNULL(...,-1)`. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 20 | IsClosedToIBAN | int | YES | Position closed to eMoney IBAN flag. Set via UPDATE JOIN to `External_*_closed_to_iban_parquet`; `ISNULL(...,-1)`. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 21 | IsRecurring | int | YES | Recurring investment position flag. Set via UPDATE JOIN to `External_bi_db_recurringinvestment_positions_parquet`; `ISNULL(...,-1)`. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 22 | IsAirDrop | int | YES | AirDrop (free share) flag. From revenue functions; `ISNULL(...,-1)`. AirDrop positions excluded from active trade counts. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 23 | IsSQF | int | YES | Sustainable & Quality-Focused instrument flag. From functions or `Function_Instrument_Snapshot_Enriched`; `ISNULL(...,-1)`. NULL for Dividends/SDRT. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 24 | RevenueMetricID | int | YES | Revenue metric dictionary ID. From `Dim_Revenue_Metrics.RevenueMetricID` via Metric text match. 12=Staking, 18=Options. Enables ID-based filtering. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 25 | RevenueMetricCategoryID | int | YES | Revenue category ID. From `Dim_Revenue_Metrics.RevenueMetricCategoryID`. Groups metrics into categories (4=Staking, 5=Options). (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 26 | IsMarginTrade | int | YES | Margin trade flag. From revenue functions; `ISNULL(...,-1)`. Forced 0 for SDRT and Options_PFOF. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
-| 27 | IsC2P | int | YES | Copy-to-Portfolio flag. `CASE WHEN V_C2P_Positions.PositionID IS NOT NULL THEN 1 ELSE 0 END`; `ISNULL(...,-1)`. NULL for non-position metrics. (Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions) |
+| 1 | DateID | int | YES | Business date key (**YYYYMMDD**) driving partition swaps; staking branch shifts Month+1 versus TVF-derived activity date; Options reload obeys TVF-supplied horizon. **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 2 | Date | date | YES | Calendar `DATE` mirrored from `@date` parameter on primary insert, TVF timestamps for Options, or derived calendar date when staking rewinds partitions. **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 3 | RealCID | int | YES | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. **(Tier 1 — Customer.CustomerStatic)** |
+| 4 | ActionTypeID | int | YES | Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. Derived from **`CreditTypeID`** & branch router in loader + positional feeds. **DDR note:** aggregated revenue streams coerce NULL → `ISNULL(...,-1)` at insert; `-1` marks non-trade metrics. **(Tier 1 — History.Credit / Trade snapshots / STS / Customer payloads)** |
+| 5 | ActionType | varchar(50) | YES | Verb text for streams — either `Dim_ActionType.Name` (commissions path) **or** literal identifiers (`Rollover`, `SDRT`, `'Redeem'` for TransferCoin aggregates, staking/options labels). **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 6 | InstrumentTypeID | int | YES | From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. **`ISNULL(...,-1)`** masks NULL account-level feeds. **(Tier 1 — Trade.GetInstrument)** |
+| 7 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. **DDR note:** `ISNULL(...,-1)` sentinel for streams lacking instruments. **(Tier 5 — Expert Review)** |
+| 8 | IsCopy | int | YES | `CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END` from revenue TVFs, then `ISNULL(...,-1)`; crypto-to-fiat branch forces `-1` post UPDATE. Indicates copy-trading linkage on applicable metrics. **(Tier 2 — Fact_CustomerAction.MirrorID logic via Function_Revenue_*)** |
+| 9 | Metric | varchar(50) | YES | Canonical revenue column label (`FullCommission`, `RollOverFee`, `TransferCoinFee`, `StakingLagOneMonth`, …) — enumerated in **`Dim_Revenue_Metrics.Metric`**. **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 10 | Amount | decimal(16,6) | YES | USD revenue amount aggregated per UNION/GROUP grain — sign reflects economic direction (negative dividend payouts retained). Populated strictly from enumerated TVF monetary columns summarized in **`§2.1`**. **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 11 | CountTransactions | int | YES | `COUNT`/`SUM` amalgamation counting instrumented actions per grain; `ISNULL(...,0)` enforced on insert (`ShareLending`/`Staking` may collapse NULL counts). **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 12 | IncludedInTotalRevenue | int | YES | True if this metric contributes to the canonical "Total Revenue" rollup; False for raw/pass-through entries (`Commission`, `Dividends`, `SDRT`). Filter on this when computing top-line revenue to avoid double-counting. **`SP_DDR`** post-processing forces `Metric='SDRT'` rows to **`0`** even if dictionary flipped historically. Stored as **`int` mirror** of **`Dim_Revenue_Metrics`** bit semantics. **(Tier 1 — UC sample)** |
+| 13 | CountAsActiveTrade | int | YES | **`CASE WHEN ActionTypeID IN (1,39) AND ISNULL(IsAirDrop,0) = 0 THEN 1 ELSE 0 END`** on commission feeders; flattened to **`0`** elsewhere before insert coercion. **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 14 | UpdateDate | datetime | YES | ETL stamp `GETDATE()` captured at each INSERT pass (main, options purge, staking window). **(Tier 2 — SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 15 | IsBuy | int | YES | **`1`** Long **`0`** Short; NULL ⇒ non-trade row sentinel — widened/truncated via `ISNULL(...,-1)` with dividend amount-based overrides (**`Metric='Dividends'`**) and **`CryptoToFiatFee`** sentinel `-1` path. **(Tier 1 — Trade.PositionTbl)** |
+| 16 | IsLeveraged | int | YES | Derived `CASE WHEN Leverage > 1 THEN 1 ELSE 0 END` sourced from BI_DB TVFs feeding position-level revenue; `ISNULL` packaging for lake merges. Admin fee branch aliases `Leverage` as `IsLeverage` inside grouping (typo tolerated). **(Tier 2 — Function_Revenue_FullCommissions / AdminFee lineage)** |
+| 17 | IsFuture | int | YES | Combination of TVF payloads and `Dim_Instrument.IsFuture` for admin/spot adjust branches (with `CryptoToFiatFee` forced `-1`). `ISNULL` packaging standard. **(Tier 2 — Dim_Instrument / Function_Revenue_TVF)** |
+| 18 | IsCopyFund | int | YES | **`CASE WHEN BI_DB_CopyFund_Positions.PositionID IS NOT NULL THEN 1 ELSE 0 END`** seeded via sequential updates on commission temps; `ISNULL` packaging. **(Tier 2 — BI_DB_CopyFund_Positions)** |
+| 19 | IsOpenedFromIBAN | int | YES | Indicator set via staged parquet + `Dim_Position`-aligned `UPDATE` overlays for eligible overnight/ticket/dividends positions (`1` once matched else `-1` sentinel via `ISNULL`). **(Tier 2 — External_bi_output_finance_bi_db_positions_opened_from_iban_parquet)** |
+| 20 | IsClosedToIBAN | int | YES | Same IBAN close-table overlay pattern as `IsOpenedFromIBAN`. **(Tier 2 — External_bi_output_finance_bi_db_positions_closed_to_iban_parquet)** |
+| 21 | IsRecurring | int | YES | Recurring investment overlay using `External_bi_db_recurringinvestment_positions_parquet`; `ConversionFee` branch also carries TVF `IsRecurring`. **(Tier 2 — External_bi_db_recurringinvestment_positions_parquet)** |
+| 22 | IsAirDrop | int | YES | Free-share flag sourced from BI_DB TVFs describing AirDrop exclusions for active-trade tallies (`ISNULL` packaging plus metric-specific coercion). **(Tier 2 — Function_Revenue_FullCommissions / Function_Revenue_Commissions)** |
+| 23 | IsSQF | int | YES | **`IsSQF` (SpotQuotedFuture flag) — 1 = instrument is a SpotQuotedFuture (a smaller-contract variant of eToro RealFutures, traded on the CME / Chicago Mercantile Exchange). 0 = not an SQF instrument. Source: `Function_Instrument_Snapshot_Enriched(@dateInt)` via membership in `Trade.InstrumentGroups` with `GroupID = 59`. ISNULL coalesces to -1 for streams where SQF classification doesn't apply (Dividends, SDRT, staking, deposit/withdraw fees). (Tier 5 — user expert correction; previously mis-described as "Sustainable & Quality-Focused")** |
+| 24 | RevenueMetricID | int | YES | Surrogate key. Stable integer 1-18 (with new entries appended). FK target from DDR fact tables when revenue is stored long-form. Seeds via `JOIN Dim_Revenue_Metrics`; staking (`12`) and options (`18`) forcibly seeded in dedicated branches prior to dictionary refresh. **(Tier 1 — UC sample)** |
+| 25 | RevenueMetricCategoryID | int | YES | Category surrogate key 1-5. 1=TradeTransactional, 2=Overnight, 3=MIMO, 4=RevShare, 5=Other — inherited from **`Dim_Revenue_Metrics`** (plus staking/options seeded pairs). **(Tier 1 — UC sample)** |
+| 26 | IsMarginTrade | int | YES | Mirrors TVF-supplied flag with SP-level overrides (`Metric='SDRT'` ⇒ `IsMarginTrade=0`; `Metric='Options_PFOF'` margin adjustments). **(Tier 2 — Function_Revenue_* / SP_DDR_Fact_Revenue_Generating_Actions)** |
+| 27 | IsC2P | int | YES | **`CASE WHEN V_C2P_Positions.PositionID IS NOT NULL THEN 1 ELSE 0 END`** on position-backed paths; `ISNULL` packaging for non-position metrics. **(Tier 2 — BI_DB_dbo.V_C2P_Positions)** |
 
 ---
 
 ## 5. Lineage
 
-### 5.1 Production Sources
+### 5.1 Production sources (representative)
 
-| Synapse Column | Production Source | Source Column | Transform |
-|---------------|-------------------|---------------|-----------|
-| Metric | — | — | Literal per revenue stream |
-| Amount | 16+ Function_Revenue_* | Fee columns | SUM per group |
-| ActionTypeID | Function_Revenue_FullCommissions/Commissions | ActionTypeID | passthrough; -1 for non-trading |
-| ActionType | Dim_ActionType / literal | Name | join-enriched or literal |
-| IncludedInTotalRevenue | Dim_Revenue_Metrics | IncludedInTotalRevenue | join-enriched |
-| RevenueMetricID | Dim_Revenue_Metrics | RevenueMetricID | join-enriched |
-| IsCopyFund | BI_DB_CopyFund_Positions | PositionID | join-enriched |
-| IsOpenedFromIBAN | External_*_opened_from_iban_parquet | PositionID | join-enriched via UPDATE |
-| IsC2P | V_C2P_Positions | PositionID | join-enriched |
+| Synapse column | Production / DWH origin | Source column | Transform |
+|----------------|------------------------|---------------|-----------|
+| RealCID | `Customer.CustomerStatic` (via `Fact_CustomerAction`) | `RealCID` | TVF passthrough + aggregation |
+| Amount | Enumerated TVF-specific fee columns (see **§2.1**) | Various | `SUM` / `COUNT` |
+| InstrumentTypeID | `Trade.GetInstrument` / `Dim_Instrument` | `InstrumentTypeID` | cast + sentinel |
+| IsSQF | `Trade.InstrumentGroups` (**GroupID=59**) via `Function_Instrument_Snapshot_Enriched` staging join | Derived flag | Instrument membership |
 
-### 5.2 ETL Pipeline
+### 5.2 ETL pipeline sketch
 
 ```
-16+ Function_Revenue_* TVFs (position/account/crypto/platform-level fees)
-  + BI_DB_CopyFund_Positions (IsCopyFund)
-  + V_C2P_Positions (IsC2P)
-  + External_*_parquet (IsOpenedFromIBAN, IsClosedToIBAN, IsRecurring)
-  + Dim_Position (date filtering for IBAN positions)
-  + Dim_ActionType (action name resolution)
-  + Dim_Instrument (IsFuture for AdminFee/SpotAdjust)
-  + Dim_Revenue_Metrics (IDs + IncludedInTotalRevenue)
-  |
-  |-- SP_DDR_Fact_Revenue_Generating_Actions(@date):
-  |     Position enrichment → overnight fees → trading fees → account fees → crypto fees
-  |     UNION ALL 17 streams → #revenue
-  |     Post-UNION UPDATEs (C2F/Dividend/SDRT nulls)
-  |     DELETE/INSERT by DateID (JOIN Dim_Revenue_Metrics)
-  |     + Options full reload (RevenueMetricID=18)
-  |     + Staking monthly reload (RevenueMetricID=12)
-  v
-BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions (3.1B rows)
+Generic Pipeline Bronze/DWH ingestion → DWH Facts/Dims (+ lake parquet overlays)
+               │
+ BI_DB Revenue TVFs (Function_Revenue_*) ──► temp tables (#rollovers … #staking, #optionsalltime)
+               │
+ BI_DB.SP_DDR_Fact_Revenue_Generating_Actions (@date parameter)
+               │ DELETE target WHERE DateID=@dateID
+               │ INSERT #revenue (union of all metrics)
+               │ DELETE/INSERT RevenueMetricID=18 (Options history)
+               │ DELETE month slice RevenueMetricID=12 + INSERT staking lag rows
+               ▼
+ BI_DB_DDR_Fact_Revenue_Generating_Actions (Synapse)
+               │ Generic Pipeline (Override delta)
+               ▼
+ main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_revenue_generating_actions
 ```
 
-| Step | Object | Description |
-|------|--------|-------------|
-| Sources | 16+ Function_Revenue_* | Position/account/crypto/platform-level fee calculations |
-| Enrichment | CopyFund_Positions, V_C2P, External_*_parquet | Flag enrichment by PositionID |
-| ETL | SP_DDR_Fact_Revenue_Generating_Actions | Multi-stream UNION, aggregation, ISNULL(-1), metric dictionary JOIN |
-| Target | BI_DB_DDR_Fact_Revenue_Generating_Actions | Master revenue fact table |
+```text
+UPSTREAM SEARCH LOG — BI_DB_DDR_Fact_Revenue_Generating_Actions:
+  Lineage source objects:
+    1. Function_Revenue_* family (fact: TVF aggregates) → Local BI_DB wiki (Functions/*.md): FOUND Read YES — enumerates Fact_CustomerAction joins etc.
+    2. Fact_CustomerAction → knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md FOUND Read YES — ActionTypeID, IsBuy, dual semantics prose
+    3. Dim_Customer → FOUND Read YES — RealCID verbatim description
+    4. Dim_Instrument → FOUND Read YES — InstrumentTypeID reference set
+    5. Dim_Revenue_Metrics → FOUND Read YES — Inclusion/category columns
+    6. BI_DB_CopyFund_Positions → NOT_FOUND dedicated wiki — rely on SP overlay description (Tier 2)
+    7. V_C2P_Positions → NOT_FOUND standalone wiki — SP-only reference (Tier 2)
+    8. Parade IBAN parquet externals → NOT_FOUND wiki → Tier 2 external overlay
+    9. Fact_CustomerAction.md + Function_Revenue_TransferCoinFee.md → FOUND Read YES for transfercoin predicates
+```
 
 ---
 
 ## 6. Relationships
 
-### 6.1 References To (this object points to)
+### 6.1 References to
 
-| Element | Related Object | Description |
-|---------|---------------|-------------|
-| RealCID | DWH_dbo.Dim_Customer | Customer dimension |
-| InstrumentTypeID | DWH_dbo.Dim_InstrumentType | Instrument class (filter -1) |
-| ActionTypeID | DWH_dbo.Dim_ActionType | Action type name (filter -1) |
-| RevenueMetricID | BI_DB_dbo.Dim_Revenue_Metrics | Revenue metric dictionary |
+| Element bundle | Related object | Notes |
+|----------------|----------------|-------|
+| `Metric`, `RevenueMetricID`, `IncludedInTotalRevenue` | `BI_DB_dbo.Dim_Revenue_Metrics` | Inclusion + category semantics |
+| `ActionTypeID` (non sentinel) | `DWH_dbo.Dim_ActionType` | Naming / classification joins |
+| `RealCID` | `DWH_dbo.Dim_Customer`, `Fact_SnapshotCustomer` (+ Genie composites) | Standard customer spine |
 
-### 6.2 Referenced By (other objects point to this)
+### 6.2 Referenced by
 
-| Source Object | Source Element | Description |
-|--------------|---------------|-------------|
-| BI_DB_dbo.BI_DB_DDR_CID_Level | — | CID-level daily DDR aggregation |
-| BI_DB_dbo.Function_DDR_Aggregation_* | — | Time-range aggregation functions |
+UC Genie **`etoro_kpi_prep`** `v_revenue_*` mirrored views, dashboards, notebooks pulling **`main.bi_db.gold_*`**, and downstream KPI prep bundles — exact consumer list rotates; search Unity Catalog dependents before refactors.
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Total revenue by stream for a date
+### 7.1 Full vs net commission split
 
 ```sql
 SELECT Metric,
-       SUM(Amount) AS Revenue,
-       SUM(CountTransactions) AS Transactions
-FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
-WHERE DateID = 20260309
-  AND IncludedInTotalRevenue = 1
-GROUP BY Metric
-ORDER BY Revenue DESC;
+       SUM(Amount) AS usd_amt
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+WHERE  DateID BETWEEN 20260101 AND 20260131
+  AND  Metric IN ('FullCommission','Commission')
+GROUP BY Metric;
 ```
 
-### 7.2 Customer revenue breakdown
+### 7.2 Top-line revenue only
+
+```sql
+SELECT DateID,
+       SUM(Amount) AS top_line_rev
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions f
+JOIN   BI_DB_dbo.Dim_Revenue_Metrics drm
+       ON drm.Metric = f.Metric
+WHERE  IncludedInTotalRevenue = 1
+GROUP BY DateID
+ORDER BY DateID DESC;
+```
+
+### 7.3 SpotQuotedFuture slice for futures analytics
 
 ```sql
 SELECT Metric,
-       SUM(Amount) AS Revenue
-FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
-WHERE RealCID = 12345678
-  AND DateID BETWEEN 20260301 AND 20260309
-  AND IncludedInTotalRevenue = 1
-GROUP BY Metric
-ORDER BY Revenue DESC;
-```
-
-### 7.3 IBAN-originated vs standard revenue
-
-```sql
-SELECT CASE WHEN IsOpenedFromIBAN = 1 THEN 'IBAN' ELSE 'Standard' END AS Source,
-       SUM(Amount) AS Revenue
-FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
-WHERE DateID = 20260309
-  AND IncludedInTotalRevenue = 1
-  AND IsOpenedFromIBAN IN (0, 1)
-GROUP BY CASE WHEN IsOpenedFromIBAN = 1 THEN 'IBAN' ELSE 'Standard' END;
+       AVG(CAST(IsSQF AS FLOAT)) AS sqf_activation_rate -- exploratory; mind sentinel -1 filtering
+FROM   BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+WHERE  DateID = 20260425 AND IsSQF >= 0
+GROUP BY Metric;
 ```
 
 ---
 
 ## 8. Atlassian Knowledge Sources
 
-No Atlassian sources found for this object.
+**Phase 10 skipped** — Confluence/Jira queries not executed (`plugin-atlassian-atlassian` MCP not invoked this session).
 
 ---
 
-*Generated: 2026-03-26 | Quality: 8.5/10 (★★★★☆) | Phases: 14/14*
-*Tiers: 2 T1, 25 T2, 0 T3, 0 T4 [UNVERIFIED], 0 T5 | Elements: 10/10, Logic: 9/10, Relationships: 7/10, Sources: 7/10*
-*Object: BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions | Type: Table | Production Source: 16+ Function_Revenue_* TVFs + Dim_Revenue_Metrics*
+*Generated: 2026-05-14 | Quality: **8.4**/10 | Phases: P1‑P16 (Atlassian SOFT skip) | Encoding: UTF-8*  
+*Tiers: 7×T1 · 18×T2 · 2×T5 — Elements **27**/27 DDL columns (parity ✅)*  
+*Synapse MCP row estimate **3 162 411 783** rows | Date span **20100103–20260425** (`DateID`)*  
+*Object: BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions*

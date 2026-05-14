@@ -76,9 +76,9 @@ INSERT FROM #final LEFT JOIN #activity
 |---|--------|------|------|-------------|
 | 1 | RealCID | int NOT NULL | T1 — Customer.CustomerStatic | Customer ID — platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. |
 | 2 | GCID | int NOT NULL | T1 — Customer.CustomerStatic | Group Customer ID — cross-product identity key linking the same person across eToro products/entities. NULL for older accounts predating GCID introduction. |
-| 3 | PlayerLevelID | int NULL | T1 — Customer.CustomerStatic | Customer experience/permission level. FK to Dictionary.PlayerLevel. 1=Standard, 4=Popular Investor, 7=VIP. Determines available features and risk limits. Default=0. |
+| 3 | PlayerLevelID | int NULL | T1 — Customer.CustomerStatic | Customer experience/permission level. FK to Dictionary.PlayerLevel. 1=Bronze, 4=Internal, 7=Diamond. Determines available features and risk limits. Default=0. |
 | 4 | Club | varchar(50) NULL | T1 — Dictionary.PlayerLevel | Player level tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Renamed from Dim_PlayerLevel.Name via PlayerLevelID JOIN. Used in BackOffice reporting JOINs and customer-facing UI. |
-| 5 | IsValidCustomer | int NULL | T1 — SP_Dim_Customer (DWH-computed) | DWH-computed: 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. |
+| 5 | IsValidCustomer | int NULL | T1 — SP_Dim_Customer (DWH-computed) | DWH-computed: 1 when not Internal (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. |
 | 6 | CountryID | int NULL | T1 — Customer.CustomerStatic | Country of residence. FK to Dictionary.Country. Determines regulatory framework, available instruments, and leverage limits. Default=0. |
 | 7 | Country | varchar(100) NULL | T1 — Dictionary.Country | Full country name in English. Resolved from CountryID via Dim_Country JOIN. Unique per CountryID. Used in compliance documents and analytical reports. |
 | 8 | RegulationID | int NULL | T1 — BackOffice.Customer | Regulatory entity governing this account. FK to Dictionary.Regulation. Always 10 (ASIC) in this table — population filter RegulationID=10 applied at source. |

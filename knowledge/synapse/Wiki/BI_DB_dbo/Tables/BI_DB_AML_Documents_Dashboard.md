@@ -120,7 +120,7 @@ Data is sourced from 6 external tables pointing to production `etoro.BackOffice.
 | 3 | FirstDepositDate | datetime | YES | Date of first deposit. DEFAULT='19000101'. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. (Tier 2 — SP_Dim_Customer) |
 | 4 | FirstDepositAmount | money | YES | Amount of first deposit (in USD). Updated from FTDAmountInUsd. (Tier 2 — SP_Dim_Customer) |
 | 5 | VerificationLevelID | int | YES | KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Default=0. (Tier 1 — BackOffice.Customer) |
-| 6 | IsValidCustomer | int | YES | DWH-computed: 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. (Tier 2 — SP_Dim_Customer) |
+| 6 | IsValidCustomer | int | YES | DWH-computed: 1 when not Internal (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Used in reporting to filter out non-standard customers. (Tier 2 — SP_Dim_Customer) |
 | 7 | IsDepositor | int | YES | Whether the customer has ever deposited. DEFAULT=0. Updated post-load from FTD data. (Tier 2 — SP_Dim_Customer) |
 | 8 | BirthDate | datetime | YES | Customer date of birth. Used in KYC age verification. PII field. (Tier 1 — Customer.CustomerStatic) |
 | 9 | Gender | varchar(500) | YES | Gender: M, F, or U (Unknown). CHECK constraint CCST_GENDER enforces these three values only in Dim_Customer. Stored as varchar(500) here (over-sized). (Tier 1 — Customer.CustomerStatic) |

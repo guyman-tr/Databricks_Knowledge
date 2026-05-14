@@ -153,7 +153,7 @@ FROM eMoney_Customer_Risk_Assessment_History h
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 9 | VerificationLevelID | int | YES | KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Default=0. (Tier 1 — BackOffice.Customer) |
-| 10 | IsValidCustomer | int | YES | DWH-computed validity flag from Dim_Customer. 1 when not Popular Investor (PlayerLevelID≠4), not label 30/26, and CountryID≠250. Used for filtering non-standard customer profiles. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
+| 10 | IsValidCustomer | int | YES | DWH-computed validity flag from Dim_Customer. 1 when not Internal (PlayerLevelID≠4), not label 30/26, and CountryID≠250. Used for filtering non-standard customer profiles. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 | 11 | IsDepositor | int | YES | 1 if the customer has made at least one deposit on the eToro trading platform. Sourced from Dim_Customer. Used in certain eTM analytics filters. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 | 12 | AccountType | varchar(50) | YES | Trading platform account type display name, resolved from DWH_dbo.Dim_AccountType via AccountTypeID. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |
 | 13 | Regulation | varchar(50) | YES | Regulatory jurisdiction display name, resolved from DWH_dbo.Dim_Regulation via RegulationID. Top values: CySEC, FCA, BVI, ASIC, GAML. (Tier 2 — SP_eMoney_Customer_Risk_Assessment) |

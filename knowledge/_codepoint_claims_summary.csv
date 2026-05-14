@@ -1,0 +1,976 @@
+column,codepoint,claimed_label,verdict,tier1_truth_name,occurrences,claimed_label_normalized
+ContractType,3,RevShare,MISMATCH,Rev,2,revshare
+ContractType,4,Hybrid,MISMATCH,Hyb,2,hybrid
+ContractType,7,Zero Commission,MISMATCH,ZeroCost,2,zero commission
+ContractType,8,CPL/CPR,MISMATCH,CPL,2,cpl cpr
+TxTypeID,11,CreditBankAccount,MISMATCH,CreditBA,2,creditbankaccount
+TxTypeID,12,DebitBankAccount,MISMATCH,DebitBA,2,debitbankaccount
+TxTypeID,13,OnlinePayment,MISMATCH,DirectDebit,2,onlinepayment
+TxTypeID,14,DirectDebit,MISMATCH,CryptoToFiat,2,directdebit
+TxTypeID,2,ContactlessPayment,MISMATCH,Contactless,2,contactlesspayment
+TxTypeID,3,CardCashWithdrawal,MISMATCH,OnlinePayment,2,cardcashwithdrawal
+TxTypeID,4,CardRefund,MISMATCH,CashWithdrawal,2,cardrefund
+TxTypeID,5,Transfer,MISMATCH,TransferReceived,2,transfer
+TxTypeID,6,TransferReceived,MISMATCH,Transfer,2,transferreceived
+AccountTypeID,1,Personal,MISMATCH,Private,1,personal
+ActionTypeID,1,Post,MISMATCH,ManualPositionOpen,1,post
+ActionTypeID,1,Sent,MISMATCH,ManualPositionOpen,1,sent
+ActionTypeID,2,Comment,MISMATCH,CopyPositionOpen,1,comment
+ActionTypeID,2,Recive,MISMATCH,CopyPositionOpen,1,recive
+ActionTypeID,3,Like,MISMATCH,CopyPlusPositionOpen,1,like
+ActionTypeID,4,Share,MISMATCH,ManualPositionClose,1,share
+ActionTypeID,5,Automatic Post,MISMATCH,CopyPositionClose,1,automatic post
+CurrencyID,1,USD,MISMATCH,"United States of America, US Dollar",1,usd
+CurrencyID,2,EUR,MISMATCH,"European Economic and Monetary Union (EMU), Euro",1,eur
+CurrencyID,3,GBP,MISMATCH,"Great Britain, Pound Sterling",1,gbp
+FundingTypeID,8,MoneyBookers/Skrill,MISMATCH,MoneyBookers,1,moneybookers skrill
+InstrumentTypeID,1,Currencies/Forex,MISMATCH,Currencies,1,currencies forex
+PlayerStatusID,1,Active/Registered,MISMATCH,Normal,1,active registered
+ConversionStatusID,4,Rejected,UNKNOWN_CODEPOINT,,2,rejected
+MoveMoneyReasonID,5,InternalTransfer Trade,UNKNOWN_CODEPOINT,,2,internaltransfer trade
+MoveMoneyReasonID,6,InternalTransfer,UNKNOWN_CODEPOINT,,2,internaltransfer
+MoveMoneyReasonID,8,Recurring Deposit,UNKNOWN_CODEPOINT,,2,recurring deposit
+MoveMoneyReasonID,9,Recurring Investment,UNKNOWN_CODEPOINT,,2,recurring investment
+TxStatusID,6,Reserved,UNKNOWN_CODEPOINT,,2,reserved
+TxStatusID,7,Cancelled,UNKNOWN_CODEPOINT,,2,cancelled
+InstrumentTypeID,12,ETFs,UNKNOWN_CODEPOINT,,1,etfs
+InstrumentTypeID,3,Commodities,UNKNOWN_CODEPOINT,,1,commodities
+InstrumentTypeID,73,Currencies,UNKNOWN_CODEPOINT,,1,currencies
+InstrumentTypeID,9,Options,UNKNOWN_CODEPOINT,,1,options
+LastWalletPoolStatus,10,Timeout,UNKNOWN_CODEPOINT,,1,timeout
+LastWalletPoolStatus,11,VerifiedForAssign,UNKNOWN_CODEPOINT,,1,verifiedforassign
+MoveMoneyReasonID,7,Not In Use,UNKNOWN_CODEPOINT,,1,not in use
+TransactionTypeID,15,CustomerMoneyBack,UNKNOWN_CODEPOINT,,1,customermoneyback
+DocsOK,1,OK,UNRESOLVED_DICTIONARY,,8,ok
+InProcessCashout,3,Processed,UNRESOLVED_DICTIONARY,,5,processed
+InProcessCashout,4,Cancelled,UNRESOLVED_DICTIONARY,,5,cancelled
+Compensation,11,NegRefill,UNRESOLVED_DICTIONARY,,4,negrefill
+Compensation,19,NWAAdj,UNRESOLVED_DICTIONARY,,4,nwaadj
+Compensation,22,PnLAdj,UNRESOLVED_DICTIONARY,,4,pnladj
+Compensation,30,DormantFee,UNRESOLVED_DICTIONARY,,4,dormantfee
+Compensation,31,LostDebt,UNRESOLVED_DICTIONARY,,4,lostdebt
+Compensation,32,Foreclosure,UNRESOLVED_DICTIONARY,,4,foreclosure
+Compensation,33,CompCashout,UNRESOLVED_DICTIONARY,,4,compcashout
+Compensation,50,PI,UNRESOLVED_DICTIONARY,,4,pi
+Compensation,52,Affiliate,UNRESOLVED_DICTIONARY,,4,affiliate
+Compensation,7,CompDeposit,UNRESOLVED_DICTIONARY,,4,compdeposit
+IsSettled,0,CFD,UNRESOLVED_DICTIONARY,,4,cfd
+SettlementTypeID,0,CFD,UNRESOLVED_DICTIONARY,,4,cfd
+IsBuy,1,Long,UNRESOLVED_DICTIONARY,,3,long
+IsCFD,1,CFD,UNRESOLVED_DICTIONARY,,3,cfd
+RiskGroupID,0,None,UNRESOLVED_DICTIONARY,,3,none
+AccountActivated,1,Active,UNRESOLVED_DICTIONARY,,2,active
+BlockchainCryptoId,1,BTC,UNRESOLVED_DICTIONARY,,2,btc
+BlockchainCryptoId,2,ETH,UNRESOLVED_DICTIONARY,,2,eth
+CloseMirrorActionType,0,Customer,UNRESOLVED_DICTIONARY,,2,customer
+CloseMirrorActionType,1,Stop Loss,UNRESOLVED_DICTIONARY,,2,stop loss
+CloseMirrorActionType,2,BSL,UNRESOLVED_DICTIONARY,,2,bsl
+CloseMirrorActionType,3,Manual Liquidation,UNRESOLVED_DICTIONARY,,2,manual liquidation
+CloseMirrorActionType,4,BackOffice,UNRESOLVED_DICTIONARY,,2,backoffice
+CloseMirrorActionType,5,Customer Detach,UNRESOLVED_DICTIONARY,,2,customer detach
+CloseMirrorActionType,6,BackOffice Detach,UNRESOLVED_DICTIONARY,,2,backoffice detach
+ClubID,1,Bronze,UNRESOLVED_DICTIONARY,,2,bronze
+ClubID,2,Platinum,UNRESOLVED_DICTIONARY,,2,platinum
+ClubID,3,Gold,UNRESOLVED_DICTIONARY,,2,gold
+ClubID,5,Silver,UNRESOLVED_DICTIONARY,,2,silver
+ClubID,6,Platinum Plus,UNRESOLVED_DICTIONARY,,2,platinum plus
+ClubID,7,Diamond,UNRESOLVED_DICTIONARY,,2,diamond
+CurrencyIson,208,DKK,UNRESOLVED_DICTIONARY,,2,dkk
+CurrencyIson,36,AUD,UNRESOLVED_DICTIONARY,,2,aud
+CurrencyIson,826,GBP,UNRESOLVED_DICTIONARY,,2,gbp
+CurrencyIson,978,EUR,UNRESOLVED_DICTIONARY,,2,eur
+FieldID,6,TaxId,UNRESOLVED_DICTIONARY,,2,taxid
+FieldID,7,NationalPin,UNRESOLVED_DICTIONARY,,2,nationalpin
+HolderCurrencyISO,208,DKK,UNRESOLVED_DICTIONARY,,2,dkk
+HolderCurrencyISO,826,GBP,UNRESOLVED_DICTIONARY,,2,gbp
+HolderCurrencyISO,978,EUR,UNRESOLVED_DICTIONARY,,2,eur
+InstanceStatus,0,NotActivated,UNRESOLVED_DICTIONARY,,2,notactivated
+InstanceStatus,1,Activated,UNRESOLVED_DICTIONARY,,2,activated
+InstanceStatus,2,Blocked,UNRESOLVED_DICTIONARY,,2,blocked
+InstanceStatus,3,Suspended,UNRESOLVED_DICTIONARY,,2,suspended
+InstanceStatus,4,Risk,UNRESOLVED_DICTIONARY,,2,risk
+InstanceStatus,5,Stolen,UNRESOLVED_DICTIONARY,,2,stolen
+InstanceStatus,6,Lost,UNRESOLVED_DICTIONARY,,2,lost
+InstanceStatus,7,Expired,UNRESOLVED_DICTIONARY,,2,expired
+InstanceStatus,8,Fraud,UNRESOLVED_DICTIONARY,,2,fraud
+IsBuy,0,Short/Sell,UNRESOLVED_DICTIONARY,,2,short sell
+IsBuy,0,Short,UNRESOLVED_DICTIONARY,,2,short
+IsBuy,1,Long/Buy,UNRESOLVED_DICTIONARY,,2,long buy
+IsFeeDividend,3,SDRT,UNRESOLVED_DICTIONARY,,2,sdrt
+MoneyMoveDirection,0,MoneyOut,UNRESOLVED_DICTIONARY,,2,moneyout
+MoneyMoveDirection,0,MoneyIn,UNRESOLVED_DICTIONARY,,2,moneyin
+MoneyMoveDirection,0,Error,UNRESOLVED_DICTIONARY,,2,error
+P22_Response,33,HRC,UNRESOLVED_DICTIONARY,,2,hrc
+PhoneVerifiedDate,1,AutomaticallyVerified,UNRESOLVED_DICTIONARY,,2,automaticallyverified
+PhoneVerifiedDate,2,ManuallyVerified,UNRESOLVED_DICTIONARY,,2,manuallyverified
+ProgramId,175,UK IBANO,UNRESOLVED_DICTIONARY,,2,uk ibano
+ProgramId,176,EU TEST IBANO,UNRESOLVED_DICTIONARY,,2,eu test ibano
+ProgramId,177,EU IBANO,UNRESOLVED_DICTIONARY,,2,eu ibano
+ProgramId,178,UK FTD,UNRESOLVED_DICTIONARY,,2,uk ftd
+ProgramId,179,EU FTD,UNRESOLVED_DICTIONARY,,2,eu ftd
+ProgramId,180,UK GBP FOR UAE,UNRESOLVED_DICTIONARY,,2,uk gbp for uae
+ProgramId,181,EU TEST BC,UNRESOLVED_DICTIONARY,,2,eu test bc
+ProgramId,182,EU Card,UNRESOLVED_DICTIONARY,,2,eu card
+ProgramId,183,Banking Circle AUD Account,UNRESOLVED_DICTIONARY,,2,banking circle aud account
+ProgramId,184,Banking Circle DKK Account,UNRESOLVED_DICTIONARY,,2,banking circle dkk account
+ProgramId,185,Banking Circle DKK Test,UNRESOLVED_DICTIONARY,,2,banking circle dkk test
+ProgramId,186,Banking Circle AUD Test,UNRESOLVED_DICTIONARY,,2,banking circle aud test
+ProgramId,39,UK CARD GBP,UNRESOLVED_DICTIONARY,,2,uk card gbp
+SettlementTypeID,1,REAL,UNRESOLVED_DICTIONARY,,2,real
+SettlementTypeID,2,TRS,UNRESOLVED_DICTIONARY,,2,trs
+SettlementTypeID,3,CMT,UNRESOLVED_DICTIONARY,,2,cmt
+SettlementTypeID,4,REAL_FUTURES,UNRESOLVED_DICTIONARY,,2,real futures
+SettlementTypeID,5,MARGIN_TRADE,UNRESOLVED_DICTIONARY,,2,margin trade
+SubChannelID,1,Affiliate Partners,UNRESOLVED_DICTIONARY,,2,affiliate partners
+SubChannelID,2,SEM,UNRESOLVED_DICTIONARY,,2,sem
+SubChannelID,3,SEO,UNRESOLVED_DICTIONARY,,2,seo
+TargetPlatformID,1,IbanAccount,UNRESOLVED_DICTIONARY,,2,ibanaccount
+TargetPlatformID,2,EtoroPlatform,UNRESOLVED_DICTIONARY,,2,etoroplatform
+TargetPlatformID,3,EtoroPosition,UNRESOLVED_DICTIONARY,,2,etoroposition
+Verified,0,Unverified,UNRESOLVED_DICTIONARY,,2,unverified
+Verified,1,Level 1,UNRESOLVED_DICTIONARY,,2,level 1
+Verified,2,Level 2,UNRESOLVED_DICTIONARY,,2,level 2
+Verified,3,Fully Verified,UNRESOLVED_DICTIONARY,,2,fully verified
+ActiveTraded,15,OpenMirror,UNRESOLVED_DICTIONARY,,1,openmirror
+ActiveTraded,17,AddMirror,UNRESOLVED_DICTIONARY,,1,addmirror
+ActiveTraded_ThisMonth,15,OpenMirror,UNRESOLVED_DICTIONARY,,1,openmirror
+ActiveTraded_ThisMonth,17,AddMirror,UNRESOLVED_DICTIONARY,,1,addmirror
+ActiveTraded_ThisQuarter,15,OpenMirror,UNRESOLVED_DICTIONARY,,1,openmirror
+ActiveTraded_ThisQuarter,17,AddMirror,UNRESOLVED_DICTIONARY,,1,addmirror
+ActiveTraded_ThisWeek,15,OpenMirror,UNRESOLVED_DICTIONARY,,1,openmirror
+ActiveTraded_ThisWeek,17,AddMirror,UNRESOLVED_DICTIONARY,,1,addmirror
+ActiveTraded_ThisYear,15,OpenMirror,UNRESOLVED_DICTIONARY,,1,openmirror
+ActiveTraded_ThisYear,17,AddMirror,UNRESOLVED_DICTIONARY,,1,addmirror
+Approved,1,Approved,UNRESOLVED_DICTIONARY,,1,approved
+BalanceAdjustments,11,CREDIT_ADJUSTMENT,UNRESOLVED_DICTIONARY,,1,credit adjustment
+BalanceAdjustments,13,DEBIT_ADJUSTMENT,UNRESOLVED_DICTIONARY,,1,debit adjustment
+BalanceAdjustments,31,GUI,UNRESOLVED_DICTIONARY,,1,gui
+BalanceAdjustments,32,PM API,UNRESOLVED_DICTIONARY,,1,pm api
+BlockchainCryptoId,18,ADA,UNRESOLVED_DICTIONARY,,1,ada
+BlockchainCryptoId,19,DOGE,UNRESOLVED_DICTIONARY,,1,doge
+BlockchainCryptoId,21,XLM,UNRESOLVED_DICTIONARY,,1,xlm
+BlockchainCryptoId,23,EOS,UNRESOLVED_DICTIONARY,,1,eos
+BlockchainCryptoId,27,TRX,UNRESOLVED_DICTIONARY,,1,trx
+BlockchainCryptoId,3,BCH,UNRESOLVED_DICTIONARY,,1,bch
+BlockchainCryptoId,4,XRP,UNRESOLVED_DICTIONARY,,1,xrp
+BlockchainCryptoId,6,LTC,UNRESOLVED_DICTIONARY,,1,ltc
+BlockchainCryptoId,64,SOL,UNRESOLVED_DICTIONARY,,1,sol
+BlockchainCryptoId,8,ETC,UNRESOLVED_DICTIONARY,,1,etc
+BonusStatusID,0,New,UNRESOLVED_DICTIONARY,,1,new
+BonusStatusID,1,Approved,UNRESOLVED_DICTIONARY,,1,approved
+BonusStatusID,2,Declined,UNRESOLVED_DICTIONARY,,1,declined
+BonusStatusID,3,Reverted,UNRESOLVED_DICTIONARY,,1,reverted
+CanDeposit,1,OpenBook DesktopWeb,UNRESOLVED_DICTIONARY,,1,openbook desktopweb
+CanDeposit,2,Trader DesktopWeb,UNRESOLVED_DICTIONARY,,1,trader desktopweb
+CanDeposit,3,OpenBook MobileWeb,UNRESOLVED_DICTIONARY,,1,openbook mobileweb
+CanDeposit,4,Trader MobileWeb InDev,UNRESOLVED_DICTIONARY,,1,trader mobileweb indev
+CashoutModeWeight,0,Manual,UNRESOLVED_DICTIONARY,,1,manual
+CashoutModeWeight,10,Auto Create,UNRESOLVED_DICTIONARY,,1,auto create
+CashoutModeWeight,20,Mass Auto Create,UNRESOLVED_DICTIONARY,,1,mass auto create
+CashoutModeWeight,30,Instant Withdrawal,UNRESOLVED_DICTIONARY,,1,instant withdrawal
+CashoutStatusID_Funding,14,Pending Review,UNRESOLVED_DICTIONARY,,1,pending review
+CashoutStatusID_Funding,17,Partially Reversed,UNRESOLVED_DICTIONARY,,1,partially reversed
+CashoutStatusID_Funding,3,Processed,UNRESOLVED_DICTIONARY,,1,processed
+CashoutStatusID_Funding,4,Canceled,UNRESOLVED_DICTIONARY,,1,canceled
+CashoutStatusID_Withdraw,1,Pending,UNRESOLVED_DICTIONARY,,1,pending
+CashoutStatusID_Withdraw,2,InProcess,UNRESOLVED_DICTIONARY,,1,inprocess
+CashoutStatusID_Withdraw,3,Processed,UNRESOLVED_DICTIONARY,,1,processed
+CashoutStatusID_Withdraw,4,Cancelled,UNRESOLVED_DICTIONARY,,1,cancelled
+CashoutTypeID,1,Cashout,UNRESOLVED_DICTIONARY,,1,cashout
+CashoutTypeID,2,Refund,UNRESOLVED_DICTIONARY,,1,refund
+CategoryID,0,N/A,UNRESOLVED_DICTIONARY,,1,n a
+CategoryID,10,DetachPosition,UNRESOLVED_DICTIONARY,,1,detachposition
+CategoryID,11,Edit StopLoss,UNRESOLVED_DICTIONARY,,1,edit stoploss
+CategoryID,12,End Of The Week Fee,UNRESOLVED_DICTIONARY,,1,end of the week fee
+CategoryID,13,LoggedIn,UNRESOLVED_DICTIONARY,,1,loggedin
+CategoryID,15,Open CRM Case,UNRESOLVED_DICTIONARY,,1,open crm case
+CategoryID,16,Open Stock Order,UNRESOLVED_DICTIONARY,,1,open stock order
+CategoryID,17,PositionClose,UNRESOLVED_DICTIONARY,,1,positionclose
+CategoryID,18,PositionOpen,UNRESOLVED_DICTIONARY,,1,positionopen
+CategoryID,19,Processed Cashout,UNRESOLVED_DICTIONARY,,1,processed cashout
+CategoryID,2,Bonus,UNRESOLVED_DICTIONARY,,1,bonus
+CategoryID,20,Refund,UNRESOLVED_DICTIONARY,,1,refund
+CategoryID,21,Refund As ChargeBack,UNRESOLVED_DICTIONARY,,1,refund as chargeback
+CategoryID,25,UserEngagement,UNRESOLVED_DICTIONARY,,1,userengagement
+CategoryID,26,WallEngagement,UNRESOLVED_DICTIONARY,,1,wallengagement
+CategoryID,27,Customer Registration,UNRESOLVED_DICTIONARY,,1,customer registration
+CategoryID,28,Reverse Deposit,UNRESOLVED_DICTIONARY,,1,reverse deposit
+CategoryID,3,Cashier Loggin,UNRESOLVED_DICTIONARY,,1,cashier loggin
+CategoryID,4,Cashout/Withdraw,UNRESOLVED_DICTIONARY,,1,cashout withdraw
+CategoryID,6,Chargeback,UNRESOLVED_DICTIONARY,,1,chargeback
+CategoryID,7,Compensation,UNRESOLVED_DICTIONARY,,1,compensation
+CategoryID,8,Deposit,UNRESOLVED_DICTIONARY,,1,deposit
+CategoryID,9,DepositAttempt,UNRESOLVED_DICTIONARY,,1,depositattempt
+ChangeTypeID,13,Unknown,UNRESOLVED_DICTIONARY,,1,unknown
+ChangeTypeID,2,Unknown,UNRESOLVED_DICTIONARY,,1,unknown
+ChangeTypeID,5,Unknown,UNRESOLVED_DICTIONARY,,1,unknown
+ClubID,0,N/A,UNRESOLVED_DICTIONARY,,1,n a
+ClubID,4,Internal,UNRESOLVED_DICTIONARY,,1,internal
+Club_ID,0,N/A,UNRESOLVED_DICTIONARY,,1,n a
+Club_ID,1,Bronze,UNRESOLVED_DICTIONARY,,1,bronze
+Club_ID,2,Platinum,UNRESOLVED_DICTIONARY,,1,platinum
+Club_ID,3,Gold,UNRESOLVED_DICTIONARY,,1,gold
+Club_ID,5,Silver,UNRESOLVED_DICTIONARY,,1,silver
+Club_ID,6,Platinum Plus,UNRESOLVED_DICTIONARY,,1,platinum plus
+Club_ID,7,Diamond,UNRESOLVED_DICTIONARY,,1,diamond
+CryptoID,2,Bitcoin,UNRESOLVED_DICTIONARY,,1,bitcoin
+CurrencyBalanceISOCode,208,DKK,UNRESOLVED_DICTIONARY,,1,dkk
+CurrencyBalanceISOCode,36,AUD,UNRESOLVED_DICTIONARY,,1,aud
+CurrencyBalanceISOCode,826,GBP,UNRESOLVED_DICTIONARY,,1,gbp
+CurrencyBalanceISOCode,978,EUR,UNRESOLVED_DICTIONARY,,1,eur
+CurrencyBalanceISON,208,DKK,UNRESOLVED_DICTIONARY,,1,dkk
+CurrencyBalanceISON,36,AUD,UNRESOLVED_DICTIONARY,,1,aud
+CurrencyBalanceISON,826,GBP,UNRESOLVED_DICTIONARY,,1,gbp
+CurrencyBalanceISON,978,EUR,UNRESOLVED_DICTIONARY,,1,eur
+CurrencyTypeID,1,Forex,UNRESOLVED_DICTIONARY,,1,forex
+CurrencyTypeID,10,Crypto,UNRESOLVED_DICTIONARY,,1,crypto
+CurrencyTypeID,2,Commodity,UNRESOLVED_DICTIONARY,,1,commodity
+CurrencyTypeID,4,Indices,UNRESOLVED_DICTIONARY,,1,indices
+CurrencyTypeID,5,Stocks,UNRESOLVED_DICTIONARY,,1,stocks
+CurrencyTypeID,6,ETF,UNRESOLVED_DICTIONARY,,1,etf
+CurrentSort,1,Bronze,UNRESOLVED_DICTIONARY,,1,bronze
+CurrentSort,2,Silver,UNRESOLVED_DICTIONARY,,1,silver
+CurrentSort,3,Gold,UNRESOLVED_DICTIONARY,,1,gold
+CurrentSort,4,Platinum,UNRESOLVED_DICTIONARY,,1,platinum
+CurrentSort,5,Platinum Plus,UNRESOLVED_DICTIONARY,,1,platinum plus
+CurrentSort,6,Diamond,UNRESOLVED_DICTIONARY,,1,diamond
+EEAStockExchange,1,EEA-listed,UNRESOLVED_DICTIONARY,,1,eea listed
+EV_MatchStatusID,0,None,UNRESOLVED_DICTIONARY,,1,none
+EV_MatchStatusID,1,PartiallyVerified,UNRESOLVED_DICTIONARY,,1,partiallyverified
+EV_MatchStatusID,2,Verified,UNRESOLVED_DICTIONARY,,1,verified
+EV_MatchStatusID,3,NotVerified,UNRESOLVED_DICTIONARY,,1,notverified
+EtoroApproved,1,Approved,UNRESOLVED_DICTIONARY,,1,approved
+EtoroCashoutStatus,1,Pending,UNRESOLVED_DICTIONARY,,1,pending
+EtoroCashoutStatus,2,InProcess,UNRESOLVED_DICTIONARY,,1,inprocess
+EtoroCashoutStatus,3,Processed,UNRESOLVED_DICTIONARY,,1,processed
+EtoroCashoutStatus,4,Cancelled,UNRESOLVED_DICTIONARY,,1,cancelled
+FieldID,1,SecondSurname,UNRESOLVED_DICTIONARY,,1,secondsurname
+FieldID,10,WithdrawQuestion,UNRESOLVED_DICTIONARY,,1,withdrawquestion
+FieldID,11,DedicatedEv,UNRESOLVED_DICTIONARY,,1,dedicatedev
+FieldID,2,CodeFiscale,UNRESOLVED_DICTIONARY,,1,codefiscale
+FieldID,3,SocialInsuranceNumber,UNRESOLVED_DICTIONARY,,1,socialinsurancenumber
+FieldID,4,NIF,UNRESOLVED_DICTIONARY,,1,nif
+FieldID,5,SubBuildingNumber,UNRESOLVED_DICTIONARY,,1,subbuildingnumber
+FieldID,8,EmployerName,UNRESOLVED_DICTIONARY,,1,employername
+FieldID,9,DepositQuestion,UNRESOLVED_DICTIONARY,,1,depositquestion
+HedgeServerID,101,Goldman Sachs,UNRESOLVED_DICTIONARY,,1,goldman sachs
+HedgeServerID,81,Real Stocks LP,UNRESOLVED_DICTIONARY,,1,real stocks lp
+ID,0,None,UNRESOLVED_DICTIONARY,,1,none
+ID,0,Unverified,UNRESOLVED_DICTIONARY,,1,unverified
+ID,1,CySEC,UNRESOLVED_DICTIONARY,,1,cysec
+ID,1,Basic,UNRESOLVED_DICTIONARY,,1,basic
+ID,10,ASIC&GAML,UNRESOLVED_DICTIONARY,,1,asicgaml
+ID,11,FSRA,UNRESOLVED_DICTIONARY,,1,fsra
+ID,12,FINRAONLY,UNRESOLVED_DICTIONARY,,1,finraonly
+ID,13,MAS,UNRESOLVED_DICTIONARY,,1,mas
+ID,14,NYDFS+FINRA,UNRESOLVED_DICTIONARY,,1,nydfs finra
+ID,2,FCA,UNRESOLVED_DICTIONARY,,1,fca
+ID,2,Intermediate,UNRESOLVED_DICTIONARY,,1,intermediate
+ID,3,NFA,UNRESOLVED_DICTIONARY,,1,nfa
+ID,3,Full KYC,UNRESOLVED_DICTIONARY,,1,full kyc
+ID,4,ASIC,UNRESOLVED_DICTIONARY,,1,asic
+ID,5,BVI,UNRESOLVED_DICTIONARY,,1,bvi
+ID,7,FinCEN,UNRESOLVED_DICTIONARY,,1,fincen
+ID,8,FinCEN+FINRA,UNRESOLVED_DICTIONARY,,1,fincen finra
+ID,9,FSA Seychelles,UNRESOLVED_DICTIONARY,,1,fsa seychelles
+InProcessCashouts,3,Processed,UNRESOLVED_DICTIONARY,,1,processed
+InProcessCashouts,4,Cancelled,UNRESOLVED_DICTIONARY,,1,cancelled
+InstrumentID,27,SPX500,UNRESOLVED_DICTIONARY,,1,spx500
+InstrumentID,28,DJ30,UNRESOLVED_DICTIONARY,,1,dj30
+InstrumentID,32,NSDQ100,UNRESOLVED_DICTIONARY,,1,nsdq100
+IsActive,1,Active,UNRESOLVED_DICTIONARY,,1,active
+IsCFD,0,Real,UNRESOLVED_DICTIONARY,,1,real
+IsConversion,4,ConversionToEtoro,UNRESOLVED_DICTIONARY,,1,conversiontoetoro
+IsConversion,5,ConversionMoneyIn,UNRESOLVED_DICTIONARY,,1,conversionmoneyin
+IsConversion,5,ConversionFromEtoro,UNRESOLVED_DICTIONARY,,1,conversionfrometoro
+IsConversion,6,ConversionMoneyOut,UNRESOLVED_DICTIONARY,,1,conversionmoneyout
+IsEuropeanCountry,1,European,UNRESOLVED_DICTIONARY,,1,european
+IsRedeem,0,Redeem,UNRESOLVED_DICTIONARY,,1,redeem
+IsRedeem,2,Redeem,UNRESOLVED_DICTIONARY,,1,redeem
+IsRedeem,8,RedeemAsic,UNRESOLVED_DICTIONARY,,1,redeemasic
+LastDowngradeID,0,No,UNRESOLVED_DICTIONARY,,1,no
+LastDowngradeID,2,Cadet,UNRESOLVED_DICTIONARY,,1,cadet
+LastDowngradeID,3,Rising Star,UNRESOLVED_DICTIONARY,,1,rising star
+LastDowngradeID,4,Champion,UNRESOLVED_DICTIONARY,,1,champion
+LastDowngradeID,5,Elite,UNRESOLVED_DICTIONARY,,1,elite
+LevelId,1,EventualyConsolidated,UNRESOLVED_DICTIONARY,,1,eventualyconsolidated
+LevelId,12,InternalError,UNRESOLVED_DICTIONARY,,1,internalerror
+LevelId,2,AllDiff,UNRESOLVED_DICTIONARY,,1,alldiff
+LevelId,3,EtoroDiffBoth,UNRESOLVED_DICTIONARY,,1,etorodiffboth
+MI,15,Mirror In,UNRESOLVED_DICTIONARY,,1,mirror in
+MI,15,Account-to-Mirror,UNRESOLVED_DICTIONARY,,1,account to mirror
+MI,17,New Mirror,UNRESOLVED_DICTIONARY,,1,new mirror
+MI,17,Register New Mirror,UNRESOLVED_DICTIONARY,,1,register new mirror
+MO,16,Mirror Out,UNRESOLVED_DICTIONARY,,1,mirror out
+MO,16,Mirror-to-Account,UNRESOLVED_DICTIONARY,,1,mirror to account
+MO,18,UnMirror,UNRESOLVED_DICTIONARY,,1,unmirror
+MO,18,Unregister Mirror,UNRESOLVED_DICTIONARY,,1,unregister mirror
+MatchStatusID,0,Unmatched,UNRESOLVED_DICTIONARY,,1,unmatched
+MatchStatusID,3,Matched,UNRESOLVED_DICTIONARY,,1,matched
+Mcc,5411,Grocery,UNRESOLVED_DICTIONARY,,1,grocery
+Mcc,5812,Restaurants,UNRESOLVED_DICTIONARY,,1,restaurants
+MifidCatigorization,0,None,UNRESOLVED_DICTIONARY,,1,none
+MifidCatigorization,1,Retail,UNRESOLVED_DICTIONARY,,1,retail
+MifidCatigorization,2,Professional,UNRESOLVED_DICTIONARY,,1,professional
+MifidCatigorization,3,Elective Professional,UNRESOLVED_DICTIONARY,,1,elective professional
+MifidCatigorization,4,Retail Pending,UNRESOLVED_DICTIONARY,,1,retail pending
+MifidCatigorization,5,Pending,UNRESOLVED_DICTIONARY,,1,pending
+MonthNumberOfYear,1,January,UNRESOLVED_DICTIONARY,,1,january
+MonthsSinceFirstOpen,1,ManualOpen,UNRESOLVED_DICTIONARY,,1,manualopen
+MonthsSinceFirstOpen,17,RegisterMirror,UNRESOLVED_DICTIONARY,,1,registermirror
+MonthsSinceFirstOpen,2,CopyOpen,UNRESOLVED_DICTIONARY,,1,copyopen
+Name,1,ManualPositionOpen,UNRESOLVED_DICTIONARY,,1,manualpositionopen
+Name,11,Chargeback,UNRESOLVED_DICTIONARY,,1,chargeback
+Name,12,Refund,UNRESOLVED_DICTIONARY,,1,refund
+Name,13,Refund As ChargeBack,UNRESOLVED_DICTIONARY,,1,refund as chargeback
+Name,14,LoggedIn,UNRESOLVED_DICTIONARY,,1,loggedin
+Name,2,CopyPositionOpen,UNRESOLVED_DICTIONARY,,1,copypositionopen
+Name,20,Detach Stock From Mirror,UNRESOLVED_DICTIONARY,,1,detach stock from mirror
+Name,21,Publish Post,UNRESOLVED_DICTIONARY,,1,publish post
+Name,22,Publish Comment,UNRESOLVED_DICTIONARY,,1,publish comment
+Name,23,Publish Like,UNRESOLVED_DICTIONARY,,1,publish like
+Name,24,Recived Post On Wall,UNRESOLVED_DICTIONARY,,1,recived post on wall
+Name,25,Recived Comment On Wall,UNRESOLVED_DICTIONARY,,1,recived comment on wall
+Name,26,Recived Like On Wall,UNRESOLVED_DICTIONARY,,1,recived like on wall
+Name,27,DepositAttempt,UNRESOLVED_DICTIONARY,,1,depositattempt
+Name,28,DetachedPositionClose,UNRESOLVED_DICTIONARY,,1,detachedpositionclose
+Name,29,Cashier Loggin,UNRESOLVED_DICTIONARY,,1,cashier loggin
+Name,3,CopyPlusPositionOpen,UNRESOLVED_DICTIONARY,,1,copypluspositionopen
+Name,30,Processed Cashout,UNRESOLVED_DICTIONARY,,1,processed cashout
+Name,31,Open CRM Case,UNRESOLVED_DICTIONARY,,1,open crm case
+Name,32,Edit StopLoss,UNRESOLVED_DICTIONARY,,1,edit stoploss
+Name,34,Open Stock Order,UNRESOLVED_DICTIONARY,,1,open stock order
+Name,35,End Of The Week Fee,UNRESOLVED_DICTIONARY,,1,end of the week fee
+Name,36,Compensation,UNRESOLVED_DICTIONARY,,1,compensation
+Name,38,Affiliate Deposit,UNRESOLVED_DICTIONARY,,1,affiliate deposit
+Name,39,PositionOpenTypeUnknown,UNRESOLVED_DICTIONARY,,1,positionopentypeunknown
+Name,4,ManualPositionClose,UNRESOLVED_DICTIONARY,,1,manualpositionclose
+Name,40,PositionCloseTypeUnknown,UNRESOLVED_DICTIONARY,,1,positionclosetypeunknown
+Name,41,Customer Registration,UNRESOLVED_DICTIONARY,,1,customer registration
+Name,42,Cashout Rollback,UNRESOLVED_DICTIONARY,,1,cashout rollback
+Name,43,Reverse Deposit,UNRESOLVED_DICTIONARY,,1,reverse deposit
+Name,44,InternalDeposit,UNRESOLVED_DICTIONARY,,1,internaldeposit
+Name,45,InternalWithdraw,UNRESOLVED_DICTIONARY,,1,internalwithdraw
+Name,5,CopyPositionClose,UNRESOLVED_DICTIONARY,,1,copypositionclose
+Name,6,CopyPlusPositionClose,UNRESOLVED_DICTIONARY,,1,copypluspositionclose
+Name,7,Deposit,UNRESOLVED_DICTIONARY,,1,deposit
+Name,8,Cashout,UNRESOLVED_DICTIONARY,,1,cashout
+Name,9,Bonus,UNRESOLVED_DICTIONARY,,1,bonus
+NoTIN_Reason,0,TIN Information Displayed,UNRESOLVED_DICTIONARY,,1,tin information displayed
+NoTIN_ReasonID,5,Diplomat/UN,UNRESOLVED_DICTIONARY,,1,diplomat un
+OldSort,1,Bronze,UNRESOLVED_DICTIONARY,,1,bronze
+OldSort,2,Silver,UNRESOLVED_DICTIONARY,,1,silver
+OldSort,3,Gold,UNRESOLVED_DICTIONARY,,1,gold
+OldSort,4,Platinum,UNRESOLVED_DICTIONARY,,1,platinum
+OldSort,5,Platinum Plus,UNRESOLVED_DICTIONARY,,1,platinum plus
+OldSort,6,Diamond,UNRESOLVED_DICTIONARY,,1,diamond
+OldTier,1,Bronze,UNRESOLVED_DICTIONARY,,1,bronze
+OldTier,2,Platinum,UNRESOLVED_DICTIONARY,,1,platinum
+OldTier,3,Gold,UNRESOLVED_DICTIONARY,,1,gold
+OldTier,5,Silver,UNRESOLVED_DICTIONARY,,1,silver
+OldTier,6,Platinum Plus,UNRESOLVED_DICTIONARY,,1,platinum plus
+OldTier,7,Diamond,UNRESOLVED_DICTIONARY,,1,diamond
+OpenOrCloseID,0,Close Click,UNRESOLVED_DICTIONARY,,1,close click
+OpenOrCloseID,1,Open Click,UNRESOLVED_DICTIONARY,,1,open click
+ParentID,1,Custom,UNRESOLVED_DICTIONARY,,1,custom
+ParentID,10,R&D,UNRESOLVED_DICTIONARY,,1,rd
+ParentID,16,ACT,UNRESOLVED_DICTIONARY,,1,act
+ParentID,23,Obsolete,UNRESOLVED_DICTIONARY,,1,obsolete
+ParentID,35,MT4,UNRESOLVED_DICTIONARY,,1,mt4
+ParentID,4,Marketing,UNRESOLVED_DICTIONARY,,1,marketing
+ParentID,45,Dividend,UNRESOLVED_DICTIONARY,,1,dividend
+ParentID,48,Inactivity Fee For Non Depositor,UNRESOLVED_DICTIONARY,,1,inactivity fee for non depositor
+ParentID,9,Accounting/Ops,UNRESOLVED_DICTIONARY,,1,accounting ops
+PaymentGeneration,0,Gen0,UNRESOLVED_DICTIONARY,,1,gen0
+PaymentGeneration,1,Gen1,UNRESOLVED_DICTIONARY,,1,gen1
+PaymentTypeID,1,Deposit,UNRESOLVED_DICTIONARY,,1,deposit
+PaymentTypeID,2,Cashout,UNRESOLVED_DICTIONARY,,1,cashout
+PaymentTypeID,3,Refund,UNRESOLVED_DICTIONARY,,1,refund
+Platform_fromAction_Regs,104,Android_Web,UNRESOLVED_DICTIONARY,,1,android web
+Platform_fromAction_Regs,105,Android_App,UNRESOLVED_DICTIONARY,,1,android app
+Platform_fromAction_Regs,117,Desktop_Web,UNRESOLVED_DICTIONARY,,1,desktop web
+PlayerStatusReasonID,0,None,UNRESOLVED_DICTIONARY,,1,none
+PlayerStatusSubReasonID,0,None,UNRESOLVED_DICTIONARY,,1,none
+PortfolioType,1,TopTraders,UNRESOLVED_DICTIONARY,,1,toptraders
+PortfolioType,2,Partners,UNRESOLVED_DICTIONARY,,1,partners
+PortfolioType,3,Market,UNRESOLVED_DICTIONARY,,1,market
+Previous_ClubID,0,N/A,UNRESOLVED_DICTIONARY,,1,n a
+Previous_ClubID,1,Bronze,UNRESOLVED_DICTIONARY,,1,bronze
+Previous_ClubID,2,Platinum,UNRESOLVED_DICTIONARY,,1,platinum
+Previous_ClubID,3,Gold,UNRESOLVED_DICTIONARY,,1,gold
+Previous_ClubID,5,Silver,UNRESOLVED_DICTIONARY,,1,silver
+Previous_ClubID,6,Platinum Plus,UNRESOLVED_DICTIONARY,,1,platinum plus
+Previous_ClubID,7,Diamond,UNRESOLVED_DICTIONARY,,1,diamond
+ProcessRegulationID,1,Cyprus/EU,UNRESOLVED_DICTIONARY,,1,cyprus eu
+ProcessRegulationID,2,UK/FCA,UNRESOLVED_DICTIONARY,,1,uk fca
+ProcessRegulationID,4,AU,UNRESOLVED_DICTIONARY,,1,au
+Program,175,UK IBANO,UNRESOLVED_DICTIONARY,,1,uk ibano
+Program,177,EU IBANO,UNRESOLVED_DICTIONARY,,1,eu ibano
+Program,182,EU Card,UNRESOLVED_DICTIONARY,,1,eu card
+Program,183,Banking Circle AUD Account,UNRESOLVED_DICTIONARY,,1,banking circle aud account
+Program,184,Banking Circle DKK Account,UNRESOLVED_DICTIONARY,,1,banking circle dkk account
+Program,39,UK CARD GBP,UNRESOLVED_DICTIONARY,,1,uk card gbp
+ProtocolID,6,Wire,UNRESOLVED_DICTIONARY,,1,wire
+ProtocolID,7,Neteller,UNRESOLVED_DICTIONARY,,1,neteller
+ProtocolID,8,MoneyBookers,UNRESOLVED_DICTIONARY,,1,moneybookers
+RegAccountProgramID,0,Unknown,UNRESOLVED_DICTIONARY,,1,unknown
+RevenueMetricCategoryID,1,TradeTransactional,UNRESOLVED_DICTIONARY,,1,tradetransactional
+RevenueMetricCategoryID,2,Overnight,UNRESOLVED_DICTIONARY,,1,overnight
+RevenueMetricCategoryID,3,MIMO,UNRESOLVED_DICTIONARY,,1,mimo
+RevenueMetricCategoryID,4,Staking,UNRESOLVED_DICTIONARY,,1,staking
+RevenueMetricCategoryID,4,RevShare,UNRESOLVED_DICTIONARY,,1,revshare
+RevenueMetricCategoryID,5,Options,UNRESOLVED_DICTIONARY,,1,options
+RevenueMetricCategoryID,5,Other,UNRESOLVED_DICTIONARY,,1,other
+RevenueMetricID,12,Staking,UNRESOLVED_DICTIONARY,,1,staking
+RevenueMetricID,18,Options,UNRESOLVED_DICTIONARY,,1,options
+SelectedValue,0,NotAllowed,UNRESOLVED_DICTIONARY,,1,notallowed
+SelectedValue,1,ReadOnly,UNRESOLVED_DICTIONARY,,1,readonly
+SelectedValue,2,Allowed,UNRESOLVED_DICTIONARY,,1,allowed
+SelectedValue,3,AllowedForExistingUsers,UNRESOLVED_DICTIONARY,,1,allowedforexistingusers
+SentLastStatusID,2,Verified,UNRESOLVED_DICTIONARY,,1,verified
+SentLastStatusID,6,WavedError,UNRESOLVED_DICTIONARY,,1,wavederror
+SettlementTypeID,1,Real,UNRESOLVED_DICTIONARY,,1,real
+SeychellesCategorizationID,2,Advanced,UNRESOLVED_DICTIONARY,,1,advanced
+Sort,0,Internal/N/A,UNRESOLVED_DICTIONARY,,1,internal n a
+Sort,1,Bronze,UNRESOLVED_DICTIONARY,,1,bronze
+Sort,2,Silver,UNRESOLVED_DICTIONARY,,1,silver
+Sort,3,Gold,UNRESOLVED_DICTIONARY,,1,gold
+Sort,4,Platinum,UNRESOLVED_DICTIONARY,,1,platinum
+Sort,5,Platinum Plus,UNRESOLVED_DICTIONARY,,1,platinum plus
+Sort,6,Diamond,UNRESOLVED_DICTIONARY,,1,diamond
+SubChannelID,32,FB,UNRESOLVED_DICTIONARY,,1,fb
+SubChannelID,33,Taboola,UNRESOLVED_DICTIONARY,,1,taboola
+SubChannelID,4,Google Brand,UNRESOLVED_DICTIONARY,,1,google brand
+SubChannelID,5,Google Search,UNRESOLVED_DICTIONARY,,1,google search
+ThreeDsResponseTypeID,0,Unspecified,UNRESOLVED_DICTIONARY,,1,unspecified
+ThreeDsResponseTypeID,1,Success,UNRESOLVED_DICTIONARY,,1,success
+ThreeDsResponseTypeID,10,Authentication Unavailable,UNRESOLVED_DICTIONARY,,1,authentication unavailable
+ThreeDsResponseTypeID,11,Bypassed Authentication,UNRESOLVED_DICTIONARY,,1,bypassed authentication
+ThreeDsResponseTypeID,12,Missing Authentication,UNRESOLVED_DICTIONARY,,1,missing authentication
+ThreeDsResponseTypeID,13,Skipped 3ds,UNRESOLVED_DICTIONARY,,1,skipped 3ds
+ThreeDsResponseTypeID,14,Unexpected,UNRESOLVED_DICTIONARY,,1,unexpected
+ThreeDsResponseTypeID,2,Failed Signature,UNRESOLVED_DICTIONARY,,1,failed signature
+ThreeDsResponseTypeID,3,Not Enrolled,UNRESOLVED_DICTIONARY,,1,not enrolled
+ThreeDsResponseTypeID,4,Enrollment Unavailable,UNRESOLVED_DICTIONARY,,1,enrollment unavailable
+ThreeDsResponseTypeID,5,Bypassed Enrollment,UNRESOLVED_DICTIONARY,,1,bypassed enrollment
+ThreeDsResponseTypeID,6,Enrollment Error,UNRESOLVED_DICTIONARY,,1,enrollment error
+ThreeDsResponseTypeID,7,Timeout,UNRESOLVED_DICTIONARY,,1,timeout
+ThreeDsResponseTypeID,8,Failed Authentication,UNRESOLVED_DICTIONARY,,1,failed authentication
+ThreeDsResponseTypeID,9,Authentication Error,UNRESOLVED_DICTIONARY,,1,authentication error
+UserInteractionActionId,1,Open,UNRESOLVED_DICTIONARY,,1,open
+UserInteractionActionId,14,Accept,UNRESOLVED_DICTIONARY,,1,accept
+UserInteractionActionId,15,Decline,UNRESOLVED_DICTIONARY,,1,decline
+eMoneyLastTxStatusID,2,Settled,UNRESOLVED_DICTIONARY,,1,settled
+PlayerLevelID,1,Bronze,MATCH,Bronze,18,bronze
+PlayerLevelID,2,Platinum,MATCH,Platinum,17,platinum
+PlayerLevelID,3,Gold,MATCH,Gold,17,gold
+PlayerLevelID,4,Internal,MATCH,Internal,17,internal
+PlayerLevelID,5,Silver,MATCH,Silver,16,silver
+PlayerLevelID,7,Diamond,MATCH,Diamond,16,diamond
+PlayerLevelID,6,Platinum Plus,MATCH,Platinum Plus,15,platinum plus
+PlayerLevelID,0,N/A,MATCH,N/A,13,n a
+AccountTypeID,7,Employee Account,MATCH,Employee Account,9,employee account
+InstrumentTypeID,5,Stocks,MATCH,Stocks,9,stocks
+CustomerChangeTypeID,1,CountryID,MATCH,CountryID,8,countryid
+CustomerChangeTypeID,2,LabelID,MATCH,LabelID,8,labelid
+InstrumentTypeID,4,Indices,MATCH,Indices,8,indices
+InstrumentTypeID,6,ETF,MATCH,ETF,8,etf
+RegulationID,1,CySEC,MATCH,CySEC,8,cysec
+InstrumentTypeID,10,Crypto Currencies,MATCH,Crypto Currencies,7,crypto currencies
+InstrumentTypeID,2,Commodities,MATCH,Commodities,7,commodities
+RegulationID,2,FCA,MATCH,FCA,7,fca
+InstrumentTypeID,1,Currencies,MATCH,Currencies,6,currencies
+RegulationID,4,ASIC,MATCH,ASIC,6,asic
+AccountProgramID,0,Unknown,MATCH,Unknown,5,unknown
+InstrumentType,1,Currencies,MATCH,Currencies,5,currencies
+InstrumentType,10,Crypto Currencies,MATCH,Crypto Currencies,5,crypto currencies
+InstrumentType,2,Commodities,MATCH,Commodities,5,commodities
+InstrumentType,4,Indices,MATCH,Indices,5,indices
+InstrumentType,5,Stocks,MATCH,Stocks,5,stocks
+InstrumentType,6,ETF,MATCH,ETF,5,etf
+PlayerStatusID,1,Normal,MATCH,Normal,5,normal
+RegulationID,10,ASIC & GAML,MATCH,ASIC & GAML,5,asic  gaml
+RegulationID,3,NFA,MATCH,NFA,5,nfa
+RegulationID,5,BVI,MATCH,BVI,5,bvi
+RegulationID,9,FSA Seychelles,MATCH,FSA Seychelles,5,fsa seychelles
+RegulationID,11,FSRA,MATCH,FSRA,4,fsra
+RegulationID,12,FINRAONLY,MATCH,FINRAONLY,4,finraonly
+RegulationID,13,MAS,MATCH,MAS,4,mas
+RegulationID,14,NYDFS+FINRA,MATCH,NYDFS+FINRA,4,nydfs finra
+RegulationID,7,FinCEN,MATCH,FinCEN,4,fincen
+RegulationID,8,FinCEN+FINRA,MATCH,FinCEN+FINRA,4,fincen finra
+AccountTypeID,14,SMSF,MATCH,SMSF,3,smsf
+AccountTypeID,2,Corporate,MATCH,Corporate,3,corporate
+GuruStatusID,0,No,MATCH,No,3,no
+GuruStatusID,1,Certified,MATCH,Certified,3,certified
+GuruStatusID,2,Cadet,MATCH,Cadet,3,cadet
+GuruStatusID,3,Rising Star,MATCH,Rising Star,3,rising star
+GuruStatusID,4,Champion,MATCH,Champion,3,champion
+GuruStatusID,5,Elite,MATCH,Elite,3,elite
+GuruStatusID,6,Elite Pro,MATCH,Elite Pro,3,elite pro
+MifidCategorizationID,1,Retail,MATCH,Retail,3,retail
+MifidCategorizationID,4,Retail Pending,MATCH,Retail Pending,3,retail pending
+MifidCategorizationID,5,Pending,MATCH,Pending,3,pending
+MirrorTypeID,1,Regular,MATCH,Regular,3,regular
+MirrorTypeID,2,CopyMe,MATCH,CopyMe,3,copyme
+MirrorTypeID,3,Social Index,MATCH,Social Index,3,social index
+MirrorTypeID,4,Fund,MATCH,Fund,3,fund
+PaymentSchemaTypeID,0,Unknown,MATCH,Unknown,3,unknown
+PaymentSchemaTypeID,1,Transfer,MATCH,Transfer,3,transfer
+PaymentSchemaTypeID,2,FasterPayments,MATCH,FasterPayments,3,fasterpayments
+PaymentSchemaTypeID,3,Chaps,MATCH,Chaps,3,chaps
+PaymentSchemaTypeID,4,Bacs,MATCH,Bacs,3,bacs
+PaymentSchemaTypeID,5,SEPAstandart,MATCH,SEPAstandart,3,sepastandart
+PaymentSchemaTypeID,6,SEPAinstantTransfer,MATCH,SEPAinstantTransfer,3,sepainstanttransfer
+PaymentStatusID,2,Approved,MATCH,Approved,3,approved
+RegulationID,0,None,MATCH,None,3,none
+AccountStatus,0,Active,MATCH,Active,2,active
+AccountStatus,1,Suspended,MATCH,Suspended,2,suspended
+AccountStatus,2,Deleted,MATCH,Deleted,2,deleted
+AccountStatusID,0,Active,MATCH,Active,2,active
+AccountStatusID,1,Suspended,MATCH,Suspended,2,suspended
+AccountStatusID,2,Deleted,MATCH,Deleted,2,deleted
+AccountTypeID,1,Private,MATCH,Private,2,private
+CardStatusID,0,NotActivated,MATCH,NotActivated,2,notactivated
+CardStatusID,1,Activated,MATCH,Activated,2,activated
+CardStatusID,2,Blocked,MATCH,Blocked,2,blocked
+CardStatusID,3,Suspended,MATCH,Suspended,2,suspended
+CardStatusID,4,Risk,MATCH,Risk,2,risk
+CardStatusID,5,Stolen,MATCH,Stolen,2,stolen
+CardStatusID,6,Lost,MATCH,Lost,2,lost
+CardStatusID,7,Expired,MATCH,Expired,2,expired
+CardStatusID,8,Fraud,MATCH,Fraud,2,fraud
+CardTypeID,1,Visa,MATCH,Visa,2,visa
+CardTypeID,13,Local Card,MATCH,Local Card,2,local card
+CardTypeID,2,Master Card,MATCH,Master Card,2,master card
+CashoutModeID,0,Manual,MATCH,Manual,2,manual
+CashoutModeID,1,Auto Create,MATCH,Auto Create,2,auto create
+CashoutModeID,2,Mass Auto Create,MATCH,Mass Auto Create,2,mass auto create
+ContractType,0,N/A,MATCH,N/A,2,n a
+ContractType,2,CPA,MATCH,CPA,2,cpa
+ConversionStatusID,1,Pending,MATCH,Pending,2,pending
+ConversionStatusID,2,Failed,MATCH,Failed,2,failed
+ConversionStatusID,3,Completed,MATCH,Completed,2,completed
+CreditTypeID,11,Chargeback,MATCH,Chargeback,2,chargeback
+CreditTypeID,12,Refund,MATCH,Refund,2,refund
+CreditTypeID,16,Refund As ChargeBack,MATCH,Refund As ChargeBack,2,refund as chargeback
+CreditTypeID,32,Reverse Deposit,MATCH,Reverse Deposit,2,reverse deposit
+CurrencyBalanceStatusID,0,Active,MATCH,Active,2,active
+CurrencyBalanceStatusID,1,ReceiveOnly,MATCH,ReceiveOnly,2,receiveonly
+CurrencyBalanceStatusID,2,SpendOnly,MATCH,SpendOnly,2,spendonly
+CurrencyBalanceStatusID,3,Suspended,MATCH,Suspended,2,suspended
+CurrencyBalanceStatusID,4,Blocked,MATCH,Blocked,2,blocked
+CurrentTier,1,Bronze,MATCH,Bronze,2,bronze
+CurrentTier,2,Platinum,MATCH,Platinum,2,platinum
+CurrentTier,3,Gold,MATCH,Gold,2,gold
+CurrentTier,5,Silver,MATCH,Silver,2,silver
+CurrentTier,6,Platinum Plus,MATCH,Platinum Plus,2,platinum plus
+CurrentTier,7,Diamond,MATCH,Diamond,2,diamond
+EvMatchStatus,0,None,MATCH,None,2,none
+EvMatchStatus,1,PartiallyVerified,MATCH,PartiallyVerified,2,partiallyverified
+EvMatchStatus,2,Verified,MATCH,Verified,2,verified
+EvMatchStatus,3,NotVerified,MATCH,NotVerified,2,notverified
+GuruStatusID,7,Removed,MATCH,Removed,2,removed
+GuruStatusID,8,Rejected,MATCH,Rejected,2,rejected
+LabelID,26,ILQ,MATCH,ILQ,2,ilq
+MoveMoneyReasonID,1,Adjustment,MATCH,Adjustment,2,adjustment
+PaymentStatusID,1,New,MATCH,New,2,new
+PaymentStatusID,12,Refund,MATCH,Refund,2,refund
+PaymentStatusID,3,Decline,MATCH,Decline,2,decline
+PaymentStatusID,5,InProcess,MATCH,InProcess,2,inprocess
+PlatformID,0,Undefined,MATCH,Undefined,2,undefined
+PlatformID,1,Web,MATCH,Web,2,web
+PlatformID,3,Android,MATCH,Android,2,android
+ProductID,99,No Platform,MATCH,No Platform,2,no platform
+Provider,1,Tribe,MATCH,Tribe,2,tribe
+RequestLastStatusID,1,Done,MATCH,Done,2,done
+RequestLastStatusID,2,Error,MATCH,Error,2,error
+RequestLastStatusID,7,TransactionVerified,MATCH,TransactionVerified,2,transactionverified
+RiskManagementStatusID,1,Success,MATCH,Success,2,success
+TxCategoryID,1,CardTransaction,MATCH,CardTransaction,2,cardtransaction
+TxCategoryID,2,BankingTransaction,MATCH,BankingTransaction,2,bankingtransaction
+TxCategoryID,3,TransferTransaction,MATCH,TransferTransaction,2,transfertransaction
+TxCategoryID,4,BalanceAdjustmentTransaction,MATCH,BalanceAdjustmentTransaction,2,balanceadjustmenttransaction
+TxStatusID,0,Failed,MATCH,Failed,2,failed
+TxStatusID,1,Authorized,MATCH,Authorized,2,authorized
+TxStatusID,2,Settled,MATCH,Settled,2,settled
+TxStatusID,3,Rejected,MATCH,Rejected,2,rejected
+TxStatusID,4,Returned,MATCH,Returned,2,returned
+TxStatusID,5,Expired,MATCH,Expired,2,expired
+TxTypeID,1,CardPayment,MATCH,CardPayment,2,cardpayment
+TxTypeID,10,Fee,MATCH,Fee,2,fee
+TxTypeID,7,PaymentReceived,MATCH,PaymentReceived,2,paymentreceived
+TxTypeID,8,Payment,MATCH,Payment,2,payment
+TxTypeID,9,Refund,MATCH,Refund,2,refund
+VerificationLevelID,1,Level 1,MATCH,Level 1,2,level 1
+VerificationLevelID,2,Level 2,MATCH,Level 2,2,level 2
+VerificationLevelID,3,Level 3,MATCH,Level 3,2,level 3
+AccountProgram,0,Unknown,MATCH,Unknown,1,unknown
+AccountStatusID,0,N/A,MATCH,N/A,1,n a
+AccountStatusID,1,Open,MATCH,Open,1,open
+AccountStatusID,2,Closed,MATCH,Closed,1,closed
+AccountTypeID,0,N/A,MATCH,N/A,1,n a
+AccountTypeID,11,News,MATCH,News,1,news
+AccountTypeID,12,White List,MATCH,White List,1,white list
+AccountTypeID,13,Analyst,MATCH,Analyst,1,analyst
+AccountTypeID,15,Affiliate Corporate Account,MATCH,Affiliate Corporate Account,1,affiliate corporate account
+AccountTypeID,16,Administrated Account,MATCH,Administrated Account,1,administrated account
+AccountTypeID,17,Funded Employee Account,MATCH,Funded Employee Account,1,funded employee account
+AccountTypeID,18,Trust,MATCH,Trust,1,trust
+AccountTypeID,3,IB Account,MATCH,IB Account,1,ib account
+AccountTypeID,4,Joint Account,MATCH,Joint Account,1,joint account
+AccountTypeID,5,White Label,MATCH,White Label,1,white label
+AccountTypeID,6,Affiliate Private Account,MATCH,Affiliate Private Account,1,affiliate private account
+AccountTypeID,7,Employee,MATCH,Employee Account,1,employee
+AccountTypeID,8,Custodian,MATCH,Custodian,1,custodian
+AccountTypeID,9,Fund,MATCH,Fund,1,fund
+ActionTypeID,1,ManualPositionOpen,MATCH,ManualPositionOpen,1,manualpositionopen
+ActionTypeID,39,PositionOpenTypeUnknown,MATCH,PositionOpenTypeUnknown,1,positionopentypeunknown
+AuthorizationType,0,Unknown,MATCH,Unknown,1,unknown
+AuthorizationType,1,Normal,MATCH,Normal,1,normal
+AuthorizationType,10,AuthorizeAdvice,MATCH,AuthorizeAdvice,1,authorizeadvice
+AuthorizationType,11,Refund,MATCH,Refund,1,refund
+AuthorizationType,12,Reversal,MATCH,Reversal,1,reversal
+AuthorizationType,13,SysReversal,MATCH,SysReversal,1,sysreversal
+AuthorizationType,14,AccountFunding,MATCH,AccountFunding,1,accountfunding
+AuthorizationType,2,PreAuthorize,MATCH,PreAuthorize,1,preauthorize
+AuthorizationType,3,FinalAuthorize,MATCH,FinalAuthorize,1,finalauthorize
+AuthorizationType,4,Incremental,MATCH,Incremental,1,incremental
+AuthorizationType,5,Instalment,MATCH,Instalment,1,instalment
+AuthorizationType,6,PreferredCustomer,MATCH,PreferredCustomer,1,preferredcustomer
+AuthorizationType,7,Recurring,MATCH,Recurring,1,recurring
+AuthorizationType,8,DelayedCharges,MATCH,DelayedCharges,1,delayedcharges
+AuthorizationType,9,NoShow,MATCH,NoShow,1,noshow
+AuthorizationTypeID,0,Unknown,MATCH,Unknown,1,unknown
+AuthorizationTypeID,1,Normal,MATCH,Normal,1,normal
+AuthorizationTypeID,10,AuthorizeAdvice,MATCH,AuthorizeAdvice,1,authorizeadvice
+AuthorizationTypeID,11,Refund,MATCH,Refund,1,refund
+AuthorizationTypeID,12,Reversal,MATCH,Reversal,1,reversal
+AuthorizationTypeID,13,SysReversal,MATCH,SysReversal,1,sysreversal
+AuthorizationTypeID,14,AccountFunding,MATCH,AccountFunding,1,accountfunding
+AuthorizationTypeID,2,PreAuthorize,MATCH,PreAuthorize,1,preauthorize
+AuthorizationTypeID,3,FinalAuthorize,MATCH,FinalAuthorize,1,finalauthorize
+AuthorizationTypeID,4,Incremental,MATCH,Incremental,1,incremental
+AuthorizationTypeID,5,Instalment,MATCH,Instalment,1,instalment
+AuthorizationTypeID,6,PreferredCustomer,MATCH,PreferredCustomer,1,preferredcustomer
+AuthorizationTypeID,7,Recurring,MATCH,Recurring,1,recurring
+AuthorizationTypeID,8,DelayedCharges,MATCH,DelayedCharges,1,delayedcharges
+AuthorizationTypeID,9,NoShow,MATCH,NoShow,1,noshow
+BonusTypeID,0,N/A,MATCH,N/A,1,n a
+BonusTypeID,1,First Registration Bonus,MATCH,First Registration Bonus,1,first registration bonus
+BonusTypeID,2,Sales First Deposit Bonus,MATCH,Sales First Deposit Bonus,1,sales first deposit bonus
+BonusTypeID,3,Custom,MATCH,Custom,1,custom
+BonusTypeID,71,Credit Line,MATCH,Credit Line,1,credit line
+CardStatus,0,NotActivated,MATCH,NotActivated,1,notactivated
+CardStatus,1,Activated,MATCH,Activated,1,activated
+CardStatus,2,Blocked,MATCH,Blocked,1,blocked
+CardStatus,3,Suspended,MATCH,Suspended,1,suspended
+CardStatus,4,Risk,MATCH,Risk,1,risk
+CardStatus,5,Stolen,MATCH,Stolen,1,stolen
+CardStatus,6,Lost,MATCH,Lost,1,lost
+CardStatus,7,Expired,MATCH,Expired,1,expired
+CardStatus,8,Fraud,MATCH,Fraud,1,fraud
+CardType,0,None,MATCH,None,1,none
+CardType,1,Visa,MATCH,Visa,1,visa
+CardType,10,Switch,MATCH,Switch,1,switch
+CardType,11,UK Local Credit Card,MATCH,UK Local Credit Card,1,uk local credit card
+CardType,12,Discover,MATCH,Discover,1,discover
+CardType,13,Local Card,MATCH,Local Card,1,local card
+CardType,14,China Union Pay,MATCH,China Union Pay,1,china union pay
+CardType,15,Solo,MATCH,Solo,1,solo
+CardType,16,Cirrus,MATCH,Cirrus,1,cirrus
+CardType,17,GE Capital,MATCH,GE Capital,1,ge capital
+CardType,2,Master Card,MATCH,Master Card,1,master card
+CardType,3,Diners,MATCH,Diners,1,diners
+CardType,4,Amex,MATCH,Amex,1,amex
+CardType,5,Fire Pay,MATCH,Fire Pay,1,fire pay
+CardType,6,JCB,MATCH,JCB,1,jcb
+CardType,7,American Express,MATCH,American Express,1,american express
+CardType,8,Maestro,MATCH,Maestro,1,maestro
+CardType,9,Laser,MATCH,Laser,1,laser
+CardTypeID,0,None,MATCH,None,1,none
+CardTypeID,10,Switch,MATCH,Switch,1,switch
+CardTypeID,11,UK Local Credit Card,MATCH,UK Local Credit Card,1,uk local credit card
+CardTypeID,12,Discover,MATCH,Discover,1,discover
+CardTypeID,14,China Union Pay,MATCH,China Union Pay,1,china union pay
+CardTypeID,15,Solo,MATCH,Solo,1,solo
+CardTypeID,16,Cirrus,MATCH,Cirrus,1,cirrus
+CardTypeID,17,GE Capital,MATCH,GE Capital,1,ge capital
+CardTypeID,3,Diners,MATCH,Diners,1,diners
+CardTypeID,4,Amex,MATCH,Amex,1,amex
+CardTypeID,5,Fire Pay,MATCH,Fire Pay,1,fire pay
+CardTypeID,6,JCB,MATCH,JCB,1,jcb
+CardTypeID,7,American Express,MATCH,American Express,1,american express
+CardTypeID,8,Maestro,MATCH,Maestro,1,maestro
+CardTypeID,9,Laser,MATCH,Laser,1,laser
+CashoutFeeGroupID,2,Exempt,MATCH,Exempt,1,exempt
+CashoutFeeGroupID,3,Discount,MATCH,Discount,1,discount
+CashoutModeID,3,Instant Withdrawal,MATCH,Instant Withdrawal,1,instant withdrawal
+CashoutStatusID,0,N/A,MATCH,N/A,1,n a
+CashoutStatusID,1,Pending,MATCH,Pending,1,pending
+CashoutStatusID,2,InProcess,MATCH,InProcess,1,inprocess
+CashoutStatusID,3,Processed,MATCH,Processed,1,processed
+CashoutStatusID,4,Canceled,MATCH,Canceled,1,canceled
+ClosePositionReasonID,0,Customer,MATCH,Customer,1,customer
+ClosePositionReasonID,1,Stop Loss,MATCH,Stop Loss,1,stop loss
+ClosePositionReasonID,11,Join Demo Challenge,MATCH,Join Demo Challenge,1,join demo challenge
+ClosePositionReasonID,12,Close All,MATCH,Close All,1,close all
+ClosePositionReasonID,13,Copy Stop Loss,MATCH,Copy Stop Loss,1,copy stop loss
+ClosePositionReasonID,15,Manual Liquidation,MATCH,Manual Liquidation,1,manual liquidation
+ClosePositionReasonID,16,BSL,MATCH,BSL,1,bsl
+ClosePositionReasonID,17,Manual Unregister,MATCH,Manual Unregister,1,manual unregister
+ClosePositionReasonID,18,BackOffice Unregister,MATCH,BackOffice Unregister,1,backoffice unregister
+ClosePositionReasonID,19,Redeem,MATCH,Redeem,1,redeem
+ClosePositionReasonID,22,Transferred Out,MATCH,Transferred Out,1,transferred out
+ClosePositionReasonID,23,Alignment,MATCH,Alignment,1,alignment
+ClosePositionReasonID,24,Delist,MATCH,Delist,1,delist
+ClosePositionReasonID,26,Expiry,MATCH,Expiry,1,expiry
+ClosePositionReasonID,3,Stop Loss,MATCH,Stop Loss (via trade server),1,stop loss
+ClosePositionReasonID,5,Take Profit,MATCH,Take Profit,1,take profit
+ClosePositionReasonID,6,Take Profit,MATCH,Take Profit (via trade server),1,take profit
+ClosePositionReasonID,7,Contact Rollover,MATCH,Contact Rollover,1,contact rollover
+ClosePositionReasonID,8,BackOffice User,MATCH,BackOffice User,1,backoffice user
+ClosePositionReasonID,9,Hierarchical Close,MATCH,Hierarchical Close,1,hierarchical close
+ContractTypeID,0,N/A,MATCH,N/A,1,n a
+ContractTypeID,1,CPR,MATCH,CPR,1,cpr
+ContractTypeID,2,CPA,MATCH,CPA,1,cpa
+ContractTypeID,3,Rev,MATCH,Rev,1,rev
+ContractTypeID,4,Hyb,MATCH,Hyb,1,hyb
+ContractTypeID,5,Other,MATCH,Other,1,other
+ContractTypeID,7,ZeroCost,MATCH,ZeroCost,1,zerocost
+ContractTypeID,8,CPL,MATCH,CPL,1,cpl
+CreditTypeID,1,Deposit,MATCH,Deposit,1,deposit
+CreditTypeID,13,Edit Stop Loss,MATCH,Edit Stop Loss,1,edit stop loss
+CreditTypeID,15,Cashout Fee,MATCH,Cashout Fee,1,cashout fee
+CreditTypeID,17,FixHistoryCreditChargeBacks,MATCH,FixHistoryCreditChargeBacks,1,fixhistorycreditchargebacks
+CreditTypeID,2,Cashout,MATCH,Cashout,1,cashout
+CreditTypeID,28,Detach Stock From Mirror,MATCH,Detach Stock From Mirror,1,detach stock from mirror
+CreditTypeID,3,Open Position,MATCH,Open Position,1,open position
+CreditTypeID,30,Close Stock Order,MATCH,Close Stock Order,1,close stock order
+CreditTypeID,31,Data Fix,MATCH,Data Fix,1,data fix
+CreditTypeID,33,Cashout Rollback,MATCH,Cashout Rollback,1,cashout rollback
+CreditTypeID,4,Close Position,MATCH,Close Position,1,close position
+CreditTypeID,5,Champ Winner,MATCH,Champ Winner,1,champ winner
+CreditTypeID,6,Compensation,MATCH,Compensation,1,compensation
+CreditTypeID,7,Bonus,MATCH,Bonus,1,bonus
+CreditTypeID,8,Reverse Cashout,MATCH,Reverse cashout,1,reverse cashout
+CreditTypeID,9,Cashout Request,MATCH,Cashout request,1,cashout request
+CurrencyBalanceStatus,0,Active,MATCH,Active,1,active
+CurrencyBalanceStatus,1,ReceiveOnly,MATCH,ReceiveOnly,1,receiveonly
+CurrencyBalanceStatus,2,SpendOnly,MATCH,SpendOnly,1,spendonly
+CurrencyBalanceStatus,3,Suspended,MATCH,Suspended,1,suspended
+CurrencyBalanceStatus,4,Blocked,MATCH,Blocked,1,blocked
+DocumentStatusID,1,New Upload,MATCH,New Upload,1,new upload
+DocumentStatusID,2,Reviewed,MATCH,Reviewed,1,reviewed
+DocumentStatusID,3,Accepted,MATCH,Accepted,1,accepted
+DocumentStatusID,4,Rejected,MATCH,Rejected,1,rejected
+DocumentStatusID,5,POIApproved,MATCH,POIApproved,1,poiapproved
+EvMatchStatusID,0,None,MATCH,None,1,none
+EvMatchStatusID,1,PartiallyVerified,MATCH,PartiallyVerified,1,partiallyverified
+EvMatchStatusID,2,Verified,MATCH,Verified,1,verified
+EvMatchStatusID,3,NotVerified,MATCH,NotVerified,1,notverified
+FundType,1,TopTraders,MATCH,TopTraders,1,toptraders
+FundType,2,Partners,MATCH,Partners,1,partners
+FundType,3,Market,MATCH,Market,1,market
+FundTypeID,1,TopTraders,MATCH,TopTraders,1,toptraders
+FundTypeID,2,Partners,MATCH,Partners,1,partners
+FundTypeID,3,Market,MATCH,Market,1,market
+FundingTypeID,1,CreditCard,MATCH,CreditCard,1,creditcard
+FundingTypeID,2,WireTransfer,MATCH,WireTransfer,1,wiretransfer
+FundingTypeID,6,Neteller,MATCH,Neteller,1,neteller
+LabelID,2,RetailFX,MATCH,RetailFX,1,retailfx
+LabelID,30,Dealing,MATCH,Dealing,1,dealing
+LanguageID,1,English,MATCH,English,1,english
+LanguageID,10,Portuguese,MATCH,Portuguese,1,portuguese
+LanguageID,11,Turkish,MATCH,Turkish,1,turkish
+LanguageID,12,Greek,MATCH,Greek,1,greek
+LanguageID,13,Korean,MATCH,Korean,1,korean
+LanguageID,14,Swedish,MATCH,Swedish,1,swedish
+LanguageID,15,Norwegian,MATCH,Norwegian,1,norwegian
+LanguageID,16,Hungarian,MATCH,Hungarian,1,hungarian
+LanguageID,17,Polish,MATCH,Polish,1,polish
+LanguageID,18,ChineseTraditional,MATCH,ChineseTraditional,1,chinesetraditional
+LanguageID,19,Dutch,MATCH,Dutch,1,dutch
+LanguageID,2,German,MATCH,German,1,german
+LanguageID,20,EuropeanPortuguese,MATCH,EuropeanPortuguese,1,europeanportuguese
+LanguageID,21,Czech,MATCH,Czech,1,czech
+LanguageID,22,Malay,MATCH,Malay,1,malay
+LanguageID,23,Danish,MATCH,Danish,1,danish
+LanguageID,24,Romanian,MATCH,Romanian,1,romanian
+LanguageID,25,EnglishUS,MATCH,EnglishUS,1,englishus
+LanguageID,26,Vietnamese,MATCH,Vietnamese,1,vietnamese
+LanguageID,27,Thai,MATCH,Thai,1,thai
+LanguageID,28,Finnish,MATCH,Finnish,1,finnish
+LanguageID,3,Arabic,MATCH,Arabic,1,arabic
+LanguageID,4,Chinese,MATCH,Chinese,1,chinese
+LanguageID,5,Russian,MATCH,Russian,1,russian
+LanguageID,6,Spanish,MATCH,Spanish,1,spanish
+LanguageID,7,French,MATCH,French,1,french
+LanguageID,8,Italian,MATCH,Italian,1,italian
+LanguageID,9,Japanese,MATCH,Japanese,1,japanese
+LastWalletPoolStatus,1,Pending,MATCH,Pending,1,pending
+LastWalletPoolStatus,2,Verified,MATCH,Verified,1,verified
+LastWalletPoolStatus,3,Failed,MATCH,Failed,1,failed
+LastWalletPoolStatus,4,FundingInitiated,MATCH,FundingInitiated,1,fundinginitiated
+LastWalletPoolStatus,5,FundingSent,MATCH,FundingSent,1,fundingsent
+LastWalletPoolStatus,6,FundingVerified,MATCH,FundingVerified,1,fundingverified
+LastWalletPoolStatus,7,FundingFailed,MATCH,FundingFailed,1,fundingfailed
+MifidCategorizationID,0,None,MATCH,None,1,none
+MifidCategorizationID,2,Professional,MATCH,Professional,1,professional
+MifidCategorizationID,3,Elective Professional,MATCH,Elective professional,1,elective professional
+MoveMoneyReasonID,2,Bonus Abuser,MATCH,Bonus Abuser,1,bonus abuser
+MoveMoneyReasonID,3,Staking,MATCH,Staking,1,staking
+MoveMoneyReasonID,4,Airdrop,MATCH,Airdrop,1,airdrop
+PaymentSchemaType,0,Unknown,MATCH,Unknown,1,unknown
+PaymentSchemaType,1,Transfer,MATCH,Transfer,1,transfer
+PaymentSchemaType,2,FasterPayments,MATCH,FasterPayments,1,fasterpayments
+PaymentSchemaType,3,Chaps,MATCH,Chaps,1,chaps
+PaymentSchemaType,4,Bacs,MATCH,Bacs,1,bacs
+PaymentSchemaType,5,SEPAstandart,MATCH,SEPAstandart,1,sepastandart
+PaymentSchemaType,6,SEPAinstantTransfer,MATCH,SEPAinstantTransfer,1,sepainstanttransfer
+PaymentSchemaType,7,SEPAdirectDebit,MATCH,SEPAdirectDebit,1,sepadirectdebit
+PaymentSchemaTypeID,7,SEPAdirectDebit,MATCH,SEPAdirectDebit,1,sepadirectdebit
+PaymentSpecificationType,0,Unknown,MATCH,Unknown,1,unknown
+PaymentSpecificationType,1,DirectDebit,MATCH,DirectDebit,1,directdebit
+PaymentSpecificationTypeID,0,Unknown,MATCH,Unknown,1,unknown
+PaymentSpecificationTypeID,1,DirectDebit,MATCH,DirectDebit,1,directdebit
+PaymentStatusID,11,Chargeback,MATCH,Chargeback,1,chargeback
+PaymentStatusID,13,Pending,MATCH,Pending,1,pending
+PaymentStatusID,35,DeclineByRRE,MATCH,DeclineByRRE,1,declinebyrre
+PaymentStatusID,4,Technical,MATCH,Technical,1,technical
+PaymentStatusID,6,Canceled,MATCH,Canceled,1,canceled
+PaymentStatusID,7,Confirmed,MATCH,Confirmed,1,confirmed
+PendingClosureStatusID,1,No,MATCH,No,1,no
+PhoneVerifiedID,0,NotVerified,MATCH,NotVerified,1,notverified
+PhoneVerifiedID,1,AutomaticallyVerified,MATCH,AutomaticallyVerified,1,automaticallyverified
+PhoneVerifiedID,2,ManualyVerified,MATCH,ManualyVerified,1,manualyverified
+PhoneVerifiedID,3,Initiated,MATCH,Initiated,1,initiated
+PhoneVerifiedID,4,Rejected,MATCH,Rejected,1,rejected
+PhoneVerifiedID,5,AbuseFlag,MATCH,AbuseFlag,1,abuseflag
+PlatformID,2,IOS,MATCH,IOS,1,ios
+PlayerStatusID,0,N/A,MATCH,N/A,1,n a
+PlayerStatusID,10,Deposit Blocked,MATCH,Deposit Blocked,1,deposit blocked
+PlayerStatusID,11,Social Index,MATCH,Social Index,1,social index
+PlayerStatusID,12,Copy Block,MATCH,Copy Block,1,copy block
+PlayerStatusID,13,Pending Verification,MATCH,Pending Verification,1,pending verification
+PlayerStatusID,15,Block Deposit & Trading,MATCH,Block Deposit & Trading,1,block deposit  trading
+PlayerStatusID,2,Blocked,MATCH,Blocked,1,blocked
+PlayerStatusID,3,Chat Blocked,MATCH,Chat Blocked,1,chat blocked
+PlayerStatusID,4,Blocked Upon Request,MATCH,Blocked Upon Request,1,blocked upon request
+PlayerStatusID,5,Warning,MATCH,Warning,1,warning
+PlayerStatusID,6,Blocked,MATCH,Blocked - Under Investigation,1,blocked
+PlayerStatusID,7,Scalpers Block,MATCH,Scalpers Block,1,scalpers block
+PlayerStatusID,8,Blocked,MATCH,Blocked - PayPal Investigation,1,blocked
+PlayerStatusID,9,Trade & MIMO Blocked,MATCH,Trade & MIMO Blocked,1,trade  mimo blocked
+ProviderID,1,Tribe,MATCH,Tribe,1,tribe
+ReceivedTransactionTypeID,1,MoneyIn,MATCH,MoneyIn,1,moneyin
+ReceivedTransactionTypeID,2,Redeem,MATCH,Redeem,1,redeem
+ReceivedTransactionTypeID,5,ConversionFromEtoro,MATCH,ConversionFromEtoro,1,conversionfrometoro
+ReceivedTransactionTypeID,6,Payment,MATCH,Payment,1,payment
+RequestLastStatusID,31,ReadByConversionWorker,MATCH,ReadByConversionWorker,1,readbyconversionworker
+RiskClassificationID,0,High,MATCH,High,1,high
+RiskClassificationID,1,Medium,MATCH,Medium,1,medium
+RiskClassificationID,2,Low,MATCH,Low,1,low
+RiskClassificationID,3,Unacceptable,MATCH,Unacceptable,1,unacceptable
+RiskClassificationID,4,Medium High,MATCH,Medium High,1,medium high
+RiskClassificationID,5,Medium Low,MATCH,Medium Low,1,medium low
+RiskManagementStatusID,0,N/A,MATCH,N/A,1,n a
+RiskManagementStatusID,35,KYCLevel3,MATCH,KYCLevel3,1,kyclevel3
+RiskManagementStatusID,47,ML,MATCH,ML,1,ml
+RiskManagementStatusID,49,CustomerToFundingViolation,MATCH,CustomerToFundingViolation,1,customertofundingviolation
+RiskStatusID,0,None,MATCH,None,1,none
+RiskStatusID,1,Normal,MATCH,Normal,1,normal
+RiskStatusID,10,Affiliate Multiple Accounts,MATCH,Affiliate Multiple Accounts,1,affiliate multiple accounts
+RiskStatusID,17,High Risk Account Country,MATCH,High Risk Account Country,1,high risk account country
+RiskStatusID,2,OverTheLimit,MATCH,OverTheLimit,1,overthelimit
+RiskStatusID,3,FTDOverDailyLimit,MATCH,FTDOverDailyLimit,1,ftdoverdailylimit
+RiskStatusID,4,TooManyCreditCards,MATCH,TooManyCreditCards,1,toomanycreditcards
+RiskStatusID,5,Too Many PayPal Accounts,MATCH,Too Many PayPal Accounts,1,too many paypal accounts
+RiskStatusID,6,BinToRegCountryConflict,MATCH,BinToRegCountryConflict,1,bintoregcountryconflict
+RiskStatusID,7,DepositNameConflict,MATCH,DepositNameConflict,1,depositnameconflict
+RiskStatusID,8,LoginToRegCountryConflict,MATCH,LoginToRegCountryConflict,1,logintoregcountryconflict
+ScreeningStatusID,0,Unknown,MATCH,Unknown,1,unknown
+ScreeningStatusID,1,NoMatch,MATCH,NoMatch,1,nomatch
+ScreeningStatusID,2,PendingInvestigation,MATCH,PendingInvestigation,1,pendinginvestigation
+ScreeningStatusID,3,PEP,MATCH,PEP,1,pep
+ScreeningStatusID,4,RiskMatch,MATCH,RiskMatch,1,riskmatch
+ScreeningStatusID,5,Technical,MATCH,Technical,1,technical
+ScreeningStatusID,6,MultipleMatch,MATCH,MultipleMatch,1,multiplematch
+ScreeningStatusID,7,SanctionsMatch,MATCH,SanctionsMatch,1,sanctionsmatch
+SocialNetworkID,0,N/A,MATCH,N/A,1,n a
+SocialNetworkID,1,Facebook,MATCH,Facebook,1,facebook
+SocialNetworkID,2,Twitter,MATCH,Twitter,1,twitter
+SocialNetworkID,3,LinkedIn,MATCH,LinkedIn,1,linkedin
+TranStatusID,0,Pending,MATCH,Pending,1,pending
+TranStatusID,1,Confirmed,MATCH,Confirmed,1,confirmed
+TranStatusID,2,Verified,MATCH,Verified,1,verified
+TranStatusID,3,Error,MATCH,Error,1,error
+TranStatusID,4,Timeout,MATCH,Timeout,1,timeout
+TranStatusID,5,PermanentError,MATCH,PermanentError,1,permanenterror
+TranStatusID,6,WavedError,MATCH,WavedError,1,wavederror
+TransactionStatus,0,Failed,MATCH,Failed,1,failed
+TransactionStatus,1,Authorized,MATCH,Authorized,1,authorized
+TransactionStatus,2,Settled,MATCH,Settled,1,settled
+TransactionStatus,3,Rejected,MATCH,Rejected,1,rejected
+TransactionStatus,4,Returned,MATCH,Returned,1,returned
+TransactionStatus,5,Expired,MATCH,Expired,1,expired
+TransactionStatusID,0,Failed,MATCH,Failed,1,failed
+TransactionStatusID,1,Authorized,MATCH,Authorized,1,authorized
+TransactionStatusID,2,Settled,MATCH,Settled,1,settled
+TransactionStatusID,3,Rejected,MATCH,Rejected,1,rejected
+TransactionStatusID,4,Returned,MATCH,Returned,1,returned
+TransactionStatusID,5,Expired,MATCH,Expired,1,expired
+TransactionType,0,Unknown,MATCH,Unknown,1,unknown
+TransactionType,1,CardPayment,MATCH,CardPayment,1,cardpayment
+TransactionType,10,Fee,MATCH,Fee,1,fee
+TransactionType,11,CreditBA,MATCH,CreditBA,1,creditba
+TransactionType,12,DebitBA,MATCH,DebitBA,1,debitba
+TransactionType,13,DirectDebit,MATCH,DirectDebit,1,directdebit
+TransactionType,14,CryptoToFiat,MATCH,CryptoToFiat,1,cryptotofiat
+TransactionType,2,Contactless,MATCH,Contactless,1,contactless
+TransactionType,3,OnlinePayment,MATCH,OnlinePayment,1,onlinepayment
+TransactionType,4,CashWithdrawal,MATCH,CashWithdrawal,1,cashwithdrawal
+TransactionType,5,TransferReceived,MATCH,TransferReceived,1,transferreceived
+TransactionType,6,Transfer,MATCH,Transfer,1,transfer
+TransactionType,7,PaymentReceived,MATCH,PaymentReceived,1,paymentreceived
+TransactionType,8,Payment,MATCH,Payment,1,payment
+TransactionType,9,Refund,MATCH,Refund,1,refund
+TransactionTypeID,0,Unknown,MATCH,Unknown,1,unknown
+TransactionTypeID,0,Redeem,MATCH,Redeem,1,redeem
+TransactionTypeID,1,CardPayment,MATCH,CardPayment,1,cardpayment
+TransactionTypeID,1,CustomerMoneyOut,MATCH,CustomerMoneyOut,1,customermoneyout
+TransactionTypeID,10,Fee,MATCH,Fee,1,fee
+TransactionTypeID,10,BlockChainActivation,MATCH,BlockChainActivation,1,blockchainactivation
+TransactionTypeID,11,CreditBA,MATCH,CreditBA,1,creditba
+TransactionTypeID,11,OmnibusMoneyOut,MATCH,OmnibusMoneyOut,1,omnibusmoneyout
+TransactionTypeID,12,DebitBA,MATCH,DebitBA,1,debitba
+TransactionTypeID,12,ConversionToFiat,MATCH,ConversionToFiat,1,conversiontofiat
+TransactionTypeID,13,DirectDebit,MATCH,DirectDebit,1,directdebit
+TransactionTypeID,13,ManualUserMoneyOut,MATCH,ManualUserMoneyOut,1,manualusermoneyout
+TransactionTypeID,14,CryptoToFiat,MATCH,CryptoToFiat,1,cryptotofiat
+TransactionTypeID,2,Contactless,MATCH,Contactless,1,contactless
+TransactionTypeID,2,AmlMoneyBack,MATCH,AmlMoneyBack,1,amlmoneyback
+TransactionTypeID,3,OnlinePayment,MATCH,OnlinePayment,1,onlinepayment
+TransactionTypeID,4,CashWithdrawal,MATCH,CashWithdrawal,1,cashwithdrawal
+TransactionTypeID,4,Funding,MATCH,Funding,1,funding
+TransactionTypeID,5,TransferReceived,MATCH,TransferReceived,1,transferreceived
+TransactionTypeID,5,ConversionMoneyIn,MATCH,ConversionMoneyIn,1,conversionmoneyin
+TransactionTypeID,6,Transfer,MATCH,Transfer,1,transfer
+TransactionTypeID,6,ConversionMoneyOut,MATCH,ConversionMoneyOut,1,conversionmoneyout
+TransactionTypeID,7,PaymentReceived,MATCH,PaymentReceived,1,paymentreceived
+TransactionTypeID,7,Payment,MATCH,Payment,1,payment
+TransactionTypeID,8,Payment,MATCH,Payment,1,payment
+TransactionTypeID,8,RedeemAsic,MATCH,RedeemAsic,1,redeemasic
+TransactionTypeID,9,Refund,MATCH,Refund,1,refund
+TransactionTypeID,9,Staking,MATCH,Staking,1,staking
+TribeScriptStatus,0,Unapproved,MATCH,Unapproved,1,unapproved
+TribeScriptStatus,1,Approved,MATCH,Approved,1,approved
+TribeScriptStatus,2,Executed,MATCH,Executed,1,executed
+TribeScriptStatusID,0,Unapproved,MATCH,Unapproved,1,unapproved
+TribeScriptStatusID,1,Approved,MATCH,Approved,1,approved
+TribeScriptStatusID,2,Executed,MATCH,Executed,1,executed
+VerificationLevelID,0,Level 0,MATCH,Level 0,1,level 0
+WorldCheckID,1,Pending WCH,MATCH,Pending WCH,1,pending wch
+WorldCheckID,2,No Match,MATCH,No Match,1,no match
+WorldCheckID,3,PEP Match,MATCH,PEP Match,1,pep match
+WorldCheckID,4,Risk Match,MATCH,Risk Match,1,risk match

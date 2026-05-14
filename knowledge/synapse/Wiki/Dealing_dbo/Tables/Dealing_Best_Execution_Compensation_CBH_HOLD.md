@@ -113,7 +113,7 @@ The table was frozen in **May 2023** (last business date **2023-05-16**, last lo
 | 3 | CID | int | YES | **Customer ID** — **PII**; **HASH** distribution key. (Tier 2 — inferred from structure) |
 | 4 | InstrumentID | int | YES | Instrument key; join `DWH_dbo.Dim_Instrument`. (Tier 2 — inferred from structure) |
 | 5 | InstrumentName | varchar(50) | YES | Display name. (Tier 2 — inferred from structure) |
-| 6 | InstrumentTypeID | int | YES | Type code (e.g. 1=FX, 2=CFD, 5=Real Stock). (Tier 2 — inferred from structure) |
+| 6 | InstrumentTypeID | int | YES | Type code (e.g. 1=Currencies, 2=Commodities, 5=Stocks). (Tier 2 — inferred from structure) |
 | 7 | InstrumentType | varchar(50) | YES | Type label. (Tier 2 — inferred from structure) |
 | 8 | HedgeServerID | int | YES | Hedge server routing identifier. (Tier 2 — inferred from structure) |
 | 9 | MirrorID | int | YES | Copy / mirror id; **0** = not copy. (Tier 2 — inferred from structure) |

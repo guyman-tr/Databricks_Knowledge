@@ -97,7 +97,7 @@ HASH(CID) distribution with CLUSTERED INDEX on (Date ASC, CID ASC). Filter on Da
 | 2 | CID | int | YES | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Used as the universal customer identifier across all tables. Hash distribution key. Passthrough from Fact_BillingDeposit / Fact_SnapshotCustomer. (Tier 1 — Customer.CustomerStatic) |
 | 3 | DepositWithdrawID | int | YES | Source deposit ID from Fact_BillingDeposit.DepositID, renamed for schema compatibility with BI_DB_DepositWithdrawFee. (Tier 2 — SP_Deposit_Reversals_PIPs) |
 | 4 | Occurred | datetime | YES | Reversal event timestamp. CASE: rollback CreateDate when available, else credit.Occurred from External_etoro_history_credit_yesterday. (Tier 2 — SP_Deposit_Reversals_PIPs) |
-| 5 | CreditTypeID | tinyint | YES | Credit type from External_etoro_history_credit_yesterday. Reversal types: 11=Chargeback, 12=Refund, 16=ChargebackReversal, 32=ReverseDeposit. (Tier 2 — SP_Deposit_Reversals_PIPs) |
+| 5 | CreditTypeID | tinyint | YES | Credit type from External_etoro_history_credit_yesterday. Reversal types: 11=Chargeback, 12=Refund, 16=Refund As ChargeBack, 32=Reverse Deposit. (Tier 2 — SP_Deposit_Reversals_PIPs) |
 | 6 | TransactionID | varchar(200) | YES | Synthetic identifier: CAST(DepositID AS VARCHAR(20)) + 'D'. (Tier 2 — SP_Deposit_Reversals_PIPs) |
 | 7 | Date | date | YES | Calendar date from @date parameter. (Tier 2 — SP_Deposit_Reversals_PIPs) |
 | 8 | Customer | varchar(200) | YES | APEX broker external ID. Decimal(38,0) to accommodate APEX very large numeric ID format. Passthrough from Dim_Customer.ExternalID. (Tier 1 — Customer.CustomerStatic) |

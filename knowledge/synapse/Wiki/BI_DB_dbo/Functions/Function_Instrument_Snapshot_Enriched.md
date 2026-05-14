@@ -96,3 +96,4 @@ dim instrument and dim instrument snapshot are not sufficient for rapid changes 
 
 ---
 *Auto-generated from SSDT source on 2026-03-22. Knowledge-only -- not migrated to Unity Catalog.*
+> **IsSQF business semantic (Tier 5 user expert 2026-05-14):** `IsSQF = 1` flags instruments that are **SpotQuotedFutures** — smaller-contract-size variants of eToro RealFutures, traded on the **CME (Chicago Mercantile Exchange)**. The technical predicate (`Trade.InstrumentGroups.GroupID = 59`) is correct; the business meaning is the product classification, NOT "Sustainable & Quality-Focused" (legacy fabricated narrative across DDR wikis until 2026-05-14) and NOT "Small Quantity Fee pricing model" (another fabricated narrative seen in Client_Balance_* wikis).
