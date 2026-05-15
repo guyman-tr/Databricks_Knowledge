@@ -43,8 +43,3 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language ALTER COLUMN Inser
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language ALTER COLUMN IsoCode SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language ALTER COLUMN CultureCode SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 11:23:43 UTC
--- Batch deploy resume: DWH_dbo deploy batch 1
--- Statements: 18/18 succeeded
--- ====================

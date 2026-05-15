@@ -41,8 +41,3 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER CO
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensationreason ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 11:27:24 UTC
--- Batch deploy resume: DWH_dbo deploy batch 1
--- Statements: 16/16 succeeded
--- ====================

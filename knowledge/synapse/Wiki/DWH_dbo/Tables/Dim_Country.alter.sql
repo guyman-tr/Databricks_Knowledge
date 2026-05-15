@@ -65,8 +65,3 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country ALTER COLUMN IsElig
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country ALTER COLUMN IsEuropeanCountry SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country ALTER COLUMN MarketingRegionManualName SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-05-05 13:09:49 UTC
--- Batch deploy resume: DWH_dbo deploy batch 10
--- Statements: 40/40 succeeded
--- ====================

@@ -40,9 +40,10 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN Sta
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN ClusterRegulationID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN IsUSA SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN JurisdictionName SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN BankID SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN RegulationLongName SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN RegulationShortName SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN DefaultRegulationID SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 11:26:28 UTC
--- Batch deploy resume: DWH_dbo deploy batch 1
--- Statements: 16/16 succeeded
--- ====================
