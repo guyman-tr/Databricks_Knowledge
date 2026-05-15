@@ -110,10 +110,20 @@ def _is_sql_type_cell(raw: str) -> bool:
 
 
 def is_plausible_column_name(name: str) -> bool:
+    """True for SQL identifier-like cells used in wiki Elements first column.
+
+    Synapse DDL often surfaces bracketed names with spaces (`[Deposit Amounts]`);
+    Unicode Catalog export may keep spaced names intact. Permit spaces and &
+    inside bracket-stripped identifiers so parse_wiki_column_catalog retains
+    those columns for ALTER regeneration.
+    """
     n = name.strip().strip("`").strip()
+    if n.startswith("[") and n.endswith("]") and len(n) >= 2:
+        n = n[1:-1].strip()
     if not n or len(n) > 128:
         return False
-    if any(c in n for c in " \t\n"):
+    # Allow spaced Synapse identifiers (excluding tabs/newlines inside the token).
+    if any(c in n for c in "\t\n"):
         return False
     if n.isdigit():
         return False
@@ -123,10 +133,36 @@ def is_plausible_column_name(name: str) -> bool:
     if "★" in n or "☆" in n:
         return False
     # Synapse / UC may use slashes (Organic/Paid), hyphens (BNY-eToro_Units),
+    # spaces (Deposit Amounts), ampersands (Compensation P&L Adjustment),
     # plus/percent/period (UnitsNOP+1%, UnitsNOP-50%, etoro.IsActive_v2), etc.
-    if not re.match(r"^[A-Za-z0-9_/\-+%.]+$", n):
+    if not re.match(r"^[A-Za-z0-9_/\-+%&. ]+$", n):
         return False
     return True
+
+
+_ELEMENTS_HEADER_RE = re.compile(
+    r"^#{1,4}\s+\d+(?:\.\d+)?\.?\s*(?:Elements?|Columns?|Column\s+Catalog|"
+    r"Column\s+Inventory)\b",
+    re.MULTILINE | re.IGNORECASE,
+)
+_NEXT_TOP_SECTION_RE = re.compile(r"^#{1,3}\s+\d+\.", re.MULTILINE)
+
+
+def _scope_to_elements_section(text: str) -> str:
+    """Return the slice of `text` covering the Elements section only.
+
+    If no Elements header is found, returns the whole text (back-compat).
+    This prevents value-map tables in earlier sections (e.g.
+    ``| 1 | FixPerUnit | meaning |``) from being mis-parsed as column rows.
+    """
+    m = _ELEMENTS_HEADER_RE.search(text)
+    if not m:
+        return text
+    body = text[m.end():]
+    nxt = _NEXT_TOP_SECTION_RE.search(body)
+    if nxt:
+        return body[: nxt.start()]
+    return body
 
 
 def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
@@ -146,11 +182,17 @@ def parse_wiki_column_catalog(text: str) -> list[tuple[str, str]]:
     A row is accepted only when a strict SQL-type token (e.g. ``int``,
     ``varchar(4000)``) appears as a standalone cell — that gates out
     property tables, narrative tables, and value-map tables.
+
+    Parsing is scoped to the ``## N. Elements`` (or equivalent) section if
+    present, so value-map tables earlier in the wiki cannot leak into the
+    column list.
     """
     rows: list[tuple[str, str]] = []
     seen: set[str] = set()
 
-    for line in text.splitlines():
+    scoped = _scope_to_elements_section(text)
+
+    for line in scoped.splitlines():
         raw = line.strip()
         if not raw.startswith("|"):
             continue

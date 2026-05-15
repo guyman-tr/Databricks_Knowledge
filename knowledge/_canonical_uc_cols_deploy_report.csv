@@ -1,0 +1,271 @@
+idx,uc_target,column,status,error
+1,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation`. SQLSTATE: 428FR"
+2,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation`. SQLSTATE: 428FR"
+3,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation`. SQLSTATE: 428FR"
+4,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog`. SQLSTATE: 428FR"
+5,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog`. SQLSTATE: 428FR"
+6,main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_dim_positionchangelog`. SQLSTATE: 428FR"
+7,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit,etr_y,OK,
+8,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit,etr_ym,OK,
+9,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit,etr_ymd,OK,
+10,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem`. SQLSTATE: 428FR"
+11,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem`. SQLSTATE: 428FR"
+12,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_billingredeem`. SQLSTATE: 428FR"
+13,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw,etr_y,OK,
+14,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw,etr_ym,OK,
+15,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingwithdraw,etr_ymd,OK,
+16,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit,etr_y,OK,
+17,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit,etr_ym,OK,
+18,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit,etr_ymd,OK,
+19,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction,etr_y,OK,
+20,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction,etr_ym,OK,
+21,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction,etr_ymd,OK,
+22,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl`. SQLSTATE: 428FR"
+23,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl`. SQLSTATE: 428FR"
+24,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_customerunrealized_pnl`. SQLSTATE: 428FR"
+25,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction`. SQLSTATE: 428FR"
+26,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction`. SQLSTATE: 428FR"
+27,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_fact_firstcustomeraction`. SQLSTATE: 428FR"
+28,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers,etr_y,OK,
+29,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers,etr_ym,OK,
+30,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_guru_copiers,etr_ymd,OK,
+31,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost,etr_y,OK,
+32,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost,etr_ym,OK,
+33,main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost,etr_ymd,OK,
+34,main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history`. SQLSTATE: 428FR"
+35,main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history`. SQLSTATE: 428FR"
+36,main.dwh.gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_sts_user_operations_data_history`. SQLSTATE: 428FR"
+37,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror`. SQLSTATE: 428FR"
+38,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror`. SQLSTATE: 428FR"
+39,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dwh`.`gold_sql_dp_prod_we_dwh_dbo_v_dim_mirror`. SQLSTATE: 428FR"
+40,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid,etr_y,OK,
+41,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid,etr_ym,OK,
+42,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid,etr_ymd,OK,
+43,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities,etr_y,OK,
+44,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities,etr_ym,OK,
+45,main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_liabilities,etr_ymd,OK,
+46,main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer,etr_y,OK,
+47,main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer,etr_ym,OK,
+48,main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer,etr_ymd,OK,
+49,main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid,etr_y,OK,
+50,main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid,etr_ym,OK,
+51,main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid,etr_ymd,OK,
+52,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports,etr_y,OK,
+53,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports,etr_ym,OK,
+54,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_appflyer_reports,etr_ymd,OK,
+55,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance`. SQLSTATE: 428FR"
+56,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance`. SQLSTATE: 428FR"
+57,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_asic_clientbalancefinance`. SQLSTATE: 428FR"
+58,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cb_cyclegap_categorization,etr_y,OK,
+59,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cb_cyclegap_categorization,etr_ym,OK,
+60,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cb_cyclegap_categorization,etr_ymd,OK,
+61,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa`. SQLSTATE: 428FR"
+62,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa`. SQLSTATE: 428FR"
+63,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_daily_nwa`. SQLSTATE: 428FR"
+64,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club,etr_y,OK,
+65,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club,etr_ym,OK,
+66,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_club,etr_ymd,OK,
+67,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata,etr_y,OK,
+68,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata,etr_ym,OK,
+69,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailypanel_fulldata,etr_ymd,OK,
+70,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition,etr_y,OK,
+71,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition,etr_ym,OK,
+72,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_lifestagedefinition,etr_ymd,OK,
+73,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidlevel_settlement_report,etr_y,OK,
+74,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidlevel_settlement_report,etr_ym,OK,
+75,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cidlevel_settlement_report,etr_ymd,OK,
+76,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_aggregate_level_new,etr_y,OK,
+77,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_aggregate_level_new,etr_ym,OK,
+78,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_aggregate_level_new,etr_ymd,OK,
+79,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new,etr_y,OK,
+80,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new,etr_ym,OK,
+81,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_balance_cid_level_new,etr_ymd,OK,
+82,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown`. SQLSTATE: 428FR"
+83,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown`. SQLSTATE: 428FR"
+84,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_client_new_compensationbreakdown`. SQLSTATE: 428FR"
+85,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata`. SQLSTATE: 428FR"
+86,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata`. SQLSTATE: 428FR"
+87,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_copydailydata`. SQLSTATE: 428FR"
+88,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cross_selling_monthly,etr_y,OK,
+89,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cross_selling_monthly,etr_ym,OK,
+90,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cross_selling_monthly,etr_ymd,OK,
+91,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop`. SQLSTATE: 428FR"
+92,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop`. SQLSTATE: 428FR"
+93,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop`. SQLSTATE: 428FR"
+94,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid`. SQLSTATE: 428FR"
+95,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid`. SQLSTATE: 428FR"
+96,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_crypto_nop_cid`. SQLSTATE: 428FR"
+97,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline,etr_y,OK,
+98,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline,etr_ym,OK,
+99,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline,etr_ymd,OK,
+100,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends`. SQLSTATE: 428FR"
+101,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends`. SQLSTATE: 428FR"
+102,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_dividends`. SQLSTATE: 428FR"
+103,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport,etr_y,OK,
+104,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport,etr_ym,OK,
+105,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport,etr_ymd,OK,
+106,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport_test,etr_y,FAIL,"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_y` cannot be resolved. Did you mean one of the following? []. SQLSTATE: 42703; line 1 pos 0"
+107,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport_test,etr_ym,FAIL,"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_ym` cannot be resolved. Did you mean one of the following? []. SQLSTATE: 42703; line 1 pos 0"
+108,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycommisionreport_test,etr_ymd,FAIL,"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_ymd` cannot be resolved. Did you mean one of the following? []. SQLSTATE: 42703; line 1 pos 0"
+109,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue`. SQLSTATE: 428FR"
+110,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue`. SQLSTATE: 428FR"
+111,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailycopyrevenue`. SQLSTATE: 428FR"
+112,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailydividendsbyposition,etr_y,OK,
+113,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailydividendsbyposition,etr_ym,OK,
+114,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailydividendsbyposition,etr_ymd,OK,
+115,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new`. SQLSTATE: 428FR"
+116,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new`. SQLSTATE: 428FR"
+117,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzero_treesize_new`. SQLSTATE: 428FR"
+118,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks`. SQLSTATE: 428FR"
+119,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks`. SQLSTATE: 428FR"
+120,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_dailyzeropnl_stocks`. SQLSTATE: 428FR"
+121,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level,etr_y,OK,
+122,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level,etr_ym,OK,
+123,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_cid_level,etr_ymd,OK,
+124,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status,etr_y,OK,
+125,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status,etr_ym,OK,
+126,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status,etr_ymd,OK,
+127,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status_backup,etr_y,OK,
+128,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status_backup,etr_ym,OK,
+129,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_daily_status_backup,etr_ymd,OK,
+130,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status,etr_y,OK,
+131,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status,etr_ym,OK,
+132,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_customer_periodic_status,etr_ymd,OK,
+133,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated`. SQLSTATE: 428FR"
+134,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated`. SQLSTATE: 428FR"
+135,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_daily_aggregated`. SQLSTATE: 428FR"
+136,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms,etr_y,OK,
+137,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms,etr_ym,OK,
+138,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms,etr_ymd,OK,
+139,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl,etr_y,OK,
+140,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl,etr_ym,OK,
+141,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_pnl,etr_ymd,OK,
+142,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts,etr_y,OK,
+143,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts,etr_ym,OK,
+144,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and_amounts,etr_ymd,OK,
+145,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee,etr_y,OK,
+146,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee,etr_ym,OK,
+147,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee,etr_ymd,OK,
+148,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_bck,etr_y,FAIL,"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_y` cannot be resolved. Did you mean one of the following? []. SQLSTATE: 42703; line 1 pos 0"
+149,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_bck,etr_ym,FAIL,"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_ym` cannot be resolved. Did you mean one of the following? []. SQLSTATE: 42703; line 1 pos 0"
+150,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_bck,etr_ymd,FAIL,"[UNRESOLVED_COLUMN.WITH_SUGGESTION] A column, variable, or function parameter with name `etr_ymd` cannot be resolved. Did you mean one of the following? []. SQLSTATE: 42703; line 1 pos 0"
+151,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution,etr_y,OK,
+152,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution,etr_ym,OK,
+153,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution,etr_ymd,OK,
+154,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_etoro_vs_positions,etr_y,OK,
+155,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_etoro_vs_positions,etr_ym,OK,
+156,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_finance_etoro_vs_positions,etr_ymd,OK,
+157,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily,etr_y,OK,
+158,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily,etr_ym,OK,
+159,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_interestdaily,etr_ymd,OK,
+160,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_investorsdetail,etr_y,OK,
+161,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_investorsdetail,etr_ym,OK,
+162,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_investorsdetail,etr_ymd,OK,
+163,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily,etr_y,OK,
+164,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily,etr_ym,OK,
+165,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingclouddaily,etr_ymd,OK,
+166,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport,etr_y,OK,
+167,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport,etr_ym,OK,
+168,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_newbonusreport,etr_ymd,OK,
+169,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl`. SQLSTATE: 428FR"
+170,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl`. SQLSTATE: 428FR"
+171,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl`. SQLSTATE: 428FR"
+172,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody`. SQLSTATE: 428FR"
+173,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody`. SQLSTATE: 428FR"
+174,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_eu_custody`. SQLSTATE: 428FR"
+175,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody`. SQLSTATE: 428FR"
+176,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody`. SQLSTATE: 428FR"
+177,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody`. SQLSTATE: 428FR"
+178,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver`. SQLSTATE: 428FR"
+179,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver`. SQLSTATE: 428FR"
+180,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_positionpnl_uk_custody_resolver`. SQLSTATE: 428FR"
+181,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_sfmc_report_archive,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_sfmc_report_archive`. SQLSTATE: 428FR"
+182,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_sfmc_report_archive,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_sfmc_report_archive`. SQLSTATE: 428FR"
+183,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_sfmc_report_archive,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_sfmc_report_archive`. SQLSTATE: 428FR"
+184,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity`. SQLSTATE: 428FR"
+185,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity`. SQLSTATE: 428FR"
+186,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_social_activity`. SQLSTATE: 428FR"
+187,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted`. SQLSTATE: 428FR"
+188,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted`. SQLSTATE: 428FR"
+189,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_bi_db_spreadedpricecandle60minsplitted`. SQLSTATE: 428FR"
+190,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_cids7daysdeviation,etr_y,OK,
+191,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_cids7daysdeviation,etr_ym,OK,
+192,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_cids7daysdeviation,etr_ymd,OK,
+193,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_cidsdailyrisk,etr_y,OK,
+194,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_cidsdailyrisk,etr_ym,OK,
+195,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_cidsdailyrisk,etr_ymd,OK,
+196,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily`. SQLSTATE: 428FR"
+197,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily`. SQLSTATE: 428FR"
+198,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`bi_db`.`gold_sql_dp_prod_we_bi_db_dbo_dwh_gaindaily`. SQLSTATE: 428FR"
+199,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits,etr_y,OK,
+200,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits,etr_ym,OK,
+201,main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_v_bi_db_alldeposits,etr_ymd,OK,
+202,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings,etr_y,OK,
+203,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings,etr_ym,OK,
+204,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_holdings,etr_ymd,OK,
+205,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity`. SQLSTATE: 428FR"
+206,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity`. SQLSTATE: 428FR"
+207,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_apexrecon_tradeactivity`. SQLSTATE: 428FR"
+208,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding,etr_y,OK,
+209,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding,etr_ym,OK,
+210,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_bny_virtu_reconeodholding,etr_ymd,OK,
+211,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost`. SQLSTATE: 428FR"
+212,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost`. SQLSTATE: 428FR"
+213,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_boundary_cost`. SQLSTATE: 428FR"
+214,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown,etr_y,OK,
+215,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown,etr_ym,OK,
+216,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_clicks_openclose_breakdown,etr_ymd,OK,
+217,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon,etr_y,OK,
+218,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon,etr_ym,OK,
+219,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_activityrecon,etr_ymd,OK,
+220,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss`. SQLSTATE: 428FR"
+221,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss`. SQLSTATE: 428FR"
+222,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_esmanetloss`. SQLSTATE: 428FR"
+223,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment,etr_y,OK,
+224,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment,etr_ym,OK,
+225,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_islamic_daily_spot_price_adjustment,etr_ymd,OK,
+226,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks`. SQLSTATE: 428FR"
+227,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks`. SQLSTATE: 428FR"
+228,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks`. SQLSTATE: 428FR"
+229,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid`. SQLSTATE: 428FR"
+230,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid`. SQLSTATE: 428FR"
+231,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_manipulationreport_realstocks_cid`. SQLSTATE: 428FR"
+232,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures,etr_y,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_y` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures`. SQLSTATE: 428FR"
+233,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures,etr_ym,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ym` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures`. SQLSTATE: 428FR"
+234,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures,etr_ymd,FAIL,"[CANNOT_ALTER_PARTITION_COLUMN] ALTER TABLE (ALTER|CHANGE) COLUMN is not supported for partition columns, but found the partition column `etr_ymd` in the table `main`.`dealing`.`gold_sql_dp_prod_we_dealing_dbo_dealing_marex_recon_eodholdings_futures`. SQLSTATE: 428FR"
+235,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings,etr_y,OK,
+236,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings,etr_ym,OK,
+237,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_saxorecon_eodholdings,etr_ymd,OK,
+238,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary,etr_y,OK,
+239,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary,etr_ym,OK,
+240,main.dealing.gold_sql_dp_prod_we_dealing_dbo_dealing_staking_summary,etr_ymd,OK,
+241,main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon,etr_y,OK,
+242,main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon,etr_ym,OK,
+243,main.dealing.gold_sql_dp_prod_we_dealing_dbo_v_dealing_duco_eodrecon,etr_ymd,OK,
+244,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients,etr_y,OK,
+245,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients,etr_ym,OK,
+246,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_dealingdashboard_clients,etr_ymd,OK,
+247,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon,etr_y,OK,
+248,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon,etr_ym,OK,
+249,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_duco_eodrecon,etr_ymd,OK,
+250,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg,etr_y,OK,
+251,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg,etr_ym,OK,
+252,main.bi_db.gold_sql_dp_prod_we_dealing_dbo_dealing_numberofpositionsopened_agg,etr_ymd,OK,
+253,main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment,etr_y,OK,
+254,main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment,etr_ym,OK,
+255,main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment,etr_ymd,OK,
+256,main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history,etr_y,OK,
+257,main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history,etr_ym,OK,
+258,main.emoney.gold_sql_dp_prod_we_emoney_dbo_emoney_customer_risk_assessment_history,etr_ymd,OK,
+259,main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance,etr_y,OK,
+260,main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance,etr_ym,OK,
+261,main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoneyclientbalance,etr_ymd,OK,
+262,main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew,etr_y,OK,
+263,main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew,etr_ym,OK,
+264,main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_financereportsbalancesnew,etr_ymd,OK,
+265,main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity,etr_y,OK,
+266,main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity,etr_ym,OK,
+267,main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_walletentity,etr_ymd,OK,
+268,main.bi_db.gold_sql_dp_prod_we_exw_wallet_exw_price,etr_y,OK,
+269,main.bi_db.gold_sql_dp_prod_we_exw_wallet_exw_price,etr_ym,OK,
+270,main.bi_db.gold_sql_dp_prod_we_exw_wallet_exw_price,etr_ymd,OK,

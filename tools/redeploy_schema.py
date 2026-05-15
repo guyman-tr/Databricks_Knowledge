@@ -30,7 +30,8 @@ WIKI_ROOT = REPO / "knowledge" / "synapse" / "Wiki"
 
 ALTER_RE = re.compile(
     r"^ALTER\s+TABLE\s+([A-Za-z0-9_.`-]+)\s+"
-    r"ALTER\s+COLUMN\s+`?([A-Za-z0-9_]+)`?\s+"
+    # Column name is either: backticked anything-but-backtick, OR bare identifier
+    r"ALTER\s+COLUMN\s+(?:`([^`]+)`|([A-Za-z0-9_]+))\s+"
     r"COMMENT\s+'((?:[^']|'')*)'\s*;",
     re.IGNORECASE,
 )
@@ -142,7 +143,8 @@ def _run(statements: list[tuple[Path, str]], report_csv: Path,
         for idx, (src, stmt) in enumerate(statements, start=1):
             m = ALTER_RE.match(stmt)
             uc_table = _strip_backticks(m.group(1)) if m else ""
-            uc_column = m.group(2) if m else ""
+            # Group 2 = backticked name (without backticks), group 3 = bare name.
+            uc_column = (m.group(2) or m.group(3)) if m else ""
             key = (uc_table, uc_column)
             if resume and prior.get(key) == "OK":
                 w.writerow({
