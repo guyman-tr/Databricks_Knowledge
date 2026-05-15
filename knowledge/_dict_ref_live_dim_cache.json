@@ -1,0 +1,576 @@
+{
+  "knowledge/synapse/Wiki/BI_DB_dbo/Tables/Dim_Revenue_Metrics.md": {
+    "source": "wiki",
+    "n_entries": 5,
+    "entries": {
+      "1": "TradeTransactional",
+      "2": "Overnight",
+      "3": "MIMO",
+      "4": "RevShare",
+      "5": "Other"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_AccountStatus.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "0": "N/A (DWH placeholder for NULL-safe JOINs",
+      "1": "Open (active account",
+      "2": "Closed (deactivated"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_AccountType.md": {
+    "source": "wiki",
+    "n_entries": 19,
+    "entries": {
+      "0": "N/A (DWH placeholder",
+      "1": "Private",
+      "2": "Corporate",
+      "3": "IB",
+      "4": "Joint",
+      "5": "White Label",
+      "6": "Affiliate Private",
+      "7": "Employee",
+      "8": "Custodian",
+      "9": "Fund",
+      "10": "eToro Group",
+      "11": "News",
+      "12": "White List",
+      "13": "Analyst",
+      "14": "SMSF",
+      "15": "Affiliate Corporate",
+      "16": "Administrated",
+      "17": "Funded Employee",
+      "18": "Trust"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_ActionType.md": {
+    "source": "wiki",
+    "n_entries": 1,
+    "entries": {
+      "0": "N/A sentinel"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_BillingDepot.md": {
+    "source": "wiki",
+    "n_entries": 8,
+    "entries": {
+      "1": "MoneyBookers USD",
+      "2": "Cashout",
+      "3": "WebMoney",
+      "4": "Giropay",
+      "6": "Neteller",
+      "7": "Neteller",
+      "8": "MoneyBookers",
+      "10": "Wire"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_BillingProtocolMIDSettingsID.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "0": "General (applies to both",
+      "1": "Live",
+      "2": "Demo"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CardType.md": {
+    "source": "wiki",
+    "n_entries": 18,
+    "entries": {
+      "0": "None",
+      "1": "Visa",
+      "2": "Master Card",
+      "3": "Diners",
+      "4": "Amex",
+      "5": "Fire Pay",
+      "6": "JCB",
+      "7": "American Express",
+      "8": "Maestro",
+      "9": "Laser",
+      "10": "Switch",
+      "11": "UK Local",
+      "12": "Discover",
+      "13": "Local Card",
+      "14": "China Union Pay",
+      "15": "Solo",
+      "16": "Cirrus",
+      "17": "GE Capital"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CashoutFeeGroup.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "1": "Default (standard fees",
+      "2": "Exempt (no fees",
+      "3": "Discount (reduced fees"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CashoutMode.md": {
+    "source": "wiki",
+    "n_entries": 7,
+    "entries": {
+      "0": "Manual",
+      "1": "Auto Create",
+      "2": "Mass Auto Create",
+      "3": "Instant Withdrawal",
+      "10": "Auto Create",
+      "20": "Mass Auto Create",
+      "30": "Instant Withdrawal (highest"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CashoutStatus.md": {
+    "source": "wiki",
+    "n_entries": 5,
+    "entries": {
+      "0": "N/A (placeholder",
+      "1": "Pending",
+      "2": "InProcess",
+      "3": "Processed",
+      "4": "Canceled"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Channel.md": {
+    "source": "wiki",
+    "n_entries": 0,
+    "entries": {}
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_ClosePositionReason.md": {
+    "source": "wiki",
+    "n_entries": 27,
+    "entries": {
+      "0": "Customer (manual",
+      "1": "Stop Loss",
+      "2": "End of Week",
+      "3": "Stop Loss",
+      "4": "Return to Market",
+      "5": "Take Profit",
+      "6": "Take Profit",
+      "7": "Contract Rollover",
+      "8": "BackOffice",
+      "9": "Hierarchical Close (leader closed",
+      "10": "Recovery",
+      "11": "Join Demo Challenge",
+      "12": "Close All",
+      "13": "Copy SL",
+      "14": "Mirror manual close",
+      "15": "Manual Liquidation",
+      "16": "BSL (gap stop-loss",
+      "17": "Manual Unregister",
+      "18": "BO Unregister",
+      "19": "Redeem",
+      "20": "Operational adjustment",
+      "21": "Orphaned",
+      "22": "Transferred Out",
+      "23": "Alignment",
+      "24": "Delist",
+      "25": "Close by rate",
+      "26": "Expiry"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CompensationReason.md": {
+    "source": "wiki",
+    "n_entries": 9,
+    "entries": {
+      "1": "Custom",
+      "4": "Marketing",
+      "9": "Accounting/Ops",
+      "10": "R&D",
+      "16": "ACT",
+      "23": "Obsolete",
+      "35": "MT4",
+      "45": "Dividend",
+      "48": "Inactivity Fee For Non Depositor"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_ContractType.md": {
+    "source": "wiki",
+    "n_entries": 9,
+    "entries": {
+      "0": "N/A (unknown/fallback",
+      "1": "CPR (Cost Per Registration",
+      "2": "CPA (Cost Per Acquisition",
+      "3": "Rev (Revenue Share",
+      "4": "Hyb (Hybrid",
+      "5": "Other",
+      "6": "eCost",
+      "7": "ZeroCost",
+      "8": "CPL (Cost Per Lead"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Country.md": {
+    "source": "wiki",
+    "n_entries": 5,
+    "entries": {
+      "0": "standard risk",
+      "1": "high risk",
+      "2": "High risk for new clients",
+      "3": "High risk FATF country",
+      "4": "Verified before deposit"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CreditType.md": {
+    "source": "wiki",
+    "n_entries": 22,
+    "entries": {
+      "1": "Deposit",
+      "2": "Cashout",
+      "3": "Open Position",
+      "4": "Close Position",
+      "5": "Champ Winner",
+      "6": "Compensation",
+      "7": "Bonus",
+      "8": "Reverse Cashout",
+      "9": "Cashout Request",
+      "10": "IB synchronization",
+      "11": "Chargeback",
+      "12": "Refund",
+      "13": "Edit Stop Loss",
+      "14": "End of Week Fee",
+      "15": "Cashout Fee",
+      "16": "Refund As ChargeBack",
+      "17": "FixHistoryCreditChargeBacks",
+      "28": "Mirror/CopyTrading operations",
+      "30": "Close Stock Order",
+      "31": "Data Fix",
+      "32": "Reverse Deposit",
+      "33": "Cashout Rollback"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Currency.md": {
+    "source": "wiki",
+    "n_entries": 8,
+    "entries": {
+      "0": "NULL placeholder",
+      "1": "Forex (174",
+      "2": "Commodity (533",
+      "4": "Indices (203",
+      "5": "Stocks (13",
+      "6": "ETF (1",
+      "8": "major forex currencies",
+      "10": "Crypto (686"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_CustomerChangeType.md": {
+    "source": "wiki",
+    "n_entries": 0,
+    "entries": {}
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_DocumentStatus.md": {
+    "source": "wiki",
+    "n_entries": 5,
+    "entries": {
+      "1": "New Upload",
+      "2": "Reviewed",
+      "3": "Accepted",
+      "4": "Rejected",
+      "5": "POIApproved"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_EvMatchStatus.md": {
+    "source": "wiki",
+    "n_entries": 4,
+    "entries": {
+      "0": "None (no match attempted",
+      "1": "PartiallyVerified",
+      "2": "Verified",
+      "3": "NotVerified"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_ExtendedUserField.md": {
+    "source": "wiki",
+    "n_entries": 12,
+    "entries": {
+      "0": "province",
+      "1": "SecondSurname",
+      "2": "CodeFiscale",
+      "3": "SocialInsuranceNumber",
+      "4": "NIF",
+      "5": "SubBuildingNumber",
+      "6": "TaxId",
+      "7": "NationalPin",
+      "8": "EmployerName",
+      "9": "DepositQuestion",
+      "10": "WithdrawQuestion",
+      "11": "DedicatedEv"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_FeeOperationTypes.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "1": "Open",
+      "2": "Close",
+      "3": "All"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_FundType.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "1": "TopTraders (copy-based",
+      "2": "Partners (external strategist",
+      "3": "Market (thematic index"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_FundingType.md": {
+    "source": "wiki",
+    "n_entries": 2,
+    "entries": {
+      "0": "can be saved",
+      "1": "single-use"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_GuruStatus.md": {
+    "source": "wiki",
+    "n_entries": 9,
+    "entries": {
+      "0": "regular customer",
+      "1": "Certified",
+      "2": "Cadet",
+      "3": "Rising Star",
+      "4": "Champion",
+      "5": "Elite",
+      "6": "Elite Pro",
+      "7": "currently active in PI program",
+      "8": "Rejected"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Instrument.md": {
+    "source": "wiki",
+    "n_entries": 11,
+    "entries": {
+      "0": "Standard (13",
+      "1": "Currencies (153 instruments",
+      "2": "Commodities (503",
+      "3": "CFD",
+      "4": "Indices (247",
+      "5": "Stocks (12",
+      "6": "ETF (1",
+      "7": "Bonds",
+      "8": "TrustFunds",
+      "9": "Options",
+      "10": "Crypto Currencies (667"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_MifidCategorization.md": {
+    "source": "wiki",
+    "n_entries": 6,
+    "entries": {
+      "0": "None (non-EU",
+      "1": "Retail (full protection",
+      "2": "Professional (reduced protection",
+      "3": "Elective Professional (opted-in retail",
+      "4": "Retail Pending (under review",
+      "5": "Pending (assessment incomplete"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_MirrorType.md": {
+    "source": "wiki",
+    "n_entries": 4,
+    "entries": {
+      "1": "Regular (standard copy",
+      "2": "CopyMe (legacy",
+      "3": "Social Index (algorithmic",
+      "4": "Fund (managed"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PaymentStatus.md": {
+    "source": "wiki",
+    "n_entries": 7,
+    "entries": {
+      "1": "New",
+      "2": "Approved",
+      "3": "Decline",
+      "4": "Technical",
+      "5": "InProcess",
+      "6": "Canceled",
+      "7": "Confirmed"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PendingClosureStatus.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "1": "No (active",
+      "2": "Suggested for Closure",
+      "3": "Approved for Closure"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Platform.md": {
+    "source": "wiki",
+    "n_entries": 4,
+    "entries": {
+      "0": "Undefined",
+      "1": "Web       (browser -- desktop",
+      "2": "IOS",
+      "3": "Android   (Google native app"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PlatformType.md": {
+    "source": "wiki",
+    "n_entries": 4,
+    "entries": {
+      "1": "OpenBook DesktopWeb",
+      "2": "Trader DesktopWeb",
+      "3": "OpenBook MobileWeb",
+      "4": "Trader MobileWeb InDev"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PlayerLevel.md": {
+    "source": "wiki",
+    "n_entries": 8,
+    "entries": {
+      "0": "Internal (excluded",
+      "1": "Bronze",
+      "2": "Silver",
+      "3": "Gold",
+      "4": "Platinum",
+      "5": "Platinum Plus",
+      "6": "Diamond",
+      "7": "Diamond"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_PlayerStatus.md": {
+    "source": "wiki",
+    "n_entries": 15,
+    "entries": {
+      "0": "N/A (sentinel",
+      "1": "Normal",
+      "2": "Blocked",
+      "3": "Chat Blocked",
+      "4": "Blocked Upon Request",
+      "5": "Warning",
+      "6": "Blocked - Under Investigation",
+      "7": "Scalpers Block",
+      "8": "Blocked - PayPal Investigation",
+      "9": "Trade & MIMO Blocked",
+      "10": "Deposit Blocked",
+      "11": "Social Index",
+      "12": "Copy Block",
+      "13": "Pending Verification",
+      "15": "Block Deposit & Trading"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_RedeemReason.md": {
+    "source": "wiki",
+    "n_entries": 13,
+    "entries": {
+      "1": "RreTradeBlocked",
+      "2": "RreFundingBlocked",
+      "4": "RreInternalUser",
+      "5": "RreVerificationLevel",
+      "7": "RejectedByOps",
+      "8": "FailedByTrading",
+      "9": "FailedByWallet",
+      "10": "CanceledByOps",
+      "11": "ServerErrorTrading",
+      "12": "ServerErrorWallet",
+      "13": "ServerErrorSettings",
+      "15": "CanceledByUser",
+      "19": "FailedByDelta (DWH-only"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_RedeemStatus.md": {
+    "source": "wiki",
+    "n_entries": 0,
+    "entries": {}
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Regulation.md": {
+    "source": "wiki",
+    "n_entries": 15,
+    "entries": {
+      "0": "None",
+      "1": "CySEC",
+      "2": "FCA",
+      "3": "NFA",
+      "4": "ASIC",
+      "5": "BVI",
+      "6": "eToroUS",
+      "7": "FinCEN",
+      "8": "FinCEN+FINRA",
+      "9": "FSA Seychelles",
+      "10": "ASIC&GAML",
+      "11": "FSRA",
+      "12": "FINRAONLY",
+      "13": "MAS",
+      "14": "NYDFS+FINRA"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_RiskClassification.md": {
+    "source": "wiki",
+    "n_entries": 6,
+    "entries": {
+      "0": "High",
+      "1": "Medium",
+      "2": "Low",
+      "3": "Unacceptable",
+      "4": "Medium High",
+      "5": "Medium Low"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_RiskManagementStatus.md": {
+    "source": "wiki",
+    "n_entries": 3,
+    "entries": {
+      "0": "N/A (sentinel",
+      "1": "Success",
+      "69": "specific block/decline reason"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_RiskStatus.md": {
+    "source": "wiki",
+    "n_entries": 11,
+    "entries": {
+      "0": "None",
+      "1": "Normal",
+      "2": "OverTheLimit",
+      "3": "FTDOverDailyLimit",
+      "4": "TooManyCreditCards",
+      "5": "Too Many PayPal Accounts",
+      "6": "BinToRegCountryConflict",
+      "7": "DepositNameConflict",
+      "8": "LoginToRegCountryConflict",
+      "10": "Affiliate Multiple Accounts",
+      "17": "High Risk Account Country"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_ThreeDsResponseTypes.md": {
+    "source": "wiki",
+    "n_entries": 15,
+    "entries": {
+      "0": "Unspecified",
+      "1": "Success",
+      "2": "Failed Signature",
+      "3": "Not Enrolled",
+      "4": "Enrollment Unavailable",
+      "5": "Bypassed Enrollment",
+      "6": "Error",
+      "7": "Timeout",
+      "8": "Failed Authentication",
+      "9": "Authentication Error",
+      "10": "Authentication Unavailable",
+      "11": "Bypassed Authentication",
+      "12": "Missing",
+      "13": "Skipped 3ds",
+      "14": "Unexpected (unclassified response"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_VerificationLevel.md": {
+    "source": "wiki",
+    "n_entries": 5,
+    "entries": {
+      "-1": "DWH sentinel (NULL-safe JOIN placeholder",
+      "0": "Unverified (registration default",
+      "1": "Basic (limited trading",
+      "2": "Intermediate (POI submitted",
+      "3": "Full KYC (all features unlocked"
+    }
+  },
+  "knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_VerificationStatus.md": {
+    "source": "wiki",
+    "n_entries": 0,
+    "entries": {}
+  }
+}

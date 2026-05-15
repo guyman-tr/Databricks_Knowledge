@@ -1,122 +1,90 @@
 # DWH_dbo.Fact_BillingDeposit
 
-> Central deposit transaction fact table — 73.9M rows recording every eToro deposit attempt with full payment lifecycle state, routing details, exchange metadata, and ~90 XML-extracted payment data attributes. Updated daily from etoro.Billing.Deposit via SP_Fact_BillingDeposit_DL_To_Synapse.
+> ~75.4M-row Synapse deposit fact (`sp_spaceused` rows≈75387676 as of sampling). Each row is one Billing deposit attempt with Funding-XML fields, Deposit PaymentData XML echoes, FX metadata, PSP routing identifiers, AFT flags from PaymentData, BIN-enriched bank/card labels, rolling daily DELETE+INSERT from Generic Pipeline staging, PlatformID stitched from Fact_CustomerAction, and recurring-deposit applicability.
 
 | Property | Value |
 |----------|-------|
 | **Schema** | DWH_dbo |
 | **Object Type** | Table |
-| **Production Source** | etoro.Billing.Deposit + etoro.Billing.Funding + etoro.Billing.RecurringDeposit (SP join) |
-| **Refresh** | Daily (SP_Fact_BillingDeposit_DL_To_Synapse, rolling DELETE + INSERT) |
-| | |
-| **Synapse Distribution** | HASH (DepositID) |
-| **Synapse Index** | CLUSTERED (DepositID ASC) + NC (PaymentStatusID ASC, ExpirationDateID ASC) |
-| | |
-| **UC Target** | `dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit` |
-| **UC Format** | _Pending -- resolved during write-objects_ |
-| **UC Partitioned By** | _Pending -- resolved during write-objects_ |
-| **UC Table Type** | _Pending -- resolved during write-objects_ |
+| **Production Source** | `etoro.Billing.Deposit` + `etoro.Billing.Funding` + `etoro.Billing.RecurringDeposit` → `SP_Fact_BillingDeposit_DL_To_Synapse` + post `SP_Fact_BillingDeposit` |
+| **Refresh** | Daily slice on `ModificationDate`; `DELETE Fact_BillingDeposit WHERE ModificationDateID` in `[@Yesterday,@CurrentDate)` then rebuild from `Ext_FBD_Fact_BillingDeposit`; `EXEC SP_Fact_BillingDeposit @Yesterday` enriches BIN + MOP country |
+| **Synapse Distribution** | `HASH(DepositID)` |
+| **Synapse Index** | `CLUSTERED INDEX (DepositID)` + `NC (PaymentStatusID, ExpirationDateID)` |
+| **UC Target** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit` |
+| **UC Format** | delta |
+| **UC Partitioned By** | _Pipeline metadata — confirm in Unity Catalog_ |
+| **UC Table Type** | Gold export from Synapse `DWH_dbo` |
 
 ---
 
 ## 1. Business Meaning
 
-`DWH_dbo.Fact_BillingDeposit` is the DWH's authoritative record of every deposit attempt on the eToro platform — approved, declined, pending, charged back, or refunded. With 73.9M rows, it is the primary billing analytics table, used for FTD (First Time Deposit) attribution, payment provider performance, fraud analysis, exchange revenue reporting, regulatory compliance segmentation, and customer lifecycle analytics.
+`DWH_dbo.Fact_BillingDeposit` is the Synapse analytics projection of `Billing.Deposit`, joined to the customer's `Billing.Funding` row for instrument metadata and XML (`FundingData`), plus an `OUTER APPLY` against `Billing.RecurringDeposit` for the `IsRecurring` flag. `PaymentData` attributes are shredded with `[DWH_dbo].[ExtractXMLValue]` per attribute name in `SP_Fact_BillingDeposit_DL_To_Synapse`. Amount outliers are clamped in ETL (`CASE` thresholds ±1,000,000,000). `AmountUSD` is recomputed in the warehouse as `Amount * ExchangeRate`. `PlatformID` is **not** present in the XML extracts: after the load, the SP updates it from `Fact_CustomerAction` rows with `ActionTypeID = 14` matching on `CID` (= `RealCID`) and `SessionID`. A second stored procedure, `SP_Fact_BillingDeposit`, enriches `MOPCountry` by interpreting `CountryIDAsString` through `Dim_Country`, and enriches `BankName` / `CardCategory` by joining `Dim_CountryBin` on `CAST(BinCodeAsString AS INT)`.
 
-The table combines data from three production sources:
-1. **`Billing.Deposit`** — the core deposit ledger (direct passthrough for 35 columns)
-2. **`Billing.Funding`** — payment instrument details (FundingTypeID, IsRefundExcluded, DocumentRequired, AFT flags)
-3. **`Billing.RecurringDeposit`** — recurring deposit configuration (OUTER APPLY for IsRecurring flag)
-
-Additionally, ~91 columns are extracted from XML blobs stored in `Billing.Deposit.PaymentData` and `Billing.Deposit.FundingData` using the DWH UDF `ExtractXMLValue`. These cover payment-method-specific fields that vary by funding type (credit card BIN details, bank account info, e-wallet data, etc.).
-
-**ETL pattern** (`SP_Fact_BillingDeposit_DL_To_Synapse`):
-1. DELETE rows from `Ext_FBD_Fact_BillingDeposit` for the ModificationDateID window
-2. INSERT from staging into Ext_FBD (multi-source JOIN + XML extraction)
-3. DELETE from main `Fact_BillingDeposit` for the window
-4. INSERT from Ext_FBD into Fact_BillingDeposit
-5. UPDATE `PlatformID` from `Fact_CustomerAction` WHERE ActionTypeID=14 matching on SessionID (second SP pass: `EXEC SP_Fact_BillingDeposit @Yesterday`)
-
-**Amount capping**: As of 2025-04-17, an `Amount CASE` expression caps extreme values before storage to prevent outlier distortion in aggregations.
-
-**PlatformID enrichment**: The platform the customer used when depositing is not stored in Billing.Deposit — it is looked up via a session-to-platform join against `Fact_CustomerAction` (ActionTypeID=14, session-based match) in a second ETL pass.
-
-**Upstream wiki**: `Billing.Deposit` has a full upstream wiki (documented in DB_Schema) providing Tier 1 column descriptions for 35 DWH columns.
+**PHASE 1 CHECKPOINT: PASS** (SSDT `DWH_dbo.Fact_BillingDeposit.sql`, 136 columns).  
+**PHASE 2 CHECKPOINT: PASS** (`SELECT TOP 10`, `sp_spaceused` row count; `sys.dm_pdw_nodes_db_partition_stats` denied — used `sp_spaceused` instead).  
+**PHASE 3 CHECKPOINT: PASS** (PaymentStatusID distribution on `TOP 100000` latest DepositIDs).
 
 ---
 
 ## 2. Business Logic
 
-### 2.1 Deposit Status Lifecycle
+### 2.1 Status, chargebacks, refunds
 
-**What**: Deposits progress through states from submission through approval, decline, or reversal.
+**What**: Deposit lifecycle mirrors `Dictionary.PaymentStatusStateMachine`; terminal success is Approved (`PaymentStatusID=2`) triggering `Billing.AmountAdd`.
 
-**Columns Involved**: `PaymentStatusID`, `RiskManagementStatusID`, `MatchStatusID`
-
-**Rules**:
-- `PaymentStatusID=2` (Approved) is the only successful terminal state — drives customer account crediting via Billing.AmountAdd in production
-- `PaymentStatusID=35` (DeclineByRRE) represents real-time risk engine declines (~10.2% of deposits)
-- `PaymentStatusID=13` (Pending), `5` (InProcess): intermediate states for offline/wire deposits
-- States 11-12, 26, 37-39 represent post-approval reversals (Chargeback, Refund, and their reversals)
-- For full state machine, see upstream wiki: Billing.Deposit §2.1
-
-### 2.2 First Time Deposit (FTD)
-
-**What**: `IsFTD=1` marks the customer's first ever approved deposit — the event that triggers marketing attribution and FTD bonus eligibility.
-
-**Columns Involved**: `IsFTD`, `CID`, `DepositID`
+**Columns Involved**: `PaymentStatusID`, `RiskManagementStatusID`, `RefundVerificationCode`
 
 **Rules**:
-- Only one deposit per customer can have `IsFTD=1` (monotonic guarantee from production)
-- `IsFTD=0` for DepositTypeID=4 (MoneyTransfer/internal transfer) regardless of deposit history
-- ~60.6% of Billing.Deposit rows have IsFTD=1 (many customers deposit exactly once)
-- DWH stores this as `int` (0/1) rather than `bit` in production
+- See upstream `Billing.Deposit` wiki §2.1 for enumerated `PaymentStatusID` meanings (Approved, declines, Pending, Chargeback `11`, Refund `12`, etc.).
+- `RiskManagementStatusID` originates from staging `Billing.Deposit` unchanged.
 
-### 2.3 Amount and Exchange Rate
+### 2.2 FTD semantics
 
-**What**: Deposits are stored in deposit currency (CurrencyID) and pre-computed to USD (AmountUSD).
+**What**: Warehouse stores `IsFTD` as `int` after `CAST`/`ISNULL`; production uses `bit`.
+
+**Columns Involved**: `IsFTD`
+
+**Rules**:
+- Derived with `ISNULL(CAST(d.IsFTD AS int),0)` in `SP_Fact_BillingDeposit_DL_To_Synapse`.
+
+### 2.3 FX, gross amount, fees
+
+**What**: `Amount` is deposit-currency money after ETL cap; `AmountUSD` is `Amount * ExchangeRate` from the capped row snapshot.
 
 **Columns Involved**: `Amount`, `CurrencyID`, `ExchangeRate`, `BaseExchangeRate`, `ExchangeFee`, `AmountUSD`
 
 **Rules**:
-- `Amount` is in deposit currency; stored as MONEY (4 decimal places)
-- As of 2025-04-17: Amount is capped via CASE expression before storage (prevents extreme outlier values)
-- `AmountUSD = Amount × ExchangeRate` (DWH-computed in ETL)
-- `BaseExchangeRate` stores the rate before fee markup; `ExchangeFee` stores the fee
-- For USD deposits: ExchangeRate=1.0, AmountUSD=Amount
+- `Amount` CASE cap documented inline in Elements.
+- `BaseExchangeRate` / `ExchangeFee` are passthrough columns from `Billing.Deposit` (upstream §2.3 for business narrative).
 
-### 2.4 XML-Extracted Payment Data (~91 Columns)
+### 2.4 XML shredding & IBAN / wallet / PSP context
 
-**What**: `Billing.Deposit.PaymentData` and `FundingData` store provider-specific XML blobs. The DWH ETL extracts ~91 attributes using `ExtractXMLValue(xml_blob, attribute_name)` into dedicated nvarchar(max) columns.
+**What**: Most `*AsString`/`*AsDecimal`/`*AsInteger` columns are single-attribute extractions; several are `COALESCE` across `PaymentData` and `FundingData`.
+
+**Columns Involved**: all `ExtractXMLValue` columns (see §4)
 
 **Rules**:
-- Each `*AsString`, `*AsDecimal`, `*AsInteger` suffix column is a single XML attribute extracted by name
-- The payment data schema varies by FundingTypeID — credit card deposits populate card-specific fields; bank wire deposits populate bank-specific fields; e-wallet deposits populate e-wallet fields
-- NULL in any XML column means either: (a) the attribute doesn't exist for this funding type, or (b) it was absent from the XML for this deposit
-- `ThreeDsResponseType` is a notable XML-extracted field — joins to Dim_ThreeDsResponseTypes via TRY_CAST(...AS INT)
+- Attribute names match the second parameter literal in `SP_Fact_BillingDeposit_DL_To_Synapse` (verbatim).
+- `IBANCodeAsString`, `PurseAsString`, `PSPCodeAsString`, wallet payer fields (`Payer*`): treat as PSP-specific payloads (`[UNVERIFIED]` nuances called out per column).
 
-### 2.5 Platform Attribution
+### 2.5 Platform attribution (warehouse)
 
-**What**: `PlatformID` identifies the device/platform the customer was on when making the deposit (web, iOS, Android, etc.).
+**What**: Trading platform/device id enriched from `Fact_CustomerAction` (not from Billing cashier payloads).
 
 **Columns Involved**: `PlatformID`, `SessionID`
 
 **Rules**:
-- `PlatformID` is NOT from Billing.Deposit — it's populated via a second ETL pass:
-  `UPDATE Fact_BillingDeposit SET PlatformID = (SELECT PlatformID FROM Fact_CustomerAction WHERE ActionTypeID=14 AND SessionID = Fact_BillingDeposit.SessionID)`
-- If no matching Fact_CustomerAction row exists for the session, PlatformID remains NULL
-- ActionTypeID=14 represents a "Deposit" action type in Fact_CustomerAction
+- `UPDATE Fact_BillingDeposit SET PlatformID = source.PlatformID JOIN #Fact_BillingDepositAction … ON CID=RealCID AND SessionID`; temp table seeded from `Fact_CustomerAction` where `ActionTypeID=14` and rolling `DateID` window (-14 days from `@Yesterday`).
 
-### 2.6 Recurring Deposits
+### 2.6 BIN post-processing
 
-**What**: `IsRecurring` identifies deposits that are part of a scheduled recurring deposit plan.
+**What**: Issuing bank and card scheme category come from BIN dimension, not Billing deposit row.
 
-**Columns Involved**: `IsRecurring`, `DepositID`
+**Columns Involved**: `BinCodeAsString`, `BankName`, `CardCategory`
 
 **Rules**:
-- `IsRecurring = 1` when a matching row exists in `Billing.RecurringDeposit` for this deposit (OUTER APPLY)
-- `IsRecurring = 0` for one-time deposits
-- Recurring deposits may have DepositTypeID=3 (Recurring) or DepositTypeID=5 (RecurringInvestment)
+- `CAST(BinCodeAsString AS INT) = Dim_CountryBin.BinCode` inside `SP_Fact_BillingDeposit`.
 
 ---
 
@@ -124,39 +92,36 @@ Additionally, ~91 columns are extracted from XML blobs stored in `Billing.Deposi
 
 ### 3.1 Synapse Distribution & Index
 
-`HASH(DepositID)` ensures even distribution — each deposit has a unique ID so this is an optimal hash key for point lookups and JOINs by deposit. The clustered index on `DepositID` makes per-deposit point lookups fast. The NC index on `(PaymentStatusID, ExpirationDateID)` supports filtered queries by status and expiration date.
-
-**Warning**: At 73.9M rows, full-table scans are expensive. Always filter by `ModificationDateID` or `PaymentStatusID`.
+`HASH(DepositID)` plus clustered `DepositID` supports point lookups; NC `(PaymentStatusID, ExpirationDateID)` supports status/expiry reporting. Always filter `ModificationDateID` for large scans.
 
 ### 3.2 Common Query Patterns
 
 | Analyst Question | Recommended Approach |
-|-----------------|---------------------|
-| Daily approved deposit volume | WHERE PaymentStatusID=2, GROUP BY ModificationDateID |
-| FTD analysis | WHERE IsFTD=1 AND PaymentStatusID=2 |
-| Exchange fee revenue | SUM(AmountUSD - Amount/ExchangeRate×BaseExchangeRate) |
-| Regulation-specific deposits | WHERE ProcessRegulationID = @regId |
-| Platform breakdown | GROUP BY PlatformID (JOIN Dim_Platform) |
-| 3DS outcome analysis | TRY_CAST(ThreeDsResponseType AS INT) JOIN Dim_ThreeDsResponseTypes |
+|------------------|---------------------|
+| Approved inflow USD | `WHERE PaymentStatusID=2` sum `AmountUSD` by `ModificationDateID` |
+| FTD cohort | `WHERE IsFTD=1 AND PaymentStatusID=2` |
+| PSP string signals | Filter `PSPCodeAsString` / `PaymentProviderTransactionStatusAsString` (mind NULLs) |
+| 3DS outcomes | `TRY_CAST(ThreeDsResponseType AS INT)` join `Dim_ThreeDsResponseTypes` |
 
 ### 3.3 Common JOINs
 
 | Join To | Join Condition | Purpose |
 |---------|---------------|---------|
-| DWH_dbo.Dim_Customer | ON CID | Customer demographics |
-| DWH_dbo.Dim_Date | ON ModificationDateID | Time dimension |
-| DWH_dbo.Dim_Currency | ON CurrencyID | Currency name |
-| DWH_dbo.Dim_Platform | ON PlatformID | Device/platform |
-| DWH_dbo.Dim_ThreeDsResponseTypes | ON TRY_CAST(ThreeDsResponseType AS INT) | 3DS outcome |
+| `DWH_dbo.Dim_Customer` | `CID` | Customer attributes |
+| `DWH_dbo.Dim_Date` | `ModificationDateID` | Activity date |
+| `DWH_dbo.Dim_Currency` | `CurrencyID` | Currency labels |
+| `DWH_dbo.Dim_FundingType` | `FundingTypeID` | Method-of-payment type |
+| `DWH_dbo.Dim_Platform` | `PlatformID` | Device after enrichment |
+| `DWH_dbo.Dim_CountryBin` | `CAST(BinCodeAsString AS INT) = BinCode` | Validate BIN enrichments |
+| `DWH_dbo.Dim_ThreeDsResponseTypes` | `TRY_CAST(ThreeDsResponseType AS INT)` | 3DS outcome |
 
 ### 3.4 Gotchas
 
-- **73.9M rows**: Always filter. Prefer ModificationDateID or ExpirationDateID index for range queries
-- **XML columns are all nvarchar(max)**: Aggregating or joining on XML-extracted columns requires TRY_CAST — they are stored as strings regardless of semantic type
-- **`v` column**: This unnamed column (`v`) is an XML-extracted field with no descriptive name — artifact of the XML schema. Contents unknown without domain review
-- **PlatformID may be NULL**: Session-to-platform join succeeds only if the deposit session was logged in Fact_CustomerAction
-- **AmountUSD is ETL-computed**: Not from production; recalculated as Amount×ExchangeRate at ETL time. For exact USD reconciliation, use Amount×ExchangeRate directly
-- **ExpirationDateID formula**: Complex derived calculation from ExpirationDateAsString XML field — not a simple date conversion
+- `v` duplicates `ClientBankNameAsString` XML attribute but lands in misnamed column `v`.
+- `PlatformIDAsInteger` (XML) ≠ `PlatformID` (Fact_CustomerAction update).
+- `LanguageIDAsInteger` / `ACHBankAccountIDAsInteger` are `nvarchar(max)` despite names.
+- `SessionID` zeroed with `ISNULL`; join logic must allow `0` vs NULL semantics.
+- `ExpirationDateID` CASE returns sentinel `190001` when XML missing/short.
 
 ---
 
@@ -164,192 +129,151 @@ Additionally, ~91 columns are extracted from XML blobs stored in `Billing.Deposi
 
 ### Confidence Tier Legend
 
-| Tier | Tag |
-|------|-----|
-| Tier 1 — upstream wiki verbatim | (Tier 1 — upstream wiki, Billing.Deposit) |
-| Tier 2 — SP ETL code | (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-
-**Note**: Elements are grouped by category for readability.
-
-### 4.1 Core Deposit Identifiers & Status (from Billing.Deposit — Tier 1)
+| Tier | Meaning |
+|------|---------|
+| Tier 1 | Upstream `Billing.Deposit` wiki / passthrough staging column with same semantics |
+| Tier 2 | Expression documented from `SP_Fact_BillingDeposit_DL_To_Synapse` or `SP_Fact_BillingDeposit` with explicit source object |
+| Tier 3 | Expression known; business label incomplete — marked `[UNVERIFIED]` |
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DepositID | int | YES | Primary distribution key (HASH). Uniquely identifies each deposit attempt. PK in production (Billing.Deposit.DepositID IDENTITY). Clustered index key in DWH. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 2 | CID | int | YES | Customer ID. Identifies the eToro customer who made this deposit. References DWH_dbo.Dim_Customer. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 3 | PaymentStatusID | int | YES | Current deposit status. Key values: 1=New, 2=Approved (73%), 3=Decline, 5=InProcess, 11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE (10.2%). Full 39-value enum in upstream wiki. NC index key. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 4 | IsFTD | int | YES | First Time Deposit flag. 1=this was the customer's very first approved deposit (drives marketing attribution). 0=repeat deposit or ineligible type. ~60.6% of deposits are FTD=1 in Billing.Deposit. Stored as int in DWH (vs. bit in production). (Tier 1 — upstream wiki, Billing.Deposit) |
-| 5 | PaymentDate | datetime | YES | UTC timestamp when the deposit was submitted (set at INSERT in production). Not the approval time. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 6 | ModificationDate | datetime | YES | UTC timestamp of the most recent modification to this deposit record. Used by ETL for incremental detection. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 7 | RiskManagementStatusID | int | YES | Result of the pre-processing risk management check. 69 distinct risk reason codes. NULL=no risk check recorded. Key codes: 1=Success, 35=KYCLevel3, 47=ML, 49=CustomerToFundingViolation. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 8 | MatchStatusID | tinyint | YES | PSP reconciliation match status. Default 0=Unmatched; 3=Matched. Used for provider reconciliation workflows. (Tier 1 — upstream wiki, Billing.Deposit) |
+| 1 | CID | int | YES | Passthrough `d.CID` from `DWH_staging.etoro_Billing_Deposit`. Production `Billing.Deposit.CID` (same semantics as upstream wiki §4). (Tier 1 — Billing.Deposit) |
+| 2 | CurrencyID | int | YES | Passthrough `d.CurrencyID` from staging. Production `Billing.Deposit.CurrencyID`. (Tier 1 — Billing.Deposit) |
+| 3 | Commission | money | YES | Passthrough `d.Commission`. Production defaults 0. (Tier 1 — Billing.Deposit) |
+| 4 | Approved | bit | YES | Passthrough `d.Approved`. Legacy flag; `PaymentStatusID` is authoritative. (Tier 1 — Billing.Deposit) |
+| 5 | ModificationDate | datetime | YES | Passthrough `d.ModificationDate`. ETL incremental watermark. (Tier 1 — Billing.Deposit) |
+| 6 | ModificationDateID | int | YES | ETL `convert(int,convert(varchar,dateadd(day,datediff(day,0,d.ModificationDate),0),112))` (`SP_Fact_BillingDeposit_DL_To_Synapse` Ext_FBD SELECT). (Tier 2 — Billing.Deposit.ModificationDate) |
+| 7 | FundingID | int | YES | Passthrough `d.FundingID`; JOIN to `etoro_Billing_Funding` `f`. (Tier 1 — Billing.Deposit) |
+| 8 | ExchangeRate | numeric(16,8) | YES | Passthrough `d.ExchangeRate`; also used in `Amount * ExchangeRate` for `AmountUSD`. (Tier 1 — Billing.Deposit) |
+| 9 | DepositID | int | YES | Passthrough `d.DepositID`. `HASH(DepositID)` distribution + clustered index. (Tier 1 — Billing.Deposit) |
+| 10 | ProcessorValueDate | datetime | YES | Passthrough `d.ProcessorValueDate`. (Tier 1 — Billing.Deposit) |
+| 11 | DepotID | int | YES | Passthrough `d.DepotID`. (Tier 1 — Billing.Deposit) |
+| 12 | SecuredCardDataAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('SecuredCardDataAsString',f.FundingData)`. Token / secured card reference; PSP semantics `[UNVERIFIED]`. (Tier 3 — Billing.Funding.FundingData) |
+| 13 | BinCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BinCodeAsString',f.FundingData)`. Downstream `SP_Fact_BillingDeposit`: `CAST(BinCodeAsString AS INT) = Dim_CountryBin.BinCode`. (Tier 2 — Billing.Funding.FundingData) |
+| 14 | BinCountryIDAsInteger | int | YES | `[DWH_dbo].[ExtractXMLValue]('BinCountryIDAsInteger',f.FundingData)` assigned to `int` (implicit cast from string). Prefer `TRY_CAST` for analytics. (Tier 2 — Billing.Funding.FundingData) |
+| 15 | CardTypeIDAsInteger | int | YES | `[DWH_dbo].[ExtractXMLValue]('CardTypeIDAsInteger',f.FundingData)` assigned to `int`. Dictionary meaning beyond SQL `[UNVERIFIED]`. (Tier 3 — Billing.Funding.FundingData) |
+| 16 | PaymentStatusID | int | YES | Passthrough `d.PaymentStatusID`. Enum per upstream wiki §4 (1=New, 2=Approved, …, 35=DeclineByRRE). (Tier 1 — Billing.Deposit) |
+| 17 | ManagerID | int | YES | Passthrough `d.ManagerID`. `0` = automated. (Tier 1 — Billing.Deposit) |
+| 18 | RiskManagementStatusID | int | YES | Passthrough `d.RiskManagementStatusID`. Upstream risk reason catalogue. (Tier 1 — Billing.Deposit) |
+| 19 | Amount | money | YES | ETL `CASE WHEN d.Amount >= 1000000000 THEN 99999999 WHEN d.Amount <= -1000000000 THEN -99999999 ELSE d.Amount END` (2025-04-17 cap). (Tier 2 — Billing.Deposit.Amount) |
+| 20 | PaymentDate | datetime | YES | Passthrough `d.PaymentDate` (submission UTC). (Tier 1 — Billing.Deposit) |
+| 21 | IPAddress | numeric(18,0) | YES | Passthrough `d.IPAddress` as `numeric(18,0)` (prod IPv4 encoding). (Tier 1 — Billing.Deposit) |
+| 22 | ClearingHouseEffectiveDate | datetime | YES | Passthrough `d.ClearingHouseEffectiveDate`. (Tier 1 — Billing.Deposit) |
+| 23 | IsFTD | int | YES | ETL `ISNULL(CAST(d.IsFTD AS int),0)` (bit→int). FTD rules upstream wiki §2.2. (Tier 1 — Billing.Deposit) |
+| 24 | RefundVerificationCode | varchar(50) | YES | Passthrough `d.RefundVerificationCode`. (Tier 1 — Billing.Deposit) |
+| 25 | MatchStatusID | tinyint | YES | Passthrough `d.MatchStatusID`. PSP reconciliation match. (Tier 1 — Billing.Deposit) |
+| 26 | BonusStatusID | int | YES | Passthrough `d.BonusStatusID`. (Tier 1 — Billing.Deposit) |
+| 27 | BonusAmount | money | YES | Passthrough `d.BonusAmount`. (Tier 1 — Billing.Deposit) |
+| 28 | BonusErrorCode | int | YES | Passthrough `d.BonusErrorCode`. (Tier 1 — Billing.Deposit) |
+| 29 | ExTransactionID | varchar(50) | YES | Passthrough `ExTransactionID` from `d` (SELECT list). External provider txn id. (Tier 1 — Billing.Deposit) |
+| 30 | FundingTypeID | int | YES | JOIN `f.FundingTypeID` where `d.FundingID = f.FundingID`. (Tier 2 — Billing.Funding.FundingTypeID) |
+| 31 | IsRefundExcluded | int | YES | ETL `CAST(f.IsRefundExcluded AS int)`. (Tier 2 — Billing.Funding.IsRefundExcluded) |
+| 32 | DocumentRequired | int | YES | ETL `CAST(f.DocumentRequired AS int)`. (Tier 2 — Billing.Funding.DocumentRequired) |
+| 33 | UpdateDate | datetime | YES | ETL `GETDATE()` at Ext_FBD build. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
+| 34 | ExpirationDateID | int | YES | ETL CASE on `[DWH_dbo].[ExtractXMLValue]('ExpirationDateAsString',f.FundingData)$`: NULL or `LEN<4` → `190001` else `200000 + RIGHT(val,2)*100 + LEFT(val,2)` where `val` = extracted string (`SP…`). `[DWH_dbo].[ExtractXMLValue]` = `[DWH_dbo].[ExtractXMLValue]`. Non-card / format edge cases `[UNVERIFIED]`. (Tier 3 — Billing.Funding.FundingData) |
+| 35 | CountryIDAsInteger | int | YES | `[DWH_dbo].[ExtractXMLValue]('CountryIDAsInteger',f.FundingData)` (Funding XML, despite column name). (Tier 2 — Billing.Funding.FundingData) |
+| 36 | StateIDAsInteger | int | YES | `[DWH_dbo].[ExtractXMLValue]('StateIDAsInteger',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 37 | BankIDAsInteger | int | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('BankIDAsInteger',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('BankIDAsInteger',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 38 | AccountNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('AccountNameAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 39 | AccountTypeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('AccountTypeAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 40 | BankAccountAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BankAccountAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 41 | BankAddressAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BankAddressAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 42 | BankCodeAsDecimal | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BankCodeAsDecimal',f.FundingData)` stored as nvarchar(max). (Tier 2 — Billing.Funding.FundingData) |
+| 43 | BankDetailsAccountIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BankDetailsAccountIDAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 44 | BankIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BankIDAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 45 | BankNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BankNameAsString',f.FundingData)` (XML). Distinct from `BankName` column enriched from `Dim_CountryBin`. (Tier 2 — Billing.Funding.FundingData) |
+| 46 | BICCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BICCodeAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 47 | CIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CIDAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 48 | v | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ClientBankNameAsString',f.FundingData)` **aliased** `AS v` — duplicate payload versus `ClientBankNameAsString` column (same XML key loaded twice). (Tier 3 — Billing.Funding.FundingData) |
+| 49 | CustomerAddressAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CustomerAddressAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 50 | CustomerNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CustomerNameAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 51 | FundingType | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('FundingType',f.FundingData)` textual label alongside typed `FundingTypeID`. (Tier 2 — Billing.Funding.FundingData) |
+| 52 | MaskedAccountIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('MaskedAccountIDAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 53 | PurseAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PurseAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 54 | RoutingNumberAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('RoutingNumberAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 55 | SecureIDAsDecimal | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('SecureIDAsDecimal',f.FundingData)` (nvarchar storage). (Tier 2 — Billing.Funding.FundingData) |
+| 56 | SortCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('SortCodeAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 57 | AccountBalanceAsDecimal | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('AccountBalanceAsDecimal',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 58 | AccountHolderAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('AccountHolderAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 59 | AccountIDAsDecimal | nvarchar(max) | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('AccountIDAsDecimal',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('AccountIDAsDecimal',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 60 | ACHBankAccountIDAsInteger | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ACHBankAccountIDAsInteger',d.PaymentData)` (DDL `nvarchar(max)`). (Tier 2 — Billing.Deposit.PaymentData) |
+| 61 | Address1AsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('Address1AsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 62 | Address2AsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('Address2AsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 63 | AdviseAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('AdviseAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 64 | AvailableBalanceAsDecimal | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('AvailableBalanceAsDecimal',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 65 | BankCodeAsString | nvarchar(max) | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('BankCodeAsString',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('BankCodeAsString',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 66 | BillNumberAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BillNumberAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 67 | BuildingNumberAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('BuildingNumberAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 68 | CardHolderPhoneNumberBodyAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CardHolderPhoneNumberBodyAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 69 | CardHolderPhoneNumberPrefixAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CardHolderPhoneNumberPrefixAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 70 | CardNumberAsString | nvarchar(max) | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('CardNumberAsString',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('CardNumberAsString',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 71 | CityAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CityAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 72 | CountryIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CountryIDAsString',d.PaymentData)`. Feeds `MOPCountry` resolution in `SP_Fact_BillingDeposit` via `Dim_Country` joins. (Tier 2 — Billing.Deposit.PaymentData) |
+| 73 | CountryNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CountryNameAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 74 | CreatedAtAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CreatedAtAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 75 | CurrentBalanceAsDecimal | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CurrentBalanceAsDecimal',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 76 | CustomerIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('CustomerIDAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 77 | EmailAsString | nvarchar(max) | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('EmailAsString',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('EmailAsString',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 78 | EndPointIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('EndPointIDAsString',d.PaymentData)`. PSP endpoint id; business label `[UNVERIFIED]`. (Tier 3 — Billing.Deposit.PaymentData) |
+| 79 | ErrorCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ErrorCodeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 80 | ErrorTypeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ErrorTypeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 81 | FirstNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('FirstNameAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 82 | IBANCodeAsString | nvarchar(max) | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('IBANCodeAsString',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('IBANCodeAsString',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 83 | InitialTransactionIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('InitialTransactionIDAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 84 | IPAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('IPAsString',d.PaymentData)`. Parallel to numeric `IPAddress`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 85 | LanguageIDAsInteger | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('LanguageIDAsInteger',d.PaymentData)` (nvarchar(max) column). (Tier 2 — Billing.Deposit.PaymentData) |
+| 86 | LastNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('LastNameAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 87 | MD5AsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('MD5AsString',d.PaymentData)` provider hash / fingerprint `[UNVERIFIED]`. (Tier 3 — Billing.Deposit.PaymentData) |
+| 88 | PayerAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PayerAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 89 | PayerBusiness | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PayerBusiness',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 90 | PayerIDAsString | nvarchar(max) | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('PayerIDAsString',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('PayerIDAsString',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
+| 91 | PayerPurseAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PayerPurseAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 92 | PayerStatus | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PayerStatus',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 93 | PaymentAmountAsDecimal | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentAmountAsDecimal',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 94 | PaymentDateAsDateTime | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentDateAsDateTime',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 95 | PaymentGuaranteeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentGuaranteeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 96 | PaymentModeAsInteger | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentModeAsInteger',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 97 | PaymentProviderTransactionStatusAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentProviderTransactionStatusAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 98 | PaymentStatusAsInteger | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentStatusAsInteger',d.PaymentData)`. Provider status integer echo; not identical to `PaymentStatusID` semantics. (Tier 2 — Billing.Deposit.PaymentData) |
+| 99 | PaymentTypeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PaymentTypeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 100 | PlaidItemIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PlaidItemIDAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 101 | PlaidNamesAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PlaidNamesAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 102 | PlatformIDAsInteger | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PlatformIDAsInteger',d.PaymentData)`. Separate from fact `PlatformID` (session join). (Tier 2 — Billing.Deposit.PaymentData) |
+| 103 | PromotionCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PromotionCodeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 104 | PSPCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('PSPCodeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 105 | RapidFirstNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('RapidFirstNameAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 106 | RapidLastNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('RapidLastNameAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 107 | ResponseMessageAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ResponseMessageAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 108 | ResponseTimeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ResponseTimeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 109 | SecretKeyAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('SecretKeyAsString',d.PaymentData)`. Masked / reference only; treat as sensitive. (Tier 2 — Billing.Deposit.PaymentData) |
+| 110 | ThreeDsAsJson | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ThreeDsAsJson',d.PaymentData)`. Raw 3DS payload JSON string. (Tier 2 — Billing.Deposit.PaymentData) |
+| 111 | ThreeDsResponseType | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ThreeDsResponseType',d.PaymentData)`. Outcome id as string; analysts `TRY_CAST` → `Dim_ThreeDsResponseTypes`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 112 | TokenAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('TokenAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 113 | TransactionIDAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('TransactionIDAsString',d.PaymentData)`. Distinct from `Billing.Deposit.TransactionID` (internal 6-char) — this is provider string from XML. (Tier 2 — Billing.Deposit.PaymentData) |
+| 114 | ZipCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ZipCodeAsString',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 115 | BaseExchangeRate | numeric(16,8) | YES | Passthrough `d.BaseExchangeRate`. Upstream: reference rate before fee markup. (Tier 1 — Billing.Deposit) |
+| 116 | ExchangeFee | int | YES | Passthrough `d.ExchangeFee`. (Tier 1 — Billing.Deposit) |
+| 117 | ProtocolMIDSettingsID | int | YES | Passthrough `d.ProtocolMIDSettingsID`. (Tier 1 — Billing.Deposit) |
+| 118 | FunnelID | int | YES | Passthrough `d.FunnelID`. (Tier 1 — Billing.Deposit) |
+| 119 | AmountUSD | decimal(11,2) | YES | Second INSERT: `Amount * ExchangeRate AS AmountUSD` from `Ext_FBD_Fact_BillingDeposit` snapshot (post-cap `Amount`). (Tier 2 — Billing.Deposit.Amount/ExchangeRate) |
+| 120 | SessionID | bigint | YES | ETL `ISNULL(d.SessionID,0)` (Ext_FBD). Platform enrichment JOIN uses `CID`+`SessionID`. (Tier 2 — Billing.Deposit.SessionID) |
+| 121 | PlatformID | int | YES | Pass-1 INSERT leaves NULL; then `UPDATE a SET PlatformID=b.PlatformID FROM Fact_BillingDeposit a JOIN #Fact_BillingDepositAction b ON `a.CID=b.RealCID AND a.SessionID=b.SessionID` where `#Fact_BillingDepositAction` is built from `Fact_CustomerAction` `ActionTypeID=14` (`SP_Fact_BillingDeposit_DL_To_Synapse`). (Tier 2 — Fact_CustomerAction.PlatformID) |
+| 122 | MOPCountry | varchar(50) | YES | `UPDATE … SET MOPCountry=m.MOPCountry` from `#MOPCountryFinal` built off `CountryIDAsString` with nested `LEFT JOIN Dim_Country` on numeric id vs `LongAbbreviation` vs `Abbreviation` (`SP_Fact_BillingDeposit`, `@dateID` slice). (Tier 2 — Dim_Country.Name via CountryIDAsString) |
+| 123 | SwiftCodeAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('SwiftCodeAsString',f.FundingData)`. (Tier 2 — Billing.Funding.FundingData) |
+| 124 | ClientBankNameAsString | nvarchar(max) | YES | `[DWH_dbo].[ExtractXMLValue]('ClientBankNameAsString',f.FundingData)` **AS ClientBankNameAsString** (same XML key also loaded into `v`). (Tier 2 — Billing.Funding.FundingData) |
+| 125 | BankName | varchar(100) | YES | `UPDATE fbw SET BankName = cb.IssuingBank` JOIN `Dim_CountryBin cb` ON `CAST(fbw.BinCodeAsString AS INT) = cb.BinCode` (`SP_Fact_BillingDeposit`). (Tier 2 — Dim_CountryBin.IssuingBank) |
+| 126 | CardCategory | varchar(50) | YES | `UPDATE fbw SET CardCategory = cb.CardCategory` same JOIN as `BankName` (`SP_Fact_BillingDeposit`). (Tier 2 — Dim_CountryBin.CardCategory) |
+| 127 | PaymentGeneration | int | YES | Passthrough `d.PaymentGeneration`. (Tier 1 — Billing.Deposit) |
+| 128 | ProcessRegulationID | int | YES | Passthrough `d.ProcessRegulationID`. (Tier 1 — Billing.Deposit) |
+| 129 | MerchantAccountID | int | YES | Passthrough `d.MerchantAccountID`. (Tier 1 — Billing.Deposit) |
+| 130 | IsSetBalanceCompleted | int | YES | ETL `CAST(d.IsSetBalanceCompleted AS INT)` (`SP…` Ext_FBD). Production `bit`. (Tier 1 — Billing.Deposit) |
+| 131 | RoutingReasonID | int | YES | Passthrough `d.RoutingReasonID`. (Tier 1 — Billing.Deposit) |
+| 132 | IsRecurring | int | YES | ETL `ISNULL(Recurring.IsRecurring,0)` from `OUTER APPLY (SELECT 1 AS IsRecurring FROM etoro_Billing_RecurringDeposit WHERE DepositID=d.DepositID) Recurring`. (Tier 2 — Billing.RecurringDeposit) |
+| 133 | FlowID | int | YES | Passthrough `d.FlowID` (SELECT list uses bare `FlowID`). (Tier 1 — Billing.Deposit) |
+| 134 | IsAftSupportedAsBool | bit | YES | ETL `ISNULL([DWH_dbo].[ExtractXMLValue]('IsAftSupportedAsBool',d.PaymentData),0)` cast to `bit` column. (Tier 2 — Billing.Deposit.PaymentData) |
+| 135 | IsAftEligibleAsBool | bit | YES | ETL `ISNULL([DWH_dbo].[ExtractXMLValue]('IsAftEligibleAsBool',d.PaymentData),0)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 136 | IsAftProcessedAsBool | bit | YES | ETL `ISNULL([DWH_dbo].[ExtractXMLValue]('IsAftProcessedAsBool',d.PaymentData),0)`. (Tier 2 — Billing.Deposit.PaymentData) |
 
-### 4.2 Amount & Currency (from Billing.Deposit — Tier 1)
-
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 9 | Amount | money | YES | Deposit amount in the deposit currency (CurrencyID). As of 2025-04-17, capped via CASE expression in ETL to prevent extreme outlier values from distorting aggregations. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 10 | CurrencyID | int | YES | Currency of the deposit amount. References DWH_dbo.Dim_Currency. 1=USD, 2=EUR, 3=GBP, etc. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 11 | ExchangeRate | numeric(16,8) | YES | Exchange rate from deposit currency to USD at processing time. Cannot be 0 in production. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 12 | BaseExchangeRate | numeric(16,8) | YES | Reference exchange rate before fee markup. Fee spread = ExchangeRate - BaseExchangeRate. Added by Adi (19/09/2019). (Tier 1 — upstream wiki, Billing.Deposit) |
-| 13 | ExchangeFee | int | YES | Exchange fee in provider-specific integer encoding (basis points). Added by Adi (19/02/2019). (Tier 1 — upstream wiki, Billing.Deposit) |
-| 14 | Commission | money | YES | Commission charged on this deposit. Default 0 in production. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 15 | AmountUSD | decimal(11,2) | YES | Deposit amount converted to USD. DWH-computed: Amount × ExchangeRate. Not from production source — pre-computed in ETL for reporting convenience. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-
-### 4.3 Payment Instrument & Routing (from Billing.Deposit + Billing.Funding — Tier 1 + Tier 2)
-
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 16 | FundingID | int | YES | Payment instrument (credit card, bank account, e-wallet) used for this deposit. References Billing.Funding. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 17 | FundingTypeID | int | YES | Type of payment instrument. Sourced from Billing.Funding.FundingTypeID (not from Billing.Deposit directly). Categorizes the deposit by payment method (credit card, wire, ACH, etc.). (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 18 | DepotID | int | YES | Acquirer/gateway configuration used for this deposit. Validated at insert against DepotToCurrency in production. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 19 | ProtocolMIDSettingsID | int | YES | Merchant ID configuration profile. Default 0=no specific MID. Added 2018-10-24. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 20 | MerchantAccountID | int | YES | Merchant account legal entity for regulatory routing. Added with DBA-646. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 21 | RoutingReasonID | int | YES | Reason code for routing path selection. Values 1-8; 3=most common (~29%). ~31% NULL for legacy records. Added PAYUS-3061, 2021-06-15. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 22 | ProcessRegulationID | int | YES | Regulatory entity/jurisdiction: 1=Cyprus/EU (~63%), 2=UK/FCA (~16%), 4=AU (~2.5%), others for ASIC etc. Added DBA-646, 2021-09-05. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 23 | FlowID | int | YES | Deposit UX flow variant. NULL=default (98.9%), 1=new flow (0.97%), 3=specific variant. Added PAYIL-8362, 2024-04-18. (Tier 1 — upstream wiki, Billing.Deposit) |
-
-### 4.4 Identifiers & Timestamps (from Billing.Deposit — Tier 1 + DWH Tier 2)
-
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 24 | Approved | bit | YES | Legacy approval flag, superseded by PaymentStatusID=2. NULL for most modern records. Retained for backward compatibility. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 25 | ProcessorValueDate | datetime | YES | Value date from the payment processor. Mandatory for offline/wire deposits. NULL for instant payment methods. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 26 | ClearingHouseEffectiveDate | datetime | YES | Settlement date assigned by the clearing house. NULL for instant payment methods. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 27 | ExTransactionID | varchar(50) | YES | External (payment provider) transaction ID. Used for provider-side reconciliation and dispute resolution. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 28 | RefundVerificationCode | varchar(50) | YES | Verification code for refund correlation. Set by UpdateRefundDetails. NULL for non-refunded deposits. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 29 | IPAddress | numeric(18,0) | YES | Customer IP address at deposit time, as a 32-bit integer. Used for fraud detection. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 30 | SessionID | bigint | YES | Application session ID. Used for PlatformID enrichment via Fact_CustomerAction JOIN (second ETL pass). (Tier 1 — upstream wiki, Billing.Deposit) |
-| 31 | ManagerID | int | YES | Operations manager who processed this deposit. 0=automated. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 32 | FunnelID | int | YES | Marketing funnel ID. FK to Dictionary.Funnel. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 33 | PaymentGeneration | int | YES | Payment infrastructure generation: 0=Gen0 (7.7%), 1=Gen1 (92%). Added 2020-04-19. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 34 | ModificationDateID | int | YES | ETL key. Integer YYYYMMDD derived from ModificationDate (CONVERT(INT, date)). Used for rolling-window DELETE+INSERT. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 35 | ExpirationDateID | int | YES | Integer date ID derived from ExpirationDateAsString XML attribute via a complex formula in SP. Represents card expiration date as YYYYMMDD. NC index key. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 36 | UpdateDate | datetime | YES | ETL load timestamp. GETDATE() at SP execution. Not from production. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-
-### 4.5 Bonus & Campaign (from Billing.Deposit — Tier 1)
-
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 37 | BonusStatusID | int | YES | Promotional bonus status. Values: 0=New, 1=Approved, 2=Declined, 3=Reverted. Only 239 non-zero records in production. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 38 | BonusAmount | money | YES | Bonus amount credited with this deposit. NULL when no bonus applies. (Tier 1 — upstream wiki, Billing.Deposit) |
-| 39 | BonusErrorCode | int | YES | Error code when bonus processing fails (BonusStatusID=2). NULL when bonus succeeds or not attempted. (Tier 1 — upstream wiki, Billing.Deposit) |
-
-### 4.6 Platform & Recurring (DWH-enriched — Tier 2)
-
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 40 | PlatformID | int | YES | Device/platform the customer used for this deposit. NOT from Billing.Deposit — enriched via second ETL pass: JOIN Fact_CustomerAction ON SessionID WHERE ActionTypeID=14. NULL if no matching session action found. References DWH_dbo.Dim_Platform. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 41 | IsRecurring | int | YES | 1=deposit is part of a recurring schedule (OUTER APPLY on Billing.RecurringDeposit). 0=one-time deposit. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 42 | IsSetBalanceCompleted | int | YES | 1=account crediting (Billing.AmountAdd) completed for this deposit. Added DBA-646. (Tier 1 — upstream wiki, Billing.Deposit) |
-
-### 4.7 Funding Instrument Metadata (from Billing.Funding — Tier 2)
-
-| # | Element | Type | Nullable | Description |
-|---|---------|------|----------|-------------|
-| 43 | IsRefundExcluded | int | YES | Whether this deposit is excluded from refund eligibility. Sourced from Billing.Funding.IsRefundExcluded. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 44 | DocumentRequired | int | YES | Whether documentation was required for this deposit/funding instrument. Sourced from Billing.Funding.DocumentRequired. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 45 | IsAftSupportedAsBool | bit | YES | Whether Account Funding Transaction (AFT) is supported by this funding instrument. Sourced from Billing.Funding. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 46 | IsAftEligibleAsBool | bit | YES | Whether this deposit was eligible for AFT processing. Sourced from Billing.Funding. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 47 | IsAftProcessedAsBool | bit | YES | Whether this deposit was actually processed via AFT. Sourced from Billing.Funding or Billing.Deposit. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-
-### 4.8 XML-Extracted Payment Data Fields (~91 Columns — Tier 2)
-
-The following columns are all extracted from `Billing.Deposit.PaymentData` or `FundingData` XML blobs using `ExtractXMLValue(xml_blob, 'AttributeName')`. Each column stores the string value of a single XML attribute. All are `nvarchar(max)` unless noted. NULL means the attribute was absent in the XML for this deposit/funding type.
-
-| # | Element | Notes |
-|---|---------|-------|
-| 48 | SecuredCardDataAsString | Tokenized card data reference |
-| 49 | BinCodeAsString | Card BIN (first 6-8 digits) |
-| 50 | BinCountryIDAsInteger (int) | Country of card BIN |
-| 51 | CardTypeIDAsInteger (int) | Card type ID (Visa, MC, etc.) |
-| 52 | CountryIDAsInteger (int) | Customer country from payment data |
-| 53 | StateIDAsInteger (int) | Customer state/province from payment data |
-| 54 | BankIDAsInteger (int) | Bank identifier integer |
-| 55 | AccountNameAsString | Bank account holder name |
-| 56 | AccountTypeAsString | Bank account type (checking, savings) |
-| 57 | BankAccountAsString | Bank account number (masked) |
-| 58 | BankAddressAsString | Bank address |
-| 59 | BankCodeAsDecimal | Bank code (numeric string) |
-| 60 | BankDetailsAccountIDAsString | Bank details account identifier |
-| 61 | BankIDAsString | Bank identifier string |
-| 62 | BankNameAsString | Name of the bank |
-| 63 | BICCodeAsString | SWIFT/BIC code for wire transfers |
-| 64 | CIDAsString | Customer ID as string (XML cross-check) |
-| 65 | v | XML-extracted field with no descriptive name (artifact) — contents require domain review |
-| 66 | CustomerAddressAsString | Customer's billing address |
-| 67 | CustomerNameAsString | Customer name from payment instrument |
-| 68 | FundingType | Funding type label from XML |
-| 69 | MaskedAccountIDAsString | Masked account/card identifier for display |
-| 70 | PurseAsString | E-wallet purse/account ID |
-| 71 | RoutingNumberAsString | US ACH routing number |
-| 72 | SecureIDAsDecimal | Secure transaction ID (numeric string) |
-| 73 | SortCodeAsString | UK bank sort code |
-| 74 | AccountBalanceAsDecimal | Account balance from payment provider |
-| 75 | AccountHolderAsString | Account holder name |
-| 76 | AccountIDAsDecimal | Account identifier (numeric string) |
-| 77 | ACHBankAccountIDAsInteger | ACH bank account reference ID |
-| 78 | Address1AsString | Billing address line 1 |
-| 79 | Address2AsString | Billing address line 2 |
-| 80 | AdviseAsString | Payment provider advisory message |
-| 81 | AvailableBalanceAsDecimal | Available balance from provider |
-| 82 | BankCodeAsString | Bank code (string form) |
-| 83 | BillNumberAsString | Bill/invoice number |
-| 84 | BuildingNumberAsString | Building number in address |
-| 85 | CardHolderPhoneNumberBodyAsString | Cardholder phone number body |
-| 86 | CardHolderPhoneNumberPrefixAsString | Cardholder phone number prefix |
-| 87 | CardNumberAsString | Card number (masked) |
-| 88 | CityAsString | Billing city |
-| 89 | CountryIDAsString | Country identifier string |
-| 90 | CountryNameAsString | Country name from payment XML |
-| 91 | CreatedAtAsString | Payment instrument creation timestamp |
-| 92 | CurrentBalanceAsDecimal | Current balance from provider |
-| 93 | CustomerIDAsString | Customer ID string from payment data |
-| 94 | EmailAsString | Customer email from payment instrument |
-| 95 | EndPointIDAsString | Payment provider endpoint identifier |
-| 96 | ErrorCodeAsString | Provider error code on decline |
-| 97 | ErrorTypeAsString | Provider error type classification |
-| 98 | FirstNameAsString | Cardholder/account holder first name |
-| 99 | IBANCodeAsString | IBAN for wire/SEPA transfers |
-| 100 | InitialTransactionIDAsString | Initial transaction ID for recurring |
-| 101 | IPAsString | Customer IP as string |
-| 102 | LanguageIDAsInteger | Language ID from payment data |
-| 103 | LastNameAsString | Cardholder/account holder last name |
-| 104 | MD5AsString | MD5 hash from payment provider |
-| 105 | PayerAsString | Payer name (PayPal/e-wallet) |
-| 106 | PayerBusiness | Payer business name (PayPal) |
-| 107 | PayerIDAsString | Payer identifier string |
-| 108 | PayerPurseAsString | Payer purse/wallet ID |
-| 109 | PayerStatus | Payer verification status |
-| 110 | PaymentAmountAsDecimal | Amount from payment XML |
-| 111 | PaymentDateAsDateTime | Payment date from XML |
-| 112 | PaymentGuaranteeAsString | Payment guarantee code |
-| 113 | PaymentModeAsInteger | Payment processing mode |
-| 114 | PaymentProviderTransactionStatusAsString | Status string from provider |
-| 115 | PaymentStatusAsInteger | Status integer from provider |
-| 116 | PaymentTypeAsString | Payment type label from provider |
-| 117 | PlaidItemIDAsString | Plaid (ACH) item identifier |
-| 118 | PlaidNamesAsString | Plaid account holder names |
-| 119 | PlatformIDAsInteger | Platform from payment XML (separate from PlatformID) |
-| 120 | PromotionCodeAsString | Promotion/voucher code used |
-| 121 | PSPCodeAsString | Payment service provider code |
-| 122 | RapidFirstNameAsString | Rapid (payout) first name |
-| 123 | RapidLastNameAsString | Rapid (payout) last name |
-| 124 | ResponseMessageAsString | Provider response message |
-| 125 | ResponseTimeAsString | Provider response time |
-| 126 | SecretKeyAsString | Provider secret key (masked/reference) |
-| 127 | ThreeDsAsJson | Raw 3DS authentication data as JSON string |
-| 128 | ThreeDsResponseType | 3DS outcome ID as string. Cast to INT to JOIN Dim_ThreeDsResponseTypes. 15 possible values (0-14). |
-| 129 | TokenAsString | Payment token from tokenization service |
-| 130 | TransactionIDAsString | Provider transaction ID string |
-| 131 | ZipCodeAsString | Billing postal/ZIP code |
-| 132 | MOPCountry | Method-of-Payment country code |
-| 133 | SwiftCodeAsString | SWIFT code for wire transfers |
-| 134 | ClientBankNameAsString | Client's bank name |
-| 135 | BankName | Bank name (varchar(100), not nvarchar(max)) |
-| 136 | CardCategory | Card category label (varchar(50)) |
-
-*All XML-extracted columns: Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse (ExtractXMLValue)*
 
 ---
 
@@ -357,128 +281,97 @@ The following columns are all extracted from `Billing.Deposit.PaymentData` or `F
 
 ### 5.1 Production Sources
 
-| Source | DWH Columns | Transform |
-|--------|-------------|-----------|
-| etoro.Billing.Deposit (d) | CID, CurrencyID, Commission, Approved, ModificationDate, FundingID, ExchangeRate, DepositID, ProcessorValueDate, DepotID, PaymentStatusID, ManagerID, RiskManagementStatusID, Amount (capped), PaymentDate, IPAddress, ClearingHouseEffectiveDate, IsFTD, RefundVerificationCode, MatchStatusID, BonusStatusID, BonusAmount, BonusErrorCode, ExTransactionID, BaseExchangeRate, ExchangeFee, ProtocolMIDSettingsID, FunnelID, SessionID, PaymentGeneration, ProcessRegulationID, MerchantAccountID, IsSetBalanceCompleted, RoutingReasonID, FlowID | Mostly passthrough; Amount has CASE cap |
-| etoro.Billing.Funding (f) | FundingTypeID, IsRefundExcluded, DocumentRequired, IsAftSupportedAsBool, IsAftEligibleAsBool, IsAftProcessedAsBool | JOIN on FundingID |
-| etoro.Billing.RecurringDeposit | IsRecurring | OUTER APPLY check |
-| ETL-computed | ModificationDateID, ExpirationDateID, AmountUSD, UpdateDate | SP formulas |
-| XML (d.PaymentData / d.FundingData) | ~91 XML columns | ExtractXMLValue(xml, 'attr') |
-| DWH_dbo.Fact_CustomerAction (2nd pass) | PlatformID | UPDATE via SessionID JOIN, ActionTypeID=14 |
+| Synapse column group | Production / warehouse source | Transform |
+|---------------------|------------------------------|-----------|
+| Core deposit keys & amounts | `Billing.Deposit` via `DWH_staging.etoro_Billing_Deposit` | Passthrough + `Amount` CASE + `IsFTD` cast + `SessionID` ISNULL |
+| Instrument type & refund/doc flags | `Billing.Funding` via `etoro_Billing_Funding` | JOIN on `FundingID` |
+| Recurring flag | `Billing.RecurringDeposit` | `OUTER APPLY` existence → `IsRecurring` |
+| XML attributes | `PaymentData` / `FundingData` blobs | `ExtractXMLValue` per attribute |
+| USD reporting column | Derived | `Amount * ExchangeRate` |
+| Platform | `Fact_CustomerAction` | `UPDATE` join on `CID`+`SessionID`, `ActionTypeID=14` |
+| MOP country string | `Dim_Country` | Interpret `CountryIDAsString` (`SP_Fact_BillingDeposit`) |
+| Bank / card category | `Dim_CountryBin` | `CAST(BinCodeAsString AS INT)` |
 
 ### 5.2 ETL Pipeline
 
 ```
-etoro.Billing.Deposit (etoroDB-REAL, 73.9M rows)
-  + etoro.Billing.Funding (payment instruments)
-  + etoro.Billing.RecurringDeposit (recurring schedule)
-  |
-  v [Generic Pipeline — daily, 1440 min, Override]
-Bronze/etoro/Billing/Deposit/
-  |
-  v [staging]
-DWH_staging.etoro_Billing_Deposit + etoro_Billing_Funding + etoro_Billing_RecurringDeposit
-  |
-  v [SP_Fact_BillingDeposit_DL_To_Synapse — Pass 1]
-    1. DELETE Ext_FBD (rolling window by ModificationDateID)
-    2. INSERT Ext_FBD from staging (multi-source JOIN + ~91 ExtractXMLValue calls)
-    3. DELETE Fact_BillingDeposit (same window)
-    4. INSERT Fact_BillingDeposit from Ext_FBD
-  |
-  v [SP_Fact_BillingDeposit @Yesterday — Pass 2]
-    UPDATE PlatformID via Fact_CustomerAction (SessionID JOIN, ActionTypeID=14)
-DWH_dbo.Fact_BillingDeposit (73.9M rows)
+etoro.Billing.Deposit ─┐
+                        ├─► Lake / Generic Pipeline ► DWH_staging.etoro_Billing_Deposit (d)
+etoro.Billing.Funding ─┘       │
+                               JOIN etoro_Billing_Funding (f)
+                               OUTER APPLY etoro_Billing_RecurringDeposit
+                               ► INSERT Ext_FBD_Fact_BillingDeposit
+                               ► DELETE+INSERT DWH_dbo.Fact_BillingDeposit
+                               ► UPDATE PlatformID (Fact_CustomerAction #temp)
+                               ► EXEC SP_Fact_BillingDeposit (@date)
+                                      ├► UPDATE MOPCountry (Dim_Country)
+                                      └► UPDATE BankName / CardCategory (Dim_CountryBin)
+Unity Catalog Gold: main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit
 ```
 
 ---
 
 ## 6. Relationships
 
-### 6.1 References To (this object points to)
+### 6.1 References To (this fact points outward)
 
-| Element | Related Object | Description |
-|---------|---------------|-------------|
-| CID | DWH_dbo.Dim_Customer | Customer who made the deposit |
-| CurrencyID | DWH_dbo.Dim_Currency | Deposit currency |
-| PaymentStatusID | DWH_dbo.Dim_PaymentStatus | Current deposit status |
-| RiskManagementStatusID | DWH_dbo.Dim_RiskManagementStatus | Risk engine decision |
-| ModificationDateID | DWH_dbo.Dim_Date | Date dimension |
-| ExpirationDateID | DWH_dbo.Dim_Date | Card expiration date |
-| FundingTypeID | DWH_dbo.Dim_FundingType | Payment method type |
-| PlatformID | DWH_dbo.Dim_Platform | Device/platform |
-| FunnelID | DWH_dbo.Dim_Funnel | Marketing funnel |
-| TRY_CAST(ThreeDsResponseType AS INT) | DWH_dbo.Dim_ThreeDsResponseTypes | 3DS authentication outcome |
+| Element | Related object | Notes |
+|---------|---------------|------|
+| `CID` | `DWH_dbo.Dim_Customer` | Customer key |
+| `CurrencyID` | `DWH_dbo.Dim_Currency` | |
+| `FundingTypeID` | `DWH_dbo.Dim_FundingType` | |
+| `PaymentStatusID` | `DWH_dbo.Dim_PaymentStatus` | |
+| `ModificationDateID` | `DWH_dbo.Dim_Date` | |
+| `RiskManagementStatusID` | `DWH_dbo.Dim_RiskManagementStatus` | |
+| `FunnelID` | `DWH_dbo.Dim_Funnel` | |
+| `PlatformID` | `DWH_dbo.Dim_Platform` | After UPDATE |
+| `TRY_CAST(ThreeDsResponseType AS INT)` | `DWH_dbo.Dim_ThreeDsResponseTypes` | |
 
-### 6.2 Referenced By (other objects point to this)
+### 6.2 Referenced By
 
-| Source Object | Source Element | Description |
-|--------------|---------------|-------------|
-| DWH_dbo.Fact_Cashout_State | DepositID | Linked deposit for refund/chargeback cashouts |
-| SP_Fact_BillingDeposit (2nd pass) | SessionID | Platform enrichment pass reads this table |
+| Consumer | Relationship |
+|----------|--------------|
+| `DWH_dbo.VU_FactBilling_ForBigQuery` | View over this table |
+| Multiple `BI_DB_dbo` AML / revenue / operations SPs | JOIN by `CID` / `DepositID` |
+| `SP_Fact_BillingDeposit` | Same-table UPDATE enrichments |
 
 ---
 
 ## 7. Sample Queries
 
-### 7.1 Daily approved deposit volume (USD)
+### 7.1 Recent approved USD volume
 
 ```sql
-SELECT
-    ModificationDateID,
-    COUNT(*) AS DepositCount,
-    SUM(AmountUSD) AS TotalUSD,
-    SUM(CASE WHEN IsFTD=1 THEN 1 ELSE 0 END) AS FTDCount
+SELECT ModificationDateID,
+       SUM(AmountUSD) AS usd
 FROM [DWH_dbo].[Fact_BillingDeposit]
 WHERE PaymentStatusID = 2
-  AND ModificationDateID >= CONVERT(INT, CONVERT(varchar(8), DATEADD(day,-30,GETDATE()), 112))
+  AND ModificationDateID >= CONVERT(int, CONVERT(varchar(8), DATEADD(day, -7, SYSUTCDATETIME()), 112))
 GROUP BY ModificationDateID
-ORDER BY ModificationDateID DESC
+ORDER BY ModificationDateID DESC;
 ```
 
-### 7.2 Decline rate by regulation entity
+### 7.2 BIN enrichment coverage
 
 ```sql
-SELECT
-    ProcessRegulationID,
-    COUNT(*) AS TotalDeposits,
-    SUM(CASE WHEN PaymentStatusID = 2 THEN 1 ELSE 0 END) AS Approved,
-    SUM(CASE WHEN PaymentStatusID = 35 THEN 1 ELSE 0 END) AS DeclinedByRRE,
-    CAST(SUM(CASE WHEN PaymentStatusID = 2 THEN 1 ELSE 0 END) AS float) / COUNT(*) AS ApprovalRate
+SELECT CASE WHEN BankName IS NULL THEN 0 ELSE 1 END AS has_bankname,
+       COUNT(*) AS deposits
 FROM [DWH_dbo].[Fact_BillingDeposit]
-WHERE ModificationDateID >= CONVERT(INT, CONVERT(varchar(8), DATEADD(day,-7,GETDATE()), 112))
-GROUP BY ProcessRegulationID
-ORDER BY TotalDeposits DESC
-```
-
-### 7.3 3DS outcome breakdown for approved deposits
-
-```sql
-SELECT
-    t.ThreeDsResponseTypesName,
-    COUNT(*) AS DepositCount,
-    SUM(AmountUSD) AS TotalUSD
-FROM [DWH_dbo].[Fact_BillingDeposit] f
-LEFT JOIN [DWH_dbo].[Dim_ThreeDsResponseTypes] t
-    ON TRY_CAST(f.ThreeDsResponseType AS INT) = t.ThreeDsResponseTypeID
-WHERE f.PaymentStatusID = 2
-  AND f.ModificationDateID >= CONVERT(INT, CONVERT(varchar(8), DATEADD(day,-7,GETDATE()), 112))
-GROUP BY t.ThreeDsResponseTypesName
-ORDER BY DepositCount DESC
+WHERE ModificationDateID >= CONVERT(int, CONVERT(varchar(8), DATEADD(day, -1, SYSUTCDATETIME()), 112))
+GROUP BY CASE WHEN BankName IS NULL THEN 0 ELSE 1 END;
 ```
 
 ---
 
 ## 8. Atlassian Knowledge Sources
 
-The upstream `Billing.Deposit` wiki references two Atlassian sources:
-
-| Source | Type | Key Knowledge |
-|--------|------|--------------|
-| PSP Demo (Confluence) | Confluence | PSP integration patterns and deposit flow context |
-| Funding Type Updates (Confluence) | Confluence | Deposit processing by funding type |
+| Source | Type | Notes |
+|--------|------|-------|
+| Upstream `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Billing/Tables/Billing.Deposit.md` | Wiki | Tier-1 business semantics for core deposit columns |
+| Confluence links embedded in `Billing.Deposit` wiki | Confluence | PSP / funding-type operational context (follow upstream doc) |
 
 ---
 
-*Generated: 2026-03-19 | Quality: 8.5/10 | Phases: 11/14*
-*Tiers: 35 T1, 56 T2, 0 T3, 0 T4-Inferred | Elements: 9.0/10, Logic: 9.0/10, Relationships: 8.5/10, Sources: 8.0/10*
-*Object: DWH_dbo.Fact_BillingDeposit | Type: Table | Production Source: etoro.Billing.Deposit (+ Billing.Funding, Billing.RecurringDeposit)*
+*Generated: 2026-05-14 | Quality: 8.5/10 | Phases: Speckit 1–16 pass (MCP sample + SSDT + SP trace)*  
+*Tiers: 33 T1, 97 T2, 6 T3, 0 T4 | Elements: 136/136 | Row estimate: ~75.4M (`sp_spaceused`)*  
+*Object: DWH_dbo.Fact_BillingDeposit | Type: Table | Sources: Billing.Deposit + Billing.Funding + RecurringDeposit + Fact_CustomerAction + Dim_Country + Dim_CountryBin*

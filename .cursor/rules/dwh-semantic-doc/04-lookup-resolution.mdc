@@ -148,6 +148,21 @@ CID -> Customer dimension (millions of rows)
   Purpose: References the customer who owns this record
 ```
 
+### Step 5b: Citation Verification — HARD ENFORCED (2026-05-14, dict-ref audit)
+
+Every `N=Label` pair in the value map this phase builds MUST be verified against either:
+  (a) the live `Dim_X` rows queried via Synapse MCP (preferred when MCP is up), OR
+  (b) a TOP 100 sample of the source table (or the relevant `Dictionary.X` table) showing that ID actually appearing in production data.
+
+**NEVER invent IDs from naming-pattern guesses or from the column name alone.** If a value cannot be verified, drop it from the map and write `FK to Dim_X (live values not sampled)` in the downstream wiki description. Do NOT fabricate IDs to make the map look complete.
+
+**Evidence from the dict-ref audit (2026-05)**: 45 of 180 audit decisions caught fabricated IDs that travelled from this phase's value map into Phase 11 wiki descriptions. Examples:
+  - `InstrumentTypeID=999` cited as "forex/other" — does not exist in `Dim_Instrument`
+  - `PaymentStatusID` cited `11,12,13,35` ("Chargeback", "Refund", "Pending", "DeclineByRRE") — none present in `Dim_PaymentStatus` (canonical IDs are `1..7`)
+  - `TransactionCode=57=bank-in external` cited against `Dim_PaymentStatus` — wrong dim entirely
+
+**Note**: Phase 11 Rule 22 will collapse most of these value maps to `FK to Dim_X.` in downstream wikis. The map this phase builds remains essential for: (a) `Dim_X.md` authors writing the canonical natural-key/label description, (b) sentinel/dominant-value annotations allowed under Rule 22's exemptions, (c) Phase 6/9 business-logic analysis that needs to reason about specific IDs (e.g. `ActionTypeID=36 AND CompensationReasonID IN (23,42,51)`). For those use cases the IDs must be ground truth, not guesses.
+
 ## Output Format
 
 ```

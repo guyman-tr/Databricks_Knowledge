@@ -59,6 +59,24 @@ CHECKPOINT CHAIN — {ObjectName}:
 
 **If ANY HARD phase shows FAIL or MISSING: DO NOT proceed to Phase 11.** Go back and complete the failed/missing phase. SOFT phases (P3, P4, P5, P6, P7, P9B, P10) are allowed to be MISSING — they degrade quality but do not block.
 
+## MANDATORY: Dim Self-Reference Check (HARD GATE — 2026-05-14)
+
+Before writing the Elements table, decide whether this wiki **IS** a `Dim_X.md` (or upstream `Dictionary.X.md`) — i.e. whether some downstream FK column points at it.
+
+```
+DIM SELF-REFERENCE CHECK — {ObjectName}:
+  Is this wiki a Dim_X.md (or upstream Dictionary.X.md) that downstream wikis FK to? [y/n]
+  → If YES: this is the canonical home for the enum. Inline `N=Label` enumeration is
+    REQUIRED in the natural-key/label column description (e.g. `Dim_PaymentStatus.PaymentStatusName`).
+    Phase 16 Verbose-Enum Scan will whitelist this row.
+  → If NO: NO inline enum (>=3 `N=Label` pairs) is allowed in ANY column description.
+    Every FK column must use `FK to Dim_X.` — see Rule 22 in 11-generate-documentation.mdc.
+```
+
+**Why this exists**: the dict-ref audit (2026-05) caught 327 enum dumps across 180 unique wikis where a downstream table cited stale, mismatched, or hallucinated `N=Label` pairs that should have lived only in `Dim_X.md`. The canonical labels must live in exactly one place; downstream wikis cite them by reference (`FK to Dim_X.`). This gate is the pre-write checkpoint that prevents regenerating that slop on the next batch.
+
+**Enforcement**: violations are caught by `tools/dict_ref_audit/scan_verbose_enums.py --path <wiki>` wired into Phase 16 as a HARD GATE. See `16-adversarial-evaluation.mdc` § "Verbose-Enum Scan".
+
 ## MANDATORY: Shape Comparison Before Writing
 
 Before writing the `.md` file, compare your output against the golden reference skeleton (`GOLDEN-REFERENCE.mdc` Section A):
@@ -72,7 +90,7 @@ SHAPE CHECK — {ObjectName}:
   [y/n] Section 5.2 has ETL pipeline ASCII diagram
   [y/n] Footer has tier breakdown counts
   [y/n] Property table has Production Source, Refresh, Distribution, UC Target
-  [y/n] Dictionary columns with <=15 values have inline values
+  [y/n] FK columns use `FK to Dim_X.` (no inline enum >=3 pairs) — unless this wiki IS Dim_X.md (Rule 22)
 ```
 
 ```

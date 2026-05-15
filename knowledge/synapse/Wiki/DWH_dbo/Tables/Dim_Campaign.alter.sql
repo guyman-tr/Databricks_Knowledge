@@ -33,10 +33,10 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN EndDa
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN MaxBonusAmount COMMENT 'Maximum total bonus pool in dollars. Range in production: $0 to $15,000,000. 0 in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN IsActive COMMENT 'Whether campaign is active. 1=active, 0=inactive. False in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN ParticipatedUsers COMMENT 'Count of customers who used this campaign. MASKED WITH default() - non-privileged users see 0. 0 in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN Description COMMENT 'Human-readable campaign description. MASKED WITH default() - non-privileged users see NULL. NULL in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN InsertDate COMMENT 'ETL load date. For ID=0 placeholder: set to @ddate (CAST(GETDATE() AS DATE) = midnight). Would be GETDATE() for live rows if INSERT were active. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN UpdateDate COMMENT 'ETL load date. For ID=0 placeholder: set to @ddate (CAST(GETDATE() AS DATE) = midnight). Would be GETDATE() for live rows if INSERT were active. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN Description COMMENT 'Human-readable campaign description. MASKED WITH default() - non-privileged users see NULL. NULL in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign)';
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN CampaignID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN CampaignGroupID SET TAGS ('pii' = 'none');
@@ -49,9 +49,5 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN IsAct
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN ParticipatedUsers SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN InsertDate SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_campaign ALTER COLUMN Description SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 11:26:43 UTC
--- Batch deploy resume: DWH_dbo deploy batch 1
--- Statements: 25/25 succeeded
--- ====================

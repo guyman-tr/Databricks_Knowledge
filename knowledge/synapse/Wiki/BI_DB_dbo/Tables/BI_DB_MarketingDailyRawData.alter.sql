@@ -83,7 +83,6 @@ ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawda
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN DateCreated SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN Channel SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN SubChannel SET TAGS ('pii' = 'none');
-ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN `Organic/Paid` SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN Contact SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN ContractName SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN ContractType SET TAGS ('pii' = 'none');
@@ -122,9 +121,5 @@ ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawda
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN Lead_Comm SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN totalGroupLTV SET TAGS ('pii' = 'none');
 ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN totalExtLTV SET TAGS ('pii' = 'none');
+ALTER TABLE main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_marketingdailyrawdata ALTER COLUMN `Organic/Paid` SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 13:04:07 UTC
--- Batch deploy resume: BI_DB_dbo deploy batch 9
--- Statements: 102/102 succeeded
--- ====================

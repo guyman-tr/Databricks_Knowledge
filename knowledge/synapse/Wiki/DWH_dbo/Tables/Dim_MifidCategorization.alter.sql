@@ -32,9 +32,8 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER C
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN MifidCategorizationID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN Name SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN UpdateDate SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN None SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN Retail SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN Professional SET TAGS ('pii' = 'none');
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mifidcategorization ALTER COLUMN Pending SET TAGS ('pii' = 'none');
 
--- == LAST EXECUTION ==
--- Timestamp: 2026-03-30 11:24:02 UTC
--- Batch deploy resume: DWH_dbo deploy batch 1
--- Statements: 8/8 succeeded
--- ====================

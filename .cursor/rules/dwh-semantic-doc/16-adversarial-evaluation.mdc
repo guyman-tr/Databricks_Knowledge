@@ -101,6 +101,14 @@ Score each dimension 1–10. Be concrete — cite specific columns and line numb
 
 **Also check**: Are there columns marked Tier 2 or Tier 3 that SHOULD be Tier 1? This is the most common generator failure — it assigns lower tiers because it didn't read the upstream wiki carefully enough.
 
+**Label freshness check (HARD-gated, 2026-05-14, dict-ref audit)**: For every cited `N=Label` pair that remains in the wiki (allowed only under Rule 22 exemptions or inside a `Dim_X.md` itself), open the canonical `Dim_X.md` and compare the label text against the dim's natural-key/label column. Historical aliases are forbidden — if migrating a doc that uses an old alias, the writer must update to canonical or replace with `FK to Dim_X.`.
+
+Real failure examples from the audit (33 `mismatched_labels` decisions across 89 wiki lines):
+  - `VerificationLevelID` wiki cited `partial / fully verified` (legacy labels); `Dim_VerificationLevel` canonical is `Basic / Full KYC`. → HARD FAIL.
+  - `CryptoId` wiki cited `1=BTC, 2=ETH, 4=XRP, 18=ADA`; `Dim_Currency` canonical labels for those IDs are `Forex (174 instruments)`, `Commodity (533)`, `Indices (203)`, etc. — entirely different dim, the writer pointed at the wrong target. → HARD FAIL.
+
+Scoring: deduct 1 point per mismatched label, capped at -4. **This dimension is HARD-gated**: a wiki with any stale labels cannot score above 7 on Tier Accuracy regardless of other check outcomes.
+
 **Upstream inheritance spot-check**: For each Tier 1 column sampled, read the upstream wiki description and compare it character-by-character against the wiki output. Look for:
 - **Paraphrasing**: upstream says "Score or decision from automated identity verification vendors (Onfido, Au10tix)" but wiki says "identity verification outcome" — HARD FAIL, details lost
 - **Dropped NULL semantics**: upstream says "NULL if not yet processed" but wiki omits it
@@ -176,7 +184,7 @@ NULL semantics were lost — that is meaning.
 - [ ] Section 5.2 has an ETL pipeline ASCII diagram with real table/SP names
 - [ ] Footer has tier breakdown counts
 - [ ] Summary line (under H1) has row count and date range
-- [ ] Dictionary columns with <=15 values have inline key=value pairs
+- [ ] FK columns use `FK to Dim_X.` — no inline `N=Label` enum (>=3 pairs) unless this wiki IS the canonical `Dim_X.md` (Rule 22; verified by Verbose-Enum Scan HARD GATE)
 - [ ] `.review-needed.md` does NOT contain `## 4. Elements`
 - [ ] If `.alter.sql` exists: every `ALTER TABLE <name>` uses a single dotted identifier (`^[A-Za-z0-9_.]+$`, no spaces — not datalake paths or status prose). Reject if `<name>` looks like English sentences or contains `/`
 - [ ] If `.alter.sql` exists: ALTER COLUMN **count** matches wiki Element count (FR-012, FR-017)
@@ -289,6 +297,28 @@ cost/quality tradeoff, not burn tokens.
 
 ---
 
+## MANDATORY: Verbose-Enum Scan (HARD GATE — 2026-05-14, dict-ref audit)
+
+Before declaring a wiki PASS, run the dict-ref scanner on just this wiki's `.md`:
+
+```
+python tools/dict_ref_audit/scan_verbose_enums.py --path knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.md
+```
+
+The scanner re-uses `THRESHOLD = 3` — any Description cell with 3+ `N=Label` patterns is flagged.
+
+**Exit conditions**:
+- Scanner reports **0 rows** for this file → PASS, continue to verdict.
+- Scanner reports **>=1 row** → **HARD FAIL the gate**. Either:
+  (a) this wiki IS the canonical `Dim_X.md` and the row is the natural-key/label column where the enum belongs (legitimate — see `GATE-wiki-generation.mdc` Dim Self-Reference Check). In that case the row is a false positive; whitelist it by adding a row to the `.review-needed.md` Reviewer Corrections table with `Scope = dim_self` and a note that the enum is canonical for this dim. The whitelist mechanism is the existing Tier 5 override path in Phase 11 Rule 15. The evaluator records the whitelist exemption in the output line below but still emits PASS on this gate when ALL flagged rows are whitelisted.
+  (b) every flagged row is a downstream FK column violating Rule 22. The writer must regenerate Phase 11 replacing each verbose enum cell with `FK to Dim_X.` per Rule 22's schema template. This counts as a Phase 16 failure → trigger the one allowed regeneration attempt.
+
+**Why this is HARD**: the dict-ref audit (2026-05) found 327 verbose-enum cells across 180 unique columns in already-shipped wikis. Inline enumeration outside `Dim_X.md` is what produced that slop — stale labels, hallucinated IDs, drift across downstream wikis. This gate is the CI-style enforcement point that prevents regeneration on the next batch.
+
+The gate runs AFTER the six-dimension rubric (Tier Accuracy through Shape Fidelity) but BEFORE the verdict is emitted. A wiki that scores 9.5 on the weighted rubric still FAILS Phase 16 if the verbose-enum scanner returns non-empty without whitelist coverage.
+
+---
+
 ## Output Format
 
 The evaluator MUST produce this structured output:
@@ -307,7 +337,11 @@ DIMENSION SCORES:
 
 WEIGHTED SCORE: {N.N}/10
 
-VERDICT: {PASS / FAIL}
+VERBOSE ENUM SCAN (HARD GATE): {N rows from scan_verbose_enums.py --path ...}
+                               PASS if N=0 OR all rows whitelisted as `dim_self` in .review-needed.md
+                               FAIL otherwise — Rule 22 violation, regenerate Phase 11
+
+VERDICT: {PASS / FAIL}   (FAIL if any HARD GATE fails, regardless of weighted score)
 
 T1 UPSTREAM FIDELITY TABLE (MANDATORY — evaluation is INVALID without this):
   | Column | Upstream (quoted) | Wiki (quoted) | MATCH? |

@@ -8,9 +8,14 @@ Pulls the live UC inventory and joins it with our wiki / deploy / propagation
 artifacts to produce a single CSV that the user pivots in Excel to see the
 "true %" of column-comment propagation.
 
-The output **brings everything** — every UC object, no rows dropped. Each
-row carries an `excluded` boolean and a single `exclude_reason` so the pivot
-can slice it any way.
+The output **brings everything in scope by default**. Schemas ending in
+`_stg`, `information_schema`, and system internals are HARD-DROPPED from
+the CSV (counted in the stderr summary). Everything else in `main` and
+`lower_environments` appears as a row, with `excluded=false` unless a
+specific table-level reason fires (failure, name pattern, explicit
+blacklist, foreign-federation, empty). No schema-level allowlist —
+`main.etoro_kpi`, `main.risk`, `main.experience`, `main.wallet`, etc.
+are all in scope.
 
 ---
 
@@ -68,26 +73,38 @@ python tools/propagation_status.py --out my_path.csv
 
 ---
 
-## Exclusion Reason Cascade (priority order — first match wins)
+## Schema HARD-DROP (does not appear in CSV)
 
-| Priority | `exclude_reason` | `exclude_category` | Detection |
-|---|---|---|---|
-| 1 | `system_internal` | `system` | Catalog starts with `__databricks_internal` or `system`, or schema = `information_schema` |
-| 2 | `_stg_schema` | `out_of_scope_schema` | Schema name ends with `_stg` |
-| 3 | `api_unowned_schema` | `out_of_scope_schema` | Schema in `api_delta`, `api_general` (we have SELECT, not MODIFY) |
-| 4 | `migration_artifact_schema` | `out_of_scope_schema` | Schema starts with `de_output_synapse_migration` |
-| 5 | `foreign_federation_table` | `out_of_scope_type` | `object_type = 'FOREIGN'` (Lakehouse Federation; we cannot ALTER) |
-| 6 | `name_pattern_pruned_date` | `pruned_pattern` | Name ends with `_YYYYMMDD` or `_YYYY_MM_DD` (8-digit only — 6-digit was too noisy) |
-| 7 | `name_pattern_pruned_keyword` | `pruned_pattern` | Name contains `backup`, `bak`, `bck`, `snapshot`, `tmp`, `temp`, `test`, `archive`, `hold`, `junk`, `copy`, `legacy`, `deprecated`, `old`, `obsolete`, `deleted`, `stale`, `scratch`, `debug`, `dev`, `sandbox`, `wip`, or ends `_v\d+`; OR matches a config `name_patterns` glob |
-| 8 | `name_pattern_pruned_dev_prefix` | `pruned_pattern` | Name starts with `ofir_`, `guyman_`, `tmp_`, `temp_`, `test_`, … |
-| 9 | `name_pattern_pruned_external` | `pruned_pattern` | Synapse `External_*` pattern (handled by the bronze-leg pipeline) |
-| 10 | `wiki_explicit_blacklist` | `blacklisted` | Synapse object listed in `dwh-semantic-doc-config.json → object_blacklist.explicit_blacklist` AND not yet `Deployed`/`Generated` |
-| 11 | `empty_object` | `no_columns` | `total_columns = 0` |
-| 12 | `wiki_deploy_failed` | `wiki_failure` | `_deploy-index.md` row says `Failed` |
-| 13 | `wiki_stub_only` | `stub_no_uc_target` | `_deploy-index.md` says `Stub only` (no UC target — comment-only ALTER) |
-| 14 | `propagation_failed` | `propagation_failure` | Has `*.propagation-progress.json` errors targeting this object (e.g., `PERMISSION_DENIED` on api_*) |
-| 15 | `wiki_not_attempted_in_scope` | `wiki_pending_backlog` | UC name is `gold_sql_dp_prod_we_*` in a framework schema, but no wiki authored AND no propagation-run AND no deploy-index entry |
-| 16 | `out_of_scope_schema` | `out_of_scope_schema` | Catalog/schema is not in our framework adjacency set |
+| Rule | Detection |
+|---|---|
+| `_stg` schemas | `schema_name` ends with `_stg` (any case) |
+| meta | `schema_name = 'information_schema'` |
+| system internals | `catalog_name` starts with `__databricks_internal` or equals `system` |
+
+Dropped rows are counted in the stderr summary (with the per-schema row
+count) but never appear in the output CSV. They are still cached in
+`.uc_propagation_status_raw.csv` so `--no-fetch` re-runs see the full
+universe.
+
+---
+
+## Per-Table Exclude Cascade (priority order — first match wins)
+
+Default verdict is `excluded=false`. A reason only fires when a specific
+table-level rule matches. There are NO schema-level blanket exclusions.
+
+| Priority | `exclude_reason` | `exclude_category` | Detection | Bypassable by deploy? |
+|---|---|---|---|---|
+| 1 | `foreign_federation_table` | `infrastructure` | `object_type = 'FOREIGN'` (Lakehouse Federation; we cannot ALTER) | no |
+| 2 | `empty_object` | `no_columns` | `total_columns = 0` | no |
+| 3 | `wiki_deploy_failed` | `wiki_failure` | `_deploy-index.md` row says `Failed` | no |
+| 4 | `wiki_stub_only` | `stub_no_uc_target` | `_deploy-index.md` says `Stub only` (no UC target — comment-only ALTER) | no |
+| 5 | `propagation_failed` | `propagation_failure` | Has `*.propagation-progress.json` errors targeting this object | no |
+| 6 | `name_pattern_pruned_date` | `pruned_pattern` | Name ends with `_YYYYMMDD` or `_YYYY_MM_DD` | yes |
+| 7 | `name_pattern_pruned_keyword` | `pruned_pattern` | Name contains `backup`, `snapshot`, `tmp`, `archive`, `legacy`, `deprecated`, `old`, etc., or matches a config `name_patterns` glob | yes |
+| 8 | `name_pattern_pruned_dev_prefix` | `pruned_pattern` | Name starts with `ofir_`, `guyman_`, `tmp_`, … | yes |
+| 9 | `name_pattern_pruned_external` | `pruned_pattern` | Synapse `External_*` (handled by bronze-leg pipeline) | yes |
+| 10 | `wiki_explicit_blacklist` | `blacklisted` | Synapse object listed in `dwh-semantic-doc-config.json → object_blacklist.explicit_blacklist` (or its `schema_blacklist`) | yes |
 | (none) | `` | `` | **In scope** — what your pivot's "true %" measures |
 
 ---
@@ -95,12 +112,12 @@ python tools/propagation_status.py --out my_path.csv
 ## "Deploy Overrides Blacklist" Rule
 
 If an object's `deploy_status` is `Deployed` or `Generated`, the cascade
-**does not** apply blacklist or name-pattern exclusion to it. We explicitly
-chose to author / deploy it; the row reflects real coverage. Examples in
-practice today:
+**does not** apply pattern or explicit-blacklist exclusion to it (priorities
+6–10). Universal table-level reasons (priorities 1–5: foreign-federation,
+empty, deploy-failed, stub-only, propagation-failed) still apply.
 
-- `BI_DB_DDR_Daily_Aggregated` is in `explicit_blacklist` (deferred, 137 cols)
-  but we deployed it in wave-2 → **excluded = false**.
+Example: `BI_DB_DDR_Daily_Aggregated` is in `explicit_blacklist` (deferred,
+137 cols) but we deployed it in wave-2 → **excluded = false**.
 
 ---
 

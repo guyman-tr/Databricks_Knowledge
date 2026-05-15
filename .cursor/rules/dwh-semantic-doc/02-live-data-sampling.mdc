@@ -111,6 +111,21 @@ From the sample data, note:
 - Columns that are never NULL despite allowing NULL -> reliably populated
 - Columns with mixed NULL/value -> conditional population (only certain record types)
 
+### Step 5b: Citation Verification — HARD ENFORCED (2026-05-14, dict-ref audit)
+
+Any enum value `N=Label` that will later be cited in a Phase 11 column description MUST be verified against either:
+  (a) the live `Dim_X` rows queried via Synapse MCP (preferred when MCP is up), OR
+  (b) a TOP 100 sample of the source table (or the relevant `Dictionary.X` table) showing that ID actually appearing in production data.
+
+**NEVER invent IDs from naming-pattern guesses.** If you cannot verify a cited ID, write `FK to Dim_X (live values not sampled)` in Phase 11 and STOP — do not fabricate IDs to fill the description.
+
+**Evidence from the dict-ref audit (2026-05)**: 45 of 180 audit decisions caught fabricated IDs that had been written by prior agents without verification. Examples:
+  - `InstrumentTypeID=999` cited as "forex/other" — does not exist in `Dim_Instrument`
+  - `PaymentStatusID` cited `11,12,13,35` ("Chargeback", "Refund", "Pending", "DeclineByRRE") — none present in `Dim_PaymentStatus` (canonical IDs are `1..7`)
+  - `TransactionCode=57=bank-in external` cited against `Dim_PaymentStatus` — that dim has no such mapping; `57` belongs to a different lookup
+
+**Note**: Phase 11 will normally substitute the full enum with `FK to Dim_X.` per Rule 22 anyway. This citation-verification step exists for the exemption cases (Dim_X.md authors, sentinels, 1-2 dominant values cited for live-data context) and for the few places Phase 9/10 surfaces an ID into Sections 1-3 outside the Elements table.
+
 ## What to Record
 
 | Data Point | Why It Matters |

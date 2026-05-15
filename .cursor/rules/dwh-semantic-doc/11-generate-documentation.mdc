@@ -437,6 +437,42 @@ Only Tier 4-Inferred descriptions carry the `[UNVERIFIED]` prefix. Tier 4-Atlass
 
     **When the SP is too large to find specific IDs**: If Phase 9 didn't capture the filter values for a column, Phase 11 MUST go back and read the relevant SP section. Use Grep to find the column name in the SP file, read the surrounding 50 lines, and extract the actual filter. Do NOT write a vague placeholder and move on.
 
+22. **⛔ NO VERBOSE ENUM OUTSIDE Dim_X.md — HARD ENFORCED (2026-05-14, dict-ref audit)**
+
+    When a column is a FK to a Dim_X table (or upstream Dictionary.X), the description MUST be `FK to Dim_X.` followed by tier suffix and source citation. **DO NOT enumerate values inline** (e.g. `1=CySEC, 2=FCA, 3=NFA, ...`). The verbose enumeration belongs ONLY in `Dim_X.md`'s own natural-key/label column description — that wiki IS the canonical home for the enum.
+
+    **Threshold for "verbose"**: 3 or more `N=Label` patterns in a single Description cell. This matches `tools/dict_ref_audit/scan_verbose_enums.py` `THRESHOLD = 3`. Under-threshold cells (booleans, sentinels, 1-2 dominant values cited as live-data context) stay allowed — see exemptions below.
+
+    **EXEMPTIONS that stay allowed (below threshold)**:
+    - Sentinel callouts: `0=NULL placeholder`, `-1=DWH sentinel`
+    - Distribution stats cited at the table level — but note these still violate Rule 3 if they live in a column description
+    - Boolean shorthands: `0=No, 1=Yes`
+    - 1-2 dominant values cited as live-data context (e.g. "Mostly 1=Real (94%); see Dim_SettlementType for the full set")
+
+    **This rule SUPERSEDES the previous "Dictionary Inline Values Rule" sub-bullet** under the Section 4 Elements template (which permitted inline pairs for `<=15 distinct values`). That permission is now restricted to: **the column being described IS the natural-key/label column of `Dim_X.md` itself.** Everywhere else, write `FK to Dim_X.` and stop. The downstream FK column inherits the canonical labels from `Dim_X.md` — repeating them in every downstream wiki is what produced the 327 stale/hallucinated/mismatched enum dumps the dict-ref audit caught.
+
+    **SCHEMA TEMPLATE for FK columns**:
+    ```
+    FK to <Dim_X | Dictionary.X>. <one-sentence business meaning>. (Tier N — source.table)
+    ```
+
+    **Example transformation (real, from audit row `PaymentStatusID__Dim_PaymentStatus`)**:
+
+    BAD (verbose, 8 `N=Label` pairs, several IDs not in `Dim_PaymentStatus`):
+    ```
+    Current deposit status. Key values: 1=New, 2=Approved, 3=Decline, 5=InProcess,
+    11=Chargeback, 12=Refund, 13=Pending, 35=DeclineByRRE. (Tier 1 — Billing.Deposit)
+    ```
+
+    GOOD (FK reference, single line, canonical labels live in `Dim_PaymentStatus.md`):
+    ```
+    Current deposit status. FK to Dim_PaymentStatus. (Tier 1 — Billing.Deposit)
+    ```
+
+    **Enforcement**: `tools/dict_ref_audit/scan_verbose_enums.py --path <wiki.md>` is wired into Phase 16 as a HARD GATE. A wiki that triggers the scanner cannot PASS Phase 16. See `16-adversarial-evaluation.mdc` § "Verbose-Enum Scan".
+
+    **For Dim_X.md authors**: the dim wiki's natural-key/label column (e.g. `Dim_PaymentStatus.PaymentStatusName`) is the ONLY place inline enums belong. Use the dim's full enumeration there — that is the canonical reference downstream wikis point at. The `GATE-wiki-generation.mdc` "Dim Self-Reference Check" tells you when you're allowed to enumerate.
+
 ---
 
 ## QUERY-BRAIN TEMPLATE
@@ -550,10 +586,11 @@ Copy this EXACTLY for every object type. Replace only `{PLACEHOLDER}` values.
 |---|---------|------|----------|-------------|
 | {n} | {Name} | {SQL data type} | {YES / NO} | {MEANINGFUL business description WITH computation formula (Rule 20). For ID columns: include the resolved value map: "Position state: 1=Open, 2=Closed (from Dictionary.PositionStatus)". For computed amounts: include the formula: "PI compensation. SUM(Amount) from Fact_CustomerAction WHERE ActionTypeID=36 AND CompensationReasonID IN (23,42,51)." For snapshot columns: "From V_Liabilities.ActualNWA." For dates: explain when set. For flags: explain condition: "1 if DltStatusID=4 in FSC, 0 otherwise." For day-over-day deltas: "today.X - yesterday.X from SourceTable."} `(Tier N — source.table)` ← **MANDATORY suffix, see Rule 19; MANDATORY formula, see Rule 20** |
 
-**Dictionary Inline Values Rule (from GOLDEN-REFERENCE.mdc Section C):**
-- If a dictionary/lookup column resolves to **<=15 distinct values**: inline key=value pairs in the description. Example: `1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType)`.
-- If it resolves to **>15 distinct values** (e.g., CountryID, InstrumentID): name the join target and describe purpose only. Example: `FK to Dim_Country. Resolves to country name.`
-- When production Dictionary name differs from DWH Dim name, document BOTH: `(Dictionary.MirrorType / Dim_MirrorType)`.
+**Dictionary Inline Values Rule (SUPERSEDED 2026-05-14 — see Rule 22):**
+- **DEFAULT (downstream wikis, any cardinality)**: write `FK to Dim_X.` — do NOT enumerate values inline. Rule 22 is HARD-ENFORCED via `scan_verbose_enums.py` in Phase 16.
+- **EXCEPTION — Dim_X.md itself**: when the column being described IS the natural-key/label column of `Dim_X.md` (e.g. `Dim_PaymentStatus.PaymentStatusName`, `Dim_MirrorType.MirrorTypeName`), inline the full enum here. This is the canonical home and downstream wikis point at it. See `GATE-wiki-generation.mdc` Dim Self-Reference Check for the gate.
+- When production Dictionary name differs from DWH Dim name, document BOTH in the FK reference: `FK to Dim_MirrorType (production: Dictionary.MirrorType).`
+- The previous permission to inline pairs when `<=15 distinct values` exist is RETIRED. That permission produced the 327 enum dumps the dict-ref audit caught — stale labels, hallucinated IDs, drift across downstream wikis. The canonical labels now live in exactly one place: `Dim_X.md`.
 
 ---
 
