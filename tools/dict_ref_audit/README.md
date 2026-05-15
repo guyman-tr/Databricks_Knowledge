@@ -28,7 +28,7 @@ Self-references are dropped automatically by `resolve_target_dim.py`.
 
 | Script | What it does | When to run |
 |---|---|---|
-| `scan_verbose_enums.py` | Regex sweep of every wiki `.md` Elements row. Threshold `>= 3` `N=Label` matches in one description = candidate. Writes `knowledge/_dict_ref_candidates.csv`. | Step 1 |
+| `scan_verbose_enums.py` | Regex sweep of every wiki `.md` Elements row. Threshold `>= 3` `N=Label` matches in one description = candidate. Default mode writes `knowledge/_dict_ref_candidates.csv` (full audit). `--path FILE` mode scans one wiki, writes to side path `knowledge/_dict_ref_single_run.csv`, and exits 1 on violations — used by Phase 16 as a HARD GATE. | Step 1 / Phase 16 gate |
 | `resolve_target_dim.py` | Maps each `column_name` to its target `Dim_X` (irregular map + `<X>ID -> Dim_<X>` heuristic + `Dictionary.X` fallback). Drops self-references. Writes `knowledge/_dict_ref_resolved.csv`. | Step 2 |
 | `validate_against_dim.py` | Extracts canonical `{id: label}` from each `Dim_X.md` (via enum entries embedded in that wiki) and cross-checks every claim. Classifies `clean / partial / mismatched_labels / delusional / unverifiable / no_target`. Writes `knowledge/_dict_ref_validated.csv` + caches canonicals to `knowledge/_dict_ref_live_dim_cache.json`. | Step 3 |
 | `build_review_csv.py` | Aggregates by `(column_name, target_dim)` so one decision covers all affected wikis. Builds suggested replacements. Writes `knowledge/_dict_ref_audit_review.csv` for the user to mark `APPROVE / SKIP / MODIFY`. | Step 4 |
@@ -160,15 +160,52 @@ Breakdown by validation status:
 | `no_target` (boolean / numeric / ambiguous) | 42 | 49 |
 | `clean` | 9 | 10 |
 
-## Extending
+## Phase 16 integration (per-wiki HARD GATE)
 
-- **Adding a new irregular column->dim mapping**: edit `IRREGULAR_DIM_MAP`
-  in `resolve_target_dim.py`.
-- **Live Synapse validation**: `validate_against_dim.py` currently extracts
-  canonical from `Dim_X.md`. To swap in live Synapse pulls, replace
-  `extract_canonical_from_md` with an MCP / pyodbc call against
-  `Dictionary.<X>`. Keep the cache file shape:
-  `{ "<dim_md_rel>": { "source": "synapse", "n_entries": N, "entries": {"0": "Label", ...} }}`.
+`scan_verbose_enums.py --path` is wired into Phase 16 adversarial evaluation as a
+HARD GATE. Before declaring a wiki PASS, the evaluator runs:
+
+```bash
+python tools/dict_ref_audit/scan_verbose_enums.py --path knowledge/synapse/Wiki/{Schema}/{Type}/{Object}.md
+```
+
+Exit conditions:
+
+- Exit **0** + `VERBOSE ENUM SCAN: PASS (0 rows)` on stdout → gate passes.
+- Exit **1** + `VERBOSE ENUM SCAN: FAIL (N row(s))` → HARD FAIL. Either replace
+  the offending cells with `FK to Dim_X.` per Rule 22 in
+  `.cursor/rules/dwh-semantic-doc/11-generate-documentation.mdc`, OR (if this
+  wiki IS the canonical `Dim_X.md` for a downstream FK) whitelist the row in
+  the `.review-needed.md` Reviewer Corrections table with `Scope = dim_self`.
+
+The side path `knowledge/_dict_ref_single_run.csv` holds the offending rows for
+inspection — it is rewritten on every `--path` invocation and is **not** the
+canonical audit CSV. The full-tree run (no `--path`) writes
+`knowledge/_dict_ref_candidates.csv` and is the input to the full audit pipeline.
+
+## Maintenance
+
+### `IRREGULAR_DIM_MAP` (handoff recommendation #7)
+
+`resolve_target_dim.py` carries `IRREGULAR_DIM_MAP` (~100 entries) — the
+column-name-to-`Dim_X` map for the cases where the `<X>ID -> Dim_<X>`
+heuristic doesn't fire. When new wikis introduce a non-`<X>ID` shorthand
+(e.g. eToro rebrands `PlayerLevel -> Club`, so a future column might be
+`ClubID` instead of `PlayerLevelID`), add the mapping there so the next
+scan/resolve run catches the regression.
+
+The full `scan -> resolve -> validate -> build_review` pipeline can be
+re-run safely on any commit — it is offline, no DB calls, and only writes
+under `knowledge/`. If you suspect new enum dumps slipped past Phase 16,
+just rerun Step 1 and check the new `_dict_ref_audit_review.csv` against
+the prior one.
+
+### Live Synapse validation
+
+`validate_against_dim.py` currently extracts canonical from `Dim_X.md`.
+To swap in live Synapse pulls, replace `extract_canonical_from_md` with
+an MCP / pyodbc call against `Dictionary.<X>`. Keep the cache file shape:
+`{ "<dim_md_rel>": { "source": "synapse", "n_entries": N, "entries": {"0": "Label", ...} }}`.
 
 ## Out of scope
 

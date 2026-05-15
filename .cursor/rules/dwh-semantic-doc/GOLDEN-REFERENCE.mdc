@@ -69,7 +69,7 @@ Below is the condensed structural skeleton with annotations. Your output MUST ma
 
 | # | Element | Type | Nullable | Description |  ← 5-column table, EVERY column, NO exceptions
                                                   ← Description MUST end with (Tier N — source)
-                                                  ← Dictionary values inline if <=15 distinct (see Section C)
+                                                  ← FK columns: `FK to Dim_X.` only — no inline enum unless this wiki IS Dim_X (see Section C)
 
 ---
 
@@ -118,31 +118,34 @@ After writing, verify EVERY assertion before saving:
 | 8 | Footer has tier breakdown counts | Check for `*Tiers:` line | HARD |
 | 9 | Property table has Production Source, Refresh, Distribution, UC Target | Check for these rows | HARD |
 | 10 | Summary line has row count and date range (not vague) | Check `>` line for numbers/dates | SOFT |
-| 11 | Dictionary columns with <=15 values have inline values | See Section C rule | SOFT |
+| 11 | FK columns use `FK to Dim_X.` — no inline `N=Label` enum unless this wiki IS Dim_X.md | See Section C rule | HARD |
 | 12 | `.review-needed.md` does NOT contain `## 4. Elements` | If it does, content is in the WRONG file | HARD |
 | 13 | `.lineage.md` exists and was written BEFORE `.md` | Check file existence | HARD |
 
 **If ANY HARD assertion fails: delete the file and regenerate. Do not patch.**
 
-## C. Dictionary Inline Values Rule
+## C. Dictionary FK Reference Rule (rewritten 2026-05-14, dict-ref audit)
+
+> **The old `<=15 inline / >15 join target` rule is RETIRED.** It produced 327 enum dumps across 180 wikis — stale labels, hallucinated IDs, drift across downstream wikis. The new policy is binary: enums live in exactly ONE place (`Dim_X.md` itself), everywhere else uses `FK to Dim_X.`. See Rule 22 in `11-generate-documentation.mdc` for the full statement.
 
 When a column references a dictionary/lookup table:
 
-| Dictionary Size | Rule | Example |
-|----------------|------|---------|
-| **<=15 distinct values** | Inline key=value pairs in the description | `1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType)` |
-| **>15 distinct values** | Name the join target only, describe what it represents | `FK to Dim_Country. Resolves to country name.` |
+| Where the column lives | Rule | Example |
+|---|---|---|
+| **Inside `Dim_X.md` itself**, on the natural-key/label column | Inline the full enum here — this IS the canonical home | `1=Regular, 2=CopyMe, 3=Social Index, 4=Fund. Determines mirror behavior. (Tier 1 — Dictionary.MirrorType)` |
+| **Anywhere else** (Facts, BI_DB aggregates, other Dims, Views, Functions) | `FK to Dim_X.` — no inline values, no labels, regardless of cardinality | `Current deposit status. FK to Dim_PaymentStatus. (Tier 1 — Billing.Deposit)` |
 
-**Threshold rationale**: 15 values fit in ~200 characters. Beyond that, inline enumeration hurts readability and adds noise.
+**Threshold for "verbose"** (matches `tools/dict_ref_audit/scan_verbose_enums.py THRESHOLD = 3`): 3 or more `N=Label` patterns in a single Description cell. Under-threshold cells stay allowed for booleans (`0=No, 1=Yes`), sentinels (`0=NULL placeholder`, `-1=DWH sentinel`), and 1-2 dominant values cited as live-data context.
 
-**Naming convention awareness**: When the production Dictionary name differs from the DWH Dim name, document BOTH:
-- Production: `Dictionary.MirrorType` (for lineage traceability)
-- DWH: `Dim_MirrorType` (for query use)
+**Naming convention awareness**: When the production Dictionary name differs from the DWH Dim name, document BOTH in the FK reference:
 
-Example from Dim_Mirror:
 ```
-| 10 | MirrorTypeID | int | YES | 1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType). Determines mirror behavior. (Tier 1 — Trade.Mirror) |
+| 10 | MirrorTypeID | int | YES | FK to Dim_MirrorType (production: Dictionary.MirrorType). Determines mirror behavior. (Tier 1 — Trade.Mirror) |
 ```
+
+**Self-reference exemption — the only inline-enum case**: a `Dim_X.md` is the canonical home for its own enum. The `GATE-wiki-generation.mdc` "Dim Self-Reference Check" gates this — answer YES (this wiki IS Dim_X) and the verbose enum is required on the natural-key/label column. Phase 16's Verbose-Enum Scan exemption (Scope = `dim_self` in the `.review-needed.md` Reviewer Corrections table) lets the gate pass for legitimate dim-self rows.
+
+**Enforcement**: `tools/dict_ref_audit/scan_verbose_enums.py --path <wiki.md>` runs as a HARD GATE in Phase 16. A non-empty result without `dim_self` whitelist coverage forces a Phase 11 regeneration.
 
 ## C2. Tier 2 Source Convention — Upstream TABLE, Not the SP
 
