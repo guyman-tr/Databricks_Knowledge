@@ -1,0 +1,180 @@
+---
+description: "Phase 3 — Upstream Wiki Bridge. For every upstream UC object surfaced by Phase 2's source code, locate its already-existing wiki and cache it locally. This is what gives passthrough columns their Tier 1 descriptions and what enforces cross-object consistency (passthrough HistoryID in v_fact_customeraction_enriched MUST have the same description as HistoryID in Fact_CustomerAction.md)."
+globs:
+alwaysApply: false
+---
+
+# Phase 3 — Upstream Wiki Bridge
+
+## CONTRACT — Phase 3
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_discovery/source_code/*.{sql,py}` (Phase 2). The list of upstream UC objects can be extracted by scanning `FROM` / `JOIN` clauses in the cached SQL/notebook bodies, OR taken from `knowledge/skills/_kpi_views_index.json[].refs` if available. |
+| **Outputs required** | `_discovery/upstream_wikis/{full_name}.md` (one copy per upstream UC object, with `_index.json` summarising routing decisions). |
+| **MUST NOT** | Skip the Synapse-mirror wiki when the upstream is a `gold_sql_dp_prod_we_*` table. That wiki contains the Tier 1 column descriptions for the entire downstream chain — missing it means the chain reverts to Tier 2/4 inference. |
+| **Failure mode** | **HARD when the upstream is a documented Synapse mirror** — that wiki always exists and skipping it is negligent. SOFT only when the upstream is genuinely new / undocumented. |
+
+---
+
+## Purpose
+
+The wiki we are about to write inherits Tier 1 column descriptions verbatim from upstream wikis (passthrough columns) and from upstream join-source wikis (join-enriched columns). This phase is the lookup step that puts those wikis within reach of Phase 4 / Phase 5.
+
+## Routing rules — search in this exact order
+
+For each upstream UC object name (e.g. `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`), try these in sequence and stop at the first hit:
+
+### Rule 1 — Synapse gold mirror
+
+Pattern: `main.{schema}.gold_sql_dp_prod_we_{db}_{synapse_schema}_{rest}` (or older `main.dwh.gold_sql_dp_prod_we_dwh_dbo_*` shorthand).
+
+- Strip the `gold_sql_dp_prod_we_` prefix.
+- Split the next segment as `{db}_{synapse_schema}` (where `db` is `sql_dp_prod_we` itself or one of the known DB ids, and `synapse_schema` is `dwh_dbo` / `bi_db_dbo` / `dealing_dbo` / etc.).
+- Derive the Synapse wiki path: `knowledge/synapse/Wiki/{Synapse_Schema_CamelCase}/Tables/{Table}.md`. Also try `Views/`, `Functions/`.
+- The known Synapse schema casing:
+  - `dwh_dbo` → `DWH_dbo`
+  - `bi_db_dbo` → `BI_DB_dbo`
+  - `dealing_dbo` → `Dealing_dbo`
+  - `emoney_dbo` → `eMoney_dbo`
+  - `exw_dbo` → `EXW_dbo`
+  - `exw_wallet` → `EXW_Wallet`
+  - `emoney_tribe` → `eMoney_Tribe`
+- The Table portion: original `pascal_case` if you can find the matching Synapse object, otherwise convert `snake_case` back to `PascalCase` using `knowledge/synapse/Wiki/{Schema}/Tables/` directory listing.
+
+Use `knowledge/skills/_uc_object_map.md` as the authoritative mapping (it already lists every Synapse↔UC pair the repo knows about).
+
+### Rule 2 — Another UC_generated wiki (this pack)
+
+Pattern: `main.{schema}.{name}` where `{schema}` is one of the in-scope schemas of this pack (`etoro_kpi_prep`, `etoro_kpi`, `de_output`, `bi_output`, `dealing_output`, `etoro_kpi_prep_stg`, ...).
+
+- Path: `knowledge/UC_generated/{schema}/{Tables|Views}/{name}.md`.
+- Determine `Tables|Views` by checking the upstream's `table_type` in its own schema's `_schema_card.md` (the framework documents schemas in topological order, so the upstream should already exist).
+- If the upstream is in-scope but not yet documented, mark `BLOCKED_ON_UPSTREAM` and put the current object aside. The orchestrator will re-attempt after the upstream is written.
+
+### Rule 3 — Acquired-domain UC table (uc-domain-doc pack)
+
+Pattern: `main.{spaceship|moneyfarm|...}.{name}` — schemas owned by `uc-domain-doc`.
+
+- Path: `knowledge/uc_domains/{domain}/schemas/{schema}/{Tables|Views}/{name}.md`.
+- Use the acquired-company-specific Tier-1 conventions documented in `.cursor/rules/uc-domain-doc/05-generate-doc.mdc` when inheriting descriptions.
+
+### Rule 4 — Bronze pure-ingest
+
+Pattern: `main.{schema}.bronze_{db}_{prod_schema}_{prod_table}` (e.g. `main.trading.bronze_etoro_history_positionchangelog`).
+
+This is a Generic-Pipeline ingest of a production table; the upstream wiki is in the **production** database wiki (DB_Schema repo). Same routing as `dwh-semantic-doc/13-production-lineage-mapping.mdc` Step 1:
+
+1. Look up the production source via `knowledge/synapse/Wiki/_generic_pipeline_mapping.json` (filter by `uc_table` field == this UC name).
+2. The mapping returns `database_name` / `schema_name` / `table_name` of the production table.
+3. Route via `knowledge/synapse/Wiki/_upstream_wiki_routing.json` to get `{repo_path}/{wiki_path}` for that database.
+4. Read `{repo_path}/{wiki_path}/{Schema}/Tables/{Schema}.{Table}.md`.
+
+### Rule 5 — Already-documented UC-native (other catalogs / general schema)
+
+Pattern: anything not matching rules 1–4 but matching a row in `knowledge/skills/_uc_object_map.md` with a `Source` of `skill_already_uc` and a non-empty wiki link.
+
+- Use the wiki path from the map.
+
+### Rule 6 — No upstream wiki
+
+Pattern: anything that doesn't match rules 1–5.
+
+- Cache an empty placeholder at `_discovery/upstream_wikis/_NO_WIKI__{full_name}.md` (just a header noting "no upstream wiki found").
+- Phase 4 / Phase 5 treat columns sourced from this upstream as Tier 2 (from source code) or Tier 4 (sample-inferred).
+
+## Tooling
+
+The routing decisions are pure file lookups. No Databricks API needed — everything happens against:
+
+- `knowledge/synapse/Wiki/_generic_pipeline_mapping.json` (~1,711 rows)
+- `knowledge/synapse/Wiki/_upstream_wiki_routing.json` (DB → repo mapping)
+- `knowledge/skills/_uc_object_map.md` (Synapse ↔ UC name map)
+- `knowledge/UC_generated/` (this pack's own wikis)
+- `knowledge/uc_domains/` (other UC pack's wikis)
+
+There is no dedicated tool for this phase — the agent runs the lookup loop inline OR uses a thin helper script for batch caching. If a script is added, it lives at `tools/uc_pipelines/cache_upstream_wikis.py`.
+
+## Output schema
+
+```
+knowledge/UC_generated/{schema}/_discovery/upstream_wikis/
+  _index.json          # routing decisions
+  main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md   # copy of Synapse wiki
+  main.dwh.dim_position.md                                       # routed via rule 1 or 5
+  _NO_WIKI__main.etoro_kpi_prep.passive_actions_enriched.md      # placeholder if rule 6
+```
+
+`_index.json` shape:
+
+```jsonc
+{
+  "schema": "etoro_kpi_prep",
+  "generated_at": "2026-05-17T15:15:00Z",
+  "upstreams": [
+    {
+      "full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "rule_matched": 1,
+      "rule_name": "synapse_gold_mirror",
+      "wiki_path": "knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md",
+      "wiki_exists": true,
+      "cached_at": "_discovery/upstream_wikis/main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md"
+    },
+    {
+      "full_name": "main.etoro_kpi_prep.v_fact_customeraction_enriched",
+      "rule_matched": 2,
+      "rule_name": "uc_generated_sibling",
+      "wiki_path": "knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.md",
+      "wiki_exists": false,
+      "blocked_on_upstream": true
+    },
+    {
+      "full_name": "main.trading.bronze_etoro_history_positionchangelog",
+      "rule_matched": 4,
+      "rule_name": "bronze_pure_ingest",
+      "generic_pipeline_row": { "database_name": "etoro", "schema_name": "History", "table_name": "PositionChangeLog" },
+      "wiki_path": "DB_Schema/etoro/Wiki/History/Tables/History.PositionChangeLog.md",
+      "wiki_exists": false,
+      "wiki_search_attempted": true
+    }
+  ],
+  "stats": {
+    "total_upstreams": 5,
+    "rule1_synapse_mirror": 3,
+    "rule2_uc_generated": 1,
+    "rule3_uc_domain": 0,
+    "rule4_bronze_prod": 1,
+    "rule5_uc_native_map": 0,
+    "rule6_no_wiki": 0,
+    "blocked_on_upstream": 1
+  }
+}
+```
+
+## Tier transitivity (the deep cut)
+
+When the cached upstream wiki column description already carries a tier suffix like
+`(Tier 1 — Trade.PositionTbl)`, Phase 5 inherits that tag **verbatim** for the passthrough column in the downstream object — it does NOT change to `(Tier 1 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)`. The Synapse mirror is a RELAY, not the origin.
+
+Same rule applies down the UC chain:
+
+- `Fact_CustomerAction.HistoryID` says `(Tier 1 — History.Credit)` (origin).
+- `gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.HistoryID` — relay, inherits `(Tier 1 — History.Credit)`.
+- `v_fact_customeraction_enriched.HistoryID` — relay, inherits `(Tier 1 — History.Credit)`.
+- `v_fact_customeraction_w_metrics.HistoryID` — relay, inherits `(Tier 1 — History.Credit)`.
+- `de_output_etoro_kpi_fact_customeraction_w_metrics.history_id` (renamed) — relay with rename, inherits `(Tier 1 — History.Credit)` plus a `renamed from HistoryID` note.
+
+See `GATE-lineage-contract.mdc` for the full transitivity rules.
+
+## Gate — Phase 3 → Phase 4
+
+Phase 4 requires every upstream UC object the source code references to have an entry in `_discovery/upstream_wikis/_index.json` — either a cached wiki or a `_NO_WIKI__` placeholder. If any upstream is missing entirely from the index, the routing pass was incomplete.
+
+Phase 4 also requires that no upstream is in `blocked_on_upstream: true` state. If one is, document the upstream first (return to Phase 0 for that upstream's schema if not yet schema-carded; otherwise jump straight to Phase 1 for the missing upstream).
+
+## Anti-patterns
+
+- ❌ Treating the gold-mirror table as an origin. It's a relay — always inherit through to the Synapse base table's origin tag.
+- ❌ Skipping the bronze-pure-ingest route ("we don't have the DB_Schema repo locally") — even if you can't read the production wiki, recording the routing decision so the wiki gap is visible is the value-add.
+- ❌ Copying the upstream wiki's `_index.json` instead of the wiki body. The body is what Phase 5 inherits FROM.
+- ❌ Re-querying `system.access.column_lineage` here. That's Phase 2's job; this phase is offline-only.

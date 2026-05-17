@@ -1,0 +1,127 @@
+---
+description: "Phase 1 — UC Discovery for the UC-Pipeline pack. For each in-scope object from the schema card, pull columns + DESCRIBE EXTENDED + sample rows + view_definition (for views). Single source of truth for downstream phases. Analog of dwh-semantic-doc Phase 1+2+3 collapsed into one UC-only pass, mirroring uc-domain-doc Phase 1 but scoped per-schema instead of per-domain."
+globs:
+alwaysApply: false
+---
+
+# Phase 1 — UC Discovery
+
+## CONTRACT — Phase 1
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `knowledge/UC_generated/{schema}/_schema_card.md` (specifically the `objects:` list where `in_scope: true`). |
+| **Outputs required** | `knowledge/UC_generated/{schema}/_discovery/uc_inventory.json`. |
+| **MUST NOT** | Pull objects flagged `in_scope: false`. Pull Synapse SSDT or SP code. Sample > 5 rows per object during this pass. |
+| **Failure mode** | **HARD** — Phases 2/3/4/5 all key off this inventory; if it is missing or stale, downstream phases reason about objects that don't exist. |
+
+---
+
+## Purpose
+
+Replace the DWH framework's P1 (DDL read) + P2 (sampling) + P3 (distribution) + P7 (view-deps) with **one** Databricks-side discovery pass. The UC `information_schema` already has every column, type, comment, table format, location; sampling 5 rows per object gives realistic value distributions; `DESCRIBE EXTENDED` adds owner / created-at / partitioning — far cheaper than reasoning about SSDT files that don't exist for UC-native objects.
+
+## Tool
+
+`tools/uc_pipelines/discover_schema.py --phase 1` (same tool as Phase 0; the `--phase 1` flag emits the full inventory rather than only the card).
+
+```bash
+python tools/uc_pipelines/discover_schema.py \
+  --schema etoro_kpi_prep \
+  --catalog main \
+  --sample-rows 5 \
+  --phase 1 \
+  --out knowledge/UC_generated/etoro_kpi_prep/_discovery/uc_inventory.json
+```
+
+The tool:
+
+1. Reads `_schema_card.md` frontmatter for the in-scope object list.
+2. Bulk-queries `system.information_schema.columns` for every in-scope object (one query, filtered by `(schema, object) IN ...`).
+3. For each VIEW: also pulls `information_schema.views.view_definition` inline (so Phase 2 doesn't re-query).
+4. For each object: `DESCRIBE EXTENDED` for format / location / owner / created-at.
+5. For each object: `SELECT * LIMIT 5` for sample rows (typed as JSON; PII masked).
+6. Writes a single JSON file.
+
+## Output schema (`uc_inventory.json`)
+
+```jsonc
+{
+  "schema": "etoro_kpi_prep",
+  "catalog": "main",
+  "framework": "uc-pipeline-doc",
+  "generated_at": "2026-05-17T15:00:00Z",
+  "objects": [
+    {
+      "name": "v_fact_customeraction_enriched",
+      "full_name": "main.etoro_kpi_prep.v_fact_customeraction_enriched",
+      "table_type": "VIEW",
+      "format": null,
+      "location": null,
+      "owner": "...",
+      "created_at": "...",
+      "uc_comment": null,
+      "row_count": null,
+      "column_count": 18,
+      "view_definition": "SELECT a.HistoryID, a.CID, ... FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction a JOIN ...",
+      "columns": [
+        {
+          "name": "HistoryID",
+          "ordinal": 1,
+          "type": "BIGINT",
+          "nullable": false,
+          "comment": null,
+          "is_partition": false,
+          "samples": ["123456789", "..."]
+        }
+      ],
+      "sample_rows": [ { "HistoryID": 123456789, ... } ]
+    }
+  ],
+  "stats": {
+    "objects_total": N,
+    "views": Nv,
+    "tables": Nt,
+    "columns_total": Nc,
+    "columns_with_uc_comment": 0,
+    "objects_with_uc_comment": 0,
+    "wall_seconds": 12.4
+  }
+}
+```
+
+`view_definition` is captured inline only for VIEW / MATERIALIZED_VIEW objects. For MANAGED / EXTERNAL tables, Phase 2 fetches the notebook body via the Workspace API and snapshots it separately under `_discovery/source_code/`.
+
+## Sampling rules
+
+- For VIEWs: skip row count (would force the planner to materialise — expensive). Always sample with `LIMIT 5`; if it exceeds 30 s, abort sampling for that view, set `sample_rows: null`, and add `sampling_skipped_reason` so Phase 4 / 5 know to rely on the view DDL / upstream wikis instead.
+- For TABLEs: row count via `SELECT COUNT(*)` is acceptable on managed tables but skipped if the table has >1 B rows (use `SHOW TBLPROPERTIES … LIKE 'spark.sql.statistics.numRows'` as a fallback).
+- For columns whose name regex-matches `(?i)email|phone|address|ssn|iban|bic|swift|card|cvv|password|passport`: emit samples as `["<masked>"]`.
+- Skip `DESCRIBE HISTORY` — CTAS-wipe diagnosis is a Phase 6 deploy concern, not discovery.
+
+## What this phase does NOT do
+
+- Does not read DDL files — UC has the column list, that's enough.
+- Does not run `EXPLAIN` / cost estimation — too noisy for first pass.
+- Does not chase upstream provenance — that's Phase 3 (upstream wiki bridge).
+- Does not attempt FK / join discovery — that's done lazily in Phase 4 by re-reading the existing `knowledge/skills/_join_graph.json` plus the view DDL captured here.
+- Does not fetch the writing notebook for tables — that's Phase 2.
+
+## Gate — Phase 1 → Phase 2
+
+Phase 2 needs:
+- `view_definition` populated for every VIEW object (sanity-check: any VIEW with a NULL `view_definition` is a misconfigured object — flag and move on).
+- The full object list (for tables, Phase 2 queries `system.access.table_lineage`).
+
+If `uc_inventory.json` has zero objects, Phase 0 was wrong. Stop and re-run Phase 0; do not paper over by hand-editing the inventory.
+
+## Re-running
+
+Re-running the script is idempotent — it overwrites `uc_inventory.json`. Schedule a re-run weekly while a schema is being actively documented; once stable, run quarterly.
+
+## Anti-patterns
+
+- ❌ Reading individual `DESCRIBE EXTENDED` results inline inside the agent loop. Always read from `uc_inventory.json` — that's why we wrote it.
+- ❌ Sampling more than 5 rows per object during discovery. Phase 5 (doc generation) can sample more on a per-object basis when needed.
+- ❌ Including objects flagged `in_scope: false` in the schema card. Phase 0 is the authoritative scope filter.
+- ❌ Treating an empty `view_definition` as "view exists but is trivial". An empty `view_definition` means the catalog metadata is broken — open a ticket, don't document.

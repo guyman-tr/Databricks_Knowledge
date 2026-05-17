@@ -1,0 +1,134 @@
+---
+description: "GATE — Lineage-First Contract for the UC-Pipeline pack. Same hard-gate as dwh-semantic-doc/GATE-lineage-contract, restated for pure-UC objects: .lineage.md MUST exist before .md is generated. Phase 5 tier assignment is mechanical, driven by the lineage file's transform classification and the cached upstream wiki tier tags."
+globs:
+alwaysApply: true
+---
+
+# ⛔ UC-Pipeline Lineage-First Contract
+
+> The lineage file traces every UC column to its source. Phase 5 (Generate Doc)
+> MUST read it BEFORE generating the wiki — otherwise tier assignment becomes guesswork.
+
+## Execution order
+
+```
+P0 SchemaCard → P1 Discovery → P2 SourceCode → P3 UpstreamBridge → P4 Lineage → P5 GenerateDoc → P6 Deploy
+                                                                    ▲             │
+                                                                    └─── reads ───┘
+```
+
+Phase 4 (`.lineage.md`) is a STRICT prerequisite of Phase 5 (`.md`). Same contract as the DWH pack.
+
+## The Contract
+
+### Phase 2 → Phase 4: Source Code Map
+
+Phase 2 produces:
+- `_discovery/source_code/{Object}.{sql,py}` — the cached view DDL or notebook body.
+- `_discovery/column_lineage/{Object}.json` — UC's auto-captured runtime column lineage.
+
+Phase 4 consumes both to build the `.lineage.md` column lineage table. The two are cross-checked; mismatches are surfaced in the lineage file's footer.
+
+### Phase 3 → Phase 4: Upstream Wiki Routes
+
+Phase 3 produces `_discovery/upstream_wikis/_index.json` mapping each upstream UC object name to a wiki path. Phase 4 uses this to populate the `Upstream Tier (from upstream wiki)` column in the lineage table.
+
+### Phase 4 → Phase 5: The Lineage File Is Input
+
+Phase 5 MUST read `{Object}.lineage.md` BEFORE generating the wiki. From the lineage file's column mapping:
+
+```
+| UC Column | Source UC Object | Source Column | Transform | Upstream Tier | Notes |
+```
+
+Phase 5 derives tier assignments **MECHANICALLY**:
+
+| Transform in lineage | Upstream wiki has the source column? | → Tier in `.md` |
+|----------------------|--------------------------------------|-----------------|
+| `passthrough` | YES | **Inherit origin tier** — verbatim description + origin tag |
+| `rename` | YES | **Inherit origin tier** — verbatim + `(renamed from {orig})` |
+| `cast` | YES | **Inherit origin tier** — verbatim + `(cast to {type})` |
+| `passthrough`/`rename`/`cast` | NO | Tier 2 — from source code; origin = this object FQN |
+| `case`/`coalesce`/`arithmetic`/`string_op` | any | Tier 2 — origin = the upstream TABLE the expression reads from |
+| `aggregate`/`window` | any | Tier 2 — origin = upstream table; description names the grain |
+| `literal` | any | Tier 2 — origin = this object FQN (no upstream input) |
+| `udf`/`function_computed` | any | Tier 2 — origin = upstream table |
+| `join_enriched` | YES (join source wiki + source col) | **Inherit origin tier from join source** |
+| `join_enriched` | NO | Tier 2 — origin = join source's FQN |
+| `unknown` | any | Tier 4 if sample evidence exists, else UNVERIFIED → sidecar |
+
+If you find yourself "deciding" a tier, you are not consulting the lineage file. Stop and re-read it.
+
+### Tier Transitivity Rule
+
+**Tier tags trace to the ORIGIN, not the relay.** When an upstream wiki column already carries a tier tag (e.g. `(Tier 1 — Trade.PositionTbl)`), that tag is **inherited through every downstream layer** that passes the column without transformation — including this UC pipeline pack's layers.
+
+Example chain (production → Synapse → UC gold mirror → UC pipeline → UC output table):
+
+| Layer | Object | HistoryID column tier tag |
+|-------|--------|---------------------------|
+| Origin | `etoro.History.Credit` | `(Tier 1 — History.Credit)` |
+| Synapse | `DWH_dbo.Fact_CustomerAction` | `(Tier 1 — History.Credit)` ← relay |
+| UC gold mirror | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` | `(Tier 1 — History.Credit)` ← relay |
+| UC pipeline view | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `(Tier 1 — History.Credit)` ← relay |
+| UC pipeline view | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` | `(Tier 1 — History.Credit)` ← relay |
+| UC pipeline table | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` | `(Tier 1 — History.Credit)` ← relay (rename + cast adds notes, NOT a new tag) |
+
+The intermediate tables are **relays** — not the source of truth. They never become origins for passthrough columns.
+
+**How to extract the origin tier:** Read the upstream wiki column description. Parse the parenthetical tier tag at the end: `(Tier N — {origin})`. That `{origin}` is the true source. If the upstream column has NO tier tag (shouldn't happen but handle gracefully), treat the upstream object itself as the origin.
+
+If the upstream column is itself Tier 2 (e.g. ETL-computed in `Fact_CustomerAction`), the downstream passthrough inherits Tier 2 with the same origin. Tier doesn't magically improve by passing through another table.
+
+### Transform Note Pattern
+
+**No transformation → keep the origin tier tag as-is. No annotation needed.**
+```
+{upstream description} (Tier N — {origin})
+```
+
+**With transformation → keep origin description + append the delta:**
+```
+{upstream description}. {This object} transform: {what changed}. (Tier N — {origin}, {transform-type})
+```
+
+Examples:
+- Passthrough: `"Source-system history id from History.Credit (non-unique — never use as PK). (Tier 1 — History.Credit)"`
+- Renamed: `"Source-system history id from History.Credit (non-unique — never use as PK). Renamed from HistoryID. (Tier 1 — History.Credit, renamed)"`
+- Cast: `"Source-system history id from History.Credit (non-unique — never use as PK). Cast to STRING for downstream JSON serialization. (Tier 1 — History.Credit, cast to STRING)"`
+- Computed (CASE): `"Flag derived from ActionTypeID — 'copy' for ActionTypeID IN (2,5), 'manual' otherwise (CASE in view DDL L42). (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)"`
+- Aggregated: `"Sum of total_fees_aud over (date, product, user_id). Source: nova_transactions / voyager_account_fees / super_transactions / nova_fees / voyager_management_fees. (Tier 2 — spaceship.bronze_spaceship_*)"`
+
+The origin is the foundation. Intermediate relays are invisible unless they transform.
+
+### Phase 5 Gate: Lineage File Must Exist
+
+**Before Phase 5 writes the wiki file:**
+
+```
+CHECK: Does {Object}.lineage.md exist under knowledge/UC_generated/{schema}/{Tables|Views}/ ?
+  YES → Read it. Use the column lineage table for tier assignment.
+  NO  → STOP. Run Phase 4 first.
+
+CHECK: Element count in .lineage.md == column_count from uc_inventory.json ?
+  YES → proceed.
+  NO  → STOP. Phase 4 missed columns. Re-run Phase 4 with --strict-column-coverage.
+
+CHECK: Any rows in .lineage.md cross-check section with severity=ERROR ?
+  NO  → proceed.
+  YES → STOP. The parser failed for at least one column; fix Phase 4 (or the source code snapshot) before generating.
+```
+
+## What This Means For The Agent
+
+1. **Don't guess where columns come from.** Read the cached view DDL / notebook body (Phase 2). Follow the column assignments. The source code tells you exactly which upstream UC table each column comes from.
+
+2. **Don't stop at the primary FROM table.** Views frequently JOIN to multiple sources. Each join source is a separate upstream with its own wiki. Phase 3's `_index.json` already enumerates them.
+
+3. **Produce the lineage file BEFORE the wiki doc.** Write `.lineage.md` first. Then read it back. Then write the wiki doc using the lineage data.
+
+4. **Tier assignment is deterministic.** Given the lineage source + upstream wiki availability, the tier is a lookup — not a judgment call.
+
+5. **Tier tags are transitive.** When reading an upstream wiki column description, extract the existing `(Tier N — {origin})` tag. That origin passes through ALL downstream relay layers unchanged. Only actual transformations earn a new annotation — the origin never changes.
+
+6. **The UC gold mirror is a relay, not an origin.** Passthrough columns from `main.dwh.gold_sql_dp_prod_we_*` inherit the Synapse base table's origin (`Trade.PositionTbl`, `History.Credit`, `Billing.Login`, etc.), not the mirror's UC FQN.

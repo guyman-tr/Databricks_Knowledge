@@ -1,0 +1,217 @@
+---
+description: "Golden Reference — output shape and quality bar for the UC-Pipeline pack's wiki .md file. 6 sections (not 8 like dwh-semantic-doc — pure-UC objects don't need Synapse-distribution / Synapse-index sections). Read once per session before Phase 5 generates docs."
+globs:
+alwaysApply: false
+---
+
+# Golden Reference — UC-Pipeline Wiki Output Shape
+
+> **Read this file ONCE before Phase 5 generates documentation.** It defines the shape,
+> structure, and quality bar. Your output must match this skeleton. If it doesn't, fix it
+> before writing to disk.
+
+## A. The Skeleton
+
+```markdown
+---
+object: main.{schema}.{name}                       ← FQN
+schema: {schema}
+framework: uc-pipeline-doc
+table_type: VIEW | MANAGED | EXTERNAL | MATERIALIZED_VIEW
+format: DELTA | null
+column_count: N
+row_count: N | null
+generated_at: <ISO8601>
+upstreams:
+  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+  - main.dwh.dim_position
+writer:
+  kind: view_definition | NOTEBOOK | JOB | PIPELINE | UC_FUNCTION
+  path: "/Workspace/Repos/.../foo.py"                # populated only for non-view
+  source_code_snapshot: "_discovery/source_code/v_fact_customeraction_enriched.sql"
+tier_breakdown:
+  tier1_columns: N
+  tier2_columns: N
+  tier3_columns: N
+  tier4_columns: N
+  unverified_columns: N
+---
+
+# {bare object name}                                 ← e.g. v_fact_customeraction_enriched
+
+> {1-2 sentence summary: row count (or "view"), what this object adds vs upstream, primary upstream, writer pattern}.
+                                                     ← The summary is NOT filler — it must answer "what does this object do that upstream doesn't"
+
+| Property | Value |                              ← Property table: 8+ rows minimum
+|----------|-------|
+| **UC Object** | `main.{schema}.{name}` |
+| **Type** | VIEW | MANAGED | … |
+| **Format** | DELTA | n/a |
+| **Owner** | (from UC DESCRIBE EXTENDED) |
+| **Row count** | N rows | n/a |
+| **Writer** | `view_definition` | `notebook:/Workspace/Repos/.../foo.py` |
+| **Primary upstream** | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` |
+| **Downstream consumers** | `main.etoro_kpi_prep.v_fact_customeraction_w_metrics` (from `_kpi_views_index.json`) |
+| **Generated** | YYYY-MM-DD |
+
+---
+
+## 1. What it is                                     ← WHAT this object adds vs upstream, WHY it exists
+                                                     ← Must say: how many rows / cardinality, what transforms applied, what upstream it derives from
+                                                     ← For pure passthrough views: state "Passthrough of {upstream} with no row transformation; adds {N} JOIN-enriched columns and {M} computed columns."
+
+---
+
+## 2. Transform Logic                                ← The view DDL / notebook code, distilled. Only when transforms are non-trivial.
+                                                     ← For pure-passthrough VIEWs (no CASE / aggregates / windows): collapse this entire section to a single sentence: "Pure passthrough of upstream — no transformation logic."
+
+### 2.1 {Transform pattern name}                     ← One subsection per material transform pattern
+**What**: {one sentence}
+**Inputs**: {source columns}
+**Output**: {target columns}
+**Rules**:
+- {bullet per rule with specific values, including value enums where present}
+
+(For materialized tables, this section also names the WRITE strategy: `MERGE`, `INSERT OVERWRITE`, `CTAS`, DLT `@dlt.table`, etc. and the rough refresh cadence inferred from `system.access.table_lineage` event_count.)
+
+---
+
+## 3. Elements                                       ← THE CORE — every column documented
+
+| # | Element | Type | Nullable | Description |   ← 5-column table, every column, NO exceptions
+                                                     ← Description MUST end with (Tier N — origin)
+                                                     ← Dictionary values inline if <=15 distinct (see §C)
+                                                     ← Passthrough columns INHERIT the upstream wiki's full description verbatim — including its tier tag (the upstream's origin, not this object's name)
+
+---
+
+## 4. Lineage
+
+### 4.1 Upstream UC Objects                          ← Table: Upstream | Role | Wiki path
+### 4.2 Pipeline ASCII Diagram                       ← Shows the chain from gold mirror (or bronze) through this object to known downstream
+### 4.3 Cross-check vs system.access.column_lineage  ← Summary line: parsed=N, runtime=N, mismatches=N (DETAILS in .lineage.md)
+
+---
+
+## 5. Common usage / JOINs                           ← How analysts actually query this object
+
+### 5.1 Sample queries                               ← 1–2 real SQL snippets from query_history or skills/_de_existing
+### 5.2 Common JOIN partners                         ← Table: JOIN to | Condition | Purpose
+### 5.3 Gotchas                                      ← Bullet list of traps (passthrough sentinels, schema drift, NULL semantics)
+
+---
+
+## 6. Deploy / UC ALTER provenance
+
+| Column | Description source | Tier | Cited as |
+|--------|--------------------|------|----------|
+| HistoryID | upstream wiki Fact_CustomerAction.md (passthrough) | T1 inherit | (Tier 1 — History.Credit) |
+| enrichment_flag | view DDL line 42 (CASE) | T2 | [uc_view_ddl] |
+| ... | ... | ... | ... |
+
+*Generated: YYYY-MM-DD | Tiers: N T1, N T2, N T3, N T4 | Elements: N/N | Source: {writer.kind}*
+```
+
+## B. Quality Assertions — Machine-Checkable
+
+After writing, verify EVERY assertion before saving:
+
+| # | Assertion | How to Check | Hard/Soft |
+|---|-----------|-------------|-----------|
+| 1 | All 6 `## N.` sections present (1 through 6) | Count `## 1.` through `## 6.` headers | HARD |
+| 2 | Every Element description ends with `(Tier N — source)` | Grep for `\(Tier [1-5] —` in Section 3 | HARD |
+| 3 | Element table has 5 columns: `# \| Element \| Type \| Nullable \| Description` | Check header row | HARD |
+| 4 | Element count matches `column_count` in frontmatter | Compare table-row count vs frontmatter | HARD |
+| 5 | Section 4.2 has pipeline ASCII diagram | Check for code block with `→` or `▼` | HARD |
+| 6 | Section 4.3 cross-check summary line present | Grep for `parsed=` `runtime=` `mismatches=` | HARD |
+| 7 | Footer has tier breakdown counts matching frontmatter | Compare `*Tiers:` line vs frontmatter | HARD |
+| 8 | Property table has at least UC Object, Type, Writer, Primary upstream | Check for these rows | HARD |
+| 9 | `.review-needed.md` does NOT contain `## 3. Elements` | If it does, content is in the WRONG file | HARD |
+| 10 | `.lineage.md` exists and was written BEFORE `.md` | Check file existence + mtime | HARD |
+| 11 | For passthrough columns, the description text MATCHES the upstream wiki's Element description byte-for-byte | Grep upstream wiki for the same column and diff | HARD (assertion 11 enforces tier transitivity) |
+| 12 | Section 2 collapsed to "Pure passthrough" for views where every column is passthrough/rename | Check transform classifications in `.lineage.md` | SOFT |
+
+**If ANY HARD assertion fails: delete the file and regenerate. Do not patch.**
+
+## C. Dictionary Inline Values Rule
+
+Same as `dwh-semantic-doc/GOLDEN-REFERENCE.mdc` §C:
+
+| Dictionary Size | Rule | Example |
+|----------------|------|---------|
+| **<=15 distinct values** | Inline key=value pairs in the description | `1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType)` |
+| **>15 distinct values** | Name the join target only, describe what it represents | `FK to dim_country. Resolves to country name.` |
+
+## D. Tier Suffix Convention — UC Pipeline Specifics
+
+The tier suffix `(Tier N — origin)` lives at the END of every Element description. Use these origin patterns:
+
+| Column situation | RIGHT | WRONG |
+|---|---|---|
+| Passthrough of a DWH gold-mirror column whose origin is `Trade.PositionTbl` | `(Tier 1 — Trade.PositionTbl)` | `(Tier 1 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)` |
+| Passthrough of a column with no upstream wiki (genuinely new column added in this UC object) | `(Tier 2 — main.{schema}.{this_object})` | `(Tier 2 — view DDL)` |
+| CASE/CAST/arithmetic over an upstream column | `(Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction)` | `(Tier 2 — view DDL)` |
+| Multi-source UNION ALL | `(Tier 2 — main.dwh...fact_customeraction / main.etoro_kpi_prep.passive_actions_enriched)` | `(Tier 2 — view DDL)` |
+| Pure literal (`current_date`, `1`, `'PROD'`) | `(Tier 2 — main.{schema}.{this_object})` | `(Tier 2 — view DDL)` |
+| join_enriched column from a join source with a wiki | inherit join source's origin tier tag | `(Tier 1 — JOIN)` |
+
+The origin **always** names a data-producing entity (a table or, in the literal/synthesized case, this object itself). It never names "view DDL" or "notebook" as such — those are evidence types cited inside the description; the tier suffix names the data origin.
+
+## E. Anti-Patterns — What Drift Looks Like
+
+### E1. Missing Tier Suffix
+
+```
+WRONG: | 3 | enrichment_flag | STRING | YES | Flag for copy vs manual actions |
+RIGHT: | 3 | enrichment_flag | STRING | YES | Flag derived from ActionTypeID — 'copy' for {2,5}, 'manual' otherwise (CASE in view DDL L42). (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) |
+```
+
+### E2. Synapse-mirror as origin
+
+```
+WRONG: | 1 | HistoryID | BIGINT | NO | Source-system history id. (Tier 1 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) |
+RIGHT: | 1 | HistoryID | BIGINT | NO | Source-system history id from `History.Credit` (non-unique — never use as PK). (Tier 1 — History.Credit) |
+```
+
+Tier transitivity: the Synapse mirror is a RELAY, not the origin. Always inherit through.
+
+### E3. Wiki content in sidecar
+
+```
+WRONG: Writing the Elements table into {Object}.review-needed.md
+RIGHT: The .md file gets the full 6-section wiki. The .review-needed.md gets ONLY
+       UNVERIFIED items, Tier 4 candidates needing review, parser warnings, and
+       reviewer correction notes. It is a lightweight checklist, NOT a duplicate wiki.
+```
+
+### E4. Bloated Section 2 for passthrough views
+
+```
+WRONG: Filling Section 2 with subsections that just re-describe the upstream's logic.
+RIGHT: For pure-passthrough VIEWs: "Pure passthrough of `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` — no transformation logic. See upstream wiki for source-system rules: knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md." Section 2 = 1 sentence.
+```
+
+The point of this pack is to NOT duplicate upstream content. Inherit, link, and only add value where this object actually adds value.
+
+### E5. Missing pipeline diagram
+
+```
+WRONG: ## 4. Lineage
+       Sourced from upstream UC objects.
+
+RIGHT: ## 4. Lineage
+       ### 4.2 Pipeline ASCII Diagram
+       ```
+       Production: etoro.History.Credit / etoro.Trade.OpenPositionEndOfDay / …
+              ↓ Generic Pipeline (Bronze)
+       Synapse: DWH_dbo.Fact_CustomerAction  ── documented at knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md
+              ↓ Generic Pipeline (Gold export → Delta)
+       main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+              ↓ view_definition (this object)
+       main.etoro_kpi_prep.v_fact_customeraction_enriched  ←── this object
+              ↓ JOIN dim_position, UNION passive_actions_enriched
+       main.etoro_kpi_prep.v_fact_customeraction_w_metrics  (downstream)
+       ```
+```
+
+Concrete chain with object names, not vague prose.
