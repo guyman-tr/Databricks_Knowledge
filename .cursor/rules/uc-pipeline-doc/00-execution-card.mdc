@@ -1,0 +1,74 @@
+---
+description: "Per-Object Execution Card — compact flight checklist for the UC-Pipeline SDD pack. KEEP LOADED at all times during a session. Full phase rules are loaded on-demand. This card is the cognitive anchor while documenting pure-UC objects in target schemas (etoro_kpi_prep, de_output, bi_output, dealing_output, etoro_kpi, ...)."
+globs:
+alwaysApply: false
+---
+
+# UC-Pipeline Per-Object Execution Card
+
+**Load this ONCE at session start. Never unload it. Load full phase rules on-demand per step.**
+
+## What this framework is
+
+This pack documents **eToro-derived UC objects downstream of the gold mirrors** — VIEWs in `etoro_kpi*`, MANAGED tables in `de_output` / `bi_output` / `dealing_output`, etc. — that are written by **notebooks or UC stored procedures**.
+
+It is the third SDD pack alongside:
+
+| Pack | Scope | Anchor |
+|---|---|---|
+| `dwh-semantic-doc/` | Synapse SSDT objects mirrored to UC gold | SSDT `.sql` + Synapse SPs |
+| `uc-domain-doc/` | Acquired-company UC (Spaceship, MoneyFarm) | Confluence + Tableau + Genie |
+| `uc-pipeline-doc/` (this pack) | eToro-derived UC downstream of gold mirrors | UC `view_definition` + writing notebook (located via `system.access.table_lineage`) |
+
+The pack output goes to `knowledge/UC_generated/{schema}/{Tables|Views}/{Object}.{md|lineage.md|review-needed.md|alter.sql}`.
+
+## Pipeline (standard path)
+
+```
+ #   Phase                  Do what                                          Rule file                     Gate    Checkpoint
+ 0a  Schema Card            Enumerate schema, classify writer, set scope     00-schema-card                HARD    PHASE 0 CHECKPOINT: PASS
+ 1   UC Discovery           info_schema columns + DESCRIBE EXTENDED + sample 01-uc-discovery               HARD    PHASE 1 CHECKPOINT: PASS
+ 2   Source Code Fetch      view_definition OR writer notebook body          02-source-code-fetch          HARD    PHASE 2 CHECKPOINT: PASS
+ 3   Upstream Wiki Bridge   Route each upstream UC object to its wiki        03-upstream-wiki-bridge       HARD    PHASE 3 CHECKPOINT: PASS
+ 4   Column Lineage         Write {Object}.lineage.md from DDL / notebook    04-column-lineage             HARD    PHASE 4 CHECKPOINT: PASS  ← feeds tier assignment
+ 5   Generate Doc           Write {Object}.md + .review-needed.md            05-generate-doc               HARD    (shape check)
+ 6   Deploy                 Generate .alter.sql then apply ALTER COMMENT     06-deploy                     SOFT    (deploy index updated)
+```
+
+## Phase Gate Checklist (emit before Phase 5)
+
+```
+PHASE GATE CHECK — {Object} ({schema}):
+  [x] P0 SchemaCard  [x] P1 Discovery  [x] P2 SourceCode  [x] P3 UpstreamBridge  [x] P4 Lineage
+  → Ready for P5
+OUTPUT CHECK — {Object}:
+  [x] _discovery/source_code/{name}.{sql|py}   [x] _discovery/upstream_wikis/* cached
+  [x] {Object}.lineage.md exists   [x] {Object}.md exists   [x] {Object}.review-needed.md exists
+  [-] {Object}.alter.sql — deferred to P6
+```
+
+**Phase 5 MUST refuse to generate if any `[ ]` (unchecked) box remains.**
+
+## Hard Enforcement Reminders
+
+- **⛔ TARGET SCHEMAS**: The user names the in-scope schemas. Typical set: `etoro_kpi_prep`, `etoro_kpi`, `de_output`, `bi_output`, `dealing_output`, `etoro_kpi_prep_stg`. Do NOT auto-include schemas the user did not name. Bronze ingest schemas (`general`, `trading`, `billing`, `emoney`, `mixpanel`, etc.) and the gold-mirror schemas (`dwh`, `bi_db`, etc.) are NEVER in-scope here — they are documented by `dwh-semantic-doc` or upstream of it.
+- **⛔ WRITER FILTER**: Only objects whose writer is a **notebook or UC stored procedure** are in scope. Determine writer via `system.access.table_lineage` (primary) → workspace-path conventions (fallback). If neither resolves, mark the object `out_of_scope` in the schema card with `reason: no Spark-write producer in system.access.table_lineage`.
+- **⛔ DAG ORDER**: Document upstream objects BEFORE downstream. Read `knowledge/skills/_kpi_views_index.json[].refs` and `system.access.table_lineage` to build the topological order. A downstream object whose upstream is in-scope but undocumented is BLOCKED — document the upstream first.
+- **⛔ LINEAGE BEFORE DOCS**: Write `.lineage.md` BEFORE `.md`. Phase 5 READS the lineage file to assign tiers. Same contract as `dwh-semantic-doc/GATE-lineage-contract.mdc`.
+- **⛔ THREE FILES PER OBJECT IN WIKI BUILD, WRITE ORDER IS SACRED**: Phase 5 produces exactly THREE files per object. Write them in THIS order:
+  1. `{Object}.lineage.md` ← **LINEAGE** (column-level source mapping from Phase 4). Written FIRST because the wiki reads it.
+  2. `{Object}.md` ← **THE WIKI** (6-section template). This is the primary artifact.
+  3. `{Object}.review-needed.md` ← **SIDECAR** (UNVERIFIED items, questions, reviewer corrections). NEVER the wiki.
+  **ALTER scripts (`.alter.sql`) are generated SEPARATELY** by Phase 6 (`tools/uc_pipelines/build_deploy_index.py` first, then `tools/deploy_alter_batch.py`). Do NOT generate `.alter.sql` during wiki build.
+- **⛔ TIER SUFFIX ON EVERY DESCRIPTION**: Every column description in Section 3 (Elements) MUST end with `(Tier N — uc_object_or_notebook)`. This suffix is written verbatim to Unity Catalog by `tools/deploy_alter_batch.py`. Same rule, byte-identical format, as `dwh-semantic-doc` rule 19 — so the deploy tooling reuses verbatim.
+- **⛔ TIER TRANSITIVITY**: Passthroughs inherit the **origin tier tag** from the upstream wiki — they do NOT introduce a new `(Tier 1 — {upstream_uc_object})` tag if the upstream column already says `(Tier 1 — Trade.PositionTbl)`. See §"Tier transitivity" in `GATE-lineage-contract.mdc`. UC view aliases are RELAYS, not origins.
+- **⛔ SHARED COLUMN = SAME DESCRIPTION**: When this view passes through `HistoryID` from `Fact_CustomerAction`, the description here MUST equal the description in `knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md`. Do NOT paraphrase. Do NOT rewrite. Do NOT change the tier.
+- **⛔ UTF-8 FILE ENCODING ON ALL WRITES**: Every file write (`.md`, `.review-needed.md`, `.lineage.md`, `.alter.sql`) MUST use explicit `encoding="utf-8"`. Python: `open(path, "w", encoding="utf-8")`.
+- **⛔ GOLDEN REFERENCE**: Read `GOLDEN-REFERENCE.mdc` once per session. Your output must match the simplified 6-section skeleton (UC pipeline objects do not need the full 8-section DWH treatment — no Synapse distribution / index sections).
+
+## Out of scope (this pack)
+
+- Genie / Tableau / Confluence Tier-1 mining — pure-UC eToro objects rarely have analyst-authored Confluence pages. Add later as optional Phase 3b if a target schema needs it.
+- External Lineage API injection — UC auto-captures lineage for pure-UC Spark writes; no injection needed.
+- DLT / Lakeflow pipeline semantics — the writer detection step records pipeline IDs, but the pack does not model pipeline-graph structure.
+- Adversarial evaluator — defer until v1 stabilises with ≥5 wikis per schema.

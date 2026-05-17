@@ -1,0 +1,130 @@
+---
+description: "Phase 6 — Deploy. Generate {Object}.alter.sql from the wiki .md (Section 3 Elements), build the per-schema _deploy-index.md, then apply ALTER COMMENT statements to Unity Catalog via tools/deploy_alter_batch.py. Reuses the dwh-semantic-doc / uc-domain-doc deploy plumbing — same status flow (Pending → Generated → Deployed)."
+globs:
+alwaysApply: false
+---
+
+# Phase 6 — Deploy
+
+## CONTRACT — Phase 6
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | All Phase 5 outputs (`{Object}.md` for each in-scope object), `_schema_card.md`. |
+| **Outputs required** | `{Object}.alter.sql` per in-scope object + `_deploy-index.md` per schema; UC objects with newly-set `COMMENT ON …` after deploy; updated index reflecting deploy state. |
+| **MUST NOT** | Deploy any column whose tier is UNVERIFIED. Those rows are NOT emitted to `.alter.sql` by the generator in the first place — verify before deploy that no UNVERIFIED text leaked in. |
+| **Failure mode** | **SOFT** — failed individual ALTERs are logged in the deploy index with the schema-prefixed `Failed (deploy Batch N)` status; the next batch can resume. |
+
+---
+
+## Procedure
+
+### 6.1 Generate ALTER scripts from wikis
+
+The wiki `.md` is the SOLE input. Same parsing protocol as `dwh-semantic-doc/11w-write-objects.mdc §3`:
+
+- **Header table**: pluck `object` (the UC FQN), `table_type`.
+- **Section 1**: extract for the table-level `COMMENT ON TABLE` (compress to ≤1024 chars).
+- **Section 3 (Elements)**: parse the markdown table; each row → one `ALTER {VIEW|TABLE} {fqn} ALTER COLUMN {col} COMMENT '{description}'`.
+- **Description field MUST end with the tier suffix** `(Tier N — origin)`. The suffix is part of the deployed text — it's the in-UC audit trail.
+
+Tool: `tools/uc_pipelines/build_alter_from_wiki.py` (a thin wrapper around the existing `tools/regen_alter_from_wiki.py`, with `--wiki-root knowledge/UC_generated/{schema}` and the simplified 6-section parser).
+
+```bash
+python tools/uc_pipelines/build_alter_from_wiki.py \
+    --schema etoro_kpi_prep \
+    --object v_fact_customeraction_enriched
+```
+
+Output: `knowledge/UC_generated/{schema}/{Tables|Views}/{Object}.alter.sql`.
+
+### 6.2 Build the per-schema deploy index
+
+```bash
+python tools/uc_pipelines/build_deploy_index.py --schema etoro_kpi_prep
+```
+
+Writes `knowledge/UC_generated/{schema}/_deploy-index.md`. **One deploy index per SCHEMA** (NOT per pack, unlike `uc-domain-doc` which uses one per domain). Each schema is the unit-of-deploy for this pack — schemas don't cross-pollinate.
+
+The index links objects with `(Views/{Object}.md)` / `(Tables/{Object}.md)` relative paths. Run once per discovery cycle.
+
+### 6.3 Deploy a batch
+
+```bash
+python tools/deploy_alter_batch.py \
+    --wiki-root knowledge/UC_generated/etoro_kpi_prep \
+    --deploy-index knowledge/UC_generated/etoro_kpi_prep/_deploy-index.md \
+    --schema etoro_kpi_prep \
+    --batch-size 5 \
+    --deploy-batch N
+```
+
+Required env (one of):
+- `DATABRICKS_TOKEN` — PAT for headless deploy.
+- `DATABRICKS_MCP_PROFILE=DEFAULT` — uses the working profile from `~/.databrickscfg`.
+
+The deploy runner is the SAME tool the other two packs use; it handles UC ALTER syntax, batch tracking, error capture, and footer audit notes.
+
+The runner:
+1. Reads `_deploy-index.md`, picks the next `--batch-size` rows whose status is `Generated`.
+2. For each row, reads `{Tables|Views}/{name}.alter.sql`, parses statements, executes them in a single Databricks SQL session.
+3. Updates the row's status to `Deployed (Batch N) — YYYY-MM-DD` on success or `Failed (deploy Batch N)` with a one-line error otherwise.
+4. Appends a `-- == LAST EXECUTION ==` footer to each `.alter.sql` for audit.
+
+### 6.4 DELTA_METADATA_CHANGED retries
+
+Same pattern as `dwh-semantic-doc`: Delta column comments occasionally race on concurrent reads and fail with `DELTA_METADATA_CHANGED`. The retry behaviour is built into `tools/deploy_alter_batch.py`. No special handling required at this pack's level.
+
+### 6.5 Redeploy a batch (if comments need correction)
+
+```bash
+python tools/deploy_alter_batch.py --redo-batch N \
+    --wiki-root knowledge/UC_generated/etoro_kpi_prep \
+    --deploy-index knowledge/UC_generated/etoro_kpi_prep/_deploy-index.md \
+    --schema etoro_kpi_prep \
+    --deploy-batch N+1
+```
+
+Resets `Deployed (Batch N)` rows back to `Generated`, then deploys them again under a new batch number. Use after editing `.alter.sql` comments based on review feedback.
+
+### 6.6 Validation pass
+
+Before any deploy, run:
+
+```bash
+python tools/uc_pipelines/validate_pipeline_wiki.py --schema etoro_kpi_prep
+```
+
+Checks:
+- Every column in `.md` Section 3 has a tier suffix.
+- Every Tier 1 column has an upstream wiki link in `_discovery/upstream_wikis/_index.json` AND that wiki actually exists on disk.
+- `.lineage.md` exists for every `.md`.
+- Element count in `.md` == element count in `.lineage.md` == column_count in frontmatter == column count in `uc_inventory.json`.
+- For passthrough columns: the description in this `.md` matches the upstream wiki's description for the same column (cross-object consistency).
+- `.alter.sql` has one ALTER COLUMN per Element row (parity), and no UNVERIFIED comments.
+
+Validation MUST pass before `tools/deploy_alter_batch.py` runs. The deploy runner pre-flights `audit_wiki_alter_comment_parity.py` already; this tool adds the pack-specific checks on top.
+
+## When to deploy
+
+The minimum bar before deploying any column is:
+- ≥3 objects fully documented in the schema (per validation pass).
+- Tier 1 / Tier 2 split looks sane (per-schema; typically ≥70% Tier 1 for passthrough-heavy schemas like `etoro_kpi_prep`).
+- A human spot-check on at least one wiki.
+
+For the example chain (etoro_kpi_prep + de_output), wait until both schemas have ≥3 in-scope objects documented, then deploy a 3-row pilot batch from each schema.
+
+## Cross-object enrichment (future)
+
+Once a schema has ≥10 wikis, also generate **downstream comment patches**: where a documented column passes through verbatim to a downstream UC object (per the in-pack DAG), emit a `<Downstream>.downstream.alter.sql` that copies the documented column's comment onto the downstream object — even if the downstream object isn't itself fully documented yet.
+
+This is the same mechanism as the DWH pack's `_downstream_column_comments.sql`. NOT yet implemented for this pack — track in each schema's `_schema_card.md` under `cross_object_enrichment_status: pending`.
+
+## Anti-patterns
+
+- ❌ Building one `_deploy-index.md` per pack. The pack spans many schemas; per-schema indexes keep deploys auditable.
+- ❌ Generating `.alter.sql` for UNVERIFIED columns. The sidecar is the staging area; only verified columns go to UC.
+- ❌ Deploying with `--batch-size 100` on a fresh schema. Use 3–5 first; review the footer + UC-side comment in `system.information_schema.columns`; then scale up.
+- ❌ Running `--redo-batch` without first updating the `.alter.sql` content. Redo without code change is a no-op that costs deploy budget.
+- ❌ Treating `Stub only` rows as deploy candidates. They have no executable statement; the index correctly excludes them.
+- ❌ Deploying before `validate_pipeline_wiki.py` passes. The validation is the last line of defense.

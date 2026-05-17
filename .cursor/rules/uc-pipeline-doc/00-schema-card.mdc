@@ -1,0 +1,136 @@
+---
+description: "Phase 0 — Schema Card. Per-target-schema scope sheet for the UC-Pipeline SDD pack. Enumerates every object in a target schema (etoro_kpi_prep, de_output, etc.), classifies the writer (VIEW vs notebook/SP-backed TABLE), and decides in-scope vs out-of-scope BEFORE any per-object phases run. Equivalent of the per-domain card from uc-domain-doc, but scoped to a single UC schema."
+globs:
+alwaysApply: false
+---
+
+# Phase 0 — Schema Card
+
+## CONTRACT — Phase 0
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | Schema name(s) named by the user (e.g. `etoro_kpi_prep`, `de_output`). Optional: `knowledge/skills/_kpi_views_index.json` for pre-computed DAG hints. |
+| **Outputs required** | `knowledge/UC_generated/{schema}/_schema_card.md` (human-readable scope), with embedded YAML frontmatter (machine-readable object list with writer classification). |
+| **MUST NOT** | Run any per-object discovery yet — Phases 1–5 key on the in-scope list this card produces. Auto-include schemas the user did not name (no fishing). |
+| **Failure mode** | **HARD** — without a schema card, downstream phases reason about objects with no scope filter and produce noise (or document upstream bronze tables that already have a wiki). |
+
+---
+
+## Purpose
+
+The DWH pack takes an SSDT file path as input. The UC-domain pack takes a domain name. This pack takes a **UC schema name**. The schema card is the once-per-schema scope sheet that decides:
+
+1. Which objects in the schema are in-scope (have a notebook/SP/view-DDL writer that produces semantic content) vs out-of-scope (bronze imports, raw copies, audit shadows, etc.).
+2. What the writer is for each in-scope TABLE (notebook path / job ID / pipeline ID), so Phase 2 knows where to fetch source code from.
+3. What the schema's general semantic role is, so the per-object wikis don't repeat boilerplate.
+
+## Tool
+
+`tools/uc_pipelines/discover_schema.py` — enumerate objects, classify writer, build the card skeleton.
+
+```bash
+python tools/uc_pipelines/discover_schema.py \
+  --schema etoro_kpi_prep \
+  --catalog main \
+  --lineage-lookback-days 90 \
+  --out knowledge/UC_generated/etoro_kpi_prep/_schema_card.md
+```
+
+The tool:
+
+1. Lists every table/view in `main.{schema}` from `system.information_schema.tables`.
+2. For VIEWs: `view_definition` always exists → writer is `view_definition`.
+3. For TABLEs: query `system.access.table_lineage` over the lookback window to find the producer entity (notebook / job / pipeline / UC-SP). Records the entity path / ID for each.
+4. Classifies in-scope vs out-of-scope per the matrix below.
+5. Writes the YAML frontmatter + a prose summary.
+
+## Writer classification
+
+| Object type | Writer source | In-scope? |
+|---|---|---|
+| `VIEW` | `information_schema.views.view_definition` | **Yes** (always — view DDL is the source). |
+| `MATERIALIZED_VIEW` | `information_schema.views.view_definition` + DLT pipeline ID from `table_lineage` | **Yes**. |
+| `MANAGED` / `EXTERNAL` table, `entity_type=NOTEBOOK` in `system.access.table_lineage` | Notebook path | **Yes**. |
+| `MANAGED` / `EXTERNAL` table, `entity_type=JOB` | Job ID → resolve to task notebook/JAR via Workspace API | **Yes** if task is a notebook; **out-of-scope** if it's a generic JDBC import. |
+| `MANAGED` / `EXTERNAL` table, `entity_type=PIPELINE` (DLT) | Pipeline ID → resolve source notebook(s) | **Yes**. |
+| `MANAGED` / `EXTERNAL` table, no producer in `table_lineage` over lookback window | — | **Out-of-scope**, reason `no Spark-write producer in system.access.table_lineage`. |
+| Any object whose name starts with `bronze_` and producer is a generic ingest job | Ingest job (Generic Pipeline / Lakeflow connect) | **Out-of-scope**, reason `bronze ingest layer — documented upstream by dwh-semantic-doc or upstream wiki`. |
+| Any object matching `gold_sql_dp_prod_we_*` | Generic Pipeline export | **Out-of-scope**, reason `synapse gold mirror — documented by dwh-semantic-doc`. |
+
+## Schema Card structure
+
+`knowledge/UC_generated/{schema}/_schema_card.md` MUST start with this YAML frontmatter:
+
+```yaml
+---
+schema: etoro_kpi_prep
+catalog: main
+display_name: "etoro_kpi_prep — DDR-prep views feeding etoro_kpi"
+generated_at: <ISO8601>
+framework: uc-pipeline-doc
+lineage_lookback_days: 90
+in_scope_count: N
+out_of_scope_count: M
+objects:
+  - name: v_fact_customeraction_enriched
+    full_name: main.etoro_kpi_prep.v_fact_customeraction_enriched
+    type: VIEW
+    writer:
+      kind: view_definition
+    in_scope: true
+    upstreams_hint:
+      - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction
+      - main.dwh.dim_position
+      - main.etoro_kpi_prep.passive_actions_enriched
+    refs_source: knowledge/skills/_kpi_views_index.json
+  - name: <table_x>
+    full_name: main.etoro_kpi_prep.<table_x>
+    type: MANAGED
+    writer:
+      kind: NOTEBOOK
+      path: "/Workspace/Repos/.../DataPlatform/databricks/de/.../<table_x>_writer.py"
+      lineage_source: system.access.table_lineage
+      lineage_event_count_30d: 12
+    in_scope: true
+  - name: bronze_some_copy
+    full_name: main.etoro_kpi_prep.bronze_some_copy
+    type: MANAGED
+    writer:
+      kind: UNKNOWN
+    in_scope: false
+    reason: "no Spark-write producer in system.access.table_lineage (likely bronze ingest)"
+---
+```
+
+After the frontmatter, free-form prose:
+
+1. **What the schema is** — one paragraph in plain English (what role this schema plays in the eToro UC namespace, what kind of objects it holds, what is downstream of it).
+2. **Mental model** — Mermaid diagram showing how the in-scope objects feed each other (a sub-DAG view rooted at the gold mirrors).
+3. **Out-of-scope summary** — short note listing how many objects were excluded and why.
+4. **Authoring policy** — note that wikis under this folder follow the UC-pipeline Tier 1–4 policy from `05-generate-doc.mdc`, inheriting verbatim from the gold-mirror wiki for passthrough columns.
+
+## Procedure
+
+1. Run the discovery tool with `--schema {schema_name}`.
+2. Inspect the candidate object list. Verify:
+   - VIEWs all have `view_definition` populated.
+   - For TABLEs marked in-scope, the writer path exists (`databricks workspace ls {path}` succeeds).
+   - For TABLEs marked out-of-scope, the reason is one of: `bronze ingest`, `synapse gold mirror`, `no producer in table_lineage`. If the reason is anything else, ask before proceeding.
+3. Write the prose sections.
+4. Commit the card.
+
+## Gate — Phase 0 → Phase 1
+
+Phase 1 (UC discovery) reads `objects[].full_name` where `in_scope: true`. If the card has zero in-scope objects, P0 is wrong — the schema is probably misnamed, or the lookback window is too short. Stop and ask the user. Do NOT proceed with a useless inventory.
+
+## Re-running
+
+Re-running the discovery tool is idempotent — it overwrites the YAML frontmatter and refreshes the lineage classification. The prose sections are preserved if they already exist (the tool only rewrites between `---` markers).
+
+## Anti-patterns
+
+- ❌ Naming bronze schemas (`general`, `trading`, `billing`, `emoney`) as in-scope. They belong to `dwh-semantic-doc` upstream wiki routing, not to this pack.
+- ❌ Skipping the writer classification step ("it's a table, it must have a writer"). If `system.access.table_lineage` is empty for the table, it really is out-of-scope — usually the table was copied via `CTAS` from another UC schema and the producer is a one-off SQL editor query, not a recurring pipeline.
+- ❌ In-scoping `gold_sql_dp_prod_we_*` tables. Those are Synapse mirrors documented by the DWH pack.
+- ❌ Setting `in_scope: true` on a table whose writer kind is `UNKNOWN`. Phase 2 will fail to fetch source code; mark out-of-scope instead.

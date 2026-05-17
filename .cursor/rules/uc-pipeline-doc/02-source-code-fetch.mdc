@@ -1,0 +1,160 @@
+---
+description: "Phase 2 — Source Code Fetch. For each in-scope object, snapshot the authoritative source-of-truth code: view_definition for VIEWs (already inline in uc_inventory.json), writing notebook/SP body for TABLEs (located via system.access.table_lineage, exported via Workspace API). This is the novel piece vs the two existing SDD packs — dwh-semantic-doc has SSDT files on disk; uc-domain-doc has no source SQL at all; this pack reads runtime source through UC system tables."
+globs:
+alwaysApply: false
+---
+
+# Phase 2 — Source Code Fetch
+
+## CONTRACT — Phase 2
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `knowledge/UC_generated/{schema}/_discovery/uc_inventory.json` (Phase 1). |
+| **Outputs required** | One `_discovery/source_code/{Object}.{sql|py}` per in-scope object + one `_discovery/column_lineage/{Object}.json` per object (cached `system.access.column_lineage` snapshot, used as cross-check in Phase 4). |
+| **MUST NOT** | Skip the writer lookup ("I'll just guess from the table name"). Skip the cache write ("the next phase will refetch"). Skip column-lineage caching when `system.access.column_lineage` returns rows. |
+| **Failure mode** | **HARD when writer is expected** — Phase 0 marked the object in-scope because the writer is known; if Phase 2 then can't locate it, the schema card and reality have diverged. Stop and ask. |
+
+---
+
+## Purpose
+
+Get the **authoritative transform code** onto local disk so Phase 4 (column lineage) can parse it deterministically. This is what makes a UC-derived object documentable in the first place — without the source, we'd be guessing column semantics from samples like the uc-domain-doc fallback.
+
+## Tool
+
+`tools/uc_pipelines/fetch_writer_source.py`.
+
+```bash
+python tools/uc_pipelines/fetch_writer_source.py \
+  --schema etoro_kpi_prep \
+  --inventory knowledge/UC_generated/etoro_kpi_prep/_discovery/uc_inventory.json \
+  --out-root knowledge/UC_generated/etoro_kpi_prep/_discovery
+```
+
+The tool runs per-object:
+
+### 2.1 VIEW objects
+
+Source IS `view_definition` (already captured in Phase 1's `uc_inventory.json`). The tool just writes it to `_discovery/source_code/{Object}.sql` with a header comment block:
+
+```sql
+-- ==========================================================================
+-- Source: information_schema.views.view_definition
+-- Object: main.etoro_kpi_prep.v_fact_customeraction_enriched
+-- Captured: 2026-05-17T15:05:00Z
+-- ==========================================================================
+
+SELECT a.HistoryID, ...
+FROM main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction a
+JOIN ...
+```
+
+### 2.2 TABLE objects (MANAGED / EXTERNAL / MATERIALIZED_VIEW)
+
+Query `system.access.table_lineage`:
+
+```sql
+SELECT
+  entity_type,
+  entity_id,
+  source_table_full_name,
+  source_type,
+  COUNT(*) AS event_count,
+  MIN(event_time) AS first_event_time,
+  MAX(event_time) AS last_event_time
+FROM system.access.table_lineage
+WHERE target_table_full_name = '{full_name}'
+  AND event_time > current_date - INTERVAL {lookback_days} DAYS
+  AND entity_type IS NOT NULL
+GROUP BY entity_type, entity_id, source_table_full_name, source_type
+ORDER BY event_count DESC
+```
+
+Then resolve `entity_id` per `entity_type`:
+
+| `entity_type` | Resolution |
+|---|---|
+| `NOTEBOOK` | `entity_id` is the notebook path. Export via Workspace API: `w.workspace.export(path, format=SOURCE)`. Snapshot to `_discovery/source_code/{Object}.{py|sql}` (extension matches `language`). |
+| `JOB` | `entity_id` is the job ID. Fetch the job spec via `w.jobs.get(job_id)`. For each task: if task has `notebook_task.notebook_path`, export that notebook. Snapshot all task notebooks concatenated, with a header comment per task. |
+| `PIPELINE` | `entity_id` is a DLT pipeline ID. Fetch the pipeline spec via `w.pipelines.get(pipeline_id)`. Export each source notebook listed in `libraries[].notebook.path`. Snapshot concatenated. |
+| `QUERY` (ad-hoc SQL editor) | Record `entity_id` (query ID) but skip code fetch — ad-hoc queries are not reproducible writers. Flag the object `UNVERIFIED_WRITER` in the schema card and DOWNGRADE `in_scope` to `false`. |
+| `UC_FUNCTION` (UC stored proc) | Pull the function body via `SHOW CREATE FUNCTION main.{schema}.{function_name}`. Snapshot. |
+
+### 2.3 column_lineage cache (cross-check, all object types)
+
+Always also fetch `system.access.column_lineage`:
+
+```sql
+SELECT
+  source_table_full_name,
+  source_column_name,
+  target_column_name,
+  entity_type,
+  COUNT(*) AS event_count
+FROM system.access.column_lineage
+WHERE target_table_full_name = '{full_name}'
+  AND event_time > current_date - INTERVAL {lookback_days} DAYS
+GROUP BY ALL
+```
+
+Cache the result to `_discovery/column_lineage/{Object}.json`. This is the **second opinion** Phase 4 cross-checks against the DDL/notebook parse — if UC column lineage says `metric_x` reads from `(source_a, col_q)` and `(source_b, col_r)` but the parsed view DDL only sees `source_a`, the lineage file flags the discrepancy.
+
+## Multiple producers
+
+A TABLE may have multiple `entity_id`s in the lookback window (e.g. an initial-load notebook AND an incremental-load notebook, or a backfill job AND a daily job). The tool:
+
+1. Records ALL distinct producers in `_discovery/source_code/_writers/{Object}.json`:
+   ```json
+   {
+     "object": "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics",
+     "writers": [
+       { "kind": "NOTEBOOK", "path": "...incremental.py", "event_count_30d": 30, "role": "primary" },
+       { "kind": "NOTEBOOK", "path": "...backfill.py",    "event_count_30d": 1,  "role": "secondary" }
+     ]
+   }
+   ```
+2. Snapshots all of them, concatenated, into `{Object}.py` with section dividers.
+3. Phase 4 reasons over the concatenation and cross-references column appearances against `system.access.column_lineage` to figure out which writer is canonical for each target column.
+
+## Empty lineage fallback
+
+If `table_lineage` returns zero rows for a target object (despite Phase 0 marking it in-scope), degrade through this ladder:
+
+1. **Audit table fallback**: query `system.access.audit` for `MERGE` / `INSERT INTO {full_name}` events in the lookback window. Often catches one-off backfill notebooks the production lineage view missed.
+2. **Workspace path conventions**: grep predictable paths for the target table name:
+   - `/Workspace/Repos/<user>/DataPlatform/databricks/de/**/*.py`
+   - `/Workspace/Repos/<user>/DataPlatform/databricks/bi/**/*.py`
+   - `/Workspace/Repos/<user>/DataPlatform/databricks/dealing/**/*.py`
+   - `/Workspace/Repos/<user>/DataPlatform/databricks/etoro_kpi/**/*.py`
+3. **Flag UNVERIFIED_WRITER and stop**: update the schema card to set `in_scope: false` with reason `writer_not_resolvable`. Move on. The object can be revisited when more lineage events accumulate, or by hand from a `de-wsroot-*` skill brief.
+
+## Output schema
+
+```
+knowledge/UC_generated/{schema}/_discovery/
+  source_code/
+    v_fact_customeraction_enriched.sql               # VIEW
+    de_output_etoro_kpi_fact_customeraction_w_metrics.py  # TABLE (notebook)
+    _writers/
+      de_output_etoro_kpi_fact_customeraction_w_metrics.json  # per-writer manifest
+  column_lineage/
+    v_fact_customeraction_enriched.json              # system.access.column_lineage cache
+    de_output_etoro_kpi_fact_customeraction_w_metrics.json
+```
+
+## Re-running
+
+Idempotent at the per-object level. Re-running:
+
+- Refreshes `view_definition` snapshots (cheap — already in `uc_inventory.json`).
+- Re-queries `table_lineage` (cheap; results stable on 90-day window).
+- **Skips notebook re-export** if the notebook's `modified_at` timestamp from the Workspace API matches the on-disk snapshot's header. Pass `--force` to force re-export.
+
+## Anti-patterns
+
+- ❌ Reading the notebook body via `Read` inside the agent loop. Always snapshot to `_discovery/source_code/` first; Phase 4 reads from disk.
+- ❌ Skipping the `column_lineage` cache because "the notebook AST will tell us the same thing". UC system lineage catches cases the AST parse misses (struct unpacking, dynamic column lists, `selectExpr` strings).
+- ❌ Trusting `entity_type=QUERY` as a recurring writer. Ad-hoc SQL editor queries are reproducible only by accident — they should fail the in-scope check.
+- ❌ Concatenating notebooks without section dividers. Phase 4 needs to know which writer to attribute each `INSERT INTO` to.
+- ❌ Hand-editing the snapshotted notebook body. Snapshots are evidence; corrections happen in the upstream production codebase, then the snapshot is refreshed.

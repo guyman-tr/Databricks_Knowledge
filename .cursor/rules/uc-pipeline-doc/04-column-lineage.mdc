@@ -1,0 +1,205 @@
+---
+description: "Phase 4 — Column Lineage. Produce {Object}.lineage.md BEFORE the wiki (same hard gate as dwh-semantic-doc/GATE-lineage-contract). Parses the cached view DDL or notebook source (Phase 2) and cross-checks against system.access.column_lineage (also Phase 2). Output drives mechanical tier assignment in Phase 5."
+globs:
+alwaysApply: false
+---
+
+# Phase 4 — Column Lineage
+
+## CONTRACT — Phase 4
+
+| Constraint | Detail |
+|------------|--------|
+| **Inputs required** | `_discovery/source_code/{Object}.{sql|py}` (Phase 2), `_discovery/column_lineage/{Object}.json` (Phase 2 cache), `_discovery/upstream_wikis/_index.json` (Phase 3). |
+| **Outputs required** | `knowledge/UC_generated/{schema}/{Tables|Views}/{Object}.lineage.md` — one row per target column, mapped to upstream source object + source column + transform classification + upstream-wiki-found flag. |
+| **MUST NOT** | Skip any target column. Write the wiki `.md` BEFORE this file exists. Hand-wave the transform classification. |
+| **Failure mode** | **HARD** — Phase 5 reads this file to assign tiers; without it, tiers are guesswork. |
+
+---
+
+## Purpose
+
+Same role as `dwh-semantic-doc` Phase 10B, but simpler:
+
+- No SSDT or SP scan.
+- The source of truth is the cached view DDL (for views) or the cached notebook body (for tables).
+- UC's own `system.access.column_lineage` provides a runtime second opinion the parser cross-checks against.
+
+## Tool
+
+`tools/uc_pipelines/build_lineage.py`.
+
+```bash
+python tools/uc_pipelines/build_lineage.py \
+  --schema etoro_kpi_prep \
+  --object v_fact_customeraction_enriched \
+  --out knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.lineage.md
+```
+
+The tool:
+
+1. Reads the inventory entry for `(schema, object)` to get the column list.
+2. Reads the source code snapshot.
+3. For VIEWs: parses the `SELECT` list using `sqlglot` (with the `databricks` dialect). For each output column, extracts the source expression and classifies the transform.
+4. For TABLEs: finds the **final** `INSERT INTO {full_name}` / `MERGE INTO {full_name}` / `df.writeTo(full_name)` / `df.write.saveAsTable(full_name)` statement in the notebook body and parses its SELECT or DataFrame schema. For PySpark code with chained transformations, walks the DataFrame ops back to the source `spark.read.table(...)` / `spark.table(...)` calls.
+5. Cross-checks each parsed mapping against `_discovery/column_lineage/{Object}.json`. Flags mismatches in a footer.
+6. Writes the markdown.
+
+## Transform classification — drives Phase 5 tier assignment
+
+| Transform | Description | Phase 5 tier (upstream wiki found) | Phase 5 tier (no upstream wiki) |
+|---|---|---|---|
+| `passthrough` | `target = source.col` with no transformation. | **Inherit origin tier from upstream wiki** | Tier 2 (from source code) |
+| `rename` | `target = source.col AS new_name` only. | **Inherit origin tier**, append `(renamed from {orig})` | Tier 2 |
+| `cast` | `CAST(source.col AS ...)` only. | **Inherit origin tier**, append `(cast to {type})` | Tier 2 |
+| `case` | `CASE WHEN ... END` over source columns. | Tier 2 — describe the CASE logic | Tier 2 |
+| `coalesce` | `COALESCE(...)` / `NVL(...)` | Tier 2 — describe the fallback chain | Tier 2 |
+| `arithmetic` | `a + b`, `a / 100.0`, etc. | Tier 2 | Tier 2 |
+| `string_op` | `concat(...)`, `regexp_replace(...)`, etc. | Tier 2 | Tier 2 |
+| `aggregate` | `SUM(...)`, `MAX(...)`, `COUNT(...)`, ... | Tier 2 — describe the aggregation grain | Tier 2 |
+| `window` | `OVER (PARTITION BY ... ORDER BY ...)` | Tier 2 — describe the window | Tier 2 |
+| `join_enriched` | column added by a JOIN (not in primary source's column list). | **Inherit origin tier from join-source wiki** | Tier 2 |
+| `literal` | constant value (`'PROD'`, `1`, `current_date`). | Tier 2 (it's the SP that "decides" the value) | Tier 2 |
+| `udf` / `function_computed` | `Function_X(...)` or a Python UDF. | Tier 2 (function logic defines the column) | Tier 2 |
+| `unknown` | parser couldn't classify (struct unpacking, dynamic columns, etc.). | Tier 4 / UNVERIFIED | Tier 4 / UNVERIFIED |
+
+## Output file shape
+
+```markdown
+# Column Lineage: main.etoro_kpi_prep.v_fact_customeraction_enriched
+
+| Property | Value |
+|----------|-------|
+| **UC Object** | `main.etoro_kpi_prep.v_fact_customeraction_enriched` |
+| **Object Type** | `VIEW` |
+| **Source** | `information_schema.views.view_definition` (snapshot: `_discovery/source_code/v_fact_customeraction_enriched.sql`) |
+| **Column-lineage cross-check** | `_discovery/column_lineage/v_fact_customeraction_enriched.json` (rows: 24, mismatches: 0) |
+| **Generated** | 2026-05-17 |
+
+## Upstream Objects
+
+| Upstream UC Object | Role | Upstream Wiki |
+|--------------------|------|---------------|
+| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction` | Primary (FROM) | `knowledge/synapse/Wiki/DWH_dbo/Tables/Fact_CustomerAction.md` (Tier 1 anchors available) |
+| `main.dwh.dim_position` | JOIN — position attributes | `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Position.md` |
+| `main.etoro_kpi_prep.passive_actions_enriched` | UNION-ed companion | `knowledge/UC_generated/etoro_kpi_prep/Tables/passive_actions_enriched.md` (sibling — must be documented first) |
+
+## Lineage Chain
+
+```
+main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction   ←── DWH gold mirror (already documented)
+        │
+        ├─ JOIN main.dwh.dim_position ON (PositionID, …)
+        └─ UNION ALL main.etoro_kpi_prep.passive_actions_enriched
+                │
+                ▼
+   main.etoro_kpi_prep.v_fact_customeraction_enriched      ←── this object
+```
+
+## Column Lineage
+
+| # | UC Column | Source UC Object | Source Column | Transform | Upstream Tier (from upstream wiki) | Notes |
+|---|-----------|------------------|---------------|-----------|------------------------------------|-------|
+| 1 | HistoryID | main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction | HistoryID | passthrough | (Tier 1 — History.Credit) | — |
+| 2 | DateID | main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction | DateID | passthrough | (Tier 1 — History.Credit) | — |
+| 3 | enrichment_flag | (computed) | — | case | n/a | `CASE WHEN a.ActionTypeID IN (2,5) THEN 'copy' ELSE 'manual' END` — view DDL L42 |
+| ... | ... | ... | ... | ... | ... | ... |
+
+## Cross-check vs system.access.column_lineage
+
+(Comparing parsed transforms against UC's auto-captured runtime lineage.)
+
+- Total target columns: 24
+- DDL-parsed mappings: 24
+- column_lineage hits: 24
+- **Mismatches: 0** ✓
+
+If non-zero, mismatches are listed here with: `target_column | parsed_sources | runtime_sources | severity`.
+
+## Lost / added columns
+
+- Columns dropped vs upstream: 4 (Fact_CustomerAction.{ColX, ColY, ColZ, ColW} — not selected)
+- Columns added vs upstream: 2 (enrichment_flag, position_currency from dim_position)
+```
+
+## Algorithm — sqlglot for views
+
+```python
+import sqlglot
+tree = sqlglot.parse_one(view_definition, read="databricks")
+for proj in tree.expressions:    # SELECT-list items
+    target_alias = proj.alias_or_name
+    expr         = proj.unalias()
+    sources      = list(expr.find_all(sqlglot.exp.Column))
+    if isinstance(expr, sqlglot.exp.Column) and not any(isinstance(p, sqlglot.exp.Func) for p in expr.walk(prune=lambda n,_: False)):
+        transform = "passthrough" if expr.name == target_alias else "rename"
+    elif isinstance(expr, sqlglot.exp.Cast):
+        transform = "cast"
+    elif isinstance(expr, sqlglot.exp.Case):
+        transform = "case"
+    elif isinstance(expr, sqlglot.exp.Func) and expr.is_aggregate:
+        transform = "aggregate"
+    elif isinstance(expr, sqlglot.exp.Window):
+        transform = "window"
+    elif isinstance(expr, sqlglot.exp.Coalesce):
+        transform = "coalesce"
+    elif isinstance(expr, (sqlglot.exp.Literal,)):
+        transform = "literal"
+    elif isinstance(expr, sqlglot.exp.Anonymous):
+        transform = "udf"
+    elif isinstance(expr, sqlglot.exp.Binary):
+        transform = "arithmetic"
+    else:
+        transform = "unknown"
+    # resolve sources[0..N] back to FROM/JOIN table aliases
+```
+
+## Algorithm — Python notebook for tables
+
+PySpark / DLT notebooks are harder to AST-parse. The tool uses a **regex-then-sqlglot** hybrid:
+
+1. Scan the notebook for the final write to `{full_name}`:
+   - `spark.sql("INSERT INTO {full_name} ...")` / `MERGE INTO`
+   - `df.writeTo("{full_name}").createOrReplace()`
+   - `df.write.format("delta").saveAsTable("{full_name}")`
+   - `@dlt.table(name="{name}")` decorator (DLT)
+2. For SQL statements: extract the SQL string and feed to sqlglot, same as views.
+3. For DataFrame chains: walk backward through `.select(...)` / `.withColumn(...)` / `.join(...)` calls until reaching a `spark.read.table(...)` / `spark.table(...)`. Build a per-column AST of the chain. This works for ~80% of typical notebooks; the rest fall back to UC `column_lineage` for the upstream mapping and use the notebook line range as a `[notebook:{path}#L{line}]` citation.
+4. For DLT: read the `@dlt.table` body; same DataFrame chain analysis as (3).
+
+When the parser cannot resolve a column, mark `transform = unknown` AND record the notebook line range. Phase 5 treats unknowns as Tier 4 candidates needing reviewer attention.
+
+## Cross-check vs system.access.column_lineage
+
+For every target column, compare:
+
+- **Parsed sources** = `{(source_uc_object, source_column)}` from the AST/regex walk.
+- **Runtime sources** = `{(source_table_full_name, source_column_name)}` from `_discovery/column_lineage/{Object}.json`.
+
+Severity rules:
+
+| Situation | Severity | Notes |
+|---|---|---|
+| Sets equal | OK | — |
+| Parsed ⊂ Runtime (parser missed a join) | WARN | Add the missing source to the lineage row; flag in footer. |
+| Runtime ⊂ Parsed (parser saw a transform UC didn't track) | WARN | Usually a literal / constant — UC column lineage doesn't track non-column expressions. Acceptable. |
+| Disjoint sets | ERROR | The parse is wrong. Re-inspect manually. Common cause: view DDL uses `*` and the parser couldn't expand. |
+| Runtime empty, Parsed non-empty | INFO | Object hasn't been queried in the lookback window. Acceptable. |
+| Runtime non-empty, Parsed empty | ERROR | Parser failed entirely. Re-check the source-code snapshot. |
+
+## Gate — Phase 4 → Phase 5
+
+Phase 5 MUST refuse to write the wiki if any of:
+
+- `.lineage.md` does not exist.
+- Element count in `.lineage.md` ≠ column count in `uc_inventory.json` for this object.
+- Any `severity: ERROR` rows exist (parsing failed).
+
+Same hard gate semantics as `dwh-semantic-doc/GATE-lineage-contract.mdc`.
+
+## Anti-patterns
+
+- ❌ Skipping the cross-check ("the parse looks fine"). UC column lineage is the second pair of eyes. The 5 minutes spent on cross-check has caught bugs the parser missed on day one.
+- ❌ Marking columns `passthrough` when the source has a CAST. Cast counts — `cast` transform earns a `(cast to {type})` note in Phase 5.
+- ❌ Hand-editing `.lineage.md`. The file is regenerated from source code; corrections happen in the parser or in a `_lineage_overrides.json` companion (see `dwh-semantic-doc` for prior art).
+- ❌ Treating a JOIN-enriched column as Tier 2 when the join source has a wiki. The join source's wiki is the Tier 1 anchor — column lineage routes through it.

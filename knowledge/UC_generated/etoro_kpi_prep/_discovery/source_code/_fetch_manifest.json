@@ -1,0 +1,45 @@
+{
+  "schema": "etoro_kpi_prep",
+  "catalog": "main",
+  "generated_at": "2026-05-17T16:27:29Z",
+  "lineage_lookback_days": 90,
+  "objects": [
+    {
+      "object": "main.etoro_kpi_prep.v_fact_customeraction_enriched",
+      "name": "v_fact_customeraction_enriched",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_fact_customeraction_enriched.json",
+      "column_lineage_row_count": 289,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_fact_customeraction_enriched.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_fact_customeraction_w_metrics",
+      "name": "v_fact_customeraction_w_metrics",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_fact_customeraction_w_metrics.json",
+      "column_lineage_row_count": 566,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_fact_customeraction_w_metrics.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "ok": 2,
+    "no_lineage": 0,
+    "no_view_def": 0,
+    "errors": 0,
+    "wall_seconds": 36.2
+  }
+}
