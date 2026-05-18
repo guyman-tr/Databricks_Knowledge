@@ -1,0 +1,202 @@
+{
+  "object": "main.etoro_kpi_prep.v_mimo_options_platform",
+  "rows": [
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "AccountNumber",
+      "target_column_name": "AccountNumber",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "Amount",
+      "target_column_name": "AmountUSD",
+      "entity_type": null,
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "Amount",
+      "target_column_name": "AmountUSD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ProcessDate",
+      "target_column_name": "Date",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ProcessDate",
+      "target_column_name": "Date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ProcessDate",
+      "target_column_name": "DateID",
+      "entity_type": null,
+      "event_count": 9
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ProcessDate",
+      "target_column_name": "DateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "IsCreditReportValidCB",
+      "target_column_name": "IsCreditReportValidCB",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "IsCreditReportValidCB",
+      "target_column_name": "IsCreditReportValidCB",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ACATSControlNumber",
+      "target_column_name": "IsFTD",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ACATSControlNumber",
+      "target_column_name": "IsFTD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "IsGlobalFTD",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "IsGlobalFTD",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "TerminalID",
+      "target_column_name": "IsInternalTransfer",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "TerminalID",
+      "target_column_name": "IsInternalTransfer",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "IsValidCustomer",
+      "target_column_name": "IsValidCustomer",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "IsValidCustomer",
+      "target_column_name": "IsValidCustomer",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "PayTypeCode",
+      "target_column_name": "MIMOAction",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "PayTypeCode",
+      "target_column_name": "MIMOAction",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "OfficeCode",
+      "target_column_name": "OfficeCode",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "OfficeCode",
+      "target_column_name": "OfficeCode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "RegisteredRepCode",
+      "target_column_name": "RegisteredRepCode",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "RegisteredRepCode",
+      "target_column_name": "RegisteredRepCode",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ACATSControlNumber",
+      "target_column_name": "TransactionID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.finance.bronze_sodreconciliation_apex_ext869_cashactivity",
+      "source_column_name": "ACATSControlNumber",
+      "target_column_name": "TransactionID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-18T08:06:24Z"
+}

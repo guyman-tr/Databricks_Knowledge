@@ -1,0 +1,100 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_revenue_commission",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 10.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 4.0,
+    "shape_fidelity": 3.0,
+    "lineage_coherence": 5.0
+  },
+  "weighted_score": 8.0,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T09:06:59Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PositionID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "Surrogate bigint from `Internal.GetPositionID_Bigint` domain; unique trade position key. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Surrogate bigint from `Internal.GetPositionID_Bigint` domain; unique trade position key. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "RealCID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic)",
+      "wiki_quote": "Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded. (Tier 1 — source-dependent)",
+      "wiki_quote": "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded. (Tier 1 — source-dependent)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "Open commission in dollars (`/100` cents conversion on ingest per `Dim_Position` lineage notes). (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Open commission in dollars (`/100` cents conversion on ingest per `Dim_Position` lineage notes). (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CommissionOnClose",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "Close commission dollars — reopen-adjust net-of-original per `Dim_Position` wiki. **`CommissionOnCloseOrig` preserves untouched close fee.** (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Close commission dollars — reopen-adjust net-of-original per `Dim_Position` wiki. **`CommissionOnCloseOrig` preserves untouched close fee.** (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CommissionByUnits",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position)",
+      "wiki_quote": "Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ActionTypeID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. Derived from **`CreditTypeID`** & branch router in loader + positional feeds. (Tier 1 — History.Credi",
+      "wiki_quote": "Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. Derived from **`CreditTypeID`** & branch router in loader + positional feeds. (Tier 1 — History.Credi",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "MirrorID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "FK to Trade.Mirror (`0`/NULL ⇒ manual trading; >0 ⇒ copy-trade child). (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "FK to Trade.Mirror (`0`/NULL ⇒ manual trading; >0 ⇒ copy-trade child). (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "SettlementTypeID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction.md",
+      "upstream_quote": "**`Dictionary.SettlementTypes`** modern encoding (`0 CFD`, `1 REAL`, `2 TRS`, `3 CMT`, `4 REAL_FUTURES`, `5 MARGIN_TRADE`). Supersedes naïve `IsSettled` reads. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "**`Dictionary.SettlementTypes`** modern encoding (`0 CFD`, `1 REAL`, `2 TRS`, `3 CMT`, `4 REAL_FUTURES`, `5 MARGIN_TRADE`). Supersedes naïve `IsSettled` reads. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 4,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "spot-check 2/2 accurate",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type']",
+    "shape_fidelity": "structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at",
+    "lineage_coherence": "`etr_ymd`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'; `TotalCommission`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'"
+  }
+}

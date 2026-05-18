@@ -1,0 +1,118 @@
+{
+  "object": "main.etoro_kpi_prep.v_population_otd_daterange",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DateID",
+      "target_column_name": "FromDateID",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "TxStatusModificationDateID",
+      "target_column_name": "FromDateID",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "TxStatusModificationDateID",
+      "target_column_name": "FromDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DateID",
+      "target_column_name": "FromDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "CID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "CID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "TxStatusModificationDateID",
+      "target_column_name": "ToDateID",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "CID",
+      "target_column_name": "ToDateID",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RealCID",
+      "target_column_name": "ToDateID",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DateID",
+      "target_column_name": "ToDateID",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "TxStatusModificationDateID",
+      "target_column_name": "ToDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DateID",
+      "target_column_name": "ToDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RealCID",
+      "target_column_name": "ToDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status",
+      "source_column_name": "CID",
+      "target_column_name": "ToDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-18T08:10:30Z"
+}

@@ -1,15 +1,171 @@
 {
   "schema": "etoro_kpi_prep",
   "catalog": "main",
-  "generated_at": "2026-05-17T16:27:29Z",
+  "generated_at": "2026-05-18T08:15:06Z",
   "lineage_lookback_days": 90,
   "objects": [
+    {
+      "object": "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "name": "gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\gold_de_user_dim_ddr_customer_dailystatus_scd.json",
+      "column_lineage_row_count": 576,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "854926722635349",
+          "event_count_lookback": 143,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "8db1c9f8-9947-4ea7-a680-c56e2d199aa6",
+          "event_count_lookback": 32,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "NOTEBOOK",
+          "entity_id": "4433076032980144",
+          "event_count_lookback": 12,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "workspace.export failed"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "9b4db745-1c6f-401a-bc41-cd7e00d1290a",
+          "event_count_lookback": 9,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "be48072e-bdb3-4043-885f-5095eb49862c",
+          "event_count_lookback": 8,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\_writers\\gold_de_user_dim_ddr_customer_dailystatus_scd.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    },
+    {
+      "object": "main.etoro_kpi_prep.mv_revenue_trading",
+      "name": "mv_revenue_trading",
+      "table_type": "MATERIALIZED_VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\mv_revenue_trading.json",
+      "column_lineage_row_count": 82,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\mv_revenue_trading.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_copyfund_positions",
+      "name": "v_copyfund_positions",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_copyfund_positions.json",
+      "column_lineage_row_count": 22,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_copyfund_positions.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_ddr_revenues",
+      "name": "v_ddr_revenues",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_ddr_revenues.json",
+      "column_lineage_row_count": 2124,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_ddr_revenues.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_dim_dataplatform_uuid",
+      "name": "v_dim_dataplatform_uuid",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_dim_dataplatform_uuid.json",
+      "column_lineage_row_count": 35,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_dim_dataplatform_uuid.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_dim_ftdplatform",
+      "name": "v_dim_ftdplatform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_dim_ftdplatform.json",
+      "column_lineage_row_count": 8,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_dim_ftdplatform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_dim_instrument_enriched",
+      "name": "v_dim_instrument_enriched",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_dim_instrument_enriched.json",
+      "column_lineage_row_count": 164,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_dim_instrument_enriched.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_fact_customeraction",
+      "name": "v_fact_customeraction",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_fact_customeraction.json",
+      "column_lineage_row_count": 100,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_fact_customeraction.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
     {
       "object": "main.etoro_kpi_prep.v_fact_customeraction_enriched",
       "name": "v_fact_customeraction_enriched",
       "table_type": "VIEW",
       "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_fact_customeraction_enriched.json",
-      "column_lineage_row_count": 289,
+      "column_lineage_row_count": 316,
       "status": "OK",
       "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_fact_customeraction_enriched.sql",
       "writers": [
@@ -33,13 +189,658 @@
           "role": "primary"
         }
       ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_globalftdplatform",
+      "name": "v_globalftdplatform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_globalftdplatform.json",
+      "column_lineage_row_count": 6,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_globalftdplatform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+      "name": "v_instrument_conversion_rates_dwh",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_instrument_conversion_rates_dwh.json",
+      "column_lineage_row_count": 49,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_instrument_conversion_rates_dwh.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_mimo_allplatforms",
+      "name": "v_mimo_allplatforms",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_mimo_allplatforms.json",
+      "column_lineage_row_count": 270,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_mimo_allplatforms.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_mimo_emoneyplatform",
+      "name": "v_mimo_emoneyplatform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_mimo_emoneyplatform.json",
+      "column_lineage_row_count": 76,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_mimo_emoneyplatform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_mimo_first_deposit_all_platforms",
+      "name": "v_mimo_first_deposit_all_platforms",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_mimo_first_deposit_all_platforms.json",
+      "column_lineage_row_count": 22,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_mimo_first_deposit_all_platforms.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_mimo_options_platform",
+      "name": "v_mimo_options_platform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_mimo_options_platform.json",
+      "column_lineage_row_count": 28,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_mimo_options_platform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_mimo_optionsplatform",
+      "name": "v_mimo_optionsplatform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_mimo_optionsplatform.json",
+      "column_lineage_row_count": 53,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_mimo_optionsplatform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_mimo_tradingplatform",
+      "name": "v_mimo_tradingplatform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_mimo_tradingplatform.json",
+      "column_lineage_row_count": 97,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_mimo_tradingplatform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_moneyfarm_aum",
+      "name": "v_moneyfarm_aum",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_moneyfarm_aum.json",
+      "column_lineage_row_count": 18,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_moneyfarm_aum.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_moneyfarm_fees",
+      "name": "v_moneyfarm_fees",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_moneyfarm_fees.json",
+      "column_lineage_row_count": 10,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_moneyfarm_fees.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_moneyfarm_mimo",
+      "name": "v_moneyfarm_mimo",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_moneyfarm_mimo.json",
+      "column_lineage_row_count": 47,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_moneyfarm_mimo.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_options_aum",
+      "name": "v_options_aum",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_options_aum.json",
+      "column_lineage_row_count": 22,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_options_aum.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_active_traders",
+      "name": "v_population_active_traders",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_active_traders.json",
+      "column_lineage_row_count": 100,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_active_traders.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_active_traders_lite",
+      "name": "v_population_active_traders_lite",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_active_traders_lite.json",
+      "column_lineage_row_count": 45,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_active_traders_lite.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_balance_only_accounts",
+      "name": "v_population_balance_only_accounts",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_balance_only_accounts.json",
+      "column_lineage_row_count": 20,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_balance_only_accounts.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_first_time_funded",
+      "name": "v_population_first_time_funded",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_first_time_funded.json",
+      "column_lineage_row_count": 60,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_first_time_funded.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_first_trading_action",
+      "name": "v_population_first_trading_action",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_first_trading_action.json",
+      "column_lineage_row_count": 52,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_first_trading_action.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_funded",
+      "name": "v_population_funded",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_funded.json",
+      "column_lineage_row_count": 25,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_funded.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_otd_daterange",
+      "name": "v_population_otd_daterange",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_otd_daterange.json",
+      "column_lineage_row_count": 16,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_otd_daterange.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_population_portfolio_only",
+      "name": "v_population_portfolio_only",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_population_portfolio_only.json",
+      "column_lineage_row_count": 100,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_population_portfolio_only.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_adminfee",
+      "name": "v_revenue_adminfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_adminfee.json",
+      "column_lineage_row_count": 25,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_adminfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_cashoutfee_excluderedeem",
+      "name": "v_revenue_cashoutfee_excluderedeem",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_cashoutfee_excluderedeem.json",
+      "column_lineage_row_count": 13,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_cashoutfee_excluderedeem.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_cashoutfee_incredeem",
+      "name": "v_revenue_cashoutfee_incredeem",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_cashoutfee_incredeem.json",
+      "column_lineage_row_count": 12,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_cashoutfee_incredeem.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_commission",
+      "name": "v_revenue_commission",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_commission.json",
+      "column_lineage_row_count": 56,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_commission.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_conversionfee",
+      "name": "v_revenue_conversionfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_conversionfee.json",
+      "column_lineage_row_count": 36,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_conversionfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_conversionfee_withpositiondata",
+      "name": "v_revenue_conversionfee_withpositiondata",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_conversionfee_withpositiondata.json",
+      "column_lineage_row_count": 60,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_conversionfee_withpositiondata.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_cryptotofiat_c2f",
+      "name": "v_revenue_cryptotofiat_c2f",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_cryptotofiat_c2f.json",
+      "column_lineage_row_count": 56,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_cryptotofiat_c2f.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_dividend",
+      "name": "v_revenue_dividend",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_dividend.json",
+      "column_lineage_row_count": 18,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_dividend.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_dormantfee",
+      "name": "v_revenue_dormantfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_dormantfee.json",
+      "column_lineage_row_count": 15,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_dormantfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_fullcommission",
+      "name": "v_revenue_fullcommission",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_fullcommission.json",
+      "column_lineage_row_count": 71,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_fullcommission.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_interestfee",
+      "name": "v_revenue_interestfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_interestfee.json",
+      "column_lineage_row_count": 16,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_interestfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "name": "v_revenue_optionsplatform",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_optionsplatform.json",
+      "column_lineage_row_count": 93,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_optionsplatform.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_rollover",
+      "name": "v_revenue_rollover",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_rollover.json",
+      "column_lineage_row_count": 20,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_rollover.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_sdrt",
+      "name": "v_revenue_sdrt",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_sdrt.json",
+      "column_lineage_row_count": 29,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_sdrt.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_share_lending",
+      "name": "v_revenue_share_lending",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_share_lending.json",
+      "column_lineage_row_count": 22,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_share_lending.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_spotadjustfee",
+      "name": "v_revenue_spotadjustfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_spotadjustfee.json",
+      "column_lineage_row_count": 28,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_spotadjustfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_stakingfee",
+      "name": "v_revenue_stakingfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_stakingfee.json",
+      "column_lineage_row_count": 80,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_stakingfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_ticketfee_bypercent",
+      "name": "v_revenue_ticketfee_bypercent",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_ticketfee_bypercent.json",
+      "column_lineage_row_count": 43,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_ticketfee_bypercent.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_ticketfee_fixed",
+      "name": "v_revenue_ticketfee_fixed",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_ticketfee_fixed.json",
+      "column_lineage_row_count": 40,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_ticketfee_fixed.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_revenue_transfercoinfee",
+      "name": "v_revenue_transfercoinfee",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_revenue_transfercoinfee.json",
+      "column_lineage_row_count": 13,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_revenue_transfercoinfee.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_spaceship_mimo",
+      "name": "v_spaceship_mimo",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_spaceship_mimo.json",
+      "column_lineage_row_count": 391,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_spaceship_mimo.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_trading_volume_and_amount",
+      "name": "v_trading_volume_and_amount",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_trading_volume_and_amount.json",
+      "column_lineage_row_count": 134,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_trading_volume_and_amount.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
+    },
+    {
+      "object": "main.etoro_kpi_prep.v_trading_volume_positionlevel",
+      "name": "v_trading_volume_positionlevel",
+      "table_type": "VIEW",
+      "column_lineage_cache": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\column_lineage\\v_trading_volume_positionlevel.json",
+      "column_lineage_row_count": 45,
+      "status": "OK",
+      "source_code": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\source_code\\v_trading_volume_positionlevel.sql",
+      "writers": [
+        {
+          "kind": "view_definition",
+          "role": "primary"
+        }
+      ]
     }
   ],
   "stats": {
-    "ok": 2,
+    "ok": 52,
     "no_lineage": 0,
     "no_view_def": 0,
     "errors": 0,
-    "wall_seconds": 36.2
+    "wall_seconds": 689.9
   }
 }

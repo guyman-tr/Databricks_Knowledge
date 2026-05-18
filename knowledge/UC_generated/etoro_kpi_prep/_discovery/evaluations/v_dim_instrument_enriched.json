@@ -1,0 +1,268 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_dim_instrument_enriched",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 10.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 4.0,
+    "shape_fidelity": 3.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.25,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T09:06:36Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.",
+      "wiki_quote": "From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Computed: TDCUR_BUY.Abbreviation + '/' + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Computed: TDCUR_BUY.Abbreviation + '/' + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "DWHInstrumentID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Alias of InstrumentID (InstrumentID AS DWHInstrumentID). Always equals InstrumentID. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Alias of InstrumentID (InstrumentID AS DWHInstrumentID). Always equals InstrumentID. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "BuyCurrencyID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "FK to Dictionary.Currency. Buy-side asset. For forex: base currency; for stocks: asset itself (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "FK to Dictionary.Currency. Buy-side asset. For forex: base currency; for stocks: asset itself (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "SellCurrencyID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "FK to Dictionary.Currency. Sell-side (denomination) currency. For forex: quote currency; for stocks: trading currency. Inherited from Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "FK to Dictionary.Currency. Sell-side (denomination) currency. For forex: quote currency; for stocks: trading currency. Inherited from Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "BuyCurrency",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Trading symbol / ticker for the buy-side currency. \"USD\", \"EUR\", \"AAPL.US\". UNIQUE constraint in production. The primary identifier used in UIs and APIs. Passthrough from Dictionary.Currency.Abbreviat",
+      "wiki_quote": "Trading symbol / ticker for the buy-side currency. \"USD\", \"EUR\", \"AAPL.US\". UNIQUE constraint in production. The primary identifier used in UIs and APIs. Passthrough from Dictionary.Currency.Abbreviat",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "SellCurrency",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Cur",
+      "wiki_quote": "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Cur",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "TradeRange",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Allowed trade range (pip distance) for pending orders. From Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Allowed trade range (pip distance) for pending orders. From Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "DollarRatio",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Price scaling factor. Most=1; JPY pairs=100. From Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Price scaling factor. Most=1; JPY pairs=100. From Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "PipDifferenceThreshold",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Max pip difference for price validation. From Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Max pip difference for price validation. From Trade.Instrument. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "IsMajorID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "1=major instrument (spread/margin treatment); 0=minor. From Trade.Instrument. Stored as int (original production type is bit). (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "1=major instrument (spread/margin treatment); 0=minor. From Trade.Instrument. Stored as int (original production type is bit). (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Industry",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Industry sector label from IMD (e.g., Technology, Consumer Goods). NULL for forex/crypto. From Trade.InstrumentMetaData. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CompanyInfo",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Extended company/instrument description. Nullable. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Extended company/instrument description. Nullable. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Exchange",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Exchange name string (e.g., \"NASDAQ\"). Populated from Price.Exchange via ExchangeID. May be denormalized. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Exchange name string (e.g., \"NASDAQ\"). Populated from Price.Exchange via ExchangeID. May be denormalized. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ISINCode",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "International Securities Identification Number. Required for stocks (e.g., \"US0378331005\" for Apple). NULL for forex, commodities, indices, most crypto. Used for compliance and dividend matching. (Tie",
+      "wiki_quote": "International Securities Identification Number. Required for stocks (e.g., \"US0378331005\" for Apple). NULL for forex, commodities, indices, most crypto. Used for compliance and dividend matching. (Tie",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ISINCountryCode",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Country prefix of ISIN (e.g., \"US\"). Audit-tracked. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Country prefix of ISIN (e.g., \"US\"). Audit-tracked. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Tradable",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "1 = orders allowed, 0 = trading disabled. Set by EnableInstrument/DisableInstrument. DWH note: CAST from bit to int, value preserved. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "1 = orders allowed, 0 = trading disabled. Set by EnableInstrument/DisableInstrument. DWH note: CAST from bit to int, value preserved. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Symbol",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Short ticker symbol (e.g., \"AAPL\", \"EURUSD\"). Used for display and lookup. Not necessarily unique. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Short ticker symbol (e.g., \"AAPL\", \"EURUSD\"). Used for display and lookup. Not necessarily unique. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "BonusCreditUsePercent",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Percentage of position that can use bonus credit. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "Percentage of position that can use bonus credit. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "SymbolFull",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Full/canonical symbol, UNIQUE in production. Used for instrument lookup. Primary identifier in Security Ops API. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CUSIP",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Alias for InstrumentMetaData.Cusip. Committee on Uniform Securities Identification Procedures code for US/Canada securities. NULL for forex, crypto, many non-US instruments. (Tier 1 — Trade.Instrument",
+      "wiki_quote": "Alias for InstrumentMetaData.Cusip. Committee on Uniform Securities Identification Procedures code for US/Canada securities. NULL for forex, crypto, many non-US instruments. (Tier 1 — Trade.Instrument",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Precision",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Decimal places for price display and rounding. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "Decimal places for price display and rounding. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "AllowBuy",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "1=buy allowed, 0=buy disabled for this instrument-provider pair. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "1=buy allowed, 0=buy disabled for this instrument-provider pair. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "AllowSell",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "1=sell allowed, 0=sell disabled. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "1=sell allowed, 0=sell disabled. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "VisibleInternallyOnly",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "1=hidden from external clients (internal/ops only), 0=visible to all. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "1=hidden from external clients (internal/ops only), 0=visible to all. DWH note: CAST from bit to int. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Multiplier",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Contract size per point for futures instruments. Used for notional and fee calculation. NULL for non-futures (15,464 rows). (Tier 1 — Trade.FuturesMetaData)",
+      "wiki_quote": "Contract size per point for futures instruments. Used for notional and fee calculation. NULL for non-futures (15,464 rows). (Tier 1 — Trade.FuturesMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ProviderID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "FK to Trade.Provider. Identifies the execution provider (e.g., 1=Tribe). From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "FK to Trade.Provider. Identifies the execution provider (e.g., 1=Tribe). From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ProviderMarginPerLot",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Cash margin required to open one unit/lot of this futures instrument with this provider. Expressed in the instrument's base currency. Renamed from InitialMargin. (Tier 1 — Trade.FuturesInstrumentsInit",
+      "wiki_quote": "Cash margin required to open one unit/lot of this futures instrument with this provider. Expressed in the instrument's base currency. Renamed from InitialMargin. (Tier 1 — Trade.FuturesInstrumentsInit",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "eToroMarginPerLot",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Initial margin in asset currency as set by eToro. Renamed from InitialMarginInAssetCurrency. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "wiki_quote": "Initial margin in asset currency as set by eToro. Renamed from InitialMarginInAssetCurrency. From Trade.ProviderToInstrument. (Tier 1 — Trade.ProviderToInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "SettlementTime",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Time of day for settlement. DWH note: reformatted from Trade.FuturesMetaData.SettlementTime via FORMAT(DATEPART(HOUR)*100 + DATEPART(MINUTE), '00:00'). (Tier 1 — Trade.FuturesMetaData)",
+      "wiki_quote": "Time of day for settlement. DWH note: reformatted from Trade.FuturesMetaData.SettlementTime via FORMAT(DATEPART(HOUR)*100 + DATEPART(MINUTE), '00:00'). (Tier 1 — Trade.FuturesMetaData)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "OperationMode",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Trading operation mode: 0=Standard (13,140 instruments), 1=Alternate (2,566, primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX). From Trade.Instrument. (Tier 1 — Tr",
+      "wiki_quote": "Trading operation mode: 0=Standard (13,140 instruments), 1=Alternate (2,566, primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX). From Trade.Instrument. (Tier 1 — Tr",
+      "match": "YES — byte-equal"
+    }
+  ],
+  "bucket_counts": {
+    "A": 47,
+    "B": 3,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 33 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "spot-check 3/3 accurate",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type']",
+    "shape_fidelity": "structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

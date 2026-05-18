@@ -20,7 +20,7 @@
       "source_column_name": "ActionTypeID",
       "target_column_name": "ActionTypeID",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -48,7 +48,7 @@
       "source_column_name": "Amount",
       "target_column_name": "Amount",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -59,6 +59,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "BonusTypeID",
+      "target_column_name": "BonusTypeID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "CampaignID",
       "target_column_name": "CampaignID",
       "entity_type": "DBSQL_QUERY",
@@ -66,10 +73,24 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "CampaignID",
+      "target_column_name": "CampaignID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "CaseID",
       "target_column_name": "CaseID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "CaseID",
+      "target_column_name": "CaseID",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -90,7 +111,7 @@
       "source_column_name": "CloseDateID",
       "target_column_name": "CloseDateID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -118,7 +139,7 @@
       "source_column_name": "Commission",
       "target_column_name": "Commission",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -146,7 +167,7 @@
       "source_column_name": "CommissionByUnits",
       "target_column_name": "CommissionByUnits",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -174,7 +195,7 @@
       "source_column_name": "CommissionOnClose",
       "target_column_name": "CommissionOnClose",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -195,7 +216,7 @@
       "source_column_name": "CommissionOnCloseOrig",
       "target_column_name": "CommissionOnCloseOrig",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -223,7 +244,7 @@
       "source_column_name": "CompensationReasonID",
       "target_column_name": "CompensationReasonID",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -234,6 +255,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "CountryIDByIP",
+      "target_column_name": "CountryIDByIP",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "CreditID",
       "target_column_name": "CreditID",
       "entity_type": "JOB",
@@ -245,6 +273,13 @@
       "target_column_name": "CreditID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 57
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "CreditID",
+      "target_column_name": "CreditID",
+      "entity_type": null,
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -255,13 +290,6 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "CreditID",
-      "target_column_name": "CreditID",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "DLTClose",
       "target_column_name": "DLTClose",
       "entity_type": "JOB",
@@ -279,7 +307,7 @@
       "source_column_name": "DLTClose",
       "target_column_name": "DLTClose",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -300,7 +328,7 @@
       "source_column_name": "DLTOpen",
       "target_column_name": "DLTOpen",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -328,7 +356,7 @@
       "source_column_name": "DateID",
       "target_column_name": "DateID",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -339,6 +367,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DemoCID",
+      "target_column_name": "DemoCID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "DepositID",
       "target_column_name": "DepositID",
       "entity_type": "JOB",
@@ -350,6 +385,13 @@
       "target_column_name": "DepositID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 57
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DepositID",
+      "target_column_name": "DepositID",
+      "entity_type": null,
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -360,13 +402,6 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "DepositID",
-      "target_column_name": "DepositID",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "Description",
       "target_column_name": "Description",
       "entity_type": "JOB",
@@ -384,7 +419,7 @@
       "source_column_name": "Description",
       "target_column_name": "Description",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -405,7 +440,7 @@
       "source_column_name": "DividendID",
       "target_column_name": "DividendID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -416,6 +451,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "DurationInSeconds",
+      "target_column_name": "DurationInSeconds",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "FullCommission",
       "target_column_name": "FullCommission",
       "entity_type": "DBSQL_QUERY",
@@ -440,7 +482,7 @@
       "source_column_name": "FullCommission",
       "target_column_name": "FullCommission",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -468,7 +510,7 @@
       "source_column_name": "FullCommissionByUnits",
       "target_column_name": "FullCommissionByUnits",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -496,7 +538,7 @@
       "source_column_name": "FullCommissionOnClose",
       "target_column_name": "FullCommissionOnClose",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -517,7 +559,7 @@
       "source_column_name": "FullCommissionOnCloseOrig",
       "target_column_name": "FullCommissionOnCloseOrig",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -538,7 +580,7 @@
       "source_column_name": "FundingTypeID",
       "target_column_name": "FundingTypeID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -559,7 +601,7 @@
       "source_column_name": "GCID",
       "target_column_name": "GCID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -570,10 +612,24 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "HistoryID",
+      "target_column_name": "HistoryID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "IPNumber",
       "target_column_name": "IPNumber",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IPNumber",
+      "target_column_name": "IPNumber",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -584,6 +640,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "InitialUnits",
+      "target_column_name": "InitialUnits",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": "JOB",
@@ -615,14 +678,14 @@
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "InstrumentID",
       "target_column_name": "InstrumentID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -671,14 +734,14 @@
       "source_column_name": "IsAirDrop",
       "target_column_name": "IsAirDrop",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "IsAirDrop",
       "target_column_name": "IsAirDrop",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -688,6 +751,13 @@
       "event_count": 22
     },
     {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IsAnonymousIP",
+      "target_column_name": "IsAnonymousIP",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsBuy",
       "target_column_name": "IsBuy",
@@ -734,14 +804,14 @@
       "source_column_name": "IsBuy",
       "target_column_name": "IsBuy",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsBuy",
       "target_column_name": "IsBuy",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -762,7 +832,7 @@
       "source_column_name": "IsDiscounted",
       "target_column_name": "IsDiscounted",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -783,7 +853,7 @@
       "source_column_name": "IsFTD",
       "target_column_name": "IsFTD",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -811,7 +881,7 @@
       "source_column_name": "IsFeeDividend",
       "target_column_name": "IsFeeDividend",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -832,7 +902,7 @@
       "source_column_name": "IsPartialCloseChild",
       "target_column_name": "IsPartialCloseChild",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -860,7 +930,7 @@
       "source_column_name": "IsPartialCloseParent",
       "target_column_name": "IsPartialCloseParent",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -871,6 +941,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IsPlug",
+      "target_column_name": "IsPlug",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "IsReOpen",
       "target_column_name": "IsReOpen",
       "entity_type": "JOB",
@@ -888,7 +965,7 @@
       "source_column_name": "IsReOpen",
       "target_column_name": "IsReOpen",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -899,6 +976,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IsReal",
+      "target_column_name": "IsReal",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "IsRedeem",
       "target_column_name": "IsRedeem",
       "entity_type": "DBSQL_QUERY",
@@ -913,6 +997,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "IsRedeem",
+      "target_column_name": "IsRedeem",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "IsSettled",
       "target_column_name": "IsSettled",
       "entity_type": "DBSQL_QUERY",
@@ -958,14 +1049,14 @@
       "source_column_name": "IsSettled",
       "target_column_name": "IsSettled",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "IsSettled",
       "target_column_name": "IsSettled",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -1014,14 +1105,14 @@
       "source_column_name": "Leverage",
       "target_column_name": "Leverage",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "Leverage",
       "target_column_name": "Leverage",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1032,6 +1123,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "LoginID",
+      "target_column_name": "LoginID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "Occurred",
       "target_column_name": "MirrorID",
       "entity_type": "DBSQL_QUERY",
@@ -1074,6 +1172,27 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "MirrorID",
+      "target_column_name": "MirrorID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "MirrorID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "MirrorID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "MoveMoneyReasonID",
       "target_column_name": "MoveMoneyReasonID",
       "entity_type": "JOB",
@@ -1091,7 +1210,7 @@
       "source_column_name": "MoveMoneyReasonID",
       "target_column_name": "MoveMoneyReasonID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1112,7 +1231,7 @@
       "source_column_name": "NetProfit",
       "target_column_name": "NetProfit",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1133,7 +1252,7 @@
       "source_column_name": "Occurred",
       "target_column_name": "Occurred",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -1154,7 +1273,7 @@
       "source_column_name": "OpenDateID",
       "target_column_name": "OpenDateID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1175,7 +1294,7 @@
       "source_column_name": "OpenMarkupByUnits",
       "target_column_name": "OpenMarkupByUnits",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1196,7 +1315,7 @@
       "source_column_name": "OriginalPositionID",
       "target_column_name": "OriginalPositionID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1217,7 +1336,7 @@
       "source_column_name": "PaymentStatusID",
       "target_column_name": "PaymentStatusID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1228,6 +1347,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "PlatformID",
+      "target_column_name": "PlatformID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "PlatformTypeID",
       "target_column_name": "PlatformTypeID",
       "entity_type": "JOB",
@@ -1245,7 +1371,7 @@
       "source_column_name": "PlatformTypeID",
       "target_column_name": "PlatformTypeID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1308,28 +1434,28 @@
       "source_column_name": "ActionTypeID",
       "target_column_name": "PositionID",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "PositionID",
       "target_column_name": "PositionID",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "Description",
       "target_column_name": "PositionID",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "CompensationReasonID",
       "target_column_name": "PositionID",
       "entity_type": null,
-      "event_count": 3
+      "event_count": 5
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1340,10 +1466,24 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "PostID",
+      "target_column_name": "PostID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "PostRootID",
       "target_column_name": "PostRootID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "PostRootID",
+      "target_column_name": "PostRootID",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1354,10 +1494,24 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "PreviousOccurred",
+      "target_column_name": "PreviousOccurred",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "ProxyType",
       "target_column_name": "ProxyType",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "ProxyType",
+      "target_column_name": "ProxyType",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1385,31 +1539,31 @@
       "source_column_name": "RealCID",
       "target_column_name": "RealCID",
       "entity_type": null,
+      "event_count": 5
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RedeemID",
+      "target_column_name": "RedeemID",
+      "entity_type": "JOB",
+      "event_count": 60
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RedeemID",
+      "target_column_name": "RedeemID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 57
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RedeemID",
+      "target_column_name": "RedeemID",
+      "entity_type": null,
       "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "RedeemID",
-      "target_column_name": "RedeemID",
-      "entity_type": "JOB",
-      "event_count": 60
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "RedeemID",
-      "target_column_name": "RedeemID",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 57
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "RedeemID",
-      "target_column_name": "RedeemID",
-      "entity_type": null,
-      "event_count": 1
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "RedeemStatus",
       "target_column_name": "RedeemStatus",
       "entity_type": "JOB",
@@ -1427,7 +1581,7 @@
       "source_column_name": "RedeemStatus",
       "target_column_name": "RedeemStatus",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1435,6 +1589,13 @@
       "target_column_name": "RegulationIDOnOpen",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "RegulationIDOnOpen",
+      "target_column_name": "RegulationIDOnOpen",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1455,7 +1616,7 @@
       "source_column_name": "ReopenForPositionID",
       "target_column_name": "ReopenForPositionID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1466,6 +1627,13 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "SessionID",
+      "target_column_name": "SessionID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "SettlementTypeID",
       "target_column_name": "SettlementTypeID",
       "entity_type": "DBSQL_QUERY",
@@ -1511,14 +1679,14 @@
       "source_column_name": "SettlementTypeID",
       "target_column_name": "SettlementTypeID",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "SettlementTypeID",
       "target_column_name": "SettlementTypeID",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 4
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1526,6 +1694,13 @@
       "target_column_name": "StatusID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "StatusID",
+      "target_column_name": "StatusID",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1546,7 +1721,7 @@
       "source_column_name": "Description",
       "target_column_name": "TicketFeeAction",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1564,10 +1739,24 @@
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "TimeID",
+      "target_column_name": "TimeID",
+      "entity_type": null,
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "UpdateDate",
       "target_column_name": "UpdateDate",
       "entity_type": "DBSQL_QUERY",
       "event_count": 22
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "UpdateDate",
+      "target_column_name": "UpdateDate",
+      "entity_type": null,
+      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -1595,49 +1784,49 @@
       "source_column_name": "VolumeOnClose",
       "target_column_name": "VolumeOnClose",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitForexRate",
       "target_column_name": "VolumeOnOpen",
       "entity_type": null,
-      "event_count": 88
+      "event_count": 90
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitialUnits",
       "target_column_name": "VolumeOnOpen",
       "entity_type": null,
-      "event_count": 88
+      "event_count": 90
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitConversionRate",
       "target_column_name": "VolumeOnOpen",
       "entity_type": null,
-      "event_count": 88
+      "event_count": 90
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitialUnits",
       "target_column_name": "VolumeOnOpen",
       "entity_type": "JOB",
-      "event_count": 84
+      "event_count": 85
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitForexRate",
       "target_column_name": "VolumeOnOpen",
       "entity_type": "JOB",
-      "event_count": 84
+      "event_count": 85
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitConversionRate",
       "target_column_name": "VolumeOnOpen",
       "entity_type": "JOB",
-      "event_count": 84
+      "event_count": 85
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
@@ -1690,13 +1879,6 @@
     },
     {
       "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "Volume",
-      "target_column_name": "VolumeOnOpen",
-      "entity_type": "NOTEBOOK",
-      "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
       "source_column_name": "InitForexRate",
       "target_column_name": "VolumeOnOpen",
       "entity_type": "DASHBOARD_V3",
@@ -1717,6 +1899,13 @@
       "event_count": 2
     },
     {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "Volume",
+      "target_column_name": "VolumeOnOpen",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "WithdrawID",
       "target_column_name": "WithdrawID",
@@ -1735,7 +1924,7 @@
       "source_column_name": "WithdrawID",
       "target_column_name": "WithdrawID",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1750,6 +1939,13 @@
       "target_column_name": "WithdrawPaymentID",
       "entity_type": "DBSQL_QUERY",
       "event_count": 57
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "WithdrawPaymentID",
+      "target_column_name": "WithdrawPaymentID",
+      "entity_type": null,
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1757,13 +1953,6 @@
       "target_column_name": "WithdrawPaymentID",
       "entity_type": "NOTEBOOK",
       "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "WithdrawPaymentID",
-      "target_column_name": "WithdrawPaymentID",
-      "entity_type": null,
-      "event_count": 1
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1777,14 +1966,14 @@
       "source_column_name": "ActionTypeID",
       "target_column_name": "actiontypeid",
       "entity_type": null,
-      "event_count": 90
+      "event_count": 91
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "ActionTypeID",
       "target_column_name": "actiontypeid",
       "entity_type": "JOB",
-      "event_count": 85
+      "event_count": 86
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1819,7 +2008,7 @@
       "source_column_name": "etr_y",
       "target_column_name": "etr_y",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1840,7 +2029,7 @@
       "source_column_name": "etr_ym",
       "target_column_name": "etr_ym",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1861,7 +2050,7 @@
       "source_column_name": "etr_ymd",
       "target_column_name": "etr_ymd",
       "entity_type": null,
-      "event_count": 1
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -1910,91 +2099,91 @@
       "source_column_name": "IsRedeem",
       "target_column_name": "isredeem",
       "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "mirrorid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 67
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "mirrorid",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": "JOB",
+      "event_count": 61
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "mirrorid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 18
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "MirrorID",
+      "target_column_name": "mirrorid",
+      "entity_type": null,
       "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "MirrorID",
       "target_column_name": "mirrorid",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 67
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 67
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "Occurred",
-      "target_column_name": "mirrorid",
-      "entity_type": "DBSQL_QUERY",
-      "event_count": 67
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
-      "entity_type": "JOB",
-      "event_count": 61
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "Occurred",
-      "target_column_name": "mirrorid",
-      "entity_type": "JOB",
-      "event_count": 61
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
-      "entity_type": "JOB",
-      "event_count": 61
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "Occurred",
-      "target_column_name": "mirrorid",
-      "entity_type": "NOTEBOOK",
-      "event_count": 18
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
-      "entity_type": "NOTEBOOK",
-      "event_count": 18
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
-      "entity_type": "NOTEBOOK",
-      "event_count": 18
-    },
-    {
-      "source_table_full_name": "main.dwh.dim_position",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
       "entity_type": null,
-      "event_count": 2
-    },
-    {
-      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
-      "source_column_name": "MirrorID",
-      "target_column_name": "mirrorid",
-      "entity_type": null,
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
       "source_column_name": "Occurred",
       "target_column_name": "mirrorid",
       "entity_type": null,
-      "event_count": 2
+      "event_count": 3
     },
     {
       "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
@@ -2025,5 +2214,5 @@
       "event_count": 1
     }
   ],
-  "generated_at": "2026-05-17T16:27:20Z"
+  "generated_at": "2026-05-18T08:05:28Z"
 }

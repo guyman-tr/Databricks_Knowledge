@@ -1,0 +1,335 @@
+{
+  "object": "main.etoro_kpi_prep.v_moneyfarm_mimo",
+  "rows": [
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "count_deposits",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "count_deposits",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "count_withdrawals",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "count_withdrawals",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "date",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "date",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "date",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "dateid",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "dateid",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "dateid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "gcid",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "gcid",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "is_ftd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "is_ftd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "is_ftd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "net_flow_gbp",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "net_flow_gbp",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "net_flow_usd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "net_flow_usd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "net_flow_usd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "net_flow_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "net_flow_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "net_flow_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_deposits_gbp",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_deposits_gbp",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_deposits_gbp",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": null,
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 3
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "total_deposits_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_withdrawals_gbp",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_withdrawals_gbp",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_withdrawals_gbp",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": null,
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": "NOTEBOOK",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Ask",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts",
+      "source_column_name": "EventPayloadRowData",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_currencypricewithsplit",
+      "source_column_name": "Bid",
+      "target_column_name": "total_withdrawals_usd",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 1
+    }
+  ],
+  "generated_at": "2026-05-18T08:07:03Z"
+}

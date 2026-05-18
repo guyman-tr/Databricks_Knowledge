@@ -1,0 +1,58 @@
+{
+  "schema": "de_output",
+  "catalog": "main",
+  "generated_at": "2026-05-18T07:34:24Z",
+  "lineage_lookback_days": 90,
+  "objects": [
+    {
+      "object": "main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics",
+      "name": "de_output_etoro_kpi_fact_customeraction_w_metrics",
+      "table_type": "EXTERNAL",
+      "column_lineage_cache": "knowledge\\UC_generated\\de_output\\_discovery\\column_lineage\\de_output_etoro_kpi_fact_customeraction_w_metrics.json",
+      "column_lineage_row_count": 196,
+      "writers": [
+        {
+          "kind": "JOB",
+          "entity_id": "712655402982749",
+          "event_count_lookback": 90,
+          "role": "primary",
+          "fetched": false,
+          "fetch_error": "job has no notebook tasks"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "0e24356b-64d2-4af6-9d45-7414ed41b7e5",
+          "event_count_lookback": 4,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "1233bc96-436a-421c-9bcf-30b8c62f602c",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        },
+        {
+          "kind": "DBSQL_QUERY",
+          "entity_id": "68a459bd-5e14-40a1-b197-1a9f26430e2e",
+          "event_count_lookback": 2,
+          "role": "secondary",
+          "fetched": false,
+          "fetch_error": "unrecognised entity_type=DBSQL_QUERY"
+        }
+      ],
+      "writers_manifest": "knowledge\\UC_generated\\de_output\\_discovery\\source_code\\_writers\\de_output_etoro_kpi_fact_customeraction_w_metrics.json",
+      "status": "WRITER_FOUND_BUT_NO_SOURCE_FETCHED"
+    }
+  ],
+  "stats": {
+    "ok": 0,
+    "no_lineage": 0,
+    "no_view_def": 0,
+    "errors": 0,
+    "wall_seconds": 21.8
+  }
+}

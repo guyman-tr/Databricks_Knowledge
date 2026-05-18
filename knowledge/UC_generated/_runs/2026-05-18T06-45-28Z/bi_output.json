@@ -1,0 +1,766 @@
+{
+  "schema": "bi_output",
+  "catalog": "main",
+  "started_at": "2026-05-18T06:52:14Z",
+  "finished_at": "2026-05-18T07:02:46Z",
+  "wall_seconds": 632.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 631.2159705162048,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [141/144] vg_positions_open_closed_iban_tp (VIEW)\n  [142/144] vg_positionsvolumeandattributes_lc4_source (VIEW)\n  [143/144] vg_positionsvolumeandattributes_lc4_source_test1 (VIEW)\n  [144/144] vg_trades (VIEW)\n[discover-schema] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_schema_card.md (124,890 bytes; 123/144 in-scope; 630.4s)"
+    },
+    "2": {
+      "wall_seconds": 0.16701126098632812,
+      "rc": 2,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "[fetch-writer] inventory not found: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_discovery\\uc_inventory.json. Run discover_schema.py --schema bi_output --phase 1 first."
+    }
+  },
+  "failures": [
+    "phase 2 rc=2: [fetch-writer] inventory not found: C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\bi_output\\_discovery\\uc_inventory.json. Run discover_schema.py --schema bi_output --phase 1 first."
+  ],
+  "objects": [
+    {
+      "name": "bi_ouput_v_dim_instrumenttype",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_ouput_vg_etoro_emoney",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_compliance_kycscreeninglimitation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_mas_daily_client_metrics",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_mas_population",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_uk_social_activity_monitoring",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_compliance_uk_social_activity_monitoring_m",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_agent_engagement",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_club_club_equity",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_club_club_offer_eligibilty",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_pageviews_behaviour",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_survey",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_survey_taker",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_triggers",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_triggers_filtered",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_facing_triggers_lead_score",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_agent_user",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_aml_handling_days",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_case",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_case_event",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_customer_engagement",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_customer_support_task",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_external_table_isa",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_investment_capital_guarantee_capital_guarantee_q42024_global",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_customer_social_social_feed",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_deltaapp_subscription_view",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_external_table_bi_db_sharelending_custodyreconciliation_external",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_external_table_bi_db_sharelending_reconciliation_external",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_hedge_nettingbalance",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_closed_to_iban",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_closed_to_iban_parquet",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_opened_from_iban",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_positions_opened_from_iban_parquet",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_recurringinvestment_positions_parquet",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetaileseu",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetailesmain",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_collateraldetailesuk",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_eu",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_custodyreconciliation_uk",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateraleu",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateralmain",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_loansandcollateraluk",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_price_estimated",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_bi_db_sharelending_reconciliation",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_finance_tables_ptp_tax",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_fullname_apiresults",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_acquisition_demo",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_acquisition_liveacquisition",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_affiliate_payments_report_closed_position",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_liveacquisitiondashboard",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_marketingcloud_user_behavior_instrument_v",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_marketingcloud_user_behavior_pi_v",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_promotion_bi_db_promo_card",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_sfmc_sfmc_filter",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_marketing_sfmc_sfmc_report",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_moneyfarm_customers",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_moneyfarm_fact_portfolio_snapshot",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_moneyfarm_fact_transactions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_regtechops_wash_trading_alerts_daily",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_urban_notifications_daily_panel",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_urban_notifications_daily_panel_agg",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_urban_notifications_monthly_lsd",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_v_recurring_investment",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_aum",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_case",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_case_event",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_cf_crm_contact",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_club",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_club_offers",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_copy_mimo",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_crm_user",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_customer_assignment",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_customer_first_dates",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_customer_snapshot",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_customer_snapshot_test",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_customer_snapshot_v2",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_daily_commission",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_date",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_ddr_customers_snapshot",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_mimo",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_parentcid",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_revenue",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_vg_volume_amount",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "bi_output_wf_view",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "current",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "current_table",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "finance_tables_functions_revenue_sdrt",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "finance_tables_functions_revenue_trading_fees",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "funded",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "limitation_to_normal_conversion",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "negative_nmi",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "nmi_by_portfoliopi_new",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "positionsvolumeandattributes_lc4_source",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "positive_nmi",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "positive_nmi_commodities",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "snapshot",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "snapshot_table",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_external_france_wealth_contracts_transactions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_acquisitionfunnel_em1",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_bidb_alldeposits_for_genie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoney_card_instance_summary",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoney_card_transactions",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoney_openbankingdeposit",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoney_panel_firstdates_em1",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoney_potentialclients_attributes",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoney_txs",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoneydimaccount_forgenie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_emoneydimtransaction_forgenie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_fact_billingdeposit_for_genie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_fact_billingdepost_forgenie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_fact_billingdepost_forgenie_new",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_fact_billingwithdraw_for_genie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_fact_snapshotcustomer_for_emoney_genie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_factbillingdeposit_transactionsandattributes",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_factbillingwithdraw_transactionsandattributes",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_fullbincodelist",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_payments_mimo_allplatformddr_genienew",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_payments_mimo_basedonddrallplatfrommimo_for_genie",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_positions_open_closed_iban_tp",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_positionsvolumeandattributes_lc4_source",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_positionsvolumeandattributes_lc4_source_test1",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    },
+    {
+      "name": "vg_trades",
+      "in_pilot_scope": true,
+      "status": "Failed (phase fail: phase 2 rc=2)",
+      "n_unverified": 0
+    }
+  ]
+}

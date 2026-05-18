@@ -3,7 +3,7 @@ schema: etoro_kpi_prep
 catalog: main
 display_name: etoro_kpi_prep — UC-Pipeline scope sheet
 framework: uc-pipeline-doc
-generated_at: "2026-05-17T16:07:11Z"
+generated_at: "2026-05-18T08:03:13Z"
 lineage_lookback_days: 90
 in_scope_count: 53
 out_of_scope_count: 2

@@ -1,0 +1,36 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_moneyfarm_aum",
+  "evaluator_attempt": 2,
+  "scores": {
+    "inheritance_fidelity": 7.0,
+    "source_code_narration_accuracy": 10.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 4.0,
+    "shape_fidelity": 3.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 7.2,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "FAIL",
+  "regeneration_feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.",
+  "evaluated_at": "2026-05-18T09:06:43Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [],
+  "bucket_counts": {
+    "A": 0,
+    "B": 7,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "no inherited columns to fidelity-check (neutral)",
+    "source_code_narration_accuracy": "spot-check 3/3 accurate",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type']",
+    "shape_fidelity": "structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

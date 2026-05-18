@@ -1,0 +1,1232 @@
+{
+  "schema": "etoro_kpi_prep",
+  "catalog": "main",
+  "started_at": "2026-05-18T08:52:14Z",
+  "finished_at": "2026-05-18T08:53:10Z",
+  "wall_seconds": 56.0,
+  "phases": {
+    "5": {
+      "wall_seconds": 13.225800037384033,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] v_revenue_transfercoinfee — tiers={'1': 4, '2': 1, 'U': 1}, unverified=1\n  [OK] v_spaceship_mimo — tiers={'2': 13, 'U': 2}, unverified=2\n  [OK] v_trading_volume_and_amount — tiers={'U': 9, '2': 22, '1': 1}, unverified=9\n  [OK] v_trading_volume_positionlevel — tiers={'U': 9, '2': 22, '1': 1}, unverified=9\n[generate-wiki] done: 53/53 OK"
+    },
+    "6": {
+      "wall_seconds": 2.0971386432647705,
+      "rc": 1,
+      "rows": 0,
+      "stdout_tail": "[HARD] v_revenue_interestfee: missing_tier_tag — column `InterestFee` description has no `(Tier N — origin)` suffix\n\n[validate-pipeline-wiki] FAIL (32 HARD, 0 WARN, strict=False)",
+      "stderr_tail": ""
+    },
+    "7": {
+      "wall_seconds": 39.00877285003662,
+      "rc": 0,
+      "rows": 53,
+      "first_pass_pass": 21,
+      "regen_pass": 0,
+      "final_fail": 32,
+      "dimension_averages": {
+        "inheritance_fidelity": 8.68,
+        "source_code_narration_accuracy": 9.02,
+        "null_with_provenance_correctness": 6.87,
+        "completeness": 3.92,
+        "shape_fidelity": 2.94,
+        "lineage_coherence": 6.81
+      },
+      "per_object": {
+        "gold_de_user_dim_ddr_customer_dailystatus_scd": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 0.0,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Could not evaluate: .md or .lineage.md missing"
+        },
+        "mv_revenue_trading": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.25
+        },
+        "v_copyfund_positions": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.0
+        },
+        "v_ddr_revenues": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 6.1,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 3.0/10: 24 elements mismatched: `DateID`: lineage source=main.etoro_kpi_prep.v_revenue_stakingfee but tier origin='blocked-on-upstream'; `Date`: lineage source=main.etoro_kpi_prep.v_revenue_stakingfee but tier origin='unclassified'; `RealCID`: lineage source=main.etoro_kpi_prep.v_revenue_stakingfee but tier origin='blocked-on-upstream'."
+        },
+        "v_dim_dataplatform_uuid": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_dim_ftdplatform": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.2,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_dim_instrument_enriched": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.25
+        },
+        "v_fact_customeraction": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_fact_customeraction_enriched": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_fact_customeraction_w_metrics": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.25
+        },
+        "v_globalftdplatform": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.2,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_instrument_conversion_rates_dwh": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_mimo_allplatforms": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_mimo_emoneyplatform": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 6.85,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 3.0/10: 10 elements mismatched: `DateID`: lineage source=main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status but tier origin='unclassified'; `Date`: lineage source=main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status but tier origin='unclassified'; `RealCID`: lineage source=main.bi_db.gold_sql_dp_prod_we_emoney_dbo_emoney_fact_transaction_status but tier origin='unclassified'."
+        },
+        "v_mimo_first_deposit_all_platforms": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.15,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 3.0/10: 4 elements mismatched: `FirstDepositDate`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'; `FirstDepositAmount`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'; `FTDPlatform`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'."
+        },
+        "v_mimo_options_platform": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.0
+        },
+        "v_mimo_optionsplatform": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.0
+        },
+        "v_mimo_tradingplatform": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_moneyfarm_aum": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_moneyfarm_fees": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 6.45,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_moneyfarm_mimo": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_options_aum": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_active_traders": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_active_traders_lite": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_balance_only_accounts": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_first_time_funded": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_first_trading_action": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 6.85,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 3.0/10: 3 elements mismatched: `IsDepositor`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked but tier origin='unclassified'; `FirstDepositDate`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked but tier origin='unclassified'; `FirstDepositDateID`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked but tier origin='unclassified'."
+        },
+        "v_population_funded": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_otd_daterange": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_population_portfolio_only": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_adminfee": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.35,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_cashoutfee_excluderedeem": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.35,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_cashoutfee_incredeem": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.35,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_commission": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.0
+        },
+        "v_revenue_conversionfee": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.25,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 5.0/10: `TransactionID`: lineage source=main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee but tier origin='unclassified'; `IsValidCustomer`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked but tier origin='unclassified'."
+        },
+        "v_revenue_conversionfee_withpositiondata": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_revenue_cryptotofiat_c2f": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.15,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 3.0/10: 3 elements mismatched: `LastModificationDate`: lineage source=main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e but tier origin='unclassified'; `LastModificationDateID`: lineage source=main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_c2f_e2e but tier origin='unclassified'; `IsValidCustomer`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked but tier origin='unclassified'."
+        },
+        "v_revenue_dividend": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.35,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_dormantfee": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.1
+        },
+        "v_revenue_fullcommission": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.0
+        },
+        "v_revenue_interestfee": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.35,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_optionsplatform": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.0
+        },
+        "v_revenue_rollover": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.25,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 5.0/10: `etr_ymd`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'; `RolloverFee`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction but tier origin='unclassified'."
+        },
+        "v_revenue_sdrt": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.25
+        },
+        "v_revenue_share_lending": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.1
+        },
+        "v_revenue_spotadjustfee": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.25,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at.\nLineage coherence 5.0/10: `etr_ymd`: lineage source=main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution but tier origin='unclassified'; `SpotAdjustFee`: lineage source=main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution but tier origin='unclassified'."
+        },
+        "v_revenue_stakingfee": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_revenue_ticketfee_bypercent": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 7.9
+        },
+        "v_revenue_ticketfee_fixed": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 6.45,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_revenue_transfercoinfee": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.35,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_spaceship_mimo": {
+          "verdict": "FAIL",
+          "attempt": 2,
+          "weighted_score": 7.2,
+          "feedback": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at."
+        },
+        "v_trading_volume_and_amount": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.1
+        },
+        "v_trading_volume_positionlevel": {
+          "verdict": "PASS",
+          "attempt": 1,
+          "weighted_score": 8.1
+        }
+      }
+    }
+  },
+  "failures": [
+    "phase 6 rc=1: no stderr"
+  ],
+  "objects": [
+    {
+      "name": "gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 38 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 38,
+      "tier_breakdown": {
+        "U": 38
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 0.0
+    },
+    {
+      "name": "mv_revenue_trading",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "12 of 24 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 12,
+      "tier_breakdown": {
+        "U": 12,
+        "2": 9,
+        "1": 3
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.25
+    },
+    {
+      "name": "v_copyfund_positions",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "2 of 9 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "U": 2,
+        "1": 5,
+        "2": 2
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.0
+    },
+    {
+      "name": "v_ddr_revenues",
+      "in_pilot_scope": true,
+      "status": "Blocked",
+      "status_detail": "upstream wiki missing: main.etoro_kpi_prep.v_revenue_stakingfee",
+      "blocked_on_upstream": "main.etoro_kpi_prep.v_revenue_stakingfee",
+      "routing_attempts": "rules 1-5 attempted in cache_upstream_wikis.py; see _discovery/upstream_wikis/_index.json",
+      "n_unverified": 24,
+      "tier_breakdown": {
+        "U": 24
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 6.1
+    },
+    {
+      "name": "v_dim_dataplatform_uuid",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "U": 1,
+        "2": 5
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_dim_ftdplatform",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Samp",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_dim_instrument_enriched",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 33,
+        "2": 15,
+        "3": 2
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.25
+    },
+    {
+      "name": "v_fact_customeraction",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "8 of 79 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 8,
+      "tier_breakdown": {
+        "5": 10,
+        "1": 35,
+        "3": 4,
+        "2": 22,
+        "U": 8
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_fact_customeraction_enriched",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "8 of 79 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 8,
+      "tier_breakdown": {
+        "5": 10,
+        "1": 35,
+        "3": 4,
+        "2": 22,
+        "U": 8
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_fact_customeraction_w_metrics",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 28,
+        "3": 1,
+        "2": 65,
+        "5": 3
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.25
+    },
+    {
+      "name": "v_globalftdplatform",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Samp",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 1,
+        "2": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_instrument_conversion_rates_dwh",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "4 of 12 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 4,
+      "tier_breakdown": {
+        "2": 3,
+        "1": 5,
+        "U": 4
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_mimo_allplatforms",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "2": 19,
+        "U": 2
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_mimo_emoneyplatform",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 10,
+      "tier_breakdown": {
+        "U": 10,
+        "2": 11
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 6.85
+    },
+    {
+      "name": "v_mimo_first_deposit_all_platforms",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 4,
+      "tier_breakdown": {
+        "1": 2,
+        "U": 4
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.15
+    },
+    {
+      "name": "v_mimo_options_platform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "5 of 14 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "U": 5,
+        "2": 8,
+        "1": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.0
+    },
+    {
+      "name": "v_mimo_optionsplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "5 of 15 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "U": 5,
+        "2": 9,
+        "1": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.0
+    },
+    {
+      "name": "v_mimo_tradingplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "8 of 19 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 8,
+      "tier_breakdown": {
+        "2": 9,
+        "U": 8,
+        "1": 2
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_moneyfarm_aum",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "2": 6,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_moneyfarm_fees",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 5 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 5,
+      "tier_breakdown": {
+        "U": 5
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 6.45
+    },
+    {
+      "name": "v_moneyfarm_mimo",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "2": 11,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_options_aum",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 6,
+      "tier_breakdown": {
+        "1": 1,
+        "U": 6,
+        "2": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_active_traders",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 3,
+      "tier_breakdown": {
+        "U": 3,
+        "2": 12
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_active_traders_lite",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 3,
+      "tier_breakdown": {
+        "U": 3,
+        "2": 11
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_balance_only_accounts",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 3
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_first_time_funded",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 3,
+      "tier_breakdown": {
+        "2": 15,
+        "U": 3
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_first_trading_action",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 18,
+      "tier_breakdown": {
+        "U": 18,
+        "2": 2
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 6.85
+    },
+    {
+      "name": "v_population_funded",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 3
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_otd_daterange",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "U": 1,
+        "2": 2
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_population_portfolio_only",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "2": 21
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_revenue_adminfee",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 6,
+        "U": 1,
+        "5": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.35
+    },
+    {
+      "name": "v_revenue_cashoutfee_excluderedeem",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 1,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.35
+    },
+    {
+      "name": "v_revenue_cashoutfee_incredeem",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 1,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.35
+    },
+    {
+      "name": "v_revenue_commission",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "2 of 15 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 3,
+        "U": 2,
+        "5": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.0
+    },
+    {
+      "name": "v_revenue_conversionfee",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Samp",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "1": 14,
+        "U": 2,
+        "2": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.25
+    },
+    {
+      "name": "v_revenue_conversionfee_withpositiondata",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "6 of 27 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 6,
+      "tier_breakdown": {
+        "1": 16,
+        "U": 6,
+        "2": 5
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_revenue_cryptotofiat_c2f",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 3,
+      "tier_breakdown": {
+        "2": 7,
+        "1": 6,
+        "U": 3
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.15
+    },
+    {
+      "name": "v_revenue_dividend",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 1,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.35
+    },
+    {
+      "name": "v_revenue_dormantfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "1 of 6 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 2,
+        "U": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.1
+    },
+    {
+      "name": "v_revenue_fullcommission",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "2 of 15 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "1": 9,
+        "2": 3,
+        "U": 2,
+        "5": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.0
+    },
+    {
+      "name": "v_revenue_interestfee",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 5/10 structural checks pass; failing: ['required section headers present', 'every element has tier tag', 'frontmatter has object_fqn'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Samp",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 4,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.35
+    },
+    {
+      "name": "v_revenue_optionsplatform",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "6 of 26 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 6,
+      "tier_breakdown": {
+        "U": 6,
+        "1": 1,
+        "2": 19
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.0
+    },
+    {
+      "name": "v_revenue_rollover",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "1": 3,
+        "2": 1,
+        "U": 2
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.25
+    },
+    {
+      "name": "v_revenue_sdrt",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "1": 10,
+        "2": 3,
+        "5": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.25
+    },
+    {
+      "name": "v_revenue_share_lending",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "1 of 9 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 5,
+        "2": 3,
+        "U": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.1
+    },
+    {
+      "name": "v_revenue_spotadjustfee",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "1": 6,
+        "U": 2,
+        "5": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.25
+    },
+    {
+      "name": "v_revenue_stakingfee",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "14 of 22 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 14,
+      "tier_breakdown": {
+        "U": 14,
+        "2": 7,
+        "1": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_revenue_ticketfee_bypercent",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "4 of 6 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 4,
+      "tier_breakdown": {
+        "U": 4,
+        "1": 1,
+        "2": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.9
+    },
+    {
+      "name": "v_revenue_ticketfee_fixed",
+      "in_pilot_scope": true,
+      "status": "Stub only",
+      "status_detail": "all 6 columns unclassifiable",
+      "blocked_on_upstream": null,
+      "routing_attempts": "no upstream wiki match AND no source-code citation",
+      "n_unverified": 6,
+      "tier_breakdown": {
+        "U": 6
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 6.45
+    },
+    {
+      "name": "v_revenue_transfercoinfee",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 1,
+      "tier_breakdown": {
+        "1": 4,
+        "2": 1,
+        "U": 1
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.35
+    },
+    {
+      "name": "v_spaceship_mimo",
+      "in_pilot_scope": true,
+      "status": "Failed (eval)",
+      "status_detail": "Completeness 4.0/10: 6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type'].\nShape fidelity 3.0/10: structural issues: missing Tier Legend section, missing Sam",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 2,
+      "tier_breakdown": {
+        "2": 13,
+        "U": 2
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 2,
+      "evaluator_score": 7.2
+    },
+    {
+      "name": "v_trading_volume_and_amount",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "9 of 32 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 9,
+      "tier_breakdown": {
+        "U": 9,
+        "2": 22,
+        "1": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.1
+    },
+    {
+      "name": "v_trading_volume_positionlevel",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "status_detail": "9 of 32 columns in sidecar",
+      "blocked_on_upstream": null,
+      "routing_attempts": "",
+      "n_unverified": 9,
+      "tier_breakdown": {
+        "U": 9,
+        "2": 22,
+        "1": 1
+      },
+      "evaluator_verdict": "PASS",
+      "evaluator_attempt": 1,
+      "evaluator_score": 8.1
+    }
+  ]
+}

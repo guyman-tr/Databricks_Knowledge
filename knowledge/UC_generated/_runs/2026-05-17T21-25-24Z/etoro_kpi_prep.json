@@ -1,0 +1,353 @@
+{
+  "schema": "etoro_kpi_prep",
+  "catalog": "main",
+  "started_at": "2026-05-17T21:25:24Z",
+  "finished_at": "2026-05-17T21:25:24Z",
+  "wall_seconds": 0.0,
+  "phases": {
+    "6": {
+      "wall_seconds": 0.1690082550048828,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "[validate-pipeline-wiki] etoro_kpi_prep: 2 objects checked, 0 HARD, 0 WARN issues\n\n[validate-pipeline-wiki] PASS",
+      "stderr_tail": ""
+    }
+  },
+  "failures": [],
+  "objects": [
+    {
+      "name": "gold_de_user_dim_ddr_customer_dailystatus_scd",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "mv_revenue_trading",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_copyfund_positions",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_ddr_revenues",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_dim_dataplatform_uuid",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_dim_ftdplatform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_dim_instrument_enriched",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_fact_customeraction",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_fact_customeraction_enriched",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 38,
+        "tier2_columns": 24,
+        "tier3_columns": 5,
+        "tier4_columns": 0,
+        "tier5_columns": 12,
+        "unverified_columns": 0
+      }
+    },
+    {
+      "name": "v_fact_customeraction_w_metrics",
+      "in_pilot_scope": true,
+      "status": "Generated",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 30,
+        "tier2_columns": 53,
+        "tier3_columns": 4,
+        "tier4_columns": 0,
+        "tier5_columns": 10,
+        "unverified_columns": 0
+      }
+    },
+    {
+      "name": "v_globalftdplatform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_instrument_conversion_rates_dwh",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_mimo_allplatforms",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_mimo_emoneyplatform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_mimo_first_deposit_all_platforms",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_mimo_options_platform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_mimo_optionsplatform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_mimo_tradingplatform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_moneyfarm_aum",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_moneyfarm_fees",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_moneyfarm_mimo",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_options_aum",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_active_traders",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_active_traders_lite",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_balance_only_accounts",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_first_time_funded",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_first_trading_action",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_funded",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_otd_daterange",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_population_portfolio_only",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_adminfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_cashoutfee_excluderedeem",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_cashoutfee_incredeem",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_commission",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_conversionfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_conversionfee_withpositiondata",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_cryptotofiat_c2f",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_dividend",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_dormantfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_fullcommission",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_interestfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_optionsplatform",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_rollover",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_sdrt",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_share_lending",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_spotadjustfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_stakingfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_ticketfee_bypercent",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_ticketfee_fixed",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_revenue_transfercoinfee",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_spaceship_mimo",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_trading_volume_and_amount",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    },
+    {
+      "name": "v_trading_volume_positionlevel",
+      "in_pilot_scope": true,
+      "status": "Pending",
+      "n_unverified": 0
+    }
+  ]
+}

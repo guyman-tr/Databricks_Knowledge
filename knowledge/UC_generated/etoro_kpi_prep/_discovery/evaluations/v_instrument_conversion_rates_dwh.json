@@ -1,0 +1,72 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_instrument_conversion_rates_dwh",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 10.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 4.0,
+    "shape_fidelity": 3.0,
+    "lineage_coherence": 3.0
+  },
+  "weighted_score": 7.9,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T09:06:38Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "SellCurrency",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Cur",
+      "wiki_quote": "Trading symbol / ticker for the sell-side currency. \"USD\", \"EUR\", \"GBX\". UNIQUE constraint in production. Passthrough from Dictionary.Currency.Abbreviation via sell-side join. (Tier 1 — Dictionary.Cur",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "InstrumentTypeID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.",
+      "wiki_quote": "From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Computed: TDCUR_BUY.Abbreviation + '/' + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument)",
+      "wiki_quote": "Computed: TDCUR_BUY.Abbreviation + '/' + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "InstrumentDisplayName",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
+      "upstream_quote": "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData)",
+      "wiki_quote": "Human-readable name shown in UI (e.g., \"Apple\", \"EUR/USD\"). Used in position displays, order forms, and APIs. (Tier 1 — Trade.InstrumentMetaData)",
+      "match": "YES — byte-equal"
+    }
+  ],
+  "bucket_counts": {
+    "A": 6,
+    "B": 6,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "spot-check 2/2 accurate",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type']",
+    "shape_fidelity": "structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at",
+    "lineage_coherence": "4 elements mismatched: `ConversionRate_Buy_Spreaded`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument but tier origin='unclassified'; `ConversionRate_Sell_Spreaded`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument but tier origin='unclassified'; `ConversionRate_Buy`: lineage source=main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument but tier origin='unclassified'"
+  }
+}

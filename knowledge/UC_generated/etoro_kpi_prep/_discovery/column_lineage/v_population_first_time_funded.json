@@ -1,0 +1,426 @@
+{
+  "object": "main.etoro_kpi_prep.v_population_first_time_funded",
+  "rows": [
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDDateID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_globalftdplatform",
+      "source_column_name": "Name",
+      "target_column_name": "FTDPlatform",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_globalftdplatform",
+      "source_column_name": "Name",
+      "target_column_name": "FTDPlatform",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_globalftdplatform",
+      "source_column_name": "FTDPlatformID",
+      "target_column_name": "FTDPlatformID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_globalftdplatform",
+      "source_column_name": "FTDPlatformID",
+      "target_column_name": "FTDPlatformID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDTime",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FTDTime",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstFundedDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": null,
+      "event_count": 6
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "FirstDepositDate",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstFundedDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBDateID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBDateID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBTime",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 7
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBTime",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction",
+      "source_column_name": "Occurred",
+      "target_column_name": "FirstIOBTime",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDate",
+      "target_column_name": "FirstOptionsTradeDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDate",
+      "target_column_name": "FirstOptionsTradeDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstOptionsTradeDateID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.etoro_kpi_prep.v_revenue_optionsplatform",
+      "source_column_name": "FirstTradeDateID",
+      "target_column_name": "FirstOptionsTradeDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstTradeDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstTradeDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstTradeDateID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenDateID",
+      "target_column_name": "FirstTradeDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "FirstTradeTime",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.dim_position",
+      "source_column_name": "OpenOccurred",
+      "target_column_name": "FirstTradeTime",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstVerifiedDate",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstVerifiedDate",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstVerifiedDateID",
+      "entity_type": null,
+      "event_count": 4
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked",
+      "source_column_name": "FromDateID",
+      "target_column_name": "FirstVerifiedDateID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": null,
+      "event_count": 20
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "DBSQL_QUERY",
+      "event_count": 8
+    },
+    {
+      "source_table_full_name": "main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked",
+      "source_column_name": "RealCID",
+      "target_column_name": "RealCID",
+      "entity_type": "NOTEBOOK",
+      "event_count": 2
+    }
+  ],
+  "generated_at": "2026-05-18T08:08:42Z"
+}

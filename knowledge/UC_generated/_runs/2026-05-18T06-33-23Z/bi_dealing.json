@@ -1,0 +1,20 @@
+{
+  "schema": "bi_dealing",
+  "catalog": "main",
+  "started_at": "2026-05-18T06:33:23Z",
+  "finished_at": "2026-05-18T06:33:30Z",
+  "wall_seconds": 7.0,
+  "phases": {
+    "1": {
+      "wall_seconds": 6.244438409805298,
+      "rc": 1,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "       ^^^^^^^^^\n  File \"C:\\Python311\\Lib\\site-packages\\databricks\\sql\\client.py\", line 477, in open\n    return self.session.is_open\n           ^^^^^^^^^^^^\nAttributeError: 'Connection' object has no attribute 'session'"
+    }
+  },
+  "failures": [
+    "phase 1 rc=1: AttributeError: 'Connection' object has no attribute 'session'"
+  ],
+  "objects": []
+}

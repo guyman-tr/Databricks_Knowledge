@@ -1,0 +1,233 @@
+{
+  "object_fqn": "main.etoro_kpi_prep.v_fact_customeraction_w_metrics",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 10.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 4.0,
+    "shape_fidelity": 3.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.25,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T09:06:37Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "GCID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Global Customer ID — the platform-wide unique customer identifier. References `Dim_Customer.GCID`. (Tier 1 — Customer.CustomerStatic)",
+      "wiki_quote": "Global Customer ID — the platform-wide unique customer identifier. References `Dim_Customer.GCID`. (Tier 1 — Customer.CustomerStatic)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "RealCID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic)",
+      "wiki_quote": "Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded. (Tier 1 — source-dependent)",
+      "wiki_quote": "UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded. (Tier 1 — source-dependent)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ActionTypeID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. Derived from `CreditTypeID` & branch router in loader + positional feeds. (Tier 1 — History.Credit / ",
+      "wiki_quote": "Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. Derived from `CreditTypeID` & branch router in loader + positional feeds. (Tier 1 — History.Credit / ",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Position / ledger amount discipline per branch (cash change on opens; fee/deposit sizing on ledger rows — see lineage). Must be ≥ 0 on trade opens historically. (Tier 1 — Trade.PositionTbl / History.C",
+      "wiki_quote": "Position / ledger amount discipline per branch (cash change on opens; fee/deposit sizing on ledger rows — see lineage). Must be ≥ 0 on trade opens historically. (Tier 1 — Trade.PositionTbl / History.C",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "NetProfit",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Realized PnL. 0 when open; populated on closes in position currency. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Realized PnL. 0 when open; populated on closes in position currency. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Open commission in dollars (`/100` cents conversion on ingest per `Dim_Position` lineage notes). (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Open commission in dollars (`/100` cents conversion on ingest per `Dim_Position` lineage notes). (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Ledger funding / wallet channel identifier (deposits & cash-outs). Nullable upstream coerced with `ISNULL(...,0)` sentinel row `0` (`Dim_FundingType.md`). Value 27 pairs with redeem flag derivation on",
+      "wiki_quote": "Ledger funding / wallet channel identifier (deposits & cash-outs). Nullable upstream coerced with `ISNULL(...,0)` sentinel row `0` (`Dim_FundingType.md`). Value 27 pairs with redeem flag derivation on",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Withdrawal request identifier for cash-out credits; 0 when absent. (Tier 1 — History.Credit)",
+      "wiki_quote": "Withdrawal request identifier for cash-out credits; 0 when absent. (Tier 1 — History.Credit)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CompensationReasonID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "`BackOffice.CompensationReason` code on comps & some opens for airdrops. (Tier 1 — History.Credit, updated wiki 2025-12)",
+      "wiki_quote": "`BackOffice.CompensationReason` code on comps & some opens for airdrops. (Tier 1 — History.Credit, updated wiki 2025-12)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "WithdrawPaymentID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Payment-processing key for withdrawals; used to collapse duplicate WithdrawProcessing tuples per historical ETL memo. (Tier 1 — History.Credit)",
+      "wiki_quote": "Payment-processing key for withdrawals; used to collapse duplicate WithdrawProcessing tuples per historical ETL memo. (Tier 1 — History.Credit)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CommissionOnClose",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Close commission dollars — reopen-adjust net-of-original per `Dim_Position` wiki. `CommissionOnCloseOrig` preserves untouched close fee. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Close commission dollars — reopen-adjust net-of-original per `Dim_Position` wiki. `CommissionOnCloseOrig` preserves untouched close fee. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "DepositID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Deposit transaction reference on inbound money rows (`NULL` off-deposit actions). (Tier 1 — History.Credit)",
+      "wiki_quote": "Deposit transaction reference on inbound money rows (`NULL` off-deposit actions). (Tier 1 — History.Credit)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "FullCommission",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Gross commission inclusive of hidden spread uplift at open (`/100` ingestion note). (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Gross commission inclusive of hidden spread uplift at open (`/100` ingestion note). (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "FullCommissionOnClose",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Gross commission on exit — symmetrical reopen-adjust story to `CommissionOnClose`. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Gross commission on exit — symmetrical reopen-adjust story to `CommissionOnClose`. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "RedeemID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "RedeemStatus",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ReopenForPositionID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "When position reopened: erroneous prior `PositionID`. NULL if virgin cycle. (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "When position reopened: erroneous prior `PositionID`. NULL if virgin cycle. (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "IsDiscounted",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "1=commission discount applied at open (legacy bit widening). (Tier 1 — Trade.PositionTbl)",
+      "wiki_quote": "1=commission discount applied at open (legacy bit widening). (Tier 1 — Trade.PositionTbl)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CommissionByUnits",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Prorated commission for partial close. Formula: `(AmountInUnitsDecimal / InitialUnits) * Commission`. Used for partial-close PnL. (Tier 1 — Trade.Position)",
+      "wiki_quote": "Prorated commission for partial close. Formula: `(AmountInUnitsDecimal / InitialUnits) * Commission`. Used for partial-close PnL. (Tier 1 — Trade.Position)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "FullCommissionByUnits",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Prorated full commission for partial close. Same proration formula as `CommissionByUnits` applied to `FullCommission`. (Tier 1 — Trade.Position)",
+      "wiki_quote": "Prorated full commission for partial close. Same proration formula as `CommissionByUnits` applied to `FullCommission`. (Tier 1 — Trade.Position)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "DividendID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Dividend event pointer for dividend-driven fee deductions. NULL off-dividend. (Tier 1 — Trade.Positions/dividends lineage)",
+      "wiki_quote": "Dividend event pointer for dividend-driven fee deductions. NULL off-dividend. (Tier 1 — Trade.Positions/dividends lineage)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "MoveMoneyReasonID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "`Dictionary.MoveMoneyReason` code on internal sweeps (5/6/recurring enums per prior audits). References dictionary dimension. (Tier 1 — History.Credit)",
+      "wiki_quote": "`Dictionary.MoveMoneyReason` code on internal sweeps (5/6/recurring enums per prior audits). References dictionary dimension. (Tier 1 — History.Credit)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "OpenMarkupByUnits",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Prorated open markup `OpenMarkup * AmountInUnitsDecimal / InitialUnits` for partial closes. (Tier 1 — Trade.Position)",
+      "wiki_quote": "Prorated open markup `OpenMarkup * AmountInUnitsDecimal / InitialUnits` for partial closes. (Tier 1 — Trade.Position)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "Description",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Operational narrative pulled from Credits / fees (\"Over night fee\", ticket fee tokens, Payments deposit processor strings). (Tier 1 — History.Credit)",
+      "wiki_quote": "Operational narrative pulled from Credits / fees (\"Over night fee\", ticket fee tokens, Payments deposit processor strings). (Tier 1 — History.Credit)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "CreditID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.etoro_kpi_prep.v_fact_customeraction_enriched.md",
+      "upstream_quote": "Direct pointer to `History.Credit.CreditID` lineage for reversible audits. Added 2025 loader wave. (Tier 1 — History.Credit)",
+      "wiki_quote": "Direct pointer to `History.Credit.CreditID` lineage for reversible audits. Added 2025 loader wave. (Tier 1 — History.Credit)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ParentCID",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror.md",
+      "upstream_quote": "Leader customer ID. The user whose trades are copied. Trade.GetActiveCopiersForParents filters by ParentCID. (Tier 1 — Trade.Mirror)",
+      "wiki_quote": "Leader customer ID. The user whose trades are copied. Trade.GetActiveCopiersForParents filters by ParentCID. (Tier 1 — Trade.Mirror)",
+      "match": "YES — byte-equal"
+    },
+    {
+      "column": "ParentUserName",
+      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror.md",
+      "upstream_quote": "Leader username at mirror creation. Denormalized for display; Trade.RegisterMirror passes from caller. (Tier 1 — Trade.Mirror)",
+      "wiki_quote": "Leader username at mirror creation. Denormalized for display; Trade.RegisterMirror passes from caller. (Tier 1 — Trade.Mirror)",
+      "match": "YES — byte-equal"
+    }
+  ],
+  "bucket_counts": {
+    "A": 56,
+    "B": 41,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 28 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "spot-check 3/3 accurate",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type']",
+    "shape_fidelity": "structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

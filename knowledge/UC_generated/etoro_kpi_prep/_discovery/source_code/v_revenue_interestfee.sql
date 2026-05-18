@@ -1,0 +1,18 @@
+-- ==========================================================================
+-- Source: information_schema.views.view_definition
+-- Object: main.etoro_kpi_prep.v_revenue_interestfee
+-- Captured: 2026-05-18T08:12:59Z
+-- ==========================================================================
+
+SELECT
+    fca.RealCID,
+    fsc.GCID,
+    fca.DateID,
+    fca.DailyFee AS InterestFee,
+    fsc.IsValidCustomer
+FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_daily_creditline fca
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked fsc
+    ON fca.RealCID = fsc.RealCID
+JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_range dr
+    ON fsc.DateRangeID = dr.DateRangeID
+    AND fca.DateID BETWEEN dr.FromDateID AND dr.ToDateID

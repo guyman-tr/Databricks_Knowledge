@@ -1,7 +1,7 @@
 -- ==========================================================================
 -- Source: information_schema.views.view_definition
 -- Object: main.etoro_kpi_prep.v_fact_customeraction_w_metrics
--- Captured: 2026-05-17T16:27:29Z
+-- Captured: 2026-05-18T08:05:37Z
 -- ==========================================================================
 
 with recurring_positions as (
