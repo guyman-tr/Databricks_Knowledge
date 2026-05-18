@@ -130,8 +130,11 @@ After writing, verify EVERY assertion before saving:
 | 10 | `.lineage.md` exists and was written BEFORE `.md` | Check file existence + mtime | HARD |
 | 11 | For passthrough columns, the description text MATCHES the upstream wiki's Element description byte-for-byte | Grep upstream wiki for the same column and diff | HARD (assertion 11 enforces tier transitivity) |
 | 12 | Section 2 collapsed to "Pure passthrough" for views where every column is passthrough/rename | Check transform classifications in `.lineage.md` | SOFT |
+| 13 | Every column description falls into exactly ONE of three buckets: (a) byte-equal to upstream wiki for the same column (passthrough/rename/cast); (b) cites a source-code line range OR a SQL operator OR a quoted SQL fragment from the cached Phase-2 snapshot (CASE/arithmetic/aggregate/window/coalesce/udf); (c) exact-matches the null-with-provenance template `Source: {upstream_fqn}.{col}. No upstream wiki cached as of {YYYY-MM-DD}.` (terminal-no-wiki upstream). Anything else is AI-inferred and forbidden by §6 No-Inference Contract in `05-generate-doc.mdc`. | Run `python tools/uc_pipelines/validate_pipeline_wiki.py --assert-no-inference --wiki <path>` — exits non-zero on any unclassifiable column | HARD |
 
 **If ANY HARD assertion fails: delete the file and regenerate. Do not patch.**
+
+**Assertion 13 hard contract**: There is no fourth bucket. A description that "looks plausible" but does NOT match (a), (b), or (c) is a Principle XI violation per the constitution and a hard validator failure. This applies to the 3-object pilot regression as much as to any new object — backward compatibility is enforced.
 
 ## C. Dictionary Inline Values Rule
 

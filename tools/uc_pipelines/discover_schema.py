@@ -458,7 +458,11 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="UC-Pipeline schema card + discovery")
     ap.add_argument("--schema", required=True, help="UC schema name (e.g. etoro_kpi_prep)")
     ap.add_argument("--catalog", default="main")
-    ap.add_argument("--phase", type=int, choices=[0, 1], default=0)
+    ap.add_argument("--phase", choices=["0", "1", "both"], default="0",
+                    help="0 = build schema card only; 1 = build uc_inventory only (requires existing card); "
+                         "both = run phase 0 then phase 1 sequentially")
+    ap.add_argument("--force", action="store_true",
+                    help="Rebuild outputs even if they already exist")
     ap.add_argument("--lineage-lookback-days", type=int, default=90)
     ap.add_argument("--sample-rows", type=int, default=5,
                     help="Only used in phase 1")
@@ -477,11 +481,26 @@ def main() -> int:
     schema_root = OBJ_OUT_ROOT / args.schema
     schema_root.mkdir(parents=True, exist_ok=True)
 
-    if args.phase == 0:
-        out_path = Path(args.out) if args.out else schema_root / "_schema_card.md"
-    else:
-        out_path = Path(args.out) if args.out else schema_root / "_discovery" / "uc_inventory.json"
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    phase_str = str(args.phase)
+    do_phase0 = phase_str in ("0", "both")
+    do_phase1 = phase_str in ("1", "both")
+
+    p0_out = Path(args.out) if (args.out and phase_str == "0") else schema_root / "_schema_card.md"
+    p1_out = Path(args.out) if (args.out and phase_str == "1") else schema_root / "_discovery" / "uc_inventory.json"
+    p0_out.parent.mkdir(parents=True, exist_ok=True)
+    p1_out.parent.mkdir(parents=True, exist_ok=True)
+
+    if not args.force:
+        if do_phase0 and p0_out.exists():
+            print(f"[discover-schema] phase=0 skip: {p0_out} exists (pass --force to rebuild)",
+                  file=sys.stderr, flush=True)
+            do_phase0 = False
+        if do_phase1 and p1_out.exists():
+            print(f"[discover-schema] phase=1 skip: {p1_out} exists (pass --force to rebuild)",
+                  file=sys.stderr, flush=True)
+            do_phase1 = False
+    if not do_phase0 and not do_phase1:
+        return 0
 
     t0 = time.time()
     conn = connect()
@@ -494,7 +513,8 @@ def main() -> int:
     view_defs = fetch_view_definitions(cur, args.catalog, args.schema)
 
     # ---------- PHASE 0: classify + write _schema_card.md ----------
-    if args.phase == 0:
+    out_path = p0_out
+    if do_phase0:
         classified: list[dict] = []
         for i, obj in enumerate(raw_objects, 1):
             name = obj["name"]
@@ -522,10 +542,15 @@ def main() -> int:
         n_in = sum(1 for o in classified if o["writer"].get("in_scope"))
         print(f"[discover-schema] wrote {out_path} ({out_path.stat().st_size:,} bytes; "
               f"{n_in}/{len(classified)} in-scope; {wall}s)", file=sys.stderr, flush=True)
-        cur.close(); conn.close()
-        return 0
+        if not do_phase1:
+            cur.close(); conn.close()
+            return 0
 
     # ---------- PHASE 1: read existing card → emit uc_inventory.json ----------
+    out_path = p1_out
+    if not do_phase1:
+        cur.close(); conn.close()
+        return 0
     card_path = schema_root / "_schema_card.md"
     if not card_path.exists():
         print(f"[discover-schema] phase=1 requires {card_path} (run phase=0 first)",
@@ -603,6 +628,7 @@ def main() -> int:
         objects_out.append({
             "name": name,
             "full_name": f"{args.catalog}.{args.schema}.{name}",
+            "in_scope": True,
             "table_type": ttype,
             "format": deinfo.get("format"),
             "location": deinfo.get("location"),

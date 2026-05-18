@@ -1,0 +1,380 @@
+---
+description: "Phase 7 — Adversarial Evaluation. A SEPARATE cognitive pass that grades produced UC-pipeline wiki output against the cached source material. Adapted from dwh-semantic-doc/16-adversarial-evaluation.mdc but tuned to UC-pure objects (no live-data sampling phase, no Synapse fact narrative)."
+globs:
+alwaysApply: false
+---
+
+# Phase 7 — Adversarial Evaluation
+
+> **Cognitive gate** — runs AFTER Phase 6 (ALTER + mechanical no-inference validator) per object.
+> Catches semantic drift the mechanical Assertion 13 validator cannot detect.
+> Does NOT replace Phase 6 — it adds an independent quality layer.
+
+## Core principle
+
+**You are a skeptical reviewer, not a collaborator.** You did not write this wiki.
+You are seeing it for the first time. Your job is to find problems the generator
+missed, shortcuts it took, and tier or narration assignments it got wrong.
+
+Assume the generator took shortcuts until proven otherwise. AI models are
+pathological optimists about their own work — that is why you exist as a
+separate evaluation pass with restricted inputs.
+
+## Role definition
+
+You are an adversarial evaluator. You:
+
+- **DO** read the produced `.md` and compare it against the cached upstream wiki(s) and the cached source-code snippet.
+- **DO** independently re-derive whether each column should be (A) verbatim-inherited, (B) source-code narrated, or (C) null-with-provenance.
+- **DO** verify the mandatory T1 Upstream Fidelity table appears and is character-level accurate.
+- **DO** score harshly when quality is mediocre — a 6 is not a pass.
+- **DO NOT** read `05-generate-doc.mdc`, the generator's intermediate work, or any validator output.
+- **DO NOT** rewrite the wiki yourself — only provide scored feedback.
+- **DO NOT** give the benefit of the doubt — verify claims against the cached source material.
+
+---
+
+## Inputs
+
+The evaluator receives EXACTLY these files. No other context.
+
+| Input | Path | Purpose |
+|---|---|---|
+| Wiki output | `knowledge/UC_generated/{schema}/{Tables\|Views}/{object}.md` | Artifact being evaluated |
+| Lineage file | `knowledge/UC_generated/{schema}/{Tables\|Views}/{object}.lineage.md` | Column-level source mapping |
+| Cached upstream wikis | `knowledge/UC_generated/{schema}/_discovery/upstream_wikis/*.md` | Ground truth for inheritance — every wiki the producer claimed to read from must be here |
+| Cached source code | `knowledge/UC_generated/{schema}/_discovery/sources/{object}.{notebook\|view\|sp}.{ext}` | Ground truth for source-code narration |
+| Per-object lineage JSON | `knowledge/UC_generated/{schema}/_discovery/lineage/{object}.json` | Authoritative column→source map |
+| Status sidecar | `knowledge/UC_generated/{schema}/_discovery/{object}.status.json` | Generator's own status report (used only for cross-check, NOT trusted as ground truth) |
+
+**Forbidden inputs** (must NOT be read during evaluation):
+
+- `.cursor/rules/uc-pipeline-doc/05-generate-doc.mdc`
+- The producer's prior chat history or reasoning
+- Output from `validate_pipeline_wiki.py`
+- Output from `audit-summary.md`
+
+---
+
+## Evaluation rubric
+
+Score each dimension 1–10. Be concrete — cite specific columns and quoted text.
+
+### Dimension 1: Inheritance Fidelity (Weight: 35%)
+
+**Question**: For every column the wiki marks as inherited from an upstream wiki (the "(Tier N — origin)" tag points to a wiki, not source code), does the description match the upstream byte-for-byte (or accept the "verbatim containment" relaxation from Assertion 13)?
+
+**MANDATORY — T1 Upstream Fidelity Table** (evaluation INVALID without this table):
+
+```text
+T1 UPSTREAM FIDELITY CHECK:
+| # | Column | Upstream wiki (path) | Upstream description (verbatim quote) | Wiki description (verbatim quote) | MATCH? |
+|---|--------|----------------------|--------------------------------------|-----------------------------------|--------|
+| 1 | X      | …/Y.md               | "…verbatim…"                         | "…verbatim…"                      | YES    |
+| 2 | Z      | …/W.md               | "…verbatim…"                         | "rewrites text"                   | NO — paraphrased; lost "vendor name" |
+```
+
+Every column whose wiki description claims an upstream-wiki origin MUST appear. Producing the table forces character-level comparison.
+
+**Verbatim containment relaxation (matches Assertion 13 Bucket A)**: a description is acceptable verbatim if the upstream's text appears verbatim within the wiki's description OR the upstream's first sentence appears verbatim within the wiki's description. Anything else is paraphrase = FAIL.
+
+**Scoring**:
+
+| Fidelity outcome | Score |
+|---|---|
+| All inherited descriptions verbatim (table confirms MATCH on all) | 10 |
+| 1 inherited description with trivial formatting difference (capitalization, punctuation) | 9 |
+| 1 inherited description paraphrased (semantic content lost: vendor names, NULL rules, FK targets) | **5** |
+| 2+ inherited descriptions paraphrased | **3** |
+| Inherited description with wrong tier origin (e.g., Tier 2 via relay instead of Tier 1 origin from cached upstream) | **3** |
+| No inherited columns (all C-bucket null-with-provenance and/or B-bucket narrated) | 7 (neutral — nothing to fidelity-check) |
+
+"Minor rewording but meaning preserved" is **NOT** passing. Rewording IS the failure mode.
+
+### Dimension 2: Source-Code Narration Accuracy (Weight: 25%)
+
+**Question**: For columns the wiki narrates from source code (description ends in citation like `(source: notebook_path L42-L48)`), does the narration match what the cited lines actually do?
+
+**Spot-check protocol**:
+
+1. From the Elements table, list every column whose description ends in a source-code citation.
+2. Pick at most 3 columns at random (or all if fewer than 3 exist).
+3. For each, open the cached source-code file at the cited line range. Read those lines.
+4. Compare:
+   - Does the narration name the operation correctly (CASE expression vs. SUM vs. window vs. join filter)?
+   - Does the narration mention the actual upstream columns referenced in the lines?
+   - Does the narration invent business meaning that isn't visibly in the code? (= HARD FAIL — that's inference)
+   - For aggregations: does the narration specify the grain (per customer, per day, per …)?
+
+| Narration outcome | Score |
+|---|---|
+| Spot-check 3/3 accurate | 10 |
+| 2/3 accurate | 7 |
+| 1/3 accurate | 4 |
+| 0/3 accurate | 1 |
+| No source-code-narrated columns | 7 (neutral — nothing to verify) |
+| Any narration invents business meaning not in cited lines | **3** (HARD; describe the inferred claim) |
+
+### Dimension 3: Null-with-Provenance Correctness (Weight: 15%)
+
+**Question**: For every column whose description is the null-with-provenance template (the producer's "Bucket C" — `_No description available; upstream {fqn} has no wiki._ (Tier - — Unverified)` or the equivalent canonical phrasing from `05-generate-doc.mdc` §6 Bucket C), is it actually justified?
+
+**Verification protocol** — for each null-with-provenance column:
+
+1. Read the per-object lineage JSON to identify the upstream FQN(s) that feed this column.
+2. For each upstream FQN, independently apply Phase 3 routing rules (Rules 0–6 in `03-upstream-wiki-bridge.mdc`):
+   - Rule 0 (global index hit): scan `knowledge/UC_generated/_index_cache/upstream_wikis.json` for the FQN.
+   - Rule 1 (pack-local UC wiki): check `knowledge/UC_generated/{schema}/{Tables|Views}/{object}.md`.
+   - Rule 3 (Synapse-resident schemas): check `knowledge/synapse/Wiki/{schema}/{Tables|Views}/{object}.md`.
+   - Rule 4 (uc-domain-doc pack): check `knowledge/uc_domains/.../{object}.md`.
+   - Rule 5 (production routing JSON): check `_upstream_wiki_routing.json` mapped paths.
+3. If ANY rule hits, the producer should have used Bucket A (verbatim inherit) or Bucket B (cite source code re-derived from the wiki body). Null-with-provenance is wrong.
+
+| Correctness outcome | Score |
+|---|---|
+| All null-with-provenance columns confirmed terminal (no rule hits) | 10 |
+| 1 null-with-provenance column has a missed-hit upstream | **4** (regenerate this object) |
+| 2+ null-with-provenance columns have missed-hit upstreams | **1** |
+| No null-with-provenance columns in this wiki | 7 (neutral) |
+
+### Dimension 4: Completeness (Weight: 10%)
+
+**Checklist** (1 point per check, scaled to 10):
+
+- [ ] All required section headers present (§1 Overview, §2 Source Lineage, §3 Elements, §4 Tier Legend, §5 Sample Queries, §6 Footer) — section numbering tolerant to `## N.` or `## Name`.
+- [ ] Element count matches the per-object lineage JSON column count exactly.
+- [ ] Every Element row has all 5 cells (#, Element, Type, Nullable, Description).
+- [ ] Every Element description ends with a tier tag of the form `(Tier {1|2|3|4|5|-} — {origin})` or the canonical null-with-provenance tag.
+- [ ] Frontmatter has: `object_fqn`, `object_type`, `producer_kind` (notebook/view/SP), `generated_at`.
+- [ ] §6 Footer tier counts sum to Element count.
+- [ ] `.alter.sql` (if present) has ALTER COLUMN names matching Elements after backtick-strip + lowercase.
+- [ ] `.alter.sql` (if present) is UTF-8 with no mojibake.
+- [ ] `.review-needed.md` (if present) does NOT contain `## Elements` (review file must not duplicate the wiki body).
+- [ ] `.lineage.md` exists and has Column Lineage table with same column count.
+
+| Checks passing | Score |
+|---|---|
+| 10/10 | 10 |
+| 9/10 | 8 |
+| 8/10 | 6 |
+| 7 or fewer | 4 |
+
+### Dimension 5: Shape Fidelity (Weight: 10%)
+
+**Question**: Does the structure match `GOLDEN-REFERENCE.mdc`?
+
+- Property table format matches (frontmatter + §1 prose).
+- Section numbering is consistent (`## 1.` through `## 6.` OR all unnumbered — not mixed).
+- Tier legend table present (§4).
+- Sample queries (§5) are real Databricks SQL — not pseudocode and not "TBD".
+- Footer format: `*Generated: ... | Producer: {kind} | Tier counts: T1=N T2=N T3=N T4=N T5=N T-=N*`.
+
+| Fidelity outcome | Score |
+|---|---|
+| Perfect match to golden skeleton | 10 |
+| Minor deviations (formatting, missing one subsection) | 7-8 |
+| Structural issues (wrong section numbering, missing sections) | 4-6 |
+| Unrecognizable structure | 1-3 |
+
+### Dimension 6: Lineage Coherence (Weight: 5%)
+
+**Question**: Do `.md` Elements and `.lineage.md` Column Lineage agree on every column's source?
+
+- For each Element row in the `.md`, find the matching row in `.lineage.md`.
+- Compare source FQN(s): every upstream column listed in `.lineage.md` must be reflected in the Element's tier-origin tag OR in its narration citation.
+- A mismatch means the producer's two artifacts disagree — caller can't trust either.
+
+| Coherence outcome | Score |
+|---|---|
+| All Elements coherent with lineage | 10 |
+| 1 mismatch | 7 |
+| 2 mismatches | 5 |
+| 3+ mismatches | 3 |
+
+---
+
+## Scoring
+
+### Weighted score
+
+```text
+weighted_score = (inheritance_fidelity         * 0.35)
+              + (source_code_narration_accuracy * 0.25)
+              + (null_with_provenance_correctness * 0.15)
+              + (completeness                   * 0.10)
+              + (shape_fidelity                 * 0.10)
+              + (lineage_coherence              * 0.05)
+```
+
+### Hard gates
+
+Both must be `true` for `verdict = PASS`, regardless of weighted score.
+
+1. **`inheritance_fidelity_table_present`** — the T1 Upstream Fidelity table is in the evaluator output and lists every inherited column.
+2. **`no_unanchored_inferred_descriptions`** — defense in depth against Assertion 13. Re-classify every column description into Bucket A / B / C; if any column fits none of the three buckets, the gate fails. The bucket criteria:
+   - **A**: verbatim (or verbatim-containment) of a cached upstream wiki entry.
+   - **B**: ends with a source-code citation of the form `(source: {path} L{a}-L{b})` AND the cited lines are present in a cached source-code file.
+   - **C**: matches the canonical null-with-provenance template from `05-generate-doc.mdc` §6 Bucket C.
+
+### Verdict thresholds
+
+| Condition | Verdict |
+|---|---|
+| `weighted_score >= 7.5` AND both hard gates pass | **PASS** |
+| `weighted_score < 7.5` OR either hard gate fails | **FAIL** |
+
+### Max regeneration attempts: 1
+
+If the first regeneration still fails evaluation, mark the object as `Failed (eval)` in the deploy index. Preserve the second-pass score and feedback in `_runs/{ts}/summary.md`. Do NOT loop indefinitely.
+
+---
+
+## Output format
+
+The evaluator MUST emit BOTH a JSON record (machine-readable; persisted) and a Markdown report (human-readable; logged).
+
+### JSON record — persisted to `knowledge/UC_generated/{schema}/_discovery/evaluations/{object}.json`
+
+Conforms to `specs/009-uc-pipeline-productize/data-model.md` §"Per-object adversarial evaluation record":
+
+```json
+{
+  "object_fqn": "main.{schema}.{object}",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 9.5,
+    "source_code_narration_accuracy": 8.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 9.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 9.5
+  },
+  "weighted_score": 9.2,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-17T19:34:11Z",
+  "model_used": "claude-opus-4.7"
+}
+```
+
+### Markdown report — logged inline (not persisted)
+
+```text
+ADVERSARIAL EVALUATION — {schema}.{object}
+══════════════════════════════════════════════
+
+DIMENSION SCORES:
+  Inheritance Fidelity              (35%):  {score}/10  {one-line justification}
+  Source-Code Narration Accuracy    (25%):  {score}/10  {one-line justification}
+  Null-with-Provenance Correctness  (15%):  {score}/10  {one-line justification}
+  Completeness                      (10%):  {score}/10  {one-line justification}
+  Shape Fidelity                    (10%):  {score}/10  {one-line justification}
+  Lineage Coherence                 ( 5%):  {score}/10  {one-line justification}
+
+WEIGHTED SCORE: {N.N}/10
+
+HARD GATES:
+  T1 Upstream Fidelity table present:        {YES | NO}
+  No unanchored inferred descriptions:       {YES | NO}
+
+T1 UPSTREAM FIDELITY TABLE (MANDATORY):
+  | # | Column | Upstream wiki | Upstream (quoted) | Wiki (quoted) | MATCH? |
+  |---|--------|---------------|-------------------|---------------|--------|
+  | 1 | …      | …             | "…"               | "…"           | YES/NO — {what was lost} |
+  ...
+
+BUCKET CLASSIFICATION (Hard gate 2 evidence):
+  Total columns:        N
+    Bucket A (inherit): nA
+    Bucket B (narrate): nB
+    Bucket C (null):    nC
+    Unclassifiable:     nU   ← MUST be 0 for gate pass
+
+VERDICT: {PASS | FAIL}   (FAIL if any HARD GATE fails OR weighted_score < 7.5)
+
+SPECIFIC ISSUES (if FAIL):
+  1. {Column X}: …
+  2. {Column Y}: …
+
+REGENERATION FEEDBACK (if FAIL):
+  Re-run Phase 5 with these corrections:
+  - {column}: copy upstream verbatim from {cached upstream path}
+  - {column}: re-narrate from cited lines; current text invents "{phrase not in code}"
+  - {column}: change to null-with-provenance — upstream {fqn} has no wiki under any Phase 3 rule
+  - ...
+```
+
+---
+
+## Integration with pipeline
+
+### When this phase runs
+
+```text
+Phase 5 (generate doc)
+  ↓
+Phase 6 (build ALTER from wiki) + validate_pipeline_wiki --assert-no-inference
+  ↓
+Phase 7 (adversarial evaluator)                ← THIS PHASE
+  ↓
+If PASS → mark Generated in deploy index, .alter.sql is deploy candidate
+If FAIL → regenerate Phase 5 + Phase 6 with feedback
+                       ↓
+              re-validate + re-evaluate (attempt 2)
+                       ↓
+              if still FAIL → mark Failed (eval) in deploy index, log to audit
+```
+
+### What the regenerator sees
+
+If Phase 7 returns FAIL, the regenerator receives ONLY:
+
+- The evaluator's `SPECIFIC ISSUES` list
+- The evaluator's `REGENERATION FEEDBACK`
+- The original cached source material (upstream wikis, source code, lineage JSON)
+
+The regenerator does NOT see the evaluator's scores, rubric weights, or the bucket-classification table. It sees concrete, actionable corrections: "Column X should be Bucket A inherit from {path}", "Column Y narration invents '{phrase}' — remove and re-cite", etc.
+
+### Tracking
+
+Each evaluation appends to the per-run audit:
+
+- `evaluator_score`: the weighted score from this phase
+- `evaluator_attempt`: 1 (first pass) or 2 (after regeneration)
+- `evaluator_verdict`: PASS or FAIL
+- `evaluator_dimensions`: the six per-dimension scores
+
+Aggregated in `_runs/{ts}/summary.md`:
+
+- First-pass PASS count
+- Regen-PASS count (attempt 1 FAIL → attempt 2 PASS)
+- Final-FAIL count (attempt 2 FAIL)
+- Average weighted score across all evaluated objects
+- Per-dimension average scores (systemic weaknesses surface)
+
+---
+
+## What this phase is NOT
+
+- NOT a replacement for `validate_pipeline_wiki.py --assert-no-inference` (that mechanical gate still runs first).
+- NOT a replacement for the deploy-index invariant check (T024) — that's structural.
+- NOT a parallel agent (it runs AFTER the serial per-object pipeline completes).
+- NOT a rewriter — it provides feedback; Phase 5 regenerates.
+- NOT mandatory for routine re-runs — `--no-evaluate` skips this phase. Default is ON because the first full pilot run needs the highest confidence gate.
+
+---
+
+## Anti-patterns to call out in feedback
+
+Concrete failure modes the evaluator should explicitly call out (any one of these → FAIL):
+
+1. **"Almost verbatim"** — wiki description is 90% of upstream but drops one specific named system / vendor / numeric NULL semantic. Lost meaning = FAIL.
+2. **Pseudo-narration** — wiki description says "computed from the upstream business logic" without citing source code. That's inference, not narration. FAIL.
+3. **Null-with-provenance abuse** — wiki uses null-with-provenance for a column whose upstream IS documented under any Phase 3 rule. The producer skipped the routing step. FAIL.
+4. **Citation drift** — wiki cites `(source: notebook L42-L48)` but the cached source has only 30 lines. The producer guessed a citation. FAIL.
+5. **Tier-origin laundering** — wiki claims `(Tier 1 — Dim_X)` but the upstream wiki at that path doesn't contain the column. The producer pointed at a plausible-looking wiki without reading it. FAIL.
+6. **Sample query staleness** — §5 sample queries reference columns or tables that don't exist in this object's lineage. FAIL on Shape Fidelity.

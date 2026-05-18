@@ -220,6 +220,30 @@ DO NOT put the Elements table here. DO NOT duplicate the wiki body. The sidecar 
 6. Validate the file shape (HARD assertions §B in GOLDEN-REFERENCE).
 7. Commit. Do NOT generate `.alter.sql` here — that's Phase 6.
 
+## §6 No-Inference Contract
+
+Every column description in the produced `.md` Elements table MUST come from one of three places, in priority order:
+
+1. **The cached upstream wiki body** (`.md` cached at `_discovery/upstream_wikis/{upstream_fqn}.md` from Phase 3). For passthrough / rename / cast columns, copy the upstream description verbatim, preserving the `(Tier N — origin)` suffix unchanged (the upstream is a relay; the deep origin tag must survive). No paraphrasing. No "minor rewording but meaning preserved" — rewording IS the failure mode.
+
+2. **The cached source-code snapshot** (`.sql` / `.py` cached at `_discovery/source_code/{Object}.{sql,py}` from Phase 2). For CASE-expression / arithmetic / aggregate / window-function / coalesce / udf / function-computed columns, narrate what the code does. The narration MUST reference at least one of:
+   - a source-code line range (`[view DDL L77-L91]`),
+   - a SQL operator that appears in the snapshot for this column (`CASE`, `+`, `SUM`, `LAG`, `COALESCE`),
+   - or a quoted SQL fragment of ≤80 chars copied verbatim from the snapshot.
+   
+   Use the source-authority tag `(Tier 2 — {upstream_uc_object})` per the tier-policy table — origin tag is the upstream TABLE the expression reads from, not the writer/SP.
+
+3. **The null-with-provenance template** from `03-upstream-wiki-bridge.mdc` Rule 6 contract Case A. Use this ONLY when (a) the lineage shows passthrough/rename/cast from an upstream whose Phase 3 routing-rule outcome is `terminal_no_wiki`, AND (b) there is no source-code expression for this column to narrate from. Tag with `(Tier 5 — terminal-no-wiki)`.
+
+There is no fourth option. Inferring a description from the column name plus its UC data type alone is a Principle XI violation and a hard validator failure (Assertion 13 in `GOLDEN-REFERENCE.mdc`). Inventing a column meaning because "this looks like an account id" or "all `*ID` columns are foreign keys" is fabrication and gets caught by the mechanical validator + the adversarial evaluator.
+
+The contract is symmetrically defended:
+
+- **Mechanical**: `tools/uc_pipelines/validate_pipeline_wiki.py --assert-no-inference` classifies each column into one of the three buckets above; an unclassifiable column is a hard fail.
+- **Adversarial**: the Phase 7 evaluator (`07-adversarial-evaluation.mdc`) re-checks (a) byte-equality with upstream for passthrough columns, (b) source-code citation for narrated columns, and (c) template-match for null-with-provenance columns — without seeing the producer's reasoning.
+
+A wiki that ships with even one column failing this contract is not a wiki — it's a regression.
+
 ## Anti-patterns
 
 - ❌ Writing the Elements table into the sidecar.
@@ -228,3 +252,4 @@ DO NOT put the Elements table here. DO NOT duplicate the wiki body. The sidecar 
 - ❌ Skipping the `.review-needed.md` file because "everything looks good". Always write the file — it's the audit trail even when empty.
 - ❌ Filling Section 2 with re-stated upstream logic for pure-passthrough views. Collapse to one sentence and link the upstream.
 - ❌ Hand-editing the upstream wiki cache. The cache is read-only evidence; corrections happen in the upstream wiki, then the cache is refreshed via Phase 3.
+- ❌ Authoring "best guess" descriptions from column-name patterns. Forbidden by §6 No-Inference Contract.

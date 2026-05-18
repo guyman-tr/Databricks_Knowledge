@@ -81,7 +81,36 @@ Pattern: anything not matching rules 1–4 but matching a row in `knowledge/skil
 Pattern: anything that doesn't match rules 1–5.
 
 - Cache an empty placeholder at `_discovery/upstream_wikis/_NO_WIKI__{full_name}.md` (just a header noting "no upstream wiki found").
-- Phase 4 / Phase 5 treat columns sourced from this upstream as Tier 2 (from source code) or Tier 4 (sample-inferred).
+- Phase 4 records this upstream's `wiki_status` as either `terminal_no_wiki` (no further upstreams exist in `system.access.column_lineage` either — true dead end) or `in_scope_not_yet_authored` (upstream is itself in one of the five pilot schemas and will be authored later in the same run).
+- Phase 5 column-description emission then branches on that status — see "Rule 6 contract — Phase 5 column description" below.
+
+### Rule 6 contract — Phase 5 column description (terminal-no-wiki vs in-scope-deferred)
+
+When a downstream column's only upstream hit Rule 6 at Phase 3, Phase 5 MUST emit one of two outcomes depending on the upstream's `wiki_status`:
+
+**Case A — `terminal_no_wiki` (no further upstream, no wiki anywhere):**
+
+Emit a deterministic null-with-provenance placeholder of the exact form:
+
+```text
+Source: {upstream_fqn}.{upstream_col}. No upstream wiki cached as of {check_date}.
+```
+
+- `{upstream_fqn}` is the upstream UC fully qualified name (e.g. `main.bronze_db_schema.foo`).
+- `{upstream_col}` is the upstream column name (case-preserved as it appears in `system.access.column_lineage`).
+- `{check_date}` is ISO-8601 (YYYY-MM-DD), taken from the run's start time.
+
+Tag the column with the source-authority tier `(Tier 5 — terminal-no-wiki)` in the Elements table. This placeholder is the explicit "we looked, we didn't find" signal — never a guess, never an LLM-paraphrase of the column name.
+
+**Case B — `in_scope_not_yet_authored` (upstream is itself in pilot scope but no wiki yet):**
+
+DO NOT emit any column description for this downstream object yet. The orchestrator's topological sort must process the upstream FIRST in the same run; when the upstream's wiki ships, the downstream re-enters the work queue and inherits verbatim per the normal Rule 2 path. If the upstream fails to author (Phase 5 hard error on the upstream itself), the downstream is marked `Blocked (upstream wiki missing in same run: {upstream_fqn})` in its `_deploy-index.md` row — no `.alter.sql` for the affected column, no description guess.
+
+**Case C — upstream wiki exists (Rules 1-5 hit, not Rule 6):**
+
+Normal verbatim inheritance per the tier-transitivity section below. Rule 6 contract does not apply.
+
+The cases are mutually exclusive and enumerated. There is no "Case D — best-guess from column name". A description generated from a column name plus its UC data type alone is a Principle XI violation and a hard validator failure (Assertion 13 in `GOLDEN-REFERENCE.mdc`).
 
 ## Tooling
 

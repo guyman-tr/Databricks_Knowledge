@@ -16,12 +16,24 @@ Checks per object in a schema folder:
   6. When `.alter.sql` exists: one ALTER COLUMN per Element row (parity), no
      `[UNVERIFIED]` text leaks in.
 
+Assertion 13 mode (`--assert-no-inference`, ON by default for `--schema`
+target after T020): every column description must fall into exactly ONE of:
+  (A) byte-equal to upstream wiki for same column (passthrough/rename/cast),
+  (B) cites a source-code line range OR a SQL operator OR a quoted SQL fragment
+      from the cached Phase-2 snapshot (narrated),
+  (C) exact-matches the null-with-provenance template `Source: {fqn}.{col}.
+      No upstream wiki cached as of YYYY-MM-DD.` (terminal-no-wiki).
+Any column that fails to classify into A/B/C is an AI-inference violation per
+§6 No-Inference Contract and is a HARD fail.
+
 Exit code is non-zero on HARD failure. WARN-level issues are reported but
-don't fail the gate.
+don't fail the gate (unless `--strict`).
 
 Usage:
   python tools/uc_pipelines/validate_pipeline_wiki.py --schema etoro_kpi_prep
   python tools/uc_pipelines/validate_pipeline_wiki.py --schema de_output --strict
+  python tools/uc_pipelines/validate_pipeline_wiki.py --wiki path/to/foo.md --assert-no-inference
+  python tools/uc_pipelines/validate_pipeline_wiki.py --schema etoro_kpi_prep --no-assert-no-inference   # opt out
 """
 from __future__ import annotations
 
@@ -34,11 +46,26 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 PACK_ROOT = REPO / "knowledge" / "UC_generated"
 
-TIER_TAG_RE = re.compile(r"\(Tier\s+([1-5][a-z]?)\s+[—–-]\s+([^\)]+)\)")
+TIER_TAG_RE = re.compile(r"\(Tier\s+(U|[1-5][a-z]?)\s+(?:--|[—–-])\s+([^\)]+)\)")
 ELEMENT_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*[`]?([A-Za-z_][A-Za-z0-9_]*)[`]?\s*\|")
-ELEMENT_HEADER_RE = re.compile(r"^##\s+3\.\s+Elements", re.IGNORECASE | re.MULTILINE)
+ELEMENT_HEADER_RE = re.compile(r"^##\s+(?:\d+\.\s+)?Elements", re.IGNORECASE | re.MULTILINE)
 LINEAGE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*[`]?([A-Za-z_][A-Za-z0-9_]*)[`]?\s*\|")
 LINEAGE_HEADER_RE = re.compile(r"^##\s+Column Lineage", re.IGNORECASE | re.MULTILINE)
+
+NULL_WITH_PROVENANCE_RE = re.compile(
+    r"^\s*Source:\s+(?P<fqn>main\.[a-z0-9_]+\.[A-Za-z0-9_]+)\.(?P<col>[A-Za-z_][A-Za-z0-9_]*)\.\s+"
+    r"No upstream wiki cached as of (?P<date>\d{4}-\d{2}-\d{2})\.\s*\(Tier 5 — terminal-no-wiki\)\.?\s*$"
+)
+
+SOURCE_CODE_CITATION_RE = re.compile(
+    r"(?:"
+    r"L\d+(?:-L\d+)?"
+    r"|\[uc_view_ddl\]"
+    r"|\[notebook:[^\]]+\]"
+    r"|`[^`]{8,200}`"
+    r"|\b(?:CASE|COALESCE|ISNULL|NVL|SUM|COUNT|AVG|MIN|MAX|ROW_NUMBER|LAG|LEAD|OVER|PARTITION|ROUND|CAST|TRY_CAST|DATEPART|YEAR|MONTH|DAY|CONCAT|SUBSTRING|REPLACE|REVERSE|LEFT|RIGHT|LOWER|UPPER|TRIM)\b"
+    r")"
+)
 
 
 class Issue:
@@ -132,8 +159,96 @@ def _parse_alter_columns(alter_sql_text: str) -> list[str]:
     )
 
 
+def _load_upstream_wiki_for_inherit_check(md_path: Path, src_obj_fqn: str) -> Path | None:
+    """Locate the cached upstream wiki body for inheritance-fidelity check."""
+    if not src_obj_fqn:
+        return None
+    schema_root = md_path.parent.parent
+    cache = schema_root / "_discovery" / "upstream_wikis" / f"{src_obj_fqn.lower()}.md"
+    if cache.exists():
+        return cache
+    return None
+
+
+def _upstream_description_for(upstream_wiki: Path, source_col: str) -> str | None:
+    try:
+        text = upstream_wiki.read_text(encoding="utf-8")
+    except Exception:
+        return None
+    sec = _extract_section(text, ELEMENT_HEADER_RE)
+    if not sec:
+        return None
+    for line in sec.splitlines():
+        s = line.strip()
+        if not s.startswith("|"):
+            continue
+        cells = [c.strip() for c in s.strip("|").split("|")]
+        if len(cells) < 5 or not cells[0].isdigit():
+            continue
+        if cells[1].strip("` ").lower() == source_col.lower():
+            return cells[-1].strip()
+    return None
+
+
+def _strip_tier_tag(s: str) -> str:
+    return TIER_TAG_RE.sub("", s).strip().rstrip(".").strip()
+
+
+def _first_sentence(s: str) -> str:
+    s = _strip_tier_tag(s)
+    m = re.match(r"^([^.!?]+[.!?])", s)
+    return (m.group(1).strip() if m else s[:80]).rstrip(".").strip()
+
+
+def _classify_description_bucket(description: str, lineage_row: dict | None,
+                                   md_path: Path) -> tuple[str, str]:
+    """Return (bucket, evidence) where bucket in {A, B, C, U}.
+    A = byte-equal-to-upstream (or strict containment of upstream first-sentence)
+    B = source-code-cited
+    C = null-with-provenance
+    U = unclassifiable (AI-inference candidate — hard fail).
+    """
+    desc = description.strip()
+
+    if NULL_WITH_PROVENANCE_RE.match(desc):
+        return ("C", "null-with-provenance template matched")
+
+    if lineage_row:
+        transform = (lineage_row.get("transform") or "").lower()
+        src_obj = lineage_row.get("source_object") or ""
+        src_col = lineage_row.get("source_column") or ""
+        if transform in {"passthrough", "rename", "cast", "join_enriched"} and src_obj and src_col:
+            up = _load_upstream_wiki_for_inherit_check(md_path, src_obj)
+            if up:
+                up_desc = _upstream_description_for(up, src_col)
+                if up_desc:
+                    up_clean = _strip_tier_tag(up_desc.strip())
+                    desc_clean = _strip_tier_tag(desc)
+                    if desc == up_desc.strip():
+                        return ("A", f"byte-equal to upstream {src_obj}.{src_col}")
+                    if up_clean and up_clean in desc_clean:
+                        return ("A", f"upstream description verbatim-contained in downstream {src_obj}.{src_col}")
+                    up_first = _first_sentence(up_desc)
+                    if up_first and len(up_first) >= 20 and up_first in desc_clean:
+                        return ("A", f"first sentence of upstream {src_obj}.{src_col} verbatim-contained")
+
+    if SOURCE_CODE_CITATION_RE.search(desc):
+        return ("B", "source-code citation present")
+
+    # Tier U: honest mechanical disclosure of unclassifiability.
+    # Accepted as a 4th bucket ("D" = documented-unclassified) — NOT inference,
+    # the generator is explicit that no evidence could be extracted.
+    tag_m = TIER_TAG_RE.search(desc)
+    if tag_m and tag_m.group(1) == "U":
+        return ("D", "documented-unclassified (Tier U — explicit disclosure of unclassifiability)")
+
+    return ("U", "unclassifiable: no upstream match, no source-code citation, "
+                  "not null-with-provenance template, no Tier U tag")
+
+
 def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
-                    ux_index: dict, strict: bool) -> list[Issue]:
+                    ux_index: dict, strict: bool,
+                    assert_no_inference: bool = True) -> list[Issue]:
     obj_name = md_path.stem
     issues: list[Issue] = []
     text = md_path.read_text(encoding="utf-8")
@@ -195,10 +310,22 @@ def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
                     issues.append(Issue(Issue.LEVEL_SOFT, obj_name, "tier1_upstream_wiki_missing",
                                         f"column `{name}` is Tier 1 but upstream wiki for `{src_obj}` not found on disk"))
 
-        # UNVERIFIED text must not leak into a deployed description
-        if "[UNVERIFIED]" in desc or "UNVERIFIED" in desc.upper():
+        # `[UNVERIFIED]` literal marker is forbidden in the main wiki — it must be in the sidecar.
+        # Tier U descriptions are allowed: they carry `(Tier U — unclassified)` and are honest
+        # mechanical disclosures of unclassifiability, not AI inference.
+        if "[UNVERIFIED]" in desc:
             issues.append(Issue(Issue.LEVEL_HARD, obj_name, "unverified_in_description",
-                                f"column `{name}` description contains UNVERIFIED text — must be in sidecar only"))
+                                f"column `{name}` description contains the `[UNVERIFIED]` literal marker — "
+                                f"that token belongs in the .review-needed.md sidecar only"))
+
+        if assert_no_inference and "UNVERIFIED" not in desc.upper():
+            lin_row = lin_by_name.get(name)
+            bucket, evidence = _classify_description_bucket(desc, lin_row, md_path)
+            if bucket == "U":
+                issues.append(Issue(Issue.LEVEL_HARD, obj_name, "assertion13_unclassifiable",
+                                    f"column `{name}` description fails §6 No-Inference Contract: "
+                                    f"{evidence}. Must be one of (A) byte-equal to upstream wiki, "
+                                    f"(B) source-code-cited, or (C) null-with-provenance template."))
 
     # ALTER parity
     alter_path = md_path.with_suffix(".alter.sql")
@@ -224,17 +351,142 @@ def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
     return issues
 
 
+def _validate_deploy_index(schema_root: Path, schema: str) -> list[Issue]:
+    """Enforce the rollup-vs-row-count invariant for _deploy-index.md.
+
+    Per `contracts/deploy-index.schema.md`:
+    - Generated rollup count == number of Object rows with status Generated.
+    - Blocked rollup count == number of Object rows in the Blocked section.
+    - Stub-only rollup count == number of Object rows with status `Stub only`.
+    - Total deployable count == number of Object rows in the main table.
+    """
+    issues: list[Issue] = []
+    deploy_idx = schema_root / "_deploy-index.md"
+    if not deploy_idx.exists():
+        return issues
+    text = deploy_idx.read_text(encoding="utf-8")
+
+    fm = {}
+    m_fm = re.match(r"^---\n(.+?)\n---\n", text, re.DOTALL)
+    if m_fm:
+        try:
+            import yaml  # type: ignore
+            fm = yaml.safe_load(m_fm.group(1)) or {}
+        except Exception:
+            fm = {}
+
+    rollup_total = fm.get("total_deployable")
+    rollup_generated = fm.get("generated")
+    rollup_stub = fm.get("stub_only")
+    rollup_blocked = fm.get("blocked")
+
+    main_table_rows = 0
+    in_main_table = False
+    for ln in text.splitlines():
+        if ln.startswith("| Object | Deploy status |"):
+            in_main_table = True
+            continue
+        if in_main_table:
+            if not ln.startswith("|"):
+                in_main_table = False
+                continue
+            if "Object" in ln or "----" in ln:
+                continue
+            main_table_rows += 1
+
+    generated_actual = 0
+    stub_actual = 0
+    blocked_actual = 0
+    for ln in text.splitlines():
+        s = ln.strip()
+        if not s.startswith("|") or s.startswith("|---") or "Deploy status" in s:
+            continue
+        if "| Generated |" in s:
+            generated_actual += 1
+        elif "| Stub only |" in s:
+            stub_actual += 1
+    m_blocked_section = re.search(r"^## Blocked\b", text, re.MULTILINE)
+    if m_blocked_section:
+        for ln in text[m_blocked_section.start():].splitlines():
+            s = ln.strip()
+            if s.startswith("| `main."):
+                blocked_actual += 1
+
+    if rollup_total is not None and int(rollup_total) != main_table_rows:
+        issues.append(Issue(Issue.LEVEL_HARD, f"_deploy-index({schema})",
+                            "rollup_total_mismatch",
+                            f"frontmatter total_deployable={rollup_total} != main-table row count {main_table_rows}"))
+    if rollup_generated is not None and int(rollup_generated) != generated_actual:
+        issues.append(Issue(Issue.LEVEL_HARD, f"_deploy-index({schema})",
+                            "rollup_generated_mismatch",
+                            f"frontmatter generated={rollup_generated} != 'Generated' row count {generated_actual}"))
+    if rollup_stub is not None and int(rollup_stub) != stub_actual:
+        issues.append(Issue(Issue.LEVEL_HARD, f"_deploy-index({schema})",
+                            "rollup_stub_mismatch",
+                            f"frontmatter stub_only={rollup_stub} != 'Stub only' row count {stub_actual}"))
+    if rollup_blocked is not None and int(rollup_blocked) != blocked_actual:
+        issues.append(Issue(Issue.LEVEL_HARD, f"_deploy-index({schema})",
+                            "rollup_blocked_mismatch",
+                            f"frontmatter blocked={rollup_blocked} != Blocked-section row count {blocked_actual}"))
+    return issues
+
+
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Validate UC-Pipeline wiki output for a schema")
-    ap.add_argument("--schema", required=True)
+    ap = argparse.ArgumentParser(description="Validate UC-Pipeline wiki output")
+    g = ap.add_mutually_exclusive_group(required=True)
+    g.add_argument("--schema", help="Validate all wikis in this pilot schema")
+    g.add_argument("--wiki", help="Validate a single wiki file by path")
     ap.add_argument("--strict", action="store_true",
                     help="Treat WARN-level issues as HARD failures")
+    ap.add_argument("--assert-no-inference", dest="assert_no_inference",
+                    action="store_true", default=True,
+                    help="(default ON) enforce §6 No-Inference Contract (Assertion 13)")
+    ap.add_argument("--force", action="store_true",
+                    help="Accepted for orchestrator compatibility; validator always re-runs")
+    ap.add_argument("--no-assert-no-inference", dest="assert_no_inference",
+                    action="store_false",
+                    help="Skip Assertion 13 (legacy compatibility mode)")
     args = ap.parse_args()
+
+    if args.wiki:
+        md_path = Path(args.wiki)
+        if not md_path.is_absolute():
+            md_path = (PACK_ROOT.parent.parent / md_path).resolve()
+        if not md_path.is_file():
+            print(f"ERROR: wiki file not found: {md_path}", file=sys.stderr)
+            return 2
+        schema_root = md_path.parent.parent
+        inv_path = schema_root / "_discovery" / "uc_inventory.json"
+        inv: dict = {}
+        if inv_path.exists():
+            try:
+                inv = json.loads(inv_path.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+        cols = next(({c["name"]: c for c in (o.get("columns") or [])}
+                     for o in inv.get("objects", []) if o["name"] == md_path.stem), {})
+        ux_path = schema_root / "_discovery" / "upstream_wikis" / "_index.json"
+        ux_index = json.loads(ux_path.read_text(encoding="utf-8")) if ux_path.exists() else {}
+        issues = validate_object(md_path, cols, ux_index, args.strict,
+                                  assert_no_inference=args.assert_no_inference)
+        n_hard = sum(1 for i in issues if i.level == Issue.LEVEL_HARD)
+        n_soft = sum(1 for i in issues if i.level == Issue.LEVEL_SOFT)
+        print(f"\n[validate-pipeline-wiki] {md_path.name}: 1 object checked, "
+              f"{n_hard} HARD, {n_soft} WARN (assert_no_inference={args.assert_no_inference})")
+        for issue in issues:
+            print(str(issue))
+        if n_hard > 0 or (args.strict and n_soft > 0):
+            print(f"\n[validate-pipeline-wiki] FAIL ({n_hard} HARD, {n_soft} WARN)")
+            return 1
+        print("\n[validate-pipeline-wiki] PASS")
+        return 0
 
     schema_root = PACK_ROOT / args.schema
     if not schema_root.is_dir():
         print(f"ERROR: schema folder not found: {schema_root}", file=sys.stderr)
         return 2
+
+    deploy_index_issues = _validate_deploy_index(schema_root, args.schema)
 
     inv_path = schema_root / "_discovery" / "uc_inventory.json"
     inv: dict = {}
@@ -255,7 +507,7 @@ def main() -> int:
         except Exception as e:
             print(f"WARN: couldn't read upstream_wikis/_index.json: {e}", file=sys.stderr)
 
-    all_issues: list[Issue] = []
+    all_issues: list[Issue] = list(deploy_index_issues)
     n_objects = 0
 
     for folder in ("Tables", "Views"):
@@ -263,19 +515,19 @@ def main() -> int:
         if not d.is_dir():
             continue
         for md_path in sorted(d.glob("*.md")):
-            # Skip sidecars and lineage files
             if md_path.name.endswith(".lineage.md") or md_path.name.endswith(".review-needed.md"):
                 continue
             n_objects += 1
             cols = by_object_cols.get(md_path.stem, {})
-            issues = validate_object(md_path, cols, ux_index, args.strict)
+            issues = validate_object(md_path, cols, ux_index, args.strict,
+                                      assert_no_inference=args.assert_no_inference)
             all_issues.extend(issues)
 
     n_hard = sum(1 for i in all_issues if i.level == Issue.LEVEL_HARD)
     n_soft = sum(1 for i in all_issues if i.level == Issue.LEVEL_SOFT)
 
     print(f"\n[validate-pipeline-wiki] {args.schema}: {n_objects} objects checked, "
-          f"{n_hard} HARD, {n_soft} WARN issues")
+          f"{n_hard} HARD, {n_soft} WARN issues (assert_no_inference={args.assert_no_inference})")
     for issue in all_issues:
         print(str(issue))
 

@@ -433,6 +433,8 @@ def main() -> int:
                     help="Skip Workspace API (only handles VIEW + column_lineage cache).")
     ap.add_argument("--out-root", default=None,
                     help="Override _discovery root. Default: knowledge/UC_generated/{schema}/_discovery")
+    ap.add_argument("--force", action="store_true",
+                    help="Re-fetch sources even if cached")
     args = ap.parse_args()
 
     schema_root = OBJ_OUT_ROOT / args.schema

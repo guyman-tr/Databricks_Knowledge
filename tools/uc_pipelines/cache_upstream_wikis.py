@@ -38,6 +38,7 @@ GENERIC_PIPELINE_PATH = SYNAPSE_WIKI_ROOT / "_generic_pipeline_mapping.json"
 UPSTREAM_ROUTING_PATH = SYNAPSE_WIKI_ROOT / "_upstream_wiki_routing.json"
 UC_OBJECT_MAP_PATH = REPO / "knowledge" / "skills" / "_uc_object_map.json"
 KPI_VIEWS_INDEX_PATH = REPO / "knowledge" / "skills" / "_kpi_views_index.json"
+GLOBAL_WIKI_INDEX_PATH = OBJ_OUT_ROOT / "_upstream_wiki_index.json"
 
 # Casing map for known Synapse schemas (UC snake_case → Synapse PascalCase folder).
 SYNAPSE_SCHEMA_CASE = {
@@ -179,7 +180,8 @@ def upstreams_from_kpi_index(target: str, kpi_index: list) -> list[str]:
 # ---------- routing ----------
 
 def route_upstream(full_name: str, generic_pipeline: list[dict],
-                   uc_object_map: dict, uc_pack_schemas: set[str]) -> dict:
+                   uc_object_map: dict, uc_pack_schemas: set[str],
+                   global_index: dict | None = None) -> dict:
     """Decide the routing rule for `full_name` and return a result dict.
 
     Returns shape:
@@ -199,6 +201,26 @@ def route_upstream(full_name: str, generic_pipeline: list[dict],
                 "reason": f"unparseable upstream ref ({len(parts)} parts)"}
 
     catalog, schema, name = parts
+
+    # Rule 0 — global wiki index (fast O(1) hit, built once per run by
+    # tools/uc_pipelines/build_upstream_wiki_index.py).
+    if global_index is not None:
+        hit = global_index.get(fn)
+        if hit and hit.get("wiki_path"):
+            kind = hit.get("wiki_kind") or "global_index"
+            rule_num = {"synapse_mirror": 1, "uc_generated": 2,
+                        "uc_domain": 3}.get(kind, 5)
+            rule_name = {"synapse_mirror": "synapse_gold_mirror",
+                         "uc_generated": "uc_generated_sibling",
+                         "uc_domain": "uc_domain"}.get(kind, "uc_native_via_map")
+            return {
+                "full_name": full_name,
+                "rule_matched": rule_num,
+                "rule_name": rule_name,
+                "wiki_path": hit["wiki_path"],
+                "wiki_exists": True,
+                "via_global_index": True,
+            }
 
     # Rule 1 — synapse gold mirror
     if name.startswith("gold_sql_dp_prod_we_"):
@@ -440,6 +462,15 @@ def main() -> int:
     ap.add_argument("--objects", nargs="+", default=None,
                     help="Optional subset; default all in-scope from _schema_card.md")
     ap.add_argument("--catalog", default="main")
+    ap.add_argument("--write-cache", action="store_true", default=True,
+                    help="(default ON) copy upstream wiki BODIES into _discovery/upstream_wikis/")
+    ap.add_argument("--no-write-cache", dest="write_cache", action="store_false",
+                    help="Routing-only mode: only write _index.json, skip body copies")
+    ap.add_argument("--use-global-index", action="store_true", default=True,
+                    help="(default ON) consult _upstream_wiki_index.json before per-rule lookups")
+    ap.add_argument("--no-global-index", dest="use_global_index", action="store_false")
+    ap.add_argument("--force", action="store_true",
+                    help="Re-route all upstreams even if cached")
     args = ap.parse_args()
 
     schema_root = OBJ_OUT_ROOT / args.schema
@@ -473,6 +504,20 @@ def main() -> int:
 
     uc_pack_schemas = _uc_generated_schemas()
 
+    global_index_lookup: dict | None = None
+    if args.use_global_index:
+        try:
+            gi = json.loads(GLOBAL_WIKI_INDEX_PATH.read_text(encoding="utf-8"))
+            global_index_lookup = gi.get("wikis", {})
+            print(f"[upstream-bridge] global index: {len(global_index_lookup)} wikis available",
+                  file=sys.stderr)
+        except FileNotFoundError:
+            print(f"[upstream-bridge] global index not found at {GLOBAL_WIKI_INDEX_PATH} "
+                  f"— run build_upstream_wiki_index.py first for faster routing",
+                  file=sys.stderr)
+        except Exception as e:
+            print(f"[upstream-bridge] WARN: global index load failed: {e}", file=sys.stderr)
+
     # Read schema card frontmatter
     try:
         import yaml  # type: ignore
@@ -502,7 +547,8 @@ def main() -> int:
         for ref in refs:
             if ref in all_routed:
                 continue
-            decision = route_upstream(ref, generic_pipeline, uc_object_map, uc_pack_schemas)
+            decision = route_upstream(ref, generic_pipeline, uc_object_map, uc_pack_schemas,
+                                       global_index=global_index_lookup)
             all_routed[ref] = decision
 
     # Cache hits
@@ -513,17 +559,19 @@ def main() -> int:
 
     for ref, decision in sorted(all_routed.items()):
         if decision.get("wiki_exists") and decision.get("wiki_path"):
-            src = REPO / decision["wiki_path"]
-            dest = cache_root / f"{ref}.md"
-            if cache_wiki(src, dest):
-                decision["cached_at"] = str(dest.relative_to(REPO))
-                cached_files.append(decision["cached_at"])
+            if args.write_cache:
+                src = REPO / decision["wiki_path"]
+                dest = cache_root / f"{ref}.md"
+                if cache_wiki(src, dest):
+                    decision["cached_at"] = str(dest.relative_to(REPO))
+                    cached_files.append(decision["cached_at"])
         else:
-            dest = cache_root / f"_NO_WIKI__{ref}.md"
-            reason = decision.get("reason") or decision.get("rule_name") or "no rule matched"
-            write_no_wiki_placeholder(dest, ref, reason)
-            decision["cached_at"] = str(dest.relative_to(REPO))
-            placeholder_files.append(decision["cached_at"])
+            if args.write_cache:
+                dest = cache_root / f"_NO_WIKI__{ref}.md"
+                reason = decision.get("reason") or decision.get("rule_name") or "no rule matched"
+                write_no_wiki_placeholder(dest, ref, reason)
+                decision["cached_at"] = str(dest.relative_to(REPO))
+                placeholder_files.append(decision["cached_at"])
 
     stats = {
         "total_upstreams": len(all_routed),
