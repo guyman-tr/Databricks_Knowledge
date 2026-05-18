@@ -1,0 +1,93 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_backoffice_compensationreason",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:15Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CompensationReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Auto-generated unique identifier. PK referenced by compensation transaction tables. Used as ParentID for child types in ",
+      "wiki_quote": "Auto-generated unique identifier. PK referenced by compensation transaction tables. Used as ParentID for child types in ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ParentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Self-referential FK to CompensationReasonID. NULL = root/department category (9 root nodes: 1, 4, 9, 10, 16, 23, 35, 45,",
+      "wiki_quote": "Self-referential FK to CompensationReasonID. NULL = root/department category (9 root nodes: 1, 4, 9, 10, 16, 23, 35, 45,",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Internal classification name used by BackOffice staff. Descriptive operational names like \"Foreclosure (taking all money",
+      "wiki_quote": "Internal classification name used by BackOffice staff. Descriptive operational names like \"Foreclosure (taking all money",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Customer-facing label shown in account statement. Decouples internal classification from customer visibility. NULL for 3",
+      "wiki_quote": "Customer-facing label shown in account statement. Decouples internal classification from customer visibility. NULL for 3",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsShownInHistory",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Whether this compensation type appears in the customer's transaction history/statement. 0=hidden from customer view (tec",
+      "wiki_quote": "Whether this compensation type appears in the customer's transaction history/statement. 0=hidden from customer view (tec",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsCashflowForGain",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Whether this compensation represents actual cash flowing in/out of the account, relevant for gain/loss calculations and ",
+      "wiki_quote": "Whether this compensation represents actual cash flowing in/out of the account, relevant for gain/loss calculations and ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsTaxable",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Whether this compensation is a taxable event that must be reported on tax statements (1099 forms, etc.). 0=non-taxable (",
+      "wiki_quote": "Whether this compensation is a taxable event that must be reported on tax statements (1099 forms, etc.). 0=non-taxable (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CompensationReason.md",
+      "upstream_quote": "Whether this type is still in active use. 0=deprecated (ID 3=Technical Problems under R&D, ID 26=Satisfaction Bonus unde",
+      "wiki_quote": "Whether this type is still in active use. 0=deprecated (ID 3=Technical Problems under R&D, ID 26=Satisfaction Bonus unde",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "object_fqn": "main.billing.bronze_moneybusdb_moneybus_transactions",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 9.05,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Auto-incrementing primary key. Part of composite clustered key with PartitionCol. Referenced by Containers.TransactionID",
+      "wiki_quote": "Auto-incrementing primary key. Part of composite clustered key with PartitionCol. Referenced by Containers.TransactionID",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Global Customer ID - identifies the user who owns this transaction. Indexed (IX_Transactions_GCID) for user-level querie",
+      "wiki_quote": "Global Customer ID - identifies the user who owns this transaction. Indexed (IX_Transactions_GCID) for user-level querie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "UTC timestamp when the transaction was created. Set to GETUTCDATE() by TransactionAdd/TransactionsAndGroupAdd if not pro",
+      "wiki_quote": "UTC timestamp when the transaction was created. Set to GETUTCDATE() by TransactionAdd/TransactionsAndGroupAdd if not pro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditorTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Account type receiving funds: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.md#account-t",
+      "wiki_quote": "Account type receiving funds: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.md#account-t",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitorTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Account type sending funds: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.md#account-typ",
+      "wiki_quote": "Account type sending funds: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.md#account-typ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "High-level transaction lifecycle state: 1=InProcess, 2=Success, 3=Decline, 4=Technical, 5=Canceled. See [Transaction Sta",
+      "wiki_quote": "High-level transaction lifecycle state: 1=InProcess, 2=Success, 3=Decline, 4=Technical, 5=Canceled. See [Transaction Sta",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GroupID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "FK to MoneyBus.TransactionsGroup.ID. Links this transaction to its parent group, tying together the debit and credit leg",
+      "wiki_quote": "FK to MoneyBus.TransactionsGroup.ID. Links this transaction to its parent group, tying together the debit and credit leg",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "External reference identifier from the calling system (typically a UUID). Used for cross-system correlation and idempote",
+      "wiki_quote": "External reference identifier from the calling system (typically a UUID). Used for cross-system correlation and idempote",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Transaction amount in the currency specified by CurrencyID. Pre-calculated by the application. Ranges from small fractio",
+      "wiki_quote": "Transaction amount in the currency specified by CurrencyID. Pre-calculated by the application. Ranges from small fractio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Currency of the transaction amount. Common values: 1 (USD), 2 (EUR), 3 (GBP). Maps to an external currency reference.",
+      "wiki_quote": "Currency of the transaction amount. Common values: 1 (USD), 2 (EUR), 3 (GBP). Maps to an external currency reference (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Modified",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "UTC timestamp of the last status change. Updated by TransactionUpdate on every pipeline step transition.",
+      "wiki_quote": "UTC timestamp of the last status change. Updated by TransactionUpdate on every pipeline step transition (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditorAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Identifier of the creditor's specific account within the creditor account type. May be a trading account number, IBAN, o",
+      "wiki_quote": "Identifier of the creditor's specific account within the creditor account type. May be a trading account number, IBAN, o",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitorAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Identifier of the debitor's specific account within the debitor account type. Paired with CreditorAccountID to fully spe",
+      "wiki_quote": "Identifier of the debitor's specific account within the debitor account type. Paired with CreditorAccountID to fully spe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Detailed pipeline step: 1=Created, 2=Success, 3=Held, 4=Credited, 5=Debited, 6=HoldDecline, 7=CreditDecline, 8=DebitDecl",
+      "wiki_quote": "Detailed pipeline step: 1=Created, 2=Success, 3=Held, 4=Credited, 5=Debited, 6=HoldDecline, 7=CreditDecline, 8=DebitDecl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PartitionCol",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Computed: `ID % 100`. Persisted computed column used as the partition key in the PS_Transactions partition scheme. Distr",
+      "wiki_quote": "Computed: `ID % 100`. Persisted computed column used as the partition key in the PS_Transactions partition scheme. Distr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Computed: `CONCAT('{\"HostName\":\"',HOST_NAME(),...})`. Non-persisted JSON audit trail capturing SQL Server session contex",
+      "wiki_quote": "Computed: `CONCAT('{\"HostName\":\"',HOST_NAME(),...})`. Non-persisted JSON audit trail capturing SQL Server session contex",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "System-versioning start timestamp. Auto-managed by SQL Server temporal tables.",
+      "wiki_quote": "System-versioning start timestamp. Auto-managed by SQL Server temporal tables (Tier 1 — inherited from MoneyBusDB.MoneyB",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "System-versioning end timestamp. 9999-12-31 for current version. Old versions move to History.MoneyBusTransactions on UP",
+      "wiki_quote": "System-versioning end timestamp. 9999-12-31 for current version. Old versions move to History.MoneyBusTransactions on UP",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditorReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Provider-side reference ID for the credit leg. Populated by TransactionUpdate after credit initiation. Used for reconcil",
+      "wiki_quote": "Provider-side reference ID for the credit leg. Populated by TransactionUpdate after credit initiation. Used for reconcil",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitorReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Provider-side reference ID for the debit leg. Populated by TransactionUpdate after debit initiation. Used for reconcilia",
+      "wiki_quote": "Provider-side reference ID for the debit leg. Populated by TransactionUpdate after debit initiation. Used for reconcilia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FlowID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Business flow classifier: 1=Open position (buy), 2=Close position (sell), 3=Deposit/withdrawal. Determines which pipelin",
+      "wiki_quote": "Business flow classifier: 1=Open position (buy), 2=Close position (sell), 3=Deposit/withdrawal. Determines which pipelin",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExtraData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "JSON metadata carrying rich trading context. For Open flows: units, leverage, instrumentName, isBuy, isReal. For Close f",
+      "wiki_quote": "JSON metadata carrying rich trading context. For Open flows: units, leverage, instrumentName, isBuy, isReal. For Close f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditorBaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Market exchange rate for converting to the creditor's currency. Used with CreditorExchangeFee to compute the effective C",
+      "wiki_quote": "Market exchange rate for converting to the creditor's currency. Used with CreditorExchangeFee to compute the effective C",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditorExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Fee/spread applied to the creditor-side currency conversion, expressed as a rate adjustment.",
+      "wiki_quote": "Fee/spread applied to the creditor-side currency conversion, expressed as a rate adjustment (Tier 1 — inherited from Mon",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditorExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Effective exchange rate applied to the creditor side (base rate adjusted by fee). Creditor amount = Amount * CreditorExc",
+      "wiki_quote": "Effective exchange rate applied to the creditor side (base rate adjusted by fee). Creditor amount = Amount * CreditorExc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitorBaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Market exchange rate for the debitor's currency conversion.",
+      "wiki_quote": "Market exchange rate for the debitor's currency conversion (Tier 1 — inherited from MoneyBusDB.MoneyBus.Transactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitorExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Fee/spread applied to the debitor-side currency conversion.",
+      "wiki_quote": "Fee/spread applied to the debitor-side currency conversion (Tier 1 — inherited from MoneyBusDB.MoneyBus.Transactions).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitorExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Effective exchange rate applied to the debitor side. Debitor amount = Amount * DebitorExchangeRate (approximately).",
+      "wiki_quote": "Effective exchange rate applied to the debitor side. Debitor amount = Amount * DebitorExchangeRate (approximately) (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "HoldReferenceID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.Transactions.md",
+      "upstream_quote": "Provider-side reference ID for the hold/reserve operation. Used to release or settle held funds. Populated during HoldIn",
+      "wiki_quote": "Provider-side reference ID for the hold/reserve operation. Used to release or settle held funds. Populated during HoldIn",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 29,
+    "B": 0,
+    "C": 8,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 29 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 8 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

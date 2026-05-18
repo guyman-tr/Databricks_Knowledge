@@ -1,0 +1,100 @@
+{
+  "object_fqn": "main.billing.bronze_recurringmanager_scheduler_plan",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PlanId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "Auto-incrementing primary key uniquely identifying each recurring payment schedule. Referenced by Scheduler.Execution.Pl",
+      "wiki_quote": "Auto-incrementing primary key uniquely identifying each recurring payment schedule. Referenced by Scheduler.Execution.Pl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "Foreign key to the Recurring.Payment table identifying which user payment instruction this schedule belongs to. One-to-o",
+      "wiki_quote": "Foreign key to the Recurring.Payment table identifying which user payment instruction this schedule belongs to. One-to-o",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FrequencyId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "Billing cycle frequency: 1=Weekly (15%), 2=BiWeekly (7%), 3=Monthly (78%). See [Frequency](_glossary.md#frequency) for f",
+      "wiki_quote": "Billing cycle frequency: 1=Weekly (15%), 2=BiWeekly (7%), 3=Monthly (78%). See [Frequency](_glossary.md#frequency) for f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StartDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "UTC timestamp of when the first execution should occur. Used by the scheduling engine to calculate subsequent execution ",
+      "wiki_quote": "UTC timestamp of when the first execution should occur. Used by the scheduling engine to calculate subsequent execution ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StartDateWithUserOffset",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "ISO 8601 formatted start date preserving the user's local timezone offset (e.g., \"2026-05-10T03:00:00+02:00\"). Stored al",
+      "wiki_quote": "ISO 8601 formatted start date preserving the user's local timezone offset (e.g., \"2026-05-10T03:00:00+02:00\"). Stored al",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "EndDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "UTC timestamp when the plan was terminated. NULL = plan is active and generating executions. Set by SetEndDateForPlanOfP",
+      "wiki_quote": "UTC timestamp when the plan was terminated. NULL = plan is active and generating executions. Set by SetEndDateForPlanOfP",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "System-versioning row start time. Automatically managed by SQL Server temporal tables. Tracks when this version of the r",
+      "wiki_quote": "System-versioning row start time. Automatically managed by SQL Server temporal tables. Tracks when this version of the r",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "System-versioning row end time. Value of 9999-12-31 indicates the current version. When a row is modified, the previous ",
+      "wiki_quote": "System-versioning row end time. Value of 9999-12-31 indicates the current version. When a row is modified, the previous ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ChargingDay",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Plan.md",
+      "upstream_quote": "Day of the month (1-28) when the charge should occur for Monthly plans. NULL for 66% of plans (legacy plans created befo",
+      "wiki_quote": "Day of the month (1-28) when the charge should occur for Monthly plans. NULL for 66% of plans (legacy plans created befo",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 9,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 9 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

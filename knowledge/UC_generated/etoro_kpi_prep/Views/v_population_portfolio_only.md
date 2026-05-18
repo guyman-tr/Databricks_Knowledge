@@ -1,4 +1,8 @@
 ---
+object_fqn: main.etoro_kpi_prep.v_population_portfolio_only
+object_type: VIEW
+producer_kind: view_definition
+generator: tools/uc_pipelines/generate_wiki.py
 object: main.etoro_kpi_prep.v_population_portfolio_only
 schema: etoro_kpi_prep
 framework: uc-pipeline-doc
@@ -6,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 21
 row_count: null
-generated_at: '2026-05-18T09:06:55Z'
+generated_at: '2026-05-18T10:56:17Z'
 upstreams:
 - main.actionsprep
 - main.active_actions
@@ -81,10 +85,10 @@ Source: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_populati
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | INT | YES | Computed in source (CAST): `SELECT         CAST(DATE_FORMAT(CAST(bps.ProcessDate AS TIMESTAMP), 'yyyyMMdd') AS INT) AS DateID,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L33-L34. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
-| 1 | RealCID | INT | YES | Computed in source (expression): `SELECT         bs.DateID,         dp.CID AS RealCID,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L12-L14. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
-| 2 | Portfolio_Only | INT | NO | Computed in source (expression): `SELECT     f.DateID,     f.RealCID,     1 AS Portfolio_Only,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L72-L75. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
-| 3 | Portfolio_Only_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Manual,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L76-L76. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
+| 1 | DateID | INT | YES | Computed in source (CAST): `CAST(DATE_FORMAT(CAST(bps.ProcessDate AS TIMESTAMP), 'yyyyMMdd') AS INT) AS DateID`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L34-L34. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
+| 1 | RealCID | INT | YES | Computed in source (expression): `dp.CID AS RealCID`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L14-L14. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
+| 2 | Portfolio_Only | INT | NO | Computed in source (expression): `1 AS Portfolio_Only`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L75-L75. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
+| 3 | Portfolio_Only_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Manual`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L76-L76. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 4 | Portfolio_Only_CFD_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (1, 2, 4) THEN 1 ELSE 0 END) AS Portfol…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L77-L77. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 5 | Portfolio_Only_CryptoCFD_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 0 T…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L78-L78. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 6 | Portfolio_Only_CryptoReal_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 1 T…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L79-L79. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
@@ -92,7 +96,7 @@ Source: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_populati
 | 8 | Portfolio_Only_StocksReal_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (5) AND COALESCE(f.IsSettled, 0) = 1 TH…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L81-L81. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 9 | Portfolio_Only_ETFCFD_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (6) AND COALESCE(f.IsSettled, 0) = 0 TH…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L82-L82. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 10 | Portfolio_Only_ETFReal_Manual | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) = 0 AND COALESCE(f.InstrumentTypeID, 0) IN (6) AND COALESCE(f.IsSettled, 0) = 1 TH…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L83-L83. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
-| 11 | Portfolio_Only_Copy | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Copy,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L84-L84. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
+| 11 | Portfolio_Only_Copy | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 THEN 1 ELSE 0 END) AS Portfolio_Only_Copy`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L84-L84. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 12 | Portfolio_Only_CFD_Copy | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (1, 2, 4) THEN 1 ELSE 0 END) AS Portfol…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L85-L85. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 13 | Portfolio_Only_CryptoCFD_Copy | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 0 T…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L86-L86. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
 | 14 | Portfolio_Only_CryptoReal_Copy | INT | YES | Computed in source (CASE, COALESCE, MAX, WHEN, IN ): `MAX(CASE WHEN COALESCE(f.MirrorID, 0) > 0 AND COALESCE(f.InstrumentTypeID, 0) IN (10) AND COALESCE(f.IsSettled, 0) = 1 T…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_portfolio_only.sql L87-L87. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_portfolio_only). |
@@ -154,7 +158,7 @@ main.etoro_kpi_prep_stg._tmp_cds_segmentation
 
 ---
 
-## 5. Common usage / JOINs
+## 5. Sample Queries & Common JOINs
 
 ### 5.1 Sample queries
 
@@ -197,5 +201,14 @@ main.etoro_kpi_prep_stg._tmp_cds_segmentation
 | Portfolio_Only_ETFReal_Copy | source code (aggregate) | 2 | [uc_view_ddl] |
 | Portfolio_Only_CopyFund | source code (aggregate) | 2 | [uc_view_ddl] |
 | Portfolio_Only_Options | source code (aggregate) | 2 | [uc_view_ddl] |
+
+---
+
+## 7. Tier Legend
+
+- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough/rename/cast).
+- **Tier 2** — column narrated from a cited source-code expression (CASE / COALESCE / arithmetic / window / UDF) in the cached Phase-2 snapshot.
+- **Tier 5** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
+- **Tier U** — unclassifiable: no upstream wiki match and no source-code citation. Mechanical disclosure of unclassifiability — see `.review-needed.md`. **Never** AI-inferred and **never** harvested from the live UC comment, because the live UC comment is the artifact this pipeline is meant to replace.
 
 *Generated: 2026-05-18 | Tiers: 0 T1, 21 T2, 0 T3, 0 T4, 0 T5, 0 U | Elements: 21/21 | Source: view_definition*

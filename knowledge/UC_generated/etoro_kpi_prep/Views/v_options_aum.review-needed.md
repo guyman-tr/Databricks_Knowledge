@@ -5,14 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_options_aum.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `DateID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `OptionsTotalEquity` | transform='cast' src='—'.'TotalEquity'; no upstream wiki match AND no source-code expression found. |
-| `OptionsCashEquity` | transform='cast' src='—'.'CashEquity'; no upstream wiki match AND no source-code expression found. |
-| `OptionsPositionMarketValue` | transform='cast' src='—'.'PositionMarketValue'; no upstream wiki match AND no source-code expression found. |
-| `FirstOptionsAUMDateID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `FirstOptionsAUMDate` | transform='cast' src='—'.'FirstFundingDate'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

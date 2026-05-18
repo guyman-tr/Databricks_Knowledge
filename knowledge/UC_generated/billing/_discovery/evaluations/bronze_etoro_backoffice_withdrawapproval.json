@@ -1,0 +1,93 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_backoffice_withdrawapproval",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ApprovedWithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "Surrogate PK. Auto-incremented. NOT FOR REPLICATION. Uniquely identifies each approval record. ~3.7M records as of 2026-",
+      "wiki_quote": "Surrogate PK. Auto-incremented. NOT FOR REPLICATION. Uniquely identifies each approval record. ~3.7M records as of 2026-",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "FK to Billing.Withdraw.WithdrawID (FK_BWIT_BWAP). Identifies the withdrawal request being approved. Multiple rows share ",
+      "wiki_quote": "FK to Billing.Withdraw.WithdrawID (FK_BWIT_BWAP). Identifies the withdrawal request being approved. Multiple rows share ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UserGroupID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "FK to Dictionary.UserGroup.UserGroupID (FK_DUGR_BWAP). Identifies which approval group this row represents. 1=Admin, 3=R",
+      "wiki_quote": "FK to Dictionary.UserGroup.UserGroupID (FK_DUGR_BWAP). Identifies which approval group this row represents. 1=Admin, 3=R",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "FK to BackOffice.Manager.ManagerID (FK_BMNG_BWAP). The manager who submitted this group's decision. ManagerID=0 indicate",
+      "wiki_quote": "FK to BackOffice.Manager.ManagerID (FK_BMNG_BWAP). The manager who submitted this group's decision. ManagerID=0 indicate",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawApprovalReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "FK to Dictionary.WithdrawApprovalReason (FK_DWAP_BWAP). Reason for the approval decision. 7=Other (default for automated",
+      "wiki_quote": "FK to Dictionary.WithdrawApprovalReason (FK_DWAP_BWAP). Reason for the approval decision. 7=Other (default for automated",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Approved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "1=This group approved the withdrawal. 0=This group rejected/held. A withdrawal proceeds only when all required groups (p",
+      "wiki_quote": "1=This group approved the withdrawal. 0=This group rejected/held. A withdrawal proceeds only when all required groups (p",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "Timestamp when this approval decision was recorded. Defaults to GETDATE() for direct inserts; set to GetDate() in Withdr",
+      "wiki_quote": "Timestamp when this approval decision was recorded. Defaults to GETDATE() for direct inserts; set to GetDate() in Withdr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.WithdrawApproval.md",
+      "upstream_quote": "Free-text comment from the approving/rejecting manager. Required field (NOT NULL). Contains compliance notes, rejection ",
+      "wiki_quote": "Free-text comment from the approving/rejecting manager. Required field (NOT NULL). Contains compliance notes, rejection ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

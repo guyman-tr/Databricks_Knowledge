@@ -2,57 +2,35 @@
   "object_fqn": "main.etoro_kpi_prep.mv_revenue_trading",
   "evaluator_attempt": 1,
   "scores": {
-    "inheritance_fidelity": 10.0,
+    "inheritance_fidelity": 7.0,
     "source_code_narration_accuracy": 10.0,
     "null_with_provenance_correctness": 7.0,
-    "completeness": 4.0,
-    "shape_fidelity": 3.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
     "lineage_coherence": 10.0
   },
-  "weighted_score": 8.25,
+  "weighted_score": 8.3,
   "hard_gates": {
     "inheritance_fidelity_table_present": true,
     "no_unanchored_inferred_descriptions": true
   },
   "verdict": "PASS",
   "regeneration_feedback": null,
-  "evaluated_at": "2026-05-18T09:06:33Z",
+  "evaluated_at": "2026-05-18T10:49:46Z",
   "model_used": "mechanical-v1",
-  "fidelity_table": [
-    {
-      "column": "InstrumentID",
-      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
-      "upstream_quote": "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument)",
-      "wiki_quote": "Primary key from Trade.Instrument. Identifies the tradeable instrument pair. (Tier 1 — Trade.GetInstrument)",
-      "match": "YES — byte-equal"
-    },
-    {
-      "column": "InstrumentTypeID",
-      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
-      "upstream_quote": "From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.",
-      "wiki_quote": "From IMD (InstrumentMetaData). Asset class: 1=Currencies, 2=Commodities, 3=CFD, 4=Indices, 5=Stocks, 6=ETF, 7=Bonds, 8=TrustFunds, 9=Options, 10=Crypto. FK to Dictionary.CurrencyType. (Tier 1 — Trade.",
-      "match": "YES — byte-equal"
-    },
-    {
-      "column": "Symbol",
-      "upstream_wiki": "knowledge\\UC_generated\\etoro_kpi_prep\\_discovery\\upstream_wikis\\main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument.md",
-      "upstream_quote": "Short ticker symbol (e.g., \"AAPL\", \"EURUSD\"). Used for display and lookup. Not necessarily unique. (Tier 1 — Trade.InstrumentMetaData)",
-      "wiki_quote": "Short ticker symbol (e.g., \"AAPL\", \"EURUSD\"). Used for display and lookup. Not necessarily unique. (Tier 1 — Trade.InstrumentMetaData)",
-      "match": "YES — byte-equal"
-    }
-  ],
+  "fidelity_table": [],
   "bucket_counts": {
-    "A": 4,
-    "B": 20,
+    "A": 0,
+    "B": 24,
     "C": 0,
     "U": 0
   },
   "dimension_notes": {
-    "inheritance_fidelity": "all 3 inherited descriptions verbatim",
+    "inheritance_fidelity": "no inherited columns to fidelity-check (neutral)",
     "source_code_narration_accuracy": "spot-check 3/3 accurate",
     "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
-    "completeness": "6/10 structural checks pass; failing: ['required section headers present', 'frontmatter has object_fqn', 'frontmatter has object_type']",
-    "shape_fidelity": "structural issues: missing Tier Legend section, missing Sample Queries section, frontmatter missing object_fqn or generated_at",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
     "lineage_coherence": "all elements coherent with lineage"
   }
 }

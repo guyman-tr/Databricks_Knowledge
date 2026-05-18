@@ -42,6 +42,12 @@ sys.path.insert(0, str(REPO / "tools"))
 
 OBJ_OUT_ROOT = REPO / "knowledge" / "UC_generated"
 DEFAULT_PILOT_SCHEMAS = ["de_output", "bi_output", "bi_dealing", "etoro_kpi_prep", "etoro_kpi"]
+# Bronze schemas where we have Tier 1 wikis available via the upstream wiki
+# index. These schemas only contain bronze passthrough tables — the in-scope
+# subset is determined per-object by classify_writer (BRONZE_TIER1_INHERITANCE).
+BRONZE_TIER1_SCHEMAS = ["general", "bi_db", "wallet", "emoney", "trading",
+                         "billing", "finance", "dealing", "compliance",
+                         "experience", "pii_data", "config"]
 WAVE_2_SCHEMAS = {"etoro_kpi"}
 PHASE_LIST_DEFAULT = "-1,0,1,2,3,4,5,6,7"
 
@@ -492,7 +498,8 @@ def _worker_run_schema(args_dict: dict) -> dict:
 
 
 def _validate_pilot_scope(schemas: list[str]) -> list[str]:
-    bad = [s for s in schemas if s not in DEFAULT_PILOT_SCHEMAS]
+    valid = set(DEFAULT_PILOT_SCHEMAS) | set(BRONZE_TIER1_SCHEMAS)
+    bad = [s for s in schemas if s not in valid]
     return bad
 
 

@@ -5,9 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_moneyfarm_aum.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `dateid` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

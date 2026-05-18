@@ -205,39 +205,115 @@ SQL_OPERATORS_OF_INTEREST = (
 
 
 def _find_column_expression_lines(source_code: str, target_column: str) -> tuple[int, int, str] | None:
-    """Heuristic: locate the line in the source code that defines `target_column`
-    as a projected SELECT alias. Returns (start_line, end_line, snippet) or None.
+    """Heuristic: locate the line(s) in the source code that define `target_column`
+    as a projected SELECT-list item. Returns (start_line, end_line, snippet) or None.
+
+    Detects three patterns, in priority order:
+      1. Explicit `AS <colname>` (case-insensitive, optional backticks).
+      2. Bare implicit alias — `<qualifier>.<colname>` or just `<colname>` —
+         appearing as the last token before `,` or end-of-line on a line that
+         is part of a SELECT projection (i.e. not a WHERE / JOIN / GROUP BY line).
+      3. Multi-line CASE/COALESCE expressions ending in `AS <colname>`.
+
+    The snippet returned is ONLY the column's own SELECT-list item — bounded
+    backward by either the previous item's trailing `,` or by the `SELECT`
+    keyword, and forward by the column's own trailing `,`/`AS` line. We never
+    grab earlier columns.
     """
     if not source_code:
         return None
     lines = source_code.splitlines()
-    target_low = target_column.lower()
-    candidate_idxs: list[int] = []
-    pat = re.compile(rf"\bAS\s+`?{re.escape(target_column)}`?\b", re.IGNORECASE)
-    pat_lower = re.compile(rf"\bas\s+`?{re.escape(target_low)}`?\b")
+    n = len(lines)
+    target = target_column
+    target_low = target.lower()
+
+    # Disqualifiers — lines that look like clauses, not projection items.
+    # NOTE: LEFT / RIGHT / FULL / INNER / OUTER / CROSS are AMBIGUOUS — they can
+    # be JOIN modifiers (clause) OR string functions (projection: `LEFT(x, 4)`).
+    # We require them to be followed by whitespace + JOIN (or directly the word
+    # JOIN-ish), otherwise we treat the line as a projection.
+    clause_re = re.compile(
+        r"^\s*("
+        r"FROM\b|WHERE\b|JOIN\b|ON\b|GROUP\s+BY\b|ORDER\s+BY\b|HAVING\b|"
+        r"UNION\b|INTERSECT\b|EXCEPT\b|WITH\b|--|/\*|\*/|\)\s*$|"
+        r"(?:LEFT|RIGHT|INNER|OUTER|CROSS|FULL)\s+(?:OUTER\s+)?JOIN\b"
+        r")",
+        re.IGNORECASE,
+    )
+
+    def is_projection_line(idx: int) -> bool:
+        ln = lines[idx]
+        return not clause_re.match(ln)
+
+    # Pass 1: explicit "AS <colname>" — both quoted-backtick and bare.
+    as_pat = re.compile(rf"\bAS\s+`?{re.escape(target)}`?\s*(?:,|$)", re.IGNORECASE)
+    candidates: list[int] = []
     for i, ln in enumerate(lines):
-        if pat.search(ln) or pat_lower.search(ln):
-            candidate_idxs.append(i)
-    if not candidate_idxs:
+        if as_pat.search(ln) and is_projection_line(i):
+            candidates.append(i)
+
+    # Pass 2: bare implicit alias — `<qualifier>.<colname>` or bare `<colname>`
+    # at end-of-projection-line (followed by `,` or line-end). Strict: rejects
+    # the column when it's used inside a WHERE/JOIN/GROUP-BY (filtered by
+    # is_projection_line) and rejects function calls like `SUM(<colname>)` by
+    # requiring the next non-whitespace char to be `,` or EOL.
+    if not candidates:
+        bare_pat = re.compile(
+            rf"(?:\.|^|\s|\()`?{re.escape(target)}`?\s*(?:,|$)",
+            re.IGNORECASE,
+        )
         for i, ln in enumerate(lines):
-            stripped = ln.strip().rstrip(",")
-            if stripped.lower().endswith(target_low) and any(
-                op in stripped.upper() for op in ("CASE", "COALESCE", "ROUND", "CAST", "SUM(", "COUNT(")):
-                candidate_idxs.append(i)
-    if not candidate_idxs:
+            if not is_projection_line(i):
+                continue
+            # Drop trailing inline comments before matching.
+            ln_stripped = re.sub(r"--.*$", "", ln).rstrip()
+            if not ln_stripped.endswith((",", target, f"`{target}`")) and \
+               not re.search(rf"\b{re.escape(target)}\b\s*$", ln_stripped, re.IGNORECASE):
+                continue
+            if bare_pat.search(ln_stripped):
+                candidates.append(i)
+
+    # Pass 3: multi-line expression ending with `... AS <colname>` on a later line.
+    # Already covered by Pass 1, but explicit fallback for CASE-WHEN-END blocks
+    # where `AS <colname>` is on the END line.
+    if not candidates:
+        for i, ln in enumerate(lines):
+            if re.search(rf"\bEND\s+AS\s+`?{re.escape(target)}`?", ln, re.IGNORECASE) and is_projection_line(i):
+                candidates.append(i)
+
+    if not candidates:
         return None
-    end_idx = candidate_idxs[0]
+    end_idx = candidates[0]
+
+    # Walk backward to find the start of THIS projection item — bounded by
+    # either the previous line ending in `,` (previous item's terminator) or
+    # the SELECT keyword. Cap the walk at 30 lines to avoid runaway.
     start_idx = end_idx
-    for j in range(end_idx, max(-1, end_idx - 20), -1):
-        ln = lines[j].lstrip()
-        if ln.startswith(",") or ln.startswith("SELECT") or ln.startswith("select"):
-            start_idx = j
+    for j in range(end_idx - 1, max(-1, end_idx - 30), -1):
+        prev = lines[j].rstrip()
+        if prev.endswith(","):
+            # The previous item ended here; THIS item starts on j+1.
+            start_idx = j + 1
             break
-        if "CASE" in lines[j].upper() and "END" in " ".join(lines[start_idx:end_idx + 1]).upper():
-            start_idx = j
+        if re.match(r"^\s*SELECT(\s|$)", prev, re.IGNORECASE):
+            start_idx = j + 1
             break
+        # If we hit a CTE header, FROM, or open paren, stop and treat the
+        # next line as the start.
+        if re.match(r"^\s*(WITH|FROM|\(|\))", prev, re.IGNORECASE):
+            start_idx = j + 1
+            break
+        start_idx = j
+
+    if start_idx > end_idx:
+        start_idx = end_idx
+
     snippet = "\n".join(lines[start_idx:end_idx + 1]).strip()
-    snippet = snippet[:200] + ("…" if len(snippet) > 200 else "")
+    # Strip trailing comma from the last line for cleaner output.
+    if snippet.endswith(","):
+        snippet = snippet[:-1]
+    if len(snippet) > 200:
+        snippet = snippet[:200] + "…"
     return (start_idx + 1, end_idx + 1, snippet)
 
 
@@ -500,6 +576,264 @@ def read_lineage_file(out_md_path: Path) -> tuple[list[dict], dict]:
     return rows, stats
 
 
+def _generate_bronze_tier1_for_object(*, schema: str, obj_name: str,
+                                       inv_obj: dict, writer_meta: dict,
+                                       dry_run: bool) -> dict:
+    """Author a UC wiki for a bronze table by fully inheriting from a Tier 1
+    production wiki.
+
+    Bronze tables have no UC writer of their own — they're populated by the
+    generic ingest pipeline. But their column names are 1:1 with the production
+    SQL Server table, so we can mechanically inherit each column's description
+    from the Tier 1 wiki of `{source_db}.{source_schema}.{source_table}`.
+
+    Every emitted description falls into Bucket A (verbatim inheritance) or
+    Bucket C (null-with-provenance when a column exists in bronze but not in
+    the Tier 1 source wiki). No AI inference. No source-code narration."""
+    schema_root = OBJ_OUT_ROOT / schema
+    columns = inv_obj.get("columns") or []
+    folder = "Tables"
+    out_dir = schema_root / folder
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_md = out_dir / f"{obj_name}.md"
+    out_review = out_dir / f"{obj_name}.review-needed.md"
+
+    tier1_rel = writer_meta.get("upstream_wiki_path") or ""
+    tier1_path = REPO / tier1_rel if tier1_rel else None
+    src_db = writer_meta.get("source_database") or "?"
+    src_sch = writer_meta.get("source_schema") or "?"
+    src_tbl = writer_meta.get("source_table") or "?"
+    src_repo = writer_meta.get("source_repo") or "?"
+    lake = writer_meta.get("datalake_path") or "(no lake path on record)"
+    copy_strat = writer_meta.get("copy_strategy") or "(no copy_strategy on record)"
+    source_label = f"{src_db}.{src_sch}.{src_tbl}"
+
+    elements_rows: list[dict] = []
+    provenance_rows: list[dict] = []
+    sidecar_unverified: list[dict] = []
+    sidecar_warnings: list[str] = []
+    tier_counts: Counter = Counter()
+    check_date = _today_iso()
+
+    tier1_has_wiki = bool(tier1_path and tier1_path.is_file())
+    if not tier1_has_wiki:
+        sidecar_warnings.append(
+            f"upstream_wiki_path declared in schema card not found on disk: {tier1_rel}"
+        )
+
+    for col in columns:
+        cname = col["name"]
+        ctype = col.get("data_type") or col.get("type") or "—"
+        nullable = "YES" if col.get("nullable") else "NO"
+        ordinal = col.get("ordinal") or (len(elements_rows) + 1)
+
+        inherited = None
+        if tier1_has_wiki:
+            inherited = _inherit_upstream_description(tier1_path, cname)
+
+        if inherited:
+            inherited_tag = TIER_TAG_RE.search(inherited)
+            if inherited_tag:
+                description = inherited
+                tier_letter = inherited_tag.group(1)[0] if inherited_tag.group(1)[0].isdigit() else "1"
+                cited_as = inherited_tag.group(0)
+            else:
+                description = _ensure_tier_tag(
+                    inherited, "1", f"inherited from {source_label}"
+                )
+                tier_letter = "1"
+                cited_as = f"(Tier 1 — inherited from {source_label})"
+            provenance_source = f"upstream wiki `{tier1_rel}` (bronze passthrough)"
+        else:
+            description = _null_with_provenance(source_label, cname, check_date)
+            description = _ensure_tier_tag(
+                description, "5",
+                "bronze-passthrough; column not documented in Tier 1 source wiki"
+                if tier1_has_wiki else "bronze-passthrough; Tier 1 source wiki not on disk",
+            )
+            tier_letter = "5"
+            provenance_source = (
+                f"would inherit from `{tier1_rel}` but column `{cname}` "
+                f"not present in source wiki"
+                if tier1_has_wiki else
+                f"would inherit from `{tier1_rel}` but file not on disk"
+            )
+            cited_as = "(Tier 5 — bronze-passthrough-no-source-row)"
+            sidecar_unverified.append({
+                "name": cname,
+                "reason": (
+                    f"present in bronze ingest but no row in {source_label} wiki — "
+                    f"may indicate added column post-ingest, or schema drift"
+                    if tier1_has_wiki else
+                    f"Tier 1 wiki path declared but not on disk: {tier1_rel}"
+                ),
+            })
+
+        elements_rows.append({
+            "ordinal": ordinal, "name": cname, "type": ctype,
+            "nullable": nullable, "description": description,
+        })
+        tier_counts[tier_letter] += 1
+        provenance_rows.append({
+            "column": cname, "source": provenance_source,
+            "tier": tier_letter, "cited_as": cited_as,
+        })
+
+    n_pass = tier_counts.get("1", 0)
+    n_narr = 0
+    n_5 = tier_counts.get("5", 0)
+    n_unverified = tier_counts.get("U", 0)
+
+    obj_fqn = f"main.{schema}.{obj_name}"
+    upstreams_seen = [source_label]
+    fm = {
+        "object_fqn": obj_fqn,
+        "object_type": (inv_obj.get("table_type") or "TABLE").upper(),
+        "producer_kind": "bronze_tier1_inheritance",
+        "generator": "tools/uc_pipelines/generate_wiki.py",
+        "object": obj_fqn,
+        "schema": schema,
+        "framework": "uc-pipeline-doc",
+        "table_type": (inv_obj.get("table_type") or "TABLE").upper(),
+        "format": inv_obj.get("data_source_format"),
+        "column_count": len(columns),
+        "row_count": inv_obj.get("row_count"),
+        "generated_at": _now_iso_z(),
+        "upstreams": upstreams_seen,
+        "writer": {
+            "kind": "bronze_tier1_inheritance",
+            "path": tier1_rel,
+            "source_database": src_db,
+            "source_schema": src_sch,
+            "source_table": src_tbl,
+            "source_repo": src_repo,
+            "datalake_path": lake,
+            "copy_strategy": copy_strat,
+            "source_code_snapshot": None,
+        },
+        "tier_breakdown": {
+            "tier1_columns": n_pass,
+            "tier2_columns": 0,
+            "tier3_columns": 0,
+            "tier4_columns": 0,
+            "tier5_columns": n_5,
+            "unverified_columns": n_unverified,
+        },
+    }
+
+    try:
+        import yaml  # type: ignore
+        fm_text = yaml.safe_dump(fm, sort_keys=False, allow_unicode=True).rstrip()
+    except Exception:
+        fm_text = json.dumps(fm, indent=2)
+
+    prop_table = _build_property_table(obj_name, inv_obj, schema)
+
+    section1 = (
+        f"Bronze ingest table populated from production source "
+        f"`{source_label}` (`{src_repo}` repo). "
+        f"This UC object is a 1:1 passthrough of the source table; no transform is "
+        f"applied during ingest. All column descriptions are inherited byte-for-byte "
+        f"from the Tier 1 source wiki at `{tier1_rel}`.\n\n"
+        f"- Lake path: `{lake}`\n"
+        f"- Copy strategy: `{copy_strat}`\n"
+        f"- Source database: `{src_db}` (`{src_repo}`)\n"
+        f"- Source schema/table: `{src_sch}.{src_tbl}`\n"
+        f"- {n_pass} of {len(columns)} columns inherited; {n_5} columns null-with-provenance."
+    )
+
+    section2 = (
+        "Pure ingest passthrough — no UC-side transform. The producer is the generic "
+        "bronze ingest pipeline (Synapse/lake → UC), not a notebook or SP authored in "
+        "this repo. Refer to the Tier 1 source wiki for the canonical column semantics."
+    )
+
+    elements_lines = [
+        "| # | Element | Type | Nullable | Description |",
+        "|---|---------|------|----------|-------------|",
+    ]
+    for r in sorted(elements_rows, key=lambda x: x["ordinal"]):
+        desc = r["description"].replace("|", "\\|").replace("\n", " ")
+        elements_lines.append(
+            f"| {r['ordinal']} | {r['name']} | {r['type']} | {r['nullable']} | {desc} |"
+        )
+    section3 = "\n".join(elements_lines)
+
+    downstream = load_downstream_from_dag(DAG_PATH, obj_fqn)
+    upstream_table_rows = [{
+        "full_name": source_label,
+        "role": "Primary",
+        "wiki_path": tier1_rel,
+    }]
+    section4 = _build_section4(obj_name, schema, upstream_table_rows, downstream, 0, 0, 0)
+    section5 = _build_section5(obj_name, schema, [])
+    section6 = _build_section6_provenance(provenance_rows)
+
+    tier_legend = (
+        "- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough).\n"
+        "- **Tier 5** — null-with-provenance: column present in bronze ingest but not yet documented in the Tier 1 source wiki (schema drift or post-ingest addition)."
+    )
+
+    md_parts = [
+        "---", fm_text, "---", "",
+        f"# {obj_name}", "",
+        f"> Bronze ingest in `main.{schema}` (1:1 passthrough of `{source_label}`). "
+        f"{n_pass} of {len(columns)} columns inherited from Tier 1 source wiki; "
+        f"{n_5} columns null-with-provenance.",
+        "", prop_table, "", "---", "",
+        "## 1. What it is", "", section1, "", "---", "",
+        "## 2. Transform Logic", "", section2, "", "---", "",
+        "## 3. Elements", "", section3, "", "---", "",
+        "## 4. Lineage", "", section4, "", "---", "",
+        "## 5. Sample Queries & Common JOINs", "", section5, "", "---", "",
+        "## 6. Deploy / UC ALTER provenance", "", section6, "", "---", "",
+        "## 7. Tier Legend", "", tier_legend, "",
+        f"*Generated: {_today_iso()} | Tiers: {n_pass} T1, 0 T2, 0 T3, 0 T4, {n_5} T5, {n_unverified} U "
+        f"| Elements: {len(elements_rows)}/{len(columns)} | Source: bronze_tier1_inheritance*",
+    ]
+    md_text = "\n".join(md_parts) + "\n"
+
+    sidecar_parts = [
+        f"# Review-needed sidecar — `{obj_name}`", "",
+        f"Generated: {_today_iso()}",
+        f"Wiki: `{out_md.relative_to(REPO).as_posix()}`",
+        f"Inheritance source: `{tier1_rel}`", "",
+        "## UNVERIFIED columns", "",
+    ]
+    if sidecar_unverified:
+        sidecar_parts.append("| Column | Reason |")
+        sidecar_parts.append("|--------|--------|")
+        for u in sidecar_unverified:
+            r = u['reason'].replace('|', '\\|')
+            sidecar_parts.append(f"| `{u['name']}` | {r} |")
+    else:
+        sidecar_parts.append("_None._")
+    if sidecar_warnings:
+        sidecar_parts.extend(["", "## Parser warnings", ""])
+        for w in sidecar_warnings:
+            sidecar_parts.append(f"- {w}")
+    sidecar_text = "\n".join(sidecar_parts) + "\n"
+
+    wrote: list[str] = []
+    if not dry_run:
+        out_md.write_text(md_text, encoding="utf-8")
+        wrote.append(str(out_md.relative_to(REPO)))
+        if sidecar_unverified or sidecar_warnings:
+            out_review.write_text(sidecar_text, encoding="utf-8")
+            wrote.append(str(out_review.relative_to(REPO)))
+        elif out_review.exists():
+            out_review.unlink()
+
+    return {
+        "obj": obj_name,
+        "wrote": wrote,
+        "tier_counts": dict(tier_counts),
+        "n_unverified": n_unverified,
+        "status": "Generated",
+        "blocked_on_upstream": None,
+    }
+
+
 def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) -> dict:
     schema_root = OBJ_OUT_ROOT / schema
     if not schema_root.is_dir():
@@ -514,6 +848,17 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
     if not columns:
         raise RuntimeError(f"object {obj_name} has no columns in inventory")
 
+    # Short-circuit for bronze tables that we're documenting purely by
+    # inheritance from a Tier 1 production wiki. They have no source code
+    # (the writer is the bronze ingest pipeline, owned upstream) so the
+    # normal lineage/source-code narration path doesn't apply.
+    writer_meta = inv_obj.get("writer") or {}
+    if writer_meta.get("kind") == "BRONZE_TIER1_INHERITANCE":
+        return _generate_bronze_tier1_for_object(
+            schema=schema, obj_name=obj_name, inv_obj=inv_obj,
+            writer_meta=writer_meta, dry_run=dry_run,
+        )
+
     ux_index = read_upstream_index(schema_root)
     dag_nodes = load_dag_nodes(DAG_PATH)
     folder = "Views" if (inv_obj.get("table_type") or "").upper() in ("VIEW", "MATERIALIZED_VIEW") else "Tables"
@@ -527,6 +872,60 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
 
     writer_kind, source_path_rel = derive_writer_kind(obj_name, inv_obj, schema_root)
     source_code, _ = read_source_code(schema_root, obj_name)
+
+    # Hard gate: TABLE objects with no discoverable writer cannot be documented
+    # mechanically from real evidence. The live UC comments on such a table
+    # (however populated they look) are explicitly NOT a source of truth — they
+    # are the artifact this pipeline is intended to replace. Emitting a wiki
+    # full of (Tier U — unclassified) rows just ships honest noise; skipping and
+    # recording a `Skipped` audit row points exactly at the gap that must be
+    # fixed (writer discovery / notebook fetch / SP resolution) before this
+    # table can be documented at all.
+    is_view = (inv_obj.get("table_type") or "").upper() in ("VIEW", "MATERIALIZED_VIEW")
+    if (not is_view) and writer_kind == "unknown":
+        live_comment_cols = sum(
+            1 for c in columns if (c.get("comment") or "").strip()
+        )
+        folder = "Tables"
+        out_dir = schema_root / folder
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_status = out_dir / f"{obj_name}.status.json"
+        skip_payload = {
+            "object": f"main.{schema}.{obj_name}",
+            "status": "Skipped",
+            "status_detail": (
+                f"TABLE writer not discoverable ({writer_kind}); blocked on writer/notebook/SP discovery. "
+                f"Live UC comments on this table ({live_comment_cols}/{len(columns)} columns) "
+                f"are intentionally NOT used as a source — they are the artifact to be replaced."
+            ),
+            "blocked_on_upstream": None,
+            "all_blocked_upstreams": [],
+            "routing_attempts": "writer-discovery exhausted: no source on disk, no notebook/job entity_id resolved. Live UC comments are not used as anchor.",
+            "n_unverified": len(columns),
+            "tier_counts": {"U": len(columns)},
+            "generated_at": _now_iso_z(),
+            "writer_kind": writer_kind,
+            "live_comment_columns": live_comment_cols,
+            "total_columns": len(columns),
+        }
+        if not dry_run:
+            out_status.write_text(json.dumps(skip_payload, indent=2, ensure_ascii=False),
+                                   encoding="utf-8")
+            # Best-effort: clear out any prior all-Tier-U .md / .review-needed.md
+            # that an earlier (laundering) run wrote, so the bank stops shipping
+            # garbage from this table.
+            for stale_ext in (".md", ".review-needed.md"):
+                stale = out_dir / f"{obj_name}{stale_ext}"
+                if stale.exists():
+                    stale.unlink()
+        return {
+            "obj": obj_name,
+            "wrote": [str(out_status.relative_to(REPO))] if not dry_run else [],
+            "tier_counts": {"U": len(columns)},
+            "n_unverified": len(columns),
+            "status": "Skipped",
+            "blocked_on_upstream": None,
+        }
 
     upstreams_seen: list[str] = []
     for r in lineage_rows:
@@ -621,17 +1020,31 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
                     provenance_source = f"null-with-provenance (terminal upstream `{src_obj}`)"
                     cited_as = "(Tier 5 — terminal-no-wiki)"
                 elif up_status == "in_scope_not_yet_authored":
+                    # Honest disclosure: the upstream object IS in our scope but its
+                    # wiki hasn't been authored yet. Block on it explicitly rather
+                    # than synthesizing a description from any other source. When
+                    # the upstream wiki lands, regenerating this object will pick
+                    # up the inheritance automatically.
+                    description = (
+                        f"Source: `{src_obj}.{src_col}`. Upstream wiki is in-scope "
+                        f"but not yet authored as of {check_date}; this column will be "
+                        f"re-resolved when the upstream wiki is generated."
+                    )
+                    description = _ensure_tier_tag(description, "5", f"blocked-on-upstream `{src_obj}`")
+                    tier_letter = "5"
+                    provenance_source = f"blocked: upstream wiki for `{src_obj}` not yet authored"
+                    cited_as = "(Tier 5 — blocked-on-upstream)"
                     sidecar_warnings.append(
-                        f"`{cname}`: upstream `{src_obj}` is in-scope but not yet authored — "
-                        f"this column will be regenerated when the upstream wiki lands.")
-                    description = (f"Upstream `{src_obj}.{src_col}` is in-scope but its wiki has not "
-                                   f"been authored yet; this column will be regenerated once the "
-                                   f"upstream wiki lands. (Tier U — blocked-on-upstream)")
-                    tier_letter = "U"
-                    provenance_source = "blocked_on_upstream"
-                    cited_as = "(Tier U — blocked-on-upstream)"
+                        f"`{cname}`: blocked on upstream `{src_obj}` wiki (in-scope, not yet authored).")
 
-        if description is None and (transform in NARRATED_TRANSFORMS or transform == "join_enriched"):
+        # Tier 2 narration: anchor the column to its `AS <colname>` expression in
+        # the cached source code. The narrator returns None if the AS-binding
+        # isn't present — so it is safe to attempt for ANY column, including
+        # those the column-lineage parser couldn't classify (transform=unknown)
+        # due to CTE / UNION-ALL / dynamic SQL the parser can't unwind. The
+        # narrator never invents text; it quotes the source line range and
+        # tags the citation as [uc_view_ddl] or [notebook:...].
+        if description is None and source_code:
             narrated = _narrate_from_source_code(cname, source_code, src_obj,
                                                   source_path_rel or "(no source cached)",
                                                   writer_kind)
@@ -657,7 +1070,9 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
             sidecar_unverified.append({
                 "name": cname,
                 "reason": f"transform={transform!r} src={src_obj!r}.{src_col!r}; "
-                          f"no upstream wiki match AND no source-code expression found.",
+                          f"no upstream wiki match and no source-code expression. "
+                          f"NOTE: live UC comment (if any) is intentionally NOT used as a source — "
+                          f"the live UC comment is the artifact we are trying to replace, not anchor against.",
             })
             description = (f"Transform `{transform}` for column `{cname}` could not be resolved "
                            f"to an upstream wiki or a source-code expression. See `.review-needed.md`. "
@@ -695,8 +1110,15 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
     table_type_label = (inv_obj.get("table_type") or "").upper() or "VIEW"
     kind_label = kind_label_map.get(writer_kind, table_type_label.lower())
 
+    obj_fqn = f"main.{schema}.{obj_name}"
     fm = {
-        "object": f"main.{schema}.{obj_name}",
+        # Canonical keys expected by validate_pipeline_wiki.py + adversarial_evaluate.py:
+        "object_fqn": obj_fqn,
+        "object_type": table_type_label,
+        "producer_kind": writer_kind,
+        "generator": "tools/uc_pipelines/generate_wiki.py",
+        # Back-compat aliases used by older readers in the pack:
+        "object": obj_fqn,
         "schema": schema,
         "framework": "uc-pipeline-doc",
         "table_type": table_type_label,
@@ -748,6 +1170,13 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
     section5 = _build_section5(obj_name, schema, [])
     section6 = _build_section6_provenance(provenance_rows)
 
+    tier_legend = (
+        "- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough/rename/cast).\n"
+        "- **Tier 2** — column narrated from a cited source-code expression (CASE / COALESCE / arithmetic / window / UDF) in the cached Phase-2 snapshot.\n"
+        "- **Tier 5** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.\n"
+        "- **Tier U** — unclassifiable: no upstream wiki match and no source-code citation. Mechanical disclosure of unclassifiability — see `.review-needed.md`. **Never** AI-inferred and **never** harvested from the live UC comment, because the live UC comment is the artifact this pipeline is meant to replace."
+    )
+
     md_parts = [
         "---", fm_text, "---", "",
         f"# {obj_name}", "",
@@ -757,8 +1186,9 @@ def generate_for_object(schema: str, obj_name: str, *, dry_run: bool = False) ->
         "## 2. Transform Logic", "", section2, "", "---", "",
         "## 3. Elements", "", section3, "", "---", "",
         "## 4. Lineage", "", section4, "", "---", "",
-        "## 5. Common usage / JOINs", "", section5, "", "---", "",
-        "## 6. Deploy / UC ALTER provenance", "", section6, "",
+        "## 5. Sample Queries & Common JOINs", "", section5, "", "---", "",
+        "## 6. Deploy / UC ALTER provenance", "", section6, "", "---", "",
+        "## 7. Tier Legend", "", tier_legend, "",
         f"*Generated: {_today_iso()} | Tiers: {n_pass} T1, {n_narr} T2, {n_3} T3, {n_4} T4, {n_5} T5, {n_unverified} U "
         f"| Elements: {len(elements_rows)}/{len(columns)} | Source: {writer_kind}*",
     ]

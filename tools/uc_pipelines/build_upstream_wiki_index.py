@@ -35,6 +35,9 @@ REPO = Path(__file__).resolve().parents[2]
 SYNAPSE_WIKI_ROOT = REPO / "knowledge" / "synapse" / "Wiki"
 UC_GENERATED_ROOT = REPO / "knowledge" / "UC_generated"
 UC_DOMAIN_ROOT = REPO / "knowledge" / "uc_domains"
+PROD_SCHEMAS_ROOT = REPO / "knowledge" / "ProdSchemas"
+ROUTING_PATH = SYNAPSE_WIKI_ROOT / "_upstream_wiki_routing.json"
+PIPELINE_MAPPING_PATH = SYNAPSE_WIKI_ROOT / "_generic_pipeline_mapping.json"
 OUT_PATH = UC_GENERATED_ROOT / "_upstream_wiki_index.json"
 
 SYNAPSE_SCHEMA_TO_SNAKE = {
@@ -194,12 +197,78 @@ def scan_uc_domains() -> list[dict]:
     return entries
 
 
+def scan_bronze_tier1() -> list[dict]:
+    """Index Tier 1 wikis from sibling-repo databases (vendored under knowledge/ProdSchemas/).
+
+    Uses _generic_pipeline_mapping.json (database/schema/table → uc_table) and
+    _upstream_wiki_routing.json (database → repo_path + wiki_path) to derive the
+    on-disk wiki path for each mapping row. Only emits entries where the wiki
+    actually exists on disk."""
+    entries: list[dict] = []
+    if not ROUTING_PATH.is_file() or not PIPELINE_MAPPING_PATH.is_file():
+        return entries
+    try:
+        routing = json.loads(ROUTING_PATH.read_text(encoding="utf-8"))
+        mapping = json.loads(PIPELINE_MAPPING_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return entries
+    upstream_dbs = routing.get("upstream_databases") or {}
+
+    for row in mapping.get("mappings", []) or []:
+        db = row.get("database_name") or ""
+        schema = row.get("schema_name") or ""
+        table = row.get("table_name") or ""
+        uc_short = row.get("uc_table") or ""
+        if not (db and schema and table and uc_short):
+            continue
+        route = upstream_dbs.get(db)
+        if not route:
+            continue
+        repo_path = Path(route.get("repo_path") or "")
+        wiki_path = (route.get("wiki_path") or "").replace("\\", "/")
+        if not repo_path.is_dir() or not wiki_path:
+            continue
+        base = repo_path / wiki_path / schema
+        # Prefer Tables, fall back to Views (matches the upstream-wiki-router skill rules).
+        cand_table = base / "Tables" / f"{schema}.{table}.md"
+        cand_view = base / "Views" / f"{schema}.{table}.md"
+        if cand_table.is_file():
+            md = cand_table
+            folder = "Tables"
+        elif cand_view.is_file():
+            md = cand_view
+            folder = "Views"
+        else:
+            continue
+        if not _is_real_wiki(md):
+            continue
+        full_name = f"main.{uc_short}".lower()
+        # Lake path is informational but useful for downstream resolvers.
+        lake = (row.get("datalake_path") or "").rstrip("/")
+        entries.append({
+            "full_name": full_name,
+            "wiki_path": str(md.relative_to(REPO)).replace("\\", "/"),
+            "wiki_kind": "bronze_tier1",
+            "source_database": db,
+            "source_schema": schema,
+            "source_table": table,
+            "source_repo": route.get("repo"),
+            "source_folder": folder,
+            "datalake_path": lake or None,
+            "copy_strategy": row.get("copy_strategy"),
+            "business_group": row.get("business_group"),
+            "column_count": _count_columns(md),
+        })
+    return entries
+
+
 def main() -> int:
     syn = scan_synapse()
     uc_g = scan_uc_generated()
     uc_d = scan_uc_domains()
+    bronze = scan_bronze_tier1()
 
-    all_entries = syn + uc_g + uc_d
+    all_entries = syn + uc_g + uc_d + bronze
     wikis: dict[str, dict] = {}
     duplicates: list[str] = []
     for e in all_entries:
@@ -214,6 +283,7 @@ def main() -> int:
         "synapse_mirror": sum(1 for v in wikis.values() if v["wiki_kind"] == "synapse_mirror"),
         "uc_generated": sum(1 for v in wikis.values() if v["wiki_kind"] == "uc_generated"),
         "uc_domain": sum(1 for v in wikis.values() if v["wiki_kind"] == "uc_domain"),
+        "bronze_tier1": sum(1 for v in wikis.values() if v["wiki_kind"] == "bronze_tier1"),
         "duplicates_dropped": len(duplicates),
     }
 

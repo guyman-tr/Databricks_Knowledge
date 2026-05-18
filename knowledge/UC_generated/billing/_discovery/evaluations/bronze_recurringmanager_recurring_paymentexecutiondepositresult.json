@@ -1,0 +1,121 @@
+{
+  "object_fqn": "main.billing.bronze_recurringmanager_recurring_paymentexecutiondepositresult",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PaymentExecutionDepositResultId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "Auto-incrementing primary key. PAGE compressed. Current max ~354,564.",
+      "wiki_quote": "Auto-incrementing primary key. PAGE compressed. Current max ~354,564 (Tier 1 — inherited from RecurringManager.Recurring",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentExecutionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "FK to Recurring.PaymentExecution.PaymentExecutionId. Links this result to the execution that triggered the billing attem",
+      "wiki_quote": "FK to Recurring.PaymentExecution.PaymentExecutionId. Links this result to the execution that triggered the billing attem",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CycleNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "Billing cycle number matching the execution's cycle. Part of the upsert key with PaymentExecutionId.",
+      "wiki_quote": "Billing cycle number matching the execution's cycle. Part of the upsert key with PaymentExecutionId (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AmountInUsd",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "The deposit amount converted to USD. Used for financial reporting and reconciliation. The original amount in the payment",
+      "wiki_quote": "The deposit amount converted to USD. Used for financial reporting and reconciliation. The original amount in the payment",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "External reference to the deposit transaction in the billing/payments system. Created by the payment processor when the ",
+      "wiki_quote": "External reference to the deposit transaction in the billing/payments system. Created by the payment processor when the ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "Raw billing processor response status. NOT from Dictionary.PaymentExecutionStatus - these are external billing system co",
+      "wiki_quote": "Raw billing processor response status. NOT from Dictionary.PaymentExecutionStatus - these are external billing system co",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "Specific billing processor sub-code for declined transactions. NULL for successful deposits. Combined with PaymentStatus",
+      "wiki_quote": "Specific billing processor sub-code for declined transactions. NULL for successful deposits. Combined with PaymentStatus",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GroupKey",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "Grouping key for batched deposit results. Typically empty string in current data. May be used for multi-part transaction",
+      "wiki_quote": "Grouping key for batched deposit results. Typically empty string in current data. May be used for multi-part transaction",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExecutionResultStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "System's classification of the billing result. FK to Dictionary.ExecutionResultStatus: 1=Success (89.5%), 2=SoftDecline ",
+      "wiki_quote": "System's classification of the billing result. FK to Dictionary.ExecutionResultStatus: 1=Success (89.5%), 2=SoftDecline ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "Timestamp of when the billing processor actually processed the payment. May differ from CreateDate if there was a proces",
+      "wiki_quote": "Timestamp of when the billing processor actually processed the payment. May differ from CreateDate if there was a proces",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "UTC timestamp when this result row was first created. Set to GETUTCDATE() by UpsertPaymentExecutionDepositResult.",
+      "wiki_quote": "UTC timestamp when this result row was first created. Set to GETUTCDATE() by UpsertPaymentExecutionDepositResult (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecutionDepositResult.md",
+      "upstream_quote": "UTC timestamp of the last update. Set to GETUTCDATE() by UpsertPaymentExecutionDepositResult on both insert and update.",
+      "wiki_quote": "UTC timestamp of the last update. Set to GETUTCDATE() by UpsertPaymentExecutionDepositResult on both insert and update (",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 12,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 12 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

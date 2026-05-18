@@ -1,0 +1,107 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_conversionfeeoverride",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PlayerLevelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "eToro Club loyalty tier for which this override applies. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum ",
+      "wiki_quote": "eToro Club loyalty tier for which this override applies. 1=Bronze, 2=Platinum, 3=Gold, 4=Internal, 5=Silver, 6=Platinum ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Payment method for which this override applies. Active values in this table: 1=CreditCard, 2=WireTransfer, 33=eToroMoney",
+      "wiki_quote": "Payment method for which this override applies. Active values in this table: 1=CreditCard, 2=WireTransfer, 33=eToroMoney",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Account denomination currency for which this override applies. References Dictionary.Currency (which is the universal in",
+      "wiki_quote": "Account denomination currency for which this override applies. References Dictionary.Currency (which is the universal in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Flat minimum deposit conversion fee in minor currency units (e.g., cents). Used for flat-fee payment methods (CreditCard",
+      "wiki_quote": "Flat minimum deposit conversion fee in minor currency units (e.g., cents). Used for flat-fee payment methods (CreditCard",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Flat minimum cashout (withdrawal) conversion fee in minor currency units. Same model as DepositFee: used for flat-fee me",
+      "wiki_quote": "Flat minimum cashout (withdrawal) conversion fee in minor currency units. Same model as DepositFee: used for flat-fee me",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModifictionDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "UTC timestamp of the last INSERT or UPDATE on this row. Note: column name is intentionally misspelled in DDL (\"Modificat",
+      "wiki_quote": "UTC timestamp of the last INSERT or UPDATE on this row. Note: column name is intentionally misspelled in DDL (\"Modificat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Optional country scope for this override. NULL=applies globally to all countries. Non-NULL values: 12=Australia (AUD/eTo",
+      "wiki_quote": "Optional country scope for this override. NULL=applies globally to all countries. Non-NULL values: 12=Australia (AUD/eTo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Percentage-based deposit conversion fee rate (e.g., 0.75 = 0.75%). Used for newer payment methods (eToroMoney=0.75% glob",
+      "wiki_quote": "Percentage-based deposit conversion fee rate (e.g., 0.75 = 0.75%). Used for newer payment methods (eToroMoney=0.75% glob",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Percentage-based cashout conversion fee rate. Mirrors DepositFeePercentage for withdrawal direction. Same values as Depo",
+      "wiki_quote": "Percentage-based cashout conversion fee rate. Mirrors DepositFeePercentage for withdrawal direction. Same values as Depo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionFeeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFeeOverride.md",
+      "upstream_quote": "Auto-incrementing surrogate identity column. NOT declared as PRIMARY KEY in DDL - uniqueness is enforced via IX_Conv_1 u",
+      "wiki_quote": "Auto-incrementing surrogate identity column. NOT declared as PRIMARY KEY in DDL - uniqueness is enforced via IX_Conv_1 u",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

@@ -83,11 +83,16 @@ from uc_pipelines.validate_pipeline_wiki import (  # noqa: E402
 
 
 def _score_inheritance_fidelity(md_rows: list[dict], lineage_rows: list[dict],
-                                 md_path: Path) -> tuple[float, list[dict], str]:
+                                 md_path: Path,
+                                 bronze_inherit_wiki: Path | None = None,
+                                 ) -> tuple[float, list[dict], str]:
     """Dimension 1: 35%. Build the mandatory T1 Upstream Fidelity table.
 
     Returns (score 1-10, table_rows, justification).
-    """
+
+    `bronze_inherit_wiki`: for bronze_tier1_inheritance objects, the
+    production Tier 1 wiki to inherit from. When set, ALL Tier 1 columns
+    are matched against this single wiki (lineage rows are not used)."""
     lin_by_name = {r["name"]: r for r in lineage_rows}
     table: list[dict] = []
     paraphrased = 0
@@ -106,6 +111,43 @@ def _score_inheritance_fidelity(md_rows: list[dict], lineage_rows: list[dict],
 
         if not tier_letter.startswith("1"):
             continue
+
+        # Bronze inheritance fast path: all Tier 1 cols verify against the
+        # single Tier 1 production wiki declared in writer.upstream_wiki_path.
+        if bronze_inherit_wiki is not None:
+            inherited_count += 1
+            up_desc = _upstream_description_for(bronze_inherit_wiki, name)
+            if not up_desc:
+                wrong_origin += 1
+                table.append({
+                    "column": name,
+                    "upstream_wiki": str(bronze_inherit_wiki),
+                    "upstream_quote": "—",
+                    "wiki_quote": desc[:120],
+                    "match": "NO — column not present in bronze Tier 1 wiki",
+                })
+                continue
+            up_clean = _strip_tier_tag(up_desc.strip())
+            desc_clean = _strip_tier_tag(desc.strip())
+            if desc.strip() == up_desc.strip() or (up_clean and up_clean in desc_clean):
+                table.append({
+                    "column": name,
+                    "upstream_wiki": str(bronze_inherit_wiki),
+                    "upstream_quote": up_desc[:120],
+                    "wiki_quote": desc[:120],
+                    "match": "YES — verbatim",
+                })
+            else:
+                paraphrased += 1
+                table.append({
+                    "column": name,
+                    "upstream_wiki": str(bronze_inherit_wiki),
+                    "upstream_quote": up_desc[:120],
+                    "wiki_quote": desc[:120],
+                    "match": "NO — paraphrased / drift from bronze Tier 1",
+                })
+            continue
+
         # This column claims inheritance. Verify against the cached upstream.
         lin = lin_by_name.get(name)
         if not lin:
@@ -393,6 +435,12 @@ def _score_lineage_coherence(md_rows: list[dict], lineage_rows: list[dict],
         tag = TIER_TAG_RE.search(desc)
         if not tag:
             continue
+        tier_letter = tag.group(1).strip()
+        # Tier U is the explicit "we couldn't classify this" disclosure. It makes
+        # no tier-origin claim, so there's nothing to verify against the lineage
+        # source — skip it for the coherence check.
+        if tier_letter == "U":
+            continue
         origin = tag.group(2).strip()
         lin = lin_by_name.get(name)
         if not lin:
@@ -405,8 +453,8 @@ def _score_lineage_coherence(md_rows: list[dict], lineage_rows: list[dict],
         src_token = src.split(".")[-1].lower()
         if src_token in origin.lower() or src.lower() in origin.lower():
             continue
-        # Allow producer-narration markers (notebook / view / SP)
-        if re.search(r"(notebook|view|SP|source:|L\d+)", origin, re.IGNORECASE):
+        # Allow producer-narration markers (notebook / view / SP / blocked-on-upstream / source-line citation)
+        if re.search(r"(notebook|view|SP|source:|L\d+|blocked-on-upstream)", origin, re.IGNORECASE):
             continue
         # Inherited origin check: read the cached upstream wiki and see if the
         # downstream's tier origin matches the upstream's own tier origin for
@@ -498,8 +546,23 @@ def evaluate_object(md_path: Path, attempt: int = 1,
 
     global_index = _load_global_wiki_index()
 
+    # Bronze inheritance: the column descriptions are validated against the
+    # Tier 1 production wiki path declared in writer.upstream_wiki_path, not
+    # against the (empty) lineage rows.
+    producer_kind = (fm.get("producer_kind") or "").lower()
+    writer_meta = fm.get("writer") or {}
+    bronze_inherit_wiki = None
+    if producer_kind == "bronze_tier1_inheritance":
+        wpath = writer_meta.get("path") or writer_meta.get("upstream_wiki_path") or ""
+        if wpath:
+            cand = Path(wpath)
+            if not cand.is_absolute():
+                cand = (Path(__file__).resolve().parents[2] / wpath).resolve()
+            if cand.is_file():
+                bronze_inherit_wiki = cand
+
     fidelity_score, fidelity_table, fidelity_just = _score_inheritance_fidelity(
-        md_rows, lineage_rows, md_path,
+        md_rows, lineage_rows, md_path, bronze_inherit_wiki=bronze_inherit_wiki,
     )
     narration_score, narration_just = _score_source_code_narration(md_rows, schema_root, obj_name)
     nwp_score, nwp_just = _score_null_with_provenance(md_rows, lineage_rows, schema_root, global_index)
@@ -530,7 +593,11 @@ def evaluate_object(md_path: Path, attempt: int = 1,
     for row in md_rows:
         if "UNVERIFIED" in row["description"].upper():
             continue
-        bucket, _ = _classify_description_bucket(row["description"], lin_by_name.get(row["name"]), md_path)
+        bucket, _ = _classify_description_bucket(
+            row["description"], lin_by_name.get(row["name"]), md_path,
+            bronze_inherit_wiki=bronze_inherit_wiki,
+            column_name=row["name"],
+        )
         bucket_counts[bucket] = bucket_counts.get(bucket, 0) + 1
         if bucket == "U":
             unanchored.append(row["name"])

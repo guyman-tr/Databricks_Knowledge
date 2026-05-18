@@ -5,9 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_interestfee.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `IsValidCustomer` | transform='join_enriched' src='main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked'.'IsValidCustomer'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

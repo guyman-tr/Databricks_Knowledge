@@ -1,0 +1,107 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_aftrouting",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Surrogate sequential identifier. NOT the primary key - included for convenience reference (e.g., admin UI row identifica",
+      "wiki_quote": "Surrogate sequential identifier. NOT the primary key - included for convenience reference (e.g., admin UI row identifica",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Country of the customer initiating the AFT transaction. Part of the composite PK. Implicit FK to Dictionary.Country. Com",
+      "wiki_quote": "Country of the customer initiating the AFT transaction. Part of the composite PK. Implicit FK to Dictionary.Country. Com",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CardTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Credit/debit card network type. Part of the composite PK. All current rows: 1=Visa (82%), 2=MasterCard (18%). FK to Dict",
+      "wiki_quote": "Credit/debit card network type. Part of the composite PK. All current rows: 1=Visa (82%), 2=MasterCard (18%). FK to Dict",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Regulatory jurisdiction governing the customer's account. Part of the composite PK. Current values: 1=CySEC (69%), 2=FCA",
+      "wiki_quote": "Regulatory jurisdiction governing the customer's account. Part of the composite PK. Current values: 1=CySEC (69%), 2=FCA",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepotID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "The payment gateway depot eligible for AFT processing for this country/card/regulation combination. Part of the composit",
+      "wiki_quote": "The payment gateway depot eligible for AFT processing for this country/card/regulation combination. Part of the composit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Audit context column, computed at read time. JSON string capturing: HostName (server running the query), AppName (applic",
+      "wiki_quote": "Audit context column, computed at read time. JSON string capturing: HostName (server running the query), AppName (applic",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Timestamp when this routing rule became effective. Auto-managed by SQL Server temporal system. Populated on INSERT and e",
+      "wiki_quote": "Timestamp when this routing rule became effective. Auto-managed by SQL Server temporal system. Populated on INSERT and e",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Timestamp when this routing rule was superseded. Auto-managed by SQL Server temporal system. Active rows: 9999-12-31 (op",
+      "wiki_quote": "Timestamp when this routing rule was superseded. Auto-managed by SQL Server temporal system. Active rows: 9999-12-31 (op",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsWhitelistedProvider",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Whether this depot is explicitly preferred (forced) for this routing combination: true=whitelisted/forced, NULL=standard",
+      "wiki_quote": "Whether this depot is explicitly preferred (forced) for this routing combination: true=whitelisted/forced, NULL=standard",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsBlacklistedProvider",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.AftRouting.md",
+      "upstream_quote": "Whether this depot is explicitly excluded from this routing combination despite being listed: false=explicitly excluded,",
+      "wiki_quote": "Whether this depot is explicitly excluded from this routing combination despite being listed: false=explicitly excluded,",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

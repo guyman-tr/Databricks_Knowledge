@@ -1,0 +1,128 @@
+{
+  "object_fqn": "main.billing.bronze_recurringmanager_recurring_payment",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PaymentId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Auto-incrementing primary key uniquely identifying each recurring payment plan. Referenced by PaymentExecution.PaymentId",
+      "wiki_quote": "Auto-incrementing primary key uniquely identifying each recurring payment plan. Referenced by PaymentExecution.PaymentId",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Cid",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Customer ID identifying the account holder who owns this recurring plan. Indexed for lookups by customer (IX_RecurringPa",
+      "wiki_quote": "Customer ID identifying the account holder who owns this recurring plan. Indexed for lookups by customer (IX_RecurringPa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "External reference to the customer's payment method (credit card, bank account, etc.) in the billing/payments system. Ca",
+      "wiki_quote": "External reference to the customer's payment method (credit card, bank account, etc.) in the billing/payments system. Ca",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "The recurring payment amount in the currency specified by CurrencyId. Represents the fixed amount charged each execution",
+      "wiki_quote": "The recurring payment amount in the currency specified by CurrencyId. Represents the fixed amount charged each execution",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Currency of the recurring payment amount. References an external currency dictionary (likely etoro Dictionary.Currency).",
+      "wiki_quote": "Currency of the recurring payment amount. References an external currency dictionary (likely etoro Dictionary.Currency).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Payment plan lifecycle status. No explicit Dictionary table exists in this database - values inferred from code and data",
+      "wiki_quote": "Payment plan lifecycle status. No explicit Dictionary table exists in this database - values inferred from code and data",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "UTC timestamp when the payment plan was first created by CreatePayment. Auto-set via default constraint. Indexed for tim",
+      "wiki_quote": "UTC timestamp when the payment plan was first created by CreatePayment. Auto-set via default constraint. Indexed for tim",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "UTC timestamp of the last modification to this payment. Set to GETUTCDATE() by UpdatePayment on every update. NULL if ne",
+      "wiki_quote": "UTC timestamp of the last modification to this payment. Set to GETUTCDATE() by UpdatePayment on every update. NULL if ne",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusReasonId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Reason why the payment reached its current status. FK to Dictionary.StatusReason: 1=RemovedMOP (1.5% - payment method re",
+      "wiki_quote": "Reason why the payment reached its current status. FK to Dictionary.StatusReason: 1=RemovedMOP (1.5% - payment method re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RecurringProgramTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Type of recurring program. FK to Dictionary.RecurringProgramType: 1=RecurringDeposit (84% - periodic account deposits), ",
+      "wiki_quote": "Type of recurring program. FK to Dictionary.RecurringProgramType: 1=RecurringDeposit (84% - periodic account deposits), ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VersionStamp",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Optimistic concurrency token (GUID format). Set when a modification is in progress. RevertPayment checks `WHERE VersionS",
+      "wiki_quote": "Optimistic concurrency token (GUID format). Set when a modification is in progress. RevertPayment checks `WHERE VersionS",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AuthenticationId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Reference to an external authentication/authorization record for the payment method. Populated when the funding method r",
+      "wiki_quote": "Reference to an external authentication/authorization record for the payment method. Populated when the funding method r",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Generation",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.Payment.md",
+      "upstream_quote": "Modification counter tracking how many update rounds the plan has undergone. 0=original/unmodified (98%), 1=modified onc",
+      "wiki_quote": "Modification counter tracking how many update rounds the plan has undergone. 0=original/unmodified (98%), 1=modified onc",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

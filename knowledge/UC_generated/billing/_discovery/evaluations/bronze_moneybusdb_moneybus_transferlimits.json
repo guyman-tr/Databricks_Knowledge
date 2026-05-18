@@ -1,0 +1,93 @@
+{
+  "object_fqn": "main.billing.bronze_moneybusdb_moneybus_transferlimits",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CountryID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Country filter for the limit rule. NULL means the rule applies to all countries. When set, restricts this limit to users",
+      "wiki_quote": "Country filter for the limit rule. NULL means the rule applies to all countries. When set, restricts this limit to users",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DebitAccountTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Source account type being debited: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.md#acco",
+      "wiki_quote": "Source account type being debited: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.md#acco",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditAccountTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Destination account type being credited: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.m",
+      "wiki_quote": "Destination account type being credited: 1=Trading, 2=Options, 3=IBAN, 4=MoneyFarm. See [Account Type](../../_glossary.m",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MinAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Minimum transfer amount allowed in the specified currency. Currently set to 1 for all rules - prevents zero-amount trans",
+      "wiki_quote": "Minimum transfer amount allowed in the specified currency. Currently set to 1 for all rules - prevents zero-amount trans",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MaxAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Maximum transfer amount allowed in the specified currency. Ranges from 50,000 (flow-specific restriction) to 100,000,000",
+      "wiki_quote": "Maximum transfer amount allowed in the specified currency. Ranges from 50,000 (flow-specific restriction) to 100,000,000",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Currency the limit applies to. Each currency requires its own limit row because acceptable ranges differ by currency den",
+      "wiki_quote": "Currency the limit applies to. Each currency requires its own limit row because acceptable ranges differ by currency den",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlayerLevelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Player/user tier level filter. NULL means the rule applies to all levels. When set, allows different transfer limits for",
+      "wiki_quote": "Player/user tier level filter. NULL means the rule applies to all levels. When set, allows different transfer limits for",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FlowID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\MoneyBus\\Tables\\MoneyBus.TransferLimits.md",
+      "upstream_quote": "Business flow identifier. NULL means \"default for all flows.\" When specified (e.g., FlowID=2), applies a more specific l",
+      "wiki_quote": "Business flow identifier. NULL means \"default for all flows.\" When specified (e.g., FlowID=2), applies a more specific l",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

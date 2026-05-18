@@ -1,0 +1,93 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_depot",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "DepotID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Primary key. Manually assigned (no IDENTITY). Stable identifier referenced by deposits, MID settings, and routing tables",
+      "wiki_quote": "Primary key. Manually assigned (no IDENTITY). Stable identifier referenced by deposits, MID settings, and routing tables",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Payment method type (e.g., 1=CreditCard, 2=Wire, 6=Neteller, 8=MoneyBookers/Skrill). References `Dictionary.FundingType`",
+      "wiki_quote": "Payment method type (e.g., 1=CreditCard, 2=Wire, 6=Neteller, 8=MoneyBookers/Skrill). References `Dictionary.FundingType`",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Direction of payment flow. FK to `Dictionary.PaymentType` (FK_DPMT_BDPT): 1=Deposit, 2=Cashout, 3=Refund. Indexed (BDPT_",
+      "wiki_quote": "Direction of payment flow. FK to `Dictionary.PaymentType` (FK_DPMT_BDPT): 1=Deposit, 2=Cashout, 3=Refund. Indexed (BDPT_",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProtocolID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Payment processing protocol/gateway. FK to `Dictionary.Protocol` (FK_DPRT_BDPT). Identifies the specific API or connecti",
+      "wiki_quote": "Payment processing protocol/gateway. FK to `Dictionary.Protocol` (FK_DPRT_BDPT). Identifies the specific API or connecti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Human-readable depot name (e.g., 'MoneyBookers USD', 'Neteller', 'Wire'). UNIQUE (BDPT_NAME index). Used in admin dashbo",
+      "wiki_quote": "Human-readable depot name (e.g., 'MoneyBookers USD', 'Neteller', 'Wire'). UNIQUE (BDPT_NAME index). Used in admin dashbo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Whether this depot is currently accepting transactions. 1=Active (eligible for routing); 0 or NULL=Inactive (excluded fr",
+      "wiki_quote": "Whether this depot is currently accepting transactions. 1=Active (eligible for routing); 0 or NULL=Inactive (excluded fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PayoutGeneration",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Controls automated payout file generation capability: 1=enabled (system can generate payment batch files for this depot)",
+      "wiki_quote": "Controls automated payout file generation capability: 1=enabled (system can generate payment batch files for this depot)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Features",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Depot.md",
+      "upstream_quote": "Depot-specific configuration features in structured text (JSON or XML format). Used for newer integrations requiring beh",
+      "wiki_quote": "Depot-specific configuration features in structured text (JSON or XML format). Used for newer integrations requiring beh",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 8,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 8 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

@@ -5,10 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_mimo_allplatforms.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `RealCID` | transform='join_enriched' src='—'.'RealCID'; no upstream wiki match AND no source-code expression found. |
-| `TransactionID` | transform='cast' src='—'.'TransactionID'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

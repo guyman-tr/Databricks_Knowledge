@@ -209,10 +209,11 @@ def route_upstream(full_name: str, generic_pipeline: list[dict],
         if hit and hit.get("wiki_path"):
             kind = hit.get("wiki_kind") or "global_index"
             rule_num = {"synapse_mirror": 1, "uc_generated": 2,
-                        "uc_domain": 3}.get(kind, 5)
+                        "uc_domain": 3, "bronze_tier1": 1}.get(kind, 5)
             rule_name = {"synapse_mirror": "synapse_gold_mirror",
                          "uc_generated": "uc_generated_sibling",
-                         "uc_domain": "uc_domain"}.get(kind, "uc_native_via_map")
+                         "uc_domain": "uc_domain",
+                         "bronze_tier1": "bronze_tier1_inheritance"}.get(kind, "uc_native_via_map")
             return {
                 "full_name": full_name,
                 "rule_matched": rule_num,

@@ -5,10 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_spaceship_mimo.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `date_id` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `gcid` | transform='join_enriched' src='—'.'gcid'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

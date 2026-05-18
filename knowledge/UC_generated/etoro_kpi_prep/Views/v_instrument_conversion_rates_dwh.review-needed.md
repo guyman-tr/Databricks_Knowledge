@@ -5,12 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_instrument_conversion_rates
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `ConversionRate_Buy_Spreaded` | transform='unknown' src='main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument'.'—'; no upstream wiki match AND no source-code expression found. |
-| `ConversionRate_Sell_Spreaded` | transform='unknown' src='main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument'.'—'; no upstream wiki match AND no source-code expression found. |
-| `ConversionRate_Buy` | transform='unknown' src='main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument'.'—'; no upstream wiki match AND no source-code expression found. |
-| `ConversionRate_Sell` | transform='unknown' src='main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument'.'—'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

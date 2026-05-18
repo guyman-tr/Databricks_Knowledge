@@ -1,13 +1,16 @@
 {
   "object": "main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd",
-  "status": "Stub only",
-  "status_detail": "all 38 columns unclassifiable",
+  "status": "Skipped",
+  "status_detail": "TABLE writer not discoverable (unknown); blocked on writer/notebook/SP discovery. Live UC comments on this table (32/38 columns) are intentionally NOT used as a source — they are the artifact to be replaced.",
   "blocked_on_upstream": null,
   "all_blocked_upstreams": [],
-  "routing_attempts": "no upstream wiki match AND no source-code citation",
+  "routing_attempts": "writer-discovery exhausted: no source on disk, no notebook/job entity_id resolved. Live UC comments are not used as anchor.",
   "n_unverified": 38,
   "tier_counts": {
     "U": 38
   },
-  "generated_at": "2026-05-18T09:06:33Z"
+  "generated_at": "2026-05-18T10:56:10Z",
+  "writer_kind": "unknown",
+  "live_comment_columns": 32,
+  "total_columns": 38
 }

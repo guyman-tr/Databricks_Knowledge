@@ -1,0 +1,247 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_vwithdrawtofunding",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 9.05,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FK to Billing.Withdraw. The parent withdrawal request. One WithdrawID can have multiple payment legs.",
+      "wiki_quote": "FK to Billing.Withdraw. The parent withdrawal request. One WithdrawID can have multiple payment legs (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FK to Billing.Funding. The payment instrument used for this withdrawal leg.",
+      "wiki_quote": "FK to Billing.Funding. The payment instrument used for this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithd",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Current status of this withdrawal leg. References Dictionary.CashoutStatus. 3=Processed (money sent). NOT filtered in th",
+      "wiki_quote": "Current status of this withdrawal leg. References Dictionary.CashoutStatus. 3=Processed (money sent). NOT filtered in th",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProcessCurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Currency in which the withdrawal was processed. References Dictionary.Currency.",
+      "wiki_quote": "Currency in which the withdrawal was processed. References Dictionary.Currency (Tier 1 — inherited from etoro.Billing.vW",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Assigned manager/agent ID for manual review of this withdrawal leg.",
+      "wiki_quote": "Assigned manager/agent ID for manual review of this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFun",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Exchange rate applied to convert the withdrawal to USD. The customer-facing rate including FX markup.",
+      "wiki_quote": "Exchange rate applied to convert the withdrawal to USD. The customer-facing rate including FX markup (Tier 1 — inherited",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Withdrawal leg amount in ProcessCurrencyID.",
+      "wiki_quote": "Withdrawal leg amount in ProcessCurrencyID (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Last modification timestamp of this withdrawal leg record.",
+      "wiki_quote": "Last modification timestamp of this withdrawal leg record (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "PK of Billing.WithdrawToFunding. Unique identifier for this withdrawal payment leg.",
+      "wiki_quote": "PK of Billing.WithdrawToFunding. Unique identifier for this withdrawal payment leg (Tier 1 — inherited from etoro.Billin",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FK to Billing.Deposit. Set when the withdrawal is a refund of a specific deposit (e.g., credit card refund must go back ",
+      "wiki_quote": "FK to Billing.Deposit. Set when the withdrawal is a refund of a specific deposit (e.g., credit card refund must go back ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RefundAmountInDepositCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "The USD-equivalent amount of this withdrawal leg. Used in FX fee calculations in GetWithdrawToFundingFXFeeAmount.",
+      "wiki_quote": "The USD-equivalent amount of this withdrawal leg. Used in FX fee calculations in GetWithdrawToFundingFXFeeAmount (Tier 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Type of cashout/withdrawal. References Dictionary.CashoutType.",
+      "wiki_quote": "Type of cashout/withdrawal. References Dictionary.CashoutType (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VerificationCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Verification/confirmation code for this withdrawal leg.",
+      "wiki_quote": "Verification/confirmation code for this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProcessorValueDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Value date from the payment processor for this leg.",
+      "wiki_quote": "Value date from the payment processor for this leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MatchStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Reconciliation matching status.",
+      "wiki_quote": "Reconciliation matching status (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepotID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FK to Billing.Depot. Gateway/depot that processed this withdrawal leg.",
+      "wiki_quote": "FK to Billing.Depot. Gateway/depot that processed this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawTo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Market/interbank exchange rate (without FX markup) at time of processing. Used with ExchangeRate to compute FX fee sprea",
+      "wiki_quote": "Market/interbank exchange rate (without FX markup) at time of processing. Used with ExchangeRate to compute FX fee sprea",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutModeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Mode of the cashout operation. References Dictionary.CashoutMode.",
+      "wiki_quote": "Mode of the cashout operation. References Dictionary.CashoutMode (Tier 1 — inherited from etoro.Billing.vWithdrawToFundi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AutoPaymentStartDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Start date of the automatic payment schedule (for recurring withdrawals).",
+      "wiki_quote": "Start date of the automatic payment schedule (for recurring withdrawals) (Tier 1 — inherited from etoro.Billing.vWithdra",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProtocolMIDSettingsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FK to Billing.ProtocolMIDSettings. The specific MID configuration used for this withdrawal.",
+      "wiki_quote": "FK to Billing.ProtocolMIDSettings. The specific MID configuration used for this withdrawal (Tier 1 — inherited from etor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Raw FX fee value in the rate's decimal form. Used in BaseExchangeRate derivation (WireTransfer path): BaseRate = Exchang",
+      "wiki_quote": "Raw FX fee value in the rate's decimal form. Used in BaseExchangeRate derivation (WireTransfer path): BaseRate = Exchang",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Timestamp when this withdrawal leg was created.",
+      "wiki_quote": "Timestamp when this withdrawal leg was created (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AdditionalInformation",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Free-text additional context for this withdrawal leg (notes, processor responses).",
+      "wiki_quote": "Free-text additional context for this withdrawal leg (notes, processor responses) (Tier 1 — inherited from etoro.Billing",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VendorCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Vendor/processor-specific reference code for this withdrawal.",
+      "wiki_quote": "Vendor/processor-specific reference code for this withdrawal (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MerchantAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FK to merchant account used for processing.",
+      "wiki_quote": "FK to merchant account used for processing (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SchemeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Payment scheme identifier (e.g., Visa, Mastercard scheme for card withdrawals).",
+      "wiki_quote": "Payment scheme identifier (e.g., Visa, Mastercard scheme for card withdrawals) (Tier 1 — inherited from etoro.Billing.vW",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ResponseID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Payment processor response identifier for this withdrawal leg.",
+      "wiki_quote": "Payment processor response identifier for this withdrawal leg (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding)",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestExecuteEntryMethodId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "Entry method used when this withdrawal request was executed.",
+      "wiki_quote": "Entry method used when this withdrawal request was executed (Tier 1 — inherited from etoro.Billing.vWithdrawToFunding).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFeeInUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FX fee expressed in USD. Added 17/09/2024 by Ran Ovadia. Part of the 2024 FX fee transparency initiative. NULL for pre-2",
+      "wiki_quote": "FX fee expressed in USD. Added 17/09/2024 by Ran Ovadia. Part of the 2024 FX fee transparency initiative. NULL for pre-2",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFeeInPercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.vWithdrawToFunding.md",
+      "upstream_quote": "FX fee expressed as a percentage of the withdrawal amount. Added 17/09/2024. NULL for pre-2024 records.",
+      "wiki_quote": "FX fee expressed as a percentage of the withdrawal amount. Added 17/09/2024. NULL for pre-2024 records (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 30,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 30 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

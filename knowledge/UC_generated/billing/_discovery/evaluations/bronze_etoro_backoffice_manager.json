@@ -1,0 +1,163 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_backoffice_manager",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Auto-generated unique integer identifier for each BackOffice staff member. PK for the entire BackOffice authorization sy",
+      "wiki_quote": "Auto-generated unique integer identifier for each BackOffice staff member. PK for the entire BackOffice authorization sy",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "UserGroupID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Department/team assignment. FK to Dictionary.UserGroup. Determines access scope and team membership. Values: 1=Administr",
+      "wiki_quote": "Department/team assignment. FK to Dictionary.UserGroup. Determines access scope and team membership. Values: 1=Administr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FirstName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Staff member's first name. Combined with LastName in views and procedures to produce display names (e.g., BackOffice.Get",
+      "wiki_quote": "Staff member's first name. Combined with LastName in views and procedures to produce display names (e.g., BackOffice.Get",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Staff member's last name. Combined with FirstName for display. LastName='*' indicates a functional/shared account (e.g.,",
+      "wiki_quote": "Staff member's last name. Combined with FirstName for display. LastName='*' indicates a functional/shared account (e.g.,",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Login",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Unique username for BackOffice authentication. Used as the primary lookup key in BackOffice.LogIn (case-insensitive matc",
+      "wiki_quote": "Unique username for BackOffice authentication. Used as the primary lookup key in BackOffice.LogIn (case-insensitive matc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Password",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Authentication credential. Masked in application layer with partial(0, \"XXXXXXXX\", 0) - all characters replaced with X w",
+      "wiki_quote": "Authentication credential. Masked in application layer with partial(0, \"XXXXXXXX\", 0) - all characters replaced with X w",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Email",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Staff member's eToro corporate email address. Used by the email notification subsystem when IsEmailNotified=1. Exposed i",
+      "wiki_quote": "Staff member's eToro corporate email address. Used by the email notification subsystem when IsEmailNotified=1. Exposed i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsEmailNotified",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Controls whether this manager receives automated email notifications from BackOffice system events (e.g., deposit alerts",
+      "wiki_quote": "Controls whether this manager receives automated email notifications from BackOffice system events (e.g., deposit alerts",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Logical soft-delete flag controlling login access and visibility. 1=active (staff currently employed, can authenticate).",
+      "wiki_quote": "Logical soft-delete flag controlling login access and visibility. 1=active (staff currently employed, can authenticate).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsTeamLeader",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Marks this manager as a team leader within their department. 1=team leader role. 0=individual contributor. Used in LoadM",
+      "wiki_quote": "Marks this manager as a team leader within their department. 1=team leader role. 0=individual contributor. Used in LoadM",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ForceChangePassword",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "When set to 1, forces this manager to change their password at the next login session. Default 0 (no forced change). Use",
+      "wiki_quote": "When set to 1, forces this manager to change their password at the next login session. Default 0 (no forced change). Use",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OverrideReplicaSettings",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "When 1, bypasses read-replica routing for this manager's BackOffice queries, directing all reads to the primary database",
+      "wiki_quote": "When 1, bypasses read-replica routing for this manager's BackOffice queries, directing all reads to the primary database",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsCustomerManager",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Indicates this manager directly manages and is responsible for a portfolio of customers. 1=customer-facing manager who a",
+      "wiki_quote": "Indicates this manager directly manages and is responsible for a portfolio of customers. 1=customer-facing manager who a",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RegionalManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Self-referential FK (no constraint defined) pointing to another Manager's ManagerID. Represents the regional manager res",
+      "wiki_quote": "Self-referential FK (no constraint defined) pointing to another Manager's ManagerID. Represents the regional manager res",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerGroupID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "FK to BackOffice.T_GroupsDictionary (no explicit constraint). Assigns this manager to a database connection group for mu",
+      "wiki_quote": "FK to BackOffice.T_GroupsDictionary (no explicit constraint). Assigns this manager to a database connection group for mu",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CalendlyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Calendly scheduling identifier for this manager. Exposed via GetManagers procedure for the customer-facing scheduler tha",
+      "wiki_quote": "Calendly scheduling identifier for this manager. Exposed via GetManagers procedure for the customer-facing scheduler tha",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerTitleID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "Job title classification FK to Dictionary.ManagerTitle. Values: 1=Sales Team, 2=Sales Representative, 3=Account Manageme",
+      "wiki_quote": "Job title classification FK to Dictionary.ManagerTitle. Values: 1=Sales Team, 2=Sales Representative, 3=Account Manageme",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "eToroCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.Manager.md",
+      "upstream_quote": "The manager's own eToro customer account CID (Customer ID). Links to Customer.CustomerStatic. Many staff members are als",
+      "wiki_quote": "The manager's own eToro customer account CID (Customer ID). Links to Customer.CustomerStatic. Many staff members are als",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 18,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 18 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

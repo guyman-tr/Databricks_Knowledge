@@ -5,11 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_population_active_traders_l
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `GCID` | transform='passthrough' src='—'.'GCID'; no upstream wiki match AND no source-code expression found. |
-| `RealCID` | transform='passthrough' src='—'.'RealCID'; no upstream wiki match AND no source-code expression found. |
-| `DateID` | transform='passthrough' src='—'.'DateID'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

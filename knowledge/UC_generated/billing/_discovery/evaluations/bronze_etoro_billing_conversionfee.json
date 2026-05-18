@@ -1,0 +1,114 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_conversionfee",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Primary key. The currency for which this fee applies. FK to `Dictionary.Currency` implicitly. CurrencyID=1 (USD) has no ",
+      "wiki_quote": "Primary key. The currency for which this fee applies. FK to `Dictionary.Currency` implicitly. CurrencyID=1 (USD) has no ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "The forex trading instrument for this currency pair (e.g., EUR/USD=1, GBP/USD=2, AUD/USD=7). References `Trade.Instrumen",
+      "wiki_quote": "The forex trading instrument for this currency pair (e.g., EUR/USD=1, GBP/USD=2, AUD/USD=7). References `Trade.Instrumen",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Flat deposit conversion fee in the local currency's smallest unit (cents, pence, subunits, etc.). Applied when a custome",
+      "wiki_quote": "Flat deposit conversion fee in the local currency's smallest unit (cents, pence, subunits, etc.). Applied when a custome",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Flat cashout conversion fee in the local currency's smallest unit. Applied when a customer withdraws in this currency an",
+      "wiki_quote": "Flat cashout conversion fee in the local currency's smallest unit. Applied when a customer withdraws in this currency an",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "UTC timestamp of the last modification to this fee row. Defaults to GETUTCDATE() on insert. All rows = 2024-05-02 (bulk ",
+      "wiki_quote": "UTC timestamp of the last modification to this fee row. Defaults to GETUTCDATE() on insert. All rows = 2024-05-02 (bulk ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Trace",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Auto-captured session context at DML time: `{\"HostName\":\"...\",\"AppName\":\"...\",\"SUserName\":\"...\",\"SPID\":\"...\",\"DBName\":\".",
+      "wiki_quote": "Auto-captured session context at DML time: `{\"HostName\":\"...\",\"AppName\":\"...\",\"SUserName\":\"...\",\"SPID\":\"...\",\"DBName\":\".",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidFrom",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "System-managed temporal column. UTC timestamp when this row version became current. Automatically set by SQL Server on I",
+      "wiki_quote": "System-managed temporal column. UTC timestamp when this row version became current. Automatically set by SQL Server on I",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ValidTo",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "System-managed temporal column. UTC timestamp when this row version was superseded. Current rows: 9999-12-31. Set to NOW",
+      "wiki_quote": "System-managed temporal column. UTC timestamp when this row version was superseded. Current rows: 9999-12-31. Set to NOW",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Percentage-based deposit fee (e.g., 1.50 = 1.5%). Currently NULL for all rows - reserved for future percentage-based fee",
+      "wiki_quote": "Percentage-based deposit fee (e.g., 1.50 = 1.5%). Currently NULL for all rows - reserved for future percentage-based fee",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Percentage-based cashout fee. Currently NULL for all rows - future use.",
+      "wiki_quote": "Percentage-based cashout fee. Currently NULL for all rows - future use (Tier 1 — inherited from etoro.Billing.Conversion",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ConversionFeeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ConversionFee.md",
+      "upstream_quote": "Secondary identity column (NOT the PK). Auto-generated starting at 100,000. Provides a stable row identifier separate fr",
+      "wiki_quote": "Secondary identity column (NOT the PK). Auto-generated starting at 100,000. Provides a stable row identifier separate fr",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

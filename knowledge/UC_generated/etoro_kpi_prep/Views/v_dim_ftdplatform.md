@@ -1,4 +1,8 @@
 ---
+object_fqn: main.etoro_kpi_prep.v_dim_ftdplatform
+object_type: VIEW
+producer_kind: view_definition
+generator: tools/uc_pipelines/generate_wiki.py
 object: main.etoro_kpi_prep.v_dim_ftdplatform
 schema: etoro_kpi_prep
 framework: uc-pipeline-doc
@@ -6,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 2
 row_count: null
-generated_at: '2026-05-18T09:06:18Z'
+generated_at: '2026-05-18T10:56:11Z'
 upstreams:
 - main.bi_db.bronze_moneybusdb_dictionary_accounttypes
 - main.actionsprep
@@ -129,7 +133,7 @@ main.etoro_kpi_prep_stg._tmp_cds_population_options
 
 ---
 
-## 5. Common usage / JOINs
+## 5. Sample Queries & Common JOINs
 
 ### 5.1 Sample queries
 
@@ -153,5 +157,14 @@ main.etoro_kpi_prep_stg._tmp_cds_population_options
 |--------|--------------------|------|----------|
 | FTDPlatformID | upstream wiki `knowledge/UC_generated/etoro_kpi_prep/_discovery/upstream_wikis/main.bi_db.bronze_moneybusdb_dictionary_accounttypes.md` (rename) | 1 | (Tier 1 — inherited from main.bi_db.bronze_moneybusdb_dictionary_accounttypes) |
 | Name | source code (case) | 2 | [uc_view_ddl] |
+
+---
+
+## 7. Tier Legend
+
+- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough/rename/cast).
+- **Tier 2** — column narrated from a cited source-code expression (CASE / COALESCE / arithmetic / window / UDF) in the cached Phase-2 snapshot.
+- **Tier 5** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
+- **Tier U** — unclassifiable: no upstream wiki match and no source-code citation. Mechanical disclosure of unclassifiability — see `.review-needed.md`. **Never** AI-inferred and **never** harvested from the live UC comment, because the live UC comment is the artifact this pipeline is meant to replace.
 
 *Generated: 2026-05-18 | Tiers: 1 T1, 1 T2, 0 T3, 0 T4, 0 T5, 0 U | Elements: 2/2 | Source: view_definition*

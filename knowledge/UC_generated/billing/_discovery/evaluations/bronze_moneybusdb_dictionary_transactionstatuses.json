@@ -1,0 +1,51 @@
+{
+  "object_fqn": "main.billing.bronze_moneybusdb_dictionary_transactionstatuses",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\Dictionary\\Tables\\Dictionary.TransactionStatuses.md",
+      "upstream_quote": "Primary key identifying each transaction status. Explicitly assigned (not IDENTITY). Referenced as StatusID in MoneyBus.",
+      "wiki_quote": "Primary key identifying each transaction status. Explicitly assigned (not IDENTITY). Referenced as StatusID in MoneyBus.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Name",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\MoneyBusDB\\Wiki\\Dictionary\\Tables\\Dictionary.TransactionStatuses.md",
+      "upstream_quote": "Human-readable status label. JOINed by ALERT_ConsecutiveTransactionFailuresAlert to display status names in alert output",
+      "wiki_quote": "Human-readable status label. JOINed by ALERT_ConsecutiveTransactionFailuresAlert to display status names in alert output",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 2,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 2 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

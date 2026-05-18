@@ -1,0 +1,205 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_redeem",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RedeemID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Surrogate PK, auto-increment. Output parameter in Billing.Redeem_Add (SET @RedeemID = SCOPE_IDENTITY()).",
+      "wiki_quote": "Surrogate PK, auto-increment. Output parameter in Billing.Redeem_Add (SET @RedeemID = SCOPE_IDENTITY()) (Tier 1 — inheri",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Customer ID. No FK constraint but standard eToro CID referencing the customer who submitted the redemption request.",
+      "wiki_quote": "Customer ID. No FK constraint but standard eToro CID referencing the customer who submitted the redemption request (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PositionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "The trading position being redeemed. No FK constraint (BIGINT, references Trade.PositionTbl). Indexed with RedeemID (IX_",
+      "wiki_quote": "The trading position being redeemed. No FK constraint (BIGINT, references Trade.PositionTbl). Indexed with RedeemID (IX_",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RedeemStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Current state in the redemption state machine. FK to Dictionary.RedeemStatus. Transitions validated by Dictionary.Redeem",
+      "wiki_quote": "Current state in the redemption state machine. FK to Dictionary.RedeemStatus. Transitions validated by Dictionary.Redeem",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RedeemReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Reason code for non-success outcomes. FK to Dictionary.RedeemReason. Set by RedeemStatusUpdate when redemption fails or ",
+      "wiki_quote": "Reason code for non-success outcomes. FK to Dictionary.RedeemReason. Set by RedeemStatusUpdate when redemption fails or ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Units",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Crypto quantity to redeem (decimal precision for crypto amounts). Set on INSERT via @Units. May be updated to actual clo",
+      "wiki_quote": "Crypto quantity to redeem (decimal precision for crypto amounts). Set on INSERT via @Units. May be updated to actual clo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RedeemFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "eToro platform fee on the redemption. Set on INSERT via @Fee (maps to column RedeemFee). Approximately 2% of the redempt",
+      "wiki_quote": "eToro platform fee on the redemption. Set on INSERT via @Fee (maps to column RedeemFee). Approximately 2% of the redempt",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WalletFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Fee for the crypto wallet service. Currently always NULL in production data - either not charged separately, deducted fr",
+      "wiki_quote": "Fee for the crypto wallet service. Currently always NULL in production data - either not charged separately, deducted fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockchainFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "On-chain network fee (gas fee) for the blockchain transfer. Populated for Bitcoin (e.g., 0.000256 BTC) and certain other",
+      "wiki_quote": "On-chain network fee (gas fee) for the blockchain transfer. Populated for Bitcoin (e.g., 0.000256 BTC) and certain other",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AmountOnRequest",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Fiat value of the redemption as calculated when the customer submitted the request. Set on INSERT via @Amount. Reflects ",
+      "wiki_quote": "Fiat value of the redemption as calculated when the customer submitted the request. Set on INSERT via @Amount. Reflects ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AmountOnClose",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Fiat value realized when the position was actually closed. Set by RedeemStatusUpdate when status transitions to 6 (Posit",
+      "wiki_quote": "Fiat value realized when the position was actually closed. Set by RedeemStatusUpdate when status transitions to 6 (Posit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "The payment method funding record. FK to Billing.Funding(FundingID). Indexed (IX_BillingRedeem_FundingID). Identifies wh",
+      "wiki_quote": "The payment method funding record. FK to Billing.Funding(FundingID). Indexed (IX_BillingRedeem_FundingID). Identifies wh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "InstrumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "The trading instrument being redeemed. FK to Trade.InstrumentMetaData(InstrumentID). Examples: 100001=Bitcoin, 100017=an",
+      "wiki_quote": "The trading instrument being redeemed. FK to Trade.InstrumentMetaData(InstrumentID). Examples: 100001=Bitcoin, 100017=an",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "UTC timestamp when the customer submitted the redemption request. Set to GETUTCDATE() on INSERT by Billing.Redeem_Add.",
+      "wiki_quote": "UTC timestamp when the customer submitted the redemption request. Set to GETUTCDATE() on INSERT by Billing.Redeem_Add (T",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "UTC timestamp of the most recent status change or update. Set to GETUTCDATE() on INSERT and updated on every status chan",
+      "wiki_quote": "UTC timestamp of the most recent status change or update. Set to GETUTCDATE() on INSERT and updated on every status chan",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawToFundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Link to the withdrawal record. FK to Billing.WithdrawToFunding(ID). Set when the redemption payout is linked to a specif",
+      "wiki_quote": "Link to the withdrawal record. FK to Billing.WithdrawToFunding(ID). Set when the redemption payout is linked to a specif",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerOpsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Operations team staff member ID who handled this redemption. Set by RedeemStatusUpdate via @ManagerOpsId. NULL for autom",
+      "wiki_quote": "Operations team staff member ID who handled this redemption. Set by RedeemStatusUpdate via @ManagerOpsId. NULL for autom",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Manager staff member ID. Set by RedeemStatusUpdate via @ManagerID. NULL for automated redemptions.",
+      "wiki_quote": "Manager staff member ID. Set by RedeemStatusUpdate via @ManagerID. NULL for automated redemptions (Tier 1 — inherited fr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Remark",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Free-text note added by operations staff. Set by RedeemStatusUpdate via @Remark. Preserved across updates (ISNULL(@Remar",
+      "wiki_quote": "Free-text note added by operations staff. Set by RedeemStatusUpdate via @Remark. Preserved across updates (ISNULL(@Remar",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CryptoID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Crypto-wallet-system identifier for the crypto asset. Set on INSERT. Distinct from InstrumentID: CryptoID is the wallet/",
+      "wiki_quote": "Crypto-wallet-system identifier for the crypto asset. Set on INSERT. Distinct from InstrumentID: CryptoID is the wallet/",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IPAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Client IP address at the time the redemption was submitted. Set on INSERT via @IPAddress. Used for fraud/compliance audi",
+      "wiki_quote": "Client IP address at the time the redemption was submitted. Set on INSERT via @IPAddress. Used for fraud/compliance audi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "NetProfit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Net profit on the redemption after fees. Default=0. Populated by the settlement process.",
+      "wiki_quote": "Net profit on the redemption after fees. Default=0. Populated by the settlement process (Tier 1 — inherited from etoro.B",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RedeemTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "Redemption type: 0=Standard crypto-to-fiat (DEFAULT, 99.9% of records), 1=Special type (21 rows, appears to be NFT or in",
+      "wiki_quote": "Redemption type: 0=Standard crypto-to-fiat (DEFAULT, 99.9% of records), 1=Special type (21 rows, appears to be NFT or in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OperationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Redeem.md",
+      "upstream_quote": "External operation reference GUID. Added in PTL-76 alongside RedeemTypeID. Used for NFT redemptions and cross-system ope",
+      "wiki_quote": "External operation reference GUID. Added in PTL-76 alongside RedeemTypeID. Used for NFT redemptions and cross-system ope",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 24,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 24 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

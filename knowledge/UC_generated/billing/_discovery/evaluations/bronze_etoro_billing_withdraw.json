@@ -1,0 +1,233 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_withdraw",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Primary key. IDENTITY starting at 1. Both a PK NONCLUSTERED and a separate CLUSTERED index exist on this column (unusual",
+      "wiki_quote": "Primary key. IDENTITY starting at 1. Both a PK NONCLUSTERED and a separate CLUSTERED index exist on this column (unusual",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Currency of the withdrawal amount. FK to `Dictionary.Currency` (FK_DCUR_BWDR). Indexed (i_CureenyID - note typo in index",
+      "wiki_quote": "Currency of the withdrawal amount. FK to `Dictionary.Currency` (FK_DCUR_BWDR). Indexed (i_CureenyID - note typo in index",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Payment method type (Visa/Wire/Neteller/eToroMoney/etc.). References `Dictionary.FundingType` implicitly. 26 distinct va",
+      "wiki_quote": "Payment method type (Visa/Wire/Neteller/eToroMoney/etc.). References `Dictionary.FundingType` implicitly. 26 distinct va",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Customer ID. FK to `Customer.CustomerStatic` (FK_CCST_BWDR). Indexed in covering indexes (CashoutStatusID+CID, CoveringN",
+      "wiki_quote": "Customer ID. FK to `Customer.CustomerStatic` (FK_CCST_BWDR). Indexed in covering indexes (CashoutStatusID+CID, CoveringN",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Operations manager who processed or last modified this withdrawal. FK to `BackOffice.Manager` (FK_BMNG_BWDR). NULL=syste",
+      "wiki_quote": "Operations manager who processed or last modified this withdrawal. FK to `BackOffice.Manager` (FK_BMNG_BWDR). NULL=syste",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Current withdrawal status. FK to `Dictionary.CashoutStatus` (FK_DCSS_BWDR). 10 distinct values: 1=Pending, 2=InProcess, ",
+      "wiki_quote": "Current withdrawal status. FK to `Dictionary.CashoutStatus` (FK_DCSS_BWDR). 10 distinct values: 1=Pending, 2=InProcess, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Timestamp when the customer submitted the withdrawal request. Included in covering indexes for date-range queries.",
+      "wiki_quote": "Timestamp when the customer submitted the withdrawal request. Included in covering indexes for date-range queries (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Gross withdrawal amount in `CurrencyID` denomination. `money` type (4 decimal places). Included in covering indexes.",
+      "wiki_quote": "Gross withdrawal amount in `CurrencyID` denomination. `money` type (4 decimal places). Included in covering indexes (Tie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Broker commission on this withdrawal. DEFAULT=0. Typically 0 for retail customers; may be non-zero for professional/part",
+      "wiki_quote": "Broker commission on this withdrawal. DEFAULT=0. Typically 0 for retail customers; may be non-zero for professional/part",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Approved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Whether the withdrawal has received required approval (e.g., compliance/operations sign-off): 1=Approved, 0=Pending appr",
+      "wiki_quote": "Whether the withdrawal has received required approval (e.g., compliance/operations sign-off): 1=Approved, 0=Pending appr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IPAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Customer's IP address at request time, stored as integer (IPv4 -> decimal). Fraud detection and audit trail.",
+      "wiki_quote": "Customer's IP address at request time, stored as integer (IPv4 -> decimal). Fraud detection and audit trail (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "UTC timestamp of the most recent status change or update. Indexed (ix_BillingWithdraw_ModificationDate). Included in cov",
+      "wiki_quote": "UTC timestamp of the most recent status change or update. Indexed (ix_BillingWithdraw_ModificationDate). Included in cov",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Remark",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Processing note added by the system or operations staff. Included in covering index INCLUDE list.",
+      "wiki_quote": "Processing note added by the system or operations staff. Included in covering index INCLUDE list (Tier 1 — inherited fro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Additional operations comment. Included in covering index INCLUDE list.",
+      "wiki_quote": "Additional operations comment. Included in covering index INCLUDE list (Tier 1 — inherited from etoro.Billing.Withdraw).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Fee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Platform fee charged for this withdrawal. Subtracted from the gross Amount. Included in covering index.",
+      "wiki_quote": "Platform fee charged for this withdrawal. Subtracted from the gross Amount. Included in covering index (Tier 1 — inherit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "FK to `Billing.Funding` - the payment instrument to which the withdrawal should be paid. NULL if no specific instrument ",
+      "wiki_quote": "FK to `Billing.Funding` - the payment instrument to which the withdrawal should be paid. NULL if no specific instrument ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RequestorComments",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Notes added by the requesting party (customer or system). DEFAULT NULL.",
+      "wiki_quote": "Notes added by the requesting party (customer or system). DEFAULT NULL (Tier 1 — inherited from etoro.Billing.Withdraw).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SessionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Audit session identifier linking this withdrawal to a specific user session. DEFAULT NULL.",
+      "wiki_quote": "Audit session identifier linking this withdrawal to a specific user session. DEFAULT NULL (Tier 1 — inherited from etoro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Internal reason code for the withdrawal decision (e.g., why it was cancelled or flagged). References an internal catalog",
+      "wiki_quote": "Internal reason code for the withdrawal decision (e.g., why it was cancelled or flagged). References an internal catalog",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SuggestedBonusDeductionAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Pre-calculated amount of trading bonus to claw back when the customer withdraws (per bonus terms). DEFAULT=0.",
+      "wiki_quote": "Pre-calculated amount of trading bonus to claw back when the customer withdraws (per bonus terms). DEFAULT=0 (Tier 1 — i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ActualBonusDeductionAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Actual bonus amount deducted after processing. May differ from suggested amount if conditions changed. NULL until finali",
+      "wiki_quote": "Actual bonus amount deducted after processing. May differ from suggested amount if conditions changed. NULL until finali",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClientWithdrawReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Customer-selected reason for the withdrawal (e.g., taking profits, funds needed, dissatisfied). References a reason cata",
+      "wiki_quote": "Customer-selected reason for the withdrawal (e.g., taking profits, funds needed, dissatisfied). References a reason cata",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClientWithdrawReasonComment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Customer's free-text explanation for the withdrawal reason. Max 510 characters.",
+      "wiki_quote": "Customer's free-text explanation for the withdrawal reason. Max 510 characters (Tier 1 — inherited from etoro.Billing.Wi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountCurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Customer's eToro account currency, if different from `CurrencyID`. FK to `Dictionary.Currency` (FK_DCUR_BWAC). Included ",
+      "wiki_quote": "Customer's eToro account currency, if different from `CurrencyID`. FK to `Dictionary.Currency` (FK_DCUR_BWAC). Included ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClientWithdrawCommentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "FK to `Dictionary.ClientWithdrawComment` (FK_BillingWithdraw_DictionaryClientWithdrawComment). Standardized comment cate",
+      "wiki_quote": "FK to `Dictionary.ClientWithdrawComment` (FK_BillingWithdraw_DictionaryClientWithdrawComment). Standardized comment cate",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExTransactionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "External transaction identifier from the payment provider. Links this withdrawal record to the provider's transaction re",
+      "wiki_quote": "External transaction identifier from the payment provider. Links this withdrawal record to the provider's transaction re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Withdrawal type classification added in a later release. NULL=legacy record (55%). 0=standard withdrawal (41%). 1=specia",
+      "wiki_quote": "Withdrawal type classification added in a later release. NULL=legacy record (55%). 0=standard withdrawal (41%). 1=specia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FlowID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Withdraw.md",
+      "upstream_quote": "Processing flow identifier added in a later release. NULL=legacy (59%). 0=standard flow (38%). 2=eToroMoney local curren",
+      "wiki_quote": "Processing flow identifier added in a later release. NULL=legacy (59%). 0=standard flow (38%). 2=eToroMoney local curren",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 28,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 28 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

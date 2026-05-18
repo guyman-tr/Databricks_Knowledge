@@ -1,4 +1,8 @@
 ---
+object_fqn: main.etoro_kpi_prep.v_population_funded
+object_type: VIEW
+producer_kind: view_definition
+generator: tools/uc_pipelines/generate_wiki.py
 object: main.etoro_kpi_prep.v_population_funded
 schema: etoro_kpi_prep
 framework: uc-pipeline-doc
@@ -6,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 3
 row_count: null
-generated_at: '2026-05-18T09:06:53Z'
+generated_at: '2026-05-18T10:56:16Z'
 upstreams:
 - main.actionsprep
 - main.active_actions
@@ -77,9 +81,9 @@ Source: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_populati
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DateID | INT | YES | Computed in source (expression): `SELECT         mcb.BalanceDateID AS DateID,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql L21-L22. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_funded). |
-| 1 | RealCID | LONG | YES | Computed in source (expression): `SELECT         cb.DateID,         cb.CID AS RealCID,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql L12-L14. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_funded). |
-| 2 | Equity | DECIMAL | YES | Computed in source (SUM): `SELECT     a.DateID,     a.RealCID,     SUM(a.Equity) AS Equity`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql L7-L10. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_funded). |
+| 1 | DateID | INT | YES | Computed in source (expression): `mcb.BalanceDateID AS DateID`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql L22-L22. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_funded). |
+| 1 | RealCID | LONG | YES | Computed in source (expression): `cb.CID AS RealCID`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql L14-L14. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_funded). |
+| 2 | Equity | DECIMAL | YES | Computed in source (SUM): `SUM(a.Equity) AS Equity`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_population_funded.sql L10-L10. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_population_funded). |
 
 ---
 
@@ -131,7 +135,7 @@ main.etoro_kpi_prep_stg._tmp_cds_basic_statuses
 
 ---
 
-## 5. Common usage / JOINs
+## 5. Sample Queries & Common JOINs
 
 ### 5.1 Sample queries
 
@@ -156,5 +160,14 @@ main.etoro_kpi_prep_stg._tmp_cds_basic_statuses
 | DateID | source code (join_enriched) | 2 | [uc_view_ddl] |
 | RealCID | source code (join_enriched) | 2 | [uc_view_ddl] |
 | Equity | source code (aggregate) | 2 | [uc_view_ddl] |
+
+---
+
+## 7. Tier Legend
+
+- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough/rename/cast).
+- **Tier 2** — column narrated from a cited source-code expression (CASE / COALESCE / arithmetic / window / UDF) in the cached Phase-2 snapshot.
+- **Tier 5** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
+- **Tier U** — unclassifiable: no upstream wiki match and no source-code citation. Mechanical disclosure of unclassifiability — see `.review-needed.md`. **Never** AI-inferred and **never** harvested from the live UC comment, because the live UC comment is the artifact this pipeline is meant to replace.
 
 *Generated: 2026-05-18 | Tiers: 0 T1, 3 T2, 0 T3, 0 T4, 0 T5, 0 U | Elements: 3/3 | Source: view_definition*

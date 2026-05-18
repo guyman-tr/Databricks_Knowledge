@@ -1,0 +1,128 @@
+{
+  "object_fqn": "main.billing.bronze_recurringmanager_scheduler_execution",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "ExecutionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Auto-incrementing primary key. ~856K rows exist. Referenced in GetExecutionByPaymentExecution, GetExecutionsForPlan, Upd",
+      "wiki_quote": "Auto-incrementing primary key. ~856K rows exist. Referenced in GetExecutionByPaymentExecution, GetExecutionsForPlan, Upd",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlanId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "FK to Scheduler.Plan.PlanId. Links this execution to its parent schedule. Indexed with ExecutionStatusId and ExecutionTy",
+      "wiki_quote": "FK to Scheduler.Plan.PlanId. Links this execution to its parent schedule. Indexed with ExecutionStatusId and ExecutionTy",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentExecutionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Cross-schema FK to the payment execution record in the Recurring schema. One-to-one relationship per execution attempt. ",
+      "wiki_quote": "Cross-schema FK to the payment execution record in the Recurring schema. One-to-one relationship per execution attempt. ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PlannedDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "UTC timestamp of when this execution should be processed. Set during creation based on the plan's frequency, start date,",
+      "wiki_quote": "UTC timestamp of when this execution should be processed. Set during creation based on the plan's frequency, start date,",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExecutionTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Classification of execution attempt: 1=Planned (regular scheduled charge), 2=Dunning (retry after soft decline). Current",
+      "wiki_quote": "Classification of execution attempt: 1=Planned (regular scheduled charge), 2=Dunning (retry after soft decline). Current",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExecutionStatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Lifecycle state: 1=Planned (1.9%), 2=WaitingForProcess, 3=Sent (0.01%), 4=Canceled (12.6%), 5=Failed (0.003%), 6=Done (8",
+      "wiki_quote": "Lifecycle state: 1=Planned (1.9%), 2=WaitingForProcess, 3=Sent (0.01%), 4=Canceled (12.6%), 5=Failed (0.003%), 6=Done (8",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "UTC timestamp of when the execution record was created, set to GETDATE() in CreateOrGetExecution. Distinct from PlannedD",
+      "wiki_quote": "UTC timestamp of when the execution record was created, set to GETDATE() in CreateOrGetExecution. Distinct from PlannedD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Stamp",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Distributed lock token. NULL = unclaimed and available for processing. Set to a GUID by GetExecutionsToProcessWithLock/S",
+      "wiki_quote": "Distributed lock token. NULL = unclaimed and available for processing. Set to a GUID by GetExecutionsToProcessWithLock/S",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ActualExecutionDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "UTC timestamp of when the execution was actually picked up for processing (not when the charge completed). Set to GETUTC",
+      "wiki_quote": "UTC timestamp of when the execution was actually picked up for processing (not when the charge completed). Set to GETUTC",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysStartTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "System-versioning row start time. Automatically managed by SQL Server temporal tables.",
+      "wiki_quote": "System-versioning row start time. Automatically managed by SQL Server temporal tables (Tier 1 — inherited from Recurring",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SysEndTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "System-versioning row end time. 9999-12-31 = current version. Previous versions stored in History.Execution.",
+      "wiki_quote": "System-versioning row end time. 9999-12-31 = current version. Previous versions stored in History.Execution (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RecurringProgramTypeId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Program classification: 1=RecurringDeposit, 2=RecurringInvestment. NULL for 52% of rows (legacy - column added after ini",
+      "wiki_quote": "Program classification: 1=RecurringDeposit, 2=RecurringInvestment. NULL for 52% of rows (legacy - column added after ini",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VersionStamp",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Scheduler\\Tables\\Scheduler.Execution.md",
+      "upstream_quote": "Optimistic concurrency token for planned date modifications. Set by UpdateExecutionPlannedDate, checked by RevertExecuti",
+      "wiki_quote": "Optimistic concurrency token for planned date modifications. Set by UpdateExecutionPlannedDate, checked by RevertExecuti",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 13,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 13 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

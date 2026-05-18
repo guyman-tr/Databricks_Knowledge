@@ -1,0 +1,177 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_history_withdrawaction",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 9.05,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "WithdrawActionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Auto-incrementing surrogate PK. IDENTITY NOT FOR REPLICATION. Sequential within each withdrawal's action history. NONCLU",
+      "wiki_quote": "Auto-incrementing surrogate PK. IDENTITY NOT FOR REPLICATION. Sequential within each withdrawal's action history. NONCLU",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "The withdrawal request this action belongs to. FK to Billing.Withdraw(WithdrawID). Multiple rows per WithdrawID form the",
+      "wiki_quote": "The withdrawal request this action belongs to. FK to Billing.Withdraw(WithdrawID). Multiple rows per WithdrawID form the",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "The cashout status recorded at this action. FK to Dictionary.CashoutStatus. See Section 2.2 for full value map. Leading ",
+      "wiki_quote": "The cashout status recorded at this action. FK to Dictionary.CashoutStatus. See Section 2.2 for full value map. Leading ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Back-office manager who performed this action. FK to BackOffice.Manager. NULL = no manager involved (fully automated). 0",
+      "wiki_quote": "Back-office manager who performed this action. FK to BackOffice.Manager. NULL = no manager involved (fully automated). 0",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Commission amount captured at this action step. Defaults to 0. Set by BackOffice.WithdrawRequestSetCommission when a man",
+      "wiki_quote": "Commission amount captured at this action step. Defaults to 0. Set by BackOffice.WithdrawRequestSetCommission when a man",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Approved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Whether this action represents an approval decision: 1=approved, 0=not approved. Approved=1 with ManagerID=0 indicates a",
+      "wiki_quote": "Whether this action represents an approval decision: 1=approved, 0=not approved. Approved=1 with ManagerID=0 indicates a",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "UTC timestamp when this action was recorded. Leading column of NC index IDX_HistoryWithdrawAction_ModificationDate - sup",
+      "wiki_quote": "UTC timestamp when this action was recorded. Leading column of NC index IDX_HistoryWithdrawAction_ModificationDate - sup",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Human-readable description of this action. Common values: \"Initiated by user request\", \"Automation - Manual Approval\". S",
+      "wiki_quote": "Human-readable description of this action. Common values: \"Initiated by user request\", \"Automation - Manual Approval\". S",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SessionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Customer session identifier at the time of the withdrawal action. NULL for automated/system actions. Provides traceabili",
+      "wiki_quote": "Customer session identifier at the time of the withdrawal action. NULL for automated/system actions. Provides traceabili",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CashoutReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Reason category for this cashout action. Default value 16 = \"Requested by User\" (95.8% of rows). Larger values (12, 18, ",
+      "wiki_quote": "Reason category for this cashout action. Default value 16 = \"Requested by User\" (95.8% of rows). Larger values (12, 18, ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClientPersonalID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Customer personal identification document reference captured at withdrawal time (e.g., for KYC compliance). Added in 201",
+      "wiki_quote": "Customer personal identification document reference captured at withdrawal time (e.g., for KYC compliance). Added in 201",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "References the funding method (payment instrument) used for this withdrawal. Links to the customer's stored payment meth",
+      "wiki_quote": "References the funding method (payment instrument) used for this withdrawal. Links to the customer's stored payment meth",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Type of funding/payment method: 1=bank transfer, 2=credit card, 33=crypto/stock redemption (inferred from data). Determi",
+      "wiki_quote": "Type of funding/payment method: 1=bank transfer, 2=credit card, 33=crypto/stock redemption (inferred from data). Determi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Withdrawal amount in the withdrawal's currency at time of this action. May differ from the original request amount for p",
+      "wiki_quote": "Withdrawal amount in the withdrawal's currency at time of this action. May differ from the original request amount for p",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Currency of the withdrawal amount. 1=USD in dominant records. References Dictionary/currency lookup.",
+      "wiki_quote": "Currency of the withdrawal amount. 1=USD in dominant records. References Dictionary/currency lookup (Tier 1 — inherited ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Fee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Withdrawal fee charged at time of this action. 0 = fee-free withdrawal (e.g., automatic stock/crypto redemption). Common",
+      "wiki_quote": "Withdrawal fee charged at time of this action. 0 = fee-free withdrawal (e.g., automatic stock/crypto redemption). Common",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "AccountCurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Customer account currency at time of action. 1=USD, 2=other currency (observed in data). Used for currency conversion wh",
+      "wiki_quote": "Customer account currency at time of action. 1=USD, 2=other currency (observed in data). Used for currency conversion wh",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExTransactionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "External payment provider transaction reference number. Populated for auto-processed withdrawals (e.g., crypto/stock red",
+      "wiki_quote": "External payment provider transaction reference number. Populated for auto-processed withdrawals (e.g., crypto/stock red",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Type classification of the withdrawal: 0=unclassified, 1=automatic/direct (e.g., stock redemption). NULL for certain flo",
+      "wiki_quote": "Type classification of the withdrawal: 0=unclassified, 1=automatic/direct (e.g., stock redemption). NULL for certain flo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FlowID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\History\\Tables\\History.WithdrawAction.md",
+      "upstream_quote": "Processing flow identifier: 0=legacy/unset, 2=automatic stock/crypto redemption flow. NULL for older records or manual p",
+      "wiki_quote": "Processing flow identifier: 0=legacy/unset, 2=automatic stock/crypto redemption flow. NULL for older records or manual p",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 20,
+    "B": 0,
+    "C": 3,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 20 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 3 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

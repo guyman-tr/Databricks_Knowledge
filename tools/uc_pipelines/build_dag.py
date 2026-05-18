@@ -190,9 +190,16 @@ def _classify_wiki_status(
 
     if global_wiki_hit:
         kind = global_wiki_hit.get("wiki_kind")
-        rule = {"synapse_mirror": 1, "uc_generated": 2, "uc_domain": 3}.get(kind, 5)
+        rule = {"synapse_mirror": 1, "uc_generated": 2, "uc_domain": 3,
+                "bronze_tier1": 1}.get(kind, 5)
         if kind == "uc_generated" and in_pilot_scope:
             return ("documented_in_pack", rule, global_wiki_hit.get("wiki_path"))
+        # Bronze with a Tier 1 wiki in scope of this pipeline run is treated as
+        # a target to author (inheriting from Tier 1), not as already-documented
+        # externally. The schema card's classify_writer already flips it to
+        # in_scope=True with kind=BRONZE_TIER1_INHERITANCE in that case.
+        if kind == "bronze_tier1" and in_pilot_scope:
+            return ("in_scope_not_yet_authored", rule, global_wiki_hit.get("wiki_path"))
         return ("documented_external", rule, global_wiki_hit.get("wiki_path"))
 
     if in_pilot_scope:

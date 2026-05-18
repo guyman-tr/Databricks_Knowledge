@@ -1,0 +1,149 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_backoffice_customerdocument",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 10.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 9.05,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:15Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "DocumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Auto-generated unique document identifier. NC PK; the UNIQUE CLUSTERED index is on (CID, DocumentID) for customer-partit",
+      "wiki_quote": "Auto-generated unique document identifier. NC PK; the UNIQUE CLUSTERED index is on (CID, DocumentID) for customer-partit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Customer account ID - FK to Customer.CustomerStatic. The primary account the document belongs to. Combined with Document",
+      "wiki_quote": "Customer account ID - FK to Customer.CustomerStatic. The primary account the document belongs to. Combined with Document",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "The BackOffice staff member who uploaded or processed this document. 0 = automated system upload (customer self-uploaded",
+      "wiki_quote": "The BackOffice staff member who uploaded or processed this document. 0 = automated system upload (customer self-uploaded",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DisplayName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "The original filename as shown to BackOffice staff and in the document management UI. Preserves the customer's original ",
+      "wiki_quote": "The original filename as shown to BackOffice staff and in the document management UI. Preserves the customer's original ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ComputerName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Legacy field: the name of the computer/workstation from which the document was uploaded. Populated when BackOffice staff",
+      "wiki_quote": "Legacy field: the name of the computer/workstation from which the document was uploaded. Populated when BackOffice staff",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FileName",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "The stored/persisted filename in the document management system. May differ from DisplayName if the storage layer applie",
+      "wiki_quote": "The stored/persisted filename in the document management system. May differ from DisplayName if the storage layer applie",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateAdded",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Timestamp when the document was first uploaded/created in the system. Range from 2009-10-29 (platform launch) to today. ",
+      "wiki_quote": "Timestamp when the document was first uploaded/created in the system. Range from 2009-10-29 (platform launch) to today. ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Accounting",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Flag intended to link a document to accounting processes. Default 0 and currently 0 for ALL 8.78M rows - this appears to",
+      "wiki_quote": "Flag intended to link a document to accounting processes. Default 0 and currently 0 for ALL 8.78M rows - this appears to",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Obsolete",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Soft-delete flag: 1 = document has been superseded, found to be fraudulent, or otherwise invalidated. Set by BackOffice.",
+      "wiki_quote": "Soft-delete flag: 1 = document has been superseded, found to be fraudulent, or otherwise invalidated. Set by BackOffice.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Optional BackOffice agent comment attached to the document at upload time. Returned by GetAllUserDocuments procedure. Ha",
+      "wiki_quote": "Optional BackOffice agent comment attached to the document at upload time. Returned by GetAllUserDocuments procedure. Ha",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DocumentSizeActionTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Status of the document's compressed/thumbnail version in the processing pipeline. FK to Dictionary.DocumentSizeActionTyp",
+      "wiki_quote": "Status of the document's compressed/thumbnail version in the processing pipeline. FK to Dictionary.DocumentSizeActionTyp",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StorageID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "External document storage system reference key. Points to the actual file blob in the document storage service (CDN/blob",
+      "wiki_quote": "External document storage system reference key. Points to the actual file blob in the document storage service (CDN/blob",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SuggestedDocumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "AI vendor's (Au10tix/Onfido) predicted document type classification. FK to Dictionary.DocumentType. Values: 1=Proof of A",
+      "wiki_quote": "AI vendor's (Au10tix/Onfido) predicted document type classification. FK to Dictionary.DocumentType. Values: 1=Proof of A",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SessionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Upload session identifier from the customer's document submission session. Correlates multiple documents uploaded in the",
+      "wiki_quote": "Upload session identifier from the customer's document submission session. Correlates multiple documents uploaded in the",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SuggestedDocumentSubTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "AI vendor's suggested document sub-classification (e.g., subtype of Proof of Identity: Passport vs Driver's License vs N",
+      "wiki_quote": "AI vendor's suggested document sub-classification (e.g., subtype of Proof of Identity: Passport vs Driver's License vs N",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "GCID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocument.md",
+      "upstream_quote": "Group Customer ID - the person-level identifier that spans all of a customer's accounts across regulatory jurisdictions.",
+      "wiki_quote": "Group Customer ID - the person-level identifier that spans all of a customer's accounts across regulatory jurisdictions.",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 16,
+    "B": 0,
+    "C": 5,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 16 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "all 5 null-with-provenance columns confirmed terminal",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

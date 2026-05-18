@@ -1,0 +1,107 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_withdrawrejects",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RejectID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "Surrogate primary key, auto-incremented. NOT FOR REPLICATION. No business meaning beyond row identity.",
+      "wiki_quote": "Surrogate primary key, auto-incremented. NOT FOR REPLICATION. No business meaning beyond row identity (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "FK to Billing.Withdraw (WithdrawID) - enforced by FK_BWWR_BW. Identifies the withdrawal being rejected. The CLUSTERED in",
+      "wiki_quote": "FK to Billing.Withdraw (WithdrawID) - enforced by FK_BWWR_BW. Identifies the withdrawal being rejected. The CLUSTERED in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RejectReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "FK to Dictionary.CashoutRejectReason (RejectReasonID) - enforced by FK_BWWR_DCRR. Reason the withdrawal was rejected. Ke",
+      "wiki_quote": "FK to Dictionary.CashoutRejectReason (RejectReasonID) - enforced by FK_BWWR_DCRR. Reason the withdrawal was rejected. Ke",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "FK to BackOffice.Manager (ManagerID) - enforced by FK_BWWR_BMNG. The operations/compliance manager who performed the rej",
+      "wiki_quote": "FK to BackOffice.Manager (ManagerID) - enforced by FK_BWWR_BMNG. The operations/compliance manager who performed the rej",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RejectDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "Timestamp when the rejection was recorded. Set by `Billing.WithdrawReject` as @RejectDate parameter (caller provides tim",
+      "wiki_quote": "Timestamp when the rejection was recorded. Set by `Billing.WithdrawReject` as @RejectDate parameter (caller provides tim",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FollowupDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "Date by which the operations team should follow up on this rejection (check if customer responded, re-submitted, or need",
+      "wiki_quote": "Date by which the operations team should follow up on this rejection (check if customer responded, re-submitted, or need",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CaseNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "External support/CRM ticket number linked to this rejection. NULL on initial insert (set by `Billing.FollowupEdit` when ",
+      "wiki_quote": "External support/CRM ticket number linked to this rejection. NULL on initial insert (set by `Billing.FollowupEdit` when ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CaseDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "Date the external support case was created. NULL on initial insert, set alongside CaseNumber by `Billing.FollowupEdit`.",
+      "wiki_quote": "Date the external support case was created. NULL on initial insert, set alongside CaseNumber by `Billing.FollowupEdit` (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsActive",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "Whether this rejection record is the current active rejection for the withdrawal. 1=active (this is the current rejectio",
+      "wiki_quote": "Whether this rejection record is the current active rejection for the withdrawal. 1=active (this is the current rejectio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.WithdrawRejects.md",
+      "upstream_quote": "Free-text notes from the rejecting manager. May contain case reference numbers, customer instructions, or context for th",
+      "wiki_quote": "Free-text notes from the rejecting manager. May contain case reference numbers, customer instructions, or context for th",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 10,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 10 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

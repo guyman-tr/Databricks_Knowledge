@@ -1,0 +1,366 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_deposit",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "DepositID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Primary key. Auto-incremented deposit identifier. NOT FOR REPLICATION - identity values are server-local and not replica",
+      "wiki_quote": "Primary key. Auto-incremented deposit identifier. NOT FOR REPLICATION - identity values are server-local and not replica",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Customer ID. FK to Customer.CustomerStatic (FK_CCST_BDEP). Identifies which eToro customer made this deposit. Indexed as",
+      "wiki_quote": "Customer ID. FK to Customer.CustomerStatic (FK_CCST_BDEP). Identifies which eToro customer made this deposit. Indexed as",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Payment instrument used for this deposit. FK to Billing.Funding (FK_BFND_BDEP). Identifies the specific credit card, ban",
+      "wiki_quote": "Payment instrument used for this deposit. FK to Billing.Funding (FK_BFND_BDEP). Identifies the specific credit card, ban",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Currency in which the deposit was made. FK to Dictionary.Currency (FK_DCUR_BDEP). Validated at insert time against Billi",
+      "wiki_quote": "Currency in which the deposit was made. FK to Dictionary.Currency (FK_DCUR_BDEP). Validated at insert time against Billi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Current payment status. FK to Dictionary.PaymentStatus (FK_DPMS_BDEP). Transitions validated by Dictionary.PaymentStatus",
+      "wiki_quote": "Current payment status. FK to Dictionary.PaymentStatus (FK_DPMS_BDEP). Transitions validated by Dictionary.PaymentStatus",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Operations manager who processed or last modified this deposit. 0=system/automated processing (no human operator). FK to",
+      "wiki_quote": "Operations manager who processed or last modified this deposit. 0=system/automated processing (no human operator). FK to",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RiskManagementStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Result of the risk management pre-check performed before processing. FK to Dictionary.RiskManagementStatus (FK_DRMS_BDEP",
+      "wiki_quote": "Result of the risk management pre-check performed before processing. FK to Dictionary.RiskManagementStatus (FK_DRMS_BDEP",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Amount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Deposit amount in the deposit currency (CurrencyID). Stored as MONEY type (4 decimal places). Passed by the application ",
+      "wiki_quote": "Deposit amount in the deposit currency (CurrencyID). Stored as MONEY type (4 decimal places). Passed by the application ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Exchange rate from deposit currency to USD, applied at processing time. Cannot be 0 (enforced in DepositAdd). Used in De",
+      "wiki_quote": "Exchange rate from deposit currency to USD, applied at processing time. Cannot be 0 (enforced in DepositAdd). Used in De",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "UTC timestamp when the deposit record was created (set to GETUTCDATE() in DepositAdd). Represents the deposit submission",
+      "wiki_quote": "UTC timestamp when the deposit record was created (set to GETUTCDATE() in DepositAdd). Represents the deposit submission",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "UTC timestamp of the most recent modification to this record. Set to GETUTCDATE() on INSERT (equals PaymentDate initiall",
+      "wiki_quote": "UTC timestamp of the most recent modification to this record. Set to GETUTCDATE() on INSERT (equals PaymentDate initiall",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TransactionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Short internal transaction identifier, unique per customer (unique index BDEP_TRANSACTION on CID+TransactionID). Generat",
+      "wiki_quote": "Short internal transaction identifier, unique per customer (unique index BDEP_TRANSACTION on CID+TransactionID). Generat",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IPAddress",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Customer's IP address at time of deposit, stored as a numeric integer (IPv4 encoded as 32-bit integer). Used for fraud d",
+      "wiki_quote": "Customer's IP address at time of deposit, stored as a numeric integer (IPv4 encoded as 32-bit integer). Used for fraud d",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Approved",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Legacy approval flag, superseded by PaymentStatusID=2. NULL for most modern records. Not updated by current code paths (",
+      "wiki_quote": "Legacy approval flag, superseded by PaymentStatusID=2. NULL for most modern records. Not updated by current code paths (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Commission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Commission amount charged on this deposit. Defaults to 0. Not set by DepositAdd (no parameter for it); may be populated ",
+      "wiki_quote": "Commission amount charged on this deposit. Defaults to 0. Not set by DepositAdd (no parameter for it); may be populated ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Provider-specific payment response XML. Schema varies by FundingType and is validated against `Dictionary.GetXMLSchema` ",
+      "wiki_quote": "Provider-specific payment response XML. Schema varies by FundingType and is validated against `Dictionary.GetXMLSchema` ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ClearingHouseEffectiveDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "The value date assigned by the clearing house for this deposit (when funds are considered settled by the clearing instit",
+      "wiki_quote": "The value date assigned by the clearing house for this deposit (when funds are considered settled by the clearing instit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "OldPaymentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Reference to a payment record in a legacy system (pre-migration). Used during the historical data migration that moved r",
+      "wiki_quote": "Reference to a payment record in a legacy system (pre-migration). Used during the historical data migration that moved r",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsFTD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Whether this deposit was the customer's First Time Deposit (their very first approved deposit on eToro). Set by DepositP",
+      "wiki_quote": "Whether this deposit was the customer's First Time Deposit (their very first approved deposit on eToro). Set by DepositP",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProcessorValueDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "The value date provided by the payment processor, indicating when funds are credited on the processor side. Mandatory fo",
+      "wiki_quote": "The value date provided by the payment processor, indicating when funds are credited on the processor side. Mandatory fo",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RefundVerificationCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Verification code supplied or received during a refund operation. Set by DepositUpdateRefundDetails. Used to correlate r",
+      "wiki_quote": "Verification code supplied or received during a refund operation. Set by DepositUpdateRefundDetails. Used to correlate r",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepotID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Identifies which Billing.Depot (acquirer/processor configuration) handled this deposit. Validated at INSERT time: Billin",
+      "wiki_quote": "Identifies which Billing.Depot (acquirer/processor configuration) handled this deposit. Validated at INSERT time: Billin",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MatchStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "PSP reconciliation match status. Default 0=Unmatched (99.9999% of records). 3=Matched (6 live records) - deposit has bee",
+      "wiki_quote": "PSP reconciliation match status. Default 0=Unmatched (99.9999% of records). 3=Matched (6 live records) - deposit has bee",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FunnelID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Marketing funnel identifier for this deposit. FK to Dictionary.Funnel (FK_BD_DF). Tracks which acquisition funnel the cu",
+      "wiki_quote": "Marketing funnel identifier for this deposit. FK to Dictionary.Funnel (FK_BD_DF). Tracks which acquisition funnel the cu",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Code",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Provider-specific code or reference associated with this deposit (e.g., provider confirmation code, voucher code). Disti",
+      "wiki_quote": "Provider-specific code or reference associated with this deposit (e.g., provider confirmation code, voucher code). Disti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExTransactionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "External (provider) transaction ID returned by the payment processor. Set during DepositProcess via @ExTransactionID par",
+      "wiki_quote": "External (provider) transaction ID returned by the payment processor. Set during DepositProcess via @ExTransactionID par",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CampaignCodeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Campaign that was active for this customer at deposit time. FK to BackOffice.Campaign (FK_Billing_Deposit_CampaignCodeID",
+      "wiki_quote": "Campaign that was active for this customer at deposit time. FK to BackOffice.Campaign (FK_Billing_Deposit_CampaignCodeID",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Status of any bonus associated with this deposit. FK to Dictionary.BonusStatus (FK_Billing_Deposit_BonusStatusID). Value",
+      "wiki_quote": "Status of any bonus associated with this deposit. FK to Dictionary.BonusStatus (FK_Billing_Deposit_BonusStatusID). Value",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusAmount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Bonus amount credited or attempted in connection with this deposit. Populated alongside BonusStatusID when a promotional",
+      "wiki_quote": "Bonus amount credited or attempted in connection with this deposit. Populated alongside BonusStatusID when a promotional",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BonusErrorCode",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Error code returned by the bonus processing system when a bonus request fails (BonusStatusID=2). Identifies the specific",
+      "wiki_quote": "Error code returned by the bonus processing system when a bonus request fails (BonusStatusID=2). Identifies the specific",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SessionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Application session ID at time of deposit. Passed through from the cashier application session context. Carried into His",
+      "wiki_quote": "Application session ID at time of deposit. Passed through from the cashier application session context. Carried into His",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Type of deposit. FK to Dictionary.DepositType (referenced in DepositProcess). Values: NULL=legacy pre-type-classificatio",
+      "wiki_quote": "Type of deposit. FK to Dictionary.DepositType (referenced in DepositProcess). Values: NULL=legacy pre-type-classificatio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Additional reason code for the current payment status. Default 0=no specific reason. Values in use: 1, 2=3rd most common",
+      "wiki_quote": "Additional reason code for the current payment status. Default 0=no specific reason. Values in use: 1, 2=3rd most common",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DRStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Delayed Revenue (DR) processing pipeline status. Default 0=Not processed (94.5%). 1=DR Processed (4.5%), 3=DR In Progres",
+      "wiki_quote": "Delayed Revenue (DR) processing pipeline status. Default 0=Not processed (94.5%). 1=DR Processed (4.5%), 3=DR In Progres",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DRDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "UTC timestamp when DR processing completed. NULL when DRStatusID=0 (not yet processed). Set when DRStatusID transitions ",
+      "wiki_quote": "UTC timestamp when DR processing completed. NULL when DRStatusID=0 (not yet processed). Set when DRStatusID transitions ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProtocolMIDSettingsID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "References Billing.ProtocolMIDSettings - the specific Merchant ID (MID) configuration profile used for this deposit's pr",
+      "wiki_quote": "References Billing.ProtocolMIDSettings - the specific Merchant ID (MID) configuration profile used for this deposit's pr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Exchange fee charged for currency conversion, in basis points or a provider-specific integer encoding. Added by Adi (19/",
+      "wiki_quote": "Exchange fee charged for currency conversion, in basis points or a provider-specific integer encoding. Added by Adi (19/",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "The reference exchange rate before any fee markup is applied. Added by Adi (19/09/2019). Enables computation of the fee ",
+      "wiki_quote": "The reference exchange rate before any fee markup is applied. Added by Adi (19/09/2019). Enables computation of the fee ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentGeneration",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Payment processing generation/API version used for this deposit. Values: 0=Generation 0 (legacy, 7.7%), 1=Generation 1 (",
+      "wiki_quote": "Payment processing generation/API version used for this deposit. Values: 0=Generation 0 (legacy, 7.7%), 1=Generation 1 (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ProcessRegulationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Regulatory entity/jurisdiction that processed this deposit. Values: 1=Cyprus/EU (~63%), 2=UK/FCA (~16%), 4=Australia (~2",
+      "wiki_quote": "Regulatory entity/jurisdiction that processed this deposit. Values: 1=Cyprus/EU (~63%), 2=UK/FCA (~16%), 4=Australia (~2",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "MerchantAccountID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "References Billing.MerchantAccountRouting - the merchant account legal entity used for this deposit (for multi-entity re",
+      "wiki_quote": "References Billing.MerchantAccountRouting - the merchant account legal entity used for this deposit (for multi-entity re",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsSetBalanceCompleted",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Whether the balance set/credit operation (`Billing.AmountAdd`) for this deposit has been completed. Set by IsSetBalanceC",
+      "wiki_quote": "Whether the balance set/credit operation (`Billing.AmountAdd`) for this deposit has been completed. Set by IsSetBalanceC",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RoutingReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Reason code explaining why this specific routing path (DepotID + MerchantAccountID) was selected. NULL=legacy/no routing",
+      "wiki_quote": "Reason code explaining why this specific routing path (DepotID + MerchantAccountID) was selected. NULL=legacy/no routing",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FlowID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Identifies the deposit flow/UX path used. NULL=legacy or default flow (98.9%). 1=new flow (0.97%), 3=specific flow varia",
+      "wiki_quote": "Identifies the deposit flow/UX path used. NULL=legacy or default flow (98.9%). 1=new flow (0.97%), 3=specific flow varia",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFeeInUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Exchange fee expressed in USD absolute amount. Complements ExchangeFee (which may be in provider-specific units) with a ",
+      "wiki_quote": "Exchange fee expressed in USD absolute amount. Complements ExchangeFee (which may be in provider-specific units) with a ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFeePercentage",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "Exchange fee as a percentage of the deposit amount (0.00-100.00). Enables direct comparison of fee rates across currenci",
+      "wiki_quote": "Exchange fee as a percentage of the deposit amount (0.00-100.00). Enables direct comparison of fee rates across currenci",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FeeConfigurationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.Deposit.md",
+      "upstream_quote": "References a fee configuration profile that determined the exchange fee for this deposit. Enables retrospective lookup o",
+      "wiki_quote": "References a fee configuration profile that determined the exchange fee for this deposit. Enables retrospective lookup o",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 47,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 47 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

@@ -150,8 +150,14 @@ def fetch_table_lineage_writers(cur, full_name: str, lookback_days: int) -> list
 
 
 def classify_writer(obj_name: str, table_type: str, view_def: str | None,
-                    lineage_rows: list[dict]) -> dict:
-    """Decide writer.kind + in_scope per the rules in 00-schema-card.mdc."""
+                    lineage_rows: list[dict],
+                    upstream_wiki_hit: dict | None = None) -> dict:
+    """Decide writer.kind + in_scope per the rules in 00-schema-card.mdc.
+
+    `upstream_wiki_hit` is the entry for this object's FQN in
+    _upstream_wiki_index.json (None if no match). When the object is a bronze
+    table whose Tier 1 wiki is available, this flips it to in-scope with a
+    `BRONZE_TIER1_INHERITANCE` writer instead of the default `BRONZE_INGEST`."""
     ttype = (table_type or "").upper()
 
     if "VIEW" in ttype:
@@ -165,8 +171,22 @@ def classify_writer(obj_name: str, table_type: str, view_def: str | None,
         return {"kind": "GENERIC_PIPELINE", "in_scope": False,
                 "reason": "synapse gold mirror — documented by dwh-semantic-doc"}
     if obj_name.startswith("bronze_"):
+        # If a Tier 1 wiki is available, we CAN document this bronze table by
+        # full inheritance from the upstream production wiki.
+        if upstream_wiki_hit and upstream_wiki_hit.get("wiki_kind") == "bronze_tier1":
+            return {
+                "kind": "BRONZE_TIER1_INHERITANCE",
+                "in_scope": True,
+                "upstream_wiki_path": upstream_wiki_hit.get("wiki_path"),
+                "source_database": upstream_wiki_hit.get("source_database"),
+                "source_schema": upstream_wiki_hit.get("source_schema"),
+                "source_table": upstream_wiki_hit.get("source_table"),
+                "source_repo": upstream_wiki_hit.get("source_repo"),
+                "datalake_path": upstream_wiki_hit.get("datalake_path"),
+                "copy_strategy": upstream_wiki_hit.get("copy_strategy"),
+            }
         return {"kind": "BRONZE_INGEST", "in_scope": False,
-                "reason": "bronze ingest layer — documented upstream by dwh-semantic-doc or upstream wiki"}
+                "reason": "bronze ingest layer — no Tier 1 wiki available in upstream_wiki_index"}
 
     if not lineage_rows:
         return {"kind": "UNKNOWN", "in_scope": False,
@@ -512,6 +532,23 @@ def main() -> int:
 
     view_defs = fetch_view_definitions(cur, args.catalog, args.schema)
 
+    # Load the global upstream wiki index (Phase 0 output) so we can flip
+    # bronze tables with Tier 1 wikis into in-scope.
+    upstream_wiki_index: dict = {}
+    uwi_path = OBJ_OUT_ROOT / "_upstream_wiki_index.json"
+    if uwi_path.is_file():
+        try:
+            uwi_payload = json.loads(uwi_path.read_text(encoding="utf-8"))
+            upstream_wiki_index = uwi_payload.get("wikis") or {}
+            n_bronze = sum(1 for v in upstream_wiki_index.values()
+                           if v.get("wiki_kind") == "bronze_tier1")
+            print(f"[discover-schema] loaded upstream wiki index: "
+                  f"{len(upstream_wiki_index)} total ({n_bronze} bronze_tier1)",
+                  file=sys.stderr, flush=True)
+        except Exception as e:
+            print(f"[discover-schema] WARN: failed to load upstream wiki index ({e})",
+                  file=sys.stderr, flush=True)
+
     # ---------- PHASE 0: classify + write _schema_card.md ----------
     out_path = p0_out
     if do_phase0:
@@ -529,7 +566,9 @@ def main() -> int:
                 lineage_rows = fetch_table_lineage_writers(
                     cur, f"{args.catalog}.{args.schema}.{name}", args.lineage_lookback_days
                 )
-            writer = classify_writer(name, ttype, vdef, lineage_rows)
+            fqn = f"{args.catalog}.{args.schema}.{name}".lower()
+            uwi_hit = upstream_wiki_index.get(fqn)
+            writer = classify_writer(name, ttype, vdef, lineage_rows, upstream_wiki_hit=uwi_hit)
 
             obj_entry = {**obj, "writer": writer}
             if vdef:
@@ -630,6 +669,7 @@ def main() -> int:
             "full_name": f"{args.catalog}.{args.schema}.{name}",
             "in_scope": True,
             "table_type": ttype,
+            "writer": obj.get("writer") or {},
             "format": deinfo.get("format"),
             "location": deinfo.get("location"),
             "owner": deinfo.get("owner"),

@@ -53,8 +53,9 @@ LINEAGE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*[`]?([A-Za-z_][A-Za-z0-9_]*)[`]?\
 LINEAGE_HEADER_RE = re.compile(r"^##\s+Column Lineage", re.IGNORECASE | re.MULTILINE)
 
 NULL_WITH_PROVENANCE_RE = re.compile(
-    r"^\s*Source:\s+(?P<fqn>main\.[a-z0-9_]+\.[A-Za-z0-9_]+)\.(?P<col>[A-Za-z_][A-Za-z0-9_]*)\.\s+"
-    r"No upstream wiki cached as of (?P<date>\d{4}-\d{2}-\d{2})\.\s*\(Tier 5 — terminal-no-wiki\)\.?\s*$"
+    r"^\s*Source:\s+(?P<fqn>(?:main\.)?[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+){1,2})\.(?P<col>[A-Za-z_][A-Za-z0-9_]*)\.\s+"
+    r"No upstream wiki cached as of (?P<date>\d{4}-\d{2}-\d{2})\.?\s*"
+    r"\(Tier 5\s+(?:--|[—–-])\s+(?:terminal-no-wiki|bronze-passthrough[^)]*)\)\.?\s*$"
 )
 
 SOURCE_CODE_CITATION_RE = re.compile(
@@ -201,17 +202,41 @@ def _first_sentence(s: str) -> str:
 
 
 def _classify_description_bucket(description: str, lineage_row: dict | None,
-                                   md_path: Path) -> tuple[str, str]:
+                                   md_path: Path,
+                                   bronze_inherit_wiki: Path | None = None,
+                                   column_name: str | None = None) -> tuple[str, str]:
     """Return (bucket, evidence) where bucket in {A, B, C, U}.
     A = byte-equal-to-upstream (or strict containment of upstream first-sentence)
     B = source-code-cited
     C = null-with-provenance
     U = unclassifiable (AI-inference candidate — hard fail).
+
+    `bronze_inherit_wiki`: for bronze_tier1_inheritance objects, the Tier 1
+    production wiki path declared in writer.upstream_wiki_path — used to verify
+    columns whose lineage row has no source_object (system.access.column_lineage
+    is empty for bronze ingest targets).
     """
     desc = description.strip()
 
     if NULL_WITH_PROVENANCE_RE.match(desc):
         return ("C", "null-with-provenance template matched")
+
+    # Bronze inheritance path — for objects whose writer is the bronze ingest
+    # pipeline (no UC source code, no column_lineage rows). Validate column
+    # descriptions byte-equal against the Tier 1 production wiki declared in
+    # the writer metadata.
+    if bronze_inherit_wiki and bronze_inherit_wiki.is_file() and column_name:
+        up_desc = _upstream_description_for(bronze_inherit_wiki, column_name)
+        if up_desc:
+            up_clean = _strip_tier_tag(up_desc.strip())
+            desc_clean = _strip_tier_tag(desc)
+            if desc == up_desc.strip():
+                return ("A", f"byte-equal to bronze Tier 1 wiki for `{column_name}`")
+            if up_clean and up_clean in desc_clean:
+                return ("A", f"bronze Tier 1 description verbatim-contained for `{column_name}`")
+            up_first = _first_sentence(up_desc)
+            if up_first and len(up_first) >= 20 and up_first in desc_clean:
+                return ("A", f"first sentence of bronze Tier 1 description verbatim-contained for `{column_name}`")
 
     if lineage_row:
         transform = (lineage_row.get("transform") or "").lower()
@@ -253,6 +278,21 @@ def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
     issues: list[Issue] = []
     text = md_path.read_text(encoding="utf-8")
     fm = _parse_yaml_frontmatter(text)
+
+    # Detect bronze inheritance — these wikis use writer.upstream_wiki_path
+    # instead of the lineage-row-based inheritance check.
+    producer_kind = (fm.get("producer_kind") or "").lower()
+    writer_meta = fm.get("writer") or {}
+    bronze_inherit_wiki: Path | None = None
+    if producer_kind == "bronze_tier1_inheritance":
+        wpath = writer_meta.get("path") or writer_meta.get("upstream_wiki_path") or ""
+        if wpath:
+            candidate = Path(wpath)
+            if not candidate.is_absolute():
+                # repo root is two parents up from this file
+                candidate = (Path(__file__).resolve().parents[2] / wpath).resolve()
+            if candidate.is_file():
+                bronze_inherit_wiki = candidate
 
     lineage_path = md_path.with_suffix(".lineage.md")
     if not lineage_path.exists():
@@ -320,7 +360,11 @@ def validate_object(md_path: Path, inv_cols_by_name: dict[str, dict],
 
         if assert_no_inference and "UNVERIFIED" not in desc.upper():
             lin_row = lin_by_name.get(name)
-            bucket, evidence = _classify_description_bucket(desc, lin_row, md_path)
+            bucket, evidence = _classify_description_bucket(
+                desc, lin_row, md_path,
+                bronze_inherit_wiki=bronze_inherit_wiki,
+                column_name=name,
+            )
             if bucket == "U":
                 issues.append(Issue(Issue.LEVEL_HARD, obj_name, "assertion13_unclassifiable",
                                     f"column `{name}` description fails §6 No-Inference Contract: "

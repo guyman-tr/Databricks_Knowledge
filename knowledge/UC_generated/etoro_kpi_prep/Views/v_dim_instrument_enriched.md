@@ -1,4 +1,8 @@
 ---
+object_fqn: main.etoro_kpi_prep.v_dim_instrument_enriched
+object_type: VIEW
+producer_kind: view_definition
+generator: tools/uc_pipelines/generate_wiki.py
 object: main.etoro_kpi_prep.v_dim_instrument_enriched
 schema: etoro_kpi_prep
 framework: uc-pipeline-doc
@@ -6,7 +10,7 @@ table_type: VIEW
 format: null
 column_count: 50
 row_count: null
-generated_at: '2026-05-18T09:06:18Z'
+generated_at: '2026-05-18T10:56:11Z'
 upstreams:
 - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
 - main.trading.bronze_etoro_trade_instrumentmetadata_daily / main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument
@@ -121,7 +125,7 @@ Source: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_inst
 | 45 | SettlementTime | TIMESTAMP | YES | Time of day for settlement. DWH note: reformatted from Trade.FuturesMetaData.SettlementTime via FORMAT(DATEPART(HOUR)*100 + DATEPART(MINUTE), '00:00'). (Tier 1 — Trade.FuturesMetaData) |
 | 46 | OperationMode | INT | YES | Trading operation mode: 0=Standard (13,140 instruments), 1=Alternate (2,566, primarily European stock CFDs traded in non-USD denomination currencies like EUR, GBX). From Trade.Instrument. (Tier 1 — Trade.Instrument) |
 | 47 | Tradeable | INT | NO | Computed in source (CASE, WHEN): `CASE     WHEN cc.VisibleInternallyOnly = 0       AND cc.Tradable = 1       AND dd.InstrumentVisible = 1     THEN 1     E…`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_instrument_enriched.sql L78-L84. [uc_view_ddl] (Tier 2 — main.trading.bronze_etoro_trade_instrumentmetadata_daily / main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument). |
-| 48 | IsSQF | INT | NO | Computed in source (CASE, WHEN): `CASE      WHEN etig.InstrumentID IS NOT NULL THEN 1      ELSE 0    END AS IsSQF,`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_instrument_enriched.sql L85-L88. [uc_view_ddl] (Tier 2 — main.trading.bronze_etoro_trade_instrumentgroups). |
+| 48 | IsSQF | INT | NO | Computed in source (CASE, WHEN): `CASE      WHEN etig.InstrumentID IS NOT NULL THEN 1      ELSE 0    END AS IsSQF`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_instrument_enriched.sql L85-L88. [uc_view_ddl] (Tier 2 — main.trading.bronze_etoro_trade_instrumentgroups). |
 | 49 | Is_245_Instrument | INT | NO | Computed in source (CASE, WHEN): `CASE      WHEN i245.InstrumentID IS NOT NULL THEN 1      ELSE 0    END AS Is_245_Instrument`. See knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_dim_instrument_enriched.sql L89-L92. [uc_view_ddl] (Tier 2 — main.etoro_kpi_prep.v_dim_instrument_enriched). |
 
 ---
@@ -177,7 +181,7 @@ main.etoro_kpi_prep.v_trading_volume_and_amount
 
 ---
 
-## 5. Common usage / JOINs
+## 5. Sample Queries & Common JOINs
 
 ### 5.1 Sample queries
 
@@ -249,5 +253,14 @@ main.etoro_kpi_prep.v_trading_volume_and_amount
 | Tradeable | source code (case) | 2 | [uc_view_ddl] |
 | IsSQF | source code (case) | 2 | [uc_view_ddl] |
 | Is_245_Instrument | source code (case) | 2 | [uc_view_ddl] |
+
+---
+
+## 7. Tier Legend
+
+- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough/rename/cast).
+- **Tier 2** — column narrated from a cited source-code expression (CASE / COALESCE / arithmetic / window / UDF) in the cached Phase-2 snapshot.
+- **Tier 5** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
+- **Tier U** — unclassifiable: no upstream wiki match and no source-code citation. Mechanical disclosure of unclassifiability — see `.review-needed.md`. **Never** AI-inferred and **never** harvested from the live UC comment, because the live UC comment is the artifact this pipeline is meant to replace.
 
 *Generated: 2026-05-18 | Tiers: 33 T1, 15 T2, 2 T3, 0 T4, 0 T5, 0 U | Elements: 50/50 | Source: view_definition*

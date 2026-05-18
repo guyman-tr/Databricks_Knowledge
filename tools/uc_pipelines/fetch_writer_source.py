@@ -484,6 +484,17 @@ def main() -> int:
     for i, obj in enumerate(target_objects, 1):
         print(f"  [{i}/{len(target_objects)}] {obj['name']} ({obj['table_type']})",
               file=sys.stderr, flush=True)
+        # Bronze tables with Tier 1 inheritance have no UC writer of their own
+        # (the producer is the generic ingest pipeline, owned upstream). Skip
+        # Phase 2 fetch — generate_wiki handles them via pure inheritance.
+        writer_kind = ((obj.get("writer") or {}).get("kind") or "").upper()
+        if writer_kind == "BRONZE_TIER1_INHERITANCE":
+            summaries.append({
+                "object": obj["full_name"], "name": obj["name"],
+                "status": "BRONZE_TIER1_NO_WRITER_TO_FETCH",
+                "note": "bronze passthrough — sourced from Tier 1 production wiki, no UC writer",
+            })
+            continue
         try:
             s = fetch_one_object(cur, ws, obj, args.lineage_lookback_days, out_root)
         except Exception as e:

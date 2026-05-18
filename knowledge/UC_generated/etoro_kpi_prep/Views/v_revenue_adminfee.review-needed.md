@@ -5,9 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_adminfee.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `AdminFee` | transform='unknown' src='main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_fact_customer_action_position_distribution'.'—'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

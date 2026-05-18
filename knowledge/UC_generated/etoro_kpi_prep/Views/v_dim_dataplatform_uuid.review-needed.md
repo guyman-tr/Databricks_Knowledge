@@ -5,9 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_dim_dataplatform_uuid.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `dp_uuid` | transform='cast' src='—'.'GCID'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

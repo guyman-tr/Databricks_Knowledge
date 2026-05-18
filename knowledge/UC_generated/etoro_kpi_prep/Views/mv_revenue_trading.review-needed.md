@@ -5,20 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/mv_revenue_trading.md`
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `PositionID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `RealCID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `DateID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `Occurred` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `Amount` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `Metric` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `ActionType` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `IncludedInTotalRevenue` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `IsActiveTrade` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `IsSettled` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `MirrorID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `SettlementTypeID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

@@ -1,0 +1,72 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_scheduledtaskstate",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "DepositID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ScheduledTaskState.md",
+      "upstream_quote": "The deposit being processed. Part of the composite PK. Implicit FK to Billing.Deposit(DepositID). `GetScheduledTask*` pr",
+      "wiki_quote": "The deposit being processed. Part of the composite PK. Implicit FK to Billing.Deposit(DepositID). `GetScheduledTask*` pr",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TaskID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ScheduledTaskState.md",
+      "upstream_quote": "The task type. Part of the composite PK. References Billing.ScheduledTaskConfig(TaskID). Values 1-8. Each TaskID represe",
+      "wiki_quote": "The task type. Part of the composite PK. References Billing.ScheduledTaskConfig(TaskID). Values 1-8. Each TaskID represe",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TaskState",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ScheduledTaskState.md",
+      "upstream_quote": "Execution state. Default=0. 0=Pending (waiting to be fetched), 1=Done/Processed (primary completion), 2=Second-phase don",
+      "wiki_quote": "Execution state. Default=0. 0=Pending (waiting to be fetched), 1=Done/Processed (primary completion), 2=Second-phase don",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ScheduledTaskState.md",
+      "upstream_quote": "Outcome reason code. Set by `UpdateScheduledTaskState`. NULL for pending and in-progress rows. Non-null values indicate ",
+      "wiki_quote": "Outcome reason code. Set by `UpdateScheduledTaskState`. NULL for pending and in-progress rows. Non-null values indicate ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Created",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.ScheduledTaskState.md",
+      "upstream_quote": "UTC timestamp of the last state change. Defaults to getutcdate() on INSERT. Updated by scheduler procedures (using GetDa",
+      "wiki_quote": "UTC timestamp of the last state change. Defaults to getutcdate() on INSERT. Updated by scheduler procedures (using GetDa",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 5,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 5 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

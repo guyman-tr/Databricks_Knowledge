@@ -1,0 +1,177 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_depositrollbacktracking",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RollbackID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Surrogate primary key. Auto-incremented. NOT FOR REPLICATION prevents identity gaps on replication subscribers. bigint a",
+      "wiki_quote": "Surrogate primary key. Auto-incremented. NOT FOR REPLICATION prevents identity gaps on replication subscribers. bigint a",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Customer whose deposit is being rolled back. Explicit FK to Customer.CustomerStatic(CID). Populated from Billing.Deposit",
+      "wiki_quote": "Customer whose deposit is being rolled back. Explicit FK to Customer.CustomerStatic(CID). Populated from Billing.Deposit",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DepositID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "The deposit being rolled back. Explicit FK to Billing.Deposit(DepositID). Multiple rollback rows may exist per DepositID",
+      "wiki_quote": "The deposit being rolled back. Explicit FK to Billing.Deposit(DepositID). Multiple rollback rows may exist per DepositID",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Type of rollback action. Explicit FK to Dictionary.PaymentStatus. Allowed values: 2=Approved(CancelRollback), 11=Chargeb",
+      "wiki_quote": "Type of rollback action. Explicit FK to Dictionary.PaymentStatus. Allowed values: 2=Approved(CancelRollback), 11=Chargeb",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalRollbackAmountInUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Cumulative total amount rolled back for this deposit across all actions, in USD. Represents the running total at the tim",
+      "wiki_quote": "Cumulative total amount rolled back for this deposit across all actions, in USD. Represents the running total at the tim",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalRollbackAmountInCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Same as TotalRollbackAmountInUSD but in the deposit's original currency. Populated from @TotalRollbackAmountInCurrency p",
+      "wiki_quote": "Same as TotalRollbackAmountInUSD but in the deposit's original currency. Populated from @TotalRollbackAmountInCurrency p",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackAmountInUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Amount rolled back by this specific action, in USD. Computed if not provided: @RollbackAmountInCurrency * @ExchangeRate.",
+      "wiki_quote": "Amount rolled back by this specific action, in USD. Computed if not provided: @RollbackAmountInCurrency * @ExchangeRate.",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackAmountInCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Amount rolled back by this specific action, in the deposit's original currency. The primary input amount from the caller",
+      "wiki_quote": "Amount rolled back by this specific action, in the deposit's original currency. The primary input amount from the caller",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Currency of the original deposit. Inherited from Billing.Deposit.CurrencyID at time of rollback. Implicit FK to Dictiona",
+      "wiki_quote": "Currency of the original deposit. Inherited from Billing.Deposit.CurrencyID at time of rollback. Implicit FK to Dictiona",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Exchange rate used for currency conversion at time of rollback. User-defined type dtPrice (decimal). Defaults to the ori",
+      "wiki_quote": "Exchange rate used for currency conversion at time of rollback. User-defined type dtPrice (decimal). Defaults to the ori",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Base exchange rate from the original deposit, carried forward to the rollback record for PIP calculation consistency. In",
+      "wiki_quote": "Base exchange rate from the original deposit, carried forward to the rollback record for PIP calculation consistency. In",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Exchange fee from the original deposit, inherited at rollback time. Used in PIP calculations via Billing.CalculateDeposi",
+      "wiki_quote": "Exchange fee from the original deposit, inherited at rollback time. Used in PIP calculations via Billing.CalculateDeposi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReferenceNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "External payment processor reference number for this rollback action (e.g., chargeback case ID, refund transaction ID). ",
+      "wiki_quote": "External payment processor reference number for this rollback action (e.g., chargeback case ID, refund transaction ID). ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Categorizes why the rollback was performed. Lookup table not in SSDT repo. Dominant values: 0=no specific reason (56%), ",
+      "wiki_quote": "Categorizes why the rollback was performed. Lookup table not in SSDT repo. Dominant values: 0=no specific reason (56%), ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comments",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Free-text notes added by the manager performing the rollback. Passed to Customer.SetBalance as @Description. NULL when n",
+      "wiki_quote": "Free-text notes added by the manager performing the rollback. Passed to Customer.SetBalance as @Description. NULL when n",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "The effective date of the rollback (e.g., date the chargeback was received from the processor). Distinct from CreateDate",
+      "wiki_quote": "The effective date of the rollback (e.g., date the chargeback was received from the processor). Distinct from CreateDate",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "UTC timestamp when this rollback record was created in eToro's system. Set to GETDATE() at time of procedure execution.",
+      "wiki_quote": "UTC timestamp when this rollback record was created in eToro's system. Set to GETDATE() at time of procedure execution (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "UTC timestamp of last modification. Initially set to GETDATE() = same as CreateDate. Updated when IsCanceled is set to 1",
+      "wiki_quote": "UTC timestamp of last modification. Initially set to GETDATE() = same as CreateDate. Updated when IsCanceled is set to 1",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Back-office manager who performed the rollback. Explicit FK to BackOffice.Manager(ManagerID). Passed to Customer.SetBala",
+      "wiki_quote": "Back-office manager who performed the rollback. Explicit FK to BackOffice.Manager(ManagerID). Passed to Customer.SetBala",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsCanceled",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.DepositRollbackTracking.md",
+      "upstream_quote": "Whether this rollback was subsequently canceled. 0=active rollback (default on insert), 1=canceled by a later PaymentSta",
+      "wiki_quote": "Whether this rollback was subsequently canceled. 0=active rollback (default on insert), 1=canceled by a later PaymentSta",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 20,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 20 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

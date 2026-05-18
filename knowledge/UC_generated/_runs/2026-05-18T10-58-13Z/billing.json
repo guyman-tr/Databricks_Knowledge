@@ -1,0 +1,1085 @@
+{
+  "schema": "billing",
+  "catalog": "main",
+  "started_at": "2026-05-18T10:58:13Z",
+  "finished_at": "2026-05-18T10:58:52Z",
+  "wall_seconds": 39.0,
+  "phases": {
+    "3": {
+      "wall_seconds": 0.2920219898223877,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [39/41] bronze_recurringmanager_recurring_paymentexecutiondepositresult → 0 upstream refs\n  [40/41] bronze_recurringmanager_scheduler_execution → 0 upstream refs\n  [41/41] bronze_recurringmanager_scheduler_plan → 0 upstream refs\n[upstream-bridge] wrote C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\UC_generated\\billing\\_discovery\\upstream_wikis\\_index.json\n[upstream-bridge] stats={'total_upstreams': 0, 'rule1_synapse_mirror': 0, 'rule2_uc_generated': 0, 'rule3_uc_domain': 0, 'rule4_bronze_prod': 0, 'rule5_uc_native_map': 0, 'rule6_no_wiki': 0, 'wikis_cached': 0, 'no_wiki_placeholders': 0, 'blocked_on_upstream': 0}"
+    },
+    "4": {
+      "wall_seconds": 0.4630305767059326,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  wrote stub knowledge/UC_generated/billing/Tables/bronze_recurringmanager_recurring_paymentexecutiondepositresult.lineage.md\n[build-lineage] main.billing.bronze_recurringmanager_scheduler_execution (EXTERNAL)\n  wrote stub knowledge/UC_generated/billing/Tables/bronze_recurringmanager_scheduler_execution.lineage.md\n[build-lineage] main.billing.bronze_recurringmanager_scheduler_plan (EXTERNAL)\n  wrote stub knowledge/UC_generated/billing/Tables/bronze_recurringmanager_scheduler_plan.lineage.md"
+    },
+    "5": {
+      "wall_seconds": 5.753398656845093,
+      "rc": 0,
+      "rows": 0,
+      "stdout_tail": "",
+      "stderr_tail": "  [OK] bronze_recurringmanager_recurring_paymentexecution — tiers={'1': 7}, unverified=0\n  [OK] bronze_recurringmanager_recurring_paymentexecutiondepositresult — tiers={'1': 12}, unverified=0\n  [OK] bronze_recurringmanager_scheduler_execution — tiers={'1': 13}, unverified=0\n  [OK] bronze_recurringmanager_scheduler_plan — tiers={'1': 9}, unverified=0\n[generate-wiki] done: 41/41 OK"
+    },
+    "6": {
+      "wall_seconds": 1.927137851715088,
+      "rc": 1,
+      "rows": 0,
+      "stdout_tail": "[HARD] bronze_recurringmanager_scheduler_plan: assertion13_unclassifiable — column `ChargingDay` description fails §6 No-Inference Contract: unclassifiable: no upstream match, no source-code citation, not null-with-provenance template, no Tier U tag. Must be one of (A) byte-equal to upstream wiki, (B) source-code-cited, or (C) null-with-provenance template.\n\n[validate-pipeline-wiki] FAIL (478 HARD, 0 WARN, strict=False)",
+      "stderr_tail": ""
+    },
+    "7": {
+      "wall_seconds": 30.386136531829834,
+      "rc": 0,
+      "rows": 41,
+      "first_pass_pass": 0,
+      "regen_pass": 0,
+      "final_fail": 41,
+      "dimension_averages": {
+        "inheritance_fidelity": 7.0,
+        "source_code_narration_accuracy": 6.9,
+        "null_with_provenance_correctness": 7.0,
+        "completeness": 8.0,
+        "shape_fidelity": 10.0,
+        "lineage_coherence": 10.0
+      },
+      "per_object": {
+        "bronze_etoro_backoffice_compensationreason": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 8 column(s) have unclassifiable descriptions: ['CompensationReasonID', 'ParentID', 'Name', 'DisplayName', 'IsShownInHistory']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_backoffice_customeralltimeaggregateddata": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 26 column(s) have unclassifiable descriptions: ['CID', 'TotalProfit', 'TotalDeposit', 'TotalBonus', 'TotalInvestment']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_backoffice_customerdocument": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 21 column(s) have unclassifiable descriptions: ['DocumentID', 'CID', 'ManagerID', 'DisplayName', 'ComputerName']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_backoffice_customerdocumenttodocumenttype": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 6.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 15 column(s) have unclassifiable descriptions: ['DocumentToDocumentTypeID', 'DocumentID', 'DocumentTypeID', 'IssueDate', 'ExpiryDate']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template.\nSource-code narration 3.0/10: spot-check 0/1 accurate; `VisaTypeID`: cited lines don't mention column or transform keywords. Verify cited line ranges actually contain the named columns or transform keywords."
+        },
+        "bronze_etoro_backoffice_customerrisk": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 7 column(s) have unclassifiable descriptions: ['GCID', 'RiskStatusID', 'Occurred', 'ModifiedDate', 'Remark']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_backoffice_documentvendors": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 2 column(s) have unclassifiable descriptions: ['DocumentID', 'Vendor']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_backoffice_manager": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 17 column(s) have unclassifiable descriptions: ['ManagerID', 'UserGroupID', 'FirstName', 'LastName', 'Password']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_backoffice_withdrawapproval": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 8 column(s) have unclassifiable descriptions: ['ApprovedWithdrawID', 'WithdrawID', 'UserGroupID', 'ManagerID', 'WithdrawApprovalReasonID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_aftrouting": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 9 column(s) have unclassifiable descriptions: ['ID', 'CountryID', 'CardTypeID', 'RegulationID', 'DepotID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_badbin": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 3 column(s) have unclassifiable descriptions: ['BinFrom', 'BinTo', 'BlockReasonID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_cashoutrollbacktracking": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 23 column(s) have unclassifiable descriptions: ['RollbackID', 'CID', 'WitdrawToFundingID', 'PaymentStatusID', 'TotalRollbackAmountInUSD']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_conversionfee": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 8 column(s) have unclassifiable descriptions: ['DepositFee', 'CashoutFee', 'ModificationDate', 'ValidFrom', 'ValidTo']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_conversionfeeoverride": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 10 column(s) have unclassifiable descriptions: ['PlayerLevelID', 'FundingTypeID', 'CurrencyID', 'DepositFee', 'CashoutFee']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_customertofunding": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 14 column(s) have unclassifiable descriptions: ['CID', 'FundingID', 'Occurred', 'DepositTypeID', 'ReasonID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_deposit": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 41 column(s) have unclassifiable descriptions: ['DepositID', 'CID', 'FundingID', 'CurrencyID', 'PaymentStatusID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_depositrollbacktracking": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 19 column(s) have unclassifiable descriptions: ['RollbackID', 'CID', 'DepositID', 'PaymentStatusID', 'TotalRollbackAmountInUSD']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_depot": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 4 column(s) have unclassifiable descriptions: ['DepotID', 'Name', 'PayoutGeneration', 'Features']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_funding_datafactory": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 9 column(s) have unclassifiable descriptions: ['FundingID', 'FundingTypeID', 'ManagerID', 'IsBlocked', 'BlockedDescription']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_fundingpaymentdetailsforwithdraw": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 10 column(s) have unclassifiable descriptions: ['FundingID', 'FundingTypeID', 'ManagerID', 'IsBlocked', 'BlockedDescription']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_limitedbins": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 1 column(s) have unclassifiable descriptions: ['Bin']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_protocolmidsettings": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 10 column(s) have unclassifiable descriptions: ['ID', 'ParameterID', 'DepotID', 'DepotModeID', 'Value']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_redeem": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 21 column(s) have unclassifiable descriptions: ['RedeemID', 'CID', 'PositionID', 'RedeemStatusID', 'RedeemReasonID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_scheduledtaskstate": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 3 column(s) have unclassifiable descriptions: ['TaskID', 'TaskState', 'Created']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_vwithdrawtofunding": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 33 column(s) have unclassifiable descriptions: ['WithdrawID', 'FundingID', 'CashoutStatusID', 'ProcessCurrencyID', 'ManagerID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_withdraw": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 18 column(s) have unclassifiable descriptions: ['WithdrawID', 'RequestDate', 'Commission', 'Approved', 'IPAddress']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_billing_withdrawrejects": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 5 column(s) have unclassifiable descriptions: ['RejectID', 'WithdrawID', 'RejectReasonID', 'ManagerID', 'Comment']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_etoro_history_withdrawaction": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 23 column(s) have unclassifiable descriptions: ['WithdrawActionID', 'WithdrawID', 'CashoutStatusID', 'ManagerID', 'Commission']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_dictionary_transactionstatuses": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 2 column(s) have unclassifiable descriptions: ['ID', 'Name']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_dictionary_transactionstatusreasons": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 3 column(s) have unclassifiable descriptions: ['ID', 'Name', 'TransactionStatusID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_dictionary_withdrawcancellationsources": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 2 column(s) have unclassifiable descriptions: ['ID', 'Name']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_dictionary_withdrawstatuses": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 2 column(s) have unclassifiable descriptions: ['ID', 'Name']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_dictionary_withdrawstatusreasons": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 3 column(s) have unclassifiable descriptions: ['ID', 'Name', 'WithdrawStatusID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_moneybus_transactions": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 35 column(s) have unclassifiable descriptions: ['ID', 'GCID', 'Created', 'CreditorTypeID', 'DebitorTypeID']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_moneybusdb_moneybus_transferlimits": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 8 column(s) have unclassifiable descriptions: ['CountryID', 'DebitAccountTypeID', 'CreditAccountTypeID', 'MinAmount', 'MaxAmount']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_dictionary_frequency": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 2 column(s) have unclassifiable descriptions: ['FrequencyID', 'Name']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_dictionary_planstatus": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 2 column(s) have unclassifiable descriptions: ['PlanStatusID', 'Name']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_recurring_payment": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 12 column(s) have unclassifiable descriptions: ['PaymentId', 'Cid', 'FundingId', 'Amount', 'CurrencyId']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_recurring_paymentexecution": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 6 column(s) have unclassifiable descriptions: ['PaymentExecutionId', 'PaymentId', 'StatusId', 'CycleNumber', 'CreateDate']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_recurring_paymentexecutiondepositresult": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 12 column(s) have unclassifiable descriptions: ['PaymentExecutionDepositResultId', 'PaymentExecutionId', 'CycleNumber', 'AmountInUsd', 'DepositId']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_scheduler_execution": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 12 column(s) have unclassifiable descriptions: ['ExecutionId', 'PlanId', 'PaymentExecutionId', 'ExecutionTypeId', 'ExecutionStatusId']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        },
+        "bronze_recurringmanager_scheduler_plan": {
+          "verdict": "FAIL",
+          "attempt": 1,
+          "weighted_score": 7.55,
+          "regeneration_skipped": true,
+          "regen_rc": 1,
+          "feedback": "Hard gate 2 failed: 9 column(s) have unclassifiable descriptions: ['PlanId', 'PaymentId', 'FrequencyId', 'StartDate', 'StartDateWithUserOffset']. Each must be (A) verbatim from upstream wiki, (B) cited from source code with L# range, or (C) null-with-provenance template."
+        }
+      }
+    }
+  },
+  "failures": [
+    "phase 6 rc=1: no stderr"
+  ],
+  "objects": [
+    {
+      "name": "bronze_etoro_backoffice_compensationreason",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_customeralltimeaggregateddata",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 27,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_customerdocument",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 16,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 5,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_customerdocumenttodocumenttype",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 16,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 6.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_customerrisk",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_documentvendors",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_manager",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 18,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_backoffice_withdrawapproval",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_aftrouting",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_badbin",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_cashoutrollbacktracking",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 23,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_conversionfee",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_conversionfeeoverride",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_customertofunding",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 14,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_deposit",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 47,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_depositrollbacktracking",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 20,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_depot",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_funding_datafactory",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_fundingpaymentdetailsforwithdraw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 11,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_limitedbins",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 1,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_protocolmidsettings",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 0,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 10,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_redeem",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 24,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_scheduledtaskstate",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 5,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_vwithdrawtofunding",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 30,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_withdraw",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 28,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_billing_withdrawrejects",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 10,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_etoro_history_withdrawaction",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 20,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 3,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_dictionary_transactionstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_dictionary_transactionstatusreasons",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_dictionary_withdrawcancellationsources",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_dictionary_withdrawstatuses",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_dictionary_withdrawstatusreasons",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 3,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_moneybus_transactions",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 29,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 8,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_moneybusdb_moneybus_transferlimits",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 8,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_dictionary_frequency",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_dictionary_planstatus",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 2,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_recurring_payment",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_recurring_paymentexecution",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 7,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_recurring_paymentexecutiondepositresult",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 12,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_scheduler_execution",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 13,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    },
+    {
+      "name": "bronze_recurringmanager_scheduler_plan",
+      "in_pilot_scope": true,
+      "status": "Generated (no .alter.sql yet)",
+      "n_unverified": 0,
+      "tier_breakdown": {
+        "tier1_columns": 9,
+        "tier2_columns": 0,
+        "tier3_columns": 0,
+        "tier4_columns": 0,
+        "tier5_columns": 0,
+        "unverified_columns": 0
+      },
+      "evaluator_verdict": "FAIL",
+      "evaluator_attempt": 1,
+      "evaluator_score": 7.55
+    }
+  ]
+}

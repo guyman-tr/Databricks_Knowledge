@@ -1,0 +1,198 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_cashoutrollbacktracking",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "RollbackID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Auto-incrementing primary key for this rollback event record. Output via @RollbackID OUTPUT parameter of AddCashoutRollb",
+      "wiki_quote": "Auto-incrementing primary key for this rollback event record. Output via @RollbackID OUTPUT parameter of AddCashoutRollb",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Customer ID of the account whose withdrawal is being rolled back. Not passed directly by the caller - derived inside Add",
+      "wiki_quote": "Customer ID of the account whose withdrawal is being rolled back. Not passed directly by the caller - derived inside Add",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WitdrawToFundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "ID of the specific payment leg (Billing.WithdrawToFunding) being rolled back. Note: column name has a typo (\"Witdraw\" no",
+      "wiki_quote": "ID of the specific payment leg (Billing.WithdrawToFunding) being rolled back. Note: column name has a typo (\"Witdraw\" no",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentStatusID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Status of the rollback at time of recording. Always 2 across all 7,349 rows (set from @CashoutStatusID parameter). Uses ",
+      "wiki_quote": "Status of the rollback at time of recording. Always 2 across all 7,349 rows (set from @CashoutStatusID parameter). Uses ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalRollbackAmountInUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Running cumulative total of all rollback amounts (in USD) applied to the same WitdrawToFundingID at the time this event ",
+      "wiki_quote": "Running cumulative total of all rollback amounts (in USD) applied to the same WitdrawToFundingID at the time this event ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalRollbackAmountInCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Running cumulative total in the original transaction currency (identified by CurrencyID). Parallel to TotalRollbackAmoun",
+      "wiki_quote": "Running cumulative total in the original transaction currency (identified by CurrencyID). Parallel to TotalRollbackAmoun",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackAmountInUSD",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "The incremental amount (in USD) reversed in this specific rollback event. Negative values indicate a rollback correction",
+      "wiki_quote": "The incremental amount (in USD) reversed in this specific rollback event. Negative values indicate a rollback correction",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackAmountInCurrency",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "The incremental amount in the original transaction currency for this rollback event. Parallel to RollbackAmountInUSD.",
+      "wiki_quote": "The incremental amount in the original transaction currency for this rollback event. Parallel to RollbackAmountInUSD (Ti",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CurrencyID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Currency of the amount columns (*InCurrency). Implicit FK to Dictionary.Currency. Passed in by caller (optional, default",
+      "wiki_quote": "Currency of the amount columns (*InCurrency). Implicit FK to Dictionary.Currency. Passed in by caller (optional, default",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Exchange rate between the rollback currency and USD applicable at the time of this rollback event. Passed by the caller,",
+      "wiki_quote": "Exchange rate between the rollback currency and USD applicable at the time of this rollback event. Passed by the caller,",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BaseExchangeRate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Base exchange rate from the original Billing.WithdrawToFunding leg, copied at rollback time by AddCashoutRollbackTrackin",
+      "wiki_quote": "Base exchange rate from the original Billing.WithdrawToFunding leg, copied at rollback time by AddCashoutRollbackTrackin",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExchangeFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Exchange fee percentage from the original Billing.WithdrawToFunding leg, copied at rollback time alongside BaseExchangeR",
+      "wiki_quote": "Exchange fee percentage from the original Billing.WithdrawToFunding leg, copied at rollback time alongside BaseExchangeR",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ReferenceNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Optional external reference number for the rollback transaction (e.g., payment provider reference for the refund). NULL ",
+      "wiki_quote": "Optional external reference number for the rollback transaction (e.g., payment provider reference for the refund). NULL ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Reason code for the rollback. Maps to @RollbackType parameter in AddCashoutRollbackTrackingRecord. No Dictionary lookup ",
+      "wiki_quote": "Reason code for the rollback. Maps to @RollbackType parameter in AddCashoutRollbackTrackingRecord. No Dictionary lookup ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comments",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Optional free-text notes about the rollback reason or context. NULL in most entries.",
+      "wiki_quote": "Optional free-text notes about the rollback reason or context. NULL in most entries (Tier 1 — inherited from etoro.Billi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RollbackDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Date/time when the rollback event occurred (as reported by the caller via @RollbackDate). Distinct from CreateDate - all",
+      "wiki_quote": "Date/time when the rollback event occurred (as reported by the caller via @RollbackDate). Distinct from CreateDate - all",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "UTC timestamp when this tracking record was inserted. Always set to GETUTCDATE() inside AddCashoutRollbackTrackingRecord",
+      "wiki_quote": "UTC timestamp when this tracking record was inserted. Always set to GETUTCDATE() inside AddCashoutRollbackTrackingRecord",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Set to GETUTCDATE() at INSERT (same as CreateDate). No UPDATE procedure found, so this field may remain equal to CreateD",
+      "wiki_quote": "Set to GETUTCDATE() at INSERT (same as CreateDate). No UPDATE procedure found, so this field may remain equal to CreateD",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "ID of the back-office manager who initiated the rollback, or 0 for system-initiated rollbacks. Passed via @ManagerID (op",
+      "wiki_quote": "ID of the back-office manager who initiated the rollback, or 0 for system-initiated rollbacks. Passed via @ManagerID (op",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsCanceled",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Always 0 across all 7,349 rows. Hardcoded to 0 in AddCashoutRollbackTrackingRecord INSERT. No UPDATE procedure changes i",
+      "wiki_quote": "Always 0 across all 7,349 rows. Hardcoded to 0 in AddCashoutRollbackTrackingRecord INSERT. No UPDATE procedure changes i",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "The parent withdrawal request ID (Billing.Withdraw.WithdrawID). Never NULL in practice (all 7,349 rows populated). Impli",
+      "wiki_quote": "The parent withdrawal request ID (Billing.Withdraw.WithdrawID). Never NULL in practice (all 7,349 rows populated). Impli",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "WithdrawToFundingActionID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "The most recent History.WithdrawToFundingAction.WithdrawToFundingActionID for the payment leg at the time of rollback. F",
+      "wiki_quote": "The most recent History.WithdrawToFundingAction.WithdrawToFundingActionID for the payment leg at the time of rollback. F",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreditID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Tables\\Billing.CashoutRollbackTracking.md",
+      "upstream_quote": "Always NULL in current data. Likely reserved for linking to a credit note or credit account entry issued as part of the ",
+      "wiki_quote": "Always NULL in current data. Likely reserved for linking to a credit note or credit account entry issued as part of the ",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 23,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 23 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_backoffice_customeralltimeaggregateddata",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:15Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "CID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Customer ID - the row key. From _1 table in Branch 1, from MIMO table in Branch 2.",
+      "wiki_quote": "Customer ID - the row key. From _1 table in Branch 1, from MIMO table in Branch 2 (Tier 1 — inherited from etoro.BackOff",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalProfit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Lifetime realized profit from all closed trading positions. Zero for MIMO-only customers. From CustomerAllTimeAggregated",
+      "wiki_quote": "Lifetime realized profit from all closed trading positions. Zero for MIMO-only customers. From CustomerAllTimeAggregated",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalDeposit",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Lifetime total deposits from the MIMO pipeline. For standard-only customers (no MIMO record) this is 0. Sourced from Cus",
+      "wiki_quote": "Lifetime total deposits from the MIMO pipeline. For standard-only customers (no MIMO record) this is 0. Sourced from Cus",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalBonus",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Lifetime total bonus credits from MIMO pipeline. Sourced from CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Lifetime total bonus credits from MIMO pipeline. Sourced from CustomerMIMOAllTimeAggregatedData (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalInvestment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total funds locked into open trading positions. Zero for MIMO-only customers. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total funds locked into open trading positions. Zero for MIMO-only customers. From CustomerAllTimeAggregatedData_1 (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalCommission",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total commission charges paid. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total commission charges paid. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.BackOffice.CustomerAl",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalVolume",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total trading volume (sum of position sizes) in USD. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total trading volume (sum of position sizes) in USD. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalLot",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total lot volume traded. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total lot volume traded. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.BackOffice.CustomerAllTimeA",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalChampWin",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total championship winnings. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total championship winnings. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.BackOffice.CustomerAllT",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalCashout",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Lifetime approved cashouts (withdrawals) from MIMO pipeline. Sourced from CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Lifetime approved cashouts (withdrawals) from MIMO pipeline. Sourced from CustomerMIMOAllTimeAggregatedData (Tier 1 — in",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalCashoutRequest",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total value of cashout requests (including pending). From CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Total value of cashout requests (including pending). From CustomerMIMOAllTimeAggregatedData (Tier 1 — inherited from eto",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalReverseCashout",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total reversed cashout amounts. From CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Total reversed cashout amounts. From CustomerMIMOAllTimeAggregatedData (Tier 1 — inherited from etoro.BackOffice.Custome",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalCompensation",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total compensation credits from MIMO pipeline. From CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Total compensation credits from MIMO pipeline. From CustomerMIMOAllTimeAggregatedData (Tier 1 — inherited from etoro.Bac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalGameCount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total number of games/contests participated in. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total number of games/contests participated in. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.Back",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalPositionCount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total number of trading positions opened lifetime. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total number of trading positions opened lifetime. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.B",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalLoginCount",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total number of platform logins. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total number of platform logins. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.BackOffice.Customer",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalLoggedTime",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total time spent logged in (seconds or minutes). From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total time spent logged in (seconds or minutes). From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.Bac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "TotalEndOfWeekFee",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Total end-of-week inactivity fees charged. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Total end-of-week inactivity fees charged. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from etoro.BackOffic",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastUpdate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Most recent update timestamp from either pipeline. `CASE WHEN A.LastUpdate > ISNULL(M.LastUpdate,'01-01-2000') THEN A.La",
+      "wiki_quote": "Most recent update timestamp from either pipeline. `CASE WHEN A.LastUpdate > ISNULL(M.LastUpdate,'01-01-2000') THEN A.La",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FirstTimeCashierLoginDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Date customer first accessed the cashier/deposit flow. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_",
+      "wiki_quote": "Date customer first accessed the cashier/deposit flow. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FirstTimeDepositAttemptDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Date of customer's first deposit attempt via MIMO pipeline. From CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Date of customer's first deposit attempt via MIMO pipeline. From CustomerMIMOAllTimeAggregatedData (Tier 1 — inherited f",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FirstTimeDepositSuccessDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Date of customer's first successful deposit via MIMO pipeline. From CustomerMIMOAllTimeAggregatedData.",
+      "wiki_quote": "Date of customer's first successful deposit via MIMO pipeline. From CustomerMIMOAllTimeAggregatedData (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastOccurredTriggerToSF",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Most recent SalesForce sync trigger timestamp. Takes the later of A and M values.",
+      "wiki_quote": "Most recent SalesForce sync trigger timestamp. Takes the later of A and M values (Tier 1 — inherited from etoro.BackOffi",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastLoggedInOn",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Most recent login timestamp. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Most recent login timestamp. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherited from",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastClientIp",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "IP address from most recent login. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "IP address from most recent login. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1 (Tier 1 — inherite",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RealizedEquityLastChange",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Timestamp of last change to LastRealizedEquity. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1.",
+      "wiki_quote": "Timestamp of last change to LastRealizedEquity. NULL for MIMO-only customers. From CustomerAllTimeAggregatedData_1 (Tier",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "LastRealizedEquity",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Views\\BackOffice.CustomerAllTimeAggregatedData.md",
+      "upstream_quote": "Most recent snapshot of customer's realized equity balance. 0 for MIMO-only customers. From CustomerAllTimeAggregatedDat",
+      "wiki_quote": "Most recent snapshot of customer's realized equity balance. 0 for MIMO-only customers. From CustomerAllTimeAggregatedDat",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 27,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 27 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

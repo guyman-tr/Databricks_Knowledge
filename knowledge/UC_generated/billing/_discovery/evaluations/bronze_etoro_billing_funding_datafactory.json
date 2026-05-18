@@ -1,0 +1,114 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_billing_funding_datafactory",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Payment instrument PK. From Billing.Funding. IDENTITY(1000,1).",
+      "wiki_quote": "Payment instrument PK. From Billing.Funding. IDENTITY(1000,1) (Tier 1 — inherited from etoro.Billing.Funding_DataFactory",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Payment method type. From Billing.Funding. 1=CreditCard, 2=WireTransfer, 3=PayPal, 6=Neteller, 33=eToroMoney, etc.",
+      "wiki_quote": "Payment method type. From Billing.Funding. 1=CreditCard, 2=WireTransfer, 3=PayPal, 6=Neteller, 33=eToroMoney, etc (Tier ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Operations manager ID. NULL=self-registered. From Billing.Funding.",
+      "wiki_quote": "Operations manager ID. NULL=self-registered. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFac",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsBlocked",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "1=instrument blocked. 0=active. From Billing.Funding.",
+      "wiki_quote": "1=instrument blocked. 0=active. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFactory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockedDescription",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Block reason text. From Billing.Funding.",
+      "wiki_quote": "Block reason text. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFactory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "BlockedAt",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Block timestamp. From Billing.Funding.",
+      "wiki_quote": "Block timestamp. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFactory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingData",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Provider-specific instrument data as native XML. Not CAST to NVARCHAR (unlike other Funding views). Subject to DDM maski",
+      "wiki_quote": "Provider-specific instrument data as native XML. Not CAST to NVARCHAR (unlike other Funding views). Subject to DDM maski",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IsRefundExcluded",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "1=excluded from automatic refund. From Billing.Funding.",
+      "wiki_quote": "1=excluded from automatic refund. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFactory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DocumentRequired",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "1=KYC documentation required. From Billing.Funding.",
+      "wiki_quote": "1=KYC documentation required. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFactory).",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DateCreated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "UTC timestamp of instrument registration. From Billing.Funding.",
+      "wiki_quote": "UTC timestamp of instrument registration. From Billing.Funding (Tier 1 — inherited from etoro.Billing.Funding_DataFactor",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentDetails",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\Billing\\Views\\Billing.Funding_DataFactory.md",
+      "upstream_quote": "Pre-computed human-readable payment account identifier. Trigger-maintained column from Billing.Funding (populated by TR_",
+      "wiki_quote": "Pre-computed human-readable payment account identifier. Trigger-maintained column from Billing.Funding (populated by TR_",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 11,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 11 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

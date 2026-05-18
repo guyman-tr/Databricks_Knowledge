@@ -5,12 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_revenue_ticketfee_bypercent
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `PositionID` | transform='cast' src='main.general.bronze_historycosts_history_costs'.'PositionID'; no upstream wiki match AND no source-code expression found. |
-| `Occurred` | transform='passthrough' src='main.general.bronze_historycosts_history_costs'.'Occurred'; no upstream wiki match AND no source-code expression found. |
-| `DateID` | transform='unknown' src='main.general.bronze_historycosts_history_costs'.'—'; no upstream wiki match AND no source-code expression found. |
-| `TicketFeeByPercent` | transform='unknown' src='main.general.bronze_historycosts_history_costs'.'—'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 

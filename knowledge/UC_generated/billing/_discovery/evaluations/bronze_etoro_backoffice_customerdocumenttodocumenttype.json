@@ -1,0 +1,149 @@
+{
+  "object_fqn": "main.billing.bronze_etoro_backoffice_customerdocumenttodocumenttype",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 3.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 7.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "DocumentToDocumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Auto-generated unique classification record ID. NOT FOR REPLICATION. Clustered PK. Referenced by BackOffice.CustomerTran",
+      "wiki_quote": "Auto-generated unique classification record ID. NOT FOR REPLICATION. Clustered PK. Referenced by BackOffice.CustomerTran",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DocumentID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "The document being classified. FK (WITH CHECK) to BackOffice.CustomerDocument(DocumentID). Multiple rows per DocumentID ",
+      "wiki_quote": "The document being classified. FK (WITH CHECK) to BackOffice.CustomerDocument(DocumentID). Multiple rows per DocumentID ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DocumentTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "The formal document type assigned by the BackOffice agent or automation. FK (WITH CHECK) to Dictionary.DocumentType. Key",
+      "wiki_quote": "The formal document type assigned by the BackOffice agent or automation. FK (WITH CHECK) to Dictionary.DocumentType. Key",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "IssueDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "The date the document was issued (e.g., passport issue date). NULL for document types where issue date is not relevant (",
+      "wiki_quote": "The date the document was issued (e.g., passport issue date). NULL for document types where issue date is not relevant (",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ExpiryDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "The date after which this document classification is considered expired and must be re-submitted. Critical for passport ",
+      "wiki_quote": "The date after which this document classification is considered expired and must be re-submitted. Critical for passport ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "FundingID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Links this classification to a specific payment/funding record when the document is associated with a credit card or pay",
+      "wiki_quote": "Links this classification to a specific payment/funding record when the document is associated with a credit card or pay",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ManagerID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "BackOffice agent who performed this classification. 0=Au10tix automated classification system. Non-zero=manual BackOffic",
+      "wiki_quote": "BackOffice agent who performed this classification. 0=Au10tix automated classification system. Non-zero=manual BackOffic",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Comment",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Agent's note or automation message for this classification. Common values: \"\" (empty, BackOffice agent with no note), \"A",
+      "wiki_quote": "Agent's note or automation message for this classification. Common values: \"\" (empty, BackOffice agent with no note), \"A",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RejectReasonID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Rejection reason when DocumentTypeID=6 (Not Accepted). Implicit FK to Dictionary.DocumentRejectReason. NULL for 96.7% of",
+      "wiki_quote": "Rejection reason when DocumentTypeID=6 (Not Accepted). Implicit FK to Dictionary.DocumentRejectReason. NULL for 96.7% of",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "RejectEmailSent",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Whether the rejection notification email was sent to the customer. 1=sent, 0=not sent, NULL=not applicable (non-rejectio",
+      "wiki_quote": "Whether the rejection notification email was sent to the customer. 1=sent, 0=not sent, NULL=not applicable (non-rejectio",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Translated",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Flag indicating whether a translation was provided for this document (for non-English documents requiring translation). ",
+      "wiki_quote": "Flag indicating whether a translation was provided for this document (for non-English documents requiring translation). ",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "DocumentClassificationID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Sub-classification refining the DocumentTypeID. FK (WITH CHECK) to Dictionary.DocumentClassification. Examples under Doc",
+      "wiki_quote": "Sub-classification refining the DocumentTypeID. FK (WITH CHECK) to Dictionary.DocumentClassification. Examples under Doc",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SignedDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Date the document was signed. Relevant for DocumentTypeID=4 (Authorization Form) and DocumentTypeID=9 (Client Forms). NU",
+      "wiki_quote": "Date the document was signed. Relevant for DocumentTypeID=4 (Authorization Form) and DocumentTypeID=9 (Client Forms). NU",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Occurred",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "UTC timestamp when this classification record was created. Default GETUTCDATE(). NULL for rows created before this colum",
+      "wiki_quote": "UTC timestamp when this classification record was created. Default GETUTCDATE(). NULL for rows created before this colum",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "SideID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "Which side(s) of the physical document were submitted. FK (WITH CHECK) to Dictionary.DocumentSide. Values: 0=NotRecogniz",
+      "wiki_quote": "Which side(s) of the physical document were submitted. FK (WITH CHECK) to Dictionary.DocumentSide. Values: 0=NotRecogniz",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "VisaTypeID",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\DB_Schema\\etoro\\Wiki\\BackOffice\\Tables\\BackOffice.CustomerDocumentToDocumentType.md",
+      "upstream_quote": "US work/student visa type for visa documents (DocumentClassificationID=65 \"US Visa\"). FK (WITH CHECK) to Dictionary.Visa",
+      "wiki_quote": "US work/student visa type for visa documents (DocumentClassificationID=65 \"US Visa\"). FK (WITH CHECK) to Dictionary.Visa",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 16,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 16 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "spot-check 0/1 accurate; `VisaTypeID`: cited lines don't mention column or transform keywords",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

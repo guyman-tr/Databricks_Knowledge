@@ -1,0 +1,86 @@
+{
+  "object_fqn": "main.billing.bronze_recurringmanager_recurring_paymentexecution",
+  "evaluator_attempt": 1,
+  "scores": {
+    "inheritance_fidelity": 10.0,
+    "source_code_narration_accuracy": 7.0,
+    "null_with_provenance_correctness": 7.0,
+    "completeness": 8.0,
+    "shape_fidelity": 10.0,
+    "lineage_coherence": 10.0
+  },
+  "weighted_score": 8.6,
+  "hard_gates": {
+    "inheritance_fidelity_table_present": true,
+    "no_unanchored_inferred_descriptions": true
+  },
+  "verdict": "PASS",
+  "regeneration_feedback": null,
+  "evaluated_at": "2026-05-18T11:07:16Z",
+  "model_used": "mechanical-v1",
+  "fidelity_table": [
+    {
+      "column": "PaymentExecutionId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "Auto-incrementing primary key. Current max ~859,547. Referenced by PaymentExecutionDepositResult, PaymentExecutionReques",
+      "wiki_quote": "Auto-incrementing primary key. Current max ~859,547. Referenced by PaymentExecutionDepositResult, PaymentExecutionReques",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "PaymentId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "FK to Recurring.Payment.PaymentId. Identifies which recurring plan this execution belongs to. Multiple executions per pa",
+      "wiki_quote": "FK to Recurring.Payment.PaymentId. Identifies which recurring plan this execution belongs to. Multiple executions per pa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "StatusId",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "Execution lifecycle status. FK to Dictionary.PaymentExecutionStatus: 1=Planned (1.9%), 2=InProcess, 3=SentToBilling (0.0",
+      "wiki_quote": "Execution lifecycle status. FK to Dictionary.PaymentExecutionStatus: 1=Planned (1.9%), 2=InProcess, 3=SentToBilling (0.0",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CycleNumber",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "Which billing cycle this execution represents (1 = first cycle, 2 = second, etc.). Combined with Retries to uniquely ide",
+      "wiki_quote": "Which billing cycle this execution represents (1 = first cycle, 2 = second, etc.). Combined with Retries to uniquely ide",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "Retries",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "Retry count within the cycle (1 = first attempt). Used by CreatePaymentExecution in the duplicate check: `NOT EXISTS (Pa",
+      "wiki_quote": "Retry count within the cycle (1 = first attempt). Used by CreatePaymentExecution in the duplicate check: `NOT EXISTS (Pa",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "CreateDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "UTC timestamp when this execution was created by CreatePaymentExecution. Auto-set via default constraint.",
+      "wiki_quote": "UTC timestamp when this execution was created by CreatePaymentExecution. Auto-set via default constraint (Tier 1 — inher",
+      "match": "YES — verbatim"
+    },
+    {
+      "column": "ModificationDate",
+      "upstream_wiki": "C:\\Users\\guyman\\Documents\\github\\Databricks_Knowledge\\knowledge\\ProdSchemas\\PaymentsDBs\\RecurringManager\\Wiki\\Recurring\\Tables\\Recurring.PaymentExecution.md",
+      "upstream_quote": "UTC timestamp of the last status change. Set to GETUTCDATE() by UpdatePaymentExecutionStatus and CreatePaymentExecution.",
+      "wiki_quote": "UTC timestamp of the last status change. Set to GETUTCDATE() by UpdatePaymentExecutionStatus and CreatePaymentExecution.",
+      "match": "YES — verbatim"
+    }
+  ],
+  "bucket_counts": {
+    "A": 7,
+    "B": 0,
+    "C": 0,
+    "U": 0
+  },
+  "dimension_notes": {
+    "inheritance_fidelity": "all 7 inherited descriptions verbatim",
+    "source_code_narration_accuracy": "no source-code-cited columns to spot-check (neutral)",
+    "null_with_provenance_correctness": "no null-with-provenance columns (neutral)",
+    "completeness": "9/10 structural checks pass; failing: ['required section headers present']",
+    "shape_fidelity": "matches golden skeleton",
+    "lineage_coherence": "all elements coherent with lineage"
+  }
+}

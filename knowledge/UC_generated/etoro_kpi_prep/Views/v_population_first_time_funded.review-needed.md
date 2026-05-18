@@ -5,11 +5,7 @@ Wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_population_first_time_funde
 
 ## UNVERIFIED columns
 
-| Column | Reason |
-|--------|--------|
-| `FTDPlatformID` | transform='join_enriched' src='—'.'FTDPlatformID'; no upstream wiki match AND no source-code expression found. |
-| `FirstFundedDateID` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
-| `FirstFundedDate` | transform='unknown' src='—'.'—'; no upstream wiki match AND no source-code expression found. |
+_None._
 
 ## Tier 4 candidates
 
