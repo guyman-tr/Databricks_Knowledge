@@ -91,7 +91,7 @@ The following describes what this table was designed to support, based on the up
 |---|---------|------|----------|-------------|
 | 1 | CampaignID | int | NOT NULL | Primary key. Auto-incrementing campaign identifier in production. PK NOT ENFORCED in DWH. Currently only ID=0 (N/A placeholder) exists. (Tier 1 - upstream wiki, BackOffice.Campaign) |
 | 2 | CampaignGroupID | int | YES | Campaign group for organization/reporting. FK to BackOffice.CampaignGroup in production. NULL for 30.5% of production campaigns (ungrouped). (Tier 1 - upstream wiki, BackOffice.Campaign) |
-| 3 | Code | varchar(15) | NOT NULL | Unique public-facing campaign code (e.g., "20coupon", "freecopyref"). The identifier customers enter at registration. UNIQUE in production. Currently only 'N/A' (ID=0 placeholder). (Tier 1 - upstream wiki, BackOffice.Campaign) |
+| 3 | Code | varchar(15) | NOT NULL | Unique public-facing campaign code (e.g., "20coupon", "freecopyref"). The identifier customers enter at registration. UNIQUE index. Auto-generated 6-char random string if not supplied. (Tier 1 - BackOffice.Campaign) |
 | 4 | MaxNumberOfUsers | int | NOT NULL | Maximum number of customers who can use this campaign. Range in production: 0 to 100,000,000. 0 in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign) |
 | 5 | StartDate | datetime | NOT NULL | Campaign activation datetime (UTC). '1900-01-01' in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign) |
 | 6 | EndDate | datetime | NOT NULL | Campaign expiry datetime (UTC). Must be after StartDate. IsActive is NOT auto-set to 0 when EndDate passes in production. '1900-01-01' in placeholder row. (Tier 1 - upstream wiki, BackOffice.Campaign) |

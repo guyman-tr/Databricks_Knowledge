@@ -26,7 +26,7 @@ The view includes three columns that `V_Dim_Date` excludes:
 
 | # | Column | Type | Source | Description |
 |---|--------|------|--------|-------------|
-| 1 | DateKey | int | Dim_Date.DateKey | PK. Date as YYYYMMDD integer. Clustered index key. REPLICATE distribution. (Tier 3 — DDL inference) |
+| 1 | DateKey | int | Dim_Date.DateKey | Date as YYYYMMDD integer. Sourced from the underlying Dim_Date table. |
 | 2 | FullDate | date | Dim_Date.FullDate | Calendar date value. (Tier 3 — DDL inference) |
 | 3 | MonthNumberOfYear | tinyint | Dim_Date.MonthNumberOfYear | Month number (1–12). (Tier 3 — DDL inference) |
 | 4 | MonthNumberOfQuarter | tinyint | Dim_Date.MonthNumberOfQuarter | Month position within the quarter (1–3). (Tier 3 — DDL inference) |

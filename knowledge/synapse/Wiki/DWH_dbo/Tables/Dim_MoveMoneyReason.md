@@ -94,7 +94,7 @@ REPLICATE distribution — the table is copied to every compute node. Ideal for 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | MoveMoneyReasonID | int | YES | Unique identifier for the money movement reason: 1=Adjustment, 2=Bonus Abuser, 3=Staking, 5=InternalTransfer Trade, 6=InternalTransfer, 7=Not In Use, 8=Recurring Deposit, 9=Recurring Investment. Gap at ID 4. Referenced by 50+ credit/balance procedures. (Tier 1 — Dictionary.MoveMoneyReason) |
-| 2 | MoveMoneyReason | varchar(30) | YES | Human-readable reason label. Note: column name matches table name (denormalized pattern). Displayed in account statements, credit history, and BackOffice audit screens. (Tier 1 — Dictionary.MoveMoneyReason) |
+| 2 | MoveMoneyReason | varchar(30) | YES | Human-readable money movement reason label matching the denormalized table-name pattern noted in the upstream wiki. Production ID 4 is missing and only possibly deprecated per the upstream wiki — the DWH label 'Airdrop' for that ID cannot be confirmed from Tier-1 sources. |
 | 3 | UpdateDate | datetime | YES | ETL-added timestamp recording when each row was last loaded or refreshed by the generic dictionary pipeline. Not present in the production source table. (Tier 2 — Generic Pipeline ETL) |
 
 ---

@@ -139,7 +139,7 @@ This means only today's changes are re-processed each day. Historical rows are r
 | 23 | ExchaFeeInPercentage | decimal(10,2) | YES | Exchange fee as a percentage of the cashout amount (0.00-100.00). Normalized fee rate for comparison across currencies. Note: column name appears to have a typo ("Excha" vs "Exchange"). (Tier 2 — SP_Fact_Cashout_State) |
 | 24 | MID | nvarchar(max) | YES | Merchant ID string — the actual MID identifier used with the payment processor. String representation of the MID for reporting/display. (Tier 2 — SP_Fact_Cashout_State) |
 | 25 | MIDName | nvarchar(max) | YES | Human-readable label for the Merchant ID configuration. Display name for the MID used in reporting. (Tier 3 — column naming) |
-| 26 | ModificationDateID | int | YES | Integer date in YYYYMMDD format derived from `CONVERT(INT, ModificationDate)`. ETL key for the daily DELETE+INSERT pattern. Use for date-range queries and partitioning. (Tier 2 — SP_Fact_Cashout_State) |
+| 26 | ModificationDateID | int | YES | Integer date key in YYYYMMDD format derived from ModificationDate by truncating to midnight and converting via style 112: `CONVERT(INT, CONVERT(VARCHAR, DATEADD(DAY, DATEDIFF(DAY, 0, ModificationDate), 0), 112))`. Used as the ETL key for the daily DELETE+INSERT pattern in SP_Fact_Cashout_State. |
 | 27 | UpdateDate | datetime | YES | ETL load timestamp. Set to GETDATE() at SP execution time. Not from the production source. Use for ETL freshness monitoring. (Tier 2 — SP_Fact_Cashout_State) |
 | 28 | CreditID | bigint | YES | Credit account identifier associated with this cashout. Added 2025-08-13 by guym to support credit account tracking. NULL for cashouts not linked to a credit account. (Tier 2 — SP_Fact_Cashout_State) |
 

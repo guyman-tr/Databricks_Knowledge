@@ -130,7 +130,7 @@ _Pending — resolved during write-objects._
 | 21 | OrderID | bigint | YES | Order that generated this cost. (Tier 2 — DWH_staging.HistoryCosts_History_Costs) |
 | 22 | CreditID | bigint | YES | Credit/bonus event that generated this cost. (Tier 2 — DWH_staging.HistoryCosts_History_Costs) |
 | 23 | Occurred | datetime2(7) | YES | Timestamp when the cost event occurred. Business event time. (Tier 2 — DWH_staging.HistoryCosts_History_Costs) |
-| 24 | DateID | int | NO | Date of the cost event in YYYYMMDD format. Computed: CONVERT(INT, Occurred). PK component. (Tier 2 — SP_Fact_History_Cost_DL_To_Synapse) |
+| 24 | DateID | int | NO | Date of the cost event in YYYYMMDD integer format. Computed as CONVERT(INT, CONVERT(VARCHAR(10), Occurred, 112)). PK component. (Tier 2 — SP_Fact_History_Cost_DL_To_Synapse) |
 | 25 | UpdateDate | datetime | NO | ETL load timestamp — GETDATE() during SP execution. (Tier 2 — SP_Fact_History_Cost) |
 
 ---

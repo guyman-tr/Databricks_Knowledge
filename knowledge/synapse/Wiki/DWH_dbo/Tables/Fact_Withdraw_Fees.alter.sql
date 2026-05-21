@@ -9,7 +9,7 @@
 
 -- ---- Column Comments ----
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees ALTER COLUMN CID COMMENT 'Customer ID. CLUSTERED INDEX key. (Tier 2 - SP_Fact_Withdraw_Fees_DL_To_Synapse passthrough)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees ALTER COLUMN WithdrawID COMMENT 'Withdrawal event identifier. Primary key for this cashout. (Tier 2 - SP passthrough)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees ALTER COLUMN WithdrawID COMMENT 'Withdrawal event identifier, passed through from the staging source. Nullable; not defined as a primary key in the DDL.';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees ALTER COLUMN WithdrawProcessingID COMMENT 'Withdrawal processing order ID. Used in payment processing workflow. (Tier 2 - SP passthrough)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees ALTER COLUMN DepositID COMMENT 'Original deposit identifier linked to this withdrawal. Required for card-match compliance - funds must return to originating payment card. NULL for non-card-match withdrawals. (Tier 2 - SP passthrough)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_withdraw_fees ALTER COLUMN FundingID COMMENT 'Funding method integer identifier. (Tier 2 - SP passthrough)';

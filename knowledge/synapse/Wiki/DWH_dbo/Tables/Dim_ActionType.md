@@ -110,7 +110,7 @@ REPLICATE distribution — the entire 45-row table is copied to every compute no
 | 3 | UpdateDate | datetime | YES | Timestamp of the last update to this action type row. Most rows show 2013-07-17 (original seed); row 0 shows 2014-02-24. (Tier 3 — no upstream wiki, grounded in DDL + live data) |
 | 4 | InsertDate | datetime | YES | Timestamp when this action type row was first inserted. Same pattern as UpdateDate — bulk seeded 2013-07-17, sentinel added 2014-02-24. (Tier 3 — no upstream wiki, grounded in DDL + live data) |
 | 5 | Category | varchar(50) | YES | Category grouping for the action type. 30 distinct values: PositionOpen, PositionClose, Deposit, Cashout, Bonus, Chargeback, UserEngagement, WallEngagement, DetachPosition, etc. Multiple ActionTypeIDs can share one Category. (Tier 3 — no upstream wiki, grounded in DDL + live data) |
-| 6 | CategoryID | int | YES | Integer identifier for the Category grouping. 29 distinct values (0-28). Used by SP_Validation_Cycle_Gap_DL_To_Synapse for financial reconciliation filtering (e.g., CategoryID=17 triggers NetProfit logic, CategoryID=4 triggers negative Amount). Not a FK to another dimension — self-contained within this table. (Tier 3 — no upstream wiki, grounded in DDL + live data) |
+| 6 | CategoryID | int | YES | Integer code grouping multiple action types into business categories (values 0–28). Used in SP_Validation_Cycle_Gap_DL_To_Synapse MINO filter: CategoryID IN (2,4,6,7,8,12,17,20,21,19) — note that 23 (Reverse cashout) is commented out in the current SP code. |
 
 ---
 

@@ -24,11 +24,39 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdatei
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID COMMENT 'Start date of the equity snapshot range (YYYYMMDD integer). (Tier 2 - view DDL)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID COMMENT 'End date of the equity snapshot range (YYYYMMDD integer). Active rows have ToDateID = YYYY1231. (Tier 2 - view DDL)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID COMMENT 'Start date of the range in YYYYMMDD integer format. Derived from DateRangeID: LEFT(DateRangeID, 8). Range: 20070101 to 20260310. (Tier 2 - via Dim_Range)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID COMMENT 'End date of the range in YYYYMMDD integer format. Derived from DateRangeID: YYYY(From) + MMDD(last 4 chars of DateRangeID). The year of ToDate always equals the year of FromDate. Range: 20070826 to 20261231. (Tier 2 - via Dim_Range)';
 -- NOTE: Inherited Fact_SnapshotEquity columns omitted - bulk wildcard ALTER COLUMN not valid SQL.
 -- Base table column descriptions live in Fact_SnapshotEquity.md and are applied via that table's alter.sql.
 
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN CID COMMENT 'Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 - via Fact_SnapshotEquity)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN DateRangeID COMMENT 'Fact_SnapshotEquity.DateRangeID';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalPositionsAmount COMMENT 'Fact_SnapshotEquity.TotalPositionsAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalCash COMMENT 'Fact_SnapshotEquity.TotalCash';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN InProcessCashouts COMMENT 'Fact_SnapshotEquity.InProcessCashouts';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorPositionsAmount COMMENT 'Fact_SnapshotEquity.TotalMirrorPositionsAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorCash COMMENT 'Fact_SnapshotEquity.TotalMirrorCash';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalStockOrders COMMENT 'Fact_SnapshotEquity.TotalStockOrders';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorStockOrders COMMENT 'Fact_SnapshotEquity.TotalMirrorStockOrders';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN RealizedEquity COMMENT 'Fact_SnapshotEquity.RealizedEquity';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN Credit COMMENT 'Fact_SnapshotEquity.Credit';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN AUM COMMENT 'Assets Under Management. Formula: TotalMirrorPositionAmount + TotalCash - Credit. For MERGE INSERT: computed as TotalMirrorPositionsAmount + TotalMirrorCash. Confluence: "AUC (or AUM) on PI Dashboard: Total Unrealized Copy Amount of the Copiers.". (Tier 2 - via Fact_SnapshotEquity)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN BonusCredit COMMENT 'Fact_SnapshotEquity.BonusCredit';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN CreditID COMMENT 'Fact_SnapshotEquity.CreditID';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN UpdateDate COMMENT 'Fact_SnapshotEquity.UpdateDate';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalStockPositionAmount COMMENT 'Fact_SnapshotEquity.TotalStockPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorStockPositionAmount COMMENT 'Fact_SnapshotEquity.TotalMirrorStockPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalCryptoPositionAmount COMMENT 'Fact_SnapshotEquity.TotalCryptoPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorCryptoPositionAmount COMMENT 'Fact_SnapshotEquity.TotalMirrorCryptoPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalRealStocks COMMENT 'Fact_SnapshotEquity.TotalRealStocks';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalRealCrypto COMMENT 'Fact_SnapshotEquity.TotalRealCrypto';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalRealCryptoLoan COMMENT 'Fact_SnapshotEquity.TotalRealCryptoLoan';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalCashCalculation COMMENT 'Fact_SnapshotEquity.TotalCashCalculation';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalCryptoPositionAmount_TRS COMMENT 'Fact_SnapshotEquity.TotalCryptoPositionAmount_TRS';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorCryptoPositionAmount_TRS COMMENT 'Fact_SnapshotEquity.TotalMirrorCryptoPositionAmount_TRS';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN Total_TRSCrypto COMMENT 'Fact_SnapshotEquity.Total_TRSCrypto';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalMirrorRealFuturesPositionAmount COMMENT 'Fact_SnapshotEquity.TotalMirrorRealFuturesPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN TotalRealFutures COMMENT 'Fact_SnapshotEquity.TotalRealFutures';
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN FromDateID SET TAGS ('pii' = 'none');
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN ToDateID SET TAGS ('pii' = 'none');
@@ -47,32 +75,32 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdatei
 -- ============================================================
 
 -- ---- Column Comments (inherited) ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `CID` COMMENT 'Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `DateRangeID` COMMENT 'Encoded date range as 12-digit bigint (YYYYMMDDYYYY). FromDate in first 8 digits, ToDate suffix in last 4 digits. New rows get @date+1231; updated rows get end-date set to @daybefore. Decoded via Dim_Range. Part of PK. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalPositionsAmount` COMMENT 'Sum of all open position amounts (NewAmount) for this CID on this date. Includes all asset classes: CFD, stocks, crypto, futures, margin. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCash` COMMENT 'Customer''s total cash balance for the day. Running-balance approach introduced 2020-06-07. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `InProcessCashouts` COMMENT 'Sum of pending withdrawal amounts not yet finalized. (Tier 2 - SP_Fact_SnapshotEquity_InProcessCashouts)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorPositionsAmount` COMMENT 'Sum of position amounts where MirrorID > 0 AND ParentPositionID != 0 (copy-trading positions only). (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorCash` COMMENT 'Cash available for copy-trading. Formula: TotalCash - Credit. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalStockOrders` COMMENT 'Legacy column, hardcoded to 0. Removed 2019-03-03. Kept for schema compatibility. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorStockOrders` COMMENT 'Legacy column, hardcoded to 0. Removed 2019-03-03. Kept for schema compatibility. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `RealizedEquity` COMMENT 'Customer settled (realized) equity — the realized portion of customer balance, excluding unrealized PnL on open positions (the unrealized component lives in Fact_CustomerUnrealized_PnL.PositionPnL). Computed as History.ActiveCredit.RealizedEquity if non-zero, otherwise TotalCash + TotalPositionsAmount + InProcessCashouts. Together with PositionPnL it sums to Balance per V_Liabilities (Balance = RealizedEquity + PositionPnL). (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `Credit` COMMENT 'Outstanding credit/bonus balance from History.ActiveCredit, last event per CID per day. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `AUM` COMMENT 'Assets Under Management. Formula: TotalMirrorPositionAmount + TotalCash - Credit. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `BonusCredit` COMMENT 'Bonus credit balance from History.ActiveCredit.BonusCredit. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `CreditID` COMMENT 'Last CreditID for this CID on this date from History.ActiveCredit. (Tier 2 - SP_Fact_SnapshotEquity_DL_To_Synapse)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `UpdateDate` COMMENT 'ETL load timestamp (GETDATE() at MERGE/INSERT time). (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalStockPositionAmount` COMMENT 'Sum of position amounts where InstrumentTypeID IN (5,6) AND not a future. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorStockPositionAmount` COMMENT 'Mirror subset of TotalStockPositionAmount. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCryptoPositionAmount` COMMENT 'Sum of position amounts where InstrumentTypeID = 10 AND not a future. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorCryptoPositionAmount` COMMENT 'Mirror subset of TotalCryptoPositionAmount. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalRealStocks` COMMENT 'Sum of position amounts where IsSettled = 1 AND InstrumentTypeID IN (5,6) AND not a future. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalRealCrypto` COMMENT 'Sum of position amounts where IsSettled = 1 AND InstrumentTypeID = 10 AND not a future. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalRealCryptoLoan` COMMENT 'Sum of InitialAmount where IsSettled = 1 AND InstrumentTypeID = 10 AND NOT future AND Leverage = 2. Changed from Amount to InitialAmount 2020-03-25. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCashCalculation` COMMENT 'Parallel computation of TotalCash for audit/validation purposes. (Tier 2 - SP_Fact_SnapshotEquity)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCryptoPositionAmount_TRS` COMMENT 'Sum of crypto position amounts where SettlementTypeID = 2 (TRS). Added 2022-01-27. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorCryptoPositionAmount_TRS` COMMENT 'Mirror subset of TotalCryptoPositionAmount_TRS. Added 2022-01-27. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `Total_TRSCrypto` COMMENT 'Sum of crypto position amounts where IsSettled = 0 AND InstrumentTypeID = 10 AND SettlementTypeID = 2. Added 2022-01-27. (Tier 2 - SP_Fact_SnapshotEquity_TotalPositionAmount)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `CID` COMMENT 'Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 - via Fact_SnapshotEquity)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `DateRangeID` COMMENT 'Fact_SnapshotEquity.DateRangeID';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalPositionsAmount` COMMENT 'Fact_SnapshotEquity.TotalPositionsAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCash` COMMENT 'Fact_SnapshotEquity.TotalCash';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `InProcessCashouts` COMMENT 'Fact_SnapshotEquity.InProcessCashouts';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorPositionsAmount` COMMENT 'Fact_SnapshotEquity.TotalMirrorPositionsAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorCash` COMMENT 'Fact_SnapshotEquity.TotalMirrorCash';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalStockOrders` COMMENT 'Fact_SnapshotEquity.TotalStockOrders';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorStockOrders` COMMENT 'Fact_SnapshotEquity.TotalMirrorStockOrders';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `RealizedEquity` COMMENT 'Fact_SnapshotEquity.RealizedEquity';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `Credit` COMMENT 'Fact_SnapshotEquity.Credit';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `AUM` COMMENT 'Assets Under Management. Formula: TotalMirrorPositionAmount + TotalCash - Credit. For MERGE INSERT: computed as TotalMirrorPositionsAmount + TotalMirrorCash. Confluence: "AUC (or AUM) on PI Dashboard: Total Unrealized Copy Amount of the Copiers.". (Tier 2 - via Fact_SnapshotEquity)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `BonusCredit` COMMENT 'Fact_SnapshotEquity.BonusCredit';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `CreditID` COMMENT 'Fact_SnapshotEquity.CreditID';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `UpdateDate` COMMENT 'Fact_SnapshotEquity.UpdateDate';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalStockPositionAmount` COMMENT 'Fact_SnapshotEquity.TotalStockPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorStockPositionAmount` COMMENT 'Fact_SnapshotEquity.TotalMirrorStockPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCryptoPositionAmount` COMMENT 'Fact_SnapshotEquity.TotalCryptoPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorCryptoPositionAmount` COMMENT 'Fact_SnapshotEquity.TotalMirrorCryptoPositionAmount';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalRealStocks` COMMENT 'Fact_SnapshotEquity.TotalRealStocks';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalRealCrypto` COMMENT 'Fact_SnapshotEquity.TotalRealCrypto';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalRealCryptoLoan` COMMENT 'Fact_SnapshotEquity.TotalRealCryptoLoan';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCashCalculation` COMMENT 'Fact_SnapshotEquity.TotalCashCalculation';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalCryptoPositionAmount_TRS` COMMENT 'Fact_SnapshotEquity.TotalCryptoPositionAmount_TRS';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `TotalMirrorCryptoPositionAmount_TRS` COMMENT 'Fact_SnapshotEquity.TotalMirrorCryptoPositionAmount_TRS';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `Total_TRSCrypto` COMMENT 'Fact_SnapshotEquity.Total_TRSCrypto';
 
 -- ---- Column PII Tags (inherited) ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotequity_fromdateid ALTER COLUMN `CID` SET TAGS ('pii' = 'none');

@@ -43,7 +43,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN 
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN OrderID COMMENT 'Order that generated this cost. (Tier 2 - DWH_staging.HistoryCosts_History_Costs)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN CreditID COMMENT 'Credit/bonus event that generated this cost. (Tier 2 - DWH_staging.HistoryCosts_History_Costs)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN Occurred COMMENT 'Timestamp when the cost event occurred. Business event time. (Tier 2 - DWH_staging.HistoryCosts_History_Costs)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN DateID COMMENT 'Date of the cost event in YYYYMMDD format. Computed: CONVERT(INT, Occurred). PK component. (Tier 2 - SP_Fact_History_Cost_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN DateID COMMENT 'Date of the cost event in YYYYMMDD integer format. Computed as CONVERT(INT, CONVERT(VARCHAR(10), Occurred, 112)). PK component. (Tier 2 - SP_Fact_History_Cost_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_history_cost ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp - GETDATE() during SP execution. (Tier 2 - SP_Fact_History_Cost)';
 
 -- ---- Column PII Tags ----

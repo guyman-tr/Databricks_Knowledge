@@ -74,7 +74,7 @@ REPLICATE is optimal for this 3-row table. Clustered index on `VerificationStatu
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | VerificationStatusID | int | YES | Primary key (clustered index). Numeric identifier for the verification workflow status from UserApiDB. Exactly 3 distinct values observed in live data. No upstream wiki — exact ID-to-meaning mapping requires domain expert review. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |
+| 1 | VerificationStatusID | int | YES | Nullable integer identifier for the verification status, sourced from UserApiDB_Dictionary_VerificationStatus. Not declared as a primary key or indexed in the DDL. |
 | 2 | Name | varchar(20) | YES | Human-readable label for the verification status. The name values observed (3 rows) describe verification workflow states from the UserApiDB system. Truncated to varchar(20) — longer names may be clipped. (Tier 3 — Phase 2 live sample) |
 | 3 | UpdateDate | datetime | YES | ETL load timestamp. Set to GETDATE() on each daily reload by SP_Dictionaries_DL_To_Synapse. Not a production change timestamp. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |
 

@@ -30,7 +30,7 @@ All computed flags return `'Yes'` or `'No'` strings. The `PartitionID` column fr
 
 | # | Column | Type | Source | Description |
 |---|--------|------|--------|-------------|
-| 1 | DateKey | int | Dim_Date.DateKey | PK. Date as YYYYMMDD integer. Clustered index key. REPLICATE distribution. (Tier 3 — DDL inference) |
+| 1 | DateKey | int | Dim_Date.DateKey | Date as YYYYMMDD integer. Logical key of the view. (Tier 3 — DDL inference) |
 | 2 | FullDate | date | Dim_Date.FullDate | Calendar date value. Reference date for all computed flags. (Tier 3 — DDL inference) |
 | 3 | MonthNumberOfYear | tinyint | Dim_Date.MonthNumberOfYear | Month number (1–12). (Tier 3 — DDL inference) |
 | 4 | MonthNumberOfQuarter | tinyint | Dim_Date.MonthNumberOfQuarter | Month position within the quarter (1–3). (Tier 3 — DDL inference) |

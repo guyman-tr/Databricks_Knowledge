@@ -153,7 +153,7 @@ With etr_ymd filter: Reads one day's parquet files only - seconds.
 | 2 | ProviderID | int | YES | Price provider identifier. Identifies which feed/liquidity provider produced this tick. Composite key with InstrumentID. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 3 | InstrumentID | int | YES | Instrument identifier (EUR/USD=1, GBP=2, etc.). FK to Dim_Instrument. Used to join positions to their price data. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 4 | PriceRateID | bigint | YES | Tick-level rate identifier. Key for joining to Dim_Position.OpenMarketPriceRateID and CloseMarketPriceRateID for P&L calculation. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
-| 5 | MarketPriceRateID | bigint | YES | Market-level rate ID for this tick. Links to the composite market price at this point. Distinct from PriceRateID when bid/ask have separate market sources. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
+| 5 | MarketPriceRateID | bigint | YES | Market rate ID; defaults to TCRP_NullMarketPriceRateID when not set. (Tier 1 - Trade.CurrencyPrice.md) |
 | 6 | BidMarketPriceRateID | bigint | YES | Market price rate ID specifically for the bid side. Used when bid and ask are sourced from different market feeds. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 7 | AskMarketPriceRateID | bigint | YES | Market price rate ID specifically for the ask side. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 8 | LiquidityAccountID | int | YES | Liquidity account that provided this price tick. Links to internal liquidity routing configuration. (Tier 4 - inferred from column name) |
@@ -180,7 +180,7 @@ With etr_ymd filter: Reads one day's parquet files only - seconds.
 | 19 | ValidTo | datetime2(7) | YES | End of the period during which this tick was current. ValidFrom/ValidTo define a non-overlapping time series per (ProviderID, InstrumentID). (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 20 | Occurred | datetime2(7) | YES | Official timestamp of the price tick (eToro system time). Primary temporal reference for price history. Source for partition columns etr_y/etr_ym/etr_ymd. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
 | 21 | OccurredOnProvider | datetime2(7) | YES | Timestamp reported by the external price provider. May differ from Occurred due to network latency. (Tier 1 - upstream wiki, Trade.CurrencyPrice) |
-| 22 | ReceivedOnPriceServer | datetime2(7) | YES | Timestamp when eToro price server received this tick. Used by SP_Dim_Instrument to detect instrument recency: "last tick received for this instrument". (Tier 2 - SP_Dim_Instrument usage: min(ReceivedOnPriceServer) for instrument last seen) |
+| 22 | ReceivedOnPriceServer | datetime2(7) | YES | Timestamp when eToro price server received this tick. SP_Dim_Instrument uses MIN(ReceivedOnPriceServer) per instrument (for yesterday's ticks) to record the earliest reception time for each instrument. |
 | 23 | MarketReceivedTime | datetime2(7) | YES | Timestamp when the market feed received this tick from the exchange (latency vs `Occurred` / `ReceivedOnPriceServer`). (Tier 4 — Confluence, Rates / prices (Buy, Sell, Bid, Ask)) |
 
 **Partition Columns:**

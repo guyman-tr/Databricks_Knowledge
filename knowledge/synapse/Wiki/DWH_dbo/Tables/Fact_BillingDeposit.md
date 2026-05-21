@@ -162,7 +162,7 @@
 | 23 | IsFTD | int | YES | ETL `ISNULL(CAST(d.IsFTD AS int),0)` (bit→int). FTD rules upstream wiki §2.2. (Tier 1 — Billing.Deposit) |
 | 24 | RefundVerificationCode | varchar(50) | YES | Passthrough `d.RefundVerificationCode`. (Tier 1 — Billing.Deposit) |
 | 25 | MatchStatusID | tinyint | YES | Passthrough `d.MatchStatusID`. PSP reconciliation match. (Tier 1 — Billing.Deposit) |
-| 26 | BonusStatusID | int | YES | Passthrough `d.BonusStatusID`. (Tier 1 — Billing.Deposit) |
+| 26 | BonusStatusID | int | YES | Status of promotional bonus for this deposit (Tier 1 - Billing.Deposit) |
 | 27 | BonusAmount | money | YES | Passthrough `d.BonusAmount`. (Tier 1 — Billing.Deposit) |
 | 28 | BonusErrorCode | int | YES | Passthrough `d.BonusErrorCode`. (Tier 1 — Billing.Deposit) |
 | 29 | ExTransactionID | varchar(50) | YES | Passthrough `ExTransactionID` from `d` (SELECT list). External provider txn id. (Tier 1 — Billing.Deposit) |
@@ -170,7 +170,7 @@
 | 31 | IsRefundExcluded | int | YES | ETL `CAST(f.IsRefundExcluded AS int)`. (Tier 2 — Billing.Funding.IsRefundExcluded) |
 | 32 | DocumentRequired | int | YES | ETL `CAST(f.DocumentRequired AS int)`. (Tier 2 — Billing.Funding.DocumentRequired) |
 | 33 | UpdateDate | datetime | YES | ETL `GETDATE()` at Ext_FBD build. (Tier 2 — SP_Fact_BillingDeposit_DL_To_Synapse) |
-| 34 | ExpirationDateID | int | YES | ETL CASE on `[DWH_dbo].[ExtractXMLValue]('ExpirationDateAsString',f.FundingData)$`: NULL or `LEN<4` → `190001` else `200000 + RIGHT(val,2)*100 + LEFT(val,2)` where `val` = extracted string (`SP…`). `[DWH_dbo].[ExtractXMLValue]` = `[DWH_dbo].[ExtractXMLValue]`. Non-card / format edge cases `[UNVERIFIED]`. (Tier 3 — Billing.Funding.FundingData) |
+| 34 | ExpirationDateID | int | YES | Integer date ID derived from ExpirationDateAsString XML attribute (MMYY format). Represents card expiration as YYYYMM (e.g., 202501 = Jan 2025), not YYYYMMDD. Default 190001 when NULL or too short. |
 | 35 | CountryIDAsInteger | int | YES | `[DWH_dbo].[ExtractXMLValue]('CountryIDAsInteger',f.FundingData)` (Funding XML, despite column name). (Tier 2 — Billing.Funding.FundingData) |
 | 36 | StateIDAsInteger | int | YES | `[DWH_dbo].[ExtractXMLValue]('StateIDAsInteger',d.PaymentData)`. (Tier 2 — Billing.Deposit.PaymentData) |
 | 37 | BankIDAsInteger | int | YES | COALESCE(`[DWH_dbo].[ExtractXMLValue]('BankIDAsInteger',d.PaymentData)`, `[DWH_dbo].[ExtractXMLValue]('BankIDAsInteger',f.FundingData)`). (Tier 2 — Billing.Deposit.PaymentData / Billing.Funding.FundingData) |
@@ -266,12 +266,12 @@
 | 127 | PaymentGeneration | int | YES | Passthrough `d.PaymentGeneration`. (Tier 1 — Billing.Deposit) |
 | 128 | ProcessRegulationID | int | YES | Passthrough `d.ProcessRegulationID`. (Tier 1 — Billing.Deposit) |
 | 129 | MerchantAccountID | int | YES | Passthrough `d.MerchantAccountID`. (Tier 1 — Billing.Deposit) |
-| 130 | IsSetBalanceCompleted | int | YES | ETL `CAST(d.IsSetBalanceCompleted AS INT)` (`SP…` Ext_FBD). Production `bit`. (Tier 1 — Billing.Deposit) |
+| 130 | IsSetBalanceCompleted | int | YES | Whether the balance-credit operation (Billing.AmountAdd) for this deposit has completed; 1 = account crediting succeeded, 0 = pending retry. Cast from bit to INT by ETL. (Tier 1 - Billing.Deposit.md) |
 | 131 | RoutingReasonID | int | YES | Passthrough `d.RoutingReasonID`. (Tier 1 — Billing.Deposit) |
 | 132 | IsRecurring | int | YES | ETL `ISNULL(Recurring.IsRecurring,0)` from `OUTER APPLY (SELECT 1 AS IsRecurring FROM etoro_Billing_RecurringDeposit WHERE DepositID=d.DepositID) Recurring`. (Tier 2 — Billing.RecurringDeposit) |
 | 133 | FlowID | int | YES | Passthrough `d.FlowID` (SELECT list uses bare `FlowID`). (Tier 1 — Billing.Deposit) |
-| 134 | IsAftSupportedAsBool | bit | YES | ETL `ISNULL([DWH_dbo].[ExtractXMLValue]('IsAftSupportedAsBool',d.PaymentData),0)` cast to `bit` column. (Tier 2 — Billing.Deposit.PaymentData) |
-| 135 | IsAftEligibleAsBool | bit | YES | ETL `ISNULL([DWH_dbo].[ExtractXMLValue]('IsAftEligibleAsBool',d.PaymentData),0)`. (Tier 2 — Billing.Deposit.PaymentData) |
+| 134 | IsAftSupportedAsBool | bit | YES | Whether Account Funding Transaction (AFT) is supported. Extracted from Billing.Deposit PaymentData XML (not Billing.Funding). Defaults to 0 when NULL. |
+| 135 | IsAftEligibleAsBool | bit | YES | Whether this deposit was eligible for AFT processing. Extracted from Billing.Deposit PaymentData XML (not Billing.Funding). Defaults to 0 when NULL. |
 | 136 | IsAftProcessedAsBool | bit | YES | ETL `ISNULL([DWH_dbo].[ExtractXMLValue]('IsAftProcessedAsBool',d.PaymentData),0)`. (Tier 2 — Billing.Deposit.PaymentData) |
 
 

@@ -75,7 +75,7 @@ The staging table `Ext_FGC_Guru_Copiers` has one row per (CID, ParentCID) — i.
 | 1 | CID | bigint | NO | Customer ID of the copier — the person allocating funds to copy a Popular Investor. This is the copier's RealCID, not the guru's. Distribution key. (Tier 2 — SP_Fact_Guru_Copiers) |
 | 2 | DateID | int | NO | Date key in YYYYMMDD format for the snapshot day. Part of composite PK. (Tier 2 — SP_Fact_Guru_Copiers) |
 | 3 | Cash | money | YES | Sum of available cash across all active copy relationships for this copier on this day. Cash not yet deployed into positions. (Tier 2 — Ext_FGC_Guru_Copiers / AUM Life Cycle confluence) |
-| 4 | Investment | money | YES | Sum of open position investment amounts across all copy relationships. Represents capital actively deployed in mirrored trades. Source: aggregated `Trade.Position.Amount`. (Tier 2 — SP_Fact_Guru_Copiers / AUM Life Cycle confluence) |
+| 4 | Investment | money | YES | Sum of investment amounts across all copy relationships for this copier on this day. Aggregated from Ext_FGC_Guru_Copiers, which is loaded from [DWH_staging].[etoro_History_GuruCopiers]. |
 | 5 | PnL | money | YES | Sum of unrealized profit/loss across all open copy positions. Fluctuates with market movements. (Tier 2 — SP_Fact_Guru_Copiers) |
 | 6 | DetachedPosInvestment | money | YES | Sum of investment in positions that have been detached from the copy relationship but remain open. Detachment occurs when a copier manually takes control of an individual position. (Tier 2 — SP_Fact_Guru_Copiers) |
 | 7 | Dit_PnL | money | YES | Unrealized PnL on detached positions. Separate from PnL because detached positions are no longer managed by the copy relationship. (Tier 2 — SP_Fact_Guru_Copiers) |

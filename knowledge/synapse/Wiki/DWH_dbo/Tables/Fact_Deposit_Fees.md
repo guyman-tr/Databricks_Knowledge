@@ -232,7 +232,7 @@ FSRA, ASIC, FinCEN, BVI, eToroUS: <0.5%
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 32 | Threedsresponse | nvarchar(max) | YES | 3D Secure authentication result (e.g., Unspecified, Authenticated, NotRequired). From Dictionary.ThreeDsResponseTypes. (Tier 3 - live data sampling) |
+| 32 | Threedsresponse | nvarchar(max) | YES | 3D Secure authentication outcome resolved from Dictionary.ThreeDsResponseTypes (e.g., Unspecified, Success, Failed Authentication, Skipped 3ds). Passthrough from BackOffice.BillingDepositsPCIVersion. |
 | 33 | Threedsparameters | nvarchar(max) | YES | Raw 3DS authentication parameters/payload from payment processor. PCI-redacted. (Tier 4 - inferred) |
 | 34 | DepositRiskStatus | nvarchar(max) | YES | Risk management status assigned to the deposit. From Dictionary.RiskManagementStatus. (Tier 4 - inferred) |
 | 35 | Riskstatus | nvarchar(max) | YES | Additional risk status field (distinct from DepositRiskStatus - may be processor-side risk score). (Tier 4 - inferred) |

@@ -23,7 +23,7 @@ For example, a DateRangeID representing January 1–March 19, 2026 would expand 
 
 | # | Column | Type | Source | Description |
 |---|--------|------|--------|-------------|
-| 1 | DateRangeID | bigint | Dim_Range.DateRangeID | Primary key (NOT ENFORCED). 12-digit composite key encoding FromDate and MMDD(ToDate). Formula: CONCAT(YYYYMMDD(From), MMDD(To)). Example: 200701011231 = From:20070101, To:20071231. (Tier 1 — inherited from Dim_Range wiki) |
+| 1 | DateRangeID | bigint | Dim_Range.DateRangeID | Primary key (NOT ENFORCED). 12-digit composite key encoding FromDate and MMDD(ToDate). Formula: CONCAT(YYYYMMDD(From), MMDD(To)). Example: 200701011231 = From:20070101, To:20071231. (Tier 2 — via Dim_Range) |
 | 2 | DateKey | int | Dim_Date.DateKey | Individual calendar date key in YYYYMMDD integer format. Falls within the range defined by Dim_Range.FromDateID and Dim_Range.ToDateID (inclusive). Primary key of Dim_Date. (Tier 2 — DDL + view logic) |
 | 3 | FullDate | date | Dim_Date.FullDate | Calendar date corresponding to DateKey in native DATE format. Provides the human-readable date for the YYYYMMDD integer key. (Tier 2 — DDL + view logic) |
 

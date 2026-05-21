@@ -106,7 +106,7 @@ CostSubtypeId -> CostSubtype
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CostSubtypeId | int | YES | Primary key. Integer identifier for the cost subtype. Maps to: 0=Markup, 1=ConversionMarkup, 2=TicketFee, 3=SDRT (UK Stamp Duty), 4=TransactionFee, 5=Refund, 6=FixPerLotFee. DWH note: sourced from `Id` column in HistoryCosts staging (renamed to CostSubtypeId). (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
+| 1 | CostSubtypeId | int | YES | Nullable integer identifier for the cost subtype. Loaded by SP_Dictionaries_DL_To_Synapse from HistoryCosts staging. |
 | 2 | CostSubtype | nvarchar(max) | YES | Human-readable name for the cost subtype. Values: Markup, ConversionMarkup, TicketFee, SDRT, TransactionFee, Refund, FixPerLotFee. Passthrough from source - column name unchanged from staging. (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
 | 3 | UpdateDate | datetime | NO | ETL load timestamp - set to GETDATE() on each full reload by SP_Dictionaries_DL_To_Synapse. Reflects when the batch SP last ran, not when the source data changed. (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
 

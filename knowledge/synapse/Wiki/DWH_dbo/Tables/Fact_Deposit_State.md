@@ -131,7 +131,7 @@ Deposit (creation) -> Deposit (ongoing)
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | CreditID | bigint | YES | Unique identifier for the deposit/credit record in the billing system. Passed through from DWH_staging.etoro_Billing_BI_Deposit_State_Report. (Tier 2 - SP_Fact_Deposit_State) |
-| 2 | FromDate | datetime2(7) | YES | Start of the day window for this deposit state record. Set to midnight of ModificationDate (e.g., 2026-03-10 00:00:00). Used as a partitioning boundary by the ETL. (Tier 3 - live data sampling) |
+| 2 | FromDate | datetime2(7) | YES | Start-date timestamp passed through from DWH_staging.etoro_Billing_BI_Deposit_State_Report. The ETL partitions on ModificationDate, not FromDate. (Tier 2 – SP_Fact_Deposit_State) |
 | 3 | EndDate | datetime2(7) | YES | End of the day window for this deposit state record. Set to midnight of the next day (e.g., 2026-03-11 00:00:00). Paired with FromDate to define the date boundary. (Tier 3 - live data sampling) |
 | 4 | CID | int | YES | Customer ID. Unique identifier for the eToro customer who made the deposit. CLUSTERED INDEX key -- use in WHERE/JOIN for efficient customer-level queries. (Tier 2 - SP_Fact_Deposit_State) |
 | 5 | CurrencyID | int | YES | Deposit currency identifier. Foreign key to DWH_dbo.Dim_Currency. 26 distinct currencies in production. Identifies the currency of the Amount field. (Tier 2 - SP_Fact_Deposit_State) |

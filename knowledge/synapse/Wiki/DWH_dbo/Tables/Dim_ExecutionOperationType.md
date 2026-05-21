@@ -122,7 +122,7 @@ Direct/Admin/Operational:
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | OperationTypeId | int | YES | Primary key. Integer code identifying the trading execution operation type. Values: 0=OrderForOpen, 1=OrderForOpenInMirror, 2=OrderForClose, 3=OrderForCloseInMirror, 4=CancelDelayedOrderForOpen, 5=CancelDelayedOrderForClose, 6=CancelOrderForOpen, 7=CancelOrderForClose, 8=OrderForOpenStatusUpdateRejected, 9=OrderForCloseStatusUpdateRejected, 10=OrderForCloseStatusUpdateFilled, 11=OrderForOpenStatusUpdateFilled, 12=PositionClose, 13=PositionCloseByLimit, 14=PositionOpen, 15=OperationalOpenPosition, 16=OperationalClosePosition, 17=OperationalPositionAdjustment, 18=DirectOpenPosition, 19=DirectClosePosition, 20=OrderForCloseByLimit, 21=OrderForCloseByRate, 22=AdminOrderForOpenWithHedge, 23=AdminOrderForOpenWithoutHedge, 24=AdminPositionOpen. Renamed from `Id` in source. (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
+| 1 | OperationTypeId | int | YES | Nullable integer code identifying the trading execution operation type. Not a primary key (column is defined as int NULL). Populated by SP_Dictionaries_DL_To_Synapse. |
 | 2 | OperationType | nvarchar(max) | YES | Human-readable operation type name. Passthrough from source column with same name. Uses nvarchar(max) in DWH (oversized for these short strings). (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
 | 3 | UpdateDate | datetime | NO | ETL load timestamp set to GETDATE() when SP_Dictionaries_DL_To_Synapse runs. NOT NULL constraint (unlike most other DWH dict tables). Does not reflect production source update time. (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
 

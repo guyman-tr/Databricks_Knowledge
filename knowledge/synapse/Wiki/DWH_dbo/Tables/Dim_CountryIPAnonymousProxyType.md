@@ -122,7 +122,7 @@ Analysts can JOIN `Dim_CountryIPAnonymousProxyType` on `ProxyType` to decode the
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | ProxyType | varchar(3) | YES | Primary key — 3-character IP2Location proxy type code. Values: DCH (Data Center/CDN), PUB (Public Proxy), SES (Search Engine Bot), TOR (Tor Exit Node), VPN (Anonymizing VPN), WEB (Web Proxy). Used as the JOIN key to decode proxy codes in Dim_CountryIPAnonymous and Fact_CustomerAction. (Tier 3 — live data, DWH_dbo.Dim_CountryIPAnonymousProxyType) |
+| 1 | ProxyType | varchar(3) | YES | 3-character IP2Location proxy type code (nullable varchar(3)). Not a formal primary key per DDL. Used to categorise proxy connections detected by IP geolocation. |
 | 2 | ProxyTypeDescription | varchar(500) | YES | Full IP2Location description of the proxy type category. Human-readable explanation suitable for reports and documentation. (Tier 3 — live data, DWH_dbo.Dim_CountryIPAnonymousProxyType) |
 | 3 | Anonymity | varchar(10) | YES | IP2Location anonymity risk level for this proxy type: "High" (PUB, TOR, VPN, WEB — user IP is hidden) or "Low" (DCH, SES — may anonymize but commonly benign). Use for fraud/risk segmentation. (Tier 3 — live data, DWH_dbo.Dim_CountryIPAnonymousProxyType) |
 | 4 | UpdateDate | datetime | YES | ETL load timestamp — always NULL (static reference table, no active ETL refresh). (Tier 3 — live data, DWH_dbo.Dim_CountryIPAnonymousProxyType) |

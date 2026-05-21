@@ -24,7 +24,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN ID COMMENT 'Primary key identifying the regulatory authority. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML, 11=FSRA, 12=FINRAONLY, 13=MAS, 14=NYDFS+FINRA. Stored in CustomerStatic.RegulationID. (Tier 1 - upstream wiki, Dictionary.Regulation)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN ID COMMENT 'Primary key identifying the regulation. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML, 11=FSRA, 12=FINRAONLY, 14=NYDFSFINRA. ID 13 is skipped (Tier 1 - Dictionary.Regulation)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN Name COMMENT 'Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 - upstream wiki, Dictionary.Regulation)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN DWHRegulationID COMMENT 'ETL-computed alias of ID - always equals ID. `[ID] as [DWHRegulationID]` in SP_Dictionaries_DL_To_Synapse. DWH-specific field not present in production. Use ID for joins. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation ALTER COLUMN StatusID COMMENT 'Hardcoded 1 (Active) for all rows by ETL (`1 as [StatusID]`). Not present in production Dictionary.Regulation. Not a meaningful filter. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';

@@ -120,7 +120,7 @@ No upstream wiki exists for `Billing.Redeem` at the time of documentation.
 | 8 | FundingID | int | YES | Payment instrument (funding method) used for this redeem payout. References Billing.Funding. Identifies the credit card, bank account, or e-wallet that received the redeemed funds. (Tier 2 — SP_Fact_BillingRedeem_DL_To_Synapse) |
 | 9 | RequestDate | datetime | YES | Datetime when the redeem request was submitted by the customer. Records the initiation time of the redeem lifecycle. No index — use ModificationDateID for range queries. (Tier 2 — SP_Fact_BillingRedeem_DL_To_Synapse) |
 | 10 | LastModificationDate | datetime | YES | Most recent datetime when this redeem record was modified. Used as the source for ModificationDateID. The ETL 7-day rolling window is based on this field. (Tier 2 — SP_Fact_BillingRedeem_DL_To_Synapse) |
-| 11 | ModificationDateID | int | NOT NULL | Clustered index key. Integer date in YYYYMMDD format derived from `CONVERT(INT, LastModificationDate)`. The ETL rolling 7-day window operates on this column. Use for date-range queries and partitioning in downstream systems. (Tier 2 — SP_Fact_BillingRedeem_DL_To_Synapse) |
+| 11 | ModificationDateID | int | NOT NULL | Integer date key in YYYYMMDD format derived from LastModificationDate via `CONVERT(INT, CONVERT(VARCHAR, DATEADD(DAY, DATEDIFF(DAY, 0, LastModificationDate), 0), 112))`. The ETL rolling 7-day delete window operates on this column. |
 | 12 | UpdateDate | datetime | NOT NULL | ETL load timestamp. Set to `GETDATE()` at SP execution time, not from the production source. Use for ETL freshness monitoring. (Tier 2 — SP_Fact_BillingRedeem_DL_To_Synapse) |
 
 ---

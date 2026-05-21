@@ -151,7 +151,7 @@ Trustly, MoneyBookers, Przelewy24, EtoroOptions, Neteller, Payoneer, UnionPay: <
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | CID | int | YES | Customer ID. CLUSTERED INDEX key. (Tier 2 - SP_Fact_Withdraw_Fees_DL_To_Synapse passthrough) |
-| 2 | WithdrawID | int | YES | Withdrawal event identifier. Primary key for this cashout. (Tier 2 - SP passthrough) |
+| 2 | WithdrawID | int | YES | Withdrawal event identifier, passed through from the staging source. Nullable; not defined as a primary key in the DDL. |
 | 3 | WithdrawProcessingID | int | YES | Withdrawal processing order ID. Used in payment processing workflow. (Tier 2 - SP passthrough) |
 | 4 | DepositID | int | YES | Original deposit identifier linked to this withdrawal. Required for card-match compliance - funds must return to originating payment card. NULL for non-card-match withdrawals. (Tier 2 - SP passthrough) |
 | 5 | FundingID | int | YES | Funding method integer identifier. (Tier 2 - SP passthrough) |

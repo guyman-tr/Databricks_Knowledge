@@ -148,7 +148,7 @@ Same mutual exclusivity rules as Fact_SnapshotEquity (Guy M fix, 2025-07-29):
 | 15 | CopyFundPnL | decimal(16,2) | YES | Unrealized PnL from positions opened via copy-fund relationships (parent CID had AccountTypeID=9 at the time the copy was opened). Identified via History.BackOfficeCustomer + History.Mirror join. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |
 | 16 | FullCommissionOnOpen | decimal(16,2) | YES | Sum of full opening commissions (FullCommission, before any discounts) across all open positions for this CID. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |
 | 17 | NOP | decimal(16,2) | YES | Net Open Position — total signed directional USD exposure across all instruments. Positive = net long, negative = net short. "eToro holding of each instrument" (Confluence). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |
-| 18 | Notional | decimal(16,2) | YES | Total absolute USD exposure across all instruments. ABS(NOP) per instrument, then summed. Always >= 0. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |
+| 18 | Notional | decimal(16,2) | YES | Total absolute USD exposure across all positions. Computed as SUM(ABS(per-position signed USD exposure)) grouped by CID — ABS is applied per position, not per instrument. Always >= 0. |
 | 19 | NOP_Crypto | decimal(16,2) | YES | Net Open Position for crypto instruments only (InstrumentTypeID = 10 AND NOT futures). (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |
 | 20 | Notional_Crypto | decimal(16,2) | YES | Absolute USD exposure for crypto instruments only. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |
 | 21 | NOP_CFD | decimal(16,2) | YES | Net Open Position for all CFD positions (IsSettled = 0), all asset classes. (Tier 2 — SP_Fact_CustomerUnrealized_PnL) |

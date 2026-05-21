@@ -24,7 +24,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason SET TAGS (
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason ALTER COLUMN RedeemReasonID COMMENT 'Primary key identifying the failure/rejection reason (DDL nullable - PK not enforced). Range 1-20, gaps at 17. Referenced by Fact_BillingRedeem.RedeemReasonID. (Tier 1 - upstream wiki, Dictionary.RedeemReason)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason ALTER COLUMN RedeemReasonID COMMENT 'Primary key identifying the failure/rejection reason (DDL nullable - PK not enforced). Range 1 - 20, 18 rows with gaps at 17 and 19. Referenced by Fact_BillingRedeem.RedeemReasonID.';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason ALTER COLUMN RedeemReasonName COMMENT 'Internal reason code name. DWH note: renamed from Name in production source. Prefix convention: Rre = Redeem Rejection, ServerError = service failure, Failed = processing failure. Values: RreTradeBlocked(1), RreFundingBlocked(2), RreDisputeProcess(3), RreInternalUser(4), RreVerificationLevel(5), ValidationDataIntegrity(6), RejectedByOps(7), FailedByTrading(8), FailedByWallet(9), CanceledByOps(10), ServerErrorTrading(11), ServerErrorWallet(12), ServerErrorSettings(13), DbError(14), CanceledByUser(15), NwaValidation(16), CancelledByTrading(18), FailedByDelta(19), TransferNegativeBalanceTerminated(20). (Tier 1 - upstream wiki, Dictionary.RedeemReason)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_redeemreason ALTER COLUMN UpdateDate COMMENT 'ETL reload timestamp - set to GETDATE() by SP_Dictionaries_DL_To_Synapse on each daily reload. Not a business date. Current value: 2026-03-11. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 

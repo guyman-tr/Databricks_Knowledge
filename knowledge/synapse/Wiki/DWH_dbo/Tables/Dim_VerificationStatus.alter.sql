@@ -24,7 +24,7 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus SET TAGS
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus ALTER COLUMN VerificationStatusID COMMENT 'Primary key (clustered index). Numeric identifier for the verification workflow status from UserApiDB. Exactly 3 distinct values observed in live data. No upstream wiki - exact ID-to-meaning mapping requires domain expert review. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus ALTER COLUMN VerificationStatusID COMMENT 'Nullable integer identifier for the verification status, sourced from UserApiDB_Dictionary_VerificationStatus. Not declared as a primary key or indexed in the DDL.';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus ALTER COLUMN Name COMMENT 'Human-readable label for the verification status. The name values observed (3 rows) describe verification workflow states from the UserApiDB system. Truncated to varchar(20) - longer names may be clipped. (Tier 3 - Phase 2 live sample)';
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationstatus ALTER COLUMN UpdateDate COMMENT 'ETL load timestamp. Set to GETDATE() on each daily reload by SP_Dictionaries_DL_To_Synapse. Not a production change timestamp. (Tier 2 - SP_Dictionaries_DL_To_Synapse)';
 

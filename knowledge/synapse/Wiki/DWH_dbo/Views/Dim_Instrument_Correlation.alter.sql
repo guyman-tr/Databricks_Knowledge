@@ -20,16 +20,16 @@ ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation SET 
 );
 
 -- ---- Column Comments ----
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN DateID COMMENT 'Date the correlation was computed for, in YYYYMMDD format. The correlation uses price data from 3 months before this date. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN InstrumentID_a COMMENT 'First instrument in the correlation pair. In the underlying storage, this is always <= InstrumentID_b; the view reconstructs both orderings. JOINs to Dim_Instrument.InstrumentID. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN InstrumentID_b COMMENT 'Second instrument in the correlation pair. Swapped with InstrumentID_a in the view''s second UNION ALL leg. JOINs to Dim_Instrument.InstrumentID. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN SampleSize COMMENT 'Number of matching hourly price candle pairs used for the correlation computation. Higher = more statistically robust. Typically 2000+ for liquid instruments over 3 months. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN StandardDeviation_a COMMENT 'Population standard deviation of hourly price changes for instrument A over the 3-month window. STDEVP(PriceChange_a). Swapped with StandardDeviation_b in the symmetric reconstruction. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN StandardDeviation_b COMMENT 'Population standard deviation of hourly price changes for instrument B over the 3-month window. STDEVP(PriceChange_b). Swapped with StandardDeviation_a in the symmetric reconstruction. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN Covariance COMMENT 'Sample covariance between price changes of instruments A and B. Formula: `SUM(a*b)/N - SUM(a)*SUM(b)/N²`. Positive = instruments move together; negative = opposite directions. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN PearsonCorrelation COMMENT 'Pearson correlation coefficient: `Covariance / (StdDev_a * StdDev_b)`. Range: -1.0 (perfect inverse) to +1.0 (perfect correlation). NULL when either StdDev is zero (flat price). (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN InsertDate COMMENT 'Timestamp when the correlation row was first computed and inserted. Set to GETDATE() during ETL. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
-ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN UpdateDate COMMENT 'Timestamp when the row was last updated. In practice, same as InsertDate since correlations are DELETE+INSERT per date, not MERGE. (Tier 2 - SP_Dim_Instrument_Correlation_FilterByInstrumentID)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN DateID COMMENT 'UnionedPartitions.DateID + Archive.DateID';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN InstrumentID_a COMMENT 'UnionedPartitions.InstrumentID_a (+ swapped _b)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN InstrumentID_b COMMENT 'UnionedPartitions.InstrumentID_b (+ swapped _a)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN SampleSize COMMENT 'UnionedPartitions.SampleSize + Archive.SampleSize';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN StandardDeviation_a COMMENT 'UnionedPartitions.StandardDeviation_a (+ swapped _b)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN StandardDeviation_b COMMENT 'UnionedPartitions.StandardDeviation_b (+ swapped _a)';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN Covariance COMMENT 'UnionedPartitions.Covariance + Archive.Covariance';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN PearsonCorrelation COMMENT 'UnionedPartitions.PearsonCorrelation + Archive.PearsonCorrelation';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN InsertDate COMMENT 'UnionedPartitions.InsertDate + Archive.InsertDate';
+ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN UpdateDate COMMENT 'UnionedPartitions.UpdateDate + Archive.UpdateDate';
 
 -- ---- Column PII Tags ----
 ALTER TABLE main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument_correlation ALTER COLUMN DateID SET TAGS ('pii' = 'none');

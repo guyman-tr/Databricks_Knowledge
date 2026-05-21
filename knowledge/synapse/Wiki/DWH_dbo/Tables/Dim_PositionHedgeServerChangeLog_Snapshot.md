@@ -114,7 +114,7 @@ This table is used by SP_Dim_Position_DL_To_Synapse when populating `InitHedgeTy
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | PositionID | bigint | NO | The position that was moved between hedge servers. References Trade.PositionTbl.PositionID (implicit - no declared FK). Part of composite PK with OperationSummaryID. A position can appear multiple times if moved across different operations. (Tier 1 — Trade.PositionsHedgeServerChangeLog) |
+| 1 | PositionID | bigint | NO | The position whose hedge-server assignment is tracked. References Trade.PositionTbl.PositionID (implicit). A position can appear in multiple rows representing successive hedge-server assignment periods (SCD Type 2). No OperationSummaryID column exists in this snapshot table. |
 | 2 | HedgeServerID | int | NO | The hedge server ID the position was moved to. After this operation, Trade.PositionTbl.HedgeServerID equals this value for the affected position. (Tier 1 — Trade.PositionsHedgeServerChangeLog) |
 | 3 | FromDate | int | YES | Start date of this hedge server assignment (YYYYMMDD int). For initial position open: equals OpenDateID. For subsequent changes: equals the date the change took effect. (Tier 2 — SP_Dim_PositionHedgeServerChangeLog_DL_To_Synapse) |
 | 4 | ToDate | int | YES | End date of this hedge server assignment (YYYYMMDD int). 20991231=currently active. For closed/changed records: the last day this assignment was valid (inclusive). (Tier 2 — SP_Dim_PositionHedgeServerChangeLog_DL_To_Synapse) |

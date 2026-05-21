@@ -112,7 +112,7 @@ Gaps:        ID 17 skipped
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RedeemReasonID | int | YES | Primary key identifying the failure/rejection reason (DDL nullable - PK not enforced). Range 1-20, gaps at 17. Referenced by Fact_BillingRedeem.RedeemReasonID. (Tier 1 - upstream wiki, Dictionary.RedeemReason) |
+| 1 | RedeemReasonID | int | YES | Primary key identifying the failure/rejection reason (DDL nullable — PK not enforced). Range 1–20, 18 rows with gaps at 17 and 19. Referenced by Fact_BillingRedeem.RedeemReasonID. |
 | 2 | RedeemReasonName | varchar(50) | YES | Internal reason code name. DWH note: renamed from Name in production source. Prefix convention: Rre = Redeem Rejection, ServerError = service failure, Failed = processing failure. Values: RreTradeBlocked(1), RreFundingBlocked(2), RreDisputeProcess(3), RreInternalUser(4), RreVerificationLevel(5), ValidationDataIntegrity(6), RejectedByOps(7), FailedByTrading(8), FailedByWallet(9), CanceledByOps(10), ServerErrorTrading(11), ServerErrorWallet(12), ServerErrorSettings(13), DbError(14), CanceledByUser(15), NwaValidation(16), CancelledByTrading(18), FailedByDelta(19), TransferNegativeBalanceTerminated(20). (Tier 1 - upstream wiki, Dictionary.RedeemReason) |
 | 3 | UpdateDate | datetime | YES | ETL reload timestamp - set to GETDATE() by SP_Dictionaries_DL_To_Synapse on each daily reload. Not a business date. Current value: 2026-03-11. (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
 

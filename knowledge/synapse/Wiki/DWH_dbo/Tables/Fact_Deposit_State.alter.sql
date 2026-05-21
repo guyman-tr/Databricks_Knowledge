@@ -9,7 +9,7 @@
 
 -- ---- Column Comments ----
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state ALTER COLUMN CreditID COMMENT 'Unique identifier for the deposit/credit record in the billing system. Passed through from DWH_staging.etoro_Billing_BI_Deposit_State_Report. (Tier 2 - SP_Fact_Deposit_State)';
-ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state ALTER COLUMN FromDate COMMENT 'Start of the day window for this deposit state record. Set to midnight of ModificationDate (e.g., 2026-03-10 00:00:00). Used as a partitioning boundary by the ETL. (Tier 3 - live data sampling)';
+ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state ALTER COLUMN FromDate COMMENT 'Start-date timestamp passed through from DWH_staging.etoro_Billing_BI_Deposit_State_Report. The ETL partitions on ModificationDate, not FromDate. (Tier 2 - SP_Fact_Deposit_State)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state ALTER COLUMN EndDate COMMENT 'End of the day window for this deposit state record. Set to midnight of the next day (e.g., 2026-03-11 00:00:00). Paired with FromDate to define the date boundary. (Tier 3 - live data sampling)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state ALTER COLUMN CID COMMENT 'Customer ID. Unique identifier for the eToro customer who made the deposit. CLUSTERED INDEX key -- use in WHERE/JOIN for efficient customer-level queries. (Tier 2 - SP_Fact_Deposit_State)';
 ALTER TABLE main.bi_db.gold_sql_dp_prod_we_dwh_dbo_fact_deposit_state ALTER COLUMN CurrencyID COMMENT 'Deposit currency identifier. Foreign key to DWH_dbo.Dim_Currency. 26 distinct currencies in production. Identifies the currency of the Amount field. (Tier 2 - SP_Fact_Deposit_State)';

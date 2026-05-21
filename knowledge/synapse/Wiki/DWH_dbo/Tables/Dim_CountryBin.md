@@ -120,7 +120,7 @@ Card deposit: first 6/8 digits of card number -> BinCode lookup
 | 7 | BankWebSite | varchar(50) | YES | Issuing bank website URL. Informational. NULL in most rows. (Tier 2 - SP_Dictionaries_DL_To_Synapse passthrough) |
 | 8 | BankInfo | varchar(255) | YES | Additional bank information text. Informational. NULL in most rows. (Tier 2 - SP_Dictionaries_DL_To_Synapse passthrough) |
 | 9 | ShouldCheck3ds | tinyint | YES | Whether 3D Secure verification is required for deposits from this BIN. 1=required (4.8M BINs, 29%), 0=not required (11.6M BINs, 71%). Drives deposit authorization flow. (Tier 1 - Dictionary.CountryBin6 upstream wiki) |
-| 10 | MinAmountFor3ds | int | YES | Minimum deposit amount (in account currency units) that triggers 3DS verification for this BIN. 0 = all amounts require 3DS when ShouldCheck3ds=1. Only meaningful when ShouldCheck3ds=1. (Tier 1 - Dictionary.CountryBin6 upstream wiki) |
+| 10 | MinAmountFor3ds | int | YES | Minimum amount that triggers 3DS check. NULL = no minimum. (Tier 1 - Dictionary.CountryBin6) |
 | 11 | IsPrepaid | bit | NO | Whether this is a prepaid card. True=prepaid (may trigger fraud checks or processing restrictions). False=standard credit/debit card. (Tier 1 - Dictionary.CountryBin6 upstream wiki) |
 | 12 | UpdateDate | datetime | NO | ETL load timestamp. Set to GETDATE() on each daily full reload via SP_Dictionaries_DL_To_Synapse. Reflects ETL run time, not source data change. (Tier 2 - SP_Dictionaries_DL_To_Synapse) |
 
