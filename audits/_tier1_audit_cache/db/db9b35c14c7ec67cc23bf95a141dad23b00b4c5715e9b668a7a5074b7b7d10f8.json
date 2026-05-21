@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "LOW",
+  "reason": "Downstream conflates MarketingRegion with Region by saying '22 distinct values matching the 22 Region labels', implying they are the same set, and incorrectly states geographic RegionID is dropped in DWH — neither claim is in the source.",
+  "proposed_fix": "FK to Dictionary.MarketingRegion. Segments countries by marketing strategy (e.g. 'Arabic' cuts across Asia/Africa regions). Distinct from geographic RegionID. (Tier 1 - Dictionary.Country)",
+  "raw_response": "{\"verdict\":\"FAIL\",\"severity\":\"LOW\",\"reason\":\"Downstream conflates MarketingRegion with Region by saying '22 distinct values matching the 22 Region labels', implying they are the same set, and incorrectly states geographic RegionID is dropped in DWH — neither claim is in the source.\",\"proposed_fix\":\"FK to Dictionary.MarketingRegion. Segments countries by marketing strategy (e.g. 'Arabic' cuts across Asia/Africa regions). Distinct from geographic RegionID. (Tier 1 - Dictionary.Country)\"}\n",
+  "cached": false
+}

@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "Source says FundingID is a foreign key to etoro_Billing_Funding, but the claim redefines it as the payment instrument itself rather than a join key referencing that table.",
+  "proposed_fix": "Foreign key (FundingID) joining to etoro_Billing_Funding; passthrough from Billing.Deposit. (Tier 1 - Fact_BillingDeposit.md)",
+  "raw_response": "```json\n{\"verdict\":\"FAIL\",\"severity\":\"MEDIUM\",\"reason\":\"Source says FundingID is a foreign key to etoro_Billing_Funding, but the claim redefines it as the payment instrument itself rather than a join key referencing that table.\",\"proposed_fix\":\"Foreign key (FundingID) joining to etoro_Billing_Funding; passthrough from Billing.Deposit. (Tier 1 - Fact_BillingDeposit.md)\"}\n```\n",
+  "cached": false
+}

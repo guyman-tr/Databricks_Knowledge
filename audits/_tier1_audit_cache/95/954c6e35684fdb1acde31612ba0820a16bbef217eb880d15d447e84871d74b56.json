@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "HIGH",
+  "reason": "Value labels 4 and 5 differ: source says 4=Eligible Counterparty and 5=Professional, but claim says 4=Retail Pending and 5=Pending, which are entirely different classification meanings.",
+  "proposed_fix": "MiFID II investor classification. FK to Dictionary.MifidCategorization. 1=Retail (97.3%), 4=Eligible Counterparty (2.6%), 5=Professional (0.03%). Default=1 (Tier 1 - Dim_Customer.md)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"HIGH\", \"reason\": \"Value labels 4 and 5 differ: source says 4=Eligible Counterparty and 5=Professional, but claim says 4=Retail Pending and 5=Pending, which are entirely different classification meanings.\", \"proposed_fix\": \"MiFID II investor classification. FK to Dictionary.MifidCategorization. 1=Retail (97.3%), 4=Eligible Counterparty (2.6%), 5=Professional (0.03%). Default=1 (Tier 1 - Dim_Customer.md)\"}\n",
+  "cached": false
+}

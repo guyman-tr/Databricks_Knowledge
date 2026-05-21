@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "LOW",
+  "reason": "Downstream adds ID 0 as inactive and counts 63 active types instead of 68, contradicting the source which only lists IDs 17 and 23 as inactive with 68 active types.",
+  "proposed_fix": "Whether this bonus type is still in active use. 0=deprecated (should not be assigned to new bonuses). Active=0 types: 17=Refill-Negative Balance, 23=Championship Winner Demo. All other 68 types are IsActive=1 (Tier 1 - BackOffice.BonusType)",
+  "raw_response": "```json\n{\"verdict\": \"FAIL\", \"severity\": \"LOW\", \"reason\": \"Downstream adds ID 0 as inactive and counts 63 active types instead of 68, contradicting the source which only lists IDs 17 and 23 as inactive with 68 active types.\", \"proposed_fix\": \"Whether this bonus type is still in active use. 0=deprecated (should not be assigned to new bonuses). Active=0 types: 17=Refill-Negative Balance, 23=Championship Winner Demo. All other 68 types are IsActive=1 (Tier 1 - BackOffice.BonusType)\"}\n```\n",
+  "cached": false
+}

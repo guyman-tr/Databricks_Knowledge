@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "Downstream claims only 4 DWH values (0-4) and flags IDs 5-17 as missing, but the source defines all 17 states as valid; this misrepresents the column's population as a subset.",
+  "proposed_fix": "Primary key identifying withdrawal lifecycle state (17 values: 1=Pending through 17=Partially Reversed; 0=N/A is a DWH placeholder). See glossary for full mapping. (Tier 1 - Dictionary.CashoutStatus)",
+  "raw_response": "```json\n{\"verdict\": \"FAIL\", \"severity\": \"MEDIUM\", \"reason\": \"Downstream claims only 4 DWH values (0-4) and flags IDs 5-17 as missing, but the source defines all 17 states as valid; this misrepresents the column's population as a subset.\", \"proposed_fix\": \"Primary key identifying withdrawal lifecycle state (17 values: 1=Pending through 17=Partially Reversed; 0=N/A is a DWH placeholder). See glossary for full mapping. (Tier 1 - Dictionary.CashoutStatus)\"}\n```\n",
+  "cached": false
+}

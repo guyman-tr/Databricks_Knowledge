@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "The downstream description only documents the ETL cast mechanics, not the column's business meaning (whether the balance-credit operation for the deposit completed).",
+  "proposed_fix": "Whether the balance-credit operation (Billing.AmountAdd) for this deposit has completed; 1 = account crediting succeeded, 0 = pending retry. Cast from bit to INT by ETL. (Tier 1 - Billing.Deposit.md)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"MEDIUM\", \"reason\": \"The downstream description only documents the ETL cast mechanics, not the column's business meaning (whether the balance-credit operation for the deposit completed).\", \"proposed_fix\": \"Whether the balance-credit operation (Billing.AmountAdd) for this deposit has completed; 1 = account crediting succeeded, 0 = pending retry. Cast from bit to INT by ETL. (Tier 1 - Billing.Deposit.md)\"}\n",
+  "cached": false
+}

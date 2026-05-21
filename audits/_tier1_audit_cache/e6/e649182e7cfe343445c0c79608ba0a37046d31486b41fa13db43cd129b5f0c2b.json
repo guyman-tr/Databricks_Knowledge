@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "LOW",
+  "reason": "Downstream adds specific semantics (0 = all amounts, only meaningful when ShouldCheck3ds=1, account currency units) not stated in the source, and replaces NULL=no minimum with different logic.",
+  "proposed_fix": "Minimum amount that triggers 3DS check. NULL = no minimum. (Tier 1 - Dictionary.CountryBin6)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"LOW\", \"reason\": \"Downstream adds specific semantics (0 = all amounts, only meaningful when ShouldCheck3ds=1, account currency units) not stated in the source, and replaces NULL=no minimum with different logic.\", \"proposed_fix\": \"Minimum amount that triggers 3DS check. NULL = no minimum. (Tier 1 - Dictionary.CountryBin6)\"}\n",
+  "cached": false
+}

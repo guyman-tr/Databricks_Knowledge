@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "LOW",
+  "reason": "Downstream maps constant value 2 to 'InProcess' (status 5 in its own lookup) while also listing 2=Approved, creating an internal contradiction; source says value 2 references the CashoutStatus lookup shared with Billing.Withdraw, not Dictionary.PaymentStatus.",
+  "proposed_fix": "Status of the rollback at time of recording. Always 2 across all production rows — set from @CashoutStatusID parameter. Uses the same CashoutStatus lookup as Billing.Withdraw, not Dictionary.PaymentStatus. (Tier 1 - Billing.CashoutRollbackTracking.md)",
+  "raw_response": "{\"verdict\":\"FAIL\",\"severity\":\"LOW\",\"reason\":\"Downstream maps constant value 2 to 'InProcess' (status 5 in its own lookup) while also listing 2=Approved, creating an internal contradiction; source says value 2 references the CashoutStatus lookup shared with Billing.Withdraw, not Dictionary.PaymentStatus.\",\"proposed_fix\":\"Status of the rollback at time of recording. Always 2 across all production rows — set from @CashoutStatusID parameter. Uses the same CashoutStatus lookup as Billing.Withdraw, not Dictionary.PaymentStatus. (Tier 1 - Billing.CashoutRollbackTracking.md)\"}\n",
+  "cached": false
+}

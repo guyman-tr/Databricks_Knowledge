@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "Source constrains BinCode strictly to 6-digit BINs (< 10,000,000), but the claimed description expands scope to include 8-digit BINs (>= 10,000,000), which is not supported by the source.",
+  "proposed_fix": "6-digit Bank Identification Number (BIN) identifying the issuing bank; constrained to values < 10,000,000 per CHK_CountryBin6. Part of composite PK and indexed by IX_DCNB_Bincode (Tier 1 - Dictionary.CountryBin6)",
+  "raw_response": "```json\n{\"verdict\": \"FAIL\", \"severity\": \"MEDIUM\", \"reason\": \"Source constrains BinCode strictly to 6-digit BINs (< 10,000,000), but the claimed description expands scope to include 8-digit BINs (>= 10,000,000), which is not supported by the source.\", \"proposed_fix\": \"6-digit Bank Identification Number (BIN) identifying the issuing bank; constrained to values < 10,000,000 per CHK_CountryBin6. Part of composite PK and indexed by IX_DCNB_Bincode (Tier 1 - Dictionary.CountryBin6)\"}\n```\n",
+  "cached": false
+}

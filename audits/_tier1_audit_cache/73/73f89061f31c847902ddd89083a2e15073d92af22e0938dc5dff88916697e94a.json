@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "Source says the column holds a currency abbreviation (text), while the claim says it is a foreign key ID to Dictionary.Currency; abbreviation vs FK integer changes how an analyst would join or filter.",
+  "proposed_fix": "Buy-side currency abbreviation. For forex: base currency code; for stocks: the asset code (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument (Tier 1 - Trade.GetInstrument)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"MEDIUM\", \"reason\": \"Source says the column holds a currency abbreviation (text), while the claim says it is a foreign key ID to Dictionary.Currency; abbreviation vs FK integer changes how an analyst would join or filter.\", \"proposed_fix\": \"Buy-side currency abbreviation. For forex: base currency code; for stocks: the asset code (BuyCurrencyID=InstrumentID). Inherited from Trade.Instrument (Tier 1 - Trade.GetInstrument)\"}\n",
+  "cached": false
+}

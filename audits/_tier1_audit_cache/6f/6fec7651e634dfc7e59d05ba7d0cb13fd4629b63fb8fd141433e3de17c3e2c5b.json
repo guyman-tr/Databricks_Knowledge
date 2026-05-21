@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "HIGH",
+  "reason": "Status labels differ materially: source says 2=PendingReview but claim says 2=Reviewed (opposite meaning), 3=Approved vs 3=Accepted is minor, but 5=Expired vs 5=POIApproved are completely different statuses.",
+  "proposed_fix": "Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. See glossary Document Status. (Tier 1 - Dictionary.DocumentStatus)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"HIGH\", \"reason\": \"Status labels differ materially: source says 2=PendingReview but claim says 2=Reviewed (opposite meaning), 3=Approved vs 3=Accepted is minor, but 5=Expired vs 5=POIApproved are completely different statuses.\", \"proposed_fix\": \"Primary key identifying the document review state. 1=Uploaded, 2=PendingReview, 3=Approved, 4=Declined, 5=Expired. See glossary Document Status. (Tier 1 - Dictionary.DocumentStatus)\"}\n",
+  "cached": false
+}

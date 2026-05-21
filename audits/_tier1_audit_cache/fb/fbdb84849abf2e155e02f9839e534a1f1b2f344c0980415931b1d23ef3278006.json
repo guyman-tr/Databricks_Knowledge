@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "Downstream adds ID 13=MAS which the source says is skipped, and changes ID 14 label from NYDFSFINRA to NYDFS+FINRA.",
+  "proposed_fix": "Primary key identifying the regulation. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML, 11=FSRA, 12=FINRAONLY, 14=NYDFSFINRA. ID 13 is skipped (Tier 1 - Dictionary.Regulation)",
+  "raw_response": "```json\n{\"verdict\": \"FAIL\", \"severity\": \"MEDIUM\", \"reason\": \"Downstream adds ID 13=MAS which the source says is skipped, and changes ID 14 label from NYDFSFINRA to NYDFS+FINRA.\", \"proposed_fix\": \"Primary key identifying the regulation. 0=None, 1=CySEC, 2=FCA, 3=NFA, 4=ASIC, 5=BVI, 6=eToroUS, 7=FinCEN, 8=FinCEN+FINRA, 9=FSA Seychelles, 10=ASIC&GAML, 11=FSRA, 12=FINRAONLY, 14=NYDFSFINRA. ID 13 is skipped (Tier 1 - Dictionary.Regulation)\"}\n```\n",
+  "cached": false
+}

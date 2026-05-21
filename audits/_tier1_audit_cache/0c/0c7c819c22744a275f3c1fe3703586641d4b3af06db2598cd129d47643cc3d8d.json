@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "MEDIUM",
+  "reason": "The downstream description adds a conditional qualifier ('if different from CurrencyID') that narrows the column's meaning to a subset of cases, whereas the source simply defines it as the customer's account currency unconditionally.",
+  "proposed_fix": "Customer account currency. FK to Dim_Currency (Tier 1 - Billing.Withdraw)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"MEDIUM\", \"reason\": \"The downstream description adds a conditional qualifier ('if different from CurrencyID') that narrows the column's meaning to a subset of cases, whereas the source simply defines it as the customer's account currency unconditionally.\", \"proposed_fix\": \"Customer account currency. FK to Dim_Currency (Tier 1 - Billing.Withdraw)\"}\n",
+  "cached": false
+}

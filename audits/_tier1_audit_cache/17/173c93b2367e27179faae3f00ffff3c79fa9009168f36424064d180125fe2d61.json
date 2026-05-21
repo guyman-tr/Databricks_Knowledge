@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "HIGH",
+  "reason": "The downstream description maps entirely different status labels to the same IDs (e.g., 1=New vs 1=Pending, 2=Approved vs 2=InProcess), describing a different enumeration that would cause analysts to misinterpret every status value.",
+  "proposed_fix": "Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally. See Payment Status glossary. (Tier 1 - Dictionary.PaymentStatus)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"HIGH\", \"reason\": \"The downstream description maps entirely different status labels to the same IDs (e.g., 1=New vs 1=Pending, 2=Approved vs 2=InProcess), describing a different enumeration that would cause analysts to misinterpret every status value.\", \"proposed_fix\": \"Primary key identifying the payment state. 1=Pending, 2=InProcess, 3=Processed, 4=Canceled, 5=Failed, 6=Reversed, 7=CompletedExternally. See Payment Status glossary. (Tier 1 - Dictionary.PaymentStatus)\"}\n",
+  "cached": false
+}

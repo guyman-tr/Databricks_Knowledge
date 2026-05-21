@@ -1,0 +1,8 @@
+{
+  "verdict": "FAIL",
+  "severity": "LOW",
+  "reason": "The enum labels differ: source says 0=unknown/fallback and 1=Standard, while downstream says 0=Manual and 1=Auto Create, which could mislead analysts interpreting the codes.",
+  "proposed_fix": "Mode of withdrawal execution: NULL=legacy (17%), 0=unknown/fallback (3.8%), 1=Standard (75.2%), 2=Alternate e.g. eToroMoney/ACH (4%). FK to Dim_CashoutMode (Tier 1 - Billing.WithdrawToFunding)",
+  "raw_response": "{\"verdict\": \"FAIL\", \"severity\": \"LOW\", \"reason\": \"The enum labels differ: source says 0=unknown/fallback and 1=Standard, while downstream says 0=Manual and 1=Auto Create, which could mislead analysts interpreting the codes.\", \"proposed_fix\": \"Mode of withdrawal execution: NULL=legacy (17%), 0=unknown/fallback (3.8%), 1=Standard (75.2%), 2=Alternate e.g. eToroMoney/ACH (4%). FK to Dim_CashoutMode (Tier 1 - Billing.WithdrawToFunding)\"}\n",
+  "cached": false
+}
