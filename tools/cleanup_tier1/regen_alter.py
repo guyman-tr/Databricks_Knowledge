@@ -125,6 +125,38 @@ def regen_for_corrections(corrections_path: Path, apply: bool) -> int:
     return n_changed
 
 
+def regen_for_apply_reports(report_globs: list[str], apply: bool) -> int:
+    """Walk one or more `audits/_apply_report_*.csv` files; for every distinct
+    wiki_path that has at least one row with status 'applied' or 'dry_run',
+    regenerate the matching alter.sql."""
+    wikis: list[Path] = []
+    seen: set[Path] = set()
+    for pattern in report_globs:
+        for rep in REPO.glob(pattern):
+            with rep.open(encoding="utf-8", newline="") as f:
+                for row in csv.DictReader(f):
+                    if row.get("status") not in ("applied", "dry_run"):
+                        continue
+                    wp = row.get("wiki_path") or ""
+                    if not wp:
+                        continue
+                    p = REPO / wp
+                    if p in seen:
+                        continue
+                    seen.add(p)
+                    if p.exists():
+                        wikis.append(p)
+    n_changed = 0
+    for w in wikis:
+        res = regen_alter_for_wiki(w, apply=apply)
+        if res["changes"]:
+            n_changed += 1
+            mode = "UPDATE" if apply else "would-update"
+            print(f"  {mode} {res['alter']} ({res['changes']} column comment edits)")
+    print(f"Wikis scanned: {len(wikis)}, alter files with changes: {n_changed}")
+    return n_changed
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--corrections",
@@ -132,6 +164,10 @@ def main() -> None:
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--wiki", default="",
                     help="If set, regen only this single wiki path (relative to repo)")
+    ap.add_argument("--apply-report", action="append", default=[],
+                    help="Glob (relative to repo) of apply-report CSV(s) to derive "
+                         "wiki list from. Can be passed multiple times. When set, "
+                         "overrides --corrections.")
     args = ap.parse_args()
     if args.wiki:
         p = REPO / args.wiki
@@ -140,6 +176,9 @@ def main() -> None:
             sys.exit(1)
         res = regen_alter_for_wiki(p, apply=args.apply)
         print(res)
+        return
+    if args.apply_report:
+        regen_for_apply_reports(args.apply_report, apply=args.apply)
         return
     regen_for_corrections(Path(args.corrections), apply=args.apply)
 

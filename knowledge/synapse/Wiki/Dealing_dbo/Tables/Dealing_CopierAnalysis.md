@@ -96,7 +96,7 @@ Based on current open positions in BI_DB_PositionPnL on @date:
 | Club | varchar(20) | Copier's loyalty club tier: Bronze / Silver / Gold / Platinum / Diamond (Tier 2 — Dim_PlayerLevel) |
 | TotalEquity | money | Copier's total account equity = ABS(ActualNWA + Liabilities) from V_Liabilities (Tier 2 — DWH_dbo.V_Liabilities) |
 | RiskScore | int | Copier's 7-day avg risk score (1–10) based on daily AvgSTD (Tier 2 — DWH_CIDsDailyRisk) |
-| Region | varchar(25) | Copier's geographic region (Tier 1 — Dim_Country) |
+| Region | varchar(25) | Marketing region label for this country. Loaded from Dictionary.MarketingRegion.Name via JOIN on MarketingRegionID. NOT the geographic region from Dictionary.Region. Up to 21 distinct values (e.g., "ROW", "Africa", "French", "Arabic"). Used for marketing campaign grouping. |
 | Country | varchar(25) | Copier's country (Tier 1 — Dim_Country) |
 | Language | varchar(20) | Copier's platform language (Tier 1 — Dim_Language) |
 | TraderType | varchar(20) | Copy behaviour type derived from avg mirror holding time (Tier 2 — computed) |
