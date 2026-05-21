@@ -212,7 +212,7 @@ Source: `DWH_dbo.Dim_Position`
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | Date | date | NO | Reporting date — the snapshot date for which ASIC monitoring alerts are computed. One row per (Date, RealCID). Injected by SP parameter @Date. (Tier 2 — SP_BI_DB_ASIC_Monitoring_CFD) |
-| 2 | RealCID | int | NO | Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values. (Tier 1 — Fact_SnapshotCustomer) |
+| 2 | RealCID | int | NO | Real (funded) customer ID. Hash distribution key. The primary customer identifier in the DWH ecosystem. FK to Dim_Customer (if exists). 46.4M distinct values. (Tier 2 — Fact_SnapshotCustomer) |
 | 3 | RegisteredReal | datetime | YES | Account registration date (renamed from Registered). Default=getdate(). (Tier 1 — Dim_Customer, Customer.CustomerStatic) |
 | 4 | Country | varchar(50) | YES | Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 — Dim_Country, Dictionary.Country upstream wiki) |
 | 5 | Club | varchar(50) | YES | Tier display name: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond, Internal, N/A. Used in BackOffice reporting JOINs and customer-facing UI. (Tier 1 — Dim_PlayerLevel, Dictionary.PlayerLevel) |

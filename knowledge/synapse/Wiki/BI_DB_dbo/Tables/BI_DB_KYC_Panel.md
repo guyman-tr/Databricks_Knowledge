@@ -174,136 +174,136 @@ Do NOT use `DaysFromFTD_Group` as a join key or in GROUP BY for time-series anal
 
 ## 4. Elements
 
-| # | Column | Type | Nullable | Confidence | Tier | Description |
-|---|--------|------|----------|------------|------|-------------|
-| 1 | RealCID | bigint | YES | CODE-BACKED | T2 | eToro production CID (RealCID from Dim_Customer). Join key to all DWH fact tables via CID=RealCID. |
-| 2 | GCID | bigint | YES | CODE-BACKED | T2 | Global Customer ID from UserApiDB. Distribution key. Join key to KYC source tables. Prefer RealCID for DWH joins. |
-| 3 | IsFTD | bit | YES | CODE-BACKED | T2 | 1 if customer has made at least one deposit (Dim_Customer.IsDepositor=1). 0 for non-depositors. |
-| 4 | IsFirstAction | bit | YES | CODE-BACKED | T2 | 1 if customer has performed at least one trading action (BI_DB_First5Actions.FirstAction IS NOT NULL). |
-| 5 | FunnelName | varchar(200) | YES | CODE-BACKED | T2 | Acquisition funnel segment: 'SocialCopy' (came via copy trading), 'Copy' (other copy), 'Direct' (organic), 'None' (unclassified). |
-| 6 | Reg_Date | date | YES | CODE-BACKED | T2 | Registration date (YYYYMMDD char format cast to date). From Dim_Customer.RegisteredReal. |
-| 7 | Reg_Month | bigint | YES | CODE-BACKED | T2 | Registration year-month as YYYYMM integer. Useful for monthly cohort aggregation. |
-| 8 | FTD_Date | date | YES | CODE-BACKED | T2 | First Time Deposit date. '1900-01-01' for non-depositors. |
-| 9 | FTD_Month | bigint | YES | CODE-BACKED | T2 | FTD year-month as YYYYMM integer. |
-| 10 | Q3_Trading_Knowledge | varchar(200) | YES | CODE-BACKED | T2 | Q3 raw answer ID (trading knowledge: educational and professional background). |
-| 11 | Q3_Is_Professional_Knowledge | smallint | YES | CODE-BACKED | T2 | 1 if Q3 responses indicate professional trading knowledge (courses, experience, or academic degree). |
-| 12 | Q3_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Composite STRING_AGG of Q3 credential flags (e.g., "Professional Experience, Academic Degree"). Not a single answer text. |
-| 13 | Q23_Assessment | varchar(200) | YES | CODE-BACKED | T2 | Q23 raw answer ID. Q23 is the core appropriateness assessment question. |
-| 14 | Q23_Is_Assessment_Pass | smallint | YES | CODE-BACKED | T2 | 1 if Q23 answer ID meets the pass threshold. |
-| 15 | Q23_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q23. |
-| 16 | Experience_Level | varchar(50) | YES | CODE-BACKED | T2 | Composite experience tier: MAX(Q33, Q34, Q35 tiers) → 'Non', 'Low', 'Med', 'High', 'N/A'. See §2.4. |
-| 17 | Q33_Experience_Equities | varchar(200) | YES | CODE-BACKED | T2 | Q33 raw answer ID (equities trading experience). |
-| 18 | Q33_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q33. |
-| 19 | Q34_Experience_Crypto | varchar(200) | YES | CODE-BACKED | T2 | Q34 raw answer ID (crypto trading experience). |
-| 20 | Q34_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q34. |
-| 21 | Q35_Experience_CFDs | varchar(200) | YES | CODE-BACKED | T2 | Q35 raw answer ID (CFD trading experience). |
-| 22 | Q35_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q35. |
-| 23 | Q2_Experience | varchar(200) | YES | CODE-BACKED | T2 | Q2 raw answer ID (general trading experience years). |
-| 24 | Q2_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q2. |
-| 25 | Q10_Annual_Income | varchar(200) | YES | CODE-BACKED | T2 | Q10 raw answer ID (annual income bracket). |
-| 26 | Q10_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q10. |
-| 27 | Q11_Liquid_Assets | varchar(200) | YES | CODE-BACKED | T2 | Q11 raw answer ID (liquid assets bracket). |
-| 28 | Q11_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q11. |
-| 29 | Q9_Risk_Reward_Scenario | varchar(200) | YES | CODE-BACKED | T2 | Q9 raw answer ID (risk/reward scenario understanding). |
-| 30 | Q9_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q9. |
-| 31 | Q14_Planned_Invested_Amount | varchar(200) | YES | CODE-BACKED | T2 | Q14 raw answer ID (total planned investment amount bracket). |
-| 32 | Q14_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q14. |
-| 33 | Q27_Planned_Investment_Instrument | varchar(200) | YES | CODE-BACKED | T2 | Q27 raw answer ID (planned instrument types — multi-select). Prefer Is_PI_* flags for individual instrument checks. |
-| 34 | Is_PI_Stocks | bit | YES | CODE-BACKED | T2 | 1 if customer plans to invest in Stocks (from Q27 multi-select). |
-| 35 | Is_PI_Crypto | bit | YES | CODE-BACKED | T2 | 1 if customer plans to invest in Crypto (from Q27). |
-| 36 | Is_PI_FX | bit | YES | CODE-BACKED | T2 | 1 if customer plans to invest in FX/CFDs (from Q27). |
-| 37 | Total_PI_Answers | smallint | YES | CODE-BACKED | T2 | Count of distinct instrument selections in Q27 (0–3). |
-| 38 | Q5_Trading_Strategy | varchar(200) | YES | CODE-BACKED | T2 | Q5 raw answer ID (preferred trading strategy). |
-| 39 | Q5_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q5. |
-| 40 | Q8_Trading_Primary_Purpose | varchar(200) | YES | CODE-BACKED | T2 | Q8 raw answer ID (primary purpose for trading: income/growth/speculation/etc.). |
-| 41 | Q8_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q8. |
-| 42 | Q15_Sources_of_Income | varchar(200) | YES | CODE-BACKED | T2 | Q15 primary/last answer ID (sources of income — multi-select question). |
-| 43 | Q15_AnswerText | varchar(max) | YES | CODE-BACKED | T2 | STRING_AGG of all selected income source answer texts (multi-select). |
-| 44 | Q26_Sources_of_Funds | varchar(200) | YES | CODE-BACKED | T2 | Q26 primary/last answer ID (sources of funds for investment — multi-select). |
-| 45 | Q26_AnswerText | varchar(max) | YES | CODE-BACKED | T2 | STRING_AGG of all selected fund source answer texts (multi-select). |
-| 46 | Q18_Occupation | varchar(200) | YES | CODE-BACKED | T2 | Q18 raw answer ID (occupation category). |
-| 47 | Q18_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q18. |
-| 48 | GapInDays_Reg_to_FTD_Group | varchar(200) | YES | CODE-BACKED | T2 | Days from registration to FTD, bucketed: '0', '1-3', '4-7', '8-14', '15-30', '31+', 'N/A'. |
-| 49 | DaysFromFTD_Group | varchar(200) | YES | CODE-BACKED | T2 | Days from FTD to yesterday, bucketed: '0', '1-7', '8-14', '15-30', '31+', 'N/A'. RECOMPUTED DAILY — not stable. |
-| 50 | VerificationLevelID | smallint | YES | CODE-BACKED | T1 | KYC verification tier ID. 1=Basic, 2=Verified, 3=Fully Verified, etc. From Dim_Customer. |
-| 51 | CountryID | int | YES | CODE-BACKED | T1 | FK to Dim_Country. Customer's registered country. |
-| 52 | CountryName | varchar(100) | YES | CODE-BACKED | T1 | Country name from Dim_Country. |
-| 53 | Region | varchar(100) | YES | CODE-BACKED | T1 | Marketing region label from Dim_Country (e.g., 'EMEA', 'LatAm', 'APAC'). |
-| 54 | EU | bit | YES | CODE-BACKED | T1 | 1 if customer's country is an EU member state. From Dim_Country. |
-| 55 | RegulationID | int | YES | CODE-BACKED | T1 | FK to Dim_Regulation. Regulatory jurisdiction governing this customer. |
-| 56 | RegulatgionName | varchar(200) | YES | CODE-BACKED | T2 | Regulation name from Dim_Regulation. NOTE: column name contains typo 'RegulatgionName' (extra 'g') — matches SP code. Use square brackets when referencing. |
-| 57 | Club | varchar(200) | YES | CODE-BACKED | T1 | eToro Club loyalty tier name (Bronze/Silver/Gold/Platinum/Platinum Plus/Diamond) from Dim_PlayerLevel. |
-| 58 | Gender | varchar(200) | YES | CODE-BACKED | T1 | Customer self-reported gender. From Dim_Customer. |
-| 59 | Age_Curr | int | YES | CODE-BACKED | T1 | Current age in years. From Dim_Customer. |
-| 60 | Age_On_Reg | int | YES | INFERRED | T3 | Age at time of registration. From Dim_Customer. |
-| 61 | CFD_Status | varchar(50) | YES | CODE-BACKED | T2 | CFD access status: 'CFD_Allowed', 'CFD_Blocked', or NULL (no assessment). From BI_DB_Scored_Appropriateness_Negative_Market. See §2.6. |
-| 62 | CFD_BlockDate | date | YES | CODE-BACKED | T2 | Date CFD access was blocked. NULL if never blocked. |
-| 63 | CFD_BlockReasonDesc | varchar(200) | YES | CODE-BACKED | T2 | Reason description for CFD block (e.g., 'Failed Appropriateness Test'). |
-| 64 | CFD_ReleaseDate | date | YES | CODE-BACKED | T2 | Date CFD access was restored after blocking. NULL if still blocked or never blocked. |
-| 65 | CFD_ReleaseReasonDesc | varchar(200) | YES | CODE-BACKED | T2 | Reason description for CFD release. |
-| 66 | DateDiffBlockRelease | int | YES | CODE-BACKED | T2 | Days between CFD block date and release date. NULL if still blocked or never blocked. |
-| 67 | FirstDepositAmount | bigint | YES | CODE-BACKED | T1 | First deposit amount in USD. From Dim_Customer.FirstDepositAmount. |
-| 68 | FirstAction_Date | date | YES | CODE-BACKED | T2 | Date of customer's first trading action. From BI_DB_First5Actions. |
-| 69 | FirstAction_Month | bigint | YES | CODE-BACKED | T2 | First action year-month as YYYYMM. |
-| 70 | FirstAction | varchar(200) | YES | CODE-BACKED | T2 | Type of first trading action (e.g., 'Buy', 'CopyTrade'). From BI_DB_First5Actions. |
-| 71 | FirstAction_Detailed | varchar(200) | YES | CODE-BACKED | T2 | More detailed first action description. From BI_DB_First5Actions. |
-| 72 | FirstInstrument | varchar(200) | YES | CODE-BACKED | T2 | First instrument traded (symbol or instrument name). From BI_DB_First5Actions. |
-| 73 | Deposit7days | decimal(38,2) | YES | CODE-BACKED | T2 | Total deposits in first 7 days after FTD. From BI_DB_First5Actions. |
-| 74 | Deposit14days | decimal(38,2) | YES | CODE-BACKED | T2 | Total deposits in first 14 days after FTD. From BI_DB_First5Actions. |
-| 75 | Deposit30days | decimal(38,2) | YES | CODE-BACKED | T2 | Total deposits in first 30 days after FTD. From BI_DB_First5Actions. |
-| 76 | Revenue7days | decimal(38,2) | YES | CODE-BACKED | T2 | Revenue generated in first 7 days after FTD. From BI_DB_First5Actions. |
-| 77 | Revenue14days | decimal(38,2) | YES | CODE-BACKED | T2 | Revenue in first 14 days after FTD. From BI_DB_First5Actions. |
-| 78 | Revenue30days | decimal(38,2) | YES | CODE-BACKED | T2 | Revenue in first 30 days after FTD. From BI_DB_First5Actions. |
-| 79 | Equity7days | decimal(38,4) | YES | CODE-BACKED | T2 | Customer account equity at 7 days after FTD. From BI_DB_First5Actions. |
-| 80 | Equity14days | decimal(38,4) | YES | CODE-BACKED | T2 | Customer equity at 14 days after FTD. From BI_DB_First5Actions. |
-| 81 | Equity30days | decimal(38,4) | YES | CODE-BACKED | T2 | Customer equity at 30 days after FTD. From BI_DB_First5Actions. |
-| 82 | Q23_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q23 (appropriateness assessment). Used in Assessment_Type derivation. |
-| 83 | Q33_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q33 (equities experience). Used in Experience_Level computation. |
-| 84 | Q34_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q34 (crypto experience). Used in Experience_Level computation. |
-| 85 | Q35_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q35 (CFD experience). Used in Experience_Level computation. |
-| 86 | Q2_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q2. |
-| 87 | Q10_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q10. |
-| 88 | Q11_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q11. |
-| 89 | Q9_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q9. |
-| 90 | Q14_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q14. |
-| 91 | Q5_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q5. |
-| 92 | Q8_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q8. |
-| 93 | Q18_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q18. |
-| 94 | UpdateDate | datetime | YES | CODE-BACKED | T2 | ETL metadata: timestamp when this row was last updated by the ETL pipeline. |
-| 95 | KYC_LastUpdateDate | datetime | YES | CODE-BACKED | T2 | Latest KYC answer submission timestamp from UserApiDB (MAX OccurredAt per GCID). Reflects when customer last updated their questionnaire responses. |
-| 96 | Q29_Time_Frame_Investing | varchar(200) | YES | CODE-BACKED | T2 | Q29 raw answer ID (intended investment time frame: short/medium/long term). |
-| 97 | Q29_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q29. |
-| 98 | Q29_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q29. |
-| 99 | Q36_US_Permanent_Resident | varchar(200) | YES | CODE-BACKED | T2 | Q36 raw answer ID (US permanent residency status — FinCEN/NFA-regulated customers). |
-| 100 | Q36_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q36. |
-| 101 | Q36_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q36. |
-| 102 | Q40_W9_Certification | varchar(200) | YES | CODE-BACKED | T2 | Q40 raw answer ID (W9 tax certification — US-specific compliance). |
-| 103 | Q40_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q40. |
-| 104 | Q40_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q40. |
-| 105 | Q30_FINRA | varchar(200) | YES | CODE-BACKED | T2 | Q30 raw answer ID (FINRA/broker affiliation — multi-select, US-regulated customers). |
-| 106 | Q30_Is_Shareholder | bit | YES | CODE-BACKED | T2 | 1 if Q30 includes "10%+ shareholder of a publicly traded company". |
-| 107 | Q30_Is_Employed_By_Broker | bit | YES | CODE-BACKED | T2 | 1 if Q30 includes "employed by a broker/dealer or FINRA member firm". |
-| 108 | Q30_Is_Public_Official | bit | YES | CODE-BACKED | T2 | 1 if Q30 includes "government official or public figure". |
-| 109 | Q30_Is_None_Apply_To_Me | bit | YES | CODE-BACKED | T2 | 1 if Q30 answer is "none of the above". |
-| 110 | Q32_PEP_MM_Question | varchar(200) | YES | CODE-BACKED | T2 | Q32 raw answer ID (PEP / money manager declaration — multi-select). |
-| 111 | Q32_Is_Shareholder | bit | YES | CODE-BACKED | T2 | 1 if Q32 includes shareholder status. |
-| 112 | Q32_Is_Employed_By_Broker | bit | YES | CODE-BACKED | T2 | 1 if Q32 includes broker/dealer employment. |
-| 113 | Q32_Is_Public_Official | bit | YES | CODE-BACKED | T2 | 1 if Q32 includes public official / PEP status. |
-| 114 | Q32_Is_None_Apply_To_Me | bit | YES | CODE-BACKED | T2 | 1 if Q32 is "none apply to me". |
-| 115 | Q50_Is_Vulnerable_Client | varchar(200) | YES | CODE-BACKED | T2 | Q50 raw answer ID (FCA Consumer Duty vulnerable client self-assessment — FCA-regulated only). |
-| 116 | Q50_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q50. |
-| 117 | Q50_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q50. |
-| 118 | Q45_Invested_Amount_CFDs | varchar(200) | YES | CODE-BACKED | T2 | Q45 raw answer ID (total amount invested in CFDs historically). |
-| 119 | Q45_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q45. |
-| 120 | Q45_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q45. |
-| 121 | Q47_Invested_Amount_Equities | varchar(200) | YES | CODE-BACKED | T2 | Q47 raw answer ID (total amount invested in equities historically). |
-| 122 | Q47_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q47. |
-| 123 | Q47_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q47. |
-| 124 | Q48_Invested_Amount_Crypto | varchar(200) | YES | CODE-BACKED | T2 | Q48 raw answer ID (total amount invested in crypto historically). |
-| 125 | Q48_AnswerID | int | YES | CODE-BACKED | T2 | Raw numeric answer ID for Q48. |
-| 126 | Q48_AnswerText | varchar(200) | YES | CODE-BACKED | T2 | Answer text for Q48. |
-| 127 | Assessment_Type | varchar(200) | YES | CODE-BACKED | T2 | KYC assessment questionnaire version: 'AnswerID_84_87' (legacy), 'AnswerID_101_104', 'AnswerID_142_146' (current), 'N/A'. See §2.2. |
-| 128 | Total_Points_Assessment_142_146 | int | YES | CODE-BACKED | T2 | Appropriateness score for AnswerID_142_146 type (+2 correct/-2 wrong). -100 sentinel for all other Assessment_Type values. See §2.3. |
+| # | Element | Type | Nullable | Description |
+|---|---------|------|----------|-------------|
+| 1 | RealCID | bigint | YES | eToro production CID (RealCID from Dim_Customer). Join key to all DWH fact tables via CID=RealCID. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 2 | GCID | bigint | YES | Global Customer ID from UserApiDB. Distribution key. Join key to KYC source tables. Prefer RealCID for DWH joins. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 3 | IsFTD | bit | YES | 1 if customer has made at least one deposit (Dim_Customer.IsDepositor=1). 0 for non-depositors. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 4 | IsFirstAction | bit | YES | 1 if customer has performed at least one trading action (BI_DB_First5Actions.FirstAction IS NOT NULL). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 5 | FunnelName | varchar(200) | YES | Acquisition funnel segment: 'SocialCopy' (came via copy trading), 'Copy' (other copy), 'Direct' (organic), 'None' (unclassified). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 6 | Reg_Date | date | YES | Registration date (YYYYMMDD char format cast to date). From Dim_Customer.RegisteredReal. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 7 | Reg_Month | bigint | YES | Registration year-month as YYYYMM integer. Useful for monthly cohort aggregation. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 8 | FTD_Date | date | YES | First Time Deposit date. '1900-01-01' for non-depositors. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 9 | FTD_Month | bigint | YES | FTD year-month as YYYYMM integer. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 10 | Q3_Trading_Knowledge | varchar(200) | YES | Q3 raw answer ID (trading knowledge: educational and professional background). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 11 | Q3_Is_Professional_Knowledge | smallint | YES | 1 if Q3 responses indicate professional trading knowledge (courses, experience, or academic degree). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 12 | Q3_AnswerText | varchar(200) | YES | Composite STRING_AGG of Q3 credential flags (e.g., "Professional Experience, Academic Degree"). Not a single answer text. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 13 | Q23_Assessment | varchar(200) | YES | Q23 raw answer ID. Q23 is the core appropriateness assessment question. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 14 | Q23_Is_Assessment_Pass | smallint | YES | 1 if Q23 answer ID meets the pass threshold. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 15 | Q23_AnswerText | varchar(200) | YES | Answer text for Q23. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 16 | Experience_Level | varchar(50) | YES | Composite experience tier: MAX(Q33, Q34, Q35 tiers) → 'Non', 'Low', 'Med', 'High', 'N/A'. See §2.4. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 17 | Q33_Experience_Equities | varchar(200) | YES | Q33 raw answer ID (equities trading experience). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 18 | Q33_AnswerText | varchar(200) | YES | Answer text for Q33. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 19 | Q34_Experience_Crypto | varchar(200) | YES | Q34 raw answer ID (crypto trading experience). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 20 | Q34_AnswerText | varchar(200) | YES | Answer text for Q34. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 21 | Q35_Experience_CFDs | varchar(200) | YES | Q35 raw answer ID (CFD trading experience). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 22 | Q35_AnswerText | varchar(200) | YES | Answer text for Q35. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 23 | Q2_Experience | varchar(200) | YES | Q2 raw answer ID (general trading experience years). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 24 | Q2_AnswerText | varchar(200) | YES | Answer text for Q2. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 25 | Q10_Annual_Income | varchar(200) | YES | Q10 raw answer ID (annual income bracket). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 26 | Q10_AnswerText | varchar(200) | YES | Answer text for Q10. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 27 | Q11_Liquid_Assets | varchar(200) | YES | Q11 raw answer ID (liquid assets bracket). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 28 | Q11_AnswerText | varchar(200) | YES | Answer text for Q11. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 29 | Q9_Risk_Reward_Scenario | varchar(200) | YES | Q9 raw answer ID (risk/reward scenario understanding). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 30 | Q9_AnswerText | varchar(200) | YES | Answer text for Q9. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 31 | Q14_Planned_Invested_Amount | varchar(200) | YES | Q14 raw answer ID (total planned investment amount bracket). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 32 | Q14_AnswerText | varchar(200) | YES | Answer text for Q14. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 33 | Q27_Planned_Investment_Instrument | varchar(200) | YES | Q27 raw answer ID (planned instrument types — multi-select). Prefer Is_PI_* flags for individual instrument checks. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 34 | Is_PI_Stocks | bit | YES | 1 if customer plans to invest in Stocks (from Q27 multi-select). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 35 | Is_PI_Crypto | bit | YES | 1 if customer plans to invest in Crypto (from Q27). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 36 | Is_PI_FX | bit | YES | 1 if customer plans to invest in FX/CFDs (from Q27). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 37 | Total_PI_Answers | smallint | YES | Count of distinct instrument selections in Q27 (0–3). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 38 | Q5_Trading_Strategy | varchar(200) | YES | Q5 raw answer ID (preferred trading strategy). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 39 | Q5_AnswerText | varchar(200) | YES | Answer text for Q5. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 40 | Q8_Trading_Primary_Purpose | varchar(200) | YES | Q8 raw answer ID (primary purpose for trading: income/growth/speculation/etc.). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 41 | Q8_AnswerText | varchar(200) | YES | Answer text for Q8. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 42 | Q15_Sources_of_Income | varchar(200) | YES | Q15 primary/last answer ID (sources of income — multi-select question). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 43 | Q15_AnswerText | varchar(max) | YES | STRING_AGG of all selected income source answer texts (multi-select). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 44 | Q26_Sources_of_Funds | varchar(200) | YES | Q26 primary/last answer ID (sources of funds for investment — multi-select). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 45 | Q26_AnswerText | varchar(max) | YES | STRING_AGG of all selected fund source answer texts (multi-select). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 46 | Q18_Occupation | varchar(200) | YES | Q18 raw answer ID (occupation category). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 47 | Q18_AnswerText | varchar(200) | YES | Answer text for Q18. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 48 | GapInDays_Reg_to_FTD_Group | varchar(200) | YES | Days from registration to FTD, bucketed: '0', '1-3', '4-7', '8-14', '15-30', '31+', 'N/A'. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 49 | DaysFromFTD_Group | varchar(200) | YES | Days from FTD to yesterday, bucketed: '0', '1-7', '8-14', '15-30', '31+', 'N/A'. RECOMPUTED DAILY — not stable. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 50 | VerificationLevelID | smallint | YES | KYC verification tier ID. 1=Basic, 2=Verified, 3=Fully Verified, etc. From Dim_Customer. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 51 | CountryID | int | YES | FK to Dim_Country. Customer's registered country. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 52 | CountryName | varchar(100) | YES | Country name from Dim_Country. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 53 | Region | varchar(100) | YES | Marketing region label from Dim_Country (e.g., 'EMEA', 'LatAm', 'APAC'). (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 54 | EU | bit | YES | 1 if customer's country is an EU member state. From Dim_Country. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 55 | RegulationID | int | YES | FK to Dim_Regulation. Regulatory jurisdiction governing this customer. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 56 | RegulatgionName | varchar(200) | YES | Regulation name from Dim_Regulation. NOTE: column name contains typo 'RegulatgionName' (extra 'g') — matches SP code. Use square brackets when referencing. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 57 | Club | varchar(200) | YES | eToro Club loyalty tier name (Bronze/Silver/Gold/Platinum/Platinum Plus/Diamond) from Dim_PlayerLevel. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 58 | Gender | varchar(200) | YES | Customer self-reported gender. From Dim_Customer. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 59 | Age_Curr | int | YES | Current age in years. From Dim_Customer. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 60 | Age_On_Reg | int | YES | Age at time of registration. From Dim_Customer. (Tier 3 - Live data sampling; INFERRED) |
+| 61 | CFD_Status | varchar(50) | YES | CFD access status: 'CFD_Allowed', 'CFD_Blocked', or NULL (no assessment). From BI_DB_Scored_Appropriateness_Negative_Market. See §2.6. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 62 | CFD_BlockDate | date | YES | Date CFD access was blocked. NULL if never blocked. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 63 | CFD_BlockReasonDesc | varchar(200) | YES | Reason description for CFD block (e.g., 'Failed Appropriateness Test'). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 64 | CFD_ReleaseDate | date | YES | Date CFD access was restored after blocking. NULL if still blocked or never blocked. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 65 | CFD_ReleaseReasonDesc | varchar(200) | YES | Reason description for CFD release. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 66 | DateDiffBlockRelease | int | YES | Days between CFD block date and release date. NULL if still blocked or never blocked. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 67 | FirstDepositAmount | bigint | YES | First deposit amount in USD. From Dim_Customer.FirstDepositAmount. (Tier 1 - Upstream wiki verbatim; CODE-BACKED) |
+| 68 | FirstAction_Date | date | YES | Date of customer's first trading action. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 69 | FirstAction_Month | bigint | YES | First action year-month as YYYYMM. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 70 | FirstAction | varchar(200) | YES | Type of first trading action (e.g., 'Buy', 'CopyTrade'). From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 71 | FirstAction_Detailed | varchar(200) | YES | More detailed first action description. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 72 | FirstInstrument | varchar(200) | YES | First instrument traded (symbol or instrument name). From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 73 | Deposit7days | decimal(38,2) | YES | Total deposits in first 7 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 74 | Deposit14days | decimal(38,2) | YES | Total deposits in first 14 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 75 | Deposit30days | decimal(38,2) | YES | Total deposits in first 30 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 76 | Revenue7days | decimal(38,2) | YES | Revenue generated in first 7 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 77 | Revenue14days | decimal(38,2) | YES | Revenue in first 14 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 78 | Revenue30days | decimal(38,2) | YES | Revenue in first 30 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 79 | Equity7days | decimal(38,4) | YES | Customer account equity at 7 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 80 | Equity14days | decimal(38,4) | YES | Customer equity at 14 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 81 | Equity30days | decimal(38,4) | YES | Customer equity at 30 days after FTD. From BI_DB_First5Actions. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 82 | Q23_AnswerID | int | YES | Raw numeric answer ID for Q23 (appropriateness assessment). Used in Assessment_Type derivation. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 83 | Q33_AnswerID | int | YES | Raw numeric answer ID for Q33 (equities experience). Used in Experience_Level computation. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 84 | Q34_AnswerID | int | YES | Raw numeric answer ID for Q34 (crypto experience). Used in Experience_Level computation. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 85 | Q35_AnswerID | int | YES | Raw numeric answer ID for Q35 (CFD experience). Used in Experience_Level computation. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 86 | Q2_AnswerID | int | YES | Raw numeric answer ID for Q2. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 87 | Q10_AnswerID | int | YES | Raw numeric answer ID for Q10. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 88 | Q11_AnswerID | int | YES | Raw numeric answer ID for Q11. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 89 | Q9_AnswerID | int | YES | Raw numeric answer ID for Q9. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 90 | Q14_AnswerID | int | YES | Raw numeric answer ID for Q14. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 91 | Q5_AnswerID | int | YES | Raw numeric answer ID for Q5. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 92 | Q8_AnswerID | int | YES | Raw numeric answer ID for Q8. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 93 | Q18_AnswerID | int | YES | Raw numeric answer ID for Q18. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 94 | UpdateDate | datetime | YES | ETL metadata: timestamp when this row was last updated by the ETL pipeline. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 95 | KYC_LastUpdateDate | datetime | YES | Latest KYC answer submission timestamp from UserApiDB (MAX OccurredAt per GCID). Reflects when customer last updated their questionnaire responses. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 96 | Q29_Time_Frame_Investing | varchar(200) | YES | Q29 raw answer ID (intended investment time frame: short/medium/long term). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 97 | Q29_AnswerID | int | YES | Raw numeric answer ID for Q29. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 98 | Q29_AnswerText | varchar(200) | YES | Answer text for Q29. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 99 | Q36_US_Permanent_Resident | varchar(200) | YES | Q36 raw answer ID (US permanent residency status — FinCEN/NFA-regulated customers). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 100 | Q36_AnswerID | int | YES | Raw numeric answer ID for Q36. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 101 | Q36_AnswerText | varchar(200) | YES | Answer text for Q36. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 102 | Q40_W9_Certification | varchar(200) | YES | Q40 raw answer ID (W9 tax certification — US-specific compliance). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 103 | Q40_AnswerID | int | YES | Raw numeric answer ID for Q40. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 104 | Q40_AnswerText | varchar(200) | YES | Answer text for Q40. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 105 | Q30_FINRA | varchar(200) | YES | Q30 raw answer ID (FINRA/broker affiliation — multi-select, US-regulated customers). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 106 | Q30_Is_Shareholder | bit | YES | 1 if Q30 includes "10%+ shareholder of a publicly traded company". (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 107 | Q30_Is_Employed_By_Broker | bit | YES | 1 if Q30 includes "employed by a broker/dealer or FINRA member firm". (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 108 | Q30_Is_Public_Official | bit | YES | 1 if Q30 includes "government official or public figure". (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 109 | Q30_Is_None_Apply_To_Me | bit | YES | 1 if Q30 answer is "none of the above". (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 110 | Q32_PEP_MM_Question | varchar(200) | YES | Q32 raw answer ID (PEP / money manager declaration — multi-select). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 111 | Q32_Is_Shareholder | bit | YES | 1 if Q32 includes shareholder status. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 112 | Q32_Is_Employed_By_Broker | bit | YES | 1 if Q32 includes broker/dealer employment. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 113 | Q32_Is_Public_Official | bit | YES | 1 if Q32 includes public official / PEP status. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 114 | Q32_Is_None_Apply_To_Me | bit | YES | 1 if Q32 is "none apply to me". (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 115 | Q50_Is_Vulnerable_Client | varchar(200) | YES | Q50 raw answer ID (FCA Consumer Duty vulnerable client self-assessment — FCA-regulated only). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 116 | Q50_AnswerID | int | YES | Raw numeric answer ID for Q50. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 117 | Q50_AnswerText | varchar(200) | YES | Answer text for Q50. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 118 | Q45_Invested_Amount_CFDs | varchar(200) | YES | Q45 raw answer ID (total amount invested in CFDs historically). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 119 | Q45_AnswerID | int | YES | Raw numeric answer ID for Q45. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 120 | Q45_AnswerText | varchar(200) | YES | Answer text for Q45. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 121 | Q47_Invested_Amount_Equities | varchar(200) | YES | Q47 raw answer ID (total amount invested in equities historically). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 122 | Q47_AnswerID | int | YES | Raw numeric answer ID for Q47. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 123 | Q47_AnswerText | varchar(200) | YES | Answer text for Q47. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 124 | Q48_Invested_Amount_Crypto | varchar(200) | YES | Q48 raw answer ID (total amount invested in crypto historically). (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 125 | Q48_AnswerID | int | YES | Raw numeric answer ID for Q48. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 126 | Q48_AnswerText | varchar(200) | YES | Answer text for Q48. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 127 | Assessment_Type | varchar(200) | YES | KYC assessment questionnaire version: 'AnswerID_84_87' (legacy), 'AnswerID_101_104', 'AnswerID_142_146' (current), 'N/A'. See §2.2. (Tier 2 - SP/DDL code; CODE-BACKED) |
+| 128 | Total_Points_Assessment_142_146 | int | YES | Appropriateness score for AnswerID_142_146 type (+2 correct/-2 wrong). -100 sentinel for all other Assessment_Type values. See §2.3. (Tier 2 - SP/DDL code; CODE-BACKED) |
 
 ---
 
@@ -341,18 +341,6 @@ BI_DB_dbo.BI_DB_KYC_Panel (21.7M rows, HASH(GCID), daily snapshot)
 | Consumer | Join Key | Purpose |
 |---------|---------|---------|
 | SP_Regulation_Change_Abuse | Listed in OpsDB dependencies (unverified at code level — SP code does not reference BI_DB_KYC_Panel) | Suspected stale dependency |
-
----
-
-## 7. Tier Legend
-
-| Tier | Meaning |
-|------|---------|
-| T1 | Verbatim from upstream wiki (DWH_dbo Dim* docs) |
-| T2 | ETL-computed — traced to SP code |
-| T3 | Inferred from data sampling or naming |
-| T4 | Best-available guess |
-
 ---
 
 *Documented 2026-04-22 — Batch 33 | SP: SP_KYC_Panel | Quality target: 8.5+*

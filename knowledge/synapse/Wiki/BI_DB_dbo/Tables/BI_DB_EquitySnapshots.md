@@ -118,8 +118,8 @@
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | Date | int | NULL | Date dimension key (YYYYMMDD integer). Identifies the snapshot date. Clustered index key (with CID). Range: 20130101–20260412. (Tier 2 — SP_User_Segment_Snapshot) |
-| 2 | CID | int | NOT NULL | Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 1 — DWH_dbo.Fact_SnapshotEquity) |
-| 3 | RealizedEquity | money | NOT NULL | Total account value. If History.ActiveCredit.RealizedEquity is non-zero, taken directly; otherwise computed as TotalCash + TotalPositionsAmount + InProcessCashouts. Confluence definition: "Unrealized Equity — the total funds in the account, including profit/loss from open positions. The Portfolio value figure represented on the platform is Unrealized equity." (Tier 1 — DWH_dbo.Fact_SnapshotEquity) |
+| 2 | CID | int | NOT NULL | Customer ID. Grouping key for all equity aggregations. FK to Dim_Customer (CID = RealCID). HASH distribution key and part of PK. (Tier 2 — DWH_dbo.Fact_SnapshotEquity) |
+| 3 | RealizedEquity | money | NOT NULL | Total account value. If History.ActiveCredit.RealizedEquity is non-zero, taken directly; otherwise computed as TotalCash + TotalPositionsAmount + InProcessCashouts. Confluence definition: "Unrealized Equity — the total funds in the account, including profit/loss from open positions. The Portfolio value figure represented on the platform is Unrealized equity." (Tier 2 — DWH_dbo.Fact_SnapshotEquity) |
 | 4 | UpdateDate | datetime | NULL | ETL timestamp set to GETDATE() at INSERT time. NULL for legacy rows predating UpdateDate column addition (earliest data from 2013). (Tier 2 — SP_User_Segment_Snapshot) |
 
 ---

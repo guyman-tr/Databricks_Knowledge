@@ -166,7 +166,7 @@ Of its 79 columns: 35 inherit byte-for-byte from upstream wikis (Tier 1), 30 are
 | 50 | InitialUnits | DECIMAL | YES | Opening unit count denominator for partial proration ladders. (Tier 1 — Trade.PositionTbl) |
 | 51 | PaymentStatusID | INT | YES | Payment pipeline status IDs on inbound/outbound monies — join `Dim_PaymentStatus`. (Tier 5 — domain expert) |
 | 52 | IsDiscounted | INT | YES | 1=commission discount applied at open (legacy bit widening). (Tier 1 — Trade.PositionTbl) |
-| 53 | IsSettled | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(IsSettled, IsSettled)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 53 | IsSettled | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(IsSettled, IsSettled)`. (Tier 5 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
 | 54 | CommissionByUnits | DECIMAL | YES | Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position) |
 | 55 | FullCommissionByUnits | DECIMAL | YES | Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission. (Tier 1 — Trade.Position) |
 | 56 | IsFTD | INT | YES | First-Time Deposit tagging on qualifying deposit/action rows (NULL elsewhere). Derived during credit classification & snapshot merges. (Tier 2 — SP_Fact_CustomerAction) |

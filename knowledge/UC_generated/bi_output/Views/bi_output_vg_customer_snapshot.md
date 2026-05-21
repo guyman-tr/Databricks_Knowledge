@@ -233,29 +233,29 @@ Of its 56 columns: 13 inherit byte-for-byte from upstream wikis (Tier 1), 43 are
 | 1 | GCID | INT | YES | Global Customer ID — the cross-platform identifier linking RealCID to demo and external systems. Source: Ext_FSC_Real_Customer_Customer (primary), Ext_Dim_Customer_CustomerIdentification_DLT (fallback). (Tier 2 — via Fact_SnapshotCustomer) |
 | 2 | Date | TIMESTAMP | YES | Direct passthrough from upstream. Formula: `Date`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
 | 3 | DateID | INT | YES | Direct passthrough from upstream. Formula: `DateID`. (Tier 2 — from `main.bi_output.bi_output_vg_date`) |
-| 4 | PlayerLevelID | INT | YES | Account tier (4=demo, other=real tiers). FK to Dim_PlayerLevel. Critical for IsValidCustomer. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 4 | PlayerLevelID | INT | YES | Account tier (4=demo, other=real tiers). FK to Dim_PlayerLevel. Critical for IsValidCustomer. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 5 | ClubTier | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerlevel`) |
 | 6 | RegulationID | INT | YES | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
 | 7 | Regulation | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_regulation`) |
-| 8 | VerificationLevelID | INT | YES | KYC verification level. FK to Dim_VerificationLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 8 | VerificationLevelID | INT | YES | KYC verification level. FK to Dim_VerificationLevel. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 9 | VerificationLevel | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_verificationlevel`) |
-| 10 | CountryID | INT | YES | Customer's registered country. FK to Dim_Country. Key filter for valid customer segmentation. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 10 | CountryID | INT | YES | Customer's registered country. FK to Dim_Country. Key filter for valid customer segmentation. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 11 | Country | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
 | 12 | Region | STRING | YES | Direct passthrough from upstream. Formula: `MarketingRegionManualName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_country`) |
 | 13 | AccountManagerID | INT | YES | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
 | 14 | AccountManager | STRING | YES | Function call computed in source. Formula: `concat(FirstName, ' ', LastName)`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_manager`) |
-| 15 | LanguageID | INT | YES | Customer's preferred interface language. FK to Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 15 | LanguageID | INT | YES | Customer's preferred interface language. FK to Dim_Language. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 16 | Language | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language`) |
 | 17 | CommunicationLanguageID | INT | YES | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
 | 18 | CommunicationLanguage | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_language`) |
-| 19 | AccountTypeID | INT | YES | Account type (e.g., 7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 19 | AccountTypeID | INT | YES | Account type (e.g., 7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 20 | AccountType | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accounttype`) |
-| 21 | GuruStatusID | INT | YES | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 21 | GuruStatusID | INT | YES | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 22 | GuruStatusName | STRING | YES | Direct passthrough from upstream. Formula: `GuruStatusName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_gurustatus`) |
 | 23 | IsPI | INT | NO | `IsPI` discriminator: `GuruStatusID > 1` → set to 1 else 0. Formula: `CASE WHEN GuruStatusID > 1 THEN 1 ELSE 0 END`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked`) |
-| 24 | AccountStatusID | INT | YES | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 24 | AccountStatusID | INT | YES | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 25 | AccountStatusName | STRING | YES | Direct passthrough from upstream. Formula: `AccountStatusName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_accountstatus`) |
-| 26 | PlayerStatusID | INT | YES | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 26 | PlayerStatusID | INT | YES | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 27 | PlayerStatusName | STRING | YES | Direct passthrough from upstream. Formula: `Name`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 28 | CanOpenPosition | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanOpenPosition`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |
 | 29 | CanClosePosition | BOOLEAN | YES | Direct passthrough from upstream. Formula: `CanClosePosition`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_playerstatus`) |

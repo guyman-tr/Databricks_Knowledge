@@ -168,7 +168,7 @@ HASH(RealCID) with CLUSTERED INDEX on Date. Customer-level lookups (WHERE RealCI
 | 12 | OpenDateID | varchar(100) | YES | Position open date as YYYYMMDD string. NULL for non-position alerts. Cast to INT/date for filtering. (Tier 2 — Dim_Position wiki) |
 | 13 | InvestedAmount | varchar(100) | YES | Position invested amount (from Dim_Position.Amount or Volume depending on rule). NULL for non-position alerts. Stored as varchar. (Tier 3 — SP inferred) |
 | 14 | InstrumentType | varchar(100) | YES | Instrument category text label from Dim_Instrument.InstrumentType (e.g., 'Stocks', 'Commodities', 'Crypto Currencies'). NULL for non-position alerts. (Tier 2 — Dim_Instrument wiki) |
-| 15 | IsSettled | varchar(100) | YES | Settlement flag as varchar: '1'=Real asset, '0'=CFD. NULL for non-position alerts. (Tier 2 — Dim_Position wiki) |
+| 15 | IsSettled | varchar(100) | YES | Settlement flag as varchar: '1'=Real asset, '0'=CFD. NULL for non-position alerts. (Tier 5 — Dim_Position wiki) |
 | 16 | Leverage | varchar(100) | YES | Position leverage ratio as varchar (e.g., '1', '5', '10'). NULL for non-position alerts. (Tier 3 — SP inferred) |
 | 17 | IsCopy | varchar(100) | YES | Copy-trade indicator as varchar. Derived from position MirrorID/ParentPositionID. NULL for non-position alerts. (Tier 2 — SP_Compliance_Forbidden_Trades) |
 | 18 | PlayerStatus | varchar(100) | YES | Customer account status at alert time from Dim_PlayerStatus.Name. E.g., 'Normal', 'Blocked'. (Tier 2 — SP_Compliance_Forbidden_Trades) |

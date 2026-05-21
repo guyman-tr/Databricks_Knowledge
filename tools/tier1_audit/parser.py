@@ -44,7 +44,8 @@ from typing import Iterable
 # Group 1 = tier label  (1, 2, 3, 4, 5, U, N)
 # Group 2 = source text (free-form, terminated by the closing paren)
 TIER_TAG_RE = re.compile(
-    r"\(\s*Tier\s+([0-9NUu])\s*(?:[-–—]|--)\s*([^()]+?)\s*\)",
+    # Order matters: try `--` first so we don't half-consume into the source_text
+    r"\(\s*Tier\s+([0-9NUu])\s*(?:--|[-–—])\s*([^()]+?)\s*\)",
     re.IGNORECASE,
 )
 
@@ -58,8 +59,18 @@ HEADER_DESC_RE = re.compile(r"^\s*(description|notes|business meaning|definition
                             re.IGNORECASE)
 HEADER_TYPE_RE = re.compile(r"^\s*(type|datatype|data\s*type)\s*$", re.IGNORECASE)
 HEADER_NULL_RE = re.compile(r"^\s*(null(?:able)?)\s*$", re.IGNORECASE)
-HEADER_CONF_RE = re.compile(r"^\s*(confidence|tier|provenance)\s*$", re.IGNORECASE)
+HEADER_CONF_RE = re.compile(r"^\s*(confidence|provenance)\s*$", re.IGNORECASE)
+HEADER_TIER_RE = re.compile(r"^\s*tier\s*$", re.IGNORECASE)
+HEADER_SOURCE_RE = re.compile(r"^\s*(source|upstream|origin|source column)\s*$",
+                              re.IGNORECASE)
+HEADER_FORMULA_RE = re.compile(
+    r"^\s*(formula|transformation|expression|compute|computation|logic)\s*$",
+    re.IGNORECASE,
+)
 HEADER_INDEX_RE = re.compile(r"^\s*(#|num|number|ord|ordinal)\s*$", re.IGNORECASE)
+
+# Tier-column cell values: T0, T1, T2, T3, T4, T5, TU, Tu, TN
+TIER_CELL_RE = re.compile(r"^\s*T\s*([0-5UuNn])\s*$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -85,6 +96,14 @@ class ColumnRow:
     description: str = ""             # tier-tag stripped
     raw_description: str = ""         # original, untouched
     tier_tags: list[TierTag] = field(default_factory=list)
+    # --- tier-column ("5-col") dialect support -----------------------------
+    tier_format: str = "inline"        # "inline" (tag in description) or
+                                       # "column" (tier in its own cell)
+    source_cell: str | None = None     # value of "Source" column when present
+    formula_cell: str | None = None    # value of "Formula"/"Transformation"
+    tier_cell: str | None = None       # value of "Tier" column when present
+    tier_cell_col: int | None = None   # zero-based column index of tier cell
+    description_col: int | None = None  # zero-based col index of description
 
     @property
     def primary_tier_tag(self) -> TierTag | None:
@@ -115,9 +134,10 @@ def _is_separator_row(cells: list[str]) -> bool:
 
 
 def _identify_columns(headers: list[str]) -> dict[str, int] | None:
-    """Map our role names (index/name/type/null/confidence/description) to
-    column positions. Returns None if we can't find both name and description
-    columns."""
+    """Map our role names (index/name/type/null/confidence/description/source/
+    formula/tier) to column positions. Returns a roles dict if we can find at
+    least `name` and one of {description, source, formula, tier}; otherwise
+    None."""
     roles: dict[str, int] = {}
     for i, h in enumerate(headers):
         if HEADER_INDEX_RE.match(h) and "index" not in roles:
@@ -128,11 +148,20 @@ def _identify_columns(headers: list[str]) -> dict[str, int] | None:
             roles["type"] = i
         elif HEADER_NULL_RE.match(h) and "null" not in roles:
             roles["null"] = i
+        elif HEADER_TIER_RE.match(h) and "tier" not in roles:
+            roles["tier"] = i
         elif HEADER_CONF_RE.match(h) and "confidence" not in roles:
             roles["confidence"] = i
+        elif HEADER_SOURCE_RE.match(h) and "source" not in roles:
+            roles["source"] = i
+        elif HEADER_FORMULA_RE.match(h) and "formula" not in roles:
+            roles["formula"] = i
         elif HEADER_DESC_RE.match(h) and "description" not in roles:
             roles["description"] = i
-    if "name" not in roles or "description" not in roles:
+    if "name" not in roles:
+        return None
+    # At least one of these must exist for the row to carry meaning:
+    if not any(k in roles for k in ("description", "source", "formula", "tier")):
         return None
     return roles
 
@@ -194,31 +223,76 @@ def _state_machine_parse(path: Path, lines: list[str]) -> list[ColumnRow]:
                 state = "scan"
                 roles = None
                 continue
-            if roles is None or len(cells) <= roles.get("name", 0) or \
-               len(cells) <= roles.get("description", 0):
+            if roles is None or len(cells) <= roles.get("name", 0):
                 continue
             name = cells[roles["name"]].strip()
-            raw_desc = cells[roles["description"]].strip()
             if not name or name.startswith(":-") or set(name) <= {"-"}:
                 continue
-            # Skip rows whose name is itself just punctuation (some wikis
-            # have a "continuation" pattern).
             if not re.search(r"[A-Za-z0-9_]", name):
                 continue
+
+            def _cell(role: str) -> str | None:
+                if role not in roles:
+                    return None
+                pos = roles[role]
+                if len(cells) <= pos:
+                    return None
+                return cells[pos].strip()
+
+            desc_present = "description" in roles
+            source_cell = _cell("source")
+            formula_cell = _cell("formula")
+            tier_cell = _cell("tier")
+
+            if desc_present and len(cells) > roles["description"]:
+                raw_desc = cells[roles["description"]].strip()
+                tier_format = "inline"
+            else:
+                # Synthesise a description for tier-column dialect wikis
+                # (e.g. V_Liabilities) so we always have something to show.
+                parts: list[str] = []
+                if source_cell:
+                    parts.append(f"Source: {source_cell}")
+                if formula_cell:
+                    parts.append(f"Formula: {formula_cell}")
+                raw_desc = " | ".join(parts) if parts else ""
+                tier_format = "column"
+
             tags = _extract_tags(raw_desc)
+
+            # Tier-column dialect: synthesise a TierTag from the Tier cell so
+            # downstream consumers (audit, reconciler, downgrade engine) treat
+            # both dialects identically.
+            if tier_cell:
+                m = TIER_CELL_RE.match(tier_cell)
+                if m:
+                    tier_letter = m.group(1).upper()
+                    # The Source column already names the parent explicitly
+                    # (e.g. "Fact_SnapshotEquity.Credit"); fall back to a
+                    # composite if no Source cell exists.
+                    src_text = source_cell or formula_cell or ""
+                    tags.append(TierTag(tier=tier_letter, source_text=src_text.strip()))
+                    tier_format = "column"
+
             rows.append(
                 ColumnRow(
                     wiki_path=path,
                     table_no=table_no,
                     line_no=idx,
-                    column_index=cells[roles["index"]].strip() if "index" in roles and len(cells) > roles["index"] else None,
+                    column_index=_cell("index"),
                     column_name=name,
-                    column_type=cells[roles["type"]].strip() if "type" in roles and len(cells) > roles["type"] else None,
-                    nullable=cells[roles["null"]].strip() if "null" in roles and len(cells) > roles["null"] else None,
-                    confidence=cells[roles["confidence"]].strip() if "confidence" in roles and len(cells) > roles["confidence"] else None,
+                    column_type=_cell("type"),
+                    nullable=_cell("null"),
+                    confidence=_cell("confidence"),
                     description=_strip_tags(raw_desc),
                     raw_description=raw_desc,
                     tier_tags=tags,
+                    tier_format=tier_format,
+                    source_cell=source_cell,
+                    formula_cell=formula_cell,
+                    tier_cell=tier_cell,
+                    tier_cell_col=roles.get("tier"),
+                    description_col=roles.get("description"),
                 )
             )
     return rows

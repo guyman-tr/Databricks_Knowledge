@@ -41,7 +41,7 @@ Returns each customer’s **first eligible trading-platform action** row: **`Fac
 | 4 | Instrument | Dim_Instrument.Name | Joined on first-action `InstrumentID` | T2 |
 | 5 | InstrumentTypeID | Dim_Instrument.InstrumentTypeID | Same join as row 4 | T2 |
 | 6 | InstrumentType | Dim_Instrument.InstrumentType | Same join as row 4 | T2 |
-| 7 | IsSettled | Fact_CustomerAction.IsSettled | Same first-action filter as row 1 | T2 |
+| 7 | IsSettled | Fact_CustomerAction.IsSettled | Same first-action filter as row 1 | T5 |
 | 8 | MirrorID | Fact_CustomerAction.MirrorID | Same first-action filter as row 1 | T2 |
 | 9 | Exchange | Dim_Instrument.Exchange | Same join as row 4 | T2 |
 | 10 | ISINCode | Dim_Instrument.ISINCode | Same join as row 4 | T2 |
@@ -50,8 +50,8 @@ Returns each customer’s **first eligible trading-platform action** row: **`Fac
 | 13 | IsCopyFund | Dim_Mirror.MirrorTypeID | `CASE WHEN ISNULL(MirrorTypeID, 0) = 4 THEN 1 ELSE 0 END` on first-action row | T2 |
 | 14 | FirstTradeDateID | Fact_CustomerAction.DateID | **`DateID` WHERE** same **`ActionTypeID IN (1,17,39)`** and airdrop filter, **`RN = 1`** | T2 |
 | 15 | Occurred | Fact_CustomerAction.Occurred | **`Occurred` WHERE** same filters as row 14 | T2 |
-| 16 | IsDepositor | Dim_Customer.IsDepositor | Direct from `Dim_Customer` | T1 |
-| 17 | FirstDepositDate | Dim_Customer.FirstDepositDate | Direct from `Dim_Customer` | T1 |
+| 16 | IsDepositor | Dim_Customer.IsDepositor | Direct from `Dim_Customer` | T2 |
+| 17 | FirstDepositDate | Dim_Customer.FirstDepositDate | Direct from `Dim_Customer` | T2 |
 | 18 | FirstTradeDate | Fact_CustomerAction.Occurred | **`Occurred AS FirstTradeDate`** — same value as row 15 on first-action row | T2 |
 | 19 | FirstDepositDateID | Dim_Customer.FirstDepositDate | `CAST(FORMAT(CAST(FirstDepositDate AS DATE), 'yyyyMMdd') AS INT)` | T2 |
 | 20 | FirstActionType | Dim_Instrument, Fact_CustomerAction | `CASE` on `InstrumentTypeID`, `MirrorID`, `IsCopyFund` → Forex / Crypto / Copy / Copy Fund / Stocks / NA | T2 |

@@ -182,10 +182,10 @@ _Not_Migrated._
 |---|---------|------|----------|-------------|
 | 1 | ReportDateID | int | YES | Report run date in YYYYMMDD format. DELETE/INSERT partition key. The SP loops @date-2 to @date for holiday coverage. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, @dateID) |
 | 2 | SnapshotDateID | int | YES | Historical snapshot date for this event in YYYYMMDD format. From BI_DB_Futures_Finance_Prep_Data.DateID. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, Prep_Data.DateID) |
-| 3 | PositionID | bigint | YES | Child position ID from the CHILDS CTE. NULL if parent-only event. From BI_DB_Futures_Finance_Prep_Data.PositionID. (Tier 1 — BI_DB_Futures_Finance_Prep_Data.PositionID) |
-| 4 | OriginalPositionID | bigint | YES | Parent/original position ID. Primary position identifier for running totals and partitioning. (Tier 1 — BI_DB_Futures_Finance_Prep_Data.OriginalPositionID) |
-| 5 | CID | int | YES | Customer ID. Distribution key. 96 distinct CIDs on a typical day. (Tier 1 — BI_DB_Futures_Finance_Prep_Data.CID) |
-| 6 | InstrumentID | int | YES | Futures instrument identifier. 25 distinct instruments (SP500, NatGas, Gold, Oil, DOW30 etc.). (Tier 1 — BI_DB_Futures_Finance_Prep_Data.InstrumentID) |
+| 3 | PositionID | bigint | YES | Child position ID from the CHILDS CTE. NULL if parent-only event. From BI_DB_Futures_Finance_Prep_Data.PositionID. (Tier 2 — BI_DB_Futures_Finance_Prep_Data.PositionID) |
+| 4 | OriginalPositionID | bigint | YES | Parent/original position ID. Primary position identifier for running totals and partitioning. (Tier 2 — BI_DB_Futures_Finance_Prep_Data.OriginalPositionID) |
+| 5 | CID | int | YES | Customer ID. Distribution key. 96 distinct CIDs on a typical day. (Tier 2 — BI_DB_Futures_Finance_Prep_Data.CID) |
+| 6 | InstrumentID | int | YES | Futures instrument identifier. 25 distinct instruments (SP500, NatGas, Gold, Oil, DOW30 etc.). (Tier 2 — BI_DB_Futures_Finance_Prep_Data.InstrumentID) |
 | 7 | ActionType | varchar(100) | YES | Position change action. Values: Hold (84%), EditSLIncreaseAmount (10%), Open (4%), EditSLReduceAmount (2%), PartialCloseOrig (<0.2%), CloseOrig, ChildClose. NULL on weekend dummy rows. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, Prep_Data.ActionType) |
 | 8 | SettlementTime | datetime | YES | Settlement timestamp for the current event. Passthrough from Prep_Data. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, Prep_Data.SettlementTime) |
 | 9 | SettlementTimePrev | datetime | YES | Previous settlement timestamp. Passthrough from Prep_Data. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, Prep_Data.SettlementTimePrev) |
@@ -201,7 +201,7 @@ _Not_Migrated._
 | 19 | AmountInUnits | decimal(18,6) | YES | Current amount in instrument units. LAG-filled via correlated subquery + UPDATE for gap-filling. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, computed from LastKnownAmountInUnits) |
 | 20 | LotCountDecimal | decimal(18,6) | YES | Current lot count with decimal precision. LAG-filled. NULLed for ChangeTypeID=1 (open events). (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, computed from LastKnownLotCount) |
 | 21 | PreviousLotCountDecimal | decimal(18,6) | YES | Previous lot count with decimal precision. LAG-filled. NULLed for ChangeTypeID=1 (open events). (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, computed from LastKnownLotCount) |
-| 22 | IsBuy | int | YES | Trade direction. 1=long, 0=short. From position upstream data. (Tier 1 — BI_DB_Futures_Finance_Prep_Data.IsBuy) |
+| 22 | IsBuy | int | YES | Trade direction. 1=long, 0=short. From position upstream data. (Tier 2 — BI_DB_Futures_Finance_Prep_Data.IsBuy) |
 | 23 | InitForexRate | decimal(18,6) | YES | SQF-adjusted open rate. Computed: raw InitForexRate + ISNULL(adj.Adj, 0). (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, Prep_Data + SQF adj) |
 | 24 | EndForexRate | decimal(18,6) | YES | SQF-adjusted close rate. COALESCE(child.EndForexRate, parent.EndForexRate) + adj. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, Prep_Data + SQF adj) |
 | 25 | IsStartOfDay | int | YES | 1 if this is the first event of the day for this OriginalPositionID. ROW_NUMBER partitioned by OriginalPositionID, DateID. (Tier 2 — SP_Finance_Real_Futures_Custody_And_Transfers, computed) |

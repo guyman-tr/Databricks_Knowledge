@@ -62,7 +62,7 @@
 | 5 | Buy/Sell | varchar(50) | YES | Trade direction ('Buy' / 'Sell'). |
 | 6 | CurrencyPrimary | varchar(50) | YES | Local currency. |
 | 7 | IB_Units | decimal(16,6) | YES | Trade units reported by IB. (Tier 2 — LP_IB_I3158027_Trades) |
-| 8 | eToro_Units | decimal(16,6) | YES | eToro hedge trade units. (Tier 1 — Dealing_Duco_ActivityRecon.eToro_Units) |
+| 8 | eToro_Units | decimal(16,6) | YES | eToro hedge trade units. (Tier 2 — Dealing_Duco_ActivityRecon.eToro_Units) |
 | 9 | Clients_Units | decimal(16,6) | YES | Client NOP units. |
 | 10 | IB-eToro_Units | decimal(16,6) | YES | IB_Units − eToro_Units. Reconciliation diff. |
 | 11 | IB-Clients_Units | decimal(16,6) | YES | IB_Units − Clients_Units. |

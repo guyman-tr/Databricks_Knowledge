@@ -107,7 +107,7 @@ Referenced by at least 9 other SPs — used as a source for aggregated complianc
 | 5 | FTDDateID | int | YES | Integer date key for FTD_Date. `CAST(CONVERT(CHAR(8), FirstDepositDate, 112) AS INT)` → YYYYMMDD format. (Tier 2 — SP_BI_DB_Scored_Appropriateness_Negative_Market, ETL-computed) |
 | 6 | EOW_FTD | datetime | YES | End-of-week date containing the FTD. `DATEADD(dd, -(DATEPART(dw, FirstDepositDate) - 7), FirstDepositDate)`. Used for weekly FTD cohort grouping. (Tier 2 — SP_BI_DB_Scored_Appropriateness_Negative_Market, ETL-computed) |
 | 7 | EOM_FTD | datetime | YES | End-of-month date containing the FTD. `EOMONTH(FirstDepositDate)`. Used for monthly FTD cohort grouping. (Tier 2 — SP_BI_DB_Scored_Appropriateness_Negative_Market, ETL-computed) |
-| 8 | FTD_Amount | money | YES | First deposit amount in USD. Renamed from Dim_Customer.FirstDepositAmount. (Tier 1 — Fact_BillingDeposit.Amount) |
+| 8 | FTD_Amount | money | YES | First deposit amount in USD. Renamed from Dim_Customer.FirstDepositAmount. (Tier 2 — Fact_BillingDeposit.Amount) |
 | 9 | RegulationID | tinyint | YES | Current regulation ID. From Dim_Customer.RegulationID. JOINs to Dim_Regulation.DWHRegulationID. (Tier 1 — Dictionary.Regulation) |
 | 10 | RegulationName | varchar(200) | YES | Current regulation name. Decoded from Dim_Regulation.Name via RegulationID. Example values: CySEC, FCA, ASIC, BVI. (Tier 1 — Dictionary.Regulation, join-enriched via Dim_Customer.RegulationID) |
 | 11 | RegionID | int | YES | Marketing region ID. Renamed from Dim_Country.MarketingRegionID via Dim_Customer.CountryID. (Tier 1 — Dictionary.MarketingRegion, join-enriched) |

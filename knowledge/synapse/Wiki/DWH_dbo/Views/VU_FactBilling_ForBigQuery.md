@@ -78,7 +78,7 @@ All 122 columns are passthrough from `Fact_BillingDeposit`. String columns are w
 | 37 | FunnelID | int | Fact_BillingDeposit.FunnelID | Marketing funnel ID. FK to Dictionary.Funnel. (Tier 1 — inherited from Fact_BillingDeposit wiki) |
 | 38 | AmountUSD | decimal(11,2) | Fact_BillingDeposit.AmountUSD | Second INSERT: `Amount * ExchangeRate AS AmountUSD` from `Ext_FBD_Fact_BillingDeposit` snapshot (post-cap `Amount`). (Tier 2 — via Fact_BillingDeposit) |
 | 39 | SessionID | bigint | Fact_BillingDeposit.SessionID | ETL `ISNULL(d.SessionID,0)` (Ext_FBD). Platform enrichment JOIN uses `CID`+`SessionID`. (Tier 2 — via Fact_BillingDeposit) |
-| 40 | PlatformID | int | Fact_BillingDeposit.PlatformID | Pass-1 INSERT leaves NULL; then `UPDATE a SET PlatformID=b.PlatformID FROM Fact_BillingDeposit a JOIN #Fact_BillingDepositAction b ON `a.CID=b.RealCID AND a.SessionID=b.SessionID` where `#Fact_BillingDepositAction` is built from `Fact_CustomerAction` `ActionTypeID=14` (`SP_Fact_BillingDeposit_DL_To_Synapse`). (Tier 2 — via Fact_BillingDeposit) |
+| 40 | PlatformID | int | Fact_BillingDeposit.PlatformID | Pass-1 INSERT leaves NULL; then `UPDATE a SET PlatformID=b.PlatformID FROM Fact_BillingDeposit a JOIN #Fact_BillingDepositAction b ON `a.CID=b.RealCID AND a.SessionID=b.SessionID` where `#Fact_BillingDepositAction` is built from `Fact_CustomerAction` `ActionTypeID=14` (`SP_Fact_BillingDeposit_DL_To_Synapse`). (Tier 5 — via Fact_BillingDeposit) |
 
 ### 3.2 Sanitized String Columns (via `RemoveSpecialChars(CONVERT(NVARCHAR(MAX), ...))`)
 

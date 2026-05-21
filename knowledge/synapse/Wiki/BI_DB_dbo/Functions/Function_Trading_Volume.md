@@ -43,14 +43,14 @@ Builds **two legs** from `DWH_dbo.Dim_Position` over the inclusive `YYYYMMDD` ra
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | CID | DWH_dbo.Dim_Position.CID | GROUP BY customer from position events | T1 |
+| 1 | CID | DWH_dbo.Dim_Position.CID | GROUP BY customer from position events | T2 |
 | 2 | InstrumentID | DWH_dbo.Dim_Position.InstrumentID | GROUP BY | T1 |
 | 3 | Leverage | DWH_dbo.Dim_Position.Leverage | GROUP BY | T1 |
 | 4 | DateID | DWH_dbo.Dim_Position.OpenDateID, CloseDateID | Event date from open or close leg of union | T2 |
 | 5 | VolumeOpen | DWH_dbo.Dim_Position.Volume | `SUM(CAST(VolumeOpen AS BIGINT))` where each open row has `VolumeOpen = ISNULL(CAST(Volume AS BIGINT),0)` and **`OpenDateID` BETWEEN @sdateInt AND @edateInt** | T2 |
 | 6 | VolumeClose | DWH_dbo.Dim_Position.VolumeOnClose | `SUM(CAST(VolumeClose AS BIGINT))` where each close row has `VolumeClose = ISNULL(CAST(VolumeOnClose AS BIGINT),0)` and **`CloseDateID` BETWEEN @sdateInt AND @edateInt** | T2 |
 | 7 | InvestedAmountOpen | DWH_dbo.Dim_Position.InitialAmountCents | `SUM(InvestedAmountOpen)` with `CASE WHEN IsPartialCloseChild=1 THEN 0 ELSE InitialAmountCents/100 END` on **open** rows only | T2 |
-| 8 | InvestedAmountClosed | DWH_dbo.Dim_Position.Amount | `SUM(Amount)` on **close** rows only (`CloseDateID` in range) | T2 |
+| 8 | InvestedAmountClosed | DWH_dbo.Dim_Position.Amount | `SUM(Amount)` on **close** rows only (`CloseDateID` in range) | TU |
 | 9 | TotalVolume | DWH_dbo.Dim_Position.Volume, VolumeOnClose | Row-level `ISNULL(VolumeOpen,0)+ISNULL(VolumeClose,0)` in CTE; output **`SUM(CAST(TotalVolume AS BIGINT))`** by group | T2 |
 | 10 | NetInvestedAmount | DWH_dbo.Dim_Position | Row-level `InvestedAmountOpen - InvestedAmountClosed` in CTE; output **`SUM(NetInvestedAmount)`** | T2 |
 | 11 | CountOpenTransactions | DWH_dbo.Dim_Position.IsPartialCloseChild | `SUM(CountOpenTransactions)` where open rows use `CASE WHEN IsPartialCloseChild=1 THEN 0 ELSE 1 END` (**excludes partial-close child opens**) | T2 |

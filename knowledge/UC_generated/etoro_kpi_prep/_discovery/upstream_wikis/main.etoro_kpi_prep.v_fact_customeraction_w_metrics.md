@@ -1,4 +1,8 @@
 ---
+object_fqn: main.etoro_kpi_prep.v_fact_customeraction_w_metrics
+object_type: VIEW
+producer_kind: view_definition
+generator: tools/uc_pipelines/generate_wiki.py
 object: main.etoro_kpi_prep.v_fact_customeraction_w_metrics
 schema: etoro_kpi_prep
 framework: uc-pipeline-doc
@@ -6,34 +10,37 @@ table_type: VIEW
 format: null
 column_count: 97
 row_count: null
-generated_at: 2026-05-17T18:00:00Z
+generated_at: '2026-05-19T12:04:40Z'
 upstreams:
-  - main.etoro_kpi_prep.v_fact_customeraction_enriched
-  - main.etoro_kpi_prep.v_dim_instrument_enriched
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee
-  - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals
-  - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror
-  - main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban
-  - main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban
-  - main.bi_db.bronze_etoro_trade_adminpositionlog
-  - main.general.bronze_recurringinvestment_recurringinvestment_planinstances
-  - main.dwh.dim_position
+- main.etoro_kpi_prep.v_fact_customeraction_enriched
+- main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched
+- main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals
+- main.etoro_kpi_prep.v_dim_instrument_enriched
+- main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror
+- main.general.bronze_recurringinvestment_recurringinvestment_planinstances
+- main.dwh.dim_position
+- main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee
+- main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban
+- main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban
 writer:
   kind: view_definition
-  path: null
-  source_code_snapshot: "_discovery/source_code/v_fact_customeraction_w_metrics.sql"
+  path: knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql
+  source_code_snapshot: knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql
+concept_count: 10
+formula_count: 97
 tier_breakdown:
-  tier1_columns: 30
-  tier2_columns: 53
-  tier3_columns: 4
+  tier1_columns: 25
+  tier2_columns: 68
+  tier3_columns: 1
   tier4_columns: 0
-  tier5_columns: 10
+  tier5_columns: 3
+  tier_null_columns: 0
   unverified_columns: 0
 ---
 
 # v_fact_customeraction_w_metrics
 
-> Pre-aggregation **revenue & flow metrics** view over `main.etoro_kpi_prep.v_fact_customeraction_enriched`: keeps the same per-event grain, drops 2 columns of the enriched view (`HistoryID`, `DemoCID`, `IPNumber`, `IsReal`, `CampaignID`, `BonusTypeID`, `LoginID`, `DurationInSeconds`, `PostID`, `CaseID`, `UpdateDate`, `TimeID`, `StatusID`, `PreviousOccurred`, `IsPlug`, `PostRootID`, `SessionID`, `RegulationIDOnOpen`, `PlatformID`, `InitialUnits`, `CountryIDByIP`, `IsAnonymousIP`, `ProxyType`, `VolumeOnOpen`, `VolumeOnClose`), filters `ActionTypeID NOT IN (14, 41)` (no logins or registrations), and **adds 43 computed columns**: 20+ revenue-bucket CASE columns (`RollOverFee`, `Dividend`, `SDRT`, `AdminFee`, `SpotAdjustFee`, `ConversionFee*`, `CashoutFeeExludingRedeem`, `TransferCoinFee`, `DormantFee`, `ShareLending*`, `CashoutAdjustment`, `*CopyAmount`, `CryptoToPosition`, `BonusCompensation`, `PnLAdjustment`, `InvestedAmount*`, `Volume*`, `TicketFee*`), commission-total rebuilds (`FullCommissionTotal`, `CommissionTotal`, `*CloseAdjustment`), 6 flag CASE columns (`IsActiveTrade`, `IsSQF`, `Is_245_Instrument`, `IsCopyFund`, `IsOpenFromIBAN`, `IsClosedToIBAN`, `IsRecurring`, `IsC2P`), and 2 JOIN-passthroughs (`ParentCID`, `ParentUserName` from `dim_mirror`). The view excludes logins/registrations entirely (`ActionTypeID NOT IN (14, 41)`).
+> View in `main.etoro_kpi_prep`. 10 business concept(s) in §2; 93 of 97 columns documented from anchored evidence; 0 unverified (see sidecar).
 
 | Property | Value |
 |----------|-------|
@@ -41,327 +48,373 @@ tier_breakdown:
 | **Type** | VIEW |
 | **Format** | n/a |
 | **Owner** | guyman@etoro.com |
-| **Row count** | n/a (view) |
-| **Writer** | `view_definition` |
-| **Primary upstream** | `main.etoro_kpi_prep.v_fact_customeraction_enriched` |
-| **JOIN upstreams (10)** | `v_dim_instrument_enriched`, `bi_db_depositwithdrawfee` (×2 aliases dwfd / dwfw), `bi_db_depositwithdrawfee_reversals`, `dim_mirror`, `positions_opened_from_iban`, `positions_closed_to_iban`, `recurring_positions` (CTE), `bronze_etoro_trade_adminpositionlog` |
-| **Downstream consumers** | `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` (materialized writer) |
-| **Generated** | 2026-05-17 |
+| **Row count** | n/a |
+| **Column count** | 97 |
+| **Concepts** | 10 (see §2) |
+| **Downstream consumers** | 3 (see §6.2) |
+| **Generated** | 2026-05-19 |
 | **Created** | Sun Apr 19 11:23:40 UTC 2026 |
 
 ---
 
-## 1. What it is
+## 1. Business Meaning
 
-`v_fact_customeraction_w_metrics` sits one layer above `v_fact_customeraction_enriched`, on the same row grain (one row per customer action event, minus logins and registrations). Its job is to **explode each action into the set of revenue / fee / flow buckets** that downstream MIMO and revenue dashboards consume — instead of joining `Fact_CustomerAction` against 20+ TVFs (the Synapse pattern), every revenue type is materialized inline as a CASE column with a `0` default, so downstream queries are just `SUM(RollOverFee)`, `SUM(Dividend)`, etc. with no further joins.
+`v_fact_customeraction_w_metrics` is a view in `main.etoro_kpi_prep` that composes 8 CASE-based classifier flag(s) computed from upstream IDs, 2 JOIN-enriched dimension lookup(s).
 
-What it adds vs `v_fact_customeraction_enriched`:
+Production-to-UC lineage flows: production source → bronze/staging → gold mirror `main.etoro_kpi_prep.v_fact_customeraction_enriched` → this object. Canonical upstream documentation: `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.md`. Additional upstreams: 10 object(s), listed in §5 Lineage.
 
-- **27 fee/revenue CASE columns** (most resolve to `0` when their predicate doesn't match) — one per logical revenue type (overnight, dividend, SDRT, admin, spot adjustment, deposit-conversion, withdraw-conversion, deposit-conversion-reversal, cashout excl. redeem, transfercoin, dormant, share-lending eToro/User/Broker/Gross, cashout adjustment, new/stop/add/remove copy amounts, crypto-to-position, bonus compensation, P&L adjustment, invested-amount in/out, volume open/close, ticket-fee open/close).
-- **4 reconstructed commission columns** (`FullCommissionCloseAdjustment`, `CommissionCloseAdjustment`, `FullCommissionTotal`, `CommissionTotal`) — fold the open-vs-close commission decision into one signed column.
-- **3 instrument-attribute flags** (`IsSQF`, `Is_245_Instrument`, `IsCopyFund`) — via JOINs to `v_dim_instrument_enriched` (for SQF / 245) and `dim_mirror` (for copy-fund classification).
-- **2 copy-trade parent passthroughs** (`ParentCID`, `ParentUserName`) — from `dim_mirror`.
-- **4 "is-X" route flags** (`IsActiveTrade`, `IsOpenFromIBAN`, `IsClosedToIBAN`, `IsRecurring`, `IsC2P`) — combine `enriched.ActionTypeID` predicates with key-presence checks against the IBAN, recurring-investment, and admin-position-log JOINs.
-- **The `recurring_positions` CTE** — distinct `(PositionID, DepositID)` from `bronze_recurringinvestment_recurringinvestment_planinstances` LEFT JOINed to `dim_position` on `OrderID`, used as the IBAN-like attribute table for `IsRecurring`.
-
-What it drops vs `v_fact_customeraction_enriched`:
-
-- All login/registration-only columns: `DurationInSeconds`, `PostID`, `CaseID`, `SessionID`, `IsAnonymousIP`, `ProxyType`, `CountryIDByIP`, `IPNumber`, `LoginID` (some are present on this view but the rows are filtered out by `ActionTypeID NOT IN (14, 41)`).
-- Deprecated columns: `IsPlug`, `PreviousOccurred`, `PostRootID`, `BonusTypeID`, `CampaignID`, `PlatformID`, `RegulationIDOnOpen`.
-- Quality columns: `HistoryID` (non-unique anyway), `DemoCID` (always 0), `IsReal` (always 1), `StatusID`, `UpdateDate`, `TimeID`, `InitialUnits`.
-- `VolumeOnOpen` / `VolumeOnClose` are **reused** through CASE columns `VolumeOpen` / `VolumeClose` rather than carried through directly.
-
-Pure SQL `view_definition` writer — no scheduling. Refreshes on every query, with the cost dominated by the 10 LEFT JOINs.
+Of its 97 columns: 25 inherit byte-for-byte from upstream wikis (Tier 1), 68 are formula-assembled from cached source code (Tier 2 — see §4 for the formula and §2 for the named concept), 0 are null-with-provenance (Tier N — terminal-no-wiki upstream).
 
 ---
 
-## 2. Transform Logic
+## 2. Business Logic
 
-### 2.1 `WHERE ActionTypeID NOT IN (14, 41)` — login/registration cut
+### 2.1 `IsActiveTrade` discriminator: `actiontypeid = 35`, `isfeedividend = 1`, `actiontypeid = 35` → set to 1 else 0
+**What**: Computed flag on `IsActiveTrade` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsActiveTrade`
+**Rules**:
+- `actiontypeid = 35`
+- `isfeedividend = 1`
+- `actiontypeid = 35`
+- `isfeedividend = 2`
+- `actiontypeid = 35`
+- `isfeedividend = 3`
+- `actiontypeid = 36`
+- `CompensationReasonID = 117`
+- `actiontypeid = 36`
+- `CompensationReasonID = 118`
+- `actiontypeid IN (7, 44)`
+- `actiontypeid IN (8, 45)`
+- `actiontypeid = 30`
+- `isredeem = 0`
+- `actiontypeid = 30`
+- `isredeem = 1`
+- `actiontypeid = 36`
+- `CompensationReasonID = 30`
+- `actiontypeid = 36`
+- `CompensationReasonID = 119`
+- `actiontypeid = 36`
+- `CompensationReasonID = 119`
+- `actiontypeid = 36`
+- `CompensationReasonID = 119`
+- `actiontypeid = 36`
+- `CompensationReasonID = 119`
+- `actiontypeid = 36`
+- `CompensationReasonID IN (41, 51)`
+- `actiontypeid = 17`
+- `actiontypeid = 18`
+- `actiontypeid = 15`
+- `actiontypeid = 16`
+- `actiontypeid = 36`
+- `CompensationReasonID = 134`
+- `actiontypeid = 9`
+- `actiontypeid = 36`
+- `CompensationReasonID = 22`
+- `actiontypeid IN (1, 2, 3, 39)`
+- `actiontypeid IN (4, 5, 6, 28, 40)`
+- `actiontypeid IN (1, 2, 3, 39)`
+- `actiontypeid IN (4, 5, 6, 28, 40)`
+- `actiontypeid = 35`
+- `IsFeeDividend = 4`
+- `ticketfeeaction = '    '`
+- `actiontypeid = 35`
+- `IsFeeDividend = 4`
+- `ticketfeeaction = '     '`
+- `actiontypeid IN (4, 5, 6, 28, 40)`
+- `actiontypeid IN (4, 5, 6, 28, 40)`
+- `actiontypeid IN (1, 2, 3, 39)`
+- `actiontypeid IN (4, 5, 6, 28, 40)`
+- `actiontypeid IN (1, 2, 3, 39)`
+- `actiontypeid IN (4, 5, 6, 28, 40)`
+- `actiontypeid = 1`
+- `mirrorid = 0`
+- `actiontypeid IN (15, 17)`
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L71-L104
+**Source(s)**: `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_Reversals`, `main.etoro_kpi_prep.v_fact_customeraction_enriched`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee`
 
-**What**: Removes login (14) and registration (41) rows from the output.
-**Why**: This view powers revenue/flow analytics — logins and registrations don't generate revenue and have NULL position economics, so they only inflate row counts. They remain available in the upstream `v_fact_customeraction_enriched` for engagement analytics.
-**Side effect**: ~20% row drop versus the upstream view (logins are 68B+ rows in `Fact_CustomerAction` per the upstream wiki §2.1 distribution table).
+### 2.2 `IsSQF` discriminator: `IsSQF = 1` → set to 1 else 0
+**What**: Computed flag on `IsSQF` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsSQF`
+**Rules**:
+- `IsSQF = 1`
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L105-L105
+**Source(s)**: `main.etoro_kpi_prep.v_dim_instrument_enriched`
 
-### 2.2 The `recurring_positions` CTE
+### 2.3 `Is_245_Instrument` discriminator: `Is_245_Instrument = 1` → set to 1 else 0
+**What**: Computed flag on `Is_245_Instrument` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `Is_245_Instrument`
+**Rules**:
+- `Is_245_Instrument = 1`
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L106-L106
+**Source(s)**: `main.etoro_kpi_prep.v_dim_instrument_enriched`
 
-**What**: Builds a `(PositionID, DepositID)` lookup for "is this position part of a recurring investment plan?"
-**Inputs**: `main.general.bronze_recurringinvestment_recurringinvestment_planinstances rpi` LEFT JOIN `main.dwh.dim_position dp` ON `rpi.OrderID = dp.OrderID`.
-**Output**: distinct rows of `(dp.PositionID, rpi.DepositID)`. Either column can be NULL — the WHERE-clauses on the downstream JOIN use `WHERE PositionID IS NOT NULL` / `WHERE DepositID IS NOT NULL` to filter.
-**Consumed by**: the `IsRecurring` CASE column (via two LEFT JOINs `rip` and `ripdep`).
+### 2.4 `IsCopyFund` discriminator: `mirrortypeid = 4` (Fund per upstream wiki) → set to 1 else 0
+**What**: Computed flag on `IsCopyFund` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsCopyFund`
+**Rules**:
+- `mirrortypeid = 4` (Fund per upstream wiki)
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L107-L107
+**Source(s)**: `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror`
 
-### 2.3 The revenue-bucket CASE family (~27 columns)
+### 2.5 `IsOpenFromIBAN` computed flag
+**What**: Computed flag on `IsOpenFromIBAN` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsOpenFromIBAN`
+**Rules**:
+- (no explicit predicates / pattern-only concept)
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L110-L110
 
-**Pattern**: every revenue / fee bucket follows the same shape:
-```sql
-CASE WHEN <predicate> THEN <amount-expression> ELSE 0 END AS <Bucket>
-```
-- **Predicate**: a combination of `ActionTypeID`, sometimes `IsFeeDividend`, sometimes `CompensationReasonID`, sometimes a JOIN-existence check (`NOT dwfd.DepositID IS NULL`).
-- **Amount expression**: either `fca.Amount` (or `-1 * fca.Amount` for sign-flipping), or the joined fee/PIPs amount (`dwfd.PIPsCalculation`), or the Commission column.
-- **ELSE 0**: every revenue column is **always non-NULL** — rows that don't match the predicate contribute 0. This makes downstream `SUM(BucketName)` aggregations trivially safe.
+### 2.6 `IsClosedToIBAN` computed flag
+**What**: Computed flag on `IsClosedToIBAN` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsClosedToIBAN`
+**Rules**:
+- (no explicit predicates / pattern-only concept)
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L111-L111
 
-The full bucket → predicate → amount mapping is in §3 (Elements table). The buckets fall into 7 logical groups: **fees (rollover/dividend/SDRT/ticket)**, **comp-driven amounts (admin/spot/dormant/cashout-adj/crypto-to-pos/PnL-adj)**, **conversion-fees (deposit/withdraw/reversal — from depositwithdrawfee joins)**, **cashout fees (excl. redeem / transfercoin — split by `IsRedeem`)**, **share lending (eToro/user/broker/gross)**, **copy-trade amounts (new/stop/add/remove)**, **invested-amounts & volumes (open/close by ActionTypeID family)**.
+### 2.7 `IsRecurring` discriminator: `actiontypeid IN (1,2,3,39,4,5,6,28,40,35)`, `actiontypeid = 36`, `CompensationReasonID IN (117,118)` → set to 1 else 0
+**What**: Computed flag on `IsRecurring` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsRecurring`
+**Rules**:
+- `actiontypeid IN (1,2,3,39,4,5,6,28,40,35)`
+- `actiontypeid = 36`
+- `CompensationReasonID IN (117,118)`
+- `actiontypeid IN (7,44)`
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L112-L115
 
-Group-specific gotchas:
+### 2.8 `IsC2P` computed flag
+**What**: Computed flag on `IsC2P` set to `1` when the predicates below hold, else `0`.
+**Columns Involved**: `IsC2P`
+**Rules**:
+- (no explicit predicates / pattern-only concept)
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` etoro_kpi_prep.sql L116-L116
 
-- **`ShareLendingFeeEtoroShare` and `ShareLendingFeeUserShare` use the SAME expression** (`fca.Amount` when `actiontypeid=36 AND CompensationReasonID=119`) — the view doesn't actually split eToro share vs user share at this layer. Treat as redundant for now; downstream should split if needed.
-- **`ShareLendingFeeBrokerShare` arithmetic**: `fca.Amount / ROUND(0.425, 1) - 2 * fca.Amount` — that `ROUND(0.425, 1)` evaluates to `0.4` (no decimals), so the formula reduces to `fca.Amount / 0.4 - 2 * fca.Amount = 2.5 * fca.Amount - 2 * fca.Amount = 0.5 * fca.Amount`. The convoluted form preserves a parameterization that other revenue TVFs use. If `ROUND(0.425, 1)` ever changes, the broker-share economics shift.
-- **`ShareLendingGrossAmount`**: `2 * fca.Amount + (Amount / ROUND(0.425, 1) - 2 * Amount)` simplifies to `Amount / 0.4 = 2.5 * Amount`. Documented for completeness.
+### 2.9 Dim lookup via alias `di` → `v_dim_instrument_enriched`
+**What**: `JOIN` to dimension `v_dim_instrument_enriched` enriches every base row with attributes drawn from that dim. The base side is the FROM-clause object; this side contributes lookups only.
+**Columns Involved**: (none)
+**Rules**:
+- ON `fca.InstrumentID = di.InstrumentID`
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` L118
+**Source(s)**: `main.etoro_kpi_prep.v_dim_instrument_enriched`
 
-### 2.4 The commission-rebuild family (4 columns)
-
-**`FullCommissionTotal` / `CommissionTotal`**: chooses between the open-side and close-side commission column based on `ActionTypeID`:
-- `ActionTypeID IN (1, 2, 3, 39)` → use `FullCommission` / `Commission` (open).
-- `ActionTypeID IN (4, 5, 6, 28, 40)` → use `FullCommissionOnClose - FullCommissionByUnits` / `CommissionOnClose - CommissionByUnits` (close, net of per-unit partial-close proration).
-- Else → 0.
-
-**`FullCommissionCloseAdjustment` / `CommissionCloseAdjustment`**: just the second CASE branch, isolated as its own column, used to net partial-close adjustments separately.
-
-### 2.5 The instrument / mirror flag CASEs
-
-**`IsSQF`**: `CASE WHEN di.IsSQF = 1 THEN 1 ELSE 0 END` — single-equality predicate against the joined instrument's SQF flag (`v_dim_instrument_enriched`). The CASE is a defensive null-handler — without it `NULL = 1 → NULL`, which would propagate to consumers.
-**`Is_245_Instrument`**: same shape, against `di.Is_245_Instrument`.
-**`IsCopyFund`**: `CASE WHEN dm.mirrortypeid = 4 THEN 1 ELSE 0 END` — `mirrortypeid = 4` is "Fund" per `Dim_Mirror.MirrorTypeID` enum.
-
-### 2.6 The IBAN / recurring / C2P existence-flag CASEs
-
-**`IsOpenFromIBAN`**: `CASE WHEN NOT ofi.TreeID IS NULL THEN 1 ELSE 0 END` — `ofi` is `SELECT DISTINCT TreeID FROM main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban` joined on `fca.PositionID = ofi.TreeID`. 1 if this position was opened from an IBAN-funded balance.
-**`IsClosedToIBAN`**: same shape against `cti` (closed-to-iban). 1 if position was closed back to an IBAN.
-**`IsRecurring`**: 3-branch CASE — (1) `ActionTypeID IN (1,2,3,39,4,5,6,28,40,35) AND rip.positionid IS NOT NULL` → 1 (positions in the recurring-investment set, on open/close/fee actions); (2) `ActionTypeID = 36 AND CompensationReasonID IN (117,118) AND rip.positionid IS NOT NULL` → 1 (admin/spot-adjust comps on recurring positions); (3) `ActionTypeID IN (7,44) AND ripdep.depositid IS NOT NULL` → 1 (deposits via recurring-investment plan); else 0.
-**`IsC2P`**: `CASE WHEN apl.positionid IS NOT NULL THEN 1 ELSE 0 END` — `apl` is `SELECT DISTINCT positionid FROM main.bi_db.bronze_etoro_trade_adminpositionlog WHERE CompensationReasonID = 134`. 1 if the position appears in the admin-position-log with comp reason 134 (= crypto-to-position transfer flag).
+### 2.10 Dim lookup via alias `dm` → `gold_sql_dp_prod_we_dwh_dbo_dim_mirror`
+**What**: `JOIN` to dimension `gold_sql_dp_prod_we_dwh_dbo_dim_mirror` enriches every base row with attributes drawn from that dim. The base side is the FROM-clause object; this side contributes lookups only.
+**Columns Involved**: (none)
+**Rules**:
+- ON `fca.MirrorID = dm.MirrorID`
+**Evidence**: `knowledge/UC_generated/etoro_kpi_prep/_discovery/source_code/v_fact_customeraction_w_metrics.sql` L126
+**Source(s)**: `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror`
 
 ---
 
-## 3. Elements
+## 3. Query Advisory
+
+### 3.1 UC Storage Layout
+
+| Property | Value |
+|----------|-------|
+| **Type** | VIEW |
+| **Format** | n/a |
+| **Partitioned by** | (not partitioned) |
+| **Materialization** | view_definition (re-runs on every query) |
+
+### 3.2 Common Query Patterns
+
+| Analyst Question | Recommended Approach |
+|------------------|----------------------|
+| Filter on discriminator flags | Use `IsActiveTrade = 1`-style filters on the precomputed flag columns (`IsActiveTrade`, `IsC2P`, `IsClosedToIBAN`, `IsCopyFund`) instead of recomputing the underlying CASE predicates downstream. |
+| Use enriched columns directly | Dimension attributes are already joined in — no need to re-join the underlying dim tables (`v_dim_instrument_enriched`, `gold_sql_dp_prod_we_dwh_dbo_dim_mirror`). |
+
+### 3.3 Common JOINs
+
+| JOIN to | Condition | Purpose |
+|---------|-----------|---------|
+| `main.etoro_kpi_prep.v_dim_instrument_enriched` | `fca.InstrumentID = di.InstrumentID` | Lookup via alias `di` |
+| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror` | `fca.MirrorID = dm.MirrorID` | Lookup via alias `dm` |
+
+### 3.4 Gotchas
+
+- No top-level filter blocks or sign flips detected. See `.review-needed.md` for parser warnings and UNVERIFIED columns.
+
+---
+
+## 4. Elements
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | GCID | INT | YES | Global Customer ID — the platform-wide unique customer identifier. References `Dim_Customer.GCID`. (Tier 1 — Customer.CustomerStatic) |
-| 2 | RealCID | INT | YES | Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic) |
-| 3 | Occurred | TIMESTAMP | YES | UTC timestamp when the action occurred. For position opens: when position was opened. For credits: when the credit was recorded. (Tier 1 — source-dependent) |
-| 4 | ActionTypeID | INT | YES | Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. This view filters `ActionTypeID NOT IN (14, 41)` (no logins / registrations). (Tier 1 — History.Credit / Trade snapshots / STS / Customer payloads) |
-| 5 | PlatformTypeID | INT | YES | Legacy platform discriminator (`0` default; `99` STS-heavy logins sampled 202601+). (Tier 3 — ETL-assigned) |
-| 6 | InstrumentID | INT | YES | FK to `Trade.Instrument`. Financial instrument being traded. Inherits the upstream COALESCE semantics of `v_fact_customeraction_enriched` (prefers position-derived instrument). (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 7 | Amount | DECIMAL | YES | Position / ledger amount discipline per branch. Must be ≥ 0 on trade opens historically. (Tier 1 — Trade.PositionTbl / History.Credit) |
-| 8 | Leverage | INT | YES | Leverage multiplier. Inherits the upstream COALESCE semantics (prefers position's stored leverage). (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 9 | NetProfit | DECIMAL | YES | Realized PnL. 0 when open; populated on closes in position currency. (Tier 1 — Trade.PositionTbl) |
-| 10 | Commission | DECIMAL | YES | Open commission in dollars (`/100` cents conversion on ingest). (Tier 1 — Trade.PositionTbl) |
-| 11 | PositionID | LONG | YES | Surrogate bigint, unique trade position key. Inherits the upstream Description-parse CASE for `ActionTypeID = 36, CompensationReasonID IN (117, 118)` rows. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) |
-| 12 | FundingTypeID | INT | YES | Ledger funding / wallet channel identifier (deposits & cash-outs). Value 27 pairs with redeem flag derivation on cash-outs. References `Dim_FundingType`. (Tier 1 — History.Credit) |
-| 13 | MirrorID | INT | YES | FK to `Trade.Mirror` (`0`/NULL ⇒ manual trading; >0 ⇒ copy-trade child). Inherits the upstream post-mirror-close zero-out CASE. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 14 | WithdrawID | INT | YES | Withdrawal request identifier for cash-out credits; 0 when absent. (Tier 1 — History.Credit) |
-| 15 | DateID | INT | YES | `Occurred` → `YYYYMMDD` int (nonclustered index driver). (Tier 2 — SP_Fact_CustomerAction) |
-| 16 | CompensationReasonID | INT | YES | `BackOffice.CompensationReason` code on comps & some opens for airdrops. (Tier 1 — History.Credit, updated wiki 2025-12) |
-| 17 | WithdrawPaymentID | INT | YES | Payment-processing key for withdrawals. (Tier 1 — History.Credit) |
-| 18 | CommissionOnClose | DECIMAL | YES | Close commission dollars — reopen-adjust net-of-original per `Dim_Position` wiki. (Tier 1 — Trade.PositionTbl) |
-| 19 | DepositID | INT | YES | Deposit transaction reference on inbound money rows (`NULL` off-deposit actions). (Tier 1 — History.Credit) |
-| 20 | FullCommission | DECIMAL | YES | Gross commission inclusive of hidden spread uplift at open. (Tier 1 — Trade.PositionTbl) |
-| 21 | FullCommissionOnClose | DECIMAL | YES | Gross commission on exit — symmetrical reopen-adjust story to `CommissionOnClose`. (Tier 1 — Trade.PositionTbl) |
-| 22 | RedeemID | INT | YES | Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl) |
-| 23 | RedeemStatus | INT | YES | Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl) |
-| 24 | IsRedeem | INT | YES | Dual-semantics redeem flag (ledger / crypto-wallet path OR CFD Billing.Redeem path). See upstream `v_fact_customeraction_enriched` description for full semantics. (Tier 2 — SP_Fact_CustomerAction) |
-| 25 | ReopenForPositionID | LONG | YES | When position reopened: erroneous prior `PositionID`. NULL if virgin cycle. (Tier 1 — Trade.PositionTbl) |
-| 26 | IsReOpen | INT | YES | 1=this position was reopened from `ReopenForPositionID`. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
-| 27 | CommissionOnCloseOrig | DECIMAL | YES | `CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0` — preserves naive close commission before netting. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
-| 28 | FullCommissionOnCloseOrig | DECIMAL | YES | `CASE WHEN ReopenForPositionID IS NOT NULL THEN FullCommissionOnClose ELSE 0` (default zeros). (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
-| 29 | OriginalPositionID | LONG | YES | Source position BEFORE partial-split chains. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
-| 30 | IsPartialCloseParent | INT | YES | Marks parent row around partial-close split. (Tier 5 — domain expert, SP_Fact_CustomerAction_IsParitalCloseParent) |
-| 31 | IsPartialCloseChild | INT | YES | Marks remainder leg after partial close — filter guidance: avoid dropping CLOSE child rows blindly. (Tier 5 — domain expert, SP_Dim_Position_DL_To_Synapse) |
-| 32 | PaymentStatusID | INT | YES | Payment pipeline status IDs on inbound/outbound monies — join `Dim_PaymentStatus`. (Tier 5 — domain expert) |
-| 33 | IsDiscounted | INT | YES | 1=commission discount applied at open (legacy bit widening). (Tier 1 — Trade.PositionTbl) |
-| 34 | IsSettled | INT | YES | 1 = real asset, 0 = CFD asset. Inherits the upstream COALESCE semantics. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 35 | CommissionByUnits | DECIMAL | YES | Prorated commission for partial close. (Tier 1 — Trade.Position) |
-| 36 | FullCommissionByUnits | DECIMAL | YES | Prorated full commission for partial close. (Tier 1 — Trade.Position) |
-| 37 | IsFTD | INT | YES | First-Time Deposit tagging on qualifying deposit/action rows. (Tier 2 — SP_Fact_CustomerAction) |
-| 38 | IsFeeDividend | INT | YES | Fee subclass for `ActionTypeID=35` (1 nightly/weekend fee, 2 dividend, 3 SDRT, 4 ticket aggregates). (Tier 2 — SP_Fact_CustomerAction) |
-| 39 | IsAirDrop | INT | YES | 1 denotes airdrop-sourced crypto open. Inherits the upstream COALESCE semantics. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 40 | DividendID | INT | YES | Dividend event pointer for dividend-driven fee deductions. (Tier 1 — Trade.Positions/dividends lineage) |
-| 41 | MoveMoneyReasonID | INT | YES | `Dictionary.MoveMoneyReason` code on internal sweeps (5/6/recurring enums per prior audits). (Tier 1 — History.Credit) |
-| 42 | SettlementTypeID | INT | YES | `Dictionary.SettlementTypes` modern encoding (`0 CFD`, `1 REAL`, `2 TRS`, `3 CMT`, `4 REAL_FUTURES`, `5 MARGIN_TRADE`). Inherits the upstream COALESCE semantics. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 43 | etr_y | STRING | YES | Year partition value injected by the gold/spaceship pipeline. Used as Delta partition key in UC. (Tier 2 — gold/spaceship pipeline) |
-| 44 | etr_ym | STRING | YES | Year-month partition value (`YYYY-MM`) injected by the gold/spaceship pipeline. (Tier 2 — gold/spaceship pipeline) |
-| 45 | etr_ymd | STRING | YES | Year-month-day partition value (`YYYY-MM-DD`) injected by the gold/spaceship pipeline. (Tier 2 — gold/spaceship pipeline) |
-| 46 | DLTOpen | INT | YES | Distributed-ledger telemetry captured at OPEN. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
-| 47 | DLTClose | INT | YES | Ledger telemetry captured at CLOSE mirroring `DLTOpen`. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
-| 48 | OpenMarkupByUnits | DECIMAL | YES | Prorated open markup for partial closes. (Tier 1 — Trade.Position) |
-| 49 | Description | STRING | YES | Operational narrative pulled from Credits / fees ("Over night fee", ticket fee tokens, Payments deposit processor strings). (Tier 1 — History.Credit) |
-| 50 | IsBuy | BOOLEAN | YES | `1` Long, `0` Short; NULL ⇒ non-trade row sentinel. Inherits the upstream COALESCE semantics. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) |
-| 51 | CreditID | LONG | YES | Direct pointer to `History.Credit.CreditID` lineage for reversible audits. (Tier 1 — History.Credit) |
-| 52 | OpenDateID | INT | YES | Position open date as `YYYYMMDD` int. Cast from `dp.OpenDateID` (replicated through `v_fact_customeraction_enriched`). (Tier 2 — main.dwh.dim_position) |
-| 53 | CloseDateID | INT | YES | Position close date as `YYYYMMDD` int. 0 = still open. (Tier 2 — main.dwh.dim_position) |
-| 54 | TicketFeeAction | STRING | YES | Pre-classifier for ticket fees: `'Open'` when upstream `Description = 'OpenTotalFees'`, `'Close'` when `'CloseTotalFees'`, NULL otherwise. Consumed here by `TicketFeeOpen` / `TicketFeeClose`. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) |
-| 55 | RollOverFee | DECIMAL | YES | Overnight / weekend fee bucket. `CASE WHEN ActionTypeID = 35 AND IsFeeDividend = 1 THEN -1 * Amount ELSE 0 END`. Sign-flipped (fees stored positive upstream are charged to the customer, so this column is negative). (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 56 | Dividend | DECIMAL | YES | Dividend pass-through bucket. `CASE WHEN ActionTypeID = 35 AND IsFeeDividend = 2 THEN Amount ELSE 0 END`. Customer-positive (credit). (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 57 | SDRT | DECIMAL | YES | UK Stamp Duty Reserve Tax bucket. `CASE WHEN ActionTypeID = 35 AND IsFeeDividend = 3 THEN -1 * Amount ELSE 0 END`. Customer-negative. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 58 | AdminFee | DECIMAL | YES | Administrative fee bucket. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 117 THEN -1 * Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 59 | SpotAdjustFee | DECIMAL | YES | Spot-adjustment fee bucket. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 118 THEN -1 * Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 60 | ConversionFeeDeposit | DECIMAL | YES | FX conversion fee on deposits. `CASE WHEN ActionTypeID IN (7, 44) AND dwfd.DepositID IS NOT NULL THEN dwfd.PIPsCalculation ELSE 0 END`. Pulls fee amount from `bi_db_depositwithdrawfee` joined on `DepositID`. (Tier 2 — main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 61 | ConversionFeeWithdraw | DECIMAL | YES | FX conversion fee on withdrawals. `CASE WHEN ActionTypeID IN (8, 45) AND dwfw.WithdrawPaymentID IS NOT NULL THEN dwfw.PIPsCalculation ELSE 0 END`. Pulls from `bi_db_depositwithdrawfee` aliased `dwfw` filtered to `TransactionType = 'Withdraw'`. (Tier 2 — main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 62 | ConversionFeeReversal | DECIMAL | YES | Reversed conversion fee for cancelled deposits. `CASE WHEN dwfdr.DepositID IS NOT NULL THEN -1 * dwfdr.PIPsCalculation ELSE 0 END`. Pulls from `bi_db_depositwithdrawfee_reversals` joined on `CreditID`. (Tier 2 — main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals) |
-| 63 | CashoutFeeExludingRedeem | DECIMAL | YES | Cashout fee for non-redeem cashouts. `CASE WHEN ActionTypeID = 30 AND IsRedeem = 0 THEN Commission ELSE 0 END`. The misspelling "Exluding" is preserved from production. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 64 | TransferCoinFee | DECIMAL | YES | Transfer-to-coin fee bucket (eToroCryptoWallet path). `CASE WHEN ActionTypeID = 30 AND IsRedeem = 1 THEN Commission ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 65 | DormantFee | DECIMAL | YES | Dormant account fee. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 30 THEN -1 * Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 66 | ShareLendingFeeEtoroShare | DECIMAL | YES | eToro's share of share-lending fee. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 119 THEN Amount ELSE 0 END`. NOTE: identical expression to `ShareLendingFeeUserShare` — the view does not split eToro vs user share at this layer. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 67 | ShareLendingFeeUserShare | DECIMAL | YES | User's share of share-lending fee. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 119 THEN Amount ELSE 0 END`. NOTE: identical expression to `ShareLendingFeeEtoroShare` (see §2.3 gotchas). (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 68 | ShareLendingFeeBrokerShare | DECIMAL | YES | Broker's share of share-lending fee. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 119 THEN Amount / ROUND(0.425, 1) - 2 * Amount ELSE 0 END`. With `ROUND(0.425, 1) = 0.4`, simplifies to `0.5 * Amount`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 69 | ShareLendingGrossAmount | DECIMAL | YES | Gross share-lending amount (before split). `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 119 THEN 2 * Amount + Amount / ROUND(0.425, 1) - 2 * Amount ELSE 0 END`. Simplifies to `2.5 * Amount`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 70 | CashoutAdjustment | DECIMAL | YES | Cashout adjustment bucket. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID IN (41, 51) THEN Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 71 | NewCopyAmount | DECIMAL | YES | Amount flowing INTO a new copy-trade (ActionTypeID=17). `CASE WHEN ActionTypeID = 17 THEN -1 * Amount ELSE 0 END`. Sign-flipped (negative on the copier's books). (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 72 | StopCopyAmount | DECIMAL | YES | Amount flowing OUT of a stop-copy event (ActionTypeID=18). `CASE WHEN ActionTypeID = 18 THEN Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 73 | AddToCopyAmount | DECIMAL | YES | Amount added to an existing copy-trade (ActionTypeID=15). `CASE WHEN ActionTypeID = 15 THEN -1 * Amount ELSE 0 END`. Sign-flipped. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 74 | RemoveFromCopyAmount | DECIMAL | YES | Amount removed from a copy-trade (ActionTypeID=16). `CASE WHEN ActionTypeID = 16 THEN Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 75 | CryptoToPosition | DECIMAL | YES | Crypto-to-position transfer amount. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 134 THEN Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 76 | BonusCompensation | DECIMAL | YES | Bonus compensation amount (ActionTypeID=9). `CASE WHEN ActionTypeID = 9 THEN Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 77 | PnLAdjustment | DECIMAL | YES | P&L adjustment bucket. `CASE WHEN ActionTypeID = 36 AND CompensationReasonID = 22 THEN Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 78 | InvestedAmountIn | DECIMAL | YES | Money flowing INTO investments (opens). `CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN Amount ELSE 0 END`. The position-open family — manual / copy / social-trade / fund-investment opens. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 79 | InvestedAmountOut | DECIMAL | YES | Money flowing OUT of investments (closes). `CASE WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN Amount ELSE 0 END`. Position-close family. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 80 | VolumeOpen | DECIMAL | YES | Open volume (gated to open ActionTypeID family). `CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN VolumeOnOpen ELSE 0 END`. Note: `VolumeOnOpen` is NULL on the passive branch of `v_fact_customeraction_enriched`, so this column is 0 / NULL on fee rows and only populated on actual opens. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 81 | VolumeClose | DECIMAL | YES | Close volume (gated to close ActionTypeID family). `CASE WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN VolumeOnClose ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 82 | TicketFeeOpen | DECIMAL | YES | Ticket-fee charged at OPEN. `CASE WHEN ActionTypeID = 35 AND IsFeeDividend = 4 AND TicketFeeAction = 'Open' THEN -1 * Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 83 | TicketFeeClose | DECIMAL | YES | Ticket-fee charged at CLOSE. `CASE WHEN ActionTypeID = 35 AND IsFeeDividend = 4 AND TicketFeeAction = 'Close' THEN -1 * Amount ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 84 | FullCommissionCloseAdjustment | DECIMAL | YES | Per-unit partial-close adjustment for FullCommission. `CASE WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN (FullCommissionOnClose - FullCommissionByUnits) ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 85 | CommissionCloseAdjustment | DECIMAL | YES | Per-unit partial-close adjustment for Commission. `CASE WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN (CommissionOnClose - CommissionByUnits) ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 86 | FullCommissionTotal | DECIMAL | YES | Unified full-commission column folded from open / close branches. `CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN FullCommission WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN (FullCommissionOnClose - FullCommissionByUnits) ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 87 | CommissionTotal | DECIMAL | YES | Unified commission column folded from open / close branches. `CASE WHEN ActionTypeID IN (1, 2, 3, 39) THEN Commission WHEN ActionTypeID IN (4, 5, 6, 28, 40) THEN (CommissionOnClose - CommissionByUnits) ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 88 | IsActiveTrade | INT | NO | 1 if the row represents an "active trade" event. `CASE WHEN (ActionTypeID = 1 AND COALESCE(IsAirDrop, 0) = 0 AND MirrorID = 0) OR ActionTypeID IN (15, 17) THEN 1 ELSE 0 END`. True for: manual non-airdrop non-copy opens (ActionTypeID=1, IsAirDrop=0, MirrorID=0) OR copy-trade-add (15) OR new copy (17). (Tier 2 — main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 89 | IsSQF | INT | NO | 1 if the instrument is SQF-eligible (Self-Quantifying Firm). `CASE WHEN di.IsSQF = 1 THEN 1 ELSE 0 END` — derived from the joined `v_dim_instrument_enriched.IsSQF`. (Tier 2 — main.etoro_kpi_prep.v_dim_instrument_enriched) |
-| 90 | Is_245_Instrument | INT | NO | 1 if the instrument is classified as a 245 product. `CASE WHEN di.Is_245_Instrument = 1 THEN 1 ELSE 0 END`. (Tier 2 — main.etoro_kpi_prep.v_dim_instrument_enriched) |
-| 91 | IsCopyFund | INT | NO | 1 if the row's mirror is a Fund (MirrorTypeID=4). `CASE WHEN dm.MirrorTypeID = 4 THEN 1 ELSE 0 END` — `MirrorTypeID = 4 = 'Fund'` per `Dim_Mirror.MirrorTypeID` enum. (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror) |
-| 92 | ParentCID | INT | YES | Copy-trade parent customer ID — the CID of the trader being copied. From `dim_mirror.ParentCID`. NULL when the row is not a copy-trade. (Tier 1 — Trade.Mirror) |
-| 93 | ParentUserName | STRING | YES | Username of the trader being copied. From `dim_mirror.ParentUserName`. NULL when the row is not a copy-trade. (Tier 1 — Trade.Mirror) |
-| 94 | IsOpenFromIBAN | INT | NO | 1 if this position was opened from an IBAN-funded balance. `CASE WHEN ofi.TreeID IS NOT NULL THEN 1 ELSE 0 END` — `ofi` is a DISTINCT `TreeID` set from `bi_output_finance_tables_bi_db_positions_opened_from_iban` joined on `PositionID = TreeID`. (Tier 2 — main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban) |
-| 95 | IsClosedToIBAN | INT | NO | 1 if this position was closed back to an IBAN. `CASE WHEN cti.PositionID IS NOT NULL THEN 1 ELSE 0 END` — `cti` is a DISTINCT `PositionID` set from `bi_output_finance_tables_bi_db_positions_closed_to_iban`. (Tier 2 — main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban) |
-| 96 | IsRecurring | INT | NO | 1 if the row is part of a recurring-investment plan. 3-branch CASE: (a) `ActionTypeID IN (1,2,3,39,4,5,6,28,40,35) AND rip.PositionID IS NOT NULL` — opens/closes/fees on recurring positions; (b) `ActionTypeID = 36 AND CompensationReasonID IN (117, 118) AND rip.PositionID IS NOT NULL` — admin/spot-adjust comps on recurring positions; (c) `ActionTypeID IN (7, 44) AND ripdep.DepositID IS NOT NULL` — deposits via recurring-investment plan. `rip` / `ripdep` are subqueries on the `recurring_positions` CTE (§2.2). (Tier 2 — main.general.bronze_recurringinvestment_recurringinvestment_planinstances / main.dwh.dim_position / main.etoro_kpi_prep.v_fact_customeraction_enriched) |
-| 97 | IsC2P | INT | NO | 1 if the position appears in `bronze_etoro_trade_adminpositionlog` with `CompensationReasonID = 134` (crypto-to-position transfer marker). `CASE WHEN apl.PositionID IS NOT NULL THEN 1 ELSE 0 END`. (Tier 2 — main.bi_db.bronze_etoro_trade_adminpositionlog) |
+| 1 | RealCID | INT | YES | Real-account Customer ID. HASH distribution key. References `Dim_Customer.RealCID`. Each customer has one real CID. (Tier 1 — Customer.CustomerStatic) |
+| 2 | Occurred | TIMESTAMP | YES | UTC timestamp when the action occurred. For position opens: when position was opened. For logins: login time. For credits: when the credit was recorded. (Tier 1 — source-dependent) |
+| 3 | ActionTypeID | INT | YES | Event classifier — join `Dim_ActionType` for `Name` / `Category`. Drives sparse column population. Derived from **`CreditTypeID`** & branch router in loader + positional feeds. (Tier 1 — History.Credit / Trade snapshots / STS / Customer payloads) |
+| 4 | PlatformTypeID | INT | YES | Legacy platform discriminator (`0` default; `99` STS-heavy logins sampled 202601+). (Tier 3 — ETL-assigned) |
+| 5 | InstrumentID | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(InstrumentID, InstrumentID)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 6 | Amount | DECIMAL | YES | Position / ledger amount discipline per branch (cash change on opens; fee/deposit sizing on ledger rows — see lineage). Must be ≥0 on trade opens historically. (Tier 1 — Trade.PositionTbl / History.Credit) |
+| 7 | Leverage | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(Leverage, Leverage)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 8 | NetProfit | DECIMAL | YES | Realized PnL. 0 when open; populated on closes in position currency. (Tier 1 — Trade.PositionTbl) |
+| 9 | Commission | DECIMAL | YES | Open commission in dollars (`/100` cents conversion on ingest per `Dim_Position` lineage notes). (Tier 1 — Trade.PositionTbl) |
+| 10 | PositionID | LONG | YES | Computed flag (CASE expression in source). Formula: `CASE WHEN ActionTypeID = 36 AND CompensationReasonID IN (117, 118) THEN TRY_CAST(REVERSE(SUBSTRING(REVERSE(Description), 1, CHARINDEX(' ', REVERSE(Description)) - 1)) AS BI…`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 11 | FundingTypeID | INT | YES | Ledger funding / wallet channel identifier (deposits & cash-outs). Nullable upstream coerced with `ISNULL(...,0)` sentinel row **`0`** (`Dim_FundingType.md`). **Value 27 pairs with redeem flag derivation on cash-outs.** References `Dim_FundingType`. (Tier 1 — History.Credit) |
+| 12 | MirrorID | INT | YES | Computed flag (CASE expression in source). Formula: `CASE WHEN Occurred > dm.Occurred THEN 0 ELSE COALESCE(MirrorID, MirrorID) END`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 13 | WithdrawID | INT | YES | Withdrawal request identifier for cash-out credits; 0 when absent. (Tier 1 — History.Credit) |
+| 14 | DateID | INT | YES | **`Occurred`** → `YYYYMMDD` int (nonclustered index driver). (Tier 2 — SP_Fact_CustomerAction) |
+| 15 | CompensationReasonID | INT | YES | `BackOffice.CompensationReason` code on comps & some opens for airdrops. (Tier 1 — History.Credit, updated wiki 2025-12) |
+| 16 | WithdrawPaymentID | INT | YES | Payment-processing key for withdrawals; used to collapse duplicate WithdrawProcessing tuples per historical ETL memo. (Tier 1 — History.Credit) |
+| 17 | CommissionOnClose | DECIMAL | YES | Close commission dollars — reopen-adjust net-of-original per `Dim_Position` wiki. **`CommissionOnCloseOrig` preserves untouched close fee.** (Tier 1 — Trade.PositionTbl) |
+| 18 | DepositID | INT | YES | Deposit transaction reference on inbound money rows (`NULL` off-deposit actions). (Tier 1 — History.Credit) |
+| 19 | FullCommission | DECIMAL | YES | Gross commission inclusive of hidden spread uplift at open (`/100` ingestion note). (Tier 1 — Trade.PositionTbl) |
+| 20 | FullCommissionOnClose | DECIMAL | YES | Gross commission on exit — symmetrical reopen-adjust story to `CommissionOnClose`. (Tier 1 — Trade.PositionTbl) |
+| 21 | RedeemID | INT | YES | Billing.Redeem reference when position closed via redeem. (Tier 1 — Trade.PositionTbl) |
+| 22 | RedeemStatus | INT | YES | Redemption state. Billing.Redeem integration. (Tier 1 — Trade.PositionTbl) |
+| 23 | IsRedeem | INT | YES | **Dual-semantics redeem flag.** (A) **Ledger / Crypto-wallet Path:** Loader CASE documented in **`Dim_FundingType.md` §2.3 (`CASE WHEN CreditTypeID = 2 AND FundingTypeID = 27 THEN 1 ELSE 0 END`)** tagging **eToroCryptoWallet (`FundingTypeID=27`) cash-outs** (`ActionTypeID = 8` sample slice **100 % FundingType 27 whenever `IsRedeem=1`** for `DateID≥20260101`). Revenue TVF **`Function_Revenue_TransferCoinFee`** filters **`Fact_CustomerAction` with `ActionTypeID = 30` AND `IsRedeem = 1`** — interpret as **transfer-to-coin / fiat-wallet → on-chain custody** (**not** shorthand for bank cash-out). (B) **CFD Billing.Redeem Path:** Positional closes (`ActionTypeID∈{4,5,6,…}`) can emit **`IsRedeem=1` alongside `RedeemID`/`RedeemStatus`** (Billing.Redeem integration per `Trade.PositionTbl`) — orthogonal to transfercoin semantics. CLOSE-branch **`CASE` text unavailable** (`sys.sql_modules.definition` **NULL** for `SP_Fact_CustomerAction` on this Synapse warehouse). **Do not equate blindly to non-existent `Dim_Position.IsRedeem` column.** (Tier 2 — SP_Fact_CustomerAction) |
+| 24 | ReopenForPositionID | LONG | YES | When position reopened: erroneous prior **`PositionID`**. NULL if virgin cycle. (Tier 1 — Trade.PositionTbl) |
+| 25 | IsReOpen | INT | YES | 1=this position was reopened from `ReopenForPositionID`. CASE WHEN **`ReopenForPositionID`** NOT NULL ⇒1 else0 default. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
+| 26 | CommissionOnCloseOrig | DECIMAL | YES | **`CASE WHEN ReopenForPositionID IS NOT NULL THEN CommissionOnClose ELSE 0`** — preserves naive close commission before netting. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
+| 27 | FullCommissionOnCloseOrig | DECIMAL | YES | **`CASE WHEN ReopenForPositionID IS NOT NULL THEN FullCommissionOnClose ELSE 0`** (default zeros). (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
+| 28 | OriginalPositionID | LONG | YES | Source position BEFORE partial-split chains. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
+| 29 | IsPartialCloseParent | INT | YES | Marks parent row around partial-close split (subject to **`SP_Fact_CustomerAction_IsParitalCloseParent`** post-job). Analyst filtering nuance persists from `Dim_Position` guidance. (Tier 5 — domain expert, SP_Fact_CustomerAction_IsParitalCloseParent) |
+| 30 | IsPartialCloseChild | INT | YES | Marks remainder leg after partial close — filter guidance identical to **`Dim_Position`**: avoid dropping CLOSE child rows blindly. (Tier 5 — domain expert, SP_Dim_Position_DL_To_Synapse) |
+| 31 | PaymentStatusID | INT | YES | Payment pipeline status IDs on inbound/outbound monies — join `Dim_PaymentStatus`. (Tier 5 — domain expert) |
+| 32 | IsDiscounted | INT | YES | 1=commission discount applied at open (legacy bit widening). (Tier 1 — Trade.PositionTbl) |
+| 33 | IsSettled | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(IsSettled, IsSettled)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 34 | CommissionByUnits | DECIMAL | YES | Prorated commission for partial close. Formula: (AmountInUnitsDecimal / InitialUnits) * Commission. Used for partial-close PnL. (Tier 1 — Trade.Position) |
+| 35 | FullCommissionByUnits | DECIMAL | YES | Prorated full commission for partial close. Same proration formula as CommissionByUnits applied to FullCommission. (Tier 1 — Trade.Position) |
+| 36 | IsFTD | INT | YES | First-Time Deposit tagging on qualifying deposit/action rows (NULL elsewhere). Derived during credit classification & snapshot merges. (Tier 2 — SP_Fact_CustomerAction) |
+| 37 | IsFeeDividend | INT | YES | Fee subclass for **`ActionTypeID=35`** (1 nightly/weekend fee, 2 dividend, 3 SDRT, 4 ticket aggregates) encoded off **`Description`** heuristics (DSM‑1463). NULL off-fee rows. (Tier 2 — SP_Fact_CustomerAction) |
+| 38 | IsAirDrop | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(IsAirDrop, IsAirDrop)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 39 | DividendID | INT | YES | Dividend event pointer for dividend-driven fee deductions. NULL off-dividend. (Tier 1 — Trade.Positions/dividends lineage) |
+| 40 | MoveMoneyReasonID | INT | YES | Computed in source (transform kind not classified). Formula: `DividendID, MoveMoneyReasonID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 41 | SettlementTypeID | INT | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(SettlementTypeID, SettlementTypeID)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 42 | etr_y | STRING | YES | Computed in source (transform kind not classified). Formula: `etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 43 | etr_ym | STRING | YES | Computed in source (transform kind not classified). Formula: `etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 44 | etr_ymd | STRING | YES | Computed in source (transform kind not classified). Formula: `etr_y, etr_ym, etr_ymd, DLTOpen, DLTClose, OpenMarkupByUnits, Description`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 45 | DLTOpen | INT | YES | Distributed-ledger telemetry captured at OPEN (Prod addition 2024‑06‑02 per dim wiki). NULL historical. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
+| 46 | DLTClose | INT | YES | Ledger telemetry captured at CLOSE mirroring **`DLTOpen`**. (Tier 2 — SP_Dim_Position_DL_To_Synapse) |
+| 47 | OpenMarkupByUnits | DECIMAL | YES | Prorated open markup **`OpenMarkup * AmountInUnitsDecimal / InitialUnits`** for partial closes. (Tier 1 — Trade.Position) |
+| 48 | Description | STRING | YES | Operational narrative pulled from Credits / fees ("Over night fee", ticket fee tokens, Payments deposit processor strings). (Tier 1 — History.Credit) |
+| 49 | IsBuy | BOOLEAN | YES | COALESCE / null-replacement of upstream values. Formula: `COALESCE(IsBuy, IsBuy)`. (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 50 | CreditID | LONG | YES | Direct pointer to **`History.Credit.CreditID`** lineage for reversible audits. Added 2025 loader wave. (Tier 1 — History.Credit) |
+| 51 | OpenDateID | INT | YES | Arithmetic combination of upstream columns. Formula: `-- Replicated Date IDs CAST(OpenDateID AS INT)`. (Tier 2 — from `main.dwh.dim_position`) |
+| 52 | CloseDateID | INT | YES | Cast of upstream column. Formula: `CAST(CloseDateID AS INT)`. (Tier 2 — from `main.dwh.dim_position`) |
+| 53 | TicketFeeAction | STRING | YES | Computed flag (CASE expression in source). Formula: `CASE WHEN Description = 'OpenTotalFees' THEN 'Open' WHEN Description = 'CloseTotalFees' THEN 'Close' ELSE NULL END`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) |
+| 54 | RollOverFee | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 35 and isfeedividend = 1 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 55 | Dividend | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 35 and isfeedividend = 2 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 56 | SDRT | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 35 and isfeedividend = 3 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 57 | AdminFee | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 117 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 58 | SpotAdjustFee | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 118 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 59 | ConversionFeeDeposit | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (7, 44) and DepositID is not null then PIPsCalculation else 0 end`. (Tier 2 — from `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee`) |
+| 60 | ConversionFeeWithdraw | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (8, 45) and WithdrawPaymentID is not null then PIPsCalculation else 0 end`. (Tier 2 — from `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee`) |
+| 61 | ConversionFeeReversal | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when depositid is not null then -1 * PIPsCalculation else 0 end`. (Tier 2 — from `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_Reversals`) |
+| 62 | CashoutFeeExludingRedeem | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 30 and isredeem = 0 then Commission else 0 end`. (Tier 2 — computed in source) |
+| 63 | TransferCoinFee | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 30 and isredeem = 1 then Commission else 0 end`. (Tier 2 — computed in source) |
+| 64 | DormantFee | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 30 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 65 | ShareLendingFeeEtoroShare | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 119 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 66 | ShareLendingFeeUserShare | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 119 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 67 | ShareLendingFeeBrokerShare | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 119 then Amount / round(0.425, 1) - 2 * (Amount) else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 68 | ShareLendingGrossAmount | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 119 then 2 * Amount + Amount / round(0.425, 1) - 2 * (Amount) else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 69 | CashoutAdjustment | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID in (41, 51) then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 70 | NewCopyAmount | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 17 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 71 | StopCopyAmount | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 18 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 72 | AddToCopyAmount | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 15 then -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 73 | RemoveFromCopyAmount | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 16 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 74 | CryptoToPosition | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 134 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 75 | BonusCompensation | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 9 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 76 | PnLAdjustment | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 36 and CompensationReasonID = 22 then Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 77 | InvestedAmountIn | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (1, 2, 3, 39) THEN Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 78 | InvestedAmountOut | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (4, 5, 6, 28, 40) THEN Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 79 | VolumeOpen | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (1, 2, 3, 39) THEN VolumeOnOpen else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 80 | VolumeClose | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (4, 5, 6, 28, 40) THEN VolumeOnClose else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 81 | TicketFeeOpen | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 35 and IsFeeDividend = 4 and ticketfeeaction = 'Open' THEN -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 82 | TicketFeeClose | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid = 35 and IsFeeDividend = 4 and ticketfeeaction = 'Close' THEN -1 * Amount else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 83 | FullCommissionCloseAdjustment | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (4, 5, 6, 28, 40) then (FullCommissionOnClose - FullCommissionByUnits) else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 84 | CommissionCloseAdjustment | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (4, 5, 6, 28, 40) then (CommissionOnClose - CommissionByUnits) else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 85 | FullCommissionTotal | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (1, 2, 3, 39) then FullCommission when actiontypeid IN (4, 5, 6, 28, 40) then (FullCommissionOnClose - FullCommissionByUnits) else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 86 | CommissionTotal | DECIMAL | YES | Computed flag (CASE expression in source). Formula: `case when actiontypeid IN (1, 2, 3, 39) then Commission when actiontypeid IN (4, 5, 6, 28, 40) then (CommissionOnClose - CommissionByUnits) else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 87 | IsActiveTrade | INT | NO | `IsActiveTrade` discriminator: `actiontypeid = 35`, `isfeedividend = 1`, `actiontypeid = 35` → set to 1 else 0. Formula: `case when (actiontypeid = 1 and coalesce(IsAirDrop, 0) = 0 and mirrorid = 0) or actiontypeid in (15, 17) then 1 else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_fact_customeraction_enriched`) |
+| 88 | IsSQF | INT | NO | `IsSQF` discriminator: `IsSQF = 1` → set to 1 else 0. Formula: `case when IsSQF = 1 then 1 else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_dim_instrument_enriched`) |
+| 89 | Is_245_Instrument | INT | NO | `Is_245_Instrument` discriminator: `Is_245_Instrument = 1` → set to 1 else 0. Formula: `case when Is_245_Instrument = 1 then 1 else 0 end`. (Tier 2 — from `main.etoro_kpi_prep.v_dim_instrument_enriched`) |
+| 90 | IsCopyFund | INT | NO | `IsCopyFund` discriminator: `mirrortypeid = 4` (Fund per upstream wiki) → set to 1 else 0. Formula: `case when mirrortypeid = 4 then 1 else 0 end`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror`) |
+| 91 | ParentCID | INT | YES | Direct passthrough from upstream. Formula: `ParentCID`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror`) |
+| 92 | ParentUserName | STRING | YES | Direct passthrough from upstream. Formula: `ParentUserName`. (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror`) |
+| 93 | IsOpenFromIBAN | INT | NO | `IsOpenFromIBAN` computed flag. Formula: `case when ofi.TreeID is not null then 1 else 0 end`. (Tier 2 — computed in source) |
+| 94 | IsClosedToIBAN | INT | NO | `IsClosedToIBAN` computed flag. Formula: `case when cti.positionid is not null then 1 else 0 end`. (Tier 2 — computed in source) |
+| 95 | IsRecurring | INT | NO | `IsRecurring` discriminator: `actiontypeid IN (1,2,3,39,4,5,6,28,40,35)`, `actiontypeid = 36`, `CompensationReasonID IN (117,118)` → set to 1 else 0. Formula: `case when actiontypeid IN (1,2,3,39,4,5,6,28,40,35) and rip.positionid is not null then 1 when actiontypeid = 36 and CompensationReasonID IN (117,118) and rip.positionid is not null then 1 …`. (Tier 2 — computed in source) |
+| 96 | IsC2P | INT | NO | `IsC2P` computed flag. Formula: `case when apl.positionid is not null then 1 else 0 end`. (Tier 2 — computed in source) |
 
 ---
 
-## 4. Lineage
+## 5. Lineage
 
-### 4.1 Upstream UC Objects
+### 5.1 Upstream UC Objects
 
 | Upstream | Role | Wiki |
 |----------|------|------|
-| `main.etoro_kpi_prep.v_fact_customeraction_enriched` | Primary (FROM) | `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.md` |
-| `main.etoro_kpi_prep.v_dim_instrument_enriched` | LEFT JOIN (`di` on `InstrumentID`) — IsSQF / Is_245_Instrument source | `(no UC wiki — schema_card lists as in-scope; pending wiki)` |
-| `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee` | LEFT JOIN (`dwfd` on `DepositID`; `dwfw` on `WithdrawPaymentID` AND `TransactionType='Withdraw'`) — ConversionFeeDeposit / ConversionFeeWithdraw source | `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DepositWithdrawFee.md` |
-| `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals` | LEFT JOIN (`dwfdr` on `CreditID`) — ConversionFeeReversal source | `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_DepositWithdrawFee_Reversals.md` |
-| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror` | LEFT JOIN (`dm` on `MirrorID`) — IsCopyFund / ParentCID / ParentUserName source | `knowledge/synapse/Wiki/DWH_dbo/Tables/Dim_Mirror.md` |
-| `main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban` | LEFT JOIN subquery (`ofi` distinct `TreeID`) — IsOpenFromIBAN source | `(no wiki found)` |
-| `main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban` | LEFT JOIN subquery (`cti` distinct `PositionID`) — IsClosedToIBAN source | `(no wiki found)` |
-| `main.bi_db.bronze_etoro_trade_adminpositionlog` | LEFT JOIN subquery (`apl` distinct `positionid` WHERE `CompensationReasonID = 134`) — IsC2P source | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.AdminPositionLog.md` |
-| `main.general.bronze_recurringinvestment_recurringinvestment_planinstances` | INSIDE `recurring_positions` CTE — LEFT JOIN to `dim_position` on `OrderID`. Feeds `rip` and `ripdep` subqueries → `IsRecurring` source | `knowledge/ProdSchemas/ExperianceDBs/RecurringInvestment/Wiki/RecurringInvestment/Tables/RecurringInvestment.PlanInstances.md` |
-| `main.dwh.dim_position` | INSIDE `recurring_positions` CTE only (via `OrderID`) | `(no UC wiki)` |
+| `main.etoro_kpi_prep.v_fact_customeraction_enriched` | Primary | `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.md` |
+| `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
+| `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals` | JOIN/UNION | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DepositWithdrawFee_Reversals.md` |
+| `main.etoro_kpi_prep.v_dim_instrument_enriched` | JOIN/UNION | `knowledge/UC_generated/etoro_kpi_prep/Views/v_dim_instrument_enriched.md` |
+| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror` | JOIN/UNION | `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Mirror.md` |
+| `main.general.bronze_recurringinvestment_recurringinvestment_planinstances` | JOIN/UNION | `knowledge/ProdSchemas/ExperianceDBs/RecurringInvestment/Wiki/RecurringInvestment/Tables/RecurringInvestment.PlanInstances.md` |
+| `main.dwh.dim_position` | JOIN/UNION | `(no wiki — see `.review-needed.md`)` |
+| `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee` | JOIN/UNION | `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DepositWithdrawFee.md` |
+| `main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_positions_opened_from_iban.md` |
+| `main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban` | JOIN/UNION | `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_positions_closed_to_iban.md` |
+| `main.bi_db.bronze_etoro_trade_adminpositionlog` | JOIN/UNION | `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.AdminPositionLog.md` |
 
-### 4.2 Pipeline ASCII Diagram
+### 5.2 Pipeline ASCII Diagram
 
 ```
-Production: etoro.History.Credit / etoro.Trade.OpenPositionEndOfDay / etoro.History.ClosePositionEndOfDay
-            etoro.Billing.Deposit / Withdraw / DepositWithdrawFee
-            etoro.Trade.AdminPositionLog
-            etoro.RecurringInvestment.PlanInstances
-                                  │
-                                  ▼ Generic Pipeline (Bronze + DWH staging + BI_DB)
-Synapse:    DWH_dbo.Fact_CustomerAction, Dim_Position, Dim_Mirror, Dim_Instrument
-            BI_DB_dbo.BI_DB_DepositWithdrawFee, *_Reversals
-            (positions_opened_from_iban / positions_closed_to_iban — DE finance outputs)
-                                  │
-                                  ▼ Generic Pipeline (Gold export → Delta EXTERNAL)
-UC:         main.dwh.gold_sql_dp_prod_we_dwh_dbo_{fact_customeraction, dim_position, dim_mirror}
-            main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_{bi_db_depositwithdrawfee, *_reversals}
-            main.bi_db.bronze_etoro_trade_adminpositionlog
-            main.bi_output.bi_output_finance_tables_bi_db_positions_{opened_from_iban, closed_to_iban}
-            main.general.bronze_recurringinvestment_recurringinvestment_planinstances
-                                  │
-                                  ▼ view_definition (enriched)
-            main.etoro_kpi_prep.v_fact_customeraction_enriched
-            main.etoro_kpi_prep.v_dim_instrument_enriched
-                                  │
-                                  ▼ view_definition (this object — 10 LEFT JOINs)
-            main.etoro_kpi_prep.v_fact_customeraction_w_metrics   ←── this object
-                                  │
-                                  ▼ notebook / job writer (materialization)
-            main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
+main.etoro_kpi_prep.v_fact_customeraction_enriched
+main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee / main.etoro_kpi_prep.v_fact_customeraction_enriched
+main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals
+... (8 more upstream(s))
+        │
+        ▼
+main.etoro_kpi_prep.v_fact_customeraction_w_metrics   ←── this object
+        │
+        ▼
+main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
+main.de_output_stg.de_output_etoro_kpi_fact_customeraction_w_metrics
+main.etoro_kpi_prep.v_ddr_revenues
 ```
 
-### 4.3 Cross-check vs system.access.column_lineage
+### 5.3 Cross-check vs system.access.column_lineage
 
-`parsed=97 runtime=97 mismatches=41` — all 41 mismatches are on CASE / join_enriched columns where the parser captured the CASE expression in the SQL text but `system.access.column_lineage` correctly tracks all input columns through the joins (e.g., the parser sees `RollOverFee` as deriving from "v_fact_customeraction_enriched" while UC's lineage table breaks that into the underlying `actiontypeid`, `isfeedividend`, `amount`). None are wrong; the parser just summarizes at a coarser granularity. Full per-column detail in `v_fact_customeraction_w_metrics.lineage.md` §"Cross-check".
+`parsed=97 runtime=97 mismatches=0` — see `.lineage.md` `## Cross-check` section for per-column detail.
 
 ---
 
-## 5. Common usage / JOINs
+## 6. Relationships
 
-### 5.1 Sample queries
+### 6.1 References To (summary — see §5 for full table)
 
-```sql
--- Monthly revenue mix per region
-SELECT
-  c.Region,
-  m.etr_ym,
-  SUM(m.FullCommissionTotal) AS total_commission,
-  SUM(m.RollOverFee)         AS rollover,
-  SUM(m.Dividend)            AS dividends_paid,
-  SUM(m.SDRT)                AS sdrt,
-  SUM(m.ConversionFeeDeposit + m.ConversionFeeWithdraw + m.ConversionFeeReversal) AS fx_fees,
-  SUM(m.CashoutFeeExludingRedeem + m.TransferCoinFee)                              AS cashout_fees,
-  SUM(m.ShareLendingFeeEtoroShare)                                                 AS share_lending_etoro
-FROM main.etoro_kpi_prep.v_fact_customeraction_w_metrics m
-JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked c
-  ON m.RealCID = c.RealCID
-WHERE m.etr_ym BETWEEN '2026-01' AND '2026-04'
-GROUP BY c.Region, m.etr_ym
-ORDER BY c.Region, m.etr_ym;
-```
+- **Primary upstream**: `main.etoro_kpi_prep.v_fact_customeraction_enriched` (wiki: `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.md`)
+- **JOIN/UNION upstreams**: 10 additional object(s)
+- **Wiki coverage**: 8/10 JOIN/UNION upstreams have a cached upstream wiki (see `_discovery/upstream_wikis/_index.json`)
 
-```sql
--- Recurring-investment customers vs one-off depositors
-SELECT
-  m.etr_y,
-  COUNT(DISTINCT CASE WHEN m.IsRecurring = 1 THEN m.RealCID END) AS recurring_customers,
-  COUNT(DISTINCT CASE WHEN m.IsRecurring = 0 AND m.ActionTypeID IN (7,44) THEN m.RealCID END) AS oneoff_depositors
-FROM main.etoro_kpi_prep.v_fact_customeraction_w_metrics m
-WHERE m.ActionTypeID IN (7, 44)
-GROUP BY m.etr_y
-ORDER BY m.etr_y;
-```
+### 6.2 Referenced By (downstream consumers)
 
-### 5.2 Common JOIN partners
-
-| JOIN to | Condition | Purpose |
-|---------|-----------|---------|
-| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked` | `m.RealCID = c.RealCID` | Customer demographics / region / KYC for segmentation |
-| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_actiontype` | `m.ActionTypeID = at.ActionTypeID` | Action labels / categories |
-| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_funding_type` | `m.FundingTypeID = ft.FundingTypeID` | Funding-method / wallet path |
-| `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_compensation_reason` | `m.CompensationReasonID = cr.CompensationReasonID` | Comp reason labels (admin / spot-adj / dormant etc.) |
-
-### 5.3 Gotchas
-
-- **Login & registration rows are excluded** (`ActionTypeID NOT IN (14, 41)`). If you need them, query `v_fact_customeraction_enriched` directly.
-- **All revenue columns are non-NULL** (CASE default = 0). Safe to `SUM(...)` without `COALESCE`. But `Amount`, `Commission`, `FullCommission` retain their upstream nullability.
-- **`ShareLendingFeeEtoroShare` and `ShareLendingFeeUserShare` are identical expressions** (`fca.Amount` when `actiontypeid=36 AND CompensationReasonID=119`) — this view does NOT split eToro vs user share. If your downstream needs the split, do it manually using the share-lending broker formula.
-- **`ShareLendingFeeBrokerShare` ROUND-trick**: `Amount / ROUND(0.425, 1) - 2 * Amount = 0.5 * Amount` (since `ROUND(0.425, 1) = 0.4`). The formula is parameterized for a `0.425` broker split, but the rounding collapses it. Validate before extrapolating to other splits.
-- **`CashoutFeeExludingRedeem` misspelling** is **preserved from production** — do not "fix" it in queries; the column name is `CashoutFeeExludingRedeem`.
-- **No predicate pushdown on `BI_DB_DepositWithdrawFee` joins** — both `dwfd` and `dwfw` are full LEFT JOINs without partition filters. Heavy queries should filter on `m.etr_ymd` BEFORE the joins fire (e.g., via a CTE).
-- **`IsRecurring` depends on the `recurring_positions` CTE** — which DEPENDS on `bronze_recurringinvestment_recurringinvestment_planinstances` having `OrderID`-matching rows in `dim_position`. If a recurring plan's `OrderID` doesn't resolve, `IsRecurring` will be 0 even when the customer is in fact on a plan.
-- **`IsCopyFund` only catches mirror-type 4 (Fund)** — does NOT catch mirror-type 2 (regular copy-trade) or mirror-type 3 (Social Index). Use `MirrorID > 0` AND `dim_mirror.MirrorTypeID IN (2, 4)` for "any copy-trade or fund" semantics.
-- **View materialization downstream**: heavy users of this view should hit `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` (the materialized table writer) instead — that table flattens this view's 10 LEFT JOINs into a single Delta scan.
+- `main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics`
+- `main.de_output_stg.de_output_etoro_kpi_fact_customeraction_w_metrics`
+- `main.etoro_kpi_prep.v_ddr_revenues`
 
 ---
 
-## 6. Deploy / UC ALTER provenance
+## 7. Sample Queries
 
-| Column | Description source | Tier | Cited as |
-|--------|--------------------|------|----------|
-| GCID..CreditID (cols 1-51) | upstream `v_fact_customeraction_enriched.md` (passthrough) | inherits T1/T2/T3/T5 | (Tier N — origin) |
-| OpenDateID / CloseDateID / TicketFeeAction | upstream `v_fact_customeraction_enriched.md` (passthrough — already T2 there) | T2 inherit | (Tier 2 — main.dwh.dim_position) |
-| RollOverFee..InvestedAmountOut, VolumeOpen..CommissionTotal (cols 55-87) | view DDL §2.3 / §2.4 (revenue bucket / commission rebuild CASEs) | T2 | [uc_view_ddl] |
-| IsActiveTrade (col 88) | view DDL §2.3 (multi-predicate CASE) | T2 | [uc_view_ddl] |
-| IsSQF / Is_245_Instrument | view DDL §2.5 (instrument-attribute CASEs against v_dim_instrument_enriched) | T2 | [uc_view_ddl] |
-| IsCopyFund | view DDL §2.5 (CASE on dim_mirror.MirrorTypeID = 4) | T2 | [uc_view_ddl] |
-| ParentCID / ParentUserName | upstream `Dim_Mirror.md` (join_enriched passthrough) | T1 inherit | (Tier 1 — Trade.Mirror) |
-| IsOpenFromIBAN / IsClosedToIBAN | view DDL §2.6 (existence CASE on IBAN subqueries) | T2 | [uc_view_ddl] |
-| IsRecurring | view DDL §2.6 + §2.2 (CTE-driven existence CASE) | T2 | [uc_view_ddl] |
-| IsC2P | view DDL §2.6 (existence CASE on AdminPositionLog) | T2 | [uc_view_ddl] |
+> Sample queries are not auto-generated. Refer to `knowledge/skills/_de_existing/` and `system.query.history` for analyst usage patterns against this object.
 
-*Generated: 2026-05-17 | Tiers: 30 T1, 53 T2, 4 T3, 0 T4, 10 T5 | Elements: 97/97 | Source: view_definition*
+---
+
+## 8. Atlassian Knowledge Sources
+
+> No Atlassian sources discovered for this object in the current pipeline. When Confluence pages or Jira tickets are linked to this UC object, they will appear here (run `tools/uc_pipelines/cache_atlassian_for_object.py` if/when that tool exists).
+
+---
+
+## Tier Legend
+
+- **Tier 1** — column inherited byte-for-byte from a documented Tier-1 upstream wiki (passthrough/rename/cast).
+- **Tier 2** — column described from a formula in `formulas.json` + an optional named concept from `concepts.json`. The formula is the predicate-explicit, alias-resolved SQL transformation; the concept gives the business name.
+- **Tier 5** — domain-expert / reviewer correction from the `.review-needed.md` sidecar. Absolute override; overrides every other tier including Tier 1 (per DWH semantic-doc framework).
+- **Tier N** — null-with-provenance: column points at an upstream that is either terminal-with-no-wiki, or in-scope-but-not-yet-authored. Explicit gap disclosure.
+- **Tier U** — unclassifiable: no upstream wiki match, no formula, no source-code snippet. Mechanical disclosure of unclassifiability — see `.review-needed.md`.
+
+*Generated: 2026-05-19 | Concepts: 10 | Formulas: 97 | Tiers: 25 T1, 68 T2, 1 T3, 0 T4, 3 T5, 0 TN, 0 U | Elements: 97/97 | Source: view_definition*

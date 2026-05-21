@@ -124,12 +124,12 @@ All columns are schema-cloned from `BI_DB_PositionPnL`. Descriptions below are i
 | 15 | StopRate | numeric(16,8) | NO | Stop-loss rate; rewound to PreviousStopRate when edited after snapshot date. (Tier 2 — BI_DB_PositionPnL) |
 | 16 | IsBuy | bit | NO | Long (1) vs short (0). (Tier 2 — BI_DB_PositionPnL) |
 | 17 | Occurred | datetime | NO | Position open timestamp (OpenOccurred from Dim_Position). (Tier 2 — BI_DB_PositionPnL) |
-| 18 | Date | date | YES | Snapshot calendar date. (Tier 2 — BI_DB_PositionPnL) |
+| 18 | Date | date | YES | Snapshot calendar date. (Tier 3 — BI_DB_PositionPnL) |
 | 19 | DateID | int | NO | Snapshot date as YYYYMMDD integer; partition key. (Tier 2 — BI_DB_PositionPnL) |
 | 20 | UpdateDate | datetime | YES | Row load timestamp at insert (GETDATE()). (Tier 2 — BI_DB_PositionPnL) |
-| 21 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog when applicable. (Tier 2 — BI_DB_PositionPnL) |
+| 21 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog when applicable. (Tier 5 — BI_DB_PositionPnL) |
 | 22 | NOP | money | YES | Net open position in USD from units multiplied by pair rate, direction, and conversion factor. (Tier 2 — BI_DB_PositionPnL) |
-| 23 | DailyPnL | decimal(16,4) | YES | Day-over-day change: PositionPnL minus prior day PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 23 | DailyPnL | decimal(16,4) | YES | Day-over-day change: PositionPnL minus prior day PositionPnL. (Tier 3 — BI_DB_PositionPnL) |
 | 24 | Leverage | int | YES | Position leverage multiplier. (Tier 2 — BI_DB_PositionPnL) |
 | 25 | RateBid | numeric(36,12) | YES | EOD bid from Fact_CurrencyPriceWithSplit, split-adjusted. (Tier 2 — BI_DB_PositionPnL) |
 | 26 | RateAsk | numeric(36,12) | YES | EOD ask from Fact_CurrencyPriceWithSplit, split-adjusted. (Tier 2 — BI_DB_PositionPnL) |

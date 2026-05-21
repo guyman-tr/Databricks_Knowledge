@@ -117,8 +117,8 @@ _Pending — resolved during write-objects._
 | 16 | IsPartialCloseParent | int | YES | 1 = position has been partially closed (some lots removed). 0 = full position. Reconstructed from changelog. (Tier 2 — SP_Fact_Position_Futures_Snapshot) |
 | 17 | IsPartialCloseChild | int | YES | 1 = this position is the closed-off portion created by a partial close event (not the remainder). Child positions are excluded from OpenAtSettlement rows in this table; they appear only in ClosedBeforeSettlement rows. |
 | 18 | IsBuy | bit | YES | Direction: 1 = long (buy), 0 = short (sell). (Tier 2 — Dim_Position) |
-| 19 | ProviderID | int | YES | Liquidity provider for this futures instrument. From Dim_Instrument_Snapshot. (Tier 2 — Dim_Instrument_Snapshot) |
-| 20 | Multiplier | decimal(38,18) | YES | Contract size multiplier. From Dim_Instrument_Snapshot. Used in PnL: LotCount × Multiplier × Price. (Tier 2 — Dim_Instrument_Snapshot) |
+| 19 | ProviderID | int | YES | Liquidity provider for this futures instrument. From Dim_Instrument_Snapshot. (Tier 3 — Dim_Instrument_Snapshot) |
+| 20 | Multiplier | decimal(38,18) | YES | Contract size multiplier. From Dim_Instrument_Snapshot. Used in PnL: LotCount × Multiplier × Price. (Tier 3 — Dim_Instrument_Snapshot) |
 | 21 | ProviderMargin | int | YES | Margin required by the liquidity provider: LotCountDecimal × ProviderMarginPerLot. (Tier 2 — SP_Fact_Position_Futures_Snapshot) |
 | 22 | eToroMargin | int | YES | Margin required by eToro: LotCountDecimal × eToroMarginPerLot. (Tier 2 — SP_Fact_Position_Futures_Snapshot) |
 | 23 | PnL | money | YES | Mark-to-market PnL. Open: `LotCount × Multiplier × (SettlementPrice - InitForexRate)`. Closed: Dim_Position.NetProfit. (Tier 2 — SP_Fact_Position_Futures_Snapshot) |

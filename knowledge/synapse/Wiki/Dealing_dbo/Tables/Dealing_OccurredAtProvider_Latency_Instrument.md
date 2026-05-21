@@ -45,7 +45,7 @@ Most-granular view of price feed latency from Liquidity Providers (LPs). Measure
 | InstrumentType | varchar(30) | Instrument asset class (Stocks, Crypto, FX, etc.). (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | Symbol | varchar(20) | Trading symbol (e.g. AAPL, EURUSD). (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | Exchange | varchar(100) | Exchange or venue for this instrument. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
-| LiquidityAccountID | int | LP account identifier — which LP delivered this price feed. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
+| LiquidityAccountID | int | LP account identifier — which LP delivered this price feed. (Tier 4 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | LiquidityAccountName | varchar(80) | LP account name. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | PCSID | int | Price Collection Server ID — which eToro server received the price. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | CountInstances | int | Number of price events with ≥3s latency on this date for this grouping. Only rows with CountInstances > 1 are inserted. (Tier 2 — computed) |

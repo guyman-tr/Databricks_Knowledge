@@ -75,8 +75,8 @@ Read-only checks executed **2026-03-21**.
 | 9   | Exchange                  | varchar(80)   | YES      | Trading venue/exchange (e.g., "Nasdaq", "FRA").                                                                                    |
 | 10  | BNY_Units                 | decimal(16,6) | YES      | Trade units reported by BNY. Positive = buy; negative = sell. (Tier 2 — LP_BNY_Custody_Security_Transactions)                      |
 | 11  | Citadel_Units             | decimal(16,6) | YES      | Trade units reported by Citadel Securities. (Tier 2 — LP_Citadel_eToro_Confirm)                                                    |
-| 12  | eToro_Units               | decimal(16,6) | YES      | Trade units recorded in eToro's hedge activity (Duco ActivityRecon). (Tier 1 — Dealing_Duco_ActivityRecon.eToro_Units)             |
-| 13  | Clients_Units             | decimal(16,6) | YES      | Aggregated client NOP units from eToro internal systems. (Tier 1 — Dealing_Duco_ActivityRecon.ClientUnits)                         |
+| 12  | eToro_Units               | decimal(16,6) | YES      | Trade units recorded in eToro's hedge activity (Duco ActivityRecon). (Tier 2 — Dealing_Duco_ActivityRecon.eToro_Units)             |
+| 13  | Clients_Units             | decimal(16,6) | YES      | Aggregated client NOP units from eToro internal systems. (Tier 2 — Dealing_Duco_ActivityRecon.ClientUnits)                         |
 | 14  | BNY-eToro_Units           | decimal(16,6) | YES      | **Reconciliation diff**: BNY_Units − eToro_Units. Zero = perfect match; non-zero = discrepancy requiring investigation.            |
 | 15  | BNY-Clients_Units         | decimal(16,6) | YES      | BNY_Units − Clients_Units. Compares LP reported trade against client-side activity.                                                |
 | 16  | Citadel-eToro_Units       | decimal(16,6) | YES      | Citadel_Units − eToro_Units. Reconciliation diff for Citadel counterparty.                                                         |

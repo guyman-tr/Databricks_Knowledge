@@ -71,8 +71,8 @@ Pure ingest passthrough — no UC-side transform. The producer is the generic br
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | DocumentID | INT | YES | The KYC document that was processed. FK (WITH CHECK) to BackOffice.CustomerDocument(DocumentID). Leading key of NC PK. 893,779 distinct values. Deletions cascade from DeleteUserDocument (Tier 1 — inherited from etoro.BackOffice.DocumentVendors). |
-| 1 | Vendor | STRING | YES | The verification vendor name or code. Part of NC PK. Free-text, no FK constraint. Known values: "100" (legacy), "Onfido", "Sumsub", "Au10tix", "IDnow". Max 1024 chars - generous allocation for potentially long vendor identifiers or JSON-encoded metadata (Tier 1 — inherited from etoro.BackOffice.DocumentVendors). |
+| 1 | DocumentID | INT | YES | The KYC document that was processed. FK (WITH CHECK) to BackOffice.CustomerDocument(DocumentID). Leading key of NC PK. 893,779 distinct values. Deletions cascade from DeleteUserDocument (Tier 2 — inherited from etoro.BackOffice.DocumentVendors). |
+| 1 | Vendor | STRING | YES | The verification vendor name or code. Part of NC PK. Free-text, no FK constraint. Known values: "100" (legacy), "Onfido", "Sumsub", "Au10tix", "IDnow". Max 1024 chars - generous allocation for potentially long vendor identifiers or JSON-encoded metadata (Tier 2 — inherited from etoro.BackOffice.DocumentVendors). |
 
 ---
 

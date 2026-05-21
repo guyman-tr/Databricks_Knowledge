@@ -138,8 +138,8 @@ ROUND_ROBIN distribution means rows are evenly spread across distributions witho
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | DateID | int | NO | Snapshot date as YYYYMMDD; partition key. (Tier 1 — BI_DB_PositionPnL) |
-| 2 | InstrumentID | int | NO | Traded instrument. (Tier 1 — BI_DB_PositionPnL) |
-| 3 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog (ChangeTypeID = 13) when applicable. (Tier 1 — BI_DB_PositionPnL) |
+| 2 | InstrumentID | int | NO | Traded instrument. (Tier 2 — BI_DB_PositionPnL) |
+| 3 | IsSettled | int | YES | 1 = real asset, 0 = CFD asset. Rewound via PositionChangeLog (ChangeTypeID = 13) when applicable. (Tier 5 — BI_DB_PositionPnL) |
 | 4 | InstrumentType | varchar(50) | YES | ETL-computed asset class + settlement category. CASE on Dim_Instrument.InstrumentTypeID and IsSettled: RealStocksETF, CFDStocksETF, RealCrypto, CFDCrypto, Currencies, Commodities, Indecies, Check. (Tier 2 — BI_DB_PositionPnL / Dim_Instrument) |
 | 5 | InstrumentDisplayName | varchar(200) | YES | Human-readable name shown in UI (e.g., "Apple", "EUR/USD"). Used in position displays, order forms, and APIs. Passthrough from Dim_Instrument. (Tier 1 — Trade.InstrumentMetaData) |
 | 6 | SellBuy | varchar(50) | YES | ETL-computed direction label. CASE WHEN IsBuy=1 THEN 'Buy' ELSE 'Sell'. Derived from BI_DB_PositionPnL.IsBuy. (Tier 2 — BI_DB_PositionPnL) |

@@ -147,126 +147,126 @@ TimeBucket / BlockedReasonBucket = CASE WHEN:
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CID | int | YES | Customer identifier. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 2 | TransferDirection | int | YES | 1 = current regulation row; -1 = prior regulation row for same-day regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 1 | CID | int | YES | Customer identifier. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 2 | TransferDirection | int | YES | 1 = current regulation row; -1 = prior regulation row for same-day regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 3 | Regulation | varchar(100) | YES | Customer's regulatory entity name. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 4 | IsCreditReportValidCB | int | YES | CB credit-validity flag. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 5 | DidRegulationTransfer | int | YES | 1 if regulation changed on this date. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 6 | DidCBValidTransfer | int | YES | 1 if credit-valid status changed on this date. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 7 | IsEtoroTradingCID | int | YES | 1 if eToro Trading entity CID. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 8 | eToroTradingGroupUser | varchar(100) | YES | eToro Trading group username. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 9 | IsGlenEagleAccount | int | YES | 1 if Glen Eagle legacy entity account. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 10 | Region | varchar(100) | YES | Marketing region. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 11 | FromRegulation | varchar(100) | YES | Source regulation for transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 12 | ToRegulation | varchar(100) | YES | Destination regulation for transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 4 | IsCreditReportValidCB | int | YES | CB credit-validity flag. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 5 | DidRegulationTransfer | int | YES | 1 if regulation changed on this date. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 6 | DidCBValidTransfer | int | YES | 1 if credit-valid status changed on this date. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 7 | IsEtoroTradingCID | int | YES | 1 if eToro Trading entity CID. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 8 | eToroTradingGroupUser | varchar(100) | YES | eToro Trading group username. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 9 | IsGlenEagleAccount | int | YES | 1 if Glen Eagle legacy entity account. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 10 | Region | varchar(100) | YES | Marketing region. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 11 | FromRegulation | varchar(100) | YES | Source regulation for transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 12 | ToRegulation | varchar(100) | YES | Destination regulation for transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 13 | AccountType | varchar(100) | YES | Account type name. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 14 | Label | varchar(100) | YES | CRM/marketing label segment. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 15 | Country | varchar(100) | YES | Country of residence. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 16 | MifidCategory | varchar(100) | YES | MiFID customer category (Retail/Professional). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 17 | Club | varchar(100) | YES | eToro Club loyalty tier. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 18 | PlayerStatus | varchar(100) | YES | Current player status name. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 19 | DateID | int | YES | Business date as YYYYMMDD integer. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 20 | OpeningBalance | money | YES | Prior day closing balance = today's opening balance. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 21 | Deposits | decimal(18,6) | YES | FCA deposits for the date. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 22 | CompensationDeposit | decimal(18,6) | YES | Compensation deposits. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 23 | Bonus | decimal(18,6) | YES | Bonus credits. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 24 | Compensation | decimal(18,6) | YES | General compensation amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 25 | CompensationPI | decimal(18,6) | YES | Popular Investor compensation. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 26 | CompensationToAffiliate | decimal(18,6) | YES | Compensation routed to affiliate. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 27 | NWAAdjustment | decimal(18,6) | YES | Non-withdrawable amount adjustment. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 28 | NegativeRefill | decimal(18,6) | YES | Negative balance refill by eToro. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 29 | Cashouts | decimal(18,6) | YES | Customer cashouts for the date. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 30 | CashoutsIncludingRedeem | decimal(18,6) | YES | Cashouts including bonus redemptions. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 31 | CompensationCashouts | decimal(18,6) | YES | Compensation cashout amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 32 | CashoutFee | decimal(18,6) | YES | Cashout processing fee. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 33 | Chargeback | decimal(18,6) | YES | Chargeback amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 34 | Refund | decimal(18,6) | YES | Refund amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 35 | OvernightFee | decimal(18,6) | YES | Overnight/rollover fees. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 36 | LostDebt | decimal(18,6) | YES | Written-off customer debt. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 37 | ChargebackLoss | decimal(18,6) | YES | Chargeback loss to eToro. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 38 | OtherNegatives | decimal(18,6) | YES | Miscellaneous negative balance adjustments. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 39 | Foreclosure | decimal(18,6) | YES | Foreclosure amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 40 | CompensationPnLAdjustments | decimal(18,6) | YES | PnL-based compensation adjustments. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 41 | CompensationDormantFee | decimal(18,6) | YES | Dormant account fee compensation. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 42 | ClientBalanceRealizedPnL | decimal(18,6) | YES | Total realized PnL in the balance cycle. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 43 | ClientBalanceRealizedPnLCFD | decimal(18,6) | YES | CFD realized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 44 | ClientBalanceRealizedPnLRealStocks | decimal(18,6) | YES | Real stocks realized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 45 | ClientBalanceRealizedPnLRealCrypto | decimal(18,6) | YES | Real crypto realized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 46 | TransferCoins | decimal(18,6) | YES | Crypto coin transfer amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 47 | TransferCoinFees | decimal(18,6) | YES | Crypto coin transfer fees. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 48 | ClosingBalance | decimal(18,6) | YES | End-of-day balance (OpeningBalance + all flows). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 49 | realizedEquity | decimal(18,6) | YES | Total realized equity from V_Liabilities. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 50 | RealCryptoOpenBalance | decimal(18,6) | YES | Prior day real crypto position value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 51 | RealCryptoClosingBalance | decimal(18,6) | YES | Today's real crypto position value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 52 | ClientMoneyOpenBalance | decimal(18,6) | YES | Prior day client money (cash) value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 53 | ClientMoneyClosingBalance | decimal(18,6) | YES | Today's client money (cash) value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 54 | RealStocksOpeningBalance | decimal(18,6) | YES | Prior day real stocks position value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 55 | RealStocksClosingBalance | decimal(18,6) | YES | Today's real stocks position value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 56 | ClientBalanceFullCommission | decimal(18,6) | YES | Total full commission (incl. unrealized component). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 57 | ClientBalanceCommission | decimal(18,6) | YES | Net commission charged. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 58 | ClientBalanceFullCommissionCFD | decimal(18,6) | YES | Full commission for CFD positions. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 59 | ClientBalanceCommissionCFD | decimal(18,6) | YES | Net commission for CFD positions. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 60 | ClientBalanceFullCommissionRealCrypto | decimal(18,6) | YES | Full commission for real crypto. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 61 | ClientBalanceCommissionRealCrypto | decimal(18,6) | YES | Net commission for real crypto. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 62 | ClientBalanceFullCommissionRealStocks | decimal(18,6) | YES | Full commission for real stocks. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 63 | ClientBalanceCommissionRealStocks | decimal(18,6) | YES | Net commission for real stocks. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 64 | DividendsPaid | decimal(18,6) | YES | Dividends paid to customer. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 65 | TotalLiability | decimal(18,6) | YES | Total eToro liability to customer from V_Liabilities. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 66 | TotalNegativeLiability | decimal(18,6) | YES | Negative portion of total liability. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 67 | WithdrawableLiability | decimal(18,6) | YES | Withdrawable portion of liability. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 68 | NegativeWithdrawableLiability | decimal(18,6) | YES | Negative withdrawable liability. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 69 | LiabilityInUsedMargin | decimal(18,6) | YES | Liability locked in used margin. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 70 | NegativeLiabilityInUsedMargin | decimal(18,6) | YES | Negative liability in used margin. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 71 | InProcessCashout | decimal(18,6) | YES | In-process cashout value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 72 | NegativeInProcessCashout | decimal(18,6) | YES | Negative in-process cashout. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 73 | NOPCrypto | decimal(18,6) | YES | Net Open Position for crypto (CFD). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 74 | NOPCryptoCFD | decimal(18,6) | YES | NOP for crypto CFD instrument type. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 75 | NOPStocks | decimal(18,6) | YES | Net Open Position for stocks. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 76 | NOPStocksCFD | decimal(18,6) | YES | NOP for stocks CFD instrument type. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 77 | TotalRealCryptoLoan | decimal(18,6) | YES | Real crypto loan value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 78 | TotalRealCrypto | decimal(18,6) | YES | Total real (settled) crypto position value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 79 | TotalRealStocks | decimal(18,6) | YES | Total real (settled) stocks position value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 80 | PositionPNLCryptoReal | decimal(18,6) | YES | PnL for real crypto positions. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 81 | PositionPNLStocksReal | decimal(18,6) | YES | PnL for real stocks positions. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 82 | PositionPNL | decimal(18,6) | YES | Total unrealized position PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 83 | AvailableCash | decimal(18,6) | YES | Customer's available cash balance. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 84 | CashInCopy | decimal(18,6) | YES | Cash allocated to copy-trading mirrors. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 85 | NOP | decimal(18,6) | YES | Total Net Open Position across all instruments. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 86 | PositionAmount | decimal(18,6) | YES | Total open position amount. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 87 | StockOrders | decimal(18,6) | YES | Pending stock orders value. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 88 | actualNWA | decimal(18,6) | YES | Actual Non-Withdrawable Amount. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 89 | UsedBonus | decimal(18,6) | YES | Bonus credit used in open positions. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 90 | UnrealizedCommissionChange | decimal(18,6) | YES | Day-over-day change in unrealized commission. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 91 | UnrealizedFullCommissionChange | decimal(18,6) | YES | Day-over-day change in full unrealized commission. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 92 | UnrealizedPnLChange | decimal(18,6) | YES | Day-over-day change in total unrealized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 93 | UnrealizedPnLChangeCFD | decimal(18,6) | YES | Day-over-day change in CFD unrealized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 94 | UnrealizedPnLChangeCryptoReal | decimal(18,6) | YES | Day-over-day change in real crypto unrealized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 95 | UnrealizedPnLChangeStocksReal | decimal(18,6) | YES | Day-over-day change in real stocks unrealized PnL. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 96 | UnrealizedFullCommissionChangeRealStocks | decimal(18,6) | YES | Day-over-day change in full unrealized commission for real stocks. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 97 | TotalNetTransfers | decimal(18,6) | YES | Total net regulation transfer amounts. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 98 | TotalTransfersInvestedRealStocks | decimal(18,6) | YES | Real stocks position value in regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 99 | TotalTransfersInvestedRealCrypto | decimal(18,6) | YES | Real crypto position value in regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 100 | NetTransfersNWA | decimal(18,6) | YES | NWA component of regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 101 | NetTransfersUnrealizedPnL | decimal(18,6) | YES | Unrealized PnL component of regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 102 | NetTransfersLiability | decimal(18,6) | YES | Liability component of regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 103 | NetLiabilityTransferStocks | decimal(18,6) | YES | Stock-specific liability in regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 104 | NetUnrealizedPnLTransferStocks | decimal(18,6) | YES | Stock-specific unrealized PnL in regulation transfers. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 105 | PositionPnLCrypto | decimal(18,6) | YES | PnL for all crypto positions (CFD + real). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 106 | PositionPnLStocks | decimal(18,6) | YES | PnL for all stock positions (CFD + real). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 107 | TotalCryptoPositionAmount | decimal(18,6) | YES | Total crypto position value (CFD + real). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 108 | TotalStocksPositionAmount | decimal(18,6) | YES | Total stock position value (CFD + real). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 109 | IsGermanBaFin | int | YES | 1 if under German BaFin regulatory supervision. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 110 | IsValidCustomer | int | YES | Segment flag: 1 = valid retail customer (not demo/internal/blocked-country). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 111 | Date | date | YES | Business date. Equals GETDATE()-2 for the run date. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 112 | YearMonth | int | YES | Year-month as YYYYMM integer. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 113 | YearQuarter | int | YES | Year-quarter as YYYYQQ integer. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 114 | Year | int | YES | Calendar year. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 115 | UnrealizedCommissionChangeRealStocks | money | YES | Day-over-day change in unrealized commission for real stocks (FINRA). (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 116 | TotalRealStocksEquityChange | money | YES | Day-over-day change in total real stocks equity. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 117 | CompensationsApexUSStocks | money | YES | Compensation for Apex US stocks operations. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 118 | UnrealizedFullCommissionChangeCFDStocks | money | YES | Day-over-day change in full unrealized commission for CFD stocks. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 119 | UnrealizedFullCommissionChangeRealCrypto | money | YES | Day-over-day change in full unrealized commission for real crypto. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
-| 120 | UnrealizedFullCommissionChangeCFDCrypto | money | YES | Day-over-day change in full unrealized commission for CFD crypto. (Tier 1 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 19 | DateID | int | YES | Business date as YYYYMMDD integer. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 20 | OpeningBalance | money | YES | Prior day closing balance = today's opening balance. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 21 | Deposits | decimal(18,6) | YES | FCA deposits for the date. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 22 | CompensationDeposit | decimal(18,6) | YES | Compensation deposits. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 23 | Bonus | decimal(18,6) | YES | Bonus credits. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 24 | Compensation | decimal(18,6) | YES | General compensation amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 25 | CompensationPI | decimal(18,6) | YES | Popular Investor compensation. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 26 | CompensationToAffiliate | decimal(18,6) | YES | Compensation routed to affiliate. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 27 | NWAAdjustment | decimal(18,6) | YES | Non-withdrawable amount adjustment. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 28 | NegativeRefill | decimal(18,6) | YES | Negative balance refill by eToro. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 29 | Cashouts | decimal(18,6) | YES | Customer cashouts for the date. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 30 | CashoutsIncludingRedeem | decimal(18,6) | YES | Cashouts including bonus redemptions. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 31 | CompensationCashouts | decimal(18,6) | YES | Compensation cashout amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 32 | CashoutFee | decimal(18,6) | YES | Cashout processing fee. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 33 | Chargeback | decimal(18,6) | YES | Chargeback amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 34 | Refund | decimal(18,6) | YES | Refund amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 35 | OvernightFee | decimal(18,6) | YES | Overnight/rollover fees. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 36 | LostDebt | decimal(18,6) | YES | Written-off customer debt. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 37 | ChargebackLoss | decimal(18,6) | YES | Chargeback loss to eToro. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 38 | OtherNegatives | decimal(18,6) | YES | Miscellaneous negative balance adjustments. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 39 | Foreclosure | decimal(18,6) | YES | Foreclosure amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 40 | CompensationPnLAdjustments | decimal(18,6) | YES | PnL-based compensation adjustments. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 41 | CompensationDormantFee | decimal(18,6) | YES | Dormant account fee compensation. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 42 | ClientBalanceRealizedPnL | decimal(18,6) | YES | Total realized PnL in the balance cycle. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 43 | ClientBalanceRealizedPnLCFD | decimal(18,6) | YES | CFD realized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 44 | ClientBalanceRealizedPnLRealStocks | decimal(18,6) | YES | Real stocks realized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 45 | ClientBalanceRealizedPnLRealCrypto | decimal(18,6) | YES | Real crypto realized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 46 | TransferCoins | decimal(18,6) | YES | Crypto coin transfer amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 47 | TransferCoinFees | decimal(18,6) | YES | Crypto coin transfer fees. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 48 | ClosingBalance | decimal(18,6) | YES | End-of-day balance (OpeningBalance + all flows). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 49 | realizedEquity | decimal(18,6) | YES | Total realized equity from V_Liabilities. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 50 | RealCryptoOpenBalance | decimal(18,6) | YES | Prior day real crypto position value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 51 | RealCryptoClosingBalance | decimal(18,6) | YES | Today's real crypto position value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 52 | ClientMoneyOpenBalance | decimal(18,6) | YES | Prior day client money (cash) value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 53 | ClientMoneyClosingBalance | decimal(18,6) | YES | Today's client money (cash) value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 54 | RealStocksOpeningBalance | decimal(18,6) | YES | Prior day real stocks position value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 55 | RealStocksClosingBalance | decimal(18,6) | YES | Today's real stocks position value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 56 | ClientBalanceFullCommission | decimal(18,6) | YES | Total full commission (incl. unrealized component). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 57 | ClientBalanceCommission | decimal(18,6) | YES | Net commission charged. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 58 | ClientBalanceFullCommissionCFD | decimal(18,6) | YES | Full commission for CFD positions. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 59 | ClientBalanceCommissionCFD | decimal(18,6) | YES | Net commission for CFD positions. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 60 | ClientBalanceFullCommissionRealCrypto | decimal(18,6) | YES | Full commission for real crypto. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 61 | ClientBalanceCommissionRealCrypto | decimal(18,6) | YES | Net commission for real crypto. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 62 | ClientBalanceFullCommissionRealStocks | decimal(18,6) | YES | Full commission for real stocks. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 63 | ClientBalanceCommissionRealStocks | decimal(18,6) | YES | Net commission for real stocks. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 64 | DividendsPaid | decimal(18,6) | YES | Dividends paid to customer. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 65 | TotalLiability | decimal(18,6) | YES | Total eToro liability to customer from V_Liabilities. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 66 | TotalNegativeLiability | decimal(18,6) | YES | Negative portion of total liability. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 67 | WithdrawableLiability | decimal(18,6) | YES | Withdrawable portion of liability. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 68 | NegativeWithdrawableLiability | decimal(18,6) | YES | Negative withdrawable liability. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 69 | LiabilityInUsedMargin | decimal(18,6) | YES | Liability locked in used margin. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 70 | NegativeLiabilityInUsedMargin | decimal(18,6) | YES | Negative liability in used margin. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 71 | InProcessCashout | decimal(18,6) | YES | In-process cashout value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 72 | NegativeInProcessCashout | decimal(18,6) | YES | Negative in-process cashout. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 73 | NOPCrypto | decimal(18,6) | YES | Net Open Position for crypto (CFD). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 74 | NOPCryptoCFD | decimal(18,6) | YES | NOP for crypto CFD instrument type. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 75 | NOPStocks | decimal(18,6) | YES | Net Open Position for stocks. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 76 | NOPStocksCFD | decimal(18,6) | YES | NOP for stocks CFD instrument type. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 77 | TotalRealCryptoLoan | decimal(18,6) | YES | Real crypto loan value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 78 | TotalRealCrypto | decimal(18,6) | YES | Total real (settled) crypto position value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 79 | TotalRealStocks | decimal(18,6) | YES | Total real (settled) stocks position value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 80 | PositionPNLCryptoReal | decimal(18,6) | YES | PnL for real crypto positions. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 81 | PositionPNLStocksReal | decimal(18,6) | YES | PnL for real stocks positions. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 82 | PositionPNL | decimal(18,6) | YES | Total unrealized position PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 83 | AvailableCash | decimal(18,6) | YES | Customer's available cash balance. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 84 | CashInCopy | decimal(18,6) | YES | Cash allocated to copy-trading mirrors. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 85 | NOP | decimal(18,6) | YES | Total Net Open Position across all instruments. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 86 | PositionAmount | decimal(18,6) | YES | Total open position amount. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 87 | StockOrders | decimal(18,6) | YES | Pending stock orders value. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 88 | actualNWA | decimal(18,6) | YES | Actual Non-Withdrawable Amount. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 89 | UsedBonus | decimal(18,6) | YES | Bonus credit used in open positions. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 90 | UnrealizedCommissionChange | decimal(18,6) | YES | Day-over-day change in unrealized commission. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 91 | UnrealizedFullCommissionChange | decimal(18,6) | YES | Day-over-day change in full unrealized commission. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 92 | UnrealizedPnLChange | decimal(18,6) | YES | Day-over-day change in total unrealized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 93 | UnrealizedPnLChangeCFD | decimal(18,6) | YES | Day-over-day change in CFD unrealized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 94 | UnrealizedPnLChangeCryptoReal | decimal(18,6) | YES | Day-over-day change in real crypto unrealized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 95 | UnrealizedPnLChangeStocksReal | decimal(18,6) | YES | Day-over-day change in real stocks unrealized PnL. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 96 | UnrealizedFullCommissionChangeRealStocks | decimal(18,6) | YES | Day-over-day change in full unrealized commission for real stocks. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 97 | TotalNetTransfers | decimal(18,6) | YES | Total net regulation transfer amounts. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 98 | TotalTransfersInvestedRealStocks | decimal(18,6) | YES | Real stocks position value in regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 99 | TotalTransfersInvestedRealCrypto | decimal(18,6) | YES | Real crypto position value in regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 100 | NetTransfersNWA | decimal(18,6) | YES | NWA component of regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 101 | NetTransfersUnrealizedPnL | decimal(18,6) | YES | Unrealized PnL component of regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 102 | NetTransfersLiability | decimal(18,6) | YES | Liability component of regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 103 | NetLiabilityTransferStocks | decimal(18,6) | YES | Stock-specific liability in regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 104 | NetUnrealizedPnLTransferStocks | decimal(18,6) | YES | Stock-specific unrealized PnL in regulation transfers. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 105 | PositionPnLCrypto | decimal(18,6) | YES | PnL for all crypto positions (CFD + real). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 106 | PositionPnLStocks | decimal(18,6) | YES | PnL for all stock positions (CFD + real). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 107 | TotalCryptoPositionAmount | decimal(18,6) | YES | Total crypto position value (CFD + real). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 108 | TotalStocksPositionAmount | decimal(18,6) | YES | Total stock position value (CFD + real). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 109 | IsGermanBaFin | int | YES | 1 if under German BaFin regulatory supervision. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 110 | IsValidCustomer | int | YES | Segment flag: 1 = valid retail customer (not demo/internal/blocked-country). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 111 | Date | date | YES | Business date. Equals GETDATE()-2 for the run date. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 112 | YearMonth | int | YES | Year-month as YYYYMM integer. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 113 | YearQuarter | int | YES | Year-quarter as YYYYQQ integer. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 114 | Year | int | YES | Calendar year. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 115 | UnrealizedCommissionChangeRealStocks | money | YES | Day-over-day change in unrealized commission for real stocks (FINRA). (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 116 | TotalRealStocksEquityChange | money | YES | Day-over-day change in total real stocks equity. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 117 | CompensationsApexUSStocks | money | YES | Compensation for Apex US stocks operations. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 118 | UnrealizedFullCommissionChangeCFDStocks | money | YES | Day-over-day change in full unrealized commission for CFD stocks. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 119 | UnrealizedFullCommissionChangeRealCrypto | money | YES | Day-over-day change in full unrealized commission for real crypto. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
+| 120 | UnrealizedFullCommissionChangeCFDCrypto | money | YES | Day-over-day change in full unrealized commission for CFD crypto. (Tier 2 — BI_DB_Client_Balance_CID_Level_New.md) |
 | 121 | PlayerStatusID | int | YES | Player status identifier from Dim_Customer. Passthrough; all rows in current data have the same PlayerStatusID corresponding to the blocked status. (Tier 2 — SP_Client_Balance_CID_Level_New_Blocked) |
 | 122 | PlayerStatusReasonID | int | YES | Player status reason ID from Dim_Customer. Filter key: always = 6 (AML-Account Closed) in this table. (Tier 2 — SP_Client_Balance_CID_Level_New_Blocked) |
 | 123 | PlayerStatusReason | varchar(100) | YES | Human-readable name for the block reason from Dim_PlayerStatusReasons.Name. Current value: "AML-Account Closed" (PlayerStatusReasonID=6). (Tier 2 — SP_Client_Balance_CID_Level_New_Blocked) |

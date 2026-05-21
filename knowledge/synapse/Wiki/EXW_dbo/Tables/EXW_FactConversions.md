@@ -134,7 +134,7 @@ The table is HASH-distributed on `SendingGCID` and uses HEAP (no CCI). With only
 | 1 | ConversionID | bigint | YES | Auto-incrementing primary key. FK target for Wallet.ConversionStatuses and Wallet.ConversionTransactions. Passthrough from WalletDB. (Tier 1 — WalletDB.Wallet.Conversions) |
 | 2 | CorrelationID | uniqueidentifier | YES | Links to the parent request in Wallet.Requests.CorrelationId. Used by the orchestration saga to deduplicate retries. (Tier 1 — WalletDB.Wallet.Conversions) |
 | 3 | RequestTime | datetime | YES | Timestamp when the conversion was initiated. Passthrough from Wallet.Conversions.Occurred. (Tier 1 — WalletDB.Wallet.Conversions) |
-| 4 | FromWalletId | uniqueidentifier | YES | The source wallet from which crypto is sold. FK to Wallet.Wallets.WalletId. (Tier 1 — WalletDB.Wallet.Conversions) |
+| 4 | FromWalletId | uniqueidentifier | YES | The source wallet from which crypto is sold. FK to Wallet.Wallets.WalletId. (Tier 3 — WalletDB.Wallet.Conversions) |
 | 5 | FromAddress | nvarchar(512) | YES | Destination blockchain address for this conversion leg. NULL when the transfer is internal. FROM-leg outgoing address. (Tier 1 — WalletDB.Wallet.ConversionTransactions) |
 | 6 | SendingGCID | bigint | YES | Group Customer ID of the wallet owner initiating the conversion. Derived by joining FromWalletId to CustomerWalletsView. Always equal to RecievingGCID (same user controls both wallets). (Tier 2 — EXW_Wallet.CustomerWalletsView) |
 | 7 | RequestedFromAmount | numeric(38,8) | YES | Amount of source crypto being sold. In native units of FromCryptoId. This is the original requested amount before execution. (Tier 1 — WalletDB.Wallet.Conversions) |
@@ -146,8 +146,8 @@ The table is HASH-distributed on `SendingGCID` and uses HEAP (no CCI). With only
 | 13 | ToEtoroEstimatedBCFee | numeric(38,8) | YES | Estimated blockchain network fee for this leg. TO-leg estimated fee — always NULL; was not populated during the historical load. (Tier 2 — WalletDB.Wallet.ConversionTransactions) |
 | 14 | ToEtoroDate | datetime | YES | Timestamp of the TO-leg conversion transaction creation. Sourced from ConversionTransactions.Occurred for the TO leg. (Tier 2 — WalletDB.Wallet.ConversionTransactions) |
 | 15 | ConversionID2 | bigint | YES | Duplicate of ConversionID. Always equals ConversionID (confirmed in 100% of rows). Loading artifact — carries no additional information. Do not use for filtering or grouping. (Tier 4 — data observation) |
-| 16 | ToWalletId | uniqueidentifier | YES | The destination wallet into which the purchased crypto arrives. FK to Wallet.Wallets.WalletId. (Tier 1 — WalletDB.Wallet.Conversions) |
-| 17 | ToAddress | nvarchar(512) | YES | Destination blockchain address for this conversion leg. NULL when the transfer is internal. TO-leg receiving address. (Tier 1 — WalletDB.Wallet.ConversionTransactions) |
+| 16 | ToWalletId | uniqueidentifier | YES | The destination wallet into which the purchased crypto arrives. FK to Wallet.Wallets.WalletId. (Tier 3 — WalletDB.Wallet.Conversions) |
+| 17 | ToAddress | nvarchar(512) | YES | Destination blockchain address for this conversion leg. NULL when the transfer is internal. TO-leg receiving address. (Tier 3 — WalletDB.Wallet.ConversionTransactions) |
 | 18 | RecievingGCID | bigint | YES | Group Customer ID of the wallet owner receiving the conversion. Derived by joining ToWalletId to CustomerWalletsView. Always equal to SendingGCID — same user owns both wallets in a self-swap. (Tier 2 — EXW_Wallet.CustomerWalletsView) |
 | 19 | RequestedToAmount | numeric(38,8) | YES | Amount of destination crypto being purchased. In native units of ToCryptoId. This is the original requested amount before execution. (Tier 1 — WalletDB.Wallet.Conversions) |
 | 20 | ToCryptoID | int | YES | Destination cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID. (Tier 1 — WalletDB.Wallet.Conversions) |

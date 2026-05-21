@@ -7,7 +7,7 @@
 | **Source** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\source_code\v_fact_customeraction_w_metrics.sql` |
 | **Column-lineage cache** | `knowledge\UC_generated\etoro_kpi_prep\_discovery\column_lineage\v_fact_customeraction_w_metrics.json` (rows: 97, mismatches: 41) |
 | **Primary upstream** | `main.etoro_kpi_prep.v_fact_customeraction_enriched` |
-| **Generated** | 2026-05-18 |
+| **Generated** | 2026-05-19 |
 
 ## Upstream Objects
 
@@ -15,15 +15,15 @@
 |--------------------|------|---------------|
 | `main.bi_output.bi_output_finance_tables_bi_db_positions_closed_to_iban` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_positions_closed_to_iban.md` |
 | `main.bi_output.bi_output_finance_tables_bi_db_positions_opened_from_iban` | JOIN / referenced | ✗ `knowledge/UC_generated/bi_output/<Tables|Views>/bi_output_finance_tables_bi_db_positions_opened_from_iban.md` |
-| `main.bi_db.bronze_etoro_trade_adminpositionlog` | JOIN / referenced | ✓ `knowledge\ProdSchemas\DB_Schema\etoro\Wiki\Trade\Tables\Trade.AdminPositionLog.md` |
-| `main.etoro_kpi_prep.v_dim_instrument_enriched` | JOIN / referenced | ✗ `knowledge/UC_generated/etoro_kpi_prep/<Tables|Views>/v_dim_instrument_enriched.md` |
+| `main.bi_db.bronze_etoro_trade_adminpositionlog` | JOIN / referenced | ✓ `knowledge/ProdSchemas/DB_Schema/etoro/Wiki/Trade/Tables/Trade.AdminPositionLog.md` |
+| `main.etoro_kpi_prep.v_dim_instrument_enriched` | JOIN / referenced | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_dim_instrument_enriched.md` |
 | `main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\DWH_dbo\Tables\Dim_Mirror.md` |
 | `main.dwh.dim_position` | JOIN / referenced | ✗ `(no wiki found)` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DepositWithdrawFee.md` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DepositWithdrawFee_Reversals.md` |
 | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee` | JOIN / referenced | ✓ `knowledge\synapse\Wiki\BI_DB_dbo\Tables\BI_DB_DepositWithdrawFee.md` |
 | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | Primary (FROM) | ✓ `knowledge/UC_generated/etoro_kpi_prep/Views/v_fact_customeraction_enriched.md` |
-| `main.general.bronze_recurringinvestment_recurringinvestment_planinstances` | JOIN / referenced | ✓ `knowledge\ProdSchemas\ExperianceDBs\RecurringInvestment\Wiki\RecurringInvestment\Tables\RecurringInvestment.PlanInstances.md` |
+| `main.general.bronze_recurringinvestment_recurringinvestment_planinstances` | JOIN / referenced | ✓ `knowledge/ProdSchemas/ExperianceDBs/RecurringInvestment/Wiki/RecurringInvestment/Tables/RecurringInvestment.PlanInstances.md` |
 
 ## Lineage Chain
 
@@ -53,14 +53,14 @@ main.etoro_kpi_prep.v_fact_customeraction_w_metrics   ←── this object
 | 3 | `Occurred` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `Occurred` | `passthrough` | (Tier 1 — source-dependent) | fca.Occurred |
 | 4 | `ActionTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `ActionTypeID` | `passthrough` | (Tier 1 — History.Credit / Trade snapshots / STS / Customer payloads) | fca.ActionTypeID |
 | 5 | `PlatformTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `PlatformTypeID` | `passthrough` | (Tier 3 — ETL-assigned) | fca.PlatformTypeID |
-| 6 | `InstrumentID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `InstrumentID` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.InstrumentID |
+| 6 | `InstrumentID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `InstrumentID` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.InstrumentID |
 | 7 | `Amount` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `Amount` | `passthrough` | (Tier 1 — Trade.PositionTbl / History.Credit) | fca.Amount |
-| 8 | `Leverage` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `Leverage` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.Leverage |
+| 8 | `Leverage` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `Leverage` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.Leverage |
 | 9 | `NetProfit` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `NetProfit` | `passthrough` | (Tier 1 — Trade.PositionTbl) | fca.NetProfit |
 | 10 | `Commission` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `Commission` | `passthrough` | (Tier 1 — Trade.PositionTbl) | fca.Commission |
-| 11 | `PositionID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `PositionID` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) | fca.PositionID |
+| 11 | `PositionID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `PositionID` | `passthrough` | (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.PositionID |
 | 12 | `FundingTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `FundingTypeID` | `passthrough` | (Tier 1 — History.Credit) | fca.FundingTypeID |
-| 13 | `MirrorID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `MirrorID` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.MirrorID |
+| 13 | `MirrorID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `MirrorID` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.MirrorID |
 | 14 | `WithdrawID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `WithdrawID` | `passthrough` | (Tier 1 — History.Credit) | fca.WithdrawID |
 | 15 | `DateID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `DateID` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | fca.DateID |
 | 16 | `CompensationReasonID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `CompensationReasonID` | `passthrough` | (Tier 1 — History.Credit, updated wiki 2025-12) | fca.CompensationReasonID |
@@ -81,27 +81,27 @@ main.etoro_kpi_prep.v_fact_customeraction_w_metrics   ←── this object
 | 31 | `IsPartialCloseChild` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsPartialCloseChild` | `passthrough` | (Tier 5 — domain expert, SP_Dim_Position_DL_To_Synapse) | fca.IsPartialCloseChild |
 | 32 | `PaymentStatusID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `PaymentStatusID` | `passthrough` | (Tier 5 — domain expert) | fca.PaymentStatusID |
 | 33 | `IsDiscounted` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsDiscounted` | `passthrough` | (Tier 1 — Trade.PositionTbl) | fca.IsDiscounted |
-| 34 | `IsSettled` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsSettled` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.IsSettled |
+| 34 | `IsSettled` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsSettled` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.IsSettled |
 | 35 | `CommissionByUnits` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `CommissionByUnits` | `passthrough` | (Tier 1 — Trade.Position) | fca.CommissionByUnits |
 | 36 | `FullCommissionByUnits` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `FullCommissionByUnits` | `passthrough` | (Tier 1 — Trade.Position) | fca.FullCommissionByUnits |
 | 37 | `IsFTD` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsFTD` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | fca.IsFTD |
 | 38 | `IsFeeDividend` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsFeeDividend` | `passthrough` | (Tier 2 — SP_Fact_CustomerAction) | fca.IsFeeDividend |
-| 39 | `IsAirDrop` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsAirDrop` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.IsAirDrop |
+| 39 | `IsAirDrop` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsAirDrop` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.IsAirDrop |
 | 40 | `DividendID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `DividendID` | `passthrough` | (Tier 1 — Trade.Positions/dividends lineage) | fca.DividendID |
-| 41 | `MoveMoneyReasonID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `MoveMoneyReasonID` | `passthrough` | (Tier 1 — History.Credit) | fca.MoveMoneyReasonID |
-| 42 | `SettlementTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `SettlementTypeID` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.SettlementTypeID |
-| 43 | `etr_y` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `etr_y` | `passthrough` | (Tier 2 — gold/spaceship pipeline) | fca.etr_y |
-| 44 | `etr_ym` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `etr_ym` | `passthrough` | (Tier 2 — gold/spaceship pipeline) | fca.etr_ym |
-| 45 | `etr_ymd` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `etr_ymd` | `passthrough` | (Tier 2 — gold/spaceship pipeline) | fca.etr_ymd |
+| 41 | `MoveMoneyReasonID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `MoveMoneyReasonID` | `passthrough` | (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.MoveMoneyReasonID |
+| 42 | `SettlementTypeID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `SettlementTypeID` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.SettlementTypeID |
+| 43 | `etr_y` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `etr_y` | `passthrough` | (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.etr_y |
+| 44 | `etr_ym` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `etr_ym` | `passthrough` | (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.etr_ym |
+| 45 | `etr_ymd` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `etr_ymd` | `passthrough` | (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.etr_ymd |
 | 46 | `DLTOpen` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `DLTOpen` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | fca.DLTOpen |
 | 47 | `DLTClose` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `DLTClose` | `passthrough` | (Tier 2 — SP_Dim_Position_DL_To_Synapse) | fca.DLTClose |
 | 48 | `OpenMarkupByUnits` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `OpenMarkupByUnits` | `passthrough` | (Tier 1 — Trade.Position) | fca.OpenMarkupByUnits |
 | 49 | `Description` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `Description` | `passthrough` | (Tier 1 — History.Credit) | fca.Description |
-| 50 | `IsBuy` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsBuy` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction / main.dwh.dim_position) | fca.IsBuy |
+| 50 | `IsBuy` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `IsBuy` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`, `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.IsBuy |
 | 51 | `CreditID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `CreditID` | `passthrough` | (Tier 1 — History.Credit) | fca.CreditID |
-| 52 | `OpenDateID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `OpenDateID` | `passthrough` | (Tier 2 — main.dwh.dim_position) | fca.OpenDateID |
-| 53 | `CloseDateID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `CloseDateID` | `passthrough` | (Tier 2 — main.dwh.dim_position) | fca.CloseDateID |
-| 54 | `TicketFeeAction` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `TicketFeeAction` | `passthrough` | (Tier 2 — main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction) | fca.TicketFeeAction |
+| 52 | `OpenDateID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `OpenDateID` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`) | fca.OpenDateID |
+| 53 | `CloseDateID` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `CloseDateID` | `passthrough` | (Tier 2 — from `main.dwh.dim_position`) | fca.CloseDateID |
+| 54 | `TicketFeeAction` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `TicketFeeAction` | `passthrough` | (Tier 2 — from `main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction`) | fca.TicketFeeAction |
 | 55 | `RollOverFee` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `—` | `case` | — | CASE WHEN actiontypeid = 35 AND isfeedividend = 1 THEN -1 * fca.Amount ELSE 0 END AS RollOverFee |
 | 56 | `Dividend` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `—` | `case` | — | CASE WHEN actiontypeid = 35 AND isfeedividend = 2 THEN fca.Amount ELSE 0 END AS Dividend |
 | 57 | `SDRT` | `main.etoro_kpi_prep.v_fact_customeraction_enriched` | `—` | `case` | — | CASE WHEN actiontypeid = 35 AND isfeedividend = 3 THEN -1 * fca.Amount ELSE 0 END AS SDRT |

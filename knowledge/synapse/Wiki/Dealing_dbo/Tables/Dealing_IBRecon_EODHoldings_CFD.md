@@ -59,7 +59,7 @@ Added to `SP_IB_Recon` in February 2025 (SR-302234, Adar Cahlon). Initially mapp
 | 7 | IsBuy | bit | YES | Direction flag: 1 = long, 0 = short. |
 | 8 | CurrencyPrimary | varchar(50) | YES | Instrument local currency. |
 | 9 | IB_Units | decimal(16,6) | YES | IB CFD position units. (Tier 2 — LP_IB_I1893329_Open_Positions) |
-| 10 | eToro_Units | decimal(16,6) | YES | eToro hedge units. (Tier 1 — Dealing_Duco_EODRecon.eToro_Units) |
+| 10 | eToro_Units | decimal(16,6) | YES | eToro hedge units. (Tier 2 — Dealing_Duco_EODRecon.eToro_Units) |
 | 11 | Clients_Units | decimal(16,6) | YES | Client NOP units. |
 | 12 | IB-eToro_Units | decimal(16,6) | YES | IB_Units − eToro_Units. Reconciliation diff. |
 | 13 | IB-Clients_Units | decimal(16,6) | YES | IB_Units − Clients_Units. |

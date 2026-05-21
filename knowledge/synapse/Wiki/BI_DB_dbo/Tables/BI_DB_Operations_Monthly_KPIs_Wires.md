@@ -137,7 +137,7 @@ ROUND_ROBIN distribution with clustered index on (ModificationDateID, CID). Howe
 | 9 | ModificationDate | datetime | YES | UTC timestamp of the most recent modification to this deposit record. Used by ETL for incremental detection. (Tier 1 — Fact_BillingDeposit.ModificationDate) |
 | 10 | Approved | int | YES | Legacy approval flag, superseded by PaymentStatusID=2. NULL for most modern records. Retained for backward compatibility. (Tier 1 — Fact_BillingDeposit.Approved) |
 | 11 | DepotID | int | YES | Acquirer/gateway configuration used for this deposit. Validated at insert against DepotToCurrency in production. (Tier 1 — Fact_BillingDeposit.DepotID) |
-| 12 | FundingTypeID | int | YES | Type of payment instrument. Categorizes the deposit by payment method (credit card, wire, ACH, etc.). FK to Dim_FundingType. (Tier 1 — Fact_BillingDeposit.FundingTypeID) |
+| 12 | FundingTypeID | int | YES | Type of payment instrument. Categorizes the deposit by payment method (credit card, wire, ACH, etc.). FK to Dim_FundingType. (Tier 2 — Fact_BillingDeposit.FundingTypeID) |
 | 13 | FundingTypeName | varchar(30) | YES | Payment method name denormalized from Dim_FundingType.Name (e.g., CreditCard, Wire, PayPal, eToroMoney). (Tier 2 — SP_Operations_Monthly_KPIs_FullData via Dim_FundingType.Name) |
 | 14 | Region | varchar(30) | YES | Marketing region label from Dim_Country, resolved via Dim_Customer.CountryID. 22 distinct values (e.g., French, ROW, Arabic Other). (Tier 2 — SP_Operations_Monthly_KPIs_FullData via Dim_Country.Region) |
 | 15 | Regulation | varchar(30) | YES | Regulation name from Dim_Regulation, resolved via Dim_Customer.RegulationID. Short code (e.g., CySEC, FCA, ASIC, BVI). (Tier 2 — SP_Operations_Monthly_KPIs_FullData via Dim_Regulation.Name) |

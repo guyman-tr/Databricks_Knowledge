@@ -43,7 +43,7 @@ Position-level **one row per open or close event** (not aggregated across positi
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | CID | DWH_dbo.Dim_Position.CID | Direct from union row | T1 |
+| 1 | CID | DWH_dbo.Dim_Position.CID | Direct from union row | T2 |
 | 2 | PositionID | DWH_dbo.Dim_Position.PositionID | Direct | T1 |
 | 3 | InstrumentID | DWH_dbo.Dim_Position.InstrumentID | Direct | T1 |
 | 4 | Amount | DWH_dbo.Dim_Position.Amount | Direct | T1 |
@@ -52,7 +52,7 @@ Position-level **one row per open or close event** (not aggregated across positi
 | 7 | VolumeOpen | DWH_dbo.Dim_Position.Volume | `ISNULL(CAST(Volume AS BIGINT),0)` on **open** leg only (`OpenDateID` in range); **0** on close leg | T2 |
 | 8 | VolumeClose | DWH_dbo.Dim_Position.VolumeOnClose | `ISNULL(CAST(VolumeOnClose AS BIGINT),0)` on **close** leg (`CloseDateID` in range); **0** on open leg | T2 |
 | 9 | InvestedAmountOpen | DWH_dbo.Dim_Position.InitialAmountCents | CASE WHEN IsPartialCloseChild=1 THEN 0 ELSE InitialAmountCents/100.0 END on opens | T2 |
-| 10 | InvestedAmountClosed | DWH_dbo.Dim_Position.Amount | CAST(Amount AS FLOAT) on closes | T2 |
+| 10 | InvestedAmountClosed | DWH_dbo.Dim_Position.Amount | CAST(Amount AS FLOAT) on closes | TU |
 | 11 | TotalVolume | DWH_dbo.Dim_Position.Volume, VolumeOnClose | `ISNULL(VolumeOpen,0) + ISNULL(VolumeClose,0)` per union row (stored volumes, not computed QA columns) | T2 |
 | 12 | NetInvestedAmount | DWH_dbo.Dim_Position | `ISNULL(InvestedAmountOpen,0) - ISNULL(InvestedAmountClosed,0)` (open uses `InitialAmountCents/100.0` unless partial-close child; close uses `CAST(Amount AS FLOAT)`) | T2 |
 | 13 | CountOpenTransactions | DWH_dbo.Dim_Position.IsPartialCloseChild | 1 or 0 on opens | T2 |

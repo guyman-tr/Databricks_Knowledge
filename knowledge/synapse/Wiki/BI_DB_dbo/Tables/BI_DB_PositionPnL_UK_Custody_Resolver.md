@@ -95,13 +95,13 @@ HASH(PositionID) distribution — optimal for PositionID-based JOINs. CLUSTERED 
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | CID | int | YES | Real customer identifier (NOT anonymized). From BI_DB_PositionPnL via #posFCA. Use for de-anonymization of EU/UK custody books. (Tier 1 — BI_DB_PositionPnL) |
-| 2 | PositionID | bigint | NO | Real position identifier (NOT hashed). Distribution key. From BI_DB_PositionPnL via #posFCA. (Tier 1 — BI_DB_PositionPnL) |
+| 1 | CID | int | YES | Real customer identifier (NOT anonymized). From BI_DB_PositionPnL via #posFCA. Use for de-anonymization of EU/UK custody books. (Tier 2 — BI_DB_PositionPnL) |
+| 2 | PositionID | bigint | NO | Real position identifier (NOT hashed). Distribution key. From BI_DB_PositionPnL via #posFCA. (Tier 2 — BI_DB_PositionPnL) |
 | 3 | PositionID_HashedEU | varchar(100) | YES | SHA1 hash of PositionID. 40-character uppercase hex string. Matches `EU_Custody.PositionID_Hashed`. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody) |
 | 4 | PositionID_HashedUK | varchar(100) | YES | MD5 hash of PositionID. 32-character uppercase hex string. Matches `UK_Custody.PositionID_Hashed`. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody) |
-| 5 | InstrumentID | int | NO | Traded instrument. Only stocks/ETFs (InstrumentTypeID 5,6). FK to Dim_Instrument. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 6 | Occurred | datetime | NO | Position open timestamp (OpenOccurred). Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
-| 7 | Date | date | YES | Snapshot calendar date @dt. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
+| 5 | InstrumentID | int | NO | Traded instrument. Only stocks/ETFs (InstrumentTypeID 5,6). FK to Dim_Instrument. Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 6 | Occurred | datetime | NO | Position open timestamp (OpenOccurred). Passthrough from BI_DB_PositionPnL. (Tier 2 — BI_DB_PositionPnL) |
+| 7 | Date | date | YES | Snapshot calendar date @dt. Passthrough from BI_DB_PositionPnL. (Tier 3 — BI_DB_PositionPnL) |
 | 8 | DateID | int | NO | Snapshot date as YYYYMMDD. Passthrough from BI_DB_PositionPnL. (Tier 1 — BI_DB_PositionPnL) |
 | 9 | UpdateDate | datetime | NO | Row load timestamp. GETDATE() at insert time. (Tier 3 — SP_BI_DB_PositionPnL_EU_Custody, GETDATE()) |
 

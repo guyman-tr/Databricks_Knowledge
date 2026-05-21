@@ -161,8 +161,8 @@ ROUND_ROBIN HEAP with 234,804 rows. Moderate size — broadcast-friendly for JOI
 | 16 | PlayerStatusSubReasonID | int | NO | Sub-reason code for PlayerStatus (hierarchical). FK to Dictionary.PlayerStatusSubReasons. Added 2022 (COINF-1989). DWH note: ISNULL applied — 0 replaces NULL (no sub-reason assigned). NOT NULL. Passthrough from Dim_Customer with ISNULL transform. (Tier 1 — Customer.CustomerStatic) |
 | 17 | PlayerStatusSubReasonName | varchar(50) | NO | Resolved sub-reason name from Dim_PlayerStatusSubReasons (LEFT JOIN). ISNULL applied: 'None' when no sub-reason. Sample values: HRC, Cross Border, Failed Verification - 15 Days. NOT NULL. (Tier 2 — SP_Blocked_Customers) |
 | 18 | RiskGroupID | int | YES | Customer country risk group from Dim_Country. Used for AML risk stratification. (Tier 2 — DWH_dbo.Dim_Country) |
-| 19 | EU | int | YES | Whether the customer's country is in the EU. From Dim_Country. 0=No, 1=Yes. (Tier 2 — DWH_dbo.Dim_Country) |
-| 20 | IsEuropeanCountry | int | YES | Whether the customer's country is a European country (broader than EU). From Dim_Country. 0=No, 1=Yes. (Tier 2 — DWH_dbo.Dim_Country) |
+| 19 | EU | int | YES | Whether the customer's country is in the EU. From Dim_Country. 0=No, 1=Yes. (Tier 3 — DWH_dbo.Dim_Country) |
+| 20 | IsEuropeanCountry | int | YES | Whether the customer's country is a European country (broader than EU). From Dim_Country. 0=No, 1=Yes. (Tier 3 — DWH_dbo.Dim_Country) |
 | 21 | VerificationLevelID | int | YES | KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. Default=0. Passthrough from Dim_Customer. (Tier 1 — BackOffice.Customer) |
 | 22 | IsValidCustomer | int | YES | DWH-computed flag: 1 when not Internal (PlayerLevelID≠4), not label 30/26, and not CountryID=250. Passthrough from Dim_Customer (Tier 2 origin in Dim_Customer). (Tier 2 — SP_Dim_Customer via Dim_Customer) |
 | 23 | IsDepositor | bit | YES | Whether the customer has ever deposited. DEFAULT=0. Updated post-load from FTD data. Passthrough from Dim_Customer (Tier 2 origin in Dim_Customer). (Tier 2 — SP_Dim_Customer via Dim_Customer) |

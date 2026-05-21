@@ -105,18 +105,18 @@ ROUND_ROBIN distribution. CLUSTERED INDEX on DateID ASC — efficient for date-r
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | Entity | varchar(10) | YES | Entity identifier for the custody book. Hardcoded to 'EU' for this table. The UK companion table uses 'UK'. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody) |
-| 2 | InstrumentID | int | NO | Traded instrument. GROUP BY key. Only stocks/ETFs (InstrumentTypeID 5,6). FK to Dim_Instrument. Passthrough from BI_DB_PositionPnL_EU_Custody. (Tier 1 — BI_DB_PositionPnL) |
+| 2 | InstrumentID | int | NO | Traded instrument. GROUP BY key. Only stocks/ETFs (InstrumentTypeID 5,6). FK to Dim_Instrument. Passthrough from BI_DB_PositionPnL_EU_Custody. (Tier 2 — BI_DB_PositionPnL) |
 | 3 | PositionPnL | decimal(16,4) | YES | Aggregate unrealized P&L in USD. SUM of position-level PositionPnL from EU_Custody for this instrument/date/group. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody, SUM) |
 | 4 | Amount | money | NO | Aggregate position amount in USD. SUM of position-level Amount from EU_Custody. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody, SUM) |
 | 5 | AmountInUnitsDecimal | numeric(16,6) | YES | Aggregate size in instrument units. SUM of position-level AmountInUnitsDecimal from EU_Custody. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody, SUM) |
-| 6 | Date | date | YES | Snapshot calendar date. GROUP BY key. (Tier 1 — BI_DB_PositionPnL) |
+| 6 | Date | date | YES | Snapshot calendar date. GROUP BY key. (Tier 3 — BI_DB_PositionPnL) |
 | 7 | DateID | int | NO | Snapshot date as YYYYMMDD. Clustered index key and GROUP BY key. DELETE+INSERT granularity. (Tier 1 — BI_DB_PositionPnL) |
 | 8 | NOP | money | YES | Aggregate net open position in USD. SUM of position-level NOP from EU_Custody. (Tier 2 — SP_BI_DB_PositionPnL_EU_Custody, SUM) |
-| 9 | IsBuy | int | YES | Long (1) vs short (0). GROUP BY key. Always 1 in practice (custody = BUY-only). Note: type is int here vs bit in EU_Custody. (Tier 1 — BI_DB_PositionPnL) |
+| 9 | IsBuy | int | YES | Long (1) vs short (0). GROUP BY key. Always 1 in practice (custody = BUY-only). Note: type is int here vs bit in EU_Custody. (Tier 2 — BI_DB_PositionPnL) |
 | 10 | UpdateDate | datetime | YES | Row load timestamp. GETDATE() at aggregation insert time (not inherited from source). (Tier 3 — SP_BI_DB_PositionPnL_EU_Custody, GETDATE()) |
-| 11 | IsCreditReportValidCB | int | YES | 1 if customer eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) |
-| 12 | IsValidCustomer | int | YES | 1 if valid retail customer for analytics. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 1 — DWH_dbo.Fact_SnapshotCustomer) |
-| 13 | HedgeServerID | int | YES | Hedge server for the position group. GROUP BY key. 16 distinct values. (Tier 1 — BI_DB_PositionPnL) |
+| 11 | IsCreditReportValidCB | int | YES | 1 if customer eligible for CreditBureau credit report validation. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
+| 12 | IsValidCustomer | int | YES | 1 if valid retail customer for analytics. ETL-computed in Fact_SnapshotCustomer. GROUP BY key. (Tier 2 — DWH_dbo.Fact_SnapshotCustomer) |
+| 13 | HedgeServerID | int | YES | Hedge server for the position group. GROUP BY key. 16 distinct values. (Tier 2 — BI_DB_PositionPnL) |
 
 ---
 

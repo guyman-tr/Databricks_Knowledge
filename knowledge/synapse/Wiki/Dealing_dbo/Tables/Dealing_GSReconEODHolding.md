@@ -70,8 +70,8 @@
 | 8 | CurrencyPrimary | varchar(50) | YES | Local currency. GBX → GBP normalised in amounts. |
 | 9 | Exchange | varchar(80) | YES | Trading venue. |
 | 10 | GS_Units | decimal(16,6) | YES | EOD position units from GS. Sourced from `[TD Quantity]` in GS valuation report. (Tier 2 — LP_GS_...PositionValuationSummary) |
-| 11 | eToro_Units | decimal(16,6) | YES | EOD hedge units from eToro's internal position. (Tier 1 — Dealing_Duco_EODRecon.eToro_Units) |
-| 12 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 1 — Dealing_Duco_EODRecon.ClientUnits) |
+| 11 | eToro_Units | decimal(16,6) | YES | EOD hedge units from eToro's internal position. (Tier 2 — Dealing_Duco_EODRecon.eToro_Units) |
+| 12 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 2 — Dealing_Duco_EODRecon.ClientUnits) |
 | 13 | GS-eToro_Units | decimal(16,6) | YES | **Reconciliation diff**: GS_Units − eToro_Units. Non-zero = recon break. |
 | 14 | GS-Clients_Units | decimal(16,6) | YES | GS_Units − Clients_Units. |
 | 15 | GS_LocalAmount | money | YES | GS market value in local currency (`[Current Market Value]`). |

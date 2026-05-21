@@ -34,10 +34,10 @@ dim instrument and dim instrument snapshot are not sufficient for rapid changes 
 
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
-| 1 | DateID | Dim_Instrument_Snapshot.DateID | Direct | T1 |
+| 1 | DateID | Dim_Instrument_Snapshot.DateID | Direct | T2 |
 | 2 | InstrumentID | etig.InstrumentID | Direct | T1 |
 | 3 | InstrumentTypeID | isn.InstrumentTypeID | Direct | T1 |
-| 4 | InstrumentType | isn.InstrumentType | Direct | T1 |
+| 4 | InstrumentType | isn.InstrumentType | Direct | T2 |
 | 5 | Name | isn.Name | Direct | T1 |
 | 6 | IsFuture | isn.IsFuture | Direct | T1 |
 | 7 | IsSQF | DWH_staging.etoro_Trade_InstrumentGroups | `CASE WHEN adj.InstrumentID IS NOT NULL THEN 1 ELSE 0 END` **WHERE** `GroupID = 59`, joined on `dis.DateID >= adj.DateID` (adj carries `@dateInt` as DateID) | T2 |

@@ -92,11 +92,11 @@ ROUND_ROBIN distribution; always filter on `Date` or `DateINT` to avoid full-tab
 | 13 | Last_Day_Performance | float | YES | PI's last-day return as a decimal fraction sourced from BI_DB_PI_Dashboard (no upstream wiki resolved). (Tier 3 — BI_DB_PI_Dashboard, no upstream wiki) |
 | 14 | YTD | float | YES | PI's year-to-date return as a decimal fraction sourced from BI_DB_PI_Dashboard (no upstream wiki resolved). (Tier 3 — BI_DB_PI_Dashboard, no upstream wiki) |
 | 15 | MTD | float | YES | PI's month-to-date return as a decimal fraction sourced from BI_DB_PI_Dashboard (no upstream wiki resolved). (Tier 3 — BI_DB_PI_Dashboard, no upstream wiki) |
-| 16 | CopyEquity | money | NO | Total AUM managed by this PI through copy relationships: ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0). Source: etoroGeneral_History_GuruCopiers. (Tier 1 — BI_DB_CopyDailyData.CopyAUM via etoroGeneral_History_GuruCopiers) |
-| 17 | NumOfCopiers | int | NO | Number of valid depositor customers currently copying this PI as of @date. Source: COUNT(*) from etoroGeneral_History_GuruCopiers. (Tier 1 — BI_DB_CopyDailyData.NumOfCopiers via etoroGeneral_History_GuruCopiers) |
+| 16 | CopyEquity | money | NO | Total AUM managed by this PI through copy relationships: ISNULL(SUM(Cash+Investment+PnL+DetachedPosInvestment+Dit_PnL), 0). Source: etoroGeneral_History_GuruCopiers. (Tier 2 — BI_DB_CopyDailyData.CopyAUM via etoroGeneral_History_GuruCopiers) |
+| 17 | NumOfCopiers | int | NO | Number of valid depositor customers currently copying this PI as of @date. Source: COUNT(*) from etoroGeneral_History_GuruCopiers. (Tier 2 — BI_DB_CopyDailyData.NumOfCopiers via etoroGeneral_History_GuruCopiers) |
 | 18 | NetMoneyIn | decimal(38,2) | NO | Net mirror-flow amount for the PI as copy leader on @yesterday: -1*SUM(Amount) for ActionTypeID IN (15,16,17,18); positive = net inflow toward the PI. (Tier 2 — SP_Daily_PI_Performance_COPYDATA_RuningSideBySide, DWH_dbo.Fact_CustomerAction via Dim_Mirror) |
 | 19 | UpdateDate | datetime | NO | ETL row-load timestamp set to GETDATE() at SP execution. (Tier 2 — SP_Daily_PI_Performance_COPYDATA_RuningSideBySide, GETDATE()) |
-| 20 | Manager | varchar(50) | YES | Account manager display name: FirstName + ' ' + LastName from Dim_Manager. (Tier 1 — BI_DB_CopyDailyData.Manager via DWH_dbo.Dim_Manager) |
+| 20 | Manager | varchar(50) | YES | Account manager display name: FirstName + ' ' + LastName from Dim_Manager. (Tier 2 — BI_DB_CopyDailyData.Manager via DWH_dbo.Dim_Manager) |
 | 21 | Country | varchar(50) | YES | Full country name in English. Unique per row. Used in UI dropdowns, compliance documents, and analytical reports. (Tier 1 — Dictionary.Country) |
 
 ---

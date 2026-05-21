@@ -73,8 +73,8 @@
 | 7 | IsBuy | bit | YES | Direction flag: 1 = buy (long), 0 = sell (short). Different convention from other LP recon tables which use 'Buy'/'Sell' text. |
 | 8 | CurrencyPrimary | varchar(50) | YES | Instrument local currency (SellCurrency from Duco). GBX retained; amounts adjusted by ÷100. |
 | 9 | IB_Units | decimal(16,6) | YES | EOD position units reported by IB (from LP_IB_...Open_Positions). (Tier 2 — LP_IB_I3158027/I1893329_Open_Positions) |
-| 10 | eToro_Units | decimal(16,6) | YES | eToro hedge units. (Tier 1 — Dealing_Duco_EODRecon.eToro_Units) |
-| 11 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 1 — Dealing_Duco_EODRecon.ClientUnits) |
+| 10 | eToro_Units | decimal(16,6) | YES | eToro hedge units. (Tier 2 — Dealing_Duco_EODRecon.eToro_Units) |
+| 11 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 2 — Dealing_Duco_EODRecon.ClientUnits) |
 | 12 | IB-eToro_Units | decimal(16,6) | YES | **Reconciliation diff**: IB_Units − eToro_Units. |
 | 13 | IB-Clients_Units | decimal(16,6) | YES | IB_Units − Clients_Units. |
 | 14 | IB_LocalAmount | money | YES | IB position value in local currency. GBX instruments: amounts ÷100 to normalise to GBP. |

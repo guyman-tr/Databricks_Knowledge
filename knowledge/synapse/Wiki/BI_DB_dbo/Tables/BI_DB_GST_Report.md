@@ -174,7 +174,7 @@ Distribution: eToro UK=2,091,484 rows, eToro Capital Australia=902,696, NULL=334
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | RealCID | int | YES | Real (funded) customer ID. The primary customer identifier in the DWH ecosystem. (Tier 1 — Fact_SnapshotCustomer) |
+| 1 | RealCID | int | YES | Real (funded) customer ID. The primary customer identifier in the DWH ecosystem. (Tier 2 — Fact_SnapshotCustomer) |
 | 2 | Regulation | varchar(20) | YES | Short code for the regulation. Values match production Dictionary.Regulation.Name. 8 values observed: FCA, ASIC & GAML, FSA Seychelles, ASIC, CySEC, MAS, FSRA, BVI. (Tier 1 — Dictionary.Regulation) |
 | 3 | Club | varchar(20) | YES | Tier display name from eToro Club loyalty program. 6 values: Bronze, Silver, Gold, Platinum, Platinum Plus, Diamond. IDs are NOT in rank order — use Dim_PlayerLevel.Sort for ordering. (Tier 1 — Dictionary.PlayerLevel) |
 | 4 | Entity | varchar(50) | YES | eToro legal entity name for regulatory reporting. CASE on RegulationID: 4,10 (ASIC, ASIC & GAML) → 'eToro Capital Australia'; 2 (FCA) → 'eToro UK'; all others → NULL. (Tier 2 — Fact_SnapshotCustomer) |

@@ -88,7 +88,7 @@ All column descriptions are T1/T2-inherited verbatim from [EXW_dbo.EXW_C2F_E2E](
 | 5 | LastModificationDateTime | datetime2(7) | YES | — | VERIFIED | Latest event timestamp across all sub-systems: GREATEST(FiatTransaction.Occurred, ConversionTime, ConversionStatusTime, CryptoTransactionTime). (Tier 2 — SP_EXW_C2F_E2E) |
 | 6 | LastModificationDate | date | YES | — | VERIFIED | Date portion of LastModificationDateTime. (Tier 2 — SP_EXW_C2F_E2E) |
 | 7 | LastModificationDateID | int | YES | — | VERIFIED | Date integer key YYYYMMDD from LastModificationDate. Used as the reference date for the point-in-time customer snapshot join. (Tier 2 — SP_EXW_C2F_E2E) |
-| 8 | GCID | int | YES | — | VERIFIED | Global Customer ID identifying the customer who initiated the conversion. Validated NOT NULL by InsertConversion. Indexed for customer-scoped queries. (Tier 1 — C2F.Conversions) |
+| 8 | GCID | int | YES | — | VERIFIED | Global Customer ID identifying the customer who initiated the conversion. Validated NOT NULL by InsertConversion. Indexed for customer-scoped queries. (Tier 2 — C2F.Conversions) |
 | 9 | RealCID | int | YES | — | VERIFIED | Internal CID after deduplication mapping. Sourced from EXW_dbo.EXW_DimUser.RealCID; maps GCID to the canonical customer record. (Tier 2 — SP_EXW_C2F_E2E) |
 | 10 | RequestID | bigint | YES | — | VERIFIED | Auto-incrementing primary key and the primary identifier for a request across the entire wallet system. Referenced by Wallet.RequestStatuses.RequestId as FK. (Tier 1 — Wallet.Requests) |
 | 11 | RequestCryptoID | int | YES | — | VERIFIED | Identifier of the cryptocurrency this request operates on. Implicit reference to Wallet.CryptoTypes.CryptoID. For conversions, this is the source crypto. (Tier 1 — Wallet.Requests) |

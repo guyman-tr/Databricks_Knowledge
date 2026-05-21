@@ -49,8 +49,8 @@ Surfaces MIMO-style cash activity for US **options** (Apex) accounts: deposits a
 | 10 | IsInternalTransfer | External_Sodreconciliation_apex_EXT869_CashActivity.TerminalID, EnteredBy | CASE WHEN TerminalID = 'OMJNL' THEN 1 ELSE 0 END | T2 |
 | 11 | TransactionID | External_Sodreconciliation_apex_EXT869_CashActivity.ACATSControlNumber | Direct | T1 |
 | 12 | IsGlobalFTD | Dim_Customer, CTE GLOBAL_FTD / FinalFTD | ISNULL(IsGlobalFTD, 0) from FTD match to Dim_Customer first deposit | T2 |
-| 13 | IsValidCustomer | Fact_SnapshotCustomer.IsValidCustomer | Direct | T1 |
-| 14 | IsCreditReportValidCB | Fact_SnapshotCustomer.IsCreditReportValidCB | Direct | T1 |
+| 13 | IsValidCustomer | Fact_SnapshotCustomer.IsValidCustomer | Direct | T2 |
+| 14 | IsCreditReportValidCB | Fact_SnapshotCustomer.IsCreditReportValidCB | Direct | T2 |
 
 ---
 *Auto-generated from SSDT source on 2026-03-22. Knowledge-only -- not migrated to Unity Catalog.*

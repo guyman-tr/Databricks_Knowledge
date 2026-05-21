@@ -190,7 +190,7 @@ ROUND_ROBIN + CLUSTERED INDEX on DateID — unlike the cross-selling tables (HEA
 | 1 | Date | date | YES | Reporting date — the date @date parameter passed to SP. Always a valid calendar date. (Tier 2 — SP_BI_DB_CryptoDashboardNew) |
 | 2 | DateID | int | NO | ETL date integer (YYYYMMDD). CONVERT(CHAR(8),@date,112). Clustered index key — most efficient filter column. (Tier 2 — SP_BI_DB_CryptoDashboardNew) |
 | 3 | DayName | varchar(10) | YES | Day-of-week name (e.g., 'Sunday', 'Monday'). From DWH_dbo.Dim_Date. Useful for weekly pattern analysis. (Tier 2 — Dim_Date) |
-| 4 | SSWeekNumberOfMonth | tinyint | YES | Week number within the current month (SS internal week numbering). From Dim_Date. (Tier 2 — Dim_Date) |
+| 4 | SSWeekNumberOfMonth | tinyint | YES | Week number within the current month (SS internal week numbering). From Dim_Date. (Tier 3 — Dim_Date) |
 | 5 | YearWeek | int | YES | Compact year-week identifier: YEAR*100 + SSWeekNumberOfYear. Computed from SP: YEAR(@date)*100 + Dim_Date.SSWeekNumberOfYear. (Tier 2 — SP_BI_DB_CryptoDashboardNew) |
 | 6 | DayNumberOfWeek_Sun_Start | tinyint | YES | Day number within the week, Sunday=1. From Dim_Date. (Tier 2 — Dim_Date) |
 | 7 | WeekofMonth | int | YES | Compact week-of-month identifier: YEAR*10000000 + MONTH*100 + SSWeekNumberOfMonth. SP-computed from @date and Dim_Date. (Tier 2 — SP_BI_DB_CryptoDashboardNew) |

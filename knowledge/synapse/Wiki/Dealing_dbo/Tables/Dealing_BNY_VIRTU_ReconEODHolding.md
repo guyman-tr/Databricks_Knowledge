@@ -63,8 +63,8 @@ Part of the **BNY/VIRTU/Citadel daily reconciliation pipeline** operated by `SP_
 | 7 | CurrencyPrimary | varchar(50) | YES | Local currency (GBX normalised to GBP). |
 | 8 | Exchange | varchar(80) | YES | Trading venue. |
 | 9 | BNY_Units | decimal(16,6) | YES | EOD position units reported by BNY custodian. (Tier 2 — LP_BNY_Custody_Valuation) |
-| 10 | eToro_Units | decimal(16,6) | YES | EOD hedge units from eToro's internal hedge position. (Tier 1 — Dealing_Duco_EODRecon.eToro_Units) |
-| 11 | Clients_Units | decimal(16,6) | YES | Aggregated client NOP units. (Tier 1 — Dealing_Duco_EODRecon.ClientUnits) |
+| 10 | eToro_Units | decimal(16,6) | YES | EOD hedge units from eToro's internal hedge position. (Tier 2 — Dealing_Duco_EODRecon.eToro_Units) |
+| 11 | Clients_Units | decimal(16,6) | YES | Aggregated client NOP units. (Tier 2 — Dealing_Duco_EODRecon.ClientUnits) |
 | 12 | BNY-eToro_Units | decimal(16,6) | YES | **Reconciliation diff**: BNY_Units − eToro_Units. Non-zero = recon break to investigate. |
 | 13 | BNY-Clients_Units | decimal(16,6) | YES | BNY_Units − Clients_Units. LP vs client position comparison. |
 | 14 | BNY_LocalAmount | money | YES | Position market value in local currency (BNY reported). |

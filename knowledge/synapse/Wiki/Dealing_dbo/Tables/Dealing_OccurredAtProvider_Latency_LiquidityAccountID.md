@@ -40,7 +40,7 @@ LP-level rollup of price feed latency — aggregates `Dealing_OccurredAtProvider
 | Column | Type | Description |
 |--------|------|-------------|
 | Date | datetime | Price event date (includes time). (Tier 2 — SP_OccurredAtProvider_Latency) |
-| LiquidityAccountID | int | LP account identifier. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
+| LiquidityAccountID | int | LP account identifier. (Tier 4 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | LiquidityAccountName | varchar(80) | LP account name. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | PCSID | int | Price Collection Server ID — which eToro server received the price. (Tier 2 — CopyFromLake.PriceLog_History_CurrencyPrice) |
 | CountInstances | int | Total number of ≥3s latency events for this LP/PCSID/date. (Tier 2 — computed) |

@@ -80,13 +80,13 @@ DELETE duplicates, INSERT deduplicated version
 | PositionID | NULL | bigint | Primary key. Allocated by Internal.GetPositionID_Bigint. Unique per position. (Tier 1 — DWH_dbo.Dim_Position via Trade.PositionTbl) |
 | CID | NULL | int | Customer ID. References Customer.Customer. (Copier's customer ID — the customer copying the Fund PI.) (Tier 1 — DWH_dbo.Dim_Position via Trade.PositionTbl) |
 | MirrorID | NULL | int | FK to Trade.Mirror. 0/NULL = manual. Positive = copy-trade position. (All rows in this table have MirrorID > 0, MirrorTypeID = 4.) (Tier 1 — DWH_dbo.Dim_Position via Trade.PositionTbl) |
-| OpenDateID | NULL | int | ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. (Tier 1 — DWH_dbo.Dim_Position via SP_Dim_Position_DL_To_Synapse) |
-| CloseDateID | NULL | int | ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. Partition column. Always include in WHERE clause. Dedupe step keeps MAX(CloseDateID) for duplicate rows. (Tier 1 — DWH_dbo.Dim_Position via SP_Dim_Position_DL_To_Synapse) |
+| OpenDateID | NULL | int | ETL-computed date int (YYYYMMDD) derived from OpenOccurred. E.g., 20260310. Used for date-range filtering. NOT a FK to Dim_Date by default. (Tier 2 — DWH_dbo.Dim_Position via SP_Dim_Position_DL_To_Synapse) |
+| CloseDateID | NULL | int | ETL-computed date int (YYYYMMDD) derived from CloseOccurred. 0=still open, 19000101=ETL transient state, YYYYMMDD=closed. Partition column. Always include in WHERE clause. Dedupe step keeps MAX(CloseDateID) for duplicate rows. (Tier 2 — DWH_dbo.Dim_Position via SP_Dim_Position_DL_To_Synapse) |
 | ParentCID | NULL | int | Leader customer ID. The user whose trades are copied (the Copy Fund PI). Trade.GetActiveCopiersForParents filters by ParentCID. (Tier 1 — DWH_dbo.Dim_Mirror via Trade.Mirror) |
 | ParentUserName | NULL | varchar(500) | Leader username at mirror creation. Denormalized for display; Trade.RegisterMirror passes from caller. (Tier 1 — DWH_dbo.Dim_Mirror via Trade.Mirror) |
 | MirrorTypeID | NULL | int | 1=Regular, 2=CopyMe, 3=Social Index, 4=Fund (Dictionary.MirrorType). Always 4 in this table — the SP filters WHERE MirrorTypeID=4. (Tier 1 — DWH_dbo.Dim_Mirror via Trade.Mirror) |
 | UpdateDate | NULL | datetime | ETL metadata: timestamp when this row was last updated by the ETL pipeline. (Propagation) |
-| IsPartialCloseChild | NULL | int | 1=this position is the child (remainder) of a partial close event. Generally filter out child positions from most metrics on OPEN when aggregating, but not all (e.g., volume is already pro-rated so excluding these is wrong). NEVER filter these out on CLOSE. (Tier 1 — DWH_dbo.Dim_Position via Trade.PositionTbl) |
+| IsPartialCloseChild | NULL | int | 1=this position is the child (remainder) of a partial close event. Generally filter out child positions from most metrics on OPEN when aggregating, but not all (e.g., volume is already pro-rated so excluding these is wrong). NEVER filter these out on CLOSE. (Tier 5 — DWH_dbo.Dim_Position via Trade.PositionTbl) |
 
 ---
 

@@ -128,7 +128,7 @@ ROUND_ROBIN distribution with clustered index on RealCID. One row per customer, 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | RealCID | int | YES | Customer ID - platform-internal primary key. Assigned at registration. Unique within etoro DB. Clustered index column. (Tier 1 — Dim_Customer.RealCID) |
-| 2 | FirstDepositDate | datetime | YES | Date of first deposit. DEFAULT='19000101'. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. (Tier 1 — Dim_Customer.FirstDepositDate) |
+| 2 | FirstDepositDate | datetime | YES | Date of first deposit. DEFAULT='19000101'. Updated from CustomerFinanceDB FTD data with FTDRecoveryDate logic. (Tier 2 — Dim_Customer.FirstDepositDate) |
 | 3 | VerificationLevelID | int | YES | KYC verification level. FK to Dictionary.VerificationLevel. Values: 0=unverified (34.2%), 1=partial (12.4%), 2=intermediate (6.2%), 3=fully verified (47.1%). Default=0. (Tier 1 — Dim_Customer.VerificationLevelID) |
 | 4 | PlayerStatusID | int | YES | Compliance and trading account status. FK to Dictionary.PlayerStatus. 1=Normal (97.5% of accounts); other values indicate restricted, closed, banned, or special states. Default=0. (Tier 1 — Dim_Customer.PlayerStatusID) |
 | 5 | PendingClosureStatusID | int | YES | Status in the pending closure workflow. Default=1 (no pending closure). Updated when customer requests account closure. (Tier 1 — Dim_Customer.PendingClosureStatusID) |
@@ -139,7 +139,7 @@ ROUND_ROBIN distribution with clustered index on RealCID. One row per customer, 
 | 10 | VerificationDate | datetime | YES | Date when customer reached full verification (VerificationLevelID >= 3). Derived from History_BackOfficeCustomer change tracking. (Tier 3 — inferred from column name and data pattern) |
 | 11 | DaysToVerify | int | YES | Calendar days from registration or first deposit to full verification date. (Tier 3 — inferred from column name) |
 | 12 | Uploaded 2 Docs (not EV) | int | YES | Flag indicating customer uploaded 2+ documents without using electronic verification. **Column name contains spaces and parentheses -- must be quoted in queries**: `[Uploaded 2 Docs (not EV)]`. (Tier 3 — inferred from column name and data) |
-| 13 | IsDepositor | int | YES | Whether the customer has ever deposited. 1=depositor, 0=non-depositor. (Tier 1 — Dim_Customer.IsDepositor, cast from bit to int) |
+| 13 | IsDepositor | int | YES | Whether the customer has ever deposited. 1=depositor, 0=non-depositor. (Tier 2 — Dim_Customer.IsDepositor, cast from bit to int) |
 | 14 | DidCO | int | YES | Flag indicating customer has completed at least one cashout/withdrawal. (Tier 3 — inferred from column name) |
 | 15 | Liquidated | bigint | YES | Flag or amount indicating customer account liquidation status. (Tier 3 — inferred from column name) |
 | 16 | EffectiveAddDate | datetime | YES | Effective account add/activation date. Likely registration date or account activation timestamp. (Tier 3 — inferred from column name) |

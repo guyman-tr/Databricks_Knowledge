@@ -99,7 +99,7 @@ ROUND_ROBIN HEAP — small table (1,460 rows), no performance concerns.
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | RealCID | int | NO | Customer ID - platform-internal primary key. Assigned at registration. Passthrough from Dim_Customer. (Tier 1 — Customer.CustomerStatic) |
-| 2 | FirstDepositDate | date | NO | Date of first deposit. CAST to date from Dim_Customer.FirstDepositDate. (Tier 1 — Customer.CustomerStatic) |
+| 2 | FirstDepositDate | date | NO | Date of first deposit. CAST to date from Dim_Customer.FirstDepositDate. (Tier 2 — Customer.CustomerStatic) |
 | 3 | VerificationLevelID | int | NO | KYC verification level. FK to Dictionary.VerificationLevel. All rows are VL3 by construction. (Tier 1 — BackOffice.Customer) |
 | 4 | Regulation | varchar(50) | NO | Short code for the regulation. Dim-lookup from Dim_Regulation via RegulationID. Values: FCA, CySEC, ASIC&GAML, FSA Seychelles, BVI, FSRA, ASIC. (Tier 1 — Dictionary.Regulation) |
 | 5 | PlayerStatus | varchar(50) | NO | Active trading tier/status classification. Passthrough from Dim_PlayerStatus via PlayerStatusID. Values filtered to exclude PlayerStatusID 2 and 4. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |

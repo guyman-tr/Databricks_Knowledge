@@ -38,7 +38,7 @@ Compliance Daily Market Surveillance: Short Term Trades Report. Identifies all v
 | 1 | InstrumentDisplayName | varchar(100) | YES | Human-readable instrument label (e.g., "CoreWeave Inc"). Used in UI and reports. (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
 | 2 | Instrument | varchar(50) | YES | Instrument ticker/code as displayed on eToro platform (e.g., "CRWV/USD"). (Tier 1 — DWH_dbo.Dim_Instrument.Name) |
 | 3 | InstrumentID | int | YES | Numeric instrument identifier. FK to DWH_dbo.Dim_Instrument. (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentID) |
-| 4 | InstrumentType | varchar(50) | YES | Instrument category name. In this table always "Stocks" or ETF type — filtered to InstrumentTypeID IN (5, 6). (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentType) |
+| 4 | InstrumentType | varchar(50) | YES | Instrument category name. In this table always "Stocks" or ETF type — filtered to InstrumentTypeID IN (5, 6). (Tier 2 — DWH_dbo.Dim_Instrument.InstrumentType) |
 | 5 | ISINCode | varchar(30) | YES | International Securities Identification Number. 12-character alphanumeric. NULL if instrument has no ISIN. (Tier 1 — DWH_dbo.Dim_Instrument.ISINCode) |
 | 6 | CUSIP | varchar(500) | YES | 9-character CUSIP identifier (North American securities). Empty string `''` if not assigned (ISNULL→''). (Tier 1 — DWH_dbo.Dim_Instrument.CUSIP via ISNULL) |
 | 7 | PositionID | bigint | YES | Unique position key. 1:1 row grain for this table. (Tier 1 — Trade.PositionTbl via DWH_dbo.Dim_Position) |

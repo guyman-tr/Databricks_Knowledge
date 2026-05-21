@@ -81,7 +81,7 @@ The `[Total Diff]` = `[Calculated RO] - [Actual RO]` is partitioned into four ex
 | CID | int | Customer identifier (Tier 1 — DWH_dbo.Dim_Position) |
 | InstrumentID | int | Instrument identifier (Tier 1 — DWH_dbo.Dim_Position) |
 | InstrumentName | varchar(50) | Instrument display name (e.g., XAU/USD, BTC) (Tier 1 — DWH_dbo.Dim_Instrument) |
-| InstrumentType | varchar(50) | Instrument class: Commodities, Crypto Currencies, Currencies, Stocks, Indices, ETF (Tier 1 — DWH_dbo.Dim_Instrument) |
+| InstrumentType | varchar(50) | Instrument class: Commodities, Crypto Currencies, Currencies, Stocks, Indices, ETF (Tier 2 — DWH_dbo.Dim_Instrument) |
 | OpenOccurred | datetime | Timestamp when the position was opened (Tier 1 — DWH_dbo.Dim_Position) |
 | CloseOccurred | datetime | Timestamp when the position was closed; GETDATE() for open positions at execution time (Tier 1 — DWH_dbo.Dim_Position) |
 | Units | decimal(16,6) | Position size in instrument units (AmountInUnitsDecimal) (Tier 1 — DWH_dbo.Dim_Position) |

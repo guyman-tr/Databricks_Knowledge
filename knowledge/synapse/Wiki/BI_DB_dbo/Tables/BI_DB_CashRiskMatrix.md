@@ -153,7 +153,7 @@ Always filter by `[Date]` in any query to leverage the clustered index and avoid
 | 4 | HedgeServerID | int | YES | FK to Trade.HedgeServer. Hedge server managing this position. (Tier 1 — Trade.PositionTbl via DWH_dbo.Dim_Position) |
 | 5 | InstrumentID | int | YES | FK to Trade.Instrument. Financial instrument being traded. (Tier 1 — Trade.PositionTbl via DWH_dbo.Dim_Position) |
 | 6 | InstrumentName | varchar(50) | YES | Computed: TDCUR_BUY.Abbreviation + '/' + TDCUR_SEL.Abbreviation. Display name for UI (e.g., EUR/USD, AAPL/USD). (Tier 1 — Trade.GetInstrument via DWH_dbo.Dim_Instrument.Name) |
-| 7 | InstrumentType | varchar(50) | YES | ETL-computed asset class label. CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else Other. (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentType via SP_Dim_Instrument) |
+| 7 | InstrumentType | varchar(50) | YES | ETL-computed asset class label. CASE on InstrumentTypeID: 1=Currencies, 2=Commodities, 4=Indices, 5=Stocks, 6=ETF, 10=Crypto Currencies, else Other. (Tier 2 — DWH_dbo.Dim_Instrument.InstrumentType via SP_Dim_Instrument) |
 | 8 | IsBuy | int | YES | 1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl via DWH_dbo.Dim_Position) |
 | 9 | Leverage | int | YES | Leverage multiplier (1, 5, 10, etc.). Determines margin and settlement type. (Tier 1 — Trade.PositionTbl via DWH_dbo.Dim_Position) |
 | 10 | Regulation | varchar(50) | YES | Short code for the regulation. Used in V_Dim_Customer and analytics dashboards. Values match production Dictionary.Regulation.Name. (Tier 1 — Dictionary.Regulation via DWH_dbo.Dim_Regulation.Name) |

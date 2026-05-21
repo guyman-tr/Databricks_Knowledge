@@ -163,7 +163,7 @@ ROUND_ROBIN HEAP — no preferred join key. 1.46M rows across 9 quarterly snapsh
 | 4 | PlayerStatus | varchar(250) | YES | Human-readable restriction state label. Values: Normal, Block Deposit & Trading, etc. Passthrough from Dim_PlayerStatus. (Tier 2 — SP_Q_AML_FSA_Report, Dim_PlayerStatus) |
 | 5 | PlayerStatusReasons | varchar(250) | YES | Human-readable reason for the player status. Passthrough from Dim_PlayerStatusReasons. (Tier 2 — SP_Q_AML_FSA_Report, Dim_PlayerStatusReasons) |
 | 6 | PlayerStatusSubReasonName | varchar(250) | YES | Granular sub-reason beneath the primary status reason. Passthrough from Dim_PlayerStatusSubReasons. (Tier 2 — SP_Q_AML_FSA_Report, Dim_PlayerStatusSubReasons) |
-| 7 | EU | int | YES | EU membership flag from Dim_Country. 1=EU member state, 0=non-EU. (Tier 1 — Dim_Country) |
+| 7 | EU | int | YES | EU membership flag from Dim_Country. 1=EU member state, 0=non-EU. (Tier 3 — Dim_Country) |
 | 8 | Desk | varchar(250) | YES | Regional desk assignment from Dim_Country. Used for internal operational routing. (Tier 3 — Dim_Country) |
 | 9 | Region | varchar(250) | YES | Geographic region classification from Dim_Country. (Tier 2 — Dim_Country) |
 | 10 | RiskGroupID | int | YES | Customer risk group identifier from Fact_SnapshotCustomer. (Tier 2 — SP_Q_AML_FSA_Report, Fact_SnapshotCustomer) |

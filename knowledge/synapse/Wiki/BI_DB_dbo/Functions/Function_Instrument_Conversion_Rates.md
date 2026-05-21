@@ -36,7 +36,7 @@ Builds per-instrument **USD conversion multipliers** (bid/ask, raw and spreaded)
 | 1 | InstrumentID | Dim_Instrument.InstrumentID | Direct | T1 |
 | 2 | SellCurrency | Dim_Instrument.SellCurrency | Direct | T1 |
 | 3 | InstrumentTypeID | Dim_Instrument.InstrumentTypeID | Direct | T1 |
-| 4 | InstrumentType | Dim_Instrument.InstrumentType | Direct | T1 |
+| 4 | InstrumentType | Dim_Instrument.InstrumentType | Direct | T2 |
 | 5 | Name | Dim_Instrument.Name | Direct | T1 |
 | 6 | InstrumentDisplayName | Dim_Instrument.InstrumentDisplayName | Direct | T1 |
 | 7 | ConversionRate_Buy_Spreaded | Dim_Instrument, Fact_CurrencyPriceWithSplit | `CAST(CASE WHEN SellCurrencyID = 1 THEN 1 WHEN BuyCurrencyID = 1 THEN 1/LatestP.RateBidSpreaded WHEN both non-USD THEN COALESCE(1/I2Price.RateBidSpreaded, I3Price.RateBidSpreaded, 1) ELSE 1 END AS MONEY)`; prices from **latest** `Fact_CurrencyPriceWithSplit` row per instrument **WHERE** `CAST(CAST(@DateID AS CHAR(8)) AS DATETIME) > Occurred`, `rn = 1` | T2 |

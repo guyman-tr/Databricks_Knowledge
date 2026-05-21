@@ -132,7 +132,7 @@ ROUND_ROBIN distribution. CLUSTERED INDEX on Date ASC — efficient for date-ran
 | 8 | Age_Group | varchar(6) | YES | Customer age band computed at SP execution time. CASE on BirthDate: 18-24, 25-34, 35-44, 45-54, 55+. NULL if BirthDate is NULL. Warning: recalculated on re-run. (Tier 2 — SP_M_PR_MonthlyData, CASE on BirthDate) |
 | 9 | Gender | varchar(6) | YES | Customer gender. M→'Male', F→'Female', else 'Male' (default). From BI_DB_CIDFirstDates.Gender. (Tier 2 — SP_M_PR_MonthlyData, CASE on Gender) |
 | 10 | PositionID | bigint | YES | Trading position identifier. Only non-mirror positions (MirrorID=0). From Dim_Position. (Tier 1 — BI_DB_CIDFirstDates / DWH_dbo.Dim_Position) |
-| 11 | OpenDateID | int | YES | Position open date as YYYYMMDD. Must fall within the reporting month. From Dim_Position.OpenDateID. (Tier 1 — DWH_dbo.Dim_Position) |
+| 11 | OpenDateID | int | YES | Position open date as YYYYMMDD. Must fall within the reporting month. From Dim_Position.OpenDateID. (Tier 2 — DWH_dbo.Dim_Position) |
 | 12 | OpenOccurred | datetime | YES | Position open timestamp. From Dim_Position.OpenOccurred. (Tier 1 — DWH_dbo.Dim_Position) |
 | 13 | Open_Hour | int | YES | Hour of day when position was opened (0-23). Computed as DATEPART(HOUR, OpenOccurred). (Tier 2 — SP_M_PR_MonthlyData, DATEPART) |
 | 14 | OpenDate_DayName | varchar(10) | YES | Day of week name when position was opened (e.g., 'Monday', 'Tuesday'). From Dim_Date.DayName via OpenDateID. (Tier 2 — SP_M_PR_MonthlyData, Dim_Date.DayName) |

@@ -149,7 +149,7 @@ HASH(GCID) distribution with HEAP. One row per payment — no deduplication requ
 | 14 | ProviderFeeCalculated | numeric(38,8) | YES | Calculated provider fee in crypto units. NULL for non-executed payments. (Tier 1 — Wallet.PaymentTransactions) |
 | 15 | EstimatedBlockChainFee | numeric(38,8) | YES | Estimated blockchain network fee. Estimated at order time; compare with BlockChainFee for actual. NULL for non-executed payments. (Tier 1 — Wallet.PaymentTransactions) |
 | 16 | FiatName | varchar(50) | YES | Fiat currency name, denormalized from Wallet.FiatTypes via FiatID. Values: EUR, GBP. (Tier 2 — ETL join enrichment) |
-| 17 | CryptoId | int | YES | The cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID. (Tier 1 — Wallet.Payments) |
+| 17 | CryptoId | int | YES | The cryptocurrency being purchased. FK to Wallet.CryptoTypes.CryptoID. (Tier 3 — Wallet.Payments) |
 | 18 | CryptoName | varchar(50) | YES | Cryptocurrency name, denormalized from Wallet.CryptoTypes via CryptoId. Values: BTC, ETH, LTC, XLM, XRP, BCH. (Tier 2 — ETL join enrichment) |
 | 19 | SentTransactionID | bigint | YES | Internal identifier for the sent blockchain transaction. Links to WalletDB transaction tables. NULL for non-executed payments. (Tier 2 — WalletDB transaction tables) |
 | 20 | ReceivedTransactionID | bigint | YES | Internal identifier for the received blockchain transaction. NULL for non-executed payments. (Tier 2 — WalletDB transaction tables) |

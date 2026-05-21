@@ -58,8 +58,8 @@ Aggregates US options/equity PFOF (payment for order flow) payback from Apex rec
 | 20 | IsClosedToIBAN | — | 0 | T2 |
 | 21 | IsRucurring | — | 0 | T2 |
 | 22 | IsAirDrop | — | 0 | T2 |
-| 23 | IsValidCustomer | Dim_Customer.IsValidCustomer | Direct | T1 |
-| 24 | IsCreditReportValidCB | Dim_Customer.IsCreditReportValidCB | Direct | T1 |
+| 23 | IsValidCustomer | Dim_Customer.IsValidCustomer | Direct | T2 |
+| 24 | IsCreditReportValidCB | Dim_Customer.IsCreditReportValidCB | Direct | T2 |
 | 25 | FirstTradeDate | Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate | First row per ClearingAccount (ROW_NUMBER partition) | T2 |
 | 26 | FirstTradeDateID | Sodreconciliation_apex_EXT1047_RevenueReports.TradeDate | CAST(FORMAT(CAST(TradeDate AS DATE),'yyyyMMdd') AS INT) on first trade | T2 |
 

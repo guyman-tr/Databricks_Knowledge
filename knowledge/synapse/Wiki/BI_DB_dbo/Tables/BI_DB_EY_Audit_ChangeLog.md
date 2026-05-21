@@ -146,20 +146,20 @@ ROUND_ROBIN distribution with HEAP storage (no clustered index). This table has 
 
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
-| 1 | PositionID | bigint | YES | FK to Dim_Position.PositionID. Distribution key -- co-located with Dim_Position for efficient JOINs. (Tier 1 — Dim_PositionChangeLog) |
-| 2 | CID | int | YES | Customer ID who owns the position. Nullable (some system positions may not have CID). (Tier 1 — Dim_PositionChangeLog) |
-| 3 | Occurred | datetime | NO | Exact timestamp when the position change occurred. Passthrough from etoro_History_PositionChangeLog. (Tier 1 — Dim_PositionChangeLog) |
-| 4 | OccurredDateID | int | YES | ETL-computed YYYYMMDD int from Occurred. Clustered index key. Always filter on this for performance. (Tier 1 — Dim_PositionChangeLog) |
+| 1 | PositionID | bigint | YES | FK to Dim_Position.PositionID. Distribution key -- co-located with Dim_Position for efficient JOINs. (Tier 2 — Dim_PositionChangeLog) |
+| 2 | CID | int | YES | Customer ID who owns the position. Nullable (some system positions may not have CID). (Tier 2 — Dim_PositionChangeLog) |
+| 3 | Occurred | datetime | NO | Exact timestamp when the position change occurred. Passthrough from etoro_History_PositionChangeLog. (Tier 2 — Dim_PositionChangeLog) |
+| 4 | OccurredDateID | int | YES | ETL-computed YYYYMMDD int from Occurred. Clustered index key. Always filter on this for performance. (Tier 2 — Dim_PositionChangeLog) |
 | 5 | ChangeTypeID | tinyint | YES | [UNVERIFIED] Type of change event. In this table only two values: 12=Amount adjustment, 13=Unknown (likely settlement-related). No official lookup table in DWH. (Tier 4 — inferred from SP filter and Dim_PositionChangeLog) |
-| 6 | PreviousAmount | money | NO | Position amount (USD) before this change. NOT NULL -- always captured. (Tier 1 — Dim_PositionChangeLog) |
-| 7 | AmountChanged | money | NO | Change in amount (can be positive or negative). AmountChanged = NewAmount - PreviousAmount. NOT NULL. (Tier 1 — Dim_PositionChangeLog) |
-| 8 | NewAmount | numeric(16,8) | YES | Position amount after this change. Nullable -- may be absent for non-amount change types. (Tier 1 — Dim_PositionChangeLog) |
+| 6 | PreviousAmount | money | NO | Position amount (USD) before this change. NOT NULL -- always captured. (Tier 2 — Dim_PositionChangeLog) |
+| 7 | AmountChanged | money | NO | Change in amount (can be positive or negative). AmountChanged = NewAmount - PreviousAmount. NOT NULL. (Tier 2 — Dim_PositionChangeLog) |
+| 8 | NewAmount | numeric(16,8) | YES | Position amount after this change. Nullable -- may be absent for non-amount change types. (Tier 2 — Dim_PositionChangeLog) |
 | 9 | PreviousIsSettled | int | YES | Before the change: 1 = real asset, 0 = CFD asset. Cast from bit in staging. NULL if this event did not involve a settlement change. (Tier 5 — Expert Review) |
 | 10 | IsSettled | int | YES | After the change: 1 = real asset, 0 = CFD asset. NULL if this event did not involve a settlement change. (Tier 5 — Expert Review) |
-| 11 | PreviousStopRate | numeric(16,8) | NO | Stop-loss rate before this change. NOT NULL. (Tier 1 — Dim_PositionChangeLog) |
-| 12 | StopRate | numeric(16,8) | NO | Stop-loss rate after this change. NOT NULL. (Tier 1 — Dim_PositionChangeLog) |
-| 13 | PreviousAmountInUnits | numeric(16,6) | YES | Unit count (shares/coins) before this change. Added for futures/unit-based positions. DWH note: for ChangeTypeID=13, backfilled from UnitsOpenStartOfDay when NULL. (Tier 1 — Dim_PositionChangeLog) |
-| 14 | AmountInUnits | numeric(16,6) | YES | Unit count after this change. DWH note: for ChangeTypeID=13, backfilled from UnitsOpenStartOfDay when NULL. (Tier 1 — Dim_PositionChangeLog) |
+| 11 | PreviousStopRate | numeric(16,8) | NO | Stop-loss rate before this change. NOT NULL. (Tier 2 — Dim_PositionChangeLog) |
+| 12 | StopRate | numeric(16,8) | NO | Stop-loss rate after this change. NOT NULL. (Tier 2 — Dim_PositionChangeLog) |
+| 13 | PreviousAmountInUnits | numeric(16,6) | YES | Unit count (shares/coins) before this change. Added for futures/unit-based positions. DWH note: for ChangeTypeID=13, backfilled from UnitsOpenStartOfDay when NULL. (Tier 2 — Dim_PositionChangeLog) |
+| 14 | AmountInUnits | numeric(16,6) | YES | Unit count after this change. DWH note: for ChangeTypeID=13, backfilled from UnitsOpenStartOfDay when NULL. (Tier 2 — Dim_PositionChangeLog) |
 | 15 | UnitsOpenStartOfDay | float | YES | Unit count the position held at start of the changelog day. CASE: BI_DB_PositionPnL.AmountInUnitsDecimal for prior day when available, else Dim_Position.InitialUnits; fallback to PreviousAmountInUnits for ChangeTypeID=12 when still NULL. (Tier 2 — Dim_Position / BI_DB_PositionPnL) |
 | 16 | EODPrice | float | YES | End-of-day instrument price in USD. Computed as direction-adjusted bid/ask from Fact_CurrencyPriceWithSplit multiplied by a USD cross-rate conversion factor derived from Dim_Instrument currency pairs. Can be 0.0 when no price found. (Tier 2 — Fact_CurrencyPriceWithSplit / Dim_Instrument) |
 | 17 | IsBuy | int | YES | 1 = Long/Buy (profit when price rises), 0 = Short/Sell. (Tier 1 — Trade.PositionTbl) |

@@ -35,11 +35,11 @@ Identical schema to `Dealing_Staking_Compensation`. See that table's documentati
 
 | Column | Type | Description |
 |--------|------|-------------|
-| StakingMonthID | int | YYYYMM format. US program starts at 202510. No malformed ID bug observed for US (unlike non-US). (Tier 3 — Dealing_Staking_Results_US) |
+| StakingMonthID | int | YYYYMM format. US program starts at 202510. No malformed ID bug observed for US (unlike non-US). (Tier 4 — Dealing_Staking_Results_US) |
 | StakingMonth | varchar(100) | Month name. (Tier 3) |
 | StakingYear | int | Calendar year. (Tier 3) |
 | CID | int | US client account ID receiving cash compensation. (Tier 3 — Dealing_Staking_Results_US) |
-| InstrumentID | int | Crypto instrument FK. For US: ADA, SOL, or ETH only. (Tier 3 — Dealing_Staking_Results_US) |
+| InstrumentID | int | Crypto instrument FK. For US: ADA, SOL, or ETH only. (Tier 4 — Dealing_Staking_Results_US) |
 | StakingRewards_USD | decimal(28,4) | USD cash compensation amount. (Tier 3 — computed via SP_Staking_US) |
 | UpdateDate | datetime | ETL run timestamp from SP_Staking_Emails_US. (Tier 4 — ETL metadata) |
 

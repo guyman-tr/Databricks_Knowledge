@@ -35,29 +35,29 @@ JOIN DWH_dbo.Dim_Date d ON d.DateKey BETWEEN FromDateID AND ToDateID
 | 5 | CustomerChangeTypeID | tinyint | Fact_SnapshotCustomer.CustomerChangeTypeID | [UNVERIFIED] Legacy: type of change that created this snapshot row. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
 | 6 | CurentValue | int | Fact_SnapshotCustomer.CurentValue | [UNVERIFIED] Legacy: current value of changed attribute. NOT populated. Typo in name ("Curent"). (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
 | 7 | PreviousValue | int | Fact_SnapshotCustomer.PreviousValue | [UNVERIFIED] Legacy: previous value of changed attribute. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
-| 8 | CountryID | int | Fact_SnapshotCustomer.CountryID | Customer's registered country. FK to Dim_Country. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 9 | LabelID | int | Fact_SnapshotCustomer.LabelID | Brand/label (e.g., eToro UK). FK to Dim_Label. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 10 | LanguageID | int | Fact_SnapshotCustomer.LanguageID | Preferred interface language. FK to Dim_Language. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 11 | VerificationLevelID | int | Fact_SnapshotCustomer.VerificationLevelID | KYC verification level. FK to Dim_VerificationLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 8 | CountryID | int | Fact_SnapshotCustomer.CountryID | Customer's registered country. FK to Dim_Country. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 9 | LabelID | int | Fact_SnapshotCustomer.LabelID | Brand/label (e.g., eToro UK). FK to Dim_Label. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 10 | LanguageID | int | Fact_SnapshotCustomer.LanguageID | Preferred interface language. FK to Dim_Language. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 11 | VerificationLevelID | int | Fact_SnapshotCustomer.VerificationLevelID | KYC verification level. FK to Dim_VerificationLevel. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 12 | DocsOK | smallint | Fact_SnapshotCustomer.DocsOK | [UNVERIFIED] Legacy: documents verified flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
-| 13 | PlayerStatusID | int | Fact_SnapshotCustomer.PlayerStatusID | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 13 | PlayerStatusID | int | Fact_SnapshotCustomer.PlayerStatusID | Customer lifecycle status. FK to Dim_PlayerStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 14 | Bankruptcy | smallint | Fact_SnapshotCustomer.Bankruptcy | [UNVERIFIED] Legacy: bankruptcy flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
-| 15 | RiskStatusID | int | Fact_SnapshotCustomer.RiskStatusID | Customer risk assessment status. FK to Dim_RiskStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 16 | RiskClassificationID | int | Fact_SnapshotCustomer.RiskClassificationID | Risk classification tier for compliance. FK to Dim_RiskClassification. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 15 | RiskStatusID | int | Fact_SnapshotCustomer.RiskStatusID | Customer risk assessment status. FK to Dim_RiskStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 16 | RiskClassificationID | int | Fact_SnapshotCustomer.RiskClassificationID | Risk classification tier for compliance. FK to Dim_RiskClassification. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 17 | CommunicationLanguageID | int | Fact_SnapshotCustomer.CommunicationLanguageID | Preferred communication language (may differ from interface language). DEFAULT 0. Source: Ext_FSC_Real_Customer_Customer.CommunicationLanguageID (CC). FK to Dim_Language. (Tier 2 — via Fact_SnapshotCustomer) |
 | 18 | PremiumAccount | smallint | Fact_SnapshotCustomer.PremiumAccount | [UNVERIFIED] Legacy: premium account flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
 | 19 | Evangelist | smallint | Fact_SnapshotCustomer.Evangelist | [UNVERIFIED] Legacy: evangelist flag. NOT populated. (Tier 4 — inherited from Fact_SnapshotCustomer wiki) |
-| 20 | GuruStatusID | smallint | Fact_SnapshotCustomer.GuruStatusID | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 20 | GuruStatusID | smallint | Fact_SnapshotCustomer.GuruStatusID | Popular Investor (Guru) program status. FK to Dim_GuruStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 21 | UpdateDate | datetime | Fact_SnapshotCustomer.UpdateDate | DWH load timestamp. Set to GETDATE() at ETL execution. Not the customer event date. DEFAULT 0 (DDL default is 0 but SP sets GETDATE()). (Tier 2 — via Fact_SnapshotCustomer) |
 | 22 | RegulationID | tinyint | Fact_SnapshotCustomer.RegulationID | Customer's assigned regulatory jurisdiction. DEFAULT 0. Sourced from Ext_FSC_BackOffice_RegulationChangeLog.ToRegulationID — end-of-day change. See §2.4. FK to Dim_Regulation. (Tier 2 — via Fact_SnapshotCustomer) |
-| 23 | AccountStatusID | int | Fact_SnapshotCustomer.AccountStatusID | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 23 | AccountStatusID | int | Fact_SnapshotCustomer.AccountStatusID | Account enabled/suspended status. FK to Dim_AccountStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 24 | AccountManagerID | int | Fact_SnapshotCustomer.AccountManagerID | Assigned account manager (sales/retention). DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.AccountManagerID (BO). FK to Dim_Manager. (Tier 2 — via Fact_SnapshotCustomer) |
-| 25 | PlayerLevelID | int | Fact_SnapshotCustomer.PlayerLevelID | Account tier (4=demo). FK to Dim_PlayerLevel. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 26 | AccountTypeID | int | Fact_SnapshotCustomer.AccountTypeID | Account type (7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 27 | DateRangeID | bigint | Fact_SnapshotCustomer.DateRangeID | SCD2 range key: 12-digit bigint. Join to Dim_Range for FromDateID/ToDateID. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 25 | PlayerLevelID | int | Fact_SnapshotCustomer.PlayerLevelID | Account tier (4=demo). FK to Dim_PlayerLevel. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 26 | AccountTypeID | int | Fact_SnapshotCustomer.AccountTypeID | Account type (7=Employee, 9=excluded). FK to Dim_AccountType. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 27 | DateRangeID | bigint | Fact_SnapshotCustomer.DateRangeID | SCD2 range key: 12-digit bigint. Join to Dim_Range for FromDateID/ToDateID. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 28 | IsDepositor | bit | Fact_SnapshotCustomer.IsDepositor | 1 if the customer has made at least one real-money deposit (FTD detected). Set when CID appears in Ext_FSC_Customer_FirstTimeDeposits. Never reverted to 0 once set. DEFAULT 0. (Tier 2 — via Fact_SnapshotCustomer) |
-| 29 | PendingClosureStatusID | tinyint | Fact_SnapshotCustomer.PendingClosureStatusID | Pending account closure status. FK to Dim_PendingClosureStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
-| 30 | DocumentStatusID | int | Fact_SnapshotCustomer.DocumentStatusID | KYC document review status. FK to Dim_DocumentStatus. (Tier 1 — inherited from Fact_SnapshotCustomer wiki) |
+| 29 | PendingClosureStatusID | tinyint | Fact_SnapshotCustomer.PendingClosureStatusID | Pending account closure status. FK to Dim_PendingClosureStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
+| 30 | DocumentStatusID | int | Fact_SnapshotCustomer.DocumentStatusID | KYC document review status. FK to Dim_DocumentStatus. (Tier 2 — inherited from Fact_SnapshotCustomer wiki) |
 | 31 | SuitabilityTestStatusID | int | Fact_SnapshotCustomer.SuitabilityTestStatusID | MiFID suitability test completion status. DEFAULT 0. Source: Ext_FSC_BackOffice_Customer.SuitabilityTestStatusID (BO). (Tier 2 — via Fact_SnapshotCustomer) |
 
 ## 5. Access Patterns

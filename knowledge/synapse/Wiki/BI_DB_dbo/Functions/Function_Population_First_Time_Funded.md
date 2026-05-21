@@ -38,8 +38,8 @@ No parameters.
 | # | Column | Source | Transformation | Tier |
 |---|--------|--------|----------------|------|
 | 1 | RealCID | Dim_Customer.RealCID | Direct (via `DWH_FTD`) | T1 |
-| 2 | FTDPlatformID | Dim_Customer.FTDPlatformID | Direct | T1 |
-| 3 | FTDPlatform | Dim_FTDPlatform.FTDPlatformName | `COALESCE(FTDPlatformName, 'TP')` | T2 |
+| 2 | FTDPlatformID | Dim_Customer.FTDPlatformID | Direct | T2 |
+| 3 | FTDPlatform | Dim_FTDPlatform.FTDPlatformName | `COALESCE(FTDPlatformName, 'TP')` | T3 |
 | 4 | FTDDateID | Dim_Customer.FirstDepositDate | `CAST(CONVERT(VARCHAR(8), FirstDepositDate, 112) AS INT)` | T2 |
 | 5 | FTDDate | Dim_Customer.FirstDepositDate | `CAST(FirstDepositDate AS DATE)` | T2 |
 | 6 | FTDTime | Dim_Customer.FirstDepositDate | Same timestamp as FTD column (first deposit) | T2 |

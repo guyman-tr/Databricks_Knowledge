@@ -69,8 +69,8 @@
 | 8 | Buy/Sell | varchar(100) | YES | Trade direction. |
 | 9 | CurrencyPrimary | varchar(50) | YES | Local currency (`[Underlyer CCY]` from GS). GBX → GBP normalised. |
 | 10 | GS_Units | decimal(16,6) | YES | Trade quantity from GS (`[Quantity]`). Zero when GS has no trade for this instrument/direction. |
-| 11 | eToro_Units | decimal(16,6) | YES | eToro hedge trade units. (Tier 1 — Dealing_Duco_ActivityRecon.eToro_Units) |
-| 12 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 1 — Dealing_Duco_ActivityRecon.ClientUnits) |
+| 11 | eToro_Units | decimal(16,6) | YES | eToro hedge trade units. (Tier 2 — Dealing_Duco_ActivityRecon.eToro_Units) |
+| 12 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 2 — Dealing_Duco_ActivityRecon.ClientUnits) |
 | 13 | GS-eToro_Units | decimal(16,6) | YES | **Reconciliation diff**: GS_Units − eToro_Units. |
 | 14 | GS-Clients_Units | decimal(16,6) | YES | GS_Units − Clients_Units. |
 | 15 | GS_Rate | decimal(16,6) | YES | GS average trade price (`[Trade Gross Price]`). |

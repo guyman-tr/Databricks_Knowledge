@@ -223,7 +223,7 @@ IsFunded_New = 1 IF EOD_Equity > 0 AND VerificationLevelID=3 AND FirstActionDate
 | `IsFTD_ThisD` | INT | 1 if customer made their first deposit on this specific date | T2 | SP: FTDdate = @date |
 | `FTDA` | FLOAT | First-time deposit amount (USD) | T2 | Dim_Customer.FirstDepositAmount |
 | `Region` | NVARCHAR | Geographic region label (e.g., 'French', 'Arabic GCC', 'Australia', 'North Europe') | T1 | DWH_dbo.Dim_Country.Region via Fact_SnapshotCustomer.CountryID |
-| `NewMarketingRegion` | NVARCHAR | Marketing team region classification (e.g., 'Arabic', 'French', 'Norway', 'ROW') | T2 | Dim_Country.MarketingRegionManualName |
+| `NewMarketingRegion` | NVARCHAR | Marketing team region classification (e.g., 'Arabic', 'French', 'Norway', 'ROW') | T3 | Dim_Country.MarketingRegionManualName |
 | `Country` | NVARCHAR | Customer's country name at snapshot date | T1 | DWH_dbo.Dim_Country.Name via Fact_SnapshotCustomer.CountryID |
 | `Channel` | NVARCHAR | Acquisition channel (e.g., 'Direct', 'Affiliate', 'SEM', 'SEO', 'Friend Referral', 'Mobile Acquisition') | T2 | BI_DB_CIDFirstDates.Channel |
 | `SubChannel` | NVARCHAR | Acquisition sub-channel detail | T2 | BI_DB_CIDFirstDates.SubChannel |
@@ -450,7 +450,7 @@ IsFunded_New = 1 IF EOD_Equity > 0 AND VerificationLevelID=3 AND FirstActionDate
 |--------|------|-------------|------|--------|
 | `AccountManager` | NVARCHAR | Account manager full name (FirstName + ' ' + LastName) from Dim_Manager | T2 | DWH_dbo.Dim_Manager.FirstName + LastName |
 | `IsIslamic` | INT | 1 if customer has a swap-free/Islamic account (WeekendFeePrecentage=0). See §2.11 | T2 | DWH_dbo.Dim_Customer.WeekendFeePrecentage |
-| `IsContacted` | INT | 1 if customer was contacted through bonus/CRM channel on this date | T2 | BI_DB_NewBonusReport.IsContacted |
+| `IsContacted` | INT | 1 if customer was contacted through bonus/CRM channel on this date | T3 | BI_DB_NewBonusReport.IsContacted |
 | `IsContactedAmount` | FLOAT | Total deposit amount from contacted periods on this date | T2 | BI_DB_NewBonusReport.IsContactedAmount |
 | `UpdateDate` | DATETIME | ETL timestamp: GETDATE() at time of SP execution. Reflects the most recent daily ETL run for this partition | T2 | SP: GETDATE() |
 | `FirstNewFundedDate` | DATE | Date when customer first satisfied the IsFunded_New criteria (first VL3-verified funded day). NULL if never funded under new definition | T2 | BI_DB_CIDFirstDates.FirstNewFundedDate |

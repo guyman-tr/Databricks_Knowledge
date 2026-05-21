@@ -64,8 +64,8 @@ Part of the **BNY/VIRTU/Citadel daily reconciliation pipeline** (`SP_BNY_VIRTU_R
 | 8 | Exchange | varchar(80) | YES | Trading venue. |
 | 9 | BNY_Units | decimal(16,6) | YES | Trade units reported by BNY. (Tier 2 — LP_BNY_Custody_Security_Transactions) |
 | 10 | VIRTU_Units | decimal(16,6) | YES | Trade units reported by VIRTU. (Tier 2 — LP_VIRTU_ETORO_Allocations_Sheet) |
-| 11 | eToro_Units | decimal(16,6) | YES | Trade units from eToro hedge activity. (Tier 1 — Dealing_Duco_ActivityRecon.eToro_Units) |
-| 12 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 1 — Dealing_Duco_ActivityRecon.ClientUnits) |
+| 11 | eToro_Units | decimal(16,6) | YES | Trade units from eToro hedge activity. (Tier 2 — Dealing_Duco_ActivityRecon.eToro_Units) |
+| 12 | Clients_Units | decimal(16,6) | YES | Client NOP units. (Tier 2 — Dealing_Duco_ActivityRecon.ClientUnits) |
 | 13 | BNY-eToro_Units | decimal(16,6) | YES | **Reconciliation diff**: BNY_Units − eToro_Units. |
 | 14 | BNY-Clients_Units | decimal(16,6) | YES | BNY_Units − Clients_Units. |
 | 15 | VIRTU-eToro_Units | decimal(16,6) | YES | VIRTU_Units − eToro_Units. Recon diff for VIRTU channel. |

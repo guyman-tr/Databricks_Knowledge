@@ -40,7 +40,7 @@ Compliance Daily Market Surveillance: Snapshot Report. Captures all positions th
 | 1 | InstrumentDisplayName | varchar(100) | YES | Human-readable instrument label (e.g., "China Railway Group"). (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentDisplayName) |
 | 2 | Instrument | varchar(50) | YES | Instrument ticker/code as displayed on eToro platform (e.g., "0390.HK/HKD", "FDP/USD"). (Tier 1 — DWH_dbo.Dim_Instrument.Name) |
 | 3 | InstrumentID | int | YES | Numeric instrument identifier. FK to DWH_dbo.Dim_Instrument. Subset of the daily Fivetran instrument list. (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentID) |
-| 4 | InstrumentType | varchar(50) | YES | Instrument category name. Typically "Stocks" in this surveillance context. (Tier 1 — DWH_dbo.Dim_Instrument.InstrumentType) |
+| 4 | InstrumentType | varchar(50) | YES | Instrument category name. Typically "Stocks" in this surveillance context. (Tier 2 — DWH_dbo.Dim_Instrument.InstrumentType) |
 | 5 | ISINCode | varchar(30) | YES | International Securities Identification Number. NULL for instruments without ISIN assignment. (Tier 1 — DWH_dbo.Dim_Instrument.ISINCode) |
 | 6 | CUSIP | varchar(500) | YES | 9-character CUSIP identifier. Empty string `''` when not assigned (ISNULL→''). Common for non-US instruments (e.g., HK-listed stocks have empty CUSIP). (Tier 1 — DWH_dbo.Dim_Instrument.CUSIP via ISNULL) |
 | 7 | PositionID | bigint | YES | Unique position key. 1:1 row grain for this table — each row is one open position. (Tier 1 — Trade.PositionTbl via DWH_dbo.Dim_Position) |

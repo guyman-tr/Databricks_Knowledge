@@ -81,7 +81,7 @@ ROUND_ROBIN HEAP — trivially small table (typically 0-5 rows per day).
 | # | Element | Type | Nullable | Description |
 |---|---------|------|----------|-------------|
 | 1 | RealCID | int | NO | Customer ID - platform-internal primary key. Assigned at registration. Passthrough from parent table. (Tier 1 — Customer.CustomerStatic) |
-| 2 | FirstDepositDate | date | NO | Date of first deposit. Passthrough from parent table. (Tier 1 — Customer.CustomerStatic) |
+| 2 | FirstDepositDate | date | NO | Date of first deposit. Passthrough from parent table. (Tier 2 — Customer.CustomerStatic) |
 | 3 | VerificationLevelID | int | NO | KYC verification level. FK to Dictionary.VerificationLevel. All rows are VL3 by construction. Passthrough from parent table. (Tier 1 — BackOffice.Customer) |
 | 4 | Regulation | varchar(50) | NO | Short code for the regulation. Values: FCA, CySEC, ASIC&GAML, FSA Seychelles, BVI, FSRA, ASIC. Passthrough from parent table. (Tier 1 — Dictionary.Regulation) |
 | 5 | PlayerStatus | varchar(50) | NO | Active trading tier/status classification. Values filtered to exclude PlayerStatusID 2 and 4. Passthrough from parent table. (Tier 2 — SP_Dictionaries_DL_To_Synapse) |

@@ -39,8 +39,8 @@ All 56 customers: FCA-regulated, VerificationLevelID=3 (fully verified), IsDepos
 | # | Column | Type | Nullable | Description |
 |---|--------|------|----------|-------------|
 | 1 | CID | int | YES | Customer ID — platform-internal primary key. One row per VP list customer. (Tier 1 — Customer.CustomerStatic via DWH_dbo.Dim_Customer.RealCID) |
-| 2 | IsDepositor | int | YES | 1 = customer has made at least one deposit; 0 = never deposited. All current VP list customers have IsDepositor=1. (Tier 1 — BackOffice.Customer via DWH_dbo.Dim_Customer.IsDepositor) |
-| 3 | IsValidCustomer | int | YES | 1 = active customer; 0 = inactive/test account. All current VP list customers have IsValidCustomer=1. (Tier 1 — BackOffice.Customer via DWH_dbo.Dim_Customer.IsValidCustomer) |
+| 2 | IsDepositor | int | YES | 1 = customer has made at least one deposit; 0 = never deposited. All current VP list customers have IsDepositor=1. (Tier 2 — BackOffice.Customer via DWH_dbo.Dim_Customer.IsDepositor) |
+| 3 | IsValidCustomer | int | YES | 1 = active customer; 0 = inactive/test account. All current VP list customers have IsValidCustomer=1. (Tier 2 — BackOffice.Customer via DWH_dbo.Dim_Customer.IsValidCustomer) |
 | 4 | VerificationLevelID | int | YES | KYC verification level. Values: 0=unverified, 1=partial, 2=intermediate, 3=fully verified. All current VP list customers are Level 3. (Tier 1 — BackOffice.Customer via DWH_dbo.Dim_Customer.VerificationLevelID) |
 | 5 | Regulation | nvarchar(250) | YES | Regulatory entity from primary RegulationID (via DWHRegulationID JOIN). All current customers are 'FCA'. (Tier 1 — DWH_dbo.Dim_Regulation.Name via DWH_dbo.Dim_Customer.RegulationID) |
 | 6 | PlayerStatus | nvarchar(250) | YES | Customer account status. Observed values: "Normal" (43), "Blocked" (9), "Block Deposit & Trading" (2), "Blocked Upon Request" (2). (Tier 1 — BackOffice.Customer via DWH_dbo.Dim_PlayerStatus.Name) |
