@@ -149,7 +149,7 @@ This super-domain is about **WHAT customers traded and HOW the trade was execute
 - **Who the customer is, their identifiers, jurisdiction, club tier, segment** → Customer & Identity super-domain (`../domain-customer-and-identity/SKILL.md`).
 - **Money flow into / out of the customer wallet** (deposits, withdrawals, MIMO, IBAN flows, FTDs) → Payments super-domain (`../domain-payments/SKILL.md`). Trading IS the destination of those funds — but the deposit-side question routes there.
 - **Fee revenue or fee composition on a trade** → Revenue & Fees super-domain (`../domain-revenue-and-fees/SKILL.md`). The trade VOLUME stays here; the COMMISSION/ROLLOVER/TICKET_FEE revenue lives there. The two are linked by `PositionID` / `ActionID`.
-- **AML risk classification, sanctions, PEP, watchlist alerts on a trade** → Compliance super-domain (planned).
+- **AML risk classification + AML alerts + Actimize CDD on a customer / trade** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)). Note: KYC sanctions / PEP-as-identity-check is NOT in the D scope yet — that's `B compliance-customer-snapshot-and-club` (planned v1.5).
 
 When a question is about **the trade itself** (what instrument, what volume, what price, was it a copy, did it fill, what was the slippage), it stays here. When it is about **the fee that trade generated** ("how much commission did Tesla trades produce?"), route to Revenue & Fees and use `PositionID` to link back.
 

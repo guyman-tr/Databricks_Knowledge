@@ -81,7 +81,7 @@ Do NOT load for:
 ## Scope
 
 In scope: the C2F end-to-end pipeline — `EXW_C2F_E2E` (103c, already-stitched anchor); side markers `eMoney_Dim_Transaction.TransactionTypeID=14`, `Fact_BillingDeposit.FundingTypeID=27`, `BI_DB_DDR_Fact_MIMO_AllPlatforms.IsCryptoToFiat=1`; the manual chain (`ReceivedTransactions` → `Conversions` → `SentTransactions` via `CorrelationId`, with `customerwalletsview` for `WalletId`→`Gcid`); the eMoney-side terminal (`eMoney_Dim_Transaction` + `eMoney_Dim_Account` with `GCID_Unique_Count=1` join gate) and TP-side terminal (`Fact_BillingDeposit` + `Dim_Customer` for GCID-on-DWH bridge); the `v_revenue_cryptotofiat_c2f` (16c) pointer to fee revenue.
-Out of scope: aggregate fee/revenue accounting (`domain-revenue-and-fees`); pure on-chain analysis (`crypto-wallet`); pure IBAN/card analysis (`emoney-accounts-and-cards`); customer total balance (`finance-recon-and-balances`); AML risk classification (Compliance super-domain).
+Out of scope: aggregate fee/revenue accounting (`domain-revenue-and-fees`); pure on-chain analysis (`crypto-wallet`); pure IBAN/card analysis (`emoney-accounts-and-cards`); customer total balance (`finance-recon-and-balances`); AML risk classification + AML alert routing ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md)).
 Last verified: 2026-05-11
 
 ## Critical Warnings

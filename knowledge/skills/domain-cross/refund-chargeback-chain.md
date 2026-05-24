@@ -81,13 +81,13 @@ Do NOT load for:
 
 - **Total refund / chargeback volume this month** → `domain-revenue-and-fees` (aggregate reversal accounting). This skill is for SINGLE-CASE forensics.
 - **Was deposit X approved** → `deposits-and-withdrawals` (C.1) alone via `Fact_BillingDeposit.PaymentStatusID`.
-- **AML alert detail / risk classification** → Compliance super-domain (planned).
+- **AML alert detail / risk classification on the customer** → [`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md) — `aml-risk-scoring` for the classification, `aml-alert-routing` for the live alerts (note: alert detail is largely Synapse-only).
 - **Provider statement vs internal recon** (MID-level decline / settlement) → `provider-reconciliation`.
 
 ## Scope
 
-In scope: the anchor `BI_DB_DepositWithdrawFee_Reversals` (45c — refund + chargeback + chargeback-reversal + reversed + partial-reversed + cashout-rollback + cancellations); `Fact_BillingDeposit` (139c) + `Fact_BillingWithdraw` (86c) original-event side; `Dim_PaymentStatus` (6c) for the status enum decode; `Fact_CustomerAction` (74c) for operator-action audit; cross-link out to AML / Compliance (planned) for context overlay. Mixed-coverage State-table provenance pointed to Synapse.
-Out of scope: aggregate reversal / chargeback rate trends (`domain-revenue-and-fees`); pure deposit lifecycle (`deposits-and-withdrawals`); MID-level provider recon (`provider-reconciliation`); customer total balance state (`finance-recon-and-balances`); AML risk classification itself (Compliance).
+In scope: the anchor `BI_DB_DepositWithdrawFee_Reversals` (45c — refund + chargeback + chargeback-reversal + reversed + partial-reversed + cashout-rollback + cancellations); `Fact_BillingDeposit` (139c) + `Fact_BillingWithdraw` (86c) original-event side; `Dim_PaymentStatus` (6c) for the status enum decode; `Fact_CustomerAction` (74c) for operator-action audit; cross-link out to [`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md) for AML context overlay. Mixed-coverage State-table provenance pointed to Synapse.
+Out of scope: aggregate reversal / chargeback rate trends (`domain-revenue-and-fees`); pure deposit lifecycle (`deposits-and-withdrawals`); MID-level provider recon (`provider-reconciliation`); customer total balance state (`finance-recon-and-balances`); AML risk classification + AML alerts themselves ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md)).
 Last verified: 2026-05-11
 
 ## Critical Warnings
@@ -98,7 +98,7 @@ Last verified: 2026-05-11
 4. **Tier 1 — One deposit can have MULTIPLE reversal rows.** Refund + later chargeback-reversal, partial reversal followed by full, etc. Group by `DepositID` and inspect the timeline; never assume a 1:1 deposit↔reversal mapping.
 5. **Tier 1 — `Fact_Deposit_State` and `Fact_Cashout_Rollback` are `_Not_Migrated` (Synapse-only).** For the State-row-triggering-reversal forensic ("which State change caused this reversal"), drop down to Synapse via `user-synapse_prod_sql` / `user-synapse_sql` MCP. The reversal table itself + `Fact_BillingDeposit` + `Fact_CustomerAction` ARE in UC and can answer most of the forensic.
 6. **Tier 2 — Chargeback ≠ Refund.** Chargeback is bank-initiated (we may dispute it back — `ChargebackReversal` = we won). Refund is internal-initiated (customer asked, or ops gave). Different commercial implications, different processes — don't conflate in reporting.
-7. **Tier 2 — AML reversals (`PaymentStatusID = 26 ReversedDeposit`) typically have a corresponding row in Compliance's AML alert tables.** The two should be cross-referenced for any "we refunded due to AML — was the alert valid?" audit. Compliance super-domain owns the interpretation; this skill owns the join key.
+7. **Tier 2 — AML reversals (`PaymentStatusID = 26 ReversedDeposit`) typically have a corresponding row in the AML alert tables.** The two should be cross-referenced for any "we refunded due to AML — was the alert valid?" audit. The AML side ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md)) owns the alert interpretation: `aml-risk-scoring` for the classification at the time, `aml-alert-routing` for the live alert (largely Synapse-only — bridge via `bi_db_amlperiodicreview.BIAMLAlerts`). This skill owns the join key on the payments side.
 8. **Tier 2 — Operator audit trail lives in `Fact_CustomerAction` (74c).** Owned by `domain-customer-and-identity/customer-action-audit-trail`. If a refund was operator-initiated, the matching action row links via `CID + ActionDate` close to the reversal `Occurred` time. For the canonical join pattern see `customer-action-audit-trail` Critical Warnings (the table has 74c — `Occurred` is the true timestamp; NO `OperatorID` / `IsManual` / `ActionDetail` columns).
 9. **Tier 2 — Partial reversals complicate aggregation.** Sum across ALL reversal rows for one `DepositID`, then compare to the original `AmountUSD`, to determine if the deposit was fully or partially reversed.
 10. **Tier 3 — PaymentStatusID 35 (`DeclineByRRE`) is NOT a dispute** — it's a pre-auth risk-engine decline (the deposit never landed). Don't mix it into dispute analyses.
@@ -118,7 +118,7 @@ graph TB
     StatePost["Fact_Deposit_State (Synapse-only)<br/>TransactionType in Refund/Chargeback/etc.<br/>provides provider-side ExTransactionID"]
     RevFee["BI_DB_DepositWithdrawFee_Reversals 45c<br/>AMOUNTS PRE-SIGNED<br/>reversal-type enum"]
     CB_Rev["Chargeback reversal<br/>bank reverses its chargeback<br/>positive amount in same _Reversals table"]
-    AmlCtx["AML / risk context<br/>(Compliance super-domain)"]
+    AmlCtx["AML / risk context<br/>(domain-compliance-and-aml — D)"]
     Action["Operator action audit<br/>Fact_CustomerAction 74c"]
 
     Dep --> Trig
@@ -200,7 +200,7 @@ ORDER BY 1, 8 NULLS FIRST;
 ```sql
 -- 2. AML-flagged customers with refunds in the same period (placeholder; Compliance overlay)
 SELECT rev.CID, rev.DepositID, rev.TransactionType, rev.AmountUSD, rev.Occurred,
-       'see Compliance super-domain' AS aml_context
+       'see domain-compliance-and-aml (aml-risk-scoring + aml-alert-routing)' AS aml_context
 FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee_reversals rev
 WHERE rev.TransactionType IN ('Refund', 'AMLRefund', 'Reversed')
   AND rev.Occurred BETWEEN :from_dt AND :to_dt;
@@ -251,7 +251,7 @@ GROUP BY rev.DepositID, rev.CID, fbd.AmountUSD;
 
 - "Total refund volume this month" → `domain-revenue-and-fees` alone.
 - "Was deposit X approved" → `deposits-and-withdrawals` alone (`Fact_BillingDeposit.PaymentStatusID`).
-- "Show me the AML alerts for this customer" → Compliance super-domain (planned).
+- "Show me the AML alerts for this customer" → [`../domain-compliance-and-aml/aml-alert-routing.md`](../domain-compliance-and-aml/aml-alert-routing.md) (mostly Synapse-only; bridge via `bi_db_amlperiodicreview.BIAMLAlerts`).
 - "Walk me through what happened to deposit X — refund? chargeback? when? who?" → load this cross-domain skill.
 
 ## Deep reads

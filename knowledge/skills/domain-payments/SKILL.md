@@ -170,7 +170,7 @@ Do **not** load for:
 
 - **Fee revenue per CID / per period** → `domain-revenue-and-fees`. Use this hub only to ROUTE there.
 - **Bonus pay-outs / compensation accounting** → Compensation regular domain (planned).
-- **AML risk classification / SAR / sanctions** → Compliance super-domain (planned).
+- **AML risk classification** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) — specifically [`aml-risk-scoring`](../domain-compliance-and-aml/aml-risk-scoring.md). AML alerts and Actimize CDD → [`aml-alert-routing`](../domain-compliance-and-aml/aml-alert-routing.md). **SAR FCA submission** is deferred to future spec 013-regulatory-reporting; **KYC sanctions-list / PEP-list identity-side screening** is `B compliance-customer-snapshot-and-club` (planned v1.5).
 - **Trading positions / P&L / broker-dealer execution** → `domain-trading`.
 - **Operator audit trail on a customer's account** → `domain-customer-and-identity/customer-action-audit-trail` (`Fact_CustomerAction`).
 
@@ -223,7 +223,7 @@ graph LR
     Wallet -->|reversal| Reversal
 ```
 
-**Out of scope here**: position-vs-broker EOD recon (`Dealing_IGRecon*`) and broker / LP identity (`dealing_dbo`) live in `domain-trading`. Treezor SOC2 audit envelopes (`FiatDwhDB.Tribe`, `eMoney_Tribe.*`, `bronze_fiatdwhdb_tribe_*`) live in `domain-cross/tribe-emoney-audit`; Compliance super-domain owns the interpretation rules when built.
+**Out of scope here**: position-vs-broker EOD recon (`Dealing_IGRecon*`) and broker / LP identity (`dealing_dbo`) live in `domain-trading`. Treezor SOC2 audit envelopes (`FiatDwhDB.Tribe`, `eMoney_Tribe.*`, `bronze_fiatdwhdb_tribe_*`) live in `domain-cross/tribe-emoney-audit`; Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) owns the AML risk classification + alert interpretation. KYC sanctions/PEP identity-side screening rules are deferred to `B compliance-customer-snapshot-and-club` (planned v1.5); Treezor SOC2 envelope interpretation rules stay in [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md).
 
 Every sub-skill below owns **one slice** of that lifecycle. The slices are designed so:
 

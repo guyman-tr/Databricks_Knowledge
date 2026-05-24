@@ -110,7 +110,7 @@ This super-domain is about **WHO the customer is** — the master record, the id
 
 - **Money flow into / out of a customer's wallet** → Payments super-domain (`domain-payments/SKILL.md`). Customer balances, deposits, withdrawals, MIMO panel.
 - **Trading positions, P&L, instrument exposure, broker-dealer execution** → Trading & Markets super-domain (`domain-trading/SKILL.md`).
-- **AML risk classification, sanctions, PEP, watchlist alerts on a customer** → Compliance & AML super-domain (planned).
+- **AML risk classification + AML alerts + Actimize CDD severity on a customer** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) — specifically [`aml-risk-scoring`](../domain-compliance-and-aml/aml-risk-scoring.md) for the classification and [`aml-alert-routing`](../domain-compliance-and-aml/aml-alert-routing.md) for the live alerts. **KYC sanctions-list / PEP-list identity-side screening** (the screening DECISION, not the downstream flag) remains in this domain's planned `compliance-customer-snapshot-and-club` sub-skill (v1.5).
 - **Fee revenue or fee composition on a customer** → Revenue & Fees super-domain (`domain-revenue-and-fees/SKILL.md`).
 
 When a question is about **what the customer DID** (deposited, traded), route to the relevant doing-domain (Payments / Trading). When a question is about **who the customer IS** (their identifiers, jurisdiction, attributes, master record, segments, lifecycle status, onboarding funnel position, support history), it stays here.
@@ -145,12 +145,12 @@ Do **not** load for:
 - Money movement (deposits, withdrawals, MIMO, balances) → Payments super-domain
 - Fee revenue → Revenue & Fees super-domain
 - Trading activity (positions, P&L, copy trading P&L attribution, broker-dealer execution) → Trading & Markets super-domain
-- AML/KYC risk classification → Compliance super-domain (planned)
+- AML risk classification + alert routing → [`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md). KYC identity-side screening (sanctions/PEP DECISION) remains here in the planned `compliance-customer-snapshot-and-club` v1.5 sub-skill.
 
 ## Scope
 
 In scope: customer master record (`Dim_Customer` 107 cols, `Customer.CustomerStatic` 83-col bronze, `BackOffice.Customer` operational mirror with `MasterAccountCID`), customer SCD slices (`Fact_SnapshotCustomer` daily SCD with `DateRangeID`, `customer_snapshot_v` 52-col daily snapshot ~47M rows/day with `RealCID STRING`, `vg_customer_daily_snapshot`), milestone first-dates (`BI_DB_CIDFirstDates`, `cidfirstdates_v` with NULL-sentinel cleanup, `vg_customer_customer_first_dates`), the identity model (`RealCID` = `CID`, `GCID`, conceptual `MasterCID` → physical `MasterAccountCID`, eMoney `AccountID`, EXW joins via `GCID`/`RealCID`), long-lived attributes (jurisdiction, regulation, club tier, Popular Investor status via `GuruStatusID` — NOT `PlayerLevelID` (which encodes Bronze/Silver/Gold/Platinum/Platinum-Plus/Diamond/Internal per `Dim_PlayerLevel.Name`), channel, country, marketing segments), customer-action audit trail (`Fact_CustomerAction` 74 cols + enriched & w_metrics views), customer-property models (`BI_DB_LTV_BI_Actual` DECIMAL point predictions, `BI_DB_CID_DailyCluster` SCD-style with three parallel cluster columns, `BI_DB_CID_DailyPanel_FullData` 184-col panel, `BI_DB_CID_MonthlyPanel_FullData` in DWH schema, `customer_segments_v` 15-col flat profile, `customer_segments_mail_v` email engagement log, `etoro_club` views, next-gen `ml_stg.ml_output_ltv_app_artifacts_*`), CRM cases / CSAT / churn-winback (`vg_crm_case` 110 cols with `Status`/`Origin`, `crm_csat_survey_per_case_v`, `crm_quality_assessment_per_case_v`, `crm_user_v` with manager/RM hierarchy, `churn_winback_summary`/`recent_targets` as predictive-model output), cross-platform identity resolution joins. Population segments and the onboarding funnel are owned by referenced DE workspace skills (`customer-populations`, `registration-to-ftd-funnel`) — load those for their slice rather than answering from this hub.
-Out of scope: money movement (Payments super-domain), fee revenue (Revenue & Fees super-domain), trading positions / P&L / broker-dealer execution (Trading super-domain), AML risk classification / sanctions / PEP (Compliance super-domain when built)
+Out of scope: money movement (Payments super-domain), fee revenue (Revenue & Fees super-domain), trading positions / P&L / broker-dealer execution (Trading super-domain), AML risk classification + alert routing ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md))
 Last verified: 2026-05-11
 
 ## Critical Warnings
@@ -225,7 +225,7 @@ These two are NOT mirrored locally. The hub above lists them in `required_tables
 |---|---|---|
 | [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md) | This super-domain ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) joined back to the customer master via eMoney `AccountID` ↔ `GCID`. The customer-side join keys live in this super-domain; the audit-trail map lives in the cross-domain skill. |
 
-Additional cross-domain skills will be added as siblings span this super-domain (Trading & Markets, Compliance & AML when built). A B↔Compliance customer-AML cross-domain is a likely candidate once D is built.
+Additional cross-domain skills will be added as siblings span this super-domain (Trading & Markets is built; Compliance & AML is built as of 2026-05-24). A B↔D customer-AML cross-domain skill is a likely future candidate — concretely it would bridge `Dim_Customer` / `Fact_SnapshotCustomer` (B-side identity state) to `cmp_aml_risk_classification_cid_level` (D-side classification) via `CID = RealCID`.
 
 ## Cross-cutting facts
 
