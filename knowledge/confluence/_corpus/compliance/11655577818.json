@@ -1,0 +1,14 @@
+{
+  "page_id": "11655577818",
+  "title": "HLD - Move Risk Classification Process to Data Lake",
+  "space_key": "CR",
+  "space_name": "Compliance Dev",
+  "url": "https://etoro-jira.atlassian.net/wiki/spaces/CR/pages/11655577818/HLD+-+Move+Risk+Classification+Process+to+Data+Lake",
+  "version": 5,
+  "created_date": "2022-04-18T12:39:05.973Z",
+  "last_updated": "2026-05-16T21:46:31.791Z",
+  "depth_in_tree": 3,
+  "query_term": "risk classification",
+  "body_markdown": "## Step 1 – CySEC flow in Data Lake (implementation details)\n\n### 1. Bring missing source tables to the Lake\n\nReplicate all CySEC-specific metadata tables from the RiskClassification DB to the Data Lake:\n\n* `RiskClassification.CySecRiskClassificationParameterView`\n* `RiskClassification.CySecRiskClassificationParameter`\n* `Dictionary.CySecRiskClassificationParameter`\n\n### 3. Build CySEC risk classification calculation on the Data Lake\n\nProcedure: `RiskCalculation.SetRiskClassificationForCySec`\n\n### 4. Outputs (Lake result tables)\n\n1. Table A – `RiskCalculation.CySecScoresTemporary`-format (for Adi's process).\n2. Table B – CySEC final classification (for Customer update); `FinalScoreID` is mapped via `main.general.bronze_etoro_dictionary_riskclassification`. Purpose: drive updates to `BackOffice.Customer.RiskClassificationID`.\n\n### 5. Update BackOffice.Customer (ADF)\n\nADF pipeline uses Table B to update `BackOffice.Customer.RiskClassificationID`. Logic: Join `BackOffice.Customer` with Table B on `CID`. Update `RiskClassificationID` only for users whose score changed.\n\n## Step 2 – Move existing weekly non-CySEC flow to the Data Lake\n\n* Main existing calculation procedure: `BackOffice.SetRiskClassificationNew`\n* Existing result table used today: `RiskCalculation.ScoresTemporary`\n\nThe non-CySEC flow produces two tables on the Lake:\n\n1. Table A – `RiskCalculation.ScoresTemporary`-format for Adi's process.\n2. Table B – Non-CySEC final classification (CID, FinalScoreID), `FinalScoreID` mapped via `main.general.bronze_etoro_dictionary_riskclassification`.\n\nADF pipeline updates `BackOffice.Customer.RiskClassificationID` for non-CySEC users.\n",
+  "fetched_at": "2026-05-24T12:34:41Z"
+}

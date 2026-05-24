@@ -1,0 +1,14 @@
+{
+  "page_id": "905216127",
+  "title": "AML Monitoring Alerts Logic (Old logic)",
+  "space_key": "OTS",
+  "space_name": "Operations Wiki",
+  "url": "https://etoro-jira.atlassian.net/wiki/spaces/OTS/pages/905216127/AML+Monitoring+Alerts+Logic+Old+logic",
+  "version": 17,
+  "created_date": "2020-02-28T07:14:36.195Z",
+  "last_updated": "2022-06-01T08:53:11.030Z",
+  "depth_in_tree": 5,
+  "query_term": "AML",
+  "body_markdown": "**(Old logic)** - last updated 2022. Alert rule catalog: DC1-DC21, OB6-OB20.\n\nDC1: 6 month > 100K USD. Triggers on Deposit. Status: Live (per 2022 doc).\nDC2: Lifetime Deposit > 100K USD with annual and 12-month tests.\nDC3: Lifetime Deposit > 500K USD.\nDC4: 12 months > 150% from declared - \"How much money do you plan to invest in your eToro\naccount in the next year?\" by 150%. Status: Live - Handled Via Preliminary.\nDC7: Daily Deposit > 50K. DC8/DC9: High-Risk BinCountry MOP for deposit/CO.\nDC14: > 3 undefined credit cards w/ > 50K deposits in 6 months.\nDC20: NAB/Westpac wire < $5k SWIFT.\nDC21: > 250K, < 500K total deposits (FCA + ASIC only).\nOB6/7/8: KYC mismatches (Student/Retiree/Age vs income).\nOB12 FINRA. OB13: High Risk Occupation. OB14/15/18/19: EU/Non-EU geo mismatches.\nOB20: Forbidden Regulation Change - Not Live, awaiting AML.\n\nThese alerts populate `BI_DB_dbo.BI_DB_AML_Daily_Alerts`. Most reference Customer KYC answers\nfrom `V_CustomerAnswersNrml` and customer status / deposit aggregates from `DWH_dbo.Dim_Customer`\nand `DWH_dbo.Fact_BillingDeposit`.\n\n(Old logic) - newer AML alerts logic exists but no current canonical page found in this corpus.\n",
+  "fetched_at": "2026-05-24T12:34:41Z"
+}

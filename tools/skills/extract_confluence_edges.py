@@ -65,8 +65,8 @@ Usage:
   python tools/skills/extract_confluence_edges.py --domain compliance
 
 Output:
-  knowledge/skills/_edges_confluence.csv          # for merge_graph.py to consume
-  knowledge/skills/_confluence_corpus.md          # human-readable corpus audit trail
+  knowledge/skills/_<domain>_confluence_edges.csv  # for graph overlay / future merge
+  knowledge/skills/_<domain>_confluence_corpus.md  # human-readable corpus audit trail
 
 Reads:
   knowledge/confluence/_corpus/<domain>/*.json
@@ -99,21 +99,47 @@ INLINE_SCHEMA_OBJ = re.compile(
 )
 
 TITLE_CANONICAL_RE = re.compile(
-    r"(?i)(handbook|framework|glossary|policy|specification|reference|architecture|standard)"
+    r"(?i)(handbook|framework|glossary|policy|specification|reference|architecture|standard"
+    r"|\bhld\b|\bprd\b|\brfc\b)"
 )
-TITLE_DOCUMENT_RE = re.compile(r"(?i)(procedure|manual)")
+TITLE_DOCUMENT_RE = re.compile(r"(?i)(procedure|manual|process)")
 TITLE_RED_FLAG_RE = re.compile(
-    r"(?i)\(?\s*(obsolete|old\s*logic|deprecated|wip|draft|sandbox|legacy|scratch|temp|tmp)\s*\)?"
+    r"(?i)\(?\s*(obsolete|old\s*logic|deprecated|wip|draft|sandbox|legacy|scratch|temp|tmp|not\s*in\s*use)\s*\)?"
 )
+# Content-derived signal: any page with this many `Schema.Object` refs is
+# treated as having de-facto canonical authority regardless of title pattern
+# (production-content trumps title heuristics).
+CONTENT_BONUS_REF_THRESHOLD = 5
+CONTENT_BONUS_SCORE = 1.0
+
+
+UC_CATALOGS = {"main", "samples", "system", "spark_catalog", "hive_metastore"}
 
 
 def normalize_ref(raw: str) -> str | None:
+    """Return a schema.table form, dropping any column suffix.
+
+    3-part refs are ambiguous (could be db.schema.table OR schema.table.column).
+    Heuristic: if first part is a known UC catalog, treat as catalog.schema.table
+    and return schema.table. Otherwise treat as schema.table.column and return
+    schema.table (i.e. first two parts).
+
+    Examples:
+        BackOffice.Customer                       -> BackOffice.Customer
+        BackOffice.Customer.RiskClassificationID  -> BackOffice.Customer
+        main.general.bronze_etoro_dict_x          -> general.bronze_etoro_dict_x
+        V_CustomerAnswersNrml                     -> None  (no schema)
+    """
     parts = [p.strip().strip("[]").strip("`") for p in raw.split(".") if p.strip()]
     if not parts:
         return None
     if len(parts) == 1:
         return None
-    return f"{parts[-2]}.{parts[-1]}"
+    if len(parts) == 2:
+        return f"{parts[0]}.{parts[1]}"
+    if parts[0].lower() in UC_CATALOGS:
+        return f"{parts[1]}.{parts[2]}"
+    return f"{parts[0]}.{parts[1]}"
 
 
 def parse_table_refs(markdown_body: str) -> set[str]:
@@ -133,7 +159,7 @@ def parse_table_refs(markdown_body: str) -> set[str]:
     return refs
 
 
-def compute_stability(page: dict) -> tuple[float, dict]:
+def compute_stability(page: dict, n_refs: int = 0) -> tuple[float, dict]:
     title = page.get("title", "") or ""
     breakdown: dict[str, float] = {}
 
@@ -170,7 +196,10 @@ def compute_stability(page: dict) -> tuple[float, dict]:
             age_score = 0.0
     breakdown["age_score"] = round(age_score, 3)
 
-    total = title_pattern_score + red_flag + depth_score + age_score
+    content_bonus = CONTENT_BONUS_SCORE if n_refs >= CONTENT_BONUS_REF_THRESHOLD else 0.0
+    breakdown["content_bonus"] = content_bonus
+
+    total = title_pattern_score + red_flag + depth_score + age_score + content_bonus
     return round(total, 3), breakdown
 
 
@@ -192,10 +221,15 @@ def main() -> int:
 
     pages = []
     for jf in sorted(corpus_dir.glob("*.json")):
+        if jf.name.startswith("_"):
+            continue  # underscore-prefixed files are scratch (e.g. _candidates.json)
         try:
-            pages.append(json.loads(jf.read_text(encoding="utf-8")))
+            obj = json.loads(jf.read_text(encoding="utf-8"))
         except json.JSONDecodeError as e:
             print(f"Skipping {jf.name}: {e}", file=sys.stderr)
+            continue
+        if isinstance(obj, dict) and "page_id" in obj:
+            pages.append(obj)
 
     if not pages:
         print(f"No pages found under {corpus_dir}", file=sys.stderr)
@@ -211,7 +245,7 @@ def main() -> int:
         title = page.get("title", "(no title)")
         body = page.get("body_markdown", "") or ""
         refs = parse_table_refs(body)
-        stab, breakdown = compute_stability(page)
+        stab, breakdown = compute_stability(page, n_refs=len(refs))
         refs_by_page.append((page, refs, stab, breakdown))
         page_summaries.append({
             "page_id": page.get("page_id", ""),
@@ -250,7 +284,7 @@ def main() -> int:
                 "stability_score": stab,
             })
 
-    out_csv = SKILLS / "_edges_confluence.csv"
+    out_csv = SKILLS / f"_{args.domain}_confluence_edges.csv"
     fields = ["left", "right", "edge_kind", "join_keys", "purpose", "source", "stability_score"]
     with out_csv.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields)
@@ -277,11 +311,14 @@ def main() -> int:
     lines.append("stability_score = title_pattern + title_red_flag")
     lines.append("                + 0.3*(1 - min(depth/10, 0.8))")
     lines.append("                + 0.5*min(months_since_edit/12, 1.0)")
+    lines.append(f"                + content_bonus  ({CONTENT_BONUS_SCORE} if n_refs >= {CONTENT_BONUS_REF_THRESHOLD}, else 0)")
     lines.append("")
-    lines.append("title_pattern  : +1.0 (Handbook/Framework/Glossary/Policy/Specification/Reference/Architecture/Standard)")
-    lines.append("                 +0.5 (Procedure/Manual)")
+    lines.append("title_pattern  : +1.0 (Handbook/Framework/Glossary/Policy/Specification/Reference/")
+    lines.append("                       Architecture/Standard/HLD/PRD/RFC)")
+    lines.append("                 +0.5 (Procedure/Manual/Process)")
     lines.append("                  0.0 otherwise")
-    lines.append("title_red_flag : -1.0 (Obsolete/Old Logic/Deprecated/WIP/Draft/Sandbox/Legacy/scratch)")
+    lines.append("title_red_flag : -1.0 (Obsolete/Old Logic/Deprecated/WIP/Draft/Sandbox/Legacy/scratch/not in use)")
+    lines.append("content_bonus  : +1.0 if page body has >= 5 inline `Schema.Object` refs (production-content signal)")
     lines.append("")
     lines.append("Stability favors AGE (older = more committed-to) and SHALLOW DEPTH (root-of-space).")
     lines.append("```")
@@ -302,7 +339,12 @@ def main() -> int:
     lines.append("")
     for s in sorted(page_summaries, key=lambda x: -x["stability"])[:20]:
         b = s["breakdown"]
-        lines.append(f"- **{s['stability']:.2f}** `{s['title'][:80]}` — pattern {b['title_pattern']:+.1f}, red_flag {b['title_red_flag']:+.1f}, depth {b['depth_score']:+.2f}, age {b['age_score']:+.2f}")
+        lines.append(
+            f"- **{s['stability']:.2f}** `{s['title'][:80]}` "
+            f"({s['n_refs']} refs) — pattern {b['title_pattern']:+.1f}, "
+            f"red_flag {b['title_red_flag']:+.1f}, depth {b['depth_score']:+.2f}, "
+            f"age {b['age_score']:+.2f}, content {b.get('content_bonus', 0.0):+.1f}"
+        )
     lines.append("")
 
     out_md.write_text("\n".join(lines), encoding="utf-8")

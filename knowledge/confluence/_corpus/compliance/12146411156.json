@@ -1,0 +1,14 @@
+{
+  "page_id": "12146411156",
+  "title": "Risk Classification - Create Daily Calculation Process",
+  "space_key": "CR",
+  "space_name": "Compliance Dev",
+  "url": "https://etoro-jira.atlassian.net/wiki/spaces/CR/pages/12146411156/Risk+Classification+-+Create+Daily+Calculation+Process",
+  "version": 6,
+  "created_date": "2023-11-23T06:31:11.385Z",
+  "last_updated": "2026-05-16T22:03:44.782Z",
+  "depth_in_tree": 3,
+  "query_term": "risk classification",
+  "body_markdown": "### **Today's Process**\n\n* All Configurations are in Azure PAAS DD RiskClassification on storageapiprd.database.windows.net\n* Calculation happened weekly on etoroDB for all customers. Customer is user who is depositor or has a Wallet Account.\n* The result of calculation updates `BackOffice.Customer.RiskClassificationID` (the final score) and saved in temporary table in etoro DB (score for each parameter + final score).\n* DE Job - step 1 - runs to bring this table to RiskClassification DB and execute SP on this DB - `dbo.P_RiskClassification` to update existsing users and insert new ones to final view.\n* DE Job - step 2 - runs to bring the final view - `dbo.V_RiskClassificationDataLake` to DataLake.\n\n### **List of Parameters**\n\n| ID | Name | Source | Source Of Daily Change |\n| --- | --- | --- | --- |\n| 2 | Country of Residence, Onboarding | `Customer.CustomerStatic` | `History.Customer` |\n| 3 | Country of Residence, Existing clients | `Customer.CustomerStatic` | `History.Customer` |\n| 4 | Place of Birth | `Customer.CustomerStatic` | Only for new users or Regulation Change |\n| 5 | Age of customer | `Customer.CustomerStatic` | `Customer.CustomerStatic` |\n| 7 | Screening Status | Screening DB | Screening DB |\n| 8 | Main Source of Income | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 9 | Occupation | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 10 | Special Score | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 11 | Annual Income | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 12 | Total Cash And Liquid Assets | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 13 | Money plan To invest | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 14 | High Risk | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 15 | Sector ML TF | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 16 | Sector High Cash | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 17 | Net Deposit | `BackOffice.CustomerAllTimeAggregatedData` | `BackOffice.CustomerAllTimeAggregatedData` |\n| 18 | Instruments Planned Investment | `V_CustomerAnswersNrml` | `History.CustomerAnswer` |\n| 20 | ScoreExpectedOriginFunds | `Customer.ExtendedUserField` |  |\n| 21 | ScoreExpectedDestinationPayments | `Customer.ExtendedUserField` |  |\n| 1018 | NFTF | Default by Regulation | Only for new users or Regulation Change |\n",
+  "fetched_at": "2026-05-24T12:34:41Z"
+}
