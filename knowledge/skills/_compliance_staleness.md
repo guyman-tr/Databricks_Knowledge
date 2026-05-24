@@ -93,8 +93,103 @@ For Phase B (partition shape decision), this staleness report says:
 
 4. **The 42+ GAP-CONF tables** confirm the Authority Hierarchy choice was correct: KPI views + Genie configs + UC information_schema are Tier 1 + 2 + ground truth for THIS domain. Confluence (Tier 3) is partial and aspirational for the AML/Compliance domain because the Compliance team writes process docs, not data docs.
 
+## 6. Locality classification (Phase A.6 — NEVER-DROP rule)
+
+> Per `.specify/templates/domain-build-template.md` Phase A.6 and spec 011 FR-011, every anchor surfaced in Phases A.0–A.5 is classified by where it physically lives today. The classification is **additive annotation, not a filter** — anchors not in UC are kept in the skill with `locality:` tags, not dropped. This was added 2026-05-24 by user direction: "we at this phase still have a lot of LOGIC and OUTPUT ONLY in synapse. re: aml alerts — i actually think it would be hugely beneficial to include the skill for knowledge purposes with caveat that the data does not yet live in databricks."
+
+Buckets:
+- **UC** — verified present in `main.*` via `system.information_schema.tables` query on 2026-05-24.
+- **synapse_only** — exists in production Synapse (`sql_dp_prod_we`) but NOT in UC.
+- **hybrid_synapse_uc** — both exist; UC bronze drops columns / lags / projects differently from Synapse master.
+- **external_system** — third-party SaaS (Actimize, ComplyAdvantage, Salesforce); may surface downstream in UC bronze, but the decision/scoring engine isn't queryable from UC.
+- **manual_only** — procedural knowledge (stored procs, runbook rules, alert-rule catalogues) — not a data table.
+
+### 6.1 Live alert + routing tables — **SYNAPSE-ONLY** (the gap)
+
+These are the operationally-critical AML routing tables. The user explicitly called them out as "logic and output only in synapse" — confirmed by `information_schema` query.
+
+| Anchor | UC presence | Locality | Source system | Role | Bridge strategy |
+|---|---|---|---|---|---|
+| `BI_DB_dbo.BI_DB_AML_BI_Alerts_New` | NOT FOUND | `synapse_only` | `sql_dp_prod_we` | Live AML alert routing table — `CategoryName='AML'` predicate identifies AML routing rows | Query via the Synapse MCP server `user-synapse_prod_sql` (read-only); see wiki at `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AML_BI_Alerts_New.md` |
+| `BI_DB_dbo.BI_DB_AML_Daily_Alerts` | NOT FOUND | `synapse_only` | `sql_dp_prod_we` | Daily AML alert summary feeding the alert review queue | Query via `user-synapse_prod_sql` MCP; wiki at `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_AML_Daily_Alerts.md` |
+| `BI_DB_dbo.BI_DB_RiskAlertManagementTool` | NOT FOUND | `synapse_only` | `sql_dp_prod_we` | Cross-category alert management tool (filter `CategoryName='AML'` for AML); referenced by Tableau workbook surfaced in Phase A.4 | Query via `user-synapse_prod_sql` MCP; wiki at `knowledge/synapse/Wiki/BI_DB_dbo/Tables/BI_DB_RiskAlertManagementTool.md` |
+
+**These three tables ARE the AML alerts production layer.** Skill must keep them — they are the primary anchors of the AML alert-routing sub-skill. Locality caveat explains that consumers querying from Databricks default profile will need to switch to Synapse.
+
+### 6.2 Verified UC anchors
+
+| Anchor | UC FQN | Locality | Tier (authority) | Notes |
+|---|---|---|---|---|
+| `BI_DB_dbo.BI_DB_AMLPeriodicReview` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_amlperiodicreview` | `UC` | 1 (production layer) | Periodic AML review queue — only AML-alert family table that made it to UC |
+| `BI_DB_dbo.BI_DB_AML_SAR_Report_FCA` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_sar_report_fca` | `UC` | 1 | FCA Suspicious Activity Report output |
+| `BI_DB_dbo.BI_DB_AML_Singapore_Risk_Classification` | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_singapore_risk_classification` | `UC` | 1 | MAS-regulated risk classification (Singapore) |
+| `BI_DB_dbo.BI_DB_AML_Subentity_Categorization` | `main.compliance.gold_sql_dp_prod_we_bi_db_dbo_bi_db_aml_subentity_categorization` | `UC` | 1 | Sub-entity (legal-entity-of-the-day) AML categorization |
+| cmp_aml_risk_classification family | `main.bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_*` (4 tables) | `UC` | 1 (Phase A.3 Cluster 53 core) | The production AML risk SCORING core: `_aggregated_group_level`, `_aggregated_level`, `_cid_level`, `_cid_window_level` |
+| de_output risk_classification family | `main.de_output.de_output_risk_classification_*` (6 tables) | `UC` | 1 | DE-team destination layer for the HLD 11655577818 CySEC migration: `_history`, `_history_cysec`, `_cysec_users_scores`, plus `vw_risk_classification_history_complete` |
+| regtech AML family | `main.regtech.gold_regtech_aml_*` (11 tables) + `main.regtech.gold_regreportdb_prod_dbo_aml_*` (9 tables) | `UC` | 1 | Parallel AML risk-scoring pipeline (regtech team-owned); NO Confluence coverage (GAP-CONF) |
+| pii_data AML views | `main.pii_data_stg.aml_*` + `main.pii_data.aml_snapshotcustomer_enriched_v` (5 objects) | `UC` | 1 | PII-protected AML analyst views |
+| wallet AML integration | `main.wallet.bronze_walletdb_wallet_amlproviderusers`, `_amlvalidations` (2 tables) | `UC` | 1 | Wallet platform AML provider integration |
+| spaceship user screening | `main.spaceship.bronze_spaceship_analytics_rpt_etoro_user_screening` | `UC` | 1 | Spaceship (UK product) AML screening report |
+| All 12 bronze copies from §1 | (see §1 table) | `UC` | 1 | Bronze ingestions of OLTP Customer / RiskCalculation / RiskClassification / BackOffice families |
+
+### 6.3 HLD-named tables that the implementation renamed — **HYBRID_SYNAPSE_UC**
+
+These are the 2 STALE-CONF cases from §1: the HLD document still names the Synapse source by its old name, but the UC implementation chose a different name.
+
+| HLD-side (Synapse) | UC-side | Locality | Notes |
+|---|---|---|---|
+| `RiskCalculation.CySecScoresTemporary` | `main.de_output_stg.de_output_risk_calculations_cysec_users_scores` | `hybrid_synapse_uc` | HLD references the Synapse name; UC name is `cysec_users_scores`. Skill teaches the UC name as canonical and notes the HLD is stale. |
+| `RiskClassification.CySecRiskClassificationParameterView` | not present as a view in UC; underlying table `main.bi_db.bronze_riskclassification_riskclassification_cysecriskclassificationparameter` IS in UC | `hybrid_synapse_uc` | UC has the bronze TABLE but not the view; consumers needing the view's projection must query Synapse. |
+
+### 6.4 Vendor / external-system sources — **EXTERNAL_SYSTEM**
+
+These compute or store AML/compliance decisions but are not directly queryable from UC (verified by `information_schema` query — zero results for `actimize|complyadvantage|onfido|sumsub|trulioo|pep_check|sanction` table-name patterns).
+
+| Source | Locality | Source system | Role | Bridge strategy |
+|---|---|---|---|---|
+| **Actimize** (CDD scoring engine) | `external_system` | Actimize SaaS | Computes the AML CDD risk score (200+ = high risk per `CDD alert guidance: Client is PEP` Confluence page). | No direct UC feed; score is surfaced indirectly via `BI_DB_dbo.BI_DB_RiskAlertManagementTool.AlertSeverityScore` (also synapse_only). For raw decisions and threshold settings: query Actimize UI directly with Compliance Eng team credentials. |
+| **ComplyAdvantage** (sanctions / PEP screening) | `external_system` | ComplyAdvantage SaaS | Sanctions list match, PEP list match, adverse media. | Decision artifacts inferred from downstream Synapse routing tables; no direct UC feed. Refer to Compliance Eng for vendor portal access. |
+| **Tableau** AML workbook (Phase A.4 fly-over) | `external_system` | Tableau Server | Surfaced `BI_DB_RiskAlertManagementTool` as the production AML routing source. Analyst-curated custom SQL — Authority Tier 6, weighted 0.5x in graph merge. | View in Tableau Server. The workbook is the audit trail for why this table is in the seed YAML's `hub_tables`. |
+
+### 6.5 Procedural knowledge — **MANUAL_ONLY**
+
+These are the rule catalogues, stored procs, and runbook steps that define AML/compliance LOGIC but are not data tables.
+
+| Item | Locality | Source | Role | Bridge strategy |
+|---|---|---|---|---|
+| `BackOffice.SetRiskClassificationNew` (SP) | `manual_only` | Synapse `etoro` DB | Sets the risk classification on a customer event | Read the SP body in Synapse Wiki; no automated query |
+| `RiskCalculation.SetRiskClassificationForCySec` (SP) | `manual_only` | Synapse `RiskCalculation` DB | CySEC-specific risk classification recompute | Read the SP body; runs in Synapse |
+| `dbo.P_RiskClassification` (SP) | `manual_only` | Synapse `RiskClassification` DB | Master risk classification orchestration | Read the SP body |
+| DC1-DC21 + OB6-OB20 alert rule catalogue | `manual_only` | Confluence page 905216127 (`AML Monitoring Alerts Logic (Old logic)`) — tagged Old logic but no replacement Confluence page exists. Rules execute today in `BI_DB_dbo.BI_DB_AML_BI_Alerts_New` (synapse_only). | The rule LOGIC that produces today's AML alerts. The doc is tagged stale but is the only catalogue. | Read the Confluence page for rule names + intent; cross-reference against `BI_DB_AML_BI_Alerts_New.AlertCode` distinct values in Synapse for the current production set. **Skill must include both as a paired knowledge item.** |
+
+### 6.6 Locality summary
+
+| Locality | Count | Comment |
+|---|---|---|
+| `UC` | ~50 tables across `main.bi_db / bi_compliance_stg / compliance / de_output / de_output_stg / regtech / pii_data / pii_data_stg / wallet / spaceship` | The production AML scoring layer and the regulatory output layer ARE in UC |
+| `synapse_only` | 3 critical alert-routing tables (`BI_DB_AML_BI_Alerts_New`, `BI_DB_AML_Daily_Alerts`, `BI_DB_RiskAlertManagementTool`) | The LIVE alert layer is Synapse-only — this is the user-surfaced gap |
+| `hybrid_synapse_uc` | 2 (CySEC HLD rename cases) | HLD names ≠ UC names; skill teaches UC names |
+| `external_system` | 3 (Actimize, ComplyAdvantage, Tableau workbook) | Vendor decisions surface only via downstream synapse_only tables |
+| `manual_only` | 4 (3 stored procs + 1 alert-rule catalogue) | Procedural knowledge worth preserving |
+
+### 6.7 Implications for Phase B partition
+
+The locality classification has a direct impact on Phase B sub-skill design:
+
+1. **An `aml-alert-routing` sub-skill is genuinely Synapse-anchored.** Its `required_tables:` will be minimal (the 2 UC-resident tables: `bi_db_amlperiodicreview`, `bi_db_aml_sar_report_fca`) and its `external_references:` will be substantial (the 3 synapse_only routing tables + 1 manual_only alert-rule catalogue + 1 external_system Actimize entry).
+
+2. **An `aml-risk-scoring` sub-skill is UC-native.** `required_tables:` covers the cmp_aml_risk_classification_* + de_output_risk_classification* + bronze inputs; `external_references:` only needs the 2 hybrid_synapse_uc entries for the HLD rename gap.
+
+3. **A `regtech-aml-pipeline` sub-skill is fully UC-native and Confluence-uncovered** — `required_tables` lists 20 regtech tables; `external_references` is empty.
+
+4. **The hub `SKILL.md`** must surface in its description the fact that one sub-skill (alert-routing) is mostly Synapse-resident so the routing-time embedding picks up the right caveat.
+
+---
+
 ## Provenance
 
 - UC query: `system.information_schema.tables` (read-only Databricks SQL warehouse). 220 rows scoped to RLIKE `(aml|risk_class|riskcalc|riskclassification|cmp_aml|cysec|screening|sanction|pep_)` or schema RLIKE `(aml|compliance|riskcalc|riskclassification)`.
+- Locality verification queries (Phase A.6, 2026-05-24): targeted `information_schema.tables` queries for `(aml_bi_alerts|aml_daily_alerts|riskalertmanagementtool|amlperiodicreview|aml_alert|aml_sar_report|aml_risk_alert)`, `(actimize|complyadvantage|onfido|sumsub|trulioo|pep_check|sanction|screening_check)`, and `(setrisk|risk_classification_history|alertseverity|aml_alerts|cdd_alert|pep_)` — 8 UC hits total, confirming the 3 Synapse-only alert-routing tables and the zero-hit external vendor pattern.
 - Confluence corpus: `knowledge/confluence/_corpus/compliance/*.json` (14 pages).
 - Wiki §3.3: `knowledge/skills/_node_summary.csv` + `_node_clusters.csv` (Phase A.2 scan).
+- Locality contract: `knowledge/skills/_AUTHORITY_HIERARCHY.md` "Locality is orthogonal to authority" + `.specify/templates/domain-build-template.md` Phase A.6.

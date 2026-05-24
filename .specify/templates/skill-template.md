@@ -15,8 +15,19 @@ required_tables:
   # Single-domain (shape A): list the canonical UC objects in this domain only.
   # Cross-domain (shape B): list canonical UC objects from EACH super-domain
   # the skill spans, in the order a query would join them.
+  # ONLY UC FQNs go here. Non-UC anchors go in external_references below.
   - {catalog}.{schema}.{table_or_view}
   - {catalog}.{schema}.{table_or_view}
+external_references:                    # optional; required when the skill teaches
+                                        # knowledge about Synapse-only / hybrid /
+                                        # external-system / procedural anchors.
+                                        # See knowledge/skills/_AUTHORITY_HIERARCHY.md
+                                        # "Locality is orthogonal to authority".
+  - name: "{Schema.Object or system identifier}"   # NOT a UC FQN (would belong in required_tables)
+    locality: "{synapse_only | hybrid_synapse_uc | external_system | manual_only}"
+    source_system: "{sql_dp_prod_we | Actimize | ComplyAdvantage | Salesforce | etc.}"
+    role: "{one-line description of what the object IS / does in the domain}"
+    bridge_strategy: "{one-line instruction for how a query reaches this object today}"
 sample_questions:                       # optional but strongly recommended
   - "{natural-language paraphrase 1}"
   - "{natural-language paraphrase 2}"
@@ -146,6 +157,28 @@ Use when: "{trigger}".
 critical filter visible (not hidden behind a CTE the user has to read).
 -->
 
+## External Data Sources (optional — include iff `external_references:` is populated)
+
+This section is the human-readable companion to the `external_references:` frontmatter block. Include it whenever any anchor cited by this skill lives outside Databricks UC — Synapse-only tables, hybrid Synapse+UC tables where the UC bronze is partial, external SaaS (Actimize, ComplyAdvantage, Salesforce, Tableau workbooks, spreadsheets), or pure procedural knowledge (stored procs, runbook rules).
+
+> **Locality caveat.** The objects listed here are NOT queryable from a default Databricks notebook today. Each row lists the locality, the source system, the role of the object in this domain, and the bridge strategy — i.e. the one-line instruction for how to reach the data.
+
+| Object | Locality | Source system | Role | Bridge strategy |
+|---|---|---|---|---|
+| `{Schema.Object}` | `synapse_only` | `sql_dp_prod_we` | {what the object is / does} | Query via the Synapse MCP server `user-synapse_prod_sql` (read-only) / `user-synapse_sql` (write). |
+| `{Schema.Object}` | `hybrid_synapse_uc` | `sql_dp_prod_we` ↔ `main.bi_db.{bronze_copy}` | {what's in UC vs what's only in Synapse} | Use UC bronze for {column subset}; reach into Synapse via MCP for {columns / business-day boundary}. |
+| `{System.Object}` | `external_system` | `Actimize` / `ComplyAdvantage` / `Salesforce` / Tableau workbook ID | {what role the source plays} | {how to reach it — vendor UI / CSV drop / Fivetran connector / contact owner}. |
+| `{StoredProc / Runbook}` | `manual_only` | `BackOffice.{SP}` / Confluence page | {what business logic this encodes} | Read the SP body in `knowledge/synapse/Wiki/...` and the Confluence page; no automated query. |
+
+After the table, add prose paragraphs (one per `external_references` entry) when the bridge strategy needs more than one line — e.g. "the Actimize CDD score is reflected downstream in `BI_DB_dbo.BI_DB_RiskAlertManagementTool.AlertSeverityScore`; for the raw decision and threshold settings, query the Actimize UI directly with credentials from the Compliance Eng team."
+
+<!--
+This section is enforced ONLY when external_references is non-empty in frontmatter.
+It is the human-readable explanation a consumer reads when they hit a non-UC anchor.
+Without it, the agent might dutifully cite the Synapse table name and then fail to
+tell the user that the data isn't actually reachable from a UC query.
+-->
+
 ## Cross-Domain Notes (shape B only — delete this section for single-domain skills)
 
 This skill spans the {Domain A} and {Domain B} super-domains. The bridge is
@@ -195,6 +228,14 @@ PRE-COMMIT CHECKLIST (mirrors DE CI):
 [ ] Frontmatter has id, name, description (≥30 chars, third-person), triggers,
     required_tables (≥1 fully-qualified UC name), version, owner.
 [ ] id matches filename stem (cross-* prefix iff shape B).
+[ ] required_tables contains ONLY UC FQNs (catalog.schema.table). Anything that
+    lives only in Synapse / Actimize / ComplyAdvantage / Salesforce / Tableau
+    custom SQL / a stored proc goes into external_references instead.
+[ ] If staleness report flagged any anchor as `STALE-CONF`, `GAP-CONF`,
+    `OBSOLETE-OK-BUT-GAP`, or Synapse-only by ground-truth UC check →
+    external_references is populated AND ## External Data Sources section
+    exists. Do NOT drop the anchor — annotate locality instead (see
+    knowledge/skills/_AUTHORITY_HIERARCHY.md "NEVER-DROP rule").
 [ ] No secrets, tokens, API keys, connection strings (SEC-001).
 [ ] No absolute paths, no backslash paths (QUAL-004 / AUTHOR-001).
 [ ] ≤500 lines (QUAL-003), ≤100 KB.

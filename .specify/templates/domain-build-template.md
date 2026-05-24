@@ -56,14 +56,30 @@ graph TB
     A3["A.3 — Genie-driven subgraph<br/>summarize_subgraph.py --domain X"]
     A4["A.4 — Tableau fly-over<br/>(no new tool, grep existing index)"]
     A5["A.5 — Confluence DEEP build<br/>extract_confluence_edges.py + corpus crawl"]
-    A6["A.6 — UC anchor validation<br/>information_schema query"]
+    A6["A.6 — UC anchor validation + locality classification<br/>information_schema query → annotate, NOT drop"]
     B["Phase B — partition decision gate<br/>4 candidate shapes, choose from data"]
-    C["Phase C — author SKILL.md + sub-skills<br/>matching authority-hierarchy ordering"]
+    C["Phase C — author SKILL.md + sub-skills<br/>required_tables (UC) + external_references (non-UC)<br/>matching authority-hierarchy ordering"]
     D["Phase D — glue + deploy<br/>sync_to_databricks.py --only domain-<name>"]
     E["Phase E — commit + push<br/>one commit per phase"]
 
     P0 --> R --> A0 --> A1 --> A2 --> A3 --> A4 --> A5 --> A6 --> B --> C --> D --> E
 ```
+
+### Phase A.6 — UC anchor validation + locality classification (NEVER-DROP rule)
+
+For every anchor surfaced by phases A.0 through A.5, query `system.information_schema.tables` to confirm it exists in UC. **The output of A.6 is a 4-bucket classification, NOT a filter.**
+
+| Bucket | Action in Phase C |
+|---|---|
+| `UC` (default) — exists in `system.information_schema.tables` | Add to `required_tables:` |
+| `synapse_only` — does not exist in UC; exists in `sql_dp_prod_we` / DWH / BI_DB / OLTP databases | Add to `external_references:` with `locality: synapse_only`; document in `## External Data Sources` body section |
+| `hybrid_synapse_uc` — exists in both, but the UC bronze drops columns / lags / projects differently | Add to BOTH `required_tables:` (for the bronze) AND `external_references:` with `locality: hybrid_synapse_uc` (for the Synapse master); explain the projection gap |
+| `external_system` — Actimize / ComplyAdvantage / Salesforce / Tableau custom SQL / Excel | Add to `external_references:` with `locality: external_system`; bridge_strategy explains vendor UI / Fivetran / etc. |
+| `manual_only` — Synapse stored proc / runbook step / manual ticket-routing rule | Add to `external_references:` with `locality: manual_only` |
+
+**The NEVER-DROP rule.** A.6's classification MUST NOT delete any anchor surfaced in A.0–A.5. The only reason to drop an anchor is if its owning team has retired it (replaced / deprecated). For anything still producing business value — even if it lives in Synapse, Actimize, Salesforce, a spreadsheet, or only as a stored proc — annotate locality and keep it in the skill. The consumer asking "where does AML risk score 200 come from?" still needs the answer even if the actual decision happens in Actimize and the trigger table is Synapse-only. See [`knowledge/skills/_AUTHORITY_HIERARCHY.md`](../../knowledge/skills/_AUTHORITY_HIERARCHY.md) "Locality is orthogonal to authority" for the full rationale.
+
+The output of A.6 is a section appended to `_<domain>_staleness.md` titled `## Locality classification` with one row per anchor and one column per bucket.
 
 ## Requirements
 
@@ -74,8 +90,10 @@ graph TB
 - **FR-003**: System MUST emit a `_<domain>_subgraph.md` Genie-seeded subgraph (not just Louvain-cluster-seeded) using the generic `summarize_subgraph.py`.
 - **FR-004**: System MUST include Confluence as a first-class signal source via `extract_confluence_edges.py` with stability-weighted page selection (Handbook/Framework/Glossary titles favored; recent low-backlink pages de-weighted).
 - **FR-005**: System MUST cross-check Confluence claims, wiki §3.3 JOINs, and UC `information_schema` for staleness; output to `_<domain>_staleness.md` with explicit verdicts per discrepancy.
+- **FR-005a** (NEVER-DROP): Phase A.6 MUST classify every anchor into one of `{UC, synapse_only, hybrid_synapse_uc, external_system, manual_only}` and append a `## Locality classification` section to `_<domain>_staleness.md`. The classification MUST be additive — anchors that fail UC presence are annotated, not deleted, unless the owning team has explicitly retired them.
 - **FR-006**: System MUST defer the file-shape (hub-with-sub-skills vs single-overlay vs atomic-pair vs B-embedded) decision to Phase B, with the choice driven by the semantic-model outputs, not by uniform-format convention.
 - **FR-007**: Every SKILL.md emitted MUST conform to spec 007 FR-009 (DataPlatform DE skill-creator schema; `tools/skills/lint_skill.py` exit 0).
+- **FR-007a** (locality routing): Every SKILL.md whose Phase A.6 produced any anchor outside the `UC` bucket MUST populate `external_references:` in frontmatter (validated by `lint_skill.py`) AND include a `## External Data Sources` body section that names the source system, the bridge strategy, and any operational caveats per entry.
 - **FR-008**: All tooling MUST be parameterized — no domain-specific hardcoding. New tools introduced by this template's first instantiation become reusable for every subsequent domain build.
 - **FR-009**: Commit cadence MUST be one commit per phase on a feature branch named after the spec; final push gated on lint + deploy verification.
 

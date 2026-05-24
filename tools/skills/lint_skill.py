@@ -31,6 +31,7 @@ MIN_DESCRIPTION_CHARS = 30
 LAST_VERIFIED_MAX_AGE_DAYS = 90
 
 REQUIRED_FRONTMATTER = ("id", "name", "description", "triggers", "required_tables", "version", "owner")
+EXTERNAL_LOCALITY_VALUES = ("synapse_only", "hybrid_synapse_uc", "external_system", "manual_only")
 
 SECRET_PATTERNS = (
     re.compile(r"(?i)\b(?:api[_-]?key|secret|token|password|passwd|pwd|connectionstring)\s*[:=]\s*['\"][^'\"]{6,}['\"]"),
@@ -78,7 +79,9 @@ def _split_frontmatter(lines: list[str]) -> tuple[list[str], list[str], int]:
 
 def _parse_frontmatter(fm_lines: list[str]) -> dict:
     """Minimal YAML parse: scalar key:value, list of strings via leading '- ',
-    multi-line scalars via '|' or '>' folded blocks. Sufficient for SKILL.md frontmatter."""
+    multi-line scalars via '|' or '>' folded blocks, plus list-of-dict blocks for
+    `external_references:` (local extension — sequence of mappings).
+    Sufficient for SKILL.md frontmatter."""
     result: dict = {}
     i = 0
     n = len(fm_lines)
@@ -103,12 +106,47 @@ def _parse_frontmatter(fm_lines: list[str]) -> dict:
             result[key] = ("\n" if rest.startswith("|") else " ").join(s for s in buf if s).strip()
             continue
         if rest == "":
-            items: list[str] = []
+            # Could be a list of strings (`- foo`) OR a list of dicts (`- key: val`)
+            # OR a single mapping (`  key: val`). Peek at the next non-blank line.
+            j = i + 1
+            while j < n and not fm_lines[j].strip():
+                j += 1
+            if j < n and fm_lines[j].lstrip().startswith("- "):
+                first_item = fm_lines[j].lstrip()[2:].rstrip()
+                if ":" in first_item and not (first_item.startswith("\"") or first_item.startswith("'")):
+                    # list of mappings (sequence of dicts)
+                    items_dicts: list[dict] = []
+                    i = j
+                    while i < n and fm_lines[i].lstrip().startswith("- "):
+                        item: dict = {}
+                        first_line = fm_lines[i].lstrip()[2:]
+                        if ":" in first_line:
+                            k, _, v = first_line.partition(":")
+                            item[k.strip()] = v.strip().strip("\"'")
+                        i += 1
+                        while i < n and fm_lines[i].startswith((" ", "\t")) and not fm_lines[i].lstrip().startswith("- "):
+                            child = fm_lines[i].lstrip()
+                            if not child or child.startswith("#"):
+                                i += 1
+                                continue
+                            if ":" in child:
+                                k, _, v = child.partition(":")
+                                item[k.strip()] = v.strip().strip("\"'")
+                            i += 1
+                        items_dicts.append(item)
+                    result[key] = items_dicts
+                    continue
+                # list of scalars
+                items: list[str] = []
+                i = j
+                while i < n and fm_lines[i].lstrip().startswith("- "):
+                    items.append(fm_lines[i].lstrip()[2:].strip().strip("\"'"))
+                    i += 1
+                result[key] = items if items else ""
+                continue
+            # empty value or single nested mapping — treat as empty for now
             i += 1
-            while i < n and fm_lines[i].lstrip().startswith("- "):
-                items.append(fm_lines[i].lstrip()[2:].strip().strip("\"'"))
-                i += 1
-            result[key] = items if items else ""
+            result[key] = ""
             continue
         if rest.startswith("[") and rest.endswith("]"):
             inner = rest[1:-1].strip()
@@ -193,6 +231,47 @@ def _lint_file(path: Path) -> list[str]:
             errors.append(
                 f"FRONTMATTER: 'required_tables' entry '{tbl}' is not fully qualified (expected catalog.schema.table)"
             )
+
+    # OPTIONAL external_references (local extension; not in upstream DE schema).
+    # Captures non-UC objects the skill teaches knowledge about: Synapse-only
+    # tables, hybrid Synapse+UC tables (UC has only the bronze copy), and
+    # external systems (Actimize, ComplyAdvantage, Salesforce, Tableau workbook
+    # IDs). Each entry MUST be a mapping with keys: name, locality, source_system,
+    # role. Linter validates shape but does NOT require the field.
+    ext_refs = fm.get("external_references", [])
+    if ext_refs:
+        if not isinstance(ext_refs, list):
+            errors.append(
+                "FRONTMATTER: 'external_references' must be a list of mappings "
+                "(each with: name, locality, source_system, role)"
+            )
+        else:
+            for idx, entry in enumerate(ext_refs):
+                if not isinstance(entry, dict):
+                    errors.append(
+                        f"FRONTMATTER: 'external_references[{idx}]' is not a mapping; "
+                        "each entry must have keys name/locality/source_system/role"
+                    )
+                    continue
+                missing = [k for k in ("name", "locality", "source_system", "role") if not entry.get(k)]
+                if missing:
+                    errors.append(
+                        f"FRONTMATTER: 'external_references[{idx}]' "
+                        f"({entry.get('name', '<unnamed>')}) missing keys: {missing}"
+                    )
+                loc = entry.get("locality", "")
+                if loc and loc not in EXTERNAL_LOCALITY_VALUES:
+                    errors.append(
+                        f"FRONTMATTER: 'external_references[{idx}]' locality "
+                        f"'{loc}' not in {EXTERNAL_LOCALITY_VALUES}"
+                    )
+                name = (entry.get("name", "") or "").strip()
+                # An entry that looks like a 3-part UC ref belongs in required_tables.
+                if name and UC_TABLE_PATTERN.match(name):
+                    errors.append(
+                        f"FRONTMATTER: 'external_references[{idx}]' name '{name}' "
+                        "looks like a UC FQN — move it to required_tables instead"
+                    )
 
     triggers = fm.get("triggers", []) or []
     if isinstance(triggers, str):
