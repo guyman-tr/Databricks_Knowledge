@@ -54,12 +54,14 @@ hub_tables:
 # this domain but Louvain may have placed in another cluster (B's
 # Customer/snapshot family at clusters 1/2/3/10, per _CHECKPOINT_A.md).
 embedded_scan_patterns:
-  - "(?i)\\baml\\b"
+  # NOTE: don't use \b around aml/pep because '_' is a word char in regex,
+  # so \baml\b would FAIL to match BI_DB_AML_* (the prevailing AML table naming).
+  - "(?i)aml"
   - "(?i)risk_class"
   - "(?i)riskclassification"
   - "(?i)watchlist"
   - "(?i)sanctions"
-  - "(?i)\\bpep\\b"
+  - "(?i)_pep_"        # PEP politically-exposed-person; conservative pattern
   - "(?i)cmp_aml"
 
 # Confluence corpus seeds — query terms run against
