@@ -49,6 +49,9 @@ hub_tables:
   - RiskClassification.CustomerOnboardingRiskClassification
   - RiskClassification.CySecRiskClassificationParameter
   - Dictionary.CySecRiskClassificationParameter
+  # Surfaced by Phase A.4 Tableau fly-over - AML routing table cited by the
+  # FCMU "AML Clients" workbook with `WHERE CategoryName = 'AML'`.
+  - BI_DB_dbo.BI_DB_RiskAlertManagementTool
 
 # Regex patterns for find_embedded_domain_members.py — names that "feel like"
 # this domain but Louvain may have placed in another cluster (B's
