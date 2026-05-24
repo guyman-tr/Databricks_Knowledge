@@ -17,3 +17,15 @@ _upstream_wiki_routing.json
 
 # Auto-generated backup files from UC rewriter
 *.uc-rewrite.bak
+
+# Audit harness outputs — large, regenerable, never committed
+audits/_tier1_audit_cache/
+audits/_sql_grounded_audit_cache/
+audits/_llm_column_audit_*/
+audits/_apply_report_*
+audits/_sql_grounded_phase*/
+audits/regen-sample/
+
+# Per-skill local stage (sync_to_databricks.py target)
+# (workspace destination, never commit local mirror)
+
