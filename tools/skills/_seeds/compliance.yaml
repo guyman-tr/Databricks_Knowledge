@@ -89,9 +89,13 @@ confluence_query_terms:
 # The real D core is the UNION of 21, 24, 35 plus the AML-tagged members
 # embedded in clusters 1/2/3/10 (surfaced by find_embedded_domain_members.py).
 primary_clusters:
-  - 21
-  - 24
-  - 35
+  - 21    # Tax Compliance (7 nodes, OUT OF v1 scope but topologically D)
+  - 24    # KYC question panel (2 nodes, OUT OF v1 scope but topologically D)
+  - 35    # VerificationStatus dim (2 nodes, adjacent infra)
+  - 53    # cmp_aml_risk_classification_* family (4 nodes, IN v1 SCOPE - the
+          #       production AML scoring core). Discovered by Phase A.3
+          #       summarize_subgraph.py via hub_tables match; CHECKPOINT_A
+          #       did not list this cluster among D's anchors.
 
 # Sibling clusters where embedded AML/compliance members may live
 # (per _CHECKPOINT_A.md: AML largely embedded in Customer/snapshot family).
