@@ -53,33 +53,33 @@ Combines multiple trading revenue TVFs (full commissions, rollover, ticket fees,
 | 3 | Metric | — | Literal per UNION branch: TotalFullCommission, RolloverFee, TicketFee, TicketFeeByPercent, AdminFee, SpotAdjustFee | T2 |
 | 4 | GCID | BI_DB_Fact_Customer_Action_Position_Distribution.GCID, Fact_CustomerAction (via snapshot join in FullCommissions) | Direct via nested TVFs | T2 |
 | 5 | CountryID | BI_DB_Fact_Customer_Action_Position_Distribution.CountryID, Fact_SnapshotCustomer.CountryID | Direct via nested TVFs | T2 |
-| 6 | LabelID | Same lineage as CountryID | Direct | T1 |
-| 7 | VerificationLevelID | Same lineage as CountryID | Direct | T1 |
-| 8 | PlayerStatusID | Same lineage as CountryID | Direct | T1 |
-| 9 | RiskStatusID | Same lineage as CountryID | Direct | T1 |
-| 10 | RiskClassificationID | Same lineage as CountryID | Direct | T1 |
-| 11 | GuruStatusID | Same lineage as CountryID | Direct | T1 |
-| 12 | RegulationID | Same lineage as CountryID | Direct | T1 |
-| 13 | AccountStatusID | Same lineage as CountryID | Direct | T1 |
-| 14 | AccountManagerID | Same lineage as CountryID | Direct | T1 |
-| 15 | PlayerLevelID | Same lineage as CountryID | Direct | T1 |
-| 16 | AccountTypeID | Same lineage as CountryID | Direct | T1 |
-| 17 | IsDepositor | Same lineage as CountryID | Direct | T1 |
-| 18 | SuitabilityTestStatusID | Same lineage as CountryID | Direct | T1 |
-| 19 | MifidCategorizationID | Same lineage as CountryID | Direct | T1 |
-| 20 | IsValidCustomer | Same lineage as CountryID | Direct | T1 |
-| 21 | IsCreditReportValidCB | Same lineage as CountryID | Direct | T1 |
-| 22 | AffiliateID | Same lineage as CountryID | Direct | T1 |
+| 6 | LabelID | BI_DB_Fact_Customer_Action_Position_Distribution.LabelID, Fact_SnapshotCustomer.LabelID | Direct via nested TVFs | T1 |
+| 7 | VerificationLevelID | BI_DB_Fact_Customer_Action_Position_Distribution.VerificationLevelID, Fact_SnapshotCustomer.VerificationLevelID | Direct via nested TVFs | T1 |
+| 8 | PlayerStatusID | BI_DB_Fact_Customer_Action_Position_Distribution.PlayerStatusID, Fact_SnapshotCustomer.PlayerStatusID | Direct via nested TVFs | T1 |
+| 9 | RiskStatusID | BI_DB_Fact_Customer_Action_Position_Distribution.RiskStatusID, Fact_SnapshotCustomer.RiskStatusID | Direct via nested TVFs | T1 |
+| 10 | RiskClassificationID | BI_DB_Fact_Customer_Action_Position_Distribution.RiskClassificationID, Fact_SnapshotCustomer.RiskClassificationID | Direct via nested TVFs | T1 |
+| 11 | GuruStatusID | BI_DB_Fact_Customer_Action_Position_Distribution.GuruStatusID, Fact_SnapshotCustomer.GuruStatusID | Direct via nested TVFs | T1 |
+| 12 | RegulationID | BI_DB_Fact_Customer_Action_Position_Distribution.RegulationID, Fact_SnapshotCustomer.RegulationID | Direct via nested TVFs | T1 |
+| 13 | AccountStatusID | BI_DB_Fact_Customer_Action_Position_Distribution.AccountStatusID, Fact_SnapshotCustomer.AccountStatusID | Direct via nested TVFs | T1 |
+| 14 | AccountManagerID | BI_DB_Fact_Customer_Action_Position_Distribution.AccountManagerID, Fact_SnapshotCustomer.AccountManagerID | Direct via nested TVFs | T1 |
+| 15 | PlayerLevelID | BI_DB_Fact_Customer_Action_Position_Distribution.PlayerLevelID, Fact_SnapshotCustomer.PlayerLevelID | Direct via nested TVFs | T1 |
+| 16 | AccountTypeID | BI_DB_Fact_Customer_Action_Position_Distribution.AccountTypeID, Fact_SnapshotCustomer.AccountTypeID | Direct via nested TVFs | T1 |
+| 17 | IsDepositor | BI_DB_Fact_Customer_Action_Position_Distribution.IsDepositor, Fact_SnapshotCustomer.IsDepositor | Direct via nested TVFs | T1 |
+| 18 | SuitabilityTestStatusID | BI_DB_Fact_Customer_Action_Position_Distribution.SuitabilityTestStatusID, Fact_SnapshotCustomer.SuitabilityTestStatusID | Direct via nested TVFs | T1 |
+| 19 | MifidCategorizationID | BI_DB_Fact_Customer_Action_Position_Distribution.MifidCategorizationID, Fact_SnapshotCustomer.MifidCategorizationID | Direct via nested TVFs | T1 |
+| 20 | IsValidCustomer | BI_DB_Fact_Customer_Action_Position_Distribution.IsValidCustomer, Fact_SnapshotCustomer.IsValidCustomer | Direct via nested TVFs | T1 |
+| 21 | IsCreditReportValidCB | BI_DB_Fact_Customer_Action_Position_Distribution.IsCreditReportValidCB, Fact_SnapshotCustomer.IsCreditReportValidCB | Direct via nested TVFs | T1 |
+| 22 | AffiliateID | BI_DB_Fact_Customer_Action_Position_Distribution.AffiliateID, Fact_SnapshotCustomer.AffiliateID | Direct via nested TVFs | T1 |
 | 23 | InstrumentTypeID | Dim_Instrument.InstrumentTypeID | Direct via nested TVFs | T1 |
 | 24 | IsFuture | Dim_Instrument.IsFuture | Direct via nested TVFs | T2 |
 | 25 | IsSQF | Function_Instrument_Snapshot_Enriched.InstrumentID | CASE WHEN InstrumentID IS NOT NULL THEN 1 ELSE 0 END (via nested TVFs) | T2 |
 | 26 | InstrumentID | BI_DB_Fact_Customer_Action_Position_Distribution.InstrumentID, Fact_CustomerAction.InstrumentID | Direct via nested TVFs | T1 |
-| 27 | IsBuy | Distribution / Fact_CustomerAction | Direct | T1 |
-| 28 | IsAirDrop | Distribution / Fact_CustomerAction | Direct | T2 |
+| 27 | IsBuy | BI_DB_Fact_Customer_Action_Position_Distribution.IsBuy, Fact_CustomerAction.IsBuy | Direct via nested TVFs | T1 |
+| 28 | IsAirDrop | BI_DB_Fact_Customer_Action_Position_Distribution.IsAirDrop, Fact_CustomerAction.IsAirDrop | Direct via nested TVFs | T2 |
 | 29 | IsLeverage | BI_DB_Fact_Customer_Action_Position_Distribution.Leverage, Fact_CustomerAction.Leverage | CASE WHEN Leverage > 1 THEN 1 ELSE 0 END | T2 |
 | 30 | IsCopy | BI_DB_Fact_Customer_Action_Position_Distribution.MirrorID, Fact_CustomerAction.MirrorID | CASE WHEN MirrorID > 0 THEN 1 ELSE 0 END | T2 |
 | 31 | IsSettled | BI_DB_Fact_Customer_Action_Position_Distribution.IsSettled, Fact_CustomerAction.IsSettled | Direct | T5 |
-| 32 | IsActiveTrade | MirrorID, IsAirDrop | CASE WHEN ISNULL(IsAirDrop,0) = 0 AND MirrorID = 0 THEN 1 ELSE 0 END; overridden 0/1 per metric branch | T2 |
+| 32 | IsActiveTrade | Function_Revenue_FullCommissions (computed from MirrorID + IsAirDrop); literal in other UNION branches | TotalFullCommission branch: `CASE WHEN ISNULL(IsAirDrop,0)=0 AND MirrorID=0 THEN 1 ELSE 0 END`. RolloverFee/AdminFee/SpotAdjustFee: literal `0`. TicketFee/TicketFeeByPercent: literal `1` | T2 |
 | 33 | IsCopyFund | BI_DB_CopyFund_Positions.PositionID | CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END | T2 |
 | 34 | IsIBANTrade | BI_DB_Positions_Closed_To_IBAN.PositionID, BI_DB_Positions_Opened_From_IBAN.PositionID | CASE WHEN closed OR opened IBAN PositionID IS NOT NULL THEN 1 ELSE 0 END | T2 |
 | 35 | IsRecurring | BI_DB_RecurringInvestment_Positions.PositionID | CASE WHEN PositionID IS NOT NULL THEN 1 ELSE 0 END | T2 |
