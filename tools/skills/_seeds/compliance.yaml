@@ -79,8 +79,16 @@ confluence_query_terms:
   - "AML alert investigation"
 
 # Louvain cluster IDs from spec 007 clustering that contain this domain's
-# core (per knowledge/skills/_CHECKPOINT_A.md). Cluster 35 = AML core.
+# core (per knowledge/skills/_CHECKPOINT_A.md, table row D):
+#   "Anchor hubs: BI_DB_Tax_Compliance_TIN, bi_compliance_cmp_aml_risk_classification_*,
+#    BI_DB_QMMF_Report, BI_DB_AML_*  |  Cluster IDs: 21, 24, 35 (+ many
+#    tables nested in B1)  |  ~30 standalone"
+# Cluster 35 alone is only 2 nodes (Dim_VerificationStatus + Dictionary.VerificationStatus).
+# The real D core is the UNION of 21, 24, 35 plus the AML-tagged members
+# embedded in clusters 1/2/3/10 (surfaced by find_embedded_domain_members.py).
 primary_clusters:
+  - 21
+  - 24
   - 35
 
 # Sibling clusters where embedded AML/compliance members may live
