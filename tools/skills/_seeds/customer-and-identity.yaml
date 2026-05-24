@@ -1,0 +1,52 @@
+# Seed parameters for the Customer & Identity super-domain.
+# Backfilled per spec 011 reusability principle. Anchored on Dim_Customer +
+# the customer_snapshot_v / cidfirstdates_v KPI view family.
+
+id: customer-and-identity
+display_name: "Customer & Identity"
+skill_folder: domain-customer-and-identity
+parent_spec: 007-package-agent-domains
+
+kpi_seeds:
+  - etoro_kpi.customer_snapshot_v
+  - etoro_kpi.cidfirstdates_v
+  - etoro_kpi.customer_exclude_list
+  - etoro_kpi.customer_segments_mail_v
+
+genie_seeds:
+  - "DEV - Customer Support Case Analytics"
+  - "Customer Messaging Analytics"
+
+hub_tables:
+  - DWH_dbo.Dim_Customer
+  - DWH_dbo.Fact_SnapshotCustomer
+  - DWH_dbo.Dim_Country
+  - DWH_dbo.Dim_PlayerLevel
+
+embedded_scan_patterns:
+  - "(?i)dim_customer"
+  - "(?i)snapshotcustomer"
+  - "(?i)player_?level"
+  - "(?i)\\bclub\\b"
+  - "(?i)cidfirstdates"
+
+confluence_query_terms:
+  - "Customer Master"
+  - "CID Snapshot"
+  - "Club Tier Logic"
+  - "Player Level"
+
+primary_clusters:
+  - 1
+  - 2
+  - 3
+  - 10
+
+embedded_clusters: []
+
+sibling_domains:
+  - compliance
+  - trading
+  - payments
+  - revenue-and-fees
+  - cross

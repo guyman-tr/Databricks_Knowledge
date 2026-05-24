@@ -1,0 +1,42 @@
+# Seed parameters for the Revenue & Fees super-domain.
+# Backfilled per spec 011 reusability principle. Anchored on
+# BI_DB_DDR_Fact_Revenue_Generating_Actions and the v_revenue_* view family.
+
+id: revenue-and-fees
+display_name: "Revenue & Fees"
+skill_folder: domain-revenue-and-fees
+parent_spec: 007-package-agent-domains
+
+kpi_seeds:
+  - etoro_kpi.ddr_revenue_v
+  - etoro_kpi_stg.bi_output_vg_revenue_slim
+
+genie_seeds:
+  - "Subscription Revenue Insights"
+
+hub_tables:
+  - BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions
+  - DWH_dbo.Fact_Trade
+  - DWH_dbo.Fact_Position
+
+embedded_scan_patterns:
+  - "(?i)revenue"
+  - "(?i)\\bfee\\b"
+  - "(?i)commission"
+  - "(?i)rollover"
+  - "(?i)spread"
+  - "(?i)dividend"
+
+confluence_query_terms:
+  - "Revenue Generating Actions"
+  - "Fee schedule"
+  - "Commission calculation"
+  - "Rollover fee"
+
+primary_clusters: []
+embedded_clusters: []
+
+sibling_domains:
+  - trading
+  - payments
+  - cross

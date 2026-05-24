@@ -1,0 +1,99 @@
+# Seed parameters for the D (Compliance & AML) domain build.
+# Consumed by:
+#   tools/skills/enumerate_production_anchors.py --domain compliance
+#   tools/skills/summarize_subgraph.py --domain compliance
+#   tools/skills/find_embedded_domain_members.py --domain compliance
+#   tools/skills/extract_confluence_edges.py --domain compliance   (Phase A.5)
+#   tools/skills/cross_check_staleness.py --domain compliance      (Phase A.5b)
+#
+# v1 scope: AML risk classification + scoring only.
+# Out of scope: KYC screening flow, tax compliance, regulatory reporting,
+# Tribe audit interpretation. (Spec 011-build-domain-compliance-aml § Scope.)
+
+id: compliance
+display_name: "Compliance & AML"
+skill_folder: domain-compliance-and-aml
+parent_spec: 011-build-domain-compliance-aml
+
+# Tier 1 — production etoro_kpi / etoro_kpi_prep views (matched against
+# _kpi_views_index.json by self_ref equality).
+kpi_seeds:
+  - etoro_kpi.kyc_for_compliance_v
+  - etoro_kpi.positions_for_compliance_v
+  - etoro_kpi.ftd_funnel_kyc
+
+# Tier 2 — Genie space TITLES (substring match against
+# _genie_spaces_index.json[].title, case-insensitive). DEV/Test spaces
+# included for completeness but flagged in the anchor report.
+genie_seeds:
+  - "AML Insights Genie"
+  - "PROD - Compliance Genie"
+  - "Customer AML Compliance Data"
+  - "Customer Compliance and Profile"
+  # DEV/Test variants — included for visibility, flagged non-production:
+  - "Test - AML CMP"
+  - "Compliance Genie - DEV"
+
+# Canonical names (Schema.Object form from _join_graph.json) of manually
+# selected anchor hubs. Used as additional graph seed nodes.
+hub_tables:
+  # production AML risk-classification tables surfaced by AML Insights Genie
+  # (canonical names after the merge_graph.py UC → Synapse rewrite)
+  - bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_level
+  - bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_cid_window_level
+  - bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_level
+  - bi_compliance_stg.bi_compliance_cmp_tables_cmp_aml_risk_classification_aggregated_group_level
+  # eToro production compliance schema (Synapse upstream)
+  - Compliance.CustomerOnboardingRiskClassification
+  - Compliance.CySecRiskClassificationParameter
+  - RiskClassification.CustomerOnboardingRiskClassification
+  - RiskClassification.CySecRiskClassificationParameter
+  - Dictionary.CySecRiskClassificationParameter
+
+# Regex patterns for find_embedded_domain_members.py — names that "feel like"
+# this domain but Louvain may have placed in another cluster (B's
+# Customer/snapshot family at clusters 1/2/3/10, per _CHECKPOINT_A.md).
+embedded_scan_patterns:
+  - "(?i)\\baml\\b"
+  - "(?i)risk_class"
+  - "(?i)riskclassification"
+  - "(?i)watchlist"
+  - "(?i)sanctions"
+  - "(?i)\\bpep\\b"
+  - "(?i)cmp_aml"
+
+# Confluence corpus seeds — query terms run against
+# plugin-atlassian-atlassian MCP search by extract_confluence_edges.py.
+# Page selection is stability-weighted (see FR-007 in spec 011).
+confluence_query_terms:
+  - "AML risk classification"
+  - "Anti-Money Laundering Handbook"
+  - "AML Framework"
+  - "Compliance Risk Classification"
+  - "Customer Risk Classification"
+  - "AML Scoring Methodology"
+  - "CySec Risk Classification"
+  - "PEP screening"
+  - "Sanctions list management"
+  - "Watchlist match"
+  - "AML alert investigation"
+
+# Louvain cluster IDs from spec 007 clustering that contain this domain's
+# core (per knowledge/skills/_CHECKPOINT_A.md). Cluster 35 = AML core.
+primary_clusters:
+  - 35
+
+# Sibling clusters where embedded AML/compliance members may live
+# (per _CHECKPOINT_A.md: AML largely embedded in Customer/snapshot family).
+embedded_clusters:
+  - 1
+  - 2
+  - 3
+  - 10
+
+# Sibling super-domains that may share bridge tables — used to label
+# cross-edges in _compliance_subgraph.md.
+sibling_domains:
+  - customer-and-identity
+  - payments
+  - cross

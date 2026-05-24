@@ -1,0 +1,45 @@
+# Seed parameters for the Trading super-domain.
+# Backfilled per spec 011 reusability principle.
+
+id: trading
+display_name: "Trading"
+skill_folder: domain-trading
+parent_spec: 007-package-agent-domains
+
+kpi_seeds:
+  - etoro_kpi.cfd_statusinfo_v
+  - etoro_kpi.positions_for_compliance_v
+
+genie_seeds:
+  - "Investment Portfolio Analytics"
+  - "Financial Instruments Overview"
+  - "Liquidity Providers Research"
+  - "Buying Power - Rollout Plan Analysis"
+
+hub_tables:
+  - DWH_dbo.Fact_Position
+  - DWH_dbo.Fact_Trade
+  - DWH_dbo.Dim_Instrument
+  - DWH_dbo.Dim_Account
+
+embedded_scan_patterns:
+  - "(?i)\\btrade\\b"
+  - "(?i)position"
+  - "(?i)instrument"
+  - "(?i)leverage"
+  - "(?i)\\bpnl\\b"
+
+confluence_query_terms:
+  - "Trade Lifecycle"
+  - "Position Sizing"
+  - "Instrument Master"
+  - "CFD vs Real"
+
+primary_clusters: []
+embedded_clusters: []
+
+sibling_domains:
+  - revenue-and-fees
+  - compliance
+  - customer-and-identity
+  - cross

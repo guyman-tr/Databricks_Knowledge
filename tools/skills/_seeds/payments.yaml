@@ -1,0 +1,56 @@
+# Seed parameters for the Payments super-domain.
+# Backfilled from tools/skills/summarize_payments_subgraph.py (the Payments-
+# specific script that this generic pipeline replaces) per spec 011 FR-008.
+#
+# SC-007 acceptance: running
+#   tools/skills/summarize_subgraph.py --domain payments
+# must regenerate _payments_subgraph.md byte-equivalent (modulo timestamp) to
+# the deployed version.
+
+id: payments
+display_name: "Payments"
+skill_folder: domain-payments
+parent_spec: 007-package-agent-domains
+
+kpi_seeds: []  # Payments anchors on Synapse fact tables rather than KPI views
+
+genie_seeds:
+  - "eToro eMoney - MIMO"
+  - "MIMO"
+
+hub_tables:
+  - DWH_dbo.Fact_BillingDeposit
+  - DWH_dbo.Fact_BillingWithdraw
+  - BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms
+  - EXW_Wallet.CryptoTypes
+  - eMoney_dbo.eMoney_Dim_Account
+  - EXW_dbo.EXW_FinanceReportsBalancesNew
+  - FiatDwhDB.Tribe
+  - Dealing_dbo.Dealing_IGReconEODHolding
+
+embedded_scan_patterns:
+  - "(?i)deposit"
+  - "(?i)withdraw"
+  - "(?i)mimo"
+  - "(?i)\\biban\\b"
+  - "(?i)wallet"
+  - "(?i)card_tx"
+  - "(?i)payment_provider"
+
+confluence_query_terms:
+  - "MIMO panel"
+  - "Payment Provider Reconciliation"
+  - "IBAN allocation"
+  - "Wallet ledger"
+  - "Fiat deposit flow"
+
+# Louvain clusters that together form Payments — surfaced by the original
+# summarize_payments_subgraph.py at clustering time (commit e9842a0..).
+primary_clusters: []  # discovered dynamically from seed_hub membership
+
+embedded_clusters: []
+
+sibling_domains:
+  - revenue-and-fees
+  - customer-and-identity
+  - cross

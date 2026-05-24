@@ -1,0 +1,36 @@
+# Seed parameters for the Cross-Domain (audit/Tribe/eMoney bridges) super-domain.
+# Backfilled per spec 011 reusability principle. Cross is structurally
+# different — it's a glue domain, not a topic.
+
+id: cross
+display_name: "Cross-Domain (Tribe / eMoney audit bridges)"
+skill_folder: domain-cross
+parent_spec: 007-package-agent-domains
+
+kpi_seeds: []
+
+genie_seeds:
+  - "eToro eMoney - MIMO"
+
+hub_tables:
+  - FiatDwhDB.Tribe
+  - eMoney_dbo.eMoney_Dim_Account
+  - eMoney_dbo.eMoney_Fact_Transaction
+
+embedded_scan_patterns:
+  - "(?i)tribe"
+  - "(?i)emoney"
+  - "(?i)audit_trail"
+
+confluence_query_terms:
+  - "Tribe audit trail"
+  - "eMoney reconciliation"
+  - "Cross-system bridge"
+
+primary_clusters: []
+embedded_clusters: []
+
+sibling_domains:
+  - payments
+  - compliance
+  - customer-and-identity
