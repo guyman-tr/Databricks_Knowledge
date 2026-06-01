@@ -192,7 +192,7 @@ Last verified: 2026-05-28
 
 ## Critical Warnings
 
-> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer OPS aggregate in this domain (AVG time to VL3 by regulation, open alerts by club tier, monthly cashout count by jurisdiction, document-review SLA per regulation, KYC completion rate per cohort) MUST follow [`../_shared/valid-users-filter-contract.md`](../_shared/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct — never current-state `Dim_Customer` for period queries); mandatory one-line scope footer on every numeric output. The OPS tables ARE the source-of-truth for active onboarding work — most analytical questions about completed customers still need internal / test / dealing accounts filtered out. The carve-out: pure operational queue management ("Assignee X's pending tickets right now", "alerts un-touched in 24h", "documents in review state for analyst Y") is work-in-flight against ALL customers including internals / dealings and does NOT take the filter — these queues are the source-of-truth for ops productivity. The moment the question shifts to analytical reporting per-customer, the contract kicks in. The regulatory variant (`IsCreditReportValidCB = 1`) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics. Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight.
+> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer OPS aggregate in this domain (AVG time to VL3 by regulation, open alerts by club tier, monthly cashout count by jurisdiction, document-review SLA per regulation, KYC completion rate per cohort) MUST follow [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct — never current-state `Dim_Customer` for period queries); mandatory one-line scope footer on every numeric output. The OPS tables ARE the source-of-truth for active onboarding work — most analytical questions about completed customers still need internal / test / dealing accounts filtered out. The carve-out: pure operational queue management ("Assignee X's pending tickets right now", "alerts un-touched in 24h", "documents in review state for analyst Y") is work-in-flight against ALL customers including internals / dealings and does NOT take the filter — these queues are the source-of-truth for ops productivity. The moment the question shifts to analytical reporting per-customer, the contract kicks in. The regulatory variant (`IsCreditReportValidCB = 1`) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics. Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight.
 
 1. **Tier 1 — `kyc_answers` is 475M rows at the Q-A grain, NOT per-customer.** One customer typically has dozens of KYC Q-A pairs (one per question on the form). For "what % answered Y on question 17" the table is right; for "how many customers completed KYC" you must DISTINCT on CID. Always filter by `KycQuestionId` AND aggregate carefully, and prefer to JOIN to `registrationfunnel` (1 row per customer) for per-customer rollups.
 
@@ -288,7 +288,7 @@ graph TB
 | Refer-a-Friend pre-FTD funnel | `domain-customer-and-identity/registration-to-ftd-funnel.md` |
 | Mixpanel client-side onboarding-flow events (form clicks, page views) | `domain-product-analytics/mixpanel-events-and-pageviews.md` |
 | A/B test impact on onboarding | `domain-product-analytics/ab-testing-and-experimentation.md` (exp_type = 'KYC') |
-| Filter contract (always for per-CID rollups) | `_shared/valid-users-filter-contract.md` |
+| Filter contract (always for per-CID rollups) | `cross-cutting/valid-users-filter-contract.md` |
 
 ## Cross-cutting facts (memorise these)
 
@@ -307,7 +307,7 @@ graph TB
 - Not the authoritative customer master (`domain-customer-and-identity/customer-master-record.md`).
 - Not the authoritative deposit/withdraw ledger (`domain-payments/deposits-and-withdrawals.md`).
 - Not the trading positions themselves (`domain-trading`).
-- Not the cross-product valid-users filter contract (`_shared/valid-users-filter-contract.md`).
+- Not the cross-product valid-users filter contract (`cross-cutting/valid-users-filter-contract.md`).
 - Not the BackOffice agent UI / workflow software / OPS Tableau-dashboard configuration.
 - Not the public-API operations observability (deferred to `domain-platform-and-meta`).
 
@@ -315,4 +315,4 @@ graph TB
 
 - **Primary sources.** UC live probes on 2026-05-28 against the 34 ops-related tables: `documentanalysis` (5.55M rows, 37 cols with rich business comments including SLA bucket semantics), `kyc_answers` (475M rows, Q-A grain), `registrationfunnel` (3.93M rows, 81 cols of timeline + screening + POI/POA + LTV), `electronic_verification_cohort` (535k rows, 58 cols with per-vendor routing), `risk_alert_management_tool` (681k rows, 102 cols generic-bag), `ops_customer_info` (45-col denormalised customer-360), `bronze_etoro_backoffice_customerdocument` (8.78M active / 13.4M issued, with int/date partition columns).
 - **Usage data.** `audits/_usage_trigger_xref_20260525T155320Z/`: `documentanalysis` 278×, `customerdocument` 78×, `customerdocumenttodocumenttype` 71×, `registrationfunnel` 36×, `electronic_verification_cohort` 35×, `ops_customer_info` 35×. Genie spaces: "OPS - Documents & Verification" 313 q/w, "OPS - General Genie" 41 q/w, "OPS - Registrations Funnel" 36 q/w, "OPS - Electronic Verification" 17 q/w.
-- **Federation references.** `_shared/valid-users-filter-contract.md`, `domain-compliance-and-aml/SKILL.md`, `domain-customer-and-identity/customer-master-record.md`, `domain-payments/deposits-and-withdrawals.md`, `domain-product-analytics/ab-testing-and-experimentation.md`.
+- **Federation references.** `cross-cutting/valid-users-filter-contract.md`, `domain-compliance-and-aml/SKILL.md`, `domain-customer-and-identity/customer-master-record.md`, `domain-payments/deposits-and-withdrawals.md`, `domain-product-analytics/ab-testing-and-experimentation.md`.

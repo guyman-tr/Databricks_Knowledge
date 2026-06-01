@@ -1,4 +1,5 @@
 ---
+name: domain-options
 description: "The 8 Options KPIs computed against the Apex stack — the metrics that drive
   Paloma's Tableau dashboards and the DDR Options rows. FTD = First-Time Deposit per Apex
   options account (Local) reconciled to Dim_Customer.FirstDepositDate where FTDPlatformID=2
@@ -68,6 +69,8 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity
   - main.general.bronze_sodreconciliation_apex_ext765_accountmaster
   - main.general.bronze_usabroker_apex_options
+version: 1
+owner: "dataplatform"
 ---
 
 # Options KPI metric definitions
@@ -333,5 +336,5 @@ The Tableau dashboards slice every KPI by these segmentation cuts:
 
 - For raw-table-level filters, see `data-patterns.md` (canonical CTEs).
 - For the "is this the right segmentation" question on a dashboard, query the workbook's data source map in `dashboard-queries.md`.
-- For valid-customer / valid-CB filter contracts, see `knowledge/skills/_shared/valid-users-filter-contract.md`.
+- For valid-customer / valid-CB filter contracts, see `knowledge/skills/cross-cutting/valid-users-filter-contract.md`.
 - For the `domain-customer-and-identity` semantics (RealCID vs GCID vs MasterAccountCID), load that domain skill — Apex's `OptionsApexID` is unique in this domain because it's the customer's Apex AccountNumber, NOT a master eToro identity.

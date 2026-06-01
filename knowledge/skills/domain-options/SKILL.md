@@ -240,7 +240,7 @@ Apex sends SOD (Start-Of-Day) files to the eToro `Sodreconciliation_PROD` server
 
 ## Cross-references shared with other skills
 
-- Valid-customer filter contract: see `knowledge/skills/_shared/valid-users-filter-contract.md`. The Options prep views surface `IsValidCustomer` and `IsCreditReportValidCB` from `Dim_Customer`.
+- Valid-customer filter contract: see `knowledge/skills/cross-cutting/valid-users-filter-contract.md`. The Options prep views surface `IsValidCustomer` and `IsCreditReportValidCB` from `Dim_Customer`.
 - DDR / MIMO panel: this skill feeds the DDR rows for the Options platform; the cross-platform aggregation lives in `domain-payments/mimo-panel-and-ddr.md`.
 - The Synapse-side Function wrappers (`Function_MIMO_Options_Platform`, `Function_Revenue_OptionsPlatform`) reference the same Apex bronze tables; they're kept as knowledge-only and not deployed to UC. The 3 prep views are the UC-side replacements.
 

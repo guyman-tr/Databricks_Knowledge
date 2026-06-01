@@ -1,4 +1,5 @@
 ---
+name: domain-options
 description: "The four Options prep views in main.etoro_kpi_prep — what columns they expose,
   which CTEs they're built from, what filters they apply, and where the DDR depends on them.
   v_options_aum (8 cols) takes EXT981 BuyPowerSummary, dedups daily by ROW_NUMBER PARTITION BY
@@ -76,6 +77,8 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
   - main.general.bronze_usabroker_apex_options
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+version: 1
+owner: "dataplatform"
 ---
 
 # Options prep views architecture
@@ -167,7 +170,7 @@ LEFT JOIN first_funding ff
 | 11 | `TransactionID` | `ACATSControlNumber` |
 | 12 | `IsGlobalFTD` | 1 if Local-FTD row also matches Dim_Customer first-deposit, else 0 |
 | 13 | `IsValidCustomer` | From masked Dim_Customer (`PlayerLevelID != 4 AND LabelID NOT IN (26,30) AND CountryID != 250`) |
-| 14 | `IsCreditReportValidCB` | From masked Dim_Customer (~= IsValidCustomer + 6 hardcoded eToro-EU subsidiary CIDs; see `_shared/valid-users-filter-contract.md`) |
+| 14 | `IsCreditReportValidCB` | From masked Dim_Customer (~= IsValidCustomer + 6 hardcoded eToro-EU subsidiary CIDs; see `cross-cutting/valid-users-filter-contract.md`) |
 
 ### 9-step CTE architecture
 

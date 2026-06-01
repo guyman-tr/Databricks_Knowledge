@@ -147,7 +147,7 @@ Do NOT load for:
 
 - The actual Mixpanel event being measured ג€” see [`mixpanel-events-and-pageviews.md`](mixpanel-events-and-pageviews.md). `early_alerting_mp_event_name` tells you WHICH event; the event volume question is a Mixpanel question.
 - Feed-engagement events under test ג€” see [`feed-and-social-analytics.md`](feed-and-social-analytics.md). ABtoro tells you who was in which variant; the feed-event response is in the server-side stream tables.
-- Customer attribute filtering for the participants ג€” apply the [valid-users filter contract](../_shared/valid-users-filter-contract.md) when rolling up by customer attributes.
+- Customer attribute filtering for the participants ג€” apply the [valid-users filter contract](../cross-cutting/valid-users-filter-contract.md) when rolling up by customer attributes.
 
 ## Scope
 

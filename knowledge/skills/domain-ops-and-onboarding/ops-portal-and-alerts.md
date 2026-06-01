@@ -157,7 +157,7 @@ Last verified: 2026-05-28
 
 ## Critical Warnings
 
-> **Tier 0 ג€” Filter Contract.** Per-CID rollups out of OPS portal tables (e.g. "open alerts by club tier", "monthly cashout count by regulation") MUST apply `../_shared/valid-users-filter-contract.md`. Pure work-queue management ("Assignee X's pending tickets right now") does not need the contract ג€” but most analytical questions do.
+> **Tier 0 ג€” Filter Contract.** Per-CID rollups out of OPS portal tables (e.g. "open alerts by club tier", "monthly cashout count by regulation") MUST apply `../cross-cutting/valid-users-filter-contract.md`. Pure work-queue management ("Assignee X's pending tickets right now") does not need the contract ג€” but most analytical questions do.
 
 1. **Tier 1 ג€” `risk_alert_management_tool` is a fat 102-column generic alert-metadata bag.** Most columns are `string`-typed and serve as per-rule metadata. The actual alert identity lives in `AlertType` / `AlertTypeDescription` / `CategoryName` / `TriggerType` / `RuleType`. Different alert types populate different metadata columns:
    - `MultipleAccounts` / `KycRelations` / `RiskRelations` ג†’ `RelatedCids` + `TotalCidsCount`
@@ -238,4 +238,4 @@ ORDER BY <date_col> DESC LIMIT 50;
 
 - **Primary sources.** UC live probes on 2026-05-28: `risk_alert_management_tool` 681k rows / 102 cols (generic-bag shape confirmed, `_1` suffix duplicates inventoried, top AlertType values measured for April 2026: MultipleAccounts ~6.8k, SiftScore ~4.5k, etc.); `ops_customer_info` 45 cols with business-commented schema confirming PendingClosureStatusID enum and the OPS-side denorm shape.
 - **Usage data.** Class C: `ops_customer_info` 35q / 7-day; Genie "OPS - General Genie" 41 q/w. AlertType-bag pattern surfaces frequently in support-investigation queries.
-- **Federation.** [`kyc-document-pipeline.md`](kyc-document-pipeline.md), [`electronic-verification-and-registration-funnel.md`](electronic-verification-and-registration-funnel.md), `../domain-payments/`, `../domain-trading/`, `../domain-compliance-and-aml/aml-risk-scoring.md`, `../_shared/valid-users-filter-contract.md`.
+- **Federation.** [`kyc-document-pipeline.md`](kyc-document-pipeline.md), [`electronic-verification-and-registration-funnel.md`](electronic-verification-and-registration-funnel.md), `../domain-payments/`, `../domain-trading/`, `../domain-compliance-and-aml/aml-risk-scoring.md`, `../cross-cutting/valid-users-filter-contract.md`.

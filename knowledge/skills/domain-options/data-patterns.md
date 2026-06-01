@@ -1,4 +1,5 @@
 ---
+name: domain-options
 description: "Reusable SQL building blocks for any Options-domain query against the Apex stack:
   the canonical house-account exclusion (5 equity 3ET + 5 options 4GS), the OfficeCode
   filter contract (4GS/5GU options vs 3E% equity), the MarketCode='5' options-only filter on
@@ -49,6 +50,8 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked
+version: 1
+owner: "dataplatform"
 ---
 
 # Reusable SQL patterns for the Options domain

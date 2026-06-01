@@ -1,4 +1,5 @@
 ---
+name: domain-options
 description: "Map of Paloma Cui's Tableau workbooks under USA / Paloma's Repository / 1-US Management
   to the Unity Catalog views and bronze tables they read. The 11 workbooks (3 Options-explicit,
   8 cross-functional that include Options): US Options Performance Monitoring (workbook 5820,
@@ -65,6 +66,8 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext872_tradeactivity
   - main.general.bronze_sodreconciliation_apex_ext981_buypowersummary
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
+version: 1
+owner: "dataplatform"
 ---
 
 # Tableau dashboard map + sample queries

@@ -1,4 +1,5 @@
 ---
+name: domain-options
 description: "Complete inventory of the 38 Apex / USABroker bronze tables in Unity Catalog,
   organised by schema (main.general for accounts, main.finance for financial activity + user
   data + dictionaries, main.bi_db for regulatory/reasoning dictionaries, main.trading for
@@ -70,6 +71,8 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
   - main.bi_db.bronze_sodreconciliation_apex_ext1034_newaccountfinancialinformation
   - main.trading.bronze_sodreconciliation_apex_ext235_mandatorycorporateactions
+version: 1
+owner: "dataplatform"
 ---
 
 # Apex / USABroker source tables

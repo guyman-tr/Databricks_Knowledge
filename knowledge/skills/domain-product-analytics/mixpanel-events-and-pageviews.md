@@ -251,10 +251,10 @@ GROUP BY EventName, UserCountry
 ORDER BY n DESC;
 ```
 
-For per-CID aggregates, append `JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap ON event.cid = snap.CID WHERE snap.IsValidCustomer = 1 AND <event-date> BETWEEN snap.FromDateID AND snap.ToDateID` per the [valid-users filter contract](../_shared/valid-users-filter-contract.md).
+For per-CID aggregates, append `JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap ON event.cid = snap.CID WHERE snap.IsValidCustomer = 1 AND <event-date> BETWEEN snap.FromDateID AND snap.ToDateID` per the [valid-users filter contract](../cross-cutting/valid-users-filter-contract.md).
 
 ## Skill provenance
 
 - **Primary sources.** Live UC probes against `main.mixpanel.*` (9 tables) on 2026-05-28: `silver`/`bronze` confirmed 6,225 cols and `mp_event_name` populated on 137.6M of 137.57M rows / day; curated slices (25-38 cols, GCID-keyed, `EventName` PascalCase, dashed etr partitions); pageview marts (13 cols, `Occurred` as bigint epoch ms).
 - **Usage data.** `audits/_usage_trigger_xref_20260525T155320Z/`: `main.mixpanel.silver` queried 160ֳ— by 5 users (Class C); phrase `mixpanel` matched in 237 user queries; `mp_event_name` in 195. Genie spaces: ABtoro Genie, Feed Analytics Genie, Customer Segmentation (Mixpanel-leg).
-- **Federation.** [`../_shared/valid-users-filter-contract.md`](../_shared/valid-users-filter-contract.md) for per-CID rollup; [`../domain-customer-and-identity/customer-models-and-segmentation.md`](../domain-customer-and-identity/customer-models-and-segmentation.md) for downstream Mixpanel-derived cluster models.
+- **Federation.** [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md) for per-CID rollup; [`../domain-customer-and-identity/customer-models-and-segmentation.md`](../domain-customer-and-identity/customer-models-and-segmentation.md) for downstream Mixpanel-derived cluster models.
