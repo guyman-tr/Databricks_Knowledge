@@ -1,6 +1,5 @@
 ---
-id: domain-compliance-and-aml
-name: "Compliance & AML Super-Domain"
+name: domain-compliance-and-aml
 description: "Routes inside the Compliance and AML super-domain (v1 = AML risk classification + scoring + alert routing only; KYC sanctions/PEP identity-side screening, FATCA/CRS tax, FCA SAR / MAS regulatory output, and Treezor Tribe audit envelopes are deferred to siblings / future specs). The AML stack at eToro is THREE production pipelines, not one: (D.1) the bi_compliance_stg cmp_aml_risk_classification_* family (4 grain-level tables — cid_level 84c, cid_window_level 77c, aggregated_level 72c, aggregated_group_level 71c) that computes the dynamic risk classification per CID + window + group, joined to the DE-output destination layer (de_output_risk_classification 97c + _history 96c + _cysec 97c + vw_risk_classification_history_complete 96c + de_output_risk_calculations_cysec_users_scores 8c, the post-rename UC home of the HLD's RiskCalculation.CySecScoresTemporary); (D.2) the LIVE AML alert routing layer that is largely Synapse-only — BI_DB_AML_BI_Alerts_New, BI_DB_AML_Daily_Alerts, and BI_DB_RiskAlertManagementTool all live in sql_dp_prod_we and NOT in UC, with only BI_DB_AMLPeriodicReview (70c) and the pii_data.aml_snapshotcustomer_enriched_v (54c) crossing into UC as the periodic-review queue + PII analyst view; (D.3) the parallel RegTech AML pipeline owned by the regtech team — 20 tables under main.regtech.gold_regtech_aml_* + gold_regreportdb_prod_dbo_aml_* keyed on PartyKey (NOT CID), with aml_riskscore_scd as the SCD-2 risk-level snapshot and api_riskscore as the API-facing serving table — entirely UC-native and entirely undocumented in Confluence (42+ tables flagged as GAP-CONF). Cross-cutting: snapshot grain is ReportRunDate / etr_ymd, the canonical join key on the cmp_aml family is GCID + CID + etr_ymd (NOT SnapshotDate), Dynamic_Risk_Classification is the production risk verdict column on the cid_level table, Is_PEP and Is_Sanctions_Match are pre-computed flags, and the alert-trigger boolean family (High_Risk_AND_No_POI, PEP_No_POA, eMoney_High_Risk_AND_No_POI, etc.) is the column-level evidence of which alerts fire. OUT of scope here: identity-side KYC screening (use B's compliance-customer-snapshot-and-club), FATCA/CRS tax (future spec 012), SAR/regulatory submission (future spec 013), Tribe Treezor audit envelopes (domain-cross/tribe-emoney-audit)."
 triggers:
   - AML
@@ -106,6 +105,10 @@ domain_tags:
   - singapore-mas
   - regtech
   - actimize
+sub_skills:
+  - aml-alert-routing.md
+  - aml-regtech-pipeline.md
+  - aml-risk-scoring.md
 version: 1
 owner: "dataplatform"
 last_validated_at: "2026-05-24"
@@ -250,8 +253,8 @@ These hold whether you load any sub-skill or not:
 
 ## Authority and locality
 
-- **Authority hierarchy**: KPI views + Genie configs + UC `information_schema` are Tier 1+2+ground truth for this domain. Confluence is Tier 3 but partial — 42+ tables flagged GAP-CONF. Wiki §3.3 join patterns are Tier 4. See [`../_AUTHORITY_HIERARCHY.md`](../_AUTHORITY_HIERARCHY.md).
-- **Locality classification** (Phase A.6, 2026-05-24): ~50 anchors `UC`, 3 critical anchors `synapse_only` (the live alert layer), 2 `hybrid_synapse_uc` (CySEC HLD renames), 3 `external_system` (Actimize, ComplyAdvantage, Tableau workbook), 4 `manual_only` (3 SPs + 1 alert-rule catalogue). See [`../_compliance_staleness.md`](../_compliance_staleness.md) §6.
+- **Authority hierarchy** for this domain: KPI views + Genie configs + UC `information_schema` are the highest-trust sources. Confluence is partial (42+ tables flagged GAP-CONF). Synapse §3.3 join patterns are lowest-trust.
+- **Locality classification** (Phase A.6, 2026-05-24): ~50 anchors `UC`, 3 critical anchors `synapse_only` (the live alert layer — `BI_DB_AML_BI_Alerts_New`, `BI_DB_AML_Daily_Alerts`, `BI_DB_RiskAlertManagementTool`), 2 `hybrid_synapse_uc` (CySEC HLD renames), 3 `external_system` (Actimize, ComplyAdvantage, Tableau workbook), 4 `manual_only` (3 SPs + 1 alert-rule catalogue).
 
 ## What this skill is NOT
 
@@ -261,6 +264,7 @@ These hold whether you load any sub-skill or not:
 - It does not cover **FCA SAR / MAS regulatory submission output** — future spec 013.
 - It does not cover **Tribe / FiatDwhDB Treezor audit envelopes** — `domain-cross/tribe-emoney-audit`.
 - It does not cover **dealing-side broker recon** — `A domain-trading/broker-and-lp-reconciliation`.
+- It does not cover the **operational WORK side** of compliance — the OPS team's alert queue, assignee workload, ticket SLA, KYC document upload pipeline, EV provider routing, and registration funnel. That's `domain-ops-and-onboarding/` — compliance owns the RULES; OPS owns the QUEUE. `BI_DB_RiskAlertManagementTool` is the synapse_only-anchor source; its UC mirror `main.bi_output_stg.bi_output_operations_risk_alert_management_tool` is documented from the OPS-queue lens in `../domain-ops-and-onboarding/ops-portal-and-alerts.md`.
 
 ## Skill provenance
 
@@ -271,4 +275,4 @@ These hold whether you load any sub-skill or not:
 - UC FQN resolution and column-count existence: queried against `system.information_schema.columns` / `system.information_schema.tables` on 2026-05-24. Three critical anchors NOT in UC (verified): `BI_DB_AML_BI_Alerts_New`, `BI_DB_AML_Daily_Alerts`, `BI_DB_RiskAlertManagementTool`. Three external-system sources NOT in UC: Actimize, ComplyAdvantage, Tableau AML workbook.
 - v1 scope per user direction (2026-05-24): AML risk classification + scoring + alert routing only. KYC screening / Tax / Regulatory reporting / Tribe explicitly deferred.
 - v1 sub-skills (all spec-011 authored 2026-05-24): `aml-risk-scoring` v1, `aml-alert-routing` v1, `aml-regtech-pipeline` v1.
-- Detail trail: [`../_compliance_production_anchors.md`](../_compliance_production_anchors.md), [`../_brief_cluster_35.md`](../_brief_cluster_35.md), [`../_compliance_embedded_members.md`](../_compliance_embedded_members.md), [`../_compliance_subgraph.md`](../_compliance_subgraph.md), [`../_compliance_tableau_flyover.md`](../_compliance_tableau_flyover.md), [`../_compliance_confluence_corpus.md`](../_compliance_confluence_corpus.md), [`../_compliance_staleness.md`](../_compliance_staleness.md), [`../_compliance_partition.md`](../_compliance_partition.md).
+- Build provenance (production anchors, cluster briefs, embedded-members scan, subgraph, Tableau fly-over, Confluence corpus, staleness, partition decision) lives in the source repo under `knowledge/skills/_compliance_*.md` and `_brief_cluster_35.md` — not deployed to Databricks workspace.

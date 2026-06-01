@@ -1,6 +1,5 @@
 ---
-id: position-state-and-grain
-name: "Position State, Grain & Lifecycle"
+name: domain-trading
 description: "The trading-platform position lifecycle, what every table holds at what grain, and the fact-vs-dim rule. Anchored on the granular `fact_customeraction_w_metrics` (state at event time, authoritative for transactional questions), `Fact_CustomerAction` (the older parent fact, 11 billion rows, sparse columns per ActionTypeID), and `Dim_Position` (134-column metadata catalog with current-state mutable fields — never trust for state at open). Includes the canonical `ActionTypeID` map (with the names that ETL actually uses — `ManualPositionOpen`, `CopyPositionOpen`, `CopyPlusPositionOpen`, `DetachedPositionClose`, the two `*TypeUnknown` fallbacks), the `IsBuy / IsSettled / SettlementTypeID / IsActiveTrade / MirrorID / MirrorTypeID` semantics, the `OrderID` NULL rule (NULL only for positions opened without an order — corporate action / dividend), and how to recreate position state at an arbitrary date via `Dim_PositionChangeLog`. Read FIRST for any position-state, copy-detection, or lifecycle question."
 triggers:
   - position state

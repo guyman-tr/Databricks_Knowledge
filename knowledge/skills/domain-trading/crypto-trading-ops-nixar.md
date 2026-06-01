@@ -1,6 +1,5 @@
 ---
-id: crypto-trading-ops-nixar
-name: "Crypto Trading Ops — Nixar & Fireblocks (Placeholder)"
+name: domain-trading
 description: "Crypto-specific trading operations — the Nixar hedge-analytics pipeline (Beta target / Delta diffusion analysis), Fireblocks settlement and custody, the crypto hedge book, on-chain confirmation flow, and crypto-redemption reconciliation. PLACEHOLDER content — final methodology (beta target derivation, delta-diffusion modelling, Nixar pipeline architecture) lands when the dealing-analyst skill set is delivered. Until then, this skill maps the known Nixar tables, Fireblocks-adjacent views, and crypto-redemption recon to their analytical questions and routes deeper questions to the BI-Dealing/Nixar production code."
 triggers:
   - crypto trading ops

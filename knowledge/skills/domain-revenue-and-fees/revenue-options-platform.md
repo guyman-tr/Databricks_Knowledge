@@ -1,6 +1,5 @@
 ---
-id: revenue-options-platform
-name: revenue-and-fees-revenue-options-platform
+name: domain-revenue-and-fees
 description: |
   Revenue from the eToro Options product — end to end. Owns the
   Options_PFOF DDR metric (RevenueMetricID = 18, added 2025-10-22),

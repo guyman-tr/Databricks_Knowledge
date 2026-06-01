@@ -1,6 +1,5 @@
 ---
-id: crypto-wallet
-name: "Crypto Wallet (EXW / on-chain)"
+name: domain-payments
 description: "eToro EXW (eToro Wallet) — the on-chain crypto wallet platform. Distinct from Trading-side crypto CFDs (those are derivatives on price, not on-chain positions — they live in domain-trading). Ranking + routing layer for EXW questions: start at the DWH-side EXW_dbo facts (UC: EXW_FactTransactions 45 cols, EXW_DimUser 21 cols, EXW_WalletInventory 19 cols, EXW_C2F_E2E 103 cols, EXW_C2P_E2E 90 cols, EXW_FinanceReportsBalancesNew 40 cols, EXW_EthFeeSent_Blockchain 19 cols), drill into the production EXW_Wallet ledger (UC: wallet.bronze_walletdb_wallet_*) for on-chain detail — SentTransactions 11 cols, ReceivedTransactions 19 cols, Conversions 16 cols + ConversionTransactions 17 cols, Redemptions 20 cols, SentTransactionOutputs 14 cols, TransactionsView 22 cols, WalletBalances, WalletPool, CustomerWalletsView 13 cols, CryptoTypes 31 cols — and only descend into status / AML / on-chain forensics (SentTransactionStatuses 7 cols, ReceivedTransactionStatuses 8 cols, AmlValidations 17 cols, Requests 11 cols) when needed. CorrelationId is the single most-important cross-table linker (Conversions.CorrelationId = SentTransactions.CorrelationId; Redemptions.SendRequestCorrelationId = SentTransactions.CorrelationId). Crypto wallet activity is OFF the MIMO graph — there is no BI_DB_DDR_Fact_MIMO_Crypto_Platform. Crypto only appears in MIMO_AllPlatforms after C2F conversion (as eMoney rows tagged IsCryptoToFiat=1). Three Synapse-only enriched facts (EXW_FactRedeemTransactions, EXW_FactConversions, EXW_PaymentReconciliation) require manual stitching in Genie. Crypto-to-Fiat off-ramp (the full E2E into IBAN) is delegated to domain-cross/crypto-to-fiat. Staking rewards and ETH gas-fee revenue route to domain-revenue-and-fees."
 triggers:
   - crypto wallet
@@ -119,14 +118,14 @@ Do NOT load for:
 - **Crypto CFD trading** (positions, P&L on ETH/BTC pairs) → `domain-trading` super-domain. CFD is a derivative on price, not a wallet position.
 - **Crypto staking rewards / staking-platform fees / ETH gas-fee revenue** → `domain-revenue-and-fees` (`v_revenue_stakingfee`, `v_revenue_transfercoinfee`, `EXW_EthFeeSent_Blockchain` aggregates).
 - **Customer total balance (crypto + fiat + open positions)** → `finance-recon-and-balances`.
-- **AML risk classification for the wallet's customer / Actimize CDD severity** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) — `aml-risk-scoring` for the classification, `aml-alert-routing` for the alert + Actimize score. This skill provides `WalletId` / public address; the linked customer's AML state lives in D. **SAR FCA submission** is deferred to future spec 013-regulatory-reporting.
+- **AML high-risk wallet investigation / SAR** → Compliance & AML super-domain (planned). This skill provides `WalletId` / public address; Compliance owns the risk logic.
 - **Operator action on a wallet** (manual freeze etc.) → `domain-customer-and-identity/customer-action-audit-trail` (`Fact_CustomerAction`).
 - **Cross-platform money-flow aggregate** (TP + eMoney + Crypto + Options) → `mimo-panel-and-ddr`. Crypto only appears post-C2F.
 
 ## Scope
 
 In scope: DWH-side `EXW_dbo` facts (`EXW_FactTransactions` 45 cols unified Sent+Received+Conv+Redeem, `EXW_DimUser` 21 cols GCID hub, `EXW_WalletInventory` 19 cols daily holdings aggregate, `EXW_FinanceReportsBalancesNew` 40 cols, `EXW_EthFeeSent_Blockchain` 19 cols); production-mirror `EXW_Wallet` ledger in UC `main.wallet.bronze_walletdb_wallet_*` (`SentTransactions` 11 cols, `ReceivedTransactions` 19 cols, `Conversions` 16 cols + `ConversionTransactions` 17 cols, `Redemptions` 20 cols, `SentTransactionOutputs` 14 cols, `CustomerWalletsView` 13 cols, `WalletBalances`, `WalletPool`, `TransactionsView` 22 cols, `CryptoTypes` 31 cols, `BlockchainCryptos` 5 cols); status / AML / request lifecycle (`SentTransactionStatuses` 7 cols, `ReceivedTransactionStatuses` 8 cols, `AmlValidations` 17 cols, `Requests` 11 cols); pricing (`EXW_Price` 17 cols, `EXW_PriceDaily` 10 cols); the `CorrelationId` cross-table linker pattern; the C2F cross-domain bridge object (`EXW_C2F_E2E` 103 cols) used as a pointer to the cross-domain skill.
-Out of scope: full C2F off-ramp story (`domain-cross/crypto-to-fiat`); crypto CFD positions / P&L (`domain-trading`); staking and gas-fee revenue (`domain-revenue-and-fees`); cross-platform money flow (`mimo-panel-and-ddr`); customer total balance (`finance-recon-and-balances`); AML risk classification + AML alert routing ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md)).
+Out of scope: full C2F off-ramp story (`domain-cross/crypto-to-fiat`); crypto CFD positions / P&L (`domain-trading`); staking and gas-fee revenue (`domain-revenue-and-fees`); cross-platform money flow (`mimo-panel-and-ddr`); customer total balance (`finance-recon-and-balances`); AML risk classification (Compliance super-domain).
 Last verified: 2026-05-11
 
 ## Critical Warnings
@@ -351,8 +350,7 @@ WHERE c.RequestedAt BETWEEN :from_dt AND :to_dt;
 | **Crypto staking rewards / staking-platform fees / ETH gas-fee revenue** | `domain-revenue-and-fees` (`v_revenue_stakingfee`, `v_revenue_transfercoinfee`, `EXW_EthFeeSent_Blockchain`) |
 | Customer total balance (crypto + fiat + open positions) | `finance-recon-and-balances` |
 | Crypto CFD trading (positions, P&L on ETH/BTC pair) | `domain-trading` — CFD is a derivative on price, not a wallet position |
-| AML risk classification + alert routing for the wallet's customer | [`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md) (`aml-risk-scoring` + `aml-alert-routing`) |
-| SAR FCA / MAS submission output | future spec 013-regulatory-reporting |
+| AML high-risk wallet investigation / SAR | Compliance & AML super-domain (planned) |
 | Operator action on a wallet (manual freeze etc.) | `domain-customer-and-identity/customer-action-audit-trail` (`Fact_CustomerAction`) |
 | Customer-side identity bridge (GCID ↔ RealCID ↔ wallet provider) | `domain-customer-and-identity/SKILL.md` |
 

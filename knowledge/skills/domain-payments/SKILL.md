@@ -1,6 +1,5 @@
 ---
-id: domain-payments
-name: "Payments Super-Domain"
+name: domain-payments
 description: "Routes inside the Payments super-domain. Use when a question is about money flow into or out of an eToro customer wallet — fiat deposits / withdrawals, eMoney IBAN / cards, crypto wallet movements, the cross-platform MIMO panel, customer balance state, or Finance external-partner reconciliation. eToro's payments stack is NOT a single ledger but FIVE loosely-coupled systems: (C.1) Trading-platform fiat deposits/withdrawals anchored on BI_DB_DepositWithdrawFee 48c + _Reversals 45c + Fact_BillingDeposit 139c + Fact_BillingWithdraw 86c; (C.2) MIMO panel cross-platform + DDR daily-status framework anchored on BI_DB_DDR_Fact_MIMO_AllPlatforms 24c + BI_DB_DDR_Customer_Daily_Status 67c + Fact_Trading_Volumes_And_Amounts 30c + Fact_AUM 43c + Fact_PnL 18c + Fact_Revenue_Generating_Actions 27c; (C.3) eMoney IBAN/card platform anchored on eMoney_Dim_Account 89c + eMoney_Dim_Transaction 77c + eMoneyClientBalance 75c (5 dictionary tables, Card_Monthly_Snapshot, BankPaymentsUK, 30DayBalanceExtract are Synapse-only); (C.4) Crypto wallet EXW anchored on EXW_FactTransactions 45c + EXW_DimUser 21c + EXW_WalletInventory 19c + the wallet.bronze_walletdb_wallet_* ledger keyed on CorrelationId (NO BI_DB_DDR_Fact_MIMO_Crypto_Platform — crypto is OFF the MIMO graph, only appears post-C2F as eMoney rows tagged IsCryptoToFiat=1); (C.5) Finance balance + recon anchored on BI_DB_Client_Balance_CID_Level_New 178c (the REAL canonical cross-platform per-CID daily balance ledger, NOT EXW_FinanceReportsBalancesNew which is a 40c crypto-wallet-only recon), the etoro_kpi_prep.v_population_* family keyed on RealCID + DateID, and Apex / USABroker SOD recon (Apex = USABroker = Options broker = US-equity clearing broker, three roles, one broker). Bonuses, fee revenue, broker EOD recon, and Treezor audit envelopes are OUT of scope — routed to other super-domains or domain-cross. Default to mimo-panel-and-ddr (C.2) FIRST for any 'how much money flowed' question, descend to raw billing facts only for platform-specific drill-down."
 triggers:
   - deposit
@@ -130,6 +129,12 @@ domain_tags:
   - usabroker
   - population
   - ftd
+sub_skills:
+  - crypto-wallet.md
+  - deposits-and-withdrawals.md
+  - emoney-accounts-and-cards.md
+  - finance-recon-and-balances.md
+  - mimo-panel-and-ddr.md
 version: 1
 owner: "dataplatform"
 last_validated_at: "2026-05-11"
@@ -170,7 +175,7 @@ Do **not** load for:
 
 - **Fee revenue per CID / per period** → `domain-revenue-and-fees`. Use this hub only to ROUTE there.
 - **Bonus pay-outs / compensation accounting** → Compensation regular domain (planned).
-- **AML risk classification** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) — specifically [`aml-risk-scoring`](../domain-compliance-and-aml/aml-risk-scoring.md). AML alerts and Actimize CDD → [`aml-alert-routing`](../domain-compliance-and-aml/aml-alert-routing.md). **SAR FCA submission** is deferred to future spec 013-regulatory-reporting; **KYC sanctions-list / PEP-list identity-side screening** is `B compliance-customer-snapshot-and-club` (planned v1.5).
+- **AML risk classification / SAR / sanctions** → Compliance super-domain (planned).
 - **Trading positions / P&L / broker-dealer execution** → `domain-trading`.
 - **Operator audit trail on a customer's account** → `domain-customer-and-identity/customer-action-audit-trail` (`Fact_CustomerAction`).
 
@@ -223,7 +228,7 @@ graph LR
     Wallet -->|reversal| Reversal
 ```
 
-**Out of scope here**: position-vs-broker EOD recon (`Dealing_IGRecon*`) and broker / LP identity (`dealing_dbo`) live in `domain-trading`. Treezor SOC2 audit envelopes (`FiatDwhDB.Tribe`, `eMoney_Tribe.*`, `bronze_fiatdwhdb_tribe_*`) live in `domain-cross/tribe-emoney-audit`; Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) owns the AML risk classification + alert interpretation. KYC sanctions/PEP identity-side screening rules are deferred to `B compliance-customer-snapshot-and-club` (planned v1.5); Treezor SOC2 envelope interpretation rules stay in [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md).
+**Out of scope here**: position-vs-broker EOD recon (`Dealing_IGRecon*`) and broker / LP identity (`dealing_dbo`) live in `domain-trading`. Treezor SOC2 audit envelopes (`FiatDwhDB.Tribe`, `eMoney_Tribe.*`, `bronze_fiatdwhdb_tribe_*`) live in `domain-cross/tribe-emoney-audit`; Compliance super-domain owns the interpretation rules when built.
 
 Every sub-skill below owns **one slice** of that lifecycle. The slices are designed so:
 

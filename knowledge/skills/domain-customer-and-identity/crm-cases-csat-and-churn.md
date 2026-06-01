@@ -1,6 +1,5 @@
 ---
-id: crm-cases-csat-and-churn
-name: "CRM Cases, CSAT, QA & Churn-Winback"
+name: domain-customer-and-identity
 description: "CRM Salesforce cases, CSAT survey scores, agent quality assessments, KYC questionnaire answers, and the churn-winback targeting model. Anchored on vg_crm_case (etoro_kpi, 110 cols, ~8.9M cases all-time on ~3.2M CIDs, since 2014, CID is STRING). Adjacent staging-tier views in etoro_kpi_stg: crm_csat_survey_per_case_v (4 cols, Salesforce-flavoured names with simplesurvey__Case__c FK and simplesurvey__Survey_Score__c metric), crm_quality_assessment_per_case_v (8 cols, every metric col uses Salesforce __c suffix — Case__c / Survey__c / Agent_Under_Assessment__c / Quality_Score__c DOUBLE / Compliance_a__c / Type_of_Communication__c / Team__c / CreatedDate), crm_user_v (22 cols, agent + manager + RM hierarchy with FullName / Department / Team / IsActive). Churn-winback (bi_output_stg): churn_winback_summary (8 cols per CID — segment, age, country, reason_for_churn_prediction, suggested_winback_text, expected_ltv, budget_to_winback) and churn_winback_recent_targets (12 cols, adds winback_score, pct_deposits_withdrawn, recent_withdrawal_usd, incentive_type). These are the targeting / scoring output of a predictive churn model — NOT a churn-population definition. Salesforce reply chain mirror lives at bi_output.bi_output_customer_customer_support_salesforce_reply (9 cols at the parent ticket grain). SF-to-BO manager mapping at crm.gold_crm_salesforcetobomanagermapping. KYC questionnaire raw answers across 5 UC locations: bi_db.bronze_userapidb_dbo_v_customeranswers (14 cols, GCID-keyed — NOT RealCID), _masked variant, bi_db.bronze_userapidb_asic_customeranswers (ASIC region 8 cols), compliance.bronze_userapidb_kyc_customeranswers, compliance.bronze_userapidb_history_customeranswers."
 triggers:
   - vg_crm_case
@@ -158,9 +157,9 @@ Do **NOT** use this skill for:
 - KYC verdict / decision (the answer to the questionnaire is here; the
   verdict is `kyc_for_compliance_v` in B.5).
 - "How many customers churned?" or "show me the dormant cohort" — those
-  are population questions; use the `customer-populations` DE workspace
-  skill. `churn_winback_*` is **predictive-model output**, not the
-  authoritative churn definition.
+  are population questions; use sibling sub-skill
+  `customer-populations-and-lifecycle.md`. `churn_winback_*` is
+  **predictive-model output**, not the authoritative churn definition.
 - BackOffice operator actions on the account (not a Salesforce ticket)
   → that's `Fact_CustomerAction` (B.4).
 - Customer-master attributes (Region / Country / Regulation / Club tier)
@@ -179,9 +178,9 @@ the SF-reply mirror, the SF→BO manager mapping, and all five UC-resident
 `*customeranswers*` variants.
 
 Out of scope: a separate compliance KYC verdict view (B.5
-`kyc_for_compliance_v`), a population-shape churn metric (DE workspace
-`customer-populations`), operator-driven account events (B.4
-`Fact_CustomerAction`).
+`kyc_for_compliance_v`), a population-shape churn metric (sibling
+sub-skill `customer-populations-and-lifecycle.md`), operator-driven
+account events (B.4 `Fact_CustomerAction`).
 
 Last verified: 2026-05-11
 
@@ -278,8 +277,8 @@ graph TB
    recent_withdrawal_usd, incentive_type`. **There is no** `CampaignID`,
    `TargetDate`, `ContactedAt`, `RespondedAt`, `CampaignName`,
    `CohortSize`, `ConversionRate` — v1 of this skill invented all of
-   these. For population churn metrics use the `customer-populations`
-   DE workspace skill.
+   these. For population churn metrics use sibling sub-skill
+   `customer-populations-and-lifecycle.md`.
 9. **`bi_output_customer_customer_support_salesforce_reply` is at the
    parent-ticket grain.** 9 cols: `CreatedDateTicket (STRING — date as
    string, not timestamp!), ParentId (STRING — FK to vg_crm_case.CaseID

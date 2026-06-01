@@ -1,6 +1,5 @@
 ---
-id: copy-trading-and-mirror
-name: "Copy Trading & Mirror Relationships (Placeholder)"
+name: domain-trading
 description: "Copy trading mechanics — the mirror relationships, mirror types (manual copy vs Smart Portfolio vs other variants), Popular Investor (PI) economics, copy chain semantics, and the way MirrorID and MirrorTypeID change over a position's lifetime. PLACEHOLDER content — final analytical methodology (PI compensation calc, copy-fund attribution, copier-leader interactions) lands when the dealing-analyst skill set is delivered. Until then, this skill teaches the at-event-time vs current-state rule for MirrorID (fact > dim) and routes deeper questions to the relevant production view family."
 triggers:
   - copy trade

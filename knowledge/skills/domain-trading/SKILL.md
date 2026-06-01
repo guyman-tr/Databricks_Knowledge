@@ -1,6 +1,5 @@
 ---
-id: domain-trading
-name: "Trading & Markets Super-Domain"
+name: domain-trading
 description: "Routes inside the Trading & Markets super-domain. eToro is a Broker-Dealer — and this super-domain is the only one that straddles BOTH sides of that boundary. The BROKER side (customer-facing: positions, trades, fees, P&L) is anchored on `fact_customeraction_w_metrics`, `Dim_Position`, and the DDR fact family. The DEALER side (market-facing: LP routing, execution, hedge cost, recons, shortfalls) is anchored on `main.dealing.*` UC tables and the `Hedge.*` / `Dealing_*` Synapse schemas. Bridge tables (`bestexecution_results`, `Dealing_Duco_EODRecon`, the per-LP recons) reach DOWN from dealer to broker (they carry PositionID, CID, OrderID, ExecutionID, PriceRateID together) — they're the only place to ask cross-side questions. Covers position lifecycle, instrument catalogue, trading volumes, AUM/NOP/PnL, copy trading and mirror relationships, broker/LP reconciliation, dealing investigation & execution events, pricing & currency history, LP contracts and cost-of-goods-sold, crypto trading operations (Nixar/Fireblocks), best-execution analytics (NBBO/slippage/fails/latency/TCA). Load this hub for any question about WHAT customers traded and HOW the trade was executed."
 triggers:
   - position
@@ -135,6 +134,19 @@ domain_tags:
   - pricing
   - crypto-ops
   - hedge-cost
+sub_skills:
+  - best-execution.md
+  - broker-and-lp-reconciliation.md
+  - copy-trading-and-mirror.md
+  - crypto-trading-ops-nixar.md
+  - dealing-investigation-and-execution.md
+  - hedge-cost-recon.md
+  - instruments-and-asset-classes.md
+  - lp-contracts-and-cogs.md
+  - portfolio-value-aum-pnl.md
+  - position-state-and-grain.md
+  - pricing-and-currency-history.md
+  - trading-volumes.md
 version: 4
 owner: "dataplatform"
 last_validated_at: "2026-05-12"
@@ -149,7 +161,7 @@ This super-domain is about **WHAT customers traded and HOW the trade was execute
 - **Who the customer is, their identifiers, jurisdiction, club tier, segment** → Customer & Identity super-domain (`../domain-customer-and-identity/SKILL.md`).
 - **Money flow into / out of the customer wallet** (deposits, withdrawals, MIMO, IBAN flows, FTDs) → Payments super-domain (`../domain-payments/SKILL.md`). Trading IS the destination of those funds — but the deposit-side question routes there.
 - **Fee revenue or fee composition on a trade** → Revenue & Fees super-domain (`../domain-revenue-and-fees/SKILL.md`). The trade VOLUME stays here; the COMMISSION/ROLLOVER/TICKET_FEE revenue lives there. The two are linked by `PositionID` / `ActionID`.
-- **AML risk classification + AML alerts + Actimize CDD on a customer / trade** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)). Note: KYC sanctions / PEP-as-identity-check is NOT in the D scope yet — that's `B compliance-customer-snapshot-and-club` (planned v1.5).
+- **AML risk classification, sanctions, PEP, watchlist alerts on a trade** → Compliance super-domain (planned).
 
 When a question is about **the trade itself** (what instrument, what volume, what price, was it a copy, did it fill, what was the slippage), it stays here. When it is about **the fee that trade generated** ("how much commission did Tesla trades produce?"), route to Revenue & Fees and use `PositionID` to link back.
 
@@ -328,7 +340,7 @@ These hold whether you load any sub-skill or not:
 
 - Cluster source: Louvain super-domain A in [`_CHECKPOINT_A.md`](../_CHECKPOINT_A.md). Local sub-skills derived from clusters 0, 4, 7, 8, 9, 11, 13, 14, 15 (per `_domain_candidates.md`).
 - Anchor objects (per `_router.md` legacy + the 67-row UC harvest run on 2026-05-11): `fact_customeraction_w_metrics`, `Dim_Position`, `Dim_Instrument`, `PositionChangeLog`, the DDR fact family (`fact_aum`, `fact_pnl`, `fact_trading_volumes_and_amounts`), the dealing recon family (`DealingDuco_EODRecon`, Apex / BNY-Virtu / Saxo / Marex / JPM / IG / Vision per-LP recons), `Dim_Mirror`, `Trade.LiquidityProviderContracts`, `History.CurrencyPrice`.
-- Three DE workspace-root skills are deeply incorporated and superseded by sub-skills here: `instruments` → [`instruments-and-asset-classes.md`](instruments-and-asset-classes.md); `trading-volumes` → [`trading-volumes.md`](trading-volumes.md); `portfolio-value` → [`portfolio-value-aum-pnl.md`](portfolio-value-aum-pnl.md). The originals at `/Workspace/.assistant/skills/{instruments,trading-volumes,portfolio-value}/` are scheduled for removal once these are validated.
+- Three DE workspace-root skills are deeply incorporated and superseded by sub-skills here: `instruments` → [`instruments-and-asset-classes.md`](instruments-and-asset-classes.md) (legacy **tombstoned 2026-05-28 / DA-72** — redirect-only); `trading-volumes` → [`trading-volumes.md`](trading-volumes.md) (legacy still live at `/Workspace/.assistant/skills/trading-volumes/`); `portfolio-value` → [`portfolio-value-aum-pnl.md`](portfolio-value-aum-pnl.md) (legacy still live at `/Workspace/.assistant/skills/portfolio-value/`). The remaining two legacy skills are scheduled for the same tombstone pass once validated.
 - UC FQN resolution: queried against `main.system.information_schema.tables` on 2026-05-11 (67 trading-relevant rows verified). Tableau dashboard graph contributed dealing-side dashboard names that surface in the routing table (Best Execution Committee, Weekly Dealing).
 - Pending content: two placeholder sub-skills (`copy-trading-and-mirror`, `crypto-trading-ops-nixar`) await dealing-analyst-authored content.
 - **v2 (2026-05-11):** Promoted the Broker-Dealer split to a top-level routing principle. Driven by the `best-execution.md` rebuild and the user-confirmed observation that dealer-side SPs (e.g. `SP_DataForDuco`, `Hedge.Report_TCA`, `bestexecution_results` ETL) routinely join broker-side artifacts (`Dim_Position`, `Fact_CustomerAction`, `BI_DB_PositionPnL`) to dealer-side keys (`OrderID`, `ExecutionID`, `PriceRateID`) — making those dealer artifacts the only legitimate bridge tables for cross-side joins. Broker-side tables never carry dealer keys (by design, not omission). New Critical Warning #1 enforces this routing rule; new sub-skill routing column tags each sub-skill as **B** / **D** / **Bridge**.

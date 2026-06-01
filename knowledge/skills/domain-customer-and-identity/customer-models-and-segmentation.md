@@ -1,6 +1,5 @@
 ---
-id: customer-models-and-segmentation
-name: "Customer Models & Segmentation"
+name: domain-customer-and-identity
 description: "Customer-PROPERTY models: predictive LTV (BI_DB_LTV_BI_Actual — 32+ cols per CID with LTV_1Y / LTV_3Y / LTV_8Y point predictions + their VolFix volatility-fixed variants + Group-LTV + Currency + DaysFromFTD + Seniority + ClusterDetail + EquityTier + First_Month_Equity_Tier / First_Month_Cluster — NOT a bucket label table), three-axis customer clustering (BI_DB_CID_DailyCluster — 13 cols, SCD-style FromDateID/ToDateID windows with ClusterDetail / ClusterSF / ClusterDynamic — three parallel cluster columns from three methodologies, NOT 'one row per CID per day'). ClusterDetail enum (live values): Crypto, Equities Traders, Equities Crypto, Equities Investors, Leveraged Traders, Diversified Traders. ClusterSF enum (Salesforce 3-bucket coarse view): Crypto, Traders, Investors. Wide feature-input panels: BI_DB_CID_DailyPanel_FullData (184 cols, bi_db) + BI_DB_CID_MonthlyPanel_FullData (in dwh schema). Customer segments: customer_segments_v (15 cols, ONE ROW PER CID — flat customer-profile view with churn flags Is_Churn_over_14/30/60 BOOLEAN + EquityScore STRING enum 'No Equity'/'Low'/'Medium'/'High' + first-event dates + customer-age + channel + club; ~47M rows / 47M distinct CIDs); customer_segments_mail_v (~24 cols, marketing-email DELIVERY+ENGAGEMENT LOG — one row per send-per-recipient — NOT a 'mail eligibility cut'; carries CampaignGroup / SubGroup / Name / Number + CountOpen / Clicks / Bounce / Delivered + LSD). Customer Exclusion list: customer_exclude_list (4 cols only: CID, GCID, excludeReason, RegisterationDate (sic typo)). excludeReason enum (live): Abuser (1.2M), High risk (128k), Internal (33k). eToro Club tier history at general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct (14 cols, OldTier/CurrentTier/Date/PLChangeType/IsFTC — see B.5 for full schema). New ML LTV pipeline output at ml_stg.ml_output_ltv_app_artifacts_* (5 tables — scored_users with expected_ltv + p_positive + ev_if_positive + SHAP attributions per feature, model_artifacts, training_history, performance_history, country_aggregates) is the next-generation replacement for BI_DB_LTV_BI_Actual."
 triggers:
   - LTV
@@ -152,7 +151,7 @@ Use this skill when the question is about:
 Do **NOT** use this skill for:
 
 - **Population aggregates** ("how many customers in cluster X?") — those
-  belong in the `customer-populations` DE workspace skill.
+  belong in sibling sub-skill `customer-populations-and-lifecycle.md`.
 - **Current point-in-time customer state** (Regulation, MifID, KYC,
   Status) → B.5 (`customer_snapshot_v`).
 - **Per-event activity** ledger → B.4 (`Fact_CustomerAction`).
@@ -186,7 +185,20 @@ In scope:
 Out of scope: company-level revenue accounting (revenue-and-fees
 super-domain); copy network topology (trading super-domain); deeper
 churn-winback model output (B.6 has `churn_winback_summary` and
-`churn_winback_recent_targets`).
+`churn_winback_recent_targets`); the **raw Mixpanel event stream** that
+feeds the daily/monthly feature panels (`BI_DB_CID_DailyPanel_FullData`
+and siblings consume aggregated Mixpanel `silver` events upstream) —
+those live in [`../domain-product-analytics/mixpanel-events-and-pageviews.md`](../domain-product-analytics/mixpanel-events-and-pageviews.md);
+A/B-test variant assignments that overlay onto these cluster cohorts —
+[`../domain-product-analytics/ab-testing-and-experimentation.md`](../domain-product-analytics/ab-testing-and-experimentation.md);
+the **affiliate sourcing dimension** and per-channel paid-media cost — `dim_affiliate_masked`
+and `v_marketing_campaigns_social` / `_google` live in
+[`../domain-marketing-and-acquisition/affiliate-and-paid-media.md`](../domain-marketing-and-acquisition/affiliate-and-paid-media.md);
+RAF (Refer-A-Friend) compensation history and the dual-sided referring × referred ledger
+live in [`../domain-marketing-and-acquisition/raf-and-incentives.md`](../domain-marketing-and-acquisition/raf-and-incentives.md);
+the SFMC email-engagement at full event-grain (2.28B rows + per-URL click logs + bounce / unsub /
+complaint streams) lives in [`../domain-marketing-and-acquisition/marketing-comms-and-sfmc.md`](../domain-marketing-and-acquisition/marketing-comms-and-sfmc.md)
+(`customer_segments_mail_v` here is the per-CID lens over the same data).
 
 Last verified: 2026-05-11
 
@@ -283,7 +295,13 @@ graph TB
    counters (`CountOpen, UniqueOpen, CountClicks, UniqueClicks,
    CountBounce, OpenDate, ClickDate — all STRING for the counters,
    STRING for the dates`). **`GCID is STRING here**, unlike
-   `customer_segments_v` where it's INT — cast on join.
+   `customer_segments_v` where it's INT — cast on join. This view is a
+   customer-segmentation lens over the same SFMC events that live at full
+   2.28B-row grain in
+   [`../domain-marketing-and-acquisition/marketing-comms-and-sfmc.md`](../domain-marketing-and-acquisition/marketing-comms-and-sfmc.md)
+   (`bi_output_marketing_sfmc_sfmc_report` + the `silver_sfmc_*` raw
+   events) — for full deliverability / bounce / unsubs / per-URL clicks /
+   send-job dimension, go there.
 6. **`customer_exclude_list` is only 4 cols.** `CID (INT), GCID (INT),
    excludeReason (STRING), RegisterationDate (TIMESTAMP — sic, the
    column name carries the typo verbatim — note the extra 'e')`. Live

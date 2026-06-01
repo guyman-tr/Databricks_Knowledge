@@ -1,6 +1,5 @@
 ---
-id: portfolio-value-aum-pnl
-name: "Portfolio Value — AUM, NOP & PnL"
+name: domain-trading
 description: "End-of-day portfolio snapshots and daily PnL deltas across the trading platform. Two DDR fact tables: BI_DB_DDR_Fact_AUM (43 columns, 7.4B rows, 1 row per customer per day = end-of-day snapshot across TP + IBAN + Options) and BI_DB_DDR_Fact_PnL (18 columns, 8.8B rows, 1 row per customer × date × InstrumentTypeID × 8 position flags = daily delta). Covers the snapshot-vs-delta aggregation rule (never SUM AUM across dates; PnL deltas DO sum), the TP-vs-Global naming convention (TotalEquityTP = TP only; EquityGlobal = TP + IBAN + Options), copy vs manual stock/crypto equity decomposition (EquityCopy / EquityStocksManual / EquityCryptoManual), the NOP-sub-columns-don't-sum gotcha (only 4 sub-columns: NOPCrypto, NOPCryptoCFD, NOPStocks, NOPStocksCFD — Forex/Commodities/Indices/ETFs missing), the IsLeveraged/IsLeverage cross-table naming inconsistency, the zero-equity-row-exclusion filter, the ActualNWA bonus-cap formula, the Options data-lag caveat, and the legacy-always-zero columns (CopyStockOrders, StockOrders — 0 since 2019)."
 triggers:
   - AUM
@@ -72,7 +71,7 @@ Do **not** load for:
 
 - Position state at open / lifecycle / MirrorID-at-open → [`position-state-and-grain.md`](position-state-and-grain.md)
 - Daily flow / capital deployment (`InvestedAmountOpen` as a flow, not a stock) → [`trading-volumes.md`](trading-volumes.md)
-- The official "funded customer" segment definition (`TotalEquityTP > $X` threshold) → `customer-populations` DE workspace skill under `domain-customer-and-identity`
+- The official "funded customer" segment definition (`TotalEquityTP > $X` threshold) → `../domain-customer-and-identity/customer-populations-and-lifecycle.md`
 - Per-trade revenue / fees → `domain-revenue-and-fees`
 - Filtering by ticker (the two-part instrument-filter rule is owned elsewhere) → [`instruments-and-asset-classes.md`](instruments-and-asset-classes.md)
 - Spaceship / MoneyFarm AUM (those are acquired-platform products with separate facts) → `domain-revenue-and-fees` per-product sub-skills
@@ -82,7 +81,7 @@ Do **not** load for:
 
 In scope: end-of-day snapshot (43 AUM columns), daily PnL delta (18 PnL columns), the 9 PnL dimension flags (`InstrumentTypeID`, `IsCopy`, `IsSettled`, `IsFuture`, `IsLeveraged`, `IsBuy`, `IsCopyFund`, `IsSQF`), TP-vs-Global column conventions, copy-vs-manual equity decomposition (`EquityCopy`, `EquityStocksManual`, `EquityCryptoManual`), the partition mismatch (AUM uses `DateID` integer; PnL uses `etr_ymd` string partition), the snapshot-vs-delta aggregation rule, NOP sub-column completeness caveat (only 4 of 6 asset classes covered), the `IsLeveraged`/`IsLeverage` cross-table naming inconsistency, the legacy-always-zero columns, the zero-equity-row exclusion filter, the Options date-lag caveat, the multi-source `FULL OUTER JOIN` semantics on CID.
 
-Out of scope: position-event detail (`position-state-and-grain.md`), volume / invested flow (`trading-volumes.md`), funded population segment (`customer-populations`), revenue (`domain-revenue-and-fees`), acquired-platform AUM (Spaceship/MoneyFarm — separate facts under `domain-revenue-and-fees`), trade-level Apex Options P&L decomposition.
+Out of scope: position-event detail (`position-state-and-grain.md`), volume / invested flow (`trading-volumes.md`), funded population segment (`../domain-customer-and-identity/customer-populations-and-lifecycle.md`), revenue (`domain-revenue-and-fees`), acquired-platform AUM (Spaceship/MoneyFarm — separate facts under `domain-revenue-and-fees`), trade-level Apex Options P&L decomposition.
 
 Last verified: 2026-05-11
 
@@ -100,7 +99,7 @@ Last verified: 2026-05-11
 
 6. **Tier 2 — `IsLeveraged` (with 'd') in the PnL fact vs `IsLeverage` (no 'd') in the volumes fact.** Same semantics (`CASE WHEN Leverage > 1`), different spellings. If you copy a query from `trading-volumes.md`, **rename `IsLeverage` → `IsLeveraged`** when you bring it to the PnL fact. See [`trading-volumes.md`](trading-volumes.md) Warning #2 for the reverse.
 
-7. **Tier 2 — The AUM table EXCLUDES rows where `EquityGlobal = 0`.** `SP_DDR_Fact_AUM` filters `WHERE NOT (EquityGlobal = 0)` before insert. `COUNT(DISTINCT RealCID) WHERE DateID = X` is NOT total customers — it's customers with non-zero global equity. For a true "funded customer" count, use the official `customer-populations` segment.
+7. **Tier 2 — The AUM table EXCLUDES rows where `EquityGlobal = 0`.** `SP_DDR_Fact_AUM` filters `WHERE NOT (EquityGlobal = 0)` before insert. `COUNT(DISTINCT RealCID) WHERE DateID = X` is NOT total customers — it's customers with non-zero global equity. For a true "funded customer" count, use the official segment definition in `../domain-customer-and-identity/customer-populations-and-lifecycle.md`.
 
 8. **Tier 2 — `CopyStockOrders` and `StockOrders` are always 0 since 2019** — legacy columns retained for schema stability. Don't reference them in new queries.
 
@@ -351,7 +350,7 @@ GROUP BY InstrumentTypeID;
 - Revenue from these positions → [`../domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md)
 - Cashout / withdrawal flow → [`../domain-payments/SKILL.md`](../domain-payments/SKILL.md)
 - IBAN/eMoney balance source (the raw eMoneyClientBalance, with proper FX) → `domain-payments` (IBAN sub-skill)
-- Funded segment definition → `customer-populations` DE workspace skill (load via `../domain-customer-and-identity/SKILL.md`)
+- Funded segment definition → `../domain-customer-and-identity/customer-populations-and-lifecycle.md`
 
 ## Sources Consulted (per `/speckit.skill` Phase 2.5)
 

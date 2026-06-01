@@ -1,6 +1,5 @@
 ---
-id: trading-volumes
-name: "Trading Volumes & Amounts"
+name: domain-trading
 description: "Notional trading volume, invested amounts, and transaction counts. Two anchors with a documented semantic divergence: (1) the per-event `fact_customeraction_w_metrics` (~9.1B rows, Lake-built Delta in `main.de_output`) — the AUTHORITATIVE source for volume and amount lineage, lineage chain `Fact_CustomerAction → v_fact_customeraction_enriched → v_fact_customeraction_w_metrics → de_output_etoro_kpi_fact_customeraction_w_metrics`, columns are signed by wallet-flow convention (`InvestedAmountIn` NEGATIVE on opens, `InvestedAmountOut` POSITIVE on closes), `VolumeOnOpen` is QA-recomputed from `InitialUnits × InitForexRate × InitConversionRate`; (2) the aggregated DDR `Fact_Trading_Volumes_And_Amounts` (~793M rows, partitioned by etr_ymd, 17 dimension flags) — convenient pre-aggregated by date × flag combo but its `InvestedAmountClosed` answers a different question than w_metrics' `InvestedAmountOut` (DDR uses `Dim_Position.Amount` = original cash invested on positions that closed today; w_metrics uses `Fact_CustomerAction.Amount` = actual cash returned to wallet on close — live divergence runs $5-12M per day on big trading days). When DDR build switches to a DBX SP, this divergence will close — until then, w_metrics is the source of truth. Covers the 17 dimension flags on the DDR fact, the BIGINT-money type quirks, the two big asymmetry traps (`IsOpenedFromIBAN` STRING vs `IsClosedToIBAN` INT, `IsLeverage` vs `IsLeveraged`), real vs CFD breakdown, volume by asset class, copy/recurring trade identification. Broker-side."
 triggers:
   - trading volume
@@ -93,7 +92,7 @@ Load when the question is about:
 
 Do **not** load for:
 
-- The official "Active Trader" segment definition (SCD-based, includes Options) → `domain-customer-and-identity` (the DE workspace skill `customer-populations`)
+- The official "Active Trader" segment definition (SCD-based, includes Options) → `../domain-customer-and-identity/customer-populations-and-lifecycle.md`
 - Position state at open / lifecycle / MirrorID at open / partial-close mechanics → [`position-state-and-grain.md`](position-state-and-grain.md)
 - AUM / NOP / equity (end-of-day stock) → [`portfolio-value-aum-pnl.md`](portfolio-value-aum-pnl.md)
 - Revenue from a trade → `domain-revenue-and-fees`
@@ -156,7 +155,7 @@ Last verified: 2026-05-11
 
 12. **Tier 2 — DDR is derived FROM the same broker-side stack as w_metrics, not from real-time event streams.** The at-event-time semantics apply: `IsCopy = 1` on a DDR volume row means the position was opened as a copy AT OPEN (via the `MirrorID > 0` rule in `Function_Trading_Volume_PositionLevel`), regardless of whether it's since been detached. The fact-vs-dim trap is already baked in by the function. See [`position-state-and-grain.md`](position-state-and-grain.md) Warning #1.
 
-13. **Tier 2 — `IsSQF` semantic is ambiguous between this skill family and the instruments skill.** The instruments wiki documents IsSQF as `GroupID = 59` in `Trade.InstrumentGroups`. The DDR fact wiki expands it as "Sustainable & Quality-Focused". Live data shows only 8 instruments flagged IsSQF=1 (4 indices + 4 crypto, all also `IsFuture=1`) — consistent with a UK regulatory designation rather than ESG marketing. Treat as a small, rarely-needed flag.
+13. **Tier 2 — `IsSQF` semantic is ambiguous between this skill family and sibling [`instruments-and-asset-classes.md`](instruments-and-asset-classes.md).** The instruments sub-skill documents IsSQF as `GroupID = 59` in `Trade.InstrumentGroups`. The DDR fact wiki expands it as "Sustainable & Quality-Focused". Live data shows only 8 instruments flagged IsSQF=1 (4 indices + 4 crypto, all also `IsFuture=1`) — consistent with a UK regulatory designation rather than ESG marketing. Treat as a small, rarely-needed flag.
 
 14. **Tier 3 — Both tables are very large.** ALWAYS filter by partition columns: DDR fact uses `etr_ymd` in `YYYY-MM-DD` STRING format (despite the DateID being `YYYYMMDD` INT — different formats in different columns of the same table!); `w_metrics` uses `etr_ymd` in `YYYY-MM-DD` STRING format. A query without the partition filter scans 793M / 9.1B rows and is rejected by most warehouse policies.
 
@@ -355,7 +354,7 @@ FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_trading_volumes_and
 WHERE CountOpenTransactions > 0
   AND etr_ymd BETWEEN '2026-01-01' AND '2026-03-31';
 ```
-**Use when:** "how many people traded?", "unique traders this quarter". **Not** the official Active Trader segment — for that route to `domain-customer-and-identity` and the `customer-populations` DE workspace skill.
+**Use when:** "how many people traded?", "unique traders this quarter". **Not** the official Active Trader segment — for that route to `../domain-customer-and-identity/customer-populations-and-lifecycle.md`.
 
 ### Pattern 6 — Copy / Smart-Portfolio / C2P breakdown
 ```sql
@@ -464,7 +463,7 @@ ORDER BY DateID;
 - Position state, copy detection at the row level → [`position-state-and-grain.md`](position-state-and-grain.md)
 - End-of-day stock (AUM, NOP, equity) → [`portfolio-value-aum-pnl.md`](portfolio-value-aum-pnl.md)
 - Revenue from these trades → [`../domain-revenue-and-fees/SKILL.md`](../domain-revenue-and-fees/SKILL.md)
-- Official Active Trader segment → `customer-populations` DE workspace skill (load via `../domain-customer-and-identity/SKILL.md`)
+- Official Active Trader segment → `../domain-customer-and-identity/customer-populations-and-lifecycle.md`
 - Margin-trade economics, the `SettlementTypeID = 5` rule → `position-state-and-grain.md` (SettlementTypeID map)
 
 ## Sources Consulted (per `/speckit.skill` Phase 2.5)

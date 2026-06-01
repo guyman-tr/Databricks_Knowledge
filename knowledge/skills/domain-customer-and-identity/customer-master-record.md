@@ -1,6 +1,5 @@
 ---
-id: customer-master-record
-name: "Customer Master Record"
+name: domain-customer-and-identity
 description: "Single-row, current-state customer attribute lookup anchored on Dim_Customer (107 cols, ~18.6M rows, type-1 SCD). The biggest hub in the DWH join graph — every fact table joins on CID = RealCID. Carries OLTP-derived identity (RealCID/GCID/DemoCID/OriginalCID), demographics (CountryID/CitizenshipCountryID/POBCountryID/LanguageID), regulation (RegulationID/DesignatedRegulationID/MifidCategorizationID), lifecycle (PlayerStatusID/PlayerLevelID/AccountTypeID/AccountStatusID), KYC docs (VerificationLevelID/IsAddressProof/IsIDProof/DocumentStatusID), Popular-Investor program (GuruStatusID/NumOfCopiers/NumOfGurus), FTD (IsDepositor/FirstDepositDate/FirstDepositAmount/FTDPlatformID/FTDTransactionID/FTDRecoveryDate), external broker IDs (ApexID/ExternalID/TanganyID/EquiLendID/DltID/SalesForceAccountID), employee flag (EmployeeAccount), the DWH-computed validity gates (IsValidCustomer/IsCreditReportValidCB), and the two PII variants (masked dwh.gold_..._masked vs full pii_data.gold_...). Use INSTEAD of querying Customer.CustomerStatic / BackOffice.Customer directly for analyst questions — Dim_Customer denormalizes 14+ OLTP sources via SP_Dim_Customer with explicit CDC change detection. Dim_Customer is TYPE-1 SCD: most attributes are overwritten on every refresh; for point-in-time historical state walk Fact_SnapshotCustomer (see identity-jurisdiction-and-regulation). For analyst-pretty enrichments (ClubTier string, Country name, Regulation name, IsPI flag) that are NOT physically on Dim_Customer, prefer etoro_kpi.customer_snapshot_v which joins Dim_Customer to dimensions and the club service for you. For population counts (Funded / Active / Portfolio-Only / Balance-Only / FTF) defer to the DE workspace skill customer-populations. For onboarding funnel (reg -> KYC -> V1/V2/V3 -> FTD) defer to registration-to-ftd-funnel."
 triggers:
   - Dim_Customer
@@ -100,7 +99,7 @@ Do NOT load for:
 
 - **Historical attribute walks** ("what was the regulation on 2025-06-01?") → `identity-jurisdiction-and-regulation` (SCD via `Fact_SnapshotCustomer`).
 - **Cross-platform identity joins** (DWH ↔ eMoney ↔ EXW Wallet via `GCID`) — this skill names the join key on the DWH side; the bridge map lives in the router and per-platform skills.
-- **Population counts / lifecycle segments** (Funded / Active Trader / FTF) → DE workspace skill `customer-populations` (uses `gold_de_user_dim_ddr_customer_dailystatus_scd`).
+- **Population counts / lifecycle segments** (Funded / Active Trader / FTF) → sibling sub-skill [`customer-populations-and-lifecycle.md`](customer-populations-and-lifecycle.md) (anchors on `gold_de_user_dim_ddr_customer_dailystatus_scd`; absorbed 2026-05-28 from the legacy DE workspace skill `customer-populations`).
 - **Onboarding funnel** (reg → KYC → V1/V2/V3 → FTD → first action) → DE workspace skill `registration-to-ftd-funnel` (uses `etoro_kpi.ftd_funnel_v`).
 - **OLTP forensics / breach flags** → `oltp-customer-static-and-breaches`.
 - **CRM cases / CSAT / churn** → `crm-cases-csat-and-churn`.
@@ -109,7 +108,7 @@ Do NOT load for:
 ## Scope
 
 In scope: the 107 columns on `Dim_Customer` (identity, PII-masked personal info, acquisition/marketing FKs, registration & lifecycle flags, compliance & regulation, MiFID classification, KYC docs, World-Check, EDD, social/Guru/PI program counters, account management/SF link, 2FA & phone verification, external broker IDs — Apex/Tangany/EquiLend/DLT, FTD recovery fields, the DWH-computed `IsValidCustomer` / `IsCreditReportValidCB` gates); the masked vs full-PII variants; `V_Liabilities` daily snapshot of equity (per-CID per-day); `BI_DB_KYC_Panel` current-state KYC verdict; `BI_DB_AMLPeriodicReview` current periodic review status; `BI_DB_DDR_CID_Level` per-CID dimensional rollup over DDR (current state); the analyst-pretty `etoro_kpi.customer_snapshot_v` join layer (Dim_Customer + dim joins + club enrichment).
-Out of scope: SCD walks (`identity-jurisdiction-and-regulation`); OLTP `Customer.CustomerStatic` raw columns and breach/illegal-trade flags (`oltp-customer-static-and-breaches`); customer-action audit trail (`customer-action-audit-trail`); compliance snapshot stack and club change log (`compliance-customer-snapshot-and-club`); CRM / CSAT / churn (`crm-cases-csat-and-churn`); LTV / cluster / segments (`customer-models-and-segmentation`); population segments and onboarding funnel (DE workspace skills `customer-populations`, `registration-to-ftd-funnel`).
+Out of scope: SCD walks (`identity-jurisdiction-and-regulation`); OLTP `Customer.CustomerStatic` raw columns and breach/illegal-trade flags (`oltp-customer-static-and-breaches`); customer-action audit trail (`customer-action-audit-trail`); compliance snapshot stack and club change log (`compliance-customer-snapshot-and-club`); CRM / CSAT / churn (`crm-cases-csat-and-churn`); LTV / cluster / segments (`customer-models-and-segmentation`); population segments and lifecycle milestones (sibling sub-skill `customer-populations-and-lifecycle.md`); onboarding funnel (DE workspace skill `registration-to-ftd-funnel`).
 Last verified: 2026-05-11
 
 ## Critical Warnings
@@ -139,7 +138,7 @@ Last verified: 2026-05-11
 
 6. **Tier 2 — `RealCID` data-type quirk across the customer surface.** `Dim_Customer.RealCID` is `INT`. `main.etoro_kpi.customer_snapshot_v.RealCID` is `STRING`. Cross-joining requires `CAST(RealCID AS INT)` or vice versa. Same column name, incompatible types — silent join failure if the planner coerces wrong way. Verified 2026-05-11.
 
-7. **Tier 2 — `GCID` is the cross-platform key but is NOT unique on `Dim_Customer`.** Multiple `RealCID`s can share a `GCID` in linked-account scenarios. Do not assume `GCID` deduplicates customers. For DWH-side unique-human counts use `COUNT(DISTINCT GCID)` with caveat, or route to `customer-populations` for the official funded-customer definition.
+7. **Tier 2 — `GCID` is the cross-platform key but is NOT unique on `Dim_Customer`.** Multiple `RealCID`s can share a `GCID` in linked-account scenarios. Do not assume `GCID` deduplicates customers. For DWH-side unique-human counts use `COUNT(DISTINCT GCID)` with caveat, or route to sibling sub-skill `customer-populations-and-lifecycle.md` for the official funded-customer definition.
 
 8. **Tier 3 — FTD-recovery overwrite semantics.** When a reversed FTD is re-deposited on a later day, `SP_Dim_Customer` Step 7 updates `FirstDepositDate` to `FTDRecoveryDate` (the newer date). The original `FirstDepositDate` is lost on Dim_Customer. The history of the original-vs-recovery FTD lives in `CustomerFinanceDB.Customer.FirstTimeDeposits`. If you need both dates, do not rely on Dim_Customer alone.
 
@@ -221,17 +220,17 @@ graph TB
 | `IsValidCustomer` | DWH-computed | `PlayerLevelID ≠ 4 AND LabelID NOT IN (30,26) AND CountryID ≠ 250`. The standard analytics gate. |
 | `IsCreditReportValidCB` | DWH-computed | Stricter than `IsValidCustomer`; adds `AccountTypeID ≠ 2` and specific CID exceptions for CountryID=250. |
 | `LabelID` | Customer.CustomerStatic | Customer-segment label. FK to `Dictionary.Label` / `DWH_dbo.Dim_Label`. Per `Dim_Label` (verified 2026-05-13): `26 = ILQ`, `30 = Dealing` — both excluded by `IsValidCustomer` and used in the `IsHedged` trigger (along with `BackOffice.BonusOnlyCustomers` — a SEPARATE table-based list, not the same as `LabelID = 26`). Full label dictionary has many more values; query `Dim_Label` for the complete map. |
-| `AffiliateID` / `CampaignID` / `SubChannelID` / `FunnelID` | Customer.CustomerStatic | Acquisition tracking. Sub-affiliate path in `SubSerialID`. Type-1 SCD. |
+| `AffiliateID` / `CampaignID` / `SubChannelID` / `FunnelID` | Customer.CustomerStatic | Acquisition tracking. Sub-affiliate path in `SubSerialID`. Type-1 SCD. Full affiliate-network metadata + lifecycle counters + channel × subchannel taxonomy → `../domain-marketing-and-acquisition/affiliate-and-paid-media.md` (anchors on `dim_affiliate_masked`); per-channel paid-media cost / FTD → `v_marketing_campaigns_social` / `_google` in the same sub-skill. |
 | `AccountManagerID` | BackOffice.Customer | VIP/sales rep. Sentinel `0` = unassigned. FK to `Dim_Manager`. |
 | `CashoutFeeGroupID` | BackOffice.Customer | Withdrawal fee schedule. FK to `Dictionary.CashoutFeeGroup`. |
 
 ## Critical anti-patterns
 
 1. **DO NOT query `Dim_Customer` for historical attributes.** Type-1 SCD overwrites silently. Walk `Fact_SnapshotCustomer` or `customer_snapshot_v` instead.
-2. **DO NOT compute population segments** (Funded / Active Trader / FTF / Portfolio-Only / Balance-Only) ad-hoc over `Dim_Customer` + `V_Liabilities`. Load DE workspace skill `customer-populations` (anchors on `gold_de_user_dim_ddr_customer_dailystatus_scd`) — orders of magnitude faster and definitionally canonical.
+2. **DO NOT compute population segments** (Funded / Active Trader / FTF / Portfolio-Only / Balance-Only) ad-hoc over `Dim_Customer` + `V_Liabilities`. Load sibling sub-skill `customer-populations-and-lifecycle.md` (anchors on `gold_de_user_dim_ddr_customer_dailystatus_scd`) — orders of magnitude faster and definitionally canonical.
 3. **DO NOT compute reg-to-FTD funnel** on Dim_Customer. Load `registration-to-ftd-funnel` and use `etoro_kpi.ftd_funnel_v`.
 4. **DO NOT `SUM` over `V_Liabilities` without a date filter** — 13.7B rows. Always pin `DateID` or `FullDate`.
-5. **DO NOT count unique customers on `CID`** if linked-account semantics matter. Use `COUNT(DISTINCT GCID)` (knowing it under-counts when GCID is NULL for legacy accounts) or route to `customer-populations`.
+5. **DO NOT count unique customers on `CID`** if linked-account semantics matter. Use `COUNT(DISTINCT GCID)` (knowing it under-counts when GCID is NULL for legacy accounts) or route to `customer-populations-and-lifecycle.md`.
 6. **DO NOT join `Dim_Customer` to `eMoney_Dim_Account` / `EXW_DimUser` on `RealCID`** — those tables key on `GCID`. Join `Dim_Customer.GCID = eMoney_Dim_Account.GCID` (and the same for EXW).
 7. **DO NOT join to OLTP `Customer.CustomerStatic` for analyst questions** unless you need an OLTP-only column. Use Dim_Customer first; for OLTP forensics see `oltp-customer-static-and-breaches`.
 8. **DO NOT read `ClubTier`, `IsPI`, `MarketingRegion` off `Dim_Customer`** — they are not there. Use `customer_snapshot_v` (`ClubTier`, `IsPI`) or the DDR daily-status table (`MarketingRegion`).
@@ -317,7 +316,7 @@ GROUP BY c.RegulationID
 ORDER BY customers DESC;
 ```
 
-For "how many funded customers" / "how many active traders" — use DE workspace skill `customer-populations` instead.
+For "how many funded customers" / "how many active traders" — use sibling sub-skill `customer-populations-and-lifecycle.md` instead.
 
 ### Pattern 5 — Cross-platform identity bridge (DWH → eMoney + EXW)
 

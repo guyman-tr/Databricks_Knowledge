@@ -1,6 +1,5 @@
 ---
-id: domain-revenue-and-fees
-name: "Revenue & Fees Super-Domain"
+name: domain-revenue-and-fees
 description: "Cross-product revenue and fee accounting. Every kind of money eToro **earns or charges**, across every product line. Anchored on three canonical artefacts: (1) `BI_DB_DDR_Fact_Revenue_Generating_Actions` — the pre-aggregated daily revenue panel keyed by `(DateID, RealCID, RevenueMetricID, ActionTypeID, InstrumentTypeID)` covering 18 metrics in 5 categories (TradeTransactional, Overnight, MIMO, RevShare, Other) — best for grand-totals, KPI dashboards, IncludedInTotalRevenue logic; (2) `de_output.de_output_etoro_kpi_fact_customeraction_w_metrics` — **THE most granular fee source** at position-action grain (98 columns including `Commission`, `FullCommission`, `RollOverFee`, `Dividend`, `SDRT`, `AdminFee`, `SpotAdjustFee`, `TicketFeeOpen`/`Close`, share-lending splits, conversion-fee triplet, cashout/transfercoin, copy amounts — for asset-specific / per-position / per-leverage / per-copy drill-downs this is fastest AND most granular, prefer it over DDR aggregation); (3) the `etoro_kpi_prep.v_revenue_*` view family (15 atomic per-fee views) and `etoro_kpi_prep.mv_revenue_trading` materialised cross-fee union — for fee-specific quirks and the fixed-vs-percent ticket-fee split. Incorporates the DataPlatform DE workspace skill `revenue` as authoritative content (the 18-metric dictionary, the 5-category bucketing, trade-classification flag logic). References the DE workspace skill `spaceship` as the source-of-truth for Spaceship product details. Load this hub for any question about WHAT eToro earned or charged and to be routed to the right fee-family sub-skill."
 triggers:
   - revenue
@@ -73,6 +72,14 @@ required_tables:
   - main.etoro_kpi_prep.mv_revenue_trading
   - main.etoro_kpi.vg_ddr_revenue
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_dim_revenue_metrics
+sub_skills:
+  - fees-deposit-withdraw-fx.md
+  - fees-misc-dormant-options-interest.md
+  - revenue-moneyfarm.md
+  - revenue-options-platform.md
+  - revenue-spaceship.md
+  - revenue-staking-and-share-lending.md
+  - trading-revenue-and-fees.md
 version: 2
 owner: "guyman@etoro.com"
 last_validated_at: "2026-05-12"
@@ -258,7 +265,7 @@ Each sub-skill takes one fee family. Most questions hit a single sub-skill; cros
 | **H.3** `revenue-staking-and-share-lending.md` | StakingLagOneMonth, ShareLending | `v_revenue_stakingfee`, `v_revenue_share_lending`, `bi_db_finance_staking_report`, Synapse `Staking.*` | Staking rewards distribution, share-lending revenue (40/40/20 split), the 1-month staking lag mechanics |
 | **H.4** `fees-misc-dormant-options-interest.md` | DormantFee, Options_PFOF, InterestFee (deprecated) | `v_revenue_{dormantfee, interestfee, optionsplatform}` | Inactivity fees, options PFOF, deprecated margin-interest |
 | **H.5** `revenue-options-platform.md` | Options product revenue end-to-end — Gatsby brand, Apex broker (= USABroker), Apex SFTP fees | `v_revenue_optionsplatform`, `etoro_kpi_prep.v_options_aum`, `etoro_kpi_prep.v_mimo_options_platform`, `finance.bronze_sodreconciliation_apex_ext1047_revenuereports`, `finance.bronze_usabroker_apex_*` | Any Options product question. **Gatsby = brand, Apex = broker.** US-equity rows from Apex land in regular trading tables (`Dim_Position`, etc.) — NOT in this sub-skill. |
-| **H.6** `revenue-spaceship.md` | Spaceship — AU acquisition (Super / Voyager / Nova / Money) | `v_spaceship_fees`, `v_spaceship_aum`, `v_spaceship_mimo` — **thin router; defer to DE workspace skill** | Australian acquisition with its own 53-table source + KPI dashboard. Authoritative content lives in DE workspace skill `/Workspace/.assistant/skills/spaceship` and in `knowledge/uc_domains/spaceship/_domain_card.md`. |
+| **H.6** `revenue-spaceship.md` | Spaceship — AU acquisition (Super / Voyager / Nova / Money) | `v_spaceship_fees`, `v_spaceship_aum`, `v_spaceship_mimo` — **thin router; defer to DE workspace skill** | Australian acquisition with its own 53-table source + KPI dashboard. Authoritative content lives in DE workspace skill `/Workspace/.assistant/skills/domain-spaceship` and in `knowledge/uc_domains/spaceship/_domain_card.md`. |
 | **H.7** `revenue-moneyfarm.md` | MoneyFarm — UK managed investing | `v_moneyfarm_{aum, mimo, fees}`, `bi_output_moneyfarm_*`, `money_farm.silver_moneyfarm_etoro_mf_aum`, `general.bronze_moneyfarm_users` | UK managed-investing platform. Source: CosmosDB document store. Owned here (no DE skill). Anchored to `knowledge/uc_domains/moneyfarm/_domain_card.md`. |
 
 **Affiliate commission is intentionally excluded** — it is not revenue. It is either a marketing cost (affiliate-paid-out) or already embedded in the partner-share component of `FullCommission`. If a question explicitly asks about affiliate-paid amounts, point at `Fact_AffiliateCommission` directly but explain it's a cost, not revenue.
@@ -272,7 +279,7 @@ Each sub-skill takes one fee family. Most questions hit a single sub-skill; cros
 | DE workspace skill | Disposition | Notes |
 |--------------------|-------------|-------|
 | `/Workspace/.assistant/skills/revenue` | **INCORPORATED** (this hub supersedes it after deployment) | 215-line DE skill with the 18-metric dictionary, 3-layer architecture, trade-classification flag tables (IsSettled / IsCopy / IsICC / IsSQF / IsMarginTrade), and SettlementTypeID / ActionTypeID / IsFeeDividend / CompensationReasonID lookups. All ported into this hub and H.1. |
-| `/Workspace/.assistant/skills/spaceship` | **REFERENCED** (authoritative for Spaceship product detail) | 6 sub-files, 53 source tables, ETL pipeline, weekly KPI dashboard. Too deep to replicate. Same pattern as `customer-populations` / `registration-to-ftd-funnel` references in the Customer & Identity hub. |
+| `/Workspace/.assistant/skills/domain-spaceship` | **REFERENCED** (authoritative for Spaceship product detail) | 6 sub-files, 53 source tables, ETL pipeline, weekly KPI dashboard. Too deep to replicate. Renamed from `spaceship` → `domain-spaceship` on 2026-05-28 / DA-72. Same reference pattern as `registration-to-ftd-funnel` in the Customer & Identity hub (the legacy `customer-populations` workspace skill was absorbed locally in the same commit). |
 
 ---
 
@@ -424,7 +431,7 @@ Each regional product is its own UC domain with a curated `_domain_card.md`. **R
 
 | Product | Region | UC domain card | Status | Notes |
 |---------|--------|----------------|--------|-------|
-| **Spaceship** | Australia | `knowledge/uc_domains/spaceship/_domain_card.md` | Ingested (`spaceship.*`, 53 tables) | Four product lines: Super (superannuation — NOT UK SIPP), Voyager (goal-based investing), Nova (newer, US-flavoured), Money (cash wallet). Source: Spaceship-side BigQuery + Metabase. **DE workspace skill `/Workspace/.assistant/skills/spaceship` is authoritative.** |
+| **Spaceship** | Australia | `knowledge/uc_domains/spaceship/_domain_card.md` | Ingested (`spaceship.*`, 53 tables) | Four product lines: Super (superannuation — NOT UK SIPP), Voyager (goal-based investing), Nova (newer, US-flavoured), Money (cash wallet). Source: Spaceship-side BigQuery + Metabase. **DE workspace skill `/Workspace/.assistant/skills/domain-spaceship` is authoritative.** |
 | **MoneyFarm** | UK | `knowledge/uc_domains/moneyfarm/_domain_card.md` | Ingested (`bi_output_moneyfarm_*`, `money_farm.silver_*`, `general.bronze_moneyfarm_*`) | UK managed investing — the UK equivalent of Spaceship. Source: MoneyFarm-side CosmosDB document store (different contract from Spaceship's BigQuery). KPI views live in `etoro_kpi_prep.v_moneyfarm_*` (NOT `etoro_kpi` like Spaceship). |
 | **Options (Gatsby + Apex)** | US | _(see H.5 sub-skill)_ | Ingested via Apex SFTP | Gatsby = product brand; Apex (= USABroker) = broker. Two ingest paths: Options → Apex SFTP → `v_revenue_optionsplatform`; US-equity → regular trading tables. See disambiguation below. |
 | **WealthFrance** | France | _(not yet ingested)_ | Acquired, no UC schema | French equivalent of MoneyFarm. Mention but do not invent tables. |
@@ -487,4 +494,4 @@ This super-domain was created in response to the insight that fees are **NOT a p
 
 The DataPlatform DE workspace skill `revenue` (215 lines, version 2, validated 2026-05-07) was incorporated VERBATIM for the 18-metric dictionary, the 5-category bucketing, the trade-classification flag definitions, and the `ActionTypeID` / `IsFeeDividend` / `CompensationReasonID` lookups. After deployment of this hub to `/Workspace/Users/guyman@etoro.com/.assistant/skills/dwh-domain/domain-revenue-and-fees/`, the DE workspace `revenue` skill is intended to be superseded.
 
-The DataPlatform DE workspace skill `spaceship` (6 sub-files, 53 source tables, KPI dashboard reference) is REFERENCED as authoritative for Spaceship product detail. Our H.6 sub-skill is a thin router.
+The DataPlatform DE workspace skill `domain-spaceship` (renamed from `spaceship` on 2026-05-28 / DA-72; 6 sub-files, 53 source tables, KPI dashboard reference) is REFERENCED as authoritative for Spaceship product detail. Our H.6 sub-skill is a thin router.

@@ -1,7 +1,6 @@
 ---
-id: domain-customer-and-identity
-name: "Customer & Identity Super-Domain"
-description: "Routes inside the Customer & Identity super-domain. Covers the customer master record (Dim_Customer 107 cols, type-1 SCD), the identity model across platforms (RealCID = CID downstream, GCID for cross-platform bridge, conceptual MasterCID — physically MasterAccountCID INT on BackOffice.Customer; eMoney joins via GCID -> emoney_dim_account.AccountID INT; EXW joins via GCID/RealCID on exw_dimuser — there is no EXWCustomerID column), customer attributes (regulation, jurisdiction, club tier, Popular Investor status via GuruStatusID — NOT PlayerLevelID; PlayerLevelID values per Dim_PlayerLevel are Bronze/Silver/Gold/Platinum/Platinum-Plus/Diamond/Internal, not PI tiers; channel, country, marketing segments), point-in-time customer SCD (Fact_SnapshotCustomer + customer_snapshot_v 52-col daily 47M-row snapshot), milestone first-dates, customer-action audit trail (Fact_CustomerAction 74 cols + v_fact_customeraction_enriched + v_fact_customeraction_w_metrics for monetary metrics), customer-property models (LTV as DECIMAL point predictions in BI_DB_LTV_BI_Actual — NOT bucket labels; BI_DB_CID_DailyCluster as SCD-style with FromDateID/ToDateID/IsLastCluster and three parallel cluster columns; flat-profile customer_segments_v; email-engagement-log customer_segments_mail_v; next-gen ml_stg.ml_output_ltv_app_artifacts_*), CRM case / CSAT / churn-winback (vg_crm_case 110 cols, Salesforce simplesurvey__*__c naming, churn_winback_* are predictive model output not campaign history), and cross-system identity resolution joins (DWH <-> eMoney <-> EXW Wallet <-> Tribe envelopes; acquired-platform user IDs for Spaceship / MoneyFarm / Apex / Alpaca). Incorporates two DataPlatform DE workspace skills as authoritative sub-skills: customer-populations (Funded / Active / Portfolio Only / Balance Only / FTF segments and lifecycle milestones) and registration-to-ftd-funnel (the canonical reg-to-FTD onboarding funnel via etoro_kpi.ftd_funnel_v). Load this hub for any question about WHO the customer is and to be routed to the right sub-skill or referenced workspace skill."
+name: domain-customer-and-identity
+description: "Routes inside the Customer & Identity super-domain. Covers the customer master record (Dim_Customer 107 cols, type-1 SCD), the identity model across platforms (RealCID = CID downstream, GCID for cross-platform bridge, conceptual MasterCID — physically MasterAccountCID INT on BackOffice.Customer; eMoney joins via GCID -> emoney_dim_account.AccountID INT; EXW joins via GCID/RealCID on exw_dimuser — there is no EXWCustomerID column), customer attributes (regulation, jurisdiction, club tier, Popular Investor status via GuruStatusID — NOT PlayerLevelID; PlayerLevelID values per Dim_PlayerLevel are Bronze/Silver/Gold/Platinum/Platinum-Plus/Diamond/Internal, not PI tiers; channel, country, marketing segments), point-in-time customer SCD (Fact_SnapshotCustomer + customer_snapshot_v 52-col daily 47M-row snapshot), milestone first-dates, customer-action audit trail (Fact_CustomerAction 74 cols + v_fact_customeraction_enriched + v_fact_customeraction_w_metrics for monetary metrics), customer-property models (LTV as DECIMAL point predictions in BI_DB_LTV_BI_Actual — NOT bucket labels; BI_DB_CID_DailyCluster as SCD-style with FromDateID/ToDateID/IsLastCluster and three parallel cluster columns; flat-profile customer_segments_v; email-engagement-log customer_segments_mail_v; next-gen ml_stg.ml_output_ltv_app_artifacts_*), CRM case / CSAT / churn-winback (vg_crm_case 110 cols, Salesforce simplesurvey__*__c naming, churn_winback_* are predictive model output not campaign history), customer population segments and lifecycle milestones (Funded / Active Trader / Portfolio Only / Balance Only via the SCD population fact gold_de_user_dim_ddr_customer_dailystatus_scd, First Time Funded formula, first trading action classification, 12 Active Trader sub-flags — owned by local sub-skill customer-populations-and-lifecycle.md, absorbed from the DE workspace skill customer-populations on DA-72), and cross-system identity resolution joins (DWH <-> eMoney <-> EXW Wallet <-> Tribe envelopes; acquired-platform user IDs for Spaceship / MoneyFarm / Apex / Alpaca). Incorporates one DataPlatform DE workspace skill as an authoritative reference: registration-to-ftd-funnel (the canonical reg-to-FTD onboarding funnel via etoro_kpi.ftd_funnel_v — funnel conversion analytics, NOT population counts). Load this hub for any question about WHO the customer is and to be routed to the right sub-skill or referenced workspace skill."
 triggers:
   - customer
   - RealCID
@@ -77,6 +76,7 @@ required_tables:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster
   - main.etoro_kpi.vg_crm_case
+  - main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd
 sample_questions:
   - "What's the difference between RealCID and GCID?"
   - "How do I join a customer in DWH to their eMoney account?"
@@ -97,9 +97,18 @@ domain_tags:
   - club
   - segmentation
   - crm
-version: 2
+sub_skills:
+  - compliance-customer-snapshot-and-club.md
+  - crm-cases-csat-and-churn.md
+  - customer-action-audit-trail.md
+  - customer-master-record.md
+  - customer-models-and-segmentation.md
+  - customer-populations-and-lifecycle.md
+  - identity-jurisdiction-and-regulation.md
+  - oltp-customer-static-and-breaches.md
+version: 3
 owner: "dataplatform"
-last_validated_at: "2026-05-11"
+last_validated_at: "2026-05-28"
 ---
 
 # Customer & Identity Super-Domain
@@ -110,19 +119,20 @@ This super-domain is about **WHO the customer is** — the master record, the id
 
 - **Money flow into / out of a customer's wallet** → Payments super-domain (`domain-payments/SKILL.md`). Customer balances, deposits, withdrawals, MIMO panel.
 - **Trading positions, P&L, instrument exposure, broker-dealer execution** → Trading & Markets super-domain (`domain-trading/SKILL.md`).
-- **AML risk classification + AML alerts + Actimize CDD severity on a customer** → Compliance & AML super-domain ([`../domain-compliance-and-aml/SKILL.md`](../domain-compliance-and-aml/SKILL.md)) — specifically [`aml-risk-scoring`](../domain-compliance-and-aml/aml-risk-scoring.md) for the classification and [`aml-alert-routing`](../domain-compliance-and-aml/aml-alert-routing.md) for the live alerts. **KYC sanctions-list / PEP-list identity-side screening** (the screening DECISION, not the downstream flag) remains in this domain's planned `compliance-customer-snapshot-and-club` sub-skill (v1.5).
+- **AML risk classification, sanctions, PEP, watchlist alerts on a customer** → Compliance & AML super-domain (planned).
 - **Fee revenue or fee composition on a customer** → Revenue & Fees super-domain (`domain-revenue-and-fees/SKILL.md`).
 
 When a question is about **what the customer DID** (deposited, traded), route to the relevant doing-domain (Payments / Trading). When a question is about **who the customer IS** (their identifiers, jurisdiction, attributes, master record, segments, lifecycle status, onboarding funnel position, support history), it stays here.
 
 ## Routing waypoint — read this first
 
-Two referenced workspace skills are part of this super-domain. **Prefer them over local sub-skills when their slice matches**:
+One referenced workspace skill is part of this super-domain. **Prefer it over local sub-skills when its slice matches**:
 
-- **For population counts and lifecycle questions** ("how many funded customers?", "how many active traders today?", "FTF cohort size") → load DE workspace skill **`customer-populations`** at `/Workspace/.assistant/skills/customer-populations/SKILL.md`. Authoritative for Funded / Active Trader / Portfolio Only / Balance Only segments and the SCD-based fast-population pattern.
 - **For the onboarding funnel** (Registration → KYC → V1/V2/V3 → Deposit Wizard → FTD → First Action, VBD/VBT cohort comparison) → load DE workspace skill **`registration-to-ftd-funnel`** at `/Workspace/.assistant/skills/registration-to-ftd-funnel/SKILL.md`. Authoritative for `main.etoro_kpi.ftd_funnel_v` and any cohort-based reg-to-FTD question. **Go-to skill before `Dim_Customer` / `Fact_CustomerAction` for any column it owns.**
 
-Local sub-skills (this folder) own everything else: master record, identity joins, jurisdiction, SCD walks, customer-action audit trail, customer-property models, CRM cases, OLTP forensics.
+**Population segments and lifecycle milestones** ("how many funded customers?", "how many active traders today?", "FTF cohort size") used to defer to the DE workspace skill `customer-populations`; on DA-72 (2026-05-28) that skill was absorbed into the local sub-skill [`customer-populations-and-lifecycle.md`](customer-populations-and-lifecycle.md) — go there for the SCD-based fast-population pattern, the Funded / Active / Portfolio / Balance hierarchy, the FTF formula, and the 12 Active Trader sub-flags. The legacy `customer-populations` skill is tombstoned and redirects here.
+
+Local sub-skills (this folder) own everything else: master record, identity joins, jurisdiction, SCD walks, customer-action audit trail, customer-property models, CRM cases, OLTP forensics, **and now population segments & lifecycle**.
 
 ## When to Use
 
@@ -138,19 +148,20 @@ Load when the question concerns the customer master record, the identity model, 
 - Customer-action audit trail ("what did the operator do on this customer's account?", per-action fees, copy vs manual position opens)
 - Customer-property models ("what's customer X's LTV prediction / daily cluster / segment / churn flag?")
 - CRM case / CSAT / churn-winback questions
-- Population / lifecycle / onboarding-funnel questions (delegate to referenced workspace skill — see Routing waypoint)
+- Population segment / lifecycle milestone questions (local sub-skill `customer-populations-and-lifecycle.md`)
+- Onboarding-funnel questions (delegate to referenced workspace skill `registration-to-ftd-funnel` — see Routing waypoint)
 
 Do **not** load for:
 
 - Money movement (deposits, withdrawals, MIMO, balances) → Payments super-domain
 - Fee revenue → Revenue & Fees super-domain
 - Trading activity (positions, P&L, copy trading P&L attribution, broker-dealer execution) → Trading & Markets super-domain
-- AML risk classification + alert routing → [`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md). KYC identity-side screening (sanctions/PEP DECISION) remains here in the planned `compliance-customer-snapshot-and-club` v1.5 sub-skill.
+- AML/KYC risk classification → Compliance super-domain (planned)
 
 ## Scope
 
-In scope: customer master record (`Dim_Customer` 107 cols, `Customer.CustomerStatic` 83-col bronze, `BackOffice.Customer` operational mirror with `MasterAccountCID`), customer SCD slices (`Fact_SnapshotCustomer` daily SCD with `DateRangeID`, `customer_snapshot_v` 52-col daily snapshot ~47M rows/day with `RealCID STRING`, `vg_customer_daily_snapshot`), milestone first-dates (`BI_DB_CIDFirstDates`, `cidfirstdates_v` with NULL-sentinel cleanup, `vg_customer_customer_first_dates`), the identity model (`RealCID` = `CID`, `GCID`, conceptual `MasterCID` → physical `MasterAccountCID`, eMoney `AccountID`, EXW joins via `GCID`/`RealCID`), long-lived attributes (jurisdiction, regulation, club tier, Popular Investor status via `GuruStatusID` — NOT `PlayerLevelID` (which encodes Bronze/Silver/Gold/Platinum/Platinum-Plus/Diamond/Internal per `Dim_PlayerLevel.Name`), channel, country, marketing segments), customer-action audit trail (`Fact_CustomerAction` 74 cols + enriched & w_metrics views), customer-property models (`BI_DB_LTV_BI_Actual` DECIMAL point predictions, `BI_DB_CID_DailyCluster` SCD-style with three parallel cluster columns, `BI_DB_CID_DailyPanel_FullData` 184-col panel, `BI_DB_CID_MonthlyPanel_FullData` in DWH schema, `customer_segments_v` 15-col flat profile, `customer_segments_mail_v` email engagement log, `etoro_club` views, next-gen `ml_stg.ml_output_ltv_app_artifacts_*`), CRM cases / CSAT / churn-winback (`vg_crm_case` 110 cols with `Status`/`Origin`, `crm_csat_survey_per_case_v`, `crm_quality_assessment_per_case_v`, `crm_user_v` with manager/RM hierarchy, `churn_winback_summary`/`recent_targets` as predictive-model output), cross-platform identity resolution joins. Population segments and the onboarding funnel are owned by referenced DE workspace skills (`customer-populations`, `registration-to-ftd-funnel`) — load those for their slice rather than answering from this hub.
-Out of scope: money movement (Payments super-domain), fee revenue (Revenue & Fees super-domain), trading positions / P&L / broker-dealer execution (Trading super-domain), AML risk classification + alert routing ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md))
+In scope: customer master record (`Dim_Customer` 107 cols, `Customer.CustomerStatic` 83-col bronze, `BackOffice.Customer` operational mirror with `MasterAccountCID`), customer SCD slices (`Fact_SnapshotCustomer` daily SCD with `DateRangeID`, `customer_snapshot_v` 52-col daily snapshot ~47M rows/day with `RealCID STRING`, `vg_customer_daily_snapshot`), milestone first-dates (`BI_DB_CIDFirstDates`, `cidfirstdates_v` with NULL-sentinel cleanup, `vg_customer_customer_first_dates`), the identity model (`RealCID` = `CID`, `GCID`, conceptual `MasterCID` → physical `MasterAccountCID`, eMoney `AccountID`, EXW joins via `GCID`/`RealCID`), long-lived attributes (jurisdiction, regulation, club tier, Popular Investor status via `GuruStatusID` — NOT `PlayerLevelID` (which encodes Bronze/Silver/Gold/Platinum/Platinum-Plus/Diamond/Internal per `Dim_PlayerLevel.Name`), channel, country, marketing segments), customer-action audit trail (`Fact_CustomerAction` 74 cols + enriched & w_metrics views), customer-property models (`BI_DB_LTV_BI_Actual` DECIMAL point predictions, `BI_DB_CID_DailyCluster` SCD-style with three parallel cluster columns, `BI_DB_CID_DailyPanel_FullData` 184-col panel, `BI_DB_CID_MonthlyPanel_FullData` in DWH schema, `customer_segments_v` 15-col flat profile, `customer_segments_mail_v` email engagement log, `etoro_club` views, next-gen `ml_stg.ml_output_ltv_app_artifacts_*`), CRM cases / CSAT / churn-winback (`vg_crm_case` 110 cols with `Status`/`Origin`, `crm_csat_survey_per_case_v`, `crm_quality_assessment_per_case_v`, `crm_user_v` with manager/RM hierarchy, `churn_winback_summary`/`recent_targets` as predictive-model output), customer population segments and lifecycle milestones (`gold_de_user_dim_ddr_customer_dailystatus_scd` SCD population fact, `BI_DB_DDR_Customer_Periodic_Status` pre-aggregate, `vg_customer_customer_first_dates`, `v_population_first_time_funded`, `v_population_first_trading_action`, `v_population_active_traders` — owned by sub-skill `customer-populations-and-lifecycle.md`, absorbed from the legacy `customer-populations` workspace skill on 2026-05-28 / DA-72), cross-platform identity resolution joins. The onboarding funnel (Reg → KYC → V1/V2/V3 → FTD conversion analytics) is owned by the referenced DE workspace skill `registration-to-ftd-funnel` — load it for its slice rather than answering from this hub.
+Out of scope: money movement (Payments super-domain), fee revenue (Revenue & Fees super-domain), trading positions / P&L / broker-dealer execution (Trading super-domain), AML risk classification / sanctions / PEP (Compliance super-domain when built)
 Last verified: 2026-05-11
 
 ## Critical Warnings
@@ -207,17 +218,19 @@ graph LR
 | [`compliance-customer-snapshot-and-club.md`](compliance-customer-snapshot-and-club.md) | `main.etoro_kpi.customer_snapshot_v`, `main.general.gold_sql_dp_prod_we_bi_db_dbo_bi_db_clubchangelogproduct` | The customer snapshot stack: `customer_snapshot_v` is a **daily 52-col snapshot with `RealCID STRING`** (~47M rows/day) — NOT compliance-filtered, NO MasterCID/StatusID/LastKycDate; `kyc_for_compliance_v` is an 8-col Q&A log (not a "latest verdict"); `positions_for_compliance_v` (182 cols, lowercase names); `cfd_statusinfo_v` (note the `ApproprietnessScore_Status` typo); `ddr_customer_current_flags` (7 cols, `IsActiveTrade` not `IsActiveTrader`). Plus `BI_DB_ClubChangeLogProduct` (14 cols, `OldTier`/`CurrentTier`), 21 `bi_output_vg_*` Genie mirrors, PII-restricted AML snapshot, spaceship club balances. Cluster 10 (32 nodes; PROD-Compliance / eToro DDR / etoro_club Genies all live here). |
 | [`crm-cases-csat-and-churn.md`](crm-cases-csat-and-churn.md) | `main.etoro_kpi.vg_crm_case`, `main.bi_output_stg.churn_winback_summary` | CRM Salesforce cases (`vg_crm_case` 110 cols, `CID`/`CaseID STRING`, columns are `Status` not `CaseStatus`, `Origin` not `CaseChannel`); CSAT survey (`crm_csat_survey_per_case_v` 4 cols, Salesforce-style `simplesurvey__*__c` naming); quality assessment (`crm_quality_assessment_per_case_v` 8 cols, `__c` suffix); CRM agent dim (`crm_user_v` 22 cols, `FullName` not `AgentName`, manager/RM hierarchy); **`churn_winback_*` is predictive model OUTPUT, not campaign history** (no eligibility / targeting / send-log semantics). Plus `bi_output_customer_customer_support_salesforce_reply` (9 cols, string dates), `gold_crm_salesforcetobomanagermapping` (SFManagerID STRING → ManagerID INT). Clusters 19 + 36 + 48 (~16 nodes; Customer Support Case Analytics / CSAT / Churn Win-Back Genies). |
 | [`customer-models-and-segmentation.md`](customer-models-and-segmentation.md) | `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ltv_bi_actual`, `main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_cid_dailycluster`, `main.etoro_kpi.customer_segments_v`, `main.ml_stg.ml_output_ltv_app_artifacts_scored_users` | Customer-property models: `BI_DB_LTV_BI_Actual` (32+ cols of **DECIMAL point predictions**: `LTV_1Y/3Y/8Y`, `LTV_8Y_GroupLevel`, `Revenue8Y_LTV_New`, with grouping columns — NOT bucket labels); `BI_DB_CID_DailyCluster` (**SCD-style** with `FromDateID`/`ToDateID`/`IsLastCluster`, three parallel cluster columns: `ClusterDetail` 6-bucket, `ClusterSF` 3-bucket Salesforce-coarse, `ClusterDynamic` fast-moving); `customer_segments_v` (15-col **flat customer profile**, ONE row per CID, with `Is_Churn_over_14/30/60` flags and `EquityScore` enum); `customer_segments_mail_v` (email delivery+engagement log, GCID STRING); `customer_exclude_list` (4 cols, `excludeReason` enum); 184-col `BI_DB_CID_DailyPanel_FullData`; next-gen ML LTV at `ml_stg.ml_output_ltv_app_artifacts_*` (5 tables with `expected_ltv DOUBLE` + SHAP attribution). **Conceptually customer-property; statistically scattered across clusters 0/7/10/12**. Owns the customer-side meaning; delegates join patterns to the statistical homes (Trading, Payments, Compliance). |
+| [`customer-populations-and-lifecycle.md`](customer-populations-and-lifecycle.md) | `main.etoro_kpi_prep.gold_de_user_dim_ddr_customer_dailystatus_scd`, `main.etoro_kpi.vg_customer_customer_first_dates`, `main.etoro_kpi_prep.v_population_first_time_funded`, `main.etoro_kpi_prep.v_population_active_traders` | Population segments (Funded / Active Trader / Portfolio Only / Balance Only with mutual-exclusion hierarchy), lifecycle milestones (FTD, FTF, registration, first action), point-in-time SCD population queries via `FromDateID`/`ToDateID` (the fast default — billions of rows compressed into date ranges), pre-aggregated periodic status (weekly/monthly/quarterly), the canonical FTF formula (`GREATEST(FTDDateID, FirstVerifiedDateID, LEAST(FirstTradeDateID, FirstIOBDateID, FirstOptionsTradeDateID))`), the 3-leg IsFunded equity check across TP + eMoney + Options, 12 Active Trader sub-flags (manual vs copy × CFD vs real × asset class), and first trading action classification (Forex / Crypto / Copy / Copy Fund / Stocks via InstrumentTypeID). **Absorbed 2026-05-28 from the legacy DE workspace skill `customer-populations`** (DA-72). Go-to for any "how many <segment>?" / "FTF cohort" / population-trend question BEFORE `Dim_Customer`-based aggregates. |
 
 ## Referenced sub-skills (incorporated, not duplicated)
 
-These are the DataPlatform DE team's authoritative workspace-level skills for two slices of this super-domain. **Load them directly** when the question matches; do NOT answer from the local sub-skills above.
+The DataPlatform DE team's authoritative workspace-level skill for the onboarding funnel slice. **Load it directly** when the question matches; do NOT answer from the local sub-skills above.
 
 | Slice | Authoritative skill | Path | When to load |
 |---|---|---|---|
-| Population segments (Funded / Active Trader / Portfolio Only / Balance Only / FTF cohort) and lifecycle milestones | `customer-populations` | `/Workspace/.assistant/skills/customer-populations/SKILL.md` | Any "how many <segment> customers?" / "active traders today?" / "FTF cohort size" / population-trend question. **Authoritative — go-to before any local sub-skill or `Dim_Customer`-based aggregate.** |
 | Onboarding funnel: Registration → KYC → V1/V2/V3 → Deposit Wizard → FTD → First Action; VBD/VBT cohort comparison | `registration-to-ftd-funnel` | `/Workspace/.assistant/skills/registration-to-ftd-funnel/SKILL.md` | Any column in `etoro_kpi.ftd_funnel_v` or any cohort-based onboarding question. **Authoritative — go-to before `Dim_Customer` / `Fact_CustomerAction`. The DE team's first-dates Genie + dedicated agent live behind this.** |
 
-These two are NOT mirrored locally. The hub above lists them in `required_tables` (`main.etoro_kpi.ftd_funnel_v`) and routes to them; their workspace SKILL.md files own the column dictionaries and patterns.
+The funnel skill is NOT mirrored locally. The hub above lists it in `required_tables` (`main.etoro_kpi.ftd_funnel_v`) and routes to it; its workspace SKILL.md file owns the column dictionary and patterns.
+
+(Population segments / lifecycle milestones used to defer to the workspace skill `customer-populations`; that skill was absorbed locally on 2026-05-28 / DA-72 — see `customer-populations-and-lifecycle.md` in the routing table above. The legacy `customer-populations` is tombstoned and redirects here.)
 
 ## Cross-domain skills (load these instead of two parents)
 
@@ -225,7 +238,7 @@ These two are NOT mirrored locally. The hub above lists them in `required_tables
 |---|---|---|
 | [`../domain-cross/tribe-emoney-audit.md`](../domain-cross/tribe-emoney-audit.md) | This super-domain ↔ C.3 eMoney | Treezor XML audit envelopes (`eMoney_Tribe.*`) joined back to the customer master via eMoney `AccountID` ↔ `GCID`. The customer-side join keys live in this super-domain; the audit-trail map lives in the cross-domain skill. |
 
-Additional cross-domain skills will be added as siblings span this super-domain (Trading & Markets is built; Compliance & AML is built as of 2026-05-24). A B↔D customer-AML cross-domain skill is a likely future candidate — concretely it would bridge `Dim_Customer` / `Fact_SnapshotCustomer` (B-side identity state) to `cmp_aml_risk_classification_cid_level` (D-side classification) via `CID = RealCID`.
+Additional cross-domain skills will be added as siblings span this super-domain (Trading & Markets, Compliance & AML when built). A B↔Compliance customer-AML cross-domain is a likely candidate once D is built.
 
 ## Cross-cutting facts
 
@@ -255,7 +268,7 @@ These hold whether you load any sub-skill or not:
 ## What this skill is NOT
 
 - It does not contain SQL — sub-skills do. The hub routes only.
-- It does not own population aggregates, funnel rates, or onboarding analytics — those live in the two referenced DE workspace skills.
+- It does not own funnel rates or onboarding-conversion analytics — those live in the referenced DE workspace skill `registration-to-ftd-funnel`. Population segment aggregates and lifecycle milestones DO live here, in the local sub-skill `customer-populations-and-lifecycle.md` (absorbed 2026-05-28 from the legacy `customer-populations` workspace skill).
 - It is not a wiki — it routes to per-table wikis under `knowledge/synapse/Wiki/<schema>/Tables/<obj>.md` for full column-level detail.
 - It does not cover **what a customer DID with money** (deposit, trade) — those route to the doing-domain (Payments, Trading).
 
@@ -264,5 +277,6 @@ These hold whether you load any sub-skill or not:
 - Cluster source: rows B in [`_router.md`](../_router.md) and [`_CHECKPOINT_A.md`](../_CHECKPOINT_A.md). Local sub-skills derived from Louvain clusters 1, 2, 3, 6, 10, 12, 19, 36, 48 (per `_domain_candidates.md`); customer-property overlay (B.7) spans clusters 0, 7, 10, 12.
 - Anchor objects (per `_router.md`): `Dim_Customer`, `Customer.CustomerStatic`, `Fact_SnapshotCustomer`, `BI_DB_CIDFirstDates`, `customer_snapshot_v`, plus `Fact_CustomerAction`, `vg_crm_case`, `BI_DB_LTV_BI_Actual`, `BI_DB_CID_DailyCluster`.
 - UC FQN resolution and identifier-column existence: queried against `system.information_schema.columns` / `system.information_schema.tables` on 2026-05-11. `MasterCID`, `EmoneyAccountID`, `EXWCustomerID`, `IsTestUser`, `IsExcludedFromReporting` confirmed non-existent in UC.
-- DE workspace skills incorporated by reference: `customer-populations` (population/lifecycle, authoritative), `registration-to-ftd-funnel` (onboarding funnel, authoritative).
+- DE workspace skill incorporated by reference: `registration-to-ftd-funnel` (onboarding funnel, authoritative).
 - v2 sub-skills (all SpecKit-rebuilt 2026-05-10 → 2026-05-11): `customer-master-record` v2 (731e3a3), `identity-jurisdiction-and-regulation` v2 (c562753), `oltp-customer-static-and-breaches` v2 (18583bc), `customer-action-audit-trail` v2 (18c9bb9), `compliance-customer-snapshot-and-club` v2 (4d7602a), `crm-cases-csat-and-churn` v2 (41996fb), `customer-models-and-segmentation` v2 (acafd8f).
+- v1 sub-skill absorbed 2026-05-28 (DA-72): `customer-populations-and-lifecycle` v1 — content imported verbatim from the legacy DE workspace skill `customer-populations` (8 anchor tables: SCD population fact, periodic-status pre-aggregate, daily-status fact, daily snapshot, milestone first-dates, three `v_population_*` builders). The legacy `customer-populations/SKILL.md` is tombstoned in the same commit and redirects here; hard-delete deferred ~30 days for embedding re-train.

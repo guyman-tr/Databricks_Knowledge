@@ -1,6 +1,5 @@
 ---
-id: mimo-panel-and-ddr
-name: "MIMO Panel & DDR (cross-platform money flow)"
+name: domain-payments
 description: "Cross-platform Money-In / Money-Out (MIMO) panel and the new Daily Data Report (DDR) framework above it. THIS IS THE DEFAULT skill for any 'how much money flowed', 'FTD count', 'customer money status by date', 'deposit/withdrawal volumes' question. Anchored on BI_DB_DDR_Fact_MIMO_AllPlatforms (UC: main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms, 24 cols, ~91.5M rows, unifies TradingPlatform + eMoney + Options/Apex + MoneyFarm-FTD via UNION ALL with FTD machinery applied). Per-platform MIMO objects (Trading_Platform / eMoney_Platform / Options_Platform) are NOT materialized in UC — they are VIEWS in main.etoro_kpi_prep (v_mimo_tradingplatform ~68M rows, v_mimo_emoneyplatform ~23M rows, v_mimo_options_platform ~98K rows) sitting on top of the materialized AllPlatforms table. The DDR framework adds five per-fact daily/periodic tables: BI_DB_DDR_Customer_Daily_Status (67 cols, 1 row per CID per DateID even on no-MIMO days), BI_DB_DDR_Customer_Periodic_Status (131 cols, weekly/monthly rollup), BI_DB_DDR_Fact_AUM (43 cols, assets-under-management per CID per day), BI_DB_DDR_Fact_PnL (18 cols, per CID per day per instrument), BI_DB_DDR_Fact_Revenue_Generating_Actions (27 cols, granular revenue event), BI_DB_DDR_Fact_Trading_Volumes_And_Amounts (30 cols, per CID per day per instrument type — also see Trading & Markets domain). Crypto wallet activity is OFF the MIMO graph unless C2F-converted to fiat (IsCryptoToFiat=1). Old DDR (BI_DB_LTV_*, BI_DB_CID_*Panel_*, BI_DB_DDR_CID_Level) is deprecated — use the new BI_DB_DDR_* framework only. Use INSTEAD of joining raw Fact_BillingDeposit/Withdraw/eMoney/EXW tables — those are for forensic drill-down only."
 triggers:
   - MIMO
@@ -313,7 +312,7 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **Crypto deposit → fiat conversion chain** | `domain-cross/crypto-to-fiat` — `IsCryptoToFiat` is here, but the journey is in C.4 + C.3. |
 | **Provider statement reconciliation** | `domain-cross/provider-reconciliation`. |
 | **Treezor / Tribe audit envelope on eMoney transactions** | `domain-cross/tribe-emoney-audit`. |
-| **Customer lifecycle status (Funded / Active / FTF / Portfolio Only / Balance Only)** | DE workspace skill `customer-populations` — authoritative for population segments. |
+| **Customer lifecycle status (Funded / Active / FTF / Portfolio Only / Balance Only)** | `../domain-customer-and-identity/customer-populations-and-lifecycle.md` — authoritative for population segments (absorbed 2026-05-28 from the legacy `customer-populations` workspace skill). |
 
 ## Deep reads
 

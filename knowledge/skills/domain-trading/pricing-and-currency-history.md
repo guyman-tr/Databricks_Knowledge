@@ -1,6 +1,5 @@
 ---
-id: pricing-and-currency-history
-name: "Pricing & Currency History"
+name: domain-trading
 description: "Historical and real-time instrument pricing across the trading platform. Four-table price stack: Fact_CurrencyPriceWithSplit (DWH daily authoritative — 14 cols + 3 partition cols, ~17.2M rows since 2009-06-15, 15,400+ instruments, with split-aware source switching at corporate-action dates, the isvalid lowercase EOD flag, raw Bid/Ask + spread-adjusted BidSpreaded/AskSpreaded, RateLastEx as last-execution price, and the ConvertRateIsBuy_1 / ConvertRateIsBuy_0 pre-computed USD conversion rates added 2023-02-26 with 4-case derivation rule); History.CurrencyPrice in the Bronze data lake (the complete tick-level archive); History.CurrencyPriceMaxDateWithSplitView (the fast last-price cache for 9,339 instruments — 1440-min override); Trade.CurrencyPrice (real-time per-provider tick cache — 60-min override). Plus BSL audit snapshots, staging views, and the etoro_History_SplitRatio split-calendar. Covers the split-adjustment mechanic, the per-date DELETE+INSERT refresh (and gap-if-missed risk), spread-adjusted vs raw price semantics, the 3 vs 1 ProviderID provenance question, and ConvertRate NULL gaps (~7.5% lifetime)."
 triggers:
   - currency price

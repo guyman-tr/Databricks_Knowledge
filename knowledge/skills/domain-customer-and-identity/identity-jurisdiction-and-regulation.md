@@ -1,6 +1,5 @@
 ---
-id: identity-jurisdiction-and-regulation
-name: "Identity, Jurisdiction & Regulation (SCD walk + first-dates)"
+name: domain-customer-and-identity
 description: "Point-in-time customer state and milestone first-dates. Anchored on Fact_SnapshotCustomer (the DWH's SCD-Type-2 by year, ~406M rows, 46.4M distinct customers, 2007-08-22 to present) accessed through V_Fact_SnapshotCustomer_FromDateID which decodes the DateRangeID 12-digit bigint into FromDateID + ToDateID (INT YYYYMMDD). Currently-open rows are flagged by ToDateID = YYYY1231 (year-end sentinel). The SCD walks every long-lived attribute: CountryID, LabelID, LanguageID, VerificationLevelID, PlayerStatusID, PlayerStatusReasonID, PlayerStatusSubReasonID, RiskStatusID, RiskClassificationID, CommunicationLanguageID, GuruStatusID, RegulationID (end-of-day from RegulationChangeLog), AccountStatusID, AccountManagerID, PlayerLevelID, AccountTypeID, MifidCategorizationID, IsEmailVerified, IsValidCustomer, DesignatedRegulationID, EvMatchStatus, RegionID, IsDepositor, PendingClosureStatusID, DocumentStatusID, SuitabilityTestStatusID, AffiliateID, DltStatusID, DltID, EquiLendID, StocksLendingStatusID, IsPhoneVerified, PhoneVerificationDateID. Plus first-dates: BI_DB_CIDFirstDates (raw PII) and the analyst-facing etoro_kpi.cidfirstdates_v (105 cols of FirstLoggedIn / FirstCashierLogin / FirstDepositAttempt / FirstDepositDate / FirstPosOpenDate / FirstStocksOpenDate / FirstCashoutDate / FirstMirrorRegistrationDate / FirstContactDate / VerificationLevel1Date|2Date|3Date / FirstTimeBeingCopied etc.). Use this skill for any historical state question (what was X on date D? when did regulation change? when did the level upgrade happen?) and any single-milestone first-date question. For aggregate population trends defer to customer-populations; for the reg-to-FTD funnel defer to registration-to-ftd-funnel + ftd_funnel_v."
 triggers:
   - jurisdiction
@@ -88,14 +87,14 @@ Load when the question concerns historical customer state, attribute-change hist
 Do NOT load for:
 
 - **Current-state lookup** ("show me the row for customer X today") → `customer-master-record` (uses `Dim_Customer` directly).
-- **Population counts by jurisdiction today** ("how many CySEC customers do we have?") → DE workspace skill `customer-populations` (uses `gold_de_user_dim_ddr_customer_dailystatus_scd`; pre-aggregated, much faster).
+- **Population counts by jurisdiction today** ("how many CySEC customers do we have?") → sibling sub-skill `customer-populations-and-lifecycle.md` (uses `gold_de_user_dim_ddr_customer_dailystatus_scd`; pre-aggregated, much faster).
 - **Reg-to-FTD funnel** (any cohort funnel question: drop-off at V1/V2/V3, time-to-FTD, VBD/VBT) → DE workspace skill `registration-to-ftd-funnel` + `main.etoro_kpi.ftd_funnel_v`.
 - **Day-by-day customer daily-status SCD** (the segment-aware version used by the populations skill) → that same workspace skill owns `gold_de_user_dim_ddr_customer_dailystatus_scd`.
 
 ## Scope
 
 In scope: the 57 columns on `V_Fact_SnapshotCustomer_FromDateID` (masked + PII variants), the SCD-Type-2-by-year mechanic (DateRangeID decode, year-end roll), the end-of-day RegulationID rule (sourced from `RegulationChangeLog`, NOT BackOffice), the IsValidCustomer + IsCreditReportValidCB business rules, GDPR-erasure masking, the 105 first-date columns on `cidfirstdates_v` (with the 1900-01-01 sentinel-to-NULL conversion), the Genie-curated `vg_customer_customer_first_dates` alias, the daily and monthly customer-snapshot rollup views, the dimension lookups (Dim_Country, Dim_Regulation, Dim_PlayerLevel, Dim_AccountType, Dim_MifidCategorization, Dim_PlayerStatusReasons, Dim_PlayerStatusSubReasons, Dim_Language).
-Out of scope: current-state row (`customer-master-record`); population segments (`customer-populations` workspace skill); reg-to-FTD funnel (`registration-to-ftd-funnel` workspace skill); OLTP forensics (`oltp-customer-static-and-breaches`); customer-action audit trail (`customer-action-audit-trail`); CRM cases (`crm-cases-csat-and-churn`); LTV / cluster / segments (`customer-models-and-segmentation`); club tier change history (`compliance-customer-snapshot-and-club` owns `BI_DB_ClubChangeLogProduct`).
+Out of scope: current-state row (`customer-master-record`); population segments (sibling sub-skill `customer-populations-and-lifecycle.md`); reg-to-FTD funnel (`registration-to-ftd-funnel` workspace skill); OLTP forensics (`oltp-customer-static-and-breaches`); customer-action audit trail (`customer-action-audit-trail`); CRM cases (`crm-cases-csat-and-churn`); LTV / cluster / segments (`customer-models-and-segmentation`); club tier change history (`compliance-customer-snapshot-and-club` owns `BI_DB_ClubChangeLogProduct`).
 Last verified: 2026-05-11
 
 ## Critical Warnings

@@ -1,6 +1,5 @@
 ---
-id: broker-and-lp-reconciliation
-name: "Broker & Liquidity-Provider Reconciliation"
+name: domain-trading
 description: "Daily end-of-day and intraday reconciliation between eToro's hedge book and external broker / liquidity-provider records. Bridge-side skill: connects broker (client NOP from BI_DB_PositionPnL) to dealer (LP hedge holdings from etoro_Hedge_Netting). Anchored on the Duco foundation (V_Dealing_Duco_EODRecon view as canonical entry point, ~18.6M rows weekdays-only 2023-01-02→present, 27 columns + the HedgingPercent KPI) and the per-LP recon tables: Apex (US equity holdings + trade activity + 7 SOD-file family), BNY-Virtu (non-US equity), Saxo (real stocks + employee accounts), Marex (futures with unique client-level grain), Goldman Sachs / Interactive Brokers / IG / JPM / Vision (bronze layer). Covers the EOD-holdings-vs-trade-activity split, the three-way comparison pattern (LP vs eToro hedge vs client NOP), HedgingPercent interpretation, weekend-gap rule, FULL OUTER JOIN NULL artifacts, SOD-file health gating, the Marex-futures-grain anomaly, and the BuyOrSell column-naming workaround."
 triggers:
   - reconciliation

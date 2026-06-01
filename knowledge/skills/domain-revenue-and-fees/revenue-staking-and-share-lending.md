@@ -1,6 +1,5 @@
 ---
-id: revenue-staking-and-share-lending
-name: revenue-and-fees-revenue-staking-and-share-lending
+name: domain-revenue-and-fees
 description: |
   RevShare-category fee revenue (DDR RevenueMetricCategoryID = 4) — the two
   yield-sharing revenue streams where eToro takes a cut of yield/income
@@ -218,3 +217,4 @@ FROM main.general.bronze_fivetran_google_sheets_staking_countries_classification
 - `v_revenue_stakingfee` and `v_revenue_share_lending` are defined in `/Users/guyman@etoro.com/a_semantic_etoro_kpi_prep/`.
 - Wallet-side staking truth is the OLTP `Wallet.dbo.Staking_*` family (mirrored to UC as `wallet.bronze_walletdb_staking_*`).
 - Country-eligibility lookup is maintained as a Google Sheet, ingested via Fivetran into `general.bronze_fivetran_google_sheets_staking_countries_classification`.
+- **Dealing-side operational truth (how rewards are calculated and distributed) is owned by [`../domain-staking/SKILL.md`](../domain-staking/SKILL.md)** — that hub covers the four stored procedures (`SP_Staking`, `SP_Staking_Emails`, `SP_Staking_DailyPool`, `SP_Staking_WelcomeEmail`), the eight eligibility gates, the 13-currency catalogue with `IntroDays` / `LiquidityBuffer` / `Distribution_StartDate`, the six-tier `RevShare` ladder (Bronze 0.45 → Diamond 0.90), the `< $1 USD` floor, the `StakingMonthID` 6-vs-7-digit re-run convention, the seven `FailReasonID` codes, and the seven `Mailing_Group` categories. **Route the "HOW" and "WHY CID X" questions there; this sub-skill stays focused on the booked-revenue lens (DDR `Metric = 'StakingLagOneMonth'` rows, 1-month lag, share-lending split).** The two are complementary: domain-staking owns the operational lens; this file owns the revenue-accounting lens. Provenance note added 2026-05-28.

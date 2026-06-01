@@ -1,6 +1,5 @@
 ---
-id: fees-misc-dormant-options-interest
-name: revenue-and-fees-fees-misc-dormant-options-interest
+name: domain-revenue-and-fees
 description: |
   Catch-all for the Other-category fees (DDR RevenueMetricCategoryID = 5) that
   don't fit the trading-side (H.1), MIMO-side (H.2), RevShare-side (H.3), or

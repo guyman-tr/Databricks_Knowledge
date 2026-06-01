@@ -1,6 +1,5 @@
 ---
-id: lp-contracts-and-cogs
-name: "LP Contracts & Cost-of-Goods-Sold (Dealer-Side)"
+name: domain-trading
 description: "Dealer-side hedge plumbing — Liquidity Provider (LP) registry hierarchy (Type → Instance → Account → HedgeServer), per-(provider, instrument) unit/lot conversion ratios, CBH-strategy `Hedge.InstrumentBoundaries` thresholds (276K rows × 39 servers × 13.7K instruments — Open/Close/HRL), direction-aware `ExposureCircuitBreakerThresholds` (12.6K rows), per-(server, instrument) and per-(provider, instrument) and per-(account, instrument) override layers, rolling-futures synthetic-to-contract mapping (68 rows × 45 synthetics × 53 contracts), multi-account routing allowlist (95.5K rows). LP catalog: 145 distinct provider types and 187 instances spanning forex CFD (FXCM, FD, BMFN, Currenex, GFT, Saxo), equities (FD Stocks, IB, GS, JPM, Marex-OMS, IEX, ICE), OMS aggregators (OMS, MarketMakerHBC, JaneStreet, Wintermute, Citadel, Jump, Virtu), crypto (BitStamp, Kraken, Coinbase, B2C2, Cumberland, Genesis, Galaxy, Talos×), staking, and Bloomberg/QuantHouse/Vision/ICE pricing-only sources. **This is the COGS / hedge-cost-of-trading view**, the mirror image of `domain-revenue-and-fees`."
 triggers:
   - LP contract

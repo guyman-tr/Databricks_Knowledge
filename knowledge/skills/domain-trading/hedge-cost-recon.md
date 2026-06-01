@@ -1,6 +1,5 @@
 ---
-id: hedge-cost-recon
-name: "Hedge Cost Reconstruction (Dealer-Side, Canonical)"
+name: domain-trading
 description: "Canonical hedge-cost (HC) source for the trading platform. Anchored on `main.bi_dealing_stg.bi_output_dealing_HC_auto_agent_v1` — produced by the `HedgeCostAgent` daily pipeline and refreshed every morning (~1.65M rows across 9 asset classes, latest data t-1). Implements the formula **`Hedge_Cost = Client_Zero − Account_PnL − LP_Financing`** for every (asset class × instrument × day) combination. Covers all eToro trading asset classes: CFD Stocks, CFD FX (ICC), CFD Commodities (ICC), CFD Indices (ICC), CFD ETF/Futures, Real Stocks, Crypto CFD, Crypto Real, Crypto Nostro. The 26-column output carries hedge cost plus the underlying components used to compute it: client and LP holdings, commission, overnight fees, ticket fees, financing, dividends, rollover, FX hedging PnL, and EOD prices. **This is the definitive HC answer for ANY question about cost of hedging** — shallow questions (asset class totals, ICC monthly HC) go straight to this table in seconds; deep questions (why is HC so high on a specific instrument? was an anomaly auto-corrected?) require reading the `eToro/HedgeCostAgent` repo's `core/DECISION_TREE.md`, `core/AUTO_RULES.md`, and `core/ACCOUNT_PNL.md` for methodology. Complements `domain-revenue-and-fees` — together they answer **net** trading-revenue questions."
 triggers:
   - hedge cost

@@ -1,6 +1,5 @@
 ---
-id: revenue-spaceship
-name: revenue-and-fees-revenue-spaceship
+name: domain-revenue-and-fees
 description: |
   Thin routing skill for Spaceship-revenue questions. Spaceship is eToro's
   Australian acquired investment platform — Super (superannuation), Voyager
@@ -10,7 +9,7 @@ description: |
   weekly KPI dashboard.
 
   AUTHORITATIVE SOURCE: the DataPlatform DE workspace skill at
-  /Workspace/.assistant/skills/spaceship (6 sub-files: SKILL.md, source-tables.md,
+  /Workspace/.assistant/skills/domain-spaceship (6 sub-files: SKILL.md, source-tables.md,
   metric-definitions.md, views-architecture.md, dashboard-queries.md,
   data-patterns.md). That skill carries all the Spaceship-specific quirks:
   per-product warnings (Super signed aud_amount, Money classification rules),
@@ -40,7 +39,7 @@ primary_objects:
   - main.spaceship.bronze_spaceship_analytics_fct_money_transactions # Money cash-wallet transactions
   - main.bi_db.bronze_sub_accounts_accounts                          # GCID bridge (providerName='Spaceship')
 authoritative_external_skills:
-  - "/Workspace/.assistant/skills/spaceship"   # DataPlatform DE skill — 6 sub-files, fully authoritative
+  - "/Workspace/.assistant/skills/domain-spaceship"   # DataPlatform DE skill — 6 sub-files, fully authoritative
 out_of_scope:
   - eToro-native trading revenue (FullCommission, Rollover, Ticket etc.) → trading-revenue-and-fees.md
   - eToro-native MIMO fees → fees-deposit-withdraw-fx.md
@@ -76,7 +75,7 @@ This sub-skill is **deliberately thin**. Spaceship has its own dedicated DataPla
 
 ## The bottom line
 
-For ANY substantive Spaceship question — fees, AUM, FTDs, F30DD, FUM, Funded Accounts, Net Deposits, Registrations, weekly dashboard, ETL, source tables, metric definitions, AUD conversion, weekend fill-forward, timezone handling — **load `/Workspace/.assistant/skills/spaceship`**. It owns everything Spaceship-specific.
+For ANY substantive Spaceship question — fees, AUM, FTDs, F30DD, FUM, Funded Accounts, Net Deposits, Registrations, weekly dashboard, ETL, source tables, metric definitions, AUD conversion, weekend fill-forward, timezone handling — **load `/Workspace/.assistant/skills/domain-spaceship`**. It owns everything Spaceship-specific.
 
 This file exists to:
 
@@ -104,7 +103,7 @@ This file exists to:
 
 ## When you should NOT use this file
 
-If the question is anything more than "Spaceship exists and lives in `main.spaceship` and rolls up via `v_spaceship_*`", load the DE workspace skill directly. Do not try to answer Spaceship-specific questions from this file — go to `/Workspace/.assistant/skills/spaceship`.
+If the question is anything more than "Spaceship exists and lives in `main.spaceship` and rolls up via `v_spaceship_*`", load the DE workspace skill directly. Do not try to answer Spaceship-specific questions from this file — go to `/Workspace/.assistant/skills/domain-spaceship`.
 
 ## Cluster provenance
 

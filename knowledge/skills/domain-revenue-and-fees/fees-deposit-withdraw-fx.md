@@ -1,6 +1,5 @@
 ---
-id: fees-deposit-withdraw-fx
-name: revenue-and-fees-fees-deposit-withdraw-fx
+name: domain-revenue-and-fees
 description: |
   MIMO-side fees — fees earned on money movement INTO and OUT of customer
   accounts. Covers the four DDR metrics in the MIMO RevenueMetricCategory
