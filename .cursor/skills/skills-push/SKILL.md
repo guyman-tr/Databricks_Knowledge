@@ -1,6 +1,6 @@
 ---
 name: skills-push
-description: Push one or more authored skills from this workspace (knowledge/skills/<id>/SKILL.md) to a fresh PR on the eToro/DataPlatform repo (databricks/data-skills/skills/<id>/SKILL.md). Use when the user says /skills-push, "push the skill", "push these skills", "ship to data-skills", "open PR for skill", "send for review", "push to dataplatform", "deploy skill for review", or references a Jira ticket key (DA-NNNN, DD-NNNN, DEI-NNNN, DSM-NNNN, etc.) alongside a skill id. If no ticket is provided, offers to create one via the jira-da skill before the CI gate runs. Validates every skill against the canonical skill-creator CI checks before any git operation, opens the PR with explicit --base/--head/--title/--body-file to avoid the title-vs-branch swap, then renames the PR title to splice the GitHub-assigned PR number into the ticket prefix (TICKET_NNNN <rest-of-title>) for easier monitoring across the dashboard / inbox / notifications, and never merges.
+description: Push one or more authored skills from this workspace (knowledge/skills/<id>/SKILL.md) to a fresh PR on the eToro/DataPlatform repo (databricks/data-skills/skills/<id>/SKILL.md). Use when the user says /skills-push, "push the skill", "push these skills", "ship to data-skills", "open PR for skill", "send for review", "push to dataplatform", "deploy skill for review", or references a Jira ticket key (DA-NNNN, DD-NNNN, DEI-NNNN, DSM-NNNN, etc.) alongside a skill id. If no ticket is provided, offers to create one via the jira-da skill before the CI gate runs. Validates every skill against the canonical skill-creator CI checks before any git operation, opens the PR with explicit --base/--head/--title/--body-file to avoid the title-vs-branch swap, then renames the PR title to a strict full-slug form `<TICKET>_<NNNN>_<slug>` (no spaces, no colons, no plus signs, no special characters of any kind — only `[A-Z]{2,5}-\d+`, single `_` separators, lower-case `[a-z0-9_]+` body) so it passes the eToro/DataPlatform `pr-title-checker.yml` regex on the first try, and never merges.
 ---
 
 # /skills-push — Push workspace skills to DataPlatform for review
@@ -18,10 +18,11 @@ Skill content authored in `Databricks_Knowledge/knowledge/skills/<id>/` must be 
 | Jira ticket | `[A-Z]{2,5}-\d+` | `DA-47`, `DD-1234`, `DEI-3745` | Yes (or create via Phase 0.5) |
 | Branch slug | `[a-z0-9_]+` (snake_case) | `add_mimo_subskill` | Yes (derive from skill ids if absent) |
 | Skill ids | one or more kebab-case folder names under `knowledge/skills/` | `mimo-panel-and-ddr deposits-and-withdrawals` | Yes (at least 1) |
-| Commit subject | human title with spaces | `Add MIMO panel + DDR sub-skill` | Auto-built if absent |
+| Commit subject | human title with spaces (used for git history) | `Add MIMO panel + DDR sub-skill` | Auto-built if absent |
+| PR title slug | `[a-z0-9_]+` (lowercased, alphanumerics-only, single `_` separators) | `add_mimo_panel_ddr_sub_skill` | Derived from commit subject in Phase 7 step 5 |
 | PR body | markdown blob | (multi-line) | Auto-built if absent |
 
-The fully-built branch name is e.g. `DA-47_add_mimo_subskill`. The fully-built commit subject is `DA-47 Add MIMO panel + DDR sub-skill`. **These two strings must never be equal.**
+The fully-built branch name is e.g. `DA-47_add_mimo_subskill`. The fully-built commit subject is `DA-47 Add MIMO panel + DDR sub-skill` (used as `-m` for `git commit` and as the *initial* PR title for `gh pr create`). The fully-built **renamed** PR title is `DA-47_3897_add_mimo_panel_ddr_sub_skill` (slugified, NNNN-spliced, no spaces, no `+`, no `:`). **Branch, commit subject, and final PR title must all be different strings.**
 
 If anything is missing or ambiguous, use AskQuestion ONCE to gather the missing pieces — don't loop the user through five separate questions. The Jira ticket is the one input the workflow can self-serve (via Phase 0.5).
 
@@ -363,32 +364,56 @@ If any of the three checks fails:
 - Do NOT auto-fix — the swap may be benign or a sign of a deeper issue.
 - AskQuestion: `Close this PR and retry` / `Edit it manually via gh pr edit` / `Accept as-is`. Default: `Edit manually`.
 
-5. **Rename the PR title to splice the PR number into the ticket prefix** (mandatory — easier monitoring across the dashboard / inbox / notifications). The number is only known after `gh pr create` returns, so the title must be patched after creation.
+5. **Rename the PR title to a strict full-slug form** (mandatory — eToro/DataPlatform's `pr-title-checker.yml` rejects spaces and most punctuation, and the user has standardised on the slug form for cross-PR scan-readability). The PR number is only known after `gh pr create` returns, so the title must be patched after creation.
 
-   Title format: `<TICKET>_<NNNN> <rest-of-subject>` — e.g. `DA-47_3897 Add MIMO panel + DDR sub-skill`. NOT `#3897 DA-47 ...` (rejected pattern, May 2026: hash-prefix breaks scan-readability and duplicates the leading-token role with the ticket key). The PR number replaces nothing in the commit subject — it slots between the ticket and the human title separated by an underscore on the left and a space on the right, so the resulting prefix `DA-47_3897` reads as a single compound identifier.
+   **Title format:** `<TICKET>_<NNNN>_<slug>` where:
+   - `<TICKET>` matches `^[A-Z]{2,5}-\d+$` (e.g. `DA-47`, `DD-1234`, `DEI-3745`).
+   - `<NNNN>` is the GitHub-assigned PR number (1+ digits, no `#`).
+   - `<slug>` matches `^[a-z0-9]+(_[a-z0-9]+)*$` — lowercase alphanumerics with single `_` separators only. **No spaces. No `+`. No `:`. No `/`. No `(` `)`. No quotes. No diacritics.** Anything that is not `[a-z0-9]` becomes a single `_`.
+   - The full title matches `^[A-Z]{2,5}-\d+_\d+_[a-z0-9]+(_[a-z0-9]+)*$` and is between 15 and 100 characters inclusive.
+
+   **Reference:** `DA-47_3897_add_mimo_panel_ddr_sub_skill` ✓. NOT `DA-47_3897 Add MIMO panel + DDR sub-skill` (spaces + `+` rejected). NOT `#3897 DA-47 ...` (hash prefix rejected). NOT `DA-47-3897-add-mimo-panel` (kebab-case body rejected — eToro convention is snake_case body after the kebab `<TICKET>` prefix).
 
    Use `gh api PATCH` directly — `gh pr edit` is unreliable on the eToro/DataPlatform org because it issues a GraphQL `repository.pullRequest.projectCards` query that fails on the org's classic-projects deprecation, returning exit 1 even when the rename would otherwise succeed. The REST `PATCH /repos/{owner}/{repo}/pulls/{number}` path has no such dependency:
 
 ```powershell
 $prNumber = $pr.number
 
-# Splice <NNNN> into the ticket prefix:
-#   $CommitSubj = "DA-47 Add MIMO panel + DDR sub-skill"
-#   $NumberedTitle = "DA-47_3897 Add MIMO panel + DDR sub-skill"
-$rest          = $CommitSubj -replace "^$([regex]::Escape($Ticket))\s+", ""
-$NumberedTitle = "$Ticket`_$prNumber $rest"
+# Step 5a - strip the ticket prefix from the commit subject to get the human title.
+#   $Ticket      = "DA-47"
+#   $CommitSubj  = "DA-47 Add MIMO panel + DDR sub-skill"
+#   $rawHuman    = "Add MIMO panel + DDR sub-skill"
+$rawHuman = $CommitSubj -replace "^$([regex]::Escape($Ticket))\s+", ""
 
-# Sanity: prefix MUST equal "<Ticket>_<prNumber>" exactly.
-if ($NumberedTitle -notmatch "^$([regex]::Escape($Ticket))_$prNumber\s") {
-    throw "Title-splice produced unexpected prefix: '$NumberedTitle'"
+# Step 5b - slugify: lowercase, replace runs of non-[a-z0-9] with single `_`, trim edges.
+#   $rawHuman    = "Add MIMO panel + DDR sub-skill"
+#   $slug        = "add_mimo_panel_ddr_sub_skill"
+$slug = $rawHuman.ToLowerInvariant() -replace '[^a-z0-9]+', '_'
+$slug = $slug.Trim('_')
+
+# Step 5c - assemble + truncate to the 100-char `pr-title-checker.yml` ceiling.
+#   Leave room for the prefix; if truncation lands inside a word, trim the trailing `_`.
+$prefix      = "${Ticket}_${prNumber}_"
+$maxSlugLen  = 100 - $prefix.Length
+if ($slug.Length -gt $maxSlugLen) {
+    $slug = $slug.Substring(0, $maxSlugLen).TrimEnd('_')
+}
+$NumberedTitle = "${prefix}${slug}"
+
+# Step 5d - sanity: must match the strict full-slug regex AND be 15..100 chars.
+if ($NumberedTitle -notmatch "^[A-Z]{2,5}-\d+_\d+_[a-z0-9]+(_[a-z0-9]+)*$") {
+    throw "Title-slug failed regex: '$NumberedTitle'"
+}
+if ($NumberedTitle.Length -lt 15 -or $NumberedTitle.Length -gt 100) {
+    throw "Title-slug length $($NumberedTitle.Length) is outside [15, 100]: '$NumberedTitle'"
 }
 
-# REST PATCH — no projects-classic GraphQL dependency, works on every PR.
+# Step 5e - REST PATCH (no projects-classic GraphQL dependency, works on every PR).
 $patchBody = @{ title = $NumberedTitle } | ConvertTo-Json
 $patchBody | gh api -X PATCH "/repos/eToro/DataPlatform/pulls/$prNumber" --input - 2>&1 | Out-Null
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Warning "PR title rename failed (exit $LASTEXITCODE) - PR opened but ticket+number prefix not applied. Manual fix:"
+    Write-Warning "PR title rename failed (exit $LASTEXITCODE) - PR opened but full-slug title not applied. Manual fix:"
     Write-Warning "  '@{ title = ''$NumberedTitle'' } | ConvertTo-Json | gh api -X PATCH /repos/eToro/DataPlatform/pulls/$prNumber --input -'"
 } else {
     $prAfter = gh pr view $prNumber --json title | ConvertFrom-Json
@@ -398,7 +423,9 @@ if ($LASTEXITCODE -ne 0) {
 }
 ```
 
-The renamed title is what the user sees in `gh pr list`, the GitHub Actions comment trail, the PR sidebar, and email notifications. The `$CommitSubj` (without the PR number) remains the git commit message so commit history stays clean across rebases. Keep `$CommitSubj` as the variable used everywhere downstream of this step EXCEPT the Phase 8 summary, which prints `$NumberedTitle` for the `pr title:` row.
+The renamed title is what the user sees in `gh pr list`, the GitHub Actions comment trail, the PR sidebar, and email notifications. **The `$CommitSubj` (with spaces and special chars) remains the git commit message** so commit history stays human-readable across rebases — the slug is a PR-title-only artefact. Keep `$CommitSubj` as the variable used everywhere downstream of this step EXCEPT the Phase 8 summary, which prints `$NumberedTitle` for the `pr title:` row.
+
+> **Why a full slug, not just `<TICKET>_<NNNN> <human title>`?** Tested on PR #3872 (DA-79, 2026-06-02): the eToro/DataPlatform repo's `.github/workflows/pr-title-checker.yml` rejects the trailing free-text portion when it contains characters outside `[A-Za-z0-9_\-]`. Specifically `DA-79_3872 Phase D complete: 6 hubs + 5 refreshes + cross-cutting contract` failed CI on the colon and plus signs. The user explicit-formed the rule as: "no spaces — kebab in the DA-xx then underscores, no special cases and all that jazz", i.e. kebab inside the `<TICKET>` token (already enforced by the Jira key shape), underscores everywhere else, no special characters. The full-slug form is the only shape that passes the checker on the first push without manual editing.
 
 > **Why not `gh pr edit`?** Tested on PR #3872 (DA-79, 2026-06-01): `gh pr edit 3872 --title "..."` returned exit 1 with `GraphQL: Projects (classic) is being deprecated... (repository.pullRequest.projectCards)` and the title was NOT changed. `gh api -X PATCH /repos/eToro/DataPlatform/pulls/3872 --input -` with a `{title: ...}` body succeeded immediately. The classic-projects GraphQL field is fetched by `gh pr edit` as part of its pre-flight context query; the REST PATCH has no such pre-flight.
 
@@ -415,7 +442,7 @@ Pushed:
   ticket:        DA-47   (link: https://etoro-jira.atlassian.net/browse/DA-47)
   branch:        DA-47_add_mimo_subskill
   commit:        DA-47 Add MIMO panel + DDR sub-skill
-  pr title:      DA-47_12345 Add MIMO panel + DDR sub-skill
+  pr title:      DA-47_12345_add_mimo_panel_ddr_sub_skill
   pr url:        https://github.com/eToro/DataPlatform/pull/12345
   base:          dev
   skills:        mimo-panel-and-ddr, deposits-and-withdrawals
@@ -423,7 +450,7 @@ Pushed:
 Reviewer will merge. Do NOT merge from here.
 ```
 
-The `_12345` infix on `pr title:` is spliced by Phase 7 step 5 after the GitHub-assigned PR number is known, replacing the bare ticket prefix from `$CommitSubj`. The `commit:` row deliberately keeps the bare-ticket form — git commit messages stay clean and reusable across rebases (commit subject must not depend on a PR number that may not exist yet, e.g. for cherry-picks or local branches before push).
+The `pr title:` row is the slugified, NNNN-spliced form built by Phase 7 step 5 — note it has NO spaces, NO `+`, NO `:`, and is fully `[A-Z]{2,5}-\d+_\d+_[a-z0-9_]+`. The `commit:` row deliberately keeps the original spaced-and-punctuated subject — git commit messages stay human-readable across rebases (and the commit subject must not depend on a PR number that may not exist yet, e.g. for cherry-picks or local branches before push).
 
 If a stash was created in Phase 2 step 2, restore it now: `git checkout dev` then `git stash pop` (silently — don't break the summary).
 
@@ -445,7 +472,9 @@ If a stash pop conflicts, leave it stashed and tell the user `Stash kept — see
 | Phase 6 push fails (non-FF) | Someone pushed to the branch first | Abort. Tell user to investigate manually. |
 | Phase 7 gh not authenticated | Token expired | Tell user `gh auth login`, abort |
 | Phase 7 head/base/title mismatch | The classic swap | Stop. Offer manual edit via `gh pr edit`. Do NOT proceed. |
-| Phase 7 step 5 title-rename fails | gh CLI outage, network blip, REST API rate limit, or insufficient permissions on the PR | Print the manual one-liner: `'@{ title = "<TICKET>_<prNumber> <rest-of-subject>" } | ConvertTo-Json | gh api -X PATCH /repos/eToro/DataPlatform/pulls/$prNumber --input -'`. The PR is opened and CI is running — only the cosmetic ticket+number prefix is missing. Do NOT abort the workflow; continue to Phase 8 with the bare-ticket title. |
+| Phase 7 step 5 title-rename fails | gh CLI outage, network blip, REST API rate limit, or insufficient permissions on the PR | Print the manual one-liner: `'@{ title = "<TICKET>_<prNumber>_<lowercase_underscore_slug>" } | ConvertTo-Json | gh api -X PATCH /repos/eToro/DataPlatform/pulls/$prNumber --input -'`. The PR is opened and CI is running but the `pr-title-checker.yml` step will FAIL on the bare-ticket title (it has spaces). Tell the user that CI red on PR-Title-Check is fixable in 5 seconds via the manual PATCH; do NOT abort the workflow, continue to Phase 8. |
+| Phase 7 step 5 slug regex throws | Commit subject contained only special characters (e.g. just `!@#$`), so slugify produced an empty string | Tell the user the commit subject must contain at least one alphanumeric word. Abort and ask for a new `$CommitSubj`. (This is theoretically impossible if Phase 0 sanity-checks `$CommitSubj` matches `^[A-Z]{2,5}-\d+ \S`.) |
+| Phase 7 step 5 slug truncated mid-acronym | Commit subject is unusually long (e.g. > 80 chars after the ticket prefix) | The truncation is correct behaviour — the 100-char ceiling is a hard CI rule. Report the truncated form to the user; if they want a different slug, they can rerun the PATCH manually with their preferred wording. |
 | Phase 7 CI red on the merged-DataPlatform-corpus (unrelated skill broken) | DE skill-creator / CI rollout out of sync | This is not your PR's failure. Report which skill broke CI, leave the PR open, and tell the user. Do NOT try to fix the upstream skill from this workflow. |
 | Network error mid-flight | Transient | Retry once with backoff; abort on second failure |
 
