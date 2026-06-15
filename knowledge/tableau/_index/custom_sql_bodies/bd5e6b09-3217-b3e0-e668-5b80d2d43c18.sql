@@ -1,0 +1,1 @@
+SELECT * FROM #TP_Balance2_Final

@@ -1,0 +1,1 @@
+SELECT * FROM BI_DEV.dbo.BI_DB_RM_KPI_Dashboard bd

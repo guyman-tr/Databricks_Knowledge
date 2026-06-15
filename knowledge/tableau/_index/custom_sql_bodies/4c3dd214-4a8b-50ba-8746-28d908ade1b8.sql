@@ -1,0 +1,1 @@
+SELECT * FROM EXW_Wallet.EXW_PriceDaily epd WHERE epd.FullDate = <[Parameters].[Parameter 1]>

@@ -1,0 +1,1 @@
+select * from [BI_DB_dbo].[External_Fivetran_google_sheets_employee_program_cid_list]

@@ -1,0 +1,1 @@
+select current_date()-1 as EndDate , date_add(date_trunc('month', current_date()), -1) AS LastDatePrevMonth

@@ -1,0 +1,2 @@
+select dateadd(YEAR, 1, a.date) as 2026date , TicketFees, * from bi_dealing_stg.bi_output_dealing_premier_clients_2026_historical_view a
+where a.cid in (select cid from bi_dealing_stg.bi_output_dealing_premier_customer_2026_new)

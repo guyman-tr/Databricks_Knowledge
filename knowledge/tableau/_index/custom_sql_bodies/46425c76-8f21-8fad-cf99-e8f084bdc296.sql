@@ -1,0 +1,1 @@
+select * from bi_dealing_stg.bi_output_dealing_vipchurn

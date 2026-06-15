@@ -1,0 +1,2 @@
+SELECT * 
+FROM #finalTable t

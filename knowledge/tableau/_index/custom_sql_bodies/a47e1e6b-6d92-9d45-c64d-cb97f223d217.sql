@@ -1,0 +1,1 @@
+select * from #Client_Distribution_Weekly_Final_Pivot

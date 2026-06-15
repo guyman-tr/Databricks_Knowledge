@@ -1,0 +1,1 @@
+SELECT * FROM [BI_DB].[dbo].[BI_DB_Daily_Club_From_fsc]

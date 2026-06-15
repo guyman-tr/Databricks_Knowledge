@@ -1,0 +1,3 @@
+select *
+from
+risk.risk_output_rm_tables_concentration_instrument_gross_op_nop_instrument_cfd

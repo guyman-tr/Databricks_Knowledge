@@ -1,0 +1,1 @@
+select * from bi_output.nmi_by_portfoliopi_new

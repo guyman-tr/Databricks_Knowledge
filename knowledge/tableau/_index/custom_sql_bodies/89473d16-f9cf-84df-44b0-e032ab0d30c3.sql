@@ -1,0 +1,1 @@
+SELECT * FROM  #Client_Distribution_Daily_Final_Pivot

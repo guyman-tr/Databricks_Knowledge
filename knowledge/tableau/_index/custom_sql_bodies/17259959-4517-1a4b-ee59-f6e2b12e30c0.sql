@@ -1,0 +1,2 @@
+select CountryID,MarketingRegionManualName as NewMarketingRegion
+from DWH_dbo.Dim_Country

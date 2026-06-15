@@ -1,0 +1,1 @@
+SELECT * FROM BI_DB_Affiliates_VerificationSLA

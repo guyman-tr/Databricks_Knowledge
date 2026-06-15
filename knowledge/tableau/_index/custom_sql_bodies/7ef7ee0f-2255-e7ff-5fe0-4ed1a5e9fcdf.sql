@@ -1,0 +1,1 @@
+select * from bi_output_stg.bi_output_finance_tables_bi_db_sharelending_summaryregulation

@@ -1,0 +1,1 @@
+select * from [dbo].[BI_DB_AML_US_ExpiredDocs]

@@ -1,0 +1,65 @@
+SELECT CID
+	  ,dc.GCID
+      ,q0.CurrentClub as ClubLevelName
+      ,q0.CurrentClub NewClub 
+      ,q0.Date as DateFirstTimeinClub
+      ,dc.UserName
+      ,dc.FirstName
+      ,Rtrim(dl.Name) as Language
+	  ,dc1.Name Country
+	  ,dc.Email
+	  ,CASE WHEN  dc1.CountryID IN (
+16
+,31
+,36
+,44
+,93
+,96
+,97
+,104
+,111
+,120
+,123
+,136
+,234
+,183
+,190
+,192
+,199
+,202
+,226
+,12
+,146
+) THEN 1 ELSE 0 END IsValidCountry
+FROM
+(
+SELECT cclo.CID
+      ,cclo.CurrentClub
+	  ,cclo.Date
+	  ,ROW_NUMBER() OVER (PARTITION BY CID ORDER BY cclo.Date DESC) rn
+FROM BI_DB_dbo.BI_DB_ClubChangeLogProduct cclo WITH (NOLOCK)
+WHERE cclo.CurrentClub  IN ('Platinum','Platinum Plus','Diamond')
+AND NOT EXISTS
+(
+SELECT *
+FROM BI_DB_dbo.BI_DB_ClubChangeLogProduct ccl 
+WHERE 
+ccl.CID = cclo.CID
+AND 
+ccl.CurrentClub  IN ('Platinum','Platinum Plus','Diamond')
+AND ccl.Date <<[Parameters].[Parameter 1]>
+)
+AND CONVERT(char(6),cclo.Date,112) = CAST(FORMAT(CAST(<[Parameters].[Parameter 1]> AS DATE),'yyyyMM') as INT)
+)q0
+INNER JOIN DWH_dbo.[Dim_Customer] dc 
+ON q0.CID = dc.RealCID
+INNER JOIN DWH_dbo.[Dim_Language] dl 
+ON dc.LanguageID = dl.LanguageID
+INNER JOIN DWH_dbo.[Dim_Country] dc1 
+ON dc.CountryID = dc1.CountryID
+WHERE q0.rn = 1
+AND dc.IsDepositor = 1
+--AND dc.AccountTypeID NOT IN (6,15)
+AND ISNULL(dc.AccountStatusID,1) = 1
+AND NOT (dc.CountryID = 102 AND q0.CurrentClub = 'Platinum')
+AND dc.CountryID!= 107

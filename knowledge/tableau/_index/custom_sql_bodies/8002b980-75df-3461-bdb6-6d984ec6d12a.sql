@@ -1,0 +1,1 @@
+select * from #final where ClosureTime>='2024-06-01'

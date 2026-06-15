@@ -1,0 +1,1 @@
+select * from  bi_output.bi_output_finance_tables_bi_db_share_lending_allocation

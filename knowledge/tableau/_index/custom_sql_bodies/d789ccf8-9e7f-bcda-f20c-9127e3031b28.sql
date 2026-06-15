@@ -1,0 +1,1 @@
+select * from  #TradingRev_Final

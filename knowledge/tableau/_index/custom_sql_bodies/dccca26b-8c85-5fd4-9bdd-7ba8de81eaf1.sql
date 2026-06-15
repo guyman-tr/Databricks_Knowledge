@@ -1,0 +1,1 @@
+select * from BI_DB_AML_US_Single_approved_DepositMore10K

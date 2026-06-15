@@ -1,0 +1,1 @@
+SELECT c.CountryID, Name AS Country FROM DWH.dbo.Dim_Country c WITH (NOLOCK)

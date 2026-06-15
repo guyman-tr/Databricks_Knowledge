@@ -1,0 +1,1 @@
+SELECT * FROM BI_DB_AML_US_100K_Yearly_Limit

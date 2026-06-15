@@ -1,0 +1,1 @@
+SELECT * FROM #final_Both_Campaigns fbc

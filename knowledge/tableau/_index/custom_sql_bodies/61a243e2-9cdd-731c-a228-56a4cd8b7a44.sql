@@ -1,0 +1,1 @@
+SELECT * FROM mf_funnel_events_all

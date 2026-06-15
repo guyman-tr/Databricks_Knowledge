@@ -1,0 +1,1 @@
+SELECT * FROM #Trx_Aggregated_After_C2F_ByCID

@@ -1,0 +1,1 @@
+select * from #eTM_Balance2_Final

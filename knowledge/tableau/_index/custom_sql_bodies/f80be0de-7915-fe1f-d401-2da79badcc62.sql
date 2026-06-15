@@ -1,0 +1,1 @@
+SELECT  * FROM BI_DB_Operations_Monthly_KPIs_Wires omkw

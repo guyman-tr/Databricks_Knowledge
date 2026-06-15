@@ -1,0 +1,1 @@
+SELECT * FROM BI_DB_dbo.BI_DB_Affiliate_Fraud_Loss bdafl

@@ -1,0 +1,63 @@
+SELECT Q0.RealCID
+,ISNULL([2012]/100.00,0) AS [2012]
+,ISNULL([2013]/100.00,0) AS [2013]
+,ISNULL([2014]/100.00,0) AS [2014]
+,ISNULL([2015]/100.00,0) AS [2015]
+,ISNULL([2016]/100.00,0) AS [2016]
+,ISNULL([2017]/100.00,0) AS [2017]
+,ISNULL([2018]/100.00,0) AS [2018]
+,ISNULL([2019]/100.00,0) AS [2019]
+,ISNULL([2020]/100.00,0) AS [2020]
+,ISNULL([2021]/100.00,0) AS [2021]
+,ISNULL([2022]/100.00,0) AS [2022]
+,ISNULL([2023]/100.00,0) AS [2023]
+,ISNULL([2024]/100.00,0) AS [2024]
+,ISNULL([2025]/100.00,0) AS [2025]
+,ISNULL([2026]/100.00,0) AS [2026]
+,ISNULL(Avg_Yearly_Gain/100.00,0) AS Avg_Yearly_Gain
+,ISNULL(TotalReturn/100.00,0) AS TotalReturn
+,MTD
+,QTD
+FROM (
+	SELECT RealCID
+		  ,Year
+		  ,Gain
+FROM BI_DB_dbo.BI_DB_PI_Gain
+WHERE  TimeFarme='Y' )yg1
+	PIVOT (
+	SUM(Gain)
+	FOR [Year] IN ([2012],[2013],[2014],[2015],[2016],[2017],[2018],[2019] ,[2020],[2021],[2022],[2023],[2024],[2025],[2026] )
+	) Q0
+JOIN  
+ (SELECT RealCID
+,AVG(Gain) Avg_Yearly_Gain
+FROM BI_DB_dbo.BI_DB_PI_Gain
+WHERE TimeFarme='Y'
+GROUP BY RealCID
+) agv 
+on Q0.RealCID=agv.RealCID
+JOIN
+
+(
+SELECT RealCID 
+,100*((CASE
+			WHEN SUM (CASE WHEN 1+Gain/100 = 0 THEN 1 END) > 0 THEN 0
+			WHEN SUM (CASE WHEN 1+Gain/100 < 0 THEN -1 END) % 2 < 0 THEN -1 
+			ELSE 1 
+			END * (EXP(SUM(LOG(ABS((NULLIF(1+Gain/100, 0))))))))-1) TotalReturn
+FROM BI_DB_dbo.BI_DB_PI_Gain
+WHERE TimeFarme='Y'
+GROUP BY RealCID
+) TotalReturn 
+on Q0.RealCID=TotalReturn.RealCID
+LEFT JOIN
+(SELECT RealCID
+,SUM(CASE WHEN bdpg.TimeFarme='M' THEN bdpg.Gain END)/100 AS 'MTD'
+,SUM(CASE WHEN bdpg.TimeFarme='Q' THEN bdpg.Gain END )/100 AS 'QTD'
+FROM BI_DB_dbo.BI_DB_PI_Gain bdpg
+WHERE  bdpg.Year=YEAR(GETDATE() - 1) 
+AND bdpg.Month= (SELECT MAX(Month) FROM BI_DB_dbo.BI_DB_PI_Gain bdpg WHERE  bdpg.Year=YEAR(GETDATE() - 1))
+AND TimeFarme IN ('M','Q')
+GROUP BY RealCID
+) MTD
+on Q0.RealCID=MTD.RealCID

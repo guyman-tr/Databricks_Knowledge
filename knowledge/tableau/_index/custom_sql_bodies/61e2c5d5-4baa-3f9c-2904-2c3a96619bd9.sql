@@ -1,0 +1,1 @@
+SELECT *,(getdate()-1) AS Update_Date FROM #etoromalta01

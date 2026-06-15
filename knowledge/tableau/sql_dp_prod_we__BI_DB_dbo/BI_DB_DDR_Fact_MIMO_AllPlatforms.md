@@ -13,8 +13,8 @@
 
 ## Summary
 
-- Custom SQL queries: **9**
-- Downstream workbooks: **9**
+- Custom SQL queries: **16**
+- Downstream workbooks: **12**
 - Downstream calculated fields: **46**
 
 ## Custom SQL queries referencing this table
@@ -610,19 +610,774 @@ GROUP BY
   , dft.Name
 ```
 
+### 10. Custom SQL Query
+
+- Tableau id: `423fb46a-9186-2a52-8feb-52e490efefee`
+
+```sql
+SELECT TableName, DateKey as DateID
+FROM 
+(
+SELECT 'BI_DB_DDR_Fact_AUM' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform) ddr -- select min(DateID) from BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20201226
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Fact_MIMO_All_Platforms' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_Non_Revenue_Generating_Actions' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_PnL' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20170102
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_Trading_Volumes_And_Amounts' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20170423
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Customer_Daily_Status' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Customer_Periodic_Status' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+) a
+```
+
+### 11. Custom SQL Query
+
+- Tableau id: `65c0d57b-f75c-f153-8c11-686946d621ad`
+
+```sql
+SELECT 
+	m.MIMOPlatform,
+	m.Date,
+	r.Name as Regulation,
+	count(m.RealCID) as CountTotalFTDs,
+    SUM(AmountUSD) AS SumTotalFTDs
+FROM 
+	[BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_AllPlatforms] m
+LEFT JOIN 
+	DWH_dbo.Dim_Customer dc on dc.RealCID = m.RealCID
+LEFT JOIN 
+	DWH_dbo.Dim_Regulation r on r.ID = dc.RegulationID
+where 
+	m.MIMOAction = 'Deposit'
+	and m.IsPlatformFTD = 1
+	and m.DateID >= 20170101
+group by    
+	MIMOPlatform,
+	r.Name,
+	m.Date
+```
+
+### 12. Custom SQL Query
+
+- Tableau id: `7c128c3a-f0b7-1c7e-aba7-e8b2e4230c8f`
+
+```sql
+SELECT  	
+m.Date, 	
+count(m.RealCID) as CountTotalFTDs,     
+SUM(AmountUSD) AS SumTotalFTDs 
+FROM  	[BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_AllPlatforms] m 
+LEFT JOIN  	DWH_dbo.Dim_Customer dc on dc.RealCID = m.RealCID 
+LEFT JOIN  	DWH_dbo.Dim_Regulation r on r.ID = dc.RegulationID 
+where  	
+m.MIMOAction = 'Deposit' 	
+and m.IsPlatformFTD = 1 	
+and m.DateID >= 20170101 
+and m.MIMOPlatform = 'TradingPlatform' 
+group by   	m.Date
+```
+
+### 13. Custom SQL Query
+
+- Tableau id: `998983ff-2ce1-1070-de8e-ac203aa32e84`
+
+```sql
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_PnL' AS TableName
+	, 'Compare to FCA netprofit' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	,  sum(so.NetProfit) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (4,5,6,28,40)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.NetProfit) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL ddr
+WHERE ddr.DateID >= CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Non_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA new copy' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, -1 * sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID = 17
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.ActionType = 'NewCopy'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Customer_Daily_Status' AS TableName
+	, 'Compare to dimcustomer ftds' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)  AS DateID
+	,  count(so.RealCID) AS SourceMetric
+FROM DWH_dbo.Dim_Customer  so
+WHERE  so.FirstDepositDate BETWEEN dateadd(MONTH, -1,cast(getdate()-1 AS DATE)) AND cast(GETDATE() AS date)
+GROUP BY CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)
+) a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.TPFirstDeposited ) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA fullcomm' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.TotalFullCommission) AS SourceMetric
+FROM BI_DB_dbo.Function_Revenue_FullCommissions(CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT),  CAST(FORMAT(CAST(getdate() AS DATE),'yyyyMMdd') as INT),0) so
+--WHERE  so.DateID BETWEEN 20250325 AND
+--AND so.ActionTypeID = 7
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND Metric = 'FullCommission'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_AllPlatforms' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+AND ddr.MIMOPlatform = 'TradingPlatform'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_AUM' AS TableName
+	, 'Compare to Vliabilities' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT vl.DateID
+	, sum(vl.NOP) AS SourceMetric
+FROM DWH_dbo.V_Liabilities vl
+WHERE  vl.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY vl.DateID
+)a
+LEFT JOIN 
+(
+SELECT bddfa.DateID
+	, sum (bddfa.NOP) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa
+WHERE bddfa.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY bddfa.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+```
+
+### 14. Custom SQL Query
+
+- Tableau id: `99fb6993-48ba-add1-fc7e-f64d79b12532`
+
+```sql
+SELECT 
+	m.MIMOPlatform,
+	m.Date,
+	r.Name as Regulation,
+	count(m.RealCID) as CountTotalRedeposits,
+    SUM(AmountUSD) AS SumTotalRedeposits
+FROM 
+	[BI_DB_dbo].[BI_DB_DDR_Fact_MIMO_AllPlatforms] m
+LEFT JOIN 
+	DWH_dbo.Dim_Customer dc on dc.RealCID = m.RealCID
+LEFT JOIN 
+	DWH_dbo.Dim_Regulation r on r.ID = dc.RegulationID
+where 
+	m.MIMOAction = 'Deposit'
+	and m.IsPlatformFTD <> 1
+	and m.DateID >= 20170101
+group by    
+	MIMOPlatform,
+	r.Name,
+	m.Date
+```
+
+### 15. Custom SQL Query
+
+- Tableau id: `ab2e61b0-86c1-2e80-b7e2-a458c9746afc`
+
+```sql
+SELECT
+    CAST(a.[Date] AS DATE) AS Occurred_Date,
+    c.Name                  AS CountryName,
+    SUM(CASE WHEN a.MIMOAction = 'Deposit'  THEN a.AmountUSD ELSE 0 END) AS Deposit_From_External_USD,
+    SUM(CASE WHEN a.MIMOAction = 'Withdraw' THEN a.AmountUSD ELSE 0 END) AS Withdraw_To_External_USD
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms a
+INNER JOIN DWH_dbo.Dim_Customer dc
+    ON a.RealCID = dc.RealCID
+INNER JOIN DWH_dbo.Dim_Country c
+    ON dc.CountryID = c.CountryID
+WHERE dc.AccountTypeID = 17
+  AND dc.IsValidCustomer = 1
+  AND a.MIMOAction IN ('Deposit', 'Withdraw')
+  AND a.IsInternalTransfer = 0
+  AND a.IsIBANQuickTransfer = 0
+  AND a.IsTradeFromIBAN = 0
+  AND a.IsCryptoToFiat = 0
+  AND a.MIMOPlatform IN ('eMoney', 'TradingPlatform')
+  AND CAST(a.[Date] AS DATE) >=
+        CASE
+            WHEN DATEADD(YEAR, -1, CAST(GETDATE() AS DATE)) < '2025-11-01'
+                THEN '2025-11-01'
+            ELSE DATEADD(YEAR, -1, CAST(GETDATE() AS DATE))
+        END
+GROUP BY
+    CAST(a.[Date] AS DATE),
+    c.Name
+```
+
+### 16. Custom SQL Query
+
+- Tableau id: `ab486771-aa02-8e53-2a03-8d2c55440e4b`
+
+```sql
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_PnL' AS TableName
+	, 'Compare to FCA netprofit' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	,  sum(so.NetProfit) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (4,5,6,28,40)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.NetProfit) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL ddr
+WHERE ddr.DateID >= CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Non_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA new copy' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, -1 * sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID = 17
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.ActionType = 'NewCopy'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Customer_Daily_Status' AS TableName
+	, 'Compare to dimcustomer ftds' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)  AS DateID
+	,  count(so.RealCID) AS SourceMetric
+FROM DWH_dbo.Dim_Customer  so
+WHERE  so.FirstDepositDate BETWEEN cast(GETDATE()-8 AS Date) AND cast(GETDATE() AS date)
+GROUP BY CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)
+) a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.GlobalFirstDeposited ) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA fullcomm' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.TotalFullCommission) AS SourceMetric
+FROM BI_DB_dbo.Function_Revenue_FullCommissions(CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT),  CAST(FORMAT(CAST(getdate() AS DATE),'yyyyMMdd') as INT),0) so
+--WHERE  so.DateID BETWEEN 20250325 AND
+--AND so.ActionTypeID = 7
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND Metric = 'FullCommission'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_AllPlatforms' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+AND ddr.MIMOPlatform = 'TradingPlatform'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_AUM' AS TableName
+	, 'Compare to Vliabilities' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT vl.DateID
+	, sum(vl.NOP) AS SourceMetric
+FROM DWH_dbo.V_Liabilities vl
+WHERE  vl.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY vl.DateID
+)a
+LEFT JOIN 
+(
+SELECT bddfa.DateID
+	, sum (bddfa.NOP) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa
+WHERE bddfa.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY bddfa.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA TicketFee' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(-1 * so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so 
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID = 35
+AND IsFeeDividend = 4
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND Metric LIKE '%Tick%'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+```
+
 ## Downstream workbooks
 
-| # | Workbook | Project | Owner | Last updated | Tableau id |
-|---|---|---|---|---|---|
-| 1 | sandbox - ddr additional available | Analysts useful reports | Guy Manova | 2025-07-29T08:52:35Z | `9dbe7b13-e32c-306d-c9e1-301aed4d2d54` |
-| 2 | new ddrs monitoring | Archive | Guy Manova | 2025-11-13T08:38:14Z | `8cbf942b-ddd5-b894-a72a-58ad1eb3bc4c` |
-| 3 | new ddrs monitoring - extract for email send | DDR's | Guy Manova | 2026-04-27T14:07:42Z | `1aa494cb-60d7-119c-72e1-77de6539ad1f` |
-| 4 | Account Statement Report - Beta version  | eTM Marketing & CF Reporting | Shachar Rubin | 2026-04-27T08:24:49Z | `21f9618d-6b3c-07c8-cd3a-2ca494267fea` |
-| 5 | Local Currencies MIMO Dashboard  (Beta) | eToro KPIs-Controlled | Shachar Rubin | 2025-11-26T12:53:24Z | `d8b16186-0542-d8da-d2e2-49dcf6861cd3` |
-| 6 | Local Currencies MIMO Dashboard  (Beta) | eToro KPIs-Controlled - Pre Prod | Shachar Rubin | 2026-04-27T08:48:39Z | `7598f6f9-eb61-aa19-9d90-1cbfc6c18e42` |
-| 7 | AML Clients – Trading & eMoney Net Deposits | FCMU | Georgios Kyriakou | 2026-04-27T08:23:57Z | `c992b919-6a3f-54be-525b-907efb8b0c63` |
-| 8 | FTDs to IBAN | Money In | Georgios Kyriakou | 2026-03-13T08:01:07Z | `5c577eb5-baa2-82f0-0e77-28d756d55b36` |
-| 9 | Local Currencies MIMO Dashboard  (Beta) TestVersion  | Sandbox | Shachar Rubin | 2025-08-18T11:41:28Z | `30c47aa7-9aa6-a37c-4b84-6ee0e2f52aee` |
+_Attribution: 9 via direct table-drag, 12 via custom SQL (workbooks can use both paths)._
+
+| # | Workbook | Project | Owner | Via | Last updated | URL |
+|---|---|---|---|---|---|---|
+| 1 | FTDs and Redeposits | 3. MIMO | Georgios Kyriakou | custom_sql | 2026-02-27T08:01:05Z | [open](https://reports.etorocorp.com/#/workbooks/FTDsandRedeposits) |
+| 2 | sandbox - ddr additional available | Analysts useful reports | Guy Manova | custom_sql,direct | 2025-07-29T08:52:35Z | [open](https://reports.etorocorp.com/#/workbooks/sandbox-ddradditionalavailable) |
+| 3 | new ddrs monitoring | Archive | Guy Manova | custom_sql,direct | 2025-11-13T08:38:14Z | [open](https://reports.etorocorp.com/#/workbooks/newddrsmonitoring) |
+| 4 | new ddrs monitoring - extract for email send | DDR's | Guy Manova | custom_sql,direct | 2026-05-31T10:17:06Z | [open](https://reports.etorocorp.com/#/workbooks/newddrsmonitoring-extractforemailsend) |
+| 5 | Account Statement Report - Beta version  | eTM Marketing & CF Reporting | Shachar Rubin | custom_sql,direct | 2026-05-31T08:22:41Z | [open](https://reports.etorocorp.com/#/workbooks/AccountStatementReport-Betaversion) |
+| 6 | Local Currencies MIMO Dashboard  (Beta) | eToro KPIs-Controlled | Shachar Rubin | custom_sql,direct | 2025-11-26T12:53:24Z | [open](https://reports.etorocorp.com/#/workbooks/LocalCurrenciesMIMODashboardBeta_17641616028340) |
+| 7 | Local Currencies MIMO Dashboard  (Beta) | eToro KPIs-Controlled - Pre Prod | Shachar Rubin | custom_sql,direct | 2026-05-31T08:49:04Z | [open](https://reports.etorocorp.com/#/workbooks/LocalCurrenciesMIMODashboardBeta) |
+| 8 | AML Clients – Trading & eMoney Net Deposits | FCMU | Georgios Kyriakou | custom_sql,direct | 2026-05-31T08:21:15Z | [open](https://reports.etorocorp.com/#/workbooks/AMLClientsTradingeMoneyNetDeposits) |
+| 9 | Deposits Daily Update Report | Money In | Georgios Kyriakou | custom_sql | 2026-05-31T05:31:16Z | [open](https://reports.etorocorp.com/#/workbooks/DepositsDailyUpdateReport) |
+| 10 | Etorian Investment Account Performance | Money In | Shachar Rubin | custom_sql | 2026-05-31T04:11:52Z | [open](https://reports.etorocorp.com/#/workbooks/EtorianInvestmentAccountPerformance) |
+| 11 | FTDs to IBAN | Money In | Georgios Kyriakou | custom_sql,direct | 2026-03-13T08:01:07Z | [open](https://reports.etorocorp.com/#/workbooks/FTDstoIBAN) |
+| 12 | Local Currencies MIMO Dashboard  (Beta) TestVersion  | Sandbox | Shachar Rubin | custom_sql,direct | 2025-08-18T11:41:28Z | [open](https://reports.etorocorp.com/#/workbooks/LocalCurrenciesMIMODashboardBetaTestVersion) |
+
+### View URLs (per workbook)
+
+- **FTDs and Redeposits** (3. MIMO)
+  - [FTDs & Redeposits](https://reports.etorocorp.com/#/views/FTDsandRedeposits/FTDsRedeposits)
+- **sandbox - ddr additional available** (Analysts useful reports)
+  - [futures](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/futures)
+  - [copy funds](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/copyfunds)
+  - [CF out of copy](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/CFoutofcopy)
+  - [long short](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/longshort)
+  - [Leveraged](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/Leveraged)
+  - [Recurring](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/Recurring)
+  - [SQF](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/SQF)
+  - [IBAN Trades](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/IBANTrades)
+  - [MIMO income](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/MIMOincome)
+  - [Others income](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/Othersincome)
+  - [invested inflow](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/investedinflow)
+  - [net invested](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/netinvested)
+  - [Volume Open](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/VolumeOpen)
+  - [Deposits from IBAN](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/DepositsfromIBAN)
+  - [redeems from total](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/redeemsfromtotal)
+  - [net inflow](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/netinflow)
+  - [iban curr](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/ibancurr)
+  - [TP currenccy](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/TPcurrenccy)
+  - [TP MOP](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/TPMOP)
+  - [recurring deposits](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/recurringdeposits)
+  - [pnl leveraged](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/pnlleveraged)
+  - [pnl short long](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/pnlshortlong)
+  - [copy vs copy fund](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/copyvscopyfund)
+  - [copy vs CF netprofit](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/copyvsCFnetprofit)
+  - [pnl asset type](https://reports.etorocorp.com/#/views/sandbox-ddradditionalavailable/pnlassettype)
+- **new ddrs monitoring** (Archive)
+  - [object dependency](https://reports.etorocorp.com/#/views/newddrsmonitoring/objectdependency)
+  - [object status history](https://reports.etorocorp.com/#/views/newddrsmonitoring/objectstatushistory)
+  - [source metric compare](https://reports.etorocorp.com/#/views/newddrsmonitoring/sourcemetriccompare)
+  - [support tables update](https://reports.etorocorp.com/#/views/newddrsmonitoring/supporttablesupdate)
+- **new ddrs monitoring - extract for email send** (DDR's)
+  - [object dependency](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/objectdependency)
+  - [object status history](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/objectstatushistory)
+  - [source metric compare](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/sourcemetriccompare)
+  - [support tables update](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/supporttablesupdate)
+  - [staking current month](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/stakingcurrentmonth)
+  - [by date diffs](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/bydatediffs)
+  - [missing dates](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/missingdates)
+- **Account Statement Report - Beta version ** (eTM Marketing & CF Reporting)
+  - [Account Statement](https://reports.etorocorp.com/#/views/AccountStatementReport-Betaversion/AccountStatement)
+  - [FX Fee](https://reports.etorocorp.com/#/views/AccountStatementReport-Betaversion/FXFee)
+- **Local Currencies MIMO Dashboard  (Beta)** (eToro KPIs-Controlled)
+  - [MIMO with Local Currencies(Reversed ConversionFee)](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBeta_17641616028340/MIMOwithLocalCurrenciesReversedConversionFee)
+  - [Local Currency Usage Dashboard](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBeta_17641616028340/LocalCurrencyUsageDashboard)
+  - [Local Currency Dashboard Compare](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBeta_17641616028340/LocalCurrencyDashboardCompare)
+- **Local Currencies MIMO Dashboard  (Beta)** (eToro KPIs-Controlled - Pre Prod)
+  - [MIMO with Local Currencies(Reversed ConversionFee)](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBeta/MIMOwithLocalCurrenciesReversedConversionFee)
+  - [Local Currency Usage Dashboard](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBeta/LocalCurrencyUsageDashboard)
+  - [Local Currency Dashboard Compare](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBeta/LocalCurrencyDashboardCompare)
+- **AML Clients – Trading & eMoney Net Deposits** (FCMU)
+  - [AML Clients – Trading & eMoney Net Deposits](https://reports.etorocorp.com/#/views/AMLClientsTradingeMoneyNetDeposits/AMLClientsTradingeMoneyNetDeposits)
+- **Deposits Daily Update Report** (Money In)
+  - [Deposits Daily Update Report](https://reports.etorocorp.com/#/views/DepositsDailyUpdateReport/DepositsDailyUpdateReport)
+- **Etorian Investment Account Performance** (Money In)
+  - [ eTorians Top Instruments & Equity](https://reports.etorocorp.com/#/views/EtorianInvestmentAccountPerformance/eToriansTopInstrumentsEquity)
+  - [eTorians MIMO Trend](https://reports.etorocorp.com/#/views/EtorianInvestmentAccountPerformance/eToriansMIMOTrend)
+- **FTDs to IBAN** (Money In)
+  - [FTDs to IBAN](https://reports.etorocorp.com/#/views/FTDstoIBAN/FTDstoIBAN)
+- **Local Currencies MIMO Dashboard  (Beta) TestVersion ** (Sandbox)
+  - [MIMO with Local Currencies(Reversed ConversionFee)](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBetaTestVersion/MIMOwithLocalCurrenciesReversedConversionFee)
+  - [Local Currency Usage Dashboard](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBetaTestVersion/LocalCurrencyUsageDashboard)
+  - [Local Currency Dashboard Compare](https://reports.etorocorp.com/#/views/LocalCurrenciesMIMODashboardBetaTestVersion/LocalCurrencyDashboardCompare)
 
 ## Downstream calculated fields (in embedded datasources)
 

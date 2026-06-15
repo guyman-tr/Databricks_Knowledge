@@ -1,0 +1,144 @@
+SELECT YearMonth
+  , LEFT (YearMonth,4) AS Year
+  , EOMonth
+  , CreditValidClose
+  , CreditValidOpen
+  , CASE WHEN RegulationOnClose IN ('eToroUS','FinCEN','FinCEN+FINRA') THEN 'USRegulationClose' ELSE 'NonUSRegulationClose' END AS RegulationClose
+  , CASE WHEN RegulationOnOpen IN ('eToroUS','FinCEN','FinCEN+FINRA') THEN 'USRegulationOpen' ELSE 'NonUSRegulationOpen' END AS RegulationOpen
+  , PeriodOpen
+  , PeriodClose
+
+  , sum(FullCommissionByUnits) FullCommissionByUnits
+  , sum(FullCommissionOnClose) FullCommissionOnClose
+  , sum(CommissionByUnits ) CommissionByUnits 
+  , sum(CommissionOnClose ) CommissionOnClose 
+  , 'US_Regulations' AS RegulationsGroup
+  , InstrumentType
+,IsSettled
+FROM BI_DB_dbo.[BI_DB_Subsidieries_Realized_Commissions_Adjustments]
+WHERE 1 = 1
+-- AND [EOMonth] BETWEEN EOMonth('20220801') AND EOMonth('20220801')
+AND (RegulationOnClose IN ('eToroUS','FinCEN','FinCEN+FINRA') OR RegulationOnOpen in('eToroUS','FinCEN','FinCEN+FINRA'))
+GROUP BY YearMonth
+  , LEFT (YearMonth,4)  , CreditValidClose  , CreditValidOpen  , PeriodOpen  , PeriodClose
+  , CASE WHEN RegulationOnClose IN ('eToroUS','FinCEN','FinCEN+FINRA') THEN 'USRegulationClose' ELSE 'NonUSRegulationClose' end
+  , CASE WHEN RegulationOnOpen IN ('eToroUS','FinCEN','FinCEN+FINRA') THEN 'USRegulationOpen' ELSE 'NonUSRegulationOpen' END
+  , InstrumentType
+  , EOMonth
+,IsSettled
+
+UNION ALL
+
+SELECT YearMonth
+  , LEFT (YearMonth,4) AS Year
+  , EOMonth
+  , CreditValidClose
+  , CreditValidOpen
+  , CASE WHEN RegulationOnClose IN ('FCA') THEN 'UKRegulationClose' ELSE 'NonUKRegulationClose' END AS RegulationClose
+  , CASE WHEN RegulationOnOpen IN ('FCA') THEN 'UKRegulationOpen' ELSE 'NonUKRegulationOpen' END AS RegulationOpen
+  , PeriodOpen
+  , PeriodClose
+  , sum(FullCommissionByUnits) FullCommissionByUnits
+  , sum(FullCommissionOnClose) FullCommissionOnClose
+  , sum(CommissionByUnits ) CommissionByUnits 
+  , sum(CommissionOnClose ) CommissionOnClose 
+  , 'UK_Regulations' AS RegulationsGroup
+  , InstrumentType
+,IsSettled
+FROM BI_DB_dbo.[BI_DB_Subsidieries_Realized_Commissions_Adjustments]
+WHERE 1 = 1
+-- AND [EOMonth] BETWEEN EOMonth('20220801') AND EOMonth('20220801')
+AND (RegulationOnClose IN ('FCA') OR RegulationOnOpen in('FCA'))
+GROUP BY YearMonth
+  , LEFT (YearMonth,4)   , CreditValidClose  , CreditValidOpen  , PeriodOpen  , PeriodClose
+  , CASE WHEN RegulationOnClose IN ('FCA') THEN 'UKRegulationClose' ELSE 'NonUKRegulationClose' END 
+  , CASE WHEN RegulationOnOpen IN ('FCA') THEN 'UKRegulationOpen' ELSE 'NonUKRegulationOpen' END 
+  , InstrumentType
+  , EOMonth
+,IsSettled
+
+UNION ALL
+
+SELECT YearMonth
+  , LEFT (YearMonth,4) AS Year
+  , EOMonth  , CreditValidClose
+  , CreditValidOpen
+  , CASE WHEN RegulationOnClose IN ('FSA Seychelles') THEN 'SeychellesRegulationClose' ELSE 'NonSeychellesRegulationClose' END AS RegulationClose
+  , CASE WHEN RegulationOnOpen IN ('FSA Seychelles') THEN 'SeychellesRegulationOpen' ELSE 'NonSeychellesRegulationOpen' END AS RegulationOpen
+  , PeriodOpen
+  , PeriodClose
+  , sum(FullCommissionByUnits) FullCommissionByUnits
+  , sum(FullCommissionOnClose) FullCommissionOnClose
+  , sum(CommissionByUnits ) CommissionByUnits 
+  , sum(CommissionOnClose ) CommissionOnClose 
+  , 'Seychelles_Regulations' AS RegulationsGroup
+  , InstrumentType
+,IsSettled
+FROM BI_DB_dbo.[BI_DB_Subsidieries_Realized_Commissions_Adjustments]
+WHERE 1 = 1
+-- AND [EOMonth] BETWEEN EOMonth('20220801') AND EOMonth('20220801')
+AND (RegulationOnClose IN ('FSA Seychelles') OR RegulationOnOpen in('FSA Seychelles'))
+GROUP BY YearMonth
+  , LEFT (YearMonth,4)   , CreditValidClose  , CreditValidOpen  , PeriodOpen  , PeriodClose
+  , CASE WHEN RegulationOnClose IN ('FSA Seychelles') THEN 'SeychellesRegulationClose' ELSE 'NonSeychellesRegulationClose' END 
+  , CASE WHEN RegulationOnOpen IN ('FSA Seychelles') THEN 'SeychellesRegulationOpen' ELSE 'NonSeychellesRegulationOpen' END 
+  , InstrumentType
+  , EOMonth
+,IsSettled
+
+UNION ALL
+
+SELECT YearMonth
+  , LEFT (YearMonth,4) AS Year
+  , EOMonth  , CreditValidClose
+  , CreditValidOpen
+  , CASE WHEN RegulationOnClose IN ('ASIC', 'ASIC & GAML') THEN 'AUSRegulationClose' ELSE 'NonAUSRegulationClose' END AS RegulationClose
+  , CASE WHEN RegulationOnOpen IN ('ASIC', 'ASIC & GAML') THEN 'AUSRegulationOpen' ELSE 'NonAUSRegulationOpen' END AS RegulationOpen
+  , PeriodOpen
+  , PeriodClose
+  , sum(FullCommissionByUnits) FullCommissionByUnits
+  , sum(FullCommissionOnClose) FullCommissionOnClose
+  , sum(CommissionByUnits ) CommissionByUnits 
+  , sum(CommissionOnClose ) CommissionOnClose 
+  , 'AUS_Regulations' AS RegulationsGroup
+  , InstrumentType
+,IsSettled
+FROM BI_DB_dbo.[BI_DB_Subsidieries_Realized_Commissions_Adjustments]
+WHERE 1 = 1
+-- AND [EOMonth] BETWEEN EOMonth('20220801') AND EOMonth('20220801')
+AND (RegulationOnClose IN ('ASIC', 'ASIC & GAML') OR RegulationOnOpen in('ASIC', 'ASIC & GAML'))
+GROUP BY YearMonth
+  , LEFT (YearMonth,4)   , CreditValidClose  , CreditValidOpen  , PeriodOpen  , PeriodClose
+  , CASE WHEN RegulationOnClose IN ('ASIC', 'ASIC & GAML') THEN 'AUSRegulationClose' ELSE 'NonAUSRegulationClose' END 
+  , CASE WHEN RegulationOnOpen IN ('ASIC', 'ASIC & GAML') THEN 'AUSRegulationOpen' ELSE 'NonAUSRegulationOpen' END 
+  , InstrumentType
+    , EOMonth
+,IsSettled
+
+UNION ALL
+SELECT YearMonth
+  , LEFT (YearMonth,4) AS Year
+  , EOMonth  , CreditValidClose
+  , CreditValidOpen
+  , CASE WHEN RegulationOnClose IN ('CySEC') THEN 'EURegulationClose' ELSE 'NonEURegulationClose' END AS RegulationClose
+  , CASE WHEN RegulationOnOpen IN ('CySEC') THEN 'EURegulationOpen' ELSE 'NonEURegulationOpen' END AS RegulationOpen
+  , PeriodOpen
+  , PeriodClose
+  , sum(FullCommissionByUnits) FullCommissionByUnits
+  , sum(FullCommissionOnClose) FullCommissionOnClose
+  , sum(CommissionByUnits ) CommissionByUnits 
+  , sum(CommissionOnClose ) CommissionOnClose 
+  , 'EU_Regulations' AS RegulationsGroup
+  , InstrumentType
+,IsSettled
+FROM BI_DB_dbo.[BI_DB_Subsidieries_Realized_Commissions_Adjustments]
+WHERE 1 = 1
+-- AND [EOMonth] BETWEEN EOMonth('20220801') AND EOMonth('20220801')
+AND (RegulationOnClose IN ('CySEC') OR RegulationOnOpen in('CySEC'))
+GROUP BY YearMonth
+  , LEFT (YearMonth,4)   , CreditValidClose  , CreditValidOpen  , PeriodOpen  , PeriodClose
+  , CASE WHEN RegulationOnClose IN ('CySEC') THEN 'EURegulationClose' ELSE 'NonEURegulationClose' END 
+  , CASE WHEN RegulationOnOpen IN ('CySEC') THEN 'EURegulationOpen' ELSE 'NonEURegulationOpen' END 
+  , InstrumentType
+    , EOMonth
+,IsSettled

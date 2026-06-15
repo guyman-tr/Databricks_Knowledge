@@ -1,0 +1,1 @@
+select GETUTCDATE() as [Last Refresh Date]

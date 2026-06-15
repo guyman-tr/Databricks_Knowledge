@@ -1,0 +1,1 @@
+select InstrumentID, InstrumentType, Name from DWH.dbo.Dim_Instrument

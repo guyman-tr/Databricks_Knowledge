@@ -1,0 +1,1 @@
+select * from main.bi_output.get_gdpr_report(<[Parameters].[Parameter 1]>)

@@ -1,0 +1,2 @@
+select *
+from product_analytics_stg.bi_output_product_analytics_optin_dashboard_aggregation

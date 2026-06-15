@@ -1,0 +1,1 @@
+SELECT Name Country,Region,MarketingRegionManualName  FROM DWH.dbo.Dim_Country

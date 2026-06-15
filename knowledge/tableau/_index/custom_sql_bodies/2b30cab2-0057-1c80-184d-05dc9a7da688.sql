@@ -1,0 +1,1 @@
+SELECT dc.RealCID, dc.IsCreditReportValidCB FROM DWH_dbo.Dim_Customer dc

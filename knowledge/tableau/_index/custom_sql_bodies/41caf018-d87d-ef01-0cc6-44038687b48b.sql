@@ -1,0 +1,1 @@
+SELECT TOP 100 * FROM [DWH_dbo].[Dim_Position]

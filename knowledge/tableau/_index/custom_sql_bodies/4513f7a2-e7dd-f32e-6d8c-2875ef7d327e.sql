@@ -1,0 +1,1 @@
+select * from main.bi_output.bi_output_Compliance_kycScreeningLimitation

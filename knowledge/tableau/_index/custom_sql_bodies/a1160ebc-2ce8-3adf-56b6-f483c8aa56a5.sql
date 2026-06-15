@@ -1,0 +1,1 @@
+SELECT * FROM #DailyDeposits_AllDates ddad

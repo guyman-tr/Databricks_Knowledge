@@ -1,0 +1,2 @@
+select * from
+risk.risk_output_rm_tables_daily_volume

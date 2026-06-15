@@ -1,0 +1,2 @@
+select distinct gcid
+from main.bi_db.bronze_fivetran_google_sheets_manually_approved_tactical_edge

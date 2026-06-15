@@ -1,0 +1,2 @@
+SELECT * FROM BI_DB_Client_Balance_CID_Level_New
+WHERE DateID>=20200101

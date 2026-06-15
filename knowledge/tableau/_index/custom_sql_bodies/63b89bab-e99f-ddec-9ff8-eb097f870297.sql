@@ -1,0 +1,27 @@
+SELECT 
+	c.*,
+	dc1.Name as Country,
+	dc1.Region as Region1, 
+	ft.Name as FundingType,
+	case when Regulation in ('ASIC & GAML') THEN 'ASIC' 
+		when Regulation in ('eToroUS','FinCEN+FINRA') THEN 'FinCEN' ELSE Regulation end as Regulation1
+		,r.Name as DesignatedRegulation
+,CASE WHEN c.HoursBetween<=2 THEN 'A: <=2 hrs'
+WHEN c.HoursBetween<=4 THEN 'B: <=4 hrs'
+WHEN c.HoursBetween<=6 THEN 'C: <=6 hrs'
+WHEN c.HoursBetween<=8 THEN 'D: <=8 hrs'
+WHEN c.HoursBetween<=10 THEN 'E: <=10 hrs'
+WHEN c.HoursBetween<=12 THEN 'F: <=12 hrs'
+WHEN c.HoursBetween<=16 THEN 'G: <=16 hrs'
+WHEN c.HoursBetween<=18 THEN 'H: <=18 hrs'
+WHEN c.HoursBetween<=20 THEN 'I: <=20 hrs'
+WHEN c.HoursBetween<=22 THEN 'J: <=22 hrs'
+WHEN c.HoursBetween<=24 THEN 'K: <=24 hrs'
+ELSE 'L: >24 Hrs' END AS HoursDistribution,
+EOMONTH(c.ModificationDate) as ModificationDateEOMonth
+FROM BI_DB_dbo.BI_DB_Operations_Monthly_KPIs_Cashouts c
+join DWH_dbo.Dim_Customer dc on c.CID = dc.RealCID
+join DWH_dbo.Dim_Country dc1 on dc.CountryID = dc1.CountryID
+Join 
+	DWH_dbo.Dim_Regulation r on r.ID = dc.DesignatedRegulationID
+JOIN DWH_dbo.Dim_FundingType ft on ft.FundingTypeID=c.FundingTypeID

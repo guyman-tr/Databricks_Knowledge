@@ -1,0 +1,25 @@
+SELECT [Dealing_OMPD_Daily].[AverageDifference] AS [AverageDifference],
+  [Dealing_OMPD_Daily].[CountAvg] AS [CountAvg],
+  [Dealing_OMPD_Daily].[CountMax] AS [CountMax],
+  [Dealing_OMPD_Daily].[CountMin] AS [CountMin],
+  [Dealing_OMPD_Daily].[CountMode] AS [CountMode],
+  [Dealing_OMPD_Daily].[DateID] AS [DateID],
+  [Dealing_OMPD_Daily].[Date] AS [Date],
+  [Dealing_OMPD_Daily].[InstrumentID] AS [InstrumentID],
+  [Dealing_OMPD_Daily].[InstrumentName] AS [InstrumentName],
+  [Dealing_OMPD_Daily].[InstrumentTypeID] AS [InstrumentTypeID],
+  [Dealing_OMPD_Daily].[InstrumentType] AS [InstrumentType],
+  [Dealing_OMPD_Daily].[MaxDifference] AS [MaxDifference],
+  [Dealing_OMPD_Daily].[MinDifference] AS [MinDifference],
+  [Dealing_OMPD_Daily].[ModeDifference] AS [ModeDifference],
+  [Dealing_OMPD_Daily].[NumberOfAlerts] AS [NumberOfAlerts],
+  [Dealing_OMPD_Daily].[Precision] AS [Precision],
+  [Dealing_OMPD_Daily].[PrimaryLiquidityAccountID] AS [PrimaryLiquidityAccountID],
+  [Dealing_OMPD_Daily].[PrimaryLiquidityAccountName] AS [PrimaryLiquidityAccountName],
+  [Dealing_OMPD_Daily].[SecondaryLiquidityAccountID] AS [SecondaryLiquidityAccountID],
+  [Dealing_OMPD_Daily].[SecondaryLiquidityAccountName] AS [SecondaryLiquidityAccountName],
+  [Dealing_OMPD_Daily].[Threshold] AS [Threshold],
+  [Dealing_OMPD_Daily].[UpdateDate] AS [UpdateDate]
+FROM [python].[Dealing_OMPD_Daily] [Dealing_OMPD_Daily]
+join DWH.dbo.Dim_Instrument b on [Dealing_OMPD_Daily].InstrumentID = b.InstrumentID 
+where b.Tradable = 1 and b.VisibleInternallyOnly=0

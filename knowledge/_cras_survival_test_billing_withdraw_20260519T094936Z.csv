@@ -1,0 +1,31 @@
+idx,kind,status,error,preview
+1,tbl_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw SET TBLPROPERTIES (     'comment' = 'Core withdrawal request tabl
+2,tbl_tags,OK,,"ALTER TABLE main.billing.bronze_etoro_billing_withdraw SET TAGS (     'layer' = 'bronze',     'source_system' = 'SQL Ser"
+3,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN WithdrawID COMMENT 'Primary key. IDENTITY starting a
+4,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN CurrencyID COMMENT 'Currency of the withdrawal amoun
+5,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN FundingTypeID COMMENT 'Payment method type (Visa/Wir
+6,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN CID COMMENT 'Customer ID. FK to Customer.CustomerSta
+7,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ManagerID COMMENT 'Operations manager who processed 
+8,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN CashoutStatusID COMMENT 'Current withdrawal status. 
+9,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN RequestDate COMMENT 'Timestamp when the customer sub
+10,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN Amount COMMENT 'Gross withdrawal amount in CurrencyI
+11,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN Commission COMMENT 'Broker commission on this withdr
+12,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN Approved COMMENT 'Whether the withdrawal has receive
+13,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN IPAddress COMMENT 'Customer''s IP address at request
+14,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ModificationDate COMMENT 'UTC timestamp of the most 
+15,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN Remark COMMENT 'Processing note added by the system 
+16,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN Comment COMMENT 'Additional operations comment. Incl
+17,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN Fee COMMENT 'Platform fee charged for this withdrawa
+18,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN FundingID COMMENT 'FK to Billing.Funding - the payme
+19,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN RequestorComments COMMENT 'Notes added by the reques
+20,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN SessionID COMMENT 'Audit session identifier linking 
+21,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN CashoutReasonID COMMENT 'Internal reason code for th
+22,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN SuggestedBonusDeductionAmount COMMENT 'Pre-calculate
+23,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ActualBonusDeductionAmount COMMENT 'Actual bonus amo
+24,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ClientWithdrawReasonID COMMENT 'Customer-selected re
+25,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ClientWithdrawReasonComment COMMENT 'Customer''s fre
+26,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN AccountCurrencyID COMMENT 'Customer''s eToro account
+27,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ClientWithdrawCommentID COMMENT 'FK to Dictionary.Cl
+28,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN ExTransactionID COMMENT 'External transaction identi
+29,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN WithdrawTypeID COMMENT 'Withdrawal type classificati
+30,col_comment,OK,,ALTER TABLE main.billing.bronze_etoro_billing_withdraw ALTER COLUMN FlowID COMMENT 'Processing flow identifier added in 

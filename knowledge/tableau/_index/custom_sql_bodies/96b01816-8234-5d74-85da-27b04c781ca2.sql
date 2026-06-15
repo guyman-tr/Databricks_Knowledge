@@ -1,0 +1,1 @@
+select * from BI_DB_dbo.BI_DB_AML_BI_Alerts_MultipleAccountseMoney

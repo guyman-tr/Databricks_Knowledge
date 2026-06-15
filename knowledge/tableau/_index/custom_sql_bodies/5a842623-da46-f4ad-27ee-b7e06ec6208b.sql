@@ -1,0 +1,2 @@
+SELECT *
+FROM BI_DEV_FB_Report

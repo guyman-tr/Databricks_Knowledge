@@ -1,0 +1,1 @@
+select * from product_analytics_stg.bi_output_product_analytics_customer_feedback_gpt_hackathon_main_pivot

@@ -1,0 +1,2 @@
+select * from crm.silver_crm_csat_survey_entry__c  csat where 
+ (Issue_Resolution__c is not null or Agent_Service__c is not null or Agent_Professionalism__c is not null or Contact_Ease__c is not null)

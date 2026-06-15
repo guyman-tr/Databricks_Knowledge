@@ -1,0 +1,2 @@
+select instrumentid,Symbol from
+trading.bronze_etoro_trade_instrumentmetadata im

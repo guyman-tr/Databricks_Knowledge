@@ -1,0 +1,1 @@
+Select * from #OB14US where RN = 1

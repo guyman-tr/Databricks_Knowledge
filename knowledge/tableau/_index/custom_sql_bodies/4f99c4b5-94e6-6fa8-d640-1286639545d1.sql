@@ -1,0 +1,1 @@
+SELECT * FROM BI_DB_AML_US_PatternsOfFunds

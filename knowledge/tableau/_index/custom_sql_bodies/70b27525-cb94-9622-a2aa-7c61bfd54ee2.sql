@@ -1,0 +1,1 @@
+select * from main.bi_output_stg.tf_crm_contact_user('2025-08-01', date_add(current_date(), -1))

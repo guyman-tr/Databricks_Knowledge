@@ -1,0 +1,225 @@
+SELECT r.StakingMonthID
+		,r.StakingMonth
+		,r.StakingYear
+		,r.InstrumentID
+		,r.Currency
+		,COUNT(DISTINCT r.CID) NumberOfCIDs
+		,r.ActualCompensationType
+        ,sum(r.Client_Airdrop) as Airdrop_Units
+        ,max(r.UpdateDate) as UpdateDate
+		,CASE WHEN r.ActualCompensationType = 'Airdrop' then a.USD_Value
+				WHEN r.ActualCompensationType = 'Cash' THEN sum(r.USD_Compensation) END USD_Value
+FROM Dealing_dbo.Dealing_Staking_Results r 
+LEFT JOIN (SELECT LEFT(CAST(CONVERT(VARCHAR(8), DATEADD(MONTH, -1, dp.OpenOccurred), 112) AS INT),6) MonthBeforeOpenID
+				,dp.InstrumentID
+				,sum(dp.InitialAmountCents/100) USD_Value
+		FROM DWH_dbo.Dim_Position dp
+		WHERE dp.OpenDateID >= 20230901
+		AND dp.InstrumentID IN (SELECT DISTINCT dss.InstrumentID FROM Dealing_dbo.Dealing_Staking_Summary dss)
+		AND dp.IsAirDrop = 1
+                 AND dp.CID IN (SELECT DISTINCT CID FROM Dealing_dbo.Dealing_Staking_Results) --New 16.11.25
+		GROUP BY dp.InstrumentID, LEFT(CAST(CONVERT(VARCHAR(8), DATEADD(MONTH, -1, dp.OpenOccurred), 112) AS INT),6)) a
+ON r.StakingMonthID = a.MonthBeforeOpenID AND r.InstrumentID = a.InstrumentID AND r.ActualCompensationType = 'Airdrop'
+WHERE exists (SELECT top 1* FROM Dealing_dbo.Dealing_Staking_Compensation c WHERE c.StakingMonthID = r.StakingMonthID)
+AND r.StakingMonthID NOT IN (202404,2024100,202503,2025030)
+AND NOT (r.StakingMonthID = 202410 AND r.Currency = 'ETH')
+GROUP BY r.StakingMonthID
+		,r.StakingMonth
+		,r.StakingYear
+                ,r.InstrumentID
+		,r.Currency
+		,r.ActualCompensationType
+                ,a.USD_Value
+
+
+UNION --March 2025 Issue 
+
+SELECT  202503 AS StakingMonthID
+		,r.StakingMonth
+		,r.StakingYear
+		,r.InstrumentID
+		,r.Currency
+		,COUNT(DISTINCT r.CID) NumberOfCIDs
+		,r.ActualCompensationType AS ActualCompensationType
+                ,sum(r.Client_Airdrop) as Airdrop_Units
+                ,'2025-04-30 12:34:18.717' as UpdateDate
+		,CASE WHEN r.ActualCompensationType = 'Airdrop' then a.USD_Value 
+			     WHEN r.ActualCompensationType = 'Cash' THEN sum(r.USD_Compensation) END as USD_Value
+FROM Dealing_dbo.Dealing_Staking_Results r 
+LEFT JOIN (
+		SELECT LEFT(CAST(CONVERT(VARCHAR(8), DATEADD(MONTH, -1, dp.OpenOccurred), 112) AS INT),6) MonthBeforeOpenID
+				,dp.InstrumentID
+				,sum(dp.InitialAmountCents/100) AS USD_Value
+		FROM DWH_dbo.Dim_Position dp
+		WHERE dp.OpenDateID between 20250401 AND 20250430
+		 AND dp.InstrumentID IN (SELECT DISTINCT dss.InstrumentID FROM Dealing_dbo.Dealing_Staking_Summary dss)
+		 AND dp.IsAirDrop = 1
+		GROUP BY dp.InstrumentID, LEFT(CAST(CONVERT(VARCHAR(8), DATEADD(MONTH, -1, dp.OpenOccurred), 112) AS INT),6)
+		) a
+  ON a.MonthBeforeOpenID  = 202503  
+ AND r.InstrumentID = a.InstrumentID 
+ AND r.ActualCompensationType ='Airdrop'
+WHERE r.StakingMonthID IN (202503,2025030)
+ AND r.ActualCompensationType IN ('Airdrop','Cash') 
+GROUP BY r.StakingMonth
+		,r.StakingYear
+                ,r.InstrumentID
+		,r.Currency
+		,r.ActualCompensationType
+                ,a.USD_Value
+
+
+
+UNION -- Nov 2024 Issue
+
+SELECT 202410 AS StakingMonthID
+		,b.StakingMonth
+		,b.StakingYear
+		,b.InstrumentID
+		,b.Currency
+		,COUNT(DISTINCT b.CID) NumberOfCIDs
+		,b.ActualCompensationType
+        ,CASE WHEN b.ActualCompensationType = 'Airdrop' then sum(b.ActualAirdropUnits) 
+				WHEN b.ActualCompensationType = 'Cash' THEN sum(b.Theoretic_Client_Airdrop)	
+		END	as Airdrop_Units
+        ,b.UpdateDate
+		,CASE WHEN b.ActualCompensationType = 'Airdrop' then a.USD_Value
+				WHEN b.ActualCompensationType = 'Cash' THEN sum(b.Cash_Compensation) END USD_Value
+FROM (SELECT r.StakingMonth
+		,r.StakingYear
+		,r.InstrumentID
+				,r.Currency
+				 ,r.CID
+				 ,sum(CASE WHEN ActualCompensationType = 'Cash' then r.USD_Compensation ELSE 0 END) Cash_Compensation
+				 ,sum(r.ActualAirdropUnits) ActualAirdropUnits
+				 ,sum(r.Client_Airdrop) AS Theoretic_Client_Airdrop
+				 ,r.ActualCompensationType
+				 ,'2024-11-26 13:35:45.230' UpdateDate
+		FROM Dealing_dbo.Dealing_Staking_Results r
+		WHERE r.StakingMonthID in (2024100,202410)
+		AND r.Currency = 'ETH'
+		AND r.IsEligible = 1
+		AND r.ActualCompensationType IN ('Airdrop','Cash')
+		GROUP BY r.StakingMonth
+				,r.StakingYear
+				,r.InstrumentID
+				,r.Currency
+				,r.CID
+				,r.ActualCompensationType) b
+LEFT JOIN (SELECT LEFT(CAST(CONVERT(VARCHAR(8), DATEADD(MONTH, -1, dp.OpenOccurred), 112) AS INT),6) MonthBeforeOpenID
+				,sum(dp.InitialAmountCents/100) USD_Value
+		FROM DWH_dbo.Dim_Position dp
+		WHERE dp.OpenDateID >= 20230901
+		AND dp.InstrumentID = 100001
+		AND dp.IsAirDrop = 1
+		GROUP BY dp.InstrumentID, LEFT(CAST(CONVERT(VARCHAR(8), DATEADD(MONTH, -1, dp.OpenOccurred), 112) AS INT),6)) a
+ON a.MonthBeforeOpenID = 202410 AND b.ActualCompensationType = 'Airdrop'
+GROUP BY b.StakingMonth
+		,b.StakingYear
+        ,b.InstrumentID
+		,b.Currency
+		,b.ActualCompensationType
+		,b.UpdateDate
+		,a.USD_Value
+
+
+UNION -- April 2024 issue
+
+SELECT r.StakingMonthID
+		,r.StakingMonth
+		,r.StakingYear
+		,r.InstrumentID
+		,r.Currency
+		,CASE WHEN r.ActualCompensationType = 'Cash' THEN COUNT(DISTINCT r.CID)
+			WHEN r.ActualCompensationType = 'Airdrop' THEN c.NumberOfCIDs END NumberOfCIDs
+		,r.ActualCompensationType
+        ,CASE WHEN r.ActualCompensationType = 'Cash' THEN sum(r.Client_Airdrop)
+			WHEN r.ActualCompensationType = 'Airdrop' then c.Airdrop_Units END Airdrop_Units
+        ,'2024-05-12 04:59:09.847' as UpdateDate
+		,CASE WHEN r.ActualCompensationType = 'Airdrop' then c.USD_Value
+				WHEN r.ActualCompensationType = 'Cash' THEN sum(r.USD_Compensation) END USD_Value
+FROM Dealing_dbo.Dealing_Staking_Results r 
+LEFT JOIN (SELECT b.InstrumentID
+					,count(DISTINCT b.CID) AS NumberOfCIDs
+					,sum(b.AmountInUnits) AS Airdrop_Units
+					,sum(b.USD_Value) AS USD_Value
+			FROM (
+			SELECT a.CID
+					,a.InstrumentID
+					,a.AmountInUnits
+					,a.AmountInUnits*dp.InitForexRate AS USD_Value
+					,'Closed by Trading Ops' CloseReason -- in 1st airdrop
+			FROM [Dealing_staging].[etoro_Trade_AdminPositionLog] a
+			LEFT JOIN DWH_dbo.Dim_Position dp
+			ON dp.OpenDateID = 20240508 AND a.PositionID = dp.PositionID
+			WHERE a.OpenActionType = 11
+			AND a.InstrumentID IN (100017,100026)
+			AND a.CID NOT IN (SELECT dp.CID	
+								FROM DWH_dbo.Dim_Position dp
+								WHERE dp.InstrumentID IN (100017,100026)
+								AND dp.OpenDateID = 20240507
+								AND dp.IsAirDrop = 1
+								AND dp.CloseOccurred < '2024-05-08 14:14'
+								AND dp.ClosePositionReasonID <> 10
+								AND dp.InstrumentID = a.InstrumentID)
+			AND CAST(a.ExecutionOccurred AS DATE) = '2024-05-08'
+			AND a.State = 3
+
+			UNION
+
+			SELECT a.CID
+					,a.InstrumentID
+					,a.AmountInUnits
+					,a.AmountInUnits * dp.InitForexRate AS USD_Value
+					,'Closed by Client - 1st' CloseReason -- 1st airdrop
+			FROM [Dealing_staging].[etoro_Trade_AdminPositionLog] a
+			LEFT JOIN DWH_dbo.Dim_Position dp
+			ON dp.OpenDateID = 20240507 AND a.PositionID = dp.PositionID
+			WHERE a.OpenActionType = 11
+			AND a.InstrumentID IN (100017,100026)
+			AND a.CID IN (SELECT dp.CID	
+								FROM DWH_dbo.Dim_Position dp
+								WHERE dp.InstrumentID IN (100017,100026)
+								AND dp.OpenDateID = 20240507
+								AND dp.IsAirDrop = 1
+								AND dp.CloseOccurred < '2024-05-08 14:14'
+								AND dp.ClosePositionReasonID <> 10
+								AND dp.InstrumentID = a.InstrumentID)
+			AND CAST(a.ExecutionOccurred AS DATE) = '2024-05-07'
+			AND a.State = 3
+
+			union 
+
+			SELECT a.CID
+					,a.InstrumentID
+					,a.AmountInUnits
+					,a.AmountInUnits * dp.InitForexRate AS USD_Value
+					,'Closed by Client - 2nd' CloseReason -- 2nd airdrop
+			FROM [Dealing_staging].[etoro_Trade_AdminPositionLog] a
+			LEFT JOIN DWH_dbo.Dim_Position dp
+			ON dp.OpenDateID = 20240508 AND a.PositionID = dp.PositionID
+			WHERE a.OpenActionType = 11
+			AND a.InstrumentID IN (100017,100026)
+			AND a.CID IN (SELECT dp.CID	
+								FROM DWH_dbo.Dim_Position dp
+								WHERE dp.InstrumentID IN (100017,100026)
+								AND dp.OpenDateID = 20240507
+								AND dp.IsAirDrop = 1
+								AND dp.CloseOccurred < '2024-05-08 14:14'
+								AND dp.ClosePositionReasonID <> 10
+								AND dp.InstrumentID = a.InstrumentID)
+			AND CAST(a.ExecutionOccurred AS DATE) = '2024-05-08' -- 2nd airdrop to fill in the gaps when the client received less than expected
+			AND a.State = 3
+			) b
+GROUP BY b.InstrumentID) c
+ON r.InstrumentID = c.InstrumentID
+WHERE StakingMonthID = 202404
+GROUP BY r.StakingMonthID
+		,r.StakingMonth
+		,r.StakingYear
+                ,r.InstrumentID
+		,r.Currency
+		,r.ActualCompensationType
+		 ,c.NumberOfCIDs
+		 ,c.Airdrop_Units
+		 ,c.USD_Value

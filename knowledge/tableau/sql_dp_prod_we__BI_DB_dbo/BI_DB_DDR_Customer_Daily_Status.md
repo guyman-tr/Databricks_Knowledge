@@ -12,9 +12,9 @@
 
 ## Summary
 
-- Custom SQL queries: **2**
-- Downstream workbooks: **2**
-- Downstream calculated fields: **0**
+- Custom SQL queries: **21**
+- Downstream workbooks: **16**
+- Downstream calculated fields: **39**
 
 ## Custom SQL queries referencing this table
 
@@ -42,7 +42,106 @@ UNION ALL
 SELECT ConversionDateID AS DateID, 'EXW_dbo.EXW_C2F_E2E' AS TableName, count(*) AS CountAll  FROM EXW_dbo.EXW_C2F_E2E WHERE ConversionDateID BETWEEN 20250325 AND CAST(FORMAT(CAST(getdate() AS DATE),'yyyyMMdd') as INT) GROUP BY ConversionDateID
 ```
 
-### 2. Custom SQL Query1
+### 2. Custom SQL Query
+
+- Tableau id: `7f7b0242-22ee-ce55-d5ee-bfd35116fa82`
+
+```sql
+--- PART 1: Historical Data (Until March 2026)
+SELECT 
+    f.Date,
+    f.YearMonth,
+    -- Mapping regions based on Dim_Country to ensure consistency across UNION
+    CASE 
+        WHEN dc.MarketingRegionManualName IN ('UK', 'German', 'French', 'Italian', 'Spain', 'Nordics', 'CEE') THEN 'UK&EU'
+        WHEN dc.MarketingRegionManualName IN ('Australia', 'SEA') THEN 'APAC'
+        WHEN dc.MarketingRegionManualName IN ('USA', 'Latam') THEN 'Americas'
+        WHEN dc.MarketingRegionManualName IN ('Arabic', 'Africa') THEN 'Middle East & Africa'
+        WHEN dc.MarketingRegionManualName = 'ROW' THEN 'ROW/Unknown'
+        ELSE 'ROW/Unknown' 
+    END AS Region,
+    f.CountryID,
+    f.Funded_EOM,
+    ISNULL(c.NewFunded, 0) AS New_Funded,
+    CAST(GETDATE() AS DATE) AS LoadDate
+FROM (
+    -- Historical Snapshot
+    SELECT 
+        EOMONTH(ActiveDate) AS Date,
+        Active_Month AS YearMonth,
+        CountryID,
+        SUM(IsEOM_Funded_NEW) AS Funded_EOM
+    FROM BI_DB_dbo.BI_DB_CID_MonthlyPanel_FullData
+    WHERE ActiveDate >= '20220101'
+      AND ActiveDate <= '20260331'
+    GROUP BY EOMONTH(ActiveDate), Active_Month, CountryID
+) f
+JOIN DWH_dbo.Dim_Country dc ON dc.CountryID = f.CountryID -- Joining Dim_Country for Part 1
+LEFT JOIN (
+    -- Historical New Funded
+    SELECT 
+        EOMONTH(FirstNewFundedDate) AS Date,
+        CountryID,
+        COUNT(DISTINCT CID) AS NewFunded
+    FROM BI_DB_dbo.BI_DB_CIDFirstDates
+    WHERE FirstNewFundedDate >= '20220101'
+      AND FirstNewFundedDate <= '20260331'
+    GROUP BY EOMONTH(FirstNewFundedDate), CountryID
+) c ON f.Date = c.Date AND f.CountryID = c.CountryID
+
+UNION ALL
+
+--- PART 2: New Data (From April 2026 onwards)
+SELECT 
+    COALESCE(EOM.Date, NEW.Date) AS Date,
+    COALESCE(EOM.YearMonth, NEW.YearMonth) AS YearMonth,
+    -- Mapping regions based on Dim_Country
+    CASE 
+        WHEN dc.MarketingRegionManualName IN ('UK', 'German', 'French', 'Italian', 'Spain', 'Nordics', 'CEE') THEN 'UK&EU'
+        WHEN dc.MarketingRegionManualName IN ('Australia', 'SEA') THEN 'APAC'
+        WHEN dc.MarketingRegionManualName IN ('USA', 'Latam') THEN 'Americas'
+        WHEN dc.MarketingRegionManualName IN ('Arabic', 'Africa') THEN 'Middle East & Africa'
+        WHEN dc.MarketingRegionManualName = 'ROW' THEN 'ROW/Unknown'
+        ELSE 'ROW/Unknown' 
+    END AS Region,
+    COALESCE(EOM.CountryID, NEW.CountryID) AS CountryID,
+    ISNULL(EOM.Funded_EOM, 0) AS Funded_EOM,
+    ISNULL(NEW.New_Funded_Count, 0) AS New_Fund_Status,
+    CAST(GETDATE() AS DATE) AS LoadDate
+FROM (
+    -- New Snapshot Logic
+    SELECT 
+        EOMONTH(bddcds.Date) AS Date,
+        YEAR(bddcds.Date) * 100 + MONTH(bddcds.Date) AS YearMonth,
+        bddcds.CountryID,
+        COUNT(DISTINCT RealCID) AS Funded_EOM
+    FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+    INNER JOIN (
+        SELECT YEAR(Date) AS Yr, MONTH(Date) AS Mn, MAX(DateID) AS MaxDateID
+        FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+        WHERE DateID >= 20260401 
+        GROUP BY YEAR(Date), MONTH(Date)
+    ) AS MaxDates ON bddcds.DateID = MaxDates.MaxDateID
+    WHERE bddcds.IsFunded = 1 AND bddcds.IsValidCustomer = 1
+    GROUP BY EOMONTH(bddcds.Date), YEAR(bddcds.Date) * 100 + MONTH(bddcds.Date), bddcds.CountryID
+) AS EOM
+FULL OUTER JOIN (
+    -- New Funded Logic
+    SELECT 
+        EOMONTH(bddcds.Date) AS Date,
+        YEAR(bddcds.Date) * 100 + MONTH(bddcds.Date) AS YearMonth,
+        bddcds.CountryID,
+        COUNT(DISTINCT RealCID) AS New_Funded_Count
+    FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+    WHERE bddcds.DateID >= 20260401 
+      AND bddcds.FirstTimeFunded = 1 
+      AND bddcds.IsValidCustomer = 1
+    GROUP BY EOMONTH(bddcds.Date), YEAR(bddcds.Date) * 100 + MONTH(bddcds.Date), bddcds.CountryID
+) AS NEW ON EOM.YearMonth = NEW.YearMonth AND EOM.CountryID = NEW.CountryID
+JOIN DWH_dbo.Dim_Country dc ON dc.CountryID = COALESCE(EOM.CountryID, NEW.CountryID) -- Joining Dim_Country for Part 2
+```
+
+### 3. Custom SQL Query1
 
 - Tableau id: `ff71d3ed-198f-a9cb-1424-a902bddb260a`
 
@@ -66,13 +165,3659 @@ UNION ALL
 SELECT ConversionDateID AS DateID, 'EXW_dbo.EXW_C2F_E2E' AS TableName, count(*) AS CountAll  FROM EXW_dbo.EXW_C2F_E2E WHERE ConversionDateID BETWEEN CAST(FORMAT(CAST(getdate()-7 AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(getdate() AS DATE),'yyyyMMdd') as INT) GROUP BY ConversionDateID
 ```
 
+### 4. Custom SQL Query
+
+- Tableau id: `164fff49-6855-0400-3336-fa00b9b078c6`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 5. Custom SQL Query
+
+- Tableau id: `32faa7ef-aeb6-773e-ce67-d427f08b7e3e`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 6. Custom SQL Query
+
+- Tableau id: `41c264e6-e723-1ff5-1f8b-d6fc55f316c2`
+
+```sql
+SELECT
+    Date,
+    SUM(IsFunded) AS TotalFundedUsers,
+    SUM(IsFirstTimeFunded) AS FirstTimeFunded,
+    SUM(Funded_FirstFunded) AS Funded_FirstFunded,
+    SUM(IsWinback) AS Winback,
+    SUM(IsChurned) AS Churned,
+    SUM(FirstTimeFunded) + SUM(IsWinback) - SUM(IsChurned) AS Net
+FROM (
+    SELECT
+        s.Date,
+        s.DateID,
+        s.RealCID,
+        s.IsFunded,
+        s.FirstTimeFunded,
+        s.Global_FTD_Date,
+        s.FirstFundedDateID,
+        LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) AS WasFundedYesterday,
+        CASE 
+            WHEN s.FirstTimeFunded = 1 
+                 AND CONVERT(INT, CONVERT(vARCHAR(8), s.Global_FTD_Date, 112)) = s.FirstFundedDateID 
+            THEN 1 ELSE 0 
+        END AS Funded_FirstFunded,
+        CASE WHEN s.FirstTimeFunded = 1 THEN 1 ELSE 0 END AS IsFirstTimeFunded,
+        CASE 
+            WHEN s.IsFunded = 1 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 0
+                 AND s.FirstTimeFunded = 0
+            THEN 1 ELSE 0 
+        END AS IsWinback,
+        CASE 
+            WHEN s.IsFunded = 0 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 1 
+            THEN 1 ELSE 0 
+        END AS IsChurned
+    FROM (
+        SELECT
+            Date,
+            DateID,
+            RealCID,
+            IsFunded,
+            FirstTimeFunded,
+            Global_FTD_Date,
+            FirstFundedDateID
+        FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+        WHERE DateID >= CONVERT(INT, CONVERT(VARCHAR(8), DATEADD(MONTH, -2, GETDATE()), 112))
+          AND IsValidCustomer = 1
+    ) AS s
+) AS daily_movement_flags
+GROUP BY
+    Date,
+    DateID
+```
+
+### 7. Custom SQL Query
+
+- Tableau id: `423fb46a-9186-2a52-8feb-52e490efefee`
+
+```sql
+SELECT TableName, DateKey as DateID
+FROM 
+(
+SELECT 'BI_DB_DDR_Fact_AUM' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform) ddr -- select min(DateID) from BI_DB_dbo.BI_DB_DDR_Fact_MIMO_eMoney_Platform
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20201226
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Fact_MIMO_All_Platforms' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_Non_Revenue_Generating_Actions' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_PnL' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20170102
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+/*
+SELECT * FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME LIKE '%DDR_Fact%'
+*/
+SELECT 'BI_DB_DDR_Fact_Trading_Volumes_And_Amounts' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Fact_Trading_Volumes_And_Amounts) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20170423
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Customer_Daily_Status' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+
+UNION ALL 
+
+SELECT 'BI_DB_DDR_Customer_Periodic_Status' AS TableName, DateKey
+FROM DWH_dbo.Dim_Date dd
+	LEFT JOIN (SELECT DISTINCT DateID FROM BI_DB_dbo.BI_DB_DDR_Customer_Periodic_Status) ddr 
+		ON dd.DateKey = ddr.DateID
+WHERE ddr.DateID IS NULL
+AND DateKey > 20150101
+AND dd.DateKey <= (SELECT max(DateID) FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New bdcbaln)
+) a
+```
+
+### 8. Custom SQL Query
+
+- Tableau id: `4b0f23b5-ebee-5657-15ee-4db61ba04425`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 9. Custom SQL Query
+
+- Tableau id: `54ada8c8-cf54-4790-1fa1-973d7e7bcfb3`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 10. Custom SQL Query
+
+- Tableau id: `6aa412ca-3cb2-1e59-1837-7238c7dc16e0`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(<[Parameters].[Parameter 1]> AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(<[Parameters].[Parameter 1]> as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(<[Parameters].[Parameter 1]> as Date) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(<[Parameters].[Parameter 1]> as Date) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(<[Parameters].[Parameter 1]> as Date) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(<[Parameters].[Parameter 1]> as Date) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(<[Parameters].[Parameter 1]> as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(<[Parameters].[Parameter 1]> as Date)), -1) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(<[Parameters].[Parameter 1]> as Date)), -1) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(<[Parameters].[Parameter 1]> as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(<[Parameters].[Parameter 1]> as Date)), -1) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(<[Parameters].[Parameter 1]> as Date)), -1) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(<[Parameters].[Parameter 1]> as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(<[Parameters].[Parameter 1]> as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(<[Parameters].[Parameter 1]> as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(<[Parameters].[Parameter 1]> as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(<[Parameters].[Parameter 1]> as Date)), 0) AND dateadd (DAY,1,cast(<[Parameters].[Parameter 1]> as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 11. Custom SQL Query
+
+- Tableau id: `782d6337-9ba3-d8ea-8e90-04477bdf29d7`
+
+```sql
+SELECT 'FullCommission' AS Metric, a.DateID AS DDRDateID , a.DDRAmount , b.DateID AS DWHDateID, b.FunctionAmount ,  abs(ISNULL(DDRAmount,0) - ISNULL(FunctionAmount,0)) AS Diff
+FROM 
+(
+SELECT bddfrga.DateID, sum(bddfrga.Amount) AS DDRAmount
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions bddfrga
+WHERE bddfrga.DateID >= CAST(FORMAT(CAST(GETDATE()-7 AS DATE),'yyyyMMdd') as INT)
+AND bddfrga.Metric = 'FullCommission'
+GROUP BY bddfrga.DateID
+) a
+FULL OUTER JOIN 
+(
+SELECT DateID, sum(TotalFullCommission)  AS FunctionAmount
+FROM BI_DB_dbo.Function_Revenue_FullCommissions(CAST(FORMAT(CAST(getdate()-7 AS DATE),'yyyyMMdd') as INT), CAST(FORMAT(CAST(GETDATE()-1 AS DATE),'yyyyMMdd') as INT),0) 
+GROUP BY DateID
+) b
+ON a.DateID = b.DateID
+WHERE ISNULL(a.DDRAmount,0) <> ISNULL(b.FunctionAmount,0)
+
+UNION ALL 
+
+SELECT 'GlobalFtds' AS Metric, a.DateID AS DDRDateID , a.DDRAmount , b.DateID AS DWHDateID, b.FunctionAmount ,  abs(ISNULL(DDRAmount,0) - ISNULL(FunctionAmount,0)) AS Diff
+FROM 
+(
+SELECT bddfrga.DateID, sum(CASE WHEN bddfrga.Global_FTD_DateID = bddfrga.DateID THEN 1 ELSE 0 end) AS DDRAmount
+FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddfrga
+WHERE bddfrga.DateID >= CAST(FORMAT(CAST(getdate()-7 AS DATE),'yyyyMMdd') as INT)
+GROUP BY bddfrga.DateID
+) a
+FULL OUTER JOIN 
+(
+SELECT CAST(FORMAT(CAST(FirstDepositDate AS DATE),'yyyyMMdd') as INT) AS DateID, count(fca.RealCID) AS FunctionAmount
+FROM DWH_dbo.Dim_Customer fca
+Where CAST(FirstDepositDate AS DATE) >= getdate()-8
+GROUP BY CAST(FORMAT(CAST(FirstDepositDate AS DATE),'yyyyMMdd') as INT)
+) b
+ON a.DateID = b.DateID
+```
+
+### 12. Custom SQL Query
+
+- Tableau id: `7c80fec2-e699-2f41-2fa5-6d9832587455`
+
+```sql
+SELECT 
+		20240413 AS DateID
+		, dc.RealCID
+		, '20240413' AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(dc.RealCID) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate > '2000-01-01' AND dc.FirstDepositDate <= '20240414' THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN 20240407 AND 20240413
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414'
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+
+
+UNION ALL
+
+SELECT 
+		20240413 AS DateID
+		, dc.RealCID
+		, '20240413' AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(dc.RealCID) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate > '2000-01-01' AND dc.FirstDepositDate <= '20240414' THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN 20240413 AND 20240413
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+WHERE dc.RegisteredReal BETWEEN '20240413' AND '20240414'
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+```
+
+### 13. Custom SQL Query
+
+- Tableau id: `930aa1ee-8008-9c74-da4d-513f4835a5bd`
+
+```sql
+SELECT
+    Date,
+    SUM(IsFunded) AS TotalFundedUsers,
+    SUM(IsFirstTimeFunded) AS FirstTimeFunded,
+    SUM(Funded_FirstFunded) AS Funded_FirstFunded,
+    SUM(IsWinback) AS Winback,
+    SUM(IsChurned) AS Churned,
+    SUM(FirstTimeFunded) + SUM(IsWinback) - SUM(IsChurned) AS Net
+FROM (
+    SELECT
+        s.Date,
+        s.DateID,
+        s.RealCID,
+        s.IsFunded,
+        s.FirstTimeFunded,
+        s.Global_FTD_Date,
+        s.FirstFundedDateID,
+        LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) AS WasFundedYesterday,
+        CASE 
+            WHEN s.FirstTimeFunded = 1 
+                 AND CONVERT(INT, CONVERT(vARCHAR(8), s.Global_FTD_Date, 112)) = s.FirstFundedDateID 
+            THEN 1 ELSE 0 
+        END AS Funded_FirstFunded,
+        CASE WHEN s.FirstTimeFunded = 1 THEN 1 ELSE 0 END AS IsFirstTimeFunded,
+        CASE 
+            WHEN s.IsFunded = 1 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 0
+                 AND s.FirstTimeFunded = 0
+            THEN 1 ELSE 0 
+        END AS IsWinback,
+        CASE 
+            WHEN s.IsFunded = 0 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 1 
+            THEN 1 ELSE 0 
+        END AS IsChurned
+    FROM (
+        SELECT
+            Date,
+            DateID,
+            RealCID,
+            IsFunded,
+            FirstTimeFunded,
+            Global_FTD_Date,
+            FirstFundedDateID
+        FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+        WHERE DateID >= CONVERT(INT, CONVERT(VARCHAR(8), DATEADD(MONTH, -2, GETDATE()), 112))
+          AND IsValidCustomer = 1
+    ) AS s
+) AS daily_movement_flags
+GROUP BY
+    Date,
+    DateID
+```
+
+### 14. Custom SQL Query
+
+- Tableau id: `998983ff-2ce1-1070-de8e-ac203aa32e84`
+
+```sql
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_PnL' AS TableName
+	, 'Compare to FCA netprofit' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	,  sum(so.NetProfit) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (4,5,6,28,40)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.NetProfit) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL ddr
+WHERE ddr.DateID >= CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Non_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA new copy' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, -1 * sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID = 17
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.ActionType = 'NewCopy'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Customer_Daily_Status' AS TableName
+	, 'Compare to dimcustomer ftds' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)  AS DateID
+	,  count(so.RealCID) AS SourceMetric
+FROM DWH_dbo.Dim_Customer  so
+WHERE  so.FirstDepositDate BETWEEN dateadd(MONTH, -1,cast(getdate()-1 AS DATE)) AND cast(GETDATE() AS date)
+GROUP BY CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)
+) a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.TPFirstDeposited ) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA fullcomm' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.TotalFullCommission) AS SourceMetric
+FROM BI_DB_dbo.Function_Revenue_FullCommissions(CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT),  CAST(FORMAT(CAST(getdate() AS DATE),'yyyyMMdd') as INT),0) so
+--WHERE  so.DateID BETWEEN 20250325 AND
+--AND so.ActionTypeID = 7
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND Metric = 'FullCommission'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_AllPlatforms' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+AND ddr.MIMOPlatform = 'TradingPlatform'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_AUM' AS TableName
+	, 'Compare to Vliabilities' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT vl.DateID
+	, sum(vl.NOP) AS SourceMetric
+FROM DWH_dbo.V_Liabilities vl
+WHERE  vl.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY vl.DateID
+)a
+LEFT JOIN 
+(
+SELECT bddfa.DateID
+	, sum (bddfa.NOP) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa
+WHERE bddfa.DateID >=  CAST(FORMAT(CAST(dateadd(MONTH,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY bddfa.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+```
+
+### 15. Custom SQL Query
+
+- Tableau id: `a882bc10-8bf2-dd5c-7699-c90a5f9b1d6e`
+
+```sql
+SELECT
+    Date,
+    SUM(IsFunded) AS TotalFundedUsers,
+    SUM(IsFirstTimeFunded) AS FirstTimeFunded,
+    SUM(Funded_FirstFunded) AS Funded_FirstFunded,
+    SUM(IsWinback) AS Winback,
+    SUM(IsChurned) AS Churned,
+    SUM(FirstTimeFunded) + SUM(IsWinback) - SUM(IsChurned) AS Net
+FROM (
+    SELECT
+        s.Date,
+        s.DateID,
+        s.RealCID,
+        s.IsFunded,
+        s.FirstTimeFunded,
+        s.Global_FTD_Date,
+        s.FirstFundedDateID,
+        LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) AS WasFundedYesterday,
+        CASE 
+            WHEN s.FirstTimeFunded = 1 
+                 AND CONVERT(INT, CONVERT(vARCHAR(8), s.Global_FTD_Date, 112)) = s.FirstFundedDateID 
+            THEN 1 ELSE 0 
+        END AS Funded_FirstFunded,
+        CASE WHEN s.FirstTimeFunded = 1 THEN 1 ELSE 0 END AS IsFirstTimeFunded,
+        CASE 
+            WHEN s.IsFunded = 1 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 0
+                 AND s.FirstTimeFunded = 0
+            THEN 1 ELSE 0 
+        END AS IsWinback,
+        CASE 
+            WHEN s.IsFunded = 0 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 1 
+            THEN 1 ELSE 0 
+        END AS IsChurned
+    FROM (
+        SELECT
+            Date,
+            DateID,
+            RealCID,
+            IsFunded,
+            FirstTimeFunded,
+            Global_FTD_Date,
+            FirstFundedDateID
+        FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+        WHERE DateID >= CONVERT(INT, CONVERT(VARCHAR(8), DATEADD(MONTH, -2, GETDATE()), 112))
+          AND IsValidCustomer = 1
+    ) AS s
+) AS daily_movement_flags
+GROUP BY
+    Date,
+    DateID
+```
+
+### 16. Custom SQL Query
+
+- Tableau id: `ab486771-aa02-8e53-2a03-8d2c55440e4b`
+
+```sql
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_PnL' AS TableName
+	, 'Compare to FCA netprofit' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	,  sum(so.NetProfit) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (4,5,6,28,40)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.NetProfit) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_PnL ddr
+WHERE ddr.DateID >= CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Non_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA new copy' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, -1 * sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID = 17
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum ( ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Non_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.ActionType = 'NewCopy'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Customer_Daily_Status' AS TableName
+	, 'Compare to dimcustomer ftds' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)  AS DateID
+	,  count(so.RealCID) AS SourceMetric
+FROM DWH_dbo.Dim_Customer  so
+WHERE  so.FirstDepositDate BETWEEN cast(GETDATE()-8 AS Date) AND cast(GETDATE() AS date)
+GROUP BY CAST(FORMAT(CAST(so.FirstDepositDate AS DATE),'yyyyMMdd') as INT)
+) a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.GlobalFirstDeposited ) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA fullcomm' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.TotalFullCommission) AS SourceMetric
+FROM BI_DB_dbo.Function_Revenue_FullCommissions(CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT),  CAST(FORMAT(CAST(getdate() AS DATE),'yyyyMMdd') as INT),0) so
+--WHERE  so.DateID BETWEEN 20250325 AND
+--AND so.ActionTypeID = 7
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND Metric = 'FullCommission'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_AllPlatforms' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_AllPlatforms ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+AND ddr.MIMOPlatform = 'TradingPlatform'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_MIMO_Trading_Platform' AS TableName
+	, 'Compare to FCA deposits' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID IN (7,44)
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.AmountUSD) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_MIMO_Trading_Platform ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND ddr.MIMOAction = 'Deposit'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_AUM' AS TableName
+	, 'Compare to Vliabilities' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT vl.DateID
+	, sum(vl.NOP) AS SourceMetric
+FROM DWH_dbo.V_Liabilities vl
+WHERE  vl.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY vl.DateID
+)a
+LEFT JOIN 
+(
+SELECT bddfa.DateID
+	, sum (bddfa.NOP) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_AUM bddfa
+WHERE bddfa.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+GROUP BY bddfa.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+
+UNION ALL
+
+
+SELECT a.DateID
+	, 'BI_DB_DDR_Fact_Revenue_Generating_Actions' AS TableName
+	, 'Compare to FCA TicketFee' AS Test
+	, a.SourceMetric
+	, b.NewDDRMetric
+	, a.SourceMetric - b.NewDDRMetric AS MetricDiff
+from 
+(
+SELECT so.DateID
+	, sum(-1 * so.Amount) AS SourceMetric
+FROM DWH_dbo.Fact_CustomerAction so 
+WHERE  so.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND so.ActionTypeID = 35
+AND IsFeeDividend = 4
+GROUP BY so.DateID
+)a
+LEFT JOIN 
+(
+SELECT ddr.DateID
+	, sum (ddr.Amount) AS NewDDRMetric
+FROM BI_DB_dbo.BI_DB_DDR_Fact_Revenue_Generating_Actions ddr
+WHERE ddr.DateID >=  CAST(FORMAT(CAST(dateadd(WEEK,-1,GETDATE()-1) AS DATE),'yyyyMMdd') as INT)
+AND Metric LIKE '%Tick%'
+GROUP BY ddr.DateID
+) b
+ON a.DateID = b.DateID
+--ORDER BY a.DateID
+```
+
+### 17. Custom SQL Query
+
+- Tableau id: `cd095b66-41aa-a156-325b-4ff28e192cc9`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 18. Custom SQL Query
+
+- Tableau id: `dcf0369b-a1f8-43a2-627c-772c45625838`
+
+```sql
+SELECT
+    Date,
+    SUM(IsFunded) AS TotalFundedUsers,
+    SUM(IsFirstTimeFunded) AS FirstTimeFunded,
+    SUM(Funded_FirstFunded) AS Funded_FirstFunded,
+    SUM(IsWinback) AS Winback,
+    SUM(IsChurned) AS Churned,
+    SUM(FirstTimeFunded) + SUM(IsWinback) - SUM(IsChurned) AS Net
+FROM (
+    SELECT
+        s.Date,
+        s.DateID,
+        s.RealCID,
+        s.IsFunded,
+        s.FirstTimeFunded,
+        s.Global_FTD_Date,
+        s.FirstFundedDateID,
+        LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) AS WasFundedYesterday,
+        CASE 
+            WHEN s.FirstTimeFunded = 1 
+                 AND CONVERT(INT, CONVERT(vARCHAR(8), s.Global_FTD_Date, 112)) = s.FirstFundedDateID 
+            THEN 1 ELSE 0 
+        END AS Funded_FirstFunded,
+        CASE WHEN s.FirstTimeFunded = 1 THEN 1 ELSE 0 END AS IsFirstTimeFunded,
+        CASE 
+            WHEN s.IsFunded = 1 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 0
+                 AND s.FirstTimeFunded = 0
+            THEN 1 ELSE 0 
+        END AS IsWinback,
+        CASE 
+            WHEN s.IsFunded = 0 
+                 AND LAG(s.IsFunded, 1, 0) OVER (PARTITION BY s.RealCID ORDER BY s.DateID) = 1 
+            THEN 1 ELSE 0 
+        END AS IsChurned
+    FROM (
+        SELECT
+            Date,
+            DateID,
+            RealCID,
+            IsFunded,
+            FirstTimeFunded,
+            Global_FTD_Date,
+            FirstFundedDateID
+        FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status
+        WHERE DateID >= CONVERT(INT, CONVERT(VARCHAR(8), DATEADD(MONTH, -2, GETDATE()), 112))
+          AND IsValidCustomer = 1
+    ) AS s
+) AS daily_movement_flags
+GROUP BY
+    Date,
+    DateID
+```
+
+### 19. Custom SQL Query
+
+- Tableau id: `e8ca804d-90be-1a69-7ca7-60bc66a4a609`
+
+```sql
+SELECT a.*
+	, dc.Name AS Country
+	, dmc.Name AS MifidCategory
+	, dpl.Name AS PlayerLevel
+	, dr.Name AS Regulation
+FROM 
+(
+SELECT a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+	 , sum(a.Registered) AS Registered
+	 , sum(a.ConvertedRegistrationFTD) AS ConvertedRegistrationFTD
+FROM 
+(
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN cast(getdate()-1 as Date) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(week, DATEDIFF(ww, 0, cast(getdate()-1 as Date)), -1) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisMonth' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(month, DATEDIFF(mm, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisQuarter' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(qq, DATEDIFF(qq, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+
+UNION ALL 
+
+SELECT 
+		CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT) AS DateID
+		, dc.RealCID
+		, cast(getdate()-1 as Date) AS [Date]
+		, 'ThisYear' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN CAST(FORMAT(CAST(DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AS DATE),'yyyyMMdd') as INT) AND CAST(FORMAT(CAST(cast(getdate()-1 as Date) AS DATE),'yyyyMMdd') as INT)
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date))  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN DATEADD(yy, DATEDIFF(yy, 0, cast(getdate()-1 as Date)), 0) AND dateadd (DAY,1,cast(getdate()-1 as Date)) THEN dc.RealCID END) = 1
+) a
+GROUP BY a.DateID
+	 , a.Date
+	 , a.TimeRange
+	 , a.FirstActionType
+	 , a.RegulationID
+	 , a.IsCreditReportValidCB
+	 , a.IsValidCustomer
+	 , a.MifidCategorizationID
+	 , a.PlayerLevelID
+	 , a.CountryID
+	 , a.MarketingRegion
+) a
+JOIN DWH_dbo.Dim_Country dc
+	ON a.CountryID = dc.CountryID
+JOIN DWH_dbo.Dim_MifidCategorization dmc
+	ON a.MifidCategorizationID = dmc.MifidCategorizationID
+JOIN DWH_dbo.Dim_PlayerLevel dpl
+	ON a.PlayerLevelID = dpl.PlayerLevelID
+JOIN DWH_dbo.Dim_Regulation dr
+	ON a.RegulationID = dr.DWHRegulationID
+```
+
+### 20. Custom SQL Query
+
+- Tableau id: `eb1f64f4-6fd6-c239-7824-92f83a7002f6`
+
+```sql
+SELECT 
+		20240413 AS DateID
+		, dc.RealCID
+		, '20240413' AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN '20240407' AND '20240414'  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN '20240407' AND '20240414' THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN 20240407 AND 20240413
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN '20240407' AND '20240414'  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN '20240407' AND '20240414' THEN dc.RealCID END) = 1
+
+UNION ALL
+
+
+SELECT 
+		20240413 AS DateID
+		, dc.RealCID
+		, '20240413' AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN '20240413' AND '20240414'  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN '20240413' AND '20240414' THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN 20240413 AND 20240413
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN '20240413' AND '20240414'  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN '20240413' AND '20240414' THEN dc.RealCID END) = 1
+```
+
+### 21. Custom SQL Query
+
+- Tableau id: `f4f7820e-00bb-1160-c70b-dee7992c9bd2`
+
+```sql
+SELECT 
+		20240413 AS DateID
+		, dc.RealCID
+		, '20240413' AS [Date]
+		, 'ThisWeek' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN '20240407' AND '20240414'  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN '20240407' AND '20240414' THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN 20240407 AND 20240413
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN '20240407' AND '20240414'  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN '20240407' AND '20240414' THEN dc.RealCID END) = 1
+
+UNION ALL
+
+
+SELECT 
+		20240413 AS DateID
+		, dc.RealCID
+		, '20240413' AS [Date]
+		, 'Yesterday' AS TimeRange
+		, ISNULL(fa.FirstActionType, 'NoAction') AS FirstActionType
+        , dc.DesignatedRegulationID AS RegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName as MarketingRegion
+		, count(CASE WHEN RegisteredReal  BETWEEN '20240413' AND '20240414'  then dc.RealCID end) AS Registered
+		, count(CASE WHEN dc.FirstDepositDate BETWEEN '20240413' AND '20240414' THEN dc.RealCID END) AS ConvertedRegistrationFTD
+FROM DWH_dbo.Dim_Customer dc
+	JOIN DWH_dbo.Dim_Country dc1
+		ON dc.CountryID = dc1.CountryID
+	LEFT JOIN 
+		(
+			SELECT a.RealCID, a.FirstActionType
+			FROM 
+			(
+			SELECT bddcds.RealCID, bddcds.FirstActionType, ROW_NUMBER () OVER (PARTITION BY bddcds.RealCID ORDER BY bddcds.DateID desc) AS RN
+			FROM BI_DB_dbo.BI_DB_DDR_Customer_Daily_Status bddcds
+			WHERE bddcds.FirstActionDateID BETWEEN 20240413 AND 20240413
+			) a
+			WHERE RN = 1
+		) fa
+		ON dc.RealCID = fa.RealCID
+-- WHERE dc.RegisteredReal BETWEEN '20240407' AND '20240414' 
+GROUP BY 
+		dc.DesignatedRegulationID
+        , IsCreditReportValidCB
+        , IsValidCustomer
+        , MifidCategorizationID
+        , PlayerLevelID
+        , dc.CountryID
+        , dc1.MarketingRegionManualName
+		, fa.FirstActionType
+		, dc.RealCID
+HAVING 
+		 count(CASE WHEN RegisteredReal  BETWEEN '20240413' AND '20240414'  then dc.RealCID end) = 1 or
+		 count(CASE WHEN dc.FirstDepositDate BETWEEN '20240413' AND '20240414' THEN dc.RealCID END) = 1
+```
+
 ## Downstream workbooks
 
-| # | Workbook | Project | Owner | Last updated | Tableau id |
-|---|---|---|---|---|---|
-| 1 | new ddrs monitoring | Archive | Guy Manova | 2025-11-13T08:38:14Z | `8cbf942b-ddd5-b894-a72a-58ad1eb3bc4c` |
-| 2 | new ddrs monitoring - extract for email send | DDR's | Guy Manova | 2026-04-27T14:07:42Z | `1aa494cb-60d7-119c-72e1-77de6539ad1f` |
+_Attribution: 3 via direct table-drag, 16 via custom SQL (workbooks can use both paths)._
+
+| # | Workbook | Project | Owner | Via | Last updated | URL |
+|---|---|---|---|---|---|---|
+| 1 | FundedChurnAirDrop  | Archive | Irina Korolik | custom_sql | 2025-12-17T15:14:53Z | [open](https://reports.etorocorp.com/#/workbooks/FundedChurnAirDrop) |
+| 2 | FundedChurnAirDrop Story | Archive | Irina Korolik | custom_sql | 2025-12-17T15:11:28Z | [open](https://reports.etorocorp.com/#/workbooks/FundedChurnAirDropStory) |
+| 3 | FundedChurnAirDrop2025 | Archive | Irina Korolik | custom_sql | 2025-12-17T15:15:08Z | [open](https://reports.etorocorp.com/#/workbooks/FundedChurnAirDrop2025_17625107384880) |
+| 4 | new ddrs monitoring | Archive | Guy Manova | custom_sql,direct | 2025-11-13T08:38:14Z | [open](https://reports.etorocorp.com/#/workbooks/newddrsmonitoring) |
+| 5 | eToro's Daily Data Report (DDR) | DDR's | Lior Ben Dor | custom_sql | 2026-05-31T09:11:33Z | [open](https://reports.etorocorp.com/#/workbooks/WIPeTorosDDR2025OriginalDesign) |
+| 6 | eToro's Daily Data Report (New DDR 2025) - LIVE QUERY | DDR's | Guy Manova | custom_sql | 2026-01-11T10:21:02Z | [open](https://reports.etorocorp.com/#/workbooks/eTorosDailyDataReportNewDDR2025-LIVEQUERY) |
+| 7 | new DDR - with queries (Edits with Figma) | DDR's | Ofir Ovadia | custom_sql | 2025-07-23T09:06:02Z | [open](https://reports.etorocorp.com/#/workbooks/newDDR-withqueriesEditswithFigma_17271749615470) |
+| 8 | new ddrs monitoring - extract for email send | DDR's | Guy Manova | custom_sql,direct | 2026-05-31T10:17:06Z | [open](https://reports.etorocorp.com/#/workbooks/newddrsmonitoring-extractforemailsend) |
+| 9 | new DDR | Guy Manova Test Versions | Guy Manova | custom_sql | 2024-08-13T11:09:10Z | [open](https://reports.etorocorp.com/#/workbooks/newDDR) |
+| 10 | new DDR - with queries | Guy Manova Test Versions | Guy Manova | custom_sql | 2024-11-19T19:35:22Z | [open](https://reports.etorocorp.com/#/workbooks/newDDR-withqueries) |
+| 11 | new DDR - with queries (Edits with Figma) | Guy Manova Test Versions | Ofir Ovadia | custom_sql | 2024-09-03T16:27:59Z | [open](https://reports.etorocorp.com/#/workbooks/newDDR-withqueriesEditswithFigma) |
+| 12 | IR Dashboard | Management Reports | Bar Arian | custom_sql,direct | 2026-05-31T11:19:48Z | [open](https://reports.etorocorp.com/#/workbooks/IRDashboard_17454158298550) |
+| 13 | Funded Churn AirDrop 2025 | Marketing Automation | Irina Korolik | custom_sql | 2026-05-31T08:48:57Z | [open](https://reports.etorocorp.com/#/workbooks/FundedChurnAirDrop2025) |
+| 14 | WIP: eToro's DDR (2025 New Design) | Sandbox | Ofir Ovadia | custom_sql | 2026-05-03T09:50:25Z | [open](https://reports.etorocorp.com/#/workbooks/WIPeTorosDDR2025NewDesign) |
+| 15 | eToro's Daily Data Report (New DDR 2026) - Spaceship | Tests | Lior Ben Dor | custom_sql | 2026-04-15T08:51:46Z | [open](https://reports.etorocorp.com/#/workbooks/eTorosDailyDataReportNewDDR2025_17717709518690) |
+| 16 | eToro's Daily Data Report (New DDR 2026) - Spaceship (Guy Changes) | Tests | Guy Manova | custom_sql | 2026-05-31T03:03:00Z | [open](https://reports.etorocorp.com/#/workbooks/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges) |
+
+### View URLs (per workbook)
+
+- **FundedChurnAirDrop ** (Archive)
+  - [Funded Churn](https://reports.etorocorp.com/#/views/FundedChurnAirDrop/FundedChurn)
+  - [Funded Churn 2](https://reports.etorocorp.com/#/views/FundedChurnAirDrop/FundedChurn2)
+  - [Story 1](https://reports.etorocorp.com/#/views/FundedChurnAirDrop/Story1)
+- **FundedChurnAirDrop Story** (Archive)
+  - [Story 1](https://reports.etorocorp.com/#/views/FundedChurnAirDropStory/Story1)
+- **FundedChurnAirDrop2025** (Archive)
+  - [Funded Churn](https://reports.etorocorp.com/#/views/FundedChurnAirDrop2025_17625107384880/FundedChurn)
+- **new ddrs monitoring** (Archive)
+  - [object dependency](https://reports.etorocorp.com/#/views/newddrsmonitoring/objectdependency)
+  - [object status history](https://reports.etorocorp.com/#/views/newddrsmonitoring/objectstatushistory)
+  - [source metric compare](https://reports.etorocorp.com/#/views/newddrsmonitoring/sourcemetriccompare)
+  - [support tables update](https://reports.etorocorp.com/#/views/newddrsmonitoring/supporttablesupdate)
+- **eToro's Daily Data Report (DDR)** (DDR's)
+  - [Yesterday's: Short Summary](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/YesterdaysShortSummary_1)
+  - [Money Movement](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/MoneyMovement)
+  - [Customers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/Customers)
+  - [Revenue: Overview & Breakdowns](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/RevenueOverviewBreakdowns)
+  - [Revenue: MiFID Category Breakdowns](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/RevenueMiFIDCategoryBreakdowns)
+  - [Open Book, Copy Book](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/OpenBookCopyBook)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/AUMPnL)
+  - [Yesterday's: Short Summary Split View](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/YesterdaysShortSummarySplitView)
+  - [Book](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/Book)
+  - [EOD Club Redeposit by Marketing Region](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/EODClubRedepositbyMarketingRegion)
+  - [Spaceship AU (Beta)](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025OriginalDesign/SpaceshipAUBeta)
+- **eToro's Daily Data Report (New DDR 2025) - LIVE QUERY** (DDR's)
+  - [Yesterday's: Short Summary](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/YesterdaysShortSummary)
+  - [Money Movement](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/MoneyMovement)
+  - [Customers](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/Customers)
+  - [Revenue: Overview & Breakdowns](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/RevenueOverviewBreakdowns)
+  - [Revenue: MiFID Category Breakdowns](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/RevenueMiFIDCategoryBreakdowns)
+  - [Open Book, Copy Book](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/OpenBookCopyBook)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/AUMPnL)
+  - [Yesterday's: Short Summary Split View](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/YesterdaysShortSummarySplitView)
+  - [Book](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/Book)
+  - [EOD Club Redeposit by Marketing Region](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025-LIVEQUERY/EODClubRedepositbyMarketingRegion)
+- **new DDR - with queries (Edits with Figma)** (DDR's)
+  - [MVP Global MIMO](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma_17271749615470/MVPGlobalMIMO)
+  - [MVP TP Breakdown](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma_17271749615470/MVPTPBreakdown)
+- **new ddrs monitoring - extract for email send** (DDR's)
+  - [object dependency](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/objectdependency)
+  - [object status history](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/objectstatushistory)
+  - [source metric compare](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/sourcemetriccompare)
+  - [support tables update](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/supporttablesupdate)
+  - [staking current month](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/stakingcurrentmonth)
+  - [by date diffs](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/bydatediffs)
+  - [missing dates](https://reports.etorocorp.com/#/views/newddrsmonitoring-extractforemailsend/missingdates)
+- **new DDR** (Guy Manova Test Versions)
+  - [Yesterday summary](https://reports.etorocorp.com/#/views/newDDR/Yesterdaysummary)
+  - [Revenue Breakdown](https://reports.etorocorp.com/#/views/newDDR/RevenueBreakdown)
+  - [Revenue - Transfer Coins](https://reports.etorocorp.com/#/views/newDDR/Revenue-TransferCoins)
+  - [Revenue by region](https://reports.etorocorp.com/#/views/newDDR/Revenuebyregion)
+  - [Money Movement - Deposits](https://reports.etorocorp.com/#/views/newDDR/MoneyMovement-Deposits)
+  - [Money Movement -Others](https://reports.etorocorp.com/#/views/newDDR/MoneyMovement-Others)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/newDDR/AUMPnL)
+  - [PnL](https://reports.etorocorp.com/#/views/newDDR/PnL)
+  - [New Customers](https://reports.etorocorp.com/#/views/newDDR/NewCustomers)
+  - [Registrations](https://reports.etorocorp.com/#/views/newDDR/Registrations)
+  - [first trades - TP FTDs](https://reports.etorocorp.com/#/views/newDDR/firsttrades-TPFTDs)
+  - [first trades - Global FTDs](https://reports.etorocorp.com/#/views/newDDR/firsttrades-GlobalFTDs)
+  - [Book - Trades](https://reports.etorocorp.com/#/views/newDDR/Book-Trades)
+  - [Book - Commissions](https://reports.etorocorp.com/#/views/newDDR/Book-Commissions)
+  - [Book - FullCommissions copy/man](https://reports.etorocorp.com/#/views/newDDR/Book-FullCommissionscopyman)
+  - [Book - Fullcommissions assets](https://reports.etorocorp.com/#/views/newDDR/Book-Fullcommissionsassets)
+  - [Openbook - copy book](https://reports.etorocorp.com/#/views/newDDR/Openbook-copybook)
+  - [Openbook - feed](https://reports.etorocorp.com/#/views/newDDR/Openbook-feed)
+  - [EOD club Redeposits](https://reports.etorocorp.com/#/views/newDDR/EODclubRedeposits)
+- **new DDR - with queries** (Guy Manova Test Versions)
+  - [Yesterday summary](https://reports.etorocorp.com/#/views/newDDR-withqueries/Yesterdaysummary)
+  - [Revenue Breakdown](https://reports.etorocorp.com/#/views/newDDR-withqueries/RevenueBreakdown)
+  - [Revenue - Transfer Coins](https://reports.etorocorp.com/#/views/newDDR-withqueries/Revenue-TransferCoins)
+  - [Revenue by region](https://reports.etorocorp.com/#/views/newDDR-withqueries/Revenuebyregion)
+  - [Money Movement - Deposits](https://reports.etorocorp.com/#/views/newDDR-withqueries/MoneyMovement-Deposits)
+  - [Money Movement -Others](https://reports.etorocorp.com/#/views/newDDR-withqueries/MoneyMovement-Others)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/newDDR-withqueries/AUMPnL)
+  - [PnL](https://reports.etorocorp.com/#/views/newDDR-withqueries/PnL)
+  - [New Customers](https://reports.etorocorp.com/#/views/newDDR-withqueries/NewCustomers)
+  - [Registrations](https://reports.etorocorp.com/#/views/newDDR-withqueries/Registrations)
+  - [first trades - TP FTDs](https://reports.etorocorp.com/#/views/newDDR-withqueries/firsttrades-TPFTDs)
+  - [first trades - Global FTDs](https://reports.etorocorp.com/#/views/newDDR-withqueries/firsttrades-GlobalFTDs)
+  - [Book - Trades](https://reports.etorocorp.com/#/views/newDDR-withqueries/Book-Trades)
+  - [Book - Commissions](https://reports.etorocorp.com/#/views/newDDR-withqueries/Book-Commissions)
+  - [Book - FullCommissions copy/man](https://reports.etorocorp.com/#/views/newDDR-withqueries/Book-FullCommissionscopyman)
+  - [Book - Fullcommissions assets](https://reports.etorocorp.com/#/views/newDDR-withqueries/Book-Fullcommissionsassets)
+  - [Openbook - copy book](https://reports.etorocorp.com/#/views/newDDR-withqueries/Openbook-copybook)
+  - [Openbook - feed](https://reports.etorocorp.com/#/views/newDDR-withqueries/Openbook-feed)
+  - [EOD club Redeposits](https://reports.etorocorp.com/#/views/newDDR-withqueries/EODclubRedeposits)
+- **new DDR - with queries (Edits with Figma)** (Guy Manova Test Versions)
+  - [eToro DDR](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/eToroDDR)
+  - [Yesterday_1](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Yesterday_1)
+  - [Yesterday_2](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Yesterday_2)
+  - [YS: Top Numbers](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTopNumbers)
+  - [YS: TN Global](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTNGlobal)
+  - [YS: TN TP](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTNTP)
+  - [YS: TN IBAN](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTNIBAN)
+  - [YS: Global KPIs](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSGlobalKPIs)
+  - [YS: Global KPIs 1](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSGlobalKPIs1)
+  - [YS: Global KPIs 2](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSGlobalKPIs2)
+  - [YS: TP KPIs](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTPKPIs)
+  - [YS: TP 1](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTP1)
+  - [YS: TP 2](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTP2)
+  - [YS: TP 3](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSTP3)
+  - [Duplicated check with guy](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Duplicatedcheckwithguy)
+  - [YS: IBAN](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSIBAN)
+  - [YS: Equity](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSEquity)
+  - [YS: Equity Global](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSEquityGlobal)
+  - [YS: Equity TradingPlatform](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSEquityTradingPlatform)
+  - [YS: Equity IBAN](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YSEquityIBAN)
+  - [YesterdaySummary_1](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YesterdaySummary_1)
+  - [YesterdaySummary_2](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YesterdaySummary_2)
+  - [YesterdaySummary_3](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/YesterdaySummary_3)
+  - [Revenue_GeneralBreakdown](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Revenue_GeneralBreakdown)
+  - [Revenue_PerRegion](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Revenue_PerRegion)
+  - [Revenue_TransferCoins](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Revenue_TransferCoins)
+  - [MoneyMovement_Deposits](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/MoneyMovement_Deposits)
+  - [MoneyMovement_Cashout&Others](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/MoneyMovement_CashoutOthers)
+  - [PnL](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/PnL)
+  - [AUM](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/AUM)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/AUMPnL)
+  - [Registrations](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Registrations)
+  - [NewCustomers](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/NewCustomers)
+  - [FirstTrades_Global](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/FirstTrades_Global)
+  - [FirstTrades_TP](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/FirstTrades_TP)
+  - [Book_Trades](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Book_Trades)
+  - [Book_Commissions](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Book_Commissions)
+  - [Book_FullCommissions copy/man](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Book_FullCommissionscopyman)
+  - [Book_Fullcommissions assets](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Book_Fullcommissionsassets)
+  - [Openbook - copy book](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Openbook-copybook)
+  - [Openbook - feed](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/Openbook-feed)
+  - [EOD club Redeposits](https://reports.etorocorp.com/#/views/newDDR-withqueriesEditswithFigma/EODclubRedeposits)
+- **IR Dashboard** (Management Reports)
+  - [IR Dashboard](https://reports.etorocorp.com/#/views/IRDashboard_17454158298550/IRDashboard)
+  - [IR Dashboard Qutarly](https://reports.etorocorp.com/#/views/IRDashboard_17454158298550/IRDashboardQutarly)
+- **Funded Churn AirDrop 2025** (Marketing Automation)
+  - [Funded Churn](https://reports.etorocorp.com/#/views/FundedChurnAirDrop2025/FundedChurn)
+  - [KPIs in 7/14](https://reports.etorocorp.com/#/views/FundedChurnAirDrop2025/FundedChurn2)
+- **WIP: eToro's DDR (2025 New Design)** (Sandbox)
+  - [DDR Original Layout](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/DDROriginalLayout)
+  - [Yesterday's Summary: KPIs](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/YesterdaysSummaryKPIs)
+  - [Yesterday's Summary: Global Ecosystem](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/YesterdaysSummaryGlobalEcosystem)
+  - [Trading Platform](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TradingPlatform)
+  - [TP1: Headers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TP1Headers)
+  - [TP2: Yesterday's Total](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TP2YesterdaysTotal)
+  - [TP3: Yesterday's External](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TP3YesterdaysExternal)
+  - [TP4: Yesterday's Internal](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TP4YesterdaysInternal)
+  - [Trading Platform: Total MIMO](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TradingPlatformTotalMIMO)
+  - [Trading Platform: External MIMO](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TradingPlatformExternalMIMO)
+  - [Trading Platform: Internal MIMO](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/TradingPlatformInternalMIMO)
+  - [eMoney IBANs](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/eMoneyIBANs)
+  - [MVP Global MIMO](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPGlobalMIMO)
+  - [MVP TP Breakdown](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPTPBreakdown)
+  - [MVP headers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPheaders)
+  - [MVP Metrics Global](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPMetricsGlobal)
+  - [MVP Metrics TP](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPMetricsTP)
+  - [MVP Metrics IBAN](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPMetricsIBAN)
+  - [MVP IBAN Open trades](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPIBANOpentrades)
+  - [MVP IBAN Close trades](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPIBANClosetrades)
+  - [MVP TP Internal](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPTPInternal)
+  - [MVP TP Total](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/MVPTPTotal)
+  - [DateFromData](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/DateFromData)
+  - [ETM1: Headers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM1Headers)
+  - [ETM2: Yesterday's Total](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM2YesterdaysTotal)
+  - [ETM3: Yesterday's External](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM3YesterdaysExternal)
+  - [ETM4: Yesterday's Internal](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM4YesterdaysInternal)
+  - [ETM5: Headers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM5Headers)
+  - [ETM6: MIMO Total](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM6MIMOTotal)
+  - [ETM7: Headers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM7Headers)
+  - [YS:IBAN_ES1](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/YSIBAN_ES1)
+  - [ETM8: MIMO External](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM8MIMOExternal)
+  - [ETM9: Headers](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM9Headers)
+  - [ETM10: MIMO Internal](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/ETM10MIMOInternal)
+  - [Duplicated check with guy](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/Duplicatedcheckwithguy)
+  - [YesterdaySummary_1](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/YesterdaySummary_1)
+  - [YesterdaySummary_2](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/YesterdaySummary_2)
+  - [YesterdaySummary_3](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/YesterdaySummary_3)
+  - [Revenue:GeneralBreakdown](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/RevenueGeneralBreakdown)
+  - [Revenue: Per Region](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/RevenuePerRegion)
+  - [Revenue: Transfer Coins](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/RevenueTransferCoins)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/AUMPnL)
+  - [Openbook - feed](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/Openbook-feed)
+  - [EOD club Redeposits](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/EODclubRedeposits)
+  - [Sheet 51](https://reports.etorocorp.com/#/views/WIPeTorosDDR2025NewDesign/Sheet51)
+- **eToro's Daily Data Report (New DDR 2026) - Spaceship** (Tests)
+  - [Yesterday's: Short Summary](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/YesterdaysShortSummary)
+  - [Money Movement](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/MoneyMovement)
+  - [Customers](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/Customers)
+  - [Revenue: Overview & Breakdowns](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/RevenueOverviewBreakdowns)
+  - [Revenue: MiFID Category Breakdowns](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/RevenueMiFIDCategoryBreakdowns)
+  - [Open Book, Copy Book](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/OpenBookCopyBook)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/AUMPnL)
+  - [Yesterday's: Short Summary Split View](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/YesterdaysShortSummarySplitView)
+  - [Book](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/Book)
+  - [EOD Club Redeposit by Marketing Region](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/EODClubRedepositbyMarketingRegion)
+  - [Spaceship](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2025_17717709518690/Spaceship)
+- **eToro's Daily Data Report (New DDR 2026) - Spaceship (Guy Changes)** (Tests)
+  - [Yesterday's: Short Summary](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/YesterdaysShortSummary)
+  - [Money Movement](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/MoneyMovement)
+  - [Customers](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/Customers)
+  - [Revenue: Overview & Breakdowns](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/RevenueOverviewBreakdowns)
+  - [Revenue: MiFID Category Breakdowns](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/RevenueMiFIDCategoryBreakdowns)
+  - [Open Book, Copy Book](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/OpenBookCopyBook)
+  - [AUM & PnL](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/AUMPnL)
+  - [Yesterday's: Short Summary Split View](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/YesterdaysShortSummarySplitView)
+  - [Book](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/Book)
+  - [EOD Club Redeposit by Marketing Region](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/EODClubRedepositbyMarketingRegion)
+  - [Spaceship](https://reports.etorocorp.com/#/views/eTorosDailyDataReportNewDDR2026-SpaceshipGuyChanges/Spaceship)
 
 ## Downstream calculated fields (in embedded datasources)
 
-_None._
+### Workbook: IR Dashboard
+
+#### Datasource: AUA
+
+- **AUA O.B**
+
+  ```
+  LOOKUP(SUM([Amount]), -1)
+  ```
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **Date Filter For Cycle**
+
+  ```
+  RANK_UNIQUE(MAX([Date]), 'desc') <= [Months to Display]
+  ```
+
+- **info**
+
+  ```
+  max(1)
+  ```
+
+- **LoadDate AUA**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+- **PnL**
+
+  ```
+  SUM([Amount]) 
+  - LOOKUP(SUM([Amount]), -1)
+  - SUM([federated.1ifznqu042lok517q8dp405bhxhu].[Deposits])
+  + SUM([federated.1ifznqu042lok517q8dp405bhxhu].[Calculation_1800313983448879119])
+  ```
+
+#### Datasource: Avg Staking
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **info**
+
+  ```
+  max(1)
+  ```
+
+- **Staking LoadDate**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+#### Datasource: Client funds
+
+- **Avg Cash**
+
+  ```
+  sum([Total Cash])/max([Num_of_days])
+  ```
+
+- **Avg CFD (w/o FSA & FSRA)**
+
+  ```
+  sum([CFD Equity])/max([Num_of_days])
+  ```
+
+- **CFD Equity**
+
+  ```
+  if [Regulation] in ('FSA Seychelles','FSRA') THEN 0 ELSE  [Equity CFD] end
+  ```
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **Load Date Client funds**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 
+  or dATEDIFF('day', MAX(([federated.0noh3780xdqner15ynnod11h8snh].[LoadDate])), TODAY()) > 0
+  or dATEDIFF('day', MAX(([federated.1behsvt1wcebwa172y52s1snnzf7].[LoadDate])), TODAY()) > 0
+  
+  
+  
+  THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+- **Total Interest Client Balance**
+
+  ```
+  ZN([Avg CFD (w/o FSA & FSRA)])+ZN([Avg Cash])+SUM(ZN([federated.1behsvt1wcebwa172y52s1snnzf7].[AvgOpenPosition]))+SUM(ZN([federated.1hw9a300zmwbgk1bxwbtg1qngkdv].[Avg_eMoney_BalanceUSD]))+SUM(ZN([federated.0noh3780xdqner15ynnod11h8snh].[Avg_Value_OptIn]))
+  ```
+
+#### Datasource: Club
+
+- **Funded/ Depositors**
+
+  ```
+  IF [IsEOM_Funded_NEW] = 1 THEN "Funded EOQ"
+  ELSE "Depositors"
+  END
+  ```
+
+- **Type**
+
+  ```
+  IF [UserType] = "Club" OR [UserType] = "Non-Club" THEN "All"
+  ELSE "Other"
+  END
+  ```
+
+- **view filter**
+
+  ```
+  IF [Users Filter] = "Depositors" THEN
+      [IsEOM_Funded_NEW] = 0 OR [IsEOM_Funded_NEW] = 1    
+  ELSE // "Funded EOQ"
+      [IsEOM_Funded_NEW] = 1                      
+  END
+  ```
+
+#### Datasource: Commission By Asset 
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **Load Data Commission**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+#### Datasource: Copy
+
+- **info**
+
+  ```
+  max(1)
+  ```
+
+#### Datasource: Deposits + Withdrawals
+
+- **CashoutsAdjusted_Negative**
+
+  ```
+  [CashoutsAdjusted]*-1
+  ```
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **LoadDate Money transfers**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 
+  or dATEDIFF('day', MAX(([federated.0nou0gd1syfahr19g5pys03c73c9].[LoadDate])), TODAY()) > 0
+  
+  
+  
+  
+  THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+- **Total Money Transfer**
+
+  ```
+  sum(ZN([CashoutsAdjusted]))+SUM(ZN([Deposits]))+sum(ZN([federated.0nou0gd1syfahr19g5pys03c73c9].[Trade_from_IBAN_Amount]))
+  ```
+
+#### Datasource: eMoney_Balance
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+#### Datasource: Funded
+
+- **Churn**
+
+  ```
+  SUM([Funded_EOM]) 
+  - (LOOKUP(SUM([Funded_EOM]), -1)
+  + sum([New_Funded]))
+  ```
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **Date Filter for cycle**
+
+  ```
+  RANK_UNIQUE(MAX([Date]), 'desc') <= [Months to Display]
+  ```
+
+- **Funded Accounts O.B**
+
+  ```
+  LOOKUP(SUM([Funded_EOM]), -1)
+  ```
+
+- **Load date funded**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+#### Datasource: Margin Book
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+#### Datasource: MAU
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+#### Datasource: Registered Users
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+#### Datasource: Trades_And_Invested amount
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **Info**
+
+  ```
+  max(1)
+  ```
+
+- **LoadDate Trades**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 
+  THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```
+
+#### Datasource: volume
+
+- **Date Filter**
+
+  ```
+  DATEDIFF('month', [Date], TODAY()) < [Months to Display]
+  ```
+
+- **LoadDate volume**
+
+  ```
+  IF DATEDIFF('day', MAX([LoadDate]), TODAY()) > 0 
+  THEN "⚠️ Not updated today" ELSE "✅ Last Updated: " + STR(MAX([LoadDate])) END
+  ```

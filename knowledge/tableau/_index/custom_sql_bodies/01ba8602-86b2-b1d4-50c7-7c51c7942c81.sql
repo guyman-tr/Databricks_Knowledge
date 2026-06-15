@@ -1,0 +1,16 @@
+SELECT [Nixar_TheoreticalHedgeCost_Prod].[25DeltaPnl] AS [25DeltaPnl],
+  [Nixar_TheoreticalHedgeCost_Prod].[50DeltaPnl] AS [50DeltaPnl],
+  [Nixar_TheoreticalHedgeCost_Prod].[DeltaPnl] AS [DeltaPnl],
+  [Nixar_TheoreticalHedgeCost_Prod].[HedgeRatio] AS [HedgeRatio],
+  [Nixar_TheoreticalHedgeCost_Prod].[Hour50NopPnl] AS [Hour50NopPnl],
+  [Nixar_TheoreticalHedgeCost_Prod].[Hour80NopPnl] AS [Hour80NopPnl],
+  [Nixar_TheoreticalHedgeCost_Prod].[HourNopPnl] AS [HourNopPnl],
+  [Nixar_TheoreticalHedgeCost_Prod].[InstrumentID] AS [InstrumentID],
+  [Nixar_TheoreticalHedgeCost_Prod].[InstrumentName] AS [InstrumentName],
+  [Nixar_TheoreticalHedgeCost_Prod].[PositionsTime] AS [PositionsTime],
+  [Nixar_TheoreticalHedgeCost_Prod].[Sigma] AS [Sigma],
+  [Nixar_TheoreticalHedgeCost_Prod].[Strat] AS [Strat],
+  [Nixar_TheoreticalHedgeCost_Prod].[T] AS [T],
+  [Nixar_TheoreticalHedgeCost_Prod].[UpdateDate] AS [UpdateDate],
+  [Nixar_TheoreticalHedgeCost_Prod].[Zero] AS [Zero]
+FROM [dbo].[Nixar_TheoreticalHedgeCost_Prod0] [Nixar_TheoreticalHedgeCost_Prod]

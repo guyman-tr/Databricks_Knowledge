@@ -1,0 +1,1 @@
+select * from mf_user_status

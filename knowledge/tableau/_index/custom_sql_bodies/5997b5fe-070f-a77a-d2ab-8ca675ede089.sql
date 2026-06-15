@@ -1,0 +1,1 @@
+select * from BI_DEV.dbo.PostRichMediaData

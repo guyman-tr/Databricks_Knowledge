@@ -1,0 +1,1 @@
+select * from bi_output.Negative_NMI

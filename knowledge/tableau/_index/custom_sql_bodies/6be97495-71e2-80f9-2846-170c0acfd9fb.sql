@@ -1,0 +1,5 @@
+SELECT *
+FROM BI_DB_dbo.BI_DB_Client_Balance_Aggregate_Level_New WITH (NOLOCK)
+WHERE DateID BETWEEN 
+      CONVERT(INT, FORMAT(DATEADD(DAY, 1, EOMONTH(GETDATE(), -2)), 'yyyyMMdd'))
+  AND CONVERT(INT, FORMAT(EOMONTH(GETDATE(), -1), 'yyyyMMdd'))

@@ -1,0 +1,2 @@
+select *
+from urban.gold_device_status_user_aggregated

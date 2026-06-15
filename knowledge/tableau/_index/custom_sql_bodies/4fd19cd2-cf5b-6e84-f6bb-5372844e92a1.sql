@@ -1,0 +1,1 @@
+select * from #FXFee_Final

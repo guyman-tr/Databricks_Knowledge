@@ -1,0 +1,1 @@
+SELECT  CONVERT(DATE, expiration_full_date, 103) AS ParsedDate, * FROM [ThirdParty_Fivetran].[Fivetran].[regulation].[brent_oil_expirations]

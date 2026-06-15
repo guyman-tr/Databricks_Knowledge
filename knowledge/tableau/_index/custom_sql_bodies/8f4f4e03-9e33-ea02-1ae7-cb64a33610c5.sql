@@ -1,0 +1,1 @@
+SELECT * FROM #kyc_agg ka

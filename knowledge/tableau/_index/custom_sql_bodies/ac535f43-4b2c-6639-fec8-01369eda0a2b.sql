@@ -1,0 +1,1 @@
+select * from dwh.gold_sql_dp_prod_we_dwh_dbo_dim_instrument where InstrumentID = 998

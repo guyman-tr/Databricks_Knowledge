@@ -1,34 +1,22 @@
 -- =============================================================================
--- Databricks ALTER Script: bronze UserApiDB.Dictionary.DltStatus
--- Generated: 2026-04-30 | tools/uc_bronze/generate_bronze_alters.py
+-- Databricks ALTER Script: main.general.bronze_userapidb_dictionary_dltstatus  (TABLE)
+-- Generated: 2026-05-19 | scaffold_alter_for_uc_targets.py
 -- Source wiki: knowledge/ProdSchemas/DB_Schema/UserApiDB/Wiki/Dictionary/Tables/Dictionary.DltStatus.md
--- Layer: bronze
--- UC Target: main.general.bronze_userapidb_dictionary_dltstatus
+-- Target: Unity Catalog comments (1024 char limit per comment)
+-- Drift guard: pre-flight uc_comment_validator.validate_alter_sql
 -- =============================================================================
 
--- ---- UC Target: main.general.bronze_userapidb_dictionary_dltstatus (business_group=general) ----
-ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus SET TBLPROPERTIES (
-    'comment' = 'Lookup table defining Distributed Ledger Technology (blockchain) verification status codes for crypto-related operations. Source: UserApiDB.Dictionary.DltStatus on the UserApiDB production database, ingested via the Generic Pipeline (Override strategy, 1440-minute refresh). Doc source: Tier 1 wiki (knowledge/ProdSchemas/DB_Schema/UserApiDB/Wiki/Dictionary/Tables/Dictionary.DltStatus.md).'
-);
+-- ---- Table comment intentionally not emitted (--cols-only) ----
 
-ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus SET TAGS (
-    'layer' = 'bronze',
-    'source_system' = 'SQL Server',
-    'source_database' = 'UserApiDB',
-    'source_schema' = 'Dictionary',
-    'source_table' = 'DltStatus',
-    'business_group' = 'general',
-    'pipeline' = 'generic_pipeline',
-    'doc_source' = 'tier1_wiki',
-    'doc_generated' = '2026-04-30',
-    'copy_strategy' = 'Override',
-    'refresh_minutes' = '1440'
-);
+-- ---- Column Comments ----
+ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus ALTER COLUMN DltStatusID COMMENT 'Primary key. DLT verification state: 1=Pending, 2=Ongoing, 3=Failed, 4=Passed, 5=Inactive. See [DLT Status](_glossary.md#dlt-status).';
+ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus ALTER COLUMN Name COMMENT 'Human-readable status label used in monitoring dashboards and compliance reports.';
 
--- Column Comments
-ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus ALTER COLUMN DltStatusID COMMENT 'Primary key. DLT verification state: 1=Pending, 2=Ongoing, 3=Failed, 4=Passed, 5=Inactive. See DLT Status. (Tier 1 - upstream wiki, UserApiDB.Dictionary.DltStatus)';
-ALTER TABLE main.general.bronze_userapidb_dictionary_dltstatus ALTER COLUMN Name COMMENT 'Human-readable status label used in monitoring dashboards and compliance reports. (Tier 1 - upstream wiki, UserApiDB.Dictionary.DltStatus)';
+-- NOTE: PII tags intentionally NOT emitted by scaffold_alter_for_uc_targets.py.
+-- Blanket-tagging every column 'pii=none' would risk silently misclassifying
+-- PII-masked columns. Run the dedicated PII classifier afterwards.
+
 -- == LAST EXECUTION ==
--- Timestamp: 2026-05-03 09:48:45 UTC
--- Bronze deploy: UserApiDB batch 1
+-- Timestamp: 2026-05-19 12:57:02 UTC
+-- Statements: 2/2 succeeded
 -- ====================
