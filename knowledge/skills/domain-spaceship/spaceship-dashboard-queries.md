@@ -1,4 +1,7 @@
 ---
+name: domain-spaceship
+version: 1
+owner: dataplatform
 description: "Spaceship Weekly KPI Dashboard — production-tested SQL for all 6 datasets that drive the live exec dashboard (Funded Accounts b45ed899, FUM 3b55071e, Registrations 01338105, FTDs & F30DD b9e3c92e, Net Deposits 5ce11b5a, Voyager Net Deposits 31cb2609). Anchored on the v_spaceship_aum + v_spaceship_mimo prep views plus the shared Money-balance CTE (running SUM over fct_money_transactions joined via contact mapping) that the dashboard datasets reuse. Covers the dataset-to-view migration status as of 2026-04-13 — Net Deposits is migrated to v_spaceship_mimo (exact match verified); Funded Accounts, FUM, Registrations, FTDs & F30DD, and Voyager Net Deposits stay on raw tables because they need balance snapshots, per-product FTD dates, 30-day windowed F30DD sums, portfolio splits (Universe vs Other), or cohort splits (25k+ vs <25k) that the MIMO view does not expose. Use for any 'reproduce a dashboard widget' / 'how is metric X computed on the SPS dashboard' / 'why does Funded Accounts differ between view and raw' question. Cross-references: spaceship-metric-definitions.md (definitions and PDF validation), spaceship-views-architecture.md (v_spaceship_aum / v_spaceship_mimo column shape and CTE design), spaceship-data-patterns.md (the shared CTEs)."
 triggers:
   - Spaceship Weekly KPI Dashboard

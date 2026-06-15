@@ -1,6 +1,5 @@
 ---
-id: crypto-to-fiat
-name: "Crypto-to-Fiat (C2F) End-to-End"
+name: domain-cross
 description: "The 'crypto came into the wallet, then was converted to EUR/USD on the customer's IBAN' off-ramp story. Bridges Payments C.4 (Crypto Wallet) and C.3 (eMoney IBAN), plus a TP-side branch via Fact_BillingDeposit FundingTypeID=27. Anchored on EXW_C2F_E2E (103c, already-stitched end-to-end view — each row = one complete C2F event with all stages joined) plus three side markers that count C2F without walking the chain: TransactionTypeID=14 on eMoney_Dim_Transaction (authoritative on eMoney side, reliable from inception), FundingTypeID=27 on Fact_BillingDeposit (authoritative on TP side, post 2025-07-01), and IsCryptoToFiat=1 on BI_DB_DDR_Fact_MIMO_AllPlatforms (cross-platform MIMO marker, dual-source — set by sub-platform tag OR by the FundingTypeID=27 post-insert UPDATE). Manual chain walk is only needed when (a) investigating a SPECIFIC failed/partial C2F that isn't yet fully in EXW_C2F_E2E (latency / data-quality issue), or (b) you need stage-specific detail like blockchain hash or per-leg conversion pricing — in those cases stitch ReceivedTransactions -> Conversions -> SentTransactions on CorrelationId, then map to either eMoney_Dim_Transaction (IBAN credit) or Fact_BillingDeposit (TP wallet credit). C2F revenue (fee per event) lives in domain-revenue-and-fees at v_revenue_cryptotofiat_c2f. Reverse on-ramp (IBAN -> crypto) is a different flow, NOT covered by EXW_C2F_E2E."
 triggers:
   - C2F
@@ -81,7 +80,7 @@ Do NOT load for:
 ## Scope
 
 In scope: the C2F end-to-end pipeline — `EXW_C2F_E2E` (103c, already-stitched anchor); side markers `eMoney_Dim_Transaction.TransactionTypeID=14`, `Fact_BillingDeposit.FundingTypeID=27`, `BI_DB_DDR_Fact_MIMO_AllPlatforms.IsCryptoToFiat=1`; the manual chain (`ReceivedTransactions` → `Conversions` → `SentTransactions` via `CorrelationId`, with `customerwalletsview` for `WalletId`→`Gcid`); the eMoney-side terminal (`eMoney_Dim_Transaction` + `eMoney_Dim_Account` with `GCID_Unique_Count=1` join gate) and TP-side terminal (`Fact_BillingDeposit` + `Dim_Customer` for GCID-on-DWH bridge); the `v_revenue_cryptotofiat_c2f` (16c) pointer to fee revenue.
-Out of scope: aggregate fee/revenue accounting (`domain-revenue-and-fees`); pure on-chain analysis (`crypto-wallet`); pure IBAN/card analysis (`emoney-accounts-and-cards`); customer total balance (`finance-recon-and-balances`); AML risk classification + AML alert routing ([`../domain-compliance-and-aml/`](../domain-compliance-and-aml/SKILL.md)).
+Out of scope: aggregate fee/revenue accounting (`domain-revenue-and-fees`); pure on-chain analysis (`crypto-wallet`); pure IBAN/card analysis (`emoney-accounts-and-cards`); customer total balance (`finance-recon-and-balances`); AML risk classification (Compliance super-domain).
 Last verified: 2026-05-11
 
 ## Critical Warnings

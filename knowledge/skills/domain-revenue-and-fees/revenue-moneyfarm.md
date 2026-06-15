@@ -1,4 +1,4 @@
----
+﻿---
 name: domain-revenue-and-fees
 description: |
   REDIRECT — MoneyFarm now has its own dedicated domain skill at
@@ -10,7 +10,7 @@ description: |
   filter conventions, and the v_moneyfarm_fees placeholder caveat) lives in
   domain-moneyfarm/SKILL.md and its 5 sub-files. This redirect must always
   resolve to domain-moneyfarm and never carry independent content.
-triggers:
+triggers: []
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-moneyfarm/SKILL.md

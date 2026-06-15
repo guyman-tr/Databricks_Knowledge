@@ -1,6 +1,5 @@
 ---
-id: provider-reconciliation
-name: "Provider Reconciliation"
+name: domain-cross
 description: "Reconciliation between eToro's internal deposit/withdrawal record and the external payment provider's settlement statement (Worldpay / SafeCharge / Nuvei / PayPal / Skrill / Neteller / OpenPayd). Bridges Payments C.1 (Deposits & Withdrawals) and C.5 (Finance Recon). The matching key is ExternalTransactionID + MIDName + MIDValue + MOPCountry, sourced from Fact_Deposit_State + Fact_Cashout_State enrichment joined to Dim_BillingProtocolMIDSettingsID. CRITICAL — the MID-routing core is Synapse-only: Fact_Deposit_State, Fact_Cashout_State, and Dim_BillingProtocolMIDSettingsID are all _Not_Migrated / wiki-only and CANNOT be queried from Databricks. On Genie the MID-decoding join will fail; run provider-recon SQL against Synapse directly (synapse_prod_sql / synapse_sql MCP, or pyodbc). The Apex SOD recon IS in UC (finance.bronze_sodreconciliation_apex_ext869_cashactivity 45c, ext870_stockactivity 32c, ext872_tradeactivity 71c, ext922_dividendreport 31c, ext1047_revenuereports 24c, sodfiles 11c, general.bronze_sodreconciliation_apex_ext981_buypowersummary 61c, general.bronze_usabroker_apex_options 17c — Apex = USABroker = same broker that clears Options) and is the dealer-side recon for the US-equity / Options clearing relationship. EXW_PaymentReconciliation (crypto-wallet provider recon) is also Synapse-only / _Not_Migrated."
 triggers:
   - provider recon
@@ -19,11 +18,11 @@ triggers:
   - Skrill
   - Neteller
   - OpenPayd
+  - Apex
+  - apex
   - Apex SOD
   - Apex BuyingPower
   - USABroker
-  - Apex
-  - apex
   - Gatsby
   - gatsby
   - MID decline rate
