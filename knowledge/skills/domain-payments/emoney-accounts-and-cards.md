@@ -8,7 +8,6 @@ triggers:
   - IBAN
   - debit card
   - card instance
-  - card lifecycle
   - MaskedPAN
   - AccountProgram
   - AccountSubProgram
@@ -32,8 +31,6 @@ triggers:
   - first card use
   - acquisition funnel
   - IsIBANQuickTransfer
-  - MoveMoneyReasonID
-  - IsCryptoToFiat
   - OpenBanking
   - WireTransfer
   - settled balance
@@ -123,7 +120,7 @@ Last verified: 2026-05-11
    - **ALL dictionary tables**: `eMoney_Dictionary_AccountStatus`, `_AccountProgram`, `_AccountSubProgram`, `_CardStatus`, `_TransactionType`, `_TransactionStatus`. In UC you must join on the raw `*ID` column without dim-resolution, or use the embedded denormalized columns on `eMoney_Dim_Account` / `eMoney_Dim_Transaction` (`AccountProgram`, `AccountStatus`, `TransactionTypeName`, `TransactionStatusName`) where they exist.
    - `eMoney_Snapshot_Settled_Balance` — for settled-only EOD, you must filter `eMoneyClientBalance` to settled-only on read (or drop to Synapse).
    - `eMoney_Card_Monthly_Snapshot` — closest UC analog is `eMoney_Panel_Retention_Monthly`; the row schema differs.
-   - `eMoney_BankPaymentsUK` — no UC mirror. UK OpenBanking / wire bank-side detail requires Synapse. There is a manual-entries Fivetran sheet (`bronze_fivetran_google_sheets_emoney_bank_payments_manual_entries`) but it's not the canonical UK feed.
+   - `eMoney_BankPaymentsUK` — no UC mirror. UK OpenBanking / wire bank-side detail requires Synapse. There is a manual-entries SharePoint workbook landing in UC as `main.sharepoint.silver_sharepoint_emoney_bank_payments_manual_entries` (live; replaces the pre-2026 `bronze_fivetran_google_sheets_emoney_bank_payments_manual_entries` Google-Sheets copy) but it's not the canonical UK feed — only manual exception entries.
    - `eMoney_Account_Mappings` — no UC mirror in `emoney_dbo`. A staging table exists at `main.bi_output_stg.bi_output_emoney_gold_account_mappings` but it's downstream, not the source.
    - `eMoney_Marketing_EmailTracking` — `_Not_Migrated`.
 2. **Tier 1 — `GCID_Unique_Count = 1` is mandatory on every join to `eMoney_Dim_Account`.** Multiple GCID-mappings exist for some CIDs; this filter selects the canonical row. Skip it and you double-count. Same logic applies via `da.GCID_Unique_Count = 1` (most patterns) or `da.GCID = X AND da.GCID_Unique_Count = 1` (when keying directly on GCID).
@@ -131,7 +128,7 @@ Last verified: 2026-05-11
 4. **Tier 2 — `CID = RealCID` everywhere on eMoney_dbo.** Joins to `Dim_Customer` use `dc.RealCID = dt.CID` (NOT `dc.GCID = dt.GCID`, even though both exist — the `CID = RealCID` is the canonical join for transaction-level slicing).
 5. **Tier 2 — `IsValidETM = 1` to filter to "real" eMoney customers.** Without this you pick up partial onboardings, deleted / archived accounts, test rows. Apply on `eMoney_Dim_Account` before any aggregate.
 6. **Tier 2 — Use `RegulationIDTxDate` / `CountryIDTxDate`** (snapshot at transaction time) for transaction-level slicing — NOT the current `RegulationID` / `CountryID` from `eMoney_Dim_Account`. A customer can change regulation; transactions are stamped at the time they happened.
-7. **Tier 2 — `IsIBANQuickTransfer` ≠ TP `IsInternalTransfer`. BOTH must be excluded for "real" external money flow.** `IsIBANQuickTransfer` is eMoney-side and corresponds to `MoveMoneyReasonID = 6` (the eMoney leg of a TP↔eMoney move). `IsInternalTransfer` is the TP-side flag (the TP leg). They co-occur as a pair; filtering one without the other leaves a half-moved-money artifact in the result. See `mimo-panel-and-ddr` Critical Warning 2 for the cross-platform implication.
+7. **Tier 2 — For "real" external money flow, filter `IsInternalTransfer = 0`. Do NOT filter `IsIBANQuickTransfer` — the column is a misnomer.** Both flags are TP-side flags on the MIMO panel (they never fire on eMoney rows), so to scope eMoney external flow on the MIMO panel you exclude TP-side internal-move rows via `IsInternalTransfer = 0` and that's it. `IsIBANQuickTransfer` is derived from `MoveMoneyReasonID = 6` on `Fact_CustomerAction`, but that reason code also fires on Options deposits with `FundingTypeID = 42` (which has nothing to do with IBAN), so the column mixes two unrelated populations under an IBAN-flavored name. The canonical DDR layer ignores it. See `mimo-panel-and-ddr` Critical Warning 2 for the verified cross-tab and the misnomer breakdown.
 8. **Tier 3 — Card PII**: `eMoney_Card_Instance_Summary` (18 cols) exposes `MaskedPAN`. Use **`v_eMoney_Card_Instance_Summary`** (17 cols, MaskedPAN removed) for analytics. Marketing tables (`eMoney_Marketing_EmailTracking` Synapse-only, `eMoney_UserData_Marketing` UC) are likewise PII-heavy.
 9. **Tier 3 — `eMoney_Fact_Transaction_Status` IS the right place for status forensics.** Unlike its TP cousin `Fact_Deposit_State` (Synapse-only, QA-only), the eMoney status fact is genuinely a state-event log queryable by analysts. Query it directly for "why did it fail" / "when did it post" / SLA latency between events.
 10. **Tier 3 — No `BI_DB_*` rollup exists for eMoney.** Don't go looking for an `BI_DB_eMoneyDepositWithdrawFee`-style canonical view — it doesn't exist. The dim trio IS the analyst layer; the cross-platform rollup is `BI_DB_DDR_Fact_MIMO_AllPlatforms` (eMoney slice via `v_mimo_emoneyplatform`).
@@ -250,14 +247,16 @@ ORDER BY EventDate;
 
 ```sql
 -- 5. eMoney FTD count cross-platform-aware (TP-side FTD machinery applied) — UC
+-- Note: IsInternalTransfer / IsIBANQuickTransfer fire only on TP rows in the MIMO panel,
+-- never on eMoney rows — so when MIMOPlatform='eMoney' those filters are no-ops.
+-- They're omitted here for clarity. The DDR layer canonically only uses IsInternalTransfer
+-- anyway; IsIBANQuickTransfer is a misnomer column (see mimo-panel-and-ddr Critical Warning #2).
 SELECT m.DateID,
        COUNT(DISTINCT m.RealCID) AS emoney_ftd_unique_cids
 FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms m
 WHERE m.MIMOPlatform = 'eMoney'
   AND m.MIMOAction   = 'Deposit'
   AND m.IsPlatformFTD = 1
-  AND m.IsInternalTransfer  = 0
-  AND m.IsIBANQuickTransfer = 0
   AND m.DateID BETWEEN :from_dt AND :to_dt
 GROUP BY m.DateID;
 ```
@@ -285,7 +284,7 @@ GROUP BY dt.TxDateID, deposit_channel;
 | Question | Reach for | Pattern |
 |---|---|---|
 | Cross-platform IBAN inflow / outflow volume | **MIMO** (see `mimo-panel-and-ddr`) | `WHERE MIMOPlatform='eMoney' AND MIMOAction IN ('Deposit','Withdraw') GROUP BY DateID, MIMOAction` |
-| eMoney FTD count | **MIMO** | `WHERE MIMOPlatform='eMoney' AND IsPlatformFTD=1 AND IsInternalTransfer=0 AND IsIBANQuickTransfer=0 GROUP BY DateID` (SQL 5 above) |
+| eMoney FTD count | **MIMO** | `WHERE MIMOPlatform='eMoney' AND IsPlatformFTD=1 GROUP BY DateID` (SQL 5 above). On the MIMO panel, `IsInternalTransfer` / `IsIBANQuickTransfer` only fire on TP rows, so `MIMOPlatform='eMoney'` already excludes them — extra filters are no-ops. |
 | Single-customer eMoney transactions | **`eMoney_Dim_Transaction`** | SQL 1 above; dedupe `Dim_Account` on `GCID_Unique_Count=1`. |
 | Daily balance per customer / program | **`eMoneyClientBalance`** | Snapshot table — never recompute from `SUM(Amount)` (Critical Warning 3). |
 | Settled-only balance | **`eMoneyClientBalance`** filtered (or Synapse `_Snapshot_Settled_Balance`) | Excludes pending; the canonical UC table is `eMoneyClientBalance` since `_Snapshot_Settled_Balance` is Synapse-only (Critical Warning 1). |
@@ -295,7 +294,7 @@ GROUP BY dt.TxDateID, deposit_channel;
 | Monthly retention | **`eMoney_Panel_Retention_Monthly`** | Pre-aggregated (the UC analog of the Synapse `_Card_Monthly_Snapshot`). |
 | Std → Club → Plus upgrade chain per CID | **`eMoney_Reports_ClubUpgrade`** | Ordered by upgrade date. |
 | Card lifecycle (issue → activate → block → expire) | **`v_eMoney_Card_Instance_Summary`** | Row per card instance per CID; **use the `v_*` variant to avoid `MaskedPAN` PII** (Critical Warning 8). |
-| IBAN Quick Transfer count | **`eMoney_Dim_Transaction`** | `WHERE IsIBANQuickTransfer = 1` (= `MoveMoneyReasonID = 6`). |
+| IBAN Quick Transfer count (with caveat) | **`eMoney_Dim_Transaction`** | `WHERE IsIBANQuickTransfer = 1` (= `MoveMoneyReasonID = 6`). **Caveat:** the column is a misnomer — `MoveMoneyReasonID = 6` also fires on Options deposits (`FundingTypeID = 42`), so this filter is *not* a clean "IBAN quick transfer" predicate. For a true IBAN-quick filter, also require `FundingTypeID <> 42` (or join to the funding-type dim and exclude Options funding types). See `mimo-panel-and-ddr` Critical Warning #2. |
 | Crypto-to-Fiat into IBAN | **`eMoney_Dim_Transaction`** | `WHERE TransactionTypeID = 14` (= `IsCryptoToFiat = 1`). For full E2E flow → `domain-cross/crypto-to-fiat`. |
 | OpenBanking deposit detection | **`eMoney_Dim_Transaction` + `External_MoneyTransfer_Billing_Transfers`** | SQL 6 above (Critical Warning 11). |
 | UK bank-side detail (sort code, payee bank) | **`eMoney_BankPaymentsUK`** (Synapse-only) | UK-only; other regions don't have an equivalent. |

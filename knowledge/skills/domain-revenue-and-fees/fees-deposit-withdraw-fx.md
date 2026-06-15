@@ -18,18 +18,7 @@ description: |
   `TransferCoinFee`. For per-position-context drill-downs route there;
   for raw provider / payment-method / MID-level analysis use the
   DepositWithdrawFee tables.
-triggers: [ConversionFee, ConversionFeeDeposit, ConversionFeeWithdraw,
-           ConversionFeeReversal, CashoutFeeExclRedeem, CashoutFeeExludingRedeem,
-           TransferCoinFee, CryptoToFiatFee, C2F, crypto to fiat,
-           ExchangeRate, BaseExchangeRate, ExchangeFee, ExchangeFeePercentage,
-           PIPsCalculation, BI_DB_DepositWithdrawFee, depositwithdrawfee,
-           depositwithdrawfee_reversals, FX markup, conversion markup,
-           cashout fee, transfer coin fee, redeem fee, deposit fee,
-           withdraw fee, IsIBANTrade, MID, MIDValue, MIDName, Depot,
-           CardType, CardCategory, BinCountry, reversal, refund, chargeback,
-           v_revenue_conversionfee, v_revenue_conversionfee_withpositiondata,
-           v_revenue_cashoutfee_excluderedeem, v_revenue_cashoutfee_incredeem,
-           v_revenue_transfercoinfee, v_revenue_cryptotofiat_c2f]
+triggers: [ConversionFee, ConversionFeeDeposit, ConversionFeeWithdraw, ConversionFeeReversal, CashoutFeeExclRedeem, CashoutFeeExludingRedeem, TransferCoinFee, CryptoToFiatFee, ExchangeRate, BaseExchangeRate, ExchangeFee, ExchangeFeePercentage, PIPsCalculation, BI_DB_DepositWithdrawFee, depositwithdrawfee, depositwithdrawfee_reversals, FX markup, conversion markup, cashout fee, transfer coin fee, redeem fee, deposit fee, withdraw fee, IsIBANTrade, Depot, CardCategory, v_revenue_conversionfee, v_revenue_conversionfee_withpositiondata, v_revenue_cashoutfee_excluderedeem, v_revenue_cashoutfee_incredeem, v_revenue_transfercoinfee, v_revenue_cryptotofiat_c2f]
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-revenue-and-fees/trading-revenue-and-fees      # ConversionFee triplet ALSO lives in w_metrics

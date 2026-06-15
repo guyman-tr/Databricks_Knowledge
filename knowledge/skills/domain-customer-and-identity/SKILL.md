@@ -11,9 +11,7 @@ triggers:
   - customer attributes
   - customer master record
   - jurisdiction
-  - regulation
   - club tier
-  - Popular Investor
   - PI status
   - PlayerLevelID
   - customer SCD
@@ -27,7 +25,6 @@ triggers:
   - customer_snapshot_v
   - cidfirstdates
   - first dates
-  - Fact_CustomerAction
   - customer action
   - v_fact_customeraction_enriched
   - v_fact_customeraction_w_metrics
@@ -47,7 +44,6 @@ triggers:
   - churn winback
   - registration to FTD
   - reg to FTD
-  - onboarding funnel
   - ftd_funnel_v
   - customer population
   - funded customer
@@ -60,7 +56,6 @@ triggers:
   - user id
   - Spaceship user
   - MoneyFarm user
-  - moneyfarmUserId
   - externalUserId
   - Apex account
   - AccountNumber
@@ -166,7 +161,35 @@ Last verified: 2026-05-11
 
 ## Critical Warnings
 
-> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer / per-segment aggregate sourced from this domain MUST follow [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `fact.DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct — almost every business question is a period, not "today"; current-state `Dim_Customer` is the fallback only for "right now" questions); mandatory one-line scope footer on every numeric output. The regulatory variant (`IsCreditReportValidCB = 1`, same quad plus `AccountTypeID != 2` minus ~10-12 CID exceptions for `CountryID = 250` — the subsidiary trade accounts at the parent broker) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics. Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight. The physical column is `IsValidCustomer`; `IsValidUser` is the colloquial alias. `customer_exclude_list` is NOT part of the contract — it is funnel-scoped and lives in the funnel sub-skill (Warning 3 below covers its role for population work).
+> ## Tier 0 — Filter Contract (DEFAULT-ON, NO PRE-FLIGHT, INLINE-ENFORCEABLE)
+>
+> EVERY per-customer / per-segment aggregate sourced from this domain is computed with the valid-users filter applied **SILENTLY**. The filter is **DEFAULT-ON**. The user must explicitly opt OUT — never the other way around. Almost every business question is a period, not "today"; current-state `Dim_Customer` is the fallback only for "right now" questions. The physical column is `IsValidCustomer`; `IsValidUser` is the colloquial alias. `customer_exclude_list` is NOT part of the contract — it is funnel-scoped and lives in the funnel sub-skill (Warning 3 below covers its role for population work).
+>
+> **Required SQL join (period-correct SCD-2 walk):**
+>
+> ```sql
+> JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+>        ON snap.RealCID = fact.CID
+>       AND snap.IsValidCustomer = 1
+>       AND fact.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+> ```
+>
+> **Mandatory output footer — emit verbatim on every numeric answer:**
+>
+> > *Scope: valid users only — `IsValidCustomer = 1` (excludes `PlayerLevel='Internal'`, `Label IN ('Dealing','ILQ')`, `Country='eToro'`), period-correct (SCD-2). Popular Investors ARE valid. For credit-balance-valid scope, ask explicitly ("CB valid"). For unfiltered, ask explicitly ("include non-valids" / "unfiltered").*
+>
+> **FORBIDDEN patterns — these are contract violations, NOT polite caveats:**
+> 1. Producing an unfiltered number and then offering *"let me know if you want the filtered version"* / *"I'd apply it for executive reporting — let me know"* / *"this does NOT include the valid-users filter"*. **The filtered number IS the answer.** Pre-flighting after the fact is a violation. If the user wants unfiltered they will literally type one of the opt-out phrases.
+> 2. Asking *"valid users or all?"* before answering. Pre-flighting before the fact is a violation.
+> 3. Switching to `IsCreditReportValidCB` because the question SOUNDS regulatory (ASIC / CySEC / FINRA / broker-recon / IFRS15 / audit). Topic heuristics are forbidden — only the user's LITERAL phrases switch the filter.
+> 4. Emitting a numeric output WITHOUT the scope footer above. The footer is what makes the silent default safe.
+>
+> **Opt-ins — fire ONLY on the user's literal words (no synonym matching, no topic inference):**
+> - "CB valid" / "Client Balance valid" / "credit-report valid" → swap `IsValidCustomer = 1` for `IsCreditReportValidCB = 1` (same join shape; same quad PLUS `AccountTypeID != 2` MINUS six hard-coded subsidiary CIDs under `CountryID = 250`). Use the regulatory-scope footer (see linked contract).
+> - "include non-valids" / "include internals" / "include etorians" / "include test accounts" / "unfiltered" → drop the join entirely. Use the opt-out footer: *Scope: unfiltered — includes test / internal / non-valid accounts on user request. NOT suitable for executive reporting.*
+> - "today" / "right now" / "currently" → swap the SCD-2 walk for a direct join to `Dim_Customer` on `c.IsValidCustomer = 1` (present-state fallback).
+>
+> See [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md) for the full opt-in SQL patterns, the `IsCreditReportValidCB` formal definition (six hard-coded subsidiary CIDs re-included; `AccountTypeID != 2` carve-out), and the rationale for the two-flag asymmetry. **But the inline rule above is enforceable on its own — do not skip it because the link wasn't resolved.**
 
 1. **Tier 1 — `RealCID` and `GCID` are not interchangeable for cross-platform joins.** Joining DWH facts to eMoney facts on `RealCID = AccountID` will silently miss every customer whose eMoney account was provisioned before the GCID unification project, and will silently double-count customers with multiple linked accounts. Always join via `Dim_Customer.GCID` to `eMoney_Dim_Account.GCID` (the platform-neutral identifier) unless you've explicitly confirmed the table you're joining keys on `RealCID`. Production OLTP `Customer.CustomerStatic` keys on `RealCID` directly; everywhere downstream the canonical column is `CID INT`. The eMoney-side AccountID column (`AccountID INT` on `emoney_dim_account`, `LONG` in the FiatDWH Tribe envelope chain) is NOT a CID — it's a per-eMoney-account number.
 2. **Tier 1 — `Dim_Customer` is type-1 SCD on most attributes.** Jurisdiction, regulation, club tier, Popular Investor status, marketing region, and most other long-lived attributes are overwritten on every refresh. To answer "what was customer X's regulation on 2025-06-01?", walk `Fact_SnapshotCustomer` (point-in-time, available in UC as `main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked` for masked or `main.pii_data.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid` for full PII) or the `customer_snapshot_v` view (daily snapshot, `RealCID STRING` — cast to INT before joining to DWH facts), not query `Dim_Customer` directly. Querying `Dim_Customer` for historical attributes returns the *current* value silently labelled with no temporal warning.

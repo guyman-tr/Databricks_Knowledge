@@ -31,8 +31,6 @@ triggers:
   - cashout fee
   - transfercoin
   - redeem fee
-  - crypto to fiat
-  - C2F
   - dividend
   - dividend pass-through
   - index dividend
@@ -40,24 +38,22 @@ triggers:
   - UK stamp duty
   - dormant fee
   - interest fee
+  - interest on balance
+  - IOB
+  - InterestConsent
   - share lending
   - staking fee
   - staking revenue
-  - PFOF
   - Options_PFOF
-  - options revenue
   - apex fee
-  - gatsby
   - spaceship revenue
   - spaceship fees
-  - moneyfarm fees
   - trading revenue
   - non-trading revenue
   - IncludedInTotalRevenue
   - RevenueMetricID
   - RevenueMetricCategory
   - Dim_Revenue_Metrics
-  - fact_customeraction_w_metrics
   - per-position fees
   - per-action fees
   - per-asset revenue
@@ -75,14 +71,15 @@ required_tables:
 sub_skills:
   - fees-deposit-withdraw-fx.md
   - fees-misc-dormant-options-interest.md
+  - interest-on-balance.md
   - revenue-moneyfarm.md
   - revenue-options-platform.md
   - revenue-spaceship.md
   - revenue-staking-and-share-lending.md
   - trading-revenue-and-fees.md
-version: 2
+version: 3
 owner: "guyman@etoro.com"
-last_validated_at: "2026-05-12"
+last_validated_at: "2026-06-11"
 ---
 
 # Revenue & Fees Super-Domain
@@ -122,7 +119,35 @@ Last verified: 2026-05-12
 
 ## Critical Warnings
 
-> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer revenue / fee / volume aggregate in this domain MUST follow [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct — never current-state `Dim_Customer` for period queries); mandatory one-line scope footer on every numeric output. The DDR fact and `mv_revenue_*` are NOT pre-filtered upstream — apply the contract every time. The regulatory variant (`IsCreditReportValidCB = 1`) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics (ASIC / CySEC / FINRA / broker-recon questions still get the default valid-users filter). Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight.
+> ## Tier 0 — Filter Contract (DEFAULT-ON, NO PRE-FLIGHT, INLINE-ENFORCEABLE)
+>
+> EVERY per-customer revenue / fee / volume aggregate in this domain is computed with the valid-users filter applied **SILENTLY**. The filter is **DEFAULT-ON**. The user must explicitly opt OUT — never the other way around. The DDR fact and `mv_revenue_*` are NOT pre-filtered upstream; apply the join every time.
+>
+> **Required SQL join (period-correct SCD-2 walk):**
+>
+> ```sql
+> JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+>        ON snap.RealCID = fact.CID
+>       AND snap.IsValidCustomer = 1
+>       AND fact.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+> ```
+>
+> **Mandatory output footer — emit verbatim on every numeric answer:**
+>
+> > *Scope: valid users only — `IsValidCustomer = 1` (excludes `PlayerLevel='Internal'`, `Label IN ('Dealing','ILQ')`, `Country='eToro'`), period-correct (SCD-2). Popular Investors ARE valid. For credit-balance-valid scope, ask explicitly ("CB valid"). For unfiltered, ask explicitly ("include non-valids" / "unfiltered").*
+>
+> **FORBIDDEN patterns — these are contract violations, NOT polite caveats:**
+> 1. Producing an unfiltered number and then offering *"let me know if you want the filtered version"* / *"I'd apply it for executive reporting — let me know"* / *"this does NOT include the valid-users filter"*. **The filtered number IS the answer.** Pre-flighting after the fact is a violation. If the user wants unfiltered they will literally type one of the opt-out phrases.
+> 2. Asking *"valid users or all?"* before answering. Pre-flighting before the fact is a violation.
+> 3. Switching to `IsCreditReportValidCB` because the question SOUNDS regulatory (ASIC / CySEC / FINRA / broker-recon / IFRS15 / audit). Topic heuristics are forbidden — only the user's LITERAL phrases switch the filter.
+> 4. Emitting a numeric output WITHOUT the scope footer above. The footer is what makes the silent default safe.
+>
+> **Opt-ins — fire ONLY on the user's literal words (no synonym matching, no topic inference):**
+> - "CB valid" / "Client Balance valid" / "credit-report valid" → swap `IsValidCustomer = 1` for `IsCreditReportValidCB = 1` in the same join. Use the regulatory-scope footer (see linked contract).
+> - "include non-valids" / "include internals" / "include etorians" / "include test accounts" / "unfiltered" → drop the join entirely. Use the opt-out footer: *Scope: unfiltered — includes test / internal / non-valid accounts on user request. NOT suitable for executive reporting.*
+> - "today" / "right now" / "currently" → swap the SCD-2 walk for a direct join to `Dim_Customer` on `c.IsValidCustomer = 1` (present-state fallback).
+>
+> See [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md) for the full opt-in SQL patterns, the `IsCreditReportValidCB` formal definition (six hard-coded subsidiary CIDs re-included; `AccountTypeID != 2` carve-out), and the rationale for the two-flag asymmetry. **But the inline rule above is enforceable on its own — do not skip it because the link wasn't resolved.**
 
 1. **Tier 1 — `SUM(Amount)` without `IncludedInTotalRevenue = 1` silently double-counts and produces wrong totals.** The DDR fact contains `Commission` (a subset of `FullCommission` — excluding partner share), `Dividends` (paid TO customers, often negative), and `SDRT` (UK tax collected, not earned). All three have `IncludedInTotalRevenue = 0`. Always filter `WHERE IncludedInTotalRevenue = 1` for total-revenue numbers.
 2. **Tier 1 — `Metric IN ('FullCommission', 'Commission')` double-counts.** `Commission` is a SUBSET of `FullCommission` (excludes partner share). Pick ONE. Same trap applies inside `fact_customeraction_w_metrics`: `FullCommissionTotal = FullCommission + FullCommissionOnClose` and `CommissionTotal = Commission + CommissionOnClose` — sum only one family per KPI.
@@ -263,7 +288,8 @@ Each sub-skill takes one fee family. Most questions hit a single sub-skill; cros
 | **H.1** `trading-revenue-and-fees.md` | Trading-platform fees: FullCommission, Commission, TicketFees, RollOverFee, AdminFee, SpotPriceAdjustment, Dividends, SDRT — **AND the per-action granular drill-down** | `de_output_etoro_kpi_fact_customeraction_w_metrics`, `mv_revenue_trading`, DDR fact, `v_revenue_{fullcommission, commission, ticketfee_fixed, ticketfee_bypercent, rollover, adminfee, spotadjustfee, dividend, sdrt}` | Any per-asset / per-position / per-copy / per-leverage / per-instrument trading-fee question. ALSO: TradeTransactional + Overnight category questions. |
 | **H.2** `fees-deposit-withdraw-fx.md` | MIMO-side fees: ConversionFee, CashoutFeeExclRedeem, TransferCoinFee, CryptoToFiatFee + raw deposit/withdraw fee tables | `v_revenue_{conversionfee, conversionfee_withpositiondata, cashoutfee_excluderedeem, cashoutfee_incredeem, transfercoinfee, cryptotofiat_c2f}`, `bi_db_depositwithdrawfee`, `bi_db_depositwithdrawfee_reversals` | FX-conversion markup, cashout fees, crypto transfer fees, crypto-to-fiat fees, fee reversals/refunds |
 | **H.3** `revenue-staking-and-share-lending.md` | StakingLagOneMonth, ShareLending | `v_revenue_stakingfee`, `v_revenue_share_lending`, `bi_db_finance_staking_report`, Synapse `Staking.*` | Staking rewards distribution, share-lending revenue (40/40/20 split), the 1-month staking lag mechanics |
-| **H.4** `fees-misc-dormant-options-interest.md` | DormantFee, Options_PFOF, InterestFee (deprecated) | `v_revenue_{dormantfee, interestfee, optionsplatform}` | Inactivity fees, options PFOF, deprecated margin-interest |
+| **H.4** `fees-misc-dormant-options-interest.md` | DormantFee, Options_PFOF, InterestFee (deprecated) | `v_revenue_{dormantfee, interestfee, optionsplatform}` | Inactivity fees, options PFOF, deprecated margin-interest. **Note:** "interest" in the file name refers to the deprecated `InterestFee` (charged TO customers), NOT IOB. For Interest on Balance see H.4b. |
+| **H.4b** `interest-on-balance.md` | Interest on Balance (IOB) — `ActionTypeID = 36 / CompensationReasonID = 57` | `bronze_interest_trade_interestconsent` (consent / opt-in), `fact_customeraction` filtered to CRID=57 (paid-out side) | Any IOB question. Economic twin of staking (gross yield → customer-paid IOB → net spread = eToro revenue). **Net IOB revenue not yet in UC** — gross treasury yield lives in Finance Excel; SharePoint→UC ingest pending. |
 | **H.5** `revenue-options-platform.md` | Options product revenue end-to-end — Gatsby brand, Apex broker (= USABroker), Apex SFTP fees | `v_revenue_optionsplatform`, `etoro_kpi_prep.v_options_aum`, `etoro_kpi_prep.v_mimo_options_platform`, `finance.bronze_sodreconciliation_apex_ext1047_revenuereports`, `finance.bronze_usabroker_apex_*` | Any Options product question. **Gatsby = brand, Apex = broker.** US-equity rows from Apex land in regular trading tables (`Dim_Position`, etc.) — NOT in this sub-skill. |
 | **H.6** `revenue-spaceship.md` | Spaceship — AU acquisition (Super / Voyager / Nova / Money) | `v_spaceship_fees`, `v_spaceship_aum`, `v_spaceship_mimo` — **thin router; defer to DE workspace skill** | Australian acquisition with its own 53-table source + KPI dashboard. Authoritative content lives in DE workspace skill `/Workspace/.assistant/skills/domain-spaceship` and in `knowledge/uc_domains/spaceship/_domain_card.md`. |
 | **H.7** `revenue-moneyfarm.md` | MoneyFarm — UK managed investing | `v_moneyfarm_{aum, mimo, fees}`, `bi_output_moneyfarm_*`, `money_farm.silver_moneyfarm_etoro_mf_aum`, `general.bronze_moneyfarm_users` | UK managed-investing platform. Source: CosmosDB document store. Owned here (no DE skill). Anchored to `knowledge/uc_domains/moneyfarm/_domain_card.md`. |
@@ -389,6 +415,7 @@ Use these categories for the canonical "Trading vs Non-Trading revenue" split:
 | Value | Revenue type |
 |-------|--------------|
 | 30 | DormantFee |
+| 57 | InterestOnBalance (IOB) — paid TO customer; net IOB revenue = Finance gross treasury yield − this paid-out side. See `interest-on-balance.md`. |
 | 117 | AdminFee |
 | 118 | SpotAdjustFee |
 | 119 | ShareLending |

@@ -21,9 +21,6 @@ description: "US-equities & options platform via Apex Clearing — the post-Gats
   (knowledge-only, not migrated)."
 triggers:
   - options
-  - gatsby
-  - apex
-  - apex sod
   - apex clearing
   - us options
   - options 3.0
@@ -50,9 +47,7 @@ triggers:
   - ICT
   - instant cash transfer
   - OMJNL
-  - USABroker
   - OptionsApexID
-  - appropriateness test
   - options eligibility
   - reasoning form
   - v_options_aum
@@ -84,11 +79,11 @@ required_tables:
   - main.finance.bronze_sodreconciliation_apex_ext1047_revenuereports
   - main.general.bronze_usabroker_apex_options
 sub_skills:
-  - source-tables.md
-  - metric-definitions.md
-  - views-architecture.md
-  - dashboard-queries.md
-  - data-patterns.md
+  - options-source-tables.md
+  - options-metric-definitions.md
+  - options-views-architecture.md
+  - options-dashboard-queries.md
+  - options-data-patterns.md
 version: 1
 owner: "dataplatform"
 last_validated_at: "2026-05-31"
@@ -126,13 +121,13 @@ Last verified: 2026-05-31
 
 | File | Load when | Contents |
 |------|-----------|----------|
-| `source-tables.md` | Exploring raw Apex/USABroker data, "what table holds X", schema/PII lookups | 38-table catalog across `main.general` / `main.finance` / `main.bi_db` / `main.trading` with key fields, PII flags, dev notes, missing-from-Synapse callouts |
-| `metric-definitions.md` | Computing KPIs, QA, "how is Options FTD calculated", validation | FTD (Local + Global), MIMO (Deposit/Withdraw, ICT vs direct), Funded (cumulative incl. Churn), Trading (Buy-only / Buy+Sell), AUM (TotalEquity / CashEquity / PositionMarketValue), PFOF revenue (estimate vs final) |
-| `views-architecture.md` | Building or fixing prep-view-backed queries, DDR root-cause | Full DDLs + CTE walkthrough for `v_options_aum`, `v_mimo_options_platform`, `v_revenue_optionsplatform` + the legacy `v_mimo_optionsplatform` (deprecated) + Apex SOD pipeline + USABroker bridge mechanics |
-| `dashboard-queries.md` | Tableau dashboard work, replicating charts, mapping a KPI back to UC | The 11 `1-US Management` Tableau workbooks + per-workbook data source map (18+ unique Databricks data sources catalogued) + the 9 sample queries from the BI knowledge-transfer Doc |
-| `data-patterns.md` | Writing any Options SQL query | Reusable CTEs: house-account exclusion, OfficeCode/RepCode filter, MarketCode='5' options-only filter, GCID-to-OptionsApexID join, Reg classification by RepCode, ICT vs direct funding split, RegisteredRepCode-to-region map |
+| `options-source-tables.md` | Exploring raw Apex/USABroker data, "what table holds X", schema/PII lookups | 38-table catalog across `main.general` / `main.finance` / `main.bi_db` / `main.trading` with key fields, PII flags, dev notes, missing-from-Synapse callouts |
+| `options-metric-definitions.md` | Computing KPIs, QA, "how is Options FTD calculated", validation | FTD (Local + Global), MIMO (Deposit/Withdraw, ICT vs direct), Funded (cumulative incl. Churn), Trading (Buy-only / Buy+Sell), AUM (TotalEquity / CashEquity / PositionMarketValue), PFOF revenue (estimate vs final) |
+| `options-views-architecture.md` | Building or fixing prep-view-backed queries, DDR root-cause | Full DDLs + CTE walkthrough for `v_options_aum`, `v_mimo_options_platform`, `v_revenue_optionsplatform` + the legacy `v_mimo_optionsplatform` (deprecated) + Apex SOD pipeline + USABroker bridge mechanics |
+| `options-dashboard-queries.md` | Tableau dashboard work, replicating charts, mapping a KPI back to UC | The 11 `1-US Management` Tableau workbooks + per-workbook data source map (18+ unique Databricks data sources catalogued) + the 9 sample queries from the BI knowledge-transfer Doc |
+| `options-data-patterns.md` | Writing any Options SQL query | Reusable CTEs: house-account exclusion, OfficeCode/RepCode filter, MarketCode='5' options-only filter, GCID-to-OptionsApexID join, Reg classification by RepCode, ICT vs direct funding split, RegisteredRepCode-to-region map |
 
-**Routing guidance**: Most questions need `data-patterns.md` (CTEs) + one of the others. Load `data-patterns.md` first when writing queries; load `views-architecture.md` first when reading existing DDR / dashboard logic.
+**Routing guidance**: Most questions need `options-data-patterns.md` (CTEs) + one of the others. Load `options-data-patterns.md` first when writing queries; load `options-views-architecture.md` first when reading existing DDR / dashboard logic.
 
 ## Product Structure
 

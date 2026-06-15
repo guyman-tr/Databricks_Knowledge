@@ -2,7 +2,6 @@
 name: domain-trading
 description: "Daily end-of-day and intraday reconciliation between eToro's hedge book and external broker / liquidity-provider records. Bridge-side skill: connects broker (client NOP from BI_DB_PositionPnL) to dealer (LP hedge holdings from etoro_Hedge_Netting). Anchored on the Duco foundation (V_Dealing_Duco_EODRecon view as canonical entry point, ~18.6M rows weekdays-only 2023-01-02→present, 27 columns + the HedgingPercent KPI) and the per-LP recon tables: Apex (US equity holdings + trade activity + 7 SOD-file family), BNY-Virtu (non-US equity), Saxo (real stocks + employee accounts), Marex (futures with unique client-level grain), Goldman Sachs / Interactive Brokers / IG / JPM / Vision (bronze layer). Covers the EOD-holdings-vs-trade-activity split, the three-way comparison pattern (LP vs eToro hedge vs client NOP), HedgingPercent interpretation, weekend-gap rule, FULL OUTER JOIN NULL artifacts, SOD-file health gating, the Marex-futures-grain anomaly, and the BuyOrSell column-naming workaround."
 triggers:
-  - reconciliation
   - recon
   - EOD recon
   - Duco
@@ -207,8 +206,10 @@ Last verified: 2026-05-11
 
 | Table | Layer | Use |
 |---|---|---|
-| `main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty` | Bronze | Counterparty mapping for crypto recon (Google Sheets via Fivetran). |
-| `main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers` | Bronze | Ticker mapping for crypto recon. |
+| `main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_counterparty` | Silver (live) | Counterparty mapping for crypto recon. Excel-on-SharePoint via Fivetran. |
+| `main.sharepoint.silver_sharepoint_mappingsforcryptoreconcilation_tickers` | Silver (live) | Ticker mapping for crypto recon. Excel-on-SharePoint via Fivetran. |
+| `main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_counterparty` | Bronze (HISTORICAL) | Pre-2026 Google-Sheets-via-Fivetran source. Superseded by the `silver_sharepoint_*` sibling above — verify freshness before relying on it. |
+| `main.dealing.bronze_fivetran_google_sheets_mappingsforcryptoreconcilation_tickers` | Bronze (HISTORICAL) | Same — superseded by `silver_sharepoint_*` sibling above. |
 
 ---
 

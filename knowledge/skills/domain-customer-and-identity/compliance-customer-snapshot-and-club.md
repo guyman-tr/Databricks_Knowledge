@@ -25,7 +25,6 @@ triggers:
   - ddr_mimo_v
   - ddr_customer_current_flags
   - IsFunded
-  - IsActiveTrade
   - BalanceOnly
   - PortfolioOnly
   - IsChurn
@@ -34,7 +33,6 @@ triggers:
   - AML enriched
   - AML snapshot
   - AML_Risk
-  - ScreeningStatus
   - PEP
   - sanctions screening
   - bi_output_vg_customer_snapshot
@@ -63,8 +61,6 @@ triggers:
   - PLChangeType
   - IsFTC
   - First Time Club
-  - IOB
-  - Interest On Balance
   - DaysTillFTC
   - DaysFromFTD
   - MaxTier

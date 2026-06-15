@@ -12,8 +12,6 @@ triggers:
   - BackOffice.CustomerDocument
   - BackOffice.CustomerRisk
   - BackOffice.CustomerAllTimeAggregatedData
-  - EXW_DimUser
-  - EXW_DimUser_Enriched
   - crypto wallet user
   - breach
   - illegal trade

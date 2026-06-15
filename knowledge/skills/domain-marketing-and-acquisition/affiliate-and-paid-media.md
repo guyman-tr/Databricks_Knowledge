@@ -35,7 +35,6 @@ triggers:
   - bi_output_marketing_affiliate_payments_report_closed_position
   - affiliate_payments_report
   - Tier
-  - Commission
   - v_marketing_campaigns_social
   - v_marketing_campaigns_google
   - Google UAC
@@ -87,7 +86,7 @@ triggers:
   - bi_output_marketing_acquisition_liveacquisition
   - silver_sharepoint_marketing_region_mapping
   - silver_sharepoint_marketing_subchannel_level_data
-  - bronze_fivetran_google_sheets_marketing_subchannel_level_data
+  - bronze_fivetran_google_sheets_marketing_subchannel_level_data  # historical name (Google-Sheets-via-Fivetran), superseded by the silver_sharepoint sibling
   - silver_sharepoint_multiregulationaffiliatecompliance
   - silver_sharepoint_sedric_affiliates_sedric_regulationdomain
   - sedric_additionalaffiliatesurl

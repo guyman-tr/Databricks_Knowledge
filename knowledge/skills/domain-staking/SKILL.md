@@ -12,7 +12,6 @@ triggers:
   - StakingMonthID
   - re-run staking
   - shadow StakingMonthID
-  - airdrop
   - airdrop list
   - AirdropID
   - AirdropOccurred
@@ -57,7 +56,6 @@ triggers:
   - Platinum
   - Platinum Plus
   - Diamond
-  - PlayerLevelID
   - ClubCategory
   - Avg_Daily_Holdings_Threshold
   - Mailing_Group
@@ -102,7 +100,6 @@ triggers:
   - IsPI
   - UK_Prohibited
   - IsEtorian
-  - Tangany
   - TanganyStatusID
   - MICA
   - MICA pop-up

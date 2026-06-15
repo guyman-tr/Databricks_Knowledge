@@ -29,7 +29,6 @@ triggers:
   - bi_cy_cost_budget
   - cost_import_file
   - confluence_embeddings
-  - AlertID
   - AlertType
   - AlertTypeDescription
   - TriggerType
@@ -37,7 +36,6 @@ triggers:
   - StatusReason
   - Assignee
   - FollowUpDate
-  - MultipleAccounts
   - SiftScore
   - NegativeBalanceCheck
   - PossibleCompromisedAccount
@@ -66,7 +64,6 @@ triggers:
   - TAX_Type
   - TaxID
   - PlayerLevel
-  - PlayerStatus
   - PlayerStatusReason
   - TicketID
   - AmopCustomerName

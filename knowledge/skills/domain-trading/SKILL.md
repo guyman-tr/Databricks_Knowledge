@@ -1,6 +1,6 @@
 ---
 name: domain-trading
-description: "Routes inside the Trading & Markets super-domain. eToro is a Broker-Dealer — and this super-domain is the only one that straddles BOTH sides of that boundary. The BROKER side (customer-facing: positions, trades, fees, P&L) is anchored on `fact_customeraction_w_metrics`, `Dim_Position`, and the DDR fact family. The DEALER side (market-facing: LP routing, execution, hedge cost, recons, shortfalls) is anchored on `main.dealing.*` UC tables and the `Hedge.*` / `Dealing_*` Synapse schemas. Bridge tables (`bestexecution_results`, `Dealing_Duco_EODRecon`, the per-LP recons) reach DOWN from dealer to broker (they carry PositionID, CID, OrderID, ExecutionID, PriceRateID together) — they're the only place to ask cross-side questions. Covers position lifecycle, instrument catalogue, trading volumes, AUM/NOP/PnL, copy trading and mirror relationships, broker/LP reconciliation, dealing investigation & execution events, pricing & currency history, LP contracts and cost-of-goods-sold, crypto trading operations (Nixar/Fireblocks), best-execution analytics (NBBO/slippage/fails/latency/TCA). Load this hub for any question about WHAT customers traded and HOW the trade was executed."
+description: "Routes inside the Trading & Markets super-domain. eToro is a Broker-Dealer — and this super-domain is the only one that straddles BOTH sides of that boundary. The BROKER side (customer-facing: positions, trades, fees, P&L) is anchored on `fact_customeraction_w_metrics`, `Dim_Position`, and the DDR fact family. The DEALER side (market-facing: LP routing, execution, hedge cost, recons, shortfalls) is anchored on `main.dealing.*` UC tables and the `Hedge.*` / `Dealing_*` Synapse schemas. Bridge tables (`bestexecution_results`, `Dealing_Duco_EODRecon`, the per-LP recons) reach DOWN from dealer to broker (they carry PositionID, CID, OrderID, ExecutionID, PriceRateID together) — they're the only place to ask cross-side questions. Covers position lifecycle, instrument catalogue, trading volumes (including IBAN/wallet-flagged trade volumes via `IsOpenedFromIBAN` / `IsClosedToIBAN` — the trade-side flags live HERE, not in Payments; Payments owns the money MOVEMENT, Trading owns the trade flagged as having come from / gone to the wallet), AUM/NOP/PnL, copy trading and mirror relationships, broker/LP reconciliation, dealing investigation & execution events, pricing & currency history, LP contracts and cost-of-goods-sold, crypto trading operations (Nixar/Fireblocks), best-execution analytics (NBBO/slippage/fails/latency/TCA). Load this hub for any question about WHAT customers traded and HOW the trade was executed — including 'trading volume from IBAN' / 'how much was traded from the wallet' / 'IBAN-originated trade volume'."
 triggers:
   - position
   - trade
@@ -21,8 +21,22 @@ triggers:
   - invested amount
   - real vs CFD
   - IsSettled
+  - IBAN trade
+  - IBAN trades
+  - trade from IBAN
+  - trades from IBAN
+  - traded from IBAN
+  - trading volume from IBAN
+  - wallet trade
+  - trade from wallet
+  - position opened from IBAN
+  - position closed to IBAN
+  - IBAN-originated trade
+  - IBAN-originated volume
+  - IsOpenedFromIBAN
+  - IsClosedToIBAN
+  - IsOpenFromIBAN
   - SettlementTypeID
-  - AUM
   - portfolio value
   - total equity
   - NOP
@@ -71,7 +85,6 @@ triggers:
   - NBBO
   - slippage
   - fails
-  - latency
   - Best Execution Committee
   - by instrument
   - by ticker

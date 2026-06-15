@@ -19,16 +19,7 @@ description: |
   equities cleared by Apex → regular trading tables (Dim_Position,
   Fact_Position) — NOT this sub-skill. Same broker, different downstream.
   Gatsby-side systems were NEVER ingested.
-triggers: [Options, options revenue, Options_PFOF, PFOF, payment for order flow,
-           options product, Gatsby, Apex, USABroker, USA broker, US equity,
-           US options, Apex SFTP, Apex sodfiles, sodreconciliation,
-           ext1047 revenuereports, ext872 tradeactivity, ext869 cashactivity,
-           ext870 stockactivity, ext922 dividendreport, ext765 accountmaster,
-           ext981 buypowersummary, apexrecon, apexrecon_holdings,
-           apexrecon_tradeactivity, v_revenue_optionsplatform,
-           v_options_aum, v_mimo_options_platform, v_mimo_optionsplatform,
-           usabroker, options eligibility, options reasoning form, PTP,
-           buying power]
+triggers: [Options_PFOF, options product, USA broker, US equity, Apex SFTP, Apex sodfiles, ext1047 revenuereports, ext872 tradeactivity, ext869 cashactivity, ext870 stockactivity, ext922 dividendreport, ext765 accountmaster, ext981 buypowersummary, apexrecon, options reasoning form, PTP, buying power]
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-revenue-and-fees/trading-revenue-and-fees    # US-equity trades land in regular trading tables, NOT here

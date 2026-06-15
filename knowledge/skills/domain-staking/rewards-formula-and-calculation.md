@@ -19,7 +19,6 @@ triggers:
   - Platinum
   - Platinum Plus
   - Diamond
-  - PlayerLevelID
   - ClubCategory
   - AnnualizedYield
   - monthly yield

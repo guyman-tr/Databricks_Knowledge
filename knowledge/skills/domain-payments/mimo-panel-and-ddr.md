@@ -10,15 +10,9 @@ triggers:
   - daily customer status
   - customer periodic status
   - panel
-  - FTD
-  - IsGlobalFTD
   - IsPlatformFTD
-  - global FTD
   - platform FTD
-  - IsCryptoToFiat
-  - IsRecurring
   - IsTradeFromIBAN
-  - IsInternalTransfer
   - IsIBANQuickTransfer
   - IsRedeem
   - bi_db_ddr_fact_mimo_allplatforms
@@ -28,18 +22,13 @@ triggers:
   - bi_db_ddr_fact_pnl
   - bi_db_ddr_fact_revenue_generating_actions
   - bi_db_ddr_fact_trading_volumes_and_amounts
-  - AUM
   - PnL
   - revenue generating actions
   - trading volumes
-  - MoneyFarm FTD
-  - Options FTD
   - Apex Options
-  - Gatsby
   - eMoney FTD
   - v_mimo_tradingplatform
   - v_mimo_emoneyplatform
-  - v_mimo_options_platform
   - v_mimo_first_deposit_all_platforms
   - net deposits
   - AML net deposits
@@ -127,7 +116,10 @@ Last verified: 2026-05-11
 ## Critical Warnings
 
 1. **Tier 1 — `IsGlobalFTD = 1` is the unique cross-platform FTD; `IsPlatformFTD = 1` is per-platform.** A customer can have a `TradingPlatform` FTD followed weeks later by an `eMoney` FTD; both rows carry `IsPlatformFTD = 1`, but only the first (chronological) row carries `IsGlobalFTD = 1`. **Counting `IsPlatformFTD` and treating them as unique customers will double-count** any customer who FTD'd on multiple platforms. Pick the right flag: use `IsGlobalFTD` for "how many new funded customers"; use `IsPlatformFTD` for "how many new customers on platform X". FTD recovery (`FirstDepositRecoveryDate` machinery) only applies to `DateID >= 20250901`; older periods may slightly under-count.
-2. **Tier 1 — `IsInternalTransfer = 1` (TP-side) AND `IsIBANQuickTransfer = 1` (eMoney-side) must BOTH be excluded for "real" money flow.** TP↔eMoney internal moves produce two rows: one TP row with `MIMOAction = 'Deposit'` + `IsInternalTransfer = 1`, and one eMoney row with `MIMOAction = 'Withdraw'` + `IsIBANQuickTransfer = 1` (or vice versa). If you don't exclude them you'll double-count company-level inflow. `IsIBANQuickTransfer` is eMoney-side and corresponds to `MoveMoneyReasonID = 6`; `IsInternalTransfer` is TP-side. **Both are needed in the filter** when measuring true external money in/out.
+2. **Tier 1 — Use `IsInternalTransfer = 0` to remove TP↔eMoney internal moves from "real" money flow. Do NOT also filter `IsIBANQuickTransfer = 0` — the column is a misnomer and the canonical DDR layer doesn't use it.** Both flags are TP-side (they only ever fire on `MIMOPlatform = 'TradingPlatform'` rows; the eMoney leg of an internal move is unflagged in the MIMO panel because the TP-side exclusion is enough to net it out). `IsInternalTransfer` is the broad flag — TP rows where the move is an internal book-entry against eMoney or Options.
+   `IsIBANQuickTransfer` is the trap: the column **name implies** it tags the IBAN-Quick-Transfer mechanism, but the **definition** is `MoveMoneyReasonID = 6` on `Fact_CustomerAction` — a reason code that also fires on **Options deposits** (`FundingTypeID = 42`, which has nothing to do with IBAN). So the flag mixes two unrelated populations under an IBAN-flavored name.
+   **Verified on Jan–May 2026 data:** `IsIBANQuickTransfer = 1 AND IsInternalTransfer = 0` = 15,892 rows / $7M over 5 months (1.9% of all IBAN-quick rows by count, ~0.05% of all internal-move dollar volume) — the Options-deposit tail of the misnomer. The 98% containment in `IsInternalTransfer` is coincidental, not structural.
+   **Practical rule:** filter `IsInternalTransfer = 0` and stop. The DDR layer + every canonical recipe use only that. Historical SQL that also carries `AND IsIBANQuickTransfer = 0` is harmless to numbers but reads as confused — it's based on the column name, not its definition.
 3. **Tier 1 — Do NOT join the four sub-platform feeds yourself.** The three views + MoneyFarm FTD injection already `UNION ALL` into `_AllPlatforms`. Joining `v_mimo_tradingplatform` + `v_mimo_emoneyplatform` again is double-counting. Use `_AllPlatforms` for cross-platform queries; use a single `v_mimo_<plat>` view only for per-platform drill.
 4. **Tier 2 — `AmountUSD` and `AmountOrigCurrency` may come in signed depending on platform.** For TP withdraw rows, the sign may be negative; for eMoney they may be positive. **Always discriminate by `MIMOAction = 'Deposit' / 'Withdraw'`, not by the sign of `AmountUSD`.** Use `ABS(AmountUSD)` when you want absolute magnitude. The net-deposit pattern below shows the safe way to compute net flow.
 5. **Tier 2 — Old DDR tables are DEPRECATED — do not reference.** `BI_DB_LTV_BI_Actual`, `BI_DB_LTV_Predictions`, `BI_DB_CID_DailyPanel_FullData`, `BI_DB_CID_MonthlyPanel_FullData`, `BI_DB_DDR_CID_Level` are the previous super-wide panels and LTV tables. They are still in Synapse (some still appear in UC) but **should not be used for new work** — they are being retired in favour of the per-fact split (`BI_DB_DDR_Fact_*` + `BI_DB_DDR_Customer_Daily_Status` joined per fact). The exception: `BI_DB_LTV_BI_Actual` is still owned by `domain-customer-and-identity/customer-models-and-segmentation` for customer-property questions (it's the current per-CID LTV-prediction table) — but it does NOT belong in a MIMO / DDR analysis.
@@ -213,6 +205,9 @@ WHERE m.DateID BETWEEN :from_dt AND :to_dt
 
 ```sql
 -- 2. Net MIMO (deposit - withdraw) — safe form, sign-agnostic — UC
+-- Filter IsInternalTransfer = 0 to exclude TP↔eMoney internal book-entry moves
+-- (the flag fires only on TP rows; the eMoney leg of the same move is unflagged
+--  but balanced — the TP-side exclusion is sufficient).
 SELECT DateID, MIMOPlatform,
        SUM(CASE WHEN MIMOAction='Deposit'  THEN AmountUSD ELSE 0 END) AS deposit_usd,
        SUM(CASE WHEN MIMOAction='Withdraw' THEN AmountUSD ELSE 0 END) AS withdraw_usd,
@@ -220,17 +215,20 @@ SELECT DateID, MIMOPlatform,
 FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms
 WHERE DateID BETWEEN :from_dt AND :to_dt
   AND IsInternalTransfer = 0
-  AND IsIBANQuickTransfer = 0
 GROUP BY DateID, MIMOPlatform;
 ```
 
 ```sql
 -- 3. AML Net Deposits KPI (specific to AML team) — UC
+-- IsInternalTransfer fires only on TP rows; on eMoney rows the column is always
+-- 0 in the panel, so the eMoney-side condition is a no-op and is omitted here
+-- for clarity. (Historical recipes carried `AND IsInternalTransfer=0
+-- AND IsIBANQuickTransfer=0` on the eMoney legs — this filtered nothing.)
 SELECT DateID,
-       SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit'  AND FundingTypeID<>33 THEN AmountUSD END)
-       - SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Withdraw' AND FundingTypeID<>33 THEN AmountUSD END)
-       + SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Deposit'  AND IsInternalTransfer=0 AND IsIBANQuickTransfer=0 THEN AmountUSD END)
-       - SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Withdraw' AND IsInternalTransfer=0 AND IsIBANQuickTransfer=0 THEN AmountUSD END)
+       SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Deposit'  AND IsInternalTransfer = 0 AND FundingTypeID<>33 THEN AmountUSD END)
+       - SUM(CASE WHEN MIMOPlatform='TradingPlatform' AND MIMOAction='Withdraw' AND IsInternalTransfer = 0 AND FundingTypeID<>33 THEN AmountUSD END)
+       + SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Deposit'  THEN AmountUSD END)
+       - SUM(CASE WHEN MIMOPlatform='eMoney' AND MIMOAction='Withdraw' THEN AmountUSD END)
          AS aml_net_deposits_usd
 FROM main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_ddr_fact_mimo_allplatforms
 WHERE DateID BETWEEN :from_dt AND :to_dt
@@ -287,7 +285,7 @@ WHERE r.DateID BETWEEN :from_dt AND :to_dt
 | **Crypto-to-fiat deposit volume** | `WHERE IsCryptoToFiat=1 AND MIMOAction='Deposit'`. Dual-source flag (sub-platform tag + post-insert UPDATE). For the full conversion story → `domain-cross/crypto-to-fiat`. |
 | **Recurring-deposit penetration** | `COUNT(DISTINCT CASE WHEN IsRecurring=1 AND MIMOAction='Deposit' THEN RealCID END) * 1.0 / COUNT(DISTINCT RealCID)` |
 | **IBAN-initiated trades (eMoney quick transfer)** | `WHERE MIMOPlatform='eMoney' AND IsTradeFromIBAN=1`. For the eMoney → trading deposit story specifically. |
-| **Internal transfers (TP↔eMoney) excluded from "real" MIMO** | `AND IsInternalTransfer=0 AND IsIBANQuickTransfer=0`. Always apply when measuring true money flow. |
+| **Internal transfers (TP↔eMoney) excluded from "real" MIMO** | `AND IsInternalTransfer = 0` (TP-side flag, only column needed). `IsIBANQuickTransfer` is a 12% sub-tag of `IsInternalTransfer` (specifically the IBAN-Quick-Transfer mechanism, `FundingTypeID = 42`); adding it filters out an additional 0.05% of dollar volume — see Critical Warning #2. The historical `AND IsIBANQuickTransfer = 0` is harmless but reads as a misunderstanding of the relationship between the two flags. |
 | **AML net deposits (specific KPI)** | SQL 3 above (`FundingTypeID <> 33` exclusion + both internal-transfer flags). |
 | **MoneyFarm FTDs** | `WHERE MIMOPlatform='MoneyFarm'` — only FTDs appear here. `Currency='GBP'` is hardcoded. |
 | **Daily customer count by status** | `BI_DB_DDR_Customer_Daily_Status GROUP BY DateID, Status` (use this when the question is about the customer rather than the transaction). 1 row per CID per day even on no-MIMO days, so COUNT(*) is *active customer count*. |

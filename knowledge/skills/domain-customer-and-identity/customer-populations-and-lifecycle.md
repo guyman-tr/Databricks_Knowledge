@@ -36,9 +36,7 @@ triggers:
   - ActiveTradedCopyFund
   - ActiveTradedOptions
   - IsFunded
-  - IsSettled
   - PI
-  - popular investor
   - dailystatus_scd
   - customer_dailystatus_scd
   - customer_periodic_status
@@ -49,6 +47,13 @@ triggers:
   - v_population_first_trading_action
   - v_population_active_traders
   - how many funded
+  - funded account
+  - funded accounts
+  - how many funded accounts
+  - number of funded accounts
+  - IsGlobalFTD
+  - global FTD
+  - global first time deposit
   - daily active traders
   - population trend
   - funded trend
@@ -121,7 +126,7 @@ Last verified: 2026-05-28
 4. **Tier 2 — `IsChurned` / `IsWinBack` columns on the SCD table are NOT stable.** They exist physically and refresh on every cycle, but their definitions are still being refined upstream by DE. Do not build long-lived business logic on these two flags. The predictive churn signals live in `customer-models-and-segmentation.md` (`Is_Churn_over_14/30/60` on `customer_segments_v`, plus the `churn_winback_*` model output). Treat the SCD's `IsChurned` as informational only.
 5. **Tier 2 — `vg_customer_daily_snapshot` is a VIEW over the daily-status fact.** For large date ranges it inherits the daily-status fact's row count and is just as slow. The view is convenient (it joins dimension dates and adds named enrichments), but if you're scanning more than ~30 days, fall back to the SCD population fact or the `BI_DB_DDR_Customer_Periodic_Status` pre-aggregate.
 6. **Tier 2 — `v_population_first_trading_action` returns ALL customers, not just depositors.** The view emits one row per customer who has ever taken a trading action (ActionTypeID IN (1, 17, 39) with `IsAirDrop = 0`). It does NOT pre-filter for `IsDepositor = 1`. If the analytical question is "what did new funded users trade first?", join to `v_population_first_time_funded` (1 row per funded customer with `FirstFundedDateID`) and filter the joined set — do NOT add `WHERE IsDepositor = 1` to the view alone, because it doesn't carry that column.
-7. **Tier 2 — Copy positions count as trading activity for FTF; airdrops do NOT.** The FirstAction component of the FTF formula uses the earliest of (first trade in `Dim_Position`, first IOB in `Fact_CustomerAction` with `ActionTypeID = 36` / CompensationReasonID = 57, first options trade). Copy positions DO count (a `MirrorID > 0` trade qualifies). Airdrops do NOT (the upstream views apply `IsAirDrop = 0`). This matters for FTF cohort sizing — never reinvent the formula from the underlying facts; load the view.
+7. **Tier 2 — Copy positions count as trading activity for FTF; airdrops do NOT.** The FirstAction component of the FTF formula uses the earliest of (first trade in `Dim_Position`, first IOB in `Fact_CustomerAction` with `ActionTypeID = 36` / CompensationReasonID = 57, first options trade). Copy positions DO count (a `MirrorID > 0` trade qualifies). Airdrops do NOT (the upstream views apply `IsAirDrop = 0`). This matters for FTF cohort sizing — never reinvent the formula from the underlying facts; load the view. **For the IOB revenue lens** (consent table, paid-out side, gross-vs-net economics), see `../domain-revenue-and-fees/interest-on-balance.md` — this skill owns the funnel lens, that one owns the revenue lens.
 8. **Tier 3 — SCD point-in-time filter is `FromDateID <= @date AND ToDateID >= @date`.** Both bounds are inclusive. Forgetting the inclusivity on either side either drops the day a customer's segment changed or double-counts a customer whose segment was identical across two compacted runs. Always use `BETWEEN @date AND @date` in the form `FromDateID <= @date AND ToDateID >= @date`.
 
 ## Core Concepts

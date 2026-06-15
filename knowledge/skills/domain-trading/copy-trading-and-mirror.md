@@ -21,7 +21,6 @@ triggers:
   - copyback
   - stop copy
   - copy to portfolio
-  - C2P
 required_tables:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_mirror
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics

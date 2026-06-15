@@ -8,9 +8,6 @@ triggers:
   - settlement statement
   - provider statement
   - settlement gap
-  - MID
-  - MIDName
-  - MIDValue
   - MOPCountry
   - ExternalTransactionID
   - ExTransactionID
@@ -25,6 +22,10 @@ triggers:
   - Apex SOD
   - Apex BuyingPower
   - USABroker
+  - Apex
+  - apex
+  - Gatsby
+  - gatsby
   - MID decline rate
   - provider chargeback
   - sodreconciliation

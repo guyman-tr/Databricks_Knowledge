@@ -5,74 +5,48 @@ triggers:
   - deposit
   - withdrawal
   - cashout
-  - FTD
   - first-time deposit
   - first-time funded
   - funding
-  - reversal
-  - chargeback
-  - refund
   - MIMO
   - money-in
   - money-out
   - net MIMO
   - DDR
-  - Customer_Daily_Status
-  - Customer_Periodic_Status
   - Fact_AUM
   - Fact_PnL
-  - Fact_Trading_Volumes_And_Amounts
   - IBAN
   - SEPA
   - OpenBanking
   - eMoney
   - card
   - Treezor
-  - crypto
   - wallet
-  - EXW
-  - on-chain
   - blockchain
-  - BlockchainTransactionId
-  - CorrelationId
   - Conversion
-  - Redemption
   - Sent
   - Received
-  - C2F
   - C2P
-  - crypto-to-fiat
   - balance
   - client balance
   - customer balance
   - finance recon
   - FinanceReports
   - BI_DB_Client_Balance
-  - Apex
-  - USABroker
-  - Apex BuyingPower
   - Apex cash activity
-  - Apex SOD
   - population
   - v_population_funded
-  - v_population_active_traders
   - v_population_balance_only_accounts
   - v_population_portfolio_only
-  - v_options_aum
   - PTP tax
-  - share lending
   - wallet allowance
-  - BI_DB_DepositWithdrawFee
   - Fact_BillingDeposit
   - Fact_BillingWithdraw
   - DDR_Fact_MIMO_AllPlatforms
   - DDR_Fact_MIMO_eMoney_Platform
   - DDR_Fact_MIMO_TP_Platform
   - DDR_Fact_MIMO_Options_Platform
-  - IsCryptoToFiat
-  - IsInternalTransfer
   - IsIBANQuickTransfer
-  - IsGlobalFTD
   - REMOVE_BAD_FTDS
 required_tables:
   - main.bi_db.gold_sql_dp_prod_we_bi_db_dbo_bi_db_depositwithdrawfee
@@ -177,6 +151,7 @@ Do **not** load for:
 - **Bonus pay-outs / compensation accounting** → Compensation regular domain (planned).
 - **AML risk classification / SAR / sanctions** → Compliance super-domain (planned).
 - **Trading positions / P&L / broker-dealer execution** → `domain-trading`.
+- **"Trading volume from IBAN" / "trade-side IBAN flag" / `IsOpenedFromIBAN` / `IsClosedToIBAN`** → `domain-trading/trading-volumes.md`. The volume of TRADES that originated from or closed to the wallet is a trading-fact attribute, even though "IBAN" is in the question. We own the MIMO money MOVEMENT into/out of the wallet; the wallet-as-a-source-of-trade-capital is a trade attribute on the trading volumes fact. **Rule:** if the noun is "volume" / "trade" / "position" → trading; if the noun is "deposit" / "withdrawal" / "balance" / "flow" → payments.
 - **Operator audit trail on a customer's account** → `domain-customer-and-identity/customer-action-audit-trail` (`Fact_CustomerAction`).
 
 ## Scope
@@ -187,7 +162,35 @@ Last verified: 2026-05-11
 
 ## Critical Warnings
 
-> **Tier 0 — Filter Contract (cross-cutting).** Every per-customer / per-segment aggregate in this domain (deposits, withdrawals, MIMO totals, net cashflow, balance rollups) MUST follow [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md): silent SCD-2 walk on `V_Fact_SnapshotCustomer_FromDateID` with `IsValidCustomer = 1` and `DateID BETWEEN snap.FromDateID AND snap.ToDateID` (period-correct); mandatory one-line scope footer on every numeric output. The MIMO panel and DDR family are NOT pre-filtered upstream — apply the contract every time. Population views (`v_population_funded`, `v_population_active_traders`, `v_population_first_time_funded`) and `ftd_funnel_v` carry their own funnel-side validity logic (including `IsExcludeUser`); the contract is idempotent on top, but the canonical filter for FTD-funnel cohort questions is the funnel skill itself. The regulatory variant (`IsCreditReportValidCB = 1`) fires ONLY when the user explicitly says "CB valid" / "Client Balance valid" / "credit-report valid" — never on topic heuristics (ASIC / CySEC / FINRA / IFRS15 / broker-recon questions still get the default valid-users filter). Opt-out (unfiltered, include non-valids / internals / etorians / test) only on explicit user request. Never pre-flight.
+> ## Tier 0 — Filter Contract (DEFAULT-ON, NO PRE-FLIGHT, INLINE-ENFORCEABLE)
+>
+> EVERY per-customer / per-segment aggregate in this domain (deposits, withdrawals, MIMO totals, net cashflow, balance rollups) is computed with the valid-users filter applied **SILENTLY**. The filter is **DEFAULT-ON**. The user must explicitly opt OUT — never the other way around. The MIMO panel and DDR family are NOT pre-filtered upstream; apply the join every time. Population views (`v_population_funded`, `v_population_active_traders`, `v_population_first_time_funded`) and `ftd_funnel_v` carry their own funnel-side validity logic (including `IsExcludeUser`); the contract is idempotent on top, but the canonical filter for FTD-funnel cohort questions is the funnel skill itself.
+>
+> **Required SQL join (period-correct SCD-2 walk):**
+>
+> ```sql
+> JOIN main.dwh.gold_sql_dp_prod_we_dwh_dbo_v_fact_snapshotcustomer_fromdateid_masked snap
+>        ON snap.RealCID = fact.CID
+>       AND snap.IsValidCustomer = 1
+>       AND fact.DateID BETWEEN snap.FromDateID AND snap.ToDateID
+> ```
+>
+> **Mandatory output footer — emit verbatim on every numeric answer:**
+>
+> > *Scope: valid users only — `IsValidCustomer = 1` (excludes `PlayerLevel='Internal'`, `Label IN ('Dealing','ILQ')`, `Country='eToro'`), period-correct (SCD-2). Popular Investors ARE valid. For credit-balance-valid scope, ask explicitly ("CB valid"). For unfiltered, ask explicitly ("include non-valids" / "unfiltered").*
+>
+> **FORBIDDEN patterns — these are contract violations, NOT polite caveats:**
+> 1. Producing an unfiltered number and then offering *"let me know if you want the filtered version"* / *"I'd apply it for executive reporting — let me know"* / *"this does NOT include the valid-users filter"*. **The filtered number IS the answer.** Pre-flighting after the fact is a violation. If the user wants unfiltered they will literally type one of the opt-out phrases.
+> 2. Asking *"valid users or all?"* before answering. Pre-flighting before the fact is a violation.
+> 3. Switching to `IsCreditReportValidCB` because the question SOUNDS regulatory (ASIC / CySEC / FINRA / IFRS15 / broker-recon / audit). Topic heuristics are forbidden — only the user's LITERAL phrases switch the filter.
+> 4. Emitting a numeric output WITHOUT the scope footer above. The footer is what makes the silent default safe.
+>
+> **Opt-ins — fire ONLY on the user's literal words (no synonym matching, no topic inference):**
+> - "CB valid" / "Client Balance valid" / "credit-report valid" → swap `IsValidCustomer = 1` for `IsCreditReportValidCB = 1` in the same join. Use the regulatory-scope footer (see linked contract).
+> - "include non-valids" / "include internals" / "include etorians" / "include test accounts" / "unfiltered" → drop the join entirely. Use the opt-out footer: *Scope: unfiltered — includes test / internal / non-valid accounts on user request. NOT suitable for executive reporting.*
+> - "today" / "right now" / "currently" → swap the SCD-2 walk for a direct join to `Dim_Customer` on `c.IsValidCustomer = 1` (present-state fallback).
+>
+> See [`../cross-cutting/valid-users-filter-contract.md`](../cross-cutting/valid-users-filter-contract.md) for the full opt-in SQL patterns, the `IsCreditReportValidCB` formal definition (six hard-coded subsidiary CIDs re-included; `AccountTypeID != 2` carve-out), and the rationale for the two-flag asymmetry. **But the inline rule above is enforceable on its own — do not skip it because the link wasn't resolved.**
 
 1. **Tier 1 — Five sub-skills, each owns ONE slice of the lifecycle. Do NOT cross slices yourself.** A deposit reaches a trade only via `domain-cross/recurring-deposit-to-trade`. A fiat deposit reaches eMoney IBAN only via `FlowID` / `IsIBANTrade` flag (C.1 → C.3). A crypto event reaches MIMO only via C2F conversion (C.4 → C.3 → C.2 via `IsCryptoToFiat=1`). The boundaries are explicit and sparse — respect them.
 2. **Tier 1 — Default to MIMO panel for cross-platform money-flow questions.** `BI_DB_DDR_Fact_MIMO_AllPlatforms` (24c) is THE pre-aggregated panel UNION-ALLing TradingPlatform / eMoney / Options / (post-C2F) Crypto. Raw billing facts (`Fact_BillingDeposit` etc.) are for platform-specific drill — never UNION them yourself across platforms.
@@ -198,7 +201,7 @@ Last verified: 2026-05-11
 7. **Tier 2 — `CID = RealCID` everywhere in DWH facts; cross-platform key is `GCID`.** TP/Trading tables join via `CID INT`. eMoney joins via `GCID INT` (NOT `EmoneyAccountID` — that column doesn't exist; the eMoney account number is `AccountID INT` on `emoney_dim_account`). EXW joins via `GCID` + `RealCID` on `exw_dimuser` (NO `EXWCustomerID` column). When crossing platforms ALWAYS use `GCID` as the bridge.
 8. **Tier 2 — `MIMOPlatform` enum: `'TradingPlatform' | 'eMoney' | 'Options' | 'Crypto'`** — but Crypto rows are zero-volume except in derived C2F-tagged eMoney rows (Critical Warning 4). Filter by `MIMOPlatform` to scope; pivot per-platform breakdowns from the same panel.
 9. **Tier 2 — `IsCryptoToFiat=1` rows in MIMO are eMoney rows representing post-C2F flows.** When asking "how much customer money entered IBAN via crypto last month", the answer is `WHERE MIMOPlatform='eMoney' AND IsCryptoToFiat=1` on the MIMO panel — not anywhere in the crypto-wallet skill.
-10. **Tier 2 — `IsInternalTransfer` and `IsIBANQuickTransfer` are NOT money-flow events.** Both are internal book-entry flags — filter them OUT for net MIMO calculations. See [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) Critical Warning for the canonical filter.
+10. **Tier 2 — `IsInternalTransfer = 1` rows are internal book-entry moves, not money-flow events; filter `IsInternalTransfer = 0` for net MIMO. Do NOT also filter `IsIBANQuickTransfer` — it's a misnomer column and the canonical DDR layer doesn't use it.** `IsInternalTransfer` is TP-side and the only flag the DDR / Function_MIMO / executive-reporting layer actually relies on. `IsIBANQuickTransfer` is derived from `MoveMoneyReasonID = 6` — a code that ALSO fires on Options deposits (`FundingTypeID = 42`), so the column name lies. See [`mimo-panel-and-ddr.md`](mimo-panel-and-ddr.md) Critical Warning #2 for the verified cross-tab and the misnomer breakdown.
 11. **Tier 2 — Amounts in TP fee tables are in *deposit currency* unless suffixed `USD`.** `Amount` is signed (deposits positive, withdraws/refunds/chargebacks negative on the reversals table). USD conversion is already applied to `AmountUSD` — do NOT multiply by `ExchangeRate` again.
 12. **Tier 2 — XML-shredded columns on DWH Fact tables.** `Fact_BillingDeposit` (139c), `Fact_BillingWithdraw` (86c), and similar DWH Fact tables are wide because the ETL pre-parses provider-specific structured fields from source billing tables (e.g. `PaymentData` XML on `Billing.Deposit`, `FundingData` on `Billing.Funding`) into individual typed columns with `*AsString` / `*AsInteger` / `*AsDecimal` / `*AsJson` suffixes. For "where is field X" questions about billing/payment attributes → scan DWH Fact columns first; the raw structured field still exists on `bronze_etoro_billing_*` for SQL JSON/XML parsing.
 13. **Tier 3 — Apex = USABroker = Options broker = US-equity clearing broker — three roles, one broker.** SOD reconciliation feeds split across schemas: `finance.bronze_sodreconciliation_apex_ext869_cashactivity` 45c, `ext870_stockactivity` 32c, `ext872_tradeactivity` 71c, `ext922_dividendreport` 31c, `ext1047_revenuereports` 24c, `sodfiles` 11c; `general.bronze_sodreconciliation_apex_ext981_buypowersummary` 61c; `general.bronze_usabroker_apex_options` 17c. Join on `AccountId + ReportDate`. Apex revenue events live in `domain-revenue-and-fees`; US-equity trades live in `domain-trading`. See [`finance-recon-and-balances.md`](finance-recon-and-balances.md).

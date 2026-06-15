@@ -24,7 +24,6 @@ triggers:
   - FailReasonID
   - ActualCompensationType
   - OriginalCompensationType
-  - Airdrop
   - Cash
   - None
   - Success
@@ -54,11 +53,9 @@ triggers:
   - Dealing_Staking_OptedOut
   - Dealing_Staking_OptedOut_PerCID
   - BI_DB_PositionPnL
-  - Dim_Position
   - Proposal Overview
   - Proposal Drill-Down
   - Airdrops List
-  - reconciliation
   - rewards calculation
   - rewards distribution
   - compensation list
@@ -129,6 +126,7 @@ From `eToro/Staking/SQL scripts/SP_Staking_modified.sql`. The `@Date DATE` param
 
 ### Step 0 — Pull parameters
 - Source: `Fivetran_google_sheets.platform_rewards` (SharePoint-backed since 2026-03-30; previously `Dealing_staging.Fivetran_google_sheets_platform_rewards`).
+  - **UC mirror for Databricks-side queries**: `main.sharepoint.silver_sharepoint_platform_rewards` (live, Excel-on-SharePoint via Fivetran). The Synapse table above is the operational SP_Staking input; the UC mirror is the analyst-facing copy.
 - Joined to `Dealing_dbo.Dealing_Staking_Parameters` for per-coin config.
 - EUR variants (ETHEUR / SOLEUR / ADAEUR) are inserted separately and their `InstrumentID` remapped to the USD equivalent for the downstream calculation — see [`currency-catalog-and-parameters.md`](currency-catalog-and-parameters.md).
 

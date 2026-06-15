@@ -19,9 +19,9 @@ triggers:
   - RegulationID
   - PlayerLevelID
   - PlayerStatusID
+  - PlayerStatus
   - AccountTypeID
   - MifidCategorizationID
-  - VerificationLevelID
   - GuruStatusID
   - Popular Investor program
   - IsDepositor
@@ -29,8 +29,6 @@ triggers:
   - FTDPlatformID
   - FTDTransactionID
   - FTDRecoveryDate
-  - IsValidCustomer
-  - IsCreditReportValidCB
   - EmployeeAccount
   - HasWallet
   - IsEDD

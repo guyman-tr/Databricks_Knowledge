@@ -15,7 +15,6 @@ triggers:
   - HBC child
   - CBH
   - Confirm Before Hedge
-  - DMA
   - Direct Market Access
   - DLT
   - HedgeExecutionModeID

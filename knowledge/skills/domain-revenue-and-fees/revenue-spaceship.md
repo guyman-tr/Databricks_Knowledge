@@ -9,9 +9,9 @@ description: |
   weekly KPI dashboard.
 
   AUTHORITATIVE SOURCE: the DataPlatform DE workspace skill at
-  /Workspace/.assistant/skills/domain-spaceship (6 sub-files: SKILL.md, source-tables.md,
-  metric-definitions.md, views-architecture.md, dashboard-queries.md,
-  data-patterns.md). That skill carries all the Spaceship-specific quirks:
+  /Workspace/.assistant/skills/domain-spaceship (6 sub-files: SKILL.md, spaceship-source-tables.md,
+  spaceship-metric-definitions.md, spaceship-views-architecture.md, spaceship-dashboard-queries.md,
+  spaceship-data-patterns.md). That skill carries all the Spaceship-specific quirks:
   per-product warnings (Super signed aud_amount, Money classification rules),
   ETL pipeline detail, weekend fill-forward mechanics, AUD currency conversion,
   Sydney-timezone conversion, the FTD definitions, internal-transfer
@@ -19,13 +19,7 @@ description: |
 
   Also see knowledge/uc_domains/spaceship/_domain_card.md for the local
   domain-card view.
-triggers: [Spaceship, spaceship, AU investment, Australian investment,
-           Australia, Super, superannuation, Voyager, Nova, Money,
-           v_spaceship_aum, v_spaceship_mimo, v_spaceship_fees,
-           bronze_spaceship_metabase, FTD, F30DD, FUM, Funded Accounts,
-           Net Deposits, Voyager mgmt fee, Nova platform fee, Nova FX fee,
-           AUD, Sydney, weekend fill-forward, signed aud_amount,
-           Australian dollar, alpaca, alpaca_account_id]
+triggers: [AU investment, Australia, Super, superannuation, Voyager, Nova, Money, Voyager mgmt fee, Nova platform fee, Nova FX fee, AUD, Sydney, signed aud_amount, Australian dollar, alpaca, alpaca_account_id]
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-customer-and-identity/SKILL.md   # GCID bridge — Spaceship user_id → eToro GCID

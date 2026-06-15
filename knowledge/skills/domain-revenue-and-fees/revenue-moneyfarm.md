@@ -11,26 +11,6 @@ description: |
   domain-moneyfarm/SKILL.md and its 5 sub-files. This redirect must always
   resolve to domain-moneyfarm and never carry independent content.
 triggers:
-  - moneyfarm
-  - MoneyFarm
-  - Moneyfarm
-  - money farm
-  - uk isa
-  - isa
-  - v_moneyfarm_aum
-  - v_moneyfarm_mimo
-  - v_moneyfarm_fees
-  - bi_output_moneyfarm_customers
-  - bi_output_moneyfarm_fact_portfolio_snapshot
-  - bi_output_moneyfarm_fact_transactions
-  - silver_moneyfarm_etoro_mf_aum
-  - bronze_moneyfarm_users
-  - moneyfarm aum
-  - moneyfarm mimo
-  - moneyfarm fees
-  - moneyfarm cohort
-  - ben thompson
-  - benth
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-moneyfarm/SKILL.md
@@ -73,8 +53,8 @@ Last verified: 2026-05-31
 
 ## Critical Warnings
 
-1. **Do NOT add new MoneyFarm content here** — this file is a redirect. Any update to MoneyFarm knowledge belongs in `domain-moneyfarm/SKILL.md` or one of its 5 sub-files (`source-tables.md`, `views-architecture.md`, `metric-definitions.md`, `dashboard-queries.md`, `data-patterns.md`).
-2. **`v_moneyfarm_fees` is a confirmed placeholder** — `WHERE 1=0`, all NULL CASTs. Querying always returns 0 rows. The customer-facing fee schedule lives in Confluence as informational knowledge only — see `domain-moneyfarm/metric-definitions.md` §7.
+1. **Do NOT add new MoneyFarm content here** — this file is a redirect. Any update to MoneyFarm knowledge belongs in `domain-moneyfarm/SKILL.md` or one of its 5 sub-files (`moneyfarm-source-tables.md`, `moneyfarm-views-architecture.md`, `moneyfarm-metric-definitions.md`, `moneyfarm-dashboard-queries.md`, `moneyfarm-data-patterns.md`).
+2. **`v_moneyfarm_fees` is a confirmed placeholder** — `WHERE 1=0`, all NULL CASTs. Querying always returns 0 rows. The customer-facing fee schedule lives in Confluence as informational knowledge only — see `domain-moneyfarm/moneyfarm-metric-definitions.md` §7.
 3. **`providerName = 'Moneyfarm'` is the canonical case** (capital M, single word). Don't use `'MoneyFarm'` (camel-case) — it matches zero rows in `bi_db.bronze_sub_accounts_accounts` and `compliance.bronze_event_hub_*`.
 
 ## What this redirect resolves to
@@ -82,11 +62,11 @@ Last verified: 2026-05-31
 MoneyFarm — eToro's UK ISA / robo-advisor acquisition (2024) — was promoted from a `domain-revenue-and-fees` sub-skill into a standalone domain skill on **2026-05-31**.
 
 The dedicated skill `domain-moneyfarm` covers:
-- The full 23-table UC catalog across 10 schemas (`source-tables.md`).
-- Full DDLs and CTE walkthroughs of the 3 prep views (`views-architecture.md`).
-- KPI definitions for AUM, MIMO, FTD, Funded, Cohort — plus the documented Managed-ISA tiered fee schedule from Confluence as **knowledge without data** (`metric-definitions.md`).
-- Ben Thompson's 5 `UK/ISA` Tableau workbooks + the UK BA Genie space [WIP] with 16 MoneyFarm join_specs (`dashboard-queries.md`).
-- 12 reusable SQL patterns + 6 anti-patterns (`data-patterns.md`).
+- The full 23-table UC catalog across 10 schemas (`moneyfarm-source-tables.md`).
+- Full DDLs and CTE walkthroughs of the 3 prep views (`moneyfarm-views-architecture.md`).
+- KPI definitions for AUM, MIMO, FTD, Funded, Cohort — plus the documented Managed-ISA tiered fee schedule from Confluence as **knowledge without data** (`moneyfarm-metric-definitions.md`).
+- Ben Thompson's 5 `UK/ISA` Tableau workbooks + the UK BA Genie space [WIP] with 16 MoneyFarm join_specs (`moneyfarm-dashboard-queries.md`).
+- 12 reusable SQL patterns + 6 anti-patterns (`moneyfarm-data-patterns.md`).
 
 ## What changed since v1 of this redirect
 

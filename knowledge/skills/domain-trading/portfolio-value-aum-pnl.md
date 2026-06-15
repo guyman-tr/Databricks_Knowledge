@@ -2,16 +2,12 @@
 name: domain-trading
 description: "End-of-day portfolio snapshots and daily PnL deltas across the trading platform. Two DDR fact tables: BI_DB_DDR_Fact_AUM (43 columns, 7.4B rows, 1 row per customer per day = end-of-day snapshot across TP + IBAN + Options) and BI_DB_DDR_Fact_PnL (18 columns, 8.8B rows, 1 row per customer × date × InstrumentTypeID × 8 position flags = daily delta). Covers the snapshot-vs-delta aggregation rule (never SUM AUM across dates; PnL deltas DO sum), the TP-vs-Global naming convention (TotalEquityTP = TP only; EquityGlobal = TP + IBAN + Options), copy vs manual stock/crypto equity decomposition (EquityCopy / EquityStocksManual / EquityCryptoManual), the NOP-sub-columns-don't-sum gotcha (only 4 sub-columns: NOPCrypto, NOPCryptoCFD, NOPStocks, NOPStocksCFD — Forex/Commodities/Indices/ETFs missing), the IsLeveraged/IsLeverage cross-table naming inconsistency, the zero-equity-row-exclusion filter, the ActualNWA bonus-cap formula, the Options data-lag caveat, and the legacy-always-zero columns (CopyStockOrders, StockOrders — 0 since 2019)."
 triggers:
-  - AUM
   - equity
   - NOP
   - net open position
   - portfolio value
   - account value
-  - assets under management
   - total equity
-  - TotalEquityTP
-  - EquityGlobal
   - RealizedEquityTP
   - RealizedEquityGlobal
   - market exposure
@@ -30,8 +26,6 @@ triggers:
   - NetProfit
   - CountPositions
   - mark to market
-  - IBANBalance
-  - OptionsTotalEquity
   - ActualNWA
   - bonus credit
   - manual stock equity

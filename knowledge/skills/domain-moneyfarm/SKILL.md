@@ -17,7 +17,10 @@ description: "MoneyFarm UK ISA / robo-advisor platform via Cosmos-MoneyFarm and 
   (money_farm.silver_moneyfarm_etoro_mf_aum), the curated bizops facts
   (bi_output.bi_output_moneyfarm_customers — 99K rows / fact_portfolio_snapshot 40K /
   fact_transactions per-event), and the auxiliary Fivetran reference
-  (experience.bronze_fivetran_experience_money_farm_product_names — 9 rows).
+  (sharepoint.silver_sharepoint_experience_money_farm_product_names — 9 rows;
+  this is Excel-on-SharePoint via Fivetran, replacing the pre-2026
+  experience.bronze_fivetran_experience_money_farm_product_names copy
+  which is now stale — last sync 2025-06-13).
   Identity bridge to eToro GCID is via bi_db.bronze_sub_accounts_accounts with
   providerName='Moneyfarm' (capital M, single word — events store the
   single-word lowercase variant). Three product lines as of Oct 2025:
@@ -61,7 +64,6 @@ triggers:
   - robo-advisor
   - digital wealth management
   - moneyfarmUserId
-  - externalUserId
   - portfolio_id moneyfarm
   - PORTFOLIO_DEPOSIT
   - PORTFOLIO_WITHDRAW
@@ -85,7 +87,8 @@ triggers:
   - bi_output_moneyfarm_fact_portfolio_snapshot
   - bi_output_moneyfarm_fact_transactions
   - moneyfarm_population_grouped
-  - bronze_fivetran_experience_money_farm_product_names
+  - silver_sharepoint_experience_money_farm_product_names
+  - bronze_fivetran_experience_money_farm_product_names  # historical name, table is now stale
   - UK BA Genie space
   - UK BA WIP
   - ISACustomerLookupDashboard
@@ -105,26 +108,54 @@ required_tables:
   - main.bi_output.bi_output_moneyfarm_fact_transactions
   - main.money_farm.silver_moneyfarm_etoro_mf_aum
   - main.general.bronze_moneyfarm_users
-  - main.experience.bronze_fivetran_experience_money_farm_product_names
+  - main.sharepoint.silver_sharepoint_experience_money_farm_product_names
   - main.bi_db.bronze_sub_accounts_accounts
   - main.compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts
 sub_skills:
-  - source-tables.md
-  - metric-definitions.md
-  - views-architecture.md
-  - dashboard-queries.md
-  - data-patterns.md
-version: 1
+  - moneyfarm-source-tables.md
+  - moneyfarm-metric-definitions.md
+  - moneyfarm-views-architecture.md
+  - moneyfarm-dashboard-queries.md
+  - moneyfarm-data-patterns.md
+version: 2
 owner: "dataplatform"
-last_validated_at: "2026-05-31"
+last_validated_at: "2026-06-04"
 ---
 
 # MoneyFarm Skill (UK ISA / robo-advisor / Cosmos-sourced)
 
+> **Tier 0 — Data-Latency & Roll-Forward Contract (cross-cutting).** MoneyFarm balance reads from `main.etoro_kpi_prep.v_moneyfarm_aum` MUST follow [`../cross-cutting/data-latency-and-rollforward.md`](../cross-cutting/data-latency-and-rollforward.md). The notable lag pattern here: **GBP and USD have different effective dates** because USD = `gbp * fx_rate` and the day's FX rate publishes intraday — verified 2026-06-09 had `total_balance_gbp = £363M` with `total_balance_usd = $0` (FX-null defaults to 0 per the column comment). Silent 3-day roll-forward, **per-column not per-table** — when the user wants USD, walk back the USD column independently (typical effective date is T-1 for USD, T-0 for GBP). Does NOT apply to `v_moneyfarm_mimo` / `v_moneyfarm_fees` flow data. Effective date shown only when it differs from requested.
+
+## ⚠️ MoneyFarm Product Taxonomy (read this first)
+
+MoneyFarm is **not a single-product platform** — it's a UK digital wealth manager and `v_moneyfarm_aum` rolls up **all their products** to `(date × GCID)`. Two segmentation axes:
+
+**By product family** (9 distinct `Product_Name` values across 5 families on `bi_output_moneyfarm_fact_portfolio_snapshot`):
+
+| Family | Live values | On 2026-06-09 |
+|---|---|---|
+| Cash ISA | `Cash ISA` | **£292.4M (80% of book)** |
+| Stocks & Shares ISA — DIY flavour | `DIY ISA` | £29.0M |
+| Stocks & Shares ISA — Managed flavour | `Managed ISA` | £6.7M |
+| _legacy long-tail_ | `Managed General Investment Account`, `DIY General Investment Account`, `Managed Junior ISA`, `Managed Self-Invested Personal Pension`, `Unknown Product` | <£0.5M each, ~£0.3M total |
+
+**By funnel-source** (`Source_Type` on the snapshot fact):
+
+| `Source_Type` | What it means | Products | On 2026-06-09 |
+|---|---|---|---|
+| `Live Event` | Customer acquired through the **eToro funnel** post-2024-acquisition. Only sees the 3 ISAs eToro markets. | Cash ISA, DIY ISA, Managed ISA | **~£328M (90% of book)** |
+| `Silver History` | Customer joined **MoneyFarm directly** pre-eToro-acquisition. Long-tail products eToro doesn't sell on its funnel — SIPP, GIA, JISA — sit here. | All 8 non-`Live Event` rows including the long-tail | ~£35M |
+
+**Cardinal rules:**
+1. **Top-line questions ("MoneyFarm AUM today")** → `v_moneyfarm_aum`. Do NOT SUM the snapshot fact for top-line — `Source_Type` overlap will double-count.
+2. **Product / funnel-source drill-down** → `bi_output_moneyfarm_fact_portfolio_snapshot` GROUP BY `Product_Name` and/or `Source_Type`.
+3. **The eToro-funnel onboarding-eligibility doc lists 3 ISAs** (Stocks-and-Shares / Managed / Cash) — that's the eToro-side **acquisition** funnel, not the full MoneyFarm-side **AUM** book. Both numbers are correct in their context.
+
 ## When to Use
 Load this skill when the user asks about:
-- MoneyFarm AUM, MIMO, FTD, Funded customers, or fees
-- The eToro UK ISA product line (Stocks-and-Shares ISA / Managed ISA / Cash ISA)
+- MoneyFarm AUM, MIMO, FTD, Funded customers, or fees (top-line)
+- MoneyFarm by product (Cash ISA, DIY ISA, Managed ISA, GIA, Junior ISA, **SIPP**) or by funnel-source (eToro-funnel vs legacy MoneyFarm-direct)
+- The eToro UK ISA acquisition-funnel product line (Stocks-and-Shares ISA / Managed ISA / Cash ISA)
 - Ben Thompson's `UK/ISA` Tableau workbooks (`AM - ISA Performance V1`, `ISA Focussed Acquisition Funnel`, `ISA Market Value (SFTP data)`, `ISA MIMO (Events API data)`, `UK Funded - by MoneyFarm & eToro`)
 - The CS-team `ISACustomerLookupDashboard` MoneyFarm External-ID lookup
 - The three `etoro_kpi_prep.v_moneyfarm_*` prep views
@@ -156,13 +187,13 @@ Last verified: 2026-05-31
 
 | File | Load when | Contents |
 |------|-----------|----------|
-| `source-tables.md` | Exploring raw MoneyFarm UC data, "what table holds X", schema/PII lookups | 21-table catalog across 9 schemas (`general` / `experience` / `money_farm` / `money_farm_stg` / `bi_output` / `bi_output_stg` / `bizops_output` / `bizops_output_stg` / `regtech_stg` / `etoro_kpi_prep`) — Cosmos→Bronze→Silver→Gold ladder with PII flags and CosmosDB-metadata callouts |
-| `metric-definitions.md` | Computing KPIs, QA, "how is MoneyFarm FTD calculated" | AUM (GBP / USD), MIMO (deposits / withdrawals / net flow), FTD (`is_ftd` per the live event stream — Oct 2025 onwards), Funded (`Current_Market_Value_GBP > 0`), Cohort (V2-eligibility scope, ProductName segmentation, Source_Type provenance), Fee schedule (informational — Managed ISA tiered AUM fee from Confluence; Cash ISA SVR + boost; Stocks-and-Shares points to MoneyFarm public pricing). **Includes the explicit warning that fee data is NOT in UC.** |
-| `views-architecture.md` | Building or fixing prep-view-backed queries, DDR root-cause | Full DDLs + CTE walkthrough for `v_moneyfarm_aum`, `v_moneyfarm_mimo`, `v_moneyfarm_fees` (placeholder) — including the GBP/USD FX join, the `compliance.bronze_event_hub_*` source filter, and the per-CTE row-grain reasoning |
-| `dashboard-queries.md` | Tableau dashboard work, replicating Ben's charts, mapping a KPI back to UC | Ben Thompson's 5 ISA workbooks (lineage, custom SQL preamble, field inventory) + the UK BA Genie space WIP (16 MoneyFarm join_specs verbatim) + 6 sample queries lifted from existing wiki and adapted |
-| `data-patterns.md` | Writing any MoneyFarm SQL query | Reusable CTEs: `providerName='Moneyfarm'` filter (case-sensitive), AccountTypeID=4 join, GBP→USD via fact_currencypricewithsplit InstrumentID=2, transaction-ID hash(GCID, valueDate, Amount), 1:N GCID-to-PortfolioID handling, Source_Type='Live Event' vs 'Silver History' vs 'Bronze Table (Recent)' segmentation, dedup by `SourceFile` for double-send days |
+| `moneyfarm-source-tables.md` | Exploring raw MoneyFarm UC data, "what table holds X", schema/PII lookups | 21-table catalog across 9 schemas (`general` / `experience` / `money_farm` / `money_farm_stg` / `bi_output` / `bi_output_stg` / `bizops_output` / `bizops_output_stg` / `regtech_stg` / `etoro_kpi_prep`) — Cosmos→Bronze→Silver→Gold ladder with PII flags and CosmosDB-metadata callouts |
+| `moneyfarm-metric-definitions.md` | Computing KPIs, QA, "how is MoneyFarm FTD calculated" | AUM (GBP / USD), MIMO (deposits / withdrawals / net flow), FTD (`is_ftd` per the live event stream — Oct 2025 onwards), Funded (`Current_Market_Value_GBP > 0`), Cohort (V2-eligibility scope, ProductName segmentation, Source_Type provenance), Fee schedule (informational — Managed ISA tiered AUM fee from Confluence; Cash ISA SVR + boost; Stocks-and-Shares points to MoneyFarm public pricing). **Includes the explicit warning that fee data is NOT in UC.** |
+| `moneyfarm-views-architecture.md` | Building or fixing prep-view-backed queries, DDR root-cause | Full DDLs + CTE walkthrough for `v_moneyfarm_aum`, `v_moneyfarm_mimo`, `v_moneyfarm_fees` (placeholder) — including the GBP/USD FX join, the `compliance.bronze_event_hub_*` source filter, and the per-CTE row-grain reasoning |
+| `moneyfarm-dashboard-queries.md` | Tableau dashboard work, replicating Ben's charts, mapping a KPI back to UC | Ben Thompson's 5 ISA workbooks (lineage, custom SQL preamble, field inventory) + the UK BA Genie space WIP (16 MoneyFarm join_specs verbatim) + 6 sample queries lifted from existing wiki and adapted |
+| `moneyfarm-data-patterns.md` | Writing any MoneyFarm SQL query | Reusable CTEs: `providerName='Moneyfarm'` filter (case-sensitive), AccountTypeID=4 join, GBP→USD via fact_currencypricewithsplit InstrumentID=2, transaction-ID hash(GCID, valueDate, Amount), 1:N GCID-to-PortfolioID handling, Source_Type='Live Event' vs 'Silver History' vs 'Bronze Table (Recent)' segmentation, dedup by `SourceFile` for double-send days |
 
-**Routing guidance**: Most questions need `data-patterns.md` (CTEs) + one of the others. Load `data-patterns.md` first when writing queries; load `views-architecture.md` first when reading existing DDR / prep-view logic; load `dashboard-queries.md` when replicating a Ben Thompson workbook.
+**Routing guidance**: Most questions need `moneyfarm-data-patterns.md` (CTEs) + one of the others. Load `moneyfarm-data-patterns.md` first when writing queries; load `moneyfarm-views-architecture.md` first when reading existing DDR / prep-view logic; load `moneyfarm-dashboard-queries.md` when replicating a Ben Thompson workbook.
 
 ## Product Structure
 
@@ -189,7 +220,7 @@ eToro acquired MoneyFarm in 2024. MoneyFarm is a UK-headquartered digital wealth
 | Layer | UC Schema | Table family | What it is |
 |---|---|---|---|
 | Bronze (raw Cosmos) | `general.*` | `bronze_moneyfarm_users` | 24K user docs from Cosmos export with `_rid`/`_self`/`_etag`/`_attachments` metadata. **PII-bearing.** |
-| Bronze (Fivetran aux) | `experience.*` | `bronze_fivetran_experience_money_farm_product_names` | 9-row product-name reference table |
+| Silver (SharePoint aux) | `sharepoint.*` | `silver_sharepoint_experience_money_farm_product_names` | 9-row product-name reference table — Excel-on-SharePoint via Fivetran (live). Replaces pre-2026 `experience.bronze_fivetran_experience_money_farm_product_names` (stale, last sync 2025-06-13). |
 | Silver (SFTP-fed) | `money_farm.*` | `silver_moneyfarm_etoro_mf_aum`, `silver_moneyfarm_historical_events` | Per-(`etr_ymd`, `Portfolio_Id`) AUM rollup from MoneyFarm's nightly SFTP drop (`SourceFile` like `ETORO-MF-AUM-...`). The historical_events table holds reconstructed pre-stream events. |
 | Silver staging | `money_farm_stg.*` | `moneyfarm_population_grouped`, `silver_moneyfarm_etoro_mf_aum` | Population-grouped view + staging copy of silver AUM |
 | Gold (bizops curated) | `bi_output.*` | `bi_output_moneyfarm_customers`, `bi_output_moneyfarm_fact_portfolio_snapshot`, `bi_output_moneyfarm_fact_transactions` | 99K customers / 40K portfolio rows / per-event transactions facts. **Already have rich UC comments deployed** (Tier-1 from Confluence anchors). |
@@ -214,7 +245,7 @@ See `domain-customer-and-identity/SKILL.md` for the full identity-layer model.
 
 ### Tier 1 — Silent wrong numbers
 
-1. **`v_moneyfarm_fees` is a PLACEHOLDER** — the DDL is literally `SELECT ... WHERE 1=0` returning all NULL casts (`date`, `dateid`, `gcid`, `total_fees_gbp`, `total_fees_usd`). **No fee data exists in any UC MoneyFarm table.** Querying this view will always return zero rows. The customer-facing fee schedule lives in Confluence (page `11942330382`) but is informational only — see `metric-definitions.md` for the documented tiers. For booked fee revenue, ask Finance directly; it is not in eToro UC.
+1. **`v_moneyfarm_fees` is a PLACEHOLDER** — the DDL is literally `SELECT ... WHERE 1=0` returning all NULL casts (`date`, `dateid`, `gcid`, `total_fees_gbp`, `total_fees_usd`). **No fee data exists in any UC MoneyFarm table.** Querying this view will always return zero rows. The customer-facing fee schedule lives in Confluence (page `11942330382`) but is informational only — see `moneyfarm-metric-definitions.md` for the documented tiers. For booked fee revenue, ask Finance directly; it is not in eToro UC.
 2. **MoneyFarm fees do NOT flow into `BI_DB_DDR_Fact_Revenue_Generating_Actions`** — the DDR revenue fact is eToro-native (PFOF, TX fees, overnight) only. Don't expect MoneyFarm fee rows to appear there.
 3. **MoneyFarm AUM and MIMO DO roll up** into `BI_DB_DDR_Fact_AUM` and `BI_DB_DDR_Fact_MIMO_AllPlatforms` respectively. Cross-platform AUM/MIMO totals therefore include MoneyFarm; product-line drill-downs filter on `AccountTypeID = 4`.
 4. **`providerName = 'Moneyfarm'` is the canonical case** — capital M, single word, no space. The source events store the single-word lowercase variant. **Don't use `'MoneyFarm'`, `'Money Farm'`, or `'money_farm'`.** This casing matters in the WHERE clause of `compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts` filter, in the `bi_db.bronze_sub_accounts_accounts` join filter, and everywhere `EventPayloadRowData.ProviderName` appears. The 3 prep views encode the correct case; raw-bronze queries must match it manually.
@@ -238,7 +269,7 @@ See `domain-customer-and-identity/SKILL.md` for the full identity-layer model.
 ### Tier 3 — Operational
 
 18. **Cosmos metadata columns in `bronze_moneyfarm_users`** — `_rid` / `_self` / `_etag` / `_attachments` are CosmosDB internal IDs and should be ignored in analytics SQL. They're not business columns.
-19. **Schema split is intentional but non-obvious** — MoneyFarm assets live across 9 schemas (`general` / `experience` / `money_farm` / `money_farm_stg` / `bi_output` / `bi_output_stg` / `bizops_output` / `bizops_output_stg` / `regtech_stg`) plus the 3 `etoro_kpi_prep` views. The `_stg` schemas are pre-publish staging; the production-grade tables for analytics are the non-`_stg` versions. See `source-tables.md` for the full table-to-schema mapping.
+19. **Schema split is intentional but non-obvious** — MoneyFarm assets live across 9 schemas (`general` / `experience` / `money_farm` / `money_farm_stg` / `bi_output` / `bi_output_stg` / `bizops_output` / `bizops_output_stg` / `regtech_stg`) plus the 3 `etoro_kpi_prep` views. The `_stg` schemas are pre-publish staging; the production-grade tables for analytics are the non-`_stg` versions. See `moneyfarm-source-tables.md` for the full table-to-schema mapping.
 20. **`SourceFile` deduplication on silver AUM** — Ben Thompson's custom SQL preamble explicitly notes: *"there are sometimes instances of 'double sends' on one day creating two rows, so taking the row with the most recent SourceFile"*. The SourceFile string format is `ETORO-MF-AUM-{date}-{seq}`. Always dedupe by `(etr_ymd, Portfolio_Id)` taking max `SourceFile` lexicographically when reading raw silver.
 21. **Daily refresh notebook** — `databricks/de/MoneyFarm/MoneyFarm_Daily.ipynb` (Jupyter, last modified 2025-05-13) writes the silver AUM. The bizops `bi_output_moneyfarm_*` family is written by a separate BI-team pipeline (no source SQL in the local DataPlatform repo).
 
@@ -250,7 +281,7 @@ See `domain-customer-and-identity/SKILL.md` for the full identity-layer model.
 | `v_moneyfarm_mimo` | 12 | One row per (`date`, `gcid`) — MIMO with FTD detection, deposit/withdrawal counts and amounts | `compliance.bronze_event_hub_prod_event_streaming_we_sub_accounts` (filtered `ProviderName='Moneyfarm'` and `EventType IN ('PORTFOLIO_DEPOSIT','PORTFOLIO_WITHDRAW')`) + `fact_currencypricewithsplit` |
 | `v_moneyfarm_fees` | 5 | **PLACEHOLDER** — `WHERE 1=0`, all NULLs. No fee data ingested. | None — view body is `SELECT NULL CASTS WHERE 1=0` |
 
-Full DDLs and CTE walkthroughs in `views-architecture.md`.
+Full DDLs and CTE walkthroughs in `moneyfarm-views-architecture.md`.
 
 ## Tableau Dashboard Reference
 
@@ -266,7 +297,7 @@ Full DDLs and CTE walkthroughs in `views-architecture.md`.
 
 Plus the CS-team **`ISACustomerLookupDashboard / ISACustomerDashboard`** (referenced from CS Confluence page `13209534657`) — used by CS TLs for MoneyFarm External-ID lookup during ISA Tmail handling.
 
-Full per-workbook field inventory + custom-SQL preambles + the UK BA Genie space's 16 MoneyFarm join_specs in `dashboard-queries.md`.
+Full per-workbook field inventory + custom-SQL preambles + the UK BA Genie space's 16 MoneyFarm join_specs in `moneyfarm-dashboard-queries.md`.
 
 ## ETL Pipeline (one-paragraph summary)
 

@@ -55,7 +55,6 @@ triggers:
   - Country_RiskGroupID
   - VerificationLevelID
   - ScreeningStatus
-  - PlayerStatus
   - Regulation
   - MifidCategorization
   - POA_Expiry_Date

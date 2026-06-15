@@ -26,20 +26,7 @@ description: |
   `etoro_kpi_prep.v_revenue_ticketfee_fixed` and
   `etoro_kpi_prep.v_revenue_ticketfee_bypercent` retain the breakdown — use them
   ONLY if the question explicitly demands fixed-vs-percent ticket-fee separation.
-triggers: [FullCommission, Commission, CommissionTotal, FullCommissionTotal,
-           CommissionOnClose, FullCommissionOnClose, TicketFee, TicketFeeByPercent,
-           TicketFees, TicketFeeOpen, TicketFeeClose, RollOverFee, AdminFee,
-           SpotPriceAdjustment, SpotAdjustFee, Dividend, Dividends, SDRT,
-           trading revenue, per position, per asset, per instrument, per copy,
-           per mirror, per leverage, IsCopy, IsLeveraged, IsSettled, IsSQF,
-           IsCopyFund, IsBuy, MirrorID, fact_customeraction_w_metrics,
-           mv_revenue_trading, fact_revenue_generating_actions, vg_ddr_revenue,
-           Dim_Revenue_Metrics, IncludedInTotalRevenue, ActionTypeID,
-           CompensationReasonID, IsFeeDividend, SettlementTypeID,
-           v_revenue_fullcommission, v_revenue_commission,
-           v_revenue_ticketfee_fixed, v_revenue_ticketfee_bypercent,
-           v_revenue_rollover, v_revenue_adminfee, v_revenue_spotadjustfee,
-           v_revenue_dividend, v_revenue_sdrt]
+triggers: [FullCommission, Commission, CommissionTotal, FullCommissionTotal, CommissionOnClose, FullCommissionOnClose, TicketFee, TicketFeeByPercent, TicketFees, TicketFeeOpen, TicketFeeClose, RollOverFee, AdminFee, SpotPriceAdjustment, SpotAdjustFee, Dividend, Dividends, SDRT, trading revenue, per position, per asset, per instrument, per copy, per mirror, per leverage, IsCopy, IsCopyFund, mv_revenue_trading, fact_revenue_generating_actions, vg_ddr_revenue, Dim_Revenue_Metrics, IncludedInTotalRevenue, IsFeeDividend, v_revenue_fullcommission, v_revenue_commission, v_revenue_ticketfee_fixed, v_revenue_ticketfee_bypercent, v_revenue_rollover, v_revenue_adminfee, v_revenue_spotadjustfee, v_revenue_dividend, v_revenue_sdrt]
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-revenue-and-fees/fees-deposit-withdraw-fx          # ConversionFee triplet co-exists in w_metrics

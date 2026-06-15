@@ -24,7 +24,6 @@ triggers:
   - eMoney_ClientRisk
   - VerificationLevelID
   - ScreeningStatus
-  - PlayerStatus
   - Country_RiskGroupID
   - HighRiskCountryDeposits
   - AML alert

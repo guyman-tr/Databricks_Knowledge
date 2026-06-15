@@ -2,29 +2,20 @@
 name: domain-customer-and-identity
 description: "Per-event ledger of every significant customer action — position opens/closes, deposits, cashouts, fees, bonuses, registrations, logins, mirror ops, edit-stoploss, compensations, refunds/chargebacks. Anchored on Fact_CustomerAction (UC: main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_customeraction, 74 cols, ~11B rows all-time, ~4M rows/day, partitioned etr_y/etr_ym/etr_ymd). Five-source UNION classified by ActionTypeID against Dim_ActionType (45 rows). Most columns are sparse — populated only for the ActionTypeIDs they relate to. Enrichment layers add position context (v_fact_customeraction_enriched, 79 cols, LEFT JOIN to dim_position with detach-aware MirrorID, TicketFeeAction derivation, and compensation-PositionID back-resolution from the last word of Description) and per-action monetary metrics (v_fact_customeraction_w_metrics — authoritative for trading-side amounts). Adjacent UC-available cluster-6 tables: BI_DB_Fact_Customer_Action_Position_Distribution (action-time customer-state snapshot per position, NOT a portfolio-shape distribution), BI_DB_DailyCopyRevenue (per-day per-PARENT/popular-investor revenue split by asset class), BI_DB_Social_Activity (live social-pipeline text — FCA 21-26 are DEAD DATA, do not use), BI_DB_DDR_CID_Level (per-day per-CID 175-col rollup, NOT lifetime), BI_DB_First5Actions (per-CID first-5-action + 1/7/14/30/60/90/180/360-day windows + LTV). Synapse-only siblings (NOT in UC): BI_DB_UsersEngagement, BI_DB_Investors_Top10, BI_DB_CustomerFirst5OpenPositions, BI_DB_ClientBalance_DDR_Data_Integrity_Alert. Use for single-CID forensics, BackOffice timelines, fee / commission attribution per ActionTypeID, and per-event volume (Active-only — Passive rows have NULL VolumeOnOpen by design)."
 triggers:
-  - Fact_CustomerAction
-  - fact_customeraction
   - customer action
   - action audit
   - audit trail
   - customer event log
-  - ActionTypeID
   - Dim_ActionType
   - dim_actiontype
   - Occurred
   - HistoryID
   - SessionID
   - IsFTD
-  - IsFeeDividend
   - End of Week Fee
   - End Of The Week Fee
-  - overnight fee
   - dividend fee
-  - SDRT
-  - ticket fee
   - TicketFeeAction
-  - IsPartialCloseParent
-  - IsPartialCloseChild
   - ReopenForPositionID
   - IsReOpen
   - CompensationReasonID
@@ -39,10 +30,6 @@ triggers:
   - BI_DB_Social_Activity
   - BI_DB_DDR_CID_Level
   - BI_DB_First5Actions
-  - VolumeOnOpen
-  - VolumeOnClose
-  - ManualPositionOpen
-  - CopyPositionOpen
   - CopyPositionClose
   - PositionOpenTypeUnknown
   - Affiliate Deposit

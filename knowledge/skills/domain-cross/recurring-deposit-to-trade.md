@@ -20,10 +20,6 @@ triggers:
   - FTDDate
   - FirstTradeDate
   - First5Actions
-  - BI_DB_First5Actions
-  - IsGlobalFTD
-  - w_metrics
-  - fact_customeraction_w_metrics
 required_tables:
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_fact_billingdeposit
   - main.dwh.gold_sql_dp_prod_we_dwh_dbo_dim_customer_masked

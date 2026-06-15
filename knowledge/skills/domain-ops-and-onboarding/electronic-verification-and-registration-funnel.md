@@ -7,7 +7,6 @@ triggers:
   - registration funnel
   - onboarding funnel
   - VerificationLevel
-  - VerificationLevelID
   - VerificationLevel0
   - VerificationLevel1
   - VerificationLevel2
@@ -33,7 +32,6 @@ triggers:
   - KYCVerificationFlowID
   - DateTime_FirstTimeDeposit
   - FirstDepositAmount
-  - IsDepositor
   - DepositAttempt
   - FirstDepositAttemptDate
   - FirstAction
@@ -42,7 +40,6 @@ triggers:
   - Screening_UnresolvedHits
   - Screening_ProviderName
   - Screening_ProviderStatus
-  - ScreeningStatus
   - ScreeningPriority
   - SLA_ScreeningStartTime
   - SLA_ScreeningEndTime

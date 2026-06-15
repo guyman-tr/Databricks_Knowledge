@@ -6,7 +6,6 @@ triggers:
   - Tribe
   - FiatDwh
   - FiatDwhDB
-  - Treezor
   - audit trail
   - SOC2
   - eMoney audit

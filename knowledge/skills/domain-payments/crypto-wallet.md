@@ -2,45 +2,18 @@
 name: domain-payments
 description: "eToro EXW (eToro Wallet) — the on-chain crypto wallet platform. Distinct from Trading-side crypto CFDs (those are derivatives on price, not on-chain positions — they live in domain-trading). Ranking + routing layer for EXW questions: start at the DWH-side EXW_dbo facts (UC: EXW_FactTransactions 45 cols, EXW_DimUser 21 cols, EXW_WalletInventory 19 cols, EXW_C2F_E2E 103 cols, EXW_C2P_E2E 90 cols, EXW_FinanceReportsBalancesNew 40 cols, EXW_EthFeeSent_Blockchain 19 cols), drill into the production EXW_Wallet ledger (UC: wallet.bronze_walletdb_wallet_*) for on-chain detail — SentTransactions 11 cols, ReceivedTransactions 19 cols, Conversions 16 cols + ConversionTransactions 17 cols, Redemptions 20 cols, SentTransactionOutputs 14 cols, TransactionsView 22 cols, WalletBalances, WalletPool, CustomerWalletsView 13 cols, CryptoTypes 31 cols — and only descend into status / AML / on-chain forensics (SentTransactionStatuses 7 cols, ReceivedTransactionStatuses 8 cols, AmlValidations 17 cols, Requests 11 cols) when needed. CorrelationId is the single most-important cross-table linker (Conversions.CorrelationId = SentTransactions.CorrelationId; Redemptions.SendRequestCorrelationId = SentTransactions.CorrelationId). Crypto wallet activity is OFF the MIMO graph — there is no BI_DB_DDR_Fact_MIMO_Crypto_Platform. Crypto only appears in MIMO_AllPlatforms after C2F conversion (as eMoney rows tagged IsCryptoToFiat=1). Three Synapse-only enriched facts (EXW_FactRedeemTransactions, EXW_FactConversions, EXW_PaymentReconciliation) require manual stitching in Genie. Crypto-to-Fiat off-ramp (the full E2E into IBAN) is delegated to domain-cross/crypto-to-fiat. Staking rewards and ETH gas-fee revenue route to domain-revenue-and-fees."
 triggers:
-  - crypto wallet
-  - EXW
-  - eToro Wallet
-  - on-chain
   - blockchain
   - SentTransaction
   - ReceivedTransaction
-  - Redemption
   - Conversion
   - Swap
-  - BlockchainTransactionId
-  - BlockchainCryptoId
   - CryptoType
   - ERC-20
-  - WalletId
-  - WalletPool
-  - WalletBalances
-  - CustomerWalletsView
-  - public address
-  - EXW_DimUser
-  - EXW_FactTransactions
-  - EXW_WalletInventory
-  - EXW_C2F_E2E
   - EXW_C2P_E2E
   - WalletInventory
-  - CorrelationId
-  - SendRequestCorrelationId
-  - gas fee
   - ETH fee
-  - EXW_EthFeeSent_Blockchain
-  - Tangany
   - Simplex
-  - AML wallet
-  - AmlValidations
-  - off-ramp
-  - crypto-to-fiat
-  - C2F
   - C2P
-  - bronze_walletdb_wallet
 required_tables:
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_facttransactions
   - main.bi_db.gold_sql_dp_prod_we_exw_dbo_exw_dimuser

@@ -34,9 +34,6 @@ triggers:
   - StartDate
   - EndDate
   - Aml_Row_UpdateDate
-  - RegulationID
-  - PlayerLevelID
-  - CitizenshipCountryID
   - regulator submission
   - regulator AML
   - RegTech AML

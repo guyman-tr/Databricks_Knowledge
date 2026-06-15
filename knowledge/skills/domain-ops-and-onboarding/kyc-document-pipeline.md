@@ -25,7 +25,6 @@ triggers:
   - DocumentClassification
   - DocumentSizeActionTypeID
   - StorageID
-  - SessionID
   - AiCheckID
   - AiReasoning
   - AI_Outcome

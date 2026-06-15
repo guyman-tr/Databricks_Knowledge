@@ -12,16 +12,7 @@ description: |
   columns in `fact_customeraction_w_metrics`), the EXW / wallet / dealing
   staking source-table chain, and the staking-countries-classification
   reference for jurisdiction-eligibility questions.
-triggers: [share lending, ShareLending, share-lending, ShareLendingFeeEtoroShare,
-           ShareLendingFeeUserShare, ShareLendingFeeBrokerShare,
-           ShareLendingGrossAmount, 40/40/20 split, lending revenue,
-           short selling revenue, staking, staking fee, StakingLagOneMonth,
-           staking rewards, staking lag, one month lag, crypto staking,
-           rewards distribution, staking platform compensation, EXW staking,
-           dealing staking, walletdb staking, stakingtransactions,
-           stakingrewards, staking_data, treasury staking,
-           staking_countries_classification, staking eligibility,
-           v_revenue_share_lending, v_revenue_stakingfee, RevShare]
+triggers: [share lending, ShareLending, share-lending, ShareLendingFeeEtoroShare, ShareLendingFeeUserShare, ShareLendingFeeBrokerShare, ShareLendingGrossAmount, 40/40/20 split, lending revenue, short selling revenue, staking fee, StakingLagOneMonth, staking lag, one month lag, crypto staking, staking platform compensation, EXW staking, dealing staking, walletdb staking, stakingtransactions, stakingrewards, staking_data, treasury staking, staking_countries_classification, staking eligibility, v_revenue_share_lending, v_revenue_stakingfee]
 load_after: [_router.md, domain-revenue-and-fees/SKILL.md]
 intersects_with:
   - domain-revenue-and-fees/trading-revenue-and-fees   # share-lending columns ALSO in w_metrics
@@ -40,7 +31,7 @@ primary_objects:
   - main.wallet.bronze_walletdb_staking_stakingtransactions
   - main.wallet.bronze_walletdb_staking_stakingexternaladdress
   - main.general.gold_tres_staking_data_staking_data    # treasury report
-  - main.general.bronze_fivetran_google_sheets_staking_countries_classification
+  - main.sharepoint.silver_sharepoint_staking_countries_classification  # live (Excel-on-SharePoint via Fivetran; was main.general.bronze_fivetran_google_sheets_* — that copy went stale 2024-05)
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics  # per-action share-lending columns
 out_of_scope:
   - Trading-platform fees → trading-revenue-and-fees.md
@@ -64,9 +55,9 @@ required_tables:
   - main.wallet.bronze_walletdb_staking_stakingtransactions
   - main.wallet.bronze_walletdb_staking_stakingexternaladdress
   - main.general.gold_tres_staking_data_staking_data
-  - main.general.bronze_fivetran_google_sheets_staking_countries_classification
+  - main.sharepoint.silver_sharepoint_staking_countries_classification
   - main.de_output.de_output_etoro_kpi_fact_customeraction_w_metrics
-last_validated_at: "2026-05-10"
+last_validated_at: "2026-06-04"
 
 ---
 
@@ -79,7 +70,7 @@ Load when the question is about staking revenue, share lending revenue, or the s
 ## Scope
 In scope: StakingLagOneMonth revenue, share lending revenue splits (EtoroShare, UserShare, BrokerShare, GrossAmount), staking lag mechanics, CompensationReasonID=119, v_revenue_sharelending, v_revenue_staking
 Out of scope: Trading fees (commission, rollover, tickets) → trading-revenue-and-fees.md; Crypto wallet staking operations (not revenue) → domain-payments/crypto-wallet; Security lending operational data (Equilend) → separate domain
-Last verified: 2026-05-10
+Last verified: 2026-06-04
 
 This sub-skill owns the two **RevShare-category** revenue metrics (DDR `RevenueMetricCategoryID = 4`) — where eToro takes a CUT of yield or income generated on customer-owned assets.
 
@@ -160,7 +151,7 @@ Crypto-staking is the major source of confusion here. The metric is called **`St
 | Dealing-side params | `finance.gold_*_dealing_staking_parameters` | Staking parameter config (per instrument) |
 | Wallet / EXW source | `wallet.bronze_walletdb_staking_staking`, `_stakingrewards`, `_stakingtransactions`, `_stakingexternaladdress` | Production-OLTP staking truth source |
 | Treasury report | `general.gold_tres_staking_data_staking_data` | Finance-team treasury report |
-| Eligibility ref | `general.bronze_fivetran_google_sheets_staking_countries_classification` | Country-by-country staking eligibility lookup |
+| Eligibility ref | `sharepoint.silver_sharepoint_staking_countries_classification` | Country-by-country staking eligibility lookup (Excel-on-SharePoint via Fivetran; replaces the pre-2026 `general.bronze_fivetran_google_sheets_*` copy, which is now stale) |
 
 ### Staking query patterns
 
@@ -190,7 +181,7 @@ ORDER BY InstrumentID;
 **Pattern 3 — Country eligibility lookup:**
 ```sql
 SELECT *
-FROM main.general.bronze_fivetran_google_sheets_staking_countries_classification;
+FROM main.sharepoint.silver_sharepoint_staking_countries_classification;
 ```
 
 ## Critical Warnings (specific to RevShare metrics)
@@ -200,7 +191,7 @@ FROM main.general.bronze_fivetran_google_sheets_staking_countries_classification
 3. **`v_revenue_share_lending` returns eToro's 40% only.** To get user-side or broker-side amounts, use `fact_customeraction_w_metrics.ShareLendingFeeUserShare` / `ShareLendingFeeBrokerShare`.
 4. **The user's 40% accrues to customer balance — it's a customer payout, NOT eToro revenue.** Don't add `ShareLendingFeeUserShare` to a Total Net Revenue query.
 5. **Share lending requires `IsSettled = 1`** (real assets only). CFD positions cannot be lent. Filtering `WHERE IsSettled = 0` will drop share-lending revenue.
-6. **Staking eligibility varies by country** — `general.bronze_fivetran_google_sheets_staking_countries_classification` is the lookup. Some jurisdictions (US for most coins, certain EU countries for specific coins) are opted-out entirely.
+6. **Staking eligibility varies by country** — `main.sharepoint.silver_sharepoint_staking_countries_classification` is the live lookup (Excel-on-SharePoint via Fivetran). The pre-2026 sibling `main.general.bronze_fivetran_google_sheets_staking_countries_classification` is **stale** — last sync 2024-05-01 — and must not be used. Some jurisdictions (US for most coins, certain EU countries for specific coins) are opted-out entirely.
 7. **Staking-data lineage**: customer-level staking transactions live in `wallet.bronze_walletdb_staking_*` (OLTP truth). The dealing-side `dealing.*` / `finance.*` staking tables are eToro-internal distribution / pool / params. The DDR `StakingLagOneMonth` is the final booked-revenue rollup. For OLTP-level audit, route through wallet; for revenue, route through DDR / `v_revenue_stakingfee`.
 8. **`general.gold_tres_staking_data_staking_data`** is a TREASURY report (treasury cluster), not the canonical revenue source. Use it for finance / treasury reconciliation only — not for KPI revenue answers.
 
@@ -216,5 +207,5 @@ FROM main.general.bronze_fivetran_google_sheets_staking_countries_classification
 
 - `v_revenue_stakingfee` and `v_revenue_share_lending` are defined in `/Users/guyman@etoro.com/a_semantic_etoro_kpi_prep/`.
 - Wallet-side staking truth is the OLTP `Wallet.dbo.Staking_*` family (mirrored to UC as `wallet.bronze_walletdb_staking_*`).
-- Country-eligibility lookup is maintained as a Google Sheet, ingested via Fivetran into `general.bronze_fivetran_google_sheets_staking_countries_classification`.
+- Country-eligibility lookup is maintained as an Excel workbook on SharePoint, ingested via Fivetran into `main.sharepoint.silver_sharepoint_staking_countries_classification`. (Pre-2026 migration the source was a Google Sheet landing in `main.general.bronze_fivetran_google_sheets_staking_countries_classification`; that table is now stale — last sync 2024-05-01 — do NOT use it.)
 - **Dealing-side operational truth (how rewards are calculated and distributed) is owned by [`../domain-staking/SKILL.md`](../domain-staking/SKILL.md)** — that hub covers the four stored procedures (`SP_Staking`, `SP_Staking_Emails`, `SP_Staking_DailyPool`, `SP_Staking_WelcomeEmail`), the eight eligibility gates, the 13-currency catalogue with `IntroDays` / `LiquidityBuffer` / `Distribution_StartDate`, the six-tier `RevShare` ladder (Bronze 0.45 → Diamond 0.90), the `< $1 USD` floor, the `StakingMonthID` 6-vs-7-digit re-run convention, the seven `FailReasonID` codes, and the seven `Mailing_Group` categories. **Route the "HOW" and "WHY CID X" questions there; this sub-skill stays focused on the booked-revenue lens (DDR `Metric = 'StakingLagOneMonth'` rows, 1-month lag, share-lending split).** The two are complementary: domain-staking owns the operational lens; this file owns the revenue-accounting lens. Provenance note added 2026-05-28.

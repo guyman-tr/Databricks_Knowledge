@@ -19,20 +19,12 @@ triggers:
   - IsPI
   - UK_Prohibited
   - IsEtorian
-  - Tangany
   - TanganyStatusID
-  - IsCreditReportValidCB
-  - RegulationID
-  - PlayerStatusID
   - AccountStatusID
-  - AccountTypeID
-  - CountryID
-  - PlayerLevelID
   - SubReasonID
   - cash equivalent country
   - cash compensation country
   - ineligible country
-  - Smart Portfolio
   - Etorian
   - inactive account
   - MICA
@@ -51,7 +43,6 @@ triggers:
   - why not eligible
   - NonEligible_PrimaryReason
   - AML restricted
-  - PlayerStatus
   - Normal
   - blocked by Compliance
 required_tables:
